@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
@@ -14,6 +15,8 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupSettingsFormType;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\InvalidPricingGroupReplacementException;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupIsUsedException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupInlineEdit;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -31,6 +34,7 @@ class PricingGroupController extends AdminBaseController
         protected readonly PricingGroupInlineEdit $pricingGroupInlineEdit,
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -75,8 +79,12 @@ class PricingGroupController extends AdminBaseController
                     ],
                 );
             }
-        } catch (PricingGroupNotFoundException $ex) {
+        } catch (PricingGroupNotFoundException) {
             $this->addErrorFlash(t('Selected pricing group doesn\'t exist.'));
+        } catch (PricingGroupIsUsedException) {
+            $this->addErrorFlash(t('Pricing group is used and cannot be deleted without choosing a replacement.'));
+        } catch (InvalidPricingGroupReplacementException) {
+            $this->addErrorFlash(t('Selected replacement pricing group must be a different pricing group from the same domain.'));
         }
 
         return $this->redirectToRoute('admin_pricinggroup_list');
@@ -90,16 +98,16 @@ class PricingGroupController extends AdminBaseController
         try {
             $pricingGroup = $this->pricingGroupFacade->getById($id);
 
-            $selectedDomain = $this->adminDomainTabsFacade->getSelectedDomainConfig();
+            $domainConfig = $this->domain->getDomainConfigById($pricingGroup->getDomainId());
 
-            if ($this->pricingGroupSettingFacade->isPricingGroupUsedOnDomain($pricingGroup, $selectedDomain)) {
+            if ($this->pricingGroupSettingFacade->isPricingGroupUsedOnDomain($pricingGroup, $domainConfig)) {
                 $message = t(
                     'For removing pricing group "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                     . 'Which pricing group you want to set instead?',
                     ['%name%' => $pricingGroup->getName()],
                 );
 
-                if ($this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($pricingGroup, $selectedDomain)) {
+                if ($this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($pricingGroup, $domainConfig)) {
                     $message = t(
                         'Pricing group "%name%" set as default. For deleting it you have to choose other one to be set everywhere '
                         . 'where the existing one is used. Which pricing group you want to set instead?',

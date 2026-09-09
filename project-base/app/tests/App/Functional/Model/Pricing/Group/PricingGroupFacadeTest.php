@@ -10,9 +10,13 @@ use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\InvalidPricingGroupReplacementException;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupIsUsedException;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class PricingGroupFacadeTest extends TransactionFunctionalTestCase
@@ -21,6 +25,11 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private PricingGroupFacade $pricingGroupFacade;
+
+    /**
+     * @inject
+     */
+    private PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
      * @inject
@@ -72,5 +81,82 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $this->em->refresh($customerUser);
 
         $this->assertEquals($pricingGroupToReplaceWith, $customerUser->getPricingGroup());
+    }
+
+    public function testDeleteDefaultPricingGroupSetsReplacementAsDefault(): void
+    {
+        $domainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomain($domainConfig);
+        $pricingGroupToReplaceWith = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_VIP,
+            Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
+        );
+
+        $this->pricingGroupFacade->delete($defaultPricingGroup->getId(), $pricingGroupToReplaceWith->getId());
+
+        $this->assertSame(
+            $pricingGroupToReplaceWith,
+            $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomain($domainConfig),
+        );
+    }
+
+    public function testDeleteDefaultPricingGroupWithoutReplacementThrowsException(): void
+    {
+        $domainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomain($domainConfig);
+
+        $this->expectException(PricingGroupIsUsedException::class);
+
+        $this->pricingGroupFacade->delete($defaultPricingGroup->getId());
+    }
+
+    public function testDeleteUnusedPricingGroupWithoutReplacement(): void
+    {
+        $pricingGroupData = new PricingGroupData();
+        $pricingGroupData->name = 'unused';
+        $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, Domain::FIRST_DOMAIN_ID);
+        $pricingGroupId = $pricingGroup->getId();
+
+        $this->pricingGroupFacade->delete($pricingGroupId);
+
+        $this->expectException(PricingGroupNotFoundException::class);
+
+        $this->pricingGroupFacade->getById($pricingGroupId);
+    }
+
+    public function testDeleteWithReplacementFromAnotherDomainThrowsException(): void
+    {
+        if (!$this->domain->isMultidomain()) {
+            $this->markTestSkipped('Test requires at least two domains.');
+        }
+
+        $pricingGroupToDelete = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
+        );
+        $pricingGroupFromAnotherDomain = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::SECOND_DOMAIN_ID,
+            PricingGroup::class,
+        );
+
+        $this->expectException(InvalidPricingGroupReplacementException::class);
+
+        $this->pricingGroupFacade->delete($pricingGroupToDelete->getId(), $pricingGroupFromAnotherDomain->getId());
+    }
+
+    public function testDeleteWithItselfAsReplacementThrowsException(): void
+    {
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
+        );
+
+        $this->expectException(InvalidPricingGroupReplacementException::class);
+
+        $this->pricingGroupFacade->delete($pricingGroup->getId(), $pricingGroup->getId());
     }
 }
