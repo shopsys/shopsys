@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 
 class SitemapRepository
 {
@@ -26,7 +27,25 @@ class SitemapRepository
         protected readonly ArticleRepository $articleRepository,
         protected readonly BlogArticleRepository $blogArticleRepository,
         protected readonly FlagRepository $flagRepository,
+        protected readonly SeoMetaRobotsEnum $seoMetaRobotsEnum,
     ) {
+    }
+
+    /**
+     * Pages with a canonical URL or noindex robots must not be offered to search engines in the sitemap
+     *
+     * The alias has to point to an entity with the SeoAttributes embeddable in the "seo" property (either the entity itself,
+     * e.g. Article, or its domain entity, e.g. ProductDomain) - DQL cannot check this, an entity without it fails
+     * with a QueryException when the query is built
+     *
+     * @param string $alias alias of the entity holding the SeoAttributes embeddable
+     */
+    protected function addSeoExclusionConditions(QueryBuilder $queryBuilder, string $alias): void
+    {
+        $queryBuilder
+            ->andWhere(sprintf('%s.seo.canonicalUrl IS NULL', $alias))
+            ->andWhere(sprintf('(%1$s.seo.metaRobots IS NULL OR %1$s.seo.metaRobots NOT IN (:noindexRobots))', $alias))
+            ->setParameter('noindexRobots', $this->seoMetaRobotsEnum->getNoindexCases());
     }
 
     /**
@@ -49,6 +68,7 @@ class SitemapRepository
             ->andWhere('pd.calculatedSellingDenied = FALSE')
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'pd');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
@@ -72,6 +92,7 @@ class SitemapRepository
             )
             ->setParameter('productListRouteName', 'front_product_list')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'cd');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
@@ -97,6 +118,7 @@ class SitemapRepository
             ->setParameter('articleType', Article::TYPE_SITE)
             ->setParameter('articleDetailRouteName', 'front_article_detail')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'a');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
@@ -141,6 +163,7 @@ class SitemapRepository
             )
             ->setParameter('blogArticlesRouteName', 'front_blogarticle_detail')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'bad');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
@@ -165,6 +188,7 @@ class SitemapRepository
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'pd');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
@@ -177,6 +201,7 @@ class SitemapRepository
         $queryBuilder = $this->flagRepository->getVisibleQueryBuilder();
         $queryBuilder
             ->select('fu.slug, fu.entityId')
+            ->join('f.domains', 'fd', Join::WITH, 'fd.domainId = :domainId')
             ->join(
                 FriendlyUrl::class,
                 'fu',
@@ -188,6 +213,7 @@ class SitemapRepository
             )
             ->setParameter('flagDetailRouteName', 'front_flag_detail')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'fd');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
@@ -212,6 +238,7 @@ class SitemapRepository
             )
             ->setParameter('categorySeoMixRouteName', 'front_category_seo')
             ->setParameter('domainId', $domainConfig->getId());
+        $this->addSeoExclusionConditions($queryBuilder, 'rcsm');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }
