@@ -1,7 +1,6 @@
 import Translation from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
-
-const translations = require('./translations.json');
+import translations from './translations.json';
 
 export default function loadTranslations() {
     Object.keys(translations).forEach(locale => {

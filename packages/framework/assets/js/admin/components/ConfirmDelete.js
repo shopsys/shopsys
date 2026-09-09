@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export default class ConfirmDelete {
     constructor(messageContainerSelector = '.modal.show .modal-body') {
         this.$messageContainer = $(messageContainerSelector);

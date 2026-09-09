@@ -1,5 +1,6 @@
 import { Popover } from '@tabler/core';
 import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 
 $('body').on('click', e => {
     if ($(e.target).closest('.popover').length > 0) {

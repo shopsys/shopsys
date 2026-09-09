@@ -1,3 +1,4 @@
+import $ from 'jquery';
 export default function registerFilterAllNodes() {
     $.extend($.fn, {
         filterAllNodes: function (selector) {
