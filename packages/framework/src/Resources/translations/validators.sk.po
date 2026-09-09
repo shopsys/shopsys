@@ -673,14 +673,8 @@ msgstr "Množstvo položky \"%itemName%\" nesmie byť väčšie ako objednané m
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cieľ presmerovania musí byť relatívna cesta (s lomítkom na začiatku) alebo absolútna cesta začínajúca protokolom (http:// alebo https://)"
 
-msgid "Same description is used on another domain"
-msgstr "Rovnaký popis je použitý na inej doméne"
-
 msgid "Same title complement is used on another domain"
 msgstr "Rovnaký doplnok titulku je použitý na inej doméne"
-
-msgid "Same title is used on another domain"
-msgstr "Rovnaký titulok je použitý na inej doméne"
 
 msgid "Seo page with slug {{ pageSlug }} already exists"
 msgstr "SEO stránka so slugom {{ pageSlug }} už existuje"

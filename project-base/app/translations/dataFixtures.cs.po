@@ -1951,12 +1951,6 @@ msgstr "Kontroluje rozměry, kompatibilitu, záruční podmínky a možnosti dop
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
 
-msgid "Shopsys Platform - Title page"
-msgstr "Shopsys Platform - Titulní strana"
-
-msgid "Shopsys Platform - the best solution for your eshop."
-msgstr "Shopsys Platform - nejlepší řešení pro váš internetový obchod."
-
 msgid "Shopsys team collaborating in an office"
 msgstr "Tým Shopsys spolupracující v kanceláři"
 

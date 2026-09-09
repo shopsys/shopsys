@@ -1951,12 +1951,6 @@ msgstr "She checks dimensions, compatibility, warranty conditions, and delivery 
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
 
-msgid "Shopsys Platform - Title page"
-msgstr ""
-
-msgid "Shopsys Platform - the best solution for your eshop."
-msgstr ""
-
 msgid "Shopsys team collaborating in an office"
 msgstr "Shopsys team collaborating in an office"
 
