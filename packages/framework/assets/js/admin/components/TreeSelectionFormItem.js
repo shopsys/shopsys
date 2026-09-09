@@ -1,5 +1,6 @@
 import IconMinus from 'icons/tabler/circle-minus.svg';
 import IconPlus from 'icons/tabler/circle-plus.svg';
+import $ from 'jquery';
 import Ajax from '../../common/utils/Ajax';
 
 export default class TreeSelectionFormItem {

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
 export default class AdministratorForm {
