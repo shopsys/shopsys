@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Navigation } from 'components/Layout/Header/Navigation/Navigation';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
@@ -94,6 +94,43 @@ const renderNavigation = () =>
     );
 
 describe('Navigation', () => {
+    test('keeps a category submenu open after an immediate pointer click following hover', () => {
+        vi.useFakeTimers();
+
+        try {
+            renderNavigation();
+            const categoryButton = screen.getByRole('button', { name: 'Electronics' });
+
+            fireEvent.mouseEnter(categoryButton);
+            fireEvent.pointerDown(categoryButton, { pointerType: 'mouse' });
+            fireEvent.focus(categoryButton);
+            act(() => {
+                vi.advanceTimersByTime(0);
+            });
+            fireEvent.pointerUp(categoryButton, { pointerType: 'mouse' });
+            fireEvent.click(categoryButton);
+            act(() => {
+                vi.advanceTimersByTime(0);
+            });
+
+            expect(categoryButton).toHaveAttribute('aria-expanded', 'true');
+            expect(screen.getByRole('link', { name: 'Televisions' })).toBeVisible();
+
+            fireEvent.pointerDown(categoryButton, { pointerType: 'mouse' });
+            fireEvent.pointerUp(categoryButton, { pointerType: 'mouse' });
+            fireEvent.click(categoryButton);
+            act(() => {
+                vi.advanceTimersByTime(0);
+            });
+
+            expect(categoryButton).toHaveAttribute('aria-expanded', 'false');
+            expect(screen.queryByRole('link', { name: 'Televisions' })).not.toBeInTheDocument();
+        } finally {
+            vi.clearAllTimers();
+            vi.useRealTimers();
+        }
+    });
+
     test('renders a category submenu at full width inside the centered menu container', async () => {
         const user = userEvent.setup();
         renderNavigation();
@@ -102,12 +139,13 @@ describe('Navigation', () => {
 
         const categoryLink = await screen.findByRole('link', { name: 'Televisions' });
         const categoryGrid = categoryLink.closest('ul');
-        const overlay = document.querySelector('.fixed.bg-overlay-default');
 
         expect(categoryGrid).toHaveClass('grid-cols-4');
         expect(categoryGrid?.parentElement).toHaveClass('w-full', 'vl:max-w-default-max-width');
         expect(categoryGrid?.parentElement?.parentElement).not.toHaveClass('grid-cols-4');
-        expect(overlay).toHaveClass('z-overlay');
+        await waitFor(() => {
+            expect(document.querySelector('.fixed.bg-overlay-default')).toHaveClass('z-overlay');
+        });
     });
 
     test('closes an opened submenu when keyboard focus moves to an item without children', async () => {
