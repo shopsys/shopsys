@@ -26,7 +26,6 @@ class SeoExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getSeoTitleAddOn', $this->getSeoTitleAddOn(...)),
-            new TwigFunction('getSeoMetaDescription', $this->getSeoMetaDescription(...)),
         ];
     }
 
@@ -40,12 +39,5 @@ class SeoExtension extends AbstractExtension
         $currentDomainId = $this->domain->getId();
 
         return $this->seoSettingFacade->getTitleAddOn($currentDomainId);
-    }
-
-    public function getSeoMetaDescription(): string
-    {
-        $currentDomainId = $this->domain->getId();
-
-        return $this->seoSettingFacade->getDescriptionMainPage($currentDomainId);
     }
 }
