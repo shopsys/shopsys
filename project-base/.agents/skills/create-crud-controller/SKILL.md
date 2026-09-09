@@ -130,8 +130,8 @@ narrower). Pick the narrowest interface from `Shopsys\AdministrationBundle\Compo
 | Interface | Adds | Enables |
 |---|---|---|
 | `ReadHandlerInterface` | `getById(int): Presentable` | detail |
-| `DeleteHandlerInterface` | `delete(object)` | delete (+ detail) |
-| `EditHandlerInterface` | `createDataFromEntity(object): object`, `edit(object, object)` | edit (+ detail) |
+| `DeleteHandlerInterface` | `delete(Presentable)` | delete (+ detail) |
+| `EditHandlerInterface` | `createDataFromEntity(Presentable): object`, `edit(Presentable, object)` | edit (+ detail) |
 | `CreateHandlerInterface` | `createData(): object`, `create(object): Presentable` | create (+ detail) |
 | `CrudHandlerInterface` | all of the above | everything |
 
@@ -229,9 +229,9 @@ extensions can add fields to. `setFormOption()` must be called before `useBuilde
 final class <Entity>ControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface
 {
     public function configureDatagrid(Datagrid $datagrid): void { $datagrid->remove('…')->add('…', […]); }
-    public function beforeEdit(object $entity, object $data): void {}
-    public function afterEdit(object $entity, object $data): void {}
-    public function onEditError(object $entity, object $data, Throwable $exception): void {}
+    public function beforeEdit(Presentable $entity, object $data): void {}
+    public function afterEdit(Presentable $entity, object $data): void {}
+    public function onEditError(Presentable $entity, object $data, Throwable $exception): void {}
 }
 ```
 

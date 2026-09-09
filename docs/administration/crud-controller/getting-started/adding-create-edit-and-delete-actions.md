@@ -42,7 +42,7 @@ class OrderDeleteHandler implements DeleteHandlerInterface
 
 !!! tip "Narrow the `object` parameters with `Assert::isInstanceOf()`"
 
-    Handler interfaces declare data objects as plain `object` and entities as the generic `Presentable` (or `object`), because the interfaces are shared by all CRUD controllers.
+    Handler interfaces declare entities as the generic `Presentable` and data objects as plain `object`, because the interfaces are shared by all CRUD controllers.
     Start every method that receives an entity or a data object with `Assert::isInstanceOf()` (from `webmozart/assert`).
     The assert fails fast with a clear message when the handler is registered for a wrong entity, and thanks to
     the `phpstan/phpstan-webmozart-assert` extension PHPStan narrows the type, so calls like `$entity->getId()`
@@ -105,14 +105,14 @@ class OrderEditHandler implements EditHandlerInterface
         return $this->orderFacade->getById($id);
     }
 
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, Order::class);
 
         return $this->orderDataFactory->createFromOrder($entity);
     }
 
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, Order::class);
         Assert::isInstanceOf($data, OrderData::class);
@@ -199,14 +199,14 @@ class OrderCrudHandler implements CrudHandlerInterface
         $this->orderFacade->deleteById($entity->getId());
     }
 
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, Order::class);
 
         return $this->orderDataFactory->createFromOrder($entity);
     }
 
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, Order::class);
         Assert::isInstanceOf($data, OrderData::class);

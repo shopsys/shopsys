@@ -43,12 +43,13 @@ Implement only the interface that matches your needs:
 
 ### Narrowing `object` Parameters
 
-The handler interfaces declare entities and data objects as plain `object` (or `Presentable`), because they are shared by every CRUD controller. Your handler, however, works with one concrete entity and its data object, so narrow the type at the start of every method that receives them:
+The handler interfaces declare entities as the generic `Presentable` and data objects as plain `object`, because they are shared by every CRUD controller. Your handler, however, works with one concrete entity and its data object, so narrow the type at the start of every method that receives them:
 
 ```php
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Webmozart\Assert\Assert;
 
-public function edit(object $entity, object $data): void
+public function edit(Presentable $entity, object $data): void
 {
     Assert::isInstanceOf($entity, Order::class);
     Assert::isInstanceOf($data, OrderData::class);

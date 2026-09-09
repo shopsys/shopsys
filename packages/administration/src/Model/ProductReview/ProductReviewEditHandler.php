@@ -45,7 +45,7 @@ class ProductReviewEditHandler implements EditHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, ProductReview::class);
 
@@ -59,7 +59,7 @@ class ProductReviewEditHandler implements EditHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, ProductReview::class);
         Assert::isInstanceOf($data, ProductReviewData::class);
