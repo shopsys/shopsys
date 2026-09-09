@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\InvalidPricingGroupReplacementException;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupIsUsedException;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -64,23 +65,29 @@ class PricingGroupFacade
     public function delete(
         int $oldPricingGroupId,
         ?int $newPricingGroupId = null,
-        ?DomainConfig $selectedDomain = null,
     ): void {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
 
-        if ($newPricingGroupId !== null) {
-            $newPricingGroup = $this->pricingGroupRepository->getById($newPricingGroupId);
-            $this->customerUserRepository->replaceCustomerUsersPricingGroup($oldPricingGroup, $newPricingGroup);
+        if ($newPricingGroupId === null) {
+            if ($this->pricingGroupSettingFacade->isPricingGroupUsed($oldPricingGroup)) {
+                throw new PricingGroupIsUsedException(
+                    sprintf('Pricing group with ID %d is used and cannot be deleted without a replacement.', $oldPricingGroupId),
+                );
+            }
         } else {
-            $newPricingGroup = null;
-        }
+            $newPricingGroup = $this->pricingGroupRepository->getById($newPricingGroupId);
 
-        if (
-            $newPricingGroup !== null
-            && $selectedDomain !== null
-            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($oldPricingGroup, $selectedDomain)
-        ) {
-            $this->pricingGroupSettingFacade->setDefaultPricingGroupForDomain($newPricingGroup, $selectedDomain);
+            if ($newPricingGroup === $oldPricingGroup || $newPricingGroup->getDomainId() !== $oldPricingGroup->getDomainId()) {
+                throw new InvalidPricingGroupReplacementException(
+                    sprintf('Pricing group with ID %d cannot replace pricing group with ID %d.', $newPricingGroupId, $oldPricingGroupId),
+                );
+            }
+
+            $this->customerUserRepository->replaceCustomerUsersPricingGroup($oldPricingGroup, $newPricingGroup);
+
+            if ($this->pricingGroupSettingFacade->isPricingGroupSetAsDefault($oldPricingGroup)) {
+                $this->pricingGroupSettingFacade->setPricingGroupAsDefault($newPricingGroup);
+            }
         }
 
         $this->em->remove($oldPricingGroup);
