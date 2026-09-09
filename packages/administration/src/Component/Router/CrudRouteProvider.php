@@ -92,16 +92,16 @@ final class CrudRouteProvider
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
      */
-    public function getRouteItem(string $controllerClass, ActionType $pageType): CrudRouteItem
+    public function getRouteItem(string $controllerClass, ActionType $actionType): CrudRouteItem
     {
-        $cacheKey = $controllerClass . '::' . $pageType->value;
+        $cacheKey = $controllerClass . '::' . $actionType->value;
         $allRouteItems = $this->getAll();
 
         if (!isset($allRouteItems[$cacheKey])) {
             throw new InvalidArgumentException(sprintf(
                 'Route item for controller "%s" and action "%s" not found.',
                 $controllerClass,
-                $pageType->value,
+                $actionType->value,
             ));
         }
 
@@ -113,9 +113,9 @@ final class CrudRouteProvider
         string $controllerName,
         ?string $routePrefix,
         string $roleConstant,
-        ActionType $pageType,
+        ActionType $actionType,
     ): CrudRouteItem {
-        $routeConfig = self::DEFAULT_ROUTES_CONFIG[$pageType->value];
+        $routeConfig = self::DEFAULT_ROUTES_CONFIG[$actionType->value];
         $routePath = '/';
 
         if ($routePrefix) {
@@ -125,18 +125,18 @@ final class CrudRouteProvider
         $routePath .= CrudTransformationHelper::transformToRouteUrl($controllerName) . $routeConfig['path'];
 
         $route = new Route($routePath, [
-            '_controller' => CrudTransformationHelper::generateController($controllerClass, $pageType),
+            '_controller' => CrudTransformationHelper::generateController($controllerClass, $actionType),
         ]);
 
         $route->setDefault(self::IS_CRUD_CONTROLLER, true);
-        $route->setDefault(self::CRUD_ACTION, $pageType->value);
+        $route->setDefault(self::CRUD_ACTION, $actionType->value);
         $route->setDefault(self::CRUD_ROLE_CONSTANT, $roleConstant);
 
         return new CrudRouteItem(
-            controller: CrudTransformationHelper::generateController($controllerClass, $pageType),
+            controller: CrudTransformationHelper::generateController($controllerClass, $actionType),
             route: $route,
-            routeName: CrudTransformationHelper::generateRouteName($controllerName, $pageType),
-            pageType: $pageType,
+            routeName: CrudTransformationHelper::generateRouteName($controllerName, $actionType),
+            actionType: $actionType,
         );
     }
 }

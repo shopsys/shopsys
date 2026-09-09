@@ -24,9 +24,9 @@ final class CrudTransformationHelper
         return (string)new UnicodeString(self::getCleanControllerName($controllerName))->snake();
     }
 
-    public static function generateController(string $controllerClass, ActionType $pageType): string
+    public static function generateController(string $controllerClass, ActionType $actionType): string
     {
-        return sprintf('%s::%sAction', $controllerClass, $pageType->value);
+        return sprintf('%s::%sAction', $controllerClass, $actionType->value);
     }
 
     /**
@@ -41,9 +41,9 @@ final class CrudTransformationHelper
         return (string)new UnicodeString(self::getCleanControllerName($controllerName))->kebab();
     }
 
-    public static function generateRouteName(string $controllerName, ActionType $pageType): string
+    public static function generateRouteName(string $controllerName, ActionType $actionType): string
     {
-        return sprintf('admin_crud_%s_%s', self::transformToRouteName($controllerName), $pageType->value);
+        return sprintf('admin_crud_%s_%s', self::transformToRouteName($controllerName), $actionType->value);
     }
 
     public static function generateRoleConstant(string $controllerName, ?string $customRoleConstant = null): string
