@@ -9,7 +9,6 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
-use Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum;
 use Shopsys\AdministrationBundle\Model\Blog\Author\BlogArticleAuthorCrudHandler;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -22,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use SortDirection;
 
 #[CrudController(BlogArticleAuthor::class)]
 #[ForRole(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR)]
@@ -52,7 +52,7 @@ class BlogArticleAuthorController extends AbstractCrudController
             'label' => t('Name'),
         ]);
 
-        $datagrid->setDefaultOrder('name', OrderingEnum::ASC);
+        $datagrid->setDefaultOrder('name', SortDirection::Ascending);
     }
 
     #[Override]

@@ -31,9 +31,6 @@ parameters:
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/DatagridRowActions.php
         -
-            identifier: shipmonk.deadEnumCase
-            path: packages/administration/src/Component/Datagrid/OrderingEnum.php
-        -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Router/CrudRouteItem.php
         -

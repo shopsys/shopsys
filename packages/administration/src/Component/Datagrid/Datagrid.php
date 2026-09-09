@@ -13,10 +13,12 @@ use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use SortDirection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -45,7 +47,7 @@ final class Datagrid
     private array $fieldsOrder = [];
 
     /**
-     * @var array{field: string, order: \Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum}|null
+     * @var array{field: string, order: \SortDirection}|null
      */
     private ?array $defaultOrder = null;
 
@@ -116,7 +118,7 @@ final class Datagrid
     /**
      * Set default order of datagrid
      */
-    public function setDefaultOrder(string $field, OrderingEnum $order): self
+    public function setDefaultOrder(string $field, SortDirection $order): self
     {
         if ($this->dragAndDropEntityClass !== null) {
             throw new InvalidArgumentException(
@@ -164,7 +166,7 @@ final class Datagrid
         $this->dragAndDropEntityClass = $entityClass;
         $this->defaultOrder = [
             'field' => $field,
-            'order' => OrderingEnum::ASC,
+            'order' => SortDirection::Ascending,
         ];
 
         return $this;
@@ -303,7 +305,13 @@ final class Datagrid
         }
 
         if ($this->dragAndDropEntityClass === null && $this->defaultOrder !== null) {
-            $grid->setDefaultOrder($this->defaultOrder['field'], $this->defaultOrder['order']->value);
+            $grid->setDefaultOrder(
+                $this->defaultOrder['field'],
+                match ($this->defaultOrder['order']) {
+                    SortDirection::Ascending => DataSourceInterface::ORDER_ASC,
+                    SortDirection::Descending => DataSourceInterface::ORDER_DESC,
+                },
+            );
         }
 
         if (count($this->fieldsOrder) > 0) {
