@@ -33,6 +33,7 @@ export type AutocompleteSearchProps = {
     shouldFocusOnMount?: boolean;
     shouldRenderResultsOverlay?: boolean;
     onClearEmpty?: () => void;
+    onSearchSubmit?: () => void;
 };
 
 export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
@@ -44,6 +45,7 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
     shouldOpenPopupOnMount,
     shouldRenderResultsOverlay = true,
     onClearEmpty,
+    onSearchSubmit,
 }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
@@ -99,6 +101,7 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
                 query: { q: searchQueryValue },
             });
             setSearchQueryValue('');
+            onSearchSubmit?.();
         }
     };
 
@@ -165,6 +168,7 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
                             popupClassName={popupClassName}
                             showFavorites={showFavorites}
                             onClosePopupCallback={handleClosePopup}
+                            onSearchSubmit={onSearchSubmit}
                         />
                     )}
                 </AnimatePresence>

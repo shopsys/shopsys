@@ -1,8 +1,12 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MobileBottomNavigation } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomNavigation';
 import { type ReactNode } from 'react';
-import { describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
+
+afterEach(() => {
+    vi.unstubAllGlobals();
+});
 
 vi.mock('next-translate/useTranslation', () => ({
     __esModule: true,
@@ -58,11 +62,14 @@ vi.mock('components/Layout/Header/MobileBottomNavigation/MobileBottomAccountDraw
 }));
 
 vi.mock('components/Layout/Header/AutocompleteSearch/AutocompleteSearch', () => ({
-    AutocompleteSearch: ({ inputRef, onClearEmpty }: any) => (
+    AutocompleteSearch: ({ inputRef, onClearEmpty, onSearchSubmit }: any) => (
         <div>
             <input aria-label="Search input" ref={inputRef} />
             <button type="button" onClick={onClearEmpty}>
                 Close mocked search
+            </button>
+            <button type="button" onClick={onSearchSubmit}>
+                Submit mocked search
             </button>
         </div>
     ),
@@ -112,5 +119,45 @@ describe('MobileBottomNavigation', () => {
 
         await waitFor(() => expect(screen.queryByLabelText('Search input')).not.toBeInTheDocument());
         expect(searchButton).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    test('closes search overlay after submitting a search', async () => {
+        const user = userEvent.setup();
+
+        render(<MobileBottomNavigation />);
+
+        const searchButton = screen.getByRole('button', { name: 'Search' });
+        await user.click(searchButton);
+        await user.click(screen.getByRole('button', { name: 'Submit mocked search' }));
+
+        expect(screen.queryByLabelText('Search input')).not.toBeInTheDocument();
+        expect(searchButton).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    test('keeps search input aligned with the visual viewport', async () => {
+        const visualViewport = new EventTarget() as EventTarget & { offsetTop: number };
+        visualViewport.offsetTop = 40;
+        vi.stubGlobal('visualViewport', visualViewport);
+
+        render(<MobileBottomNavigation />);
+
+        fireEvent.click(screen.getByRole('button', { name: 'Search' }));
+        const searchContainer = screen.getByLabelText('Search input').closest('.fixed');
+
+        await waitFor(() => expect(searchContainer).toHaveStyle({ transform: 'translateY(40px)' }));
+
+        act(() => {
+            visualViewport.offsetTop = 120;
+            visualViewport.dispatchEvent(new Event('scroll'));
+        });
+
+        await waitFor(() => expect(searchContainer).toHaveStyle({ transform: 'translateY(120px)' }));
+
+        act(() => {
+            visualViewport.offsetTop = 0;
+            visualViewport.dispatchEvent(new Event('resize'));
+        });
+
+        await waitFor(() => expect(searchContainer).toHaveStyle({ transform: 'translateY(0px)' }));
     });
 });

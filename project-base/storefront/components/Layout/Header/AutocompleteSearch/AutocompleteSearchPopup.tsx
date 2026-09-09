@@ -29,6 +29,7 @@ type AutocompleteProps = {
     favoritesData: TypeAutocompleteFavoritesQuery | undefined;
     popupClassName?: string;
     showFavorites: boolean;
+    onSearchSubmit?: () => void;
 };
 
 export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
@@ -39,6 +40,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     favoritesData,
     popupClassName,
     showFavorites,
+    onSearchSubmit,
 }) => {
     const router = useRouter();
     const { t } = useTranslation();
@@ -133,6 +135,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                 variant="secondary"
                                 onClick={() => {
                                     onClosePopupCallback();
+                                    onSearchSubmit?.();
                                     router.push({
                                         pathname: searchUrl,
                                         query: { q: autocompleteSearchQueryValue },
