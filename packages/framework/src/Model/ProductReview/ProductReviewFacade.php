@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScope
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Shopsys\FrameworkBundle\Model\ProductReview\Exception\ProductReviewCannotBeApprovedException;
 use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageFactory;
 use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImagePublisher;
 
@@ -24,6 +25,7 @@ class ProductReviewFacade
         protected readonly EntityManagerInterface $em,
         protected readonly ProductReviewRepository $productReviewRepository,
         protected readonly ProductReviewFactory $productReviewFactory,
+        protected readonly ProductReviewDataFactory $productReviewDataFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
@@ -132,6 +134,23 @@ class ProductReviewFacade
         $this->em->flush();
 
         $this->productReviewImagePublisher->refreshPublicationStatus($productReview);
+    }
+
+    public function approve(ProductReview $productReview): void
+    {
+        if ($productReview->getStatus() !== ProductReviewStatusEnum::STATUS_PENDING) {
+            throw new ProductReviewCannotBeApprovedException($productReview->getId());
+        }
+
+        $productReviewData = $this->productReviewDataFactory->createFromProductReview($productReview);
+
+        $productReview->approve();
+
+        $this->em->flush();
+
+        $this->editImages($productReview, $productReviewData->images);
+
+        $this->dispatchReviewsExport($productReview);
     }
 
     protected function dispatchReviewsExport(ProductReview $productReview): void
