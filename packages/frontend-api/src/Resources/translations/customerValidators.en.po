@@ -318,4 +318,3 @@ msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
-

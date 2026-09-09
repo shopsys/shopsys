@@ -30,4 +30,3 @@ msgstr "Zadaný hash není validní."
 
 msgid "User with provided email address does not exist."
 msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
-

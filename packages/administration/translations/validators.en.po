@@ -18,4 +18,3 @@ msgstr ""
 
 msgid "You can set refunded amount only up to %paidAmount%."
 msgstr ""
-

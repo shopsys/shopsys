@@ -18,4 +18,3 @@ msgstr "Môžete refundovať iba %refundableAmount%."
 
 msgid "You can set refunded amount only up to %paidAmount%."
 msgstr "Refundovanú čiastku môžete nastaviť maximálne na %paidAmount%."
-

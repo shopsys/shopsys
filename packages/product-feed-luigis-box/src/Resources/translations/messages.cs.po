@@ -12,4 +12,3 @@ msgstr "Nastavení Luigi's Box"
 
 msgid "The value is used for availability_rank setting in Luigi's Box feed. See <a href=\"https://docs.luigisbox.com/indexing/feeds.html\">the docs</a> for more information."
 msgstr "Hodnota se používá pro nastavení availability_rank v XML feedu pro Luigi's Box. Pro více informací vizte <a href=\"https://docs.luigisbox.com/indexing/feeds.html\">dokumentaci</a>."
-

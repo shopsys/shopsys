@@ -129,4 +129,3 @@ msgstr "katalog"
 
 msgid "pcs"
 msgstr "ks"
-

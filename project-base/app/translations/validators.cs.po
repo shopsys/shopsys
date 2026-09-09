@@ -9,4 +9,3 @@ msgstr "Prosím vyplňte GTM ID"
 
 msgid "Uploaded image is too large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr "Uploadovaný obrázek je příliš velký ({{ size }} {{ suffix }}). Maximální velikost obrázku je {{ limit }} {{ suffix }}."
-

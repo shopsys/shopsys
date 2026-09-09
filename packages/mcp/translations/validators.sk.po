@@ -15,4 +15,3 @@ msgstr "Zadajte prosím popisok tokenu"
 
 msgid "Token label cannot be longer than {{ limit }} characters"
 msgstr "Popisok tokenu nemôže byť dlhší ako {{ limit }} znakov"
-

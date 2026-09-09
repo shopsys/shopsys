@@ -12,4 +12,3 @@ msgstr "Google Shopping product feed is not optimized for selling to Australia, 
 
 msgid "Show in feed"
 msgstr "Show in feed"
-

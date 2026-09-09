@@ -69,4 +69,3 @@ msgstr ""
 
 msgid "unknown catalog number (product will not be displayed)"
 msgstr ""
-

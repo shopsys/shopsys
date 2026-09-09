@@ -21,4 +21,3 @@ msgstr "Kategorie Zboží.cz"
 
 msgid "Zbozi.cz product feed"
 msgstr "XML feed Zboží.cz"
-

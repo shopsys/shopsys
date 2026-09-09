@@ -15,4 +15,3 @@ msgstr ""
 
 msgid "Token label cannot be longer than {{ limit }} characters"
 msgstr ""
-
