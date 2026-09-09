@@ -244,6 +244,7 @@ Typically used together with a [custom template](#settemplateactiontype-actionty
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Webmozart\Assert\Assert;
 
 protected function configureTemplateParameters(
@@ -252,11 +253,9 @@ protected function configureTemplateParameters(
     ?Presentable $entity = null,
 ): void {
     if ($actionType === ActionType::EDIT) {
-        Assert::isInstanceOf($entity, Brand::class);
+        Assert::isInstanceOf($entity, BlogArticleAuthor::class);
 
-        $templateParameters
-            ->set('gridView', $this->createArticlesGrid($entity)->createView())
-            ->set('entityLogEntityName', $this->entityLogFacade->getEntityNameByEntity(Brand::class));
+        $templateParameters->set('gridView', $this->createBlogArticlesGrid($entity)->createView());
     }
 }
 ```
