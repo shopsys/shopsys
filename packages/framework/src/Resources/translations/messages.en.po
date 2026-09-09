@@ -88,9 +88,6 @@ msgstr ""
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
-msgstr ""
-
 msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr ""
 
@@ -1886,9 +1883,6 @@ msgid "Has X+Y promotion"
 msgstr ""
 
 msgid "Heading (H1)"
-msgstr ""
-
-msgid "Headline"
 msgstr ""
 
 msgid "Heureka"
