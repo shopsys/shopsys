@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\NewProductsCategoryAu
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\OnStockCategoryAutomatedFilter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 
 class CategoryDataFixture extends AbstractReferenceFixture
 {
@@ -287,6 +288,12 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $categoryData = $this->categoryDataFactory->create();
             $categoryData->name = $subcategoryNamesByLocale[$referenceName];
             $categoryData->parent = $this->getReference($parentReferenceName, Category::class);
+
+            if ($referenceName === self::CATEGORY_PRINTER_SUPPLIES) {
+                foreach ($categoryData->seo as $seoAttributesData) {
+                    $seoAttributesData->metaRobots = SeoMetaRobotsEnum::NOINDEX;
+                }
+            }
 
             $this->createCategory($categoryData, $referenceName);
         }
