@@ -1,5 +1,6 @@
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
+import $ from 'jquery';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';

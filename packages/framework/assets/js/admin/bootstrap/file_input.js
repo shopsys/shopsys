@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Translator from 'bazinga-translator';
 import IconFolder from 'icons/tabler/folder-filled.svg';
 
@@ -121,4 +122,4 @@ import IconFolder from 'icons/tabler/folder-filled.svg';
         + '</style>';
     $('link[rel=stylesheet]').eq(0).before(cssHtml);
 
-})(jQuery);
+})($);

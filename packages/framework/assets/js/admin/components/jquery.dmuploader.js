@@ -1,3 +1,4 @@
+import $ from 'jquery';
 /* eslint-disable */
 
 /*
@@ -267,4 +268,4 @@
     $(document).on('dragenter', function (e) { e.stopPropagation(); e.preventDefault(); });
     $(document).on('dragover', function (e) { e.stopPropagation(); e.preventDefault(); });
     $(document).on('drop', function (e) { e.stopPropagation(); e.preventDefault(); });
-})(jQuery);
+})($);

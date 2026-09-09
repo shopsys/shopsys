@@ -1,5 +1,6 @@
 import Translator from 'bazinga-translator';
 import AlertTriangle from 'icons/tabler/alert-triangle.svg';
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
 export default class FormChangeInfo {

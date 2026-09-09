@@ -3,6 +3,7 @@ import IconDoc from 'icons/tabler/file-type-doc.svg';
 import IconPdf from 'icons/tabler/file-type-pdf.svg';
 import IconXls from 'icons/tabler/file-type-xls.svg';
 import IconXml from 'icons/tabler/file-type-xml.svg';
+import $ from 'jquery';
 
 export default class FileItem {
     constructor(uploader, $file, loaded) {
