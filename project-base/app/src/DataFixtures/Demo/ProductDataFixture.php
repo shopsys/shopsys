@@ -19,6 +19,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -55,6 +56,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly CurrencyFacade $currencyFacade,
         private readonly PriceConverter $priceConverter,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -1806,7 +1808,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
 
-        $this->createProduct($productData);
+        $lg22mt44dSmallerProduct = $this->createProduct($productData);
 
         $productData = $this->productDemoDataFactory->createDefaultData('7700668');
 
@@ -1837,6 +1839,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
+            $productData->seo[$domain->getId()]->canonicalUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
+                $domain->getId(),
+                'front_product_detail',
+                $lg22mt44dSmallerProduct->getId(),
+            );
+        }
 
         $this->createProduct($productData);
 

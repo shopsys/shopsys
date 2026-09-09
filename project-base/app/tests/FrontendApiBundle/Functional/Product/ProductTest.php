@@ -66,6 +66,22 @@ class ProductTest extends GraphQlTestCase
         $this->assertSame($expectedName, $data['name']);
     }
 
+    public function testProductCanonicalUrl(): void
+    {
+        $productWithCanonicalUrl = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 58, Product::class);
+        $canonicalProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 57, Product::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/ProductQuery.graphql', [
+            'uuid' => $productWithCanonicalUrl->getUuid(),
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'product');
+
+        $this->assertSame(
+            $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => $canonicalProduct->getId()]),
+            $data['seo']['canonicalUrl'],
+        );
+    }
+
     public function testProductDetailWithAllAttributesByUuid(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDetailWithAllAttributes.graphql', [

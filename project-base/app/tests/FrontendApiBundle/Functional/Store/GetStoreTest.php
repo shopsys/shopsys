@@ -392,9 +392,9 @@ class GetStoreTest extends GraphQlTestCase
                 'isDefault' => true,
                 'description' => t('Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'seo' => [
-                    'title' => null,
-                    'metaDescription' => t('Pick-up counter is right behind the main entrance. Parking is available in the courtyard for short stops.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'h1' => null,
+                    'title' => t('Ostrava department store | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'metaDescription' => t('Ostrava department store offers personal pickup, a service desk and a wide range of electronics in stock.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'h1' => t('Ostrava department store', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'metaRobots' => null,
                     'canonicalUrl' => null,
                 ],
