@@ -49,7 +49,7 @@ Service registration needs nothing from you: `packages/administration/config/ser
 Package code follows `.agents/skills/coding-conventions/SKILL.md`, which inverts the canonical's `final` / `private` / full-typehint rules:
 
 - Controller and handler classes are **not `final`**, constructor properties and helper methods are **`protected`** (`protected readonly Facade $facade`), so projects can extend them. The FormType stays `final` (Symfony requirement) — projects override it via `getExtendedTypes()` or the form-extension mechanism, and its option name follows the existing admin FormTypes (`'transportGroup' => $entity`).
-- Mark every overridden `configure*()`, `getEditTemplate()`, `getEditViewData()` and handler method with `#[Override]`; handler methods carry a `{@inheritdoc}` docblock plus a *why* line when the method does more than delegate (see `ProductReviewEditHandler`).
+- Mark every overridden `configure*()` (including `configureTemplateParameters()`) and handler method with `#[Override]`; handler methods carry a `{@inheritdoc}` docblock plus a *why* line when the method does more than delegate (see `ProductReviewEditHandler`).
 - `Assert::isInstanceOf()` at the start of every handler method that receives `object` — the three shipped handlers are the pattern to copy.
 
 ## Docs, translations, upgrade notes — you own them here
