@@ -23,6 +23,7 @@ A project built on Shopsys Platform: Symfony/PHP backend (`app/`), Next.js/React
 ## Skills — the rest lives here
 
 - **Architecture & how to extend** (where code lives, Entity Extension, vendor overrides, Data/Factory/Facade, docs links) → `.agents/skills/shopsys-architecture/SKILL.md`
+- **Admin CRUD controller for an entity** (controller, handler, datagrid, form, actions, extending a bundle CRUD) → `.agents/skills/create-crud-controller/SKILL.md`
 - **Commands** (build, DB, tests, checks, schema) → `.agents/skills/shopsys-commands/SKILL.md`
 - **Coding conventions & docblocks** → `.agents/skills/coding-conventions/SKILL.md`
 - **Find where code lives** → `.agents/skills/codebase-locator/SKILL.md`
