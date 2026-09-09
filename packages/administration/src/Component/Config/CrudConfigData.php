@@ -63,9 +63,9 @@ final readonly class CrudConfigData
         }
     }
 
-    public function getTitle(ActionType $pageType, ?string $recordName = null): string
+    public function getTitle(ActionType $actionType, ?string $recordName = null): string
     {
-        return match ($pageType) {
+        return match ($actionType) {
             ActionType::LIST => $this->getPluralEntityName(),
             ActionType::CREATE => $this->getSingularEntityName(),
             ActionType::EDIT, ActionType::DETAIL => implode(' · ', array_filter([
@@ -76,9 +76,9 @@ final readonly class CrudConfigData
         };
     }
 
-    public function getBreadcrumbTitle(ActionType $pageType): string
+    public function getBreadcrumbTitle(ActionType $actionType): string
     {
-        return match ($pageType) {
+        return match ($actionType) {
             ActionType::CREATE => t('New record'),
             ActionType::EDIT => t('Editing a record'),
             ActionType::DETAIL => t('Record detail'),
