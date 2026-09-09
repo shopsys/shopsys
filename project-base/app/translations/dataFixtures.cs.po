@@ -451,6 +451,9 @@ msgstr "Knihomolové"
 msgid "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
 msgstr "Doplňte svůj článek fotografiemi elektroniky v každodenním prostředí. O soubory pro publikaci a údaje o autorství požádejte náš tým pro média a uveďte, které snímky chcete použít."
 
+msgid "Browse all products in our demo shop that were made in Germany."
+msgstr "Prohlédněte si všechny produkty v našem demo eshopu, které byly vyrobeny v Německu."
+
 msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
 msgstr "Stavějte škálovatelné B2C a B2B e-shopy na otevřené e-commerce platformě navržené pro komplexní projekty."
 
@@ -1579,6 +1582,15 @@ msgstr "Objednávky jsou připraveny u pultu v přízemí vedle showroomu. Perso
 msgid "Ordinary customer"
 msgstr "Obyčejný zákazník"
 
+msgid "Ostrava department store"
+msgstr "Obchodní dům Ostrava"
+
+msgid "Ostrava department store offers personal pickup, a service desk and a wide range of electronics in stock."
+msgstr "Obchodní dům Ostrava nabízí osobní odběr, servisní přepážku a široký výběr elektroniky skladem."
+
+msgid "Ostrava department store | Demo shop"
+msgstr "Obchodní dům Ostrava | Demo eshop"
+
 msgid "Other"
 msgstr "Pevné"
 
@@ -1758,6 +1770,12 @@ msgstr "Produktové novinky"
 
 msgid "Product news | Demo shop"
 msgstr "Produktové novinky | Demo obchod"
+
+msgid "Products made in Germany"
+msgstr "Produkty vyrobené v Německu"
+
+msgid "Products made in Germany | Demo shop"
+msgstr "Produkty vyrobené v Německu | Demo eshop"
 
 msgid "Products worth comparing"
 msgstr "Produkty, které stojí za porovnání"
