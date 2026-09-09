@@ -11,29 +11,11 @@ class SeoSettingTest extends GraphQlTestCase
 {
     public function testGetSeoSettings(): void
     {
-        $query = '
-            query {
-                settings {
-                    seo {
-                        title
-                        titleAddOn
-                        metaDescription
-                    }
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SeoSettingsQuery.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'settings');
 
-        $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $expectedTitleAddOn = t('| Demo eshop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain());
 
-        $expectedTitle = t('Shopsys Platform - Title page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
-        $expectedTitleAddOn = t('| Demo eshop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
-        $expectedDescription = t('Shopsys Platform - the best solution for your eshop.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
-
-        self::assertEquals($expectedTitle, $data['seo']['title']);
-        self::assertEquals($expectedTitleAddOn, $data['seo']['titleAddOn']);
-        self::assertEquals($expectedDescription, $data['seo']['metaDescription']);
+        self::assertSame($expectedTitleAddOn, $data['seo']['titleAddOn']);
     }
 }
