@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer;
+use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 
 class SeoPageDataFixture extends AbstractReferenceFixture
 {
@@ -54,10 +55,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
 
                 $seoPageData->pageSlugsIndexedByDomainId[$domainId] = $pageSlug;
 
-                $this->fillSeoPageData(
-                    $seoPageData,
-                    $domainConfig,
-                );
+                $this->fillSeoPageData($seoPageData, $domainConfig);
             }
 
             $seoPage = $this->seoPageFacade->create($seoPageData);
@@ -79,30 +77,24 @@ class SeoPageDataFixture extends AbstractReferenceFixture
             $seoPageData = $this->seoPageDataFactory->createFromSeoPage($seoPage);
 
             foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-                $this->fillSeoPageData(
-                    $seoPageData,
-                    $domainConfig,
-                    $seoPage->getId(),
-                );
+                $this->fillSeoPageData($seoPageData, $domainConfig);
             }
 
             $this->seoPageFacade->edit($seoPage->getId(), $seoPageData);
         }
     }
 
-    private function fillSeoPageData(
-        SeoPageData $seoPageData,
-        DomainConfig $domainConfig,
-        ?int $seoPageId = null,
-    ): void {
+    private function fillSeoPageData(SeoPageData $seoPageData, DomainConfig $domainConfig): void
+    {
         $domainId = $domainConfig->getId();
         $locale = $domainConfig->getLocale();
         $pageName = $seoPageData->pageName;
         $pageSlug = $seoPageData->pageSlugsIndexedByDomainId[$domainId];
+        $isDemoSeoPage = in_array($pageName, self::$demoSeoPages, true);
 
         $seoPageSlug = $this->seoPageSlugTransformer->transformFriendlyUrlToSeoPageSlug($pageSlug);
 
-        if ($seoPageSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG || $seoPageId === null) {
+        if ($seoPageSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG || $isDemoSeoPage) {
             $canonicalUrl = $domainConfig->getUrl();
         } else {
             $canonicalUrl = $domainConfig->getUrl() . '/' . $seoPageSlug;
@@ -111,6 +103,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         $seoPageData->seo[$domainId]->title = $this->formatAttributeValue($pageName, 'title', $locale);
         $seoPageData->seo[$domainId]->metaDescription = $this->formatAttributeValue($pageName, 'meta description', $locale);
         $seoPageData->seo[$domainId]->canonicalUrl = $canonicalUrl;
+        $seoPageData->seo[$domainId]->metaRobots = $isDemoSeoPage ? SeoMetaRobotsEnum::NOINDEX_NOFOLLOW : null;
         $seoPageData->seoOgTitlesIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og title', $locale);
         $seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og description', $locale);
     }
