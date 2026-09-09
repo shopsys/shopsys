@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewStatusEnum;
 use SortDirection;
+use Webmozart\Assert\Assert;
 
 #[CrudController(ProductReview::class)]
 class ProductReviewController extends AbstractCrudController
@@ -134,6 +135,8 @@ class ProductReviewController extends AbstractCrudController
         ?Presentable $entity = null,
     ): void {
         if ($actionType === ActionType::EDIT) {
+            Assert::isInstanceOf($entity, ProductReview::class);
+
             $templateParameters
                 ->set('entityLogEntityName', $this->entityLogFacade->getEntityNameByEntity(ProductReview::class))
                 ->set('productReview', $entity);

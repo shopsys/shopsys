@@ -244,21 +244,24 @@ Typically used together with a [custom template](#settemplateactiontype-actionty
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+use Webmozart\Assert\Assert;
 
 protected function configureTemplateParameters(
     CrudTemplateParameters $templateParameters,
     ActionType $actionType,
     ?Presentable $entity = null,
 ): void {
-    if ($actionType !== ActionType::EDIT) {
-        return;
-    }
+    if ($actionType === ActionType::EDIT) {
+        Assert::isInstanceOf($entity, Brand::class);
 
-    $templateParameters
-        ->set('gridView', $this->createArticlesGrid($entity)->createView())
-        ->set('entityLogEntityName', $this->entityLogFacade->getEntityNameByEntity(Brand::class));
+        $templateParameters
+            ->set('gridView', $this->createArticlesGrid($entity)->createView())
+            ->set('entityLogEntityName', $this->entityLogFacade->getEntityNameByEntity(Brand::class));
+    }
 }
 ```
+
+The `$entity` parameter is typed as the generic `Presentable`, so narrow it with `Assert::isInstanceOf()` before passing it to typed methods - the same way [handlers do](handlers.md#narrowing-object-parameters). A controller rendering another entity then fails fast with a clear message, and PHPStan analyses the following code with the concrete type.
 
 `CrudTemplateParameters` provides:
 

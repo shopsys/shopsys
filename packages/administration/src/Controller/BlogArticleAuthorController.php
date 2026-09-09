@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Webmozart\Assert\Assert;
 
 #[CrudController(BlogArticleAuthor::class)]
 #[ForRole(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR)]
@@ -74,10 +75,9 @@ class BlogArticleAuthorController extends AbstractCrudController
         ?Presentable $entity = null,
     ): void {
         if ($actionType === ActionType::EDIT) {
-            /** @var \Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor $blogArticleAuthor */
-            $blogArticleAuthor = $entity;
+            Assert::isInstanceOf($entity, BlogArticleAuthor::class);
 
-            $templateParameters->set('gridView', $this->createBlogArticlesGrid($blogArticleAuthor)->createView());
+            $templateParameters->set('gridView', $this->createBlogArticlesGrid($entity)->createView());
         }
     }
 

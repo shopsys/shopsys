@@ -91,6 +91,8 @@ use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+use Shopsys\FrameworkBundle\Model\Order\Order;
+use Webmozart\Assert\Assert;
 
 public function configure(CrudConfig $config): void
 {
@@ -103,6 +105,8 @@ public function configureTemplateParameters(
     ?Presentable $entity = null,
 ): void {
     if ($actionType === ActionType::EDIT) {
+        Assert::isInstanceOf($entity, Order::class);
+
         $templateParameters->set('orderItemsGridView', $this->createOrderItemsGrid($entity)->createView());
     }
 }
