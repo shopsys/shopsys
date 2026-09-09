@@ -160,6 +160,9 @@ msgstr "Všetky domény"
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr "Všetky ceny musia byť spracované manuálne ak je zaškrtnuté, inak bude jednotková cena bez DPH a celkové ceny pre túto položku prepočítané automaticky."
 
+msgid "All statuses"
+msgstr "Všetky stavy"
+
 msgid "Alternate language"
 msgstr "Alternatívny jazyk"
 

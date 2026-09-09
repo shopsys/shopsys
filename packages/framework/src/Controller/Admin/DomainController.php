@@ -44,6 +44,15 @@ class DomainController extends AdminBaseController
         ]);
     }
 
+    #[RequireRole(SystemRole::ADMIN)]
+    public function domainSelectAction(): Response
+    {
+        return $this->render('@ShopsysAdministration/partial/select_domain.html.twig', [
+            'domainConfigs' => $this->domain->getAdminEnabledDomains(),
+            'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+        ]);
+    }
+
     #[Route(path: '/multidomain/select-domain/{id}', requirements: ['id' => '\d+'])]
     #[RequireRole(SystemRole::ADMIN)]
     public function selectDomainAction(Request $request, int $id): Response

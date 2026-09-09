@@ -13,48 +13,60 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="card">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
-                <li class="nav-item">
-                    <a href="#quick"
-                       class="nav-link{{ not isAdvancedSearchFormSubmitted ? ' active' }}"
-                       data-bs-toggle="tab"
-                    >
-                        {{ 'Quick search'|trans }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#advanced"
-                       class="nav-link{{ isAdvancedSearchFormSubmitted ? ' active' }}"
-                       data-bs-toggle="tab"
-                    >
-                        {{ 'Advanced search'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="card-body">
-            <div class="tab-content">
-                <div class="tab-pane{{ not isAdvancedSearchFormSubmitted ? ' active show' }}" id="quick">
-                    {{ form_start(quickSearchForm) }}
-                    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
-                        form_input: quickSearchForm.text,
-                        form_submit: quickSearchForm.submit,
-                        placeholder: 'Search by name, email, phone, or UUID...'|trans,
-                        info_message: 'Searching searches in <ul><li>last name</li><li>company name</li><li>email</li><li>telephone</li><li>UUID</li></ul> It is possible to use wildcards * and ?.'|trans,
-                    } %}
-                    {{ form_end(quickSearchForm) }}
+    <div class="row row-deck row-cards mb-3">
+        <div class="col-12{% if showDomainSwitcher %} col-xl-8{% endif %}">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                        <li class="nav-item">
+                            <a href="#quick"
+                               class="nav-link{{ not isAdvancedSearchFormSubmitted ? ' active' }}"
+                               data-bs-toggle="tab"
+                            >
+                                {{ 'Quick search'|trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#advanced"
+                               class="nav-link{{ isAdvancedSearchFormSubmitted ? ' active' }}"
+                               data-bs-toggle="tab"
+                            >
+                                {{ 'Advanced search'|trans }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="tab-pane{{ isAdvancedSearchFormSubmitted ? ' active show' }}" id="advanced">
-                    {% include '@ShopsysAdministration/content/advancedSearch/advancedSearch.html.twig'
-                        with {advancedSearchForm: advancedSearchForm} %}
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane{{ not isAdvancedSearchFormSubmitted ? ' active show' }}" id="quick">
+                            {{ form_start(quickSearchForm) }}
+                            {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+                                form_input: quickSearchForm.text,
+                                form_submit: quickSearchForm.submit,
+                                hide_title: true,
+                                placeholder: 'Search by name, email, phone, or UUID...'|trans,
+                                info_message: 'Searching searches in <ul><li>last name</li><li>company name</li><li>email</li><li>telephone</li><li>UUID</li></ul> It is possible to use wildcards * and ?.'|trans,
+                            } %}
+                            {{ form_end(quickSearchForm) }}
+                        </div>
+                        <div class="tab-pane{{ isAdvancedSearchFormSubmitted ? ' active show' }}" id="advanced">
+                            {% include '@ShopsysAdministration/content/advancedSearch/advancedSearch.html.twig'
+                                with {advancedSearchForm: advancedSearchForm} %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        {% if showDomainSwitcher %}
+            <div class="col-12 col-xl-4">
+                <div class="card">
+                    <div class="card-body d-grid align-items-center column-gap-3" style="grid-template-columns: auto minmax(0, 1fr)">
+                        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainSelectAction')) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-
-    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {{ gridView.render() }}
 {% endblock %}

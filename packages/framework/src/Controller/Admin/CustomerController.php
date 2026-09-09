@@ -229,6 +229,7 @@ class CustomerController extends AdminBaseController
             'isAdvancedSearchFormSubmitted' => $this->customerUserAdvancedSearchFacade->isAdvancedSearchFormSubmitted(
                 $request,
             ),
+            'showDomainSwitcher' => count($this->domain->getAdminEnabledDomains()) > 1,
         ]);
     }
 
