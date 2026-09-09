@@ -21,4 +21,15 @@ class SeoMetaRobotsEnum extends AbstractEnum
 
         return array_combine($allCases, $allCases);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getNoindexCases(): array
+    {
+        return [
+            self::NOINDEX,
+            self::NOINDEX_NOFOLLOW,
+        ];
+    }
 }
