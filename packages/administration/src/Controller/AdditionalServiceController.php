@@ -12,6 +12,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Model\AdditionalService\AdditionalServiceCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Form\Admin\AdditionalService\AdditionalServiceFormType;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
@@ -47,7 +48,7 @@ class AdditionalServiceController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
         $formConfigurator->useFormType(AdditionalServiceFormType::class, [
             'additionalService' => $entity,

@@ -190,7 +190,7 @@ $datagrid->add('status', [
 
 For fully custom conditions, use `getSelectedListDomainId()` and `getEffectiveListDomainIds()`.
 
-### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
+### `configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void`
 
 Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
 
@@ -199,7 +199,7 @@ The `CrudFormConfigurator` provides two mutually exclusive approaches — you mu
 **Use an existing FormType class:**
 
 ```php
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(BrandFormType::class, [
         'brand' => $entity,
@@ -210,7 +210,7 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 **Or build the form inline using the builder:**
 
 ```php
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('name', TextType::class, [

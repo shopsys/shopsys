@@ -62,9 +62,10 @@ Extensions can add fields to forms using the `configureForm()` method. This work
 // OrderControllerExtension.php
 
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-public function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+public function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('internalNote', TextareaType::class, [
@@ -94,23 +95,24 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController;
 use Throwable;
 
 #[CrudControllerExtension(crudController: OrderCrudController::class)]
 class OrderControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface, CrudCreateHookExtensionInterface
 {
-    public function beforeEdit(object $entity, object $data): void
+    public function beforeEdit(Presentable $entity, object $data): void
     {
         // Custom logic before saving edited entity
     }
 
-    public function afterEdit(object $entity, object $data): void
+    public function afterEdit(Presentable $entity, object $data): void
     {
         // Custom logic after successful edit (e.g., clear cache, send notification)
     }
 
-    public function onEditError(object $entity, object $data, Throwable $exception): void
+    public function onEditError(Presentable $entity, object $data, Throwable $exception): void
     {
         // Custom error handling for edit failures
     }
@@ -120,7 +122,7 @@ class OrderControllerExtension extends AbstractCrudControllerExtension implement
         // Custom logic before creating new entity
     }
 
-    public function afterCreate(object $entity, object $data): void
+    public function afterCreate(Presentable $entity, object $data): void
     {
         // Custom logic after successful creation
     }

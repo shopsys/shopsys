@@ -18,6 +18,7 @@ use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvid
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Form\Admin\ProductReview\ProductReviewFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\ProductReview\Exception\ProductReviewCannotBeApprovedException;
@@ -139,7 +140,7 @@ class ProductReviewController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
         $formConfigurator->useFormType(ProductReviewFormType::class, [
             'productReview' => $entity,

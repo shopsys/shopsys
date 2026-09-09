@@ -184,9 +184,9 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * @param object|null $entity Null for create action, the existing entity for edit action
+     * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for create action, the existing entity for edit action
      */
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
     }
 

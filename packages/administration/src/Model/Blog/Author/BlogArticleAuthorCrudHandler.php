@@ -42,7 +42,7 @@ class BlogArticleAuthorCrudHandler implements CrudHandlerInterface
     }
 
     #[Override]
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, BlogArticleAuthor::class);
 
@@ -50,7 +50,7 @@ class BlogArticleAuthorCrudHandler implements CrudHandlerInterface
     }
 
     #[Override]
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, BlogArticleAuthor::class);
         Assert::isInstanceOf($data, BlogArticleAuthorData::class);
@@ -59,7 +59,7 @@ class BlogArticleAuthorCrudHandler implements CrudHandlerInterface
     }
 
     #[Override]
-    public function delete(object $entity): void
+    public function delete(Presentable $entity): void
     {
         Assert::isInstanceOf($entity, BlogArticleAuthor::class);
 
