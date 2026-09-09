@@ -1,5 +1,6 @@
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 import PasswordStrengthCalculator from './utils/passwordStrengthCalculator';
 
 export default class PasswordWithStrengthInput {

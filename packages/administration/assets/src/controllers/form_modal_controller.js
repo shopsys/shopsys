@@ -3,6 +3,7 @@ import { getComponent } from '@symfony/ux-live-component';
 import { Modal, Popover, Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 import ConfirmWindow from '../js/utils/confirmWindow';
 
 export default class extends Controller {
