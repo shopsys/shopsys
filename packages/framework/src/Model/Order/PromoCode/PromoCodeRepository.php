@@ -55,10 +55,15 @@ class PromoCodeRepository
     /**
      * @return string[]
      */
-    public function getAllPromoCodeCodes(): array
+    public function getPromoCodeCodes(?int $filterByBatchId = null): array
     {
         $queryBuilder = $this->getAllQueryBuilder()
             ->select('pc.code');
+
+        if ($filterByBatchId !== null) {
+            $queryBuilder->andWhere('pc.massGenerateBatchId = :batchId')
+                ->setParameter('batchId', $filterByBatchId);
+        }
 
         return array_column($queryBuilder->getQuery()->getResult(), 'code');
     }
@@ -71,13 +76,5 @@ class PromoCodeRepository
         $result = $queryBuilder->getQuery()->getSingleResult();
 
         return $result['lastBatchId'];
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]|null
-     */
-    public function findByMassBatchId(int $batchId): ?array
-    {
-        return $this->getPromoCodeRepository()->findBy(['massGenerateBatchId' => $batchId]);
     }
 }
