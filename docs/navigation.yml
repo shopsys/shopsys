@@ -2,6 +2,7 @@ arrange:
     - index.md
     - installation
     - introduction
+    - security
     - model
     - cookbook
     - functional
