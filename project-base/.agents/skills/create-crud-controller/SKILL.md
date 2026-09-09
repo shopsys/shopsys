@@ -81,6 +81,10 @@ Extension (#[CrudControllerExtension])        ── same configure*() methods +
   for actions that have a handler.
 - **Default row actions** (edit, delete) and the **New** top button appear automatically
   when the matching action is enabled — you don't add them.
+- **The actions themselves are `final`** (`listAction()`, `detailAction()`, `createAction()`,
+  `editAction()`, `deleteAction()`). Everything is customised through the `configure*()`
+  hooks, `setTemplate()` and the extension hooks; a flow they cannot express gets its own
+  `#[Route]` action after `disableAction()` of the built-in one.
 
 ## Workflow
 
