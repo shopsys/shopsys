@@ -359,7 +359,7 @@ namespace App\Controller\Admin;
 -use App\Grid\Salesman\SalesmanGridFactory;
 +use App\Grid\Salesman\SalesmanGridInlineEdit;
 use App\Model\Salesman\SalesmanFacade;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\Routing\Attribute\Route;
