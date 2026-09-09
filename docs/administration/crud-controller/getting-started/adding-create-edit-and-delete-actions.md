@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Webmozart\Assert\Assert;
 
 class OrderDeleteHandler implements DeleteHandlerInterface
@@ -25,12 +26,12 @@ class OrderDeleteHandler implements DeleteHandlerInterface
     ) {
     }
 
-    public function getById(int $id): object
+    public function getById(int $id): Presentable
     {
         return $this->orderFacade->getById($id);
     }
 
-    public function delete(object $entity): void
+    public function delete(Presentable $entity): void
     {
         Assert::isInstanceOf($entity, Order::class);
 
@@ -41,7 +42,7 @@ class OrderDeleteHandler implements DeleteHandlerInterface
 
 !!! tip "Narrow the `object` parameters with `Assert::isInstanceOf()`"
 
-    Handler interfaces declare entities and data objects as plain `object`, because the interfaces are shared by all CRUD controllers.
+    Handler interfaces declare data objects as plain `object` and entities as the generic `Presentable` (or `object`), because the interfaces are shared by all CRUD controllers.
     Start every method that receives an entity or a data object with `Assert::isInstanceOf()` (from `webmozart/assert`).
     The assert fails fast with a clear message when the handler is registered for a wrong entity, and thanks to
     the `phpstan/phpstan-webmozart-assert` extension PHPStan narrows the type, so calls like `$entity->getId()`
@@ -88,6 +89,7 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Webmozart\Assert\Assert;
 
 class OrderEditHandler implements EditHandlerInterface
@@ -98,7 +100,7 @@ class OrderEditHandler implements EditHandlerInterface
     ) {
     }
 
-    public function getById(int $id): object
+    public function getById(int $id): Presentable
     {
         return $this->orderFacade->getById($id);
     }
@@ -132,6 +134,7 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Webmozart\Assert\Assert;
 
 class OrderCreateHandler implements CreateHandlerInterface
@@ -142,7 +145,7 @@ class OrderCreateHandler implements CreateHandlerInterface
     ) {
     }
 
-    public function getById(int $id): object
+    public function getById(int $id): Presentable
     {
         return $this->orderFacade->getById($id);
     }
@@ -152,7 +155,7 @@ class OrderCreateHandler implements CreateHandlerInterface
         return $this->orderDataFactory->create();
     }
 
-    public function create(object $data): object
+    public function create(object $data): Presentable
     {
         Assert::isInstanceOf($data, OrderData::class);
 
@@ -173,6 +176,7 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use Shopsys\AdministrationBundle\Component\Crud\Handler\CrudHandlerInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Webmozart\Assert\Assert;
 
 class OrderCrudHandler implements CrudHandlerInterface
@@ -183,12 +187,12 @@ class OrderCrudHandler implements CrudHandlerInterface
     ) {
     }
 
-    public function getById(int $id): object
+    public function getById(int $id): Presentable
     {
         return $this->orderFacade->getById($id);
     }
 
-    public function delete(object $entity): void
+    public function delete(Presentable $entity): void
     {
         Assert::isInstanceOf($entity, Order::class);
 
@@ -215,7 +219,7 @@ class OrderCrudHandler implements CrudHandlerInterface
         return $this->orderDataFactory->create();
     }
 
-    public function create(object $data): object
+    public function create(object $data): Presentable
     {
         Assert::isInstanceOf($data, OrderData::class);
 
