@@ -88,9 +88,6 @@ msgstr "<a href=\"%url%\">Článek se zásadami recenzí pro doménu %domainName
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
 
-msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
-msgstr "<a href=\"%url%\">SEO informace pro hlavní stránku domény %domainName% nejsou zcela nastaveny.</a>"
-
 msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr "<a href=\"%url%\">Doprava nebo platba nejsou nastaveny pro doménu %domainName%.</a>"
 
@@ -1887,9 +1884,6 @@ msgstr "Má akci X+Y"
 
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
-
-msgid "Headline"
-msgstr "Titulek"
 
 msgid "Heureka"
 msgstr "Heureka"

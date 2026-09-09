@@ -1951,12 +1951,6 @@ msgstr ""
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
 
-msgid "Shopsys Platform - Title page"
-msgstr "Shopsys Platform - Titulná stránka"
-
-msgid "Shopsys Platform - the best solution for your eshop."
-msgstr "Shopsys Platform - najlepšie riešenie pre váš internetový obchod."
-
 msgid "Shopsys team collaborating in an office"
 msgstr "Tím Shopsys spolupracujúci v kancelárii"
 
