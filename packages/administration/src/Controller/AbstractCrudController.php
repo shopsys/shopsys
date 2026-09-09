@@ -19,6 +19,7 @@ use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionI
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
@@ -180,26 +181,26 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * @param object|null $entity Null for create action, the existing entity for edit action
+     * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for create action, the existing entity for edit action
      */
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
-    }
-
-    protected function getEditTemplate(): string
-    {
-        return '@ShopsysAdministration/crud/edit.html.twig';
     }
 
     /**
-     * @return array<string, mixed>
+     * Sets additional variables passed to the template of the given action via `$templateParameters->set()`.
+     * A name already used by the action itself (`title`, `form`, ...) or by an extension throws an exception.
+     *
+     * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for the list and create actions, the displayed entity otherwise
      */
-    protected function getEditViewData(object $entity): array
-    {
-        return [];
+    protected function configureTemplateParameters(
+        CrudTemplateParameters $templateParameters,
+        ActionType $actionType,
+        ?Presentable $entity = null,
+    ): void {
     }
 
-    public function listAction(): Response
+    final public function listAction(): Response
     {
         $listDomainControl = $this->definition->getConfig()->getListDomainControl();
         $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
@@ -215,7 +216,7 @@ abstract class AbstractCrudController extends AdminBaseController
         $this->configureDatagrid($datagrid);
         $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureDatagrid($datagrid));
 
-        return $this->render('@ShopsysAdministration/crud/list.html.twig', [
+        return $this->renderAction(ActionType::LIST, [
             'title' => $this->definition->getConfig()->getTitle(ActionType::LIST),
             'grid' => $datagrid->createView(),
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
@@ -225,15 +226,15 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
-    public function detailAction(int $id): Response
+    final public function detailAction(int $id): Response
     {
-        return $this->render('@ShopsysAdministration/crud/detail.html.twig', [
+        return $this->renderAction(ActionType::DETAIL, [
             'title' => $this->definition->getConfig()->getTitle(ActionType::DETAIL),
             'topActions' => $this->getConfiguredActions(ActionType::DETAIL),
         ]);
     }
 
-    public function editAction(Request $request, int $id): Response
+    final public function editAction(Request $request, int $id): Response
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::EDIT);
@@ -295,16 +296,15 @@ abstract class AbstractCrudController extends AdminBaseController
         $recordName = $entity->toHumanReadable();
         $this->breadcrumbOverrider->overrideLastItem($config->getBreadcrumbTitle(ActionType::EDIT) . ' - ' . $recordName);
 
-        return $this->render($this->getEditTemplate(), [
+        return $this->renderAction(ActionType::EDIT, [
             'title' => $config->getTitle(ActionType::EDIT, $recordName),
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
             'entity' => $entity,
             'form' => $form->createView(),
-            ...$this->getEditViewData($entity),
-        ]);
+        ], $entity);
     }
 
-    public function createAction(Request $request): Response
+    final public function createAction(Request $request): Response
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::CREATE);
@@ -355,7 +355,7 @@ abstract class AbstractCrudController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysAdministration/crud/new.html.twig', [
+        return $this->renderAction(ActionType::CREATE, [
             'title' => $this->definition->getConfig()->getTitle(ActionType::CREATE),
             'topActions' => $this->getConfiguredActions(ActionType::CREATE),
             'form' => $form->createView(),
@@ -363,7 +363,7 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     #[CsrfProtection]
-    public function deleteAction(int $id): RedirectResponse
+    final public function deleteAction(int $id): RedirectResponse
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::DELETE);
@@ -410,6 +410,35 @@ abstract class AbstractCrudController extends AdminBaseController
 
         return $this->redirect(
             $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
+        );
+    }
+
+    /**
+     * Renders the configured template of the given action with the base parameters extended
+     * by `configureTemplateParameters()` of the controller and of its extensions.
+     *
+     * @param array<string, mixed> $parameters
+     * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for the list and create actions, the displayed entity otherwise
+     */
+    final protected function renderAction(
+        ActionType $actionType,
+        array $parameters,
+        ?Presentable $entity = null,
+    ): Response {
+        $templateParameters = new CrudTemplateParameters($actionType, $parameters);
+        $templateParameters->collectFrom(
+            static::class,
+            fn () => $this->configureTemplateParameters($templateParameters, $actionType, $entity),
+        );
+
+        $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $templateParameters->collectFrom(
+            $extension::class,
+            fn () => $extension->configureTemplateParameters($templateParameters, $actionType, $entity),
+        ));
+
+        return $this->render(
+            $this->definition->getConfig()->getTemplate($actionType),
+            $templateParameters->toArray(),
         );
     }
 

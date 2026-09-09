@@ -54,7 +54,7 @@ class TransportGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, TransportGroup::class);
 
@@ -65,7 +65,7 @@ class TransportGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, TransportGroup::class);
         Assert::isInstanceOf($data, TransportGroupData::class);
@@ -77,7 +77,7 @@ class TransportGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function delete(object $entity): void
+    public function delete(Presentable $entity): void
     {
         Assert::isInstanceOf($entity, TransportGroup::class);
 

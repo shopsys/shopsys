@@ -13,7 +13,7 @@ final class CrudRouteItem
         private readonly string $controller,
         private readonly Route $route,
         private readonly string $routeName,
-        private readonly ActionType $pageType,
+        private readonly ActionType $actionType,
     ) {
     }
 
@@ -36,8 +36,8 @@ final class CrudRouteItem
         return $this->routeName;
     }
 
-    public function getPageType(): ActionType
+    public function getActionType(): ActionType
     {
-        return $this->pageType;
+        return $this->actionType;
     }
 }

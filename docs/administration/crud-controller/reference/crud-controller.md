@@ -54,6 +54,12 @@ See [Admin Rights and Access Control](../../admin-rights.md)
 Crud Controller provides several methods that allow you to customize the behavior of the controller.
 These methods can be overridden to customize the controller behavior:
 
+!!! warning "The actions themselves are final"
+
+    `listAction()`, `detailAction()`, `createAction()`, `editAction()` and `deleteAction()` are `final`. They orchestrate the whole flow of the action — they dispatch the [hooks](handlers.md#hooks-system) of all registered extensions and carry the CSRF protection of the delete action — so overriding them would silently break those guarantees for everyone. Customize the actions through the methods described below.
+
+    When an action flow genuinely cannot be expressed by them, opt out of it explicitly: disable the action with `$config->disableAction(ActionType::EDIT)` in `configure()` and register your own action with its own route. To render such an action with the CRUD layout, use the protected `renderAction()` and `getConfiguredActions()` methods.
+
 ### `configure(CrudConfig $config): void`
 
 Configure general behavior of the controller. Customizable options are available [here](#crud-config).
@@ -190,7 +196,7 @@ $datagrid->add('status', [
 
 For fully custom conditions, use `getSelectedListDomainId()` and `getEffectiveListDomainIds()`.
 
-### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
+### `configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void`
 
 Configure the form for create and edit pages. The `$entity` parameter is `null` for create action and contains the entity being edited for edit action.
 
@@ -199,7 +205,7 @@ The `CrudFormConfigurator` provides two mutually exclusive approaches — you mu
 **Use an existing FormType class:**
 
 ```php
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(BrandFormType::class, [
         'brand' => $entity,
@@ -210,7 +216,7 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 **Or build the form inline using the builder:**
 
 ```php
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('name', TextType::class, [
@@ -227,6 +233,45 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 !!! warning "Mutually exclusive modes"
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
+
+### `configureTemplateParameters(CrudTemplateParameters $templateParameters, ActionType $actionType, ?Presentable $entity = null): void`
+
+Sets additional variables passed to the template of the given action. Do nothing when the action needs no extra data (the default). The `$entity` parameter is `null` for the list and create actions and contains the displayed entity for the edit action.
+
+Typically used together with a [custom template](#settemplateactiontype-actiontype-string-template) that renders the extra variables.
+
+```php
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
+use Webmozart\Assert\Assert;
+
+protected function configureTemplateParameters(
+    CrudTemplateParameters $templateParameters,
+    ActionType $actionType,
+    ?Presentable $entity = null,
+): void {
+    if ($actionType === ActionType::EDIT) {
+        Assert::isInstanceOf($entity, BlogArticleAuthor::class);
+
+        $templateParameters->set('gridView', $this->createBlogArticlesGrid($entity)->createView());
+    }
+}
+```
+
+The `$entity` parameter is typed as the generic `Presentable`, so narrow it with `Assert::isInstanceOf()` before passing it to typed methods - the same way [handlers do](handlers.md#narrowing-object-parameters). A controller rendering another entity then fails fast with a clear message, and PHPStan analyses the following code with the concrete type.
+
+`CrudTemplateParameters` provides:
+
+- `set(string $name, mixed $value)` — sets a variable, chainable
+- `has(string $name)` and `get(string $name)` — read a variable of the action itself (`title`, `form`, ...) or one set earlier by the controller, e.g. to build on it in an extension
+
+[Extensions](../getting-started/extending-existing-crud-controller.md#templates-and-additional-parameters) provide the same method and are called after the controller, so they can read what the controller has set.
+
+!!! warning
+
+    No variable can be silently overwritten — `set()` with a name already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception naming the colliding variable and both its sources. Choose a different name instead.
 
 ## CRUD Config
 
@@ -339,4 +384,21 @@ Example:
 $config
     ->setMenuIcon('cart')
 ;
+```
+
+#### `setTemplate(ActionType $actionType, string $template)`
+
+Overrides the template rendered by the given action (`list`, `detail`, `create`, or `edit` — the `delete` action renders no template and throws an exception).
+The custom template receives the same variables as the default one, extended by [`configureTemplateParameters()`](#configuretemplateparameterscrudtemplateparameters-templateparameters-actiontype-actiontype-presentable-entity-null-void) of the controller and its extensions.
+
+```php
+$config
+    ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig')
+;
+```
+
+The default templates live in the `@ShopsysAdministration/crud/` directory — extend them in the custom template to keep the page layout and only add the extra content:
+
+```twig
+{% extends '@ShopsysAdministration/crud/edit.html.twig' %}
 ```

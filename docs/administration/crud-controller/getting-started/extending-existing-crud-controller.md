@@ -62,9 +62,10 @@ Extensions can add fields to forms using the `configureForm()` method. This work
 // OrderControllerExtension.php
 
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-public function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+public function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('internalNote', TextareaType::class, [
@@ -77,6 +78,41 @@ public function configureForm(CrudFormConfigurator $formConfigurator, ?object $e
 !!! warning
 
     Calling `useBuilder()` in an extension when the controller used `useFormType()` will throw `CrudFormAlreadyConfiguredException`. If you need to extend a form defined via FormType, use [Symfony's form extension mechanism](https://symfony.com/doc/current/form/create_form_type_extension.html) instead.
+
+### Templates and additional parameters
+
+Extensions can replace the template of an action via `setTemplate()` in `configure()` and pass additional variables to it via `configureTemplateParameters()`.
+Extensions are called after the original controller, so they can read its variables with `has()` and `get()`. Setting a name already used by the action itself (`title`, `form`, `topActions`, ...), by the controller, or by another extension throws an exception, so no variable can be silently overwritten.
+
+```php
+// OrderControllerExtension.php
+
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+use Shopsys\FrameworkBundle\Model\Order\Order;
+use Webmozart\Assert\Assert;
+
+public function configure(CrudConfig $config): void
+{
+    $config->setTemplate(ActionType::EDIT, 'Admin/Order/edit.html.twig');
+}
+
+public function configureTemplateParameters(
+    CrudTemplateParameters $templateParameters,
+    ActionType $actionType,
+    ?Presentable $entity = null,
+): void {
+    if ($actionType === ActionType::EDIT) {
+        Assert::isInstanceOf($entity, Order::class);
+
+        $templateParameters->set('orderItemsGridView', $this->createOrderItemsGrid($entity)->createView());
+    }
+}
+```
+
+See the [CRUD Controller reference](../reference/crud-controller.md#settemplateactiontype-actiontype-string-template) for details.
 
 ### Using Hooks
 
@@ -94,23 +130,24 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController;
 use Throwable;
 
 #[CrudControllerExtension(crudController: OrderCrudController::class)]
 class OrderControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface, CrudCreateHookExtensionInterface
 {
-    public function beforeEdit(object $entity, object $data): void
+    public function beforeEdit(Presentable $entity, object $data): void
     {
         // Custom logic before saving edited entity
     }
 
-    public function afterEdit(object $entity, object $data): void
+    public function afterEdit(Presentable $entity, object $data): void
     {
         // Custom logic after successful edit (e.g., clear cache, send notification)
     }
 
-    public function onEditError(object $entity, object $data, Throwable $exception): void
+    public function onEditError(Presentable $entity, object $data, Throwable $exception): void
     {
         // Custom error handling for edit failures
     }
@@ -120,7 +157,7 @@ class OrderControllerExtension extends AbstractCrudControllerExtension implement
         // Custom logic before creating new entity
     }
 
-    public function afterCreate(object $entity, object $data): void
+    public function afterCreate(Presentable $entity, object $data): void
     {
         // Custom logic after successful creation
     }
