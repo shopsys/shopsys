@@ -249,10 +249,11 @@ class OrderFacade
             $orderItemData->totalPriceWithVat = null;
             $orderItemData->totalPriceWithoutVat = null;
         } else {
-            Assert::allNotNull(
-                [$orderItemData->unitPriceWithVat, $orderItemData->unitPriceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
-                'When not using price calculation for an order item, all prices must be filled.',
-            );
+            $message = 'When not using price calculation for an order item, all prices must be filled.';
+            Assert::notNull($orderItemData->unitPriceWithVat, $message);
+            Assert::notNull($orderItemData->unitPriceWithoutVat, $message);
+            Assert::notNull($orderItemData->totalPriceWithVat, $message);
+            Assert::notNull($orderItemData->totalPriceWithoutVat, $message);
         }
     }
 
