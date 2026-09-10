@@ -73,6 +73,7 @@ services:
             - build
         environment:
             - CYPRESS_KEEP_TID=1
+            - LUIGIS_BOX_ENABLED_DOMAIN_IDS=
         volumes:
             - ./project-base/storefront:/home/node/app
         healthcheck:

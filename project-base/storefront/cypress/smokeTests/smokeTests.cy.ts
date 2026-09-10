@@ -1,5 +1,6 @@
 import { staticData } from 'fixtures/demodata';
 import { checktHeadlineText } from 'support';
+import { formatConsoleArguments } from 'support/formatConsoleArguments';
 import { visitEntityByUuid } from 'support/navigation';
 import { TIDs } from 'tids';
 
@@ -337,17 +338,7 @@ context('Smoke tests', () => {
                     win.console.error = (...args) => {
                         // log the error so we can still see it in test output
                         originalConsoleError.apply(win.console, args);
-                        const serializedArgs = args.map((arg) => {
-                            if (typeof arg === 'object' && arg !== null) {
-                                try {
-                                    return JSON.stringify(arg, null, 2);
-                                } catch {
-                                    return String(arg);
-                                }
-                            }
-                            return String(arg);
-                        });
-                        consoleErrors.push(serializedArgs.join(' '));
+                        consoleErrors.push(formatConsoleArguments(args));
                     };
 
                     // intercept unhandled errors
