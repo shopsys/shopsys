@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
@@ -42,7 +44,7 @@ class OrderProcessingTest extends TestCase
             $nullMiddleware,
         ]);
 
-        $orderProcessor = new OrderProcessor($orderProcessingStack);
+        $orderProcessor = new OrderProcessor($orderProcessingStack, $this->createStub(OrderDataFactory::class), new InMemoryCache());
         $orderInput = $this->createStub(OrderInput::class);
         $orderData = $this->createStub(OrderData::class);
 

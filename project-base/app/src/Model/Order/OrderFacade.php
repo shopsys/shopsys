@@ -28,7 +28,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
  * @method void updateTrackingNumber(\App\Model\Order\Order $order, string $trackingNumber)
  * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType(string $transportType)
  * @method \App\Model\Order\OrderData createOrderDataFromCart(\App\Model\Cart\Cart $cart, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
- * @method \App\Model\Order\OrderData fillOrderDataFromCart(\App\Model\Order\OrderData $orderData, \App\Model\Cart\Cart $cart, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @property \App\Model\Payment\PaymentFacade $paymentFacade
  * @method void updatePaymentByLastPaymentTransaction(\App\Model\Order\Order $order)
  * @method void processWithdrawalRequest(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
