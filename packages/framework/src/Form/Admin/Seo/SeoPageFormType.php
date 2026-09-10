@@ -83,16 +83,15 @@ final class SeoPageFormType extends AbstractType
             ->add('pageName', TextType::class, [
                 'label' => 'Page name',
                 'required' => true,
-                'disabled' => $seoPage !== null,
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter page name'),
                 ],
             ])
             ->add('pageSlugsIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
-                'disabled' => $seoPage !== null,
                 'required' => true,
                 'label' => 'Page slug',
+                'help' => t('The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change.'),
                 'options_by_domain_id' => $optionsByDomainId,
                 'entry_options' => [
                     'constraints' => [

@@ -52,7 +52,6 @@ class SeoPage
     public function __construct(
         SeoPageData $seoPageData,
     ) {
-        $this->pageName = $seoPageData->pageName;
         $this->domains = new ArrayCollection();
 
         $this->createDomains($seoPageData);
@@ -125,6 +124,7 @@ class SeoPage
 
     protected function setData(SeoPageData $seoPageData): void
     {
+        $this->pageName = $seoPageData->pageName;
         $this->setDomains($seoPageData);
         $this->defaultPage = $seoPageData->defaultPage;
     }
@@ -135,7 +135,6 @@ class SeoPage
 
         foreach ($domainIds as $domainId) {
             $seoPageDomain = new SeoPageDomain($domainId, $this);
-            $seoPageDomain->setPageSlug($seoPageData->pageSlugsIndexedByDomainId[$domainId]);
             $this->domains->add($seoPageDomain);
         }
 
@@ -147,6 +146,7 @@ class SeoPage
         foreach ($this->domains as $seoPageDomain) {
             $domainId = $seoPageDomain->getDomainId();
 
+            $seoPageDomain->setPageSlug($seoPageData->pageSlugsIndexedByDomainId[$domainId]);
             $seoPageDomain->getSeoAttributes()->edit($seoPageData->seo[$domainId]);
             $seoPageDomain->setSeoOgTitle($seoPageData->seoOgTitlesIndexedByDomainId[$domainId]);
             $seoPageDomain->setSeoOgDescription($seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId]);
