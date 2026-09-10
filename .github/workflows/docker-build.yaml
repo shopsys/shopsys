@@ -1220,6 +1220,7 @@ jobs:
         needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
             always() && !failure() && !cancelled() &&
+            github.actor != 'dependabot[bot]' &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
