@@ -2,6 +2,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { ProductListQueryDocument } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -29,7 +31,23 @@ const WishlistPage: NextPage<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, redisClient, domainConfig, t }),
+            initServerSideProps({
+                context,
+                redisClient,
+                domainConfig,
+                t,
+                prefetchedQueries: [
+                    {
+                        query: ProductListQueryDocument,
+                        variables: {
+                            input: {
+                                type: TypeProductListTypeEnum.Wishlist,
+                                uuid: null,
+                            },
+                        },
+                    },
+                ],
+            }),
 );
 
 export default WishlistPage;
