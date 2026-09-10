@@ -41,6 +41,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             <ColorPreview
                 colorIcon={imageUrl ? { url: imageUrl, anchorText: imageName || label } : null}
                 imageClassName="p-0.5"
+                isDecorative
                 rgbHex={bgColor}
                 className={twMergeCustom(
                     'size-7 border border-icon-default bg-input-bg-default transition',
