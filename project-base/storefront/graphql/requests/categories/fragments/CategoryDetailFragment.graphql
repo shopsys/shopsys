@@ -10,9 +10,9 @@ fragment CategoryDetailFragment on Category {
     images {
         ...ImageFragment
     }
-    seoH1
-    seoTitle
-    seoMetaDescription
+    seo {
+        ...SeoAttributesFragment
+    }
     readyCategorySeoMixLinks {
         __typename
         name

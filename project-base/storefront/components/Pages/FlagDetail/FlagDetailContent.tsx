@@ -9,7 +9,7 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 
 type FlagDetailContentProps = {
@@ -19,14 +19,14 @@ type FlagDetailContentProps = {
 export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
-    const title = useSeoTitleWithPagination(flag.products.totalCount, flag.name);
+    const heading = useHeadingWithPagination(flag.seo.h1 || flag.name, flag.products.totalCount);
 
     const productFilterOptions = { ...flag.products.productFilterOptions, flags: null };
 
     return (
         <VerticalStack gap="md">
             <Webline>
-                <h1>{title}</h1>
+                <h1>{heading}</h1>
             </Webline>
 
             <FilteredProductsWrapper>
