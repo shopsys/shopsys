@@ -8,6 +8,7 @@ import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductPriceProps = {
+    id?: string;
     productPrice: TypeProductPriceFragment | TypeListedProductPriceFragment;
     isPriceFromVisible?: boolean;
     placeholder?: string;
@@ -15,6 +16,7 @@ type ProductPriceProps = {
 };
 
 export const ProductPrice: FC<ProductPriceProps> = ({
+    id,
     productPrice,
     isPriceFromVisible,
     placeholder,
@@ -34,6 +36,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({
 
     return (
         <div
+            id={id}
             className={twMergeCustom('flex flex-wrap items-center gap-x-2 gap-y-0.5', className)}
             data-tid={TIDs.product_price}
         >

@@ -19,6 +19,7 @@ import {
     ProductListItemImage,
     type ProductListItemImageHandle,
 } from './ProductListItemImage';
+import { useProductListItemLinkDescription } from './useProductListItemLinkDescription';
 
 type ProductListItemGridViewProps = ProductListItemLayoutProps &
     Pick<ProductItemProps, 'imageCount' | 'isWithImageGallery' | 'size' | 'textSize' | 'textSizePrice'> & {
@@ -51,6 +52,8 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
     const { t } = useTranslation();
     const productListItemImageRef = useRef<ProductListItemImageHandle>(null);
     const isImageGalleryEnabled = isWithImageGallery && (imageCount ?? 0) > 1;
+    const { availabilityDescriptionId, priceDescriptionId, productLinkAriaDescribedBy } =
+        useProductListItemLinkDescription(product, visibleItemsConfig);
 
     return (
         <li
@@ -114,6 +117,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                         ns: 'accessibility',
                         productName: product.fullName,
                     })}
+                    aria-describedby={productLinkAriaDescribedBy}
                     onMouseUp={onProductClick}
                 >
                     <div className="row-start-1">
@@ -148,6 +152,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
                     {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
                         <ProductPrice
+                            id={priceDescriptionId}
                             className="row-start-5 mt-2.5 min-h-6 sm:min-h-7"
                             isPriceFromVisible={visibleItemsConfig.priceFromWord}
                             productPrice={product.price}
@@ -157,6 +162,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
                     {visibleItemsConfig.storeAvailability && !product.isSellingDenied && (
                         <ProductAvailability
+                            id={availabilityDescriptionId}
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
                             isPersonalPickupOnly={product.isPersonalPickupOnly}

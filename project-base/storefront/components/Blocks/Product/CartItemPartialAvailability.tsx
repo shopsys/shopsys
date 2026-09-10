@@ -5,12 +5,14 @@ import { twMergeCustom } from 'utils/twMerge';
 import { ProductAvailabilityIcon } from './ProductAvailabilityIcon';
 
 type CartItemPartialAvailabilityProps = {
+    id?: string;
     stockQuantity: number;
     unitName: string;
     expectedRestockingDate: string | null;
 };
 
 export const CartItemPartialAvailability: FC<CartItemPartialAvailabilityProps> = ({
+    id,
     className,
     stockQuantity,
     unitName,
@@ -20,7 +22,7 @@ export const CartItemPartialAvailability: FC<CartItemPartialAvailabilityProps> =
     const { formatDate } = useFormatDate();
 
     return (
-        <div className={twMergeCustom('flex flex-col gap-0.5 text-left', className)}>
+        <div id={id} className={twMergeCustom('flex flex-col gap-0.5 text-left', className)}>
             <span className="flex items-center gap-1 text-availability-in-stock">
                 <ProductAvailabilityIcon className="size-3.5 shrink-0" status={TypeAvailabilityStatusEnum.InStock} />
                 {t('In stock {{ quantity }} {{ unit }}', { quantity: stockQuantity, unit: unitName })}

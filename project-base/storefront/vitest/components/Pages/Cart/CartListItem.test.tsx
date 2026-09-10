@@ -9,12 +9,14 @@ vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
         children,
         href,
         'aria-label': ariaLabel,
+        'aria-describedby': ariaDescribedBy,
     }: {
         children: React.ReactNode;
         href: string;
         'aria-label'?: string;
+        'aria-describedby'?: string;
     }) => (
-        <a aria-label={ariaLabel} href={href}>
+        <a aria-describedby={ariaDescribedBy} aria-label={ariaLabel} href={href}>
             {children}
         </a>
     ),
@@ -33,7 +35,9 @@ vi.mock('components/Basic/Image/Image', () => ({
 }));
 
 vi.mock('components/Blocks/Product/ProductAvailability', () => ({
-    ProductAvailability: ({ availability }: { availability: { name: string } }) => <span>{availability.name}</span>,
+    ProductAvailability: ({ availability, id }: { availability: { name: string }; id?: string }) => (
+        <span id={id}>{availability.name}</span>
+    ),
 }));
 
 vi.mock('components/Forms/Button/IconButton', () => ({
@@ -128,7 +132,7 @@ describe('CartListItem', () => {
     };
     const createAddToCartResult = (quantity: number) => ({ addProductResult: { cartItem: { quantity } } }) as any;
 
-    test('uses one product detail link for the image and product name only', () => {
+    test('uses one product detail link and describes it with availability only', () => {
         render(
             <CartListItem
                 isRemovingFromCart={false}
@@ -143,6 +147,7 @@ describe('CartListItem', () => {
 
         expect(productLinks).toHaveLength(1);
         expect(productLinks[0]).toHaveAccessibleName('Go to product page of 32" Philips TV');
+        expect(productLinks[0]).toHaveAccessibleDescription('In stock');
         expect(within(productLinks[0]).getByRole('img')).toBeInTheDocument();
         expect(within(productLinks[0]).getByText('32" Philips TV')).toBeInTheDocument();
         expect(within(productLinks[0]).queryByText('Code: ABC123')).not.toBeInTheDocument();

@@ -7,6 +7,7 @@ import { getAvailabilityTextColorClassName } from 'utils/ui/getAvailabilityTextC
 import { ProductAvailabilityIcon } from './ProductAvailabilityIcon';
 
 type ProductAvailabilityProps = {
+    id?: string;
     availability: TypeAvailability;
     availableStoresCount: number | null;
     displayMode?: 'compact' | 'default' | 'detail';
@@ -20,6 +21,7 @@ type ProductAvailabilityProps = {
 };
 
 export const ProductAvailability: FC<ProductAvailabilityProps> = ({
+    id,
     availability,
     availableStoresCount,
     className,
@@ -44,6 +46,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
 
     return (
         <span
+            id={id}
             data-tid={TIDs.product_availability}
             className={twMergeCustom(
                 'flex text-left text-sm',
