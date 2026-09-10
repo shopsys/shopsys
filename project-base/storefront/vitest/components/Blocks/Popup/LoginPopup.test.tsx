@@ -81,6 +81,22 @@ describe('Popup accessibility', () => {
         expect(popup).toHaveAccessibleDescription('Product added to comparison.');
     });
 
+    test('moves initial focus from the page to the popup title', () => {
+        const pageInput = document.createElement('input');
+        document.body.append(pageInput);
+        pageInput.focus();
+
+        render(
+            <Popup role="alertdialog" title="Please check inserted details">
+                <button type="button">Close</button>
+            </Popup>,
+        );
+
+        expect(screen.getByRole('heading', { name: 'Please check inserted details' })).toHaveFocus();
+
+        pageInput.remove();
+    });
+
     test('uses checkout login title as accessible dialog name even when popup title is visually hidden', () => {
         render(<LoginPopup shouldOverwriteCustomerUserCart defaultEmail="customer@example.com" />);
 
