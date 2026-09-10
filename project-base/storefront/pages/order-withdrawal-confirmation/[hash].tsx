@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderWithdrawalConfirmationContent } from 'components/Pages/OrderWithdrawal/OrderWithdrawalConfirmationContent';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
@@ -17,12 +16,13 @@ const OrderWithdrawalConfirmationPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-            <CommonLayout pageTypeOverride="order-withdrawal-confirmation" title={t('Withdrawal request confirmation')}>
-                <OrderWithdrawalConfirmationContent />
-            </CommonLayout>
-        </>
+        <CommonLayout
+            defaultMetaRobots="noindex"
+            defaultTitle={t('Withdrawal request confirmation')}
+            pageTypeOverride="order-withdrawal-confirmation"
+        >
+            <OrderWithdrawalConfirmationContent />
+        </CommonLayout>
     );
 };
 

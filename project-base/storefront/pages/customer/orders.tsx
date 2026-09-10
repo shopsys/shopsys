@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
@@ -37,25 +36,21 @@ const OrdersPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                paginationScrollTargetRef={paginationScrollTargetRef}
+        <CustomerLayout
+            breadcrumbs={breadcrumbs}
+            paginationScrollTargetRef={paginationScrollTargetRef}
+            title={t('My orders')}
+        >
+            <PageHero
+                icon={OrderIcon}
                 title={t('My orders')}
-            >
-                <PageHero
-                    icon={OrderIcon}
-                    title={t('My orders')}
-                    description={t(
-                        'View and manage your past orders, track order status, and monitor your shopping history.',
-                    )}
-                />
+                description={t(
+                    'View and manage your past orders, track order status, and monitor your shopping history.',
+                )}
+            />
 
-                <OrdersPageContent paginationScrollTargetRef={paginationScrollTargetRef} />
-            </CustomerLayout>
-        </>
+            <OrdersPageContent paginationScrollTargetRef={paginationScrollTargetRef} />
+        </CustomerLayout>
     );
 };
 

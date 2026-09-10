@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -28,15 +27,11 @@ const PersonalDataOverviewPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal data overview')}>
-                <PersonalDataOverviewContent
-                    contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
-                />
-            </CommonLayout>
-        </>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" title={t('Personal data overview')}>
+            <PersonalDataOverviewContent
+                contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
+            />
+        </CommonLayout>
     );
 };
 

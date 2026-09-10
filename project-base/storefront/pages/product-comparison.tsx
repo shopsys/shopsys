@@ -22,7 +22,7 @@ const ProductComparisonPage: NextPage<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Product comparison')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" title={t('Product comparison')}>
             <ProductComparison />
         </CommonLayout>
     );

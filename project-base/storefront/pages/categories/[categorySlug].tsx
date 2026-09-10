@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
@@ -59,15 +58,15 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <PageDefer>
-            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
-
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
+                defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
                 description={categoryData?.seo.metaDescription}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
                 ogImageUrlDefault={firstImageUrl}
+                seo={categoryData?.seo}
                 title={title}
             >
                 {!!categoryData && (

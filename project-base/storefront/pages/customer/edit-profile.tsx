@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
@@ -29,25 +28,21 @@ const EditProfilePage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <CustomerLayout breadcrumbs={breadcrumbs} title={userProfileSectionLabel}>
+            {currentCustomerUserData !== undefined && (
+                <>
+                    <PageHero
+                        icon={UserEditIcon}
+                        title={userProfileSectionLabel}
+                        description={t(
+                            'Edit your profile information to keep your account secure and enjoy personalized services.',
+                        )}
+                    />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} title={userProfileSectionLabel}>
-                {currentCustomerUserData !== undefined && (
-                    <>
-                        <PageHero
-                            icon={UserEditIcon}
-                            title={userProfileSectionLabel}
-                            description={t(
-                                'Edit your profile information to keep your account secure and enjoy personalized services.',
-                            )}
-                        />
-
-                        <EditProfileContent currentCustomerUser={currentCustomerUserData} />
-                    </>
-                )}
-            </CustomerLayout>
-        </>
+                    <EditProfileContent currentCustomerUser={currentCustomerUserData} />
+                </>
+            )}
+        </CustomerLayout>
     );
 };
 

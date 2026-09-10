@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
@@ -64,20 +63,18 @@ const FlagDetailPage: NextPage = () => {
     useGtmPageReadyEvent(pageReadyEvent, isFlagFetching);
 
     return (
-        <>
-            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
-
-            <CommonLayout
-                breadcrumbs={flagDetailData?.flag?.breadcrumb}
-                breadcrumbsType="category"
-                description={flagDetailData?.flag?.seo.metaDescription}
-                hreflangLinks={flagDetailData?.flag?.hreflangLinks}
-                isFetchingData={!filter && isFlagFetching && !flagDetailData}
-                title={title}
-            >
-                {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={flagDetailData?.flag?.breadcrumb}
+            breadcrumbsType="category"
+            defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
+            description={flagDetailData?.flag?.seo.metaDescription}
+            hreflangLinks={flagDetailData?.flag?.hreflangLinks}
+            isFetchingData={!filter && isFlagFetching && !flagDetailData}
+            seo={flagDetailData?.flag?.seo}
+            title={title}
+        >
+            {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
+        </CommonLayout>
     );
 };
 

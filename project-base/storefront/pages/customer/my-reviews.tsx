@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
@@ -42,23 +41,19 @@ const MyReviewsPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                paginationScrollTargetRef={paginationScrollTargetRef}
+        <CustomerLayout
+            breadcrumbs={breadcrumbs}
+            paginationScrollTargetRef={paginationScrollTargetRef}
+            title={t('My reviews')}
+        >
+            <PageHero
+                description={t('Here you can find all your product reviews and their approval status.')}
+                icon={StarIcon}
                 title={t('My reviews')}
-            >
-                <PageHero
-                    description={t('Here you can find all your product reviews and their approval status.')}
-                    icon={StarIcon}
-                    title={t('My reviews')}
-                />
+            />
 
-                <MyReviewsContent paginationScrollTargetRef={paginationScrollTargetRef} />
-            </CustomerLayout>
-        </>
+            <MyReviewsContent paginationScrollTargetRef={paginationScrollTargetRef} />
+        </CustomerLayout>
     );
 };
 
