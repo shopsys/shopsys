@@ -13,6 +13,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import type { ProductListItemLayoutProps } from './ProductListItemActions';
 import { ProductListItemAddToCart, ProductListItemButtons } from './ProductListItemActions';
 import { ProductListItemImage } from './ProductListItemImage';
+import { useProductListItemLinkDescription } from './useProductListItemLinkDescription';
 
 type ProductListItemListViewProps = ProductListItemLayoutProps & {
     forwardedRef: Ref<HTMLLIElement>;
@@ -46,6 +47,8 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
     visibleItemsConfig,
 }) => {
     const { t } = useTranslation();
+    const { availabilityDescriptionId, priceDescriptionId, productLinkAriaDescribedBy } =
+        useProductListItemLinkDescription(product, visibleItemsConfig);
 
     return (
         <li
@@ -79,6 +82,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                         ns: 'accessibility',
                         productName: product.fullName,
                     })}
+                    aria-describedby={productLinkAriaDescribedBy}
                     onMouseUp={onProductClick}
                 >
                     <div className="col-start-1 row-start-1 row-end-6 flex items-center justify-center xl:relative xl:block xl:min-h-0">
@@ -115,6 +119,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
 
                     {visibleItemsConfig.storeAvailability && !product.isSellingDenied && (
                         <ProductAvailability
+                            id={availabilityDescriptionId}
                             availability={product.availability}
                             availableStoresCount={product.availableStoresCount}
                             isPersonalPickupOnly={product.isPersonalPickupOnly}
@@ -143,6 +148,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
             <div className="flex min-w-0 flex-col items-stretch gap-2 sm:flex-row sm:items-end sm:justify-between md:flex-col md:items-end md:justify-center">
                 {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
                     <ProductPrice
+                        id={priceDescriptionId}
                         className="justify-end text-right"
                         isPriceFromVisible={visibleItemsConfig.priceFromWord}
                         productPrice={product.price}
