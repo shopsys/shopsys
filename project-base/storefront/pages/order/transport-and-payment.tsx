@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
 import {
     AdvertsQueryDocument,
@@ -18,13 +17,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
     useGtmPaymentAndTransportViewEvent(gtmStaticPageReadyEvent);
 
-    return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <TransportAndPaymentContent />
-        </>
-    );
+    return <TransportAndPaymentContent />;
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(

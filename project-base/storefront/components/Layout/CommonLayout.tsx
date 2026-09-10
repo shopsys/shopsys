@@ -3,6 +3,7 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -10,7 +11,7 @@ import { type ReactNode, useEffect, useRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
-import { OgTypeEnum } from 'types/seo';
+import { MetaRobotsContent, OgTypeEnum } from 'types/seo';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
@@ -42,8 +43,10 @@ const getCurrentHashTarget = (): HTMLElement | null => {
 };
 
 export type CommonLayoutProps = {
+    seo?: TypeSeoAttributesFragment | null;
     title?: string | null;
     description?: string | null;
+    defaultMetaRobots?: MetaRobotsContent;
     breadcrumbs?: TypeBreadcrumbFragment[];
     breadcrumbsType?: FriendlyPagesTypesKey;
     canonicalQueryParams?: CanonicalQueryParameters;
@@ -57,8 +60,10 @@ export type CommonLayoutProps = {
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
     children,
+    seo,
     description,
     title,
+    defaultMetaRobots,
     breadcrumbs,
     breadcrumbsType,
     canonicalQueryParams,
@@ -116,9 +121,11 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 canonicalQueryParams={canonicalQueryParams}
                 defaultDescription={description}
                 defaultHreflangLinks={hreflangLinks}
+                defaultMetaRobots={defaultMetaRobots}
                 defaultTitle={title}
                 ogImageUrlDefault={ogImageUrlDefault}
                 ogType={ogType}
+                seo={seo}
             />
 
             <div className="flex h-full min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] vl:pb-0">

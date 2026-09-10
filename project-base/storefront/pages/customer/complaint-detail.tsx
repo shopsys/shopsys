@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
@@ -43,30 +42,26 @@ const ComplaintDetailPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!complaintDetailError}>
+            <CustomerLayout
+                breadcrumbs={breadcrumbs}
+                breadcrumbsType="complaintList"
+                isFetchingData={isComplaintDetailFetching}
+                title={`${t('Complaint number')} ${complaintNumber}`}
+            >
+                {!!complaintData?.complaint && (
+                    <>
+                        <PageHero
+                            icon={DocumentIcon}
+                            title={`${t('Your complaint')} ${complaintData.complaint.number}`}
+                            titleTid={TIDs.complaint_detail_number_heading}
+                        />
 
-            <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!complaintDetailError}>
-                <CustomerLayout
-                    breadcrumbs={breadcrumbs}
-                    breadcrumbsType="complaintList"
-                    isFetchingData={isComplaintDetailFetching}
-                    title={`${t('Complaint number')} ${complaintNumber}`}
-                >
-                    {!!complaintData?.complaint && (
-                        <>
-                            <PageHero
-                                icon={DocumentIcon}
-                                title={`${t('Your complaint')} ${complaintData.complaint.number}`}
-                                titleTid={TIDs.complaint_detail_number_heading}
-                            />
-
-                            <ComplaintDetailContent complaint={complaintData.complaint} />
-                        </>
-                    )}
-                </CustomerLayout>
-            </PageGuard>
-        </>
+                        <ComplaintDetailContent complaint={complaintData.complaint} />
+                    </>
+                )}
+            </CustomerLayout>
+        </PageGuard>
     );
 };
 
