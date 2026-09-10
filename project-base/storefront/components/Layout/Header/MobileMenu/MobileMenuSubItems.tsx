@@ -1,3 +1,4 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
@@ -82,12 +83,12 @@ const SubMenuItem: FC<SubMenuItemProps> = ({ count, href, icon: Icon, label, onC
             <span className="relative shrink-0">
                 <Icon className="size-6" />
                 {!!count && (
-                    <span
+                    <CountBadge
                         aria-hidden="true"
-                        className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-icon-accent-red px-0.5 font-bold font-secondary text-text-inverted text-xs leading-normal"
+                        className="absolute -top-2 -right-2 bg-icon-accent-red text-text-inverted"
                     >
                         {count}
-                    </span>
+                    </CountBadge>
                 )}
             </span>
 
