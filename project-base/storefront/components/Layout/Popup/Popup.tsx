@@ -3,7 +3,7 @@ import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { useEffect, useEffectEvent, useId, useLayoutEffect, useRef, useState } from 'react';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -53,20 +53,11 @@ export const Popup: React.FC<PopupProps> = ({
         closePortalContent();
     };
 
-    const onStoreAndFocus = useEffectEvent(() => {
+    // Focus must be established before paint so form auto-focus cannot remain behind the modal.
+    useLayoutEffect(() => {
         storeCurrentFocus();
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                (titleRef.current ?? popupRef.current)?.focus({ preventScroll: true });
-            });
-        });
-    });
-
-    // Focus on popup when it appears
-    useEffect(() => {
-        onStoreAndFocus();
-    }, []);
+        (titleRef.current ?? popupRef.current)?.focus({ preventScroll: true });
+    }, [storeCurrentFocus]);
 
     useLayoutEffect(() => {
         if (!popupRef.current) {
