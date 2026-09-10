@@ -101,12 +101,18 @@ describe('Fixed Header Tests', { retries: { runMode: 0 } }, () => {
             .should('have.attr', 'aria-hidden', 'true')
             .and('have.attr', 'inert');
 
-        // Focusing the last navigation trigger opens its submenu, so keyboard navigation leaves from its last link.
+        // Keyboard navigation leaves the opened submenu from its last link.
         cy.getByTID([TIDs.fixed_header])
             .find(FOCUSABLE_ELEMENTS_SELECTOR)
             .filter(':visible')
             .last()
             .focus()
+            .should('have.attr', 'aria-expanded', 'false')
+            .as('lastNavigationTrigger');
+
+        cy.realPress('{downarrow}');
+
+        cy.get('@lastNavigationTrigger')
             .should('have.attr', 'aria-expanded', 'true')
             .invoke('attr', 'aria-controls')
             .should('be.a', 'string')
