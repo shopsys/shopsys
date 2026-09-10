@@ -1,10 +1,9 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
 import { getImageAlt } from 'utils/imageAltText';
-import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
+import { useSeoPage } from 'utils/seo/useSeoPage';
 
 type UseSeoHookProps = {
     defaultTitle?: string | null;
@@ -16,22 +15,15 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
     const { url } = useDomainConfig();
     const router = useRouter();
 
-    const pageSlug = extractSeoPageSlugFromUrl(router.asPath, url);
-
     const [{ data: settingsData }] = useSettingsQuery();
-    const [{ data: seoPageData }] = useSeoPageQuery({
-        variables: {
-            pageSlug: pageSlug!,
-        },
-        pause: !pageSlug,
-    });
+    const seoPage = useSeoPage();
 
-    const preferredTitle = seoPageData?.seoPage?.seo.title;
-    const preferredDescription = seoPageData?.seoPage?.seo.metaDescription;
-    const preferredCanonicalUrl = seoPageData?.seoPage?.seo.canonicalUrl;
-    const preferredOgTitle = seoPageData?.seoPage?.ogTitle;
-    const preferredOgDescription = seoPageData?.seoPage?.ogDescription;
-    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.url;
+    const preferredTitle = seoPage?.seo.title;
+    const preferredDescription = seoPage?.seo.metaDescription;
+    const preferredCanonicalUrl = seoPage?.seo.canonicalUrl;
+    const preferredOgTitle = seoPage?.ogTitle;
+    const preferredOgDescription = seoPage?.ogDescription;
+    const preferredOgImageUrl = seoPage?.ogImage?.url;
 
     const titleSuffix = settingsData?.settings?.seo.titleAddOn;
 
@@ -46,9 +38,9 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
         ogDescription: preferredOgDescription,
         ogImageUrl: preferredOgImageUrl,
         ogImageAlt: preferredOgImageUrl
-            ? getImageAlt(seoPageData?.seoPage?.ogImage?.name, getImageAlt(preferredOgTitle, title))
+            ? getImageAlt(seoPage?.ogImage?.name, getImageAlt(preferredOgTitle, title))
             : undefined,
-        hreflangLinks: seoPageData?.seoPage?.hreflangLinks,
+        hreflangLinks: seoPage?.hreflangLinks,
         canonicalUrl,
     };
 };
