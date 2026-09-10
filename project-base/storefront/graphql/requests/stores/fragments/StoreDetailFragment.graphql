@@ -4,6 +4,9 @@ fragment StoreDetailFragment on Store {
     slug
     storeName: name
     description
+    seo {
+        ...SeoAttributesFragment
+    }
     street
     city
     postcode

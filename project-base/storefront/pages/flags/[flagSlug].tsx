@@ -34,8 +34,8 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
@@ -55,7 +55,10 @@ const FlagDetailPage: NextPage = () => {
         },
     });
 
-    const seoTitle = useSeoTitleWithPagination(flagDetailData?.flag?.products.totalCount, flagDetailData?.flag?.name);
+    const title = useHeadingWithPagination(
+        flagDetailData?.flag?.seo.title || flagDetailData?.flag?.name,
+        flagDetailData?.flag?.products.totalCount,
+    );
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(flagDetailData?.flag);
     useGtmPageReadyEvent(pageReadyEvent, isFlagFetching);
@@ -67,9 +70,10 @@ const FlagDetailPage: NextPage = () => {
             <CommonLayout
                 breadcrumbs={flagDetailData?.flag?.breadcrumb}
                 breadcrumbsType="category"
+                description={flagDetailData?.flag?.seo.metaDescription}
                 hreflangLinks={flagDetailData?.flag?.hreflangLinks}
                 isFetchingData={!filter && isFlagFetching && !flagDetailData}
-                title={seoTitle}
+                title={title}
             >
                 {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
             </CommonLayout>

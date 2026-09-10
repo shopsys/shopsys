@@ -25,23 +25,21 @@ export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams 
         pause: !pageSlug,
     });
 
-    const preferredTitle = seoPageData?.seoPage?.title;
-    const preferredDescription = seoPageData?.seoPage?.metaDescription;
-    const preferredCanonicalUrl = seoPageData?.seoPage?.canonicalUrl;
+    const preferredTitle = seoPageData?.seoPage?.seo.title;
+    const preferredDescription = seoPageData?.seoPage?.seo.metaDescription;
+    const preferredCanonicalUrl = seoPageData?.seoPage?.seo.canonicalUrl;
     const preferredOgTitle = seoPageData?.seoPage?.ogTitle;
     const preferredOgDescription = seoPageData?.seoPage?.ogDescription;
     const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.url;
 
-    const fallbackTitle = settingsData?.settings?.seo.title;
-    const fallbackDescription = settingsData?.settings?.seo.metaDescription;
-    const fallbackTitleSuffix = settingsData?.settings?.seo.titleAddOn;
+    const titleSuffix = settingsData?.settings?.seo.titleAddOn;
 
     const canonicalUrl = preferredCanonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
 
     return {
-        title: preferredTitle ?? defaultTitle ?? fallbackTitle ?? '',
-        titleSuffix: fallbackTitleSuffix ?? '',
-        description: preferredDescription ?? defaultDescription ?? fallbackDescription ?? '',
+        title: preferredTitle ?? defaultTitle ?? '',
+        titleSuffix: titleSuffix ?? '',
+        description: preferredDescription ?? defaultDescription ?? null,
         ogTitle: preferredOgTitle,
         ogDescription: preferredOgDescription,
         ogImageUrl: preferredOgImageUrl,

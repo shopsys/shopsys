@@ -5,7 +5,7 @@ import { TIDs } from 'cypress/tids';
 import { useRef } from 'react';
 
 type CollapsibleDescriptionWithImageProps = {
-    title: string | null | undefined;
+    heading: string | null | undefined;
     description: string | null;
     currentPage: number;
     imageName: string;
@@ -14,7 +14,7 @@ type CollapsibleDescriptionWithImageProps = {
 };
 
 export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImageProps> = ({
-    title,
+    heading,
     description,
     currentPage,
     imageName,
@@ -25,9 +25,9 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
 
     return (
         <Webline>
-            {!!title && (
+            {!!heading && (
                 <h1 className="mb-5" data-tid={TIDs.page_title}>
-                    {title}
+                    {heading}
                 </h1>
             )}
 

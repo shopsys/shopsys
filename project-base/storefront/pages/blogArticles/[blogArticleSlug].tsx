@@ -55,20 +55,20 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
                 breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
                 breadcrumbsType="blogCategory"
                 canonicalQueryParams={[]}
-                description={blogArticleData?.blogArticle?.seoMetaDescription}
+                description={blogArticleData?.blogArticle?.seo.metaDescription}
                 hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
                 isFetchingData={isBlogArticleFetching}
                 ogImageUrlDefault={blogArticleImageUrl}
                 ogType={OgTypeEnum.Article}
-                title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
+                title={blogArticleData?.blogArticle?.seo.title || blogArticleData?.blogArticle?.name}
             >
                 {!!blogArticleData?.blogArticle && (
                     <>
                         <ArticleMetadata
                             authorName={blogArticleData.blogArticle.author?.name}
                             datePublished={blogArticleData.blogArticle.publishDate}
-                            description={blogArticleData.blogArticle.seoMetaDescription}
-                            headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
+                            description={blogArticleData.blogArticle.seo.metaDescription}
+                            headline={blogArticleData.blogArticle.seo.h1 || blogArticleData.blogArticle.name}
                             imageUrl={blogArticleData.blogArticle.mainImage?.url}
                         />
                         <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />

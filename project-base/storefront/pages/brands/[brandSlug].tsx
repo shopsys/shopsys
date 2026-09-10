@@ -37,8 +37,8 @@ import {
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
@@ -57,12 +57,9 @@ const BrandDetailPage: NextPage = () => {
         },
     });
 
-    const prefixedTitle = getPrefixedSeoTitle(brandDetailData?.brand?.seoTitle, t('Brand'));
-
-    const seoTitle = useSeoTitleWithPagination(
+    const title = useHeadingWithPagination(
+        brandDetailData?.brand?.seo.title || getPrefixedSeoTitle(brandDetailData?.brand?.name, t('Brand')),
         brandDetailData?.brand?.products.totalCount,
-        brandDetailData?.brand?.name,
-        prefixedTitle,
     );
 
     const brandImageUrl = brandDetailData?.brand?.mainImage?.url;
@@ -77,11 +74,11 @@ const BrandDetailPage: NextPage = () => {
             <CommonLayout
                 breadcrumbs={brandDetailData?.brand?.breadcrumb}
                 breadcrumbsType="brandsOverview"
-                description={brandDetailData?.brand?.seoMetaDescription}
+                description={brandDetailData?.brand?.seo.metaDescription}
                 hreflangLinks={brandDetailData?.brand?.hreflangLinks}
                 isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
                 ogImageUrlDefault={brandImageUrl}
-                title={seoTitle}
+                title={title}
             >
                 {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}
             </CommonLayout>
