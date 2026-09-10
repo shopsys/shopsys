@@ -46,6 +46,7 @@ return [
         __DIR__ . '/tests/FrontendApiBundle/Functional/*',
     ],
     ClassLengthSniff::class => [
+        __DIR__ . '/src/DataFixtures/Demo/ImageDataFixture.php',
         __DIR__ . '/src/DataFixtures/Demo/OrderDataFixture.php',
         __DIR__ . '/src/DataFixtures/Demo/ProductDataFixture.php',
         __DIR__ . '/tests/FrontendApiBundle/Functional/*',

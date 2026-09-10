@@ -8,6 +8,8 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData;
@@ -17,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class ReadyCategorySeoCombinationFormType extends AbstractType
@@ -64,6 +67,7 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                 'required' => false,
                 'attr' => ['data-js-recommended-length' => 155],
             ])
+            ->add($this->createImageGroup($builder, $readyCategorySeoMix))
             ->add('categorySeoFilterFormTypeAllQueriesJson', HiddenType::class)
             ->add('selectedCategorySeoMixCombinationJson', HiddenType::class)
             ->add('actionBar', ActionBarType::class, [
@@ -71,6 +75,33 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                 'back_label' => t('Back to overview of available combinations'),
                 'save_label' => t('Save'),
             ]);
+    }
+
+    private function createImageGroup(
+        FormBuilderInterface $builder,
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
+    ): FormBuilderInterface {
+        $builderImageGroup = $builder->create('image', GroupType::class, [
+            'label' => 'Image',
+        ]);
+
+        $builderImageGroup
+            ->add('image', ImageUploadType::class, [
+                'required' => false,
+                'image_entity_class' => ReadyCategorySeoMix::class,
+                'file_constraints' => [
+                    new File(
+                        maxSize: '2M',
+                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ),
+                ],
+                'label' => 'Upload image',
+                'entity' => $readyCategorySeoMix,
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+            ]);
+
+        return $builderImageGroup;
     }
 
     #[Override]
