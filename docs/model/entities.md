@@ -69,8 +69,10 @@ You should provide your own implementation if you need to alter the list of doma
 ```php
 // FrameworkBundle/Model/Product/Brand/BrandDomain.php
 
-namespace Shopsys\FrameworkBundle\Model\Product\Brand
+namespace Shopsys\FrameworkBundle\Model\Product\Brand;
+
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 
 #[ORM\Table(name: 'brand_domains')]
 #[ORM\Entity]
@@ -98,10 +100,10 @@ class BrandDomain
     protected $domainId;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoTitle;
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     // ...
 
@@ -113,22 +115,15 @@ class BrandDomain
     {
         $this->brand = $brand;
         $this->domainId = $domainId;
+        $this->seo = new SeoAttributes();
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle()
+    public function getSeoAttributes()
     {
-        return $this->seoTitle;
-    }
-
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle)
-    {
-        $this->seoTitle = $seoTitle;
+        return $this->seo;
     }
 
     // ...
@@ -152,11 +147,11 @@ class Brand extends AbstractTranslatableEntity
 
     /**
      * @param int $domainId
-     * @return string
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoAttributes(int $domainId)
     {
-        return $this->getBrandDomain($domainId)->getSeoTitle();
+        return $this->getBrandDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -324,19 +319,9 @@ class BrandData
     public $urls;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
+    public $seo;
 
     public function __construct()
     {
@@ -344,9 +329,7 @@ class BrandData
         $this->image = new ImageUploadData();
         $this->descriptions = [];
         $this->urls = new UrlListData();
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->seo = [];
     }
 }
 ```
@@ -423,10 +406,10 @@ To transfer URL addresses via the system, use PHPDoc annotation `\Shopsys\Framew
 #### Multidomain
 
 [Multidomain property](../introduction/domain-multidomain-multilanguage.md#multidomain-attribute) is an array and has to be indexed by `domainId` - an integer ID of the given domain.
-An example of such property is a `seoH1s` in the `BrandData` example above.
+An example of such property is a `seo` in the `BrandData` example above (an array of [`SeoAttributesData`](./seo-attributes.md) indexed by domain ID).
 Data factory has to create an item in this array for each domain ID, otherwise domain entities would not be created correctly (a domain entity should exist for each domain, even with null values).
 
-Therefore the multidomain field has PHPDoc annotation `string[]|null[]` or `int[]|null[]`.
+Therefore the multidomain field has PHPDoc annotation `string[]|null[]`, `int[]|null[]` or `DataObject[]`.
 For boolean multidomain properties, we recommend using default value filled in the factory and PHPDoc annotation `bool[]` only, e.g., property [`TransportData::$enabled`]({{github.link}}/packages/framework/src/Model/Transport/TransportData.php).
 
 #### Multilanguage

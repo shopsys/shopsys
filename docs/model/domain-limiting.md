@@ -49,8 +49,8 @@ foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $d
     $locale = $domainConfig->getLocale();
     $domainId = $domainConfig->getId();
 
-    $blogArticleData->seoTitles[$domainId] = t('SEO Title', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-    $blogArticleData->seoMetaDescriptions[$domainId] = t('SEO Meta description', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+    $blogArticleData->seo[$domainId]->title = t('SEO Title', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+    $blogArticleData->seo[$domainId]->metaDescription = t('SEO Meta description', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 }
 ```
 
@@ -83,18 +83,16 @@ It's possible to create `entry_options` only for the selected domains, leveragin
 foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
     $domainId = $domainConfig->getId();
 
-    $seoTitlesOptionsByDomainId[$domainId] = [
-        'attr' => [
-            'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-            'data-js-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
-        ],
-    ];
-    $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
-        'attr' => [
-            'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
-        ],
+    $seoAttributesOptionsByDomainId[$domainId] = [
+        'placeholder_source_input_id' => 'category_form_name_' . $domainConfig->getLocale(),
+        'domain_id' => $domainId,
     ];
 }
+
+$builder->add('seo', MultidomainType::class, [
+    'entry_type' => SeoAttributesType::class,
+    'options_by_domain_id' => $seoAttributesOptionsByDomainId,
+]);
 ```
 
 If you have the strictly domain-separated entity (e.g., orders, complaints - any entity that belongs to a single domain), use the `Domain::getAdminEnabledDomainIds()` method to prepare the datasource.
