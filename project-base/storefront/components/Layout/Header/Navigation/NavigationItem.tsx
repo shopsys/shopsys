@@ -37,6 +37,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
 }) => {
     const { url } = useDomainConfig();
     const triggerRef = useRef<HTMLButtonElement>(null);
+    const isPointerInteractionRef = useRef(false);
     const [catalogUrl] = getInternationalizedStaticUrls(['/catalog'], url);
     const skeletonType = getNavigationItemSkeletonType(navigationItem, catalogUrl);
     const isLink = isNavigationItemLink(navigationItem);
@@ -89,6 +90,10 @@ export const NavigationItem: FC<NavigationItemProps> = ({
             className="group"
             ref={itemRef}
             onFocus={() => {
+                if (isPointerInteractionRef.current) {
+                    return;
+                }
+
                 if (isDropdownTrigger) {
                     onMenuOpenImmediately();
                 } else {
@@ -97,6 +102,18 @@ export const NavigationItem: FC<NavigationItemProps> = ({
             }}
             onKeyDown={handleKeyDown}
             onMouseEnter={handleMouseEnter}
+            onPointerCancel={() => {
+                isPointerInteractionRef.current = false;
+            }}
+            onPointerDown={() => {
+                isPointerInteractionRef.current = true;
+            }}
+            onPointerLeave={() => {
+                isPointerInteractionRef.current = false;
+            }}
+            onPointerUp={() => {
+                isPointerInteractionRef.current = false;
+            }}
         >
             {isLink && link !== null ? (
                 <ExtendedNextLink
