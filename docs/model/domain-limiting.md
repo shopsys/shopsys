@@ -49,8 +49,8 @@ foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $d
     $locale = $domainConfig->getLocale();
     $domainId = $domainConfig->getId();
 
-    $blogArticleData->seoTitles[$domainId] = t('SEO Title', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-    $blogArticleData->seoMetaDescriptions[$domainId] = t('SEO Meta description', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+    $blogArticleData->seo[$domainId]->title = t('SEO Title', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+    $blogArticleData->seo[$domainId]->metaDescription = t('SEO Meta description', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 }
 ```
 
@@ -77,24 +77,21 @@ A few ground rules should be followed to make the domain limiting work correctly
 
 Use [`MultidomainType`](../introduction/using-form-types.md#multidomaintype) and [`LocalizedType`](../introduction/using-form-types.md#localizedtype) form types to render form fields for each domain/locale.
 
-It's possible to create `entry_options` only for the selected domains, leveraging the `Domain::getAdminEnabledDomains()` method.
+On top of the common `entry_options`, it's possible to create `options_by_domain_id` only for the selected domains, leveraging the `Domain::getAdminEnabledDomainIds()` method (see e.g. the product categories in `ProductFormType`).
 
 ```php
-foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
-    $domainId = $domainConfig->getId();
-
-    $seoTitlesOptionsByDomainId[$domainId] = [
-        'attr' => [
-            'placeholder' => $this->getCategoryNameForPlaceholder($domainConfig, $options['category']),
-            'data-js-placeholder-source-input-id' => 'category_form_name_' . $domainConfig->getLocale(),
-        ],
-    ];
-    $seoMetaDescriptionsOptionsByDomainId[$domainId] = [
-        'attr' => [
-            'placeholder' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
-        ],
+foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+    $categoriesOptionsByDomainId[$domainId] = [
+        'domain_id' => $domainId,
+        'product' => $product,
     ];
 }
+
+$builder->add('categoriesByDomainId', MultidomainType::class, [
+    'entry_type' => CategoriesType::class,
+    'options_by_domain_id' => $categoriesOptionsByDomainId,
+    'label' => 'Assign to category',
+]);
 ```
 
 If you have the strictly domain-separated entity (e.g., orders, complaints - any entity that belongs to a single domain), use the `Domain::getAdminEnabledDomainIds()` method to prepare the datasource.
