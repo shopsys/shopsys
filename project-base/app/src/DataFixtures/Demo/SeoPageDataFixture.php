@@ -103,7 +103,11 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         $seoPageData->seo[$domainId]->title = $this->formatAttributeValue($pageName, 'title', $locale);
         $seoPageData->seo[$domainId]->metaDescription = $this->formatAttributeValue($pageName, 'meta description', $locale);
         $seoPageData->seo[$domainId]->canonicalUrl = $canonicalUrl;
-        $seoPageData->seo[$domainId]->metaRobots = $isDemoSeoPage ? SeoMetaRobotsEnum::NOINDEX_NOFOLLOW : null;
+
+        // predefined pages keep the robots seeded by migrations
+        if ($isDemoSeoPage) {
+            $seoPageData->seo[$domainId]->metaRobots = SeoMetaRobotsEnum::NOINDEX_NOFOLLOW;
+        }
         $seoPageData->seoOgTitlesIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og title', $locale);
         $seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og description', $locale);
     }
