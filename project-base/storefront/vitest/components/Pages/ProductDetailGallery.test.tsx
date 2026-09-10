@@ -108,6 +108,20 @@ describe('ProductDetailGallery', () => {
         expect(thirdThumbnailButton).not.toHaveAttribute('aria-current');
     });
 
+    test('uses a border-only focus style for every gallery opener', () => {
+        renderGallery(manyImages);
+
+        const galleryOpeners = [
+            screen.getByRole('button', { name: 'Open image gallery of Test product' }),
+            ...screen.getAllByRole('button', { name: /Open item \d of 7 in gallery/ }),
+            screen.getByRole('button', { name: 'Open 2 more items in gallery' }),
+        ];
+
+        for (const galleryOpener of galleryOpeners) {
+            expect(galleryOpener).toHaveAttribute('data-focus-style', 'ring');
+        }
+    });
+
     test('opens the fullscreen gallery on the selected item', async () => {
         const user = userEvent.setup();
         renderGallery(images, [video]);
