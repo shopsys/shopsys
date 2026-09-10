@@ -15,17 +15,17 @@ import { type useSearchQuery } from './searchUtils';
 
 type SearchPageContentProps = {
     searchData: ReturnType<typeof useSearchQuery>['searchData'];
-    isSearchFetching: boolean;
+    isSearchPageFetching: boolean;
 };
 
-export const SearchPageContent: FC<SearchPageContentProps> = ({ searchData, isSearchFetching }) => {
+export const SearchPageContent: FC<SearchPageContentProps> = ({ searchData, isSearchPageFetching }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const searchString = useCurrentSearchStringQuery();
 
     const searchHeading = `${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`;
 
-    if ((isSearchFetching || !isClient) && searchString) {
+    if ((isSearchPageFetching || !isClient) && searchString) {
         return <SkeletonPageSearch />;
     }
 
@@ -42,9 +42,11 @@ export const SearchPageContent: FC<SearchPageContentProps> = ({ searchData, isSe
                 </div>
             )}
 
-            {!!searchData && !isSearchFetching && searchString && <SearchContent searchResults={searchData} />}
+            {!!searchData && !isSearchPageFetching && searchString && <SearchContent searchResults={searchData} />}
 
-            {!isSearchFetching && isClient && searchString && <SearchProducts />}
+            {!isSearchPageFetching && isClient && searchString && (
+                <SearchProducts searchProductsDataFromMainQuery={searchData?.productsSearch} />
+            )}
 
             <DeferredLastVisitedProducts />
         </VerticalStack>

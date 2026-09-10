@@ -18,12 +18,12 @@ export const PromoCode: FC = () => {
     const [isContentVisible, setIsContentVisible] = useState(hasAppliedCode);
     const [wasContentRequested, setWasContentRequested] = useState(hasAppliedCode);
 
-    const togglePromoCodeVisibility = () => {
+    const toggleContentVisibility = () => {
         if (!isContentVisible) {
             setWasContentRequested(true);
         }
 
-        setIsContentVisible(!isContentVisible);
+        setIsContentVisible((currentValue) => !currentValue);
     };
 
     return (
@@ -38,13 +38,12 @@ export const PromoCode: FC = () => {
                 )}
                 data-tid={TIDs.blocks_promocode_add_button}
                 type="button"
-                onClick={togglePromoCodeVisibility}
+                onClick={toggleContentVisibility}
             >
                 <span className="flex min-w-0 items-center gap-2">
                     <TagIcon aria-hidden className="size-4 shrink-0 text-link-default" />
                     <span>{t('Discount coupon or gift voucher')}</span>
                 </span>
-
                 <PlusIcon
                     className={twJoin(
                         'size-3.5 shrink-0 text-link-default transition-transform duration-200',

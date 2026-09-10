@@ -23,7 +23,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const currentSearchString = useCurrentSearchStringQuery();
-    const { searchData, isSearchFetching } = useSearchQuery(currentSearchString);
+    const { searchData, isSearchPageFetching } = useSearchQuery(currentSearchString);
     useResetSessionFilters();
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -38,13 +38,13 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 
             <CommonLayout
                 breadcrumbs={breadcrumbs}
-                isFetchingData={isSearchFetching && !!currentSearchString}
+                isFetchingData={isSearchPageFetching}
                 pageTypeOverride={SkeletonEnum.Search}
                 title={t('Search')}
             >
                 <SearchPageContent
                     key={currentSearchString}
-                    isSearchFetching={isSearchFetching}
+                    isSearchPageFetching={isSearchPageFetching}
                     searchData={searchData}
                 />
             </CommonLayout>

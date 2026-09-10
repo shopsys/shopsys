@@ -11,12 +11,8 @@ export const useFilterShowLess = (
 
     const [isWithAllItemsShown, setAreAllItemsShown] = useState(isWithHiddenCheckedItem);
 
-    const shownOptions = options?.slice(0, defaultNumberOfItems);
-    const defaultOptions = isWithAllItemsShown ? options : shownOptions;
-
     return {
         isShowLessMoreShown: !!hiddenOptions?.length,
-        defaultOptions,
         isWithAllItemsShown,
         setAreAllItemsShown,
     };

@@ -1,4 +1,5 @@
 export const PRODUCT_LIST_CONTROLS_ELEMENT_ID = 'product-list-controls';
+export const PRODUCT_LIST_HEADING_ELEMENT_ID = 'product-list-heading';
 
 const PRODUCT_LIST_ELEMENT_ID = 'product-list';
 const FILTER_SCROLL_ATTEMPTS = 6;
@@ -37,7 +38,9 @@ export const scrollToProductListControls = (attempt = 0) => {
             return;
         }
 
-        const productListControlsElement = document.getElementById(PRODUCT_LIST_CONTROLS_ELEMENT_ID);
+        const productListControlsElement =
+            document.getElementById(PRODUCT_LIST_HEADING_ELEMENT_ID) ??
+            document.getElementById(PRODUCT_LIST_CONTROLS_ELEMENT_ID);
 
         if (productListControlsElement) {
             productListControlsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });

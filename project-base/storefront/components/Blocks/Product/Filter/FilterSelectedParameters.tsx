@@ -49,214 +49,218 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         <p className="h6 mb-2">{t('Selected filters')}</p>
 
                         <div className="flex flex-wrap items-center gap-y-2">
-                            {!!currentFilter?.onlyInStock && (
-                                <SelectedParametersList keyName="filter-only-in-stock">
-                                    <SelectedParametersName>{t('Availability')}</SelectedParametersName>
-                                    <SelectedParametersListItem
-                                        ariaLabel={t('Remove filter Availability only goods in stock', {
-                                            ns: 'accessibility',
-                                        })}
-                                        onClick={() => updateFilterInStockQuery(false)}
-                                    >
-                                        {t('Only goods in stock')}
-                                        <SelectedParametersIcon />
-                                    </SelectedParametersListItem>
-                                </SelectedParametersList>
-                            )}
-
-                            {(currentFilter?.minimalPrice !== undefined ||
-                                currentFilter?.maximalPrice !== undefined) && (
-                                <SelectedParametersList keyName="filter-minmax-price">
-                                    <SelectedParametersName>{t('Price')}</SelectedParametersName>
-                                    <SelectedParametersListItem
-                                        ariaLabel={t(
-                                            'Remove filter Price from {{ minimalPrice }} to {{ maximalPrice }}',
-                                            {
-                                                ns: 'accessibility',
-                                                minimalPrice: formatPrice(currentFilter.minimalPrice ?? 0),
-                                                maximalPrice: formatPrice(currentFilter.maximalPrice ?? 0),
-                                            },
-                                        )}
-                                        onClick={() => {
-                                            updateFilterPricesQuery({
-                                                maximalPrice: undefined,
-                                                minimalPrice: undefined,
-                                            });
-                                        }}
-                                    >
-                                        {currentFilter.minimalPrice !== undefined && (
-                                            <>
-                                                <span>{t('from')}&nbsp;</span>
-                                                {formatPrice(currentFilter.minimalPrice)}
-                                                {currentFilter.maximalPrice !== undefined && <>&nbsp;</>}
-                                            </>
-                                        )}
-                                        {currentFilter.maximalPrice !== undefined && (
-                                            <>
-                                                <span>{t('to')}&nbsp;</span>
-                                                {formatPrice(currentFilter.maximalPrice)}
-                                            </>
-                                        )}
-                                        <SelectedParametersIcon />
-                                    </SelectedParametersListItem>
-                                </SelectedParametersList>
-                            )}
-
-                            {!!checkedBrands?.length && (
-                                <SelectedParametersList keyName="selected-brands">
-                                    <SelectedParametersName>{t('Brands')}</SelectedParametersName>
-                                    {checkedBrands.map(
-                                        (checkedBrand) =>
-                                            !!checkedBrand && (
-                                                <SelectedParametersListItem
-                                                    key={checkedBrand.brand.uuid}
-                                                    ariaLabel={t('Remove filter Brand {{ filterName }}', {
-                                                        ns: 'accessibility',
-                                                        filterName: checkedBrand.brand.name,
-                                                    })}
-                                                    onClick={() => updateFilterBrandsQuery(checkedBrand.brand.uuid)}
-                                                >
-                                                    {checkedBrand.brand.name}
-                                                    <SelectedParametersIcon />
-                                                </SelectedParametersListItem>
-                                            ),
-                                    )}
-                                </SelectedParametersList>
-                            )}
-
-                            {!!checkedFlags.length && (
-                                <SelectedParametersList keyName="selected-flags">
-                                    <SelectedParametersName>{t('Flags')}</SelectedParametersName>
-                                    {checkedFlags.map((checkedFlag) => (
+                            <AnimatePresence initial={false}>
+                                {!!currentFilter?.onlyInStock && (
+                                    <SelectedParametersList key="filter-only-in-stock" keyName="filter-only-in-stock">
+                                        <SelectedParametersName>{t('Availability')}</SelectedParametersName>
                                         <SelectedParametersListItem
-                                            key={checkedFlag.flag.uuid}
-                                            ariaLabel={t('Remove filter Flag {{ filterName }}', {
+                                            ariaLabel={t('Remove filter Availability only goods in stock', {
                                                 ns: 'accessibility',
-                                                filterName: checkedFlag.flag.name,
                                             })}
-                                            onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
+                                            onClick={() => updateFilterInStockQuery(false)}
                                         >
-                                            <Flag className="py-0.5" rgbBgColor={checkedFlag.flag.rgbColor}>
-                                                {checkedFlag.flag.name}
-                                            </Flag>
+                                            {t('Only goods in stock')}
                                             <SelectedParametersIcon />
                                         </SelectedParametersListItem>
-                                    ))}
-                                </SelectedParametersList>
-                            )}
+                                    </SelectedParametersList>
+                                )}
 
-                            {selectedParameters.map((selectedParameter) => {
-                                const selectedParameterOptions = filterOptions.parameters?.find(
-                                    (parameterOption) => parameterOption.uuid === selectedParameter.parameter,
-                                );
+                                {(currentFilter?.minimalPrice !== undefined ||
+                                    currentFilter?.maximalPrice !== undefined) && (
+                                    <SelectedParametersList key="filter-minmax-price" keyName="filter-minmax-price">
+                                        <SelectedParametersName>{t('Price')}</SelectedParametersName>
+                                        <SelectedParametersListItem
+                                            ariaLabel={t(
+                                                'Remove filter Price from {{ minimalPrice }} to {{ maximalPrice }}',
+                                                {
+                                                    ns: 'accessibility',
+                                                    minimalPrice: formatPrice(currentFilter.minimalPrice ?? 0),
+                                                    maximalPrice: formatPrice(currentFilter.maximalPrice ?? 0),
+                                                },
+                                            )}
+                                            onClick={() => {
+                                                updateFilterPricesQuery({
+                                                    maximalPrice: undefined,
+                                                    minimalPrice: undefined,
+                                                });
+                                            }}
+                                        >
+                                            {currentFilter.minimalPrice !== undefined && (
+                                                <>
+                                                    <span>{t('from')}&nbsp;</span>
+                                                    {formatPrice(currentFilter.minimalPrice)}
+                                                    {currentFilter.maximalPrice !== undefined && <>&nbsp;</>}
+                                                </>
+                                            )}
+                                            {currentFilter.maximalPrice !== undefined && (
+                                                <>
+                                                    <span>{t('to')}&nbsp;</span>
+                                                    {formatPrice(currentFilter.maximalPrice)}
+                                                </>
+                                            )}
+                                            <SelectedParametersIcon />
+                                        </SelectedParametersListItem>
+                                    </SelectedParametersList>
+                                )}
 
-                                const isSliderParameter =
-                                    selectedParameterOptions?.__typename === 'ParameterSliderFilterOption';
-                                const isColorParameter =
-                                    selectedParameterOptions?.__typename === 'ParameterColorFilterOption';
-                                const isCheckBoxParameter =
-                                    selectedParameterOptions?.__typename === 'ParameterCheckboxFilterOption';
-
-                                const selectedParameterValues =
-                                    // hack typescript because it is confused about filtering shared types
-                                    isCheckBoxParameter || isColorParameter
-                                        ? (
-                                              selectedParameterOptions.values as {
-                                                  uuid: string;
-                                                  text: string;
-                                                  isSelected: boolean;
-                                                  rgbHex: string;
-                                                  colorIcon?: {
-                                                      url: string;
-                                                      anchorText: string;
-                                                  };
-                                              }[]
-                                          ).filter((selectedParameterValue) => {
-                                              return (
-                                                  selectedParameter.values?.includes(selectedParameterValue.uuid) ||
-                                                  defaultProductFiltersMap.parameters
-                                                      .get(selectedParameter.parameter)
-                                                      ?.has(selectedParameterValue.uuid)
-                                              );
-                                          })
-                                        : undefined;
-
-                                if (!selectedParameterOptions) {
-                                    return null;
-                                }
-
-                                return (
-                                    <SelectedParametersList
-                                        key={selectedParameterOptions.uuid}
-                                        keyName={selectedParameterOptions.uuid}
-                                    >
-                                        <SelectedParametersName>{selectedParameterOptions.name}</SelectedParametersName>
-                                        {isSliderParameter && (
-                                            <SelectedParametersListItem
-                                                key={selectedParameterOptions.uuid}
-                                                ariaLabel={t(
-                                                    'Remove parameter range from {{ minValue }} to {{ maxValue }} from group {{ groupName }}',
-                                                    {
-                                                        ns: 'accessibility',
-                                                        minValue:
-                                                            selectedParameter.minimalValue ||
-                                                            selectedParameterOptions.minimalValue,
-                                                        maxValue:
-                                                            selectedParameter.maximalValue ||
-                                                            selectedParameterOptions.maximalValue,
-                                                        groupName: selectedParameterOptions.name,
-                                                    },
-                                                )}
-                                                onClick={() =>
-                                                    updateFilterParametersQuery(
-                                                        selectedParameterOptions.uuid,
-                                                        undefined,
-                                                    )
-                                                }
-                                            >
-                                                <span>{t('from')}&nbsp;</span>
-                                                {selectedParameter.minimalValue ||
-                                                    selectedParameterOptions.minimalValue}
-                                                {!!selectedParameterOptions.unit?.name &&
-                                                    `\xa0${selectedParameterOptions.unit.name}`}
-                                                <span>&nbsp;{t('to')}&nbsp;</span>
-                                                {selectedParameter.maximalValue ||
-                                                    selectedParameterOptions.maximalValue}
-                                                {selectedParameterOptions.unit?.name &&
-                                                    `\xa0${selectedParameterOptions.unit.name}`}
-                                                <SelectedParametersIcon />
-                                            </SelectedParametersListItem>
+                                {!!checkedBrands?.length && (
+                                    <SelectedParametersList key="selected-brands" keyName="selected-brands">
+                                        <SelectedParametersName>{t('Brands')}</SelectedParametersName>
+                                        {checkedBrands.map(
+                                            (checkedBrand) =>
+                                                !!checkedBrand && (
+                                                    <SelectedParametersListItem
+                                                        key={checkedBrand.brand.uuid}
+                                                        ariaLabel={t('Remove filter Brand {{ filterName }}', {
+                                                            ns: 'accessibility',
+                                                            filterName: checkedBrand.brand.name,
+                                                        })}
+                                                        onClick={() => updateFilterBrandsQuery(checkedBrand.brand.uuid)}
+                                                    >
+                                                        {checkedBrand.brand.name}
+                                                        <SelectedParametersIcon />
+                                                    </SelectedParametersListItem>
+                                                ),
                                         )}
-                                        {selectedParameterValues?.map((selectedValue) => (
+                                    </SelectedParametersList>
+                                )}
+
+                                {!!checkedFlags.length && (
+                                    <SelectedParametersList key="selected-flags" keyName="selected-flags">
+                                        <SelectedParametersName>{t('Flags')}</SelectedParametersName>
+                                        {checkedFlags.map((checkedFlag) => (
                                             <SelectedParametersListItem
-                                                key={selectedValue.uuid}
-                                                ariaLabel={t(
-                                                    'Remove parameter {{ value }} from group {{ groupName }}',
-                                                    {
-                                                        ns: 'accessibility',
-                                                        value: selectedValue.text,
-                                                        groupName: selectedParameterOptions.name,
-                                                    },
-                                                )}
-                                                onClick={() =>
-                                                    updateFilterParametersQuery(
-                                                        selectedParameter.parameter,
-                                                        selectedValue.uuid,
-                                                    )
-                                                }
+                                                key={checkedFlag.flag.uuid}
+                                                ariaLabel={t('Remove filter Flag {{ filterName }}', {
+                                                    ns: 'accessibility',
+                                                    filterName: checkedFlag.flag.name,
+                                                })}
+                                                onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
                                             >
-                                                <ColorPreview
-                                                    className="mr-2"
-                                                    colorIcon={selectedValue.colorIcon}
-                                                    rgbHex={selectedValue.rgbHex}
-                                                />
-                                                {selectedValue.text}
+                                                <Flag className="py-0.5" rgbBgColor={checkedFlag.flag.rgbColor}>
+                                                    {checkedFlag.flag.name}
+                                                </Flag>
                                                 <SelectedParametersIcon />
                                             </SelectedParametersListItem>
                                         ))}
                                     </SelectedParametersList>
-                                );
-                            })}
+                                )}
+
+                                {selectedParameters.map((selectedParameter) => {
+                                    const selectedParameterOptions = filterOptions.parameters?.find(
+                                        (parameterOption) => parameterOption.uuid === selectedParameter.parameter,
+                                    );
+
+                                    const isSliderParameter =
+                                        selectedParameterOptions?.__typename === 'ParameterSliderFilterOption';
+                                    const isColorParameter =
+                                        selectedParameterOptions?.__typename === 'ParameterColorFilterOption';
+                                    const isCheckBoxParameter =
+                                        selectedParameterOptions?.__typename === 'ParameterCheckboxFilterOption';
+
+                                    const selectedParameterValues =
+                                        // hack typescript because it is confused about filtering shared types
+                                        isCheckBoxParameter || isColorParameter
+                                            ? (
+                                                  selectedParameterOptions.values as {
+                                                      uuid: string;
+                                                      text: string;
+                                                      isSelected: boolean;
+                                                      rgbHex: string;
+                                                      colorIcon?: {
+                                                          url: string;
+                                                          anchorText: string;
+                                                      };
+                                                  }[]
+                                              ).filter((selectedParameterValue) => {
+                                                  return (
+                                                      selectedParameter.values?.includes(selectedParameterValue.uuid) ||
+                                                      defaultProductFiltersMap.parameters
+                                                          .get(selectedParameter.parameter)
+                                                          ?.has(selectedParameterValue.uuid)
+                                                  );
+                                              })
+                                            : undefined;
+
+                                    if (!selectedParameterOptions) {
+                                        return null;
+                                    }
+
+                                    return (
+                                        <SelectedParametersList
+                                            key={selectedParameterOptions.uuid}
+                                            keyName={selectedParameterOptions.uuid}
+                                        >
+                                            <SelectedParametersName>
+                                                {selectedParameterOptions.name}
+                                            </SelectedParametersName>
+                                            {isSliderParameter && (
+                                                <SelectedParametersListItem
+                                                    key={selectedParameterOptions.uuid}
+                                                    ariaLabel={t(
+                                                        'Remove parameter range from {{ minValue }} to {{ maxValue }} from group {{ groupName }}',
+                                                        {
+                                                            ns: 'accessibility',
+                                                            minValue:
+                                                                selectedParameter.minimalValue ||
+                                                                selectedParameterOptions.minimalValue,
+                                                            maxValue:
+                                                                selectedParameter.maximalValue ||
+                                                                selectedParameterOptions.maximalValue,
+                                                            groupName: selectedParameterOptions.name,
+                                                        },
+                                                    )}
+                                                    onClick={() =>
+                                                        updateFilterParametersQuery(
+                                                            selectedParameterOptions.uuid,
+                                                            undefined,
+                                                        )
+                                                    }
+                                                >
+                                                    <span>{t('from')}&nbsp;</span>
+                                                    {selectedParameter.minimalValue ||
+                                                        selectedParameterOptions.minimalValue}
+                                                    {!!selectedParameterOptions.unit?.name &&
+                                                        `\xa0${selectedParameterOptions.unit.name}`}
+                                                    <span>&nbsp;{t('to')}&nbsp;</span>
+                                                    {selectedParameter.maximalValue ||
+                                                        selectedParameterOptions.maximalValue}
+                                                    {selectedParameterOptions.unit?.name &&
+                                                        `\xa0${selectedParameterOptions.unit.name}`}
+                                                    <SelectedParametersIcon />
+                                                </SelectedParametersListItem>
+                                            )}
+                                            {selectedParameterValues?.map((selectedValue) => (
+                                                <SelectedParametersListItem
+                                                    key={selectedValue.uuid}
+                                                    ariaLabel={t(
+                                                        'Remove parameter {{ value }} from group {{ groupName }}',
+                                                        {
+                                                            ns: 'accessibility',
+                                                            value: selectedValue.text,
+                                                            groupName: selectedParameterOptions.name,
+                                                        },
+                                                    )}
+                                                    onClick={() =>
+                                                        updateFilterParametersQuery(
+                                                            selectedParameter.parameter,
+                                                            selectedValue.uuid,
+                                                        )
+                                                    }
+                                                >
+                                                    <ColorPreview
+                                                        className="mr-2"
+                                                        colorIcon={selectedValue.colorIcon}
+                                                        rgbHex={selectedValue.rgbHex}
+                                                    />
+                                                    {selectedValue.text}
+                                                    <SelectedParametersIcon />
+                                                </SelectedParametersListItem>
+                                            ))}
+                                        </SelectedParametersList>
+                                    );
+                                })}
+                            </AnimatePresence>
 
                             <button
                                 aria-label={t('Clear all active filters', { ns: 'accessibility' })}
