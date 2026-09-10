@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 import FilePicker from './FilePicker';
 import FormChangeInfo from './FormChangeInfo';

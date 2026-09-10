@@ -1,11 +1,6 @@
 {
     "extends": ["@shopsys/biome-config"],
     "files": {
-        "includes": [
-            "js/**",
-            "!js/admin/bootstrap",
-            "!js/admin/components/jquery.dmuploader.js",
-            "!js/common/plugins/jquery.fix.clone.js"
-        ]
+        "includes": ["js/**", "!js/admin/bootstrap", "!js/admin/components/jquery.dmuploader.js"]
     }
 }

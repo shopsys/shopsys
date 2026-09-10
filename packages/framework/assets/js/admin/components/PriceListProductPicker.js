@@ -1,6 +1,7 @@
 import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
+import $ from 'jquery';
 import { formatPrice } from '../../common/utils/priceFormatter';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';

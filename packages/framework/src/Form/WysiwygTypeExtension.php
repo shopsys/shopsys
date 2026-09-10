@@ -8,11 +8,13 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Reprise\Asset\EntrypointsLookupInterface;
 
 final class WysiwygTypeExtension extends AbstractTypeExtension
 {
@@ -22,7 +24,8 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
 
     public function __construct(
         private readonly Localization $localization,
-        private readonly string $entrypointsPath,
+        private readonly EntrypointsLookupInterface $entrypointsLookup,
+        private readonly Packages $packages,
         private readonly WysiwygCdnDataTransformer $wysiwygCdnDataTransformer,
     ) {
     }
@@ -96,15 +99,20 @@ final class WysiwygTypeExtension extends AbstractTypeExtension
         );
     }
 
+    /**
+     * @return string[]
+     */
     private function getContentCss(): array
     {
         $entrypointsOutput = [];
-        $entrypointsJsonContent = file_get_contents($this->entrypointsPath);
-        $entrypointsArrayContent = json_decode($entrypointsJsonContent, true);
-        $entrypoints = $entrypointsArrayContent['entrypoints'];
 
-        if (array_key_exists(static::ADMIN_WYSIWYG_ENTRY, $entrypoints) === true) {
-            $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[static::ADMIN_WYSIWYG_ENTRY]['css']);
+        // the lookup deduplicates returned files per request, so the entry must not share CSS chunks
+        // with the entries rendered by the layout, otherwise those chunks would be missing from the page
+        if ($this->entrypointsLookup->entryExists(static::ADMIN_WYSIWYG_ENTRY)) {
+            // entrypoints.json holds web-root relative references, CKEditor needs URLs
+            foreach ($this->entrypointsLookup->getCssFiles(static::ADMIN_WYSIWYG_ENTRY) as $cssFile) {
+                $entrypointsOutput[] = $this->packages->getUrl($cssFile);
+            }
         }
 
         $entrypointsOutput[] = '/tailwind-for-admin/style.css';

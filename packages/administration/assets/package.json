@@ -20,6 +20,7 @@
         "countup.js": "^2.8.0",
         "imask": "^7.6.1",
         "intl-messageformat": "^11.2.5",
+        "jquery": "^4.0.0",
         "nouislider": "^15.8.1",
         "tom-select": "^2.4.3"
     },

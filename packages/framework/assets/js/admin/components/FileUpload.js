@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import './jquery.dmuploader';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';

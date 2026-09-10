@@ -1,4 +1,5 @@
 import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 
 export default class FixedBar {
     static adjustToolbarHeightProperty() {

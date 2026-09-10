@@ -1,5 +1,6 @@
 import { Buffer } from 'buffer';
 import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 import GrapesMailEditor from './GrapesMailEditor';
 import GrapesWebEditor from './GrapesWebEditor';
 import './grapesjs-non-editable-page';

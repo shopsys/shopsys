@@ -26,7 +26,7 @@ provides a signpost of customizations that are easily achievable as well as a li
 - Open-box modifications in `project-base`
     - E.g. adding new entities, changing the FE design, customization of FE javascripts, adding new FE pages (routes and controllers), ...
 - [Hiding the existing features and functionality](https://github.com/shopsys/demoshop/pull/13)
-- You can read [Npm and webpack]('../frontend/npm-and-webpack.md') to know how to extend javascript
+- You can read [Npm and Rsbuild](../frontend/npm-and-rsbuild.md) to know how to extend javascript
 - See [the cookbook section](../cookbook/index.md) for more
 
 ## What is not supported

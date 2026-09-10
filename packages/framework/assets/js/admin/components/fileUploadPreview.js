@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Sortable from 'sortablejs';
 import Register from '../../common/utils/Register';
 import { deselect, getSelectedValues, select } from './choiceControl';
