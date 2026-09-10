@@ -61,9 +61,6 @@ msgstr "Požiadavka na obnovenie hesla správcu"
 msgid "Authentication code"
 msgstr "Overovací kód"
 
-msgid "Catalog"
-msgstr "Katalóg"
-
 msgid "Confirm withdrawal from contract - order no. {order_number}"
 msgstr "Potvrďte odstúpenie od zmluvy - objednávka č. {order_number}"
 
@@ -129,9 +126,6 @@ msgstr "Vaša otázka k produktu {productName}"
 
 msgid "Your watched product is back in stock!"
 msgstr "Váš sledovaný produkt je späť na sklade!"
-
-msgid "catalog-slug"
-msgstr "katalog"
 
 msgid "pcs"
 msgstr "ks"
