@@ -167,6 +167,8 @@ export enum TIDs {
     product_compare_button = 'product_compare_button',
     comparison_product_ = 'comparison_product_',
     comparison_product_image = 'comparison_product_image',
+    comparison_reorder_button = 'comparison_reorder_button',
+    comparison_undo_button = 'comparison_undo_button',
     comparison_remove_all_button = 'comparison_remove_all_button',
     comparison_empty_state = 'comparison_empty_state',
     comparison_remove_product_button = 'comparison_remove_product_button',

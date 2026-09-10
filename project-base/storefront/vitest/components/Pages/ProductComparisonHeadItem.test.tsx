@@ -1,9 +1,11 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from 'components/Pages/ProductComparison/ProductComparisonHead';
 import { ProductComparisonHeadItem } from 'components/Pages/ProductComparison/ProductComparisonHeadItem';
+import { Reorder } from 'framer-motion';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import type React from 'react';
 import { describe, expect, test, vi } from 'vitest';
+import { renderWithTooltipProvider as render } from 'vitest/helpers/renderWithTooltipProvider';
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
     ExtendedNextLink: ({
@@ -22,6 +24,9 @@ vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
         </a>
     ),
 }));
+
+vi.mock('components/Blocks/Product/ProductPrice', () => ({ ProductPrice: () => <span>€100</span> }));
+vi.mock('components/Blocks/Product/ProductAvailability', () => ({ ProductAvailability: () => <span>In stock</span> }));
 
 vi.mock('components/Basic/Image/Image', () => ({
     Image: () => <span role="img" />,
@@ -101,40 +106,55 @@ describe('ProductComparisonHeadItem', () => {
 
     test('shows the product rating outside the image and product name link', () => {
         render(
-            <table>
-                <tbody>
-                    <tr>
-                        <ProductComparisonHeadItem
-                            listIndex={0}
-                            product={product}
-                            stickyTriggerId={PRODUCT_COMPARISON_STICKY_TRIGGER_ID}
-                            toggleProductInComparison={vi.fn()}
-                        />
-                    </tr>
-                </tbody>
-            </table>,
+            <Reorder.Group values={[product.uuid]} onReorder={vi.fn()}>
+                <ProductComparisonHeadItem
+                    listIndex={0}
+                    product={product}
+                    stickyTriggerId={PRODUCT_COMPARISON_STICKY_TRIGGER_ID}
+                    toggleProductInComparison={vi.fn()}
+                />
+            </Reorder.Group>,
         );
 
         const productLink = screen.getByRole('link', { name: 'Go to product page of 32" Philips TV' });
         const reviewsLink = screen.getByRole('link', { name: 'Average rating 4.5 out of 5, go to reviews' });
 
         expect(reviewsLink).toHaveAttribute('href', '/32-philips-tv#reviews');
-        expect(reviewsLink).toHaveClass('row-start-2');
         expect(reviewsLink).toHaveTextContent('4.5');
         expect(reviewsLink).toHaveTextContent('2 reviews');
         expect(productLink).not.toContainElement(reviewsLink);
-        expect(productLink.parentElement).toBe(reviewsLink.parentElement);
         const productImage = within(productLink).getByRole('img');
         const productName = within(productLink).getByText('32" Philips TV');
+        const productNameWrapper = productName.parentElement;
 
+        expect(within(productLink).getByText('€100')).toBeInTheDocument();
+        expect(within(productLink).getByText('In stock')).toBeInTheDocument();
         expect(productImage).toBeInTheDocument();
         expect(productName).toBeInTheDocument();
-        expect(productName).toHaveClass('row-start-3');
-        expect(productName).not.toHaveClass('text-link-default', 'underline');
-        expect(productName).not.toHaveClass('group-hover/product-link:text-link-hovered');
-        expect(productName).toHaveClass('group-hover/product-link:underline');
+        expect(productNameWrapper).not.toHaveClass('text-link-default', 'underline');
+        expect(productNameWrapper).not.toHaveClass('group-hover/product-link:text-link-hovered');
+        expect(productNameWrapper).toHaveClass('group-hover/product-link:underline');
         expect(within(productLink).queryByText('Code: ABC123')).not.toBeInTheDocument();
         expect(within(productLink).queryByText('4.5')).not.toBeInTheDocument();
-        expect(productName).toHaveAttribute('id', PRODUCT_COMPARISON_STICKY_TRIGGER_ID);
+        expect(productNameWrapper).toHaveAttribute('id', PRODUCT_COMPARISON_STICKY_TRIGGER_ID);
+    });
+    test('moves the product with arrow keys using a handle separate from its link', () => {
+        const onMove = vi.fn();
+        render(
+            <Reorder.Group values={[product.uuid]} onReorder={vi.fn()}>
+                <ProductComparisonHeadItem
+                    canReorder
+                    listIndex={0}
+                    product={product}
+                    onMove={onMove}
+                    toggleProductInComparison={vi.fn()}
+                />
+            </Reorder.Group>,
+        );
+        const handle = screen.getByRole('button', { name: /Reorder/ });
+        expect(screen.getByRole('link', { name: /Go to product page/ })).not.toContainElement(handle);
+        fireEvent.keyDown(handle, { key: 'ArrowRight' });
+        fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+        expect(onMove.mock.calls).toEqual([[1], [-1]]);
     });
 });

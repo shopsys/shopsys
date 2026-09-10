@@ -101,6 +101,14 @@ MutationDecorator:
                     input:
                         type: ProductListUpdateInput!
                 resolve: "@=mutation('removeProductFromListMutation', args)"
+            ReorderProductList:
+                type: ProductList!
+                description: "Updates the order of products in a product list"
+                args:
+                    input:
+                        type: ProductListReorderInput!
+                        validation: cascade
+                resolve: "@=mutation('reorderProductListMutation', args, validator)"
             RemoveProductList:
                 type: ProductList
                 description: "Removes the product list"

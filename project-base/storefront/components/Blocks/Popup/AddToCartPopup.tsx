@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { Button } from 'components/Forms/Button/Button';
@@ -56,41 +57,44 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     aria-labelledby={`added-product-${product.uuid}-name`}
                     className="relative flex flex-row flex-wrap vl:flex-nowrap items-center gap-4 rounded-xl bg-background-more p-4 vl:p-5"
                 >
-                    <ExtendedNextLink
-                        className="group/product-link flex vl:flex-1 basis-full vl:basis-auto cursor-pointer vl:items-center gap-2.5 text-text-default no-underline hover:text-text-default hover:no-underline"
-                        href={productUrl}
-                        type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
-                        aria-label={t('Go to product page of {{ productName }}', {
-                            ns: 'accessibility',
-                            productName: product.fullName,
-                        })}
-                    >
-                        <div className="flex size-20 shrink-0" data-tid={TIDs.add_to_cart_popup_image}>
-                            <Image
-                                alt=""
-                                className="size-20 object-contain mix-blend-multiply"
-                                height={80}
-                                src={product.mainImage?.url}
-                                width={80}
-                            />
-                        </div>
-
-                        <div
-                            className="flex vl:w-48 flex-col gap-2 tracking-wide"
-                            data-tid={TIDs.blocks_product_addtocartpopup_product_name}
+                    <div className="grid min-w-0 vl:flex-1 basis-full vl:basis-auto grid-cols-[80px_minmax(0,1fr)] grid-rows-[auto_auto] gap-x-2.5 gap-y-2">
+                        <ExtendedNextLink
+                            className="group/product-link col-span-2 col-start-1 row-span-2 row-start-1 grid grid-cols-subgrid grid-rows-subgrid text-text-default no-underline hover:text-text-default hover:no-underline"
+                            href={productUrl}
+                            type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+                            aria-label={t('Go to product page of {{ productName }}', {
+                                ns: 'accessibility',
+                                productName: product.fullName,
+                            })}
                         >
+                            <div
+                                className="col-start-1 row-span-2 row-start-1 flex size-20 vl:self-center"
+                                data-tid={TIDs.add_to_cart_popup_image}
+                            >
+                                <Image
+                                    alt=""
+                                    className="size-20 object-contain mix-blend-multiply"
+                                    height={80}
+                                    src={product.mainImage?.url}
+                                    width={80}
+                                />
+                            </div>
+
                             <h3
-                                className="font-secondary font-semibold text-sm group-hover/product-link:underline group-focus-visible/product-link:underline lg:text-sm"
+                                className="col-start-2 row-start-1 self-end font-secondary font-semibold text-sm tracking-wide group-hover/product-link:underline group-focus-visible/product-link:underline lg:text-sm"
+                                data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                                 id={`added-product-${product.uuid}-name`}
                             >
                                 {product.fullName}
                             </h3>
+                        </ExtendedNextLink>
 
-                            <div className="text-sm text-text-less">
-                                {t('Code')}: {product.catalogNumber}
-                            </div>
-                        </div>
-                    </ExtendedNextLink>
+                        <SelectableCode
+                            className="relative z-above col-start-2 row-start-2 w-fit self-start text-sm text-text-less tracking-wide"
+                            label={t('Code')}
+                            value={product.catalogNumber}
+                        />
+                    </div>
 
                     <div className="flex flex-1 items-center justify-end gap-4 vl:gap-6">
                         <div className="font-secondary">

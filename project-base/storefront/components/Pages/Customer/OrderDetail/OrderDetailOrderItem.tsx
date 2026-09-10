@@ -3,6 +3,7 @@ import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
@@ -188,9 +189,13 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     </div>
                 </div>
 
-                <span className="vl:w-auto w-full text-sm text-text-less">
-                    {t('Code')}: {orderItem.product?.catalogNumber}
-                </span>
+                {orderItem.product?.catalogNumber && (
+                    <SelectableCode
+                        className="vl:w-auto w-full text-sm"
+                        label={t('Code')}
+                        value={orderItem.product.catalogNumber}
+                    />
+                )}
 
                 <span>
                     {orderItem.quantity} {orderItem.unit}

@@ -1,0 +1,4 @@
+ProductListReorderInput:
+    type: input-object
+    inherits:
+        - 'ProductListReorderInputDecorator'

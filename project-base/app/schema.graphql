@@ -1498,6 +1498,8 @@ type Mutation {
   RemoveProductList(input: ProductListInput!): ProductList
   "Remove already used promo code from cart"
   RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
+  "Updates the order of products in a product list"
+  ReorderProductList(input: ProductListReorderInput!): ProductList!
   "Request password recovery - email with hash will be sent"
   RequestPasswordRecovery(email: String!): String!
   "Request access to personal data"
@@ -2454,6 +2456,12 @@ input ProductListInput {
   type: ProductListTypeEnum!
   "Product list identifier"
   uuid: Uuid = null
+}
+
+input ProductListReorderInput {
+  productListInput: ProductListInput!
+  "Distinct product UUIDs in the requested order. Products omitted from the input keep their slots."
+  productUuids: [Uuid!]!
 }
 
 "One of possible types of the product list"

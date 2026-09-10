@@ -53,13 +53,13 @@ export const ProductListReviewsSummaryLink: FC<ProductListReviewsSummaryLinkProp
                 <span className="font-semibold text-text-default">{formattedAverageRating}</span>
             </span>
 
-            <span className="text-text-link hover:text-text-link hover:underline">
+            <span className="rounded-sm text-text-link hover:text-text-link hover:underline group-focus-visible/reviews-link:bg-orange-500 group-focus-visible/reviews-link:text-text-default">
                 {t('{{ count }} reviews', { count: reviewsSummary.totalCount })}
             </span>
         </>
     );
     const rootClassName = twMergeCustom(
-        'flex w-fit items-center gap-1.5 whitespace-nowrap text-xs no-underline hover:no-underline',
+        'group/reviews-link flex w-fit items-center gap-1.5 whitespace-nowrap text-xs no-underline hover:no-underline focus-visible:outline-hidden',
         isReviewCountWrappedOnMobile && 'flex-col items-start gap-0.5 sm:flex-row sm:items-center sm:gap-1.5',
         className,
     );
@@ -71,6 +71,7 @@ export const ProductListReviewsSummaryLink: FC<ProductListReviewsSummaryLinkProp
     return (
         <ExtendedNextLink
             preventRedirectOnTextSelection
+            data-focus-color="preserve"
             href={`${productUrl ?? product.slug}#${PRODUCT_DETAIL_SECTIONS_IDS.reviews}`}
             tabIndex={allowKeyboardFocus ? 0 : -1}
             tid={TIDs.blocks_product_list_reviews}

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\ProductList;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Validator\InputValidator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\List\Exception\InvalidProductListOrderException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductNotInListException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
@@ -15,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\InvalidProductListOrderUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductAlreadyInListUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductNotInListUserError;
@@ -94,6 +97,24 @@ class ProductListMutation extends AbstractMutation
             return $this->productListFacade->removeProductFromList($productList, $product);
         } catch (ProductNotInListException $exception) {
             throw new ProductNotInListUserError($exception->getMessage(), $productListType);
+        }
+    }
+
+    public function reorderProductListMutation(Argument $argument, InputValidator $validator): ProductList
+    {
+        $validator->validate();
+        $input = $argument['input'];
+        $productListInput = $input['productListInput'];
+        $productList = $this->productListApiFacade->findProductListByInputData($productListInput);
+
+        if ($productList === null) {
+            throw new ProductListNotFoundUserError('Product list not found', $productListInput['type']);
+        }
+
+        try {
+            return $this->productListFacade->reorderProducts($productList, $input['productUuids']);
+        } catch (InvalidProductListOrderException $exception) {
+            throw new InvalidProductListOrderUserError($exception->getMessage(), $productListInput['type']);
         }
     }
 

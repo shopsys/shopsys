@@ -165,6 +165,7 @@
     * [PhoneDataInput](#phonedatainput)
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
+    * [ProductListReorderInput](#productlistreorderinput)
     * [ProductListUpdateInput](#productlistupdateinput)
     * [ProductQuestionInput](#productquestioninput)
     * [ProductReviewInput](#productreviewinput)
@@ -2098,6 +2099,20 @@ Remove already used promo code from cart
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#removepromocodefromcartinput">RemovePromoCodeFromCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mutation.reorderproductlist">ReorderProductList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a>!</td>
+<td>
+
+Updates the order of products in a product list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistreorderinput">ProductListReorderInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -14149,6 +14164,34 @@ Product list type
 <td>
 
 Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductListReorderInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistreorderinput.productlistinput">productListInput</strong></td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistreorderinput.productuuids">productUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Distinct product UUIDs in the requested order. Products omitted from the input keep their slots.
 
 </td>
 </tr>

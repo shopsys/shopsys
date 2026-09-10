@@ -3,6 +3,7 @@ import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { RejectedIcon } from 'components/Basic/Icon/RejectedIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { TIDs } from 'cypress/tids';
+import { ReactNode } from 'react';
 import { toast } from 'react-toastify';
 import { getErrorIdentifier, isErrorIgnored } from 'utils/errors/ignoredErrors';
 import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
@@ -20,16 +21,23 @@ const getErrorIdentifierFromMessage = (message: string): string => {
 
 export type ShowMessageOptions = {
     toastId?: string;
+    action?: ReactNode;
+    autoClose?: number | false;
+    updateExisting?: boolean;
 };
 
 type ToastMessageContentProps = {
     message: string;
     tid: string;
+    action?: ReactNode;
 };
 
-const ToastMessageContent: FC<ToastMessageContentProps> = ({ message, tid }) => (
-    <div className="custom-toast-content">
-        <span data-tid={tid}>{message}</span>
+const ToastMessageContent: FC<ToastMessageContentProps> = ({ message, tid, action }) => (
+    <div className={action ? 'custom-toast-content flex min-w-0 flex-1 items-center gap-3' : 'custom-toast-content'}>
+        <span className={action ? 'wrap-break-word min-w-0 flex-1' : undefined} data-tid={tid}>
+            {message}
+        </span>
+        {action}
     </div>
 );
 
@@ -80,10 +88,17 @@ export const showMessage = (
             icon: <WarningIcon />,
         });
     } else {
-        toast.success(() => <ToastMessageContent message={message} tid={TIDs.toast_success} />, {
+        const content = <ToastMessageContent message={message} tid={TIDs.toast_success} action={options?.action} />;
+        const successOptions = {
             toastId,
-            closeOnClick: true,
+            closeOnClick: !options?.action,
             icon: <CheckmarkIcon />,
-        });
+            ...(options?.autoClose !== undefined && { autoClose: options.autoClose }),
+        };
+        if (options?.updateExisting && toast.isActive(toastId)) {
+            toast.update(toastId, { ...successOptions, render: content });
+        } else {
+            toast.success(content, successOptions);
+        }
     }
 };
