@@ -22,6 +22,15 @@ export type TypeParameterTypeEnum =
   | 'COLOR'
   | 'SLIDER';
 
+/** One of possible ordering modes for product reviews */
+export type TypeProductReviewOrderingModeEnum =
+  /** Order by rating, highest first */
+  | 'HIGHEST_RATING'
+  /** Order by rating, lowest first */
+  | 'LOWEST_RATING'
+  /** Order by date of creation, newest first */
+  | 'NEWEST';
+
 /** One of possible product types */
 export type TypeProductTypeEnum =
   /** Basic product */
@@ -45,7 +54,7 @@ export type TypeProductDetailFragment = { __typename: 'RegularProduct', shortDes
     | { uuid: string, name: string, images: Array<{ __typename: 'Image', name: string | null, url: string }>, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } } }
     | { uuid: string, name: string, images: Array<{ __typename: 'Image', name: string | null, url: string }>, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } } }
     | { uuid: string, name: string, images: Array<{ __typename: 'Image', name: string | null, url: string }>, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } } }
-  >, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number, ratingCounts: Array<{ __typename: 'ProductReviewRatingCount', rating: number, count: number }> } | null };
+  >, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number, ratingCounts: Array<{ __typename: 'ProductReviewRatingCount', rating: number, count: number }> } | null, reviews: { totalCount: number, orderingMode: Types.TypeProductReviewOrderingModeEnum, summary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number, ratingCounts: Array<{ __typename: 'ProductReviewRatingCount', rating: number, count: number }> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { __typename: 'ProductReview', uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } | null } | null> | null } | null };
 
 export const ProductDetailFragment = gql`
     fragment ProductDetailFragment on RegularProduct {

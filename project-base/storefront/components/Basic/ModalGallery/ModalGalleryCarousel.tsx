@@ -68,8 +68,9 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                         alt={galleryItem.name || `${galleryName}-${index}`}
                                         className="max-h-full w-auto object-contain mix-blend-multiply"
                                         draggable={false}
+                                        hash={galleryItem.url.split('?')[1]}
                                         height={80}
-                                        src={galleryItem.url}
+                                        src={galleryItem.url.split('?')[0]}
                                         width={80}
                                     />
                                 )}

@@ -37,6 +37,7 @@ class ProductReviewResolverMap extends ResolverMap
                 // the exported documents carry approved reviews only, so the status is stored just for the own reviews read from the database
                 'status' => static fn (array $reviewArray) => $reviewArray['status'] ?? ProductReviewStatusEnum::STATUS_APPROVED,
                 'rejectionReason' => static fn (array $reviewArray) => $reviewArray['rejection_reason'] ?? null,
+                'rejectedImagesCount' => static fn (array $reviewArray) => $reviewArray['rejected_images_count'] ?? 0,
                 'productUuid' => static fn (array $reviewArray) => $reviewArray['product_uuid'],
                 'productName' => static fn (array $reviewArray) => $reviewArray['product_name'],
                 'product' => fn (array $reviewArray) => $this->loadVisibleProduct($reviewArray['product_id'] ?? null),

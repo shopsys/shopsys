@@ -1,0 +1,16 @@
+fragment ProductReviewConnectionFragment on ProductReviewConnection {
+    totalCount
+    orderingMode
+    summary {
+        ...ProductReviewsSummaryFragment
+    }
+    pageInfo {
+        ...PageInfoFragment
+    }
+    edges {
+        cursor
+        node {
+            ...ProductReviewFragment
+        }
+    }
+}

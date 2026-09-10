@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Product\Search;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter;
 use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImagePublisher;
 
 class ProductElasticsearchConverterTest extends TestCase
 {
@@ -92,7 +95,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'top_product_position' => null,
         ];
 
-        $converter = new ProductElasticsearchConverter(new ProductReviewDocumentMapper());
+        $converter = new ProductElasticsearchConverter($this->createProductReviewDocumentMapper());
         $this->assertSame($expected, $converter->fillEmptyFields($product));
     }
 
@@ -200,7 +203,16 @@ class ProductElasticsearchConverterTest extends TestCase
             'top_product_position' => null,
         ];
 
-        $converter = new ProductElasticsearchConverter(new ProductReviewDocumentMapper());
+        $converter = new ProductElasticsearchConverter($this->createProductReviewDocumentMapper());
         $this->assertSame($expected, $converter->fillEmptyFields($product));
+    }
+
+    private function createProductReviewDocumentMapper(): ProductReviewDocumentMapper
+    {
+        return new ProductReviewDocumentMapper(
+            $this->createStub(CustomerUploadedFileFacade::class),
+            $this->createStub(Domain::class),
+            $this->createStub(ProductReviewImagePublisher::class),
+        );
     }
 }

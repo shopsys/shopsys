@@ -4,20 +4,9 @@ query ProductReviewsQuery(
     $after: String
     $orderingMode: ProductReviewOrderingModeEnum
 ) {
-    productReviews(productUuid: $productUuid, first: $first, after: $after, orderingMode: $orderingMode) {
-        totalCount
-        orderingMode
-        summary {
-            ...ProductReviewsSummaryFragment
-        }
-        pageInfo {
-            ...PageInfoFragment
-        }
-        edges {
-            cursor
-            node {
-                ...ProductReviewFragment
-            }
+    product(uuid: $productUuid) {
+        reviews(first: $first, after: $after, orderingMode: $orderingMode) {
+            ...ProductReviewConnectionFragment
         }
     }
 }

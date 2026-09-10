@@ -10,10 +10,13 @@ use Nette\Utils\Json;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter;
 use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImagePublisher;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\Elasticsearch\ZboziProductExportDataProvider;
 use Symfony\Component\Finder\Finder;
 
@@ -23,7 +26,7 @@ class ProductElasticsearchConverterTest extends TestCase
     public function testAllFieldsAreMentionedInConverter(string $mappingFile): void
     {
         $productElasticsearchConverter = new ProductElasticsearchConverter(
-            new ProductReviewDocumentMapper(),
+            $this->createProductReviewDocumentMapper(),
             [$this->createProductExportDataProvider()],
         );
 
@@ -78,6 +81,15 @@ class ProductElasticsearchConverterTest extends TestCase
         foreach ($finder as $file) {
             yield $file->getFilename() => [$file->getRealPath()];
         }
+    }
+
+    private function createProductReviewDocumentMapper(): ProductReviewDocumentMapper
+    {
+        return new ProductReviewDocumentMapper(
+            $this->createStub(CustomerUploadedFileFacade::class),
+            $this->createStub(Domain::class),
+            $this->createStub(ProductReviewImagePublisher::class),
+        );
     }
 
     private function createProductExportDataProvider(): ProductExportDataProviderInterface

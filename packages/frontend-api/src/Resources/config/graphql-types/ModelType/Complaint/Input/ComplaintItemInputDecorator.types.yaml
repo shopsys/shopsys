@@ -53,6 +53,10 @@ ComplaintItemInputDecorator:
                 validation:
                   -   NotBlank:
                         message: "Please attach files"
-                  -   \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload:
-                        mimeTypes: ['image/jpeg', 'image/png']
-                        maxSize: 10485760
+                  -   All:
+                        -   File:
+                                extensions: ["jpg", "jpeg", "png"]
+                                maxSize: 10485760
+                                mimeTypesMessage: "Type of file {{ name }} is unsupported."
+                                extensionsMessage: "Type of file {{ name }} is unsupported."
+                                maxSizeMessage: "The file {{ name }} is too big."

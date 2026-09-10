@@ -1,6 +1,7 @@
 import { ExtendedNextLink, type ExtendedNextLinkProps } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { WriteIcon } from 'components/Basic/Icon/WriteIcon';
+import { ProductReviewPhotos } from 'components/Blocks/ProductReviews/ProductReviewPhotos';
 import { ProductReviewStatus } from 'components/Blocks/ProductReviews/ProductReviewStatus';
 import { ProductReviewDisplayStatus } from 'components/Blocks/ProductReviews/productReviewTypes';
 import { getReviewerInitial } from 'components/Blocks/ProductReviews/productReviewUtils';
@@ -14,9 +15,13 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductReviewItemProps = {
+    arePhotosOnGreyBackground?: boolean;
     id?: string;
     leadingContent?: ReactNode;
-    productReview: Pick<TypeProductReviewFragment, 'reviewerName' | 'rating' | 'text' | 'createdAt'> &
+    productReview: Pick<
+        TypeProductReviewFragment,
+        'reviewerName' | 'productName' | 'rating' | 'text' | 'createdAt' | 'images'
+    > &
         Partial<Pick<TypeProductReviewFragment, 'responseText' | 'responseCreatedAt'>>;
     productName?: ReactNode;
     reviewTitle?: ReactNode;
@@ -26,6 +31,7 @@ type ProductReviewItemProps = {
 };
 
 export const ProductReviewItem: FC<ProductReviewItemProps> = ({
+    arePhotosOnGreyBackground,
     children,
     className,
     id,
@@ -112,6 +118,12 @@ export const ProductReviewItem: FC<ProductReviewItemProps> = ({
                     </div>
 
                     {productReview.text && <p className="m-0 whitespace-pre-line">{productReview.text}</p>}
+
+                    <ProductReviewPhotos
+                        isOnGreyBackground={arePhotosOnGreyBackground}
+                        galleryName={productReview.productName}
+                        images={productReview.images}
+                    />
 
                     {productReview.responseText && (
                         <div className="flex flex-col gap-1 rounded-md bg-background-more p-4">

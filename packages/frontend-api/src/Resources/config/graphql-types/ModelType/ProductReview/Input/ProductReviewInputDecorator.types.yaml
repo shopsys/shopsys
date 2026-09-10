@@ -66,3 +66,18 @@ ProductReviewInputDecorator:
                 type: "String"
                 description: "URL hash of the order proving the purchase of a customer that is not logged in, the review is created unverified without it"
                 defaultValue: null
+            images:
+                type: "[FileUpload!]!"
+                description: "Photos of the review (JPG or PNG, up to 5 files of 10 MB each)"
+                defaultValue: []
+                validation:
+                    -   Count:
+                            max: 5
+                            maxMessage: "You can upload up to {{ limit }} photos"
+                    -   All:
+                            -   File:
+                                    extensions: ['jpg', 'jpeg', 'png']
+                                    maxSize: 10485760
+                                    mimeTypesMessage: "Type of file {{ name }} is unsupported."
+                                    extensionsMessage: "Type of file {{ name }} is unsupported."
+                                    maxSizeMessage: "The file {{ name }} is too big."

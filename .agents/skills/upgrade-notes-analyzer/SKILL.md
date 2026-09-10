@@ -139,6 +139,8 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 
 **Style:**
 - **Upgrade notes are instructions, not a changelog** — every line must tell the developer what to DO, not what happened
+- **Never restate what `#project-base-diff` already shows** — a change that consists of editing a project-base file (config yaml, ES definitions, storefront code) must NOT become its own bullet, and never paste config snippets from the diff; bullets are reserved for package-level BC breaks (invisible in the project-base diff), manual actions invisible in ANY diff (index recreation, exports, cache clears — phrase as "after applying the project changes, do X"), and conditional decisions the developer must make
+- Drop speculative "if you customize Y" warnings when the PR did not touch Y
 - Action verbs: "use", "replace", "update", "rename"
 - Always use FQCN
 - **Never describe new features** — if something was added and requires no action, omit it entirely

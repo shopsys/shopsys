@@ -613,6 +613,10 @@
                         "type": "date",
                         "index": false,
                         "doc_values": false
+                    },
+                    "images": {
+                        "type": "object",
+                        "enabled": false
                     }
                 }
             },

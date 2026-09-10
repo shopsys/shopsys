@@ -6,7 +6,9 @@ namespace Shopsys\FrontendApiBundle\Model\ProductReview;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -15,6 +17,8 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImage;
+use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageDataFactory;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewDataFactory;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
@@ -39,14 +43,22 @@ class ProductReviewApiFacade
         protected readonly ProductReviewDocumentMapper $productReviewDocumentMapper,
         protected readonly ProductReviewFacade $productReviewFacade,
         protected readonly RequestStack $requestStack,
+        protected readonly ProductReviewImageDataFactory $productReviewImageDataFactory,
+        protected readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
+        protected readonly FileUpload $fileUpload,
     ) {
     }
 
     public function checkProductReviewsEnabledOnCurrentDomain(): void
     {
-        if (!$this->productReviewEnabledChecker->isEnabledForDomain($this->domain->getId())) {
+        if (!$this->areProductReviewsEnabledOnCurrentDomain()) {
             throw new ProductReviewsDisabledUserError('Product reviews are not enabled on this domain.');
         }
+    }
+
+    public function areProductReviewsEnabledOnCurrentDomain(): bool
+    {
+        return $this->productReviewEnabledChecker->isEnabledForDomain($this->domain->getId());
     }
 
     /**
@@ -154,9 +166,13 @@ class ProductReviewApiFacade
      */
     public function extractReviewToPublicArray(ProductReview $productReview): array
     {
-        $reviewArray = $this->productReviewDocumentMapper->mapReview($productReview);
+        $reviewArray = $this->productReviewDocumentMapper->mapReview($productReview, $this->domain->getId());
         $reviewArray['status'] = $productReview->getStatus();
         $reviewArray['rejection_reason'] = $productReview->getRejectionReason();
+        $reviewArray['rejected_images_count'] = count(array_filter(
+            $productReview->getImages(),
+            static fn (ProductReviewImage $productReviewImage): bool => $productReviewImage->isRejected(),
+        ));
         $reviewArray['product_id'] = $productReview->getProduct()?->getId();
 
         return $reviewArray;
@@ -201,12 +217,33 @@ class ProductReviewApiFacade
         $productReviewData->text = $input['text'];
         $productReviewData->ipAddress = $this->requestStack->getCurrentRequest()?->getClientIp() ?? 'unknown';
         $productReviewData->isVerifiedPurchase = $orderItem !== null;
+        $productReviewData->images = $this->createImagesData($input['images']);
 
         try {
             return $this->productReviewFacade->create($productReviewData);
         } catch (UniqueConstraintViolationException) {
             throw new DuplicateProductReviewUserError('The customer has already reviewed this product.');
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
+     * @return \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData[]
+     */
+    protected function createImagesData(array $uploadedFiles): array
+    {
+        $imagesData = [];
+
+        foreach (array_values($uploadedFiles) as $index => $uploadedFile) {
+            $productReviewImageData = $this->productReviewImageDataFactory->create();
+            $productReviewImageData->file = $this->customerUploadedFileDataFactory->create();
+            $productReviewImageData->file->uploadedFiles[] = $this->fileUpload->upload($uploadedFile);
+            $productReviewImageData->file->uploadedFilenames[] = sprintf('review-image-%d', $index + 1);
+
+            $imagesData[] = $productReviewImageData;
+        }
+
+        return $imagesData;
     }
 
     /**

@@ -4,6 +4,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
+import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 /** One of possible moderation statuses of a product review */
 export type TypeProductReviewStatusEnum =
   /** The review is approved and publicly visible */
@@ -13,11 +14,11 @@ export type TypeProductReviewStatusEnum =
   /** The review was rejected */
   | 'REJECTED';
 
-export type TypeCustomerUserProductReviewFragment = { __typename: 'ProductReview', uuid: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, responseText: string | null, responseCreatedAt: string | null, productUuid: string | null, productName: string, product:
+export type TypeCustomerUserProductReviewFragment = { __typename: 'ProductReview', uuid: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, responseText: string | null, responseCreatedAt: string | null, rejectedImagesCount: number, productUuid: string | null, productName: string, product:
     | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
     | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
     | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
-   | null };
+   | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> };
 
 export const CustomerUserProductReviewFragment = gql`
     fragment CustomerUserProductReviewFragment on ProductReview {
@@ -32,6 +33,7 @@ export const CustomerUserProductReviewFragment = gql`
   rejectionReason
   responseText
   responseCreatedAt
+  rejectedImagesCount
   productUuid
   productName
   product {
@@ -42,5 +44,8 @@ export const CustomerUserProductReviewFragment = gql`
       url
     }
   }
+  images {
+    ...ImageFragment
+  }
 }
-    `;
+    ${ImageFragment}`;
