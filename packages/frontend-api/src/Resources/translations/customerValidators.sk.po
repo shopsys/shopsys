@@ -203,13 +203,13 @@ msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr "PSČ nemôže byť dlhšie ako {{ limit }} znakov"
 
 msgid "Promo code is already applied in the current cart."
-msgstr "Promocódový kód je už použitý v aktuálnom košíku."
+msgstr "Zľavový kupón je už použitý v aktuálnom košíku."
 
 msgid "Promo code is available for registered customers only."
-msgstr "Promocódový kód je dostupný iba pre registrovaných zákazníkov."
+msgstr "Zľavový kupón je dostupný iba pre registrovaných zákazníkov."
 
 msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
-msgstr "Promocódový kód nie je dostupný pre vašu cenovú skupinu. Možno ste zabudli sa prihlásiť."
+msgstr "Zľavový kupón nie je dostupný pre vašu cenovú skupinu. Možno ste zabudli sa prihlásiť."
 
 msgid "Quantity must be an integer"
 msgstr "Množstvo musí byť celé číslo"
@@ -281,19 +281,19 @@ msgid "The payment is not allowed in combination with already selected transport
 msgstr "Táto platba nie je povolená v kombinácii s už vybratou dopravou"
 
 msgid "The promo code can only be used for a higher total price."
-msgstr "Promocódový kód sa dá použiť iba pri vyššej celkovej cene."
+msgstr "Zľavový kupón sa dá použiť iba pri vyššej celkovej cene."
 
 msgid "The promo code is no longer valid. Check it, please."
-msgstr "Promocódový kód už nie je platný. Prosím, skontrolujte ho."
+msgstr "Zľavový kupón už nie je platný. Prosím, skontrolujte ho."
 
 msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
-msgstr "Promocódový kód sa nedá použiť na žiaden z produktov vo vašom košíku. Prosím, skontrolujte ho."
+msgstr "Zľavový kupón sa nedá použiť na žiaden z produktov vo vašom košíku. Prosím, skontrolujte ho."
 
 msgid "The promo code is not valid or it has been already used. Check it, please."
-msgstr "Promocódový kód nie je platný alebo už bol použitý. Prosím, skontrolujte ho."
+msgstr "Zľavový kupón nie je platný alebo už bol použitý. Prosím, skontrolujte ho."
 
 msgid "The promo code is not valid yet. Check it, please."
-msgstr "Promocódový kód ešte nie je platný. Prosím, skontrolujte ho."
+msgstr "Zľavový kupón ešte nie je platný. Prosím, skontrolujte ho."
 
 msgid "The transport is not allowed in combination with already selected payment"
 msgstr "Táto doprava nie je povolená v kombinácii s už vybratou platbou"
