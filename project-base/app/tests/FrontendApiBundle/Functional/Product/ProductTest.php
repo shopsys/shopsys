@@ -76,10 +76,13 @@ class ProductTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'product');
 
-        $this->assertSame(
+        $expectedCanonicalUrl = preg_replace(
+            '~^http://~',
+            'https://',
             $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => $canonicalProduct->getId()]),
-            $data['seo']['canonicalUrl'],
         );
+
+        $this->assertSame($expectedCanonicalUrl, $data['seo']['canonicalUrl']);
     }
 
     public function testProductDetailWithAllAttributesByUuid(): void

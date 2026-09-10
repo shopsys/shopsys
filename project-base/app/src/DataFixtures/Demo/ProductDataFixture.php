@@ -1841,11 +1841,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
-            $productData->seo[$domain->getId()]->canonicalUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
+            $canonicalUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
                 $domain->getId(),
                 'front_product_detail',
                 $lg22mt44dSmallerProduct->getId(),
             );
+            // canonical URL has to be https even when the domain runs on http (e.g. locally)
+            $productData->seo[$domain->getId()]->canonicalUrl = preg_replace('~^http://~', 'https://', $canonicalUrl);
         }
 
         $this->createProduct($productData);

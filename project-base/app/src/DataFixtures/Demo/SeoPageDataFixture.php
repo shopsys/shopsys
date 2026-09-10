@@ -99,6 +99,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         } else {
             $canonicalUrl = $domainConfig->getUrl() . '/' . $seoPageSlug;
         }
+        $canonicalUrl = $this->forceHttps($canonicalUrl);
 
         $seoPageData->seo[$domainId]->title = $this->formatAttributeValue($pageName, 'title', $locale);
         $seoPageData->seo[$domainId]->metaDescription = $this->formatAttributeValue($pageName, 'meta description', $locale);
@@ -110,6 +111,14 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         }
         $seoPageData->seoOgTitlesIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og title', $locale);
         $seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId] = $this->formatAttributeValue($pageName, 'og description', $locale);
+    }
+
+    /**
+     * Canonical URL has to be https even when the domain runs on http
+     */
+    private function forceHttps(string $url): string
+    {
+        return preg_replace('~^http://~', 'https://', $url);
     }
 
     private function formatAttributeValue(string $pageName, string $value, string $locale): string
