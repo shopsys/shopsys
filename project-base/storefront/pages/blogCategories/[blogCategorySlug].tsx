@@ -54,6 +54,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
             description={blogCategoryData?.blogCategory?.seo.metaDescription}
             hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
             isFetchingData={isBlogCategoryFetching}
+            seo={blogCategoryData?.blogCategory?.seo}
             title={title}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}

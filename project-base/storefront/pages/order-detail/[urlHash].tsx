@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
@@ -50,29 +49,27 @@ const OrderDetailByHashPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-            <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || isOrderFetching}>
-                <CommonLayout
-                    breadcrumbs={breadcrumbs}
-                    title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
-                >
-                    {!!orderData?.order && (
-                        <Webline width="lg">
-                            <VerticalStack gap="sm">
-                                <PageHero
-                                    icon={DocumentIcon}
-                                    title={`${t('Your order')} ${orderData.order.number}`}
-                                    titleTid={TIDs.order_detail_number_heading}
-                                />
+        <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || isOrderFetching}>
+            <CommonLayout
+                breadcrumbs={breadcrumbs}
+                defaultMetaRobots="noindex"
+                title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
+            >
+                {!!orderData?.order && (
+                    <Webline width="lg">
+                        <VerticalStack gap="sm">
+                            <PageHero
+                                icon={DocumentIcon}
+                                title={`${t('Your order')} ${orderData.order.number}`}
+                                titleTid={TIDs.order_detail_number_heading}
+                            />
 
-                                <OrderDetailContent order={orderData.order} />
-                            </VerticalStack>
-                        </Webline>
-                    )}
-                </CommonLayout>
-            </PageGuard>
-        </>
+                            <OrderDetailContent order={orderData.order} />
+                        </VerticalStack>
+                    </Webline>
+                )}
+            </CommonLayout>
+        </PageGuard>
     );
 };
 

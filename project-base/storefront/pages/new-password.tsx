@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -44,19 +43,17 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
     }
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-            <CommonLayout
-                title={t('Set new password')}
-                breadcrumbs={
-                    hash === '' || email === ''
-                        ? breadcrumbs
-                        : [{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]
-                }
-            >
-                <NewPasswordContent email={emailParam} hash={hashParam} />
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={
+                hash === '' || email === ''
+                    ? breadcrumbs
+                    : [{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]
+            }
+            defaultMetaRobots="noindex"
+            title={t('Set new password')}
+        >
+            <NewPasswordContent email={emailParam} hash={hashParam} />
+        </CommonLayout>
     );
 };
 

@@ -53,6 +53,7 @@ const ArticleDetailPage: NextPage = () => {
             description={article?.seo.metaDescription}
             isFetchingData={isArticleDetailFetching}
             ogType={OgTypeEnum.Article}
+            seo={article?.seo}
             title={article?.seo.title || article?.articleName}
         >
             {!!article && (

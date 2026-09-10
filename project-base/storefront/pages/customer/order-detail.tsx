@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CURRENT_CUSTOMER_USER_REVIEWS_LIMIT } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
@@ -59,25 +58,21 @@ const OrderDetailPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!orderDetailError}>
+            <CustomerLayout
+                breadcrumbs={breadcrumbs}
+                breadcrumbsType="orderList"
+                isFetchingData={isOrderDetailFetching}
+            >
+                <PageHero
+                    icon={DocumentIcon}
+                    title={t('Your order') + (orderData?.order?.number ? ` ${orderData.order.number}` : '')}
+                    titleTid={TIDs.order_detail_number_heading}
+                />
 
-            <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!orderDetailError}>
-                <CustomerLayout
-                    breadcrumbs={breadcrumbs}
-                    breadcrumbsType="orderList"
-                    isFetchingData={isOrderDetailFetching}
-                >
-                    <PageHero
-                        icon={DocumentIcon}
-                        title={t('Your order') + (orderData?.order?.number ? ` ${orderData.order.number}` : '')}
-                        titleTid={TIDs.order_detail_number_heading}
-                    />
-
-                    {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
-                </CustomerLayout>
-            </PageGuard>
-        </>
+                {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
+            </CustomerLayout>
+        </PageGuard>
     );
 };
 

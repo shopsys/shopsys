@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
@@ -68,21 +67,19 @@ const BrandDetailPage: NextPage = () => {
     useGtmPageReadyEvent(pageReadyEvent, isBrandFetching);
 
     return (
-        <>
-            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
-
-            <CommonLayout
-                breadcrumbs={brandDetailData?.brand?.breadcrumb}
-                breadcrumbsType="brandsOverview"
-                description={brandDetailData?.brand?.seo.metaDescription}
-                hreflangLinks={brandDetailData?.brand?.hreflangLinks}
-                isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
-                ogImageUrlDefault={brandImageUrl}
-                title={title}
-            >
-                {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={brandDetailData?.brand?.breadcrumb}
+            breadcrumbsType="brandsOverview"
+            defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
+            description={brandDetailData?.brand?.seo.metaDescription}
+            hreflangLinks={brandDetailData?.brand?.hreflangLinks}
+            isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
+            ogImageUrlDefault={brandImageUrl}
+            seo={brandDetailData?.brand?.seo}
+            title={title}
+        >
+            {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}
+        </CommonLayout>
     );
 };
 

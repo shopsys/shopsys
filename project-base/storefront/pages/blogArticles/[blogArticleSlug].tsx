@@ -1,5 +1,4 @@
 import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
@@ -49,33 +48,32 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const shouldNoIndex = isDraft || isPreview || isFuturePublishDate;
 
     return (
-        <>
-            {shouldNoIndex && <MetaRobots content="noindex, nofollow" />}
-            <CommonLayout
-                breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
-                breadcrumbsType="blogCategory"
-                canonicalQueryParams={[]}
-                description={blogArticleData?.blogArticle?.seo.metaDescription}
-                hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
-                isFetchingData={isBlogArticleFetching}
-                ogImageUrlDefault={blogArticleImageUrl}
-                ogType={OgTypeEnum.Article}
-                title={blogArticleData?.blogArticle?.seo.title || blogArticleData?.blogArticle?.name}
-            >
-                {!!blogArticleData?.blogArticle && (
-                    <>
-                        <ArticleMetadata
-                            authorName={blogArticleData.blogArticle.author?.name}
-                            datePublished={blogArticleData.blogArticle.publishDate}
-                            description={blogArticleData.blogArticle.seo.metaDescription}
-                            headline={blogArticleData.blogArticle.seo.h1 || blogArticleData.blogArticle.name}
-                            imageUrl={blogArticleData.blogArticle.mainImage?.url}
-                        />
-                        <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
-                    </>
-                )}
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
+            breadcrumbsType="blogCategory"
+            canonicalQueryParams={[]}
+            defaultMetaRobots={shouldNoIndex ? 'noindex, nofollow' : undefined}
+            description={blogArticleData?.blogArticle?.seo.metaDescription}
+            hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
+            isFetchingData={isBlogArticleFetching}
+            ogImageUrlDefault={blogArticleImageUrl}
+            ogType={OgTypeEnum.Article}
+            seo={blogArticleData?.blogArticle?.seo}
+            title={blogArticleData?.blogArticle?.seo.title || blogArticleData?.blogArticle?.name}
+        >
+            {!!blogArticleData?.blogArticle && (
+                <>
+                    <ArticleMetadata
+                        authorName={blogArticleData.blogArticle.author?.name}
+                        datePublished={blogArticleData.blogArticle.publishDate}
+                        description={blogArticleData.blogArticle.seo.metaDescription}
+                        headline={blogArticleData.blogArticle.seo.h1 || blogArticleData.blogArticle.name}
+                        imageUrl={blogArticleData.blogArticle.mainImage?.url}
+                    />
+                    <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
+                </>
+            )}
+        </CommonLayout>
     );
 };
 

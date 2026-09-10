@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
@@ -27,25 +26,21 @@ const ChangePasswordPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <CustomerLayout breadcrumbs={breadcrumbs} title={t('Change password')}>
+            {currentCustomerUserData !== undefined && (
+                <>
+                    <PageHero
+                        icon={LockCheckIcon}
+                        title={t('Change password')}
+                        description={t(
+                            'Keep your account safe and sound by updating your password to something only you know.',
+                        )}
+                    />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} title={t('Change password')}>
-                {currentCustomerUserData !== undefined && (
-                    <>
-                        <PageHero
-                            icon={LockCheckIcon}
-                            title={t('Change password')}
-                            description={t(
-                                'Keep your account safe and sound by updating your password to something only you know.',
-                            )}
-                        />
-
-                        <ChangePasswordContent currentCustomerUser={currentCustomerUserData} />
-                    </>
-                )}
-            </CustomerLayout>
-        </>
+                    <ChangePasswordContent currentCustomerUser={currentCustomerUserData} />
+                </>
+            )}
+        </CustomerLayout>
     );
 };
 

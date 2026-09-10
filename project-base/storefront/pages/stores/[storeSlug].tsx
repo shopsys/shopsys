@@ -43,6 +43,7 @@ const StoreDetailPage: NextPage = () => {
             description={storeDetailData?.store?.seo.metaDescription}
             isFetchingData={isStoreFetching}
             ogImageUrlDefault={storeImageUrl}
+            seo={storeDetailData?.store?.seo}
             title={title}
         >
             {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}

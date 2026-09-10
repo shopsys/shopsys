@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderLayout } from 'components/Layout/OrderLayout';
 import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
@@ -20,13 +19,9 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     useGtmContactInformationViewEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <OrderLayout page="contact-information">
-                <ContactInformationContent />
-            </OrderLayout>
-        </>
+        <OrderLayout page="contact-information">
+            <ContactInformationContent />
+        </OrderLayout>
     );
 };
 
