@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class HeurekaFeedItem implements FeedItemInterface
 {
+    /**
+     * @param string[] $specialServices
+     */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
@@ -27,6 +30,7 @@ class HeurekaFeedItem implements FeedItemInterface
         protected readonly ?Money $cpc = null,
         protected readonly ?string $deliveryId = null,
         protected readonly ?Money $deliveryPrice = null,
+        protected readonly array $specialServices = [],
     ) {
     }
 
@@ -112,5 +116,13 @@ class HeurekaFeedItem implements FeedItemInterface
     public function getCpc(): ?Money
     {
         return $this->cpc;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSpecialServices(): array
+    {
+        return $this->specialServices;
     }
 }

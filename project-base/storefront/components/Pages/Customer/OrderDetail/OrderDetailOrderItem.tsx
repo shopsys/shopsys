@@ -5,6 +5,7 @@ import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
+import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
@@ -16,6 +17,7 @@ import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapOrderItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import {
     WRITE_REVIEW_ORDER_HASH_QUERY_PARAMETER_NAME,
@@ -85,6 +87,8 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
             ? purchasedGiftVouchers.filter((giftVoucher) => giftVoucher.productCatnum === orderItem.catnum)
             : [];
 
+    const additionalServiceLines = mapOrderItemAdditionalServiceSummaryLines(orderItem.relatedItems, formatPrice);
+
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const openCreateComplaintPopup = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -117,119 +121,128 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     return (
         <div
             className={twJoin(
-                'relative flex flex-col gap-3 font-secondary font-semibold first:border-none',
+                'font-secondary font-semibold first:border-none',
                 'border-t border-t-border-default py-5 first:pt-0 last:pb-0',
             )}
         >
-            {isProductGift && <GiftBadge className="top-5 rounded-tl-md" />}
+            <div className="relative flex flex-col gap-3">
+                {isProductGift && <GiftBadge className="top-5 rounded-tl-md" />}
 
-            <div
-                className={twMergeCustom(
-                    'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5',
-                )}
-            >
-                <div className="flex vl:w-auto w-full items-center gap-5">
-                    <div className="flex size-20 shrink-0" data-tid={TIDs.order_detail_item_image}>
-                        <Image
-                            alt={orderItem.name}
-                            className="size-20 object-contain mix-blend-multiply"
-                            height={80}
-                            src={orderItem.product?.mainImage?.url}
-                            width={80}
-                        />
+                <div
+                    className={twMergeCustom(
+                        'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5',
+                    )}
+                >
+                    <div className="flex vl:w-auto w-full items-center gap-5">
+                        <div className="flex size-20 shrink-0" data-tid={TIDs.order_detail_item_image}>
+                            <Image
+                                alt={orderItem.name}
+                                className="size-20 object-contain mix-blend-multiply"
+                                height={80}
+                                src={orderItem.product?.mainImage?.url}
+                                width={80}
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            {orderItem.product?.isVisible ? (
+                                <ExtendedNextLink
+                                    className="vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
+                                    href={orderItem.product.slug}
+                                    skeletonType="product"
+                                    aria-label={t('Go to product {{ productName }}', {
+                                        ns: 'accessibility',
+                                        productName: orderItem.name,
+                                    })}
+                                >
+                                    {orderItem.name}
+                                </ExtendedNextLink>
+                            ) : (
+                                <span className="text-sm text-text-default">{orderItem.name}</span>
+                            )}
+
+                            {showComplaintButton && (
+                                <button
+                                    aria-haspopup="dialog"
+                                    className="inline-flex cursor-pointer items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
+                                    data-tid={TIDs.order_detail_create_complaint_button}
+                                    tabIndex={0}
+                                    aria-label={t('Create complaint for product {{ productName }}', {
+                                        ns: 'accessibility',
+                                        productName: orderItem.name,
+                                    })}
+                                    onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
+                                >
+                                    <FillIcon className="mr-1 size-5" />
+                                    {t('Create complaint')}
+                                </button>
+                            )}
+
+                            {showWriteReviewButton && (
+                                <ExtendedNextLink
+                                    className="inline-flex items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm hover:text-link-hovered"
+                                    href={getWriteReviewUrl()}
+                                    tid={TIDs.order_detail_write_review_button}
+                                    skeletonType="product"
+                                    aria-label={t('Write a review for product {{ productName }}', {
+                                        ns: 'accessibility',
+                                        productName: orderItem.name,
+                                    })}
+                                >
+                                    <StarIcon className="mr-1 size-5" />
+                                    {t('Write a review')}
+                                </ExtendedNextLink>
+                            )}
+
+                            {hasAlreadyReviewed && (
+                                <p className="inline-flex items-center self-baseline whitespace-nowrap text-sm text-text-less">
+                                    <StarIcon aria-hidden className="mr-1 size-5" />
+                                    {t('Already reviewed.')}
+                                </p>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        {orderItem.product?.isVisible ? (
-                            <ExtendedNextLink
-                                className="vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
-                                href={orderItem.product.slug}
-                                skeletonType="product"
-                                aria-label={t('Go to product {{ productName }}', {
-                                    ns: 'accessibility',
-                                    productName: orderItem.name,
-                                })}
-                            >
-                                {orderItem.name}
-                            </ExtendedNextLink>
-                        ) : (
-                            <span className="text-sm text-text-default">{orderItem.name}</span>
-                        )}
+                    <span className="vl:w-auto w-full text-sm text-text-less">
+                        {t('Code')}: {orderItem.catnum}
+                    </span>
 
-                        {showComplaintButton && (
-                            <button
-                                aria-haspopup="dialog"
-                                className="inline-flex cursor-pointer items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
-                                data-tid={TIDs.order_detail_create_complaint_button}
-                                tabIndex={0}
-                                aria-label={t('Create complaint for product {{ productName }}', {
-                                    ns: 'accessibility',
-                                    productName: orderItem.name,
-                                })}
-                                onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
-                            >
-                                <FillIcon className="mr-1 size-5" />
-                                {t('Create complaint')}
-                            </button>
-                        )}
+                    <span>
+                        {orderItem.quantity} {orderItem.unit}
+                    </span>
 
-                        {showWriteReviewButton && (
-                            <ExtendedNextLink
-                                className="inline-flex items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm hover:text-link-hovered"
-                                href={getWriteReviewUrl()}
-                                tid={TIDs.order_detail_write_review_button}
-                                skeletonType="product"
-                                aria-label={t('Write a review for product {{ productName }}', {
-                                    ns: 'accessibility',
-                                    productName: orderItem.name,
-                                })}
-                            >
-                                <StarIcon className="mr-1 size-5" />
-                                {t('Write a review')}
-                            </ExtendedNextLink>
-                        )}
-
-                        {hasAlreadyReviewed && (
-                            <p className="inline-flex items-center self-baseline whitespace-nowrap text-sm text-text-less">
-                                <StarIcon aria-hidden className="mr-1 size-5" />
-                                {t('Already reviewed.')}
-                            </p>
-                        )}
-                    </div>
+                    {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
+                        <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                    )}
                 </div>
 
-                <span className="vl:w-auto w-full text-sm text-text-less">
-                    {t('Code')}: {orderItem.catnum}
-                </span>
-
-                <span>
-                    {orderItem.quantity} {orderItem.unit}
-                </span>
-
-                {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                {purchasedGiftVouchersForItem.length > 0 && (
+                    <div className="-ml-4 vl:ml-0 flex w-full flex-wrap items-center gap-2">
+                        {purchasedGiftVouchersForItem.map((giftVoucher, giftVoucherIndex) => (
+                            <Link
+                                key={giftVoucher.pdfUrl}
+                                isButton
+                                isExternal
+                                buttonVariant="tertiary"
+                                href={giftVoucher.pdfUrl}
+                                tid={TIDs.order_detail_download_gift_voucher_button_ + giftVoucherIndex}
+                            >
+                                <DownloadIcon className="size-4" />
+                                {purchasedGiftVouchersForItem.length > 1
+                                    ? `${t('Voucher')} ${giftVoucherIndex + 1}`
+                                    : t('Download gift voucher')}
+                            </Link>
+                        ))}
+                    </div>
                 )}
             </div>
 
-            {purchasedGiftVouchersForItem.length > 0 && (
-                <div className="-ml-4 vl:ml-0 flex w-full flex-wrap items-center gap-2">
-                    {purchasedGiftVouchersForItem.map((giftVoucher, giftVoucherIndex) => (
-                        <Link
-                            key={giftVoucher.pdfUrl}
-                            isButton
-                            isExternal
-                            buttonVariant="tertiary"
-                            href={giftVoucher.pdfUrl}
-                            tid={TIDs.order_detail_download_gift_voucher_button_ + giftVoucherIndex}
-                        >
-                            <DownloadIcon className="size-4" />
-                            {purchasedGiftVouchersForItem.length > 1
-                                ? `${t('Voucher')} ${giftVoucherIndex + 1}`
-                                : t('Download gift voucher')}
-                        </Link>
-                    ))}
-                </div>
-            )}
+            <AdditionalServiceSummaryList
+                showHeading
+                className="mt-3 vl:ml-25 border-border-less border-t pt-3"
+                isPriceHighlighted={false}
+                services={additionalServiceLines}
+            />
         </div>
     );
 };

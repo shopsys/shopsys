@@ -5,5 +5,8 @@ fragment MainVariantDetailFragment on MainVariant {
         mainImage {
             ...ImageFragment
         }
+        additionalServices {
+            ...AdditionalServiceFragment
+        }
     }
 }

@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -265,6 +267,84 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
     }
 
     /**
+     * @return iterable<string, array{daysUntilDelivery: int, deliveryDaysExtensions: int[], publicHolidays: string[], expectedDeliveryDate: string}>
+     */
+    public static function getDeliveryDateWithAdditionalServicesExtensionData(): iterable
+    {
+        yield 'extension moves the delivery postponed from the weekend by a whole working day' => [
+            'daysUntilDelivery' => 2,
+            'deliveryDaysExtensions' => [1],
+            'publicHolidays' => [],
+            'expectedDeliveryDate' => '2026-07-21 00:00:00',
+        ];
+
+        yield 'extension steps over the weekend' => [
+            'daysUntilDelivery' => 1,
+            'deliveryDaysExtensions' => [1],
+            'publicHolidays' => [],
+            'expectedDeliveryDate' => '2026-07-20 00:00:00',
+        ];
+
+        yield 'extension steps over a public holiday' => [
+            'daysUntilDelivery' => 1,
+            'deliveryDaysExtensions' => [1],
+            'publicHolidays' => ['2026-07-20'],
+            'expectedDeliveryDate' => '2026-07-21 00:00:00',
+        ];
+
+        yield 'the highest extension of all chosen services applies' => [
+            'daysUntilDelivery' => 1,
+            'deliveryDaysExtensions' => [1, 2],
+            'publicHolidays' => [],
+            'expectedDeliveryDate' => '2026-07-21 00:00:00',
+        ];
+    }
+
+    /**
+     * @param int[] $deliveryDaysExtensions
+     * @param string[] $publicHolidays
+     */
+    #[DataProvider('getDeliveryDateWithAdditionalServicesExtensionData')]
+    public function testAdditionalServicesExtendTheDeliveryDateByWholeAllowedDeliveryDays(
+        int $daysUntilDelivery,
+        array $deliveryDaysExtensions,
+        array $publicHolidays,
+        string $expectedDeliveryDate,
+    ): void {
+        $cartStub = $this->createCartStubWithAdditionalServices($deliveryDaysExtensions);
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(
+                $this->createClosedDayFacadeStub($publicHolidays, []),
+                productAvailabilityFacade: $this->createProductAvailabilityFacadeStubWithStockedProduct(),
+            )
+            ->calculateExpectedDeliveryDate(
+                $this->createTransportStubDeliveringOnNoSpecialDay($daysUntilDelivery),
+                $cartStub,
+                Domain::FIRST_DOMAIN_ID,
+            );
+
+        $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
+    }
+
+    public function testAdditionalServicesExtensionCountsTheDaysTheTransportDeliversOn(): void
+    {
+        $cartStub = $this->createCartStubWithAdditionalServices([1]);
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(
+                productAvailabilityFacade: $this->createProductAvailabilityFacadeStubWithStockedProduct(),
+            )
+            ->calculateExpectedDeliveryDate(
+                $this->createTransportStubDeliveringAnyDay(1),
+                $cartStub,
+                Domain::FIRST_DOMAIN_ID,
+            );
+
+        $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
+    }
+
+    /**
      * @return iterable<string, array{daysUntilDelivery: int, deliveryDaysOfWeek: int[], deliversOnPublicHolidays: bool, deliversOnInternalClosedDays: bool, publicHolidays: string[], internalClosedDays: string[], expectedDeliveryDate: string}>
      */
     public static function getKeptDeliveryDateData(): iterable
@@ -487,6 +567,33 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
         // the selected store is not excluded from the Friday internal day, even though another store
         // is open — the pickup is expected on Saturday
+        $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
+    }
+
+    public function testPickupPlaceIdentifierDrivesThePersonalPickupDeliveryDateOfQuantifiedProducts(): void
+    {
+        $openStoreStub = $this->createStoreStubOpenEveryDay();
+        $selectedStoreStub = $this->createStoreStubOpenEveryDay();
+
+        $internalClosedDayStub = $this->createClosedDayStub(false, [$openStoreStub]);
+
+        $storeFacadeStub = $this->createStub(StoreFacade::class);
+        $storeFacadeStub->method('findByUuidAndDomainId')
+            ->willReturnMap([['selected-store-uuid', Domain::FIRST_DOMAIN_ID, $selectedStoreStub]]);
+        $storeFacadeStub->method('getStoresByDomainIdWithEagerLoadedOpeningHours')->willReturn([$openStoreStub, $selectedStoreStub]);
+
+        $deliveryDate = $this
+            ->createTransportExpectedDeliveryDateCalculation(
+                $this->createClosedDayFacadeStubWithClosedFriday($internalClosedDayStub),
+                $storeFacadeStub,
+            )
+            ->calculateExpectedDeliveryDateForQuantifiedProducts(
+                $this->createTransportStubDeliveringOnNoSpecialDay(1, true),
+                [],
+                Domain::FIRST_DOMAIN_ID,
+                'selected-store-uuid',
+            );
+
         $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
     }
 
@@ -1094,6 +1201,36 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             ->calculateExpectedDeliveryDateForStore($transportStub, null, Domain::FIRST_DOMAIN_ID, $selectedStore);
     }
 
+    /**
+     * @param int[] $deliveryDaysExtensions
+     */
+    private function createCartStubWithAdditionalServices(array $deliveryDaysExtensions): Cart
+    {
+        $additionalServiceStubs = array_map(function (int $deliveryDaysExtension): AdditionalService {
+            $additionalServiceStub = $this->createStub(AdditionalService::class);
+            $additionalServiceStub->method('getDeliveryDaysExtension')->willReturn($deliveryDaysExtension);
+
+            return $additionalServiceStub;
+        }, $deliveryDaysExtensions);
+
+        $quantifiedProduct = new QuantifiedProduct($this->createProductStub(), 1);
+        $quantifiedProduct->setAdditionalData(QuantifiedProduct::ADDITIONAL_SERVICES_KEY, $additionalServiceStubs);
+
+        $cartStub = $this->createStub(Cart::class);
+        $cartStub->method('getQuantifiedProducts')->willReturn([$quantifiedProduct]);
+
+        return $cartStub;
+    }
+
+    private function createProductAvailabilityFacadeStubWithStockedProduct(): ProductAvailabilityFacade
+    {
+        $productAvailabilityFacadeStub = $this->createStub(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')
+            ->willReturn([1 => 10]);
+
+        return $productAvailabilityFacadeStub;
+    }
+
     private function createClosedDayFacadeStubWithClosedFriday(ClosedDay $closedDay): ClosedDayFacade
     {
         $closedDayFacadeStub = $this->createStub(ClosedDayFacade::class);
@@ -1156,6 +1293,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             $storeFacade ?? $this->createStub(StoreFacade::class),
             new InMemoryCache(),
             new StoreOpeningHoursProvider($this->createStub(ClosedDayFacade::class), new InMemoryCache()),
+            new AdditionalServicesDeliveryDaysExtensionCalculation(),
         );
     }
 

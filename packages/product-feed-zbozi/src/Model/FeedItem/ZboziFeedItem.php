@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class ZboziFeedItem implements FeedItemInterface
 {
+    /**
+     * @param array<int, array{extraMessage: string, customText: string|null}> $additionalServices
+     */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
@@ -29,6 +32,7 @@ class ZboziFeedItem implements FeedItemInterface
         protected readonly ?Money $cpcSearch = null,
         protected readonly ?string $deliveryId = null,
         protected readonly ?Money $deliveryPrice = null,
+        protected readonly array $additionalServices = [],
     ) {
     }
 
@@ -128,5 +132,13 @@ class ZboziFeedItem implements FeedItemInterface
     public function getMaxCpcSearch(): ?Money
     {
         return $this->cpcSearch;
+    }
+
+    /**
+     * @return array<int, array{extraMessage: string, customText: string|null}>
+     */
+    public function getAdditionalServices(): array
+    {
+        return $this->additionalServices;
     }
 }

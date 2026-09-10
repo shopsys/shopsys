@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
+use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\PhoneType;
@@ -35,6 +37,7 @@ final class OrderFormType extends AbstractType
     public function __construct(
         private readonly CountryFacade $countryFacade,
         private readonly WithdrawalRequestFacade $withdrawalRequestFacade,
+        private readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -111,6 +114,12 @@ final class OrderFormType extends AbstractType
             ->add('deliveredAt', DateTimeType::class, [
                 'label' => 'Delivered at',
                 'required' => false,
+            ])
+            ->add('expectedDeliveryDate', DatePickerType::class, [
+                'label' => 'Expected delivery date',
+                'required' => false,
+                'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($order->getDomainId())->getName(),
+                'help' => t('Enter the date in the format dd.mm.yyyy (e.g. 31.12.2023)'),
             ]);
 
         return $builderBasicInformationGroup;

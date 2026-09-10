@@ -1,0 +1,16 @@
+SetCartItemAdditionalServicesInputDecorator:
+    type: input-object
+    decorator: true
+    inherits:
+        - 'CartInput'
+    config:
+        fields:
+            cartItemUuid:
+                type: "Uuid!"
+                description: "Cart item UUID"
+            additionalServiceUuids:
+                type: "[Uuid!]!"
+                description: "UUIDs of the additional services chosen for the cart item. The previously chosen services are replaced by the provided set."
+                validation:
+                    -   Count:
+                            max: 100

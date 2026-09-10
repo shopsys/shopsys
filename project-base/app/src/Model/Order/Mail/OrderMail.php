@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail as BaseOrderMail;
  * @method string getDeliveryAddressHtmlTable(\App\Model\Order\Order $order)
  * @method string getProductsHtmlTable(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $orderItemTotalPricesById)
  * @method string getDomainLocaleByOrder(\App\Model\Order\Order $order)
+ * @method \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig getDomainConfigByOrder(\App\Model\Order\Order $order)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
  * @method __construct(\App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory, \Twig\Environment $twig, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension, \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator, \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension, \Shopsys\FrameworkBundle\Model\Payment\PaymentInstructionFacade $paymentInstructionFacade, \Shopsys\FrameworkBundle\Model\Mail\MailDisplayPriceResolver $mailDisplayPriceResolver, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade $withdrawalRequestFacade)
@@ -32,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail as BaseOrderMail;
  * @method string getFormattedPriceWithoutVat(\App\Model\Order\Order $order)
  * @method string[] getBccEmailsForWithdrawal(\App\Model\Mail\MailTemplate $mailTemplate, \App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest $withdrawalRequest)
  * @method string|null getGiftVouchersInfoHtml(\App\Model\Order\Order $order)
+ * @method string getFormattedExpectedDeliveryDate(\App\Model\Order\Order $order)
  */
 class OrderMail extends BaseOrderMail
 {

@@ -22,7 +22,7 @@ class FreeTransportAndPaymentInformationMiddleware implements OrderProcessorMidd
     ): OrderProcessingData {
         $orderProcessingData->orderData->freeTransportAndPaymentApplied = $this->freeTransportAndPaymentFacade->isFreeTransportAndPaymentApplied(
             $orderProcessingData->getDomainConfig()->getId(),
-            $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
+            $orderProcessingData->orderData->getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(),
             $orderProcessingData->orderInput->isFreeTransportAndPaymentPromoCodeApplied(),
         );
 

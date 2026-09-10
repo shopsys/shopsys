@@ -63,5 +63,11 @@ fragment CartItemFragment on CartItem {
             ...ParameterFragment
         }
         vatPercent
+        additionalServices {
+            ...AdditionalServiceFragment
+        }
+    }
+    additionalServices {
+        ...AdditionalServiceFragment
     }
 }

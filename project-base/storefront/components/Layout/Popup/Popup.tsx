@@ -24,6 +24,7 @@ type PopupProps = {
     children?: React.ReactNode;
     className?: string;
     role?: 'dialog' | 'alertdialog';
+    onClose?: () => void;
 };
 
 export const Popup: React.FC<PopupProps> = ({
@@ -36,6 +37,7 @@ export const Popup: React.FC<PopupProps> = ({
     contentClassName,
     key,
     role = 'dialog',
+    onClose,
 }) => {
     const { t } = useTranslation();
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
@@ -50,6 +52,12 @@ export const Popup: React.FC<PopupProps> = ({
     const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
 
     const handleClosePopup = () => {
+        if (onClose) {
+            onClose();
+
+            return;
+        }
+
         closePortalContent();
     };
 
@@ -92,7 +100,17 @@ export const Popup: React.FC<PopupProps> = ({
         };
     }, [windowDimensions]);
 
-    useKeypress('Escape', () => handleClosePopup());
+    const isTopMostOpenDialog = () => {
+        const openDialogs = document.querySelectorAll('[role="dialog"], [role="alertdialog"]');
+
+        return openDialogs[openDialogs.length - 1] === popupRef.current;
+    };
+
+    useKeypress('Escape', () => {
+        if (isTopMostOpenDialog()) {
+            handleClosePopup();
+        }
+    });
 
     useFocusTrap(popupRef);
 

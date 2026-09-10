@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order\Mail;
 
 use App\Model\Mail\MailTemplate;
-use App\Model\Mail\MailTemplateData;
+use App\Model\Mail\MailTemplateDataFactory;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
+use Closure;
+use DateTimeImmutable;
+use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -31,6 +35,16 @@ class OrderMailTest extends TransactionFunctionalTestCase
      * @inject
      */
     private OrderItemPriceCalculation $orderItemPriceCalculation;
+
+    /**
+     * @inject
+     */
+    private MailTemplateDataFactory $mailTemplateDataFactory;
+
+    /**
+     * @inject
+     */
+    private DateTimeFormatterExtension $dateTimeFormatterExtension;
 
     public function testGetMailTemplateNameByStatus(): void
     {
@@ -60,49 +74,102 @@ class OrderMailTest extends TransactionFunctionalTestCase
 
     public function testGetMessageByOrder(): void
     {
-        $routerStub = $this->createStub(DomainRouter::class);
-        $routerStub->method('generate')->willReturn('generatedUrl');
-
-        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
-        $domainRouterFactoryStub->method('getRouter')->willReturn($routerStub);
-
-        $twigStub = $this->createStub(Environment::class);
-        $settingStub = $this->createStub(Setting::class);
-        $settingStub->method('getForDomain')->willReturn('no-reply@shopsys.com');
-        $priceExtensionStub = $this->createStub(PriceExtension::class);
-        $dateTimeFormatterExtensionStub = $this->createStub(DateTimeFormatterExtension::class);
-        $orderUrlGeneratorStub = $this->createStub(OrderUrlGenerator::class);
-        $hiddenPriceExtensionStub = $this->createStub(HiddenPriceExtension::class);
-        $paymentInstructionFacadeStub = $this->createStub(PaymentInstructionFacade::class);
-        $mailDisplayPriceResolverStub = $this->createStub(MailDisplayPriceResolver::class);
-        $withdrawalRequestFacadeStub = $this->createStub(WithdrawalRequestFacade::class);
-
-        $orderMail = new OrderMail(
-            $settingStub,
-            $domainRouterFactoryStub,
-            $twigStub,
-            $this->orderItemPriceCalculation,
-            $this->domain,
-            $priceExtensionStub,
-            $dateTimeFormatterExtensionStub,
-            $orderUrlGeneratorStub,
-            $hiddenPriceExtensionStub,
-            $paymentInstructionFacadeStub,
-            $mailDisplayPriceResolverStub,
-            $withdrawalRequestFacadeStub,
-        );
+        $orderMail = $this->createOrderMail();
 
         $order = $this->getReference('order_1', Order::class);
 
-        $mailTemplateData = new MailTemplateData();
-        $mailTemplateData->subject = 'subject';
-        $mailTemplateData->body = 'body';
-        $mailTemplate = new MailTemplate('templateName', Domain::FIRST_DOMAIN_ID, $mailTemplateData);
+        $mailTemplate = $this->createMailTemplate('body');
 
         $messageData = $orderMail->createMessage($mailTemplate, $order);
 
         $this->assertInstanceOf(MessageData::class, $messageData);
         $this->assertSame($mailTemplate->getSubject(), $messageData->subject);
         $this->assertSame($mailTemplate->getBody(), $messageData->body);
+
+        $expectedDeliveryDateReplacement = $messageData
+            ->variablesReplacementsForBody[OrderMail::VARIABLE_EXPECTED_DELIVERY_DATE];
+        $this->assertInstanceOf(Closure::class, $expectedDeliveryDateReplacement);
+        $this->assertSame('', $expectedDeliveryDateReplacement());
+    }
+
+    public function testExpectedDeliveryDateVariableIsFormattedInTheOrderDomainTimeZone(): void
+    {
+        $orderDomainTimeZone = new DateTimeZone('Pacific/Auckland');
+        $expectedDeliveryDateStoredInUtc = new DateTimeImmutable('2026-09-10 00:00:00', $orderDomainTimeZone)
+            ->setTimezone(new DateTimeZone('UTC'));
+        $orderMail = $this->createOrderMail(
+            $this->dateTimeFormatterExtension,
+            $this->createDomainStub('en', $orderDomainTimeZone),
+        );
+
+        $orderStub = $this->createStub(Order::class);
+        $orderStub->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
+        $orderStub->method('getEmail')->willReturn('customer@example.com');
+        $orderStub->method('getExpectedDeliveryDate')->willReturn($expectedDeliveryDateStoredInUtc);
+        $orderStub->method('getItems')->willReturn([]);
+
+        $mailTemplate = $this->createMailTemplate(OrderMail::VARIABLE_EXPECTED_DELIVERY_DATE);
+
+        $messageData = $orderMail->createMessage($mailTemplate, $orderStub);
+        $expectedDeliveryDateReplacement = $messageData
+            ->variablesReplacementsForBody[OrderMail::VARIABLE_EXPECTED_DELIVERY_DATE];
+
+        $this->assertInstanceOf(Closure::class, $expectedDeliveryDateReplacement);
+        $this->assertSame('Sep 10, 2026', $expectedDeliveryDateReplacement());
+    }
+
+    private function createDomainStub(string $locale, DateTimeZone $dateTimeZone): Domain
+    {
+        $domainConfig = new DomainConfig(
+            Domain::FIRST_DOMAIN_ID,
+            'https://example.com',
+            'example',
+            $locale,
+            $dateTimeZone,
+            'https://example.com',
+        );
+
+        $domainStub = $this->createStub(Domain::class);
+        $domainStub->method('getDomainConfigById')->willReturn($domainConfig);
+
+        return $domainStub;
+    }
+
+    private function createOrderMail(
+        ?DateTimeFormatterExtension $dateTimeFormatterExtension = null,
+        ?Domain $domain = null,
+    ): OrderMail {
+        $routerStub = $this->createStub(DomainRouter::class);
+        $routerStub->method('generate')->willReturn('generatedUrl');
+
+        $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
+        $domainRouterFactoryStub->method('getRouter')->willReturn($routerStub);
+
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub->method('getForDomain')->willReturn('no-reply@shopsys.com');
+
+        return new OrderMail(
+            $settingStub,
+            $domainRouterFactoryStub,
+            $this->createStub(Environment::class),
+            $this->orderItemPriceCalculation,
+            $domain ?? $this->domain,
+            $this->createStub(PriceExtension::class),
+            $dateTimeFormatterExtension ?? $this->createStub(DateTimeFormatterExtension::class),
+            $this->createStub(OrderUrlGenerator::class),
+            $this->createStub(HiddenPriceExtension::class),
+            $this->createStub(PaymentInstructionFacade::class),
+            $this->createStub(MailDisplayPriceResolver::class),
+            $this->createStub(WithdrawalRequestFacade::class),
+        );
+    }
+
+    private function createMailTemplate(string $body): MailTemplate
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->subject = 'subject';
+        $mailTemplateData->body = $body;
+
+        return new MailTemplate('templateName', Domain::FIRST_DOMAIN_ID, $mailTemplateData);
     }
 }

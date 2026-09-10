@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductAdditionalServicesBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -23,6 +24,7 @@ class ZboziFeedItemFactory
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly ProductAdditionalServicesBatchLoader $productAdditionalServicesBatchLoader,
     ) {
     }
 
@@ -57,6 +59,7 @@ class ZboziFeedItemFactory
             $cpcSearch,
             $this->getDeliveryId($product),
             $this->getDeliveryPrice($product, $domainConfig),
+            $this->getAdditionalServices($product, $domainConfig),
         );
     }
 
@@ -72,6 +75,14 @@ class ZboziFeedItemFactory
     protected function getDeliveryId(Product $product): ?string
     {
         return $product->isElectronicGiftVoucher() ? 'VLASTNI_PREPRAVA' : null;
+    }
+
+    /**
+     * @return array<int, array{extraMessage: string, customText: string|null}>
+     */
+    protected function getAdditionalServices(Product $product, DomainConfig $domainConfig): array
+    {
+        return $this->productAdditionalServicesBatchLoader->getShownInFeedsZboziEntries($product, $domainConfig);
     }
 
     protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface

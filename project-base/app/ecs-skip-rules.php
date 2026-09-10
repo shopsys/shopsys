@@ -20,6 +20,7 @@ $filesExcludedFromStrictTyping = [
     ...json_decode(file_get_contents(__DIR__ . '/var/cache/dev/' . EntitiesDumpCommand::OUTPUT_FILE), true, 512, JSON_THROW_ON_ERROR),
     __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
     '**Data.php',
+    '**Dto.php',
 ];
 
 return [

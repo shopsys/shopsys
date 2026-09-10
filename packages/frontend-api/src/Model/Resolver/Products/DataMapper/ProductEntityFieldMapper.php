@@ -49,7 +49,13 @@ class ProductEntityFieldMapper
         protected readonly ParameterValueFileResolver $parameterValueFileResolver,
         protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
+        protected readonly DataLoaderInterface $additionalServicesByProductIdBatchLoader,
     ) {
+    }
+
+    public function getAdditionalServices(Product $product): Promise
+    {
+        return $this->additionalServicesByProductIdBatchLoader->load($product->getId());
     }
 
     public function getShortDescription(Product $product): ?string

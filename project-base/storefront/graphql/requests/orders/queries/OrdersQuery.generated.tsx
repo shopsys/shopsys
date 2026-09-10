@@ -27,6 +27,7 @@ export type TypeOrderFilterInput = {
 
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
+  | 'additionalService'
   | 'discount'
   | 'payment'
   | 'product'

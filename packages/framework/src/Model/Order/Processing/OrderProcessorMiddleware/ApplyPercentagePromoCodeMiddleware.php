@@ -56,33 +56,31 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         PromoCodeLimit $promoCodeLimit,
         OrderProcessingData $orderProcessingData,
     ): void {
-        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
-            if (!in_array($productItem->product->getId(), $validProductIds, true)) {
-                continue;
+        foreach ($this->getValidProductItemsData($orderData, $validProductIds) as $productItem) {
+            foreach ($this->getDiscountableItemsDataForProductItem($productItem) as $discountedItem) {
+                $discountOrderItemData = $this->createDiscountOrderItemData(
+                    $appliedPromoCode,
+                    $promoCodeLimit,
+                    $discountedItem,
+                    $orderProcessingData->getDomainConfig(),
+                );
+
+                if ($discountOrderItemData === null) {
+                    continue;
+                }
+
+                $productItem->relatedOrderItemsData[] = $discountOrderItemData;
+
+                $orderData->addItem($discountOrderItemData);
+                $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
             }
-
-            $discountOrderItemData = $this->createDiscountOrderItemData(
-                $appliedPromoCode,
-                $promoCodeLimit,
-                $productItem,
-                $orderProcessingData->getDomainConfig(),
-            );
-
-            if ($discountOrderItemData === null) {
-                continue;
-            }
-
-            $productItem->relatedOrderItemsData[] = $discountOrderItemData;
-
-            $orderData->addItem($discountOrderItemData);
-            $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
         }
     }
 
     protected function createDiscountOrderItemData(
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
-        OrderItemData $productItem,
+        OrderItemData $discountedItem,
         DomainConfig $domainConfig,
     ): ?OrderItemData {
         $locale = $domainConfig->getLocale();
@@ -90,8 +88,8 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $discountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
-            $this->getItemTotalPriceWithAppliedPromotions($productItem),
-            (float)$productItem->vatPercent,
+            $this->getItemTotalPriceWithAppliedPromotions($discountedItem),
+            (float)$discountedItem->vatPercent,
             (float)$promoCodeLimit->getDiscount(),
             $currency->getRoundingType(),
             $currency->getRoundingPlacesPriceWithoutVat(),
@@ -105,11 +103,11 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountPrice = $discountPrice->inverse();
 
-        $discountOrderItemData->name = $this->getOrderItemName($locale, $promoCodeLimit, $productItem);
+        $discountOrderItemData->name = $this->getOrderItemName($locale, $promoCodeLimit, $discountedItem);
         $discountOrderItemData->quantity = 1;
         $discountOrderItemData->setUnitPrice($discountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice);
-        $discountOrderItemData->vatPercent = $productItem->vatPercent;
+        $discountOrderItemData->vatPercent = $discountedItem->vatPercent;
         $discountOrderItemData->promoCode = $promoCode;
 
         return $discountOrderItemData;
@@ -118,13 +116,13 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
     protected function getOrderItemName(
         string $locale,
         PromoCodeLimit $promoCodeLimit,
-        OrderItemData $productItem,
+        OrderItemData $discountedItem,
     ): string {
         return sprintf(
             '%s -%s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
             $this->numberFormatterExtension->formatPercent($promoCodeLimit->getDiscount(), $locale),
-            $productItem->name,
+            $discountedItem->name,
         );
     }
 

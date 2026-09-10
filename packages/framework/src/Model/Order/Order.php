@@ -46,6 +46,7 @@ class Order implements DomainSeparatedEntityInterface
     protected const array SORTED_TYPES = [
         OrderItemTypeEnum::TYPE_PRODUCT,
         OrderItemTypeEnum::TYPE_PRODUCT_GIFT,
+        OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE,
         OrderItemTypeEnum::TYPE_DISCOUNT,
         OrderItemTypeEnum::TYPE_PAYMENT,
         OrderItemTypeEnum::TYPE_TRANSPORT,
@@ -96,6 +97,13 @@ class Order implements DomainSeparatedEntityInterface
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $deliveredAt;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $expectedDeliveryDate;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
@@ -485,6 +493,7 @@ class Order implements DomainSeparatedEntityInterface
         $this->paid = false;
 
         $this->createdAt = $orderData->createdAt;
+        $this->expectedDeliveryDate = $orderData->expectedDeliveryDate;
         $this->domainId = $orderData->domainId;
         $this->urlHash = $urlHash;
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
@@ -744,6 +753,7 @@ class Order implements DomainSeparatedEntityInterface
         $this->status = $orderData->status;
         $this->heurekaAgreement = $orderData->heurekaAgreement;
         $this->deliveredAt = $orderData->deliveredAt;
+        $this->expectedDeliveryDate = $orderData->expectedDeliveryDate;
 
         $this->setDeliveryAddress($orderData);
 
@@ -1012,6 +1022,14 @@ class Order implements DomainSeparatedEntityInterface
     public function getDeliveredAt()
     {
         return $this->deliveredAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getExpectedDeliveryDate()
+    {
+        return $this->expectedDeliveryDate;
     }
 
     /**

@@ -1,12 +1,12 @@
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmCartViewEventType } from 'gtm/types/events';
-import { GtmCartItemType } from 'gtm/types/objects';
+import { GtmCartProductOrServiceType } from 'gtm/types/objects';
 
 export const getGtmCartViewEvent = (
     currencyCode: string,
     valueWithoutVat: number | null,
     valueWithVat: number | null,
-    products: GtmCartItemType[] | undefined,
+    products: GtmCartProductOrServiceType[] | undefined,
     arePricesHidden: boolean,
 ): GtmCartViewEventType => ({
     event: GtmEventType.cart_view,

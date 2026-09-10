@@ -1,0 +1,4 @@
+AdditionalService:
+    type: object
+    inherits:
+        - 'AdditionalServiceDecorator'

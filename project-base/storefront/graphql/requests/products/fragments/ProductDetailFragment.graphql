@@ -4,4 +4,7 @@ fragment ProductDetailFragment on RegularProduct {
     usps
     availableStoresCount
     isPersonalPickupOnly
+    additionalServices {
+        ...AdditionalServiceFragment
+    }
 }

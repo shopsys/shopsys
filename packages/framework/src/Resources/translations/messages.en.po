@@ -160,10 +160,16 @@ msgstr ""
 msgid "Added"
 msgstr ""
 
+msgid "Additional description for Zboží.cz"
+msgstr ""
+
 msgid "Additional information"
 msgstr ""
 
 msgid "Additional login info"
+msgstr ""
+
+msgid "Additional services"
 msgstr ""
 
 msgid "Address"
@@ -245,6 +251,9 @@ msgid "An email with 6 digit code was sent to your email address."
 msgstr ""
 
 msgid "Ancestor category"
+msgstr ""
+
+msgid "Applies to Heureka, Google, Zboží.cz and Mergado feeds together."
 msgstr ""
 
 msgid "Apply"
@@ -341,6 +350,9 @@ msgid "Authentication code"
 msgstr ""
 
 msgid "Author"
+msgstr ""
+
+msgid "Authorized service"
 msgstr ""
 
 msgid "Autocomplete favorites"
@@ -512,6 +524,9 @@ msgid "Buy quantity"
 msgstr ""
 
 msgid "By flag"
+msgstr ""
+
+msgid "By how many working days the service extends the estimated delivery time of the order."
 msgstr ""
 
 msgid "CMS"
@@ -997,6 +1012,9 @@ msgstr ""
 msgid "Default warehouse"
 msgstr ""
 
+msgid "Deferred payment option"
+msgstr ""
+
 msgid "Delete"
 msgstr ""
 
@@ -1028,6 +1046,9 @@ msgid "Delivery address is the same as billing address"
 msgstr ""
 
 msgid "Delivery city"
+msgstr ""
+
+msgid "Delivery extension in working days"
 msgstr ""
 
 msgid "Delivery last name"
@@ -1513,6 +1534,9 @@ msgstr ""
 msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
 msgstr ""
 
+msgid "Enter the date in the format dd.mm.yyyy (e.g. 31.12.2023)"
+msgstr ""
+
 msgid "Entered code is not valid"
 msgstr ""
 
@@ -1570,6 +1594,9 @@ msgstr ""
 msgid "Expand"
 msgstr ""
 
+msgid "Expected delivery date"
+msgstr ""
+
 msgid "Expected maximum duration"
 msgstr ""
 
@@ -1592,6 +1619,12 @@ msgid "Extended SEO category - filters"
 msgstr ""
 
 msgid "Extended SEO category - set combinations with SEO values"
+msgstr ""
+
+msgid "Extended return period"
+msgstr ""
+
+msgid "Extended warranty"
 msgstr ""
 
 msgid "External ID"
@@ -1738,7 +1771,22 @@ msgstr ""
 msgid "Fourth column categories"
 msgstr ""
 
+msgid "Free accessories"
+msgstr ""
+
+msgid "Free case"
+msgstr ""
+
+msgid "Free gift"
+msgstr ""
+
+msgid "Free installation"
+msgstr ""
+
 msgid "Free quantity"
+msgstr ""
+
+msgid "Free return shipping"
 msgstr ""
 
 msgid "Free shipping and payment"
@@ -1775,6 +1823,9 @@ msgid "Generated"
 msgstr ""
 
 msgid "Generated batches"
+msgstr ""
+
+msgid "Gift packaging"
 msgstr ""
 
 msgid "Gift plan <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
@@ -1981,6 +2032,9 @@ msgstr ""
 msgid "Instagram URL"
 msgstr ""
 
+msgid "Installment purchase option"
+msgstr ""
+
 msgid "Instructions"
 msgstr ""
 
@@ -2173,6 +2227,9 @@ msgstr ""
 msgid "Name %locale%"
 msgstr ""
 
+msgid "Name for price comparison feeds"
+msgstr ""
+
 msgid "Name has not been entered in your current language"
 msgstr ""
 
@@ -2195,6 +2252,9 @@ msgid "Name suffix"
 msgstr ""
 
 msgid "Names"
+msgstr ""
+
+msgid "Names for price comparison feeds of the chosen services are exported to the Google feed custom label with a recommended maximum length of 100 characters (including the separators between the names)."
 msgstr ""
 
 msgid "Namespace"
@@ -2383,7 +2443,13 @@ msgstr ""
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
 msgstr ""
 
+msgid "Old appliance removal"
+msgstr ""
+
 msgid "One domain cannot be used in two groups"
+msgstr ""
+
+msgid "Only 100 characters will be exported to the Google feed custom label, so not all chosen services may appear in it."
 msgstr ""
 
 msgid "Only checked products"
@@ -2734,6 +2800,9 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
+msgid "Price comparison feeds"
+msgstr ""
+
 msgid "Price including VAT"
 msgstr ""
 
@@ -2762,6 +2831,9 @@ msgid "Price lists"
 msgstr ""
 
 msgid "Prices"
+msgstr ""
+
+msgid "Prices and VAT"
 msgstr ""
 
 msgid "Pricing"
@@ -2870,6 +2942,9 @@ msgid "Products with this flag"
 msgstr ""
 
 msgid "Products without this flag"
+msgstr ""
+
+msgid "Professional appliance installation"
 msgstr ""
 
 msgid "Promo code"
@@ -3301,6 +3376,9 @@ msgstr ""
 msgid "Seo"
 msgstr ""
 
+msgid "Service type for Zboží.cz"
+msgstr ""
+
 msgid "Set"
 msgstr ""
 
@@ -3356,6 +3434,9 @@ msgid "Show combinations"
 msgstr ""
 
 msgid "Show detail"
+msgstr ""
+
+msgid "Show in price comparison feeds"
 msgstr ""
 
 msgid "Show in the category"
@@ -3748,6 +3829,9 @@ msgstr ""
 msgid "Url address"
 msgstr ""
 
+msgid "Use VAT rate of the product"
+msgstr ""
+
 msgid "User consent policy"
 msgstr ""
 
@@ -3809,6 +3893,9 @@ msgid "Visible on homepage"
 msgstr ""
 
 msgid "Voucher"
+msgstr ""
+
+msgid "Voucher for next purchase"
 msgstr ""
 
 msgid "Voucher value"
@@ -3893,6 +3980,9 @@ msgid "Year"
 msgstr ""
 
 msgid "Yes"
+msgstr ""
+
+msgid "Yes = the service is an ancillary supply and takes over the VAT rate of the product it is attached to in the cart. No = the service is a separate supply with its own VAT rate."
 msgstr ""
 
 msgid "You are allowed to disable two factor authentication only to yourself."

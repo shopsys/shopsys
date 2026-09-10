@@ -36,7 +36,7 @@ export const DeferredProductDetailAddToCart: FC<DeferredProductDetailAddToCartPr
             {shouldRender ? (
                 <ProductDetailAddToCart {...props} buttonSize={buttonSize} />
             ) : (
-                <Skeleton className="w-full" />
+                <Skeleton className="w-full sm:max-w-60" />
             )}
         </div>
     );

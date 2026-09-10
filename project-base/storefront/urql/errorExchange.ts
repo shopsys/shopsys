@@ -51,6 +51,10 @@ const MUTATION_ERROR_CONFIG: Partial<Record<string, MutationErrorConfig>> = {
         errorType: 'remove-from-cart-error',
         gtmOrigin: GtmMessageOriginType.cart,
     },
+    SetCartItemAdditionalServicesMutation: {
+        errorType: 'set-cart-item-additional-services-error',
+        gtmOrigin: GtmMessageOriginType.cart,
+    },
     ChangePaymentInCartMutation: {
         errorType: 'payment-error',
         gtmOrigin: GtmMessageOriginType.transport_and_payment_page,

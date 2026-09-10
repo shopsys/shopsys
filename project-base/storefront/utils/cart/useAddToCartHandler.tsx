@@ -1,13 +1,8 @@
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
-import { RefObject } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { useAddToCart } from 'utils/cart/useAddToCart';
-
-const AddToCartPopup = dynamic(() =>
-    import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
-);
+import { OnProductAddedToCart, useAddToCart } from 'utils/cart/useAddToCart';
 
 type UseAddToCartHandlerProps = {
     spinboxRef: RefObject<HTMLInputElement | null>;
@@ -16,6 +11,8 @@ type UseAddToCartHandlerProps = {
     gtmProductListName: GtmProductListNameType;
     isWithSpinbox?: boolean;
     listIndex?: number;
+    onProductAddedToCart?: OnProductAddedToCart;
+    onAddToCartFlowStateChange?: (isPending: boolean) => void;
 };
 
 export const useAddToCartHandler = ({
@@ -25,43 +22,59 @@ export const useAddToCartHandler = ({
     gtmProductListName,
     isWithSpinbox = true,
     listIndex,
+    onProductAddedToCart,
+    onAddToCartFlowStateChange,
 }: UseAddToCartHandlerProps) => {
     const { addToCart, isAddingToCart } = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
     const clearStoredFocus = useSessionStore((s) => s.clearStoredFocus);
+    const [isAddToCartFlowPending, setIsAddToCartFlowPending] = useState(false);
+    const isAddToCartFlowPendingRef = useRef(false);
 
     const onAddToCartHandler = async () => {
-        if (isWithSpinbox && spinboxRef.current === null) {
+        if ((isWithSpinbox && spinboxRef.current === null) || isAddToCartFlowPendingRef.current) {
             return;
         }
 
-        storeCurrentFocus();
+        isAddToCartFlowPendingRef.current = true;
+        setIsAddToCartFlowPending(true);
+        onAddToCartFlowStateChange?.(true);
+        const addToCartPopupComponentPromise = import('components/Blocks/Popup/AddToCartPopup');
 
-        const spinboxElement = spinboxRef.current;
-        let addedQuantity = 1;
+        try {
+            storeCurrentFocus();
 
-        if (isWithSpinbox && spinboxElement !== null) {
-            addedQuantity = spinboxElement.valueAsNumber;
-        }
+            const spinboxElement = spinboxRef.current;
+            let addedQuantity = 1;
 
-        const addToCartResult = await addToCart(productUuid, addedQuantity, listIndex);
+            if (isWithSpinbox && spinboxElement !== null) {
+                addedQuantity = spinboxElement.valueAsNumber;
+            }
 
-        if (isWithSpinbox && spinboxRef.current !== null) {
-            spinboxRef.current.valueAsNumber = 1;
-        }
+            const addToCartResult = await addToCart(productUuid, addedQuantity, listIndex, false, onProductAddedToCart);
 
-        if (addToCartResult) {
-            updatePortalContent(
-                <AddToCartPopup
-                    key={addToCartResult.addProductResult.cartItem.uuid}
-                    addedCartItem={addToCartResult.addProductResult.cartItem}
-                />,
-            );
-        } else {
-            clearStoredFocus();
+            if (isWithSpinbox && spinboxRef.current !== null) {
+                spinboxRef.current.valueAsNumber = 1;
+            }
+
+            if (addToCartResult) {
+                const { AddToCartPopup } = await addToCartPopupComponentPromise;
+                updatePortalContent(
+                    <AddToCartPopup
+                        key={addToCartResult.addProductResult.cartItem.uuid}
+                        addedCartItem={addToCartResult.addProductResult.cartItem}
+                    />,
+                );
+            } else {
+                clearStoredFocus();
+            }
+        } finally {
+            isAddToCartFlowPendingRef.current = false;
+            setIsAddToCartFlowPending(false);
+            onAddToCartFlowStateChange?.(false);
         }
     };
 
-    return { onAddToCartHandler, isAddingToCart };
+    return { onAddToCartHandler, isAddingToCart: isAddingToCart || isAddToCartFlowPending };
 };

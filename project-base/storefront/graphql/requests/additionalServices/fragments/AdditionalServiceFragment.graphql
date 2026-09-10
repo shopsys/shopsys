@@ -1,0 +1,15 @@
+fragment AdditionalServiceFragment on AdditionalService {
+    __typename
+    id
+    uuid
+    name
+    catnum
+    description
+    deliveryDaysExtension
+    price {
+        ...PriceFragment
+    }
+    mainImage {
+        ...ImageFragment
+    }
+}

@@ -66,11 +66,14 @@
                         {% for orderItemId, orderItemForm in form.itemsWithoutTransportAndPayment %}
                             {% set itemData = orderItemForm.vars.data %}
                             {% set productItemData = (itemData is not null and itemData.type in ['product', 'productGift']) ? itemData : null %}
+                            {% set isAdditionalService = itemData is not null and itemData.type == 'additionalService' %}
                             <tr>
                                 <td>
-                                    <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center gap-2{% if isAdditionalService %} ps-3{% endif %}">
                                         {% if productItemData and productItemData.product %}
                                             {{ image(productItemData.product, { width: 36, height: 36 }) }}
+                                        {% elseif isAdditionalService and itemData.additionalService %}
+                                            {{ image(itemData.additionalService, { width: 36, height: 36 }) }}
                                         {% endif %}
                                         <div class="min-w-0">
                                             <div class="d-flex align-items-center gap-1 min-w-0">

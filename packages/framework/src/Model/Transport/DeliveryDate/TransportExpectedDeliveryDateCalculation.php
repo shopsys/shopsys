@@ -9,6 +9,7 @@ use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -43,6 +44,7 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly StoreFacade $storeFacade,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
+        protected readonly AdditionalServicesDeliveryDaysExtensionCalculation $additionalServicesDeliveryDaysExtensionCalculation,
     ) {
     }
 
@@ -54,13 +56,33 @@ class TransportExpectedDeliveryDateCalculation
         ?Cart $cart,
         int $domainId,
     ): ?DateTimeImmutable {
-        $storeSelectedInCart = $this->findStoreSelectedInCartForTransport($transport, $cart, $domainId);
+        return $this->calculateExpectedDeliveryDateForQuantifiedProducts(
+            $transport,
+            $cart?->getQuantifiedProducts() ?? [],
+            $domainId,
+            $this->findPickupPlaceIdentifierSelectedInCartForTransport($transport, $cart),
+        );
+    }
+
+    /**
+     * Returns the expected delivery date of an order of the given products placed today; null when no date can be promised
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     */
+    public function calculateExpectedDeliveryDateForQuantifiedProducts(
+        Transport $transport,
+        array $quantifiedProducts,
+        int $domainId,
+        ?string $pickupPlaceIdentifier = null,
+    ): ?DateTimeImmutable {
+        $quantifiedProducts = array_values($quantifiedProducts);
 
         return $this->calculateDeliveryDate(
             $transport,
-            array_values($cart?->getQuantifiedProducts() ?? []),
+            $quantifiedProducts,
             $domainId,
-            $storeSelectedInCart,
+            $this->findSelectedStoreForTransport($transport, $pickupPlaceIdentifier, $domainId),
+            $this->additionalServicesDeliveryDaysExtensionCalculation->calculateHighestDeliveryDaysExtension($quantifiedProducts),
         );
     }
 
@@ -74,12 +96,14 @@ class TransportExpectedDeliveryDateCalculation
         Store $store,
     ): ?DateTimeImmutable {
         $this->assertPersonalPickupTransport($transport);
+        $quantifiedProducts = array_values($cart?->getQuantifiedProducts() ?? []);
 
         return $this->calculateDeliveryDate(
             $transport,
-            array_values($cart?->getQuantifiedProducts() ?? []),
+            $quantifiedProducts,
             $domainId,
             $store,
+            $this->additionalServicesDeliveryDaysExtensionCalculation->calculateHighestDeliveryDaysExtension($quantifiedProducts),
         );
     }
 
@@ -122,9 +146,15 @@ class TransportExpectedDeliveryDateCalculation
         array $quantifiedProducts,
         int $domainId,
         ?Store $store,
+        int $deliveryDaysExtension = 0,
     ): ?DateTimeImmutable {
         if ($store === null && $transport->isPersonalPickup()) {
-            return $this->calculateBestPickupDeliveryDateAcrossStores($transport, $quantifiedProducts, $domainId);
+            return $this->calculateBestPickupDeliveryDateAcrossStores(
+                $transport,
+                $quantifiedProducts,
+                $domainId,
+                $deliveryDaysExtension,
+            );
         }
 
         // the dispatch date does not depend on the transport nor the store, so one set of products resolves it just
@@ -144,7 +174,13 @@ class TransportExpectedDeliveryDateCalculation
 
         $closestPossibleDeliveryDate = $dispatchDate->modify(sprintf('+%d days', $transport->getDaysUntilDelivery()));
 
-        $deliveryDate = $this->postponeToFirstAllowedDeliveryDay($transport, $closestPossibleDeliveryDate, $domainId, $store);
+        $deliveryDate = $this->postponeToFirstAllowedDeliveryDay(
+            $transport,
+            $closestPossibleDeliveryDate,
+            $domainId,
+            $store,
+            $deliveryDaysExtension,
+        );
 
         return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
     }
@@ -156,11 +192,18 @@ class TransportExpectedDeliveryDateCalculation
         Transport $transport,
         array $quantifiedProducts,
         int $domainId,
+        int $deliveryDaysExtension,
     ): ?DateTimeImmutable {
         $bestDeliveryDate = null;
 
         foreach ($this->getStoresByDomainIdCached($domainId) as $store) {
-            $deliveryDate = $this->calculateDeliveryDate($transport, $quantifiedProducts, $domainId, $store);
+            $deliveryDate = $this->calculateDeliveryDate(
+                $transport,
+                $quantifiedProducts,
+                $domainId,
+                $store,
+                $deliveryDaysExtension,
+            );
 
             if ($deliveryDate !== null && ($bestDeliveryDate === null || $deliveryDate < $bestDeliveryDate)) {
                 $bestDeliveryDate = $deliveryDate;
@@ -191,18 +234,25 @@ class TransportExpectedDeliveryDateCalculation
         return implode(',', $quantifiedProductParts);
     }
 
-    protected function findStoreSelectedInCartForTransport(Transport $transport, ?Cart $cart, int $domainId): ?Store
+    protected function findPickupPlaceIdentifierSelectedInCartForTransport(Transport $transport, ?Cart $cart): ?string
     {
-        if (
-            $cart !== null
-            && $transport->isPersonalPickup()
-            && $cart->getTransport()?->getId() === $transport->getId()
-            && $cart->getPickupPlaceIdentifier() !== null
-        ) {
-            return $this->storeFacade->findByUuidAndDomainId($cart->getPickupPlaceIdentifier(), $domainId);
+        if ($cart === null || $cart->getTransport()?->getId() !== $transport->getId()) {
+            return null;
         }
 
-        return null;
+        return $cart->getPickupPlaceIdentifier();
+    }
+
+    protected function findSelectedStoreForTransport(
+        Transport $transport,
+        ?string $pickupPlaceIdentifier,
+        int $domainId,
+    ): ?Store {
+        if ($pickupPlaceIdentifier === null || !$transport->isPersonalPickup()) {
+            return null;
+        }
+
+        return $this->storeFacade->findByUuidAndDomainId($pickupPlaceIdentifier, $domainId);
     }
 
     /**
@@ -262,30 +312,33 @@ class TransportExpectedDeliveryDateCalculation
         DateTimeImmutable $deliveryDate,
         int $domainId,
         ?Store $store,
+        int $deliveryDaysExtension = 0,
     ): ?DateTimeImmutable {
         $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
 
-        $postponedDays = 0;
+        $remainingDeliveryDaysExtension = $deliveryDaysExtension;
 
-        while (
-            $postponedDays < static::MAX_POSTPONE_DAYS
-            && !$this->isDeliveryAllowedOnDate(
+        for ($postponedDays = 0; $postponedDays < static::MAX_POSTPONE_DAYS; $postponedDays++) {
+            $isDeliveryAllowed = $this->isDeliveryAllowedOnDate(
                 $transport,
                 $deliveryDate,
                 $domainId,
                 $store,
                 $closedDaysIndexedByDate[$deliveryDate->format(static::DATE_INDEX_FORMAT)] ?? [],
-            )
-        ) {
+            );
+
+            if ($isDeliveryAllowed) {
+                if ($remainingDeliveryDaysExtension === 0) {
+                    return $deliveryDate;
+                }
+
+                $remainingDeliveryDaysExtension--;
+            }
+
             $deliveryDate = $deliveryDate->modify('+1 day');
-            $postponedDays++;
         }
 
-        if ($postponedDays === static::MAX_POSTPONE_DAYS) {
-            return null;
-        }
-
-        return $deliveryDate;
+        return null;
     }
 
     /**

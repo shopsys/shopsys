@@ -8,6 +8,7 @@
   * [Objects](#objects)
     * [AddProductResult](#addproductresult)
     * [AddToCartResult](#addtocartresult)
+    * [AdditionalService](#additionalservice)
     * [AdvertCode](#advertcode)
     * [AdvertImage](#advertimage)
     * [AdvertPosition](#advertposition)
@@ -179,6 +180,7 @@
     * [RemoveCustomerUserDataInput](#removecustomeruserdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
     * [SearchInput](#searchinput)
+    * [SetCartItemAdditionalServicesInput](#setcartitemadditionalservicesinput)
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
@@ -2093,6 +2095,20 @@ Request access to personal data
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mutation.setcartitemadditionalservices">SetCartItemAdditionalServices</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Set the chosen additional services of a cart item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#setcartitemadditionalservicesinput">SetCartItemAdditionalServicesInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mutation.setdefaultdeliveryaddress">SetDefaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
@@ -2190,6 +2206,100 @@ Order urlHash as a proof of access to the order for anonymous customers
 <td colspan="2" valign="top"><strong id="addtocartresult.cart">cart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### AdditionalService
+
+Represents an additional service offered with a product
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.catnum">catnum</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Catalog number of the additional service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.deliverydaysextension">deliveryDaysExtension</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+By how many working days the additional service extends the estimated delivery time of the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.description">description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Description of the additional service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.id">id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Additional service id
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Additional service image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the additional service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.price">price</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Price of the additional service for one unit of the product it accompanies
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="additionalservice.uuid">uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the additional service
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -3811,6 +3921,15 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.additionalservices">additionalServices</strong></td>
+<td valign="top">[<a href="#additionalservice">AdditionalService</a>!]!</td>
+<td>
+
+Additional services chosen for the cart item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.freequantity">freeQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -3876,7 +3995,17 @@ Cart item UUID
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithmodifiedadditionalserviceprices">cartItemsWithModifiedAdditionalServicePrices</strong></td>
+<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithmodifiedprice">cartItemsWithModifiedPrice</strong></td>
+<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithremovedadditionalservices">cartItemsWithRemovedAdditionalServices</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
@@ -6426,6 +6555,15 @@ Represents a product
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.additionalservices">additionalServices</strong></td>
+<td valign="top">[<a href="#additionalservice">AdditionalService</a>!]!</td>
+<td>
+
+Additional services offered with the product on the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.availability">availability</strong></td>
 <td valign="top"><a href="#availability">Availability</a>!</td>
 <td></td>
@@ -7434,6 +7572,15 @@ The customer's email address
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.expecteddeliverydate">expectedDeliveryDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Expected delivery date captured when the order was created; null when no delivery date could be promised
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7896,6 +8043,29 @@ Catalog number of the order item product
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="orderitem.deliverydaysextension">deliveryDaysExtension</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+By how many working days the additional service extends the estimated delivery time of the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.mainimage">mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Main image of the product, additional service, transport or payment the order item represents
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="orderitem.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -7937,6 +8107,15 @@ Product of the order item
 <td>
 
 Quantity of order items in the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.relateditems">relatedItems</strong></td>
+<td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
+<td>
+
+Order items related to this order item (e.g. additional services of a product item)
 
 </td>
 </tr>
@@ -10395,6 +10574,15 @@ Represents a product
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.additionalservices">additionalServices</strong></td>
+<td valign="top">[<a href="#additionalservice">AdditionalService</a>!]!</td>
+<td>
+
+Additional services offered with the product on the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.availability">availability</strong></td>
 <td valign="top"><a href="#availability">Availability</a>!</td>
 <td></td>
@@ -12133,6 +12321,15 @@ Represents a product
 <td colspan="2" valign="top"><strong id="variant.accessories">accessories</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.additionalservices">additionalServices</strong></td>
+<td valign="top">[<a href="#additionalservice">AdditionalService</a>!]!</td>
+<td>
+
+Additional services offered with the product on the current domain
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="variant.availability">availability</strong></td>
@@ -15094,6 +15291,47 @@ Unique identifier of the user who initiated the search in format UUID version 4 
 </tbody>
 </table>
 
+### SetCartItemAdditionalServicesInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="setcartitemadditionalservicesinput.additionalserviceuuids">additionalServiceUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+UUIDs of the additional services chosen for the cart item. The previously chosen services are replaced by the provided set.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="setcartitemadditionalservicesinput.cartitemuuid">cartItemUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Cart item UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="setcartitemadditionalservicesinput.cartuuid">cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier, new cart will be created if not provided and customer is not logged in
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ## Enums
 
 ### ArticlePlacementTypeEnum
@@ -15461,6 +15699,10 @@ One of possible types of the order item
 </tr>
 </thead>
 <tbody>
+<tr>
+<td valign="top"><strong>additionalService</strong></td>
+<td></td>
+</tr>
 <tr>
 <td valign="top"><strong>discount</strong></td>
 <td></td>
@@ -16794,6 +17036,15 @@ Represents a product
 <td colspan="2" valign="top"><strong id="product.accessories">accessories</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.additionalservices">additionalServices</strong></td>
+<td valign="top">[<a href="#additionalservice">AdditionalService</a>!]!</td>
+<td>
+
+Additional services offered with the product on the current domain
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="product.availability">availability</strong></td>

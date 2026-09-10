@@ -1,0 +1,4 @@
+SetCartItemAdditionalServicesInput:
+    type: input-object
+    inherits:
+        - 'SetCartItemAdditionalServicesInputDecorator'

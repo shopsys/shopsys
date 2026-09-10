@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use DateTimeInterface;
+use DateTimeZone;
 use IntlDateFormatter;
 use Override;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
@@ -64,33 +65,39 @@ class DateTimeFormatterExtension extends AbstractExtension
         ];
     }
 
-    public function formatDate(mixed $dateTime, ?string $locale = null): string
+    public function formatDate(mixed $dateTime, ?string $locale = null, ?DateTimeZone $displayTimeZone = null): string
     {
         return $this->format(
             $dateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::NONE,
             $locale,
+            $displayTimeZone,
         );
     }
 
-    public function formatTime(mixed $dateTime, ?string $locale = null): string
+    public function formatTime(mixed $dateTime, ?string $locale = null, ?DateTimeZone $displayTimeZone = null): string
     {
         return $this->format(
             $dateTime,
             IntlDateFormatter::NONE,
             IntlDateFormatter::MEDIUM,
             $locale,
+            $displayTimeZone,
         );
     }
 
-    public function formatDateTime(mixed $dateTime, ?string $locale = null): string
-    {
+    public function formatDateTime(
+        mixed $dateTime,
+        ?string $locale = null,
+        ?DateTimeZone $displayTimeZone = null,
+    ): string {
         return $this->format(
             $dateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::MEDIUM,
             $locale,
+            $displayTimeZone,
         );
     }
 
@@ -98,8 +105,13 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param int $dateType {@link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants}
      * @param int $timeType {@link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants}
      */
-    protected function format(mixed $dateTime, int $dateType, int $timeType, ?string $locale = null): string
-    {
+    protected function format(
+        mixed $dateTime,
+        int $dateType,
+        int $timeType,
+        ?string $locale = null,
+        ?DateTimeZone $displayTimeZone = null,
+    ): string {
         if ($dateTime === null) {
             return '-';
         }
@@ -109,6 +121,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateType,
             $timeType,
             $this->getLocale($locale),
+            $displayTimeZone,
         );
     }
 

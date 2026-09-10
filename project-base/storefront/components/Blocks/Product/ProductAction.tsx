@@ -7,6 +7,8 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { CurrentCartType } from 'types/cart';
+import { FunctionComponentProps } from 'types/globals';
+import { OnProductAddedToCart } from 'utils/cart/useAddToCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type PurchaseAction = 'sellingDenied' | 'outOfStock' | 'inquiry' | 'chooseVariant' | 'addToCart' | 'none';
@@ -44,7 +46,8 @@ type ProductActionProps = {
     isWatchdogButtonShownWithPurchaseAction?: boolean;
     skipKeyboardNavigation?: boolean;
     currentCart?: Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
-};
+    onProductAddedToCart?: OnProductAddedToCart;
+} & FunctionComponentProps;
 
 export const PRODUCT_VARIANTS_ID = 'product-variants';
 
@@ -57,6 +60,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     buttonSize = 'medium',
     isWatchdogButtonShownWithPurchaseAction = false,
     skipKeyboardNavigation = false,
+    onProductAddedToCart,
 }) => {
     const { t } = useTranslation();
     const { canCreateOrder } = useAuthorization();
@@ -82,6 +86,7 @@ export const ProductAction: FC<ProductActionProps> = ({
         minQuantity: 1,
         productUuid: product.uuid,
         tabIndex: skipKeyboardNavigation ? -1 : 0,
+        onProductAddedToCart,
     };
 
     return (

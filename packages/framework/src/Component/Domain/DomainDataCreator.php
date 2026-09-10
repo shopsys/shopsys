@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServiceFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -33,6 +34,7 @@ class DomainDataCreator
         protected readonly VatDataFactory $vatDataFactory,
         protected readonly VatFacade $vatFacade,
         protected readonly VatSetting $vatSetting,
+        protected readonly AdditionalServiceFacade $additionalServiceFacade,
     ) {
     }
 
@@ -58,6 +60,8 @@ class DomainDataCreator
                     self::TEMPLATE_DOMAIN_ID,
                     $domainId,
                 );
+
+                $this->additionalServiceFacade->useProductVatRateWhereVatIsMissing($domainId);
 
                 if ($isNewLocale) {
                     $this->translatableEntityDataCreator->copyAllTranslatableDataForNewLocale(

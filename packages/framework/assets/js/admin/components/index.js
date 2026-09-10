@@ -1,3 +1,4 @@
+import './AdditionalService';
 import './Advert';
 import './AdministratorForm';
 import './AdvancedSearch';
@@ -38,6 +39,7 @@ import './OrderItems';
 import './Parameters';
 import './Payment';
 import './Product';
+import './ProductAdditionalServices';
 import './PriceListProductPicker';
 import './PriceListProductPickerWindow';
 import './productsPicker';

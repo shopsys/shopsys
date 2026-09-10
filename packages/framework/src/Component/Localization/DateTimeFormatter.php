@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Localization;
 
 use DateTimeInterface;
+use DateTimeZone;
 use IntlDateFormatter;
 use Override;
 
@@ -21,13 +22,18 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
     #[Override]
-    public function format(DateTimeInterface $value, int $dateType, int $timeType, string $locale): string|false
-    {
+    public function format(
+        DateTimeInterface $value,
+        int $dateType,
+        int $timeType,
+        string $locale,
+        ?DateTimeZone $displayTimeZone = null,
+    ): string|false {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,
             $dateType,
             $timeType,
-            $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
+            $displayTimeZone ?? $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
             null,
             $this->getCustomPattern($locale, $dateType, $timeType),
         );

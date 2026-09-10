@@ -63,6 +63,7 @@ const orderItem = {
         priceWithoutVat: '8',
         vatAmount: '2',
     },
+    relatedItems: [] as TypeOrderDetailItemFragment['relatedItems'],
     order: {
         withdrawalRequest: null,
     },

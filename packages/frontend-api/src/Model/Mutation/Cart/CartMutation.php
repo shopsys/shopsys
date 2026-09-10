@@ -73,6 +73,31 @@ class CartMutation extends AbstractMutation
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }
 
+    public function setCartItemAdditionalServicesMutation(
+        Argument $argument,
+        InputValidator $validator,
+    ): CartWithModificationsResult {
+        $validator->validate();
+
+        $input = $argument['input'];
+
+        $cartUuid = $input['cartUuid'];
+        $cartItemUuid = $input['cartItemUuid'];
+        $additionalServiceUuids = $input['additionalServiceUuids'];
+
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+
+        $cart = $this->cartApiFacade->setCartItemAdditionalServicesByUuid(
+            $cartItemUuid,
+            $additionalServiceUuids,
+            $cart,
+        );
+
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+    }
+
     public function addOrderItemsToCartMutation(
         Argument $argument,
         InputValidator $validator,

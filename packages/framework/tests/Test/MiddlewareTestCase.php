@@ -7,9 +7,11 @@ namespace Tests\FrameworkBundle\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
@@ -19,8 +21,10 @@ use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class MiddlewareTestCase extends TestCase
 {
@@ -101,5 +105,51 @@ class MiddlewareTestCase extends TestCase
         $domainConfigStub->method('getLocale')->willReturn('en');
 
         return $domainConfigStub;
+    }
+
+    protected function addProductItemToOrderData(
+        OrderData $orderData,
+        Price $unitPrice,
+        int $quantity,
+        string $name,
+        int $productId,
+    ): OrderItemData {
+        $productItemData = new OrderItemData();
+        $productItemData->type = OrderItemTypeEnum::TYPE_PRODUCT;
+        $productItemData->name = $name;
+        $productItemData->setUnitPrice($unitPrice);
+        $productItemData->setTotalPrice($unitPrice->multiply($quantity));
+        $productItemData->vatPercent = '21';
+        $productItemData->quantity = $quantity;
+        $productItemData->unitName = 'pcs';
+        $productItemData->catnum = (string)$productId;
+        $productItemData->product = $this->createStub(Product::class);
+        $productItemData->product->method('getId')->willReturn($productId);
+
+        $orderData->addItem($productItemData);
+
+        return $productItemData;
+    }
+
+    protected function addAdditionalServiceItemToOrderData(
+        OrderData $orderData,
+        OrderItemData $productItemData,
+        Price $price,
+        string $name,
+    ): OrderItemData {
+        $additionalServiceItemData = new OrderItemData();
+        $additionalServiceItemData->type = OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE;
+        $additionalServiceItemData->name = $name;
+        $additionalServiceItemData->setUnitPrice($price);
+        $additionalServiceItemData->setTotalPrice($price);
+        $additionalServiceItemData->vatPercent = '21';
+        $additionalServiceItemData->quantity = 1;
+
+        $productItemData->relatedOrderItemsData[] = $additionalServiceItemData;
+
+        $orderData->addItem($additionalServiceItemData);
+        $orderData->addTotalPrice($price, OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE);
+
+        return $additionalServiceItemData;
     }
 }
