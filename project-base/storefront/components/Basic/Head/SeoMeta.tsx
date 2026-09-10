@@ -7,6 +7,7 @@ import { OgTypeEnum } from 'types/seo';
 import { logMessage } from 'utils/errors/logMessage';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
+import { getDocumentTitle } from 'utils/seo/getDocumentTitle';
 import { useSeo } from 'utils/seo/useSeo';
 
 type SeoMetaProps = {
@@ -69,7 +70,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
     return (
         <Head>
-            <title>{[title, titleSuffix].filter(Boolean).join(' ')}</title>
+            <title>{getDocumentTitle(title, titleSuffix)}</title>
 
             {description && <meta content={description} name="description" />}
 
