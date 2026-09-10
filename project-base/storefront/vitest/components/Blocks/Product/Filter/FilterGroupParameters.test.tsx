@@ -530,12 +530,12 @@ describe('FilterGroupParameters', () => {
             expect(screen.getByText('Wool')).toBeInTheDocument();
         });
 
-        test('has proper ARIA labels for color swatches', () => {
+        test('announces each color checkbox label and count once', () => {
             render(<FilterGroupParameters {...defaultColorProps} />);
 
-            expect(screen.getByText('Red')).toBeInTheDocument();
-            expect(screen.getByText('Blue')).toBeInTheDocument();
-            expect(screen.getByText('Green')).toBeInTheDocument();
+            expect(screen.getByRole('checkbox', { name: 'Red' })).toBeInTheDocument();
+            expect(screen.getByRole('checkbox', { name: 'Blue (15)' })).toBeInTheDocument();
+            expect(screen.getByRole('checkbox', { name: 'Green (10)' })).toBeInTheDocument();
         });
 
         test('has proper ARIA labels for range slider inputs', () => {
