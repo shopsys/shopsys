@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useSeoPageH1 } from 'utils/seo/useSeoPageH1';
 import { ProductComparisonContent } from './ProductComparisonContent';
 
 const RemoveAllProductsPopup = dynamic(
@@ -27,7 +28,7 @@ export const ProductComparison: FC = () => {
     const { t } = useTranslation();
     const { comparison, isProductListFetching, removeComparison } = useComparison();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const title = `${t('Product comparison')}${comparison?.products.length ? ` (${comparison.products.length})` : ''}`;
+    const heading = `${useSeoPageH1(t('Product comparison'))}${comparison?.products.length ? ` (${comparison.products.length})` : ''}`;
 
     const handleRemoveAllClick = () => {
         updatePortalContent(
@@ -50,7 +51,7 @@ export const ProductComparison: FC = () => {
                 {comparison?.products && !isProductListFetching && (
                     <>
                         <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
-                            <h1 data-tid={TIDs.page_title}>{title}</h1>
+                            <h1 data-tid={TIDs.page_title}>{heading}</h1>
 
                             <Button
                                 aria-label={t('Remove all products from comparison', { ns: 'accessibility' })}
