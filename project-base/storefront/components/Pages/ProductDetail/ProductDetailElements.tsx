@@ -1,4 +1,5 @@
-type ProductDetailTitleProps = {
+type ProductDetailHeadingProps = {
+    heading: string | null;
     name: string;
     namePrefix: string | null;
     nameSuffix: string | null;
@@ -8,14 +9,29 @@ const ProductDetailPrefix: FC = ({ children }) => (
     <div className="mb-1 font-secondary text-text-disabled">{children}</div>
 );
 
-const ProductDetailHeading: FC = ({ children }) => <h1 className="wrap-anywhere">{children}</h1>;
+const ProductDetailH1: FC = ({ children }) => <h1 className="wrap-anywhere">{children}</h1>;
 
-export const ProductDetailTitle: FC<ProductDetailTitleProps> = ({ name, namePrefix, nameSuffix, className }) => (
+/**
+ * The SEO heading set in the administration replaces the whole name including its prefix and suffix
+ */
+export const ProductDetailHeading: FC<ProductDetailHeadingProps> = ({
+    heading,
+    name,
+    namePrefix,
+    nameSuffix,
+    className,
+}) => (
     <div className={className}>
-        {namePrefix && <ProductDetailPrefix>{namePrefix}</ProductDetailPrefix>}
+        {heading ? (
+            <ProductDetailH1>{heading}</ProductDetailH1>
+        ) : (
+            <>
+                {namePrefix && <ProductDetailPrefix>{namePrefix}</ProductDetailPrefix>}
 
-        <ProductDetailHeading>
-            {name} {nameSuffix}
-        </ProductDetailHeading>
+                <ProductDetailH1>
+                    {name} {nameSuffix}
+                </ProductDetailH1>
+            </>
+        )}
     </div>
 );
