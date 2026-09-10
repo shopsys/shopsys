@@ -3614,7 +3614,10 @@ msgid "The selected country is not valid."
 msgstr "Zvolená země není platná."
 
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
-msgstr ""
+msgstr "Vybraná hodnota se vždy použije tak, jak je. \"Výchozí (nenastaveno)\" nechá rozhodnutí na storefrontu, který uplatní svá pravidla pro tuto stránku, např. noindex pro filtrované výpisy, košík nebo objednávku."
+
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change."
+msgstr "Slug musí odpovídat konfiguraci stránky na storefrontu, pokud si nejste změnou jisti, poraďte se s vývojářem."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
