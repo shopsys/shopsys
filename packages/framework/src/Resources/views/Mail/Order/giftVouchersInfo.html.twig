@@ -1,0 +1,19 @@
+{% trans_default_domain 'customerMessages' %}
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="margin-top: 12px;">
+    <tbody>
+        {% for giftVoucher in order.redeemedGiftVouchers %}
+            <tr>
+                <td align="right" style="padding-bottom: 8px;">
+                    {% trans into orderLocale %}Gift voucher{% endtrans %}
+                    <span style="display: inline-block; background-color: #c23838; color: #ffffff; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; letter-spacing: 1px;">{{ giftVoucher.code }}</span>
+                    <strong style="color: #c23838; white-space: nowrap; padding-left: 10px;">-{{ giftVoucher.valueWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</strong>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td align="right" style="padding-top: 10px; border-top: 1px solid #efefef;">
+                <h3 style="margin: 0;">{% trans into orderLocale %}Remaining to pay{% endtrans %}: <span style="color: #006cd6; white-space: nowrap;">{{ order.remainingAmountToPay|priceWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</span></h3>
+            </td>
+        </tr>
+    </tbody>
+</table>

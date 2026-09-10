@@ -38,9 +38,10 @@ class PaymentGridFactory implements GridFactoryInterface
             $queryBuilder,
             'p.id',
             function ($row) {
-                $payment = $this->paymentRepository->findById($row['p']['id']);
+                $payment = $this->paymentRepository->getById($row['p']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($payment);
                 $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
+                $row['isGiftVoucherPayment'] = $payment->isGiftVoucherType();
 
                 return $row;
             },

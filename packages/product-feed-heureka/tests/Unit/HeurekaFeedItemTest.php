@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory;
@@ -254,6 +255,7 @@ class HeurekaFeedItemTest extends TestCase
         ]);
 
         $this->heurekaFeedItemFactory = new HeurekaFeedItemFactory(
+            $this->createStub(TransportFacade::class),
             $this->productPriceCalculationForCustomerUserMock,
             $this->heurekaProductDataBatchLoaderMock,
             $this->heurekaCategoryFacadeStub,

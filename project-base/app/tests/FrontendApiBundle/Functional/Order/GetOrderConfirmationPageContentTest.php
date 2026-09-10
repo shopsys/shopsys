@@ -9,6 +9,7 @@ use App\Model\Order\Order;
 use GoPay\Definition\Response\PaymentStatus;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderPaidStatusFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFactory;
@@ -18,6 +19,11 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 final class GetOrderConfirmationPageContentTest extends GraphQlTestCase
 {
     use OrderTestTrait;
+
+    /**
+     * @inject
+     */
+    private OrderPaidStatusFacade $orderPaidStatusFacade;
 
     /**
      * @inject
@@ -56,6 +62,7 @@ final class GetOrderConfirmationPageContentTest extends GraphQlTestCase
         $paymentTransaction = $this->createPaymentTransaction($order, $paymentTransactionStatus);
         $order->addPaymentTransaction($paymentTransaction);
         $this->em->flush();
+        $this->orderPaidStatusFacade->refreshOrderPaidStatusByPaymentTransactions($order);
 
         $this->assertOrderConfirmationPageContent(
             $order,

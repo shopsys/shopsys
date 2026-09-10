@@ -41,6 +41,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
+    const isUnavailable = transport.productsBlockingSelectionInCart.length > 0;
 
     const ariaLabel = isPriceVisible(transport.price.priceWithVat)
         ? t('Choose transport {{ transportName }} for {{ price }}', {
@@ -74,7 +75,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                     <TransportAndPaymentItemLabel
                         description={transport.description}
                         expectedDeliveryDate={transport.expectedDeliveryDate}
-                        disabled={disabled}
+                        disabled={isUnavailable}
                         image={transport.mainImage}
                         isActive={isActive}
                         isImageOnWhiteBackground={hasGreyBackground || isActive}
@@ -93,7 +94,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                 onClick={changeTransport}
             />
 
-            {disabled &&
+            {isUnavailable &&
                 transport.productsBlockingSelectionInCart.map((productsGroup) => (
                     <TransportUnavailabilityInfo
                         key={productsGroup.reason}

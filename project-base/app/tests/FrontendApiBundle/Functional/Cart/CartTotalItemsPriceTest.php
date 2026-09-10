@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -29,6 +30,35 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
         $expectedPrice = $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
 
         $this->assertSame($expectedPrice, $responseData['totalItemsPrice']);
+    }
+
+    public function testRemainingItemsAmountToPayExcludesTransportAndPayment(): void
+    {
+        $cartUuid = $this->getResponseDataForGraphQlType($this->addHelloKittyToNewCart(), 'AddToCart')['cart']['uuid'];
+        $this->addPaymentCardToCart($cartUuid);
+        $this->addTransportPplToCart($cartUuid);
+
+        $responseData = $this->getResponseDataForGraphQlType($this->getCartPricesResponse($cartUuid), 'cart');
+
+        $totalPriceWithVat = Money::create($responseData['totalPrice']['priceWithVat']);
+        $totalItemsPriceWithVat = Money::create($responseData['totalItemsPrice']['priceWithVat']);
+
+        $this->assertTrue(
+            $totalPriceWithVat->isGreaterThan($totalItemsPriceWithVat),
+            'The selected transport and payment must make the total larger than the items price.',
+        );
+        $this->assertTrue($totalItemsPriceWithVat->equals(Money::create($responseData['remainingItemsAmountToPay'])));
+        $this->assertTrue($totalPriceWithVat->equals(Money::create($responseData['remainingAmountToPay'])));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getCartPricesResponse(string $cartUuid): array
+    {
+        return $this->getResponseContentForGql(__DIR__ . '/graphql/CartPricesQuery.graphql', [
+            'cartUuid' => $cartUuid,
+        ]);
     }
 
     /**

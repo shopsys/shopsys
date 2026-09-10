@@ -1,0 +1,11 @@
+mutation ApplyCodeToCart($cartUuid: Uuid, $code: String!) {
+    ApplyCodeToCart(input: { cartUuid: $cartUuid, code: $code }) {
+        uuid
+        promoCodes {
+            code
+        }
+        giftVouchers {
+            code
+        }
+    }
+}

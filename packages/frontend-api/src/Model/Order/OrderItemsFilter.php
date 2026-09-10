@@ -10,6 +10,7 @@ class OrderItemsFilter
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null $orderStatuses
+     * @param string[]|null $excludeProductTypes
      */
     public function __construct(
         protected ?string $orderUuid = null,
@@ -18,6 +19,7 @@ class OrderItemsFilter
         protected ?string $catnum = null,
         protected ?string $productUuid = null,
         protected ?string $type = null,
+        protected ?array $excludeProductTypes = null,
     ) {
     }
 
@@ -52,5 +54,13 @@ class OrderItemsFilter
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getExcludeProductTypes(): ?array
+    {
+        return $this->excludeProductTypes;
     }
 }

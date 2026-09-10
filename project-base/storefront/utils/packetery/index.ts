@@ -102,3 +102,4 @@ const mapPacketeryOpeningHoursToInternalOpeningHours = (
 
     return { ...internalOpeningHours, exceptionDays: packeteryExtendedPoint.exceptionDays };
 };
+export const isEmailTransport = (transportTypeCode: string | undefined) => transportTypeCode === 'email';

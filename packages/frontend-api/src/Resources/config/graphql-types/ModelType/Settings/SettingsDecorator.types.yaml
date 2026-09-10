@@ -16,6 +16,10 @@ SettingsDecorator:
                 type: String
                 resolve: "@=query('contactFormMainTextQuery')"
                 description: "Main text for contact form"
+            emailTransportDescription:
+                type: String
+                resolve: "@=query('emailTransportDescriptionQuery')"
+                description: "Returns the localized description of email delivery for electronic gift vouchers"
             displayTimezone:
                 type: String!
                 resolve: "@=query('displayTimezoneQuery')"

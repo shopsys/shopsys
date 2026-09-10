@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomain()
  * @method \App\Model\Payment\Payment|null findPaymentByExternalMethodTransportAndDomainId(string $externalPaymentMethod, \App\Model\Transport\Transport $transport, int $domainId)
  * @method void validateOrderRoundingTypes(\App\Model\Payment\PaymentData $paymentData)
+ * @method \App\Model\Payment\Payment getGiftVoucherPayment()
  */
 class PaymentFacade extends BasePaymentFacade
 {

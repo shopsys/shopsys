@@ -20,6 +20,12 @@
             <EAN>{{ item.ean }}</EAN>
         {% endif -%}
         <DELIVERY_DATE>{{ item.deliveryDate }}</DELIVERY_DATE>
+        {% if item.deliveryId is not null -%}
+            <DELIVERY>
+                <DELIVERY_ID>{{ item.deliveryId }}</DELIVERY_ID>
+                <DELIVERY_PRICE>{{ item.deliveryPrice is not null ? item.deliveryPrice|moneyFormat(2, ',') : 0 }}</DELIVERY_PRICE>
+            </DELIVERY>
+        {% endif -%}
         {% if item.manufacturer is not null -%}
             <MANUFACTURER>{{ item.manufacturer }}</MANUFACTURER>
         {% endif -%}

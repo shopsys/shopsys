@@ -43,6 +43,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const string ORDER_DELIVERED_YESTERDAY = 'order_delivered_yesterday';
     public const string ORDER_DELIVERED_MONTH_AGO = 'order_delivered_month_ago';
     public const string ORDER_CREATED_BY_VITEK = 'order_created_by_vitek';
+    public const string ORDER_WITH_GIFT_VOUCHER_PRODUCTS = 'order_with_gift_voucher_products';
+    public const string ORDER_WITH_GIFT_VOUCHER_PRODUCTS_SECOND_DOMAIN = 'order_with_gift_voucher_products_second_domain';
 
     /**
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
@@ -70,6 +72,59 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $this->loadDefault($domainId);
             }
         }
+
+        $this->createGiftVoucherPurchaseOrder(
+            Domain::FIRST_DOMAIN_ID,
+            self::ORDER_WITH_GIFT_VOUCHER_PRODUCTS,
+            OrderStatusDataFixture::ORDER_STATUS_DONE,
+        );
+
+        if (in_array(Domain::SECOND_DOMAIN_ID, $this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds(), true)) {
+            $this->createGiftVoucherPurchaseOrder(
+                Domain::SECOND_DOMAIN_ID,
+                self::ORDER_WITH_GIFT_VOUCHER_PRODUCTS_SECOND_DOMAIN,
+                OrderStatusDataFixture::ORDER_STATUS_NEW,
+            );
+        }
+    }
+
+    private function createGiftVoucherPurchaseOrder(
+        int $domainId,
+        string $referenceName,
+        string $orderStatusReferenceName,
+    ): void {
+        $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
+            'no-reply@shopsys.com',
+            $domainId,
+        );
+        $orderData = $this->orderDataFactory->create();
+        $orderData->status = $this->getReference($orderStatusReferenceName, OrderStatus::class);
+        $orderData->firstName = 'Marie';
+        $orderData->lastName = 'Skalická';
+        $orderData->email = 'no-reply@shopsys.com';
+        $orderData->telephone = new PhoneData('CZ', '+420', '731254789');
+        $orderData->street = 'Poštovní 4';
+        $orderData->city = 'Ostrava';
+        $orderData->postcode = '70200';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
+        $orderData->deliveryAddressSameAsBillingAddress = true;
+        $orderData->domainId = $domainId;
+        $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
+        $orderData->createdAt = (new DatePoint())->modify('-6 day')->setTime(9, 15, 27);
+
+        $order = $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '157' => 4,
+            ],
+            TransportDataFixture::TRANSPORT_EMAIL,
+            PaymentDataFixture::PAYMENT_GOPAY_CARD,
+            $customerUser,
+        );
+        $this->addReference($referenceName, $order);
     }
 
     /**

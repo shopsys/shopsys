@@ -8,6 +8,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
@@ -32,11 +33,26 @@ class ChangePaymentInOrderMutation extends AbstractMutation
         try {
             $payment = $this->paymentFacade->getByUuid($paymentUuid);
 
+            if (!$this->isPaymentSelectableForOrder($payment, $order)) {
+                throw new PaymentNotFoundException($paymentUuid);
+            }
+
             $this->orderFacade->changeOrderPayment($order, $payment);
         } catch (PaymentNotFoundException) {
             throw new PaymentNotFoundUserError('Payment with UUID \'' . $paymentUuid . '\' not found.');
         }
 
         return $order;
+    }
+
+    protected function isPaymentSelectableForOrder(Payment $payment, Order $order): bool
+    {
+        foreach ($this->paymentFacade->getVisibleForOrder($order) as $visiblePayment) {
+            if ($visiblePayment->getId() === $payment->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -172,8 +172,17 @@ export type GtmProductInterface = {
   url: string; // product URL
   brand: string; // product brand name
   categories: string[]; // array of product categories
+  productType: GtmProductType; // type of the product, gift vouchers are reported as "voucher"
   imageUrl?: string; // optional product image URL
 };
+```
+
+## GtmProductType
+
+The type represents the kind of the product in the data layer.
+
+```ts
+export type GtmProductType = 'product' | 'service' | 'voucher';
 ```
 
 ## GtmListedProductType

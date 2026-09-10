@@ -22,6 +22,7 @@ fragment CartItemFragment on CartItem {
         fullName
         catalogNumber
         isInquiryType
+        productType
         flags {
             ...SimpleFlagFragment
         }

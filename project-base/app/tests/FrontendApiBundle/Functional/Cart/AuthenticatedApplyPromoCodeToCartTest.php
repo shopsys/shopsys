@@ -78,7 +78,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         self::assertNull($data['uuid']);
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
@@ -110,7 +110,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         self::assertNull($data['uuid']);
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
@@ -154,7 +154,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
             'promoCode' => $promoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
@@ -185,7 +185,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
             'promoCode' => $validPromoCode->getCode(),
         ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
         self::assertPromoCode($validPromoCode, $data['promoCodes'][0]);
 

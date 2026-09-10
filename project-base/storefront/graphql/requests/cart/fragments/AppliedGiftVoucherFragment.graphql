@@ -1,0 +1,7 @@
+fragment AppliedGiftVoucherFragment on AppliedGiftVoucher {
+    __typename
+    code
+    valueWithVat
+    valueWithoutVat
+    productName
+}

@@ -6,6 +6,8 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
+  /** Product availability status for electronically delivered products */
+  | 'Digital'
   /** Product is out of stock with a known expected restocking date */
   | 'ExpectedRestock'
   /** Product availability status in stock */

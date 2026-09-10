@@ -1,5 +1,6 @@
 import { CheckmarkDoneIcon } from 'components/Basic/Icon/CheckmarkDoneIcon';
 import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
+import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { PackageUnavailableIcon } from 'components/Basic/Icon/PackageUnavailableIcon';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 
@@ -14,6 +15,7 @@ export const ProductAvailabilityIcon: FC<ProductAvailabilityIconProps> = ({ stat
 };
 
 const availabilityIconByStatus: Record<TypeAvailabilityStatusEnum, SvgFC> = {
+    [TypeAvailabilityStatusEnum.Digital]: DownloadIcon,
     [TypeAvailabilityStatusEnum.InStock]: CheckmarkDoneIcon,
     [TypeAvailabilityStatusEnum.ExpectedRestock]: ClockIcon,
     [TypeAvailabilityStatusEnum.OutOfStock]: PackageUnavailableIcon,

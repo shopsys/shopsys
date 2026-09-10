@@ -15,9 +15,20 @@
 
 {% block grid_value_cell_id_status_name %}
     <span class="status status-{{ row.statusType|order_status_color }}">
-        <span class="status-dot"></span>
         {{ value }}
     </span>
+{% endblock %}
+
+{% block grid_value_cell_id_paid %}
+    {% if value %}
+        <span class="status status-green">
+            {{ 'Paid'|trans }}
+        </span>
+    {% else %}
+        <span class="status status-yellow">
+            {{ 'Unpaid'|trans }}
+        </span>
+    {% endif %}
 {% endblock %}
 
 {% block grid_value_cell_id_total_price %}

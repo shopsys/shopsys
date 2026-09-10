@@ -1,4 +1,13 @@
 services:
+    gotenberg:
+        image: gotenberg/gotenberg:8
+        command:
+            - gotenberg
+            - --chromium-deny-private-ips
+            - --api-download-from-deny-private-ips
+        networks:
+            - default
+
     webserver:
         restart: always
         image: nginx:1.29-alpine

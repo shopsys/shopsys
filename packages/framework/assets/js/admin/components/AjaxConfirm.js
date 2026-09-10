@@ -1,3 +1,4 @@
+import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
@@ -13,6 +14,18 @@ export default class AjaxConfirm {
                     url: $(this).attr('href'),
                     context: this,
                     success: data => {
+                        const $directDelete = $('<div>').append($.parseHTML(data)).find('.js-confirm-delete-direct');
+
+                        if ($directDelete.length > 0) {
+                            ConfirmWindow.show({
+                                content: $directDelete.html(),
+                                style: 'danger',
+                                continueUrl: $directDelete.data('continue-url'),
+                            });
+
+                            return;
+                        }
+
                         // eslint-disable-next-line no-new
                         new ModalWindow({
                             content: data,
@@ -26,7 +39,7 @@ export default class AjaxConfirm {
                             const onOpen = $(_this).data('ajax-confirm-on-open');
                             if (onOpen) {
                                 // eslint-disable-next-line no-new
-                                new ConfirmDelete(_this);
+                                new ConfirmDelete();
                             }
 
                             // Remove the event listener to avoid multiple registrations

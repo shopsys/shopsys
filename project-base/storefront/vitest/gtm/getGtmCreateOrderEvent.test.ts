@@ -22,6 +22,7 @@ const cart = {
         vatAmount: '21.00',
     },
     totalDiscountPrice: {
+        priceWithoutVat: '5.00',
         priceWithVat: '5.00',
     },
     transport: {
@@ -31,6 +32,7 @@ const cart = {
             priceWithVat: '4.84',
         },
     },
+    giftVouchers: [],
     items: [],
 } as any;
 
@@ -46,18 +48,20 @@ describe('getGtmCreateOrderEventOrderPart', () => {
         );
 
         expect(result).toMatchObject({
-            currencyCode: 'EUR',
+            currency: 'EUR',
             id: '202600001',
-            valueWithoutVat: 100,
-            valueWithVat: 121,
-            vatAmount: 21,
+            value: 100,
+            valueWithTax: 121,
+            valueTax: 21,
             paymentPriceWithoutVat: 10,
             paymentPriceWithVat: 12.1,
             transportPriceWithoutVat: 4,
             transportPriceWithVat: 4.84,
             transportType: 'Packetery',
             discountAmount: 5,
+            discountAmountWithTax: 5,
             promoCodes: ['PROMO'],
+            coupons: ['PROMO'],
             paymentType: 'Credit card',
             reviewConsents: {
                 google: true,
@@ -77,6 +81,7 @@ describe('getGtmCreateOrderEventOrderPart', () => {
                     vatAmount: '0',
                 },
                 totalDiscountPrice: {
+                    priceWithoutVat: '***',
                     priceWithVat: '***',
                 },
                 transport: {
@@ -100,13 +105,14 @@ describe('getGtmCreateOrderEventOrderPart', () => {
             domainConfig,
         );
 
-        expect(result.valueWithoutVat).toBeNull();
-        expect(result.valueWithVat).toBeNull();
+        expect(result.value).toBeNull();
+        expect(result.valueWithTax).toBeNull();
         expect(result.paymentPriceWithoutVat).toBeNull();
         expect(result.paymentPriceWithVat).toBeNull();
         expect(result.transportPriceWithoutVat).toBeNull();
         expect(result.transportPriceWithVat).toBeNull();
         expect(result.discountAmount).toBeNull();
+        expect(result.discountAmountWithTax).toBeNull();
         expect(result.reviewConsents).toEqual({
             google: false,
             seznam: false,
@@ -118,5 +124,46 @@ describe('getGtmCreateOrderEventOrderPart', () => {
         const result = getGtmCreateOrderEventOrderPart(cart, payment, [], '202600001', undefined, domainConfig);
 
         expect(result).not.toHaveProperty('reviewConsents');
+    });
+
+    test('should report zero voucher values and no voucher names without applied vouchers', () => {
+        const result = getGtmCreateOrderEventOrderPart(cart, payment, [], '202600001', undefined, domainConfig);
+
+        expect(result.voucherAmount).toBe(0);
+        expect(result.voucherAmountWithTax).toBe(0);
+        expect(result.voucherName).toEqual([]);
+    });
+
+    test('should aggregate gift voucher amount, tax and names', () => {
+        const result = getGtmCreateOrderEventOrderPart(
+            {
+                ...cart,
+                giftVouchers: [
+                    {
+                        code: 'VOUCHER-1',
+                        valueWithVat: '36.30',
+                        valueWithoutVat: '30.00',
+                        validUntil: '2030-01-01T00:00:00+00:00',
+                        productName: 'Electronic gift voucher 1000 CZK',
+                    },
+                    {
+                        code: 'VOUCHER-2',
+                        valueWithVat: '20.50',
+                        valueWithoutVat: '20.50',
+                        validUntil: '2030-01-01T00:00:00+00:00',
+                        productName: null,
+                    },
+                ],
+            },
+            payment,
+            [],
+            '202600001',
+            undefined,
+            domainConfig,
+        );
+
+        expect(result.voucherAmount).toBe(50.5);
+        expect(result.voucherAmountWithTax).toBe(56.8);
+        expect(result.voucherName).toEqual(['Electronic gift voucher 1000 CZK', 'VOUCHER-2']);
     });
 });

@@ -136,6 +136,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                     <ExtendedNextLink
                                         href={order.trackingUrl}
                                         target="_blank"
+                                        className="text-sm"
                                         aria-label={t('Go to tracking package {{ trackingNumber }}', {
                                             ns: 'accessibility',
                                             trackingNumber: order.trackingNumber,
@@ -190,6 +191,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                             productReviewsAllowed={order.productReviewsAllowed}
                             isReviewAvailabilityLoading={isReviewAvailabilityLoading}
                             reviewedProductUuids={reviewedProductUuids}
+                            purchasedGiftVouchers={order.purchasedGiftVouchers}
                             isDiscount={
                                 orderItem.type === TypeOrderItemTypeEnum.Discount ||
                                 orderItem.type === TypeOrderItemTypeEnum.Promotion
@@ -210,7 +212,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                     'border-border-less border-b-3 pb-4',
                             )}
                         >
-                            {t('Promo code')}
+                            {t('Discount coupon')}
                             <Flag type="discount">{order.promoCode}</Flag>
                         </div>
                     )}
@@ -231,6 +233,39 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 </div>
                             </div>
                         )}
+
+                    {order.giftVouchers.length > 0 && (
+                        <div className="flex flex-col gap-2 border-border-less border-t-1 pt-2">
+                            {order.giftVouchers.map((giftVoucher) => (
+                                <div
+                                    key={giftVoucher.code}
+                                    className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-1 sm:flex sm:gap-2"
+                                >
+                                    <span>{t('Gift voucher')}</span>
+
+                                    <Flag className="col-start-2 row-start-1 justify-self-end" type="discount">
+                                        {giftVoucher.code}
+                                    </Flag>
+
+                                    {isPriceVisible(giftVoucher.valueWithVat) && (
+                                        <span className="col-start-2 row-start-2 justify-self-end whitespace-nowrap text-price-discounted sm:ml-auto">
+                                            {`-${formatPrice(giftVoucher.valueWithVat)}`}
+                                        </span>
+                                    )}
+                                </div>
+                            ))}
+
+                            {isPriceVisible(order.remainingAmountToPay) && (
+                                <div className="flex items-baseline justify-between gap-2 border-border-less border-t-[3px] pt-4">
+                                    <span className="text-lg">{t('Remaining to pay')}</span>
+
+                                    <strong className="whitespace-nowrap text-lg text-price-default">
+                                        {formatPrice(order.remainingAmountToPay, { explicitZero: true })}
+                                    </strong>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 

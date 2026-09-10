@@ -211,6 +211,22 @@
     --color-status-badge-text-error: var(--color-red-800);
     --color-status-badge-text-success: var(--color-green-800);
     --color-status-badge-text-warning: var(--color-orange-800);
+    --color-alert-bg-error: var(--color-red-100);
+    --color-alert-bg-info: var(--color-secondary-100);
+    --color-alert-bg-success: var(--color-green-100);
+    --color-alert-bg-warning: var(--color-orange-100);
+    --color-alert-border-error: var(--color-border-error);
+    --color-alert-border-info: var(--color-secondary-300);
+    --color-alert-border-success: var(--color-border-success);
+    --color-alert-border-warning: var(--color-icon-warning);
+    --color-alert-icon-error: var(--color-icon-error);
+    --color-alert-icon-info: var(--color-icon-accent);
+    --color-alert-icon-success: var(--color-icon-success);
+    --color-alert-icon-warning: var(--color-icon-warning);
+    --color-alert-text-error: var(--color-text-default);
+    --color-alert-text-info: var(--color-text-default);
+    --color-alert-text-success: var(--color-text-default);
+    --color-alert-text-warning: var(--color-text-default);
 
     --color-toast-bg-default: var(--color-brand-50);
     --color-toast-bg-error: var(--color-red-100);

@@ -47,6 +47,7 @@ final class Version20180603135347 extends AbstractMigration implements DomainAwa
                     {payment_instructions}<br/>
                     {products}
                     <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
+                    {gift_vouchers_info}
                     {rounding_info}<br/>
                     {addresses}
                     <a style="margin:0.75rem auto;display:flex;height:fit-content;width:fit-content;cursor:pointer;align-items:center;justify-content:center;gap:0.5rem;border-radius:0.5rem;border:2px solid #00C8B7;background-color:#00C8B7;padding:7px 12px;text-align:center;font-weight:500;line-height:18px;text-decoration:none;outline:none;transition:all 0.2s ease;color:#fff;"
@@ -77,6 +78,7 @@ final class Version20180603135347 extends AbstractMigration implements DomainAwa
                     {payment_instructions}<br/>
                     {products}
                     <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
+                    {gift_vouchers_info}
                     {rounding_info}<br/>
                     {addresses}
                 ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)),
@@ -101,6 +103,7 @@ final class Version20180603135347 extends AbstractMigration implements DomainAwa
                     {payment_instructions}<br/>
                     {products}
                     <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
+                    {gift_vouchers_info}
                     {rounding_info}<br/>
                     {addresses}
                 ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)),
@@ -125,6 +128,7 @@ final class Version20180603135347 extends AbstractMigration implements DomainAwa
                     {payment_instructions}<br/>
                     {products}
                     <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
+                    {gift_vouchers_info}
                     {rounding_info}<br/>
                     {addresses}
                 ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)),

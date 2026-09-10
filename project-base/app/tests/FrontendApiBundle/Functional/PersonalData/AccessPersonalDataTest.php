@@ -57,7 +57,7 @@ class AccessPersonalDataTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($query);
         $accessPersonalDataData = $response['data']['accessPersonalData'];
 
-        $this->assertCount(16, $accessPersonalDataData['orders']);
+        $this->assertCount(17, $accessPersonalDataData['orders']);
 
         $expectedCustomerUser = [
             'firstName' => 'Jaromír',

@@ -153,6 +153,7 @@
         "scheb/2fa-bundle": "^7.6.0",
         "scheb/2fa-email": "^7.6.0",
         "scheb/2fa-google-authenticator": "^7.6.0",
+        "sensiolabs/gotenberg-bundle": "^1.4",
         "sentry/sentry": "^4.10.0",
         "sentry/sentry-symfony": "^5.0.1",
         "shopsys/deployment": "^5.0.0",

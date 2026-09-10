@@ -53,4 +53,5 @@ return [
     Shopsys\MakerBundle\ShopsysMakerBundle::class => ['dev' => true],
     Shopsys\McpBundle\ShopsysMcpBundle::class => ['all' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
+    Sensiolabs\GotenbergBundle\SensiolabsGotenbergBundle::class => ['all' => true],
 ];

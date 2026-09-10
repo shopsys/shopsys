@@ -10,6 +10,7 @@ import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const getGtmCreateOrderEvent = (
@@ -35,25 +36,38 @@ export const getGtmCreateOrderEventOrderPart = (
     orderNumber: string,
     reviewConsents: GtmReviewConsentsType | undefined,
     domainConfig: DomainConfigType,
-): GtmCreateOrderEventOrderPartType => ({
-    currencyCode: domainConfig.currencyCode,
-    id: orderNumber,
-    valueWithoutVat: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithoutVat),
-    valueWithVat: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithVat),
-    vatAmount: parseFloat(cart.totalPrice.vatAmount),
-    paymentPriceWithoutVat: getGtmPriceBasedOnVisibility(payment.price.priceWithoutVat),
-    paymentPriceWithVat: getGtmPriceBasedOnVisibility(payment.price.priceWithVat),
-    transportPriceWithoutVat: cart.transport
-        ? getGtmPriceBasedOnVisibility(cart.transport.price.priceWithoutVat)
-        : null,
-    transportPriceWithVat: cart.transport ? getGtmPriceBasedOnVisibility(cart.transport.price.priceWithVat) : null,
-    transportType: cart.transport?.name ?? '',
-    discountAmount: getGtmPriceBasedOnVisibility(cart.totalDiscountPrice.priceWithVat),
-    promoCodes: promoCodes.map(({ code }) => code),
-    paymentType: payment.name,
-    ...(reviewConsents !== undefined && { reviewConsents }),
-    products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
-});
+): GtmCreateOrderEventOrderPartType => {
+    const voucherAmount = sumVisiblePrices(cart.giftVouchers.map((giftVoucher) => giftVoucher.valueWithoutVat));
+    const voucherAmountWithTax = sumVisiblePrices(cart.giftVouchers.map((giftVoucher) => giftVoucher.valueWithVat));
+
+    return {
+        currency: domainConfig.currencyCode,
+        id: orderNumber,
+        value: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithoutVat),
+        valueWithTax: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithVat),
+        valueTax: parseFloat(cart.totalPrice.vatAmount),
+        paymentPriceWithoutVat: getGtmPriceBasedOnVisibility(payment.price.priceWithoutVat),
+        paymentPriceWithVat: getGtmPriceBasedOnVisibility(payment.price.priceWithVat),
+        transportPriceWithoutVat: cart.transport
+            ? getGtmPriceBasedOnVisibility(cart.transport.price.priceWithoutVat)
+            : null,
+        transportPriceWithVat: cart.transport ? getGtmPriceBasedOnVisibility(cart.transport.price.priceWithVat) : null,
+        transportType: cart.transport?.name ?? '',
+        discountAmount: getGtmPriceBasedOnVisibility(cart.totalDiscountPrice.priceWithoutVat),
+        discountAmountWithTax: getGtmPriceBasedOnVisibility(cart.totalDiscountPrice.priceWithVat),
+        promoCodes: promoCodes.map(({ code }) => code),
+        coupons: promoCodes.map(({ code }) => code),
+        voucherAmount,
+        voucherAmountWithTax,
+        voucherName: cart.giftVouchers.map((giftVoucher) => giftVoucher.productName ?? giftVoucher.code),
+        paymentType: payment.name,
+        ...(reviewConsents !== undefined && { reviewConsents }),
+        products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
+    };
+};
+
+const sumVisiblePrices = (prices: string[]): number | null =>
+    prices.every(isPriceVisible) ? prices.reduce((totalAmount, price) => totalAmount + parseFloat(price), 0) : null;
 
 export const getGtmCreateOrderEventUserPart = (
     user: CurrentCustomerType | null | undefined,

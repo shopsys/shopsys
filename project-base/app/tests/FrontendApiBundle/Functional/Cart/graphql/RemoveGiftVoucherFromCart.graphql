@@ -1,0 +1,18 @@
+mutation RemoveGiftVoucherFromCart(
+    $cartUuid: Uuid
+    $giftVoucherCode: String!
+) {
+    RemoveCodeFromCart(input: {
+        cartUuid: $cartUuid
+        code: $giftVoucherCode
+    }) {
+        uuid
+        giftVouchers {
+            code
+        }
+        remainingAmountToPay
+        totalPrice {
+            priceWithVat
+        }
+    }
+}

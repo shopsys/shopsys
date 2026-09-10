@@ -1,5 +1,5 @@
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { mapGtmProductInterface } from 'gtm/mappers/mapGtmProductInterface';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -41,6 +41,7 @@ const listedProduct = {
     isMainVariant: false,
     isInquiryType: false,
     reviewsSummary: null,
+    productType: TypeProductTypeEnum.Basic,
     unit: { __typename: 'Unit', name: 'pcs' },
 } satisfies TypeListedProductFragment;
 

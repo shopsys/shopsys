@@ -2,6 +2,7 @@ fragment OrderDetailItemFragment on OrderItem {
     __typename
     uuid
     name
+    catnum
     unitPrice {
         ...PriceFragment
     }
@@ -30,6 +31,7 @@ fragment OrderDetailItemFragment on OrderItem {
         isVisible
         isSellingDenied
         isInquiryType
+        productType
         isCurrentlyOutOfStock
         promotionBuyQuantity
         promotionFreeQuantity

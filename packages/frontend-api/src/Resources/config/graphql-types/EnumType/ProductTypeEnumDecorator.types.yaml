@@ -10,3 +10,9 @@ ProductTypeEnumDecorator:
             INQUIRY:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\ProductTypeEnum::TYPE_INQUIRY")'
                 description: "Product with inquiry form instead of add to cart button"
+            ELECTRONIC_GIFT_VOUCHER:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER")'
+                description: "Gift voucher delivered by email after the order is paid"
+            PRINTED_GIFT_VOUCHER:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER")'
+                description: "Gift voucher delivered printed as a regular product"

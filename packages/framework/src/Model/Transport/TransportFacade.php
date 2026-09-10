@@ -5,16 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\EmailTransportCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
 {
+    protected const string EMAIL_TRANSPORT_LOWEST_PRICE_CACHE_NAMESPACE = 'emailTransportLowestPriceWithVatByDomainId';
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TransportRepository $transportRepository,
@@ -26,6 +31,7 @@ class TransportFacade
         protected readonly TransportFactory $transportFactory,
         protected readonly TransportPriceFactory $transportPriceFactory,
         protected readonly PaymentFacade $paymentFacade,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -56,9 +62,46 @@ class TransportFacade
         return $this->transportRepository->getById($id);
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getAllByType(string $type): array
+    {
+        return $this->transportRepository->getAllByType($type);
+    }
+
+    public function findEmailTransport(): ?Transport
+    {
+        return array_first($this->getAllByType(TransportTypeEnum::TYPE_EMAIL));
+    }
+
+    public function findEmailTransportLowestPriceWithVatByDomainId(int $domainId): ?Money
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::EMAIL_TRANSPORT_LOWEST_PRICE_CACHE_NAMESPACE,
+            function () use ($domainId) {
+                $emailTransport = $this->findEmailTransport();
+
+                if ($emailTransport === null) {
+                    return null;
+                }
+
+                return $this->transportPriceCalculation
+                    ->calculateIndependentPrice($emailTransport->getLowestPriceOnDomain($domainId))
+                    ->getPriceWithVat();
+            },
+            $domainId,
+        );
+    }
+
     public function deleteById(int $id): void
     {
         $transport = $this->getById($id);
+
+        if ($transport->isEmailType()) {
+            throw new EmailTransportCannotBeDeletedException();
+        }
+
         $transport->markAsDeleted();
         $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
 

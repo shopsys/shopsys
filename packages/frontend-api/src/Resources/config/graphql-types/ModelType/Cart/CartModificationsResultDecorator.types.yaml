@@ -11,6 +11,8 @@ CartModificationsResultDecorator:
                 type: "CartPaymentModificationsResult!"
             promoCodeModifications:
                 type: "CartPromoCodeModificationsResult!"
+            giftVoucherModifications:
+                type: "CartGiftVoucherModificationsResult!"
             multipleAddedProductModifications:
                 type: "CartMultipleAddedProductModificationsResult!"
             someProductWasRemovedFromEshop:

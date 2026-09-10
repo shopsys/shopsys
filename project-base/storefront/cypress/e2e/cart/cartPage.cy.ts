@@ -1,5 +1,5 @@
 import {
-    applyPromoCodeOnCartPage,
+    applyCodeOnCartPage,
     checkCartItemSpinboxDecreaseButtonIsEnabled,
     checkCartItemSpinboxIncreaseButtonIsEnabled,
     clickOnPromoCodeButton,
@@ -210,8 +210,8 @@ describe('Cart Page Tests', () => {
 
     it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
         clickOnPromoCodeButton();
-        applyPromoCodeOnCartPage('test');
-        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
+        applyCodeOnCartPage('test');
+        checkAndHideSuccessToast(translations.toast.success.codeAdded);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after applying first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -240,7 +240,7 @@ describe('Cart Page Tests', () => {
         goToPreviousOrderStep();
         checkUrl(url.cart);
         removePromoCodeOnCartPage();
-        checkAndHideSuccessToast(translations.toast.success.promoCodeRemoved);
+        checkAndHideSuccessToast(translations.toast.success.codeRemoved);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after removing first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -250,8 +250,8 @@ describe('Cart Page Tests', () => {
             ],
         });
 
-        applyPromoCodeOnCartPage('test-product2');
-        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
+        applyCodeOnCartPage('test-product2');
+        checkAndHideSuccessToast(translations.toast.success.codeAdded);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after removing second promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -265,8 +265,8 @@ describe('Cart Page Tests', () => {
     it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', function () {
         clickOnPromoCodeButton();
 
-        applyPromoCodeOnCartPage('test');
-        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
+        applyCodeOnCartPage('test');
+        checkAndHideSuccessToast(translations.toast.success.codeAdded);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after applying promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
@@ -293,8 +293,8 @@ describe('Cart Page Tests', () => {
         cy.reloadAndWaitForStableAndInteractiveDOM();
 
         clickOnPromoCodeButton();
-        applyPromoCodeOnCartPage('test');
-        checkAndHideSuccessToast(translations.toast.success.promoCodeAdded);
+        applyCodeOnCartPage('test');
+        checkAndHideSuccessToast(translations.toast.success.codeAdded);
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),
             'cart page with non-free transport after applying promocode',

@@ -85,12 +85,12 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/PaymentsQuery.graphql');
 
         $payments = $this->getResponseDataForGraphQlType($response, 'payments');
-        $this->assertCount(4, $payments);
+        $this->assertCount(5, $payments);
 
         foreach ($payments as $payment) {
             $this->assertSame('***', $payment['price']['priceWithVat']);
             $this->assertSame('***', $payment['price']['priceWithoutVat']);
-            $this->assertSame(PaymentTypeEnum::TYPE_BASIC, $payment['type']);
+            $this->assertNotSame(PaymentTypeEnum::TYPE_GOPAY, $payment['type']);
         }
     }
 

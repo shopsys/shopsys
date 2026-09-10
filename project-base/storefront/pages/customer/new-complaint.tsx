@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
@@ -95,7 +95,7 @@ const NewComplaintPage: FC = () => {
             <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
                 <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" title={t('New complaint')}>
                     <PageHero
-                        icon={ComplaintsIcon}
+                        icon={DocumentIcon}
                         title={t('New complaint')}
                         description={t(
                             'Have an issue with your purchase? Search for the product below and click the button to create a complaint.',

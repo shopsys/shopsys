@@ -30,6 +30,18 @@ class DetectionFacade
         }
     }
 
+    public function setSourceAndUserIdentifier(string $source, string $userIdentifier): void
+    {
+        $this->source = $source;
+        $this->userIdentifier = $userIdentifier;
+    }
+
+    public function resetSourceAndUserIdentifier(): void
+    {
+        $this->source = null;
+        $this->userIdentifier = null;
+    }
+
     public function getUserIdentifier(): string
     {
         if ($this->userIdentifier !== null) {

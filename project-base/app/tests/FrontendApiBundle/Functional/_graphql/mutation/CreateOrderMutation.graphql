@@ -132,6 +132,9 @@ mutation CreateOrder(
                 promoCodeModifications {
                     noLongerApplicablePromoCode
                 }
+                giftVoucherModifications {
+                    noLongerApplicableGiftVouchers
+                }
                 transportModifications {
                     personalPickupStoreUnavailable
                     transportPriceChanged

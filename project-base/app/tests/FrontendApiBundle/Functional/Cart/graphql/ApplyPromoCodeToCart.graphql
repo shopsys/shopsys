@@ -2,10 +2,10 @@ mutation ApplyPromoCodeToCart(
     $promoCode: String!,
     $cartUuid: Uuid,
 ) {
-    ApplyPromoCodeToCart(
+    ApplyCodeToCart(
         input: {
             cartUuid: $cartUuid
-            promoCode: $promoCode
+            code: $promoCode
         }) {
         uuid
         promoCodes {

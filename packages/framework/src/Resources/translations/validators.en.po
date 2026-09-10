@@ -499,6 +499,12 @@ msgstr ""
 msgid "Please enter the quantity."
 msgstr ""
 
+msgid "Please enter the validity date"
+msgstr ""
+
+msgid "Please enter the value"
+msgstr ""
+
 msgid "Please enter the whole number."
 msgstr ""
 

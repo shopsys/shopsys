@@ -1,0 +1,8 @@
+framework:
+    http_client:
+        scoped_clients:
+            gotenberg.client:
+                base_uri: '%env(GOTENBERG_DSN)%'
+
+sensiolabs_gotenberg:
+    http_client: 'gotenberg.client'

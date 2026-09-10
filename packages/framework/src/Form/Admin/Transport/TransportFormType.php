@@ -104,7 +104,8 @@ final class TransportFormType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->transportTypeProvider->getAllIndexedByTranslations(),
+                'choices' => $this->getTypeChoices($transport),
+                'disabled' => $transport instanceof Transport && $transport->isEmailType(),
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -313,6 +314,26 @@ final class TransportFormType extends AbstractType
                     new Constraints\Callback(callback: [$this, 'validateTransportPricesOnDomain']),
                 ],
             ]);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getTypeChoices(?Transport $transport): array
+    {
+        $typeChoices = $this->transportTypeProvider->getAllIndexedByTranslations();
+
+        if ($transport instanceof Transport && $transport->isEmailType()) {
+            return array_filter(
+                $typeChoices,
+                static fn (string $type): bool => $type === TransportTypeEnum::TYPE_EMAIL,
+            );
+        }
+
+        return array_filter(
+            $typeChoices,
+            static fn (string $type): bool => $type !== TransportTypeEnum::TYPE_EMAIL,
+        );
     }
 
     public function validateTransportPricesOnDomain(

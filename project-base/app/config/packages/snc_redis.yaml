@@ -1,5 +1,14 @@
 snc_redis:
     clients:
+        apply_code_to_cart_rate_limiter:
+            type: 'phpredis'
+            alias: 'apply_code_to_cart_rate_limiter'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            logging: false
+            options:
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:rate_limiter:apply_code_to_cart:'
+                connection_timeout: 2
+                read_write_timeout: 5
         bestselling_products:
             type: 'phpredis'
             alias: 'bestselling_products'

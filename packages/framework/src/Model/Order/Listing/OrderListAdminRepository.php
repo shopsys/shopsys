@@ -25,6 +25,7 @@ class OrderListAdminRepository
                 o.createdAt,
                 MAX(ost.name) AS statusName,
                 os.type AS statusType,
+                o.paid,
                 o.totalPriceWithVat,
                 CASE WHEN o.companyName IS NOT NULL
                     THEN o.companyName

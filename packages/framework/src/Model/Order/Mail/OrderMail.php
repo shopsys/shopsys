@@ -50,6 +50,7 @@ class OrderMail implements MessageFactoryInterface
     public const string VARIABLE_TRANSPORT_TRACKING_URL = '{tracking_url}';
     public const string VARIABLE_TRACKING_INSTRUCTIONS = '{tracking_instructions}';
     public const string VARIABLE_ROUNDING_INFO = '{rounding_info}';
+    public const string VARIABLE_GIFT_VOUCHERS_INFO = '{gift_vouchers_info}';
     public const string VARIABLE_ADDRESSES = '{addresses}';
 
     public function __construct(
@@ -131,6 +132,7 @@ class OrderMail implements MessageFactoryInterface
             self::VARIABLE_TRANSPORT_INFO => fn () => $this->getTransportInfoHtml($order, $orderItemTotalPricesById),
             self::VARIABLE_PAYMENT_INFO => fn () => $this->getPaymentInfoHtml($order, $orderItemTotalPricesById),
             self::VARIABLE_ROUNDING_INFO => fn () => $this->getRoundingInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_GIFT_VOUCHERS_INFO => fn () => $this->getGiftVouchersInfoHtml($order),
             self::VARIABLE_ADDRESSES => fn () => $this->getAddressesHtml($order),
         ];
     }
@@ -189,6 +191,7 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'isEmailTransport' => $order->getTransport()->isEmailType(),
         ]);
     }
 
@@ -323,11 +326,24 @@ class OrderMail implements MessageFactoryInterface
         ]);
     }
 
+    protected function getGiftVouchersInfoHtml(Order $order): ?string
+    {
+        if (count($order->getRedeemedGiftVouchers()) === 0) {
+            return null;
+        }
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/giftVouchersInfo.html.twig', [
+            'order' => $order,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+        ]);
+    }
+
     protected function getAddressesHtml(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/addresses.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'isEmailTransport' => $order->getTransport()->isEmailType(),
         ]);
     }
 

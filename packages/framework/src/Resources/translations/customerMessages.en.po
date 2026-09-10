@@ -16,6 +16,9 @@ msgstr ""
 msgid "Catalog number"
 msgstr ""
 
+msgid "Delivered by email"
+msgstr ""
+
 msgid "Delivery address"
 msgstr ""
 
@@ -35,6 +38,9 @@ msgid "Free"
 msgstr ""
 
 msgid "Gift"
+msgstr ""
+
+msgid "Gift voucher"
 msgstr ""
 
 msgid "In stock"
@@ -62,6 +68,12 @@ msgid "Personal information export"
 msgstr ""
 
 msgid "Personal information overview"
+msgstr ""
+
+msgid "Remaining to pay"
+msgstr ""
+
+msgid "Sent by email after payment"
 msgstr ""
 
 msgid "Transport"

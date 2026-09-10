@@ -7,11 +7,15 @@ namespace Shopsys\FrontendApiBundle\Model\Payment;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
+use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentUnavailableForRemainingAmountToPayInCartException;
 
 class PaymentValidationFacade
 {
@@ -20,6 +24,8 @@ class PaymentValidationFacade
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly PaymentPriceProvider $paymentPriceProvider,
+        protected readonly OrderFacade $orderFacade,
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
     ) {
     }
 
@@ -35,6 +41,28 @@ class PaymentValidationFacade
 
         if ($paymentWatchedPrice === null || !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice)) {
             throw new PaymentPriceChangedException($calculatedPaymentPrice);
+        }
+    }
+
+    public function checkPaymentSuitabilityForRemainingAmountToPayInCart(Payment $payment, ?string $cartUuid): void
+    {
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+
+        $this->checkPaymentSuitabilityForRemainingAmountToPay($payment, $cart);
+    }
+
+    public function checkPaymentSuitabilityForRemainingAmountToPay(Payment $payment, Cart $cart): void
+    {
+        $orderData = $this->orderFacade->createOrderDataFromCart($cart, $this->domain->getCurrentDomainConfig());
+        $remainingAmountToPayWithoutPayment = $this->orderPriceCalculation->calculateRemainingAmountToPay(
+            $orderData->totalPrice->getPriceWithVat()
+                ->subtract($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT]->getPriceWithVat()),
+            $cart->getAllAppliedGiftVouchers(),
+        );
+
+        if ($payment->isGiftVoucherType() !== $remainingAmountToPayWithoutPayment->isZero()) {
+            throw new PaymentUnavailableForRemainingAmountToPayInCartException();
         }
     }
 

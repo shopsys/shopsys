@@ -29,7 +29,7 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
     const setIsGlobalUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
     const isUserMenuOpen = shouldUseLocalUserMenuState ? isLocalUserMenuOpen : isGlobalUserMenuOpen;
     const setIsUserMenuOpen = shouldUseLocalUserMenuState ? setIsLocalUserMenuOpen : setIsGlobalUserMenuOpen;
-    const isActiveDelayed = useDebounce(isUserMenuOpen, 200);
+    const isActiveDelayed = useDebounce(isUserMenuOpen, isUserMenuOpen ? 200 : 0);
     const isDesktop = useMediaMin('vl');
 
     return (
@@ -43,8 +43,7 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
                 role="button"
                 tabIndex={0}
                 className={twMergeCustom(
-                    'group outline-hidden lg:relative lg:flex',
-                    isUserMenuOpen && 'z-aboveOverlay',
+                    'group outline-hidden group-has-[[aria-haspopup=menu][aria-expanded=true]]/header:z-aboveOverlay lg:relative lg:flex',
                 )}
                 onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
                 onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
@@ -106,7 +105,13 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
                 </MenuIconicItemUserPopover>
             </div>
 
-            {isDesktop && <Overlay isActive={isActiveDelayed} onClick={() => setIsUserMenuOpen(false)} />}
+            {isDesktop && (
+                <Overlay
+                    shouldDisablePointerEventsOnExit
+                    isActive={isActiveDelayed}
+                    onClick={() => setIsUserMenuOpen(false)}
+                />
+            )}
         </>
     );
 };

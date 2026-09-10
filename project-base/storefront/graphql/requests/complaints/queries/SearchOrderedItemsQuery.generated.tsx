@@ -23,6 +23,8 @@ export type TypeOrderItemTypeEnum =
 export type TypeOrderItemsFilterInput = {
   /** Filter order items by product catalog number (OR condition with productUuid) */
   catnum?: string | null | undefined;
+  /** Exclude order items of products with these product types */
+  excludeProductTypes?: Array<TypeProductTypeEnum> | null | undefined;
   /** Filter order items in orders created after this date */
   orderCreatedAfter?: string | null | undefined;
   /** Filter orders created after this date */
@@ -48,6 +50,17 @@ export type TypeOrderStatusEnum =
   /** Withdrawn */
   | 'withdrawn';
 
+/** One of possible product types */
+export type TypeProductTypeEnum =
+  /** Basic product */
+  | 'BASIC'
+  /** Gift voucher delivered by email after the order is paid */
+  | 'ELECTRONIC_GIFT_VOUCHER'
+  /** Product with inquiry form instead of add to cart button */
+  | 'INQUIRY'
+  /** Gift voucher delivered printed as a regular product */
+  | 'PRINTED_GIFT_VOUCHER';
+
 /** Represents search input object */
 export type TypeSearchInput = {
   isAutocomplete: boolean;
@@ -67,9 +80,9 @@ export type TypeSearchOrderedItemsQueryVariables = Exact<{
 
 
 export type TypeSearchOrderedItemsQuery = { orderItemsSearch: { totalCount: number, edges: Array<{ node: { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, order: { uuid: string, number: string, creationDate: string }, product:
-          | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
-          | { isVisible: boolean, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+          | { isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+          | { isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+          | { isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
          | null } | null } | null> | null } };
 
 

@@ -53,6 +53,7 @@ const orderItem = {
     __typename: 'OrderItem',
     uuid: 'order-item-uuid',
     name: 'Product',
+    catnum: 'CAT-1',
     quantity: 1,
     unit: 'pcs',
     type: TypeOrderItemTypeEnum.Product,
@@ -83,6 +84,7 @@ describe('OrderDetailOrderItem', () => {
                 orderUrlHash="order-url-hash"
                 orderUuid="order-uuid"
                 productReviewsAllowed
+                purchasedGiftVouchers={[]}
                 isReviewAvailabilityLoading={false}
                 reviewedProductUuids={new Set([productUuid])}
             />,
@@ -103,11 +105,40 @@ describe('OrderDetailOrderItem', () => {
                 orderUrlHash="order-url-hash"
                 orderUuid="order-uuid"
                 productReviewsAllowed
+                purchasedGiftVouchers={[]}
                 reviewedProductUuids={new Set()}
             />,
         );
 
         expect(screen.queryByText('Write a review')).not.toBeInTheDocument();
         expect(screen.queryByText('Already reviewed.')).not.toBeInTheDocument();
+    });
+
+    test.each([
+        ['the product catalog number has changed', { ...orderItem.product!, catalogNumber: 'CAT-NEW' }],
+        ['the product has been deleted', null],
+    ])('keeps the purchased gift voucher available when %s', (_, product) => {
+        render(
+            <OrderDetailOrderItem
+                isOrderFromRegisteredCustomer
+                orderItem={{ ...orderItem, product }}
+                orderUrlHash="order-url-hash"
+                orderUuid="order-uuid"
+                productReviewsAllowed
+                purchasedGiftVouchers={[
+                    { productCatnum: 'CAT-1', pdfUrl: '/purchased-voucher.pdf' },
+                    { productCatnum: 'CAT-OTHER', pdfUrl: '/other-voucher.pdf' },
+                ]}
+                isReviewAvailabilityLoading={false}
+                reviewedProductUuids={new Set()}
+            />,
+        );
+
+        expect(screen.getByRole('link', { name: 'Download gift voucher' })).toHaveAttribute(
+            'href',
+            '/purchased-voucher.pdf',
+        );
+        expect(screen.getByText('Code: CAT-1')).toBeInTheDocument();
+        expect(screen.queryByRole('link', { name: 'Voucher 2' })).not.toBeInTheDocument();
     });
 });

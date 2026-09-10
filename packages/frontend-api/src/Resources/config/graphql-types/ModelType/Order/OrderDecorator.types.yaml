@@ -118,7 +118,18 @@ OrderDecorator:
                 resolve: '@=value.getLastExternalPaymentStatus()'
             isPaid:
                 type: "Boolean!"
-                description: "Indicates whether the order is paid successfully with GoPay payment type"
+                description: "Indicates whether the order is paid (either marked as paid, fully covered by gift vouchers, or paid successfully with GoPay payment type)"
+            remainingAmountToPay:
+                type: "Money!"
+                description: "Total price with VAT reduced by redeemed gift vouchers, never below zero"
+            giftVouchers:
+                type: "[AppliedGiftVoucher!]!"
+                description: "Gift vouchers redeemed on the order"
+                resolve: '@=value.getRedeemedGiftVouchers()'
+            purchasedGiftVouchers:
+                type: "[PurchasedGiftVoucher!]!"
+                description: "Gift vouchers generated from the order"
+                resolve: '@=query("purchasedGiftVouchersByOrderQuery", value)'
             hasPaymentInProcess:
                 type: "Boolean!"
                 description: "Indicates whether order payment is still being processed with GoPay payment type"
@@ -161,6 +172,9 @@ OrderDecorator:
             canRequestWithdrawal:
                 type: "Boolean!"
                 description: "Returns whether withdrawal can be requested for the order"
+            isWithdrawalBlockedByPurchasedGiftVoucher:
+                type: "Boolean!"
+                description: "Returns whether withdrawal cannot be requested because a gift voucher purchased in the order has already been redeemed or cancelled"
             withdrawalDeadline:
                 type: "DateTime"
                 description: "Returns withdrawal deadline for the order, null if not specified (when order has not been delivered yet)"

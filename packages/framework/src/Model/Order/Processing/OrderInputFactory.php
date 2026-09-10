@@ -39,6 +39,10 @@ class OrderInputFactory
             $orderInput->addPromoCode($promoCode);
         }
 
+        foreach ($cart->getAllAppliedGiftVouchers() as $giftVoucher) {
+            $orderInput->addGiftVoucher($giftVoucher);
+        }
+
         return $orderInput;
     }
 

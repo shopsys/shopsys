@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Shopsys\FrontendApiBundle\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
+use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentUnavailableForRemainingAmountToPayInCartException;
 use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportPriceChangedException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportUnavailableForProductsInCartException;
@@ -38,6 +40,7 @@ class TransportAndPaymentWatcherFacade
         protected readonly CartPaymentFacade $cartPaymentFacade,
         protected readonly PaymentValidationFacade $paymentValidationFacade,
         protected readonly OrderFacade $orderFacade,
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
     ) {
     }
 
@@ -67,6 +70,21 @@ class TransportAndPaymentWatcherFacade
         }
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
+        $this->cartWithModificationsResult->setRemainingAmountToPay(
+            $this->orderPriceCalculation->calculateRemainingAmountToPay(
+                $orderData->totalPrice->getPriceWithVat(),
+                $cart->getAllAppliedGiftVouchers(),
+            ),
+        );
+        $this->cartWithModificationsResult->setRemainingItemsAmountToPay(
+            $this->orderPriceCalculation->calculateRemainingAmountToPay(
+                $productsPrice->getPriceWithVat(),
+                $cart->getAllAppliedGiftVouchers(),
+            ),
+        );
+        $this->cartWithModificationsResult->setGiftVoucherProductItemsPriceWithVat(
+            $orderData->getGiftVoucherProductItemsTotalPrice()->getPriceWithVat(),
+        );
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
         $this->cartWithModificationsResult->setTotalItemsPriceBeforeDiscount($orderData->basicTotalItemsPrice);
         $this->cartWithModificationsResult->setTotalProductPriceAdjustmentsDiscount($orderData->totalProductPriceAdjustmentsDiscount);
@@ -181,7 +199,21 @@ class TransportAndPaymentWatcherFacade
 
             return;
         }
+        $this->checkPaymentSuitabilityForRemainingAmountToPay($cart, $payment);
+
+        if ($cart->getPayment() === null) {
+            return;
+        }
         $this->checkPaymentPrice($cart, $payment);
+    }
+
+    protected function checkPaymentSuitabilityForRemainingAmountToPay(Cart $cart, Payment $payment): void
+    {
+        try {
+            $this->paymentValidationFacade->checkPaymentSuitabilityForRemainingAmountToPay($payment, $cart);
+        } catch (PaymentUnavailableForRemainingAmountToPayInCartException) {
+            $this->setPaymentInCartUnavailable($cart);
+        }
     }
 
     protected function setTransportInCartUnavailable(Cart $cart): void

@@ -330,7 +330,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $this->assertSame(4, $data['products']['productFilterOptions']['inStock']);
+        $this->assertSame(6, $data['products']['productFilterOptions']['inStock']);
         $this->assertSame($minimalPrice, $data['products']['productFilterOptions']['minimalPrice']);
         $this->assertSame($maximalPrice, $data['products']['productFilterOptions']['maximalPrice']);
 

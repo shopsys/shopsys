@@ -1,0 +1,10 @@
+query TransportTypeCodesQuery(
+    $cartUuid: Uuid,
+) {
+    transports(cartUuid: $cartUuid) {
+        transportTypeCode
+        productsBlockingSelectionInCart(cartUuid: $cartUuid) {
+            reason
+        }
+    }
+}

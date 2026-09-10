@@ -43,6 +43,17 @@ class PaymentRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
+    public function getAllByType(string $type): array
+    {
+        return $this->getQueryBuilderForAll()
+            ->andWhere('p.type = :type')->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
     public function getAllIncludingDeleted(): array
     {
         return $this->getPaymentRepository()->findAll();

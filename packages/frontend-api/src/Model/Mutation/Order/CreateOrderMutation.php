@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\Exception\GiftVoucherNotRedeemableException;
+use Shopsys\FrameworkBundle\Model\GiftVoucher\Exception\GiftVouchersExceedPayableAmountException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
@@ -21,6 +23,8 @@ use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\Order\Exception\GiftVoucherNotRedeemableUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\Order\Exception\GiftVouchersExceedPayableAmountUserError;
 use Shopsys\FrontendApiBundle\Model\Order\CreateOrderResult;
 use Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
@@ -101,7 +105,13 @@ class CreateOrderMutation extends AbstractMutation
     ): Order {
         $processedOrderData = $this->getProcessedOrderData($argument, $cart, $deliveryAddressUuid);
 
-        return $this->placeOrderFacade->placeOrder($processedOrderData, $deliveryAddressUuid);
+        try {
+            return $this->placeOrderFacade->placeOrder($processedOrderData, $deliveryAddressUuid);
+        } catch (GiftVoucherNotRedeemableException) {
+            throw new GiftVoucherNotRedeemableUserError('An applied gift voucher is no longer redeemable. Remove it from the cart, please.');
+        } catch (GiftVouchersExceedPayableAmountException) {
+            throw new GiftVouchersExceedPayableAmountUserError('The value of applied gift vouchers exceeds the amount payable by them. Remove a gift voucher or add more items to the cart, please.');
+        }
     }
 
     protected function getProcessedOrderData(

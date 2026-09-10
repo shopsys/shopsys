@@ -1,0 +1,21 @@
+AppliedGiftVoucherDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Gift voucher applied as a form of payment"
+        fields:
+            code:
+                type: "String!"
+                description: "Code of the gift voucher"
+            valueWithVat:
+                type: "Money!"
+                description: "Value of the gift voucher including VAT"
+            valueWithoutVat:
+                type: "Money!"
+                description: "Value of the gift voucher excluding VAT, calculated using the VAT rate of the purchased gift voucher product"
+            validUntil:
+                type: "DateTime!"
+                description: "Date and time until the gift voucher is valid"
+            productName:
+                type: "String"
+                description: "Name of the purchased gift voucher product the voucher was generated from"

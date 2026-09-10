@@ -21,6 +21,7 @@ class PromoCode extends Constraint
     public const NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR = 'f9003c4b-4036-4625-b1c3-7b1c82c461f3';
     public const ALREADY_APPLIED_PROMO_CODE_ERROR = 'bde9e59e-6881-460e-8501-7f5e9a57a266';
     public const LIMIT_NOT_REACHED_ERROR = '3f94ee5e-b496-441b-9744-d8b6375000e6';
+    public const ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR = 'e0b0e8b0-93cd-4f0e-9c34-2b1a52c8c9d4';
 
     /**
      * @var array<string, string>
@@ -34,6 +35,7 @@ class PromoCode extends Constraint
         self::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR => 'NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR',
         self::ALREADY_APPLIED_PROMO_CODE_ERROR => 'ALREADY_APPLIED_PROMO_CODE_ERROR',
         self::LIMIT_NOT_REACHED_ERROR => 'LIMIT_NOT_REACHED_ERROR',
+        self::ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR => 'ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR',
     ];
 
     /**
@@ -51,6 +53,7 @@ class PromoCode extends Constraint
         public string $notAvailableForCustomerUserPricingGroupMessage = 'Promo code is not available for your pricing group. Maybe you forgot to log in.',
         public string $alreadyAppliedPromoCodeMessage = 'Promo code is already applied in the current cart.',
         public string $limitNotReachedMessage = 'The promo code can only be used for a higher total price.',
+        public string $onlySinglePromoCodeAllowedMessage = 'Only one promo code can be applied in the cart.',
         ?array $groups = null,
         mixed $payload = null,
     ) {

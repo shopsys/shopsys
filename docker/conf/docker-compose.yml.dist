@@ -151,6 +151,14 @@ services:
         image: redis:7.4-alpine
         container_name: shopsys-framework-redis
 
+    gotenberg:
+        image: gotenberg/gotenberg:8
+        command:
+            - gotenberg
+            - --chromium-deny-private-ips
+            - --api-download-from-deny-private-ips
+        container_name: shopsys-framework-gotenberg
+
     redis-commander:
         container_name: shopsys-framework-redis-commander
         image: ghcr.io/joeferner/redis-commander:latest

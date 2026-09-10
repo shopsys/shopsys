@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareInterface
 {
@@ -42,15 +43,16 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
                 static fn (OrderItemData $orderItemData) => $orderItemData->product,
                 $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT),
             );
+            $promoCodeApplicableProductsPrice = $this->getPromoCodeApplicableProductsPrice($orderData);
 
             try {
                 $validProductIds = $this->currentPromoCodeFacade->validatePromoCode(
                     $appliedPromoCode,
-                    $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT],
+                    $promoCodeApplicableProductsPrice,
                     $products,
                 );
 
-                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
+                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $promoCodeApplicableProductsPrice);
             } catch (PromoCodeException) {
                 continue;
             }
@@ -67,6 +69,12 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
         }
 
         return $orderProcessingStack->processNext($orderProcessingData);
+    }
+
+    protected function getPromoCodeApplicableProductsPrice(OrderData $orderData): PriceInterface
+    {
+        return $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]
+            ->subtract($orderData->getGiftVoucherProductItemsTotalPrice());
     }
 
     /**

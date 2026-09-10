@@ -44,6 +44,14 @@ fragment OrderDetailFragment on Order {
     totalPrice {
         ...PriceFragment
     }
+    giftVouchers {
+        ...AppliedGiftVoucherFragment
+    }
+    purchasedGiftVouchers {
+        productCatnum
+        pdfUrl
+    }
+    remainingAmountToPay
     isPaid
     hasExternalPayment
     hasPaymentInProcess
@@ -59,6 +67,7 @@ fragment OrderDetailFragment on Order {
         ...OrderWithdrawalRequestFragment
     }
     canRequestWithdrawal
+    isWithdrawalBlockedByPurchasedGiftVoucher
     withdrawalDeadline
     productReviewsAllowed
     reviewedProductUuids
