@@ -18,6 +18,9 @@ export default function datePicker($container) {
             altInput: true,
             altFormat: 'm/d/Y', // default English format
             allowInput: true,
+            onReady: rememberLastDispatchedValue,
+            onChange: rememberLastDispatchedValue,
+            onClose: dispatchChangeAfterSilentValueCommit,
         };
 
         const locale = localeMap[currentLang] || currentLang;
@@ -40,6 +43,19 @@ export default function datePicker($container) {
                 $element.flatpickr(defaultOptions);
             });
     });
+}
+
+function rememberLastDispatchedValue(_selectedDates, _dateStr, instance) {
+    instance.input.dataset.lastDispatchedValue = instance.input.value;
+}
+
+function dispatchChangeAfterSilentValueCommit(selectedDates, dateStr, instance) {
+    if (instance.input.value === instance.input.dataset.lastDispatchedValue) {
+        return;
+    }
+
+    rememberLastDispatchedValue(selectedDates, dateStr, instance);
+    instance.input.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
 }
 
 function getDateFormatForLocale(locale) {
