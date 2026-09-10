@@ -26,8 +26,10 @@ vi.mock('next-translate/useTranslation', () => ({
 }));
 
 vi.mock('components/Basic/Animations/AnimateNavigationMenu', () => ({
-    AnimateNavigationMenu: ({ children, className }: { children: ReactNode; className?: string }) => (
-        <div className={className}>{children}</div>
+    AnimateNavigationMenu: ({ children, className, id }: { children: ReactNode; className?: string; id?: string }) => (
+        <div className={className} id={id}>
+            {children}
+        </div>
     ),
 }));
 
@@ -57,7 +59,18 @@ const navigationItemWithChildren: TypeCategoriesByColumnFragment = {
                     name: 'Televisions',
                     slug: '/televisions',
                     mainImage: null,
-                    children: [],
+                    children: [
+                        {
+                            __typename: 'Category',
+                            name: 'LED televisions',
+                            slug: '/led-televisions',
+                        },
+                        {
+                            __typename: 'Category',
+                            name: 'OLED televisions',
+                            slug: '/oled-televisions',
+                        },
+                    ],
                 },
             ],
         },
@@ -99,6 +112,7 @@ describe('Navigation', () => {
         renderNavigation();
 
         await user.tab();
+        await user.keyboard('{ArrowDown}');
 
         const categoryLink = await screen.findByRole('link', { name: 'Televisions' });
         const categoryGrid = categoryLink.closest('ul');
@@ -110,11 +124,48 @@ describe('Navigation', () => {
         expect(overlay).toHaveClass('z-overlay');
     });
 
-    test('closes an opened submenu when keyboard focus moves to an item without children', async () => {
+    test('keeps a category submenu closed on focus and opens it with ArrowDown', async () => {
         const user = userEvent.setup();
         renderNavigation();
 
         await user.tab();
+
+        const navigationTrigger = screen.getByRole('button', { name: 'Electronics' });
+        expect(navigationTrigger).toHaveFocus();
+        expect(navigationTrigger).toHaveAttribute('aria-expanded', 'false');
+        expect(navigationTrigger).not.toHaveAttribute('aria-haspopup');
+        expect(screen.queryByRole('link', { name: 'Televisions' })).not.toBeInTheDocument();
+
+        await user.keyboard('{ArrowDown}');
+
+        expect(await screen.findByRole('link', { name: 'Televisions' })).toHaveFocus();
+        expect(navigationTrigger).toHaveAttribute('aria-expanded', 'true');
+
+        await user.keyboard('{Escape}');
+
+        expect(navigationTrigger).toHaveFocus();
+        await waitFor(() => {
+            expect(navigationTrigger).toHaveAttribute('aria-expanded', 'false');
+            expect(screen.queryByRole('link', { name: 'Televisions' })).not.toBeInTheDocument();
+        });
+    });
+
+    test('provides names for the category lists whose item counts are announced by screen readers', async () => {
+        const user = userEvent.setup();
+        renderNavigation();
+
+        await user.tab();
+        await user.keyboard('{ArrowDown}');
+
+        expect(await screen.findByRole('list', { name: 'Electronics' })).toBeInTheDocument();
+        expect(await screen.findByRole('list', { name: 'Televisions' })).toBeInTheDocument();
+    });
+
+    test('closes an opened submenu when keyboard focus moves to an item without children', async () => {
+        const user = userEvent.setup();
+        renderNavigation();
+
+        await user.click(screen.getByRole('button', { name: 'Electronics' }));
 
         await waitFor(() => {
             expect(screen.getAllByRole('link', { name: 'Televisions' })[0]).toBeVisible();

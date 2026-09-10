@@ -3,7 +3,6 @@ import { NavigationItemContent } from 'components/Layout/Header/Navigation/Navig
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import type { KeyboardEventHandler, MouseEventHandler, Ref } from 'react';
-import { useRef } from 'react';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 import { getNavigationItemSkeletonType, isNavigationItemLink, isNavigationItemWithCategories } from './navigationUtils';
@@ -36,19 +35,11 @@ export const NavigationItem: FC<NavigationItemProps> = ({
     onMenuOpenImmediately,
 }) => {
     const { url } = useDomainConfig();
-    const triggerRef = useRef<HTMLButtonElement>(null);
     const [catalogUrl] = getInternationalizedStaticUrls(['/catalog'], url);
     const skeletonType = getNavigationItemSkeletonType(navigationItem, catalogUrl);
     const isLink = isNavigationItemLink(navigationItem);
     const isDropdownTrigger = isNavigationItemWithCategories(navigationItem);
     const link = navigationItem.link;
-
-    const handleKeyDown: KeyboardEventHandler<HTMLLIElement> = (event) => {
-        if (event.key === 'Escape') {
-            onMenuClose();
-            triggerRef.current?.focus();
-        }
-    };
 
     const handleDropdownTriggerKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
         if (event.key !== 'ArrowDown') {
@@ -89,13 +80,10 @@ export const NavigationItem: FC<NavigationItemProps> = ({
             className="group"
             ref={itemRef}
             onFocus={() => {
-                if (isDropdownTrigger) {
-                    onMenuOpenImmediately();
-                } else {
+                if (!isDropdownTrigger) {
                     onMenuClose();
                 }
             }}
-            onKeyDown={handleKeyDown}
             onMouseEnter={handleMouseEnter}
         >
             {isLink && link !== null ? (
@@ -110,10 +98,8 @@ export const NavigationItem: FC<NavigationItemProps> = ({
                 </ExtendedNextLink>
             ) : (
                 <button
-                    ref={isDropdownTrigger ? triggerRef : undefined}
                     aria-controls={isDropdownTrigger ? menuId : undefined}
                     aria-expanded={isDropdownTrigger ? isMenuOpened : undefined}
-                    aria-haspopup={isDropdownTrigger ? 'true' : undefined}
                     className={navigationItemClassName}
                     type="button"
                     onClick={isMenuOpened ? onMenuClose : onMenuOpenImmediately}
