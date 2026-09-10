@@ -283,7 +283,7 @@ class AllPagesTest extends KernelTestCase
         $queryCountingMiddleware = new QueryCountingMiddleware();
 
         $connectionReflection = new ReflectionClass($connection);
-        $driverProperty = $connectionReflection->getProperty('_driver');
+        $driverProperty = $connectionReflection->getProperty('driver');
         $currentDriver = $driverProperty->getValue($connection);
 
         $wrappedDriver = $queryCountingMiddleware->wrap($currentDriver);
