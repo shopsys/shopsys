@@ -31,7 +31,7 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -46,10 +46,9 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
-    const seoTitle = useSeoTitleWithPagination(
+    const title = useHeadingWithPagination(
+        categoryData?.seo.title || categoryData?.name,
         categoryData?.products.totalCount,
-        categoryData?.name,
-        categoryData?.seoTitle,
     );
 
     const firstImageUrl = categoryData?.images[0]?.url;
@@ -65,11 +64,11 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
-                description={categoryData?.seoMetaDescription}
+                description={categoryData?.seo.metaDescription}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
                 ogImageUrlDefault={firstImageUrl}
-                title={seoTitle}
+                title={title}
             >
                 {!!categoryData && (
                     <CategoryDetailContent category={categoryData} isFetchingVisible={isFetchingVisible} />

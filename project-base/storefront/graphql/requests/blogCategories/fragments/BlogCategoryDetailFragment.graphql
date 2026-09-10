@@ -8,8 +8,9 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     mainImage {
         ...ImageFragment
     }
-    seoTitle
-    seoMetaDescription
+    seo {
+        ...SeoAttributesFragment
+    }
     description
     hreflangLinks {
         ...HreflangLinksFragment

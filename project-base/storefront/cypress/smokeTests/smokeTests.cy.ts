@@ -205,7 +205,7 @@ context('Smoke tests', () => {
             uuid: staticData.smokeTestRoutesUuids.product,
             entityType: 'product',
             test: () => {
-                checktHeadlineText('22" Sencor SLE 22F46DM4 HELLO KITTY');
+                checktHeadlineText('Hello Kitty Television');
             },
         },
         ['main-blog-page']: {

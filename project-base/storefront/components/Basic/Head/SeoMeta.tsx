@@ -53,7 +53,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
     const hreflangLinks = hreflangLinksSeoPage || defaultHreflangLinks;
 
     useEffect(() => {
-        if (!title && !areMissingRequiredTagsReported) {
+        if (!title && !titleSuffix && !areMissingRequiredTagsReported) {
             logMessage('Missing required tags', [
                 {
                     key: 'tags',
@@ -62,7 +62,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
             ]);
             setAreMissingRequiredTagsReported(true);
         }
-    }, [title, areMissingRequiredTagsReported]);
+    }, [title, titleSuffix, areMissingRequiredTagsReported]);
 
     const ogTitle = ogTitleFromProps ?? title;
     const ogDescription = ogDescriptionFromProps ?? description;
@@ -70,7 +70,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
     return (
         <Head>
-            <title>{`${title} ${titleSuffix}`}</title>
+            <title>{[title, titleSuffix].filter(Boolean).join(' ')}</title>
 
             {description && <meta content={description} name="description" />}
 

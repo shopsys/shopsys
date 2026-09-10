@@ -31,7 +31,8 @@ const StoreDetailPage: NextPage = () => {
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(storeDetailData?.store);
     useGtmPageReadyEvent(pageReadyEvent, isStoreFetching);
 
-    const seoTitle = getPrefixedSeoTitle(storeDetailData?.store?.storeName, t('Store'));
+    const title =
+        storeDetailData?.store?.seo.title || getPrefixedSeoTitle(storeDetailData?.store?.storeName, t('Store'));
     const storeImageUrl = storeDetailData?.store?.storeImages[0]?.url;
 
     return (
@@ -39,9 +40,10 @@ const StoreDetailPage: NextPage = () => {
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             breadcrumbsType="stores"
             canonicalQueryParams={[]}
+            description={storeDetailData?.store?.seo.metaDescription}
             isFetchingData={isStoreFetching}
             ogImageUrlDefault={storeImageUrl}
-            title={seoTitle}
+            title={title}
         >
             {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}
         </CommonLayout>

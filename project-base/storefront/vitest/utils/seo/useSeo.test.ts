@@ -9,7 +9,7 @@ vi.mock('graphql/requests/seoPage/queries/SeoPageQuery.generated', () => ({
 }));
 
 vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
-    useSettingsQuery: () => [{ data: { settings: { seo: { title: 'Site title' } } } }],
+    useSettingsQuery: () => [{ data: { settings: { seo: { titleAddOn: null } } } }],
 }));
 
 vi.mock('components/providers/DomainConfigProvider', () => ({
@@ -31,10 +31,10 @@ describe('SEO image ALT', () => {
         [' \t ', ' ', 'Page title', 'Default title', 'Page title'],
         [null, null, 'Page title', 'Default title', 'Page title'],
         [null, null, null, 'Default title', 'Default title'],
-        [null, null, null, undefined, 'Site title'],
+        [null, null, null, undefined, ''],
     ])('resolves ALT from public values: %j, %j, %j, %j', (name, ogTitle, title, defaultTitle, expected) => {
         mockSeoPageQuery.mockReturnValue([
-            { data: { seoPage: { title, ogTitle, ogImage: { name, url: '/image.jpg' } } } },
+            { data: { seoPage: { seo: { title }, ogTitle, ogImage: { name, url: '/image.jpg' } } } },
         ]);
 
         const { result } = renderHook(() => useSeo({ defaultTitle }));
@@ -43,7 +43,7 @@ describe('SEO image ALT', () => {
     });
 
     test('does not provide an ALT when there is no SEO image', () => {
-        mockSeoPageQuery.mockReturnValue([{ data: { seoPage: { title: 'Page title', ogImage: null } } }]);
+        mockSeoPageQuery.mockReturnValue([{ data: { seoPage: { seo: { title: 'Page title' }, ogImage: null } } }]);
 
         const { result } = renderHook(() => useSeo({}));
 

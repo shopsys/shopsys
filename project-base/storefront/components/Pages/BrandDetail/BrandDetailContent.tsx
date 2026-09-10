@@ -11,7 +11,7 @@ import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/Brand
 import { useRef } from 'react';
 import { getImageAlt } from 'utils/imageAltText';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 
 type BrandDetailContentProps = {
@@ -22,7 +22,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
-    const title = useSeoTitleWithPagination(brand.products.totalCount, brand.name, brand.seoH1);
+    const heading = useHeadingWithPagination(brand.seo.h1 || brand.name, brand.products.totalCount);
 
     const productFilterOptions = { ...brand.products.productFilterOptions, brands: null };
 
@@ -31,9 +31,9 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}
                 description={brand.description}
+                heading={heading}
                 imageName={getImageAlt(brand.mainImage?.name, brand.name)}
                 imageUrl={brand.mainImage?.url}
-                title={title}
             />
 
             <FilteredProductsWrapper>

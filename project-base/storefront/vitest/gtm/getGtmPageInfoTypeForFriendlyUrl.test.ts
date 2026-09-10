@@ -14,10 +14,15 @@ const articleDetail = {
     articleName: 'Test article',
     text: null,
     breadcrumb: [],
-    seoTitle: null,
-    seoMetaDescription: null,
     createdAt: '2026-04-30T10:00:00+02:00',
-    seoH1: null,
+    seo: {
+        __typename: 'SeoAttributes',
+        title: null,
+        metaDescription: null,
+        h1: null,
+        metaRobots: null,
+        canonicalUrl: null,
+    },
 } satisfies TypeArticleDetailFragment;
 
 const productDetail = {
@@ -43,9 +48,14 @@ const blogArticleDetail = {
     text: null,
     publishDate: '2026-04-30T10:00:00+02:00',
     status: 'published',
-    seoTitle: null,
-    seoMetaDescription: null,
-    seoH1: null,
+    seo: {
+        __typename: 'SeoAttributes',
+        title: null,
+        metaDescription: null,
+        h1: null,
+        metaRobots: null,
+        canonicalUrl: null,
+    },
     mainBlogCategoryUuid: 'f2a0464a-b2d3-4d8c-8326-45d1f0a5db29',
     mainImage: null,
     breadcrumb: [],
