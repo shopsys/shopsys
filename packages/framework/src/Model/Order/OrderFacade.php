@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
@@ -52,7 +52,7 @@ class OrderFacade
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly PricingSetting $pricingSetting,
         protected readonly OrderInputFactory $orderInputFactory,
-        protected readonly OrderProcessor $orderProcessor,
+        protected readonly OrderProcessingFacade $orderProcessingFacade,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly OrderDeliveryDateFacade $orderDeliveryDateFacade,
         protected readonly WithdrawalRequestFacade $withdrawalRequestFacade,
@@ -375,19 +375,9 @@ class OrderFacade
 
     public function createOrderDataFromCart(Cart $cart, DomainConfig $domainConfig): OrderData
     {
-        $orderData = $this->orderDataFactory->create();
-
-        return $this->fillOrderDataFromCart($orderData, $cart, $domainConfig);
-    }
-
-    protected function fillOrderDataFromCart(OrderData $orderData, Cart $cart, DomainConfig $domainConfig): OrderData
-    {
         $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
 
-        return $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
+        return $this->orderProcessingFacade->getProcessedOrderData($orderInput);
     }
 
     public function updatePaymentByLastPaymentTransaction(Order $order): void

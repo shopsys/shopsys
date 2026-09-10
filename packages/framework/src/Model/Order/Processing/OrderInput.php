@@ -38,7 +38,7 @@ class OrderInput
     protected array $giftVouchers = [];
 
     /**
-     * @var array<int, mixed>
+     * @var array<string, mixed>
      */
     protected array $additionalData = [];
 
@@ -124,6 +124,34 @@ class OrderInput
     public function cleanAdditionalData(string $key): void
     {
         unset($this->additionalData[$key]);
+    }
+
+    public function getFingerprint(): string
+    {
+        return md5(json_encode($this->getFingerprintData(), JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getFingerprintData(): array
+    {
+        $additionalData = $this->additionalData;
+        ksort($additionalData);
+
+        return [
+            'domainId' => $this->domainConfig->getId(),
+            'customerUserId' => $this->customerUser?->getId(),
+            'quantifiedProducts' => array_map(
+                static fn (QuantifiedProduct $quantifiedProduct): array => $quantifiedProduct->getFingerprintData(),
+                array_values($this->products),
+            ),
+            'transportId' => $this->transport?->getId(),
+            'paymentId' => $this->payment?->getId(),
+            'promoCodeIds' => array_map(static fn (PromoCode $promoCode): int => $promoCode->getId(), array_values($this->promoCodes)),
+            'giftVoucherIds' => array_map(static fn (GiftVoucher $giftVoucher): int => $giftVoucher->getId(), array_values($this->giftVouchers)),
+            'additionalData' => $additionalData,
+        ];
     }
 
     /**

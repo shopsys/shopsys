@@ -8,10 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -22,8 +21,7 @@ class TransportPriceProvider
 {
     public function __construct(
         protected readonly OrderInputFactory $orderInputFactory,
-        protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly OrderProcessor $orderProcessor,
+        protected readonly OrderProcessingFacade $orderProcessingFacade,
     ) {
     }
 
@@ -56,12 +54,7 @@ class TransportPriceProvider
             $orderInput->cleanAdditionalData(PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER);
         }
 
-        $orderData = $this->orderDataFactory->create();
-
-        $orderData = $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
+        $orderData = $this->orderProcessingFacade->getProcessedOrderData($orderInput);
 
         if (count($orderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT)) === 0) {
             $totalWeight = $orderInput->findAdditionalData(AddTransportMiddleware::ADDITIONAL_DATA_CART_TOTAL_WEIGHT);
