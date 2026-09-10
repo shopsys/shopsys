@@ -3616,6 +3616,9 @@ msgstr ""
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
 msgstr ""
 
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change."
+msgstr ""
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr ""
 
