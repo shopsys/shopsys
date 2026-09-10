@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderWithdrawalContent } from 'components/Pages/OrderWithdrawal/OrderWithdrawalContent';
@@ -48,19 +47,17 @@ const OrderWithdrawalPage: FC = () => {
     const hasAccess = userCanRequestWithdrawal || isOrderFetching;
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-            <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
-                <CommonLayout
-                    breadcrumbs={breadcrumbs}
-                    isFetchingData={isOrderFetching}
-                    pageTypeOverride="order-withdrawal"
-                    title={t('Withdrawal from contract')}
-                >
-                    {!!orderData?.order && <OrderWithdrawalContent order={orderData.order} />}
-                </CommonLayout>
-            </PageGuard>
-        </>
+        <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
+            <CommonLayout
+                breadcrumbs={breadcrumbs}
+                defaultMetaRobots="noindex"
+                isFetchingData={isOrderFetching}
+                pageTypeOverride="order-withdrawal"
+                title={t('Withdrawal from contract')}
+            >
+                {!!orderData?.order && <OrderWithdrawalContent order={orderData.order} />}
+            </CommonLayout>
+        </PageGuard>
     );
 };
 

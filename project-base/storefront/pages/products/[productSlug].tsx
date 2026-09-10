@@ -66,6 +66,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
                 hreflangLinks={product?.hreflangLinks}
                 isFetchingData={isProductFetching}
                 ogImageUrlDefault={firstImageUrl}
+                seo={product?.seo}
                 title={product?.seo.title || product?.name}
             >
                 {product?.__typename === 'RegularProduct' && (
