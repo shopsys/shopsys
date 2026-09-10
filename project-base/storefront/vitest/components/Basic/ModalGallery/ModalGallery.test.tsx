@@ -109,6 +109,9 @@ describe('ModalGallery', () => {
         expect(container.querySelector('[aria-hidden="true"][style="width: 72px;"]')).not.toBeInTheDocument();
 
         const thumbnailTabs = screen.getAllByRole('tab', { name: 'Select image from gallery' });
+        for (const thumbnailTab of thumbnailTabs) {
+            expect(thumbnailTab).toHaveAttribute('data-focus-style', 'ring');
+        }
         expect(thumbnailTabs[2]).toHaveAttribute('aria-selected', 'true');
         expect(thumbnailTabs[2]).toHaveClass('border-border-accent');
         expect(thumbnailTabs[0]).toHaveAttribute('aria-selected', 'false');
