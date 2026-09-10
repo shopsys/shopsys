@@ -8,6 +8,7 @@ type ColorPreviewProps = {
     imageAlt: string;
     className?: string;
     imageClassName?: string;
+    isDecorative?: boolean;
     children?: ReactNode;
 };
 
@@ -17,6 +18,7 @@ export const ColorPreview: FC<ColorPreviewProps> = ({
     imageAlt,
     className,
     imageClassName,
+    isDecorative,
     children,
 }) => {
     const hasImage = !!imageUrl;
@@ -28,6 +30,7 @@ export const ColorPreview: FC<ColorPreviewProps> = ({
 
     return (
         <div
+            aria-hidden={isDecorative ? 'true' : undefined}
             style={{ backgroundColor: hasImage ? undefined : (rgbHex ?? undefined) }}
             className={twMergeCustom(
                 'relative flex size-4 shrink-0 justify-center overflow-hidden rounded-sm',
@@ -37,7 +40,7 @@ export const ColorPreview: FC<ColorPreviewProps> = ({
         >
             {hasImage && (
                 <Image
-                    alt={imageAlt}
+                    alt={isDecorative ? '' : imageAlt}
                     className={twMergeCustom('size-full object-cover', imageClassName)}
                     height={16}
                     src={imageUrl}
