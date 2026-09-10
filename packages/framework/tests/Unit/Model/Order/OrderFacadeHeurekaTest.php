@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderPaidStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -95,7 +95,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createStub(OrderDataFactory::class),
             $this->createStub(PricingSetting::class),
             $this->createStub(OrderInputFactory::class),
-            $this->createStub(OrderProcessor::class),
+            $this->createStub(OrderProcessingFacade::class),
             $this->createStub(PaymentFacade::class),
             $this->createStub(OrderDeliveryDateFacade::class),
             $this->createStub(WithdrawalRequestFacade::class),
