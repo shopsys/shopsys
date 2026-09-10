@@ -71,6 +71,23 @@ describe('useComparisonProducts ordering', () => {
         expect(result.current.visibleProducts.map((p) => p.uuid)).toEqual(['a', 'b', 'c', 'd']);
     });
 
+    test('follows subsequent server order after a successful save', async () => {
+        viewport.width = 1200;
+        const save = vi.fn().mockResolvedValue(true);
+        const { result, rerender } = renderHook(({ items }) => useComparisonProducts(items, save), {
+            initialProps: { items: products.slice(0, 3) },
+        });
+        act(() => result.current.reorderProducts(['c', 'a', 'b']));
+
+        await act(async () => {
+            await result.current.saveProductOrder();
+        });
+        rerender({ items: [products[2], products[0], products[1]] });
+        rerender({ items: [products[1], products[2], products[0]] });
+
+        expect(result.current.visibleProducts.map((p) => p.uuid)).toEqual(['b', 'c', 'a']);
+    });
+
     test('keeps the parameter source order when the server confirms reordered columns', () => {
         const { result, rerender } = renderHook(({ items }) => useComparisonProducts(items), {
             initialProps: { items: products },

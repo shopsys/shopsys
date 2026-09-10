@@ -35,6 +35,17 @@ final class ReorderProductListTest extends GraphQlTestCase
         $this->assertUserError($response, 'COMPARISON-invalid-product-list-order');
     }
 
+    public function testRejectsMoreThanOneHundredProducts(): void
+    {
+        $productUuid = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class)->getUuid();
+        $response = $this->reorderProductUuids(
+            ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+            array_fill(0, 101, $productUuid),
+        );
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+    }
+
     public function testCannotReorderCustomerListAnonymously(): void
     {
         $response = $this->reorder(ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID, [2]);
@@ -61,6 +72,14 @@ final class ReorderProductListTest extends GraphQlTestCase
     {
         $productUuids = array_map(fn (int $id) => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $id, Product::class)->getUuid(), $productIds);
 
+        return $this->reorderProductUuids($uuid, $productUuids);
+    }
+
+    /**
+     * @param string[] $productUuids
+     */
+    private function reorderProductUuids(string $uuid, array $productUuids): array
+    {
         return $this->getResponseContentForGql(__DIR__ . '/graphql/ReorderProductListMutation.graphql', [
             'uuid' => $uuid,
             'type' => 'COMPARISON',

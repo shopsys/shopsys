@@ -7,3 +7,6 @@ ProductListReorderInputDecorator:
             productUuids:
                 type: "[Uuid!]!"
                 description: "Distinct product UUIDs in the requested order. Products omitted from the input keep their slots."
+                validation:
+                    -   Count:
+                            max: 100

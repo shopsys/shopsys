@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\ProductList;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Validator\InputValidator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -99,8 +100,9 @@ class ProductListMutation extends AbstractMutation
         }
     }
 
-    public function reorderProductListMutation(Argument $argument): ProductList
+    public function reorderProductListMutation(Argument $argument, InputValidator $validator): ProductList
     {
+        $validator->validate();
         $input = $argument['input'];
         $productListInput = $input['productListInput'];
         $productList = $this->productListApiFacade->findProductListByInputData($productListInput);

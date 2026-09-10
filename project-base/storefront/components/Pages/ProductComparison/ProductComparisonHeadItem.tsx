@@ -91,6 +91,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             className="cursor-grab touch-none opacity-0 focus-visible:opacity-100 active:cursor-grabbing active:opacity-100 group-hover/comparison-product:opacity-100"
                             shape="rounded"
                             size="small"
+                            tid={TIDs.comparison_reorder_button}
                             variant="ghost"
                             title={t('Drag to reorder')}
                             tooltipLabel={t('Drag to reorder')}

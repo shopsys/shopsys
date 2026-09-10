@@ -60,8 +60,10 @@ class ProductListFacade
                 $itemsByProductUuid[$item->getProduct()->getUuid()] = $item;
             }
 
-            if ($productUuids === [] || count(array_unique($productUuids)) !== count($productUuids)
-                || array_diff($productUuids, array_keys($itemsByProductUuid)) !== []) {
+            $requestedUuids = array_flip($productUuids);
+
+            if ($productUuids === [] || count($requestedUuids) !== count($productUuids)
+                || array_diff_key($requestedUuids, $itemsByProductUuid) !== []) {
                 throw new InvalidProductListOrderException('Product order must contain distinct products belonging to the list.');
             }
 
@@ -70,7 +72,7 @@ class ProductListFacade
 
             // Keep products absent from the storefront response in their existing slots.
             foreach ($items as $position => $item) {
-                if (in_array($item->getProduct()->getUuid(), $productUuids, true)) {
+                if (isset($requestedUuids[$item->getProduct()->getUuid()])) {
                     $orderedItems[$nextIndex++]->changePosition($position);
                 } else {
                     $item->changePosition($position);

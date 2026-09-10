@@ -21,7 +21,29 @@ export const checkComparisonToastVisible = () => {
 };
 
 export const closeComparisonToast = () => {
-    cy.getByTID([TIDs.toast_success]).click().should('not.exist');
+    checkAndHideSuccessToast();
+};
+
+export const checkComparisonProductOrder = (catnums: string[]) => {
+    cy.getByTID([TIDs.comparison_table])
+        .find('[data-comparison-product]')
+        .then(($products) => {
+            expect($products.toArray().map((product) => product.dataset.tid)).to.deep.equal(
+                catnums.map((catnum) => TIDs.comparison_product_ + catnum),
+            );
+        });
+};
+
+export const moveComparisonProductLeft = (catnum: string) => {
+    cy.intercept('POST', '/graphql/ReorderProductListMutation').as('reorderProductList');
+    cy.getByTID([[TIDs.comparison_product_, catnum], TIDs.comparison_reorder_button]).focus();
+    cy.realPress('{leftarrow}');
+    cy.wait('@reorderProductList').its('response.statusCode').should('eq', 200);
+};
+
+export const undoComparisonProductRemoval = () => {
+    cy.getByTID([TIDs.comparison_undo_button]).should('be.visible').click();
+    cy.getByTID([TIDs.toast_success]).should('not.exist');
 };
 
 export const removeAllFromComparison = () => {

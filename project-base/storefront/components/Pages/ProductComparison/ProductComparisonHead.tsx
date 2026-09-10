@@ -1,3 +1,4 @@
+import { TIDs } from 'cypress/tids';
 import { Reorder } from 'framer-motion';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { CSSProperties, useState } from 'react';
@@ -58,6 +59,7 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({
                     <Reorder.Group
                         as="div"
                         axis="x"
+                        data-tid={TIDs.comparison_table}
                         values={comparedProducts.map((product) => product.uuid)}
                         onReorder={(order) => onReorder?.(order)}
                         className="grid grid-flow-col grid-cols-2 grid-rows-[auto_auto_auto_auto_auto_auto_auto_auto] md:grid-cols-[12rem_repeat(var(--comparison-products),minmax(0,1fr))]"

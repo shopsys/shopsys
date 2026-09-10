@@ -39,8 +39,9 @@ export const useComparisonProducts = (
             while (pendingOrder.current) {
                 const order = pendingOrder.current;
                 pendingOrder.current = null;
-                const success = await onSaveOrder(order);
-                if (!success && !pendingOrder.current && latestOrder.current === order) {
+                await onSaveOrder(order);
+                if (!pendingOrder.current && latestOrder.current === order) {
+                    latestOrder.current = [];
                     setProductOrder([]);
                 }
             }
