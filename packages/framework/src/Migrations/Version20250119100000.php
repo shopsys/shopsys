@@ -6,31 +6,34 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Override;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 final class Version20250119100000 extends AbstractMigration implements DomainAwareInterface
 {
     use MultidomainMigrationTrait;
 
+    private const string PAGE_NAME = 'Katalog';
+
+    private const array PAGE_SLUGS_BY_LOCALE = [
+        'en' => 'catalog',
+        'cs' => 'katalog',
+        'sk' => 'katalog',
+    ];
+
     #[Override]
     public function up(Schema $schema): void
     {
-        $primaryLocale = $this->getDomainLocale($this->getAllDomainIds()[0]);
-        $pageName = t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $primaryLocale);
-
-        $seoPageId = $this->getExistingSeoPageId($pageName);
+        $seoPageId = $this->getExistingSeoPageId(self::PAGE_NAME);
 
         if ($seoPageId === null) {
             $this->sql('INSERT INTO seo_pages (page_name, default_page) VALUES (:pageName, true)', [
-                'pageName' => $pageName,
+                'pageName' => self::PAGE_NAME,
             ]);
             $seoPageId = (int)$this->connection->lastInsertId();
         }
 
         foreach ($this->getAllDomainIds() as $domainId) {
-            $locale = $this->getDomainLocale($domainId);
-            $pageSlug = t('catalog-slug', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $pageSlug = self::PAGE_SLUGS_BY_LOCALE[$this->getDomainLocale($domainId)] ?? self::PAGE_SLUGS_BY_LOCALE['en'];
 
             $this->insertSeoPageDomainIfNotExists($seoPageId, $domainId, $pageSlug);
             $this->insertFriendlyUrlIfNotExists($seoPageId, $domainId, $pageSlug);
