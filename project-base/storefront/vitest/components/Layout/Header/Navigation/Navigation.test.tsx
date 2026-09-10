@@ -73,13 +73,17 @@ const overflowNavigationItem: TypeCategoriesByColumnFragment = {
     categoriesByColumns: [],
 };
 
+const moreNavigationItemRef = { current: null };
+const navigationItemRefs = { current: [] };
+const navigationRef = { current: null };
+
 vi.mock('components/Layout/Header/Navigation/useNavigationOverflow', () => ({
     useNavigationOverflow: () => ({
         hasOverflowNavigationItems: true,
         isNavigationMeasured: true,
-        moreNavigationItemRef: { current: null },
-        navigationItemRefs: { current: [] },
-        navigationRef: { current: null },
+        moreNavigationItemRef,
+        navigationItemRefs,
+        navigationRef,
         overflowNavigationItems: [overflowNavigationItem],
         shouldRenderMoreNavigationItem: true,
         visibleNavigationItems: [navigationItemWithChildren, visibleNavigationItem],

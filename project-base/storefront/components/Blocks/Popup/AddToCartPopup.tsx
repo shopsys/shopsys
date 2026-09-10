@@ -54,7 +54,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
             <VerticalStack gap={'xs'}>
                 <section
                     aria-labelledby={`added-product-${product.uuid}-name`}
-                    className="relative flex flex-row flex-wrap vl:flex-nowrap items-center gap-4 rounded-xl bg-background-more p-4 vl:p-5"
+                    className="relative flex flex-row flex-wrap items-center gap-4 rounded-xl bg-background-more p-4 vl:p-5 lg:flex-nowrap"
                 >
                     <ExtendedNextLink
                         className="group/product-link flex vl:flex-1 basis-full vl:basis-auto cursor-pointer vl:items-center gap-2.5 text-text-default no-underline hover:text-text-default hover:no-underline"
@@ -92,25 +92,27 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                         </div>
                     </ExtendedNextLink>
 
-                    <div className="flex flex-1 items-center justify-end gap-4 vl:gap-6">
+                    <div className="flex flex-1 items-center justify-between gap-4 vl:gap-6 md:justify-end">
                         <div className="font-secondary">
                             <span className="font-semibold">{quantity}</span>
                             <span className="text-sm text-text-less">&nbsp;{product.unit.name}</span>
                         </div>
 
                         {isPriceVisible(product.price.priceWithVat) && (
-                            <div className="whitespace-nowrap font-secondary">
-                                <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
-                                <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
+                            <div className="flex flex-col items-end vl:gap-6 gap-y-1 sm:flex-row sm:items-center sm:gap-4">
+                                <div className="whitespace-nowrap font-secondary">
+                                    <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
+                                    <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
+                                </div>
+
+                                <CartItemPrice
+                                    freeQuantity={0}
+                                    productPrice={product.price}
+                                    quantity={quantity}
+                                    className="vl:w-auto"
+                                />
                             </div>
                         )}
-
-                        <CartItemPrice
-                            freeQuantity={0}
-                            productPrice={product.price}
-                            quantity={quantity}
-                            className="ml-auto vl:ml-0 vl:w-auto"
-                        />
                     </div>
                 </section>
 
