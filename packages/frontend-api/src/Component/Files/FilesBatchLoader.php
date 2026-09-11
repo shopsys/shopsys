@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Component\Files;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
@@ -148,7 +149,7 @@ class FilesBatchLoader
 
         foreach ($filesBatchLoadData as $fileBatchLoadData) {
             $entityName = $fileBatchLoadData->getEntityName();
-            $type = Utils::ifNull($fileBatchLoadData->getType(), UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
+            $type = ExtendedClassNameResolver::resolve(Utils::class)::ifNull($fileBatchLoadData->getType(), UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
             $result[$entityName][$type][] = $fileBatchLoadData;
         }
 

@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
 use Hybridauth\User\Profile;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -55,9 +56,9 @@ class RegistrationDataFactory
     {
         $registrationData = $this->createForDomainId($this->domain->getId());
 
-        $registrationData->firstName = TransformStringHelper::getTrimmedStringOrNullOnEmpty($profile->firstName);
-        $registrationData->lastName = TransformStringHelper::getTrimmedStringOrNullOnEmpty($profile->lastName);
-        $registrationData->email = TransformStringHelper::getTrimmedStringOrNullOnEmpty($profile->email);
+        $registrationData->firstName = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($profile->firstName);
+        $registrationData->lastName = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($profile->lastName);
+        $registrationData->email = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($profile->email);
 
         return $registrationData;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Country\CountryFlag;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\CountryDialCode;
@@ -33,7 +34,7 @@ class PhonePrefixesQuery extends AbstractQuery
                 'code' => $countryDialCode->code,
                 'dialCode' => $countryDialCode->dialCode,
                 'countryName' => Countries::getName($countryDialCode->code, $locale),
-                'flagEmoji' => CountryFlag::getFlagEmoji($countryDialCode->code),
+                'flagEmoji' => ExtendedClassNameResolver::resolve(CountryFlag::class)::getFlagEmoji($countryDialCode->code),
             ],
             $countryDialCodes,
         );

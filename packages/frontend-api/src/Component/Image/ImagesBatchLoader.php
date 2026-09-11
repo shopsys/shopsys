@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Component\Image;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
@@ -81,7 +82,7 @@ class ImagesBatchLoader
 
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             $entityName = $imageBatchLoadData->getEntityName();
-            $type = Utils::ifNull($imageBatchLoadData->getType(), ImageEntityConfig::WITHOUT_NAME_KEY);
+            $type = ExtendedClassNameResolver::resolve(Utils::class)::ifNull($imageBatchLoadData->getType(), ImageEntityConfig::WITHOUT_NAME_KEY);
             $result[$entityName][$type][] = $imageBatchLoadData;
         }
 

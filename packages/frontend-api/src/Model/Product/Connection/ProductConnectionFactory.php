@@ -10,6 +10,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -137,7 +138,7 @@ class ProductConnectionFactory
         $promise = $paginator->auto($argument, 0); // actual total count is set after the promise is fulfilled
 
         $promise->then(function (ProductConnection $productConnection) use ($batchLoadDataId): void {
-            $productConnection->setTotalCount(ProductsBatchLoader::getTotalByBatchLoadDataId($batchLoadDataId));
+            $productConnection->setTotalCount(ExtendedClassNameResolver::resolve(ProductsBatchLoader::class)::getTotalByBatchLoadDataId($batchLoadDataId));
         });
 
         return $promise;
