@@ -101,7 +101,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 <div
                                     className={twJoin(
                                         'grid items-stretch gap-3',
-                                        areMultiplePurchaseActionsVisible ? 'sm:grid-cols-2' : 'sm:max-w-80',
+                                        areMultiplePurchaseActionsVisible && 'sm:grid-cols-2',
                                     )}
                                 >
                                     {isWatchdogButtonVisible && (

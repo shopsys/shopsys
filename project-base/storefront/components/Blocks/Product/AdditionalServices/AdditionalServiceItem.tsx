@@ -114,7 +114,7 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
         >
             <div
                 className={twMergeCustom(
-                    'contents md:col-span-1 md:col-start-1 md:flex md:min-w-0 md:gap-2 [&>div]:w-fit [&>div]:min-w-0 [&>div]:max-w-full',
+                    'contents md:col-span-1 md:col-start-1 md:flex md:min-w-0 md:gap-2 [&>div]:w-fit [&>div]:min-w-0 [&>div]:max-w-full [&>div]:self-stretch md:[&>div]:self-auto',
                     isSelectedInCart &&
                         '[&>div]:row-span-2 md:[&>div]:row-span-1 [&>label]:row-span-2 md:[&>label]:row-span-1',
                     isInCartList && 'vl:col-start-1 vl:pl-22.5',
@@ -124,7 +124,7 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
                     disabled={isDisabled}
                     id={checkboxId}
                     label={<span aria-hidden="true" />}
-                    labelWrapperClassName="w-fit items-start gap-0 font-normal text-text-default hover:text-text-default md:min-h-10 md:items-center"
+                    labelWrapperClassName="h-full w-fit items-center gap-0 font-normal text-text-default hover:text-text-default md:min-h-10"
                     name={checkboxId}
                     value={isSelected}
                     onChange={() => onToggleService(additionalService, !isSelected)}
