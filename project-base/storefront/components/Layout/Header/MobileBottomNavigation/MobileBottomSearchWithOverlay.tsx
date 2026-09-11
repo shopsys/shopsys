@@ -1,5 +1,5 @@
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
-import { type RefObject } from 'react';
+import { type RefObject, useEffect, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type MobileBottomSearchWithOverlayProps = {
@@ -9,6 +9,26 @@ type MobileBottomSearchWithOverlayProps = {
 
 export const MobileBottomSearchWithOverlay: FC<MobileBottomSearchWithOverlayProps> = ({ searchInputRef, onClose }) => {
     const { t } = useTranslation();
+    const [visualViewportOffsetTop, setVisualViewportOffsetTop] = useState(0);
+
+    useEffect(() => {
+        const visualViewport = window.visualViewport;
+
+        if (!visualViewport) {
+            return undefined;
+        }
+
+        const updateVisualViewportOffsetTop = () => setVisualViewportOffsetTop(visualViewport.offsetTop);
+
+        updateVisualViewportOffsetTop();
+        visualViewport.addEventListener('resize', updateVisualViewportOffsetTop);
+        visualViewport.addEventListener('scroll', updateVisualViewportOffsetTop);
+
+        return () => {
+            visualViewport.removeEventListener('resize', updateVisualViewportOffsetTop);
+            visualViewport.removeEventListener('scroll', updateVisualViewportOffsetTop);
+        };
+    }, []);
 
     return (
         <>
@@ -19,7 +39,10 @@ export const MobileBottomSearchWithOverlay: FC<MobileBottomSearchWithOverlayProp
                 onClick={onClose}
             />
 
-            <div className="pointer-events-none fixed inset-x-0 top-5 z-aboveOverlay flex justify-center px-5">
+            <div
+                className="pointer-events-none fixed inset-x-0 top-5 z-aboveOverlay flex justify-center px-5"
+                style={{ transform: `translateY(${visualViewportOffsetTop}px)` }}
+            >
                 <div className="pointer-events-auto w-full max-w-xl">
                     <AutocompleteSearch
                         inputRef={searchInputRef}
@@ -28,6 +51,7 @@ export const MobileBottomSearchWithOverlay: FC<MobileBottomSearchWithOverlayProp
                         shouldOpenPopupOnMount
                         shouldRenderResultsOverlay={false}
                         onClearEmpty={onClose}
+                        onSearchSubmit={onClose}
                     />
                 </div>
             </div>
