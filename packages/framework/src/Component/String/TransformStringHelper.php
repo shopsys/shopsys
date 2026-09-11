@@ -34,11 +34,6 @@ class TransformStringHelper
         return self::emptyToNull(trim($value));
     }
 
-    public function stringToFriendlyUrlSlug(string $string): string
-    {
-        return static::createFriendlyUrlSlug($string);
-    }
-
     /**
      * @see http://php.vrana.cz/vytvoreni-pratelskeho-url.php
      */

@@ -121,7 +121,7 @@ class ComplaintStatusFacade
     {
         foreach ($complaintStatusData->name as $name) {
             if ($name !== null && trim($name) !== '') {
-                $code = $this->transformStringHelper->stringToFriendlyUrlSlug($name);
+                $code = $this->transformStringHelper->createFriendlyUrlSlug($name);
 
                 if ($code !== '') {
                     return $code;

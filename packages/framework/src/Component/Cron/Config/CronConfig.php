@@ -101,7 +101,7 @@ class CronConfig
     {
         $className = basename(str_replace('\\', '/', $serviceId));
         $className = $this->transformStringHelper->removeStringFromEnd($className, 'CronModule');
-        $classSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($className);
+        $classSlug = $this->transformStringHelper->createFriendlyUrlSlug($className);
 
         $suffix = '-' . substr(md5($serviceId), 0, 6);
 

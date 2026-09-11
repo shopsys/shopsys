@@ -65,7 +65,7 @@ class TransformStringTest extends TestCase
         $this->assertSame($expected, $this->transformStringHelper->safeFilename($actual));
     }
 
-    public static function stringToFriendlyUrlSlugProvider(): array
+    public static function createFriendlyUrlSlugProvider(): array
     {
         return [
             [
@@ -99,13 +99,7 @@ class TransformStringTest extends TestCase
         ];
     }
 
-    #[DataProvider('stringToFriendlyUrlSlugProvider')]
-    public function testStringToFriendlyUrlSlug(mixed $actual, mixed $expected): void
-    {
-        $this->assertSame($expected, $this->transformStringHelper->stringToFriendlyUrlSlug($actual));
-    }
-
-    #[DataProvider('stringToFriendlyUrlSlugProvider')]
+    #[DataProvider('createFriendlyUrlSlugProvider')]
     public function testCreateFriendlyUrlSlug(mixed $actual, mixed $expected): void
     {
         $this->assertSame($expected, TransformStringHelper::createFriendlyUrlSlug($actual));

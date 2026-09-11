@@ -110,7 +110,7 @@ class ProductImagesTest extends GraphQlTestCase
     {
         $locale = $this->getFirstDomainLocale();
         $productName = t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $productSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($productName);
+        $productSlug = $this->transformStringHelper->createFriendlyUrlSlug($productName);
         $imageName = t(
             $nameTranslationKey,
             ['%productName%' => $this->product->getFullName($locale)],
@@ -138,7 +138,7 @@ class ProductImagesTest extends GraphQlTestCase
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->getFirstDomainLocale(),
         );
-        $categorySlug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedCategoryName);
+        $categorySlug = $this->transformStringHelper->createFriendlyUrlSlug($translatedCategoryName);
 
         return [
             'url' => $this->getBaseUrlPath('/content-test/images/category/' . $categorySlug . '_' . $imageId . '.jpg'),

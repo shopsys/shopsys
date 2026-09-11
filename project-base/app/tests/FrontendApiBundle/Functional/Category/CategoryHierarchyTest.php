@@ -64,7 +64,7 @@ final class CategoryHierarchyTest extends GraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
-        $printersSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($this->categoryPrinters->getName($firstDomainLocale));
+        $printersSlug = $this->transformStringHelper->createFriendlyUrlSlug($this->categoryPrinters->getName($firstDomainLocale));
 
         $response = $this->getResponseContentForGql(self::QUERY_FOLDER . '/SingleCategoryQuery.graphql', [
             'urlSlug' => $printersSlug,
