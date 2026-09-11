@@ -351,6 +351,7 @@
     "Keep your account safe and sound by updating your password to something only you know.": "Udržte svoj účet v bezpečí tým, že si nastavíte heslo, ktoré poznáte iba vy.",
     "Last name": "Priezvisko",
     "Last name must be at most {{ max }} characters": "Priezvisko nesmie byť dlhšie ako {{ max }} znakov",
+    "Last used": "Naposledy použité",
     "Last visited products": "Naposledy navštívené produkty",
     "Let's shop": "Poďme nakupovať",
     "List view": "Riadkové zobrazenie",

@@ -256,6 +256,7 @@ export const COOKIES_STORE_NAME = 'cookiesStore-1';
 export const DEFAULT_PERSIST_STORE_STATE = {
     state: {
         cartUuid: null as string | null,
+        lastLoginType: null as string | null,
         productListUuids: {},
         userConsent: {
             statistics: false,
@@ -295,5 +296,5 @@ export const DEFAULT_PERSIST_STORE_STATE = {
         },
         packeteryPickupPoint: null,
     },
-    version: 4,
+    version: 5,
 };
