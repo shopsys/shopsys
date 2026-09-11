@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
@@ -66,7 +67,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     #[ORM\Column(type: 'string', length: 255)]
     protected $slug {
         set {
-            $this->slug = TransformStringHelper::createFriendlyUrlSlug($value);
+            $this->slug = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($value);
         }
     }
 
