@@ -75,9 +75,6 @@ class SideMenuBuilder
     public const string LIST_ARTICLE = 'articles';
     public const string NEW_ARTICLE = 'new';
     public const string EDIT_ARTICLE = 'edit';
-    public const string LIST_ADVERT = 'adverts';
-    public const string NEW_ADVERT = 'new';
-    public const string EDIT_ADVERT = 'edit';
     public const string LIST_BESTSELLING_PRODUCT = 'bestselling_products';
     public const string DETAIL_BESTSELLING_PRODUCT = 'edit';
     public const string SECTION_BLOG = 'blog';
@@ -570,19 +567,6 @@ class SideMenuBuilder
         $articlesMenu->addChild(
             static::EDIT_ARTICLE,
             ['route' => 'admin_article_edit', 'label' => t('Editing article'), 'display' => false],
-        );
-
-        $advertsMenu = $menu->addChild(
-            static::LIST_ADVERT,
-            ['route' => 'admin_advert_list', 'label' => t('Advertising system')],
-        );
-        $advertsMenu->addChild(
-            static::NEW_ADVERT,
-            ['route' => 'admin_advert_new', 'label' => t('New advertising'), 'display' => false],
-        );
-        $advertsMenu->addChild(
-            static::EDIT_ADVERT,
-            ['route' => 'admin_advert_edit', 'label' => t('Editing advertising'), 'display' => false],
         );
 
         $bestsellingProductsMenu = $menu->addChild(
