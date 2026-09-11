@@ -32,11 +32,12 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
     stickyActionBoundaryRef,
 }) => {
     const buttonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-    const navigationRef = useRef<HTMLElement>(null);
+    const navigationRef = useRef<HTMLDivElement>(null);
     const sentinelRef = useRef<HTMLDivElement>(null);
     const [isNavigationSticky, setIsNavigationSticky] = useState(false);
     const [isBeforeStickyActionBoundary, setIsBeforeStickyActionBoundary] = useState(true);
     const isDesktop = useMediaMin('vl');
+    const isSectionNavigationVisible = sections.length > 1;
 
     useEffect(() => {
         let animationFrameId: number | null = null;
@@ -107,40 +108,49 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
     return (
         <>
             <div aria-hidden="true" className="h-0" ref={sentinelRef} />
-            <nav
+            <div
                 className={twMergeCustom(
                     'sticky top-(--sticky-navigation-offset,0px) z-menu bg-background-default transition-[top,box-shadow] duration-200',
                     isNavigationSticky && 'shadow-md',
+                    !isSectionNavigationVisible && 'h-0',
                 )}
-                data-tid={TIDs.product_detail_section_navigation}
                 ref={navigationRef}
             >
-                <Webline className="flex items-center gap-6 py-4">
-                    <div className="min-w-0 flex-1">
-                        <HorizontalScrollHint
-                            render={(scrollContainerRef) => (
-                                <div ref={scrollContainerRef} className="flex gap-3 overflow-x-auto">
-                                    {sections.map((section) => (
-                                        <Tag
-                                            key={section.id}
-                                            buttonRef={(el) => {
-                                                if (el) {
-                                                    buttonRefs.current.set(section.id, el);
-                                                } else {
-                                                    buttonRefs.current.delete(section.id);
-                                                }
-                                            }}
-                                            isActive={activeSection === section.id}
-                                            onClick={() => onSectionClick(section.id)}
-                                            className="shrink-0"
-                                        >
-                                            {section.label}
-                                        </Tag>
-                                    ))}
-                                </div>
-                            )}
-                        />
-                    </div>
+                <Webline
+                    className={twMergeCustom(
+                        'flex items-center gap-6 py-4',
+                        !isSectionNavigationVisible &&
+                            'absolute inset-x-0 top-0 justify-end bg-background-default shadow-md',
+                        !isSectionNavigationVisible && (!product || !isDesktop || !isNavigationSticky) && 'hidden',
+                    )}
+                >
+                    {isSectionNavigationVisible && (
+                        <nav className="min-w-0 flex-1" data-tid={TIDs.product_detail_section_navigation}>
+                            <HorizontalScrollHint
+                                render={(scrollContainerRef) => (
+                                    <div ref={scrollContainerRef} className="flex gap-3 overflow-x-auto">
+                                        {sections.map((section) => (
+                                            <Tag
+                                                key={section.id}
+                                                buttonRef={(el) => {
+                                                    if (el) {
+                                                        buttonRefs.current.set(section.id, el);
+                                                    } else {
+                                                        buttonRefs.current.delete(section.id);
+                                                    }
+                                                }}
+                                                isActive={activeSection === section.id}
+                                                onClick={() => onSectionClick(section.id)}
+                                                className="shrink-0"
+                                            >
+                                                {section.label}
+                                            </Tag>
+                                        ))}
+                                    </div>
+                                )}
+                            />
+                        </nav>
+                    )}
 
                     {product && isDesktop && (
                         <ProductDetailStickyAction
@@ -150,7 +160,7 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
                         />
                     )}
                 </Webline>
-            </nav>
+            </div>
 
             {product && isDesktop === false && (
                 <ProductDetailStickyAction
