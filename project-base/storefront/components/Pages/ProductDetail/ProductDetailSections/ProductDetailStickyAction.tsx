@@ -3,6 +3,7 @@ import { ProductAvailability } from 'components/Blocks/Product/ProductAvailabili
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { twMergeCustom } from 'utils/twMerge';
 import { DeferredProductDetailAddToCart } from '../ProductDetailAddToCart/DeferredProductDetailAddToCart';
 
@@ -25,7 +26,7 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
             data-tid={TIDs.product_detail_sticky_action}
         >
             <Image
-                alt=""
+                alt={generateProductImageAlt(product.fullName, product.mainCategory?.name, product.images[0]?.name)}
                 className="size-9 xs:size-10 shrink-0 object-contain"
                 height={40}
                 src={product.images[0]?.url}

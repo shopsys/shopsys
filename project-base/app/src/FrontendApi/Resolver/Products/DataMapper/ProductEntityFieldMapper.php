@@ -66,6 +66,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method \DateTimeImmutable|null getExpectedRestockingDate(\App\Model\Product\Product $product)
  * @method array{average_rating: float|null, total_count: int, rating_counts: array<int, array{rating: int, count: int}>}|null getReviewsSummary(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAdditionalServices(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getMainCategoryPromise(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -93,6 +94,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductSellableVariantsProvider $productSellableVariantsProvider,
         ProductReviewApiFacade $productReviewApiFacade,
         DataLoaderInterface $additionalServicesByProductIdBatchLoader,
+        DataLoaderInterface $productMainCategoriesBatchLoader,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -118,6 +120,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productSellableVariantsProvider,
             $productReviewApiFacade,
             $additionalServicesByProductIdBatchLoader,
+            $productMainCategoriesBatchLoader,
         );
     }
 

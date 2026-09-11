@@ -2,6 +2,7 @@ import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { YouTubeThumbnail } from 'components/Basic/YouTubeThumbnail/YouTubeThumbnail';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { generateProductImageAlt } from 'utils/productAltText';
 
 import { ProductDetailGalleryItem } from './ProductDetailGallery.types';
@@ -84,7 +85,7 @@ export const ProductDetailGallerySlide: FC<ProductDetailGallerySlideProps> = ({
             {isLoaded && isImage && (
                 <Image
                     priority={index === 0}
-                    alt={galleryItem.name || generateProductImageAlt(productName, categoryName)}
+                    alt={generateProductImageAlt(productName, categoryName, galleryItem.name)}
                     className="vl:size-125 h-80 w-full object-contain mix-blend-multiply lg:h-125"
                     draggable={false}
                     height={500}
@@ -97,7 +98,7 @@ export const ProductDetailGallerySlide: FC<ProductDetailGallerySlideProps> = ({
             {isLoaded && isVideo && (
                 <>
                     <YouTubeThumbnail
-                        alt=""
+                        alt={getImageAlt(galleryItem.description, productName)}
                         className="vl:size-125 h-80 w-full object-contain lg:h-125"
                         draggable={false}
                         height={500}

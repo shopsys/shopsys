@@ -1,6 +1,10 @@
 fragment ProductGiftFragment on Product {
     uuid
     name
+    fullName
+    mainCategory {
+        name
+    }
     images{
         ...ImageFragment
     }

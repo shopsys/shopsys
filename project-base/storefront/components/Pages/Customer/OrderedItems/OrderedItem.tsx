@@ -11,6 +11,7 @@ import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -47,7 +48,11 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
             <div className="flex vl:flex-row flex-col vl:items-start vl:justify-between gap-4">
                 <Image
                     priority
-                    alt={orderedItem.product?.mainImage?.name || ''}
+                    alt={generateProductImageAlt(
+                        orderedItem.product?.fullName ?? orderedItem.name,
+                        orderedItem.product?.mainCategory?.name,
+                        orderedItem.product?.mainImage?.name,
+                    )}
                     className="size-20 max-h-full object-contain mix-blend-multiply"
                     height={80}
                     src={orderedItem.product?.mainImage?.url}

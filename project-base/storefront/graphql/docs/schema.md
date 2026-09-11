@@ -6780,6 +6780,15 @@ Product link
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mainvariant.maincategory">mainCategory</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+The deepest visible category of the product on the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mainvariant.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
@@ -7207,6 +7216,15 @@ Notification bar image by params
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="notificationbar.plaintext">plainText</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Message of the notification without HTML markup
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="notificationbar.rgbcolor">rgbColor</strong></td>
@@ -10808,6 +10826,15 @@ Product link
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="regularproduct.maincategory">mainCategory</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+The deepest visible category of the product on the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="regularproduct.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
@@ -12562,6 +12589,15 @@ Whether a cart containing this product is limited to personal pickup transports
 <td>
 
 Product link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.maincategory">mainCategory</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+The deepest visible category of the product on the current domain
 
 </td>
 </tr>
@@ -17277,6 +17313,15 @@ Whether a cart containing this product is limited to personal pickup transports
 <td>
 
 Product link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.maincategory">mainCategory</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+The deepest visible category of the product on the current domain
 
 </td>
 </tr>

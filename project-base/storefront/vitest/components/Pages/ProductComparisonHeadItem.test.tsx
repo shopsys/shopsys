@@ -24,7 +24,7 @@ vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
 }));
 
 vi.mock('components/Basic/Image/Image', () => ({
-    Image: () => <span role="img" />,
+    Image: ({ alt }: { alt: string }) => <span aria-label={alt} role="img" />,
 }));
 
 vi.mock('components/Blocks/Product/ButtonsAction/ProductCompareButton', () => ({
@@ -92,7 +92,8 @@ describe('ProductComparisonHeadItem', () => {
         catalogNumber: 'ABC123',
         fullName: '32" Philips TV',
         isMainVariant: false,
-        mainImage: { url: '/image.jpg' },
+        mainCategory: { name: 'TV, audio' },
+        mainImage: { name: null, url: '/image.jpg' },
         price: { percentageDiscount: 0 },
         reviewsSummary: { averageRating: 4.5, totalCount: 2 },
         slug: '/32-philips-tv',
@@ -128,6 +129,7 @@ describe('ProductComparisonHeadItem', () => {
         const productName = within(productLink).getByText('32" Philips TV');
 
         expect(productImage).toBeInTheDocument();
+        expect(productImage).toHaveAccessibleName('TV, audio - 32" Philips TV');
         expect(productName).toBeInTheDocument();
         expect(productName).toHaveClass('row-start-3');
         expect(productName).not.toHaveClass('text-link-default', 'underline');

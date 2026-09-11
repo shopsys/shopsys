@@ -50,6 +50,7 @@ class ProductEntityFieldMapper
         protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
         protected readonly DataLoaderInterface $additionalServicesByProductIdBatchLoader,
+        protected readonly DataLoaderInterface $productMainCategoriesBatchLoader,
     ) {
     }
 
@@ -84,6 +85,11 @@ class ProductEntityFieldMapper
     public function getCategories(Product $product): array
     {
         return $product->getCategoriesIndexedByDomainId()[$this->domain->getId()];
+    }
+
+    public function getMainCategoryPromise(Product $product): Promise
+    {
+        return $this->productMainCategoriesBatchLoader->load($product->getId());
     }
 
     public function getAvailability(Product $product): ProductAvailabilityInfo

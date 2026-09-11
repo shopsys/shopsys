@@ -4,6 +4,7 @@ import { TypeAvailabilityStatusEnum } from 'graphql/types';
 export type DeliveryOptionsProduct = {
     uuid: string;
     fullName: string;
+    mainCategory?: { name: string } | null;
     mainImage?: TypeImageFragment | null;
     availability: { name: string; status: TypeAvailabilityStatusEnum };
     price: { priceWithVat: string };

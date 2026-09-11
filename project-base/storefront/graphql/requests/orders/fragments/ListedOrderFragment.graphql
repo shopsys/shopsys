@@ -20,13 +20,13 @@ fragment ListedOrderFragment on Order {
         payment {
             name
             mainImage {
-                url
+                ...ImageFragment
             }
         }
         transport {
             name
             mainImage {
-                url
+                ...ImageFragment
             }
         }
     }

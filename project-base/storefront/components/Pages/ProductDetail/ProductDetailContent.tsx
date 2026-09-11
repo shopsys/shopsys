@@ -70,11 +70,11 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                     <div className="order-2 vl:col-start-1 vl:row-span-2 vl:row-start-1 min-w-0">
                         <ProductDetailGallery
-                            categoryName={product.categories[0]?.name}
+                            categoryName={product.mainCategory?.name}
                             flags={product.flags}
                             images={product.images}
                             percentageDiscount={product.price.percentageDiscount}
-                            productName={product.name}
+                            productName={product.fullName}
                             videoIds={product.productVideos}
                         />
                     </div>

@@ -54,7 +54,7 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
         ref,
     ) => {
         const imageSize = getProductListItemImageSize(size);
-        const imageAlt = generateProductImageAlt(product.fullName, product.categories[0]?.name);
+        const imageAlt = generateProductImageAlt(product.fullName, product.mainCategory?.name, product.mainImage?.name);
         const isGalleryEnabled = isWithImageGallery && imageCount > 1;
 
         return (
@@ -65,7 +65,7 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
             >
                 {isGalleryEnabled ? (
                     <ProductListItemGallery
-                        imageAlt={imageAlt}
+                        imageAlt={generateProductImageAlt(product.fullName, product.mainCategory?.name)}
                         imageCount={imageCount}
                         imageSize={imageSize}
                         product={product}
@@ -73,14 +73,14 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
                     />
                 ) : (
                     <>
-                        <div className="flex w-full items-center justify-center" style={{ height: imageSize }}>
+                        <div className="relative w-full" style={{ height: imageSize }}>
                             <Image
+                                fill
                                 alt={imageAlt}
-                                className="h-full w-full object-contain mix-blend-multiply"
+                                className="object-contain mix-blend-multiply"
                                 draggable={false}
-                                height={imageSize}
+                                sizes={`${imageSize}px`}
                                 src={product.mainImage?.url}
-                                width={imageSize}
                             />
                         </div>
 

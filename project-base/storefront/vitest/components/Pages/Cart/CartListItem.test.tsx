@@ -119,7 +119,11 @@ describe('CartListItem', () => {
             },
             isAllowedNegativeStock: false,
             isInquiryType: false,
+            mainCategory: {
+                name: 'TV, audio',
+            },
             mainImage: {
+                name: null,
                 url: '/image.jpg',
             },
             price: {
@@ -157,7 +161,7 @@ describe('CartListItem', () => {
         expect(productLinks).toHaveLength(1);
         expect(productLinks[0]).toHaveAccessibleName('Go to product page of 32" Philips TV');
         expect(productLinks[0]).toHaveClass('w-fit', 'max-w-full');
-        expect(within(productLinks[0]).getByRole('img')).toBeInTheDocument();
+        expect(within(productLinks[0]).getByRole('img')).toHaveAccessibleName('TV, audio - 32" Philips TV');
         expect(within(productLinks[0]).getByRole('heading', { name: '32" Philips TV' })).toHaveClass(
             'w-fit',
             'max-w-full',
