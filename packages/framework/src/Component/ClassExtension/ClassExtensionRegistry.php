@@ -4,101 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
-use ErrorException;
-use Roave\BetterReflection\BetterReflection;
-use Roave\BetterReflection\Reflector\DefaultReflector;
-use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
-use Symfony\Component\Finder\Finder;
-
 class ClassExtensionRegistry
 {
     /**
-     * @var string[]
-     */
-    protected array $serviceExtensionMap = [];
-
-    /**
-     * @var string[]
-     */
-    protected array $otherClassesExtensionMap = [];
-
-    /**
-     * @param string[] $entityExtensionMap
-     * @param array<int, array{name: string, path: string, namespace: string, app_namespace: string}> $packagesRegistry
+     * @param array<class-string, class-string> $classExtensionMap
      */
     public function __construct(
-        protected readonly array $entityExtensionMap,
-        protected readonly array $packagesRegistry,
+        protected readonly array $classExtensionMap,
     ) {
-        $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
-    }
-
-    public function addExtendedService(string $parentClassName, string $childClassName): void
-    {
-        if (!array_key_exists($parentClassName, $this->serviceExtensionMap)) {
-            $this->serviceExtensionMap[$parentClassName] = $childClassName;
-        }
     }
 
     /**
-     * Other classes that are not entities or registered in service extension map
-     * I.e. data objects and controllers (other class types can by added by modifying the finder if necessary)
-     *
-     * @return string[]
-     */
-    protected function getOtherClassesExtensionMap(): array
-    {
-        $otherClassesMap = [];
-
-        foreach ($this->packagesRegistry as $package) {
-            if (!is_dir($package['path'] . '/src')) {
-                continue;
-            }
-
-            $finder = Finder::create()
-                ->files()
-                ->ignoreUnreadableDirs()
-                ->in($package['path'] . '/src')
-                ->name('/.*\.php$/');
-
-            /** @var \Symfony\Component\Finder\SplFileInfo $file */
-            foreach ($finder as $file) {
-                try {
-                    $packageClassFqcn = $this->getFqcn($file->getPathname());
-                } catch (ErrorException) {
-                    continue;
-                }
-
-                $projectClassFqcn = str_replace($package['namespace'], $package['app_namespace'], $packageClassFqcn);
-
-                if (class_exists($projectClassFqcn) === false) {
-                    continue;
-                }
-
-                if (get_parent_class($projectClassFqcn) !== $packageClassFqcn) {
-                    continue;
-                }
-
-                $otherClassesMap[$packageClassFqcn] = $projectClassFqcn;
-            }
-        }
-
-        return $otherClassesMap;
-    }
-
-    protected function getFqcn(string $pathname): string
-    {
-        $astLocator = (new BetterReflection())->astLocator();
-        $reflector = new DefaultReflector(new SingleFileSourceLocator($pathname, $astLocator));
-
-        return $reflector->reflectAllClasses()[0]->getName();
-    }
-
-    /**
-     * @return string[]
+     * @return array<class-string, class-string>
      */
     public function getClassExtensionMap(): array
     {
-        return $this->serviceExtensionMap + $this->entityExtensionMap + $this->otherClassesExtensionMap;
+        return $this->classExtensionMap;
     }
 }

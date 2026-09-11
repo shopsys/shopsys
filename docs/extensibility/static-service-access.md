@@ -10,9 +10,10 @@ Your project may extend the service and override the method, but framework code 
 
 ## How it works
 
-1. The [`RegisterExtendedClassNamesCompilerPass`]({{github.link}}/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedClassNamesCompilerPass.php) maps every service registered under its class name to the class the container resolves it to, whenever that is a different class extending it.
-   Nothing has to opt in, the map follows the same aliases and definitions that dependency injection follows.
-   The [entity extension map](entity-extension.md) is included as well, so a static call on an extended entity resolves the same way.
+1. The [`RegisterExtendedClassNamesCompilerPass`]({{github.link}}/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedClassNamesCompilerPass.php) builds one map of framework classes to the project classes extending them.
+   It follows the same aliases and definitions that dependency injection follows, includes the [entity extension map](entity-extension.md), and adds project classes that extend a package class by naming convention, `App\Model\Product\ProductData` for `Shopsys\FrameworkBundle\Model\Product\ProductData`, even when no service is involved.
+   Nothing has to opt in.
+   The same map drives the `annotations-fix` tooling through `ClassExtensionRegistry`, so both tools agree on what is extended.
 2. `ShopsysFrameworkBundle::boot()` hands the map to `ExtendedClassNameResolver`.
 3. Framework code calls the static method on `ExtendedClassNameResolver::resolve(TransformStringHelper::class)` instead of on the class name directly.
 
