@@ -28,6 +28,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     href,
     queryParams,
     as,
+    locale,
     onClick,
     type,
     skeletonType,
@@ -42,6 +43,11 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     const { url } = useDomainConfig();
 
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
+    const localHref = getLocalHref(href, url);
+    const originalAs = isDynamic ? href : as;
+    const localAs = getLocalHref(originalAs, url);
+    // Absolute URLs already specify their locale; Next.js must not prepend the current one after conversion.
+    const isAbsoluteTargetConverted = (originalAs ?? href) !== (localAs ?? localHref);
     const urlHref = isDynamic
         ? {
               pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
@@ -50,7 +56,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
                   ...queryParams,
               },
           }
-        : href;
+        : localHref;
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
@@ -77,10 +83,11 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
 
     return (
         <NextLink
-            as={isDynamic ? href : as}
+            as={localAs}
             className={className}
             data-tid={tid}
             href={urlHref}
+            locale={locale ?? (isAbsoluteTargetConverted ? false : undefined)}
             prefetch={false}
             rel={addRelNoopenerWhenTargetIsBlank(rel, target)}
             tabIndex={0}
@@ -91,6 +98,29 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
             {children}
         </NextLink>
     );
+};
+
+// Next.js normalizes absolute local URLs differently during SSR and hydration.
+const getLocalHref = <T extends string | UrlObject | undefined>(href: T, baseUrl: string): T | string => {
+    if (typeof href !== 'string') {
+        return href;
+    }
+
+    try {
+        const parsedUrl = new URL(href);
+
+        if (
+            parsedUrl.origin === new URL(baseUrl).origin &&
+            parsedUrl.pathname.startsWith('/') &&
+            !parsedUrl.pathname.startsWith('//')
+        ) {
+            return `${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}`;
+        }
+    } catch {
+        return href;
+    }
+
+    return href;
 };
 
 const isHrefExternal = (href: string | UrlObject, baseUrl: string) => {
