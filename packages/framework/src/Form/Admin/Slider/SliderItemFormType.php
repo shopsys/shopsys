@@ -141,7 +141,7 @@ final class SliderItemFormType extends AbstractType
                 'label' => 'Display date TO',
             ])
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_slider_list',
+                'back_route' => 'admin_crud_slider_list',
                 'entity' => $options['slider_item'],
             ]);
     }
