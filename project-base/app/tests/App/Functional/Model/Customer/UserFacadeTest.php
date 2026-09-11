@@ -6,12 +6,14 @@ namespace Tests\App\Functional\Model\Customer;
 
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
+use App\DataFixtures\Demo\SalesRepresentativeDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class UserFacadeTest extends TransactionFunctionalTestCase
@@ -97,5 +99,24 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $this->expectException(DuplicateEmailException::class);
 
         $this->customerUserFacade->create($customerUserUpdateData);
+    }
+
+    public function testGetEmailsOfCustomerUsersIndexedBySalesRepresentativeId(): void
+    {
+        $salesRepresentativeWithCustomer = $this->getReference(SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_1, SalesRepresentative::class);
+        $salesRepresentativeWithoutCustomer = $this->getReference(SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_2, SalesRepresentative::class);
+
+        $emailsIndexedBySalesRepresentativeId = $this->customerUserFacade->getEmailsOfCustomerUsersIndexedBySalesRepresentativeId([
+            $salesRepresentativeWithCustomer->getId(),
+            $salesRepresentativeWithoutCustomer->getId(),
+        ]);
+
+        $this->assertSame(
+            [
+                $salesRepresentativeWithCustomer->getId() => ['no-reply@shopsys.com'],
+                $salesRepresentativeWithoutCustomer->getId() => [],
+            ],
+            $emailsIndexedBySalesRepresentativeId,
+        );
     }
 }

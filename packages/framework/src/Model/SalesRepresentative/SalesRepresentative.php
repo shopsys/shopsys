@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -15,7 +17,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'sales_representatives')]
 #[ORM\Entity]
 #[EntityImage]
-class SalesRepresentative
+class SalesRepresentative implements Presentable
 {
     /**
      * @var int
@@ -198,6 +200,29 @@ class SalesRepresentative
      */
     public function getPresentationalLabel()
     {
-        return $this->hasNoneOfNamesSet() ? (string)$this->getId() : $this->getFullName();
+        return static::createPresentationalLabel($this->firstName, $this->lastName, $this->id);
+    }
+
+    /**
+     * Builds the label from the raw values, so lists showing a sales representative without loading the entity use the same rule
+     *
+     * @param string|null $firstName
+     * @param string|null $lastName
+     * @param int $id
+     * @return string
+     */
+    public static function createPresentationalLabel($firstName, $lastName, $id)
+    {
+        if (($firstName === null || $firstName === '') && ($lastName === null || $lastName === '')) {
+            return (string)$id;
+        }
+
+        return $firstName . ' ' . $lastName;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getPresentationalLabel();
     }
 }
