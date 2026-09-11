@@ -7,6 +7,7 @@ namespace Shopsys\MakerBundle\Command;
 use Exception;
 use Override;
 use RuntimeException;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\MakerBundle\Maker\BaseMaker;
 use Shopsys\MakerBundle\Maker\DataFixtureMaker;
 use Shopsys\MakerBundle\Maker\EntityMaker;
@@ -52,11 +53,11 @@ class GenerateEntityAgendaCommand extends Command
         }
 
         $commandNames = [
-            EntityMaker::getCommandName(),
-            RepositoryMaker::getCommandName(),
-            FacadeMaker::getCommandName(),
-            NotFoundExceptionMaker::getCommandName(),
-            DataFixtureMaker::getCommandName(),
+            ExtendedClassNameResolver::resolve(EntityMaker::class)::getCommandName(),
+            ExtendedClassNameResolver::resolve(RepositoryMaker::class)::getCommandName(),
+            ExtendedClassNameResolver::resolve(FacadeMaker::class)::getCommandName(),
+            ExtendedClassNameResolver::resolve(NotFoundExceptionMaker::class)::getCommandName(),
+            ExtendedClassNameResolver::resolve(DataFixtureMaker::class)::getCommandName(),
         ];
 
         foreach ($commandNames as $commandName) {
