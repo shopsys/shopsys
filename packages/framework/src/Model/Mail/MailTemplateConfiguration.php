@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail as AdministratorResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail;
@@ -198,7 +199,7 @@ class MailTemplateConfiguration
 
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
-                OrderMail::getMailTemplateNameByStatus($orderStatus),
+                ExtendedClassNameResolver::resolve(OrderMail::class)::getMailTemplateNameByStatus($orderStatus),
                 $mailTemplateVariables->withNewName(t('Order') . ' - ' . $orderStatus->getName()),
             );
         }

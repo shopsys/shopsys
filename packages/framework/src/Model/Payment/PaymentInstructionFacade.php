@@ -8,6 +8,7 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Mail\MailEmbedCollector;
@@ -138,7 +139,7 @@ class PaymentInstructionFacade
         string $currencyCode,
         int $domainId,
     ): string {
-        return SpaydHelper::createSpayd(
+        return ExtendedClassNameResolver::resolve(SpaydHelper::class)::createSpayd(
             $payment->getIban($domainId),
             $amount,
             $currencyCode,

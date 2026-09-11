@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
@@ -43,7 +44,7 @@ class FriendlyUrlRepository
         return $this->getFriendlyUrlRepository()->findOneBy(
             [
                 'domainId' => $domainId,
-                'slug' => FriendlyUrlSlugNormalizer::normalize($slug),
+                'slug' => ExtendedClassNameResolver::resolve(FriendlyUrlSlugNormalizer::class)::normalize($slug),
             ],
         );
     }

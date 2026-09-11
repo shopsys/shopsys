@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 use Nette\Utils\Json;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
@@ -102,8 +103,8 @@ class ProductRecalculationFacade
         foreach ($this->domain->getAllIds() as $domainId) {
             $productIdsExistingInElastic = $this->productElasticsearchProvider->getOnlyExistingProductsIds($productIds, $domainId);
             $this->indexFacade->exportIds(
-                $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
-                $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
+                $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName()),
+                $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId),
                 $productIdsExistingInElastic,
                 $fields,
             );
@@ -119,8 +120,8 @@ class ProductRecalculationFacade
             }
 
             $this->indexFacade->exportIds(
-                $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
-                $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
+                $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName()),
+                $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId),
                 $productIdsNotExistingInElastic,
             );
         }

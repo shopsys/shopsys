@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImageFolder;
@@ -143,7 +144,7 @@ class Advert implements DomainSeparatedEntityInterface
 
         $this->categories = new ArrayCollection();
 
-        if (!AdvertPositionRegistry::isCategoryPosition($this->positionName)) {
+        if (!ExtendedClassNameResolver::resolve(AdvertPositionRegistry::class)::isCategoryPosition($this->positionName)) {
             return;
         }
 

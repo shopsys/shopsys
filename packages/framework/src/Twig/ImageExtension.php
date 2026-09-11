@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
@@ -164,9 +165,9 @@ class ImageExtension extends AbstractExtension
 
     protected function preventDefault(array &$attributes): void
     {
-        Utils::setArrayDefaultValue($attributes, 'type');
-        Utils::setArrayDefaultValue($attributes, 'alt', '');
-        Utils::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
+        ExtendedClassNameResolver::resolve(Utils::class)::setArrayDefaultValue($attributes, 'type');
+        ExtendedClassNameResolver::resolve(Utils::class)::setArrayDefaultValue($attributes, 'alt', '');
+        ExtendedClassNameResolver::resolve(Utils::class)::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
     }
 
     protected function getImageHtmlByEntityName(array $attributes, string $entityName): string

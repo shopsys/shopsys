@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -69,7 +70,7 @@ class AdditionalServiceTranslation extends AbstractTranslation
      */
     public function setName($name): void
     {
-        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($name);
     }
 
     /**
@@ -85,7 +86,7 @@ class AdditionalServiceTranslation extends AbstractTranslation
      */
     public function setFeedName($feedName): void
     {
-        $this->feedName = TransformStringHelper::getTrimmedStringOrNullOnEmpty($feedName);
+        $this->feedName = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($feedName);
     }
 
     /**
@@ -101,7 +102,7 @@ class AdditionalServiceTranslation extends AbstractTranslation
      */
     public function setZboziDescription($zboziDescription): void
     {
-        $this->zboziDescription = TransformStringHelper::getTrimmedStringOrNullOnEmpty($zboziDescription);
+        $this->zboziDescription = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($zboziDescription);
     }
 
     /**
@@ -117,6 +118,6 @@ class AdditionalServiceTranslation extends AbstractTranslation
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($description);
     }
 }

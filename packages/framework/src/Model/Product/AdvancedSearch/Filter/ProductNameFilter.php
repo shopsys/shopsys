@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Product\AdvancedSearch\ProductAdvancedSearchFacade;
 
@@ -52,6 +53,6 @@ class ProductNameFilter extends AbstractAdvancedSearchFilter
     #[Override]
     public static function getEntityType(): string
     {
-        return ProductAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(ProductAdvancedSearchFacade::class)::getEntityType();
     }
 }

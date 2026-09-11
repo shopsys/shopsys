@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Article\Messenger;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
@@ -27,8 +28,8 @@ class ArticleExportMessageHandler
     {
         try {
             $this->indexFacade->exportIds(
-                $this->indexRegistry->getIndexByIndexName(ArticleIndex::getName()),
-                $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $articleExportMessage->domainId),
+                $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ArticleIndex::class)::getName()),
+                $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ArticleIndex::class)::getName(), $articleExportMessage->domainId),
                 [$articleExportMessage->articleId],
             );
 

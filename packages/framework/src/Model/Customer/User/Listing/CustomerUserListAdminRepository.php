@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
@@ -41,7 +42,7 @@ class CustomerUserListAdminRepository
             ->from(Order::class, 'o3')
             ->where('o3.customer = c.id AND o3.deleted = false');
 
-        $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cu');
+        $phoneExpr = ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('cu');
 
         return $this->em->createQueryBuilder()
             ->select('
@@ -87,7 +88,7 @@ class CustomerUserListAdminRepository
                 $queryBuilder->setParameter('exactText', $quickSearchData->text);
             }
 
-            $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cu');
+            $phoneExpr = ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('cu');
 
             $queryBuilder
                 ->andWhere('

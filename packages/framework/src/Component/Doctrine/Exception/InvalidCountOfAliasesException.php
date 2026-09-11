@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Doctrine\Exception;
 
 use Exception;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Utils\Debug;
 
 class InvalidCountOfAliasesException extends Exception
@@ -12,7 +13,7 @@ class InvalidCountOfAliasesException extends Exception
     public function __construct(?array $rootAliases = null, ?Exception $previous = null)
     {
         parent::__construct(
-            'Query builder has invalid count of root aliases ' . Debug::export($rootAliases),
+            'Query builder has invalid count of root aliases ' . ExtendedClassNameResolver::resolve(Debug::class)::export($rootAliases),
             0,
             $previous,
         );

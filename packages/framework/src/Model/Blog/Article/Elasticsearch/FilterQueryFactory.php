@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
@@ -53,6 +54,6 @@ class FilterQueryFactory
 
     protected function getIndexName(): string
     {
-        return $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $this->domain->getId())->getIndexAlias();
+        return $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(BlogArticleIndex::class)::getName(), $this->domain->getId())->getIndexAlias();
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Monolog\Logger;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
@@ -56,7 +57,7 @@ class CronModuleRunnerFacade
             return CronModuleExecutor::RUN_STATUS_OK;
         }
 
-        $shortServiceId = ReflectionHelper::getShortClassName($cronModuleConfig->getServiceId());
+        $shortServiceId = ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($cronModuleConfig->getServiceId());
         $this->logger->pushProcessor(function ($record) use ($shortServiceId) {
             $record->extra['module'] = $shortServiceId;
 
