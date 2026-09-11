@@ -12,6 +12,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
@@ -22,7 +23,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'stores')]
 #[ORM\Entity]
 #[EntityImage(multiple: true)]
-class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
+class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface, Presentable
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
@@ -394,5 +395,11 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
     public function setDistance($distance): void
     {
         $this->distance = $distance;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName();
     }
 }

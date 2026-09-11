@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Store;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -136,11 +135,6 @@ class StoreFacade
     public function getByIdAndDomainId(int $id, int $domainId): Store
     {
         return $this->storeRepository->getByIdAndDomainId($id, $domainId);
-    }
-
-    public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
-    {
-        return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);
     }
 
     /**

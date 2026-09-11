@@ -128,7 +128,7 @@ class RouteConfigCustomization
             })
             ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 if (
-                    preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())
+                    preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_crud_store_set_default$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)|(^admin_customeruser_loginascustomeruser$)~', $info->getRouteName())
                     && !in_array($info->getRouteName(), self::SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES, true)
                 ) {
                     $debugNote = 'Add CSRF token for protected actions during test execution. '
