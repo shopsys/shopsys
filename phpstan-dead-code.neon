@@ -14,9 +14,6 @@ parameters:
             path: packages/administration/src/Component/Action/RowAction.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/administration/src/Component/Config/ActionsConfig.php
-        -
-            identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Config/CrudConfig.php
         -
             identifier: shipmonk.deadProperty.neverRead
