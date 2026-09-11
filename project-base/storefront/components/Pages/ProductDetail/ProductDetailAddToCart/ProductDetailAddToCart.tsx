@@ -21,6 +21,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 export type ProductDetailAddToCartProps = {
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonTid?: string;
+    isInPurchaseActionsRow?: boolean;
     product: TypeProductDetailFragment;
     shouldDisplayAdditionalServices?: boolean;
     spinboxId?: string;
@@ -29,6 +30,7 @@ export type ProductDetailAddToCartProps = {
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     buttonSize = 'xlarge',
     buttonTid = TIDs.pages_productdetail_addtocart_button,
+    isInPurchaseActionsRow = false,
     product,
     shouldDisplayAdditionalServices = true,
     spinboxId,
@@ -103,6 +105,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     const additionalServicesElement = shouldDisplayAdditionalServices ? (
         <AdditionalServices
             additionalServices={product.additionalServices}
+            className={isInPurchaseActionsRow ? 'w-full basis-full' : undefined}
             isDisabled={isAddToCartPending || isSettingAdditionalServices}
             quantity={cartItem?.quantity}
             selectedServiceUuids={selectedServiceUuids}
@@ -115,10 +118,10 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
 
     if (cartItem && !isAddToCartPending) {
         return (
-            <div className="flex flex-col gap-4">
+            <div className={isInPurchaseActionsRow ? 'contents' : 'flex flex-col gap-4'}>
                 <CartItemQuantityControls
                     cartItem={cartItem}
-                    className="w-full sm:max-w-60"
+                    className={twJoin('w-full', isInPurchaseActionsRow ? 'min-w-max flex-1' : 'sm:max-w-60')}
                     gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                     gtmProductListName={GtmProductListNameType.product_detail}
                     size={buttonSize}
@@ -133,8 +136,10 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     const isWatchdogButtonVisible = showWatchdogButton(product);
 
     return (
-        <div className="flex w-full flex-1 flex-col gap-4">
-            <div className="relative flex w-full sm:max-w-60">
+        <div className={isInPurchaseActionsRow ? 'contents' : 'flex w-full flex-1 flex-col gap-4'}>
+            <div
+                className={twJoin('relative flex w-full', isInPurchaseActionsRow ? 'min-w-max flex-1' : 'sm:max-w-60')}
+            >
                 {isAddToCartPending && (
                     <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
                 )}
@@ -143,7 +148,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
                     aria-haspopup="dialog"
                     aria-label={addToCartAriaLabel}
                     className={twJoin(
-                        'h-auto w-full whitespace-normal text-balance',
+                        'h-auto w-full text-balance',
+                        isInPurchaseActionsRow ? 'whitespace-nowrap' : 'whitespace-normal',
                         buttonSize !== 'xlarge' && 'min-h-9',
                         buttonSize === 'large' && 'sm:min-h-10',
                         buttonSize === 'xlarge' && 'min-h-10 sm:min-h-14',
