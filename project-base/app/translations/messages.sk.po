@@ -69,4 +69,3 @@ msgstr "od najlacnejších"
 
 msgid "unknown catalog number (product will not be displayed)"
 msgstr "neznáme katalógové číslo (produkt nebude zobrazený)"
-

@@ -6,4 +6,3 @@ msgstr ""
 
 msgid "Please enter the Luigi's Box rank."
 msgstr "Zadejte prosím Luigi's Box rank"
-

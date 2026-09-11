@@ -22,12 +22,12 @@ class PoDumper implements DumperInterface
         $output .= '"Content-Type: text/plain; charset=UTF-8\n"' . "\n";
         $output .= '"Content-Transfer-Encoding: 8bit\n"' . "\n";
         $output .= '"Language: ' . $catalogue->getLocale() . '\n"' . "\n";
-        $output .= "\n";
 
         $messages = $catalogue->getDomain($domain)->all();
         $sortedMessages = $this->sortMessagesByMessageId($messages);
 
         foreach ($sortedMessages as $message) {
+            $output .= "\n";
             $output .= sprintf('msgid "%s"' . "\n", $this->escape($message->getId()));
 
             if ($message->isNew()) {
@@ -35,8 +35,6 @@ class PoDumper implements DumperInterface
             } else {
                 $output .= sprintf('msgstr "%s"' . "\n", $this->escape($message->getLocaleString()));
             }
-
-            $output .= "\n";
         }
 
         return $output;

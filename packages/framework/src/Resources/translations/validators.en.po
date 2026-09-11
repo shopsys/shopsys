@@ -780,4 +780,3 @@ msgstr ""
 
 msgid "column {{ column_name }} must be number, {{ value }} provided"
 msgstr ""
-

@@ -180,4 +180,3 @@ msgstr "Nový token můžete vygenerovat ručně nebo připojit MCP klienta podl
 
 msgid "tokens"
 msgstr "tokeny"
-

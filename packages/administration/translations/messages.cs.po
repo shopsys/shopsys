@@ -2838,4 +2838,3 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
-

@@ -318,4 +318,3 @@ msgstr "Musíte byť prihlásený, ak chcete zadať UUID dodacej adresy v objedn
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nemôže byť dlhšie ako {{ limit }} znakov"
-

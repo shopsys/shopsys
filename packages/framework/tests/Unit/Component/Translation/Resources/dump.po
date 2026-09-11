@@ -6,4 +6,3 @@ msgstr ""
 
 msgid "message id"
 msgstr "locale string"
-

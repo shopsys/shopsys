@@ -2850,4 +2850,3 @@ msgstr "roky"
 
 msgid "| Demo eshop"
 msgstr "| Demo e-shop"
-

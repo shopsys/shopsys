@@ -318,4 +318,3 @@ msgstr "Musíte být přihlášen, pokud chcete poskytnout UUID dodací adresy j
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
-

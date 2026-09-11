@@ -90,4 +90,3 @@ msgstr "bez DPH"
 
 msgid "inc VAT"
 msgstr "s DPH"
-

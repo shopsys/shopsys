@@ -21,4 +21,3 @@ msgstr "Zbozi.cz category"
 
 msgid "Zbozi.cz product feed"
 msgstr "Zbozi.cz product feed"
-

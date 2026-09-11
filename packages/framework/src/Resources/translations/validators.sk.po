@@ -780,4 +780,3 @@ msgstr "stĺpec {{ column_name }} musí byť väčší ako 0"
 
 msgid "column {{ column_name }} must be number, {{ value }} provided"
 msgstr "stĺpec {{ column_name }} musí byť číslo, zadané bolo {{ value }}"
-

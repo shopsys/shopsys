@@ -18,4 +18,3 @@ msgstr "Uložit změny"
 
 msgid "Yes"
 msgstr "Ano"
-
