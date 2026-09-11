@@ -25,7 +25,7 @@ The method — mindset, the read-the-log → fix → fixup-commits flow, author 
 
 ## Environment delta (GitHub Actions instead of GitLab CI)
 
-You run in the `ai-standards-fix` job of the Docker build workflow, after the `standards` job failed. The job runs no containers at all: it checks the branch out, downloads that job's log, and hands it to you. Editing files is the entire mechanism.
+You run in the `AI fix of failed standards` workflow (`.github/workflows/standards-autofix-pr.yaml`), started on demand by a `/standards-autofix` comment on the pull request or by a manual dispatch — never automatically. The job runs no containers at all: it checks the branch out, downloads the *Check standards* log of the latest completed Docker build run for the PR head, and hands it to you. Editing files is the entire mechanism.
 
 - **Target:** `$ARGUMENTS` carries the same `--merge-base` and `--standards-log` flags the canonical describes; there is no PR reference and no container name. Empty still means a local run on the current branch.
 - **Log content:** `--standards-log` is the raw GitHub Actions log of the *Check standards* job, so every line is prefixed with the job name, step name and a timestamp. The failure is `php phing standards` or `project-base/app/check-schema.sh`; the `ux:icons:lock` check lives in a different job here, so you will never see it.
