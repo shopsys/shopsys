@@ -17,12 +17,19 @@ class StoreDataFactory
     ) {
     }
 
-    public function createForDomain(int $domainId): StoreData
+    public function create(): StoreData
     {
         $storeData = $this->createInstance();
-        $storeData->domainId = $domainId;
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
         $storeData->image = $this->imageUploadDataFactory->create();
+
+        return $storeData;
+    }
+
+    public function createForDomain(int $domainId): StoreData
+    {
+        $storeData = $this->create();
+        $storeData->domainId = $domainId;
 
         return $storeData;
     }

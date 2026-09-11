@@ -41,6 +41,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const string ATTR_REFERENCE_NAME = 'referenceName';
 
     public const string STORE_FIRST = 'store_first';
+    public const string STORE_SECOND = 'store_second';
 
     public function __construct(
         private readonly StoreFacade $storeFacade,
@@ -92,6 +93,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
             [
                 self::ATTR_NAME => 'Pardubice',
+                self::ATTR_REFERENCE_NAME => self::STORE_SECOND,
                 self::ATTR_STOCK => StocksDataFixture::STOCK_PARDUBICE,
                 self::ATTR_DESCRIPTION => t('A compact city store for quick parcel pickup. Please ring the bell if the door is closed during opening hours.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -227,6 +229,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
             [
                 self::ATTR_NAME => 'Bratislava',
+                self::ATTR_REFERENCE_NAME => self::STORE_SECOND,
                 self::ATTR_STOCK => StocksDataFixture::STOCK_BRATISLAVA,
                 self::ATTR_DESCRIPTION => t('The branch is close to the business center entrance. Staff will prepare your order at the front desk after you show the order number.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,

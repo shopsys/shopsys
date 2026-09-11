@@ -486,7 +486,7 @@ final class ProductFormType extends AbstractType
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
                 'data' => t('Products stocked in a warehouse assigned to a store are ready for personal pickup there, products from other warehouses are transferred first (transfer days are set per domain). Warehouses are assigned to stores on the store detail. <a href="%warehousesUrl%" target="_blank">Manage warehouses</a> &middot; <a href="%storesUrl%" target="_blank">Manage stores</a> &middot; <a href="%transferDaysUrl%" target="_blank">Set transfer days</a>', [
                     '%warehousesUrl%' => $this->urlGenerator->generate('admin_stock_list'),
-                    '%storesUrl%' => $this->urlGenerator->generate('admin_store_list'),
+                    '%storesUrl%' => $this->urlGenerator->generate('admin_crud_store_list'),
                     '%transferDaysUrl%' => $this->urlGenerator->generate('admin_stock_settings'),
                 ]),
             ]);

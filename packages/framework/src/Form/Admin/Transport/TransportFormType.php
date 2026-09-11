@@ -177,7 +177,7 @@ final class TransportFormType extends AbstractType
                     'data-transport-delivery-schedule-target' => 'pickupScheduleInfo',
                 ],
                 'data' => t('The pickup dates are driven by the weekly opening hours of the <a href="%storesUrl%" target="_blank">stores</a> and by the <a href="%closedDaysUrl%" target="_blank">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day.', [
-                    '%storesUrl%' => $this->administrationRouter->generate('admin_store_list'),
+                    '%storesUrl%' => $this->administrationRouter->generate('admin_crud_store_list'),
                     '%closedDaysUrl%' => $this->administrationRouter->generate('admin_crud_closed_day_list'),
                 ]),
             ]);
