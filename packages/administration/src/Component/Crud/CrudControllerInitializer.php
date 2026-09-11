@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Sets Definition on the current CRUD controller before action execution.
+ * Sets Definition on the current CRUD controller and its extensions before action execution.
  * Runs at request time (after locale is set) to ensure correct translations.
  */
 final class CrudControllerInitializer implements EventSubscriberInterface
@@ -40,10 +40,15 @@ final class CrudControllerInitializer implements EventSubscriberInterface
             $controller = $controller[0];
         }
 
-        if ($controller instanceof AbstractCrudController) {
-            $controller->setDefinition(
-                $this->crudControllerRegistry->getDefinition($controller::class),
-            );
+        if (!($controller instanceof AbstractCrudController)) {
+            return;
+        }
+
+        $definition = $this->crudControllerRegistry->getDefinition($controller::class);
+        $controller->setDefinition($definition);
+
+        foreach ($definition->getExtensions() as $extension) {
+            $extension->setDefinition($definition);
         }
     }
 }

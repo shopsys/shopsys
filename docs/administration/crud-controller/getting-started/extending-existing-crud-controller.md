@@ -78,6 +78,25 @@ public function configureForm(CrudFormConfigurator $formConfigurator, ?object $e
 
     Calling `useBuilder()` in an extension when the controller used `useFormType()` will throw `CrudFormAlreadyConfiguredException`. If you need to extend a form defined via FormType, use [Symfony's form extension mechanism](https://symfony.com/doc/current/form/create_form_type_extension.html) instead.
 
+### Accessing the CRUD Definition
+
+The extension has access to the `Definition` of the extended controller via `$this->definition`, the same way the controller itself does.
+It contains the resolved config, the entity class, the controller name, and the role constant, so the extension can react to how the controller is configured.
+
+```php
+// OrderControllerExtension.php
+
+public function configureQuery(QueryBuilder $queryBuilder): void
+{
+    if ($this->definition->getConfig()->getListDomainControl() !== null) {
+        $queryBuilder->andWhere('o.domainId IN (:domainIds)');
+    }
+}
+```
+
+!!! warning
+    `$this->definition` is not available in `configure()`. The config is a part of the `Definition`, so it is built only after all `configure()` methods have been called.
+
 ### Using Hooks
 
 Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
