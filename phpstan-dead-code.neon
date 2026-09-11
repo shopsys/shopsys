@@ -437,6 +437,18 @@ parameters:
             path: packages/framework/src/Model/Seo/Page/SeoPageDomain.php
         -
             identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Slider\\SliderItem::getPosition$#'
+            path: packages/framework/src/Model/Slider/SliderItem.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Slider\\SliderItem::setDatetimeVisibleFrom$#'
+            path: packages/framework/src/Model/Slider/SliderItem.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Slider\\SliderItem::setDatetimeVisibleTo$#'
+            path: packages/framework/src/Model/Slider/SliderItem.php
+        -
+            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Stock\\StockEvent::getStock$#'
             path: packages/framework/src/Model/Stock/StockEvent.php
         -

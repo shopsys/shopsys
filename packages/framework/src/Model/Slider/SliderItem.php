@@ -10,6 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -22,7 +23,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 #[EntityImage('web')]
 #[EntityImage('mobile')]
-class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInterface
+class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInterface, Presentable
 {
     /**
      * @var int
@@ -263,5 +264,11 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     public function setRouteName($routeName): void
     {
         $this->routeName = $routeName;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName();
     }
 }
