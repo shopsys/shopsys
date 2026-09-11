@@ -52,6 +52,17 @@ public function configure(CrudConfig $config): void
 
 More configuration options can be found in the [Crud Config](../reference/crud-controller.md#crud-config) reference.
 
+## Migrating a legacy admin controller
+
+A legacy `AdminBaseController` with list/new/edit/delete actions is replaced by one CRUD controller and one handler, see `Shopsys\AdministrationBundle\Controller\ParameterGroupController` for the reference conversion.
+
+1. create the CRUD controller with `#[CrudController(<Entity>::class)]` and `#[ForRole(AdminRoleConstant::<existing role>)]`, keep the URL base with `setRoutePrefix()` and the menu position with `setMenuSection(..., ['after' => ...])`
+2. create a handler implementing `CrudHandlerInterface` that delegates to the existing facade and data factory; for a domain-separated entity, `createData()` sets the selected domain on the new data (`AdminDomainTabsFacade::getSelectedDomainId()` for the domain switcher)
+3. make the entity implement `Shopsys\FrameworkBundle\Component\Utils\Presentable`
+4. port the grid columns to `configureDatagrid()` — use `virtual` + `transform` for computed values and `template` for HTML cells
+5. keep extra pages (import, export, ...) as `#[Route]` methods on the CRUD controller named `admin_crud_<snake>_<action>` and expose them with `configureActions()`; a custom route that renders a page needs a hidden `display => false` menu item in `SideMenuBuilder` under the section of the CRUD item (see `HOLIDAYS_IMPORT`), otherwise the page has no breadcrumb and is missing from the admin search (the breadcrumb then ends at the section, the CRUD item itself cannot be its parent because CRUD items are added to the menu later)
+6. delete your legacy controller, its grid factory, its templates and the menu items you registered for it, then update every reference to the old route names (`back_route` of the form type, other templates, smoke test customizations)
+
 ## Next Steps
 
 - Continue with [Configuring List Page](configure-list-page.md) to customize your datagrid
