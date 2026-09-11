@@ -5,12 +5,14 @@ import { ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
-    ExtendedNextLink: ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>,
+    ExtendedNextLink: ({ children }: { children: ReactNode }) => <a href="/order-detail">{children}</a>,
 }));
 
 vi.mock('components/Pages/Customer/CustomerRecordElements', () => ({
-    CustomerRecordProductImage: ({ image }: { image?: string }) => (
-        <span data-image={image ?? 'fallback'} data-testid="product-image" />
+    CustomerRecordProductImage: ({ image, imageAlt }: { image?: string; imageAlt: string }) => (
+        <span data-image={image ?? 'fallback'} data-testid="product-image">
+            {imageAlt}
+        </span>
     ),
     CustomerRecordRowInfo: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
@@ -46,5 +48,38 @@ describe('OrderItemProducts', () => {
         );
 
         expect(screen.getByTestId('product-image')).toHaveAttribute('data-image', 'fallback');
+    });
+
+    test('wraps product previews in a row and links to remaining products', () => {
+        const orderLink = {
+            pathname: '/customer/order/[orderNumber]',
+            query: { orderNumber: '123456' },
+        };
+
+        const items = Array.from({ length: 5 }, (_, index) => {
+            const productNumber = index + 1;
+
+            return {
+                product: {
+                    isVisible: true,
+                    link: `/product-${productNumber}`,
+                    mainImage: {
+                        name: `Product ${productNumber}`,
+                        url: `/product-${productNumber}.jpg`,
+                    },
+                    name: `Product ${productNumber}`,
+                },
+                quantity: 1,
+            } as TypeOrderItemFragment;
+        });
+
+        render(<OrderItemProducts items={items} orderLink={orderLink} />);
+
+        const productPreviews = screen.getByText('Product 1').parentElement;
+
+        expect(productPreviews).toHaveClass('flex', 'flex-wrap', 'gap-3');
+        expect(screen.getByText('Product 4')).toBeInTheDocument();
+        expect(screen.queryByText('Product 5')).not.toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'Next' })).toBeInTheDocument();
     });
 });
