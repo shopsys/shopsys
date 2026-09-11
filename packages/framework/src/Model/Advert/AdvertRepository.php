@@ -32,6 +32,15 @@ class AdvertRepository
     }
 
     /**
+     * @param int[] $advertIds
+     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
+     */
+    public function getByIds(array $advertIds): array
+    {
+        return $this->getAdvertRepository()->findBy(['id' => $advertIds]);
+    }
+
+    /**
      * @param string[] $positionNames
      */
     public function getVisibleAdvertByPositionsQueryBuilder(
