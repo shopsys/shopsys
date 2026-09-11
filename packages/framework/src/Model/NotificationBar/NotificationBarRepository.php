@@ -50,14 +50,6 @@ class NotificationBarRepository
             ->getQuery()->getResult();
     }
 
-    public function getAllByDomainIdQueryBuilderForGrid(int $domainId): QueryBuilder
-    {
-        return $this->getAllByDomainIdQueryBuilder($domainId)
-            ->addSelect('CASE WHEN (nb.hidden = FALSE AND (nb.validityFrom IS NULL OR nb.validityFrom <= :now) AND (nb.validityTo IS NULL OR nb.validityTo > :now)) THEN TRUE ELSE FALSE END AS visibility')
-            ->setParameter('now', $this->clock->now())
-            ->orderBy('nb.id');
-    }
-
     protected function getAllByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getNotificationBarRepository()->createQueryBuilder('nb')
