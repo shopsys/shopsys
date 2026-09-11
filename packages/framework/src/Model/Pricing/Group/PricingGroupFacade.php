@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\InvalidPricingGroupReplacementException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupIsUsedException;
@@ -22,7 +21,6 @@ class PricingGroupFacade
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly PricingGroupFactory $pricingGroupFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
-        protected readonly Domain $domain,
     ) {
     }
 
@@ -69,10 +67,9 @@ class PricingGroupFacade
         ?int $newPricingGroupId = null,
     ): void {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
-        $domainConfig = $this->domain->getDomainConfigById($oldPricingGroup->getDomainId());
 
         if ($newPricingGroupId === null) {
-            if ($this->pricingGroupSettingFacade->isPricingGroupUsedOnDomain($oldPricingGroup, $domainConfig)) {
+            if ($this->pricingGroupSettingFacade->isPricingGroupUsed($oldPricingGroup)) {
                 throw new PricingGroupIsUsedException(
                     sprintf('Pricing group with ID %d is used and cannot be deleted without a replacement.', $oldPricingGroupId),
                 );
@@ -88,8 +85,8 @@ class PricingGroupFacade
 
             $this->customerUserRepository->replaceCustomerUsersPricingGroup($oldPricingGroup, $newPricingGroup);
 
-            if ($this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($oldPricingGroup, $domainConfig)) {
-                $this->pricingGroupSettingFacade->setDefaultPricingGroupForDomain($newPricingGroup, $domainConfig);
+            if ($this->pricingGroupSettingFacade->isPricingGroupSetAsDefault($oldPricingGroup)) {
+                $this->pricingGroupSettingFacade->setPricingGroupAsDefault($newPricingGroup);
             }
         }
 

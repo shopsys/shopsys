@@ -10,6 +10,7 @@ use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\InvalidPricingGroupReplacementException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupIsUsedException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
@@ -62,19 +63,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
             PricingGroup::class,
         );
         $customerUser = $this->customerUserFacade->getCustomerUserById(1);
-
-        $customerUserData = $this->customerUserDataFactory->createFromCustomerUser($customerUser);
-        $customerUserData->pricingGroup = $pricingGroupToDelete;
-
-        /** @var \App\Model\Customer\BillingAddress $billingAddress */
-        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-        $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
-
-        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
-        $customerUserUpdateData->customerUserData = $customerUserData;
-        $customerUserUpdateData->billingAddressData = $billingAddressData;
-
-        $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
+        $this->assignPricingGroupToCustomerUser($customerUser, $pricingGroupToDelete);
 
         $this->pricingGroupFacade->delete($pricingGroupToDelete->getId(), $pricingGroupToReplaceWith->getId());
 
@@ -109,6 +98,19 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $this->expectException(PricingGroupIsUsedException::class);
 
         $this->pricingGroupFacade->delete($defaultPricingGroup->getId());
+    }
+
+    public function testDeletePricingGroupAssignedToCustomerWithoutReplacementThrowsException(): void
+    {
+        $pricingGroupData = new PricingGroupData();
+        $pricingGroupData->name = 'assigned to customer';
+        $pricingGroupAssignedToCustomer = $this->pricingGroupFacade->create($pricingGroupData, Domain::FIRST_DOMAIN_ID);
+        $customerUser = $this->customerUserFacade->getCustomerUserById(1);
+        $this->assignPricingGroupToCustomerUser($customerUser, $pricingGroupAssignedToCustomer);
+
+        $this->expectException(PricingGroupIsUsedException::class);
+
+        $this->pricingGroupFacade->delete($pricingGroupAssignedToCustomer->getId());
     }
 
     public function testDeleteUnusedPricingGroupWithoutReplacement(): void
@@ -158,5 +160,21 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $this->expectException(InvalidPricingGroupReplacementException::class);
 
         $this->pricingGroupFacade->delete($pricingGroup->getId(), $pricingGroup->getId());
+    }
+
+    private function assignPricingGroupToCustomerUser(CustomerUser $customerUser, PricingGroup $pricingGroup): void
+    {
+        $customerUserData = $this->customerUserDataFactory->createFromCustomerUser($customerUser);
+        $customerUserData->pricingGroup = $pricingGroup;
+
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+        $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
+
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
+        $customerUserUpdateData->customerUserData = $customerUserData;
+        $customerUserUpdateData->billingAddressData = $billingAddressData;
+
+        $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
     }
 }

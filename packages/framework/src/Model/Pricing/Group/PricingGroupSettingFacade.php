@@ -17,10 +17,10 @@ class PricingGroupSettingFacade
     ) {
     }
 
-    public function isPricingGroupUsedOnDomain(PricingGroup $pricingGroup, DomainConfig $domainConfig): bool
+    public function isPricingGroupUsed(PricingGroup $pricingGroup): bool
     {
         return $this->pricingGroupRepository->existsCustomerUserWithPricingGroup($pricingGroup)
-            || $this->isPricingGroupDefaultOnDomain($pricingGroup, $domainConfig);
+            || $this->isPricingGroupSetAsDefault($pricingGroup);
     }
 
     public function getDefaultPricingGroupByDomainId(int $domainId): PricingGroup
@@ -54,17 +54,17 @@ class PricingGroupSettingFacade
         return $this->getDefaultPricingGroupByDomainId($domainConfig->getId());
     }
 
-    public function setDefaultPricingGroupForDomain(PricingGroup $pricingGroup, DomainConfig $domainConfig): void
+    public function setPricingGroupAsDefault(PricingGroup $pricingGroup): void
     {
         $this->setting->setForDomain(
             Setting::DEFAULT_PRICING_GROUP,
             $pricingGroup->getId(),
-            $domainConfig->getId(),
+            $pricingGroup->getDomainId(),
         );
     }
 
-    public function isPricingGroupDefaultOnDomain(PricingGroup $pricingGroup, DomainConfig $domainConfig): bool
+    public function isPricingGroupSetAsDefault(PricingGroup $pricingGroup): bool
     {
-        return $pricingGroup === $this->getDefaultPricingGroupByDomain($domainConfig);
+        return $pricingGroup === $this->getDefaultPricingGroupByDomainId($pricingGroup->getDomainId());
     }
 }
