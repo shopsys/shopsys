@@ -179,7 +179,7 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
                             'pointer-events-auto absolute z-cart hidden origin-top',
                             topClassName,
                             'vl:block rounded-xl bg-background-default p-5',
-                            'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
+                            'before:absolute before:-top-5 before:left-0 before:h-5 before:w-full',
                             positionClasses,
                         )}
                     >
