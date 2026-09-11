@@ -19,6 +19,7 @@ type DeferredProductDetailAddToCartProps = ProductDetailAddToCartProps & {
 export const DeferredProductDetailAddToCart: FC<DeferredProductDetailAddToCartProps> = ({
     buttonSize = 'xlarge',
     className,
+    isInPurchaseActionsRow = false,
     ...props
 }) => {
     const shouldRender = useDeferredRender('add_to_cart');
@@ -30,11 +31,16 @@ export const DeferredProductDetailAddToCart: FC<DeferredProductDetailAddToCartPr
                 buttonSize !== 'xlarge' && 'min-h-9',
                 buttonSize === 'large' && 'sm:min-h-10',
                 buttonSize === 'xlarge' && 'min-h-10 sm:min-h-14',
+                isInPurchaseActionsRow && 'contents',
                 className,
             )}
         >
             {shouldRender ? (
-                <ProductDetailAddToCart {...props} buttonSize={buttonSize} />
+                <ProductDetailAddToCart
+                    {...props}
+                    buttonSize={buttonSize}
+                    isInPurchaseActionsRow={isInPurchaseActionsRow}
+                />
             ) : (
                 <Skeleton className="w-full sm:max-w-60" />
             )}
