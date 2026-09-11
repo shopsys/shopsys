@@ -67,7 +67,7 @@ public function configureDatagrid(Datagrid $datagrid): void
     ;
     
     // To see orders sorted by the creation date, you can set the default order
-    $datagrid->setDefaultOrder('createdAt', OrderingEnum::DESC);
+    $datagrid->setDefaultOrder('createdAt', \SortDirection::Descending);
 }
 ```
 
