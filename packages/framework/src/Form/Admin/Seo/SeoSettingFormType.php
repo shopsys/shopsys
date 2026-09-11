@@ -8,14 +8,13 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\NotInArray;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Model\Seo\Organization;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationData;
 use Shopsys\FrameworkBundle\Model\Seo\OrganizationSettingFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -99,7 +98,9 @@ final class SeoSettingFormType extends AbstractType
 
     private function addOrganizationFields(FormBuilderInterface $builder, int $domainId): void
     {
-        $organization = $builder->create('organization', FormType::class, [
+        $organization = $builder->create('organization', GroupType::class, [
+            'inherit_data' => false,
+            'data_class' => OrganizationData::class,
             'label' => 'Organization',
             'required' => false,
         ]);
@@ -107,7 +108,7 @@ final class SeoSettingFormType extends AbstractType
             'label' => 'Company name',
             'required' => false,
         ]);
-        $organization->add('vatId', TextType::class, [
+        $organization->add('companyTaxNumber', TextType::class, [
             'label' => 'Tax number',
             'required' => false,
         ]);
@@ -119,45 +120,39 @@ final class SeoSettingFormType extends AbstractType
             'label' => 'Company description',
             'required' => false,
         ]);
-        $organization->add('streetAddress', TextType::class, [
+        $organization->add('street', TextType::class, [
             'label' => 'Street and house number',
             'required' => false,
         ]);
-        $organization->add('addressLocality', TextType::class, [
+        $organization->add('city', TextType::class, [
             'label' => 'City',
             'required' => false,
         ]);
-        $organization->add('postalCode', TextType::class, [
+        $organization->add('postcode', TextType::class, [
             'label' => 'Postcode',
             'required' => false,
         ]);
-        $organization->add('addressCountry', TextType::class, [
+        $organization->add('country', TextType::class, [
             'label' => 'Country',
             'required' => false,
         ]);
 
+        $this->addOrganizationLogoFields($organization, $domainId);
         $builder->add($organization);
-        $this->addOrganizationLogoFields($builder, $domainId);
     }
 
     private function addOrganizationLogoFields(FormBuilderInterface $builder, int $domainId): void
     {
         $builder
-            ->add('currentOrganizationLogo', DisplayOnlyType::class, [
-                'label' => 'Current organization logo URL',
-                'data' => $this->organizationSettingFacade->getOrganization($domainId)['logo'],
-            ])
-            ->add('organizationLogo', ImageUploadType::class, [
+            ->add('image', ImageUploadType::class, [
+                'entity' => $this->organizationSettingFacade->findByDomainId($domainId),
+                'image_entity_class' => Organization::class,
                 'label' => 'Organization logo',
                 'required' => false,
                 'file_constraints' => [
                     new Constraints\Image(maxSize: '8M', extensions: ['jpg', 'jpeg', 'png'], minWidth: 200, minHeight: 200),
                 ],
                 'info_text' => t('JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px.'),
-            ])
-            ->add('deleteOrganizationLogo', CheckboxType::class, [
-                'label' => 'Delete organization logo',
-                'required' => false,
             ]);
     }
 

@@ -7,7 +7,7 @@ OrganizationSettingDecorator:
             name:
                 type: "String"
                 description: "Company name"
-            vatId:
+            companyTaxNumber:
                 type: "String"
                 description: "Tax number"
             companyNumber:
@@ -16,21 +16,21 @@ OrganizationSettingDecorator:
             description:
                 type: "String"
                 description: "Company description"
-            streetAddress:
+            street:
                 type: "String"
                 description: "Street and house number"
-            addressLocality:
+            city:
                 type: "String"
                 description: "City"
-            postalCode:
+            postcode:
                 type: "String"
                 description: "Postcode"
-            addressCountry:
+            country:
                 type: "String"
                 description: "Country"
             logo:
                 type: "String"
                 description: "Absolute organization logo URL"
-            sameAs:
+            socialNetworkUrls:
                 type: "[String!]!"
                 description: "Social network profile URLs"

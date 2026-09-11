@@ -4,22 +4,22 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null, organization: { name: string | null, vatId: string | null, companyNumber: string | null, description: string | null, streetAddress: string | null, addressLocality: string | null, postalCode: string | null, addressCountry: string | null, logo: string | null, sameAs: Array<string> } };
+export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null, organization: { name: string | null, companyTaxNumber: string | null, companyNumber: string | null, description: string | null, street: string | null, city: string | null, postcode: string | null, country: string | null, logo: string | null, socialNetworkUrls: Array<string> } };
 
 export const SeoSettingFragment = gql`
     fragment SeoSettingFragment on SeoSetting {
   __typename
   organization {
     name
-    vatId
+    companyTaxNumber
     companyNumber
     description
-    streetAddress
-    addressLocality
-    postalCode
-    addressCountry
+    street
+    city
+    postcode
+    country
     logo
-    sameAs
+    socialNetworkUrls
   }
   title
   titleAddOn

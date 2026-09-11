@@ -92,14 +92,6 @@ class BlogArticle extends AbstractTranslatableEntity
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $modifiedAt;
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getModifiedAt()
-    {
-        return $this->modifiedAt;
-    }
-
     public function __construct(BlogArticleData $blogArticleData)
     {
         $this->translations = new ArrayCollection();
@@ -113,6 +105,14 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
         $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
         $this->blogArticleAuthor = $blogArticleData->blogArticleAuthor;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     public function edit(

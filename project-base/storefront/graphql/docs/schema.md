@@ -8516,16 +8516,7 @@ Organization settings for the current domain
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="organizationsetting.addresscountry">addressCountry</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Country
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="organizationsetting.addresslocality">addressLocality</strong></td>
+<td colspan="2" valign="top"><strong id="organizationsetting.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8539,6 +8530,24 @@ City
 <td>
 
 Company registration number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.companytaxnumber">companyTaxNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Tax number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="organizationsetting.country">country</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Country
 
 </td>
 </tr>
@@ -8570,7 +8579,7 @@ Company name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="organizationsetting.postalcode">postalCode</strong></td>
+<td colspan="2" valign="top"><strong id="organizationsetting.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8579,7 +8588,7 @@ Postcode
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="organizationsetting.sameas">sameAs</strong></td>
+<td colspan="2" valign="top"><strong id="organizationsetting.socialnetworkurls">socialNetworkUrls</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
@@ -8588,20 +8597,11 @@ Social network profile URLs
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="organizationsetting.streetaddress">streetAddress</strong></td>
+<td colspan="2" valign="top"><strong id="organizationsetting.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Street and house number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="organizationsetting.vatid">vatId</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Tax number
 
 </td>
 </tr>

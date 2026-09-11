@@ -201,7 +201,7 @@ final class ArticleFormType extends AbstractType
                 'required' => false,
                 'file_constraints' => [
                     new Constraints\File(
-                        maxSize: '15M',
+                        maxSize: '2M',
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),

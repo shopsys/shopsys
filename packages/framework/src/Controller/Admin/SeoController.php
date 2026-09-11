@@ -52,8 +52,6 @@ class SeoController extends AdminBaseController
 
             $this->organizationSettingFacade->saveSettings(
                 $seoSettingData['organization'],
-                $seoSettingData['organizationLogo'],
-                $seoSettingData['deleteOrganizationLogo'],
                 $domainId,
             );
 

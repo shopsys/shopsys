@@ -2520,12 +2520,14 @@ export type TypeOrderWithdrawalRequestInput = {
 /** Organization settings for the current domain */
 export type TypeOrganizationSetting = {
   __typename?: 'OrganizationSetting';
-  /** Country */
-  addressCountry: Maybe<Scalars['String']['output']>;
   /** City */
-  addressLocality: Maybe<Scalars['String']['output']>;
+  city: Maybe<Scalars['String']['output']>;
   /** Company registration number */
   companyNumber: Maybe<Scalars['String']['output']>;
+  /** Tax number */
+  companyTaxNumber: Maybe<Scalars['String']['output']>;
+  /** Country */
+  country: Maybe<Scalars['String']['output']>;
   /** Company description */
   description: Maybe<Scalars['String']['output']>;
   /** Absolute organization logo URL */
@@ -2533,13 +2535,11 @@ export type TypeOrganizationSetting = {
   /** Company name */
   name: Maybe<Scalars['String']['output']>;
   /** Postcode */
-  postalCode: Maybe<Scalars['String']['output']>;
+  postcode: Maybe<Scalars['String']['output']>;
   /** Social network profile URLs */
-  sameAs: Array<Scalars['String']['output']>;
+  socialNetworkUrls: Array<Scalars['String']['output']>;
   /** Street and house number */
-  streetAddress: Maybe<Scalars['String']['output']>;
-  /** Tax number */
-  vatId: Maybe<Scalars['String']['output']>;
+  street: Maybe<Scalars['String']['output']>;
 };
 
 /** Information about pagination in a connection. */

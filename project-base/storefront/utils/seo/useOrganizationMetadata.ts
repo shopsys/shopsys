@@ -6,23 +6,23 @@ export const useOrganizationMetadata = () => {
     const [{ data }] = useSettingsQuery();
     const organization = data?.settings?.seo.organization;
     const address = {
-        streetAddress: organization?.streetAddress || undefined,
-        addressLocality: organization?.addressLocality || undefined,
-        postalCode: organization?.postalCode || undefined,
-        addressCountry: organization?.addressCountry || undefined,
+        streetAddress: organization?.street || undefined,
+        addressLocality: organization?.city || undefined,
+        postalCode: organization?.postcode || undefined,
+        addressCountry: organization?.country || undefined,
     };
 
     return {
         '@type': 'Organization',
         url,
         name: organization?.name || undefined,
-        vatID: organization?.vatId || undefined,
+        vatID: organization?.companyTaxNumber || undefined,
         identifier: organization?.companyNumber
             ? { '@type': 'PropertyValue', propertyID: 'IČO', value: organization.companyNumber }
             : undefined,
         description: organization?.description || undefined,
         address: Object.values(address).some(Boolean) ? { '@type': 'PostalAddress', ...address } : undefined,
         logo: organization?.logo || undefined,
-        sameAs: organization?.sameAs.length ? organization.sameAs : undefined,
+        sameAs: organization?.socialNetworkUrls.length ? organization.socialNetworkUrls : undefined,
     };
 };

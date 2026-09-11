@@ -2054,12 +2054,14 @@ input OrderWithdrawalRequestInput {
 
 "Organization settings for the current domain"
 type OrganizationSetting {
-  "Country"
-  addressCountry: String
   "City"
-  addressLocality: String
+  city: String
   "Company registration number"
   companyNumber: String
+  "Tax number"
+  companyTaxNumber: String
+  "Country"
+  country: String
   "Company description"
   description: String
   "Absolute organization logo URL"
@@ -2067,13 +2069,11 @@ type OrganizationSetting {
   "Company name"
   name: String
   "Postcode"
-  postalCode: String
+  postcode: String
   "Social network profile URLs"
-  sameAs: [String!]!
+  socialNetworkUrls: [String!]!
   "Street and house number"
-  streetAddress: String
-  "Tax number"
-  vatId: String
+  street: String
 }
 
 "Information about pagination in a connection."

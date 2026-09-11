@@ -19,7 +19,7 @@ class SeoSettingsQuery extends AbstractQuery
     }
 
     /**
-     * @return array{robotsTxtContent: string|null, title: string|null, titleAddOn: string|null, metaDescription: string|null, organization: array<string, string|array<string>|null>}
+     * @return array{robotsTxtContent: string|null, title: string|null, titleAddOn: string|null, metaDescription: string|null, organization: \Shopsys\FrameworkBundle\Model\Seo\OrganizationData}
      */
     public function seoSettingsQuery(): array
     {
