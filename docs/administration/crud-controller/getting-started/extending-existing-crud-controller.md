@@ -84,6 +84,10 @@ The extension has access to the `Definition` of the extended controller via `$th
 It contains the resolved config, the entity class, the controller name, and the role constant, so the extension can react to how the controller is configured.
 The [helper methods](../reference/crud-controller.md#helper-methods) for generating URLs and redirecting between the actions of the extended controller are available in the extension as well.
 
+### Adding custom actions
+
+An extension can add a [custom action](../reference/custom-actions.md) to the extended controller by declaring a method with the `#[CrudAction]` attribute, the target controller is inferred from `#[CrudControllerExtension]`.
+
 ```php
 // OrderControllerExtension.php
 

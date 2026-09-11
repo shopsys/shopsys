@@ -12,6 +12,7 @@ final readonly class CrudRegistryItem
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
      * @param class-string $entityClass
+     * @param array<string, \Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDefinition> $actions built-in and custom actions indexed by name
      */
     public function __construct(
         public string $controllerClass,
@@ -19,6 +20,7 @@ final readonly class CrudRegistryItem
         public string $entityClass,
         public string $entityName,
         public CrudConfigData $config,
+        public array $actions = [],
     ) {
     }
 

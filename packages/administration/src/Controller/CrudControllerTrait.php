@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Controller;
 
+use InvalidArgumentException;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
-use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -39,36 +40,47 @@ trait CrudControllerTrait
     }
 
     /**
-     * Returns the route name of the given action of this CRUD controller (e.g. "admin_crud_order_edit")
+     * Returns the route name of the given action of this CRUD controller (e.g. "admin_crud_order_edit"),
+     * custom actions are referenced by their name
      */
-    protected function getCrudRouteName(ActionType $actionType): string
+    protected function getCrudRouteName(ActionType|string $action): string
     {
-        return CrudTransformationHelper::generateRouteName($this->definition->controllerName, $actionType);
+        return $this->definition->getAction($action)->getRouteName();
     }
 
     /**
-     * Generates URL of the given action of this CRUD controller.
-     * Actions working with a single record (detail, edit, delete) expect the entity or its ID.
+     * Generates URL of the given action of this CRUD controller, custom actions are referenced by their name.
+     * Actions working with a single record (detail, edit, delete, custom actions with {id} in the path) expect the entity or its ID.
      * CSRF token is added automatically for protected actions (e.g. delete), so the URL is directly usable.
      *
      * @param array<string, mixed> $parameters additional route parameters
      */
     protected function generateCrudUrl(
-        ActionType $actionType,
+        ActionType|string $action,
         int|object|null $entityOrId = null,
         array $parameters = [],
     ): string {
-        $routeName = $this->getCrudRouteName($actionType);
+        $actionDefinition = $this->definition->getAction($action);
+
+        if ($actionDefinition->entityBound !== ($entityOrId !== null || isset($parameters['id']))) {
+            throw new InvalidArgumentException(sprintf(
+                $actionDefinition->entityBound
+                    ? 'Action "%s" of "%s" works with a single record, pass the entity or its ID.'
+                    : 'Action "%s" of "%s" does not work with a single record, do not pass an entity or ID.',
+                $actionDefinition->name,
+                $this->definition->controllerClass,
+            ));
+        }
 
         if ($entityOrId !== null) {
             $parameters['id'] = is_object($entityOrId) ? $this->crudEntityIdentifierExtractor->getId($entityOrId) : $entityOrId;
         }
 
-        if ($this->routeCsrfProtector->isActionProtected($this->definition->controllerClass, $actionType->value . 'Action')) {
-            $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] ??= $this->routeCsrfProtector->getCsrfTokenByRoute($routeName);
+        if ($this->routeCsrfProtector->isActionProtected($actionDefinition->controllerClass, $actionDefinition->method)) {
+            $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] ??= $this->routeCsrfProtector->getCsrfTokenByRoute($actionDefinition->getRouteName());
         }
 
-        return $this->generateUrl($routeName, $parameters);
+        return $this->generateUrl($actionDefinition->getRouteName(), $parameters);
     }
 
     /**
@@ -77,10 +89,19 @@ trait CrudControllerTrait
      * @param array<string, mixed> $parameters additional route parameters
      */
     protected function redirectToCrudAction(
-        ActionType $actionType,
+        ActionType|string $action,
         int|object|null $entityOrId = null,
         array $parameters = [],
     ): RedirectResponse {
-        return $this->redirect($this->generateCrudUrl($actionType, $entityOrId, $parameters));
+        return $this->redirect($this->generateCrudUrl($action, $entityOrId, $parameters));
+    }
+
+    /**
+     * Loads a record the same way the built-in edit and delete actions do (through the registered handler),
+     * so custom actions apply the same checks
+     */
+    protected function getCrudEntity(int $id): Presentable
+    {
+        return $this->definition->getReadHandler()->getById($id);
     }
 }

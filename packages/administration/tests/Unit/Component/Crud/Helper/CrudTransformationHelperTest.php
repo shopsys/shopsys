@@ -60,47 +60,32 @@ class CrudTransformationHelperTest extends TestCase
         ];
     }
 
-    #[DataProvider('generateControllerDataProvider')]
-    public function testGenerateController(
-        string $controllerClass,
-        ActionType $actionType,
-        string $expectedController,
+    #[DataProvider('generateRouteNameDataProvider')]
+    public function testGenerateRouteName(
+        string $controllerName,
+        ActionType|string $action,
+        string $expectedRouteName,
     ): void {
-        $result = CrudTransformationHelper::generateController($controllerClass, $actionType);
+        $result = CrudTransformationHelper::generateRouteName($controllerName, $action);
 
-        $this->assertSame($expectedController, $result);
+        $this->assertSame($expectedRouteName, $result);
     }
 
     /**
-     * @return array<string, array{controllerClass: string, actionType: \Shopsys\AdministrationBundle\Component\Config\ActionType, expectedController: string}>
+     * @return array<string, array{controllerName: string, action: \Shopsys\AdministrationBundle\Component\Config\ActionType|string, expectedRouteName: string}>
      */
-    public static function generateControllerDataProvider(): array
+    public static function generateRouteNameDataProvider(): array
     {
         return [
-            'list action' => [
-                'controllerClass' => 'App\\Controller\\ProductController',
-                'actionType' => ActionType::LIST,
-                'expectedController' => 'App\\Controller\\ProductController::listAction',
+            'built-in action' => [
+                'controllerName' => 'PriceListController',
+                'action' => ActionType::EDIT,
+                'expectedRouteName' => 'admin_crud_price_list_edit',
             ],
-            'detail action' => [
-                'controllerClass' => 'App\\Controller\\OrderController',
-                'actionType' => ActionType::DETAIL,
-                'expectedController' => 'App\\Controller\\OrderController::detailAction',
-            ],
-            'create action' => [
-                'controllerClass' => 'App\\Controller\\UserController',
-                'actionType' => ActionType::CREATE,
-                'expectedController' => 'App\\Controller\\UserController::createAction',
-            ],
-            'edit action' => [
-                'controllerClass' => 'App\\Controller\\CategoryController',
-                'actionType' => ActionType::EDIT,
-                'expectedController' => 'App\\Controller\\CategoryController::editAction',
-            ],
-            'delete action' => [
-                'controllerClass' => 'App\\Controller\\PriceListController',
-                'actionType' => ActionType::DELETE,
-                'expectedController' => 'App\\Controller\\PriceListController::deleteAction',
+            'custom action by name' => [
+                'controllerName' => 'ProductReviewController',
+                'action' => 'approve',
+                'expectedRouteName' => 'admin_crud_product_review_approve',
             ],
         ];
     }

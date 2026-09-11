@@ -62,11 +62,18 @@ final class CrudConfig
     ];
 
     /**
+     * @var string[]
+     */
+    private array $disabledCustomActionNames = [];
+
+    /**
      * @param string|null $customRoleConstant role declared by the ForRole attribute on the CRUD controller (or its extension), resolved at compile time
+     * @param string[] $customActionNames names of the custom actions declared for the CRUD controller by the CrudAction attribute, resolved at compile time
      */
     public function __construct(
         private readonly string $entityName,
         private readonly ?string $customRoleConstant = null,
+        private readonly array $customActionNames = [],
     ) {
         $this->enabledActions = new ArrayCollection([
             ActionType::LIST,
@@ -110,20 +117,20 @@ final class CrudConfig
     }
 
     /**
-     * Enables a given action(s) for the crud controller.
+     * Enables a given action(s) for the crud controller. Custom actions are enabled by default and are referenced by their name.
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|\Shopsys\AdministrationBundle\Component\Config\ActionType[] $actions
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|string|array<\Shopsys\AdministrationBundle\Component\Config\ActionType|string> $actions
      * @return $this
      */
-    public function enableAction(ActionType|array $actions): self
+    public function enableAction(ActionType|string|array $actions): self
     {
-        if (!is_array($actions)) {
-            $actions = [$actions];
-        }
+        foreach ($this->normalizeActions($actions) as $action) {
+            if (is_string($action)) {
+                $this->disabledCustomActionNames = array_values(array_diff($this->disabledCustomActionNames, [$action]));
 
-        Assert::allIsInstanceOf($actions, ActionType::class, 'The given action is not a valid action type');
+                continue;
+            }
 
-        foreach ($actions as $action) {
             if ($this->enabledActions->contains($action)) {
                 continue;
             }
@@ -135,24 +142,67 @@ final class CrudConfig
     }
 
     /**
-     * Disables a given action(s) for the crud controller.
+     * Disables a given action(s) for the crud controller. Custom actions are referenced by their name.
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|\Shopsys\AdministrationBundle\Component\Config\ActionType[] $actions
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|string|array<\Shopsys\AdministrationBundle\Component\Config\ActionType|string> $actions
      * @return $this
      */
-    public function disableAction(ActionType|array $actions): self
+    public function disableAction(ActionType|string|array $actions): self
     {
-        if (!is_array($actions)) {
-            $actions = [$actions];
-        }
+        foreach ($this->normalizeActions($actions) as $action) {
+            if (is_string($action)) {
+                if (!in_array($action, $this->disabledCustomActionNames, true)) {
+                    $this->disabledCustomActionNames[] = $action;
+                }
 
-        Assert::allIsInstanceOf($actions, ActionType::class, 'The given action is not a valid action type');
+                continue;
+            }
 
-        foreach ($actions as $action) {
             $this->enabledActions->removeElement($action);
         }
 
         return $this;
+    }
+
+    /**
+     * Built-in actions given by name are converted to ActionType, custom action names are validated against the declared ones
+     *
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|string|array<\Shopsys\AdministrationBundle\Component\Config\ActionType|string> $actions
+     * @return array<\Shopsys\AdministrationBundle\Component\Config\ActionType|string>
+     */
+    private function normalizeActions(ActionType|string|array $actions): array
+    {
+        $normalizedActions = [];
+
+        foreach (is_array($actions) ? $actions : [$actions] as $action) {
+            if ($action instanceof ActionType) {
+                $normalizedActions[] = $action;
+
+                continue;
+            }
+
+            Assert::string($action, 'The given action is not a valid action type or custom action name');
+            $builtInAction = ActionType::tryFrom($action);
+
+            if ($builtInAction !== null) {
+                $normalizedActions[] = $builtInAction;
+
+                continue;
+            }
+
+            if (!in_array($action, $this->customActionNames, true)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Unknown custom action "%s" for "%s". Declared custom actions: %s.',
+                    $action,
+                    $this->entityName,
+                    $this->customActionNames === [] ? 'none' : implode(', ', $this->customActionNames),
+                ));
+            }
+
+            $normalizedActions[] = $action;
+        }
+
+        return $normalizedActions;
     }
 
     /**
@@ -352,6 +402,8 @@ final class CrudConfig
             $this->menuIcon,
             $this->listDomainControl,
             $this->listAllowedDomainIds,
+            $this->customActionNames,
+            $this->disabledCustomActionNames,
         );
     }
 }

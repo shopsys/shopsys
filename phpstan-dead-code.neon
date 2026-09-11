@@ -23,6 +23,9 @@ parameters:
             path: packages/administration/src/Component/Crud/CrudRegistryItem.php
         -
             identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Crud/Form/CrudFormConfigurator.php
+        -
+            identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/Adapter/Orm/ProxyQuery.php
         -
             identifier: shipmonk.deadMethod
@@ -36,9 +39,16 @@ parameters:
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Security/AccessControl/AccessControlDataProviderInterface.php
+        # action methods of the compiler pass fixtures are only reflected, never called
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/tests/Unit/DependencyInjection/Compiler/Fixtures/*
         -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/Security/Attribute/PermissionAttributeInterface.php
         -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/Cache/InMemoryCache.php

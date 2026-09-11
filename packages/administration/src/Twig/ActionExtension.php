@@ -10,6 +10,7 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface
 use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
+use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
@@ -25,6 +26,7 @@ class ActionExtension extends AbstractExtension
         protected readonly RouteAccessCheckerInterface $routeAccessChecker,
         protected readonly RouteCsrfProtector $csrfProtector,
         protected readonly AccessControlDataProviderInterface $accessControlDataProvider,
+        protected readonly CrudControllerRegistry $crudControllerRegistry,
     ) {
     }
 
@@ -57,13 +59,17 @@ class ActionExtension extends AbstractExtension
         }
 
         if ($actionRoute instanceof CrudActionRouteData) {
-            $parameters = $actionRoute->getId($data) !== null ? ['id' => $actionRoute->getId($data)] : [];
+            $definition = $this->crudControllerRegistry->getDefinition($actionRoute->getCrudController());
+            // fails for an unknown action, so a typo in the action name is caught when the action is rendered
+            $action = $definition->getAction($actionRoute->getActionName());
 
-            if ($this->csrfProtector->isActionProtected($actionRoute->getCrudController(), $actionRoute->getActionType()->value . 'Action')) {
-                $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->csrfProtector->getCsrfTokenByRoute($actionRoute->getRouteName());
+            $parameters = $actionRoute->getParameters($data);
+
+            if ($this->csrfProtector->isActionProtected($action->controllerClass, $action->method)) {
+                $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->csrfProtector->getCsrfTokenByRoute($action->getRouteName());
             }
 
-            return $this->router->generate($actionRoute->getRouteName(), $parameters);
+            return $this->router->generate($action->getRouteName(), $parameters);
         }
 
         if ($actionRoute instanceof RouteActionRouteData) {

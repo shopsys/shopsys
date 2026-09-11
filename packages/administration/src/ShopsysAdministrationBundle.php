@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle;
 use Override;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\InitializeControllersCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\LoadControllersExtensionCompilerPass;
+use Shopsys\AdministrationBundle\DependencyInjection\Compiler\LoadCrudActionsCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\RegisterControllerExtensionsCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\Compiler\ResolveCrudRoleConstantsCompilerPass;
 use Shopsys\AdministrationBundle\DependencyInjection\ShopsysAdministrationExtension;
@@ -35,5 +36,7 @@ class ShopsysAdministrationBundle extends AbstractBundle
         $container->addCompilerPass(new RegisterControllerExtensionsCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 150);
         $container->addCompilerPass(new LoadControllersExtensionCompilerPass());
         $container->addCompilerPass(new ResolveCrudRoleConstantsCompilerPass(), priority: -50);
+        // resolves the access control rules of custom actions, needs the role constants above
+        $container->addCompilerPass(new LoadCrudActionsCompilerPass(), priority: -75);
     }
 }
