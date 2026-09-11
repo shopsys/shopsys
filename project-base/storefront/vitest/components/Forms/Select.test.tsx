@@ -186,6 +186,25 @@ describe('Select active option', () => {
     });
 });
 
+describe('Select combobox label', () => {
+    test('keeps the label above the placeholder while closed and empty', () => {
+        render(
+            <Select
+                activeOption={null}
+                ariaLabel="Choose color"
+                label="Color"
+                options={colorOptions}
+                placeholder="Search"
+                tid="color-select"
+                comboBoxConfig={{ searchValue: '', setSearchValue: vi.fn() }}
+                onSelectOption={vi.fn()}
+            />,
+        );
+
+        expect(screen.getByText('Color')).toHaveClass('top-2.25', 'text-sm');
+    });
+});
+
 describe('Select closing', () => {
     test('closes after clicking outside even when a parent stops bubbling mouse events', () => {
         render(

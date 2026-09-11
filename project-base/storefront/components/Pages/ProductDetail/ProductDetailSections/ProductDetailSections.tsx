@@ -52,6 +52,7 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
+    const isOverviewVisible = !!description?.trim();
 
     const overviewRef = useRef<HTMLDivElement>(null);
     const parametersRef = useRef<HTMLDivElement>(null);
@@ -62,7 +63,12 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
 
     // `.filter()` only reads `isVisible`, not `ref.current`.
     const sections = [
-        { id: PRODUCT_DETAIL_SECTIONS_IDS.overview, label: t('Overview'), ref: overviewRef, isVisible: true },
+        {
+            id: PRODUCT_DETAIL_SECTIONS_IDS.overview,
+            label: t('Overview'),
+            ref: overviewRef,
+            isVisible: isOverviewVisible,
+        },
         {
             id: PRODUCT_DETAIL_SECTIONS_IDS.parameters,
             label: t('Parameters'),
@@ -97,7 +103,9 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
             />
 
             <VerticalStack gap="lg">
-                <ProductDetailOverviewSection description={description} sectionRef={overviewRef} />
+                {isOverviewVisible && (
+                    <ProductDetailOverviewSection description={description} sectionRef={overviewRef} />
+                )}
 
                 {!!parameters.length && (
                     <ProductDetailParametersSection parameters={parameters} sectionRef={parametersRef} />
