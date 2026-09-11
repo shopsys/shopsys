@@ -6,15 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
-use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\PriceList\Exception\PriceListNotFoundException;
 
 class PriceListRepository
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -32,18 +29,6 @@ class PriceListRepository
         }
 
         return $priceList;
-    }
-
-    public function getPriceListGridQueryBuilder(): QueryBuilder
-    {
-        return $this->getPriceListRepository()
-            ->createQueryBuilder('pl')
-            ->addSelect('CASE
-                    WHEN :now BETWEEN pl.validFrom AND pl.validTo THEN 0
-                    WHEN :now < pl.validFrom THEN 1
-                    ELSE -1
-                END AS validityStatus')
-            ->setParameter('now', $this->clock->now());
     }
 
     public function getPriceListDataToExport(int $priceListId): iterable

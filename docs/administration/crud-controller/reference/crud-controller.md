@@ -18,8 +18,9 @@ The five main actions of the CRUD Controller are:
 
 Crud controller generates pretty URLs for each action. The URL is generated based on the Controller name.
 
-- `PriceListController` -> `/admin/price-list/` (Same for `PriceListCrudController`)
+- `StoreController` -> `/admin/store/` (Same for `StoreCrudController`)
 - `OrderController` -> `/admin/order/`
+- `PriceListController` with `setRoutePrefix('/pricing')` -> `/admin/pricing/price-list/`
 
 !!! note
 

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
@@ -15,7 +16,7 @@ use Symfony\Component\Clock\DatePoint;
 #[AsMcpTable]
 #[ORM\Table(name: 'price_lists')]
 #[ORM\Entity]
-class PriceList implements DomainSeparatedEntityInterface
+class PriceList implements DomainSeparatedEntityInterface, Presentable
 {
     /**
      * @var int
@@ -162,5 +163,11 @@ class PriceList implements DomainSeparatedEntityInterface
             static fn (PriceListProductPrice $priceListProductPrice) => $priceListProductPrice->getProduct()->getId(),
             $this->getPriceListProductPrices(),
         );
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName();
     }
 }
