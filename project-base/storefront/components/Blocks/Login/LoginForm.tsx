@@ -7,16 +7,19 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { TypeLoginTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import type { ChangeEventHandler } from 'react';
+import { type ChangeEventHandler, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
+import { twJoin } from 'tailwind-merge';
 import { LoginFormType } from 'types/form';
 import { useLogin } from 'utils/auth/useLogin';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { LastUsedLoginMethodBadge } from './LastUsedLoginMethodBadge';
 import { useLoginForm, useLoginFormMeta } from './loginFormMeta';
 
 export type LoginFormProps = {
@@ -38,6 +41,14 @@ export const LoginForm: FC<LoginFormProps> = ({
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
+    const lastLoginType = usePersistStore((store) => store.lastLoginType);
+    const [isClientMounted, setIsClientMounted] = useState(false);
+
+    useEffect(() => {
+        setIsClientMounted(true);
+    }, []);
+
+    const visibleLastLoginType = isClientMounted ? lastLoginType : null;
 
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
@@ -79,19 +90,29 @@ export const LoginForm: FC<LoginFormProps> = ({
                     onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
                 >
                     <FormContentWrapper className={formContentWrapperClassName}>
-                        <TextInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.email.name}
-                            textInputProps={{
-                                label: formMeta.fields.email.label,
-                                required: true,
-                                type: 'email',
-                                autoComplete: 'email',
-                                'aria-describedby': descriptionId,
-                                onChange: onEmailChange,
-                            }}
-                        />
+                        <div
+                            className={twJoin(
+                                'relative',
+                                visibleLastLoginType === TypeLoginTypeEnum.Web &&
+                                    '[&_input:not([aria-invalid=true])]:border-background-accent',
+                            )}
+                            data-tid={TIDs.login_method_web}
+                        >
+                            {visibleLastLoginType === TypeLoginTypeEnum.Web && <LastUsedLoginMethodBadge />}
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                    'aria-describedby': descriptionId,
+                                    onChange: onEmailChange,
+                                }}
+                            />
+                        </div>
 
                         <PasswordInputControlled
                             control={formProviderMethods.control}
@@ -130,6 +151,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                     <SocialNetworkLogin
                                         shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                                         socialNetworks={settingsData.settings.socialNetworkLoginConfig}
+                                        lastLoginType={visibleLastLoginType}
                                     />
                                 </>
                             )}
