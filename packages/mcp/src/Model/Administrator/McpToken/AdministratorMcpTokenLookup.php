@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Component\Security\McpBearerToken;
 
 class AdministratorMcpTokenLookup
@@ -18,7 +19,7 @@ class AdministratorMcpTokenLookup
 
     public function findValidTokenByTokenString(string $tokenString): ?AdministratorMcpToken
     {
-        $tokenParts = McpBearerToken::parseTokenString($tokenString);
+        $tokenParts = ExtendedClassNameResolver::resolve(McpBearerToken::class)::parseTokenString($tokenString);
 
         if ($tokenParts === null) {
             return null;

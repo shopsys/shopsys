@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\Controller\OAuth;
 use InvalidArgumentException;
 use JsonException;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Model\OAuth\McpOAuthClientRegistrationFacade;
 use Shopsys\McpBundle\Model\OAuth\McpOAuthProtocol;
@@ -28,8 +29,8 @@ class McpOAuthClientRegistrationController
         try {
             $payload = $request->toArray();
             $registration = $this->mcpOauthClientRegistrationFacade->registerClient(
-                ArrayHelper::getArrayOrEmpty($payload, 'redirect_uris'),
-                ArrayHelper::getStringOrNull($payload, 'client_name'),
+                ExtendedClassNameResolver::resolve(ArrayHelper::class)::getArrayOrEmpty($payload, 'redirect_uris'),
+                ExtendedClassNameResolver::resolve(ArrayHelper::class)::getStringOrNull($payload, 'client_name'),
             );
         } catch (JsonException|InvalidArgumentException $exception) {
             return new JsonResponse([
