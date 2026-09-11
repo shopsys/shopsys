@@ -11,9 +11,9 @@ parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames:
             - Mcp\Capability\Attribute\McpTool
+            # built-in and custom CRUD actions are routed by CrudRouteProvider
+            - Shopsys\AdministrationBundle\Component\Attributes\CrudAction
         dispatchedMethodNamesByClassName:
-            # crud controller actions are routed by CrudRouteProvider via generateController
-            Shopsys\AdministrationBundle\Controller\AbstractCrudController: [listAction, detailAction, editAction, createAction, deleteAction]
             # tagged shopsys.role_section_provider services are indexed by the AutowireIterator defaultIndexMethod
             Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider: [getTargetContext]
             # maker MakeCommandRegistrationPass reads the command description via method_exists

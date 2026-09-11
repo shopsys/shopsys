@@ -9,6 +9,8 @@ parameters:
     shopsysDeadCodeDetection:
         dispatchAttributeClassNames:
             - Mcp\Capability\Attribute\McpTool
+            # custom CRUD actions are routed by CrudRouteProvider
+            - Shopsys\AdministrationBundle\Component\Attributes\CrudAction
         dispatchedMethodNamesByClassName:
             # page objects are constructed by the Codeception dependency injection when declared as Cest method parameters
             Tests\App\Acceptance\acceptance\PageObject\AbstractPage: [__construct]

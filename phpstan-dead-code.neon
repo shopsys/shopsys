@@ -39,10 +39,6 @@ parameters:
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Security/AccessControl/AccessControlDataProviderInterface.php
-        # action methods of the compiler pass fixtures are only reflected, never called
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/administration/tests/Unit/DependencyInjection/Compiler/Fixtures/*
         -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
