@@ -95,11 +95,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'is_allowed_negative_stock',
             'variants',
             'main_variant_id',
-            'seo_h1',
-            'seo_title',
-            'seo_meta_description',
-            'seo_meta_robots',
-            'seo_canonical_url',
+            ...$this->getSeoFields(),
             'accessories',
             'additional_services',
             'name_prefix',
@@ -120,6 +116,20 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'is_promoted',
             'top_product_position',
             'zbozi_category',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getSeoFields(): array
+    {
+        return [
+            'seo_h1',
+            'seo_title',
+            'seo_meta_description',
+            'seo_meta_robots',
+            'seo_canonical_url',
         ];
     }
 
