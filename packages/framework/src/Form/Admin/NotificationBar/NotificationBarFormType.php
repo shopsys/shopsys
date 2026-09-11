@@ -99,7 +99,7 @@ final class NotificationBarFormType extends AbstractType
         $builder
             ->add($builderSettingsGroup)
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_notificationbar_list',
+                'back_route' => 'admin_crud_notification_bar_list',
                 'entity' => $options['notification_bar'],
             ]);
     }

@@ -93,9 +93,6 @@ class SideMenuBuilder
     public const string EDIT_BANNER = 'edit_page';
     public const string LIST_PROMOTED_PRODUCT = 'promoted_products';
     public const string LIST_PROMOTED_CATEGORY = 'promoted_categories';
-    public const string LIST_NOTIFICATION_BAR = 'notification_bar';
-    public const string NEW_NOTIFICATION_BAR = 'notification_bar_new';
-    public const string EDIT_NOTIFICATION_BAR = 'notification_bar_edit';
     public const string ORDER_CONFIRMATION = 'order_confirmation';
     public const string SECTION_LEGAL = 'legal';
     public const string TERMS_AND_CONDITIONS = 'terms_and_conditions';
@@ -620,10 +617,6 @@ class SideMenuBuilder
         $homepageMenu->addChild(static::LIST_PROMOTED_CATEGORY, ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
 
         $menu->addChild(static::AUTOCOMPLETE_SETTING, ['route' => 'admin_autocomplete_setting', 'label' => t('Autocomplete favorites')]);
-
-        $notificationBarMenu = $menu->addChild(static::LIST_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
-        $notificationBarMenu->addChild(static::NEW_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
-        $notificationBarMenu->addChild(static::EDIT_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
 
         $menu->addChild(static::ORDER_CONFIRMATION, ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
 
