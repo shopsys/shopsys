@@ -41,6 +41,29 @@ Implement only the interface that matches your needs:
 
     `HandlerInterface` is a base marker interface used only for automatic service registration. Do not implement it directly - it provides no functionality. Always implement one of the specific handler interfaces instead.
 
+### Narrowing `object` Parameters
+
+The handler interfaces declare entities and data objects as plain `object` (or `Presentable`), because they are shared by every CRUD controller. Your handler, however, works with one concrete entity and its data object, so narrow the type at the start of every method that receives them:
+
+```php
+use Webmozart\Assert\Assert;
+
+public function edit(object $entity, object $data): void
+{
+    Assert::isInstanceOf($entity, Order::class);
+    Assert::isInstanceOf($data, OrderData::class);
+
+    $this->orderFacade->edit($entity->getId(), $data);
+}
+```
+
+The assert has two purposes:
+
+- **Fail fast** - a handler registered for a wrong entity throws an `InvalidArgumentException` with a clear message instead of failing somewhere deep in the facade
+- **Static analysis** - PHPStan understands `Assert::isInstanceOf()` thanks to the `phpstan/phpstan-webmozart-assert` extension (enabled in `phpstan.neon`), so the following code is analysed with the concrete type and calls like `$entity->getId()` or passing `$data` to a typed facade method are not reported as errors
+
+Do not skip the assert just because the method "only" forwards the object to the facade - the facade methods are typed, and without the narrowing PHPStan reports the call as passing `object` where the concrete class is expected.
+
 ### Registering Handlers
 
 After creating your handler, register it in your CRUD controller's `configure()` method:
