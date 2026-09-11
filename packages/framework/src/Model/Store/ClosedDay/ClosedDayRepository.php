@@ -35,6 +35,22 @@ class ClosedDayRepository
     }
 
     /**
+     * @param int[] $closedDayIds
+     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
+     */
+    public function getByIdsWithEagerLoadedExcludedStores(array $closedDayIds): array
+    {
+        return $this->getClosedDayRepository()
+            ->createQueryBuilder('cd')
+            ->addSelect('es')
+            ->leftJoin('cd.excludedStores', 'es')
+            ->where('cd.id IN (:closedDayIds)')
+            ->setParameter('closedDayIds', $closedDayIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
     public function getFollowingWeekClosedDaysNotExcludedForStore(Store $store): array
