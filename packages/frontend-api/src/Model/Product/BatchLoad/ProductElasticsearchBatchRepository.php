@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
 use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Component\Elasticsearch\MultipleSearchQueryFactory;
@@ -27,7 +28,7 @@ class ProductElasticsearchBatchRepository
      */
     public function getBatchedProductsAndTotalsByFilterQueries(array $filterQueries): array
     {
-        $mSearchQuery = $this->multipleSearchQueryFactory->create(ProductIndex::getName(), $filterQueries);
+        $mSearchQuery = $this->multipleSearchQueryFactory->create(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $filterQueries);
         $result = $this->client->msearch($mSearchQuery->getQuery());
 
         $keys = array_keys($filterQueries);
