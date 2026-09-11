@@ -7,6 +7,7 @@ FlagDecorator:
             - 'Slug'
             - 'Breadcrumb'
             - 'ProductListable'
+            - 'Seo'
         description: "Represents a flag"
         fields:
             uuid:
@@ -18,6 +19,9 @@ FlagDecorator:
             rgbColor:
                 type: "String!"
                 description: "Flag color in rgb format"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the flag page"
             slug:
                 type: "String!"
                 description: "URL slug of flag"

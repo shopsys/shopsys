@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchPageContent } from 'components/Pages/Search/SearchPageContent';
 import { useSearchQuery } from 'components/Pages/Search/searchUtils';
@@ -33,22 +32,19 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex, nofollow" />
-
-            <CommonLayout
-                breadcrumbs={breadcrumbs}
-                isFetchingData={isSearchPageFetching}
-                pageTypeOverride={SkeletonEnum.Search}
-                title={t('Search')}
-            >
-                <SearchPageContent
-                    key={currentSearchString}
-                    isSearchPageFetching={isSearchPageFetching}
-                    searchData={searchData}
-                />
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={breadcrumbs}
+            defaultMetaRobots="noindex, nofollow"
+            isFetchingData={isSearchPageFetching}
+            pageTypeOverride={SkeletonEnum.Search}
+            title={t('Search')}
+        >
+            <SearchPageContent
+                key={currentSearchString}
+                isSearchPageFetching={isSearchPageFetching}
+                searchData={searchData}
+            />
+        </CommonLayout>
     );
 };
 

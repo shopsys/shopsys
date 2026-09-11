@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
@@ -34,23 +33,19 @@ const UsersPage: FC = () => {
     }
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <CustomerLayout breadcrumbs={breadcrumbs} title={t('Customer users')}>
+            <PageHero
+                icon={UserIcon}
+                title={t('Customer users')}
+                description={t(
+                    'Add, edit, and manage company users and permissions for seamless team collaboration and control.',
+                )}
+            />
 
-            <CustomerLayout breadcrumbs={breadcrumbs} title={t('Customer users')}>
-                <PageHero
-                    icon={UserIcon}
-                    title={t('Customer users')}
-                    description={t(
-                        'Add, edit, and manage company users and permissions for seamless team collaboration and control.',
-                    )}
-                />
-
-                <div className="flex w-full flex-col items-center gap-4">
-                    <CustomerUsersTable />
-                </div>
-            </CustomerLayout>
-        </>
+            <div className="flex w-full flex-col items-center gap-4">
+                <CustomerUsersTable />
+            </div>
+        </CustomerLayout>
     );
 };
 

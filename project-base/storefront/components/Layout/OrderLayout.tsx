@@ -21,7 +21,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
     return (
         <>
-            <SeoMeta defaultTitle={t('Order')} />
+            <SeoMeta defaultMetaRobots="noindex" defaultTitle={t('Order')} />
 
             <div className="flex h-full min-h-screen flex-col">
                 <AccessibilityNavigation simpleHeader />

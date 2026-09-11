@@ -68,6 +68,8 @@ class ArticleExportRepository
             'seoH1' => $article->getSeoH1(),
             'seoTitle' => $article->getSeoTitle(),
             'seoMetaDescription' => $article->getSeoMetaDescription(),
+            'seoMetaRobots' => $article->getSeoAttributes()->getMetaRobots(),
+            'seoCanonicalUrl' => $article->getSeoAttributes()->getCanonicalUrl(),
             'position' => $article->getPosition(),
             'external' => $article->isExternal(),
             'createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),

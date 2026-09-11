@@ -225,12 +225,8 @@ Allows to input custom filenames and translated names for uploaded files.
 
 ### [FriendlyUrlType]({{github.link}}/packages/framework/src/Form/FriendlyUrlType.php)
 
-Displays a select box with domain urls and text field that lets you to create friendly url on selected domain with your valid slug.
-Uses `DomainType` to display select box with domain urls.
-
-#### limit_domains_by_ids
-
-Limits list of displayed domains to provided ids.
+Displays a text field for the slug of a new friendly URL and validates its URL encoding.
+It is used by `UrlListType` for every domain.
 
 ### [UrlListType]({{github.link}}/packages/framework/src/Form/UrlListType.php)
 
@@ -244,9 +240,39 @@ Defines which route should the URLs go into.
 
 Defines what is the entity ID that the URLs are assigned to.
 
-#### limit_domains_by_ids
+#### domain_id
 
-Limits list of displayed domains to provided ids.
+Limits the list to a single domain.
+Defaults to `null`, which displays the URLs of all domains enabled in the administration.
+
+### [SeoGroupType]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoGroupType.php)
+
+Renders the SEO card of an entity — the [SEO attributes](../model/seo-attributes.md) and the URL addresses for each domain.
+Uses `SeoAttributesType` (multidomain via `MultidomainType`, or single-domain when `domain_id` is set) and `UrlListType`.
+
+#### domain_id
+
+Limits the group to a single domain.
+Defaults to `null`, which renders a card for every domain enabled in the administration.
+
+#### placeholder_source_input_id
+
+ID of the input whose value is displayed as a live placeholder of the title and H1.
+The `{locale}` and `{domain_id}` placeholders in the ID are replaced per domain.
+
+#### h1_required
+
+Defaults to `false`.
+
+#### url_list_options
+
+Options passed to `UrlListType` (`route_name`, `entity_id`).
+Defaults to `null`, which renders no URL addresses.
+
+### [SeoAttributesType]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoAttributesType.php)
+
+Displays the fields of `SeoAttributesData` — title, meta description, H1, meta robots and canonical URL.
+Requires the `domain_id` option, accepts `placeholder_source_input_id` and `h1_required` with the same meaning as in `SeoGroupType`.
 
 ### [ImageUploadType]({{github.link}}/packages/framework/src/Form/ImageUploadType.php)
 

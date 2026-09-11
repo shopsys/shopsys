@@ -1,0 +1,9 @@
+SeoDecorator:
+    type: interface
+    decorator: true
+    config:
+        description: "Represents entity with SEO attributes"
+        fields:
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the entity's page"

@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { CreateComplaintPopupButton } from 'components/Blocks/Complaint/CreateComplaintPopupButton';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
@@ -48,47 +47,43 @@ const ComplaintsPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                paginationScrollTargetRef={paginationScrollTargetRef}
+        <CustomerLayout
+            breadcrumbs={breadcrumbs}
+            paginationScrollTargetRef={paginationScrollTargetRef}
+            title={t('My complaints')}
+        >
+            <PageHero
+                icon={DocumentIcon}
                 title={t('My complaints')}
-            >
-                <PageHero
-                    icon={DocumentIcon}
-                    title={t('My complaints')}
-                    description={t(
-                        'Track all your complaints, monitor resolutions, and receive updates on every status change.',
-                    )}
-                />
-
-                {canCreateComplaint && (
-                    <div className="flex justify-center gap-2">
-                        <LinkButton
-                            aria-label={t('Go to new complaint page', { ns: 'accessibility' })}
-                            size="small"
-                            type="complaintNew"
-                            href={{
-                                pathname: customerComplaintsNewUrl,
-                            }}
-                        >
-                            {t('New complaint')}
-                        </LinkButton>
-
-                        <CreateComplaintPopupButton
-                            label={t('Create complaint manually')}
-                            size="small"
-                            variant="secondary"
-                            tid={TIDs.complaints_list_create_complaint_manually_button}
-                        />
-                    </div>
+                description={t(
+                    'Track all your complaints, monitor resolutions, and receive updates on every status change.',
                 )}
+            />
 
-                <ComplaintsPageContent paginationScrollTargetRef={paginationScrollTargetRef} />
-            </CustomerLayout>
-        </>
+            {canCreateComplaint && (
+                <div className="flex justify-center gap-2">
+                    <LinkButton
+                        aria-label={t('Go to new complaint page', { ns: 'accessibility' })}
+                        size="small"
+                        type="complaintNew"
+                        href={{
+                            pathname: customerComplaintsNewUrl,
+                        }}
+                    >
+                        {t('New complaint')}
+                    </LinkButton>
+
+                    <CreateComplaintPopupButton
+                        label={t('Create complaint manually')}
+                        size="small"
+                        variant="secondary"
+                        tid={TIDs.complaints_list_create_complaint_manually_button}
+                    />
+                </div>
+            )}
+
+            <ComplaintsPageContent paginationScrollTargetRef={paginationScrollTargetRef} />
+        </CustomerLayout>
     );
 };
 

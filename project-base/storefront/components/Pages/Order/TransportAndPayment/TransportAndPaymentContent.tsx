@@ -13,6 +13,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isEmailTransport } from 'utils/packetery';
+import { useSeoPageH1 } from 'utils/seo/useSeoPageH1';
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import {
     useLoadTransportAndPaymentFromLastOrder,
@@ -21,6 +22,7 @@ import {
 
 export const TransportAndPaymentContent: FC = () => {
     const { t } = useTranslation();
+    const heading = useSeoPageH1(t('Transport and payment'));
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { cart, transport, pickupPlace, payment } = useCurrentCart();
 
@@ -86,7 +88,7 @@ export const TransportAndPaymentContent: FC = () => {
             isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsFetching}
             page="transport-and-payment"
         >
-            <h1 className="sr-only">{t('Transport and payment')}</h1>
+            <h1 className="sr-only">{heading}</h1>
 
             <OrderContentWrapper
                 activeStep={2}

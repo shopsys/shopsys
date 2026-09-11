@@ -12,11 +12,7 @@ ArticleInterfaceDecorator:
                 type: "String!"
             text:
                 type: "String"
-            seoTitle:
-                type: "String"
-            seoMetaDescription:
-                type: "String"
-            seoH1:
-                type: "String"
+            seo:
+                type: "SeoAttributes!"
             breadcrumb:
                 type: "[Link!]!"

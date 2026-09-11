@@ -2,12 +2,12 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 
 type BlogCategoryHeaderProps = {
-    title: string | null | undefined;
+    heading: string | null | undefined;
     description: string | null;
     image: TypeImageFragment | null;
 };
 
-export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, description, image }) => {
+export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ heading, description, image }) => {
     return (
         <Webline>
             <div
@@ -15,7 +15,7 @@ export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, descrip
                 style={image?.url ? { backgroundImage: `url("${image.url}")` } : undefined}
             >
                 <Webline className="relative z-above px-10 py-14">
-                    <h1 className="mb-3 text-text-inverted">{title}</h1>
+                    <h1 className="mb-3 text-text-inverted">{heading}</h1>
                     {description && (
                         <p
                             className="text-text-inverted **:text-text-inverted **:hover:text-text-inverted"

@@ -166,7 +166,7 @@ class ReadyCategorySeoMixRepository
             ->andWhere('rcsm.category IN(:categories)')
             ->andWhere('rcsm.domainId = :domainId')
             ->andWhere('rcsm.showInCategory = true')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), SortDirection::Ascending)
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.seo.h1', $domainConfig->getLocale()), SortDirection::Ascending)
             ->setParameter('categories', $categoryIds)
             ->setParameter('domainId', $domainConfig->getId())
             ->getQuery()

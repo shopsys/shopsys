@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CartContent } from 'components/Pages/Cart/CartContent';
 import { CartStickyBar } from 'components/Pages/Cart/CartStickyBar';
@@ -24,18 +23,15 @@ const CartPage: FC<ServerSidePropsType> = () => {
     useGtmCartViewEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-
-            <CommonLayout
-                isFetchingData={isCartFetchingOrUnavailable}
-                pageTypeOverride="cart"
-                title={t('Shopping cart')}
-                bottomContent={cart?.items.length ? <CartStickyBar originalButtonRef={cartPreviewRef} /> : undefined}
-            >
-                {cart?.items.length ? <CartContent cart={cart} cartPreviewRef={cartPreviewRef} /> : <EmptyCart />}
-            </CommonLayout>
-        </>
+        <CommonLayout
+            bottomContent={cart?.items.length ? <CartStickyBar originalButtonRef={cartPreviewRef} /> : undefined}
+            defaultMetaRobots="noindex"
+            isFetchingData={isCartFetchingOrUnavailable}
+            pageTypeOverride="cart"
+            title={t('Shopping cart')}
+        >
+            {cart?.items.length ? <CartContent cart={cart} cartPreviewRef={cartPreviewRef} /> : <EmptyCart />}
+        </CommonLayout>
     );
 };
 

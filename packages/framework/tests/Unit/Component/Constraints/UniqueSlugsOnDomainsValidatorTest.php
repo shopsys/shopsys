@@ -65,13 +65,11 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     public function testValidateSameSlugsOnDifferentDomains(): void
     {
         $values = [
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-url/',
+            1 => [
+                [UrlListData::FIELD_SLUG => 'new-url/'],
             ],
-            [
-                UrlListData::FIELD_DOMAIN => 2,
-                UrlListData::FIELD_SLUG => 'new-url/',
+            2 => [
+                [UrlListData::FIELD_SLUG => 'new-url/'],
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();
@@ -83,13 +81,9 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     public function testValidateDuplicateSlugsOnSameDomain(): void
     {
         $values = [
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-url/',
-            ],
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-url/',
+            1 => [
+                [UrlListData::FIELD_SLUG => 'new-url/'],
+                [UrlListData::FIELD_SLUG => 'new-url/'],
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();
@@ -105,13 +99,9 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     public function testValidateDuplicateEncodedAndDecodedSlugsOnSameDomain(): void
     {
         $values = [
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-%75rl/',
-            ],
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-url/',
+            1 => [
+                [UrlListData::FIELD_SLUG => 'new-%75rl/'],
+                [UrlListData::FIELD_SLUG => 'new-url/'],
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();
@@ -127,13 +117,9 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     public function testValidateDuplicateSlugsWithDifferentEncodingCaseOnSameDomain(): void
     {
         $values = [
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-caf%C3%A9/',
-            ],
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'new-caf%c3%a9/',
+            1 => [
+                [UrlListData::FIELD_SLUG => 'new-caf%C3%A9/'],
+                [UrlListData::FIELD_SLUG => 'new-caf%c3%a9/'],
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();
@@ -149,9 +135,8 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     public function testValidateExistingSlug(): void
     {
         $values = [
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'existing-url/',
+            1 => [
+                [UrlListData::FIELD_SLUG => 'existing-url/'],
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();
@@ -167,9 +152,8 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     public function testValidateExistingEncodedSlug(): void
     {
         $values = [
-            [
-                UrlListData::FIELD_DOMAIN => 1,
-                UrlListData::FIELD_SLUG => 'existing-%75rl/',
+            1 => [
+                [UrlListData::FIELD_SLUG => 'existing-%75rl/'],
             ],
         ];
         $constraint = new UniqueSlugsOnDomains();

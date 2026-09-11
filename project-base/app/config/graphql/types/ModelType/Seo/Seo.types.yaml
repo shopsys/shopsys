@@ -1,0 +1,4 @@
+Seo:
+    type: interface
+    inherits:
+        - 'SeoDecorator'

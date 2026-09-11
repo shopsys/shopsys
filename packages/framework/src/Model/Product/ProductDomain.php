@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -42,18 +43,11 @@ class ProductDomain
     protected $domainId;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoTitle;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoMetaDescription;
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     /**
      * @var string|null
@@ -68,13 +62,6 @@ class ProductDomain
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $shortDescription;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoH1;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
@@ -171,6 +158,7 @@ class ProductDomain
         $this->domainId = $domainId;
         $this->flags = new ArrayCollection();
         $this->calculatedSellingDenied = false;
+        $this->seo = new SeoAttributes();
     }
 
     /**
@@ -182,51 +170,11 @@ class ProductDomain
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle()
+    public function getSeoAttributes()
     {
-        return $this->seoTitle;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
-    {
-        return $this->seoMetaDescription;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
-    {
-        return $this->seoH1;
-    }
-
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle): void
-    {
-        $this->seoTitle = $seoTitle;
-    }
-
-    /**
-     * @param string|null $seoMetaDescription
-     */
-    public function setSeoMetaDescription($seoMetaDescription): void
-    {
-        $this->seoMetaDescription = $seoMetaDescription;
-    }
-
-    /**
-     * @param string $seoH1
-     */
-    public function setSeoH1($seoH1): void
-    {
-        $this->seoH1 = $seoH1;
+        return $this->seo;
     }
 
     /**

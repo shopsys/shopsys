@@ -19,7 +19,7 @@ import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -34,10 +34,9 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const seoTitle = useSeoTitleWithPagination(
+    const title = useHeadingWithPagination(
+        blogCategoryData?.blogCategory?.seo.title || blogCategoryData?.blogCategory?.name,
         blogCategoryData?.blogCategory?.articlesTotalCount,
-        blogCategoryData?.blogCategory?.name,
-        blogCategoryData?.blogCategory?.seoTitle,
         DEFAULT_BLOG_PAGE_SIZE,
     );
 
@@ -52,10 +51,11 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         <CommonLayout
             breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
             breadcrumbsType="blogCategory"
-            description={blogCategoryData?.blogCategory?.seoMetaDescription}
+            description={blogCategoryData?.blogCategory?.seo.metaDescription}
             hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
             isFetchingData={isBlogCategoryFetching}
-            title={seoTitle}
+            seo={blogCategoryData?.blogCategory?.seo}
+            title={title}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
         </CommonLayout>

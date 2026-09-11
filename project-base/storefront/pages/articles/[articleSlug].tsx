@@ -50,17 +50,18 @@ const ArticleDetailPage: NextPage = () => {
         <CommonLayout
             breadcrumbs={article?.breadcrumb}
             canonicalQueryParams={[]}
-            description={article?.seoMetaDescription}
+            description={article?.seo.metaDescription}
             isFetchingData={isArticleDetailFetching}
             ogType={OgTypeEnum.Article}
-            title={article?.seoTitle || article?.articleName}
+            seo={article?.seo}
+            title={article?.seo.title || article?.articleName}
         >
             {!!article && (
                 <>
                     <ArticleMetadata
                         datePublished={article.createdAt}
-                        description={article.seoMetaDescription}
-                        headline={article.seoTitle || article.articleName}
+                        description={article.seo.metaDescription}
+                        headline={article.seo.h1 || article.articleName}
                     />
                     <ArticleDetailContent article={article} />
                 </>

@@ -34,7 +34,11 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
         </Webline>
     );
 
-    return <CommonLayout>{arePersonalDataFetching ? <SkeletonPagePersonalDataOverview /> : content}</CommonLayout>;
+    return (
+        <CommonLayout title={t('Personal data overview')}>
+            {arePersonalDataFetching ? <SkeletonPagePersonalDataOverview /> : content}
+        </CommonLayout>
+    );
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(

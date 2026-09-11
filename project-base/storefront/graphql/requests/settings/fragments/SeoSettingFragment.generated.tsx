@@ -4,13 +4,11 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string | null, titleAddOn: string | null, metaDescription: string | null };
+export type TypeSeoSettingFragment = { __typename: 'SeoSetting', titleAddOn: string | null };
 
 export const SeoSettingFragment = gql`
     fragment SeoSettingFragment on SeoSetting {
   __typename
-  title
   titleAddOn
-  metaDescription
 }
     `;

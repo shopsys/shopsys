@@ -72,9 +72,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
             $mainPageBlogCategoryData->names[$locale] = t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mainPageBlogCategoryData->descriptions[$locale] = t('description - Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mainPageBlogCategoryData->seoH1s[$domainId] = t('Main blog page - %locale% - H1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mainPageBlogCategoryData->seoMetaDescriptions[$domainId] = t('Main blog page - %locale% - meta description', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mainPageBlogCategoryData->seoTitles[$domainId] = t('Main blog page - %locale% - Title', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mainPageBlogCategoryData->seo[$domainId]->h1 = t('Main blog page - %locale% - H1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mainPageBlogCategoryData->seo[$domainId]->metaDescription = t('Main blog page - %locale% - meta description', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mainPageBlogCategoryData->seo[$domainId]->title = t('Main blog page - %locale% - Title', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->blogCategoryFacade->edit($mainPageBlogCategory->getId(), $mainPageBlogCategoryData);
 
@@ -339,11 +339,11 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $domainId = $domainConfig->getId();
 
             $translatedData = $this->getTranslatedSubcategoryData($subcategoryOrder, $locale);
-            $blogCategoryData->seoH1s[$domainId] = $translatedData['seoH1'];
-            $blogCategoryData->seoTitles[$domainId] = $translatedData['seoTitle'];
+            $blogCategoryData->seo[$domainId]->h1 = $translatedData['seoH1'];
+            $blogCategoryData->seo[$domainId]->title = $translatedData['seoTitle'];
             $blogCategoryData->names[$locale] = $translatedData['name'];
             $blogCategoryData->descriptions[$locale] = $translatedData['description'];
-            $blogCategoryData->seoMetaDescriptions[$domainId] = $translatedData['description'];
+            $blogCategoryData->seo[$domainId]->metaDescription = $translatedData['description'];
         }
 
         $blogCategoryData->uuid = Uuid::uuid5(
@@ -491,9 +491,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $domainId = $domainConfig->getId();
 
             $blogArticleData->blogCategoriesByDomainId[$domainId] = $blogCategories;
-            $blogArticleData->seoTitles[$domainId] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = $articleTitlesByLocale[$locale];
-            $blogArticleData->seoMetaDescriptions[$domainId] = t('Read practical advice in the article: %articleTitle%', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seo[$domainId]->title = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seo[$domainId]->h1 = $articleTitlesByLocale[$locale];
+            $blogArticleData->seo[$domainId]->metaDescription = t('Read practical advice in the article: %articleTitle%', ['%articleTitle%' => $articleTitlesByLocale[$locale]], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->assignBlogArticleAuthor($blogArticleData);
@@ -578,9 +578,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
                 $mainPageBlogCategory,
                 $buyingGuideCategory,
             ];
-            $blogArticleData->seoTitles[$domainId] = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domainId] = $articleTitle;
-            $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticleData->perexes[$locale];
+            $blogArticleData->seo[$domainId]->title = t('%articleTitle% | Demo shop', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seo[$domainId]->h1 = $articleTitle;
+            $blogArticleData->seo[$domainId]->metaDescription = $blogArticleData->perexes[$locale];
         }
 
         return $this->blogArticleFacade->create($blogArticleData);

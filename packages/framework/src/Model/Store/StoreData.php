@@ -108,6 +108,11 @@ class StoreData
      */
     public $urls;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData
+     */
+    public $seo;
+
     public function __construct()
     {
         $this->urls = new UrlListData();

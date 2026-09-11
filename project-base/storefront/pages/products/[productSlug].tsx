@@ -62,11 +62,12 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
                 breadcrumbs={product?.breadcrumb}
                 breadcrumbsType="category"
                 canonicalQueryParams={[]}
-                description={product?.seoMetaDescription}
+                description={product?.seo.metaDescription}
                 hreflangLinks={product?.hreflangLinks}
                 isFetchingData={isProductFetching}
                 ogImageUrlDefault={firstImageUrl}
-                title={product?.seoTitle || product?.name}
+                seo={product?.seo}
+                title={product?.seo.title || product?.name}
             >
                 {product?.__typename === 'RegularProduct' && (
                     <ProductDetailContent isProductDetailFetching={isProductFetching} product={product} />

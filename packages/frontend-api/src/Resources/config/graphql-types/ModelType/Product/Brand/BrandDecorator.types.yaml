@@ -7,6 +7,7 @@ BrandDecorator:
             - 'Breadcrumb'
             - 'Slug'
             - 'ProductListable'
+            - 'Seo'
         description: "Represents a brand"
         fields:
             uuid:
@@ -21,15 +22,9 @@ BrandDecorator:
             link:
                 type: "String!"
                 description: "Brand main URL"
-            seoTitle:
-                type: "String"
-                description: "Brand SEO title"
-            seoMetaDescription:
-                type: "String"
-                description: "Brand SEO meta description"
-            seoH1:
-                type: "String"
-                description: "Brand SEO H1"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the brand page"
             images:
                 type: "[Image!]!"
                 description: "Brand images"

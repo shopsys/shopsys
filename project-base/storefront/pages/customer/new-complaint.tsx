@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
@@ -89,39 +88,35 @@ const NewComplaintPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
+            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" title={t('New complaint')}>
+                <PageHero
+                    icon={DocumentIcon}
+                    title={t('New complaint')}
+                    description={t(
+                        'Have an issue with your purchase? Search for the product below and click the button to create a complaint.',
+                    )}
+                />
 
-            <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
-                <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" title={t('New complaint')}>
-                    <PageHero
-                        icon={DocumentIcon}
-                        title={t('New complaint')}
-                        description={t(
-                            'Have an issue with your purchase? Search for the product below and click the button to create a complaint.',
-                        )}
-                    />
+                <SearchInput
+                    className="w-full border border-input-border-default"
+                    label={t('Search for a product you want to complain about')}
+                    shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
+                    value={searchQueryValue}
+                    ariaLabelForSearchButton={t('Search for a product you want to complain about', {
+                        ns: 'accessibility',
+                    })}
+                    onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
+                    onClear={() => setSearchQueryValue('')}
+                />
 
-                    <SearchInput
-                        className="w-full border border-input-border-default"
-                        label={t('Search for a product you want to complain about')}
-                        shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
-                        value={searchQueryValue}
-                        ariaLabelForSearchButton={t('Search for a product you want to complain about', {
-                            ns: 'accessibility',
-                        })}
-                        onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
-                        onClear={() => setSearchQueryValue('')}
-                    />
-
-                    <OrderedItemsContent
-                        areOrderedItemsFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
-                        items={mappedOrderedItems}
-                        totalCount={orderedItemsTotalCount}
-                    />
-                </CustomerLayout>
-            </PageGuard>
-        </>
+                <OrderedItemsContent
+                    areOrderedItemsFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
+                    items={mappedOrderedItems}
+                    totalCount={orderedItemsTotalCount}
+                />
+            </CustomerLayout>
+        </PageGuard>
     );
 };
 

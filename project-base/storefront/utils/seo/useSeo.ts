@@ -1,51 +1,50 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
-import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
+import { MetaRobotsContent } from 'types/seo';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
+import { isNoindexMetaRobots } from 'utils/seo/isNoindexMetaRobots';
+import { resolveMetaRobots } from 'utils/seo/resolveMetaRobots';
+import { useSeoPage } from 'utils/seo/useSeoPage';
 
 type UseSeoHookProps = {
+    seo?: TypeSeoAttributesFragment | null;
     defaultTitle?: string | null;
     defaultDescription?: string | null;
+    defaultMetaRobots?: MetaRobotsContent;
     canonicalQueryParams?: CanonicalQueryParameters;
 };
 
-export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps) => {
+export const useSeo = ({
+    seo,
+    defaultTitle,
+    defaultDescription,
+    defaultMetaRobots,
+    canonicalQueryParams,
+}: UseSeoHookProps) => {
     const { url } = useDomainConfig();
     const router = useRouter();
 
-    const pageSlug = extractSeoPageSlugFromUrl(router.asPath, url);
-
     const [{ data: settingsData }] = useSettingsQuery();
-    const [{ data: seoPageData }] = useSeoPageQuery({
-        variables: {
-            pageSlug: pageSlug!,
-        },
-        pause: !pageSlug,
-    });
+    const seoPage = useSeoPage();
 
-    const preferredTitle = seoPageData?.seoPage?.title;
-    const preferredDescription = seoPageData?.seoPage?.metaDescription;
-    const preferredCanonicalUrl = seoPageData?.seoPage?.canonicalUrl;
-    const preferredOgTitle = seoPageData?.seoPage?.ogTitle;
-    const preferredOgDescription = seoPageData?.seoPage?.ogDescription;
-    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.url;
+    const titleSuffix = settingsData?.settings?.seo.titleAddOn;
 
-    const fallbackTitle = settingsData?.settings?.seo.title;
-    const fallbackDescription = settingsData?.settings?.seo.metaDescription;
-    const fallbackTitleSuffix = settingsData?.settings?.seo.titleAddOn;
-
-    const canonicalUrl = preferredCanonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
+    const metaRobots = resolveMetaRobots(seoPage?.seo.metaRobots, seo?.metaRobots, defaultMetaRobots);
+    const canonicalUrl =
+        seoPage?.seo.canonicalUrl || seo?.canonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
 
     return {
-        title: preferredTitle ?? defaultTitle ?? fallbackTitle ?? '',
-        titleSuffix: fallbackTitleSuffix ?? '',
-        description: preferredDescription ?? defaultDescription ?? fallbackDescription ?? '',
-        ogTitle: preferredOgTitle,
-        ogDescription: preferredOgDescription,
-        ogImageUrl: preferredOgImageUrl,
-        hreflangLinks: seoPageData?.seoPage?.hreflangLinks,
+        title: seoPage?.seo.title ?? defaultTitle ?? '',
+        titleSuffix: titleSuffix ?? '',
+        description: seoPage?.seo.metaDescription ?? defaultDescription ?? null,
+        metaRobots,
+        isNoindex: isNoindexMetaRobots(metaRobots),
         canonicalUrl,
+        ogTitle: seoPage?.ogTitle,
+        ogDescription: seoPage?.ogDescription,
+        ogImageUrl: seoPage?.ogImage?.url,
+        hreflangLinks: seoPage?.hreflangLinks,
     };
 };

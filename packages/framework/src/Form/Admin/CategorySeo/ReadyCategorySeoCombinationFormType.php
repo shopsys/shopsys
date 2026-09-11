@@ -8,15 +8,14 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
-use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -30,20 +29,16 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
         $readyCategorySeoMix = $options['readyCategorySeoMix'];
 
         $builder
-            ->add('urls', UrlListType::class, [
-                'required' => true,
-                'route_name' => 'front_category_seo',
-                'entity_id' => $readyCategorySeoMix?->getId(),
-                'label' => 'URL Settings',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('h1', TextType::class, [
-                'label' => 'Heading (H1)',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
+            ->add('seoGroup', SeoGroupType::class, [
+                'h1_required' => true,
+                'domain_id' => $options['domain_id'],
+                'url_list_options' => [
+                    'required' => true,
+                    'route_name' => 'front_category_seo',
+                    'entity_id' => $readyCategorySeoMix?->getId(),
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
                 ],
             ])
             ->add('showInCategory', YesNoType::class, [
@@ -56,16 +51,6 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
             ->add('description', CKEditorType::class, [
                 'label' => 'Category description',
                 'required' => false,
-            ])
-            ->add('title', TextType::class, [
-                'label' => 'Page title',
-                'required' => false,
-                'attr' => ['data-js-recommended-length' => 60],
-            ])
-            ->add('metaDescription', TextareaType::class, [
-                'label' => 'Meta description',
-                'required' => false,
-                'attr' => ['data-js-recommended-length' => 155],
             ])
             ->add($this->createImageGroup($builder, $readyCategorySeoMix))
             ->add('categorySeoFilterFormTypeAllQueriesJson', HiddenType::class)
@@ -108,9 +93,10 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['readyCategorySeoMix', 'new_combination_url'])
+            ->setRequired(['readyCategorySeoMix', 'new_combination_url', 'domain_id'])
             ->addAllowedTypes('readyCategorySeoMix', [ReadyCategorySeoMix::class, 'null'])
             ->addAllowedTypes('new_combination_url', 'string')
+            ->addAllowedTypes('domain_id', 'int')
             ->setDefaults([
                 'data_class' => ReadyCategorySeoMixData::class,
                 'attr' => ['novalidate' => 'novalidate'],

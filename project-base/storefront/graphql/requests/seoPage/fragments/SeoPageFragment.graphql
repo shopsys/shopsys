@@ -1,8 +1,8 @@
 fragment SeoPageFragment on SeoPage {
     __typename
-    title
-    metaDescription
-    canonicalUrl
+    seo {
+        ...SeoAttributesFragment
+    }
     ogTitle
     ogDescription
     ogImage {

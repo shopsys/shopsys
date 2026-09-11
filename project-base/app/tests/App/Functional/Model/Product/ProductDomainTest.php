@@ -49,9 +49,9 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     {
         $productData = $this->productDataFactory->create();
 
-        $productData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $productData->seoMetaDescriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
-        $productData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $productData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $productData->seo[self::SECOND_DOMAIN_ID]->metaDescription = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
+        $productData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
         $productData->descriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->catnum = '123';
@@ -86,9 +86,9 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     {
         $productData = $this->productDataFactory->create();
 
-        $productData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $productData->seoMetaDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
-        $productData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $productData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $productData->seo[self::FIRST_DOMAIN_ID]->metaDescription = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
+        $productData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
         $productData->descriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->catnum = '123';
