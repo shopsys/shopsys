@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -32,11 +33,15 @@ class ProductVideoTranslations
     protected $productVideo;
 
     /**
-     * @var string
+     * @var string|null
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', nullable: true)]
-    protected $description;
+    protected $description {
+        set {
+            $this->description = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @var string
@@ -70,7 +75,7 @@ class ProductVideoTranslations
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription()
     {
@@ -78,11 +83,11 @@ class ProductVideoTranslations
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = $description;
     }
 
     /**

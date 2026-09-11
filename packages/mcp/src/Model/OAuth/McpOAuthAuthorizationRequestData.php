@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Model\OAuth;
 
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Symfony\Component\HttpFoundation\Request;
 
 class McpOAuthAuthorizationRequestData
@@ -21,10 +22,10 @@ class McpOAuthAuthorizationRequestData
     {
         $authorizationRequestData = new self();
         $query = $request->query->all();
-        $authorizationRequestData->clientId = ArrayHelper::getStringOrNull($query, 'client_id');
-        $authorizationRequestData->codeChallenge = ArrayHelper::getStringOrNull($query, 'code_challenge');
-        $authorizationRequestData->redirectUri = ArrayHelper::getStringOrNull($query, 'redirect_uri');
-        $authorizationRequestData->state = ArrayHelper::getStringOrNull($query, 'state');
+        $authorizationRequestData->clientId = ExtendedClassNameResolver::resolve(ArrayHelper::class)::getStringOrNull($query, 'client_id');
+        $authorizationRequestData->codeChallenge = ExtendedClassNameResolver::resolve(ArrayHelper::class)::getStringOrNull($query, 'code_challenge');
+        $authorizationRequestData->redirectUri = ExtendedClassNameResolver::resolve(ArrayHelper::class)::getStringOrNull($query, 'redirect_uri');
+        $authorizationRequestData->state = ExtendedClassNameResolver::resolve(ArrayHelper::class)::getStringOrNull($query, 'state');
 
         return $authorizationRequestData;
     }

@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Monolog\Logger;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
@@ -82,8 +83,8 @@ class CronModuleExecutor
             $this->logger->error('Cron was running out of memory, so it was put to sleep to prevent failure.', [
                 'service_id' => $cronConfig->getServiceId(),
                 'instance_name' => $cronConfig->getInstanceName(),
-                'memory_usage' => BytesHelper::convertBytesToReadableString($memoryUsage),
-                'memory_limit' => BytesHelper::convertBytesToReadableString($memoryLimit),
+                'memory_usage' => ExtendedClassNameResolver::resolve(BytesHelper::class)::convertBytesToReadableString($memoryUsage),
+                'memory_limit' => ExtendedClassNameResolver::resolve(BytesHelper::class)::convertBytesToReadableString($memoryLimit),
             ]);
 
             return false;

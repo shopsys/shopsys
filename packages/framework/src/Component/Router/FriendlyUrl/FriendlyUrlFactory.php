@@ -44,7 +44,7 @@ class FriendlyUrlFactory
         }
 
         $nameForUrl = $entityName . ($indexPostfix === null ? '' : '-' . $indexPostfix);
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($nameForUrl);
+        $slug = $this->transformStringHelper->createFriendlyUrlSlug($nameForUrl);
 
         return $this->create($routeName, $entityId, $domainId, $slug);
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
@@ -33,7 +34,7 @@ class OrderStatusFacade
         $this->em->flush();
 
         $this->mailTemplateFacade->createMailTemplateForAllDomains(
-            OrderMail::getMailTemplateNameByStatus($orderStatus),
+            ExtendedClassNameResolver::resolve(OrderMail::class)::getMailTemplateNameByStatus($orderStatus),
             $orderStatus,
         );
 
@@ -129,7 +130,7 @@ class OrderStatusFacade
     {
         foreach ($orderStatusData->name as $name) {
             if ($name !== null && trim($name) !== '') {
-                $code = $this->transformStringHelper->stringToFriendlyUrlSlug($name);
+                $code = $this->transformStringHelper->createFriendlyUrlSlug($name);
 
                 if ($code !== '') {
                     return $code;

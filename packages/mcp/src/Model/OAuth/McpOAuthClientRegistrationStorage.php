@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Model\OAuth;
 
 use Psr\Cache\CacheItemPoolInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 
 class McpOAuthClientRegistrationStorage
 {
@@ -35,7 +36,7 @@ class McpOAuthClientRegistrationStorage
         /** @var array{client_id: string, client_name: string, redirect_uris: array<string>} $registrationData */
         $registrationData = $cacheItem->get();
 
-        return McpOAuthClientRegistrationData::createFromArray($registrationData);
+        return ExtendedClassNameResolver::resolve(McpOAuthClientRegistrationData::class)::createFromArray($registrationData);
     }
 
     protected function getCacheKey(string $clientId): string

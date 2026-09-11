@@ -3,6 +3,7 @@
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
+use Shopsys\CodingStandards\CsFixer\ExtendedClassNameResolverFixer;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\General\ForbiddenSuperGlobalSniff;
@@ -27,6 +28,10 @@ return [
     RemoveUselessDefaultCommentFixer::class,
     AssignmentInConditionSniff::class => [
         __DIR__ . '/src/Kernel.php',
+    ],
+    ExtendedClassNameResolverFixer::class => [
+        __DIR__ . '/src/Kernel.php',
+        __DIR__ . '/tests/*',
     ],
     DisallowMultipleAssignmentsSniff::class => [
         __DIR__ . '/src/Kernel.php',

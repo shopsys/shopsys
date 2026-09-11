@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\CombinedArticle;
 use Elasticsearch\Client;
 use InvalidArgumentException;
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Search\SearchSetting;
@@ -55,13 +56,13 @@ class CombinedArticleElasticsearchRepository
         $blogArticleVersionedIndexName = $this->getBlogArticleIndex($domainId)->getVersionedIndexName();
 
         if ($indexVersion === $blogArticleVersionedIndexName) {
-            return BlogArticleIndex::getName();
+            return ExtendedClassNameResolver::resolve(BlogArticleIndex::class)::getName();
         }
 
         $articleVersionedIndexName = $this->getArticleIndex($domainId)->getVersionedIndexName();
 
         if ($indexVersion === $articleVersionedIndexName) {
-            return ArticleIndex::getName();
+            return ExtendedClassNameResolver::resolve(ArticleIndex::class)::getName();
         }
 
         throw new InvalidArgumentException(sprintf('Unsupported index version "%s"', $indexVersion));
@@ -92,7 +93,7 @@ class CombinedArticleElasticsearchRepository
     protected function getArticleIndex(int $domainId): IndexDefinition
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
-            ArticleIndex::getName(),
+            ExtendedClassNameResolver::resolve(ArticleIndex::class)::getName(),
             $domainId,
         );
     }
@@ -100,7 +101,7 @@ class CombinedArticleElasticsearchRepository
     protected function getBlogArticleIndex(int $domainId): IndexDefinition
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
-            BlogArticleIndex::getName(),
+            ExtendedClassNameResolver::resolve(BlogArticleIndex::class)::getName(),
             $domainId,
         );
     }

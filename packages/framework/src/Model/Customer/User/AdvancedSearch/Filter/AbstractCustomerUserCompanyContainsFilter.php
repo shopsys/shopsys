@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\CustomerUserAdvancedSearchFacade;
 
@@ -36,6 +37,6 @@ abstract class AbstractCustomerUserCompanyContainsFilter extends AbstractAdvance
     #[Override]
     public static function getEntityType(): string
     {
-        return CustomerUserAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(CustomerUserAdvancedSearchFacade::class)::getEntityType();
     }
 }

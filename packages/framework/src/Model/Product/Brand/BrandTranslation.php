@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -33,7 +34,11 @@ class BrandTranslation extends AbstractTranslation
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
-    protected $description;
+    protected $description {
+        set {
+            $this->description = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
+        }
+    }
 
     /**
      * @return string|null
@@ -48,6 +53,6 @@ class BrandTranslation extends AbstractTranslation
      */
     public function setDescription($description): void
     {
-        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = $description;
     }
 }

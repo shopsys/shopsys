@@ -39,6 +39,18 @@ php vendor/bin/ecs check /path/to/project --config=/path/to/project/custom-codin
 
 ### Rules for [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 
+#### `Shopsys/extended_class_name_resolver`
+
+Static method calls on framework classes must resolve the class name first through `ExtendedClassNameResolver`, so the call lands in the project class instead of the framework one:
+
+```php
+ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($value);
+```
+
+The fixer wraps the call and adds the import.
+It applies to every class in the configured namespaces (`namespace_prefixes`, by default `Shopsys\`) except the excluded namespaces (`excluded_namespace_prefixes`, by default the standalone tools that do not ship the framework) and the excluded classes (`excluded_class_names`, by default `Money` and `HiddenMoney`, which are documented as not extendable although they are not final).
+Final classes, enums, `self`, `static`, `parent`, calls inside the class itself and code in the global namespace are left alone.
+
 #### `Shopsys/missing_button_type`
 
 All `<button>` HTML tags in `.html` and `.html.twig` files must have explicit `type` attribute.

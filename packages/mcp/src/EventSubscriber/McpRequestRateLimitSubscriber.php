@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\EventSubscriber;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Component\Security\McpBearerToken;
 use Shopsys\McpBundle\Component\Security\McpRequestMatcher;
@@ -62,7 +63,7 @@ class McpRequestRateLimitSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (McpRequestMatcher::isMcpRuntimeRequest($request)) {
+        if (ExtendedClassNameResolver::resolve(McpRequestMatcher::class)::isMcpRuntimeRequest($request)) {
             $rateLimits = $this->consumeRuntimeRateLimits($request);
         } else {
             $route = $request->attributes->getString('_route');
@@ -113,11 +114,11 @@ class McpRequestRateLimitSubscriber implements EventSubscriberInterface
 
         $authorizationHeader = $request->headers->get(McpBearerToken::HEADER_AUTHORIZATION);
 
-        if ($authorizationHeader === null || !McpBearerToken::hasBearerScheme($authorizationHeader)) {
+        if ($authorizationHeader === null || !ExtendedClassNameResolver::resolve(McpBearerToken::class)::hasBearerScheme($authorizationHeader)) {
             return $rateLimits;
         }
 
-        $tokenParts = McpBearerToken::parseTokenString(McpBearerToken::extractTokenString($authorizationHeader));
+        $tokenParts = ExtendedClassNameResolver::resolve(McpBearerToken::class)::parseTokenString(ExtendedClassNameResolver::resolve(McpBearerToken::class)::extractTokenString($authorizationHeader));
 
         if ($tokenParts !== null) {
             $rateLimits[] = $this->runtimeRateLimiter

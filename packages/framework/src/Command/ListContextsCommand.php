@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Context\AbstractContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
@@ -49,7 +50,7 @@ class ListContextsCommand extends Command
             $requiredContexts = $this->getRequiredContexts($context);
 
             $rows[] = [
-                ReflectionHelper::getShortClassName($contextClass),
+                ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($contextClass),
                 $context->getDescription(),
                 count($requiredContexts) > 0 ? implode(', ', $requiredContexts) : '-',
                 $context->getIdentifier(),
@@ -70,7 +71,7 @@ class ListContextsCommand extends Command
         $requiredContexts = [];
 
         foreach ($context->getRequiredContexts() as $requiredContextClass) {
-            $requiredContexts[] = ReflectionHelper::getShortClassName($requiredContextClass);
+            $requiredContexts[] = ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($requiredContextClass);
         }
 
         return $requiredContexts;

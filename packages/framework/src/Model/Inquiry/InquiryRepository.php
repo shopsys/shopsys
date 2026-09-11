@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Inquiry\Exception\InquiryNotFoundException;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 use SortDirection;
@@ -43,7 +44,7 @@ class InquiryRepository
             ->addSelect('pt.name as productName')
             ->addSelect('CONCAT(i.lastName, \' \', i.firstName) as fullName')
             ->addSelect('CONCAT(i.companyName, \' (\', i.companyNumber, \')\') as company')
-            ->addSelect(PhoneNumberSearchHelper::getDqlExpression('i') . ' as telephone')
+            ->addSelect(ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('i') . ' as telephone')
             ->leftJoin('i.product', 'p')
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $locale)

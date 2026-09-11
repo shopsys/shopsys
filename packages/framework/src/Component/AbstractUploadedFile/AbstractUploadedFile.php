@@ -6,10 +6,12 @@ namespace Shopsys\FrameworkBundle\Component\AbstractUploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Symfony\Component\Clock\DatePoint;
 
@@ -63,7 +65,11 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
-    protected $slug;
+    protected $slug {
+        set {
+            $this->slug = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($value);
+        }
+    }
 
     public function getSlugWithExtension(): string
     {
@@ -108,6 +114,7 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     public function setName($name): void
     {
         $this->name = $name;
+        $this->slug = $name;
     }
 
     public function getNameWithExtension(): string
@@ -130,15 +137,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $slug
-     */
-    #[Override]
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
     /**

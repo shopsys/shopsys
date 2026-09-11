@@ -8,6 +8,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Exception as DbalDriverException;
 use Doctrine\DBAL\Exception as DbalException;
 use Doctrine\DBAL\Result;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 
 class SqlExecutor
 {
@@ -30,7 +31,7 @@ class SqlExecutor
         $sqlQueryValidationResult = $this->sqlQueryValidator->validate($sql);
 
         if (!$sqlQueryValidationResult->isValid || $sqlQueryValidationResult->singleStatementSql === null) {
-            return SqlExecutionResult::createInvalid($sqlQueryValidationResult->errorMessage ?? 'SQL query is invalid.');
+            return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createInvalid($sqlQueryValidationResult->errorMessage ?? 'SQL query is invalid.');
         }
 
         $singleStatementSql = $sqlQueryValidationResult->singleStatementSql;
@@ -41,13 +42,13 @@ class SqlExecutor
             $rows = $this->executeQuery($singleStatementSql);
         } catch (DbalException $exception) {
             if ($this->isSystemUnavailableException($exception)) {
-                return SqlExecutionResult::createInvalid(self::ERROR_SYSTEM_UNAVAILABLE);
+                return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createInvalid(self::ERROR_SYSTEM_UNAVAILABLE);
             }
 
-            return SqlExecutionResult::createInvalid(self::ERROR_EXECUTION_FAILED);
+            return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createInvalid(self::ERROR_EXECUTION_FAILED);
         }
 
-        return SqlExecutionResult::createValid([
+        return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createValid([
             'columnNames' => $rows !== [] ? array_keys(reset($rows)) : [],
             'rows' => $rows,
             'rowCount' => count($rows),

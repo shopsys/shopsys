@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
@@ -84,7 +85,7 @@ class SliderItemFacade
     protected function fixUrlInSliderItemData(SliderItemData $sliderItemData): void
     {
         $domainConfig = $this->domain->getDomainConfigById($sliderItemData->domainId);
-        $sliderItemData->link = UrlNormalizer::normalizeUrl($sliderItemData->link, $domainConfig);
+        $sliderItemData->link = ExtendedClassNameResolver::resolve(UrlNormalizer::class)::normalizeUrl($sliderItemData->link, $domainConfig);
     }
 
     protected function setSliderItemRouteName(SliderItem $sliderItem): void

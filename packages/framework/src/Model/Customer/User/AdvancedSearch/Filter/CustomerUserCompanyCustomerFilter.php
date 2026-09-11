@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Customer\User\AdvancedSearch\CustomerUserAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -60,7 +61,7 @@ class CustomerUserCompanyCustomerFilter extends AbstractAdvancedSearchFilter
     #[Override]
     public static function getEntityType(): string
     {
-        return CustomerUserAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(CustomerUserAdvancedSearchFacade::class)::getEntityType();
     }
 
     /**

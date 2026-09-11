@@ -263,6 +263,6 @@ class ImageFacade
             return null;
         }
 
-        return $this->transformStringHelper->stringToFriendlyUrlSlug($seoEntityName);
+        return $this->transformStringHelper->createFriendlyUrlSlug($seoEntityName);
     }
 }

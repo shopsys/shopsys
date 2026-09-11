@@ -87,7 +87,7 @@ class CategoryTest extends GraphQlTestCase
         $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $locale);
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $electronicsSlug = '/' . $this->transformStringHelper->stringToFriendlyUrlSlug($electronicsName);
+        $electronicsSlug = '/' . $this->transformStringHelper->createFriendlyUrlSlug($electronicsName);
 
         $this->assertSame($electronicsName, $responseData['name']);
         $this->assertSame(t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['description']);

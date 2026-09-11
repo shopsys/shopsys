@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\AddConstraintValidatorsPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterContextsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterCronModulesCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterExtendedClassNamesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterExtendedEntitiesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterImageEntitiesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
-use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectShopsysClassExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterRoleProviderCompilerPass;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Symfony\Component\Config\Resource\DirectoryResource;
@@ -44,6 +45,7 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new RegisterContextsCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 150);
         $container->addCompilerPass(new RegisterRoleProviderCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 140);
         $container->addCompilerPass(new RegisterImageEntitiesCompilerPass());
+        $container->addCompilerPass(new RegisterExtendedClassNamesCompilerPass());
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
         $container->registerForAutoconfiguration(ProductExportDataProviderInterface::class)->addTag('shopsys.product_export_data_provider');
@@ -54,9 +56,17 @@ class ShopsysFrameworkBundle extends Bundle
             return;
         }
 
-        $container->addCompilerPass(new RegisterProjectShopsysClassExtensionsCompilerPass());
-
         $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Component'));
         $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Model'));
+    }
+
+    #[Override]
+    public function boot(): void
+    {
+        parent::boot();
+
+        ExtendedClassNameResolver::setExtendedClassNamesByClassName(
+            $this->container->getParameter(RegisterExtendedClassNamesCompilerPass::EXTENDED_CLASS_NAMES_PARAMETER),
+        );
     }
 }

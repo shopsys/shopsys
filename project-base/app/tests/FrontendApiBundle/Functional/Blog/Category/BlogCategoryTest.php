@@ -83,7 +83,7 @@ class BlogCategoryTest extends GraphQlTestCase
     public function testGetBlogCategoryByUrlSlug(): void
     {
         $firstSubsectionName = t('First subsection %locale%', ['%locale%' => $this->getFirstDomainLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $firstSubsectionSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($firstSubsectionName);
+        $firstSubsectionSlug = $this->transformStringHelper->createFriendlyUrlSlug($firstSubsectionName);
 
         $query = '
             query {

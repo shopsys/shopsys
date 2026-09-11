@@ -1,6 +1,7 @@
 arrange:
     - index.md
     - framework-extensibility.md
+    - static-service-access.md
     - entity-extension.md
     - entity-extension-vs-entity-generation.md
     - extending-form-from-plugin.md

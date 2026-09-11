@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class ProductNotInListUserError extends UserError implements UserErrorWithCodeInterface
@@ -25,6 +26,6 @@ class ProductNotInListUserError extends UserError implements UserErrorWithCodeIn
     #[Override]
     public function getUserErrorCode(): string
     {
-        return ProductListUserErrorCodeHelper::getUserErrorCode($this->productListType, static::CODE);
+        return ExtendedClassNameResolver::resolve(ProductListUserErrorCodeHelper::class)::getUserErrorCode($this->productListType, static::CODE);
     }
 }

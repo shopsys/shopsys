@@ -65,16 +65,16 @@ class FriendlyUrlTest extends GraphQlTestCase
     private function getEntityNameByFriendlyUrlProvider(): array
     {
         $canonName = t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $canonSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($canonName);
+        $canonSlug = $this->transformStringHelper->createFriendlyUrlSlug($canonName);
 
         $privacyPolicyName = t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $privacyPolicySlug = $this->transformStringHelper->stringToFriendlyUrlSlug($privacyPolicyName);
+        $privacyPolicySlug = $this->transformStringHelper->createFriendlyUrlSlug($privacyPolicyName);
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $electronicsSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($electronicsName);
+        $electronicsSlug = $this->transformStringHelper->createFriendlyUrlSlug($electronicsName);
 
         $canonMg3550Name = t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $canonMg3550Slug = $this->transformStringHelper->stringToFriendlyUrlSlug($canonMg3550Name);
+        $canonMg3550Slug = $this->transformStringHelper->createFriendlyUrlSlug($canonMg3550Name);
 
         return [
             [

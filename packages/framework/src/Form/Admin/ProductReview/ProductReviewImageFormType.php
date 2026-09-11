@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\ProductReview;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData;
 use Symfony\Component\Form\AbstractType;
@@ -85,7 +86,7 @@ final class ProductReviewImageFormType extends AbstractType
         /** @var \Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageData $productReviewImageData */
         $productReviewImageData = $event->getData();
 
-        if (TransformStringHelper::emptyToNull($productReviewImageData->rejectionReason) === null) {
+        if (ExtendedClassNameResolver::resolve(TransformStringHelper::class)::emptyToNull($productReviewImageData->rejectionReason) === null) {
             $form->get('rejectionReason')->addError(new FormError(t('Please enter reason for photo rejection')));
         }
     }

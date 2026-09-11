@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\GiftVoucher;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\GiftVoucher\Exception\GiftVoucherNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -90,8 +91,8 @@ class GiftVoucherRepository
         if ($searchText !== null && $searchText !== '') {
             $queryBuilder
                 ->andWhere('LOWER(gv.code) LIKE LOWER(:codeSearchText) OR LOWER(gv.customerEmail) LIKE LOWER(:searchText)')
-                ->setParameter('codeSearchText', '%' . DatabaseSearchingHelper::getLikeSearchString($normalizedCodeSearchText ?? $searchText) . '%')
-                ->setParameter('searchText', '%' . DatabaseSearchingHelper::getLikeSearchString($searchText) . '%');
+                ->setParameter('codeSearchText', '%' . ExtendedClassNameResolver::resolve(DatabaseSearchingHelper::class)::getLikeSearchString($normalizedCodeSearchText ?? $searchText) . '%')
+                ->setParameter('searchText', '%' . ExtendedClassNameResolver::resolve(DatabaseSearchingHelper::class)::getLikeSearchString($searchText) . '%');
         }
 
         return $queryBuilder;

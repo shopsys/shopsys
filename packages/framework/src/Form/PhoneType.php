@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form;
 
 use libphonenumber\PhoneNumberUtil;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Country\CountryFlag;
 use Shopsys\FrameworkBundle\Form\Admin\PhonePrefix\CountryDialCodeTransformer;
 use Shopsys\FrameworkBundle\Form\Constraints\PhoneNumber;
@@ -196,7 +197,7 @@ final class PhoneType extends AbstractType
 
         return sprintf(
             '%s %s (%s)',
-            CountryFlag::getFlagEmoji($countryDialCode->code),
+            ExtendedClassNameResolver::resolve(CountryFlag::class)::getFlagEmoji($countryDialCode->code),
             $countryDialCode->dialCode,
             Countries::getName($countryDialCode->code),
         );

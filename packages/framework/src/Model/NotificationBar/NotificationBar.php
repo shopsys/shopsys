@@ -32,7 +32,11 @@ class NotificationBar implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -88,7 +92,7 @@ class NotificationBar implements DomainSeparatedEntityInterface
 
     protected function setData(NotificationBarData $notificationBarData): void
     {
-        $this->uuid = $notificationBarData->uuid ?? Uuid::uuid4()->toString();
+        $this->uuid = $notificationBarData->uuid;
         $this->domainId = $notificationBarData->domainId;
         $this->text = $notificationBarData->text;
         $this->validityFrom = $notificationBarData->validityFrom;

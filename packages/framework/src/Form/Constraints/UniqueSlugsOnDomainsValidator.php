@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
@@ -61,7 +62,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
             $domainConfig = $this->domain->getDomainConfigById($domainId);
-            $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
+            $slug = ExtendedClassNameResolver::resolve(FriendlyUrlSlugNormalizer::class)::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
 
             $domainRouter = $this->domainRouterFactory->getRouter($domainId);
 
@@ -89,7 +90,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
-            $slug = FriendlyUrlSlugNormalizer::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
+            $slug = ExtendedClassNameResolver::resolve(FriendlyUrlSlugNormalizer::class)::normalize((string)$urlData[UrlListData::FIELD_SLUG]);
 
             if (!array_key_exists($domainId, $slugsCountByDomainId)) {
                 $slugsCountByDomainId[$domainId] = [];

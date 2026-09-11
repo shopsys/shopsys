@@ -12,9 +12,4 @@ interface UploadedFileInterface
      * @param mixed $name
      */
     public function setName($name): void;
-
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug): void;
 }

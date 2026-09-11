@@ -89,6 +89,7 @@ use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
+use Shopsys\CodingStandards\CsFixer\ExtendedClassNameResolverFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\CsFixer\MissingLinkRelNoopenerFixer;
@@ -168,6 +169,7 @@ return ECSConfig::configure()
         NullableTypeForNullDefaultValueSniff::class,
         ReturnTypeHintSpacingSniff::class,
         InheritDocFormatFixer::class,
+        ExtendedClassNameResolverFixer::class,
         ForbiddenDumpFixer::class,
         MissingButtonTypeFixer::class,
         MissingLinkRelNoopenerFixer::class,

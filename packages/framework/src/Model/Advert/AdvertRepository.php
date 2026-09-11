@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use LogicException;
 use Psr\Clock\ClockInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
@@ -40,7 +41,7 @@ class AdvertRepository
     ): QueryBuilder {
         if ($category === null) {
             foreach ($positionNames as $positionName) {
-                if (AdvertPositionRegistry::isCategoryPosition($positionName)) {
+                if (ExtendedClassNameResolver::resolve(AdvertPositionRegistry::class)::isCategoryPosition($positionName)) {
                     throw new LogicException('Cannot retrieve advert on product list page without setting category.');
                 }
             }

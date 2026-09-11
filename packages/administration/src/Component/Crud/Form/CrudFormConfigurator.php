@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Crud\Form;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Form\Exception\CrudFormAlreadyConfiguredException;
 use Shopsys\AdministrationBundle\Component\Crud\Form\Exception\CrudFormNotConfiguredException;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -48,7 +49,7 @@ class CrudFormConfigurator
     public function useFormType(string $formTypeClass, array $options = []): void
     {
         if ($this->mode !== CrudFormMode::UNCONFIGURED) {
-            throw CrudFormAlreadyConfiguredException::cannotSwitchMode($this->mode);
+            throw ExtendedClassNameResolver::resolve(CrudFormAlreadyConfiguredException::class)::cannotSwitchMode($this->mode);
         }
 
         $this->formTypeClass = $formTypeClass;
@@ -64,7 +65,7 @@ class CrudFormConfigurator
     public function useBuilder(): FormBuilderInterface
     {
         if ($this->mode === CrudFormMode::FORM_TYPE) {
-            throw CrudFormAlreadyConfiguredException::cannotSwitchMode($this->mode);
+            throw ExtendedClassNameResolver::resolve(CrudFormAlreadyConfiguredException::class)::cannotSwitchMode($this->mode);
         }
 
         if ($this->builder === null) {
@@ -84,7 +85,7 @@ class CrudFormConfigurator
     public function setFormOption(string $name, mixed $value): static
     {
         if ($this->builder !== null) {
-            throw CrudFormAlreadyConfiguredException::cannotSetOptionAfterBuilderCreated();
+            throw ExtendedClassNameResolver::resolve(CrudFormAlreadyConfiguredException::class)::cannotSetOptionAfterBuilderCreated();
         }
 
         $this->formOptions[$name] = $value;

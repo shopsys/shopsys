@@ -109,12 +109,16 @@ class DeliveryAddress
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
         $this->customer = $deliveryAddressData->customer;
-        $this->uuid = $deliveryAddressData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $deliveryAddressData->uuid;
         $this->setData($deliveryAddressData);
     }
 

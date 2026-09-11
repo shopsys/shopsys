@@ -131,7 +131,11 @@ class ProductDomain
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'integer')]
-    protected $orderingPriority;
+    protected $orderingPriority {
+        set {
+            $this->orderingPriority = (int)$value;
+        }
+    }
 
     /**
      * @var bool

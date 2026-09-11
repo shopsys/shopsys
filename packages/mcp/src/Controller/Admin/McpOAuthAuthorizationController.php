@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
@@ -30,7 +31,7 @@ class McpOAuthAuthorizationController extends AdminBaseController
     #[Route(path: '/superadmin/mcp-server/authorize/', name: McpRouteName::ADMIN_MCP_OAUTH_AUTHORIZE, methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function authorizeAction(Request $request): Response
     {
-        $authorizationRequestData = McpOAuthAuthorizationRequestData::createFromRequest($request);
+        $authorizationRequestData = ExtendedClassNameResolver::resolve(McpOAuthAuthorizationRequestData::class)::createFromRequest($request);
         $form = $this->createForm(McpOauthAuthorizationFormType::class, $authorizationRequestData);
         $form->handleRequest($request);
 

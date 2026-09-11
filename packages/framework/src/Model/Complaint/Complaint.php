@@ -37,7 +37,11 @@ class Complaint implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -204,7 +208,7 @@ class Complaint implements DomainSeparatedEntityInterface
     {
         $this->createdAt = $complaintData->createdAt;
 
-        $this->uuid = $complaintData->uuid ?? Uuid::uuid4()->toString();
+        $this->uuid = $complaintData->uuid;
         $this->number = $complaintData->number;
         $this->domainId = $complaintData->domainId;
         $this->order = $complaintData->order;
