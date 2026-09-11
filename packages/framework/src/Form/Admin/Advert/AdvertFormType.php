@@ -187,7 +187,7 @@ final class AdvertFormType extends AbstractType
                 'label' => 'Display date TO',
             ])
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_advert_list',
+                'back_route' => 'admin_crud_advert_list',
                 'entity' => $options['advert'],
             ]);
     }

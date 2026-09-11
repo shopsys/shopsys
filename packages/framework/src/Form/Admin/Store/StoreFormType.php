@@ -67,7 +67,7 @@ final class StoreFormType extends AbstractType
             ->add($this->createMapGroup($builder))
             ->add($this->createImagesGroup($builder, $options))
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_store_list',
+                'back_route' => 'admin_crud_store_list',
                 'entity' => $options['store'],
             ]);
     }
@@ -203,7 +203,7 @@ final class StoreFormType extends AbstractType
                 'label' => 'Load coordinates by address',
                 'attr' => [
                     'class' => 'btn btn-primary js-load-store-coordinates',
-                    'data-load-coordinates-url' => $this->urlGenerator->generate('admin_store_loadcoordinates'),
+                    'data-load-coordinates-url' => $this->urlGenerator->generate('admin_crud_store_load_coordinates'),
                 ],
             ]);
         }

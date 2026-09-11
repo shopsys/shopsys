@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 
@@ -70,8 +69,4 @@ class NotificationBarFacade
         return $this->notificationBarRepository->findVisibleAndValidByDomainId($domainId);
     }
 
-    public function getAllByDomainIdQueryBuilderForGrid(int $domainId): QueryBuilder
-    {
-        return $this->notificationBarRepository->getAllByDomainIdQueryBuilderForGrid($domainId);
-    }
 }

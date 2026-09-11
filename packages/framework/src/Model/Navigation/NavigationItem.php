@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -16,7 +17,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'navigation_items')]
 #[ORM\Index(name: 'domain_id_idx', columns: ['domain_id'])]
 #[ORM\Entity]
-class NavigationItem implements OrderableEntityInterface, DomainSeparatedEntityInterface
+class NavigationItem implements OrderableEntityInterface, DomainSeparatedEntityInterface, Presentable
 {
     /**
      * @var int
@@ -113,14 +114,6 @@ class NavigationItem implements OrderableEntityInterface, DomainSeparatedEntityI
     }
 
     /**
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
      * @param int $position
      */
     #[Override]
@@ -160,5 +153,11 @@ class NavigationItem implements OrderableEntityInterface, DomainSeparatedEntityI
     public function getRouteName()
     {
         return $this->routeName;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName();
     }
 }

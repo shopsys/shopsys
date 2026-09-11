@@ -32,9 +32,6 @@ class SideMenuBuilder
     public const string NEW_CUSTOMER_USER = 'customerUserNew';
     public const string EDIT_DELIVERY_ADDRESS = 'deliverAddressEdit';
     public const string NEW_DELIVER_ADDRESS = 'deliverAddressNew';
-    public const string LIST_SALES_REPRESENTATIVE = 'salesRepresentatives';
-    public const string NEW_SALES_REPRESENTATIVE = 'salesRepresentativeNew';
-    public const string EDIT_SALES_REPRESENTATIVE = 'salesRepresentativeEdit';
     public const string LIST_NEWSLETTER = 'newsletter';
     public const string LIST_PROMO_CODE = 'promo_codes';
     public const string LIST_PROMO_CODE_BATCH = 'admin_promocode_listmassgeneratebatch';
@@ -60,10 +57,6 @@ class SideMenuBuilder
     public const string NEW_CATEGORY = 'new';
     public const string EDIT_CATEGORY = 'edit';
     public const string ROOT_PRICING = 'pricing';
-    public const string LIST_PRICE_LIST = 'price_list';
-    public const string NEW_PRICE_LIST = 'new';
-    public const string EDIT_PRICE_LIST = 'edit';
-    public const string IMPORT_PRICE_LIST = 'import';
     public const string LIST_PRICING_GROUP = 'pricing_groups';
     public const string LIST_VAT = 'vat';
     public const string FREE_TRANSPORT_AND_PAYMENT = 'free_transport_and_payment';
@@ -75,9 +68,6 @@ class SideMenuBuilder
     public const string LIST_ARTICLE = 'articles';
     public const string NEW_ARTICLE = 'new';
     public const string EDIT_ARTICLE = 'edit';
-    public const string LIST_ADVERT = 'adverts';
-    public const string NEW_ADVERT = 'new';
-    public const string EDIT_ADVERT = 'edit';
     public const string LIST_BESTSELLING_PRODUCT = 'bestselling_products';
     public const string DETAIL_BESTSELLING_PRODUCT = 'edit';
     public const string SECTION_BLOG = 'blog';
@@ -87,18 +77,9 @@ class SideMenuBuilder
     public const string LIST_BLOG_ARTICLE = 'blogArticles';
     public const string NEW_BLOG_ARTICLE = 'newBlogArticles';
     public const string EDIT_BLOG_ARTICLE = 'editBlogArticles';
-    public const string LIST_NAVIGATION = 'navigation';
-    public const string EDIT_NAVIGATION = 'navigation_edit';
-    public const string NEW_NAVIGATION = 'navigation_new';
     public const string SECTION_HOMEPAGE = 'homepage';
-    public const string LIST_BANNER = 'banners';
-    public const string NEW_BANNER = 'new_page';
-    public const string EDIT_BANNER = 'edit_page';
     public const string LIST_PROMOTED_PRODUCT = 'promoted_products';
     public const string LIST_PROMOTED_CATEGORY = 'promoted_categories';
-    public const string LIST_NOTIFICATION_BAR = 'notification_bar';
-    public const string NEW_NOTIFICATION_BAR = 'notification_bar_new';
-    public const string EDIT_NOTIFICATION_BAR = 'notification_bar_edit';
     public const string ORDER_CONFIRMATION = 'order_confirmation';
     public const string SECTION_LEGAL = 'legal';
     public const string TERMS_AND_CONDITIONS = 'terms_and_conditions';
@@ -142,9 +123,6 @@ class SideMenuBuilder
     public const string NEW_PARAMETER = 'parameters_new';
     public const string EDIT_PARAMETER = 'parameters_edit';
     public const string EDIT_PARAMETERS_VALUE = 'parameters_values_edit';
-    public const string LIST_PARAMETER_GROUP = 'parametergroups';
-    public const string NEW_PARAMETER_GROUP = 'parametergroups_new';
-    public const string EDIT_PARAMETER_GROUP = 'parametergroups_edit';
     public const string LIST_ORDER_STATUS = 'order_statuses';
     public const string LIST_COMPLAINT_STATUS = 'complaint_statuses';
     public const string LIST_BRAND = 'brands';
@@ -157,13 +135,6 @@ class SideMenuBuilder
     public const string LIST_PHONE_PREFIX_SETTINGS = 'phone_prefix_settings';
     public const string LIST_PARAMETER_VALUE = 'parameter_values';
     public const string EDIT_PARAMETER_VALUE = 'parameter_values_edit';
-    public const string LIST_STORE = 'stores';
-    public const string NEW_STORE = 'new_store';
-    public const string EDIT_STORE = 'edit_store';
-    public const string LIST_CLOSED_DAY = 'closed_day';
-    public const string NEW_CLOSED_DAY = 'closed_day_new';
-    public const string EDIT_CLOSED_DAY = 'closed_day_edit';
-    public const string HOLIDAYS_IMPORT = 'closed_day_holidaysimport';
     public const string SECTION_SEO = 'seo';
     public const string SEO = 'seo';
     public const string ROBOTS = 'robots';
@@ -370,21 +341,6 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
-        $salesRepresentativeMenu = $menu->addChild(static::LIST_SALES_REPRESENTATIVE, [
-            'route' => 'admin_salesrepresentative_list',
-            'label' => t('Sales representatives'),
-        ]);
-        $salesRepresentativeMenu->addChild(static::NEW_SALES_REPRESENTATIVE, [
-            'route' => 'admin_salesrepresentative_new',
-            'label' => t('New sales representative'),
-            'display' => false,
-        ]);
-        $salesRepresentativeMenu->addChild(static::EDIT_SALES_REPRESENTATIVE, [
-            'route' => 'admin_salesrepresentative_edit',
-            'display' => false,
-            'label' => t('Editing sales representative'),
-        ]);
-
         $menu->addChild(static::LIST_NEWSLETTER, [
             'route' => 'admin_newsletter_list',
             'label' => t('Email newsletter'),
@@ -523,20 +479,6 @@ class SideMenuBuilder
         $menu = $this->menuFactory->createItem(static::ROOT_PRICING, ['label' => t('Pricing')]);
         $menu->setExtra('icon', 'tag');
 
-        $priceListMenu = $menu->addChild(static::LIST_PRICE_LIST, ['route' => 'admin_pricelist_list', 'label' => t('Price lists')]);
-        $priceListMenu->addChild(
-            static::NEW_PRICE_LIST,
-            ['route' => 'admin_pricelist_new', 'label' => t('New price list'), 'display' => false],
-        );
-        $priceListMenu->addChild(
-            static::EDIT_PRICE_LIST,
-            ['route' => 'admin_pricelist_edit', 'label' => t('Editing price list'), 'display' => false],
-        );
-        $priceListMenu->addChild(
-            static::IMPORT_PRICE_LIST,
-            ['route' => 'admin_pricelist_import', 'label' => t('Import price list'), 'display' => false],
-        );
-
         $menu->addChild(static::LIST_PRICING_GROUP, ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
         $menu->addChild(static::LIST_VAT, ['route' => 'admin_vat_list', 'label' => t('VAT')]);
         $menu->addChild(
@@ -584,19 +526,6 @@ class SideMenuBuilder
             ['route' => 'admin_article_edit', 'label' => t('Editing article'), 'display' => false],
         );
 
-        $advertsMenu = $menu->addChild(
-            static::LIST_ADVERT,
-            ['route' => 'admin_advert_list', 'label' => t('Advertising system')],
-        );
-        $advertsMenu->addChild(
-            static::NEW_ADVERT,
-            ['route' => 'admin_advert_new', 'label' => t('New advertising'), 'display' => false],
-        );
-        $advertsMenu->addChild(
-            static::EDIT_ADVERT,
-            ['route' => 'admin_advert_edit', 'label' => t('Editing advertising'), 'display' => false],
-        );
-
         $bestsellingProductsMenu = $menu->addChild(
             static::LIST_BESTSELLING_PRODUCT,
             ['route' => 'admin_bestsellingproduct_list', 'label' => t('Bestsellers')],
@@ -616,24 +545,12 @@ class SideMenuBuilder
         $blogArticles->addChild(static::NEW_BLOG_ARTICLE, ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
         $blogArticles->addChild(static::EDIT_BLOG_ARTICLE, ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
-        $navigationMenu = $menu->addChild(static::LIST_NAVIGATION, ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
-        $navigationMenu->addChild(static::EDIT_NAVIGATION, ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editing item')]);
-        $navigationMenu->addChild(static::NEW_NAVIGATION, ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
-
         $homepageMenu = $menu->addChild(static::SECTION_HOMEPAGE, ['label' => t('Home page')]);
-
-        $bannersMenu = $homepageMenu->addChild(static::LIST_BANNER, ['route' => 'admin_slider_list', 'label' => t('Banners')]);
-        $bannersMenu->addChild(static::NEW_BANNER, ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false]);
-        $bannersMenu->addChild(static::EDIT_BANNER, ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false]);
 
         $homepageMenu->addChild(static::LIST_PROMOTED_PRODUCT, ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
         $homepageMenu->addChild(static::LIST_PROMOTED_CATEGORY, ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
 
         $menu->addChild(static::AUTOCOMPLETE_SETTING, ['route' => 'admin_autocomplete_setting', 'label' => t('Autocomplete favorites')]);
-
-        $notificationBarMenu = $menu->addChild(static::LIST_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
-        $notificationBarMenu->addChild(static::NEW_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
-        $notificationBarMenu->addChild(static::EDIT_NOTIFICATION_BAR, ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
 
         $menu->addChild(static::ORDER_CONFIRMATION, ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
 
@@ -795,10 +712,6 @@ class SideMenuBuilder
         $parametersMenu->addChild(static::EDIT_PARAMETER, ['route' => 'admin_parameter_edit', 'display' => false, 'label' => t('Editing parameter')]);
         $parametersMenu->addChild(static::EDIT_PARAMETERS_VALUE, ['route' => 'admin_parametervalues_edit', 'display' => false, 'label' => t('Parameter values')]);
 
-        $parameterGroupsMenu = $listsMenu->addChild(static::LIST_PARAMETER_GROUP, ['route' => 'admin_parametergroup_list', 'label' => t('Parameter groups')]);
-        $parameterGroupsMenu->addChild(static::NEW_PARAMETER_GROUP, ['route' => 'admin_parametergroup_new', 'display' => false, 'label' => t('New parameter group')]);
-        $parameterGroupsMenu->addChild(static::EDIT_PARAMETER_GROUP, ['route' => 'admin_parametergroup_edit', 'display' => false, 'label' => t('Editing parameter group')]);
-
         $listsMenu->addChild(
             static::LIST_ORDER_STATUS,
             ['route' => 'admin_orderstatus_list', 'label' => t('Status of orders')],
@@ -833,15 +746,6 @@ class SideMenuBuilder
 
         $parameterValueMenu = $listsMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Parameter value of type color')]);
         $parameterValueMenu->addChild(static::EDIT_PARAMETER_VALUE, ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
-
-        $storeMenu = $listsMenu->addChild(static::LIST_STORE, ['route' => 'admin_store_list', 'label' => t('Stores')]);
-        $storeMenu->addChild(static::NEW_STORE, ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
-        $storeMenu->addChild(static::EDIT_STORE, ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
-
-        $closedDayMenu = $listsMenu->addChild(static::LIST_CLOSED_DAY, ['route' => 'admin_closedday_list', 'label' => t('Holidays and internal days')]);
-        $closedDayMenu->addChild(static::NEW_CLOSED_DAY, ['route' => 'admin_closedday_new', 'label' => t('New closed day'), 'display' => false]);
-        $closedDayMenu->addChild(static::EDIT_CLOSED_DAY, ['route' => 'admin_closedday_edit', 'label' => t('Holiday / internal day detail'), 'display' => false]);
-        $closedDayMenu->addChild(static::HOLIDAYS_IMPORT, ['route' => 'admin_closedday_holidaysimport', 'label' => t('Holidays import'), 'display' => false]);
 
         $seoMenu = $menu->addChild(static::SECTION_SEO, ['label' => t('SEO')]);
         $seoMenu->addChild(static::SEO, ['route' => 'admin_seo_index', 'label' => t('SEO')]);

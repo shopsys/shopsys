@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Csv\CsvHelper;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
@@ -42,11 +41,6 @@ class PriceListFacade
     public function getById(int $id): PriceList
     {
         return $this->priceListRepository->getById($id);
-    }
-
-    public function getPriceListGridQueryBuilder(): QueryBuilder
-    {
-        return $this->priceListRepository->getPriceListGridQueryBuilder();
     }
 
     public function create(PriceListData $priceListData): PriceList

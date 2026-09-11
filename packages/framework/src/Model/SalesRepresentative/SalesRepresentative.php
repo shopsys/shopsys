@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -15,7 +17,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'sales_representatives')]
 #[ORM\Entity]
 #[EntityImage]
-class SalesRepresentative
+class SalesRepresentative implements Presentable
 {
     /**
      * @var int
@@ -195,5 +197,11 @@ class SalesRepresentative
     public function getPresentationalLabel()
     {
         return $this->hasNoneOfNamesSet() ? (string)$this->getId() : $this->getFullName();
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getPresentationalLabel();
     }
 }

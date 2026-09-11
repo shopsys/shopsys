@@ -56,3 +56,14 @@ More configuration options can be found in the [Crud Config](../reference/crud-c
 
 - Continue with [Configuring List Page](configure-list-page.md) to customize your datagrid
 - Learn how to [Add Create, Edit, and Delete Actions](adding-create-edit-and-delete-actions.md)
+
+## Migrating a legacy admin controller
+
+A legacy `AdminBaseController` with list/new/edit/delete actions is replaced by one CRUD controller and one handler, see `Shopsys\AdministrationBundle\Controller\ParameterGroupController` for the reference conversion.
+
+1. create the CRUD controller with `#[CrudController(<Entity>::class)]` and `#[ForRole(AdminRoleConstant::<existing role>)]`, keep the URL base with `setRoutePrefix()` and the menu position with `setMenuSection(..., ['after' => ...])`
+2. create a handler implementing `CrudHandlerInterface` that delegates to the existing facade and data factory; preset the selected domain in `createData()` when the list uses `setListDomainControl()`
+3. make the entity implement `Shopsys\FrameworkBundle\Component\Utils\Presentable`
+4. port the grid columns to `configureDatagrid()` — use `virtual` + `transform` for computed values and `template` for HTML cells
+5. keep extra pages (import, export, ...) as `#[Route]` methods on the CRUD controller named `admin_crud_<snake>_<action>` and expose them with `configureActions()`
+6. delete the legacy controller, its grid factory, its `content/<name>/{list,listGrid,new,edit,detail}.html.twig` templates and its `SideMenuBuilder` items, then update every reference to the old route names (`back_route` of the form type, other templates, smoke test customizations) and describe the renamed routes in the upgrade notes

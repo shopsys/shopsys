@@ -63,7 +63,7 @@ final class ClosedDayFormType extends AbstractType
                 'multiple' => true,
             ])
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_closedday_list',
+                'back_route' => 'admin_crud_closed_day_list',
                 'entity' => $options['closed_day'],
             ]);
     }

@@ -80,7 +80,7 @@ final class PriceListFormType extends AbstractType
             ]);
 
         $builder->add('actionBar', ActionBarType::class, [
-            'back_route' => 'admin_pricelist_list',
+            'back_route' => 'admin_crud_price_list_list',
             'entity' => $options['priceList'],
         ]);
     }

@@ -10,6 +10,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -22,7 +23,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 #[EntityImage('web')]
 #[EntityImage('mobile')]
-class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInterface
+class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInterface, Presentable
 {
     /**
      * @var int
@@ -169,14 +170,6 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     }
 
     /**
-     * @return int|null
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
      * @param int $position
      */
     #[Override]
@@ -226,27 +219,11 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     }
 
     /**
-     * @param \DateTimeImmutable|null $datetimeVisibleFrom
-     */
-    public function setDatetimeVisibleFrom($datetimeVisibleFrom): void
-    {
-        $this->datetimeVisibleFrom = $datetimeVisibleFrom;
-    }
-
-    /**
      * @return \DateTimeImmutable|null
      */
     public function getDatetimeVisibleTo()
     {
         return $this->datetimeVisibleTo;
-    }
-
-    /**
-     * @param \DateTimeImmutable|null $datetimeVisibleTo
-     */
-    public function setDatetimeVisibleTo($datetimeVisibleTo): void
-    {
-        $this->datetimeVisibleTo = $datetimeVisibleTo;
     }
 
     /**
@@ -263,5 +240,11 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     public function setRouteName($routeName): void
     {
         $this->routeName = $routeName;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName();
     }
 }

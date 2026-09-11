@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterGroupFacade
@@ -47,12 +46,6 @@ class ParameterGroupFacade
     public function getAll(): array
     {
         return $this->parameterRepository->getAllParameterGroups();
-    }
-
-    public function getOrderedParameterGroupsQueryBuilder(
-        string $locale,
-    ): QueryBuilder {
-        return $this->parameterRepository->getOrderedParameterGroupsQueryBuilder($locale);
     }
 
     public function getById(int $parameterGroupId): ParameterGroup

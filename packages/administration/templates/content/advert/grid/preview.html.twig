@@ -1,0 +1,5 @@
+{% if row.type == constant('Shopsys\\FrameworkBundle\\Model\\Advert\\Advert::TYPE_IMAGE') %}
+    {{ image(value, { type: 'web', height: 30 }) }}
+{% else %}
+    {{ '- html -' }}
+{% endif %}
