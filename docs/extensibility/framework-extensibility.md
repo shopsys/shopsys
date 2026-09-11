@@ -21,6 +21,7 @@ provides a signpost of customizations that are easily achievable as well as a li
 - [Implementing a basic data import](../cookbook/basic-data-import.md) to import data to you e-shop from an external source
     - Adding a new cron module and configuring it
 - [Extending the application using standard Symfony techniques](https://symfony.com/doc/current/bundles/override.html)
+- [Overriding static methods of framework services](static-service-access.md) such as the friendly URL slug generation
     - E.g. overriding Twig templates, routes, services, ...
 - [Adding a new advert position](../cookbook/adding-a-new-advert-position.md) to be used in the administration section _Marketing > Advertising system_
 - Open-box modifications in `project-base`
