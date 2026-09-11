@@ -17,7 +17,7 @@ class HeurekaProductDataNotLoadedException extends Exception
         ?Exception $previous = null,
     ) {
         $message = sprintf(
-            '%s of product with ID %d on %s have not been loaded via HeurekaProductDataBatchLoader::loadForProducts().',
+            '%s of product with ID %d on %s have not been loaded via ExtendedClassNameResolver::resolve(HeurekaProductDataBatchLoader::class)::loadForProducts().',
             ucfirst($attribute),
             $product->getId(),
             $domainConfig->getId(),
