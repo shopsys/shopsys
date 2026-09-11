@@ -68,8 +68,8 @@ Extension (#[CrudControllerExtension])        ── same configure*() methods +
 ```
 
 - **Routes** are generated from the controller class name with the `Controller` / `CrudController`
-  suffix stripped: `PriceListController` → `/admin/price-list/`, route names
-  `admin_crud_price_list_{list|detail|create|edit|delete}` (`{entityId}` param). `setRoutePrefix()` adds a segment in front.
+  suffix stripped: `StoreController` → `/admin/store/`, route names
+  `admin_crud_store_{list|detail|create|edit|delete}` (`{entityId}` param). `setRoutePrefix()` adds a segment in front.
 - **Role** `ROLE_CRUD_<CONTROLLER_NAME>` is generated and registered in the role matrix
   automatically. Put `#[ForRole(AdminRoleConstant::ROLE_X)]` on the class to reuse an
   existing role instead — then no own role is registered.
