@@ -32,9 +32,6 @@ class SideMenuBuilder
     public const string NEW_CUSTOMER_USER = 'customerUserNew';
     public const string EDIT_DELIVERY_ADDRESS = 'deliverAddressEdit';
     public const string NEW_DELIVER_ADDRESS = 'deliverAddressNew';
-    public const string LIST_SALES_REPRESENTATIVE = 'salesRepresentatives';
-    public const string NEW_SALES_REPRESENTATIVE = 'salesRepresentativeNew';
-    public const string EDIT_SALES_REPRESENTATIVE = 'salesRepresentativeEdit';
     public const string LIST_NEWSLETTER = 'newsletter';
     public const string LIST_PROMO_CODE = 'promo_codes';
     public const string LIST_PROMO_CODE_BATCH = 'admin_promocode_listmassgeneratebatch';
@@ -353,21 +350,6 @@ class SideMenuBuilder
             'route' => 'admin_delivery_address_new',
             'label' => t('New delivery address'),
             'display' => false,
-        ]);
-
-        $salesRepresentativeMenu = $menu->addChild(static::LIST_SALES_REPRESENTATIVE, [
-            'route' => 'admin_salesrepresentative_list',
-            'label' => t('Sales representatives'),
-        ]);
-        $salesRepresentativeMenu->addChild(static::NEW_SALES_REPRESENTATIVE, [
-            'route' => 'admin_salesrepresentative_new',
-            'label' => t('New sales representative'),
-            'display' => false,
-        ]);
-        $salesRepresentativeMenu->addChild(static::EDIT_SALES_REPRESENTATIVE, [
-            'route' => 'admin_salesrepresentative_edit',
-            'display' => false,
-            'label' => t('Editing sales representative'),
         ]);
 
         $menu->addChild(static::LIST_NEWSLETTER, [
