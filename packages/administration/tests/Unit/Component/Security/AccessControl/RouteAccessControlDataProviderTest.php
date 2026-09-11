@@ -8,7 +8,6 @@ use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider;
@@ -50,10 +49,8 @@ class RouteAccessControlDataProviderTest extends TestCase
         $this->routeCollection = new RouteCollection(); // Use real RouteCollection
         $this->roleRegistry = $this->createStub(RoleRegistryInterface::class);
 
-        // Create real AttributeProcessor with mocked dependencies
-        $accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
-        $this->accessControlRuleFactory = $accessControlRuleFactory;
-        $this->attributeProcessor = new AttributeProcessor($accessControlRuleFactory, new CrudRoleConstantProvider());
+        $this->accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
+        $this->attributeProcessor = new AttributeProcessor();
 
         // Set up role registry to return stub roles for any identifier
         $this->roleRegistry

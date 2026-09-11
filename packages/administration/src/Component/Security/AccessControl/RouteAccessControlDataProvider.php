@@ -211,7 +211,6 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     }
 
     /**
-     * @param class-string $controllerClass
      * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
      */
     private function processRouteRules(
@@ -220,7 +219,9 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
         string $method,
     ): array {
         $reflectionClass = new ReflectionClass($controllerClass);
-        $attributeRules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
+        $attributeRules = $this->accessControlRuleFactory->createFromData(
+            $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method)),
+        );
         $isCrudController = $route->getDefault(CrudRouteProvider::IS_CRUD_CONTROLLER) === true;
 
         if (count($attributeRules) > 0 || $isCrudController === false) {

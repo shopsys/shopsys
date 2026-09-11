@@ -36,4 +36,16 @@ final class AccessControlRuleFactory
             httpMethods: $validatedMethods,
         );
     }
+
+    /**
+     * @param list<\Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleData> $rulesData
+     * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
+     */
+    public function createFromData(array $rulesData): array
+    {
+        return array_map(
+            fn (AccessControlRuleData $ruleData): AccessControlRule => $this->create($ruleData->roleIdentifier, $ruleData->httpMethods),
+            $rulesData,
+        );
+    }
 }
