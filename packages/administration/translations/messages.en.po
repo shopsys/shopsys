@@ -2546,7 +2546,7 @@ msgid "Unredeemed"
 msgstr ""
 
 msgid "Unregistered"
-msgstr "-"
+msgstr ""
 
 msgid "Unused friendly URL list"
 msgstr ""
