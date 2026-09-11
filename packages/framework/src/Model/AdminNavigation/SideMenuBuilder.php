@@ -57,10 +57,6 @@ class SideMenuBuilder
     public const string NEW_CATEGORY = 'new';
     public const string EDIT_CATEGORY = 'edit';
     public const string ROOT_PRICING = 'pricing';
-    public const string LIST_PRICE_LIST = 'price_list';
-    public const string NEW_PRICE_LIST = 'new';
-    public const string EDIT_PRICE_LIST = 'edit';
-    public const string IMPORT_PRICE_LIST = 'import';
     public const string LIST_PRICING_GROUP = 'pricing_groups';
     public const string LIST_VAT = 'vat';
     public const string FREE_TRANSPORT_AND_PAYMENT = 'free_transport_and_payment';
@@ -482,20 +478,6 @@ class SideMenuBuilder
     {
         $menu = $this->menuFactory->createItem(static::ROOT_PRICING, ['label' => t('Pricing')]);
         $menu->setExtra('icon', 'tag');
-
-        $priceListMenu = $menu->addChild(static::LIST_PRICE_LIST, ['route' => 'admin_pricelist_list', 'label' => t('Price lists')]);
-        $priceListMenu->addChild(
-            static::NEW_PRICE_LIST,
-            ['route' => 'admin_pricelist_new', 'label' => t('New price list'), 'display' => false],
-        );
-        $priceListMenu->addChild(
-            static::EDIT_PRICE_LIST,
-            ['route' => 'admin_pricelist_edit', 'label' => t('Editing price list'), 'display' => false],
-        );
-        $priceListMenu->addChild(
-            static::IMPORT_PRICE_LIST,
-            ['route' => 'admin_pricelist_import', 'label' => t('Import price list'), 'display' => false],
-        );
 
         $menu->addChild(static::LIST_PRICING_GROUP, ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
         $menu->addChild(static::LIST_VAT, ['route' => 'admin_vat_list', 'label' => t('VAT')]);
