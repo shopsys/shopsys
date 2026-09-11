@@ -510,12 +510,12 @@ protected $name {
 ```
 
 Use a hook for sanitization, validation of a single property, or a fallback for a missing value.
-Do not use it when the write touches other properties, when the property is a collection or an array, or when the logic needs a service.
+Do not use it when the write touches other properties, when the property is a collection or an array, or when the logic needs a service without a static method.
 
 Keep in mind:
 
 - the hook must assign the property, otherwise Doctrine refuses to map it
-- only static helpers and `$this->` methods are available, services cannot be injected into entities
+- only static helpers and `$this->` methods are available, services cannot be injected into entities, call a static method of a service through [`ExtendedClassNameResolver`](../extensibility/static-service-access.md) so the hook lands in the project class
 - Doctrine never runs hooks, so existing rows are not rewritten when a hook is added
 
 ### Changing a framework hook in your project
