@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\Mapping as ORM;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -47,7 +48,7 @@ class FriendlyUrl implements DomainSeparatedEntityInterface
     #[ORM\Id]
     protected $slug {
         set {
-            $this->slug = FriendlyUrlSlugNormalizer::normalize($value);
+            $this->slug = ExtendedClassNameResolver::resolve(FriendlyUrlSlugNormalizer::class)::normalize($value);
         }
     }
 
