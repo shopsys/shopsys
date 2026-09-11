@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -18,8 +19,10 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Table(name: 'notification_bars')]
 #[ORM\Entity]
 #[EntityImage]
-class NotificationBar implements DomainSeparatedEntityInterface
+class NotificationBar implements DomainSeparatedEntityInterface, Presentable
 {
+    protected const int HUMAN_READABLE_TEXT_MAX_LENGTH = 60;
+
     /**
      * @var int
      */
@@ -171,5 +174,11 @@ class NotificationBar implements DomainSeparatedEntityInterface
     public function isHidden()
     {
         return $this->hidden;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return sprintf('%s (#%d)', mb_strimwidth($this->getPlainText(), 0, static::HUMAN_READABLE_TEXT_MAX_LENGTH, '…'), $this->id);
     }
 }
