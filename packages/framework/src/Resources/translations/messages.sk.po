@@ -2851,6 +2851,9 @@ msgstr "Cenová skupina <strong>{{ name }}</strong> odstránená"
 msgid "Pricing group <strong>{{ name }}</strong> deleted and replaced by group <strong>{{ newName }}</strong>."
 msgstr "Cenová skupina <strong>{{ name }}</strong> bola zmazaná a bola nahradená skupinou <strong>{{ newName }}</strong>."
 
+msgid "Pricing group is used and cannot be deleted without choosing a replacement."
+msgstr "Cenová skupina je používaná a nemôže byť odstránená bez zvolenia náhrady."
+
 msgid "Pricing groups"
 msgstr "Cenové skupiny"
 
@@ -3315,6 +3318,9 @@ msgstr "Zvolený produkt neexistuje."
 
 msgid "Selected promo code doesn't exist."
 msgstr "Zvolený zľavový kupón neexistuje."
+
+msgid "Selected replacement pricing group must be a different pricing group from the same domain."
+msgstr "Zvolená náhradná cenová skupina musí byť iná cenová skupina z tej istej domény."
 
 msgid "Selected sales representative doesn't exist."
 msgstr "Zvolený obchodný zástupca neexistuje."
