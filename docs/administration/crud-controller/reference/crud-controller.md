@@ -228,6 +228,39 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
+## Helper methods
+
+The following helpers are available in the CRUD controller as well as in its extensions (see [Extending existing CRUD Controller](../getting-started/extending-existing-crud-controller.md)).
+They work with the routes of the current CRUD controller, so custom actions do not need to build route names by hand.
+
+### `getCrudRouteName(ActionType $actionType): string`
+
+Returns the route name of the given action, e.g. `admin_crud_order_edit`.
+
+### `generateCrudUrl(ActionType $actionType, int|object|null $entityOrId = null, array $parameters = []): string`
+
+Generates the URL of the given action.
+Actions working with a single record (`DETAIL`, `EDIT`, `DELETE`) expect the entity or its ID as the second argument.
+For CSRF-protected actions (`DELETE`) the CSRF token is added automatically, so the URL is directly usable in links.
+
+```php
+$editUrl = $this->generateCrudUrl(ActionType::EDIT, $order);
+$deleteUrl = $this->generateCrudUrl(ActionType::DELETE, $order->getId());
+```
+
+### `redirectToCrudAction(ActionType $actionType, int|object|null $entityOrId = null, array $parameters = []): RedirectResponse`
+
+Redirects to the given action, accepts the same arguments as `generateCrudUrl()`.
+
+```php
+public function approveAction(int $id): RedirectResponse
+{
+    // ...
+
+    return $this->redirectToCrudAction(ActionType::EDIT, $id);
+}
+```
+
 ## CRUD Config
 
 The `CrudConfig` class is used to configure the behavior of the Crud Controller. It is used in the `configure` method of the Crud Controller.

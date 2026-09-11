@@ -37,9 +37,6 @@ parameters:
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Security/AccessControl/AccessControlDataProviderInterface.php
         -
-            identifier: shipmonk.deadProperty.neverRead
-            path: packages/administration/src/Controller/AbstractCrudControllerExtension.php
-        -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
         -

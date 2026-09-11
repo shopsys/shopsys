@@ -12,12 +12,10 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
-use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
-use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -43,7 +41,7 @@ use Throwable;
 #[AutoconfigureTag('shopsys.admin.crud_controllers')]
 abstract class AbstractCrudController extends AdminBaseController
 {
-    protected Definition $definition;
+    use CrudControllerTrait;
 
     #[Required]
     public DatagridFactory $datagridFactory;
@@ -64,9 +62,6 @@ abstract class AbstractCrudController extends AdminBaseController
     public BreadcrumbOverrider $breadcrumbOverrider;
 
     #[Required]
-    public CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor;
-
-    #[Required]
     public AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade;
 
     #[Required]
@@ -74,11 +69,6 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public Domain $domain;
-
-    public function setDefinition(Definition $definition): void
-    {
-        $this->definition = $definition;
-    }
 
     public function configure(CrudConfig $config): void
     {
@@ -257,9 +247,7 @@ abstract class AbstractCrudController extends AdminBaseController
                     $this->addEditSuccessFlash($entity, $id);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
-                );
+                return $this->redirectToCrudAction(ActionType::LIST);
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->onEditError($entity, $data, $exception), CrudEditHookExtensionInterface::class);
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
@@ -327,9 +315,7 @@ abstract class AbstractCrudController extends AdminBaseController
                     $this->addCreateSuccessFlash($entity);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
-                );
+                return $this->redirectToCrudAction(ActionType::LIST);
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->onCreateError($data, $exception), CrudCreateHookExtensionInterface::class);
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
@@ -408,9 +394,7 @@ abstract class AbstractCrudController extends AdminBaseController
             );
         }
 
-        return $this->redirect(
-            $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
-        );
+        return $this->redirectToCrudAction(ActionType::LIST);
     }
 
     /**
@@ -444,7 +428,7 @@ abstract class AbstractCrudController extends AdminBaseController
             t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was saved successfully.'),
             [
                 'objectName' => $entity->toHumanReadable(),
-                'url' => $this->generateEditUrl($id),
+                'url' => $this->generateCrudUrl(ActionType::EDIT, $id),
             ],
         );
     }
@@ -455,20 +439,7 @@ abstract class AbstractCrudController extends AdminBaseController
             t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was created successfully.'),
             [
                 'objectName' => $entity->toHumanReadable(),
-                'url' => $this->generateEditUrl($this->crudEntityIdentifierExtractor->getId($entity)),
-            ],
-        );
-    }
-
-    private function generateEditUrl(int $id): string
-    {
-        return $this->generateUrl(
-            CrudTransformationHelper::generateRouteName(
-                $this->definition->controllerName,
-                ActionType::EDIT,
-            ),
-            [
-                'id' => $id,
+                'url' => $this->generateCrudUrl(ActionType::EDIT, $entity),
             ],
         );
     }

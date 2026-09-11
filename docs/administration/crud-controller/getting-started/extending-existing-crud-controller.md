@@ -82,6 +82,7 @@ public function configureForm(CrudFormConfigurator $formConfigurator, ?object $e
 
 The extension has access to the `Definition` of the extended controller via `$this->definition`, the same way the controller itself does.
 It contains the resolved config, the entity class, the controller name, and the role constant, so the extension can react to how the controller is configured.
+The [helper methods](../reference/crud-controller.md#helper-methods) for generating URLs and redirecting between the actions of the extended controller are available in the extension as well.
 
 ```php
 // OrderControllerExtension.php
