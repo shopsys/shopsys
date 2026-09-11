@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Config;
 
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 /**
@@ -86,7 +87,7 @@ final readonly class CrudConfigData
             return $this->entityNameSingular;
         }
 
-        return Translator::staticTrans(CrudTransformationHelper::toSingularEntityName($this->entityName));
+        return ExtendedClassNameResolver::resolve(Translator::class)::staticTrans(CrudTransformationHelper::toSingularEntityName($this->entityName));
     }
 
     private function getPluralEntityName(): string
@@ -95,7 +96,7 @@ final readonly class CrudConfigData
             return $this->entityNamePlural;
         }
 
-        return Translator::staticTrans(CrudTransformationHelper::toPluralEntityName($this->entityName));
+        return ExtendedClassNameResolver::resolve(Translator::class)::staticTrans(CrudTransformationHelper::toPluralEntityName($this->entityName));
     }
 
     /**
