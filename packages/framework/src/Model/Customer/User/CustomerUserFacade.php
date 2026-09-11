@@ -375,10 +375,13 @@ class CustomerUserFacade
     }
 
     /**
-     * @return string[]
+     * @param int[] $salesRepresentativeIds
+     * @return array<int, array{count: int, emails: string[]}>
      */
-    public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array
-    {
-        return $this->customerUserRepository->findEmailsOfCustomerUsersUsingSalesRepresentative($salesRepresentativeId);
+    public function getCustomerUserEmailsSummaryIndexedBySalesRepresentativeId(
+        array $salesRepresentativeIds,
+        int $emailsLimit,
+    ): array {
+        return $this->customerUserRepository->getCustomerUserEmailsSummaryIndexedBySalesRepresentativeId($salesRepresentativeIds, $emailsLimit);
     }
 }
