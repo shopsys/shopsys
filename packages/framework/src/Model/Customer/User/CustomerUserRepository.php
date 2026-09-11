@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTimeInterface;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -125,20 +126,47 @@ class CustomerUserRepository
     }
 
     /**
-     * @return string[]
+     * @param int[] $salesRepresentativeIds
+     * @return array<int, array{count: int, emails: string[]}>
      */
-    public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array
-    {
-        $customers = $this->getCustomerUserRepository()
-            ->createQueryBuilder('c')
-            ->select('c')
-            ->where('c.salesRepresentative = :salesRepresentativeId')
-            ->setParameter('salesRepresentativeId', $salesRepresentativeId)
-            ->getQuery()
-            ->getArrayResult();
+    public function getCustomerUserEmailsSummaryIndexedBySalesRepresentativeId(
+        array $salesRepresentativeIds,
+        int $emailsLimit,
+    ): array {
+        $summariesIndexedBySalesRepresentativeId = array_fill_keys($salesRepresentativeIds, ['count' => 0, 'emails' => []]);
 
-        return array_map(function ($item) {
-            return $item['email'];
-        }, $customers);
+        if ($salesRepresentativeIds === []) {
+            return $summariesIndexedBySalesRepresentativeId;
+        }
+
+        $rows = $this->em->getConnection()->fetchAllAssociative(
+            'SELECT ranked_customer_users.sales_representative_id, ranked_customer_users.email, ranked_customer_users.customer_users_count
+            FROM (
+                SELECT
+                    cu.sales_representative_id,
+                    cu.email,
+                    COUNT(*) OVER (PARTITION BY cu.sales_representative_id) AS customer_users_count,
+                    ROW_NUMBER() OVER (PARTITION BY cu.sales_representative_id ORDER BY cu.email) AS email_position
+                FROM customer_users cu
+                WHERE cu.sales_representative_id IN (:salesRepresentativeIds)
+            ) ranked_customer_users
+            WHERE ranked_customer_users.email_position <= :emailsLimit
+            ORDER BY ranked_customer_users.email_position',
+            [
+                'salesRepresentativeIds' => $salesRepresentativeIds,
+                'emailsLimit' => $emailsLimit,
+            ],
+            [
+                'salesRepresentativeIds' => ArrayParameterType::INTEGER,
+            ],
+        );
+
+        foreach ($rows as $row) {
+            $salesRepresentativeId = (int)$row['sales_representative_id'];
+            $summariesIndexedBySalesRepresentativeId[$salesRepresentativeId]['count'] = (int)$row['customer_users_count'];
+            $summariesIndexedBySalesRepresentativeId[$salesRepresentativeId]['emails'][] = $row['email'];
+        }
+
+        return $summariesIndexedBySalesRepresentativeId;
     }
 }
