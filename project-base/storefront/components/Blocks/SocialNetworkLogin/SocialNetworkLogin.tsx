@@ -1,15 +1,18 @@
 import { TypeLoginTypeEnum } from 'graphql/types';
+import type { LastLoginType } from 'store/slices/createUserSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SocialNetworkLoginLink } from './SocialNetworkLoginLink';
 
 type SocialNetworkLoginProps = {
     socialNetworks: TypeLoginTypeEnum[];
     shouldOverwriteCustomerUserCart: boolean | undefined;
+    lastLoginType: LastLoginType | null;
 };
 
 export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
     socialNetworks,
     shouldOverwriteCustomerUserCart,
+    lastLoginType,
 }) => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const productListUuids: string[] = Object.values(usePersistStore((store) => store.productListUuids));
@@ -26,7 +29,14 @@ export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
                     },
                 };
 
-                return <SocialNetworkLoginLink key={socialNetwork} href={url} socialNetwork={socialNetwork} />;
+                return (
+                    <SocialNetworkLoginLink
+                        key={socialNetwork}
+                        href={url}
+                        isLastUsed={lastLoginType === socialNetwork}
+                        socialNetwork={socialNetwork}
+                    />
+                );
             })}
         </div>
     );

@@ -24,7 +24,8 @@ const SocialLoginPage: FC<ServerSidePropsType> = () => {
             storeAuthNotification(domainId, { type: 'social-login-fail', socialNetworkType });
             performAuthHardNavigation(replaceUrl);
         } else {
-            handleActionsAfterLogin(query.showCartMergeInfo === 'true', replaceUrl);
+            const socialNetworkType = getAllowedSocialNetworkType(getStringFromUrlQuery(query.socialNetwork));
+            handleActionsAfterLogin(query.showCartMergeInfo === 'true', replaceUrl, socialNetworkType);
             updateUserEntryState(query.isRegistration === 'true' ? 'registration' : 'login');
         }
     });

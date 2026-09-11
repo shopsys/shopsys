@@ -4,6 +4,8 @@ import {
     TypeLoginMutationVariables,
     useLoginMutation,
 } from 'graphql/requests/auth/mutations/LoginMutation.generated';
+import { TypeLoginTypeEnum } from 'graphql/types';
+import type { LastLoginType } from 'store/slices/createUserSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { OperationResult } from 'urql';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
@@ -32,7 +34,7 @@ export const useLogin = () => {
         );
 
         if (loginResult.data) {
-            handleActionsAfterLogin(loginResult.data.Login.showCartMergeInfo, rewriteUrl);
+            handleActionsAfterLogin(loginResult.data.Login.showCartMergeInfo, rewriteUrl, TypeLoginTypeEnum.Web);
         }
 
         return loginResult;
@@ -43,13 +45,22 @@ export const useLogin = () => {
 
 export const useHandleActionsAfterLogin = () => {
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
+    const updateLastLoginType = usePersistStore((store) => store.updateLastLoginType);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
     const domainConfig = useDomainConfig();
 
-    const handleActionsAfterLogin = (showCartMergeInfo: boolean, rewriteUrl: string | undefined) => {
+    const handleActionsAfterLogin = (
+        showCartMergeInfo: boolean,
+        rewriteUrl: string | undefined,
+        lastLoginType?: LastLoginType,
+    ) => {
         updateCartUuid(null);
         updateProductListUuids({});
+
+        if (lastLoginType !== undefined) {
+            updateLastLoginType(lastLoginType);
+        }
 
         storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');
