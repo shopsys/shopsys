@@ -6,6 +6,7 @@ namespace Tests\App\Smoke\Http;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
+use App\DataFixtures\Demo\ProductReviewDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth;
 use Shopsys\HttpSmokeTesting\Auth\NoAuth;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
@@ -263,6 +265,14 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Use valid order from fixtures and add CSRF token.')
                     ->setParameter('id', $order->getId())
                     ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_crud_product_review_approve', function (RouteConfig $config): void {
+                $review = $this->getPersistentReference(ProductReviewDataFixture::PRODUCT_REVIEW_PENDING_GUEST, domainId: 1, entityClassName: ProductReview::class);
+
+                $config->changeDefaultRequestDataSet('Approving a review needs a CSRF token and redirects back to the list.')
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setParameter('id', $review->getId())
                     ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config): void {

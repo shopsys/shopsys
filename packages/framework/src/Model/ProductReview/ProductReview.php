@@ -244,6 +244,12 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
         $this->setData($productReviewData);
     }
 
+    public function approve(): void
+    {
+        $this->status = ProductReviewStatusEnum::STATUS_APPROVED;
+        $this->rejectionReason = null;
+    }
+
     public function isContentEdited(ProductReviewData $productReviewData): bool
     {
         return $this->firstName !== $productReviewData->firstName
