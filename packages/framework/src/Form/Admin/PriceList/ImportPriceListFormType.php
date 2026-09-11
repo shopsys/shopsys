@@ -49,7 +49,7 @@ final class ImportPriceListFormType extends AbstractType
                 'label' => 'Overwrite Price list',
                 'attr' => [
                     'class' => 'js-import-price-list-select-list',
-                    'data-load-metadata-url' => $this->urlGenerator->generate('admin_pricelist_loadmetadata', ['id' => '0']),
+                    'data-load-metadata-url' => $this->urlGenerator->generate('admin_crud_price_list_load_metadata', ['id' => '0']),
                 ],
             ])
             ->add('domainId', DomainType::class, [
@@ -113,7 +113,7 @@ final class ImportPriceListFormType extends AbstractType
             ]);
 
         $builder->add('actionBar', ActionBarType::class, [
-            'back_route' => 'admin_pricelist_list',
+            'back_route' => 'admin_crud_price_list_list',
             'save_label' => t('Import'),
         ]);
     }
