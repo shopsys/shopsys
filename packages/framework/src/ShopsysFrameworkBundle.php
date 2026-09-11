@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterImageEntitiesCo
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
-use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectShopsysClassExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterRoleProviderCompilerPass;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Symfony\Component\Config\Resource\DirectoryResource;
@@ -56,8 +55,6 @@ class ShopsysFrameworkBundle extends Bundle
         if ($environment !== EnvironmentType::DEVELOPMENT) {
             return;
         }
-
-        $container->addCompilerPass(new RegisterProjectShopsysClassExtensionsCompilerPass());
 
         $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Component'));
         $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Model'));
