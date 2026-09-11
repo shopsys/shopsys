@@ -151,7 +151,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                                 </div>
                             )}
 
-                            {!shouldShowPaymentGateway && isPaymentFailed && order.hasExternalPayment && (
+                            {!shouldShowPaymentGateway && isPaymentFailed && order.isAwaitingPayment && (
                                 <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />
                             )}
 

@@ -9,29 +9,31 @@ Generates upgrade notes for Shopsys Platform features when creating pull request
 
 ## Initial Setup
 
-When invoked, respond:
-```
-I'm ready to generate upgrade notes. Please provide:
-1. Link to the pull request (or I can analyze current branch changes)
-2. Scope: backend, storefront, or both (or I can infer from changes)
-```
+Never ask the user for the pull request or the scope — resolve both automatically before doing anything else:
 
-Then wait for user input.
+1. **Pull request** — in this order, stop at the first hit:
+    - a PR URL or number given in the command arguments
+    - the PR of the current branch: `gh pr view --json number,url,title,baseRefName` (exit code 0 means a PR exists)
+    - no PR yet: analyze the current branch against the repository default branch (`gh repo view --json defaultBranchRef -q .defaultBranchRef.name`, fallback `git symbolic-ref refs/remotes/origin/HEAD`), use the subject of the first commit on the branch as the title, and put `XXXX` in place of the PR number in the heading (`([#XXXX](https://github.com/shopsys/shopsys/pull/XXXX))`) — tell the user to replace it once the PR exists
+2. **Scope** — take it from the command arguments when given, otherwise infer it from the changed paths:
+    - `packages/` or `project-base/app/` → backend
+    - `project-base/storefront/` → storefront
+    - both groups → both
+
+Ask the user only when neither source yields an answer (for example outside a git repository).
 
 ## Command Arguments
 
 - **[link-to-pull-request]** (optional): GitHub PR URL or number (e.g., `4183` or `https://github.com/shopsys/shopsys/pull/4183`)
 - **[backend|storefront|both]** (optional): Scope of changes - will be inferred if not provided
 
-## Workflow After Receiving User Input
+## Workflow
 
 Use TodoWrite to track: fetching PR data → analyzing changes → generating files → user review
 
-### Step 1: Parse User Input
+### Step 1: Resolve Inputs
 
-Extract from user input:
-- **PR identifier**: URL, number, or "current-branch"
-- **Scope** (optional): backend, storefront, or both
+Resolve the PR identifier and scope as described in **Initial Setup** — from the command arguments first, then automatically. Do not stop to ask.
 
 ### Step 2: Fetch PR Data (Using Subagent)
 
@@ -53,7 +55,7 @@ Return structured results following the output format in the specification."
 
 **Wait for subagent results.**
 
-If subagent requests user input (e.g., "What is the base branch?"), relay the question to user and pass answer back.
+If the subagent asks for the base branch, answer with the PR's `baseRefName` or the repository default branch resolved in **Initial Setup** — do not relay the question to the user.
 
 ### Step 3: Analyze Changes (Using Subagent)
 
