@@ -1,0 +1,5 @@
+{% if row['stock.id'] is not null %}
+    <a href="{{ url('admin_stock_edit', { id: row['stock.id'] }) }}">{{ value }}</a>
+{% else %}
+    <span class="text-secondary">{{ 'No warehouse associated'|trans }}</span>
+{% endif %}

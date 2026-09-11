@@ -139,9 +139,6 @@ class SideMenuBuilder
     public const string LIST_PHONE_PREFIX_SETTINGS = 'phone_prefix_settings';
     public const string LIST_PARAMETER_VALUE = 'parameter_values';
     public const string EDIT_PARAMETER_VALUE = 'parameter_values_edit';
-    public const string LIST_STORE = 'stores';
-    public const string NEW_STORE = 'new_store';
-    public const string EDIT_STORE = 'edit_store';
     public const string HOLIDAYS_IMPORT = 'closed_day_holidaysimport';
     public const string SECTION_SEO = 'seo';
     public const string SEO = 'seo';
@@ -768,10 +765,6 @@ class SideMenuBuilder
 
         $parameterValueMenu = $listsMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Parameter value of type color')]);
         $parameterValueMenu->addChild(static::EDIT_PARAMETER_VALUE, ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
-
-        $storeMenu = $listsMenu->addChild(static::LIST_STORE, ['route' => 'admin_store_list', 'label' => t('Stores')]);
-        $storeMenu->addChild(static::NEW_STORE, ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
-        $storeMenu->addChild(static::EDIT_STORE, ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
 
         $listsMenu->addChild(static::HOLIDAYS_IMPORT, ['route' => 'admin_crud_closed_day_holidays_import', 'label' => t('Holidays import'), 'display' => false]);
 
