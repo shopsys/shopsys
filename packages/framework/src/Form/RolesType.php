@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider;
@@ -211,7 +212,7 @@ final class RolesType extends AbstractType
         string $context,
     ): RoleSection {
         if (isset($this->roleSectionsProvidersByContext[$context]) === false) {
-            return AbstractRoleSectionProvider::getDefaultSection();
+            return ExtendedClassNameResolver::resolve(AbstractRoleSectionProvider::class)::getDefaultSection();
         }
 
         return $this->roleSectionsProvidersByContext[$context]->getById($sectionIdentifier);

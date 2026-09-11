@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use GoPay\Definition\Response\PaymentStatus;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -16,8 +17,8 @@ class PaymentTransactionExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('translate_payment_transaction_status', GoPayOrderStatus::getTranslatedGoPayStatus(...)),
-            new TwigFilter('translate_payment_transaction_sub_status', GoPayOrderStatus::getTranslatedGoPaySubStatus(...)),
+            new TwigFilter('translate_payment_transaction_status', ExtendedClassNameResolver::resolve(GoPayOrderStatus::class)::getTranslatedGoPayStatus(...)),
+            new TwigFilter('translate_payment_transaction_sub_status', ExtendedClassNameResolver::resolve(GoPayOrderStatus::class)::getTranslatedGoPaySubStatus(...)),
             new TwigFilter('gopay_payment_status_badge_class', $this->getBadgeClass(...)),
         ];
     }

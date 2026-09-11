@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
@@ -24,7 +25,7 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
     public function create(?string $roleConstant): Grid
     {
         $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();
-        $queryBuilder->addSelect(PhoneNumberSearchHelper::getDqlExpression('sr') . ' as telephone');
+        $queryBuilder->addSelect(ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('sr') . ' as telephone');
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'sr.id');
 
         $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource, $roleConstant);

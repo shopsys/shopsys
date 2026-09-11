@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -64,7 +65,7 @@ final class FriendlyUrlType extends AbstractType
         $context->buildViolation(
             t('Slug containing non-ASCII characters must be URL-encoded. The encoded value of "%enteredValue%" is "%normalizedValue%".', [
                 '%enteredValue%' => $slug,
-                '%normalizedValue%' => FriendlyUrlSlugNormalizer::normalize($slug),
+                '%normalizedValue%' => ExtendedClassNameResolver::resolve(FriendlyUrlSlugNormalizer::class)::normalize($slug),
             ], Translator::VALIDATOR_TRANSLATION_DOMAIN),
         )
             ->addViolation();

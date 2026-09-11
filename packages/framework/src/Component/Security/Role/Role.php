@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Security\Role;
 
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Security\Role\Exception\RoleCannotBeOverwrittenException;
 use Webmozart\Assert\Assert;
 
@@ -179,7 +180,7 @@ class Role
             $subordinatePermissionsForFull = Permission::FULL->getSubordinatePermissions(true);
 
             if (
-                ArrayHelper::haveArraysDifferentValues(
+                ExtendedClassNameResolver::resolve(ArrayHelper::class)::haveArraysDifferentValues(
                     Permission::toValues(...$subordinatePermissionsForFull),
                     Permission::toValues(...$highestPermissions),
                 ) === false

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -83,6 +84,6 @@ class OrderPriceFilterWithVatFilter extends AbstractAdvancedSearchFilter
     #[Override]
     public static function getEntityType(): string
     {
-        return OrderAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(OrderAdvancedSearchFacade::class)::getEntityType();
     }
 }

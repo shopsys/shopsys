@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch\ComplaintAdvancedSearchFacade;
 
@@ -57,6 +58,6 @@ class ComplaintOrderNumberFilter extends AbstractAdvancedSearchFilter
     #[Override]
     public static function getEntityType(): string
     {
-        return ComplaintAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(ComplaintAdvancedSearchFacade::class)::getEntityType();
     }
 }

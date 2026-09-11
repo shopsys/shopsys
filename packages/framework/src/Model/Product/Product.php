@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -891,7 +892,7 @@ class Product extends AbstractTranslatableEntity
 
     public function getDescriptionAsPlainText(int $domainId): ?string
     {
-        return TransformStringHelper::convertHtmlToPlainText($this->getDescription($domainId));
+        return ExtendedClassNameResolver::resolve(TransformStringHelper::class)::convertHtmlToPlainText($this->getDescription($domainId));
     }
 
     /**

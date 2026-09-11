@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
@@ -20,7 +21,7 @@ final class Version20260207120000 extends AbstractMigration
         );
 
         while (($row = $friendlyUrlsResult->fetchAssociative()) !== false) {
-            $normalizedSlug = FriendlyUrlSlugNormalizer::normalize($row['slug']);
+            $normalizedSlug = ExtendedClassNameResolver::resolve(FriendlyUrlSlugNormalizer::class)::normalize($row['slug']);
 
             if ($normalizedSlug === $row['slug']) {
                 continue;

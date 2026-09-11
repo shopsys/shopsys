@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Context;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Administration\AdminUrlProvider;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -48,7 +49,7 @@ final class AdminContext extends AbstractContext
 
     private function isPathMatchingAdminPattern(string $pathinfo): bool
     {
-        return Utils::strStartsWithAny($pathinfo, $this->additionalAdminPathPrefixes) ||
+        return ExtendedClassNameResolver::resolve(Utils::class)::strStartsWithAny($pathinfo, $this->additionalAdminPathPrefixes) ||
             $this->resolveContextHelper->requestPathMatchesPattern($this->adminUrlProvider->getAdminUrl(), $pathinfo);
     }
 }

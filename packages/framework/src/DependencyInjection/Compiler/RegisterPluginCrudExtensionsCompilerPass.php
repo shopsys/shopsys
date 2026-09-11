@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -34,7 +35,7 @@ final class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInte
         string $serviceId,
         string $type,
     ): void {
-        PluginCrudExtensionRegistry::assertTypeIsKnown($type);
+        ExtendedClassNameResolver::resolve(PluginCrudExtensionRegistry::class)::assertTypeIsKnown($type);
 
         $pluginCrudExtensionRegistryDefinition->addMethodCall(
             'registerCrudExtension',

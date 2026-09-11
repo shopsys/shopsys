@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Complaint\AdvancedSearch;
 use Doctrine\ORM\QueryBuilder;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AbstractAdvancedSearchFacade;
@@ -55,7 +56,7 @@ class ComplaintAdvancedSearchFacade extends AbstractAdvancedSearchFacade
                 $queryBuilder->setParameter('exactText', $quickSearchData->text);
             }
 
-            $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('cmp', 'deliveryTelephone');
+            $phoneExpr = ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('cmp', 'deliveryTelephone');
 
             $queryBuilder
                 ->andWhere('

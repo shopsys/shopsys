@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
@@ -92,6 +93,6 @@ class OrderWithdrawalRequestFilter extends AbstractAdvancedSearchFilter
     #[Override]
     public static function getEntityType(): string
     {
-        return OrderAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(OrderAdvancedSearchFacade::class)::getEntityType();
     }
 }

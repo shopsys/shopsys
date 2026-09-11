@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
@@ -108,7 +109,7 @@ class SettingValue
             case static::TYPE_BOOLEAN:
                 return $this->value === static::BOOLEAN_TRUE;
             case static::TYPE_DATETIME:
-                return DateTimeHelper::createFromFormat(static::DATETIME_STORED_FORMAT, $this->value);
+                return ExtendedClassNameResolver::resolve(DateTimeHelper::class)::createFromFormat(static::DATETIME_STORED_FORMAT, $this->value);
             case static::TYPE_MONEY:
                 return Money::create($this->value);
             default:

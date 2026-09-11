@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 
@@ -47,6 +48,6 @@ class FilterQueryFactory
 
     protected function getIndexName(): string
     {
-        return $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $this->domain->getId())->getIndexAlias();
+        return $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ArticleIndex::class)::getName(), $this->domain->getId())->getIndexAlias();
     }
 }

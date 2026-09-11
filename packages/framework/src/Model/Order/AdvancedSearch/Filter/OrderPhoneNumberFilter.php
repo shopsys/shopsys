@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\AbstractAdvancedSearchFilter;
 use Shopsys\FrameworkBundle\Model\Order\AdvancedSearch\OrderAdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
@@ -42,7 +43,7 @@ class OrderPhoneNumberFilter extends AbstractAdvancedSearchFilter
             $searchValue = $this->getSearchValue($ruleData);
             $dqlOperator = $this->getDqlOperator($ruleData->operator);
             $parameterName = 'phoneNumber_' . $index;
-            $phoneExpr = PhoneNumberSearchHelper::getDqlExpression('o');
+            $phoneExpr = ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('o');
             $queryBuilder->andWhere('NORMALIZED(' . $phoneExpr . ') ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
@@ -54,6 +55,6 @@ class OrderPhoneNumberFilter extends AbstractAdvancedSearchFilter
     #[Override]
     public static function getEntityType(): string
     {
-        return OrderAdvancedSearchFacade::getEntityType();
+        return ExtendedClassNameResolver::resolve(OrderAdvancedSearchFacade::class)::getEntityType();
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\DateTimeHelper;
 
 use DateTimeImmutable;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 
 class BusinessDayCalculation
@@ -37,7 +38,7 @@ class BusinessDayCalculation
      */
     protected function isBusinessDay(DateTimeImmutable $date, array $publicHolidays): bool
     {
-        if (DateTimeHelper::isWeekend($date)) {
+        if (ExtendedClassNameResolver::resolve(DateTimeHelper::class)::isWeekend($date)) {
             return false;
         }
 

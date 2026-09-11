@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -36,7 +37,7 @@ class OrderMailFacade
         OrderStatus $orderStatus,
         int $domainId,
     ): MailTemplate {
-        $templateName = OrderMail::getMailTemplateNameByStatus($orderStatus);
+        $templateName = ExtendedClassNameResolver::resolve(OrderMail::class)::getMailTemplateNameByStatus($orderStatus);
 
         return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);
     }
