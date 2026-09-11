@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
@@ -47,11 +46,6 @@ class PricingGroupSettingFacade
     public function getDefaultPricingGroupByCurrentDomain(): PricingGroup
     {
         return $this->getDefaultPricingGroupByDomainId($this->domain->getId());
-    }
-
-    public function getDefaultPricingGroupByDomain(DomainConfig $domainConfig): PricingGroup
-    {
-        return $this->getDefaultPricingGroupByDomainId($domainConfig->getId());
     }
 
     public function setPricingGroupAsDefault(PricingGroup $pricingGroup): void
