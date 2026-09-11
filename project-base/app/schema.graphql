@@ -206,10 +206,16 @@ type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & Articl
   createdAt: DateTime!
   "If the the article should be open in a new tab"
   external: Boolean!
+  "The article image"
+  mainImage(type: String = null): Image
+  "Date and time of the last article modification"
+  modifiedAt: DateTime
   "Name of article"
   name: String!
   "Placement of article"
   placement: String!
+  "Actual publication date of the article"
+  publishDate: DateTime
   "Seo first level heading of article"
   seoH1: String
   "Seo meta description of article"
@@ -316,6 +322,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   mainBlogCategoryUuid: Uuid!
   "Blog article image by params"
   mainImage(type: String = null): Image
+  "Date and time of the last article modification"
+  modifiedAt: DateTime
   "The blog article title"
   name: String!
   "The blog article perex"
@@ -2044,6 +2052,30 @@ input OrderWithdrawalRequestInput {
   telephone: PhoneDataInput = null
 }
 
+"Organization settings for the current domain"
+type OrganizationSetting {
+  "City"
+  city: String
+  "Company registration number"
+  companyNumber: String
+  "Tax number"
+  companyTaxNumber: String
+  "Country"
+  country: String
+  "Company description"
+  description: String
+  "Absolute organization logo URL"
+  logo: String
+  "Company name"
+  name: String
+  "Postcode"
+  postcode: String
+  "Social network profile URLs"
+  socialNetworkUrls: [String!]!
+  "Street and house number"
+  street: String
+}
+
 "Information about pagination in a connection."
 type PageInfo {
   "When paginating forwards, the cursor to continue."
@@ -3249,6 +3281,8 @@ type SeoPage implements Hreflang {
 type SeoSetting {
   "Description of the content of a web page"
   metaDescription: String
+  "Organization details for structured data on the current domain"
+  organization: OrganizationSetting!
   "Robots.txt's file content"
   robotsTxtContent: String
   "Document's title that is shown in a browser's title"

@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
@@ -17,7 +18,7 @@ type ProductMetadataProps = {
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
-    const { currencyCode } = useDomainConfig();
+    const { currencyCode, url } = useDomainConfig();
     const router = useRouter();
     const { t } = useTranslation();
 
@@ -51,6 +52,25 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
         },
     }));
 
+    const variants =
+        product.__typename === 'MainVariant'
+            ? product.variants.filter((variant) => !variant.isInquiryType && !variant.isSellingDenied)
+            : [];
+    const variantPrices = variants.map((variant) => Number(variant.price.priceWithVat));
+    const offer = {
+        url: getStringWithoutTrailingSlash(url) + router.asPath,
+        priceCurrency: currencyCode,
+        itemCondition: 'https://schema.org/NewCondition',
+        availability: getSchemaOrgAvailability(product.availability.status),
+        ...(product.__typename === 'MainVariant'
+            ? { '@type': 'AggregateOffer', lowPrice: Math.min(...variantPrices), highPrice: Math.max(...variantPrices) }
+            : { '@type': 'Offer', price: product.price.priceWithVat }),
+    };
+    const hasOffers =
+        !product.isInquiryType &&
+        !product.isSellingDenied &&
+        (product.__typename !== 'MainVariant' || variants.length > 0);
+
     return (
         <Head>
             <script
@@ -62,22 +82,18 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                         '@context': 'https://schema.org/',
                         '@type': 'Product',
                         name: product.fullName,
-                        image: product.images.length > 0 ? product.images[0].url : null,
-                        description: product.description,
+                        image: product.images.map((image) => image.url),
+                        description: product.description
+                            ?.replace(/<[^>]*>/g, ' ')
+                            .replace(/\s+/g, ' ')
+                            .trim(),
                         sku: product.catalogNumber,
-                        mpn: product.ean,
+                        gtin13: product.ean || undefined,
                         brand: {
                             '@type': 'Brand',
                             name: product.brand?.name,
                         },
-                        offers: {
-                            '@type': 'Offer',
-                            url: router.asPath,
-                            priceCurrency: currencyCode,
-                            price: product.price.priceWithVat,
-                            itemCondition: 'https://schema.org/NewCondition',
-                            availability: getSchemaOrgAvailability(product.availability.status),
-                        },
+                        offers: hasOffers ? offer : undefined,
                         ...(hasReviews &&
                             reviewsSummary.averageRating !== null && {
                                 aggregateRating: {

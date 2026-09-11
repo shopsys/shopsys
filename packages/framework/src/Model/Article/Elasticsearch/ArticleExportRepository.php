@@ -71,6 +71,8 @@ class ArticleExportRepository
             'position' => $article->getPosition(),
             'external' => $article->isExternal(),
             'createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),
+            'modifiedAt' => $article->getModifiedAt()?->format('Y-m-d H:i:s'),
+            'publishDate' => $article->getPublishDate()?->format(DATE_ATOM),
             'type' => $article->getType(),
             'slug' => [],
             'mainSlug' => null,

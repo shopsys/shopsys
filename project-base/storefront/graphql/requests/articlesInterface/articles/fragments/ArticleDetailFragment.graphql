@@ -5,11 +5,16 @@ fragment ArticleDetailFragment on ArticleSite {
     placement
     articleName: name
     text
+    mainImage {
+        ...ImageFragment
+    }
     breadcrumb {
         ...BreadcrumbFragment
     }
     seoTitle
     seoMetaDescription
+    modifiedAt
+    publishDate
     createdAt
     seoH1
 }

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -38,6 +39,7 @@ class MailController extends AdminBaseController
         protected readonly MailTemplateConfiguration $mailTemplateConfiguration,
         protected readonly MailTemplateDataFactory $mailTemplateDataFactory,
         protected readonly MailTemplateSenderFacade $mailTemplateSenderFacade,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -171,6 +173,8 @@ class MailController extends AdminBaseController
             $this->mailSettingFacade->setLinkedInUrl($mailSettingData['linkedinUrl'], $selectedDomainId);
             $this->mailSettingFacade->setTiktokUrl($mailSettingData['tiktokUrl'], $selectedDomainId);
             $this->mailSettingFacade->setFooterText($mailSettingData['footerText'], $selectedDomainId);
+
+            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
 
             $this->addSuccessFlash(t('Email settings modified.'));
         }

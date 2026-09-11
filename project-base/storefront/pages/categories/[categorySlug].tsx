@@ -63,6 +63,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
             {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
+                isNoIndex={!!currentFilter || !!currentSort}
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
                 description={categoryData?.seoMetaDescription}

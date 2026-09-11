@@ -31,6 +31,9 @@ class BlogArticleResolverMap extends ResolverMap
                 'publishDate' => static function (array $blogArticleData) {
                     return $blogArticleData['publishDate'] !== null ? new DatePoint($blogArticleData['publishDate']) : null;
                 },
+                'modifiedAt' => static function (array $articleData) {
+                    return ($articleData['modifiedAt'] ?? null) !== null ? new DatePoint($articleData['modifiedAt']) : null;
+                },
                 'createdAt' => static function (array $blogArticleData) {
                     return new DatePoint($blogArticleData['createdAt']);
                 },

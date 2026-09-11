@@ -1,3 +1,4 @@
+import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { TooltipProvider } from 'components/Basic/Tooltip/Tooltip';
 import { RouteAccessibilityManager } from 'components/Layout/RouteAccessibilityManager';
 import { RouteAnnouncer } from 'components/Layout/RouteAnnouncer';
@@ -106,6 +107,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                     <UrqlWrapper pageProps={pageProps}>
                         <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                             <DomainConfigProvider domainConfig={domainConfig}>
+                                <LogoMetadata />
                                 <PersistStoreProvider>
                                     <DeferredToastContainer />
                                     <CurrentCustomerUserProvider>

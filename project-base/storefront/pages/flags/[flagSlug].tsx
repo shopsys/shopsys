@@ -65,6 +65,7 @@ const FlagDetailPage: NextPage = () => {
             {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
+                isNoIndex={!!currentFilter || !!currentSort}
                 breadcrumbs={flagDetailData?.flag?.breadcrumb}
                 breadcrumbsType="category"
                 hreflangLinks={flagDetailData?.flag?.hreflangLinks}

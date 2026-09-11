@@ -4,6 +4,9 @@ SeoSettingDecorator:
     config:
         description: "Represents settings of SEO"
         fields:
+            organization:
+                type: "OrganizationSetting!"
+                description: "Organization details for structured data on the current domain"
             robotsTxtContent:
                 type: "String"
                 description: "Robots.txt's file content"

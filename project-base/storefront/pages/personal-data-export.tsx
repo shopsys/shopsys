@@ -30,7 +30,7 @@ const PersonalDataExportPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal data export')}>
+            <CommonLayout isNoIndex breadcrumbs={breadcrumbs} title={t('Personal data export')}>
                 <PersonalDataExportContent
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
                 />

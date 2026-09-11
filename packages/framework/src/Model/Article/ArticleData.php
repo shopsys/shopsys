@@ -79,6 +79,16 @@ class ArticleData
      */
     public $url;
 
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    public $publishDate;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $image;
+
     public function __construct()
     {
         $this->urls = new UrlListData();
