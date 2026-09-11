@@ -142,9 +142,6 @@ class SideMenuBuilder
     public const string NEW_PARAMETER = 'parameters_new';
     public const string EDIT_PARAMETER = 'parameters_edit';
     public const string EDIT_PARAMETERS_VALUE = 'parameters_values_edit';
-    public const string LIST_PARAMETER_GROUP = 'parametergroups';
-    public const string NEW_PARAMETER_GROUP = 'parametergroups_new';
-    public const string EDIT_PARAMETER_GROUP = 'parametergroups_edit';
     public const string LIST_ORDER_STATUS = 'order_statuses';
     public const string LIST_COMPLAINT_STATUS = 'complaint_statuses';
     public const string LIST_BRAND = 'brands';
@@ -794,10 +791,6 @@ class SideMenuBuilder
         $parametersMenu->addChild(static::NEW_PARAMETER, ['route' => 'admin_parameter_new', 'display' => false, 'label' => t('New parameter')]);
         $parametersMenu->addChild(static::EDIT_PARAMETER, ['route' => 'admin_parameter_edit', 'display' => false, 'label' => t('Editing parameter')]);
         $parametersMenu->addChild(static::EDIT_PARAMETERS_VALUE, ['route' => 'admin_parametervalues_edit', 'display' => false, 'label' => t('Parameter values')]);
-
-        $parameterGroupsMenu = $listsMenu->addChild(static::LIST_PARAMETER_GROUP, ['route' => 'admin_parametergroup_list', 'label' => t('Parameter groups')]);
-        $parameterGroupsMenu->addChild(static::NEW_PARAMETER_GROUP, ['route' => 'admin_parametergroup_new', 'display' => false, 'label' => t('New parameter group')]);
-        $parameterGroupsMenu->addChild(static::EDIT_PARAMETER_GROUP, ['route' => 'admin_parametergroup_edit', 'display' => false, 'label' => t('Editing parameter group')]);
 
         $listsMenu->addChild(
             static::LIST_ORDER_STATUS,
