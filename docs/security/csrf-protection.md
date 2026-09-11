@@ -29,7 +29,7 @@ and [`CsrfExtension`]({{github.link}}/packages/framework/src/Twig/CsrfExtension.
     ```php
     use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 
-    #[Route(path: '/store/setdefault/{id}', requirements: ['id' => '\d+'])]
+    #[Route(path: '/store/set-default/{id}', name: 'admin_crud_store_set_default', requirements: ['id' => '\d+'])]
     #[CanEdit]
     #[CsrfProtection]
     public function setDefaultAction(int $id): Response
@@ -38,7 +38,7 @@ and [`CsrfExtension`]({{github.link}}/packages/framework/src/Twig/CsrfExtension.
 2. Generate every link to it with `protectedUrl()` (same arguments as `url()`):
 
     ```twig
-    <a href="{{ protectedUrl('admin_store_setdefault', { id: store.id }) }}" class="btn btn-secondary">
+    <a href="{{ protectedUrl('admin_crud_store_set_default', { id: store.id }) }}" class="btn btn-secondary">
         {{ 'Set as default'|trans }}
     </a>
     ```

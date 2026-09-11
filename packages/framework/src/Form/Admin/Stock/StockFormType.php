@@ -101,7 +101,7 @@ final class StockFormType extends AbstractType
                     'label' => false,
                     'stores' => $this->stock->getStores(),
                     'help' => t('Products stocked in this warehouse are ready for personal pickup at these stores. A warehouse is assigned to a store on the store detail. <a href="%listUrl%">Manage stores</a>', [
-                        '%listUrl%' => $this->urlGenerator->generate('admin_store_list'),
+                        '%listUrl%' => $this->urlGenerator->generate('admin_crud_store_list'),
                     ]),
                     'help_html' => true,
                 ]),
