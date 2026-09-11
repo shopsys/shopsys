@@ -1,0 +1,188 @@
+name: AI fix of failed standards
+
+on:
+    workflow_dispatch:
+        inputs:
+            pr_number:
+                description: 'Pull request number whose failed standards check should be fixed'
+                required: true
+                type: string
+    issue_comment:
+        types: [created]
+
+permissions:
+    contents: read
+    pull-requests: read
+    issues: write
+    actions: read
+
+concurrency:
+    group: standards-autofix-pr-${{ github.event.inputs.pr_number || github.event.issue.number }}
+    cancel-in-progress: true
+
+jobs:
+    autofix:
+        name: Claude standards autofix
+        if: github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request && startsWith(github.event.comment.body, '/standards-autofix'))
+        runs-on: ubuntu-22.04
+        timeout-minutes: 30
+        env:
+            PR_NUMBER: ${{ github.event.inputs.pr_number || github.event.issue.number }}
+        steps:
+            -   name: Check commenter has write permission
+                id: permission
+                if: github.event_name == 'issue_comment'
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+                run: |
+                    PERMISSION=$(gh api "repos/${{ github.repository }}/collaborators/${COMMENT_AUTHOR}/permission" --jq '.permission')
+                    if [ "${PERMISSION}" != "admin" ] && [ "${PERMISSION}" != "write" ]; then
+                        gh api "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" -f content=-1 || true
+                        echo "::error::User ${COMMENT_AUTHOR} does not have write permission to trigger the standards autofix."
+                        exit 1
+                    fi
+
+            -   name: Ensure the PR is open and not from a fork
+                id: pr
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                run: |
+                    if ! [[ "${PR_NUMBER}" =~ ^[0-9]+$ ]]; then
+                        echo "::error::Invalid PR number: ${PR_NUMBER}"
+                        exit 1
+                    fi
+                    PR_JSON=$(gh api "repos/${{ github.repository }}/pulls/${PR_NUMBER}")
+                    STATE=$(jq -r '.state' <<< "${PR_JSON}")
+                    HEAD_REPO=$(jq -r '.head.repo.full_name' <<< "${PR_JSON}")
+                    if [ "${STATE}" != "open" ]; then
+                        echo "::error::PR #${PR_NUMBER} is not open (state: ${STATE})."
+                        exit 1
+                    fi
+                    if [ "${HEAD_REPO}" != "${{ github.repository }}" ]; then
+                        echo "::error::PR #${PR_NUMBER} comes from a fork (${HEAD_REPO}) — its branch cannot be fixed here."
+                        exit 1
+                    fi
+                    HEAD_REF=$(jq -r '.head.ref' <<< "${PR_JSON}")
+                    BASE_REF=$(jq -r '.base.ref' <<< "${PR_JSON}")
+                    HEAD_SHA=$(jq -r '.head.sha' <<< "${PR_JSON}")
+                    for REF in "${BASE_REF}" "${HEAD_REF}"; do
+                        if ! [[ "${REF}" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+                            echo "::error::Unsafe ref name: ${REF}"
+                            exit 1
+                        fi
+                    done
+                    {
+                        echo "head_ref=${HEAD_REF}"
+                        echo "base_ref=${BASE_REF}"
+                        echo "head_sha=${HEAD_SHA}"
+                    } >> "${GITHUB_OUTPUT}"
+
+            -   name: React to the triggering comment
+                if: github.event_name == 'issue_comment'
+                continue-on-error: true
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                run: gh api "repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions" -f content=eyes
+
+            -   name: GIT checkout branch - ${{ steps.pr.outputs.head_ref }}
+                uses: actions/checkout@v7
+                with:
+                    ref: ${{ steps.pr.outputs.head_sha }}
+                    fetch-depth: 0
+                    persist-credentials: false
+
+            -   name: Disable git hooks so the autofixer cannot plant executable files
+                run: git config --global core.hooksPath /dev/null
+
+            -   name: Download the failed standards check log of the latest Docker build run
+                id: standards_log
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+                    BASE_REF: ${{ steps.pr.outputs.base_ref }}
+                run: |
+                    git fetch --no-tags origin "${BASE_REF}"
+                    MERGE_BASE=$(git merge-base HEAD "origin/${BASE_REF}")
+                    echo "MERGE_BASE=${MERGE_BASE}" >> $GITHUB_OUTPUT
+
+                    RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/docker-build.yaml/runs?head_sha=${HEAD_SHA}&event=pull_request&per_page=10" \
+                        --jq '[.workflow_runs[] | select(.status == "completed")] | sort_by(.created_at) | reverse | .[0].id // empty')
+                    if [ -z "${RUN_ID}" ]; then
+                        echo "::error::No completed Docker build run found for ${HEAD_SHA} — wait for CI to finish and try again."
+                        exit 1
+                    fi
+
+                    STANDARDS_JOB=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate \
+                        --jq '[.jobs[] | select(.name == "Check standards")][0] | "\(.id) \(.conclusion)"')
+                    STANDARDS_JOB_ID=${STANDARDS_JOB% *}
+                    STANDARDS_JOB_CONCLUSION=${STANDARDS_JOB#* }
+                    if [ -z "${STANDARDS_JOB_ID}" ] || [ "${STANDARDS_JOB_ID}" = "null" ]; then
+                        echo "::error::Run ${RUN_ID} has no \"Check standards\" job."
+                        exit 1
+                    fi
+                    if [ "${STANDARDS_JOB_CONCLUSION}" != "failure" ]; then
+                        echo "::error::\"Check standards\" of run ${RUN_ID} did not fail (conclusion: ${STANDARDS_JOB_CONCLUSION}) — nothing to fix."
+                        exit 1
+                    fi
+
+                    gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${STANDARDS_JOB_ID}/logs" > /tmp/standards.log
+
+                    echo "Downloaded $(wc -l < /tmp/standards.log) lines from job ${STANDARDS_JOB_ID} of run ${RUN_ID}."
+
+            -   name: Run Claude standards autofix
+                uses: anthropics/claude-code-action@v1
+                with:
+                    github_token: ${{ github.token }}
+                    claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+                    prompt: "/standards-autofix --merge-base=${{ steps.standards_log.outputs.MERGE_BASE }} --standards-log=/tmp/standards.log"
+                    # "disableAllHooks" and "--strict-mcp-config" pin the agent to the configuration injected
+                    # here — a ".claude/settings.json" hook or ".mcp.json" committed in the pull request branch
+                    # would otherwise run commands on this runner outside the allowedTools allowlist, in the
+                    # same job that later holds the push token. "core.hooksPath" above covers git hooks only.
+                    # File reads and writes are confined to the checkout and the downloaded log (the leading slash
+                    # anchors the rule to an absolute path) - everything else, /proc/self/environ and GITHUB_ENV in
+                    # particular, is out of reach. The rule is an "Edit(...)" rule, not "Write(...)": path-scoped
+                    # file rules only match under "Edit", which covers every file-editing tool including Write.
+                    claude_args: |
+                        --model claude-opus-5
+                        --max-turns 120
+                        --strict-mcp-config
+                        --settings '{"disableAllHooks": true}'
+                        --allowedTools "Read(/${{ github.workspace }}/**),Read(/tmp/standards.log),Edit(/${{ github.workspace }}/**),Grep,Glob,Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git blame:*),Bash(git show:*),Bash(git add:*),Bash(git commit:*),Bash(git apply:*)"
+                        --disallowedTools "Bash(git push:*),Bash(git remote:*),Bash(git config:*),Bash(git fetch:*),Bash(git rebase:*)"
+
+            -   name: Push fix commits
+                env:
+                    HEAD_REF: ${{ steps.pr.outputs.head_ref }}
+                    HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+                    PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
+                run: |
+                    if [ -z "$(git log --format='%h' "${HEAD_SHA}..HEAD")" ]; then
+                        echo "No fix commits were created."
+                        exit 0
+                    fi
+
+                    git log --format='%h %s' "${HEAD_SHA}..HEAD"
+
+                    if git log --format='%s' "${HEAD_SHA}..HEAD" | grep -qvE '^(fixup! |Fix pre-existing coding standards violations$)'; then
+                        echo "::error::Refusing to push - the autofixer produced a commit that is not a fixup."
+                        exit 1
+                    fi
+
+                    if ! git diff --quiet "${HEAD_SHA}..HEAD" -- .github .agents .claude AGENTS.md CLAUDE.md project-base/.agents project-base/.claude project-base/AGENTS.md project-base/CLAUDE.md; then
+                        echo "::error::Refusing to push - the autofixer modified CI or agent-instruction files."
+                        exit 1
+                    fi
+
+                    # Scripts and manifests CI executes are protected too: the next pull_request run of a same-repo
+                    # branch receives secrets, so a fixup that edits a shell script, a phing build file or a
+                    # dependency manifest would run there. A coding-standards fix never needs to touch these.
+                    if ! git diff --quiet "${HEAD_SHA}..HEAD" -- '*.sh' '*.bash' 'build.xml' 'build-*.xml' 'composer.json' 'composer.lock' 'package.json' 'package-lock.json' 'pnpm-lock.yaml' 'Dockerfile*' 'docker-compose*' '.gitattributes' '.gitmodules'; then
+                        echo "::error::Refusing to push - the autofixer modified build scripts or dependency manifests."
+                        exit 1
+                    fi
+
+                    # ".git/config" is inside the checkout and untracked, so the autofixer could re-enable hooks or
+                    # plant a credential helper there unseen by the guards above - command-line "-c" outranks it.
+                    git -c core.hooksPath=/dev/null -c credential.helper= -c credential.helper='!f() { echo username=x-access-token; echo "password=${PUSH_TOKEN}"; }; f' push "https://github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${HEAD_REF}"
