@@ -128,8 +128,7 @@ final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
         $originalMainFriendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId())->getSlug();
         $urlListDataWithNewUrl = new UrlListData();
-        $urlListDataWithNewUrl->newUrls[] = [
-            UrlListData::FIELD_DOMAIN => Domain::FIRST_DOMAIN_ID,
+        $urlListDataWithNewUrl->newUrls[Domain::FIRST_DOMAIN_ID][] = [
             UrlListData::FIELD_SLUG => 'manually-managed-category-url',
         ];
 
