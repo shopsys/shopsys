@@ -327,6 +327,10 @@ parameters:
             path: packages/framework/src/Model/Mail/Exception/MailTemplateAlreadyExistsException.php
         -
             identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Navigation\\NavigationItem::getPosition$#'
+            path: packages/framework/src/Model/Navigation/NavigationItem.php
+        -
+            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Navigation\\NavigationItemCategory::getPosition$#'
             path: packages/framework/src/Model/Navigation/NavigationItemCategory.php
         -

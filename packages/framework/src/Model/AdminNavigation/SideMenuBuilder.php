@@ -87,9 +87,6 @@ class SideMenuBuilder
     public const string LIST_BLOG_ARTICLE = 'blogArticles';
     public const string NEW_BLOG_ARTICLE = 'newBlogArticles';
     public const string EDIT_BLOG_ARTICLE = 'editBlogArticles';
-    public const string LIST_NAVIGATION = 'navigation';
-    public const string EDIT_NAVIGATION = 'navigation_edit';
-    public const string NEW_NAVIGATION = 'navigation_new';
     public const string SECTION_HOMEPAGE = 'homepage';
     public const string LIST_BANNER = 'banners';
     public const string NEW_BANNER = 'new_page';
@@ -612,10 +609,6 @@ class SideMenuBuilder
         $blogArticles = $blogMenu->addChild(static::LIST_BLOG_ARTICLE, ['route' => 'admin_blogarticle_list', 'label' => t('Blog articles')]);
         $blogArticles->addChild(static::NEW_BLOG_ARTICLE, ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
         $blogArticles->addChild(static::EDIT_BLOG_ARTICLE, ['route' => 'admin_blogarticle_edit', 'display' => false]);
-
-        $navigationMenu = $menu->addChild(static::LIST_NAVIGATION, ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
-        $navigationMenu->addChild(static::EDIT_NAVIGATION, ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editing item')]);
-        $navigationMenu->addChild(static::NEW_NAVIGATION, ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
 
         $homepageMenu = $menu->addChild(static::SECTION_HOMEPAGE, ['label' => t('Home page')]);
 
