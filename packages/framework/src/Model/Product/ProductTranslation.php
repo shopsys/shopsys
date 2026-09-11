@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -35,7 +36,7 @@ class ProductTranslation extends AbstractTranslation
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $name {
         set {
-            $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+            $this->name = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
         }
     }
 
@@ -46,7 +47,7 @@ class ProductTranslation extends AbstractTranslation
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $variantAlias {
         set {
-            $this->variantAlias = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+            $this->variantAlias = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
         }
     }
 
@@ -57,7 +58,7 @@ class ProductTranslation extends AbstractTranslation
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $namePrefix {
         set {
-            $this->namePrefix = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+            $this->namePrefix = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
         }
     }
 
@@ -68,7 +69,7 @@ class ProductTranslation extends AbstractTranslation
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $nameSuffix {
         set {
-            $this->nameSuffix = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+            $this->nameSuffix = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
         }
     }
 

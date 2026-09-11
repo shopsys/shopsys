@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -35,7 +36,7 @@ class ParameterTranslation extends AbstractTranslation
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $name {
         set {
-            $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
+            $this->name = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
         }
     }
 
