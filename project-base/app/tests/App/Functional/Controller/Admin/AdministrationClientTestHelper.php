@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
@@ -37,6 +38,19 @@ final class AdministrationClientTestHelper
         return $router->generate($routeName, $parameters);
     }
 
+    public function getRouteCsrfTokenFromSessionOfLastRequest(string $routeName): string
+    {
+        $container = $this->getClientTestContainer();
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $container->get('request_stack');
+        $requestStack->push($this->client->getRequest());
+
+        try {
+            return $container->get(RouteCsrfProtector::class)->getCsrfTokenByRoute($routeName);
+        } finally {
+            $requestStack->pop();
+        }
+    }
 
     private function getClientTestContainer(): TestContainer
     {
