@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Model\OAuth;
 
 use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken;
 use Symfony\Component\HttpFoundation\IpUtils;
 
@@ -23,7 +24,7 @@ class McpOAuthClientRegistrationFacade
     public function registerClient(array $redirectUris, ?string $clientName): McpOAuthClientRegistrationData
     {
         $normalizedRedirectUris = $this->normalizeAndValidateRedirectUris($redirectUris);
-        $registrationData = McpOAuthClientRegistrationData::createFromArray([
+        $registrationData = ExtendedClassNameResolver::resolve(McpOAuthClientRegistrationData::class)::createFromArray([
             'client_id' => bin2hex(random_bytes(16)),
             'client_name' => $this->normalizeAndValidateClientName($clientName),
             'redirect_uris' => $normalizedRedirectUris,

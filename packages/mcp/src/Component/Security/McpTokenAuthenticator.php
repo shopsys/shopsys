@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\Component\Security;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpToken;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,7 +32,7 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
     #[Override]
     public function supports(Request $request): ?bool
     {
-        return McpRequestMatcher::isMcpRuntimeRequest($request);
+        return ExtendedClassNameResolver::resolve(McpRequestMatcher::class)::isMcpRuntimeRequest($request);
     }
 
     /**
@@ -46,11 +47,11 @@ class McpTokenAuthenticator extends AbstractAuthenticator implements Authenticat
             throw new CustomUserMessageAuthenticationException('Authorization: Bearer token is required.');
         }
 
-        if (!McpBearerToken::hasBearerScheme($authorizationHeader)) {
+        if (!ExtendedClassNameResolver::resolve(McpBearerToken::class)::hasBearerScheme($authorizationHeader)) {
             throw new CustomUserMessageAuthenticationException('Authorization header must use the Bearer scheme.');
         }
 
-        $tokenString = McpBearerToken::extractTokenString($authorizationHeader);
+        $tokenString = ExtendedClassNameResolver::resolve(McpBearerToken::class)::extractTokenString($authorizationHeader);
         $administratorMcpToken = $this->administratorMcpTokenFacade->findValidTokenByTokenString($tokenString);
 
         if ($administratorMcpToken === null) {

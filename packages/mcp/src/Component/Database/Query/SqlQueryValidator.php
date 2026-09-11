@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Component\Database\Query;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Component\Database\Query\Exception\SqlQueryParsingException;
 use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
 
@@ -148,17 +149,17 @@ class SqlQueryValidator
     public function validate(string $sql): SqlQueryValidationResult
     {
         if (trim($sql) === '') {
-            return SqlQueryValidationResult::createInvalid(self::ERROR_EMPTY_QUERY);
+            return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createInvalid(self::ERROR_EMPTY_QUERY);
         }
 
         try {
             $parsedSqlQuery = $this->postgresQueryParser->parseSingleStatement($sql);
         } catch (SqlQueryParsingException $sqlQueryParsingException) {
-            return SqlQueryValidationResult::createInvalid($sqlQueryParsingException->getMessage());
+            return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createInvalid($sqlQueryParsingException->getMessage());
         }
 
         if ($this->getWrappedNodeTag($parsedSqlQuery->statement) !== self::NODE_TAG_SELECT_STMT) {
-            return SqlQueryValidationResult::createInvalid(self::ERROR_ONLY_SELECT_SUPPORTED);
+            return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createInvalid(self::ERROR_ONLY_SELECT_SUPPORTED);
         }
 
         $validationErrorMessage = $this->validateSelectStatement(
@@ -168,10 +169,10 @@ class SqlQueryValidator
         );
 
         if ($validationErrorMessage !== null) {
-            return SqlQueryValidationResult::createInvalid($validationErrorMessage);
+            return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createInvalid($validationErrorMessage);
         }
 
-        return SqlQueryValidationResult::createValid($parsedSqlQuery->singleStatementSql);
+        return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createValid($parsedSqlQuery->singleStatementSql);
     }
 
     /**
