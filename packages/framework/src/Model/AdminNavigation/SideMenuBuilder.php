@@ -88,9 +88,6 @@ class SideMenuBuilder
     public const string NEW_BLOG_ARTICLE = 'newBlogArticles';
     public const string EDIT_BLOG_ARTICLE = 'editBlogArticles';
     public const string SECTION_HOMEPAGE = 'homepage';
-    public const string LIST_BANNER = 'banners';
-    public const string NEW_BANNER = 'new_page';
-    public const string EDIT_BANNER = 'edit_page';
     public const string LIST_PROMOTED_PRODUCT = 'promoted_products';
     public const string LIST_PROMOTED_CATEGORY = 'promoted_categories';
     public const string ORDER_CONFIRMATION = 'order_confirmation';
@@ -608,10 +605,6 @@ class SideMenuBuilder
         $blogArticles->addChild(static::EDIT_BLOG_ARTICLE, ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
         $homepageMenu = $menu->addChild(static::SECTION_HOMEPAGE, ['label' => t('Home page')]);
-
-        $bannersMenu = $homepageMenu->addChild(static::LIST_BANNER, ['route' => 'admin_slider_list', 'label' => t('Banners')]);
-        $bannersMenu->addChild(static::NEW_BANNER, ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false]);
-        $bannersMenu->addChild(static::EDIT_BANNER, ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false]);
 
         $homepageMenu->addChild(static::LIST_PROMOTED_PRODUCT, ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
         $homepageMenu->addChild(static::LIST_PROMOTED_CATEGORY, ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
