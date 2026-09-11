@@ -61,6 +61,8 @@ Every uploaded file slug, whether written by the framework hook or by your own c
 
 ## Rules for framework code
 
+The coding standards fixer `Shopsys/extended_class_name_resolver` from [shopsys/coding-standards]({{github.link}}/packages/coding-standards/README.md) rewrites static calls on services into the resolved form and adds the import, so `php phing standards-fix` keeps the codebase consistent.
+
 - a static method of a service is never called by the framework class name from code that projects cannot reach through dependency injection, always through `ExtendedClassNameResolver::resolve()`
 - use the pattern only where dependency injection is not available, everywhere else inject the service
 
