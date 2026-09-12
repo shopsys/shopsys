@@ -9,12 +9,11 @@ use Override;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use ReflectionException;
-use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
+use Shopsys\AdministrationBundle\Component\Security\Attribute\CrudAttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
-use Shopsys\FrameworkBundle\Component\Security\Role\RoleIdentifierHelper;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -43,6 +42,7 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
         private readonly string $adminUrl,
         private readonly AttributeProcessor $attributeProcessor,
         private readonly AccessControlRuleFactory $accessControlRuleFactory,
+        private readonly CrudAttributeProcessor $crudAttributeProcessor,
     ) {
     }
 
@@ -211,7 +211,9 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
     }
 
     /**
-     * @param class-string $controllerClass
+     * Routes of CRUD controllers (built-in and custom actions) resolve their rules with the role of the CRUD controller,
+     * the other routes with the attributes of the method only
+     *
      * @return \Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRule[]
      */
     private function processRouteRules(
@@ -220,24 +222,18 @@ final class RouteAccessControlDataProvider implements AccessControlDataProviderI
         string $method,
     ): array {
         $reflectionClass = new ReflectionClass($controllerClass);
-        $attributeRules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
-        $isCrudController = $route->getDefault(CrudRouteProvider::IS_CRUD_CONTROLLER) === true;
+        $reflectionMethod = $reflectionClass->getMethod($method);
 
-        if (count($attributeRules) > 0 || $isCrudController === false) {
-            return $attributeRules;
+        if ($route->getDefault(CrudRouteProvider::IS_CRUD_CONTROLLER) === true) {
+            $rulesData = $this->crudAttributeProcessor->processCrudAction(
+                $reflectionClass,
+                $reflectionMethod,
+                $route->getDefault(CrudRouteProvider::CRUD_ROLE_CONSTANT),
+            );
+        } else {
+            $rulesData = $this->attributeProcessor->processMethod($reflectionClass, $reflectionMethod);
         }
 
-        /** @var \Shopsys\AdministrationBundle\Component\Config\ActionType $action */
-        $action = ActionType::from($route->getDefault(CrudRouteProvider::CRUD_ACTION));
-        $roleConstant = $route->getDefault(CrudRouteProvider::CRUD_ROLE_CONSTANT);
-
-        $crudRules = [];
-
-        foreach ($action->toAccessControlRules() as $rule) {
-            $roleWithPermission = RoleIdentifierHelper::getIdentifierWithPermission($roleConstant, $rule->getPermission());
-            $crudRules[] = $this->accessControlRuleFactory->create($roleWithPermission, $rule->getMethods());
-        }
-
-        return $crudRules;
+        return $this->accessControlRuleFactory->createFromData($rulesData);
     }
 }

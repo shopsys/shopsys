@@ -18,6 +18,8 @@ final readonly class CrudConfigData
      * @param MenuItemPosition $menuSectionPosition
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, null|class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
      * @param int[]|null $listAllowedDomainIds
+     * @param string[] $customActionNames
+     * @param string[] $disabledCustomActionNames
      */
     public function __construct(
         private ?string $entityNameSingular,
@@ -37,6 +39,8 @@ final readonly class CrudConfigData
         private ?string $menuIcon,
         private ?CrudListDomainControl $listDomainControl,
         private ?array $listAllowedDomainIds,
+        private array $customActionNames = [],
+        private array $disabledCustomActionNames = [],
     ) {
         foreach ($this->enabledActions as $action) {
             if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
@@ -110,14 +114,41 @@ final readonly class CrudConfigData
         return $this->enabledActions;
     }
 
-    public function isActionEnabled(ActionType $actionType): bool
+    /**
+     * Returns the names of the enabled custom actions (all declared custom actions except the disabled ones)
+     *
+     * @return string[]
+     */
+    public function getEnabledCustomActionNames(): array
     {
-        return in_array($actionType, $this->enabledActions, true);
+        if ($this->fullDisabled === true) {
+            return [];
+        }
+
+        return array_values(array_diff($this->customActionNames, $this->disabledCustomActionNames));
+    }
+
+    /**
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|string $action built-in action or the name of a custom action
+     */
+    public function isActionEnabled(ActionType|string $action): bool
+    {
+        if ($this->fullDisabled === true) {
+            return false;
+        }
+
+        $builtInAction = $action instanceof ActionType ? $action : ActionType::tryFrom($action);
+
+        if ($builtInAction !== null) {
+            return in_array($builtInAction, $this->enabledActions, true);
+        }
+
+        return in_array($action, $this->getEnabledCustomActionNames(), true);
     }
 
     public function isFullDisabled(): bool
     {
-        return $this->fullDisabled || count($this->enabledActions) === 0;
+        return $this->fullDisabled || (count($this->enabledActions) === 0 && count($this->getEnabledCustomActionNames()) === 0);
     }
 
     public function getMenuSection(): string

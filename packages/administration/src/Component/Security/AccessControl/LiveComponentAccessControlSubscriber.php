@@ -23,6 +23,7 @@ class LiveComponentAccessControlSubscriber implements EventSubscriberInterface
         protected readonly ContextResolverInterface $contextResolver,
         protected readonly AttributeProcessor $attributeProcessor,
         protected readonly Security $security,
+        protected readonly AccessControlRuleFactory $accessControlRuleFactory,
     ) {
     }
 
@@ -71,7 +72,9 @@ class LiveComponentAccessControlSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $accessControlRules = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
+        $accessControlRules = $this->accessControlRuleFactory->createFromData(
+            $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method)),
+        );
 
         if ($accessControlRules === []) {
             return;

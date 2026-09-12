@@ -228,6 +228,45 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
+## Helper methods
+
+The following helpers are available in the CRUD controller as well as in its extensions (see [Extending existing CRUD Controller](../getting-started/extending-existing-crud-controller.md)).
+They work with the routes of the current CRUD controller, so custom actions do not need to build route names by hand.
+Every helper accepts either a built-in `ActionType` or the name of a [custom action](custom-actions.md).
+
+### `getCrudRouteName(ActionType|string $action): string`
+
+Returns the route name of the given action, e.g. `admin_crud_order_edit`.
+
+### `generateCrudUrl(ActionType|string $action, int|object|null $entityOrId = null, array $parameters = []): string`
+
+Generates the URL of the given action.
+Actions working with a single record (`DETAIL`, `EDIT`, `DELETE`, custom actions with `{id}` in the path) expect the entity or its ID as the second argument, other actions must not get one.
+For CSRF-protected actions (`DELETE`, custom actions with `#[CsrfProtection]`) the CSRF token is added automatically, so the URL is directly usable in links.
+An unknown action name throws `CrudActionNotFoundException`.
+
+```php
+$editUrl = $this->generateCrudUrl(ActionType::EDIT, $order);
+$deleteUrl = $this->generateCrudUrl(ActionType::DELETE, $order->getId());
+```
+
+### `redirectToCrudAction(ActionType|string $action, int|object|null $entityOrId = null, array $parameters = []): RedirectResponse`
+
+Redirects to the given action, accepts the same arguments as `generateCrudUrl()`.
+
+```php
+public function approveAction(int $id): RedirectResponse
+{
+    // ...
+
+    return $this->redirectToCrudAction(ActionType::EDIT, $id);
+}
+```
+
+### `getCrudEntity(int $id): Presentable`
+
+Loads a record through the registered handler (`ReadHandlerInterface`), the same way the built-in edit and delete actions do, so the checks of the handler apply to custom actions as well.
+
 ## CRUD Config
 
 The `CrudConfig` class is used to configure the behavior of the Crud Controller. It is used in the `configure` method of the Crud Controller.
