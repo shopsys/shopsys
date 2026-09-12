@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Controller;
 
 use InvalidArgumentException;
+use LogicException;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
@@ -61,6 +62,14 @@ trait CrudControllerTrait
         array $parameters = [],
     ): string {
         $actionDefinition = $this->definition->getAction($action);
+
+        if (!$this->definition->getConfig()->isActionEnabled($actionDefinition->name)) {
+            throw new LogicException(sprintf(
+                'Action "%s" of "%s" is disabled, its route does not exist.',
+                $actionDefinition->name,
+                $this->definition->controllerClass,
+            ));
+        }
 
         if ($actionDefinition->entityBound !== ($entityOrId !== null || isset($parameters['id']))) {
             throw new InvalidArgumentException(sprintf(

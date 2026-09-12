@@ -67,15 +67,24 @@ class DefinitionTest extends TestCase
         $definition->getAction('publish');
     }
 
-    public function testGetReadHandlerReturnsFirstHandlerAbleToLoadRecords(): void
+    public function testGetReadHandlerPrefersTheHandlerOfTheEditAction(): void
     {
-        $readHandler = $this->createStub(ReadHandlerInterface::class);
+        $editHandler = $this->createStub(ReadHandlerInterface::class);
         $definition = $this->createDefinition(handlers: [
+            ActionType::DELETE->value => $this->createStub(ReadHandlerInterface::class),
             ActionType::CREATE->value => $this->createStub(HandlerInterface::class),
-            ActionType::EDIT->value => $readHandler,
+            ActionType::EDIT->value => $editHandler,
         ]);
 
-        $this->assertSame($readHandler, $definition->getReadHandler());
+        $this->assertSame($editHandler, $definition->getReadHandler());
+    }
+
+    public function testGetReadHandlerFallsBackToAnyHandlerAbleToLoadRecords(): void
+    {
+        $createHandler = $this->createStub(ReadHandlerInterface::class);
+        $definition = $this->createDefinition(handlers: [ActionType::CREATE->value => $createHandler]);
+
+        $this->assertSame($createHandler, $definition->getReadHandler());
     }
 
     public function testGetReadHandlerThrowsWhenNoHandlerCanLoadRecords(): void

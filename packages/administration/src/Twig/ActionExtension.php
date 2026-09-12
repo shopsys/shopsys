@@ -66,7 +66,7 @@ class ActionExtension extends AbstractExtension
             $parameters = $actionRoute->getParameters($data);
 
             if ($this->csrfProtector->isActionProtected($action->controllerClass, $action->method)) {
-                $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->csrfProtector->getCsrfTokenByRoute($action->getRouteName());
+                $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] ??= $this->csrfProtector->getCsrfTokenByRoute($action->getRouteName());
             }
 
             return $this->router->generate($action->getRouteName(), $parameters);

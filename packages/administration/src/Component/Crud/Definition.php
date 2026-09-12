@@ -95,12 +95,19 @@ final readonly class Definition
     }
 
     /**
-     * Returns the first registered handler able to load a single record, so custom actions can use the same loading
-     * (including the checks the handler does) as the built-in edit and delete actions
+     * Returns a registered handler able to load a single record, so custom actions can load records the same way
+     * (including the checks the handler does) as the built-in actions. The handler of the edit action is preferred,
+     * then the one of the delete action, then any other handler loading records.
      */
     public function getReadHandler(): ReadHandlerInterface
     {
-        foreach ($this->handlers as $handler) {
+        $preferredHandlers = [
+            $this->handlers[ActionType::EDIT->value] ?? null,
+            $this->handlers[ActionType::DELETE->value] ?? null,
+            ...array_values($this->handlers),
+        ];
+
+        foreach ($preferredHandlers as $handler) {
             if ($handler instanceof ReadHandlerInterface) {
                 return $handler;
             }

@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
@@ -24,6 +25,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Tests\AdministrationBundle\Unit\Component\Crud\ReviewCrudControllerRegistryFactory;
 use Tests\AdministrationBundle\Unit\DependencyInjection\Compiler\Fixtures\ReviewCrudController;
+use Tests\AdministrationBundle\Unit\DependencyInjection\Compiler\Fixtures\ReviewHandler;
 
 class CrudControllerTraitTest extends TestCase
 {
@@ -109,6 +111,16 @@ class CrudControllerTraitTest extends TestCase
         $controller->generateCrudUrl(ActionType::LIST, self::ENTITY_ID);
     }
 
+    public function testGenerateCrudUrlRejectsDisabledAction(): void
+    {
+        $controller = $this->createController(disabledActions: ['approve']);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Action "approve" of "' . ReviewCrudController::class . '" is disabled');
+
+        $controller->generateCrudUrl('approve', self::ENTITY_ID);
+    }
+
     public function testGenerateCrudUrlRejectsUnknownAction(): void
     {
         $controller = $this->createController();
@@ -141,7 +153,10 @@ class CrudControllerTraitTest extends TestCase
      * Returns an object using the trait with generateUrl() and redirect() replaced by fakes,
      * so the generated URL is "/<routeName>?<query>" and can be asserted directly
      */
-    private function createController(?ReadHandlerInterface $readHandler = null): object
+    /**
+     * @param string[] $disabledActions
+     */
+    private function createController(?ReadHandlerInterface $readHandler = null, array $disabledActions = []): object
     {
         $controller = new class() {
             use CrudControllerTrait {
@@ -170,7 +185,11 @@ class CrudControllerTraitTest extends TestCase
             'ReviewCrudController',
             $this->createEntity()::class,
             'Review',
-            new CrudConfig('Review', customActionNames: ['approve', 'export_all'])->getConfig(),
+            new CrudConfig('Review', customActionNames: ['approve', 'move', 'export_all'])
+                ->registerHandler(ReviewHandler::class)
+                ->enableAction(ActionType::DETAIL)
+                ->disableAction($disabledActions)
+                ->getConfig(),
             [],
             $readHandler === null ? [] : [ActionType::EDIT->value => $readHandler],
             ReviewCrudControllerRegistryFactory::createActionDefinitions(),
