@@ -340,3 +340,17 @@ $config
     ->setMenuIcon('cart')
 ;
 ```
+
+#### `showEntityLog(bool $show)`
+
+The edit page displays the change history of the record (the `Admin:EntityLogTimeline` component) below the form
+whenever the entity has [entity logging](../../../model/log-entity-changes.md) enabled by the `#[Loggable]` attribute.
+Nothing has to be configured to get it. Use this method to hide the history on a CRUD controller where it isn't wanted:
+
+```php
+$config
+    ->showEntityLog(false)
+;
+```
+
+A custom edit template can also replace or remove the `entity_log` block of `@ShopsysAdministration/crud/edit.html.twig`.

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChan
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 
 class EntityLogTimelineComponentTest extends TestCase
@@ -145,11 +146,33 @@ class EntityLogTimelineComponentTest extends TestCase
         $component = new EntityLogTimelineComponent(
             $this->createEntityLogRepositoryStub($entityLogs),
             $this->createResolvedChangesFormatterStub(),
+            $this->createStub(EntityLogFacade::class),
         );
         $component->entityName = 'Order';
         $component->entityId = 10;
 
         return $component;
+    }
+
+    public function testMountResolvesEntityNameAndIdFromTheEntity(): void
+    {
+        $entityLogFacadeStub = $this->createStub(EntityLogFacade::class);
+        $entityLogFacadeStub->method('getEntityNameByEntity')->willReturn('Order');
+        $component = new EntityLogTimelineComponent(
+            $this->createEntityLogRepositoryStub([]),
+            $this->createResolvedChangesFormatterStub(),
+            $entityLogFacadeStub,
+        );
+
+        $component->mount(new class() {
+            public function getId(): int
+            {
+                return 10;
+            }
+        });
+
+        $this->assertSame('Order', $component->entityName);
+        $this->assertSame(10, $component->entityId);
     }
 
     /**

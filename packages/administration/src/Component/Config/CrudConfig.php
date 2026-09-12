@@ -52,6 +52,8 @@ final class CrudConfig
      */
     private ?array $listAllowedDomainIds = null;
 
+    private bool $entityLogShown = true;
+
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
      */
@@ -261,6 +263,19 @@ final class CrudConfig
     }
 
     /**
+     * Show or hide the change history (entity log) on the edit page.
+     * The history is displayed only for entities with entity logging enabled by the Loggable attribute.
+     *
+     * @return $this
+     */
+    public function showEntityLog(bool $show): self
+    {
+        $this->entityLogShown = $show;
+
+        return $this;
+    }
+
+    /**
      * @template T of \Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface
      *
      * Register handler class or classes for CRUD actions.
@@ -352,6 +367,7 @@ final class CrudConfig
             $this->menuIcon,
             $this->listDomainControl,
             $this->listAllowedDomainIds,
+            $this->entityLogShown,
         );
     }
 }
