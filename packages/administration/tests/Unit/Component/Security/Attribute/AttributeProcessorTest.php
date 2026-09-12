@@ -21,6 +21,9 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+use Tests\AdministrationBundle\Unit\Component\Security\Attribute\Fixtures\PublicAccessChildFixtureController;
+use Tests\AdministrationBundle\Unit\Component\Security\Attribute\Fixtures\PublicAccessParentFixtureController;
+use Tests\AdministrationBundle\Unit\Component\Security\Attribute\Fixtures\SuperAdminChildFixtureController;
 
 class AttributeProcessorTest extends TestCase
 {
@@ -383,5 +386,24 @@ class AttributeProcessorTest extends TestCase
         $this->assertEquals('ROLE_USER_EDIT', $rules[0]->roleIdentifier);
         $this->assertCount(1, $rules[0]->httpMethods);
         $this->assertEquals([HttpMethod::GET], $rules[0]->httpMethods);
+    }
+
+    public function testClassLevelSuperAdminOnlyIsInheritedBySubclasses(): void
+    {
+        $reflectionClass = new ReflectionClass(SuperAdminChildFixtureController::class);
+
+        $rules = $this->processor->processMethod($reflectionClass, $reflectionClass->getMethod('testMethod'));
+
+        $this->assertCount(1, $rules);
+        $this->assertSame(SystemRole::SUPER_ADMIN, $rules[0]->roleIdentifier);
+    }
+
+    public function testClassLevelPublicAccessIsNotInheritedBySubclasses(): void
+    {
+        $parentClass = new ReflectionClass(PublicAccessParentFixtureController::class);
+        $childClass = new ReflectionClass(PublicAccessChildFixtureController::class);
+
+        $this->assertSame(SystemRole::PUBLIC_ACCESS, $this->processor->processMethod($parentClass, $parentClass->getMethod('testMethod'))[0]->roleIdentifier);
+        $this->assertSame([], $this->processor->processMethod($childClass, $childClass->getMethod('testMethod')), 'a subclass must not become public by accident');
     }
 }

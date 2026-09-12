@@ -38,7 +38,7 @@ class AttributeDispatchUsageProvider extends ReflectionBasedMemberUsageProvider
         return null;
     }
 
-    protected function hasAttribute(ReflectionMethod $method, string $attributeClassName): bool
+    public function hasAttribute(ReflectionMethod $method, string $attributeClassName): bool
     {
         if ($method->getName() === '__invoke' && count($method->getDeclaringClass()->getAttributes($attributeClassName)) > 0) {
             return true;

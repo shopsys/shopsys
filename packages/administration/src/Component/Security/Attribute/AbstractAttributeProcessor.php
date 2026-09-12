@@ -10,8 +10,8 @@ use ReflectionClass;
 use ReflectionMethod;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleData;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
-use Shopsys\FrameworkBundle\Component\Security\Attribute\AbstractCanPermissionAttribute;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\PermissionAttributeInterface;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\PublicAccess;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequirePermission;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
@@ -23,7 +23,8 @@ use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
  * Converts the security attributes of a controller method to access control rules.
  * Has no dependencies, so the rules can be resolved anywhere, including the container build.
  * The attributes are looked up along the inheritance chain, so an overriding method (or a subclass) without attributes
- * keeps the attributes of the parent declaration.
+ * keeps the attributes of the parent declaration. Class-level PublicAccess is the exception, it applies to the class itself only,
+ * a subclass must not become public by accident.
  */
 abstract class AbstractAttributeProcessor
 {
@@ -107,7 +108,7 @@ abstract class AbstractAttributeProcessor
     {
         $rules = [];
 
-        foreach (ReflectionHelper::getMethodAttributes($method, AbstractCanPermissionAttribute::class, ReflectionAttribute::IS_INSTANCEOF) as $permissionAttribute) {
+        foreach (ReflectionHelper::getMethodAttributes($method, PermissionAttributeInterface::class, ReflectionAttribute::IS_INSTANCEOF) as $permissionAttribute) {
             $role = $permissionAttribute->getRole() ?? $classRole;
 
             if ($role === null) {
@@ -126,7 +127,7 @@ abstract class AbstractAttributeProcessor
     }
 
     /**
-     * Method-level PublicAccess takes precedence over the class-level one
+     * Method-level PublicAccess takes precedence over the class-level one, the class-level one is not inherited by subclasses
      *
      * @return list<\Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleData>
      */
@@ -138,7 +139,7 @@ abstract class AbstractAttributeProcessor
             return [new AccessControlRuleData(SystemRole::PUBLIC_ACCESS, $publicAccess->getMethods())];
         }
 
-        if (ReflectionHelper::getClassAttribute($class, PublicAccess::class) !== null) {
+        if ($class->getAttributes(PublicAccess::class) !== []) {
             return [new AccessControlRuleData(SystemRole::PUBLIC_ACCESS)];
         }
 

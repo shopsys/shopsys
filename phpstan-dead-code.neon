@@ -39,12 +39,13 @@ parameters:
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Security/AccessControl/AccessControlDataProviderInterface.php
+        # the fixture methods of the ReflectionHelper test are only reflected, never called
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/tests/Unit/Component/Reflection/Fixtures/*
         -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/Security/Attribute/PermissionAttributeInterface.php
         -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/Cache/InMemoryCache.php
