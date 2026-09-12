@@ -36,7 +36,7 @@ final class CrudAttributeProcessor extends AbstractAttributeProcessor
 
         if ($rules === []) {
             throw new LogicException(sprintf(
-                'CRUD action %s::%s() must be guarded by an access control attribute (CanView, CanEdit, CanCreate, CanDelete, RequirePermission, RequireRole or SuperAdminOnly).',
+                'CRUD action %s::%s() must be guarded by an access control attribute (CanView, CanEdit, CanCreate, CanDelete, RequirePermission, RequireRole, SuperAdminOnly or PublicAccess).',
                 $class->getName(),
                 $method->getName(),
             ));

@@ -89,7 +89,7 @@ final class CrudRouteProvider
             null,
             [],
             $action->methods,
-            $action->condition ?? '',
+            $action->condition,
         );
         $route->setDefault('_controller', $action->getControllerReference());
         $route->setDefault(self::IS_CRUD_CONTROLLER, true);

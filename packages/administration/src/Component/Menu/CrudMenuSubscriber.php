@@ -40,7 +40,8 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
         foreach ($this->crudControllerRegistry->getAll() as $item) {
             $config = $item->config;
 
-            if ($config->isFullDisabled()) {
+            // the menu item links to the list page, a controller with only custom actions enabled has no page to link to
+            if ($config->isFullDisabled() || !$config->isActionEnabled(ActionType::LIST)) {
                 continue;
             }
 
