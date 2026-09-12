@@ -228,6 +228,13 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
+### Change history on the edit page
+
+The edit page displays the change history of the record (the `Admin:EntityLogTimeline` component) below the form
+whenever the entity has [entity logging](../../../model/log-entity-changes.md) enabled by the `#[Loggable]` attribute.
+Nothing has to be configured to get it — an entity that is logged shows its log.
+A custom edit template can replace or remove the `entity_log` block of `@ShopsysAdministration/crud/edit.html.twig`.
+
 ## CRUD Config
 
 The `CrudConfig` class is used to configure the behavior of the Crud Controller. It is used in the `configure` method of the Crud Controller.

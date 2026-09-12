@@ -16,7 +16,6 @@ use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
-use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Form\Admin\ProductReview\ProductReviewFormType;
@@ -34,7 +33,6 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProductReviewController extends AbstractCrudController
 {
     public function __construct(
-        protected readonly EntityLogFacade $entityLogFacade,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
         protected readonly ProductReviewFacade $productReviewFacade,
     ) {
@@ -164,7 +162,6 @@ class ProductReviewController extends AbstractCrudController
         $productReview = $entity;
 
         return [
-            'entityLogEntityName' => $this->entityLogFacade->getEntityNameByEntity(ProductReview::class),
             'productReview' => $productReview,
         ];
     }
