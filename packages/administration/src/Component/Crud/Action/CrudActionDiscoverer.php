@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Crud\Action;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
+use ReflectionUnionType;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudAction;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
@@ -89,12 +90,12 @@ final class CrudActionDiscoverer
         }
 
         // an attribute of an unknown class (e.g. a missing use statement) would be silently ignored by the access control
-        foreach ($method->getAttributes() as $methodAttribute) {
-            if (!class_exists($methodAttribute->getName())) {
+        foreach ([...$class->getAttributes(), ...$method->getAttributes()] as $declaredAttribute) {
+            if (!class_exists($declaredAttribute->getName())) {
                 throw new RuntimeException(sprintf(
                     'CRUD action %s: the attribute class "%s" does not exist, check the use statements.',
                     $this->describeMethod($class, $method),
-                    $methodAttribute->getName(),
+                    $declaredAttribute->getName(),
                 ));
             }
         }
@@ -205,10 +206,12 @@ final class CrudActionDiscoverer
         return $crudControllerClass;
     }
 
+    private const array SCALAR_TYPES = ['int', 'string', 'float', 'bool'];
+
     /**
      * Returns the names of the parameters that have to come from the route: required parameters of a scalar type
-     * without an attribute. Everything else is resolved by Symfony (Request, services, entities, parameters mapped
-     * by an attribute such as MapQueryParameter) or has a default value.
+     * (or a union of scalar types) without an attribute. Everything else is resolved by Symfony (Request, services,
+     * entities, parameters mapped by an attribute such as MapQueryParameter) or has a default value.
      *
      * @return list<string>
      */
@@ -217,15 +220,7 @@ final class CrudActionDiscoverer
         $parameterNames = [];
 
         foreach ($method->getParameters() as $parameter) {
-            $type = $parameter->getType();
-
-            if (
-                $parameter->isDefaultValueAvailable()
-                || $parameter->getAttributes() !== []
-                || !($type instanceof ReflectionNamedType)
-                || !$type->isBuiltin()
-                || in_array($type->getName(), ['array', 'iterable', 'callable', 'object', 'mixed'], true)
-            ) {
+            if ($parameter->isDefaultValueAvailable() || $parameter->getAttributes() !== [] || !$this->isScalarType($parameter->getType())) {
                 continue;
             }
 
@@ -233,6 +228,15 @@ final class CrudActionDiscoverer
         }
 
         return $parameterNames;
+    }
+
+    private function isScalarType(mixed $type): bool
+    {
+        if ($type instanceof ReflectionUnionType) {
+            return array_all($type->getTypes(), fn (mixed $memberType): bool => $this->isScalarType($memberType));
+        }
+
+        return $type instanceof ReflectionNamedType && in_array($type->getName(), self::SCALAR_TYPES, true);
     }
 
     /**

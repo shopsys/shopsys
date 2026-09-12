@@ -126,6 +126,22 @@ class LoadCrudActionsCompilerPassTest extends TestCase
         $this->assertSame('/publish/{id}/{note}', $this->getActionsByName($container)['publish']['path']);
     }
 
+    public function testUnionOfScalarTypesIsRoutePlaceholderToo(): void
+    {
+        $action = new class() {
+            #[CrudAction(crudController: ReviewCrudController::class)]
+            #[CanView]
+            public function lookupAction(int|string $code, ?int $revision): void
+            {
+            }
+        };
+        $container = $this->createContainer([$action::class]);
+
+        new LoadCrudActionsCompilerPass()->process($container);
+
+        $this->assertSame('/lookup/{code}/{revision}', $this->getActionsByName($container)['lookup']['path']);
+    }
+
     public function testPublicAccessMakesTheActionPublic(): void
     {
         $public = new class() {
@@ -171,7 +187,7 @@ class LoadCrudActionsCompilerPassTest extends TestCase
         $container = $this->createContainer([$duplicate::class]);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('CRUD action "edit" of "' . ReviewCrudController::class . '" is declared twice');
+        $this->expectExceptionMessage('CRUD action "edit" declared in ' . $duplicate::class . '::anotherEditAction() collides with the built-in action');
 
         new LoadCrudActionsCompilerPass()->process($container);
     }

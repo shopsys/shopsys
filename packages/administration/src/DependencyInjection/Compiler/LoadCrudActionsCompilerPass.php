@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\DependencyInjection\Compiler;
 use Override;
 use ReflectionClass;
 use RuntimeException;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDefinition;
 use Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDiscoverer;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
@@ -53,13 +54,20 @@ final class LoadCrudActionsCompilerPass implements CompilerPassInterface
                 $actionKey = $action->crudControllerClass . '::' . $action->name;
 
                 if (isset($actions[$actionKey])) {
-                    throw new RuntimeException(sprintf(
-                        'CRUD action "%s" of "%s" is declared twice, in %s() and in %s().',
-                        $action->name,
-                        $action->crudControllerClass,
-                        $actions[$actionKey]->getControllerReference(),
-                        $action->getControllerReference(),
-                    ));
+                    throw new RuntimeException(ActionType::tryFrom($action->name) !== null
+                        ? sprintf(
+                            'CRUD action "%s" declared in %s() collides with the built-in action of "%s", choose another name.',
+                            $action->name,
+                            $action->getControllerReference(),
+                            $action->crudControllerClass,
+                        )
+                        : sprintf(
+                            'CRUD action "%s" of "%s" is declared twice, in %s() and in %s().',
+                            $action->name,
+                            $action->crudControllerClass,
+                            $actions[$actionKey]->getControllerReference(),
+                            $action->getControllerReference(),
+                        ));
                 }
 
                 $roleConstant = CrudTransformationHelper::generateRoleConstant(

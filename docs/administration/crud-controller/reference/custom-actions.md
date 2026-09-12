@@ -55,7 +55,7 @@ A class outside a `Controller/` directory does not need any service configuratio
 
 - **Name** defaults to the method name without the `Action` suffix in snake_case (`sendEmailAction` → `send_email`). It must match `^[a-z][a-z0-9_]*$` and must not be a built-in action name. The route is named `admin_crud_<controller>_<name>`.
 - **Path** defaults to `/<name>` followed by a placeholder for every required scalar parameter of the method, in their order (`moveAction(Request $request, int $id, int $position)` → `/move/{id}/{position}`). It is appended after the CRUD controller URL (`/admin/[prefix/]product-review`). A custom path must contain a placeholder for every such parameter, the other placeholders end up in the request attributes as usual.
-- **Method parameters** are resolved by Symfony like in any other controller: `Request`, services, entities and parameters mapped by attributes (`#[MapQueryParameter]`, `#[MapEntity]`, ...) are not route placeholders, neither are parameters with a default value.
+- **Method parameters** are resolved by Symfony like in any other controller: `Request`, services, entities and parameters mapped by attributes (`#[MapQueryParameter]`, `#[MapEntity]`, ...) are not route placeholders, neither are parameters with a default value. A union of scalar types (`int|string $code`) is a placeholder as well.
 - An action whose path contains `{id}` works with a single record, `generateCrudUrl()` and `linkToCrud()` expect the entity or its ID for it. `linkToCrud()` accepts a closure returning either the ID or an array of all route parameters.
 - **Route options** known from the Symfony `#[Route]` attribute can be set: `methods`, `requirements`, `defaults` and `condition`. The defaults `_controller` and `_crud_*` are reserved.
 
@@ -70,7 +70,7 @@ public function exportAction(string $_format): Response
 Every custom action must be guarded by one of `#[CanView]`, `#[CanEdit]`, `#[CanCreate]`, `#[CanDelete]`, `#[RequirePermission]`, `#[RequireRole]` or `#[SuperAdminOnly]`, a missing attribute fails the container build.
 `#[SuperAdminOnly]` on the handling class (e.g. the CRUD controller itself) applies to the action as well, `#[PublicAccess]` makes it public.
 
-The role of a `Can*` attribute without an explicit role is resolved in this order: the `#[ForRole]` attribute of the handling class, then the role of the CRUD controller.
+The role of a `Can*` attribute without an explicit role is resolved in this order: the `#[ForRole]` attribute of the handling class (or of its parent class), then the role of the CRUD controller.
 The role of the CRUD controller then offers the permission even when the corresponding built-in action is disabled, so e.g. `#[CanEdit]` on `approve` makes the `EDIT` permission available on the role of product reviews even with `editAction` disabled.
 Different actions can require different permissions. An attribute with an explicit role (`#[CanEdit(role: 'ROLE_MODERATOR')]`) or a handling class with `#[ForRole]` guards the action by that role and does not influence the role of the CRUD controller.
 
