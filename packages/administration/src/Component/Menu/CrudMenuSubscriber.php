@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Menu;
 
 use Knp\Menu\ItemInterface;
+use LogicException;
 use Override;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
@@ -49,13 +50,19 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
             $menu = $this->findMenuItem($rootMenu, $sectionMenu);
 
             if ($menu === null) {
-                return;
+                // a missing section hides only the item of this controller, the remaining CRUD controllers are still added
+                continue;
             }
 
             $submenuSection = $config->getSubmenuSection();
 
             if ($submenuSection !== null) {
-                $menu = $menu->getChild($submenuSection);
+                $menu = $menu->getChild($submenuSection) ?? throw new LogicException(sprintf(
+                    'CRUD controller "%s" is configured to be displayed in submenu section "%s" of menu section "%s", but the section has no such child. Check the setMenuSection() call in its configure() method.',
+                    $item->controllerClass,
+                    $submenuSection,
+                    $sectionMenu,
+                ));
             }
 
             $route = $this->crudRouteProvider->getRouteItem($item->controllerClass, ActionType::LIST);
