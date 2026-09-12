@@ -35,14 +35,21 @@ final class CrudMenuSubscriberTest extends TestCase
         $this->setTranslator();
     }
 
-    public function testControllerWithMissingMenuSectionDoesNotHideTheFollowingControllers(): void
+    public function testControllerIsAddedToItsMenuSection(): void
     {
         $rootMenu = $this->createRootMenu();
 
-        $this->configureMenu($rootMenu, [MissingSectionCrudController::class, ProductsCrudController::class]);
+        $this->configureMenu($rootMenu, [ProductsCrudController::class]);
 
         $this->assertNotNull($rootMenu->getChild('products')->getChild('admin_crud_products_list'));
-        $this->assertNull($rootMenu->getChild('admin_crud_missing_section_list'));
+    }
+
+    public function testControllerWithMissingMenuSectionThrowsUnderstandableException(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('CRUD controller "' . MissingSectionCrudController::class . '" is configured to be displayed in menu section "nonexistent", but the side menu has no such section');
+
+        $this->configureMenu($this->createRootMenu(), [MissingSectionCrudController::class]);
     }
 
     public function testControllerWithMissingSubmenuSectionThrowsUnderstandableException(): void
