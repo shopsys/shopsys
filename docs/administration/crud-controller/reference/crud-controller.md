@@ -224,6 +224,13 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 }
 ```
 
+!!! note "Action bar of the form"
+
+    The `ActionBarType` of a form handled by a CRUD controller action links back to the list action of the controller automatically,
+    so the FormType does not need to set `back_route`. Set `back_route` or `back_url` only when the form should lead somewhere else.
+    On the built-in create and edit pages the label of the save button is derived from the action as well, so the `entity` option
+    is not needed either — `$builder->add('actionBar', ActionBarType::class)` is all a CRUD FormType has to do.
+
 !!! warning "Mutually exclusive modes"
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.

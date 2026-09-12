@@ -48,10 +48,7 @@ final class TransportGroupFormType extends AbstractType
                 'entity' => $options['transportGroup'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ])
-            ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_crud_transport_group_list',
-                'entity' => $options['transportGroup'],
-            ]);
+            ->add('actionBar', ActionBarType::class);
     }
 
     #[Override]

@@ -201,10 +201,7 @@ final class AdditionalServiceFormType extends AbstractType
             ->add($builderFeedsGroup)
             ->add($builderAdditionalInformationGroup)
             ->add($builderImageGroup)
-            ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_crud_additional_service_list',
-                'entity' => $additionalService,
-            ]);
+            ->add('actionBar', ActionBarType::class);
     }
 
     #[Override]

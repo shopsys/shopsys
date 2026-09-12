@@ -96,10 +96,7 @@ final class BlogArticleAuthorFormType extends AbstractType
         $builder
             ->add($builderBasicInformationGroup)
             ->add($builderImageGroup)
-            ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_crud_blog_article_author_list',
-                'entity' => $blogArticleAuthor,
-            ]);
+            ->add('actionBar', ActionBarType::class);
     }
 
     #[Override]
