@@ -47,12 +47,11 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
 
             $sectionMenu = $config->getMenuSection();
 
-            $menu = $this->findMenuItem($rootMenu, $sectionMenu);
-
-            if ($menu === null) {
-                // a missing section hides only the item of this controller, the remaining CRUD controllers are still added
-                continue;
-            }
+            $menu = $this->findMenuItem($rootMenu, $sectionMenu) ?? throw new LogicException(sprintf(
+                'CRUD controller "%s" is configured to be displayed in menu section "%s", but the side menu has no such section. Check the setMenuSection() call in its configure() method.',
+                $item->controllerClass,
+                $sectionMenu,
+            ));
 
             $submenuSection = $config->getSubmenuSection();
 
