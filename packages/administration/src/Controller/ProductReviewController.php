@@ -152,20 +152,6 @@ class ProductReviewController extends AbstractCrudController
         return '@ShopsysAdministration/content/productReview/edit.html.twig';
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    #[Override]
-    protected function getEditViewData(object $entity): array
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\ProductReview\ProductReview $productReview */
-        $productReview = $entity;
-
-        return [
-            'productReview' => $productReview,
-        ];
-    }
-
     #[Route(path: '/product-review/approve/{id}', name: 'admin_crud_product_review_approve', requirements: ['id' => '\d+'], methods: ['GET'])]
     #[CanEdit]
     #[CsrfProtection]

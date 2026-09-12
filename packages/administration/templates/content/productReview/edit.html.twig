@@ -1,7 +1,7 @@
 {% extends '@ShopsysAdministration/crud/edit.html.twig' %}
 
 {% block main_content %}
-    {{ include('@ShopsysAdministration/content/productReview/basicInformation.html.twig', {'productReview': productReview}) }}
+    {{ include('@ShopsysAdministration/content/productReview/basicInformation.html.twig', { productReview: entity }) }}
 
     {{ parent() }}
 {% endblock %}
