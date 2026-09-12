@@ -48,6 +48,7 @@ class LoadCrudActionsCompilerPassTest extends TestCase
         $this->assertSame(ReviewCrudController::class . '::editAction', $actions['edit']['controllerClass'] . '::' . $actions['edit']['method']);
         $this->assertSame('/edit/{id}', $actions['edit']['path']);
         $this->assertTrue($actions['edit']['entityBound']);
+        $this->assertSame(['id' => '\d+'], $actions['edit']['requirements'], 'integer placeholders match digits only');
         $this->assertSame([
             ['roleIdentifier' => 'ROLE_CRUD_REVIEW_EDIT', 'httpMethods' => ['POST']],
             ['roleIdentifier' => 'ROLE_CRUD_REVIEW_VIEW', 'httpMethods' => ['GET']],
@@ -57,6 +58,7 @@ class LoadCrudActionsCompilerPassTest extends TestCase
         // Request and parameters with a default value are not route placeholders, the required scalar ones are
         $this->assertSame('/move/{id}/{position}', $actions['move']['path']);
         $this->assertTrue($actions['move']['entityBound']);
+        $this->assertSame(['id' => '\d+', 'position' => '\d+'], $actions['move']['requirements']);
 
         $this->assertSame([
             'name' => 'approve',
@@ -66,7 +68,7 @@ class LoadCrudActionsCompilerPassTest extends TestCase
             'path' => '/approve/{id}',
             'entityBound' => true,
             'methods' => [],
-            'requirements' => [],
+            'requirements' => ['id' => '\d+'],
             'defaults' => [],
             'condition' => null,
             'accessControlRules' => [['roleIdentifier' => 'ROLE_CRUD_REVIEW_EDIT', 'httpMethods' => []]],
@@ -139,7 +141,9 @@ class LoadCrudActionsCompilerPassTest extends TestCase
 
         new LoadCrudActionsCompilerPass()->process($container);
 
-        $this->assertSame('/lookup/{code}/{revision}', $this->getActionsByName($container)['lookup']['path']);
+        $lookup = $this->getActionsByName($container)['lookup'];
+        $this->assertSame('/lookup/{code}/{revision}', $lookup['path']);
+        $this->assertSame(['revision' => '\d+'], $lookup['requirements'], 'a union type has no default requirement, a nullable int has');
     }
 
     public function testPublicAccessMakesTheActionPublic(): void

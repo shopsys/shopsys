@@ -57,7 +57,7 @@ A class outside a `Controller/` directory does not need any service configuratio
 - **Path** defaults to `/<name>` followed by a placeholder for every required scalar parameter of the method, in their order (`moveAction(Request $request, int $id, int $position)` → `/move/{id}/{position}`). It is appended after the CRUD controller URL (`/admin/[prefix/]product-review`). A custom path must contain a placeholder for every such parameter, the other placeholders end up in the request attributes as usual.
 - **Method parameters** are resolved by Symfony like in any other controller: `Request`, services, entities and parameters mapped by attributes (`#[MapQueryParameter]`, `#[MapEntity]`, ...) are not route placeholders, neither are parameters with a default value. A union of scalar types (`int|string $code`) is a placeholder as well.
 - An action whose path contains `{id}` works with a single record, `generateCrudUrl()` and `linkToCrud()` expect the entity or its ID for it. `linkToCrud()` accepts a closure returning either the ID or an array of all route parameters.
-- **Route options** known from the Symfony `#[Route]` attribute can be set: `methods`, `requirements`, `defaults` and `condition`. The defaults `_controller` and `_crud_*` are reserved.
+- **Route options** known from the Symfony `#[Route]` attribute can be set: `methods`, `requirements`, `defaults` and `condition`. The defaults `_controller` and `_crud_*` are reserved. A placeholder of an `int` parameter gets the requirement `\d+` unless you set your own.
 
 ```php
 #[CrudAction(name: 'export', path: '/export.{_format}', methods: ['GET'], requirements: ['_format' => 'csv|xml'], defaults: ['_format' => 'csv'])]

@@ -102,10 +102,12 @@ final class CrudActionDiscoverer
 
         $name = $this->resolveName($class, $method, $attribute);
         $crudControllerClass = $this->resolveCrudControllerClass($class, $method, $attribute, $crudControllerClasses, $controllerClassesByExtensionClass);
-        $placeholderParameterNames = $this->getRoutePlaceholderParameterNames($method);
+        $placeholderParameters = $this->getRoutePlaceholderParameters($method);
+        $placeholderParameterNames = array_keys($placeholderParameters);
         $path = $attribute->path ?? $this->createDefaultPath($name, $placeholderParameterNames);
+        $requirements = $attribute->requirements;
 
-        foreach ($placeholderParameterNames as $parameterName) {
+        foreach ($placeholderParameters as $parameterName => $parameter) {
             if (!str_contains($path, '{' . $parameterName . '}')) {
                 throw new RuntimeException(sprintf(
                     'CRUD action %s: the required parameter $%s is not a placeholder of the route path "%s", add {%s} to the path, give the parameter a default value or resolve it by an attribute.',
@@ -114,6 +116,11 @@ final class CrudActionDiscoverer
                     $path,
                     $parameterName,
                 ));
+            }
+
+            // an integer placeholder (typically {id}) matches digits only, so a non-numeric value is a 404 instead of a type error
+            if ($this->isIntegerType($parameter->getType())) {
+                $requirements[$parameterName] ??= '\d+';
             }
         }
 
@@ -135,7 +142,7 @@ final class CrudActionDiscoverer
             path: '/' . ltrim($path, '/'),
             entityBound: str_contains($path, '{id}'),
             methods: $attribute->methods,
-            requirements: $attribute->requirements,
+            requirements: $requirements,
             defaults: $attribute->defaults,
             condition: $attribute->condition,
         );
@@ -209,25 +216,30 @@ final class CrudActionDiscoverer
     private const array SCALAR_TYPES = ['int', 'string', 'float', 'bool'];
 
     /**
-     * Returns the names of the parameters that have to come from the route: required parameters of a scalar type
+     * Returns the parameters that have to come from the route, indexed by name: required parameters of a scalar type
      * (or a union of scalar types) without an attribute. Everything else is resolved by Symfony (Request, services,
      * entities, parameters mapped by an attribute such as MapQueryParameter) or has a default value.
      *
-     * @return list<string>
+     * @return array<string, \ReflectionParameter>
      */
-    private function getRoutePlaceholderParameterNames(ReflectionMethod $method): array
+    private function getRoutePlaceholderParameters(ReflectionMethod $method): array
     {
-        $parameterNames = [];
+        $parameters = [];
 
         foreach ($method->getParameters() as $parameter) {
             if ($parameter->isDefaultValueAvailable() || $parameter->getAttributes() !== [] || !$this->isScalarType($parameter->getType())) {
                 continue;
             }
 
-            $parameterNames[] = $parameter->getName();
+            $parameters[$parameter->getName()] = $parameter;
         }
 
-        return $parameterNames;
+        return $parameters;
+    }
+
+    private function isIntegerType(mixed $type): bool
+    {
+        return $type instanceof ReflectionNamedType && $type->getName() === 'int';
     }
 
     private function isScalarType(mixed $type): bool

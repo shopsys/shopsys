@@ -40,6 +40,7 @@ class CrudRouteProviderTest extends TestCase
         $this->assertSame('admin_crud_review_approve', $routeItem->getRouteName());
         $this->assertSame('approve', $routeItem->getActionName());
         $this->assertSame('/review/approve/{id}', $route->getPath());
+        $this->assertSame(['id' => '\d+'], $route->getRequirements());
         $this->assertSame(ReviewCrudController::class . '::approveAction', $route->getDefault('_controller'));
         $this->assertTrue($route->getDefault(CrudRouteProvider::IS_CRUD_CONTROLLER));
         $this->assertSame('approve', $route->getDefault(CrudRouteProvider::CRUD_ACTION));
