@@ -187,10 +187,23 @@ class FriendlyUrlFacade
                 }
             }
 
+            $isMainFriendlyUrlResolved = $urlListData->mainFriendlyUrl !== null;
+
             foreach ($urlListData->newUrls as $newSlug) {
                 $newFriendlyUrl = $this->friendlyUrlFactory->create($routeName, $entityId, $domainId, $newSlug);
                 $this->em->persist($newFriendlyUrl);
                 $toFlush[] = $newFriendlyUrl;
+
+                // when the entity is being created programmatically with URLs filled in the data object, it has no main URL yet,
+                // so the first new URL on the domain becomes main and no URL is generated from the entity name afterwards
+                if (!$isMainFriendlyUrlResolved
+                    && $this->findMainFriendlyUrl($domainId, $routeName, $entityId) === null
+                ) {
+                    $newFriendlyUrl->setMain(true);
+                    $this->renewMainFriendlyUrlSlugCache($newFriendlyUrl);
+                }
+
+                $isMainFriendlyUrlResolved = true;
             }
         }
 
