@@ -8,6 +8,7 @@ use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
@@ -40,8 +41,8 @@ class DatagridTest extends TestCase
     protected function setUp(): void
     {
         $this->adapter = $this->createStub(AdapterInterface::class);
-        $this->adapter->method('getDatasource')->willReturnCallback(function (string $identificationName, array $fields): DataSourceInterface {
-            $this->fetchedFieldNames = array_map(static fn (FieldDescriptor $field) => $field->getName(), $fields);
+        $this->adapter->method('getDatasource')->willReturnCallback(function (DatasourceRequest $request): DataSourceInterface {
+            $this->fetchedFieldNames = array_map(static fn (FieldDescriptor $field) => $field->getName(), $request->fields);
 
             return $this->createStub(DataSourceInterface::class);
         });

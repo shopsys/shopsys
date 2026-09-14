@@ -10,7 +10,7 @@ use LogicException;
 
 /**
  * Joins what a walked path needs into one query and tells how the value of the path is addressed there. Every join
- * is added once, under an alias derived from the path, so the selects of the query share it.
+ * is added once, under an alias derived from the path, so the selects and the conditions of the query share it.
  *
  * @internal this class is not intended to be used directly by other developers
  */
@@ -43,15 +43,15 @@ final class PathJoiner
     }
 
     /**
-     * A path through a collection is resolved without a DQL expression — joining the collection would multiply
-     * the listed record.
+     * A path through a collection is resolved without a DQL expression when the query does not join collections,
+     * so that it is matched by a correlated subquery instead.
      */
     public function resolve(WalkedPath $walkedPath): PathResolution
     {
         $description = $walkedPath->description;
         $selectAlias = $this->getAlias($description->path);
 
-        if ($description->isToMany()) {
+        if ($description->isToMany() && $this->joinStyle->joinsCollections() === false) {
             return new PathResolution(null, $selectAlias, null, $description);
         }
 
@@ -91,6 +91,10 @@ final class PathJoiner
     private function joinAssociation(PathStep $step, string $currentAlias): string
     {
         $joinAlias = $this->getAlias($step->partPath) . '_join';
+
+        if ($this->joinStyle->prefixesAliases()) {
+            $joinAlias = $this->rootAlias . '_' . $joinAlias;
+        }
 
         if (array_key_exists($joinAlias, $this->joins) === false) {
             $this->joins[$joinAlias] = $joinAlias;

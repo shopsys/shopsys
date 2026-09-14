@@ -22,10 +22,28 @@ enum JoinStyle
      */
     case LISTING;
 
+    /**
+     * A correlated subquery reaching the related rows of a collection joins by the association path inwardly — only
+     * that reaches through a collection, and a record without any related row is never matched. It is nested in the
+     * query listing the records, so its aliases are prefixed not to shadow the aliases of that query.
+     */
+    case CORRELATED;
+
+    public function joinsCollections(): bool
+    {
+        return $this === self::CORRELATED;
+    }
+
+    public function prefixesAliases(): bool
+    {
+        return $this === self::CORRELATED;
+    }
+
     public function join(QueryBuilder $queryBuilder, string $currentAlias, PathStep $step, string $joinAlias): void
     {
         match ($this) {
             self::LISTING => $queryBuilder->leftJoin($step->targetEntityClass, $joinAlias, Join::WITH, $this->createRangeJoinCondition($currentAlias, $step, $joinAlias)),
+            self::CORRELATED => $queryBuilder->innerJoin(sprintf('%s.%s', $currentAlias, $step->field), $joinAlias),
         };
     }
 

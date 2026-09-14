@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMSetup;
 use PHPUnit\Framework\TestCase;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathResolution;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalker;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalkerInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
@@ -300,6 +301,31 @@ final class ProxyQueryTest extends TestCase
         $this->assertTrue($pathResolution->isToMany());
         $this->assertNull($pathResolution->dqlExpression);
         $this->assertSame([], $proxyQuery->getQueryBuilder()->getDQLPart('join'));
+    }
+
+    /**
+     * A related row of a collection is reached by a correlated subquery joining the collection inwardly, under
+     * aliases of its own, so that the listed record is never multiplied.
+     */
+    public function testRelatedRowIsMatchedByCorrelatedSubquery(): void
+    {
+        $proxyQuery = $this->createProxyQuery(DummyProduct::class);
+        $proxyQuery->addSelect('id');
+
+        $predicate = $proxyQuery->exists('domains.domainId', static fn (PathResolution $pathResolution): string => sprintf(
+            '%s = :%s',
+            $pathResolution->dqlExpression,
+            $proxyQuery->addParameter(1),
+        ));
+        $proxyQuery->applyExpression($predicate);
+
+        $queryBuilder = $proxyQuery->getQueryBuilder();
+        $this->assertSame(
+            'EXISTS(SELECT 1 FROM ' . DummyProduct::class . ' dgsub_0 INNER JOIN dgsub_0.domains dgsub_0_domains_join WHERE dgsub_0.id = o.id AND dgsub_0_domains_join.domainId = :dgexpr_0)',
+            $predicate,
+        );
+        $this->assertSame([], $queryBuilder->getDQLPart('join'));
+        $this->assertStringContainsString('EXISTS', $queryBuilder->getQuery()->getSQL());
     }
 
     /**
