@@ -12,6 +12,11 @@ In case you are using `OrmAdapter`, you can use dot notation to access nested pr
 - `$datagrid->add('currency.code')` - This will join the `currency` relation and fetch the `code` property of the `Currency` entity.
 - `$datagrid->add('status.name')` - This will join the `status` relation and look for the `name` property of the `Status` entity. In this case `Status` is a translatable entity and the `name` property is a translatable field. The datagrid will automatically fetch the correct translation based on the current locale.
 - `$datagrid->add('currency')` - This will fetch the `Currency` entity. In this case you need to define `template`, `transform` or `visible` to `false` option to tell datagrid how to display this object.
+- `$datagrid->add('translations.name')` - This will fetch the translated `name` property explicitly. A translated field is found even without naming the `translations` relation, so this is only needed when the entity itself has a field of the same name — then the field of the entity wins and the translated one has to be addressed this way.
+
+!!! note "A field of a to-many relation cannot be fetched"
+
+    Joining a to-many relation would list an entity once per related row, which would break paging and the total count. Fetch such values with a `virtual` field and a `transform` instead. The only exception is `translations`, which is joined with the current locale and therefore leads to a single row.
 
 ### Options
 
@@ -31,6 +36,8 @@ The following options are available for fields:
 - `role` - Role constant (e.g. `ROLE_PRODUCT`) the administrator needs to see the field. The field is then neither fetched nor displayed for other administrators. If not set, the role of the datagrid (the CRUD controller) is used.
 - `permission` - Permission (`Shopsys\FrameworkBundle\Component\Security\Role\Permission`) on the role the administrator needs to see the field. If not set, `Permission::VIEW` is used. The field is restricted only when `role` or `permission` is set.
 - `class` - CSS class added to the header and the cells of the column, e.g. `text-end` for numeric columns.
+- `searchable` - If set to `true`, the quick search of the datagrid searches in this field. A text input is rendered above the datagrid and the typed text is matched (ignoring case and diacritics) in every searchable field, any of them matching is enough. The field has to lead to a text value; a virtual field, a date or a number is refused when the datagrid is built. A field combining multiple properties is searched in all of its properties leading to text, the others (an identifier, a date) are skipped. A field the administrator is not allowed to see (`role`, `permission`) is not searched in. See [Narrowing the records](./narrowing.md#quick-search).
+- `filterable` - If set to `true`, the filter of the datagrid offers a rule over this field. The kind of filter is picked by the value the path of the field leads to (text, number, date, yes/no, product) and the filter takes the label of the field. A filter declared by `$datagrid->filters()->add()` under the name of the field replaces the picked one. A field without a path, combining several properties or leading to a value no filter is known for (money, an association to another entity than a product — a select of the related entities loads all of them, declare an `EntityFilter` for a small table) is refused when the datagrid is built. A field the administrator is not allowed to see (`role`, `permission`) gets no filter. See [Filters](./filters.md#filters-of-the-fields).
 
 ```php
 $datagrid->add('name', [
