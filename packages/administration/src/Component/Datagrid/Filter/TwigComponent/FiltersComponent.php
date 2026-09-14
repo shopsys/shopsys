@@ -28,6 +28,11 @@ final class FiltersComponent
     public GridView $gridView;
 
     /**
+     * Rendered inside a card of the page (a tab next to the quick search) instead of a card of its own.
+     */
+    public bool $embedded = false;
+
+    /**
      * Whether any rule was composed — the panel is then marked as active.
      */
     public function isActive(): bool

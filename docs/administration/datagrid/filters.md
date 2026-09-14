@@ -67,7 +67,7 @@ An invalid filter (a malformed number, an operation the filter does not offer) n
 
 ## The form on the page
 
-The `Admin:Grid:Filters` component renders the form in the `datagrid_controls` block of the CRUD list template, fed by the `filterForm` template parameter. Besides the composed groups it renders a prototype of the operation select and the value input for every filter and every arity of its operations (`prototypes[<filter>][<arity>]`); the `datagrid-filter` Stimulus controller clones them when the administrator adds a rule or changes its filter or operation, so no request is needed until the filter is applied. The prototypes are never submitted.
+The `Admin:Grid:Filters` component renders the form in the `datagrid_controls` block of the CRUD list template, fed by the `filterForm` template parameter. When the list offers the quick search as well, the two share one card as tabs — the tab of a composed filter is the open one — and the domain control moves into a card beside them as a compact select. Besides the composed groups it renders a prototype of the operation select and the value input for every filter and every arity of its operations (`prototypes[<filter>][<arity>]`); the `datagrid-filter` Stimulus controller clones them when the administrator adds a rule or changes its filter or operation, so no request is needed until the filter is applied. The prototypes are never submitted.
 
 Outside the CRUD controller: `Datagrid::getFilterForm()` gives the submitted form (null when no filter is declared or the datagrid is built outside a request), and `component('Admin:Grid:Filters', { filterForm: form, gridView: gridView })` renders it.
 
