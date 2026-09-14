@@ -58,12 +58,7 @@
                                             {% endif %}
 
                                             {% if allowDelete %}
-                                                {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_delivery_address_delete' %}
-                                                {% set deleteUrl = url('admin_delivery_address_delete', {
-                                                    id: deliveryAddress.id,
-                                                    (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                                }) %}
-                                                <a href="{{ deleteUrl }}"
+                                                <a href="{{ protectedUrl('admin_delivery_address_delete', {id: deliveryAddress.id}) }}"
                                                    class="link-secondary"
                                                    data-confirm-window
                                                    data-confirm-message="{{ deleteConfirmMessage }}"
