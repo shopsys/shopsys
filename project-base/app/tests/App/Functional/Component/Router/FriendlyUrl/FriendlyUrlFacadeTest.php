@@ -5,17 +5,27 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\Router\FriendlyUrl;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\UnitDataFixture;
+use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryDataFactory;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
 {
     private const string CATEGORY_ROUTE_NAME = 'front_product_list';
+    private const string PRODUCT_ROUTE_NAME = 'front_product_detail';
 
     /**
      * @inject
@@ -31,6 +41,21 @@ final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private CategoryDataFactory $categoryDataFactory;
+
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
+
+    /**
+     * @inject
+     */
+    private ProductDataFactory $productDataFactory;
+
+    /**
+     * @inject
+     */
+    private ProductInputPriceDataFactory $productInputPriceDataFactory;
 
     public function testMainFriendlyUrlIsKeptWhenEntityIsRenamed(): void
     {
@@ -146,6 +171,52 @@ final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame('manually-managed-category-url', $mainFriendlyUrlAfterManualChange->getSlug());
         $this->assertNotNull($originalFriendlyUrl);
         $this->assertFalse($originalFriendlyUrl->isMain());
+    }
+
+    public function testManuallyAddedUrlMatchingProductNameBecomesMainWhenProductIsCreated(): void
+    {
+        $productData = $this->createProductDataWithNameAndSlugOnFirstDomain('Oreo', 'oreo');
+
+        $product = $this->productFacade->create($productData);
+        $this->em->clear();
+
+        $friendlyUrlsOnFirstDomain = $this->friendlyUrlFacade->getAllByRouteNameDomainIdsAndEntityIds(self::PRODUCT_ROUTE_NAME, $product->getId(), [Domain::FIRST_DOMAIN_ID]);
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::PRODUCT_ROUTE_NAME, $product->getId());
+        $this->assertCount(1, $friendlyUrlsOnFirstDomain);
+        $this->assertSame('oreo', $mainFriendlyUrl->getSlug());
+    }
+
+    public function testManuallyAddedUrlTakesPrecedenceOverUrlGeneratedFromProductNameWhenProductIsCreated(): void
+    {
+        $productData = $this->createProductDataWithNameAndSlugOnFirstDomain('Biscuit', 'oreo');
+
+        $product = $this->productFacade->create($productData);
+        $this->em->clear();
+
+        $friendlyUrlsOnFirstDomain = $this->friendlyUrlFacade->getAllByRouteNameDomainIdsAndEntityIds(self::PRODUCT_ROUTE_NAME, $product->getId(), [Domain::FIRST_DOMAIN_ID]);
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::PRODUCT_ROUTE_NAME, $product->getId());
+        $this->assertCount(1, $friendlyUrlsOnFirstDomain);
+        $this->assertSame('oreo', $mainFriendlyUrl->getSlug());
+        $this->assertNull($this->friendlyUrlFacade->findByDomainIdAndSlug(Domain::FIRST_DOMAIN_ID, 'biscuit'));
+    }
+
+    private function createProductDataWithNameAndSlugOnFirstDomain(string $name, string $slug): ProductData
+    {
+        $productData = $this->productDataFactory->create();
+        $productData->name[$this->getFirstDomainLocale()] = $name;
+        $productData->catnum = $slug . '-catnum';
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
+        $productData->categoriesByDomainId[Domain::FIRST_DOMAIN_ID][] = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
+        $productData->productInputPricesByDomain[Domain::FIRST_DOMAIN_ID] = $this->productInputPriceDataFactory->create(
+            $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID, Vat::class),
+            [Domain::FIRST_DOMAIN_ID => Money::create(1)],
+        );
+        $productData->urls->newUrls[] = [
+            UrlListData::FIELD_DOMAIN => Domain::FIRST_DOMAIN_ID,
+            UrlListData::FIELD_SLUG => $slug,
+        ];
+
+        return $productData;
     }
 
     private function getSecondDomainLocale(): string
