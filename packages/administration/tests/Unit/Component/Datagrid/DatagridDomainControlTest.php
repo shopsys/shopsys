@@ -17,6 +17,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -220,7 +221,7 @@ final class DatagridDomainControlTest extends TestCase
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturn($gridStub);
 
-        return new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), DatagridNarrowingResolverFactory::create(), $scope, [
+        return new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), $scope, [
             'roleConstant' => 'ROLE_CRUD_TEST',
         ]);
     }

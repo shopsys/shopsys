@@ -19,6 +19,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlS
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowing;
 use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -75,6 +76,7 @@ final class Datagrid
         private readonly GridFactory $gridFactory,
         private readonly AccessCheckerInterface $accessChecker,
         private readonly DatagridNarrowingResolver $narrowingResolver,
+        private readonly DatagridRequestState $requestState,
         private readonly ?DomainControlScope $domainControlScope,
         array $options,
     ) {
@@ -95,12 +97,18 @@ final class Datagrid
     }
 
     /**
-     * What narrows the records on behalf of the administrator — the domain control. Resolved on the first call
-     * (`createView()` makes one).
+     * What narrows the records on behalf of the administrator — the domain control and the quick search. Resolved
+     * from the fields on the first call (`createView()` makes one), so ask once the datagrid is configured; a later
+     * change of the fields does not change it.
+     *
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
      */
     public function getNarrowing(): DatagridNarrowing
     {
         return $this->narrowing ??= $this->narrowingResolver->resolve(
+            $this->adapter,
+            $this->getAccessibleFields(),
+            $this->requestState,
             $this->domainControlScope,
         );
     }
@@ -243,7 +251,8 @@ final class Datagrid
      *       property?: string|string[]|null,
      *       role?: string|null,
      *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
-     *       class?: string|null
+     *       class?: string|null,
+     *       searchable?: bool
      *   } $options
      * @phpstan-param FieldOptions $options
      */
@@ -272,7 +281,8 @@ final class Datagrid
      *      property?: string|string[]|null,
      *      role?: string|null,
      *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
-     *      class?: string|null
+     *      class?: string|null,
+     *      searchable?: bool
      *  } $options
      * @phpstan-param FieldOptions $options
      */
@@ -321,7 +331,7 @@ final class Datagrid
         $this->addDomainFieldIfWorthDisplaying();
 
         // fields the administrator is not allowed to see are neither fetched nor displayed
-        $accessibleFields = array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
+        $accessibleFields = $this->getAccessibleFields();
 
         $datasource = $this->adapter->getDatasource(new DatasourceRequest(
             $this->identificationName,
@@ -399,6 +409,17 @@ final class Datagrid
             $field->getRole() ?? $this->options['roleConstant'],
             $field->getPermission() ?? Permission::VIEW,
         );
+    }
+
+    /**
+     * The fields the current administrator is allowed to see — only those are fetched, displayed and narrowed by,
+     * so that the quick search cannot tell what a field hidden from the administrator holds.
+     *
+     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[]
+     */
+    private function getAccessibleFields(): array
+    {
+        return array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
     }
 
     /**

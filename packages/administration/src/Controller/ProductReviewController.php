@@ -92,11 +92,14 @@ class ProductReviewController extends AbstractCrudController
                 'label' => t('Product'),
                 'property' => ['productName', 'catnum', 'product.id'],
                 'template' => '@ShopsysAdministration/content/productReview/grid/product.html.twig',
+                // the name and the catalog number are searched in, the identifier is skipped as it is no text
+                'searchable' => true,
             ])
             ->add('reviewer', [
                 'label' => t('Reviewer'),
                 'property' => ['lastName', 'firstName', 'customerUser.id'],
                 'template' => '@ShopsysAdministration/content/productReview/grid/reviewer.html.twig',
+                'searchable' => true,
             ])
             ->add('rating', [
                 'label' => t('Rating'),

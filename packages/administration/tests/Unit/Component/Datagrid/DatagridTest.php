@@ -11,6 +11,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -68,7 +69,7 @@ class DatagridTest extends TestCase
         $accessChecker = $this->createStub(AccessCheckerInterface::class);
         $accessChecker->method('hasPermission')->willReturnMap($permissionMap);
 
-        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), null, ['roleConstant' => self::DATAGRID_ROLE]);
+        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), null, ['roleConstant' => self::DATAGRID_ROLE]);
     }
 
     public function testRestrictedFieldIsNeitherFetchedNorDisplayedWithoutPermission(): void
@@ -111,7 +112,7 @@ class DatagridTest extends TestCase
     {
         $accessChecker = $this->createMock(AccessCheckerInterface::class);
         $accessChecker->expects($this->never())->method('hasPermission');
-        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), null, ['roleConstant' => self::DATAGRID_ROLE]);
+        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), null, ['roleConstant' => self::DATAGRID_ROLE]);
 
         $datagrid->add('name');
 
