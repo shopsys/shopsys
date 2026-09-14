@@ -11,6 +11,9 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\BooleanFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ChoiceFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ProductFilter;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
@@ -27,6 +30,7 @@ class ProductReviewController extends AbstractCrudController
     public function __construct(
         protected readonly EntityLogFacade $entityLogFacade,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
+        protected readonly ProductReviewStatusEnum $productReviewStatusEnum,
     ) {
     }
 
@@ -119,6 +123,17 @@ class ProductReviewController extends AbstractCrudController
                 'label' => t('Domain'),
             ]);
         }
+
+        $this->configureFilters($datagrid);
+    }
+
+    protected function configureFilters(Datagrid $datagrid): void
+    {
+        $datagrid->filters()
+            ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->productReviewStatusEnum->getAllIndexedByTranslations()))
+            ->add(ChoiceFilter::new('rating', t('Rating'))->setChoices(array_combine(range(1, 5), range(1, 5))))
+            ->add(ProductFilter::new('product', t('Product')))
+            ->add(BooleanFilter::new('isVerifiedPurchase', t('Verified purchase')));
     }
 
     #[Override]

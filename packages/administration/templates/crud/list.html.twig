@@ -13,8 +13,8 @@
 {% block main_content %}
     {% block datagrid_controls %}
         {% if quickSearch is not null or filterForm is not null %}
-            {# a composed filter outranks the quick search, so its tab is the one open #}
-            {% set filterActive = filterForm is not null and filterForm.isSubmitted() and filterForm.data.hasRules() %}
+            {# a composed filter outranks the quick search, so its tab is the one open; render() hands the form over as its view #}
+            {% set filterActive = filterForm is not null and filterForm.vars.submitted and filterForm.vars.data.hasRules() %}
             <div class="row row-deck row-cards mb-3">
                 <div class="col-12{{ domainControlScope is not null ? ' col-xl-8' }}">
                     <div class="card">
