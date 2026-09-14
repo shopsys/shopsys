@@ -23,9 +23,11 @@ There are currently two adapters available:
 
 You can also create your own adapter by implementing the `Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface`.
 
+Every adapter narrows its records by the condition of the `DatasourceRequest` it is given — a tree of plain data, which the adapter compiles into its own medium through its `ExpressionBuilderInterface`, so the same code works over any medium. Optional abilities are declared by extending interfaces the adapter may implement: `EntityClassAwareAdapterInterface` (the adapter knows its entity class) and `PathDescribingAdapterInterface` (the adapter describes a path before any query is built). See [Narrowing the records](./narrowing.md).
+
 ### Datagrid class
 
-The `Shopsys\AdministrationBundle\Component\Datagrid\Datagrid` class is the main class that is used to configure the Datagrid. It provides methods to configure columns, filters, actions, and other features.
+The `Shopsys\AdministrationBundle\Component\Datagrid\Datagrid` class is the main class that is used to configure the Datagrid. It provides methods to configure columns, actions, and other features.
 
 ## Permission Integration
 
@@ -103,6 +105,6 @@ class MyController extends AbstractController
 
 3. Configure Datagrid:
 
-The next step is to configure Datagrid by using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
+The next step is to configure Datagrid by using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, actions, and other features.
 
 More information about configuration can be found in the [Configuration](./configuration.md) section.

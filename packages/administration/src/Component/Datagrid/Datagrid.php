@@ -11,7 +11,10 @@ use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -33,6 +36,11 @@ final class Datagrid
     private ArrayCollection $fields;
 
     private DatagridRowActions $actions;
+
+    /**
+     * @var \Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface[]
+     */
+    private array $conditions = [];
 
     private string $identificationName = 'id';
 
@@ -269,6 +277,21 @@ final class Datagrid
     }
 
     /**
+     * Narrows the listed records by a fixed condition the administrator neither sees nor switches off —
+     * "only records that are not deleted", "only orders of the customer this datagrid belongs to".
+     *
+     * The condition is data of the shared vocabulary, so it works over any adapter. What only the query
+     * can say (a default join, an aggregate) still goes to `configureQuery()` of the CRUD controller or
+     * to a `DqlCondition`.
+     */
+    public function addCondition(ConditionInterface $condition): self
+    {
+        $this->conditions[] = $condition;
+
+        return $this;
+    }
+
+    /**
      * Class for managing row actions in datagrid
      */
     public function actions(): DatagridRowActions
@@ -278,7 +301,11 @@ final class Datagrid
 
     public function createView(): GridView
     {
-        $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
+        $datasource = $this->adapter->getDatasource(new DatasourceRequest(
+            $this->identificationName,
+            $this->fields->getValues(),
+            $this->composeCondition(...$this->conditions),
+        ));
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
         if ($this->fields->isEmpty() || $this->fields->forAll(fn ($key, FieldDescriptor $field) => $field->isVisible() === false)) {
@@ -323,6 +350,20 @@ final class Datagrid
         }
 
         return $grid->createView();
+    }
+
+    /**
+     * Everything narrowing the datagrid, combined by AND — null when nothing narrows it.
+     */
+    private function composeCondition(?ConditionInterface ...$conditions): ?ConditionInterface
+    {
+        $conditions = array_values(array_filter($conditions));
+
+        return match (count($conditions)) {
+            0 => null,
+            1 => $conditions[0],
+            default => Condition::andX(...$conditions),
+        };
     }
 
     private function configureDefaultCrudActions(): void

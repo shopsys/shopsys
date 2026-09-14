@@ -27,7 +27,7 @@ parameters:
             path: packages/administration/src/Component/Crud/Form/CrudFormConfigurator.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/administration/src/Component/Datagrid/Adapter/Orm/ProxyQuery.php
+            path: packages/administration/src/Component/Datagrid/Condition/Condition.php
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/Datagrid.php

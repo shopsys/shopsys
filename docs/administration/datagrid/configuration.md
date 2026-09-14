@@ -12,7 +12,7 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 
 ## Methods Configuration
 
-You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
+You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, actions, and other features. The records are narrowed through the adapter, see [Narrowing the records](./narrowing.md).
 All methods are chainable, so you can call them one after another.
 
 ```php
