@@ -73,21 +73,103 @@ Outside the CRUD controller: `Datagrid::getFilterForm()` gives the submitted for
 
 ## Writing your own filter
 
-Extend `AbstractFilter` (or one of the built-in filters) and say which operations it offers and how its value is entered; the translation into a condition is inherited:
+A filter type answers four questions: which operations it offers, how its value is entered, whether it can work on the path it was declared on, and how a submitted rule becomes a condition. `AbstractFilter` answers all four with sensible defaults, so a new type overrides only what differs.
+
+### 1. Name the operations and the value input
+
+Extend `AbstractFilter` (or the closest built-in filter) and list the operations of the [vocabulary](narrowing.md#the-vocabulary) the filter offers, in the order the administrator sees them, and the form type entering the value:
 
 ```php
-final class ProductFilter extends EntityFilter
+namespace App\Component\Datagrid\Filter;
+
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\AbstractFilter;
+use Shopsys\FrameworkBundle\Form\MoneyType;
+
+final class MoneyFilter extends AbstractFilter
 {
     protected function getDefaultOperators(): array
     {
-        return [ExpressionOperatorEnum::EQUALS, ExpressionOperatorEnum::NOT_EQUALS];
+        return [
+            ExpressionOperatorEnum::EQUALS,
+            ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL,
+            ExpressionOperatorEnum::LESS_THAN_OR_EQUAL,
+            ExpressionOperatorEnum::BETWEEN,
+        ];
     }
 
     public function getValueFormType(string $operator): string
     {
-        return ProductType::class; // the product picker window instead of a select
+        return MoneyType::class;
     }
 }
 ```
 
-Override `createComparison()` when the value compares differently from a plain comparison of the path (see `DateFilter` and `EntityFilter`), `assertApplicable()` to refuse a path the filter cannot work with, and `getOperatorLabel()` when an operation reads better in another word for the kind of value. A filter may even offer operations of its own that carry the value in themselves — `BooleanFilter` offers "yes" and "no" with `getValueArity()` saying none, and translates them to `equals` in `buildCondition()`. What the vocabulary cannot express at all is a `DqlCondition` returned from `buildCondition()`, with the datagrid bound to the ORM adapter as the price.
+That is already a complete filter. `resolveFor()` keeps only the operations the adapter supports on the path (a filter left with none is refused when the datagrid is built), the form renders the money input for a single value or a pair of bounds for `between`, and `buildCondition()` turns a rule into a `Comparison` on the path. `setOperators()` on the declaration narrows the list further, never widens it.
+
+The name of the filter in the URL is derived from the path (`price`, `author_fullName` for `author.fullName`). Keep it stable — a renamed filter breaks bookmarked links — and call `setName()` only when two filters share a path.
+
+### 2. Shape the value form
+
+`getDefaultValueFormOptions()` returns the options of the value form type; the options passed to `setValueFormOptions()` on the declaration are merged on top, so the declaration always wins. The `FilterEnvironment` the filter was resolved for is at hand through `getEnvironment()` — it carries the adapter, the vocabulary, the applicability rules and the time zone of the administration, which is how `DateFilter` keeps the picked day in that time zone:
+
+```php
+protected function getDefaultValueFormOptions(string $operator): array
+{
+    return [
+        'model_timezone' => $this->getEnvironment()->displayTimeZone->getName(),
+    ];
+}
+```
+
+`$this->pathDescription` (null when the adapter has no schema to describe the path from) tells the cardinality of the path, the kind of value it leads to and the entity class of an association. `NumericFilter` picks `IntegerType` over `NumberType` by it, `EntityFilter` takes the entity class of the select from it.
+
+### 3. Refuse a path the filter cannot work with
+
+Override `assertApplicable()` when the type needs a particular kind of path, so that a wrong declaration fails when the datagrid is built, not when the administrator submits it:
+
+```php
+protected function assertApplicable(FilterEnvironment $environment): void
+{
+    if ($this->pathDescription !== null && $this->pathDescription->valueType !== PathValueTypeEnum::MONEY) {
+        throw new FilterNotApplicableException($this->getName(), sprintf('the path "%s" does not lead to money.', $this->path));
+    }
+}
+```
+
+`isOperatorApplicable()` is the per-operation counterpart — `BooleanFilter` overrides it because its `yes` and `no` are not operators of the vocabulary and the applicability rules would not know them.
+
+### 4. Translate the rule when a plain comparison is not enough
+
+`createComparison()` receives the operation and the normalized value (a single value, a list, or `[from, to]` for a range) and returns any condition of the [condition tree](narrowing.md#the-condition-tree):
+
+- `EntityFilter` compares the identifier of the association instead of the association itself,
+- `DateFilter` turns "is 12.5." into a range from midnight to midnight,
+- `BooleanFilter` offers operations of its own that carry the value in themselves — it says through `getValueArity()` that `yes` and `no` take no value and translates them to `equals` in `buildCondition()`.
+
+```php
+protected function createComparison(string $operator, mixed $value): ?ConditionInterface
+{
+    if ($operator === ExpressionOperatorEnum::EQUALS) {
+        // the input cannot express the stored precision, so "is" means "rounds to"
+        return Condition::andX(
+            Condition::greaterThanOrEqual($this->path, $value->subtract(Money::create('0.005'))),
+            Condition::lessThan($this->path, $value->add(Money::create('0.005'))),
+        );
+    }
+
+    return parent::createComparison($operator, $value);
+}
+```
+
+Returning `null` means the rule narrows nothing. What the vocabulary cannot express at all (an aggregate, a computed value) is a [`DqlCondition`](narrowing.md#beyond-the-vocabulary) returned from here — the price is that the datagrid then works with the ORM adapter only, say so in the docblock of the filter.
+
+Override `getOperatorLabel()` when an operation reads better in another word for the kind of value (`DateFilter` says "is before" instead of "is less than").
+
+### 5. Declare it and test it
+
+```php
+$datagrid->filters()->add(MoneyFilter::new('price', t('Price')));
+```
+
+A filter is a plain object, so its unit test needs neither Doctrine nor a request: resolve it for a `FilterEnvironment` over an adapter describing the path, then assert the operations it offers and the condition `buildCondition()` builds from a `FilterRuleData`. `DateFilterTest` and `EntityFilterTest` in `packages/administration/tests/Unit/Component/Datagrid/Filter/` show the setup. A functional test of the list with the filter in the URL (see `FilterListTest` in the project) proves the whole path down to the rows.

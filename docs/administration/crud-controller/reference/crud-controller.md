@@ -86,7 +86,7 @@ protected function configureActions(ActionsConfig $actions): void
 
 ### `configureDatagrid(Datagrid $datagrid): void`
 
-Configure the datagrid for the list page. See [Configuring List Page](../getting-started/configure-list-page.md) for examples.
+Configure the datagrid for the list page. See [Configuring List Page](../getting-started/configure-list-page.md) for examples and the [Datagrid](../../datagrid/index.md) documentation for everything the datagrid offers: [fields](../../datagrid/fields.md), [row actions](../../datagrid/row-actions.md), the quick search, the [filters](../../datagrid/filters.md) and the [conditions narrowing the records](../../datagrid/narrowing.md).
 
 ```php
 protected function configureDatagrid(Datagrid $datagrid): void
@@ -105,9 +105,31 @@ protected function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
+The same method declares everything that narrows the list for the administrator:
+
+- a field with `'searchable' => true` joins the **quick search** — a text input above the datagrid searching in every such field ([Quick search](../../datagrid/narrowing.md#quick-search)),
+- `$datagrid->filters()->add(TextFilter::new('author.fullName', t('Author name')))` declares a **filter** the administrator composes rules from ([Filters](../../datagrid/filters.md)),
+- `$datagrid->addCondition(Condition::equals('deleted', false))` adds a **fixed condition** the administrator neither sees nor switches off ([Narrowing the records](../../datagrid/narrowing.md#asking-the-adapter-to-narrow)).
+
+```php
+protected function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('number', ['label' => t('Order Nr.'), 'searchable' => true])
+        ->add('email', ['label' => t('E-mail'), 'searchable' => true])
+        ->addCondition(Condition::equals('deleted', false));
+
+    $datagrid->filters()
+        ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->orderStatusEnum->getAllIndexedByTranslations()))
+        ->add(DateFilter::new('createdAt', t('Created')));
+}
+```
+
 ### `configureQuery(QueryBuilder $queryBuilder): void`
 
-Modify the query used to fetch entities for the list page.
+Shape the query used to fetch entities for the list page **statically** — a fixed scope, a default join, a computed column, an ordering. It runs once when the adapter is created and works with Doctrine only.
+
+A condition the administrator drives (a search, a filter) never belongs here: declare a [filter](../../datagrid/filters.md) or a searchable field instead. A fixed condition expressible on a path of the entity is better added by `$datagrid->addCondition()` in `configureDatagrid()`, which keeps it parameterized and independent of the medium; `configureQuery()` is for what only DQL can say.
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
