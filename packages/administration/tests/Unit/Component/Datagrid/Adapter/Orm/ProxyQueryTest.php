@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathResolution;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalker;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalkerInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
@@ -354,6 +355,52 @@ final class ProxyQueryTest extends TestCase
         $this->assertTrue($pathResolution->isToMany());
         $this->assertNull($pathResolution->dqlExpression);
         $this->assertSame([], $proxyQuery->getQueryBuilder()->getDQLPart('join'));
+    }
+
+    /**
+     * A related row of a collection is reached by a correlated subquery joining the collection inwardly, under
+     * aliases of its own, so that the listed record is never multiplied.
+     */
+    public function testRelatedRowIsMatchedByCorrelatedSubquery(): void
+    {
+        $proxyQuery = $this->createProxyQuery(DummyProduct::class);
+        $proxyQuery->addSelect('id');
+
+        $predicate = $proxyQuery->exists('domains.domainId', static fn (PathResolution $pathResolution): string => sprintf(
+            '%s = :%s',
+            $pathResolution->dqlExpression,
+            $proxyQuery->addParameter(1),
+        ));
+        $proxyQuery->applyExpression($predicate);
+
+        $queryBuilder = $proxyQuery->getQueryBuilder();
+        $this->assertSame(
+            'EXISTS(SELECT 1 FROM ' . DummyProduct::class . ' dgsub_0 INNER JOIN dgsub_0.domains dgsub_0_domains_join WHERE dgsub_0.id = o.id AND dgsub_0_domains_join.domainId = :dgexpr_0)',
+            $predicate,
+        );
+        $this->assertSame([], $queryBuilder->getDQLPart('join'));
+        $this->assertStringContainsString('EXISTS', $queryBuilder->getQuery()->getSQL());
+    }
+
+    /**
+     * Every request composes its condition on a copy of the query, so the parameters, the subqueries and the joins
+     * a condition needs never reach the query it was copied from.
+     */
+    public function testConditionOfCloneNeverReachesTheOriginal(): void
+    {
+        $proxyQuery = $this->createProxyQuery(DummyProduct::class);
+        $proxyQuery->addSelect('id');
+
+        $clonedProxyQuery = clone $proxyQuery;
+        $currencyCode = $clonedProxyQuery->resolvePath('currency.code');
+        $clonedProxyQuery->applyExpression(sprintf('%s = :%s', $currencyCode->dqlExpression, $clonedProxyQuery->addParameter('CZK')));
+        $clonedProxyQuery->applyExpression($clonedProxyQuery->exists('labels.name'));
+
+        $queryBuilder = $proxyQuery->getQueryBuilder();
+        $this->assertNull($queryBuilder->getDQLPart('where'));
+        $this->assertSame([], $queryBuilder->getDQLPart('join'));
+        $this->assertCount(0, $queryBuilder->getParameters());
+        $this->assertCount(2, $clonedProxyQuery->getQueryBuilder()->getParameters());
     }
 
     /**

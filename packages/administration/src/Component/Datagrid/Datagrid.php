@@ -11,6 +11,7 @@ use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
@@ -297,7 +298,10 @@ final class Datagrid
         // fields the administrator is not allowed to see are neither fetched nor displayed
         $accessibleFields = array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
 
-        $datasource = $this->adapter->getDatasource($this->identificationName, $accessibleFields);
+        $datasource = $this->adapter->getDatasource(new DatasourceRequest(
+            $this->identificationName,
+            $accessibleFields,
+        ));
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
         $visibleFields = array_filter($accessibleFields, static fn (FieldDescriptor $field) => $field->isVisible());

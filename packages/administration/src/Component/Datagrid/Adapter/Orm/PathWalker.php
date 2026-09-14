@@ -120,6 +120,7 @@ final class PathWalker implements PathWalkerInterface
                 $targetClassMetadata->getName(),
                 $associationMapping instanceof InverseSideMapping ? $associationMapping->mappedBy : null,
                 $this->getComparedIdentifierFields($associationMapping, $targetClassMetadata),
+                isToMany: $isToMany,
             );
             $classMetadata = $targetClassMetadata;
 

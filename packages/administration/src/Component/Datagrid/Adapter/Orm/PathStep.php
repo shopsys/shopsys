@@ -18,6 +18,7 @@ final readonly class PathStep
      * @param string|null $mappedBy The association of the target entity owning an association segment, null when the segment owns it
      * @param string[] $targetIdentifierFields The identifier fields of the entity an association segment owns the reference to, given only when it is identified by several fields
      * @param string|null $identifierField The identifier field an identity segment reads, given only when the entity it leads to is identified by several fields
+     * @param bool $isToMany Whether an association segment leads to a collection
      */
     public function __construct(
         public PathStepKind $kind,
@@ -28,6 +29,7 @@ final readonly class PathStep
         public ?string $mappedBy = null,
         public array $targetIdentifierFields = [],
         public ?string $identifierField = null,
+        public bool $isToMany = false,
     ) {
     }
 }

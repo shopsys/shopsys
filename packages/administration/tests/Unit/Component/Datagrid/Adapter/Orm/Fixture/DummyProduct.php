@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture;
 
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +21,12 @@ final class DummyProduct
 
     #[ORM\Column(type: 'datetime_immutable')]
     public DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    public ?DateTime $updatedAt = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    public ?DateTime $releasedOn = null;
 
     #[ORM\ManyToOne(targetEntity: DummyCurrency::class)]
     #[ORM\JoinColumn(nullable: false)]
