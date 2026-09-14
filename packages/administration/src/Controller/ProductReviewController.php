@@ -11,9 +11,9 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
@@ -45,7 +45,7 @@ class ProductReviewController extends AbstractCrudController
 
         $config
             ->setMenuSection(SideMenuBuilder::ROOT_PRODUCT, null, ['after' => SideMenuBuilder::LIST_PRODUCT])
-            ->setListDomainControl(CrudListDomainControl::QUICK_FILTER, $enabledDomainIds)
+            ->setListDomainControl(DomainControlType::FILTER, $enabledDomainIds)
             ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
             ->registerHandler(ProductReviewEditHandler::class)
             ->disable(!$this->productReviewEnabledChecker->isEnabledOnAnyDomain());
@@ -131,7 +131,7 @@ class ProductReviewController extends AbstractCrudController
                 'property' => 'hasTextReview',
             ]);
 
-        if ($this->domain->isMultidomain()) {
+        if ($datagrid->getDomainControlScope()->isDomainWorthDisplaying()) {
             $datagrid->add('domainId', [
                 'label' => t('Domain'),
             ]);
