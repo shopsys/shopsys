@@ -462,6 +462,7 @@ class SalesmanController extends AdminBaseController
 !!! tip
 
     It is a good practice to enable [CSRF protection](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) on this type of action.
+    See [CSRF Protection](../security/csrf-protection.md) for how `#[CsrfProtection]` and `protectedUrl()` work together.
 
 ### 6.3 Add action column to the grid
 

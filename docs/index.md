@@ -20,6 +20,8 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Application configuration, requirements, and installation guides for various platforms, including Docker.
 * [Introduction](./introduction/index.md)
     * Information about basic concepts and terms in Shopsys Platform.
+* [Security](./security/index.md)
+    * CSRF protection and HTTP security headers.
 * [Model](./model/index.md)
     * Basics about model architecture, entities, ...
 * [Cookbook](./cookbook/index.md)
