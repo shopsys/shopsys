@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid;
 
+use LogicException;
 use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -11,6 +12,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -68,7 +70,7 @@ class DatagridTest extends TestCase
         $accessChecker = $this->createStub(AccessCheckerInterface::class);
         $accessChecker->method('hasPermission')->willReturnMap($permissionMap);
 
-        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), null, ['roleConstant' => self::DATAGRID_ROLE]);
+        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), null, ['roleConstant' => self::DATAGRID_ROLE]);
     }
 
     public function testRestrictedFieldIsNeitherFetchedNorDisplayedWithoutPermission(): void
@@ -111,7 +113,7 @@ class DatagridTest extends TestCase
     {
         $accessChecker = $this->createMock(AccessCheckerInterface::class);
         $accessChecker->expects($this->never())->method('hasPermission');
-        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), null, ['roleConstant' => self::DATAGRID_ROLE]);
+        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), null, ['roleConstant' => self::DATAGRID_ROLE]);
 
         $datagrid->add('name');
 
@@ -142,5 +144,31 @@ class DatagridTest extends TestCase
 
         $this->assertSame('customer', $this->columnsById['customer']->getSourceColumnName());
         $this->assertSame('lastName,firstName', $this->columnsById['customer']->getOrderSourceColumnName());
+    }
+
+    /**
+     * The narrowing is resolved from the fields once, so a field changed afterwards — restricted by a role, for one —
+     * would keep narrowing the records as it was; the change is refused instead.
+     */
+    public function testFieldsCannotBeChangedOnceTheNarrowingIsResolved(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $datagrid->add('name');
+        $datagrid->getNarrowing();
+
+        $changes = [
+            static fn (Datagrid $datagrid) => $datagrid->add('email'),
+            static fn (Datagrid $datagrid) => $datagrid->update('name', ['role' => 'ROLE_SECRET']),
+            static fn (Datagrid $datagrid) => $datagrid->remove('name'),
+        ];
+
+        foreach ($changes as $change) {
+            try {
+                $change($datagrid);
+                $this->fail('A change of the fields has to be refused once the narrowing is resolved.');
+            } catch (LogicException $exception) {
+                $this->assertStringContainsString('already resolved', $exception->getMessage());
+            }
+        }
     }
 }

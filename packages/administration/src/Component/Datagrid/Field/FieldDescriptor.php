@@ -20,7 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     property?: string|string[]|null,
  *     role?: string|null,
  *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
- *     class?: string|null
+ *     class?: string|null,
+ *     searchable?: bool
  * }
  */
 final class FieldDescriptor
@@ -59,6 +60,7 @@ final class FieldDescriptor
             'role' => null,
             'permission' => null,
             'class' => null,
+            'searchable' => false,
         ]);
 
         $optionsResolver->setAllowedTypes('label', 'string');
@@ -73,6 +75,7 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('role', ['string', 'null']);
         $optionsResolver->setAllowedTypes('permission', [Permission::class, 'null']);
         $optionsResolver->setAllowedTypes('class', ['string', 'null']);
+        $optionsResolver->setAllowedTypes('searchable', 'bool');
 
         return $optionsResolver->resolve($options);
     }
@@ -114,6 +117,16 @@ final class FieldDescriptor
     public function isVirtual(): bool
     {
         return $this->options['virtual'];
+    }
+
+    /**
+     * Whether the quick search of the datagrid searches in this field. The field has to have a path of its
+     * own (see `getSelectProperties()`) leading to text, a combined field is searched in those of its properties
+     * leading to text; the datagrid refuses any other.
+     */
+    public function isSearchable(): bool
+    {
+        return $this->options['searchable'];
     }
 
     public function getHelp(): ?string

@@ -10,8 +10,10 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdap
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScopeFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @phpstan-type DatagridOptions array{
@@ -28,18 +30,20 @@ final class DatagridFactory
         private readonly AccessCheckerInterface $accessChecker,
         private readonly DomainControlScopeFactory $domainControlScopeFactory,
         private readonly DatagridNarrowingResolver $datagridNarrowingResolver,
+        private readonly RequestStack $requestStack,
     ) {
     }
 
     /**
-     * The domain control of the datagrid is read from the CRUD definition unless given explicitly, which is how
-     * a datagrid is built in a test.
+     * The state of the datagrid is read from the request and its domain control from the CRUD definition
+     * unless given explicitly, which is how a datagrid is built in a test or outside a request.
      *
      * @param DatagridOptions $options
      */
     public function create(
         AdapterInterface $adapter,
         array $options,
+        ?DatagridRequestState $requestState = null,
         ?DomainControlScope $domainControlScope = null,
     ): Datagrid {
         return new Datagrid(
@@ -47,9 +51,17 @@ final class DatagridFactory
             $this->gridFactory,
             $this->accessChecker,
             $this->datagridNarrowingResolver,
+            $requestState ?? $this->createRequestState($options['name'] ?? 'datagrid'),
             $domainControlScope ?? $this->createDomainControlScope($adapter, $options['crudDefinition'] ?? null),
             $options,
         );
+    }
+
+    private function createRequestState(string $gridId): DatagridRequestState
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        return $request === null ? DatagridRequestState::outsideRequest($gridId) : DatagridRequestState::fromRequest($request, $gridId);
     }
 
     /**
