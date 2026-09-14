@@ -19,6 +19,7 @@ class LiveComponentAccessControlDataProvider
      */
     public function __construct(
         protected readonly AttributeProcessor $attributeProcessor,
+        protected readonly AccessControlRuleFactory $accessControlRuleFactory,
         #[AutowireIterator('twig.component')]
         protected readonly iterable $twigComponents,
     ) {
@@ -45,7 +46,7 @@ class LiveComponentAccessControlDataProvider
                 $identifier = sprintf('%s::%s', $componentName, $method->getName());
                 $liveComponentAccessControlData[$identifier] = new RouteAccessControlData(
                     $identifier,
-                    $this->attributeProcessor->processMethod($reflectionClass, $method),
+                    $this->accessControlRuleFactory->createFromData($this->attributeProcessor->processMethod($reflectionClass, $method)),
                     $reflectionClass->getName(),
                     $method->getName(),
                 );

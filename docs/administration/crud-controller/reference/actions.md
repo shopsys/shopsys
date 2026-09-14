@@ -85,6 +85,10 @@ protected function configureActions(ActionsConfig $actions): void
 
     You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Action\AbstractAction` class.
 
+!!! tip
+
+    The action buttons only link somewhere. To add a new operation to the CRUD controller itself (a route, permissions, `linkToCrud()` support), declare a [custom action](custom-actions.md).
+
 ### What the closures receive
 
 The `displayIf()` and `linkToRoute()` closures receive the data of the page the action is displayed on:
@@ -98,9 +102,8 @@ The `displayIf()` and `linkToRoute()` closures receive the data of the page the 
 
 !!! note
 
-    Permission attributes (`#[CanView]`, `#[CanEdit]`, ...) on custom routes defined in a Crud Controller do not need an explicit role 
-    — they fall back to the controller's role constant (the generated one, or the one declared by the class-level `#[ForRole]` attribute), the same role the built-in CRUD actions use.
-    You only need to pass a role explicitly when the route should be guarded by a different role.
+    A plain `#[Route]` method in a CRUD controller is guarded like any other administration route: its permission attributes (`#[CanView]`, `#[CanEdit]`, ...) need an explicit role or a class-level `#[ForRole]` attribute.
+    To guard a method by the role of the CRUD controller automatically, declare it as a [custom action](custom-actions.md).
 
 ### Configuration
 
@@ -139,7 +142,9 @@ protected function configureActions(ActionsConfig $actions): void
         // Use this in case you need to create an action to an external page.
         ->linkToUrl('https://www.shopsys.com')
         // Creates a link between CRUD controllers
-        ->linkToCrud(ArticleController::class, ActionType::List)     
+        ->linkToCrud(ArticleController::class, ActionType::LIST)
+        // or to a custom action of a CRUD controller by its name
+        ->linkToCrud(ArticleController::class, 'publish', fn (Article $entity) => $entity->getId())
         // Use in case your page is too important to lose it  
         ->setOpenInNewTab()
     ;

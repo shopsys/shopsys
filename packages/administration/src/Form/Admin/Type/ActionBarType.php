@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Form\Admin\Type;
 
+use InvalidArgumentException;
 use Override;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FormTypesBundle\ActionBarType as BaseActionBarType;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -12,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
@@ -22,6 +26,7 @@ final class ActionBarType extends AbstractTypeExtension
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
         private readonly RequestStack $requestStack,
         private readonly RouterInterface $router,
+        private readonly CrudRouteProvider $crudRouteProvider,
     ) {
     }
 
@@ -45,7 +50,11 @@ final class ActionBarType extends AbstractTypeExtension
             ->setAllowedTypes('entity_name', ['string', 'null'])
             ->setAllowedTypes('entity_identifier', ['string', 'null'])
             ->setDefault('entity_name', null)
-            ->setDefault('entity_identifier', null);
+            ->setDefault('entity_identifier', null)
+            // forms rendered by a CRUD controller action lead back to its list by default, an explicit back_route or back_url still wins
+            ->setDefault('back_route', fn (Options $options): ?string => $options['back_url'] === null ? $this->findCrudListRouteName() : null)
+            // the built-in create and edit actions know which label fits, other forms keep deciding by the "entity" option
+            ->setDefault('save_label', fn (Options $options): ?string => $this->findCrudSaveLabel());
     }
 
     /**
@@ -75,6 +84,45 @@ final class ActionBarType extends AbstractTypeExtension
                 $builder->remove('save');
             }
         }
+    }
+
+    /**
+     * Returns the route name of the list action of the CRUD controller handling the main request,
+     * or null when the request is not a CRUD route, is the list itself, or the list action is disabled
+     */
+    private function findCrudListRouteName(): ?string
+    {
+        $attributes = $this->requestStack->getMainRequest()?->attributes;
+        $crudControllerClass = $attributes?->get(CrudRouteProvider::CRUD_CONTROLLER_CLASS);
+
+        if (!is_string($crudControllerClass) || $attributes->get(CrudRouteProvider::CRUD_ACTION) === ActionType::LIST->value) {
+            return null;
+        }
+
+        try {
+            return $this->crudRouteProvider->getRouteItem($crudControllerClass, ActionType::LIST)->getRouteName();
+        } catch (InvalidArgumentException) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the save button label of the built-in create and edit CRUD actions handling the main request,
+     * or null when the label has to be resolved from the "entity" option (other CRUD actions, forms outside CRUD)
+     */
+    private function findCrudSaveLabel(): ?string
+    {
+        $attributes = $this->requestStack->getMainRequest()?->attributes;
+
+        if ($attributes?->get(CrudRouteProvider::IS_CRUD_CONTROLLER) !== true) {
+            return null;
+        }
+
+        return match ($attributes->get(CrudRouteProvider::CRUD_ACTION)) {
+            ActionType::CREATE->value => t('Create'),
+            ActionType::EDIT->value => t('Save changes'),
+            default => null,
+        };
     }
 
     /**

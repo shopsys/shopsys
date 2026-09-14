@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Action\RouteData;
 
 use Closure;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDefinition;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 
@@ -13,12 +14,13 @@ final class CrudActionRouteData implements ActionRouteInterface
 {
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param null|\Closure(mixed): int $id
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|string $action built-in action or the name of a custom action
+     * @param null|\Closure(mixed): (int|array<string, mixed>) $parameters returns the entity ID or all route parameters of the action
      */
     public function __construct(
         private readonly string $crudController,
-        private readonly ActionType $actionType,
-        private readonly ?Closure $id = null,
+        private readonly ActionType|string $action,
+        private readonly ?Closure $parameters = null,
     ) {
     }
 
@@ -30,24 +32,31 @@ final class CrudActionRouteData implements ActionRouteInterface
         return $this->crudController;
     }
 
-    public function getActionType(): ActionType
+    public function getActionName(): string
     {
-        return $this->actionType;
+        return CrudActionDefinition::normalizeName($this->action);
     }
 
     public function getRouteName(): string
     {
         $controllerName = ReflectionHelper::getShortClassName($this->getCrudController());
 
-        return CrudTransformationHelper::generateRouteName($controllerName, $this->getActionType());
+        return CrudTransformationHelper::generateRouteName($controllerName, $this->getActionName());
     }
 
-    public function getId(mixed $data = null): ?int
+    /**
+     * Returns the route parameters for the given data, an integer returned by the closure is the ID of the record
+     *
+     * @return array<string, mixed>
+     */
+    public function getParameters(mixed $data = null): array
     {
-        if ($this->id === null) {
-            return null;
+        if ($this->parameters === null) {
+            return [];
         }
 
-        return call_user_func($this->id, $data);
+        $parameters = ($this->parameters)($data);
+
+        return is_int($parameters) ? ['id' => $parameters] : $parameters;
     }
 }

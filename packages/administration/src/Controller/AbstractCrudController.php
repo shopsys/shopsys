@@ -8,16 +8,16 @@ use Closure;
 use Doctrine\ORM\QueryBuilder;
 use LogicException;
 use Psr\Log\LoggerInterface;
+use Shopsys\AdministrationBundle\Component\Attributes\CrudAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
-use Shopsys\AdministrationBundle\Component\Crud\Definition;
+use Shopsys\AdministrationBundle\Component\Crud\CrudDefinitionAwareInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
-use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -26,8 +26,13 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanCreate;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -41,9 +46,9 @@ use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 
 #[AutoconfigureTag('shopsys.admin.crud_controllers')]
-abstract class AbstractCrudController extends AdminBaseController
+abstract class AbstractCrudController extends AdminBaseController implements CrudDefinitionAwareInterface
 {
-    protected Definition $definition;
+    use CrudControllerTrait;
 
     #[Required]
     public DatagridFactory $datagridFactory;
@@ -64,9 +69,6 @@ abstract class AbstractCrudController extends AdminBaseController
     public BreadcrumbOverrider $breadcrumbOverrider;
 
     #[Required]
-    public CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor;
-
-    #[Required]
     public AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade;
 
     #[Required]
@@ -74,11 +76,6 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public Domain $domain;
-
-    public function setDefinition(Definition $definition): void
-    {
-        $this->definition = $definition;
-    }
 
     public function configure(CrudConfig $config): void
     {
@@ -199,6 +196,8 @@ abstract class AbstractCrudController extends AdminBaseController
         return [];
     }
 
+    #[CrudAction(path: '/')]
+    #[CanView]
     public function listAction(): Response
     {
         $listDomainControl = $this->definition->getConfig()->getListDomainControl();
@@ -225,6 +224,8 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
+    #[CrudAction(path: '/detail/{id}')]
+    #[CanView]
     public function detailAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/detail.html.twig', [
@@ -233,6 +234,9 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
+    #[CrudAction(path: '/edit/{id}')]
+    #[CanEdit(methods: [HttpMethod::POST])]
+    #[CanView(methods: [HttpMethod::GET])]
     public function editAction(Request $request, int $id): Response
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface $handler */
@@ -257,9 +261,7 @@ abstract class AbstractCrudController extends AdminBaseController
                     $this->addEditSuccessFlash($entity, $id);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
-                );
+                return $this->redirectToCrudAction(ActionType::LIST);
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->onEditError($entity, $data, $exception), CrudEditHookExtensionInterface::class);
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
@@ -304,6 +306,8 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
+    #[CrudAction(path: '/create')]
+    #[CanCreate]
     public function createAction(Request $request): Response
     {
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface $handler */
@@ -327,9 +331,7 @@ abstract class AbstractCrudController extends AdminBaseController
                     $this->addCreateSuccessFlash($entity);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
-                );
+                return $this->redirectToCrudAction(ActionType::LIST);
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->onCreateError($data, $exception), CrudCreateHookExtensionInterface::class);
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
@@ -362,6 +364,8 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
     }
 
+    #[CrudAction(path: '/delete/{id}')]
+    #[CanDelete]
     #[CsrfProtection]
     public function deleteAction(int $id): RedirectResponse
     {
@@ -408,9 +412,7 @@ abstract class AbstractCrudController extends AdminBaseController
             );
         }
 
-        return $this->redirect(
-            $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
-        );
+        return $this->redirectToCrudAction(ActionType::LIST);
     }
 
     /**
@@ -444,7 +446,7 @@ abstract class AbstractCrudController extends AdminBaseController
             t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was saved successfully.'),
             [
                 'objectName' => $entity->toHumanReadable(),
-                'url' => $this->generateEditUrl($id),
+                'url' => $this->generateCrudUrl(ActionType::EDIT, $id),
             ],
         );
     }
@@ -455,20 +457,7 @@ abstract class AbstractCrudController extends AdminBaseController
             t('<strong><a href="{{ url }}">{{ objectName }}</a></strong> was created successfully.'),
             [
                 'objectName' => $entity->toHumanReadable(),
-                'url' => $this->generateEditUrl($this->crudEntityIdentifierExtractor->getId($entity)),
-            ],
-        );
-    }
-
-    private function generateEditUrl(int $id): string
-    {
-        return $this->generateUrl(
-            CrudTransformationHelper::generateRouteName(
-                $this->definition->controllerName,
-                ActionType::EDIT,
-            ),
-            [
-                'id' => $id,
+                'url' => $this->generateCrudUrl(ActionType::EDIT, $entity),
             ],
         );
     }

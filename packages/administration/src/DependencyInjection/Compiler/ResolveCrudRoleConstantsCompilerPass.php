@@ -8,6 +8,7 @@ use Override;
 use ReflectionClass;
 use Shopsys\AdministrationBundle\Component\Crud\CrudControllerRegistry;
 use Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider;
+use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -59,14 +60,11 @@ final class ResolveCrudRoleConstantsCompilerPass implements CompilerPassInterfac
         return $extensionClassesByController;
     }
 
+    /**
+     * The attribute of a parent class applies as well, the same way the access control resolves the class role
+     */
     private function findForRole(ReflectionClass $reflectionClass): ?string
     {
-        $attributes = $reflectionClass->getAttributes(ForRole::class);
-
-        if (count($attributes) !== 0) {
-            return $attributes[0]->newInstance()->role;
-        }
-
-        return null;
+        return ReflectionHelper::getClassAttribute($reflectionClass, ForRole::class)?->role;
     }
 }

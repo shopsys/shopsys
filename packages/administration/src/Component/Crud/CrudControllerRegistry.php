@@ -6,8 +6,10 @@ namespace Shopsys\AdministrationBundle\Component\Crud;
 
 use ReflectionClass;
 use RuntimeException;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
+use Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDefinition;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
 use Symfony\Component\DependencyInjection\ServiceLocator;
@@ -17,6 +19,7 @@ final class CrudControllerRegistry
 {
     public const string CRUD_CONTROLLERS_PARAMETER = 'shopsys.admin.crud_controllers';
     public const string CRUD_CONTROLLERS_EXTENSIONS_PARAMETER = 'shopsys.admin.crud_controllers_extensions';
+    public const string CRUD_ACTIONS_PARAMETER = 'shopsys.admin.crud_actions';
 
     /**
      * @var array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, array{controllerName: string, entityClass: class-string, entityName: string}>|null
@@ -29,6 +32,11 @@ final class CrudControllerRegistry
     private ?array $resolvedExtensions = null;
 
     /**
+     * @var array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, array<string, \Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDefinition>>|null
+     */
+    private ?array $resolvedActions = null;
+
+    /**
      * @var array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, \Shopsys\AdministrationBundle\Component\Crud\Definition>
      */
     private array $definitions = [];
@@ -36,6 +44,7 @@ final class CrudControllerRegistry
     /**
      * @param array<int, array{class: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, entityClass: string}> $crudControllers
      * @param array<int, array{extensionClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension>, controllerClass: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, priority: int}> $crudControllerExtensions sorted by ascending priority
+     * @param array<int, array<string, mixed>> $crudActions built-in and custom actions collected by LoadCrudActionsCompilerPass
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
@@ -46,6 +55,7 @@ final class CrudControllerRegistry
         private readonly ServiceLocator $handlers,
         private readonly array $crudControllers = [],
         private readonly array $crudControllerExtensions = [],
+        private readonly array $crudActions = [],
     ) {
     }
 
@@ -65,6 +75,7 @@ final class CrudControllerRegistry
                 entityClass: $meta['entityClass'],
                 entityName: $meta['entityName'],
                 config: $this->buildConfig($controllerClass),
+                actions: $this->getResolvedActions()[$controllerClass] ?? [],
             );
         }
 
@@ -96,6 +107,7 @@ final class CrudControllerRegistry
                 $config,
                 $extensions,
                 $this->loadHandlers($config->getHandlerClasses()),
+                $this->getResolvedActions()[$controllerClass] ?? [],
             );
         }
 
@@ -113,7 +125,11 @@ final class CrudControllerRegistry
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
         $crudController = $this->controllers->get($controllerClass);
 
-        $config = new CrudConfig($meta['entityName'], $this->crudRoleConstantProvider->findCustomRoleConstant($controllerClass));
+        $config = new CrudConfig(
+            $meta['entityName'],
+            $this->crudRoleConstantProvider->findCustomRoleConstant($controllerClass),
+            $this->getCustomActionNames($controllerClass),
+        );
         $crudController->configure($config);
 
         foreach ($extensions as $extension) {
@@ -160,6 +176,37 @@ final class CrudControllerRegistry
         }
 
         return $this->resolvedExtensions;
+    }
+
+    /**
+     * @return array<class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, array<string, \Shopsys\AdministrationBundle\Component\Crud\Action\CrudActionDefinition>>
+     */
+    private function getResolvedActions(): array
+    {
+        if ($this->resolvedActions === null) {
+            $this->resolvedActions = [];
+
+            foreach ($this->crudActions as $actionData) {
+                $action = CrudActionDefinition::fromArray($actionData);
+                $this->resolvedActions[$action->crudControllerClass][$action->name] = $action;
+            }
+        }
+
+        return $this->resolvedActions;
+    }
+
+    /**
+     * Built-in actions are configured through ActionType, only the custom ones are configured by name
+     *
+     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
+     * @return string[]
+     */
+    private function getCustomActionNames(string $controllerClass): array
+    {
+        return array_values(array_filter(
+            array_keys($this->getResolvedActions()[$controllerClass] ?? []),
+            static fn (string $actionName): bool => ActionType::tryFrom($actionName) === null,
+        ));
     }
 
     /**

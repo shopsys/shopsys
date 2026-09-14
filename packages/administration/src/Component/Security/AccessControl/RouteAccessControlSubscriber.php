@@ -27,6 +27,7 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
         private readonly ContextResolverInterface $contextResolver,
         private readonly AttributeProcessor $attributeProcessor,
         private readonly Security $security,
+        private readonly AccessControlRuleFactory $accessControlRuleFactory,
     ) {
     }
 
@@ -80,7 +81,9 @@ final class RouteAccessControlSubscriber implements EventSubscriberInterface
         }
 
         $reflectionClass = new ReflectionClass($controllerObject);
-        $routeData = $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method));
+        $routeData = $this->accessControlRuleFactory->createFromData(
+            $this->attributeProcessor->processMethod($reflectionClass, $reflectionClass->getMethod($method)),
+        );
 
         if ($routeData === []) {
             return;
