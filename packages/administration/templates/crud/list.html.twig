@@ -18,6 +18,9 @@
         {% if quickSearch is not null %}
             {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid }) }}
         {% endif %}
+        {% if filterForm is not null %}
+            {{ component('Admin:Grid:Filters', { filterForm: filterForm, gridView: grid }) }}
+        {% endif %}
     {% endblock %}
 
     {{ grid.render }}

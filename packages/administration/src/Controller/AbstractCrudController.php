@@ -126,6 +126,7 @@ abstract class AbstractCrudController extends AdminBaseController
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
             'domainControlScope' => $datagrid->getDomainControlScope(),
             'quickSearch' => $datagrid->getQuickSearch(),
+            'filterForm' => $datagrid->getFilterForm(),
         ]);
     }
 

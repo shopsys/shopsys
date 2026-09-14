@@ -1,0 +1,101 @@
+{% set form = filterForm %}
+
+{% macro ruleFields(fieldsForm) %}
+    <div class="datagrid-filter__operator" style="flex: 0 0 14rem">
+        {{ form_widget(fieldsForm.operator) }}
+    </div>
+    <div class="flex-grow-1" data-datagrid-filter-target="value">
+        {% if fieldsForm.value is defined %}
+            {{ form_widget(fieldsForm.value) }}
+            {{ form_errors(fieldsForm.value) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro rule(ruleForm) %}
+    <div class="d-flex gap-2 align-items-start mb-2" data-datagrid-filter-target="rule">
+        <div style="flex: 0 0 14rem">
+            {{ form_widget(ruleForm.filter) }}
+        </div>
+        <div class="d-flex gap-2 flex-grow-1" data-datagrid-filter-target="ruleFields">
+            {{ _self.ruleFields(ruleForm) }}
+        </div>
+        <button type="button" class="btn btn-icon btn-ghost-secondary" data-action="datagrid-filter#removeRule" title="{{ 'Remove rule'|trans }}">
+            {{ ux_icon('circle-cross') }}
+        </button>
+    </div>
+{% endmacro %}
+
+{% macro group(groupForm) %}
+    <div class="border rounded p-2 mb-2" data-datagrid-filter-target="group">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            {{ form_widget(groupForm.operator, { attr: { class: 'form-select form-select-sm w-auto' } }) }}
+            <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm" data-action="datagrid-filter#removeGroup" title="{{ 'Remove group'|trans }}">
+                {{ ux_icon('trash') }}
+            </button>
+        </div>
+        <div data-datagrid-filter-target="rules">
+            {% for ruleForm in groupForm.rules %}
+                {{ _self.rule(ruleForm) }}
+            {% endfor %}
+        </div>
+        <button type="button" class="btn btn-sm" data-action="datagrid-filter#addRule">
+            {{ ux_icon('circle-plus') }} {{ 'Add rule'|trans }}
+        </button>
+    </div>
+{% endmacro %}
+
+<div class="card mb-3"
+     data-controller="datagrid-filter"
+     data-datagrid-filter-group-prototype-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\DatagridFilterFormType::GROUP_PROTOTYPE_NAME') }}"
+     data-datagrid-filter-rule-prototype-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\FilterGroupType::RULE_PROTOTYPE_NAME') }}"
+     data-datagrid-filter-prototypes-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\DatagridFilterFormType::PROTOTYPES_NAME') }}"
+>
+    {{ form_start(form) }}
+        {# the order and the limit of the grid travel with the filter, the page starts over #}
+        {{ gridView.renderHiddenInputs('page') }}
+
+        <div class="card-header card-header-no-bg d-flex align-items-center gap-2">
+            <h2 class="card-title text-secondary">{{ 'Filter'|trans }}</h2>
+            {% if this.active %}
+                <span class="badge bg-blue-lt text-blue-lt-fg">{{ 'Active'|trans }}</span>
+            {% endif %}
+        </div>
+
+        <div class="card-body">
+            {{ form_errors(form) }}
+
+            <div class="mb-2" data-datagrid-filter-target="groupsOperator" {% if form.groups|length < 2 %}hidden{% endif %}>
+                {{ form_widget(form.operator, { attr: { class: 'form-select form-select-sm w-auto' } }) }}
+            </div>
+
+            <div data-datagrid-filter-target="groups">
+                {% for groupForm in form.groups %}
+                    {{ _self.group(groupForm) }}
+                {% endfor %}
+            </div>
+
+            <button type="button" class="btn btn-sm" data-action="datagrid-filter#addGroup">
+                {{ ux_icon('circle-plus') }} {{ 'Add group of rules'|trans }}
+            </button>
+        </div>
+
+        <div class="card-footer card-footer-no-bg d-flex justify-content-end gap-2">
+            <a href="{{ gridView.url({ (form.vars.full_name): null }, 'page') }}" class="btn">
+                {{ ux_icon('circle-cross') }} {{ 'Reset filter'|trans }}
+            </a>
+            <button type="submit" class="btn btn-primary">
+                {{ ux_icon('filter') }} {{ 'Apply filter'|trans }}
+            </button>
+        </div>
+    {{ form_end(form, { render_rest: false }) }}
+
+    {# the prototypes are kept out of the form, so they are never submitted #}
+    <template data-datagrid-filter-target="groupTemplate">{{ _self.group(form.groups.vars.prototype) }}</template>
+    <template data-datagrid-filter-target="ruleTemplate">{{ _self.rule(form.groups.vars.prototype.rules.vars.prototype) }}</template>
+    {% for filterPrototypes in form.prototypes %}
+        {% for arityPrototype in filterPrototypes %}
+            <template data-datagrid-filter-target="prototype" data-filter="{{ filterPrototypes.vars.name }}" data-arity="{{ arityPrototype.vars.name }}">{{ _self.ruleFields(arityPrototype) }}</template>
+        {% endfor %}
+    {% endfor %}
+</div>

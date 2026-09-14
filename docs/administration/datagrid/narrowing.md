@@ -1,7 +1,7 @@
 # Narrowing the records
 
 A datagrid lists the records its adapter loads. Everything that narrows them — the domain control, a quick
-search — does so through a **condition**: a small tree of plain data every adapter understands and
+search, a filter — does so through a **condition**: a small tree of plain data every adapter understands and
 compiles into its own medium. The code narrowing a datagrid never sees a `QueryBuilder`, so the same code
 works over a Doctrine query and over records already in memory.
 
@@ -28,8 +28,8 @@ is what makes the contract safe and simple:
 - a request without a condition lists every record.
 
 `Datagrid::createView()` sends such a request itself, combining by `Condition::andX()` everything that
-narrows the datagrid: the condition of the domain control, the quick search and the fixed conditions added
-by `Datagrid::addCondition()`.
+narrows the datagrid: the condition of the domain control, the quick search or the filter, and the fixed
+conditions added by `Datagrid::addCondition()`.
 
 ```php
 // a fixed scope the administrator neither sees nor switches off
@@ -59,6 +59,11 @@ and why. A field hidden by `visible: false` can still be searchable.
 
 Outside the CRUD controller the pieces are `Datagrid::getQuickSearch()` (null when no field is searchable or
 the datagrid is built outside a request) and the component: `component('Admin:Grid:QuickSearch', { quickSearch: datagrid.quickSearch, gridView: gridView })`.
+
+## Filters
+
+Rules the administrator composes — grouped, combined by `AND` or `OR` — are declared as filters on the datagrid
+and rendered as a form above the records; see [Filters](./filters.md). A composed filter outranks the quick search.
 
 ## The condition tree
 

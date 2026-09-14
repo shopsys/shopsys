@@ -92,7 +92,25 @@ public function configureDatagrid(Datagrid $datagrid): void
 
 Only a field leading to text can be searchable — see [Quick search](../../datagrid/narrowing.md#quick-search).
 
-## 4. Configure list actions
+## 4. Declare filters
+
+Let the administrator compose rules over the records by declaring filters. Each filter names a path of the records and the way its value is entered.
+
+```php
+public function configureDatagrid(Datagrid $datagrid): void
+{
+    // ... fields
+
+    $datagrid->filters()
+        ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->orderStatusEnum->getAllIndexedByTranslations()))
+        ->add(DateFilter::new('createdAt', t('Created')))
+        ->add(TextFilter::new('customerUser.email', t('Customer e-mail')));
+}
+```
+
+The built-in filters and the rules of composing them are described in [Filters](../../datagrid/filters.md).
+
+## 5. Configure list actions
 
 Sometimes you may want to add some actions on the list page. You can do that by using the `configureActions` method. This method is also used for configuring actions on other pages, so you can use the `ActionsConfig` object to define the actions that will be displayed on the list page.
 
