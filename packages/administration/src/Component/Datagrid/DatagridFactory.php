@@ -8,8 +8,11 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScopeFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorApplicability;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
 use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestStateResolver;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 
 /**
  * @phpstan-type DatagridOptions array{
@@ -18,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
  *     pagination?: bool,
  *     domainControlScope?: \Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope|null,
  *     requestState?: \Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState|null,
+ *     filterEnvironment?: \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment|null,
  *     roleConstant: string,
  * }
  */
@@ -28,6 +32,8 @@ final class DatagridFactory
         private readonly DomainControlScopeFactory $domainControlScopeFactory,
         private readonly DatagridRequestStateResolver $datagridRequestStateResolver,
         private readonly ExpressionOperatorApplicability $expressionOperatorApplicability,
+        private readonly ExpressionOperatorEnum $expressionOperatorEnum,
+        private readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -41,6 +47,12 @@ final class DatagridFactory
     {
         $options = $this->resolveDomainControlScope($adapter, $options);
         $options['requestState'] ??= $this->datagridRequestStateResolver->resolve($options['name'] ?? 'datagrid');
+        $options['filterEnvironment'] ??= new FilterEnvironment(
+            $adapter,
+            $this->expressionOperatorEnum,
+            $this->expressionOperatorApplicability,
+            $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
+        );
 
         return new Datagrid($adapter, $this->gridFactory, $this->expressionOperatorApplicability, $options);
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Request;
 
+use Closure;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Symfony\Component\Form\FormInterface;
 
@@ -20,11 +22,15 @@ final readonly class DatagridRequestState
 {
     private const string QUICK_SEARCH_FORM_SUFFIX = '_search';
 
+    private const string FILTER_FORM_SUFFIX = '_filter';
+
     /**
      * @param \Symfony\Component\Form\FormInterface|null $quickSearchForm Null when the datagrid is built outside a request (a command, a test)
+     * @param \Closure(\Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection): \Symfony\Component\Form\FormInterface|null $filterFormFactory Builds and submits the filter form once the datagrid knows its filters; null outside a request
      */
     public function __construct(
         public ?FormInterface $quickSearchForm = null,
+        public ?Closure $filterFormFactory = null,
     ) {
     }
 
@@ -34,6 +40,20 @@ final readonly class DatagridRequestState
     public static function createQuickSearchFormName(string $gridId): string
     {
         return self::toFormName($gridId) . self::QUICK_SEARCH_FORM_SUFFIX;
+    }
+
+    public static function createFilterFormName(string $gridId): string
+    {
+        return self::toFormName($gridId) . self::FILTER_FORM_SUFFIX;
+    }
+
+    /**
+     * The filter form depends on the declared filters, which the datagrid knows only once it is configured,
+     * so the form is built on demand — null outside a request.
+     */
+    public function createFilterForm(FilterCollection $filters): ?FormInterface
+    {
+        return $this->filterFormFactory === null ? null : ($this->filterFormFactory)($filters);
     }
 
     private static function toFormName(string $gridId): string

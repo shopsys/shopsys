@@ -30,6 +30,15 @@ parameters:
             path: packages/administration/src/Component/Datagrid/Condition/Condition.php
         -
             identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/AbstractFilter.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/EntityFilter.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/FilterInterface.php
+        -
+            identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/Datagrid.php
         -
             identifier: shipmonk.deadMethod

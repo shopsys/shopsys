@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Request;
 
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\DatagridFilterFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -31,7 +34,38 @@ final class DatagridRequestStateResolver
             return new DatagridRequestState();
         }
 
-        return new DatagridRequestState($this->createQuickSearchForm($gridId, $request));
+        return new DatagridRequestState(
+            $this->createQuickSearchForm($gridId, $request),
+            fn (FilterCollection $filters): FormInterface => $this->createFilterForm($gridId, $filters, $request),
+        );
+    }
+
+    /**
+     * A filter with no rule composed — never submitted, or submitted empty — is shown as the starting point,
+     * one group with one rule, so the administrator never faces an empty panel.
+     */
+    private function createFilterForm(string $gridId, FilterCollection $filters, Request $request): FormInterface
+    {
+        $form = $this->submitFromQuery($this->createFilterFormWithData($gridId, $filters, new FilterFormData()), $request);
+
+        if ($form->isSubmitted() && $form->getData()->hasRules()) {
+            return $form;
+        }
+
+        return $this->createFilterFormWithData($gridId, $filters, FilterFormData::createStartingPoint());
+    }
+
+    private function createFilterFormWithData(
+        string $gridId,
+        FilterCollection $filters,
+        FilterFormData $data,
+    ): FormInterface {
+        return $this->formFactory->createNamed(
+            DatagridRequestState::createFilterFormName($gridId),
+            DatagridFilterFormType::class,
+            $data,
+            ['filters' => $filters],
+        );
     }
 
     /**

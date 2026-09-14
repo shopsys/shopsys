@@ -23,6 +23,8 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundExcept
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorApplicability;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
 use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
@@ -31,6 +33,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use SortDirection;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -50,6 +53,15 @@ final class Datagrid
      * @var \Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface[]
      */
     private array $conditions = [];
+
+    private FilterCollection $filters;
+
+    private ?FormInterface $filterForm = null;
+
+    /**
+     * The filter form is derived from the declared filters, so it is built once they are configured.
+     */
+    private bool $filterFormResolved = false;
 
     private ?QuickSearch $quickSearch = null;
 
@@ -92,6 +104,7 @@ final class Datagrid
     ) {
         $this->fields = new ArrayCollection();
         $this->actions = new DatagridRowActions();
+        $this->filters = new FilterCollection();
         $this->options = $this->resolveOptions($options);
 
         $this->configureDefaultCrudActions();
@@ -136,6 +149,7 @@ final class Datagrid
             'pagination' => true,
             'domainControlScope' => null,
             'requestState' => null,
+            'filterEnvironment' => null,
         ]);
 
         $resolver->setRequired('roleConstant');
@@ -146,6 +160,7 @@ final class Datagrid
         $resolver->setAllowedTypes('roleConstant', 'string');
         $resolver->setAllowedTypes('domainControlScope', [DomainControlScope::class, 'null']);
         $resolver->setAllowedTypes('requestState', [DatagridRequestState::class, 'null']);
+        $resolver->setAllowedTypes('filterEnvironment', [FilterEnvironment::class, 'null']);
 
         return $resolver->resolve($options);
     }
@@ -343,6 +358,41 @@ final class Datagrid
     }
 
     /**
+     * The filters the administrator composes rules from — `$datagrid->filters()->add(TextFilter::new('name'))`.
+     * Declare them while configuring the datagrid; they are adapted to the adapter when the form is first asked for.
+     */
+    public function filters(): FilterCollection
+    {
+        return $this->filters;
+    }
+
+    /**
+     * The submitted filter form, null when no filter is declared or the datagrid is built outside a request.
+     * Ask once the filters are declared.
+     *
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     */
+    public function getFilterForm(): ?FormInterface
+    {
+        if ($this->filterFormResolved === false) {
+            $this->filterForm = $this->createFilterForm();
+            $this->filterFormResolved = true;
+        }
+
+        return $this->filterForm;
+    }
+
+    /**
+     * Whether the administrator composed any filter rule — the filter then outranks the quick search.
+     */
+    public function hasFilterRules(): bool
+    {
+        $filterForm = $this->getFilterForm();
+
+        return $filterForm?->isSubmitted() === true && $filterForm->getData()->hasRules();
+    }
+
+    /**
      * Class for managing row actions in datagrid
      */
     public function actions(): DatagridRowActions
@@ -419,11 +469,36 @@ final class Datagrid
     }
 
     /**
-     * What the administrator searched for, null when nothing.
+     * What the administrator searched for, null when nothing. The filter and the quick search are two ways
+     * of asking the same question, so only one of them applies — the filter whenever any rule was composed,
+     * the quick search otherwise. An invalid filter (a malformed date, a rule of a filter that no longer
+     * exists) narrows nothing and shows its errors instead of quietly listing more than the administrator asked for.
      */
     private function createSearchCondition(): ?ConditionInterface
     {
+        if ($this->hasFilterRules()) {
+            $filterForm = $this->getFilterForm();
+
+            return $filterForm?->isValid() === true ? $this->filters->createCondition($filterForm->getData()) : null;
+        }
+
         return $this->getQuickSearch()?->createCondition();
+    }
+
+    /**
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     */
+    private function createFilterForm(): ?FormInterface
+    {
+        if ($this->filters->isEmpty()) {
+            return null;
+        }
+
+        $filterEnvironment = $this->options['filterEnvironment']
+            ?? throw new InvalidArgumentException('The datagrid declares filters, so it needs the "filterEnvironment" option to adapt them to its adapter.');
+        $this->filters->resolveFor($filterEnvironment);
+
+        return $this->getRequestState()->createFilterForm($this->filters);
     }
 
     /**
@@ -454,7 +529,10 @@ final class Datagrid
             return null;
         }
 
-        return new QuickSearch($quickSearchForm, $this->getRequestState()->getSearchTerm(), $labelsByPath);
+        // a composed filter outranks the quick search, so its term is not shown either
+        $term = $this->hasFilterRules() ? null : $this->getRequestState()->getSearchTerm();
+
+        return new QuickSearch($quickSearchForm, $term, $labelsByPath);
     }
 
     /**
