@@ -62,14 +62,14 @@ Do not call `protectedUrl()` or compose the token yourself when the link is prod
 
 Use this only when the URL is not built by `protectedUrl()` or the helpers above (for example a form action or a URL built in PHP).
 
-In Twig, use the same token id the protector expects:
+In Twig, use the same token id the protector expects, for example as a hidden field of a form that submits to the protected route:
 
 ```twig
-{% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_category_delete' %}
-{% set deleteUrl = url('admin_category_delete', {
-    id: category.id,
-    (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-}) %}
+{% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_unit_delete' %}
+<input type="hidden"
+       name="{{ constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER') }}"
+       value="{{ csrf_token(csrfTokenId) }}"
+/>
 ```
 
 In PHP, inject `RouteCsrfProtector` and use `getCsrfTokenByRoute()`:
