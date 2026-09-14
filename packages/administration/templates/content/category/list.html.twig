@@ -58,12 +58,7 @@
                                class="link-secondary"
                             >{{ ux_icon('pencil') }}</a>
 
-                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_category_delete' %}
-                            {% set categoryDeleteUrl = url('admin_category_delete', {
-                                id: categoryWithPreloadedChildren.category.id,
-                                (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                            }) %}
-                            <a href="{{ categoryDeleteUrl }}"
+                            <a href="{{ protectedUrl('admin_category_delete', {id: categoryWithPreloadedChildren.category.id}) }}"
                                class="link-secondary"
                                data-confirm-window
                                data-confirm-message="{{ categoryHasSeoMix ? 'Do you really want to remove this category even with their SEO mixes?'|trans : 'Do you really want to delete this category?'|trans }}"

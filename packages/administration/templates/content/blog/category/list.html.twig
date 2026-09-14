@@ -54,13 +54,8 @@
                                class="link-secondary"
                             >{{ ux_icon('pencil') }}</a>
 
-                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_blogcategory_delete' %}
-                        {% set blogCategoryDeleteUrl = url('admin_blogcategory_delete', {
-                            id: blogCategoryId,
-                            (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                        }) %}
                         {% if blogCategoryWithPreloadedChildren.blogCategory.level is not same as(0) %}
-                            <a href="{{ blogCategoryDeleteUrl }}"
+                            <a href="{{ protectedUrl('admin_blogcategory_delete', {id: blogCategoryId}) }}"
                                data-confirm-window
                                class="link-secondary"
                                    data-confirm-message="{{ 'Do you really want to delete this category?'|trans }}"
