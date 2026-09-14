@@ -19,6 +19,7 @@ final class OrmAdapterFactory
         private readonly Localization $localization,
         private readonly HintsHelper $hintsHelper,
         private readonly CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor,
+        private readonly PathWalkerInterface $pathWalker,
     ) {
     }
 
@@ -34,6 +35,7 @@ final class OrmAdapterFactory
             $this->localization,
             $this->hintsHelper,
             $this->crudEntityIdentifierExtractor,
+            $this->pathWalker,
             $configureQuery,
         );
     }
