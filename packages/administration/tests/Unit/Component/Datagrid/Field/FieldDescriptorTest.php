@@ -98,4 +98,38 @@ class FieldDescriptorTest extends TestCase
 
         new FieldDescriptor('name', ['property' => []]);
     }
+
+    public function testFieldIsNotSearchableByDefault(): void
+    {
+        $this->assertFalse((new FieldDescriptor('name'))->isSearchable());
+    }
+
+    public function testSearchableFieldKeepsItsPathAsTheSearchedOne(): void
+    {
+        $field = new FieldDescriptor('brandName', [
+            'searchable' => true,
+            'property' => 'brand.name',
+        ]);
+
+        $this->assertTrue($field->isSearchable());
+        $this->assertSame(['brand.name'], $field->getSelectProperties());
+    }
+
+    public function testSearchableCanBeSwitchedOnByUpdate(): void
+    {
+        $field = new FieldDescriptor('name');
+
+        $field->update(['searchable' => true]);
+
+        $this->assertTrue($field->isSearchable());
+    }
+
+    public function testSearchableIsRefusedWhenNotBoolean(): void
+    {
+        $this->expectException(InvalidOptionsException::class);
+
+        // the static analysis refuses this as well, which is the first line of defence
+        /** @phpstan-ignore argument.type */
+        new FieldDescriptor('name', ['searchable' => 'yes']);
+    }
 }

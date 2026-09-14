@@ -25,6 +25,11 @@ final class DomainControlComponent
 {
     public DomainControlScope $scope;
 
+    /**
+     * The domain filter as a compact select (next to the search of the list) instead of the row of tabs.
+     */
+    public bool $select = false;
+
     public function __construct(
         private readonly Domain $domain,
     ) {

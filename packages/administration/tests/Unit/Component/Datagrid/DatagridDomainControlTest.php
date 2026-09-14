@@ -17,6 +17,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -53,6 +54,21 @@ final class DatagridDomainControlTest extends TestCase
         $this->assertNotNull($domainField);
         $this->assertSame('@ShopsysAdministration/datagrid/cell/domain_icon.html.twig', $domainField->getTemplate());
         $this->assertSame('domainId', $domainField->getMappingProperty());
+    }
+
+    /**
+     * The domain field narrows nothing, so it is added even when the narrowing was resolved before the view — an
+     * extension asking for the narrowing while configuring the datagrid does not break the view.
+     */
+    public function testDomainFieldIsAddedEvenOnceTheNarrowingIsResolved(): void
+    {
+        $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
+        $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
+        $datagrid->getNarrowing();
+
+        $datagrid->createView();
+
+        $this->assertArrayHasKey('domainId', $adapter->getLastRequestFields());
     }
 
     public function testDomainFieldIsLastByDefault(): void
@@ -222,7 +238,7 @@ final class DatagridDomainControlTest extends TestCase
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturn($gridStub);
 
-        return new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), $scope, [
+        return new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), $scope, [
             'roleConstant' => 'ROLE_CRUD_TEST',
         ]);
     }

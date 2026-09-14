@@ -127,6 +127,7 @@ abstract class AbstractCrudController extends AdminBaseController
             'grid' => $gridView,
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
             'domainControlScope' => $narrowing->domainControlScope,
+            'quickSearch' => $narrowing->quickSearch,
         ]);
     }
 
