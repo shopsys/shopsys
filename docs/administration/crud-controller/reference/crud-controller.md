@@ -120,48 +120,54 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 
 ### List domain control
 
-Use `setListDomainControl()` in `configure()` to display a domain control above the datagrid.
+A list of an entity implementing `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface` displays the **domain filter** above the datagrid and filters the list query by the selected domain **automatically** — no `configure()` or `configureQuery()` code is needed.
+
+A selected domain limits the list to that domain, and the "All domains" option limits it to the domains available to the administrator.
+The filter remembers its selection under a namespace generated from the controller name, and hides itself when only one domain is available.
+
+Use `setListDomainControl()` in `configure()` to change the default:
 
 ```php
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 
 public function configure(CrudConfig $config): void
 {
-    $config->setListDomainControl(CrudListDomainControl::QUICK_FILTER, [1, 3]);
+    $config->setListDomainControl(DomainControlType::FILTER, [1, 3], 'crud_shared_selection');
 }
 ```
 
-- `CrudListDomainControl::QUICK_FILTER` displays a per-list filter with an "All domains" option.
-  The filter stores its selection under a namespace generated from the controller name.
+- `DomainControlType::FILTER` displays a per-list filter with an "All domains" option.
   The optional `$allowedDomainIds` argument restricts the filter to the specified domain IDs; the list is always intersected with the domains available to the administrator.
-- `CrudListDomainControl::SWITCHER` displays the global administration domain switcher.
-  It always returns one selected domain ID and does not support `$allowedDomainIds`.
+  The optional `$filterNamespace` argument overrides the generated namespace — pass the same value in two controllers to share the selection between their lists.
+- `DomainControlType::SWITCHER` displays the global administration domain switcher.
+  It always returns one selected domain ID and supports neither `$allowedDomainIds` nor `$filterNamespace`.
+  Use it on lists whose create and edit actions are bound to the globally selected domain.
+- `DomainControlType::NONE` displays no domain control and applies no domain condition. Use it to opt an entity belonging to a domain out of the automatic filtering.
 
-When the entity implements `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface`, the domain condition is applied to the list query automatically (no `configureQuery()` code is needed).
-A selected domain limits the list to that domain, and the "All domains" option of a quick filter limits it to the domains available to the administrator (intersected with the configured allowed domain IDs).
+The domain condition is applied whenever the control is enabled, even when only one domain is available — a list must never show records of a domain the administrator has no access to.
+
+#### Automatic domain field
+
+When the list works with more than one domain, a `domainId` field displaying the domain of every record is added to the datagrid automatically as the last one.
+
+Adding the field yourself takes precedence over the automatic one, which is the way to change its label, position or visibility:
+
+```php
+protected function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('name', ['label' => t('Name')])
+        ->add('domainId', ['label' => t('Shop')]);
+}
+```
+
+Displaying the domain and filtering by it are independent — hiding the field (`'visible' => false`) never widens the listed records. Use `DomainControlType::NONE` to turn the filtering off as well.
 
 #### Entities without `DomainSeparatedEntityInterface`
 
-When the entity is related to a domain in another way (e.g. through a joined entity), nothing is applied to the list query automatically.
-Decide first what the domain control should affect on your list — the two cases need different code and can be combined.
+Such an entity displays no domain control and no domain condition. Enable the control with `setListDomainControl()` when the list should offer the domain choice for other reasons — the domain is related in another way (e.g. through a joined entity), so nothing is applied to the list query automatically.
 
-**Limiting which entities are listed** — apply the condition in `configureQuery()` using `addListDomainIdsCondition()` with the DQL field holding the domain ID:
-
-```php
-protected function configureQuery(QueryBuilder $queryBuilder): void
-{
-    $queryBuilder->join('o.domains', 'od');
-    $this->addListDomainIdsCondition($queryBuilder, 'od.domainId');
-}
-```
-
-The condition respects the selected domain (or all domains available to the list when "All domains" is selected in a quick filter) and matches nothing when no domain is available to the administrator.
-It excludes an entity only when the entity has no row for the given domain — joined entities that are created for every domain are never excluded.
-
-The join lists the entity once per matching domain, so use it only where a single domain is always selected (`SWITCHER`).
-With "All domains" selected, an entity related to three domains is listed three times.
-
-**Showing per-domain values in a column** (status, publish date, …) — select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected:
+**Showing per-domain values in a column** (status, publish date, …) — select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected. Inject `DomainControlScopeFactory` into your controller to resolve the same scope the datagrid works with:
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
@@ -171,11 +177,11 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
             '(SELECT MIN(bad.status) FROM %s bad WHERE bad.blogArticle = o AND bad.domainId IN (:domainIds)) AS domainStatus',
             BlogArticleDomain::class,
         ))
-        ->setParameter('domainIds', $this->getEffectiveListDomainIds());
+        ->setParameter('domainIds', $domainControlScope->getEffectiveDomainIds());
 }
 ```
 
-`getEffectiveListDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
+`getEffectiveDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
 A subselect is used instead of a join to keep one row per entity, and each subselect needs its own DQL alias, as aliases are unique within the whole query.
 
 Such a value does not map to a property of the listed entity, so display it with a `virtual` datagrid field whose `transform` reads it from the row:
@@ -187,8 +193,6 @@ $datagrid->add('status', [
     'transform' => fn (mixed $value, array $row): mixed => $row['domainStatus'] ?? null,
 ]);
 ```
-
-For fully custom conditions, use `getSelectedListDomainId()` and `getEffectiveListDomainIds()`.
 
 ### `configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void`
 

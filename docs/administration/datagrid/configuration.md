@@ -8,6 +8,7 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 - `name` (optional, string) - The name of the datagrid
 - `crudDefinition` (optional, `Shopsys\AdministrationBundle\Component\Crud\Definition`) - Crud Definition provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
 - `pagination` (optional, bool) - Enable or disable pagination. Default is `true`
+- `domainControlScope` (optional, `Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope`) - The domains the datagrid works with and the way the administrator picks among them. For a datagrid of a Crud Controller it is resolved from `crudDefinition` automatically, so pass it only for a standalone datagrid. When it is set and the listed entity implements `DomainSeparatedEntityInterface`, the datagrid is limited to the domains of the scope and displays a `domainId` field. See [List domain control](../crud-controller/reference/crud-controller.md#list-domain-control)
 
 
 ## Methods Configuration

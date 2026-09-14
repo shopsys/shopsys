@@ -15,6 +15,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -79,6 +80,11 @@ final class Datagrid
         $this->configureDefaultCrudActions();
     }
 
+    public function getDomainControlScope(): ?DomainControlScope
+    {
+        return $this->options['domainControlScope'];
+    }
+
     /**
      * @param DatagridOptions $options
      * @return DatagridOptions
@@ -90,6 +96,7 @@ final class Datagrid
             'name' => 'datagrid',
             'crudDefinition' => null,
             'pagination' => true,
+            'domainControlScope' => null,
         ]);
 
         $resolver->setRequired('roleConstant');
@@ -98,6 +105,7 @@ final class Datagrid
         $resolver->setAllowedTypes('crudDefinition', [Definition::class, 'null']);
         $resolver->setAllowedTypes('pagination', 'bool');
         $resolver->setAllowedTypes('roleConstant', 'string');
+        $resolver->setAllowedTypes('domainControlScope', [DomainControlScope::class, 'null']);
 
         return $resolver->resolve($options);
     }
@@ -301,11 +309,9 @@ final class Datagrid
 
     public function createView(): GridView
     {
-        $datasource = $this->adapter->getDatasource(new DatasourceRequest(
-            $this->identificationName,
-            $this->fields->getValues(),
-            $this->composeCondition(...$this->conditions),
-        ));
+        $this->addDomainFieldIfWorthDisplaying();
+
+        $datasource = $this->adapter->getDatasource($this->createDatasourceRequest());
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
         if ($this->fields->isEmpty() || $this->fields->forAll(fn ($key, FieldDescriptor $field) => $field->isVisible() === false)) {
@@ -350,6 +356,47 @@ final class Datagrid
         }
 
         return $grid->createView();
+    }
+
+    /**
+     * Everything one listing asks of the adapter — the fields to select and the condition combining all that
+     * narrows the datagrid.
+     */
+    private function createDatasourceRequest(): DatasourceRequest
+    {
+        return new DatasourceRequest(
+            $this->identificationName,
+            $this->fields->getValues(),
+            $this->composeCondition(
+                $this->getDomainControlScope()?->createCondition(),
+                ...$this->conditions,
+            ),
+        );
+    }
+
+    /**
+     * Displays the domain of every record when the domain control works with several domains.
+     *
+     * Displaying the domain and limiting the records to the domains of the control are independent —
+     * the limit is a part of every request the datagrid sends to its adapter, so hiding or removing the
+     * field never widens the listed records. Adding the field manually takes precedence.
+     */
+    private function addDomainFieldIfWorthDisplaying(): void
+    {
+        $domainControlScope = $this->getDomainControlScope();
+
+        if ($domainControlScope === null || $domainControlScope->isDomainWorthDisplaying() === false) {
+            return;
+        }
+
+        if ($this->fields->containsKey($domainControlScope->domainIdPath)) {
+            return;
+        }
+
+        $this->add($domainControlScope->domainIdPath, [
+            'label' => t('Domain'),
+            'template' => '@ShopsysAdministration/datagrid/cell/domain_icon.html.twig',
+        ]);
     }
 
     /**
