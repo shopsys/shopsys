@@ -118,7 +118,7 @@ final class PathWalker implements PathWalkerInterface
             $classMetadata = $targetClassMetadata;
 
             if ($isLast) {
-                return $this->finish($path, $steps, $crossesToMany, PathValueTypeEnum::ASSOCIATION);
+                return $this->finish($path, $steps, $crossesToMany, PathValueTypeEnum::ASSOCIATION, $classMetadata->getName());
             }
         }
 
@@ -127,17 +127,20 @@ final class PathWalker implements PathWalkerInterface
 
     /**
      * @param list<\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathStep> $steps
+     * @param class-string|null $targetEntityClass
      */
     private function finish(
         string $path,
         array $steps,
         bool $crossesToMany,
         PathValueTypeEnum $valueType,
+        ?string $targetEntityClass = null,
     ): WalkedPath {
         return new WalkedPath($steps, new PathDescription(
             $path,
             $crossesToMany ? PathCardinalityEnum::TO_MANY : PathCardinalityEnum::TO_ONE,
             $valueType,
+            $targetEntityClass,
         ));
     }
 

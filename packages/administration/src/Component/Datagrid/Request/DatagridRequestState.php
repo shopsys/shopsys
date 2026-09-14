@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Everything the request says about one datagrid, read once by `DatagridFactory` and handed to the datagrid —
  * the features narrowing the datagrid take their part from here and never touch the request themselves.
- * Only the raw query is kept; `DatagridFormFactory` turns it into forms once the datagrid knows its fields.
+ * Only the raw query is kept; `DatagridFormFactory` turns it into forms once the datagrid knows its fields
+ * and filters.
  *
  * The state is carried by GET forms named after the datagrid, so that two datagrids on one page never
  * clash and the pager keeps the state in its links (the framework `Grid` merges the whole query string).
@@ -19,14 +20,18 @@ final readonly class DatagridRequestState
 {
     private const string QUICK_SEARCH_FORM_SUFFIX = '_search';
 
+    private const string FILTER_FORM_SUFFIX = '_filter';
+
     /**
      * @param string $gridId The ID of the datagrid the state belongs to, its forms are named after it
      * @param array<string, mixed>|null $quickSearchQuery The query of the quick search form, null when the request does not carry it
+     * @param array<string, mixed>|null $filterQuery The query of the filter form, null when the request does not carry it
      * @param bool $inRequest False when the datagrid is built outside a request (a command, a test) — no form is built then
      */
     public function __construct(
         public string $gridId,
         public ?array $quickSearchQuery = null,
+        public ?array $filterQuery = null,
         public bool $inRequest = true,
     ) {
     }
@@ -36,6 +41,7 @@ final readonly class DatagridRequestState
         return new self(
             $gridId,
             self::readFormQuery($request, self::createFormName($gridId, self::QUICK_SEARCH_FORM_SUFFIX)),
+            self::readFormQuery($request, self::createFormName($gridId, self::FILTER_FORM_SUFFIX)),
         );
     }
 
@@ -47,6 +53,11 @@ final readonly class DatagridRequestState
     public function getQuickSearchFormName(): string
     {
         return self::createFormName($this->gridId, self::QUICK_SEARCH_FORM_SUFFIX);
+    }
+
+    public function getFilterFormName(): string
+    {
+        return self::createFormName($this->gridId, self::FILTER_FORM_SUFFIX);
     }
 
     /**

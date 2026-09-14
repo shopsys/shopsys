@@ -82,6 +82,11 @@ abstract class AbstractCrudController extends AdminBaseController
     {
     }
 
+    /**
+     * Shapes the query of the list statically — a fixed scope, a default join, an ordering. It runs once when
+     * the adapter is created, without any request, so a condition driven by the administrator never belongs
+     * here: it belongs to a searchable field or a filter of the datagrid, see `configureDatagrid()`.
+     */
     protected function configureQuery(QueryBuilder $queryBuilder): void
     {
     }
@@ -128,6 +133,10 @@ abstract class AbstractCrudController extends AdminBaseController
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
             'domainControlScope' => $narrowing->domainControlScope,
             'quickSearch' => $narrowing->quickSearch,
+            // the forms themselves, so that they are rendered as their views and an invalid filter answers 422
+            'filterForm' => $narrowing->filterPanel?->form,
+            'filterPrototypesForm' => $narrowing->filterPanel?->prototypesForm,
+            'filterActive' => $narrowing->filterActive,
         ]);
     }
 

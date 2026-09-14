@@ -10,10 +10,14 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Path;
  */
 final readonly class PathDescription
 {
+    /**
+     * @param class-string|null $targetEntityClass The entity a path ending with an association leads to, null for a value
+     */
     public function __construct(
         public string $path,
         public PathCardinalityEnum $cardinality,
         public PathValueTypeEnum $valueType,
+        public ?string $targetEntityClass = null,
     ) {
     }
 
