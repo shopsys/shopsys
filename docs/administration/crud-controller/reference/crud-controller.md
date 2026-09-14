@@ -124,6 +124,7 @@ A list of an entity implementing `\Shopsys\FrameworkBundle\Component\Domain\Enti
 
 A selected domain limits the list to that domain, and the "All domains" option limits it to the domains available to the administrator.
 The filter remembers its selection under a namespace generated from the controller name, and hides itself when only one domain is available.
+It is rendered as a row of domain tabs above the datagrid; a list offering a quick search or a filter renders it as a compact select in a card beside them.
 
 Use `setListDomainControl()` in `configure()` to change the default:
 

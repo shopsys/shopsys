@@ -45,7 +45,7 @@
     </div>
 {% endmacro %}
 
-<div class="card mb-3"
+<div class="{{ embedded ? '' : 'card mb-3' }}"
      data-controller="datagrid-filter"
      data-datagrid-filter-group-prototype-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\DatagridFilterFormType::GROUP_PROTOTYPE_NAME') }}"
      data-datagrid-filter-rule-prototype-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\FilterGroupType::RULE_PROTOTYPE_NAME') }}"
@@ -55,14 +55,16 @@
         {# the order and the limit of the grid travel with the filter, the page starts over #}
         {{ gridView.renderHiddenInputs('page') }}
 
-        <div class="card-header card-header-no-bg d-flex align-items-center gap-2">
-            <h2 class="card-title text-secondary">{{ 'Filter'|trans }}</h2>
-            {% if this.active %}
-                <span class="badge bg-blue-lt text-blue-lt-fg">{{ 'Active'|trans }}</span>
-            {% endif %}
-        </div>
+        {% if not embedded %}
+            <div class="card-header card-header-no-bg d-flex align-items-center gap-2">
+                <h2 class="card-title text-secondary">{{ 'Filter'|trans }}</h2>
+                {% if this.active %}
+                    <span class="badge bg-blue-lt text-blue-lt-fg">{{ 'Active'|trans }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
 
-        <div class="card-body">
+        <div class="{{ embedded ? '' : 'card-body' }}">
             {{ form_errors(form) }}
 
             <div class="mb-2" data-datagrid-filter-target="groupsOperator" {% if form.groups|length < 2 %}hidden{% endif %}>
@@ -80,7 +82,7 @@
             </button>
         </div>
 
-        <div class="card-footer card-footer-no-bg d-flex justify-content-end gap-2">
+        <div class="{{ embedded ? 'd-flex justify-content-end gap-2 mt-3' : 'card-footer card-footer-no-bg d-flex justify-content-end gap-2' }}">
             <a href="{{ gridView.url({ (form.vars.full_name): null }, 'page') }}" class="btn">
                 {{ ux_icon('circle-cross') }} {{ 'Reset filter'|trans }}
             </a>

@@ -1,5 +1,5 @@
 {% if scope.isFilter %}
-    {% include '@ShopsysAdministration/partial/quick_domain_filter.html.twig' with {
+    {% include (select ? '@ShopsysAdministration/partial/quick_domain_filter_select.html.twig' : '@ShopsysAdministration/partial/quick_domain_filter.html.twig') with {
         domainConfigs: this.domainConfigs,
         namespace: scope.filterNamespace,
         selectedDomainId: scope.selectedDomainId,

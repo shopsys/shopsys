@@ -23,6 +23,11 @@ final class QuickSearchComponent
 
     public GridView $gridView;
 
+    /**
+     * Rendered inside a card of the page (a tab next to the filter) instead of a card of its own.
+     */
+    public bool $embedded = false;
+
     private ?FormView $formView = null;
 
     public function getFormView(): FormView

@@ -4,6 +4,7 @@
     {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
         form_input: this.formView.text,
         form_submit: this.formView.submit,
+        hide_title: embedded,
         placeholder: 'Search in: %fields%'|trans({ '%fields%': quickSearch.labelsByPath|join(', ') }),
     } %}
 {{ form_end(this.formView, { render_rest: false }) }}
