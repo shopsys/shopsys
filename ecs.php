@@ -128,6 +128,9 @@ return ECSConfig::configure()
                 __DIR__ . '/project-base/app/src/DataFixtures/Demo/ImageDataFixture.php',
             ],
             CyclomaticComplexitySniff::class => [
+                // compare() of an expression builder dispatches the whole vocabulary of operators in one match
+                __DIR__ . '/packages/administration/src/Component/Datagrid/Adapter/Array/Expression/PhpExpressionBuilder.php',
+                __DIR__ . '/packages/administration/src/Component/Datagrid/Adapter/Orm/Expression/DqlExpressionBuilder.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version20240403091822.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version20240704143616.php',

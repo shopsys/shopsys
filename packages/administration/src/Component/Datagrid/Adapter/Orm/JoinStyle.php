@@ -22,11 +22,60 @@ enum JoinStyle
      */
     case LISTING;
 
-    public function join(QueryBuilder $queryBuilder, string $currentAlias, PathStep $step, string $joinAlias): void
+    /**
+     * A correlated subquery reaching the related rows of a collection joins by the association path — only that
+     * reaches through a collection. A related row missing a to-one association has a missing value there, the way
+     * a listed record does, while an empty collection has no related row at all, so a record without any is never
+     * matched. A collection whose owner may be missing itself is joined outwardly and left out only when its owner
+     * is there, so a missing owner is a missing value as well. The subquery is nested in the query listing
+     * the records, so its aliases are prefixed not to shadow the aliases of that query.
+     */
+    case CORRELATED;
+
+    public function joinsCollections(): bool
     {
+        return $this === self::CORRELATED;
+    }
+
+    public function prefixesAliases(): bool
+    {
+        return $this === self::CORRELATED;
+    }
+
+    /**
+     * @param bool $joinsFromRoot Whether the association belongs to the root entity of the query, which is never missing
+     */
+    public function join(
+        QueryBuilder $queryBuilder,
+        string $currentAlias,
+        PathStep $step,
+        string $joinAlias,
+        bool $joinsFromRoot,
+    ): void {
         match ($this) {
             self::LISTING => $queryBuilder->leftJoin($step->targetEntityClass, $joinAlias, Join::WITH, $this->createRangeJoinCondition($currentAlias, $step, $joinAlias)),
+            self::CORRELATED => $this->joinCorrelated($queryBuilder, $currentAlias, $step, $joinAlias, $joinsFromRoot),
         };
+    }
+
+    protected function joinCorrelated(
+        QueryBuilder $queryBuilder,
+        string $currentAlias,
+        PathStep $step,
+        string $joinAlias,
+        bool $joinsFromRoot,
+    ): void {
+        $association = sprintf('%s.%s', $currentAlias, $step->field);
+
+        if ($step->isToMany === false) {
+            $queryBuilder->leftJoin($association, $joinAlias);
+        } elseif ($joinsFromRoot) {
+            $queryBuilder->innerJoin($association, $joinAlias);
+        } else {
+            $queryBuilder
+                ->leftJoin($association, $joinAlias)
+                ->andWhere(sprintf('%s IS NOT NULL OR %s IS NULL', $joinAlias, $currentAlias));
+        }
     }
 
     /**
