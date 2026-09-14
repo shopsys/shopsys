@@ -35,12 +35,14 @@ Read the source first — the docblocks are complete and the code is short. Docs
 
 | Topic | Source (read-only) | Docs |
 |---|---|---|
-| Base controller: `configure*()` hooks, actions, list-domain helpers | `vendor/shopsys/administration/src/Controller/AbstractCrudController.php` | [Configuration reference](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/crud-controller/) |
+| Base controller: `configure*()` hooks, actions | `vendor/shopsys/administration/src/Controller/AbstractCrudController.php` | [Configuration reference](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/crud-controller/) |
 | `CrudConfig` — every configurable option | `vendor/shopsys/administration/src/Component/Config/CrudConfig.php` | same page, section *CRUD Config* |
 | Handler interfaces | `vendor/shopsys/administration/src/Component/Crud/Handler/` | [Handlers](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/handlers/) |
 | Hook interfaces (before/after/onError) | `vendor/shopsys/administration/src/Component/Crud/Extension/` | same page, section *Hooks System* |
 | Form configurator (FormType vs builder) | `vendor/shopsys/administration/src/Component/Crud/Form/CrudFormConfigurator.php` | *configureForm* section of the configuration reference |
 | Datagrid, fields, row actions | `vendor/shopsys/administration/src/Component/Datagrid/` | [Datagrid](https://docs.shopsys.com/en/latest/administration/datagrid/), [Fields](https://docs.shopsys.com/en/latest/administration/datagrid/fields/), [Row actions](https://docs.shopsys.com/en/latest/administration/datagrid/row-actions/) |
+| Domain control, quick search, the condition tree | `vendor/shopsys/administration/src/Component/Datagrid/Condition/`, `.../Datagrid/DomainControl/` | [Narrowing the records](https://docs.shopsys.com/en/latest/administration/datagrid/narrowing/) |
+| Filters: built-in types, writing your own | `vendor/shopsys/administration/src/Component/Datagrid/Filter/` | [Filters](https://docs.shopsys.com/en/latest/administration/datagrid/filters/) |
 | Top actions (`Action`, `ActionsConfig`) | `vendor/shopsys/administration/src/Component/Action/`, `.../Component/Config/ActionsConfig.php` | [Actions](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/actions/) |
 | Extending an existing CRUD controller | `vendor/shopsys/administration/src/Controller/AbstractCrudControllerExtension.php` | [Extending](https://docs.shopsys.com/en/latest/administration/crud-controller/getting-started/extending-existing-crud-controller/) |
 | Roles, `#[ForRole]`, `#[CanView]`… | `vendor/shopsys/framework/src/Component/Security/Attribute/` | [Admin rights](https://docs.shopsys.com/en/latest/administration/admin-rights/) |
@@ -51,14 +53,14 @@ Working examples shipped with the platform (`vendor/shopsys/administration/src/`
 
 - `Controller/TransportGroupController.php` + `Model/Transport/TransportGroupCrudHandler.php` — the minimal full CRUD: FormType, one column, drag-and-drop ordering, `#[ForRole]`, menu positioning.
 - `Controller/BlogArticleAuthorController.php` — full CRUD plus a custom edit template with an extra grid (`setTemplate(ActionType::EDIT, …)` / `configureTemplateParameters()`).
-- `Controller/ProductReviewController.php` + `Model/ProductReview/ProductReviewEditHandler.php` — edit-only handler, `configureQuery()` with computed columns, templates per column, domain quick filter, `disable()` by feature flag.
+- `Controller/ProductReviewController.php` + `Model/ProductReview/ProductReviewEditHandler.php` — edit-only handler, `configureQuery()` with computed columns, templates per column, domain filter, searchable fields, filters (`ChoiceFilter`, `ProductFilter`, `BooleanFilter`), `disable()` by feature flag.
 
 ## What you get and how it fits together
 
 ```
 #[CrudController(Entity::class)]  Controller  ── configure(CrudConfig)         menu, names, route prefix, role section, handlers, domain control
-                                              ── configureDatagrid(Datagrid)  list columns, ordering, drag&drop, row actions
-                                              ── configureQuery(QueryBuilder) list DQL (root alias is `o`)
+                                              ── configureDatagrid(Datagrid)  list columns, ordering, drag&drop, row actions, searchable fields, filters()
+                                              ── configureQuery(QueryBuilder) list DQL (root alias is `o`), fixed conditions
                                               ── configureForm(...)           create/edit form: useFormType() OR useBuilder()
                                               ── configureActions(...)        top buttons per page (ActionType::LIST/EDIT/…)
                                               ── configureTemplateParameters(...)  extra variables for a template replaced via $config->setTemplate()
@@ -163,11 +165,17 @@ Rules that bite:
 protected function configureDatagrid(Datagrid $datagrid): void
 {
     $datagrid
-        ->add('name', ['label' => t('Name')])
-        ->add('domainId', ['label' => t('Domain')])            // only if $this->domain->isMultidomain()
+        ->add('name', ['label' => t('Name'), 'searchable' => true])   // joins the quick search
+        ->add('createdAt', ['label' => t('Created'), 'filterable' => true])  // filter picked by the path (DateFilter)
         ->add('status', ['label' => t('Status'), 'virtual' => true, 'property' => 'computedStatus',
                          'template' => '@ShopsysAdministration/content/…/grid/status.html.twig']);
-    $datagrid->setDefaultOrder('name', OrderingEnum::ASC);     // or enableDragAndDrop('position')
+    // the domain column of a list working with several domains is added automatically
+
+    $datagrid->filters()
+        ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->statusEnum->getAllIndexedByTranslations()))
+        ->add(EntityFilter::new('author', t('Author')));
+
+    $datagrid->setDefaultOrder('name', SortDirection::Ascending);     // or enableDragAndDrop('position')
     $datagrid->actions()->add(RowAction::create('publish', t('Publish'), 'eye')->linkToRoute(…));
 }
 
@@ -175,26 +183,55 @@ protected function configureDatagrid(Datagrid $datagrid): void
 protected function configureQuery(QueryBuilder $queryBuilder): void
 {
     // root entity alias is always `o`
-    $queryBuilder->addSelect('CASE … END AS computedStatus')->andWhere('o.deleted = false');
+    $queryBuilder->addSelect('CASE … END AS computedStatus');
+    // a fixed condition, the administrator never sees it
+    $queryBuilder->andWhere('o.deleted = :deleted')->setParameter('deleted', false);
 }
 ```
 
-Field options: `label`, `visible`, `sortable`, `virtual` (not selected from the entity —
-pair with `property` or `transform`), `property` (DQL path, e.g. `product.id`, or an array of
+Field options: `label`, `visible`, `sortable`, `searchable` (text paths only; a combined field is
+searched in its text paths), `filterable` (filter picked by the path; not for combined or
+virtual fields), `virtual` (not selected from the entity — pair with `property` or
+`transform`), `property` (DQL path, e.g. `product.id`, or an array of
 paths — all are fetched, the template gets them as `value.<path>`, the column sorts by all of
 them and without a template they are joined with a space; prefer this over hidden helper
 fields), `template`, `transform`, `help`, `role` / `permission` (show the column only to
 administrators with the permission on the role; role defaults to the controller role,
-permission to `Permission::VIEW`; the data is not fetched for others), `class` (CSS class of the
+permission to `Permission::VIEW`; the data is not fetched, searched or filtered for others), `class` (CSS class of the
 header and cells, e.g. `text-end`). Datagrid methods: `add` / `update` / `remove` / `reorder`,
 `setDefaultOrder`, `setPagination`, `enableDragAndDrop(field)`, `actions()` (row actions:
-`add` / `update` / `delete` / `reorder`).
+`add` / `update` / `delete` / `reorder`), `filters()` (`add` / `remove`),
+`getDomainControlScope()` (known while configuring), `getNarrowing()` (the quick search, the filter
+panel and their condition, resolved once the datagrid is configured).
 
-**Multi-domain lists**: `setListDomainControl(CrudListDomainControl::QUICK_FILTER|SWITCHER, $allowedDomainIds)`
+**Narrowing the list** — pick by who drives the condition:
+
+- `'searchable' => true` on a field — the administrator types a text, it is looked for in
+  every searchable field (diacritics-insensitive). Only paths leading to text.
+- `'filterable' => true` on a field — the datagrid picks the filter by the value of the path
+  (text, number, date, boolean, product, other entity; money and virtual fields have none).
+- `$datagrid->filters()->add(TextFilter::new('author.fullName', t('Author')))` — the
+  administrator composes rules from the declared filters (AND/OR groups, operators per type).
+  Always takes precedence: declared under the name of a `filterable` field it replaces the
+  picked filter (`customerUser.email` field → filter name `customerUser_email`).
+  Filters are offered sorted by label in the administration language.
+  Built-in: `TextFilter`, `NumericFilter`, `DateFilter`, `BooleanFilter`, `ChoiceFilter`,
+  `EntityFilter`, `ProductFilter`; own type = extend `AbstractFilter`, see the Filters docs.
+  A filter outranks the quick search: when filter rules are submitted, the search text is ignored.
+  Over a collection "is not" / "is none of" negate the whole condition, a missing value is "not X".
+- a fixed condition nobody switches off (`o.deleted = :deleted`) goes to `configureQuery()`
+  as a parameterized `andWhere()`, next to the computed columns and joins of the list.
+
+Both the quick search and the filters are switched by tabs above the datagrid; when the list
+also has a domain filter, it moves to a select on the right of them.
+
+**Multi-domain lists**: `setListDomainControl(DomainControlType::FILTER|SWITCHER|NONE, $allowedDomainIds, $filterNamespace, $domainIdPath)`
 in `configure()`. For entities implementing `DomainSeparatedEntityInterface` the domain
-condition is applied for you; otherwise use `addListDomainIdsCondition($qb, 'x.domainId')`,
-`getEffectiveListDomainIds()` or `getSelectedListDomainId()` in `configureQuery()` — the
-configuration reference has the join-vs-subselect guidance.
+condition is applied for you (`FILTER` is the default, the tabs/select show only when more
+than one domain is allowed); an entity related to a domain in another way passes the path to
+its domain (`domainIdPath: 'domains.domainId'`), other entities get no domain control. A list working with several domains (the domain filter
+offering more than one) gets a `domainId` column automatically; add the field yourself only to change
+its label or position.
 
 ### 4. Form
 
@@ -223,7 +260,7 @@ extensions can add fields to. `setFormOption()` must be called before `useBuilde
 - Page with extra content (any of list / detail / create / edit): `$config->setTemplate(ActionType::<PAGE>, '…')`
   in `configure()` — the template extends the default one (`@ShopsysAdministration/crud/edit.html.twig`)
   and only overrides the block where the extra content goes (`before_form`, `form`, `after_form`, `entity_log`
-  on create/edit, `domain_control`, `before_grid`, `grid`, `after_grid` on list — no `parent()` needed). The edit
+  on create/edit, `datagrid_controls`, `before_grid`, `grid`, `after_grid` on list — no `parent()` needed). The edit
   page gets the record as `entity` and shows the change history of `#[Loggable]` entities on its own. Hand it extra variables from `configureTemplateParameters(CrudTemplateParameters $templateParameters)`:
   the context of the rendered action is on `$templateParameters` — check `$templateParameters->isAction(ActionType::EDIT)`
   (or `hasEntity()` for every page showing a record), get the entity with `$templateParameters->getEntity(<Entity>::class)`
@@ -269,8 +306,9 @@ final class <Entity>ControllerExtension extends AbstractCrudControllerExtension 
    `{entityId}` gets `1`, `_delete` routes get a CSRF token and expect a 302. Make sure demo
    data contains the entity with id 1 or add a `customizeByRouteName()` entry in
    `app/tests/App/Smoke/Http/RouteConfigCustomization.php`. Cover the handler's
-   non-trivial logic (filters, access rules) with a functional test; the facade is tested on
-   its own.
+   non-trivial logic (access rules) and every declared filter with a functional test — request
+   the list with the filter in the URL (`<gridId>_filter[...]`, see `FilterListTest`) and assert
+   the rows; an own filter type gets a unit test on top (resolve → `buildCondition()`).
 4. `php phing standards-fix` and PHPStan; a new `#[ForRole]`-less controller adds a
    `ROLE_CRUD_*` row to the administrator role matrix — check the role settings page renders.
 
@@ -280,6 +318,7 @@ final class <Entity>ControllerExtension extends AbstractCrudControllerExtension 
 - [ ] Controller has `#[CrudController(Entity::class)]`, extends `AbstractCrudController`, lives in `app/src/Controller/Admin/`.
 - [ ] Handler implements the narrowest sufficient interface, class name ends with `Handler`, asserts types, delegates to the facade.
 - [ ] `configure()`: menu section (+ position), handler registered, role section / `#[ForRole]` decided consciously.
-- [ ] Datagrid columns labelled with `t()`; default order or drag-and-drop set; domain column only in multidomain.
+- [ ] Datagrid columns labelled with `t()`; default order or drag-and-drop set; no own domain column (it is added automatically).
+- [ ] Searchable fields marked, filters declared for what the administrator narrows by, fixed conditions as parameterized `andWhere()` in `configureQuery()`.
 - [ ] Form via an existing/new admin `FormType` (builder only for trivial forms).
 - [ ] Smoke test passes for all five routes; translations dumped; standards + PHPStan green.
