@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterf
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
 
 class DatagridTest extends TestCase
 {
@@ -69,7 +70,7 @@ class DatagridTest extends TestCase
         $accessChecker = $this->createStub(AccessCheckerInterface::class);
         $accessChecker->method('hasPermission')->willReturnMap($permissionMap);
 
-        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), ['roleConstant' => self::DATAGRID_ROLE]);
+        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), null, ['roleConstant' => self::DATAGRID_ROLE]);
     }
 
     public function testRestrictedFieldIsNeitherFetchedNorDisplayedWithoutPermission(): void
@@ -112,7 +113,7 @@ class DatagridTest extends TestCase
     {
         $accessChecker = $this->createMock(AccessCheckerInterface::class);
         $accessChecker->expects($this->never())->method('hasPermission');
-        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), ['roleConstant' => self::DATAGRID_ROLE]);
+        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), null, ['roleConstant' => self::DATAGRID_ROLE]);
 
         $datagrid->add('name');
 

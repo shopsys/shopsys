@@ -11,12 +11,14 @@ use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtra
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactoryInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
-final class OrmAdapter implements EntityClassAwareAdapterInterface
+final class OrmAdapter implements EntityClassAwareAdapterInterface, PathDescribingAdapterInterface
 {
     private ProxyQuery $proxyQuery;
 
@@ -48,6 +50,15 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
     public function getEntityClass(): string
     {
         return $this->entityClass;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function describePath(string $path): PathDescription
+    {
+        return $this->pathWalker->walk($this->entityClass, $path)->description;
     }
 
     /**

@@ -6,12 +6,10 @@ namespace Shopsys\AdministrationBundle\Controller;
 
 use Closure;
 use Doctrine\ORM\QueryBuilder;
-use LogicException;
 use Psr\Log\LoggerInterface;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudDeleteHookExtensionInterface;
@@ -23,10 +21,6 @@ use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
@@ -69,15 +63,6 @@ abstract class AbstractCrudController extends AdminBaseController
     public CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor;
 
     #[Required]
-    public AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade;
-
-    #[Required]
-    public AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    #[Required]
-    public Domain $domain;
-
-    #[Required]
     public LoggableEntityConfigFactory $loggableEntityConfigFactory;
 
     public function setDefinition(Definition $definition): void
@@ -101,89 +86,6 @@ abstract class AbstractCrudController extends AdminBaseController
     {
     }
 
-    protected function getSelectedListDomainId(): ?int
-    {
-        return match ($this->definition->getConfig()->getListDomainControl()) {
-            CrudListDomainControl::QUICK_FILTER => $this->adminDomainFilterTabsFacade->getSelectedDomainId(
-                $this->getListDomainFilterNamespace(),
-                $this->getListDomainIds(),
-            ),
-            CrudListDomainControl::SWITCHER => $this->adminDomainTabsFacade->getSelectedDomainId(),
-            null => throw new LogicException('List domain control is not configured.'),
-        };
-    }
-
-    /**
-     * Returns the namespace the quick domain filter stores its selection under, generated from the controller name.
-     */
-    protected function getListDomainFilterNamespace(): string
-    {
-        return 'crud_' . CrudTransformationHelper::transformToRouteName($this->definition->controllerName);
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getListDomainIds(): array
-    {
-        $allowedDomainIds = $this->definition->getConfig()->getListAllowedDomainIds();
-        $adminEnabledDomainIds = $this->domain->getAdminEnabledDomainIds();
-
-        if ($allowedDomainIds === null) {
-            return $adminEnabledDomainIds;
-        }
-
-        return array_values(array_intersect($adminEnabledDomainIds, $allowedDomainIds));
-    }
-
-    /**
-     * Returns the domain IDs the list is allowed to show: the selected domain,
-     * or all domains available to the list when "All domains" is selected.
-     *
-     * @return int[]
-     */
-    protected function getEffectiveListDomainIds(): array
-    {
-        $selectedDomainId = $this->getSelectedListDomainId();
-
-        return $selectedDomainId !== null ? [$selectedDomainId] : $this->getListDomainIds();
-    }
-
-    /**
-     * Adds the list domain condition on the given DQL field; matches nothing when no domain is available.
-     */
-    protected function addListDomainIdsCondition(QueryBuilder $queryBuilder, string $domainIdField): void
-    {
-        $domainIds = $this->getEffectiveListDomainIds();
-
-        if ($domainIds === []) {
-            $queryBuilder->andWhere('1 = 0');
-
-            return;
-        }
-
-        $queryBuilder
-            ->andWhere($domainIdField . ' IN (:listDomainFilterDomainIds)')
-            ->setParameter('listDomainFilterDomainIds', $domainIds);
-    }
-
-    /**
-     * Applies the configured domain condition to the list query of a domain-separated entity.
-     *
-     * Override with an empty body to opt out, or with custom logic when the domain relation
-     * cannot be expressed as a condition on the root entity's `domainId` field.
-     */
-    protected function applyListDomainFilter(QueryBuilder $queryBuilder): void
-    {
-        if ($this->definition->getConfig()->getListDomainControl() === null
-            || !is_a($this->definition->entityClass, DomainSeparatedEntityInterface::class, true)
-        ) {
-            return;
-        }
-
-        $this->addListDomainIdsCondition($queryBuilder, $queryBuilder->getRootAliases()[0] . '.domainId');
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Utils\Presentable|null $entity Null for create action, the existing entity for edit action
      */
@@ -205,9 +107,7 @@ abstract class AbstractCrudController extends AdminBaseController
 
     final public function listAction(): Response
     {
-        $listDomainControl = $this->definition->getConfig()->getListDomainControl();
         $adapter = $this->ormAdapterFactory->create($this->definition->entityClass, function (QueryBuilder $queryBuilder): void {
-            $this->applyListDomainFilter($queryBuilder);
             $this->configureQuery($queryBuilder);
             $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureQuery($queryBuilder));
         });
@@ -219,13 +119,14 @@ abstract class AbstractCrudController extends AdminBaseController
         $this->configureDatagrid($datagrid);
         $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureDatagrid($datagrid));
 
+        $gridView = $datagrid->createView();
+        $narrowing = $datagrid->getNarrowing();
+
         return $this->renderAction(ActionType::LIST, [
             'title' => $this->definition->getConfig()->getTitle(ActionType::LIST),
-            'grid' => $datagrid->createView(),
+            'grid' => $gridView,
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
-            'listDomainControl' => $listDomainControl,
-            'listDomainFilterNamespace' => $listDomainControl === CrudListDomainControl::QUICK_FILTER ? $this->getListDomainFilterNamespace() : null,
-            'listDomainIds' => $listDomainControl === CrudListDomainControl::QUICK_FILTER ? $this->getListDomainIds() : [],
+            'domainControlScope' => $narrowing->domainControlScope,
         ]);
     }
 
