@@ -16,3 +16,12 @@ CRUD controller is built using known Shopsys components like [Grid](../internal-
 - [Configuration](reference/crud-controller.md)
 - [Handlers](reference/handlers.md)
 - [Actions](reference/actions.md)
+
+## Datagrid
+
+The list page of a CRUD controller is a [Datagrid](../datagrid/index.md). Its own documentation covers what `configureDatagrid()` can declare:
+
+- [Fields](../datagrid/fields.md) — the columns, including the `searchable` option of the quick search
+- [Row actions](../datagrid/row-actions.md)
+- [Filters](../datagrid/filters.md) — the rules the administrator composes, the built-in filter types and how to write your own
+- [Narrowing the records](../datagrid/narrowing.md) — the conditions behind the domain control, the search and the filters, and `addCondition()` for a fixed one

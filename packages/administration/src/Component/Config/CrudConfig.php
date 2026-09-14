@@ -8,6 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use InvalidArgumentException;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface;
+use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
+use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Webmozart\Assert\Assert;
 
 /**
@@ -15,6 +19,8 @@ use Webmozart\Assert\Assert;
  */
 final class CrudConfig
 {
+    private const string FILTER_NAMESPACE_PREFIX = 'crud_';
+
     private ?string $entityNameSingular = null;
 
     private ?string $entityNamePlural = null;
@@ -45,12 +51,7 @@ final class CrudConfig
 
     private ?string $menuIcon = null;
 
-    private ?CrudListDomainControl $listDomainControl = null;
-
-    /**
-     * @var int[]|null
-     */
-    private ?array $listAllowedDomainIds = null;
+    private DomainControlConfig $domainControlConfig;
 
     /**
      * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>|null>
@@ -63,14 +64,21 @@ final class CrudConfig
 
     /**
      * @param string|null $customRoleConstant role declared by the ForRole attribute on the CRUD controller (or its extension), resolved at compile time
+     * @param class-string|null $entityClass Enables the domain filter by default for an entity belonging to a domain
+     * @param string|null $controllerName Derives the namespace the domain filter remembers its selection under
      */
     public function __construct(
         private readonly string $entityName,
         private readonly ?string $customRoleConstant = null,
+        ?string $entityClass = null,
+        private readonly ?string $controllerName = null,
     ) {
         $this->enabledActions = new ArrayCollection([
             ActionType::LIST,
         ]);
+        $this->domainControlConfig = $entityClass !== null && is_a($entityClass, DomainSeparatedEntityInterface::class, true)
+            ? new DomainControlConfig(DomainControlType::FILTER, null, $this->getDefaultFilterNamespace())
+            : new DomainControlConfig(DomainControlType::NONE);
     }
 
     /**
@@ -239,23 +247,25 @@ final class CrudConfig
     }
 
     /**
-     * Sets the domain control displayed on the list page.
+     * Sets the domain control displayed on the list page. A list of an entity belonging to a domain displays
+     * the domain filter by default — use `DomainControlType::NONE` to disable it.
      *
-     * @param int[]|null $allowedDomainIds Domain IDs available in the quick domain filter. Null allows all domains available to the administrator.
+     * @param int[]|null $allowedDomainIds Domain IDs available in the domain filter. Null allows all domains available to the administrator.
+     * @param string|null $filterNamespace The namespace the domain filter remembers its selection under. Null generates it from the controller name; pass the same value in two controllers to share the selection between their lists.
      * @return $this
      */
     public function setListDomainControl(
-        CrudListDomainControl $listDomainControl,
+        DomainControlType $domainControlType,
         ?array $allowedDomainIds = null,
+        ?string $filterNamespace = null,
     ): self {
-        if ($listDomainControl === CrudListDomainControl::SWITCHER && $allowedDomainIds !== null) {
-            throw new InvalidArgumentException('Domain switcher does not support allowed domain IDs.');
-        }
-
-        Assert::allInteger($allowedDomainIds ?? []);
-
-        $this->listDomainControl = $listDomainControl;
-        $this->listAllowedDomainIds = $allowedDomainIds;
+        $this->domainControlConfig = new DomainControlConfig(
+            $domainControlType,
+            $allowedDomainIds,
+            $domainControlType === DomainControlType::FILTER
+                ? $filterNamespace ?? $this->getDefaultFilterNamespace()
+                : $filterNamespace,
+        );
 
         return $this;
     }
@@ -332,6 +342,17 @@ final class CrudConfig
         return $this;
     }
 
+    /**
+     * The domain filter of a list remembers its selection per controller unless the controller names
+     * the namespace itself to share the selection with another list.
+     */
+    private function getDefaultFilterNamespace(): string
+    {
+        Assert::notNull($this->controllerName, 'The domain filter of a CRUD list requires the controller name to derive its namespace from.');
+
+        return self::FILTER_NAMESPACE_PREFIX . CrudTransformationHelper::transformToRouteName($this->controllerName);
+    }
+
     public function getConfig(): CrudConfigData
     {
         return new CrudConfigData(
@@ -350,8 +371,7 @@ final class CrudConfig
             $this->customRoleSection,
             $this->handlerClasses,
             $this->menuIcon,
-            $this->listDomainControl,
-            $this->listAllowedDomainIds,
+            $this->domainControlConfig,
         );
     }
 }
