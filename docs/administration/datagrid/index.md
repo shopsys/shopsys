@@ -7,6 +7,7 @@ This component is built on top of the [Grid](../internal-grid/index.md) componen
 - [Configuration](./configuration.md)
   - [Fields](./fields.md)
   - [Row actions](./row-actions.md)
+  - [Filters](./filters.md)
 
 ## Architecture
 
@@ -22,6 +23,8 @@ There are currently two adapters available:
 - `Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapter` - Adapter that works with Doctrine entities and it's used by [Crud Controller](../crud-controller/index.md)
 
 You can also create your own adapter by implementing the `Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface`.
+
+Every adapter narrows its records by the condition of the `DatasourceRequest` it is given — a tree of plain data, which the adapter compiles into its own medium through its `ExpressionBuilderInterface`, so the same code works over any medium. Optional abilities are declared by extending interfaces the adapter may implement: `EntityClassAwareAdapterInterface` (the adapter knows its entity class) and `PathDescribingAdapterInterface` (the adapter describes a path before any query is built). See [Narrowing the records](./narrowing.md).
 
 ### Datagrid class
 
