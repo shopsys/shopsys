@@ -56,7 +56,7 @@ If you want to use already created tests for your specific configuration, you ma
 
 !!! note "Notes"
 
-    - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration. Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.
+    - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration. Search for the `#[Group('singledomain')]` or `#[Group('multidomain')]` attributes on your test methods respectively.
     - Some functional tests (e.g., the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`. Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
 
 ### 2. How to add a new domain
