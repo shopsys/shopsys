@@ -15,6 +15,9 @@
         {% if domainControlScope is not null %}
             {{ component('Admin:Grid:DomainControl', { scope: domainControlScope }) }}
         {% endif %}
+        {% if quickSearch is not null %}
+            {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid }) }}
+        {% endif %}
     {% endblock %}
 
     {% block before_grid %}{% endblock %}

@@ -138,6 +138,7 @@ abstract class AbstractCrudController extends AdminBaseController
             'grid' => $datagrid->createView(),
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
             'domainControlScope' => $datagrid->getDomainControlScope(),
+            'quickSearch' => $datagrid->getQuickSearch(),
         ]);
     }
 

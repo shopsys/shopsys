@@ -30,6 +30,7 @@ The following options are available for fields:
 - `template` - The template that is used to render the field. The template is a path to a Twig template file. Look at the [Define your own column template](../internal-grid/grid-rendering-customization.md#1-define-your-own-column-template) section for more information about the template.
 - `transform` - A callback function that is used to transform the data right after data are fetched. The callback function receives the value of the field as the first parameter, row as the second argument and all rows as the third parameter.
 - `property` - The property of the entity that is used to fetch the data. If not set, the field name is used as the property name.
+- `searchable` - If set to `true`, the quick search of the datagrid searches in this field. A text input is rendered above the datagrid and the typed text is matched (ignoring case and diacritics) in every searchable field, any of them matching is enough. The field has to lead to a text value; a virtual field without a `property` or a date or a number is refused when the datagrid is built. See [Narrowing the records](./narrowing.md#quick-search).
 
 ```php
 $datagrid->add('name', [

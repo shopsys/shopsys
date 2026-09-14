@@ -13,10 +13,18 @@ use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorApplicability;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
@@ -42,6 +50,14 @@ final class Datagrid
      * @var \Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface[]
      */
     private array $conditions = [];
+
+    private ?QuickSearch $quickSearch = null;
+
+    /**
+     * The quick search is derived from the fields, so it is built once they are configured and rebuilt
+     * whenever a field changes.
+     */
+    private bool $quickSearchResolved = false;
 
     private string $identificationName = 'id';
 
@@ -71,6 +87,7 @@ final class Datagrid
     public function __construct(
         private readonly AdapterInterface $adapter,
         private readonly GridFactory $gridFactory,
+        private readonly ExpressionOperatorApplicability $expressionOperatorApplicability,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
@@ -85,6 +102,27 @@ final class Datagrid
         return $this->options['domainControlScope'];
     }
 
+    public function getRequestState(): DatagridRequestState
+    {
+        return $this->options['requestState'] ??= new DatagridRequestState();
+    }
+
+    /**
+     * The quick search over the fields declared `searchable`, null when there is none or when the datagrid
+     * is built outside a request. Ask once the fields are configured.
+     *
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     */
+    public function getQuickSearch(): ?QuickSearch
+    {
+        if ($this->quickSearchResolved === false) {
+            $this->quickSearch = $this->createQuickSearch();
+            $this->quickSearchResolved = true;
+        }
+
+        return $this->quickSearch;
+    }
+
     /**
      * @param DatagridOptions $options
      * @return DatagridOptions
@@ -97,6 +135,7 @@ final class Datagrid
             'crudDefinition' => null,
             'pagination' => true,
             'domainControlScope' => null,
+            'requestState' => null,
         ]);
 
         $resolver->setRequired('roleConstant');
@@ -106,6 +145,7 @@ final class Datagrid
         $resolver->setAllowedTypes('pagination', 'bool');
         $resolver->setAllowedTypes('roleConstant', 'string');
         $resolver->setAllowedTypes('domainControlScope', [DomainControlScope::class, 'null']);
+        $resolver->setAllowedTypes('requestState', [DatagridRequestState::class, 'null']);
 
         return $resolver->resolve($options);
     }
@@ -233,6 +273,7 @@ final class Datagrid
         }
 
         $this->fields->set($name, new FieldDescriptor($name, $options));
+        $this->quickSearchResolved = false;
 
         return $this;
     }
@@ -259,6 +300,7 @@ final class Datagrid
         }
 
         $this->fields->get($name)->update($options);
+        $this->quickSearchResolved = false;
 
         return $this;
     }
@@ -280,6 +322,7 @@ final class Datagrid
         }
 
         $this->fields->remove($name);
+        $this->quickSearchResolved = false;
 
         return $this;
     }
@@ -369,9 +412,70 @@ final class Datagrid
             $this->fields->getValues(),
             $this->composeCondition(
                 $this->getDomainControlScope()?->createCondition(),
+                $this->createSearchCondition(),
                 ...$this->conditions,
             ),
         );
+    }
+
+    /**
+     * What the administrator searched for, null when nothing.
+     */
+    private function createSearchCondition(): ?ConditionInterface
+    {
+        return $this->getQuickSearch()?->createCondition();
+    }
+
+    /**
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     */
+    private function createQuickSearch(): ?QuickSearch
+    {
+        $labelsByPath = [];
+
+        foreach ($this->fields as $field) {
+            if ($field->isSearchable() === false) {
+                continue;
+            }
+
+            $path = $field->getSelectProperty();
+
+            if ($path === null) {
+                throw new FieldNotSearchableException($field->getName(), 'a virtual field without a property has no path to search in.');
+            }
+
+            $this->assertSearchable($field, $path);
+            $labelsByPath[$path] = $field->getLabel();
+        }
+
+        $quickSearchForm = $this->getRequestState()->quickSearchForm;
+
+        if ($labelsByPath === [] || $quickSearchForm === null) {
+            return null;
+        }
+
+        return new QuickSearch($quickSearchForm, $this->getRequestState()->getSearchTerm(), $labelsByPath);
+    }
+
+    /**
+     * A search over a date or a number fails in the database, so the declaration is refused right away.
+     * An adapter without a schema cannot be asked; the check then happens when the expression is built.
+     */
+    private function assertSearchable(FieldDescriptor $field, string $path): void
+    {
+        if ($this->adapter->getExpressionCapabilities()->supportsOperator(ExpressionOperatorEnum::CONTAINS) === false) {
+            throw new FieldNotSearchableException($field->getName(), sprintf('the adapter "%s" cannot search text.', $this->adapter::class));
+        }
+
+        if ($this->adapter instanceof PathDescribingAdapterInterface === false) {
+            return;
+        }
+
+        try {
+            $this->expressionOperatorApplicability->assertApplicable(ExpressionOperatorEnum::CONTAINS, $this->adapter->describePath($path));
+        } catch (PathNotFoundException | OperatorNotApplicableToPathException $exception) {
+            throw new FieldNotSearchableException($field->getName(), $exception->getMessage(), $exception);
+        }
     }
 
     /**

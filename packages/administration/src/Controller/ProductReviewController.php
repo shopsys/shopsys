@@ -89,6 +89,7 @@ class ProductReviewController extends AbstractCrudController
             ->add('productName', [
                 'label' => t('Product'),
                 'template' => '@ShopsysAdministration/content/productReview/grid/productName.html.twig',
+                'searchable' => true,
             ])
             ->add('productId', [
                 'visible' => false,
@@ -99,14 +100,19 @@ class ProductReviewController extends AbstractCrudController
                 'property' => 'customerUser.id',
             ])
             ->add('catnum', [
+                'label' => t('Catalog number'),
                 'visible' => false,
+                'searchable' => true,
             ])
             ->add('firstName', [
+                'label' => t('First name'),
                 'visible' => false,
+                'searchable' => true,
             ])
             ->add('lastName', [
                 'label' => t('Reviewer'),
                 'template' => '@ShopsysAdministration/content/productReview/grid/reviewer.html.twig',
+                'searchable' => true,
             ])
             ->add('rating', [
                 'label' => t('Rating'),

@@ -9,6 +9,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Composite;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\LogicalOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorApplicability;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -80,7 +81,7 @@ final class DatagridConditionTest extends TestCase
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturn($gridStub);
 
-        return new Datagrid($adapter, $gridFactoryStub, [
+        return new Datagrid($adapter, $gridFactoryStub, new ExpressionOperatorApplicability(), [
             'roleConstant' => 'ROLE_CRUD_TEST',
         ]);
     }
