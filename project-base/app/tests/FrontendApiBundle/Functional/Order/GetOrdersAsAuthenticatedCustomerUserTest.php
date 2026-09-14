@@ -18,7 +18,15 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
     use OrderTestTrait;
 
-    private const EXPECTED_ORDER_IDS = [4, 5, 3, 1, 46, 2, 6];
+    private const array EXPECTED_ORDER_REFERENCE_NAMES = [
+        OrderDataFixture::ORDER_PREFIX . '4',
+        OrderDataFixture::ORDER_PREFIX . '5',
+        OrderDataFixture::ORDER_PREFIX . '3',
+        OrderDataFixture::ORDER_PREFIX . '1',
+        OrderDataFixture::ORDER_WITH_GIFT_VOUCHER_PRODUCTS,
+        OrderDataFixture::ORDER_PREFIX . '2',
+        OrderDataFixture::ORDER_PREFIX . '6',
+    ];
 
     #[DataProvider('getOrdersDataProvider')]
     public function testGetAllCustomerUserOrders(
@@ -41,8 +49,8 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
         foreach ($responseData['edges'] as $orderIndex => $edge) {
             $orderMessage = sprintf(
-                'Hint: check data and sort of order with ID #%d',
-                self::EXPECTED_ORDER_IDS[$orderIndex + $offsetInExpected],
+                'Hint: check data and sort of order with reference "%s"',
+                self::EXPECTED_ORDER_REFERENCE_NAMES[$orderIndex + $offsetInExpected],
             );
 
 
@@ -233,8 +241,8 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     {
         $ordersArray = [];
 
-        foreach (self::EXPECTED_ORDER_IDS as $orderId) {
-            $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . $orderId, Order::class);
+        foreach (self::EXPECTED_ORDER_REFERENCE_NAMES as $orderReferenceName) {
+            $order = $this->getReference($orderReferenceName, Order::class);
 
             $ordersArray[] = [
                 'status' => $order->getStatus()->getName(),

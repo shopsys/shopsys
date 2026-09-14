@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\Model\Product\Product;
 use DateTimeImmutable;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherDataFactory;
@@ -117,6 +118,7 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
         );
     }
 
+    #[Group('multidomain')]
     public function testApplyGiftVoucherFromAnotherDomainReturnsError(): void
     {
         $this->assertApplyCodeValidationError(
