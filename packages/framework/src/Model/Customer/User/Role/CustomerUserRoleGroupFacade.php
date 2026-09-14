@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 
 class CustomerUserRoleGroupFacade
@@ -40,7 +41,7 @@ class CustomerUserRoleGroupFacade
         $customerUserRoleGroup->edit($administratorRoleGroupData);
         $this->entityManager->flush();
 
-        $rolesChanged = ArrayHelper::haveArraysDifferentValues($currentRoles, $newRoles);
+        $rolesChanged = ExtendedClassNameResolver::resolve(ArrayHelper::class)::haveArraysDifferentValues($currentRoles, $newRoles);
 
         if ($rolesChanged) {
             foreach ($this->customerUserRoleGroupRepository->iterateAllCustomerUsersByRoleGroup($customerUserRoleGroup) as $customerUser) {

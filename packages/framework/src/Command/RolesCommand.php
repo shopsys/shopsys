@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use Collator;
 use Exception;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Context\AbstractContext;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
@@ -152,7 +153,7 @@ class RolesCommand extends Command
 
         foreach ($contexts as $context) {
             $contextClass = $context->getIdentifier();
-            $shortClassName = ReflectionHelper::getShortClassName($contextClass);
+            $shortClassName = ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($contextClass);
 
             if ($shortClassName === $contextFilter || $contextClass === $contextFilter) {
                 return [$context];
@@ -161,7 +162,7 @@ class RolesCommand extends Command
 
         $io->error(sprintf('Context "%s" not found.', $contextFilter));
         $io->note('Available contexts: ' . implode(', ', array_map(
-            fn (AbstractContext $context) => ReflectionHelper::getShortClassName($context->getIdentifier()),
+            fn (AbstractContext $context) => ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($context->getIdentifier()),
             $contexts,
         )));
 
@@ -177,7 +178,7 @@ class RolesCommand extends Command
         try {
             $roles = $this->roleRegistry->getRoles($contextClass);
         } catch (Exception $e) {
-            $contextName = ReflectionHelper::getShortClassName($contextClass);
+            $contextName = ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($contextClass);
             $io->warning(sprintf('Could not load roles for context "%s": %s', $contextName, $e->getMessage()));
 
             return null;
@@ -210,7 +211,7 @@ class RolesCommand extends Command
         array $roles,
         ?string $searchFilter,
     ): void {
-        $io->title(sprintf('Roles for context: %s', ReflectionHelper::getShortClassName($context->getIdentifier())));
+        $io->title(sprintf('Roles for context: %s', ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($context->getIdentifier())));
         $io->text(sprintf('Context description: %s', $context->getDescription()));
 
         if ($searchFilter !== null) {
@@ -308,7 +309,7 @@ class RolesCommand extends Command
             return $this->roleSectionsProvidersByContext[$contextClass]->getById($role->getRoleSection());
         }
 
-        return AbstractRoleSectionProvider::getDefaultSection();
+        return ExtendedClassNameResolver::resolve(AbstractRoleSectionProvider::class)::getDefaultSection();
     }
 
     /**
@@ -330,7 +331,7 @@ class RolesCommand extends Command
     {
         $contextClass = $context->getIdentifier();
 
-        $io->title(sprintf('Role hierarchy for context: %s', ReflectionHelper::getShortClassName($contextClass)));
+        $io->title(sprintf('Role hierarchy for context: %s', ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getShortClassName($contextClass)));
         $io->text(sprintf('Context description: %s', $context->getDescription()));
         $io->newLine();
 

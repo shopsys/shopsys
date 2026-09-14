@@ -48,7 +48,15 @@ class ParameterValue
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6, nullable: true)]
-    protected $numericValue;
+    protected $numericValue {
+        set {
+            if ($value !== null) {
+                Assert::numeric($value);
+            }
+
+            $this->numericValue = $value;
+        }
+    }
 
     /**
      * @var string
@@ -126,15 +134,5 @@ class ParameterValue
     public function getNumericValue()
     {
         return $this->numericValue;
-    }
-
-    /**
-     * @param string $numericValue
-     */
-    public function setNumericValue($numericValue): void
-    {
-        Assert::numeric($numericValue);
-
-        $this->numericValue = $numericValue;
     }
 }

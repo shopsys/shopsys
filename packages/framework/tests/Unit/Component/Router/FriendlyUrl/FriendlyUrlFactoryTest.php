@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlIsNotMultidomainException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -90,7 +89,7 @@ class FriendlyUrlFactoryTest extends TestCase
         $domain = $this->createDomain();
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
-        return new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub);
+        return new FriendlyUrlFactory($domain, new EntityNameResolver([]), $domainRouterFactoryStub);
     }
 
     private function getFriendlyUrlFactoryMock(): FriendlyUrlFactory|MockObject
@@ -99,7 +98,7 @@ class FriendlyUrlFactoryTest extends TestCase
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
 
         return $this->getMockBuilder(FriendlyUrlFactory::class)
-            ->setConstructorArgs([$domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryStub])
+            ->setConstructorArgs([$domain, new EntityNameResolver([]), $domainRouterFactoryStub])
             ->onlyMethods(['isRouteMultidomain'])
             ->getMock();
     }

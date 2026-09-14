@@ -110,7 +110,11 @@ class OrderItem
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'decimal', precision: 20, scale: 6)]
-    protected $vatPercent;
+    protected $vatPercent {
+        set {
+            $this->vatPercent = (string)BigDecimal::of($value)->toScale(6, RoundingMode::HALF_UP);
+        }
+    }
 
     /**
      * @var int
@@ -139,7 +143,12 @@ class OrderItem
     #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: Transport::class)]
-    protected $transport;
+    protected $transport {
+        set {
+            $this->checkTypeTransport();
+            $this->transport = $value;
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
@@ -147,7 +156,12 @@ class OrderItem
     #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true)]
     #[ORM\ManyToOne(targetEntity: Payment::class)]
-    protected $payment;
+    protected $payment {
+        set {
+            $this->checkTypePayment();
+            $this->payment = $value;
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
@@ -155,7 +169,17 @@ class OrderItem
     #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: true, name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
-    protected $product;
+    protected $product {
+        set {
+            $this->checkTypeProductOrProductGift();
+
+            if ($value !== null && $value->isMainVariant()) {
+                throw new MainVariantCannotBeOrderedException();
+            }
+
+            $this->product = $value;
+        }
+    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService|null
@@ -189,7 +213,7 @@ class OrderItem
         $this->name = $name;
         $this->unitPriceWithoutVat = $price->getPriceWithoutVat();
         $this->unitPriceWithVat = $price->getPriceWithVat();
-        $this->vatPercent = (string)BigDecimal::of($vatPercent)->toScale(6, RoundingMode::HALF_UP);
+        $this->vatPercent = $vatPercent;
         $this->quantity = $quantity;
         $this->type = $type;
         $this->unitName = $unitName;
@@ -333,7 +357,7 @@ class OrderItem
             $this->setTotalPrice(new Price($orderItemData->totalPriceWithoutVat, $orderItemData->totalPriceWithVat));
         }
 
-        $this->vatPercent = (string)BigDecimal::of($orderItemData->vatPercent)->toScale(6, RoundingMode::HALF_UP);
+        $this->vatPercent = $orderItemData->vatPercent;
         $this->quantity = $orderItemData->quantity;
         $this->unitName = $orderItemData->unitName;
         $this->catnum = $orderItemData->catnum;
@@ -352,7 +376,6 @@ class OrderItem
      */
     public function setTransport($transport): void
     {
-        $this->checkTypeTransport();
         $this->transport = $transport;
     }
 
@@ -371,7 +394,6 @@ class OrderItem
      */
     public function setPayment($payment): void
     {
-        $this->checkTypePayment();
         $this->payment = $payment;
     }
 
@@ -439,11 +461,6 @@ class OrderItem
     public function setProduct($product): void
     {
         $this->checkTypeProduct();
-
-        if ($product !== null && $product->isMainVariant()) {
-            throw new MainVariantCannotBeOrderedException();
-        }
-
         $this->product = $product;
     }
 
@@ -453,11 +470,6 @@ class OrderItem
     public function setProductGift($productGift): void
     {
         $this->checkTypeProductGift();
-
-        if ($productGift !== null && $productGift->isMainVariant()) {
-            throw new MainVariantCannotBeOrderedException();
-        }
-
         $this->product = $productGift;
     }
 
@@ -536,6 +548,13 @@ class OrderItem
     protected function checkTypeAdditionalService(): void
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_ADDITIONAL_SERVICE);
+    }
+
+    protected function checkTypeProductOrProductGift(): void
+    {
+        if (!$this->isTypeProduct() && !$this->isTypeProductGift()) {
+            throw new WrongItemTypeException(OrderItemTypeEnum::TYPE_PRODUCT, $this->type);
+        }
     }
 
     protected function checkTypeDiscount(): void

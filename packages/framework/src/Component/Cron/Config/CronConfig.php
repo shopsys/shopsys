@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Cron\Config;
 
 use DateTimeInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\CronModuleConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\SentryMonitoringNotEnabledException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
@@ -101,7 +102,7 @@ class CronConfig
     {
         $className = basename(str_replace('\\', '/', $serviceId));
         $className = $this->transformStringHelper->removeStringFromEnd($className, 'CronModule');
-        $classSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($className);
+        $classSlug = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($className);
 
         $suffix = '-' . substr(md5($serviceId), 0, 6);
 

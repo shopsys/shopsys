@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\McpBundle\EventSubscriber;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
 use Shopsys\McpBundle\Component\Security\McpRequestMatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -40,18 +41,18 @@ class McpAvailabilitySubscriber implements EventSubscriberInterface
         if (
             !$event->isMainRequest()
             || $this->mcpAvailabilityChecker->isAvailable()
-            || !McpRequestMatcher::isMcpRequest($event->getRequest())
+            || !ExtendedClassNameResolver::resolve(McpRequestMatcher::class)::isMcpRequest($event->getRequest())
         ) {
             return;
         }
 
-        if (McpRequestMatcher::isMcpOauthRequest($event->getRequest())) {
+        if (ExtendedClassNameResolver::resolve(McpRequestMatcher::class)::isMcpOauthRequest($event->getRequest())) {
             $event->setResponse($this->createDisabledOauthJsonResponse());
 
             return;
         }
 
-        if (McpRequestMatcher::isMcpAdminRequest($event->getRequest())) {
+        if (ExtendedClassNameResolver::resolve(McpRequestMatcher::class)::isMcpAdminRequest($event->getRequest())) {
             throw new NotFoundHttpException(static::DISABLED_RESPONSE_MESSAGE);
         }
 

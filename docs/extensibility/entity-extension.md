@@ -59,6 +59,11 @@ class Product extends BaseProduct
 
 The `catnum` column will be removed from the parent entity and Doctrine will no longer map it.
 
+### How can I change a property hook of the parent entity?
+
+A redeclared property keeps the parent's `set` hook.
+Declare your own hook on it to replace the behavior, or call `parent::$propertyName::set($value)` from your hook to extend it, see [Property hooks](../model/entities.md#property-hooks).
+
 ## Limitations
 
 ### OrderItem

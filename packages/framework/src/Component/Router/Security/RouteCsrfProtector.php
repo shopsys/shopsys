@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\Security;
 use Override;
 use ReflectionMethod;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -100,7 +101,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
             function () use ($controllerName, $actionMethod) {
                 $method = new ReflectionMethod($controllerName, $actionMethod);
 
-                return ReflectionHelper::getMethodAttribute($method, CsrfProtection::class) !== null;
+                return ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getMethodAttribute($method, CsrfProtection::class) !== null;
             },
             $controllerName,
             $actionMethod,

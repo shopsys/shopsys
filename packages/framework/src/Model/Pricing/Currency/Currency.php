@@ -70,7 +70,15 @@ class Currency
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 15)]
-    protected $roundingType;
+    protected $roundingType {
+        set {
+            if (in_array($value, $this->getRoundingTypes(), true) !== true) {
+                throw new InvalidRoundingTypeException($value);
+            }
+
+            $this->roundingType = $value;
+        }
+    }
 
     /**
      * @var int
@@ -95,7 +103,7 @@ class Currency
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;
         $this->minFractionDigits = $currencyData->minFractionDigits;
-        $this->setRoundingType($currencyData->roundingType);
+        $this->roundingType = $currencyData->roundingType;
         $this->roundingPlacesPriceWithoutVat = $currencyData->roundingPlacesPriceWithoutVat;
     }
 
@@ -153,18 +161,6 @@ class Currency
     public function getRoundingType()
     {
         return $this->roundingType;
-    }
-
-    /**
-     * @param string $roundingType
-     */
-    protected function setRoundingType($roundingType): void
-    {
-        if (in_array($roundingType, $this->getRoundingTypes(), true) !== true) {
-            throw new InvalidRoundingTypeException($roundingType);
-        }
-
-        $this->roundingType = $roundingType;
     }
 
     /**

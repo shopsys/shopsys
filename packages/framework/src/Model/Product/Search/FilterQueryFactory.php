@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
@@ -72,7 +73,7 @@ class FilterQueryFactory
     public function getIndexName(): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
-            ProductIndex::getName(),
+            ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(),
             $this->domain->getId(),
         )->getIndexAlias();
     }
@@ -254,7 +255,7 @@ class FilterQueryFactory
      */
     public function createOnlyExistingProductIdsFilterQuery(array $productIds, int $domainId): FilterQuery
     {
-        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId);
 
         return $this->create($indexDefinition->getIndexAlias())
             ->filterByProductIds($productIds)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
@@ -89,15 +90,15 @@ class CustomerUserUpdateDataFactory
 
         $customerUserUpdateData = $this->createFromCustomerUser($customerUser);
 
-        $customerUserUpdateData->customerUserData->firstName = Utils::ifNull(
+        $customerUserUpdateData->customerUserData->firstName = ExtendedClassNameResolver::resolve(Utils::class)::ifNull(
             $customerUser->getFirstName(),
             $order->getFirstName(),
         );
-        $customerUserUpdateData->customerUserData->lastName = Utils::ifNull(
+        $customerUserUpdateData->customerUserData->lastName = ExtendedClassNameResolver::resolve(Utils::class)::ifNull(
             $customerUser->getLastName(),
             $order->getLastName(),
         );
-        $customerUserUpdateData->customerUserData->telephone = Utils::ifNull(
+        $customerUserUpdateData->customerUserData->telephone = ExtendedClassNameResolver::resolve(Utils::class)::ifNull(
             $customerUser->getTelephoneData(),
             $order->getTelephoneData(),
         );

@@ -66,7 +66,11 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 255)]
-    protected $email;
+    protected $email {
+        set {
+            $this->email = mb_strtolower($value);
+        }
+    }
 
     /**
      * @var string|null
@@ -158,7 +162,11 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain>
@@ -186,7 +194,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->domainId = $customerUserData->domainId;
         $this->setEmail($customerUserData->email);
         $this->customer = $customerUserData->customer;
-        $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $customerUserData->uuid;
         $this->refreshTokenChain = new ArrayCollection();
 
         $this->createdAt = $customerUserData->createdAt;
@@ -214,7 +222,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     public function setEmail($email): void
     {
-        $this->email = mb_strtolower($email);
+        $this->email = $email;
     }
 
     public function setPasswordHash(string $passwordHash): void

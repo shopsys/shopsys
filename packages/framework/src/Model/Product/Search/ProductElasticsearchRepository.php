@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Doctrine\ORM\QueryBuilder;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
@@ -60,7 +61,7 @@ class ProductElasticsearchRepository
             return [];
         }
 
-        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId);
         $parameters = $this->createQuery($indexDefinition->getIndexAlias(), $searchText);
         $result = $this->client->search($parameters);
 

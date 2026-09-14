@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
@@ -44,7 +45,7 @@ class ImageEntityConfig
 
     public function isMultiple(?string $type): bool
     {
-        $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);
+        $key = ExtendedClassNameResolver::resolve(Utils::class)::ifNull($type, self::WITHOUT_NAME_KEY);
 
         if (array_key_exists($key, $this->multipleByType)) {
             return $this->multipleByType[$key];

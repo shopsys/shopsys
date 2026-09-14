@@ -38,7 +38,11 @@ class SliderItem extends BaseSliderItem
 
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected string $uuid;
+    protected string $uuid {
+        set(?string $value) {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
@@ -49,7 +53,7 @@ class SliderItem extends BaseSliderItem
 
         $this->gtmId = $sliderItemData->gtmId;
         $this->gtmCreative = $sliderItemData->gtmCreative;
-        $this->uuid = $sliderItemData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $sliderItemData->uuid;
     }
 
     /**

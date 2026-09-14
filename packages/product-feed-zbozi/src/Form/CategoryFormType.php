@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\ZboziBundle\Form;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryDownloader;
 use Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryFacade;
@@ -32,7 +33,7 @@ final class CategoryFormType extends AbstractType
             }
 
             $zboziCategories = $this->zboziCategoryFacade->getAllIndexedByZboziId($locale);
-            $builder->add(CategoryCrudExtension::createFormFieldKeyByLocale($locale), ChoiceType::class, [
+            $builder->add(ExtendedClassNameResolver::resolve(CategoryCrudExtension::class)::createFormFieldKeyByLocale($locale), ChoiceType::class, [
                 'label' => $this->getLabelForLocale($locale),
                 'translation_domain' => false,
                 'choices' => $zboziCategories,

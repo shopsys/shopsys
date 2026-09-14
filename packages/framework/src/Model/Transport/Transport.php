@@ -96,7 +96,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -157,7 +161,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->prices = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->payments = new ArrayCollection();
-        $this->uuid = $transportData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $transportData->uuid;
         $this->setData($transportData);
     }
 

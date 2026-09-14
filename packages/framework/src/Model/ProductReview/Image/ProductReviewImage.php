@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductReview\Image;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
@@ -50,7 +51,7 @@ class ProductReviewImage
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $rejectionReason {
-        set => TransformStringHelper::emptyToNull($value);
+        set => ExtendedClassNameResolver::resolve(TransformStringHelper::class)::emptyToNull($value);
     }
 
     public function __construct(

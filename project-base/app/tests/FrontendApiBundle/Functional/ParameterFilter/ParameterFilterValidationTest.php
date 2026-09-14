@@ -24,7 +24,7 @@ class ParameterFilterValidationTest extends GraphQlTestCase
         $parameterSlider = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->createFriendlyUrlSlug($translatedName);
 
         $mutation = 'query {
   category(urlSlug: "' . $slug . '") {
@@ -52,7 +52,7 @@ class ParameterFilterValidationTest extends GraphQlTestCase
         $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class);
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->createFriendlyUrlSlug($translatedName);
 
         $mutation = 'query {
   category(urlSlug: "' . $slug . '") {

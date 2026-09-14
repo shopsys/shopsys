@@ -9,7 +9,6 @@ use Override;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
-use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
 use Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory;
 use Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory;
 use Shopsys\FrameworkBundle\Component\ClassExtension\StaleAnnotationsRemover;
@@ -49,9 +48,12 @@ class ExtendedClassesAnnotationsCommand extends Command
 - Removes stale @property and @method annotations from project classes when the referenced method or property no longer exists in the parent class.');
     }
 
+    /**
+     * @param array<class-string, class-string> $classExtensionMap
+     */
     public function __construct(
         protected readonly string $projectRootDirectory,
-        protected readonly ClassExtensionRegistry $classExtensionRegistry,
+        protected readonly array $classExtensionMap,
         protected readonly PropertyAnnotationsFactory $propertyAnnotationsFactory,
         protected readonly MethodAnnotationsFactory $methodAnnotationsAdder,
         protected readonly AnnotationsReplacer $annotationsReplacer,
@@ -185,7 +187,7 @@ class ExtendedClassesAnnotationsCommand extends Command
      */
     protected function addPropertyAndMethodAnnotationsToProjectClasses(bool $isDryRun): array
     {
-        $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
+        $classExtensionMap = $this->classExtensionMap;
         $filesForAddingPropertyOrMethodAnnotations = [];
 
         foreach ($classExtensionMap as $shopsysClass => $projectClass) {
@@ -228,7 +230,7 @@ class ExtendedClassesAnnotationsCommand extends Command
      */
     protected function removeStalePropertyAndMethodAnnotationsFromProjectClasses(bool $isDryRun): array
     {
-        $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
+        $classExtensionMap = $this->classExtensionMap;
         $filesWithRemovedAnnotations = [];
 
         foreach ($classExtensionMap as $shopsysClass => $projectClass) {

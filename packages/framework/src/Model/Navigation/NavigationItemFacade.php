@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -101,7 +102,7 @@ class NavigationItemFacade
         }
 
         $domainConfig = $this->domain->getDomainConfigById($navigationItemData->domainId);
-        $navigationItemData->url = UrlNormalizer::normalizeUrl($navigationItemData->url, $domainConfig);
+        $navigationItemData->url = ExtendedClassNameResolver::resolve(UrlNormalizer::class)::normalizeUrl($navigationItemData->url, $domainConfig);
     }
 
     public function delete(NavigationItem $navigationItem): void

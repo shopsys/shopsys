@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Component\CustomerUploadedFile;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
@@ -86,7 +87,7 @@ class CustomerUploadedFilesBatchLoader
 
         foreach ($customerUploadedFileBatchLoadData as $fileBatchLoadData) {
             $entityName = $fileBatchLoadData->getEntityName();
-            $type = Utils::ifNull($fileBatchLoadData->getType(), UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
+            $type = ExtendedClassNameResolver::resolve(Utils::class)::ifNull($fileBatchLoadData->getType(), UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
             $result[$entityName][$type][] = $fileBatchLoadData;
         }
 

@@ -714,7 +714,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->createFriendlyUrlSlug($translatedName);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
             'urlSlug' => $slug,
@@ -738,7 +738,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->createFriendlyUrlSlug($translatedName);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
             'urlSlug' => $slug,

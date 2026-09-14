@@ -8,6 +8,7 @@ use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class QueryPaginator
@@ -107,7 +108,7 @@ class QueryPaginator
             $parametersAssoc[$parameter->getName()] = $parameter->getValue();
         }
 
-        $flattenedParameters = SqlParametersFlattener::flattenArrayParameters(
+        $flattenedParameters = ExtendedClassNameResolver::resolve(SqlParametersFlattener::class)::flattenArrayParameters(
             $query->getDQL(),
             $parametersAssoc,
         );

@@ -104,7 +104,11 @@ class Inquiry implements DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $createdAt;
+    protected $createdAt {
+        set {
+            $this->createdAt = $value ?? new DatePoint();
+        }
+    }
 
     /**
      * @var string
@@ -138,7 +142,7 @@ class Inquiry implements DomainSeparatedEntityInterface
 
     public function __construct(InquiryData $inquiryData)
     {
-        $this->createdAt = $inquiryData->createdAt ?? new DatePoint();
+        $this->createdAt = $inquiryData->createdAt;
         $this->domainId = $inquiryData->domainId;
 
         $this->setData($inquiryData);

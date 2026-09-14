@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
@@ -44,7 +45,11 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var int
@@ -166,7 +171,11 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'datetime_immutable')]
-    protected $createdAt;
+    protected $createdAt {
+        set {
+            $this->createdAt = $value ?? new DatePoint();
+        }
+    }
 
     /**
      * @var string|null
@@ -192,8 +201,8 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
     public function __construct(ProductReviewData $productReviewData)
     {
         $this->images = new ArrayCollection();
-        $this->uuid = $productReviewData->uuid ?? Uuid::uuid4()->toString();
-        $this->createdAt = $productReviewData->createdAt ?? new DatePoint();
+        $this->uuid = $productReviewData->uuid;
+        $this->createdAt = $productReviewData->createdAt;
         $this->domainId = $productReviewData->domainId;
         $this->product = $productReviewData->product;
         $this->catnum = $productReviewData->catnum;
@@ -222,7 +231,7 @@ class ProductReview implements Presentable, DomainSeparatedEntityInterface
 
     protected function setResponse(ProductReviewData $productReviewData): void
     {
-        $responseText = TransformStringHelper::emptyToNull($productReviewData->responseText);
+        $responseText = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::emptyToNull($productReviewData->responseText);
 
         if ($responseText === null) {
             $this->responseText = null;

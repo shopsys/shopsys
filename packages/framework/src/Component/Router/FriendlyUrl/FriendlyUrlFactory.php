@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -16,7 +17,6 @@ class FriendlyUrlFactory
     public function __construct(
         protected readonly Domain $domain,
         protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly TransformStringHelper $transformStringHelper,
         protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
@@ -44,7 +44,7 @@ class FriendlyUrlFactory
         }
 
         $nameForUrl = $entityName . ($indexPostfix === null ? '' : '-' . $indexPostfix);
-        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($nameForUrl);
+        $slug = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($nameForUrl);
 
         return $this->create($routeName, $entityId, $domainId, $slug);
     }

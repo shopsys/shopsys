@@ -59,7 +59,7 @@
         </exec>
     </target>
 
-    <target name="annotations-check" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'annotations-fix' phing target">
+    <target name="annotations-check" description="Checks whether annotations of extended classes in the project match the actual types according to the class extension map built by RegisterExtendedClassNamesCompilerPass. Reported problems can be fixed using 'annotations-fix' phing target">
         <if>
             <istrue value="${check-and-fix-annotations}"/>
             <then>

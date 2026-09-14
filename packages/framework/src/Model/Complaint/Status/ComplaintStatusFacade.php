@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
@@ -17,7 +18,6 @@ class ComplaintStatusFacade
         protected readonly ComplaintStatusRepository $complaintStatusRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly ComplaintMail $complaintMail,
-        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -121,7 +121,7 @@ class ComplaintStatusFacade
     {
         foreach ($complaintStatusData->name as $name) {
             if ($name !== null && trim($name) !== '') {
-                $code = $this->transformStringHelper->stringToFriendlyUrlSlug($name);
+                $code = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($name);
 
                 if ($code !== '') {
                     return $code;

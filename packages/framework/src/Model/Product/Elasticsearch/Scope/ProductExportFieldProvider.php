@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
@@ -84,7 +85,7 @@ class ProductExportFieldProvider
      */
     public function getAll(): array
     {
-        $exportFields = ReflectionHelper::getAllPublicClassConstants(static::class);
+        $exportFields = ExtendedClassNameResolver::resolve(ReflectionHelper::class)::getAllPublicClassConstants(static::class);
 
         foreach ($this->productExportDataProviders as $productExportDataProvider) {
             $exportFields = [...$exportFields, ...$productExportDataProvider->getExportFields()];

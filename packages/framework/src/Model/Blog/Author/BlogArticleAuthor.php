@@ -40,7 +40,11 @@ class BlogArticleAuthor extends AbstractTranslatableEntity implements Presentabl
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'guid', unique: true)]
-    protected $uuid;
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var string
@@ -59,7 +63,7 @@ class BlogArticleAuthor extends AbstractTranslatableEntity implements Presentabl
     public function __construct(BlogArticleAuthorData $blogArticleAuthorData)
     {
         $this->translations = new ArrayCollection();
-        $this->uuid = $blogArticleAuthorData->uuid ?: Uuid::uuid4()->toString();
+        $this->uuid = $blogArticleAuthorData->uuid;
 
         $this->setData($blogArticleAuthorData);
     }

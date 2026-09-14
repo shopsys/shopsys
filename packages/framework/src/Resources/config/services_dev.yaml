@@ -6,16 +6,12 @@ services:
 
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         arguments:
-            - '%kernel.project_dir%'
+            $projectRootDirectory: '%kernel.project_dir%'
+            $classExtensionMap: '%shopsys.class_extension.extended_class_names%'
 
     Shopsys\FrameworkBundle\Command\ReplaceObsoleteIconsCommand:
         arguments:
             - '%kernel.project_dir%'
-
-    Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
-        arguments:
-            $entityExtensionMap: '%shopsys.entity_extension.map%'
-            $packagesRegistry: '%shopsys.packages.registry%'
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector:
         tags:

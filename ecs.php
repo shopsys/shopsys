@@ -7,6 +7,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff as PhpCsValidVariableNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
+use Shopsys\CodingStandards\CsFixer\ExtendedClassNameResolverFixer;
 use Shopsys\CodingStandards\CsFixer\FinalCompilerPassFixer;
 use Shopsys\CodingStandards\CsFixer\FinalFormTypeFixer;
 use Shopsys\CodingStandards\CsFixer\FinalMigrationFixer;
@@ -101,6 +102,10 @@ return ECSConfig::configure()
             __DIR__ . '/packages/maker/templates/*',
             __DIR__ . '/packages/mcp/tests/Unit/Phpstan/data/InvalidMcpEntityExposureEntities.php',
             __DIR__ . '/packages/mcp/tests/Unit/Phpstan/data/ValidMcpEntityExposureEntity.php',
+            ExtendedClassNameResolverFixer::class => [
+                __DIR__ . '/packages/*/tests/*',
+                __DIR__ . '/utils/*',
+            ],
             AssignmentInConditionSniff::class => [
                 __DIR__ . '/project-base/app/src/Kernel.php',
             ],

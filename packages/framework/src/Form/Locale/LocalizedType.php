@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Locale;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Form\FormTypeLayout;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -29,8 +30,8 @@ final class LocalizedType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        Utils::setArrayDefaultValue($options['entry_options'], 'required', $options['required']);
-        Utils::setArrayDefaultValue($options['entry_options'], 'constraints', []);
+        ExtendedClassNameResolver::resolve(Utils::class)::setArrayDefaultValue($options['entry_options'], 'required', $options['required']);
+        ExtendedClassNameResolver::resolve(Utils::class)::setArrayDefaultValue($options['entry_options'], 'constraints', []);
 
         $defaultLocaleOptions = $options['entry_options'];
         $otherLocaleOptions = $options['entry_options'];
