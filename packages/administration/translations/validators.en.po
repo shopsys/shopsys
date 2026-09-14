@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Fill in both bounds of the range."
+msgstr ""
+
 msgid "Payment transaction is not refundable."
 msgstr ""
 
