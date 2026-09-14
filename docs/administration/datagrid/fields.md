@@ -12,6 +12,11 @@ In case you are using `OrmAdapter`, you can use dot notation to access nested pr
 - `$datagrid->add('currency.code')` - This will join the `currency` relation and fetch the `code` property of the `Currency` entity.
 - `$datagrid->add('status.name')` - This will join the `status` relation and look for the `name` property of the `Status` entity. In this case `Status` is a translatable entity and the `name` property is a translatable field. The datagrid will automatically fetch the correct translation based on the current locale.
 - `$datagrid->add('currency')` - This will fetch the `Currency` entity. In this case you need to define `template`, `transform` or `visible` to `false` option to tell datagrid how to display this object.
+- `$datagrid->add('translations.name')` - This will fetch the translated `name` property explicitly. A translated field is found even without naming the `translations` relation, so this is only needed when the entity itself has a field of the same name — then the field of the entity wins and the translated one has to be addressed this way.
+
+!!! note "A field of a to-many relation cannot be fetched"
+
+    Joining a to-many relation would list an entity once per related row, which would break paging and the total count. Fetch such values with a `virtual` field and a `transform` instead. The only exception is `translations`, which is joined with the current locale and therefore leads to a single row.
 
 ### Options
 
