@@ -18,8 +18,9 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
  * of its own medium while building the data source, so an expression never comes from a foreign medium and
  * the medium is never prepared (an association joined, a value registered) for nothing.
  *
- * Optional abilities of a medium are declared by the extending interfaces (`EntityClassAwareAdapterInterface`),
- * so a caller asks for them by `instanceof` and degrades gracefully when the medium lacks them.
+ * Optional abilities of a medium are declared by the extending interfaces (`EntityClassAwareAdapterInterface`,
+ * `PathDescribingAdapterInterface`), so a caller asks for them by `instanceof` and degrades gracefully
+ * when the medium lacks them.
  */
 interface AdapterInterface
 {
