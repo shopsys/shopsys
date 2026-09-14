@@ -24,6 +24,9 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
  * It is the single place knowing how a path is read — the shadowing of a translated field by an own one, the
  * explicit `translations` segment, the identifier of an association available without a join. Describing a
  * path and building a query for it both consume the same walk, so they can never disagree.
+ *
+ * It is a stateless service — the ORM adapter describes a path and its query resolves the path by the very same
+ * instance.
  */
 final class PathWalker implements PathWalkerInterface
 {

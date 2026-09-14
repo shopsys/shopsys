@@ -14,7 +14,11 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowing;
+use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -38,6 +42,8 @@ final class Datagrid
     private ArrayCollection $fields;
 
     private DatagridRowActions $actions;
+
+    private ?DatagridNarrowing $narrowing = null;
 
     private string $identificationName = 'id';
 
@@ -68,6 +74,8 @@ final class Datagrid
         private readonly AdapterInterface $adapter,
         private readonly GridFactory $gridFactory,
         private readonly AccessCheckerInterface $accessChecker,
+        private readonly DatagridNarrowingResolver $narrowingResolver,
+        private readonly ?DomainControlScope $domainControlScope,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
@@ -75,6 +83,26 @@ final class Datagrid
         $this->options = $this->resolveOptions($options);
 
         $this->configureDefaultCrudActions();
+    }
+
+    /**
+     * The domains the datagrid works with, null when it has no domain control. Known already while the datagrid
+     * is configured, so it can decide about the fields.
+     */
+    public function getDomainControlScope(): ?DomainControlScope
+    {
+        return $this->domainControlScope;
+    }
+
+    /**
+     * What narrows the records on behalf of the administrator — the domain control. Resolved on the first call
+     * (`createView()` makes one).
+     */
+    public function getNarrowing(): DatagridNarrowing
+    {
+        return $this->narrowing ??= $this->narrowingResolver->resolve(
+            $this->domainControlScope,
+        );
     }
 
     /**
@@ -290,12 +318,15 @@ final class Datagrid
 
     public function createView(): GridView
     {
+        $this->addDomainFieldIfWorthDisplaying();
+
         // fields the administrator is not allowed to see are neither fetched nor displayed
         $accessibleFields = array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
 
         $datasource = $this->adapter->getDatasource(new DatasourceRequest(
             $this->identificationName,
             $accessibleFields,
+            $this->getNarrowing()->condition,
         ));
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
@@ -368,6 +399,37 @@ final class Datagrid
             $field->getRole() ?? $this->options['roleConstant'],
             $field->getPermission() ?? Permission::VIEW,
         );
+    }
+
+    /**
+     * Displays the domain of every record when the domain control works with several domains.
+     *
+     * Displaying the domain and limiting the records to the domains of the control are independent —
+     * the limit is a part of every request the datagrid sends to its adapter, so hiding or removing the
+     * field never widens the listed records. Adding the field manually takes precedence. A record related
+     * to several domains (the path leads through a collection) has no single domain to display.
+     */
+    private function addDomainFieldIfWorthDisplaying(): void
+    {
+        $domainControlScope = $this->getDomainControlScope();
+
+        if ($domainControlScope === null || $domainControlScope->isDomainWorthDisplaying() === false) {
+            return;
+        }
+
+        if ($this->fields->containsKey($domainControlScope->domainIdPath) || $this->leadsThroughCollection($domainControlScope->domainIdPath)) {
+            return;
+        }
+
+        $this->add($domainControlScope->domainIdPath, [
+            'label' => t('Domain'),
+            'template' => '@ShopsysAdministration/datagrid/cell/domain_icon.html.twig',
+        ]);
+    }
+
+    private function leadsThroughCollection(string $path): bool
+    {
+        return $this->adapter instanceof PathDescribingAdapterInterface && $this->adapter->describePath($path)->isToMany();
     }
 
     private function configureDefaultCrudActions(): void

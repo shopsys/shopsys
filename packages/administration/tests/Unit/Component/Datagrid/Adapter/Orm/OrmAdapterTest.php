@@ -30,6 +30,8 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ExpressionFromFore
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Doctrine\NormalizedFunction;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
@@ -100,6 +102,18 @@ final class OrmAdapterTest extends TestCase
         $this->assertSame(1, substr_count($dql, 'LEFT JOIN'));
         $this->assertStringContainsString('currency_join.code AS currency__code', $dql);
         $this->assertStringContainsString('currency_join.code = :dgexpr_0', $dql);
+    }
+
+    public function testPathIsDescribedWithoutTouchingThePrototypeQuery(): void
+    {
+        $ormAdapter = $this->createOrmAdapter();
+
+        $pathDescription = $ormAdapter->describePath('currency.code');
+
+        $this->assertSame(PathCardinalityEnum::TO_ONE, $pathDescription->cardinality);
+        $this->assertSame(PathValueTypeEnum::STRING, $pathDescription->valueType);
+        // describing must not join the association into every query built afterwards
+        $this->assertStringNotContainsString('JOIN', $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', []))));
     }
 
     /**
