@@ -1,17 +1,21 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OgTypeEnum } from 'types/seo';
+import { MetaRobotsContent, OgTypeEnum } from 'types/seo';
 import { logMessage } from 'utils/errors/logMessage';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
+import { getDocumentTitle } from 'utils/seo/getDocumentTitle';
 import { useSeo } from 'utils/seo/useSeo';
 
 type SeoMetaProps = {
+    seo?: TypeSeoAttributesFragment | null;
     defaultTitle?: string | null;
     defaultDescription?: string | null;
+    defaultMetaRobots?: MetaRobotsContent;
     canonicalQueryParams?: CanonicalQueryParameters;
     defaultHreflangLinks?: TypeHreflangLink[];
     ogType?: OgTypeEnum | undefined;
@@ -19,8 +23,10 @@ type SeoMetaProps = {
 };
 
 export const SeoMeta: FC<SeoMetaProps> = ({
+    seo,
     defaultTitle,
     defaultDescription,
+    defaultMetaRobots,
     canonicalQueryParams,
     defaultHreflangLinks,
     ogType = OgTypeEnum.Website,
@@ -37,11 +43,15 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         ogTitle: ogTitleFromProps,
         ogDescription: ogDescriptionFromProps,
         ogImageUrl: ogImageUrlFromProps,
+        metaRobots,
+        isNoindex,
         canonicalUrl,
         hreflangLinks: hreflangLinksSeoPage,
     } = useSeo({
+        seo,
         defaultTitle,
         defaultDescription,
+        defaultMetaRobots,
         canonicalQueryParams,
     });
 
@@ -52,7 +62,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
     const hreflangLinks = hreflangLinksSeoPage || defaultHreflangLinks;
 
     useEffect(() => {
-        if (!title && !areMissingRequiredTagsReported) {
+        if (!title && !titleSuffix && !areMissingRequiredTagsReported) {
             logMessage('Missing required tags', [
                 {
                     key: 'tags',
@@ -61,7 +71,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
             ]);
             setAreMissingRequiredTagsReported(true);
         }
-    }, [title, areMissingRequiredTagsReported]);
+    }, [title, titleSuffix, areMissingRequiredTagsReported]);
 
     const ogTitle = ogTitleFromProps ?? title;
     const ogDescription = ogDescriptionFromProps ?? description;
@@ -69,17 +79,22 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
     return (
         <Head>
-            <title>{`${title} ${titleSuffix}`}</title>
+            <title>{getDocumentTitle(title, titleSuffix)}</title>
 
             {description && <meta content={description} name="description" />}
+            {metaRobots && <meta content={metaRobots} name="robots" />}
 
-            <link href={canonicalUrl || currentUrlWithDomain} rel="canonical" />
+            {!isNoindex && (
+                <>
+                    <link href={canonicalUrl || currentUrlWithDomain} rel="canonical" />
 
-            {hreflangLinks?.map(({ hreflang, href }) => (
-                <link key={hreflang} href={href} hrefLang={hreflang} rel="alternate" />
-            ))}
-            {hreflangLinks && hreflangLinks.length > 0 && (
-                <link href={canonicalUrl || currentUrlWithDomain} hrefLang="x-default" rel="alternate" />
+                    {hreflangLinks?.map(({ hreflang, href }) => (
+                        <link key={hreflang} href={href} hrefLang={hreflang} rel="alternate" />
+                    ))}
+                    {hreflangLinks && hreflangLinks.length > 0 && (
+                        <link href={canonicalUrl || currentUrlWithDomain} hrefLang="x-default" rel="alternate" />
+                    )}
+                </>
             )}
 
             <meta content={ogType} property="og:type" />

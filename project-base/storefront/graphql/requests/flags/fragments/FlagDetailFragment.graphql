@@ -6,6 +6,9 @@ fragment FlagDetailFragment on Flag {
         ...BreadcrumbFragment
     }
     name
+    seo {
+        ...SeoAttributesFragment
+    }
     products(orderingMode: $orderingMode, filter: $filter) {
         ...ListedProductConnectionPreviewFragment
     }

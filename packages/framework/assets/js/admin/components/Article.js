@@ -2,24 +2,13 @@ import Register from '../../common/utils/Register';
 
 export default class Article {
     constructor($container) {
-        this.$domainSelectInput = $container.find('#article_form_articleData_domainId');
-        this.$metaDescriptionInput = $container.find('#article_form_seo_seoMetaDescription');
         this.$typeInputs = $container.find('input[name="article_form[articleData][type]"]');
-
-        this.$domainSelectInput.on('change', event => {
-            this.changeMetaDescriptionPlaceholderByDomainId($(event.target).val());
-        });
 
         this.$typeInputs.on('change', () => {
             this.initTypeVisibility($container);
         });
 
         this.initTypeVisibility($container);
-    }
-
-    changeMetaDescriptionPlaceholderByDomainId(domainId) {
-        const metaDescriptionPlaceHolderText = this.$metaDescriptionInput.data(`placeholderDomain${domainId}`);
-        this.$metaDescriptionInput.attr('placeholder', metaDescriptionPlaceHolderText);
     }
 
     initTypeVisibility($container) {

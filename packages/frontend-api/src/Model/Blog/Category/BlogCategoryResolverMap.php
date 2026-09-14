@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElastics
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResultFactory;
 
 class BlogCategoryResolverMap extends ResolverMap
 {
@@ -23,6 +24,7 @@ class BlogCategoryResolverMap extends ResolverMap
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
+        protected readonly SeoAttributesResultFactory $seoAttributesResultFactory,
     ) {
     }
 
@@ -31,14 +33,11 @@ class BlogCategoryResolverMap extends ResolverMap
     {
         return [
             'BlogCategory' => [
-                'seoH1' => function (BlogCategory $blogCategory) {
-                    return $blogCategory->getSeoH1($this->domain->getId());
-                },
-                'seoTitle' => function (BlogCategory $blogCategory) {
-                    return $blogCategory->getSeoTitle($this->domain->getId());
-                },
-                'seoMetaDescription' => function (BlogCategory $blogCategory) {
-                    return $blogCategory->getSeoMetaDescription($this->domain->getId());
+                'seo' => function (BlogCategory $blogCategory) {
+                    return $this->seoAttributesResultFactory->createFromSeoAttributes(
+                        $blogCategory->getSeoAttributes($this->domain->getId()),
+                        $blogCategory->getDescription($this->domain->getLocale()),
+                    );
                 },
                 'parent' => function (BlogCategory $blogCategory) {
                     return $blogCategory->getParent();

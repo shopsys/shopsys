@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterfa
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -77,6 +78,13 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
     #[AsMcpColumn]
     #[ORM\Column(type: 'text', nullable: true)]
     protected $description;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    #[AsMcpColumn]
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     /**
      * @var string|null
@@ -180,6 +188,7 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
         $this->openingHours = new ArrayCollection();
+        $this->seo = new SeoAttributes();
         $this->domainId = $storeData->domainId;
         $this->setData($storeData);
     }
@@ -214,6 +223,7 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
         $this->email = $storeData->email;
         $this->phone = $storeData->phone;
         $this->directions = $storeData->directions;
+        $this->seo->edit($storeData->seo);
     }
 
     /**
@@ -259,6 +269,14 @@ class Store implements OrderableEntityInterface, DomainSeparatedEntityInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes()
+    {
+        return $this->seo;
     }
 
     /**

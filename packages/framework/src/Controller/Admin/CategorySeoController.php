@@ -272,10 +272,16 @@ class CategorySeoController extends AdminBaseController
         string $newCombinationsUrl,
         string $selfUrl,
     ): Response {
+        if ($selectedCategorySeoMixCombination === null) {
+            // saving the SEO mix is impossible without a selected combination anyway
+            throw $this->createNotFoundException('No SEO mix combination is selected.');
+        }
+
         $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixData, [
             'method' => 'POST',
             'new_combination_url' => $newCombinationsUrl,
-            'readyCategorySeoMix' => $selectedCategorySeoMixCombination !== null ? $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) : null,
+            'readyCategorySeoMix' => $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
+            'domain_id' => $selectedCategorySeoMixCombination->getDomainId(),
         ]);
 
         $readyCategorySeoCombinationFormType->handleRequest($request);

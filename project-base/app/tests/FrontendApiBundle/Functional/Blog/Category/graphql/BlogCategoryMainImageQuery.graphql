@@ -1,0 +1,7 @@
+query BlogCategoryMainImageQuery($uuid: Uuid!) {
+    blogCategory(uuid: $uuid) {
+        mainImage {
+            url
+        }
+    }
+}

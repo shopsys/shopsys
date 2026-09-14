@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
@@ -41,21 +40,22 @@ const OrderWithdrawalSuccessPage: FC = () => {
     const hasAccess = userCanRequestWithdrawal || isOrderFetching;
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-            <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
-                <CommonLayout pageTypeOverride="order-withdrawal-success" title={t('Withdrawal request submitted')}>
-                    <Webline>
-                        <ConfirmationPageContent
-                            content={orderData?.order?.withdrawalInstructions}
-                            heading={t('Your withdrawal request has been submitted')}
-                            headingIcon={CheckmarkIcon}
-                            headingVariant="success"
-                        />
-                    </Webline>
-                </CommonLayout>
-            </PageGuard>
-        </>
+        <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
+            <CommonLayout
+                defaultMetaRobots="noindex"
+                pageTypeOverride="order-withdrawal-success"
+                title={t('Withdrawal request submitted')}
+            >
+                <Webline>
+                    <ConfirmationPageContent
+                        content={orderData?.order?.withdrawalInstructions}
+                        heading={t('Your withdrawal request has been submitted')}
+                        headingIcon={CheckmarkIcon}
+                        headingVariant="success"
+                    />
+                </Webline>
+            </CommonLayout>
+        </PageGuard>
     );
 };
 

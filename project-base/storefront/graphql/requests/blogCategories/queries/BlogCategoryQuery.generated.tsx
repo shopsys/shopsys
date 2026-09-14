@@ -14,7 +14,7 @@ export type TypeBlogCategoryQueryVariables = Exact<{
 }>;
 
 
-export type TypeBlogCategoryQuery = { blogCategory: { __typename: 'BlogCategory', uuid: string, name: string, seoTitle: string | null, seoMetaDescription: string | null, description: string | null, articlesTotalCount: number, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, hreflangLinks: Array<{ hreflang: string, href: string }> } | null };
+export type TypeBlogCategoryQuery = { blogCategory: { __typename: 'BlogCategory', uuid: string, name: string, description: string | null, articlesTotalCount: number, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, seo: { __typename: 'SeoAttributes', title: string | null, metaDescription: string | null, h1: string | null, metaRobots: string | null, canonicalUrl: string | null }, hreflangLinks: Array<{ hreflang: string, href: string }> } | null };
 
 
 export const BlogCategoryQueryDocument = gql`

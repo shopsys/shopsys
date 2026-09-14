@@ -1,12 +1,8 @@
 {% block friendly_url_widget %}
     <div class="js-entity-url-list-new-row mb-2" data-index="{{ form.vars.name }}">
         <div class="row g-2">
-            <div class="col-12 col-lg-auto">
-                {{ form_widget(form.domain) }}
-            </div>
-
             <div class="col input-group">
-                <span class="input-group-text">/</span>
+                <span class="input-group-text">{{ domainUrl|default('') }}/</span>
                 {{ form_widget(form.slug) }}
             </div>
 

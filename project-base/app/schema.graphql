@@ -162,9 +162,7 @@ type ArticleEdge {
 interface ArticleInterface {
   breadcrumb: [Link!]!
   name: String!
-  seoH1: String
-  seoMetaDescription: String
-  seoTitle: String
+  seo: SeoAttributes!
   slug: String!
   text: String
   uuid: Uuid!
@@ -199,7 +197,7 @@ enum ArticlePlacementTypeEnum {
   none
 }
 
-type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & ArticleInterface {
+type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & ArticleInterface & Seo {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Date and time of the article creation"
@@ -210,12 +208,8 @@ type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & Articl
   name: String!
   "Placement of article"
   placement: String!
-  "Seo first level heading of article"
-  seoH1: String
-  "Seo meta description of article"
-  seoMetaDescription: String
-  "Seo title of article"
-  seoTitle: String
+  "SEO attributes of the article page"
+  seo: SeoAttributes!
   "Article URL slug"
   slug: String!
   "Text of article"
@@ -295,7 +289,7 @@ interface BaseCustomerUser {
   uuid: Uuid!
 }
 
-type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
+type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang & Seo {
   "The author of the blog article"
   author: BlogArticleAuthor
   "The list of the blog article visible categories"
@@ -322,12 +316,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   perex: String
   "Date and time of the blog article publishing"
   publishDate: DateTime
-  "The blog article SEO H1 heading"
-  seoH1: String
-  "The blog article SEO meta description"
-  seoMetaDescription: String
-  "The blog article SEO title"
-  seoTitle: String
+  "SEO attributes of the blog article page"
+  seo: SeoAttributes!
   "The blog article URL slug"
   slug: String!
   "The blog article status (draft, preview, published)"
@@ -371,7 +361,7 @@ type BlogArticleEdge {
   node: BlogArticle
 }
 
-type BlogCategory implements Breadcrumb & Slug & Hreflang {
+type BlogCategory implements Breadcrumb & Slug & Hreflang & Seo {
   "Total count of blog articles in this category"
   articlesTotalCount: Int!
   "Paginated blog articles of the given blog category"
@@ -394,12 +384,8 @@ type BlogCategory implements Breadcrumb & Slug & Hreflang {
   name: String!
   "The blog category parent"
   parent: BlogCategory
-  "The blog category SEO H1 heading"
-  seoH1: String
-  "The blog category SEO meta description"
-  seoMetaDescription: String
-  "The blog category SEO title"
-  seoTitle: String
+  "SEO attributes of the blog category page"
+  seo: SeoAttributes!
   "The blog category URL slug"
   slug: String!
   "The blog category UUID"
@@ -407,7 +393,7 @@ type BlogCategory implements Breadcrumb & Slug & Hreflang {
 }
 
 "Represents a brand"
-type Brand implements Hreflang & Breadcrumb & Slug & ProductListable {
+type Brand implements Hreflang & Breadcrumb & Slug & ProductListable & Seo {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Brand description"
@@ -426,12 +412,8 @@ type Brand implements Hreflang & Breadcrumb & Slug & ProductListable {
   name: String!
   "Paginated and ordered products of brand"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
-  "Brand SEO H1"
-  seoH1: String
-  "Brand SEO meta description"
-  seoMetaDescription: String
-  "Brand SEO title"
-  seoTitle: String
+  "SEO attributes of the brand page"
+  seo: SeoAttributes!
   "Brand URL slug"
   slug: String!
   "UUID"
@@ -566,7 +548,7 @@ type CartTransportModificationsResult {
 }
 
 "Represents a category"
-type Category implements Breadcrumb & Slug & ProductListable {
+type Category implements Breadcrumb & Slug & ProductListable & Seo {
   "Automated filters for the category"
   automatedFilters: [CategoryAutomatedFilterEnum!]!
   "Best selling products"
@@ -597,12 +579,8 @@ type Category implements Breadcrumb & Slug & ProductListable {
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "An array of links of prepared category SEO mixes of a given category"
   readyCategorySeoMixLinks: [Link!]!
-  "Seo first level heading of category"
-  seoH1: String
-  "Seo meta description of category"
-  seoMetaDescription: String
-  "Seo title of category"
-  seoTitle: String
+  "SEO attributes of the category page"
+  seo: SeoAttributes!
   "Category URL slug"
   slug: String!
   "UUID"
@@ -1226,7 +1204,7 @@ type File {
 scalar FileUpload
 
 "Represents a flag"
-type Flag implements Hreflang & Slug & Breadcrumb & ProductListable {
+type Flag implements Hreflang & Slug & Breadcrumb & ProductListable & Seo {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Categories containing at least one product with flag"
@@ -1239,6 +1217,8 @@ type Flag implements Hreflang & Slug & Breadcrumb & ProductListable {
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Flag color in rgb format"
   rgbColor: String!
+  "SEO attributes of the flag page"
+  seo: SeoAttributes!
   "URL slug of flag"
   slug: String!
   "UUID"
@@ -1376,7 +1356,7 @@ type MainBlogCategoryData {
 }
 
 "Represents a product"
-type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
+type MainVariant implements Product & Seo & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
   "Additional services offered with the product on the current domain"
   additionalServices: [AdditionalService!]!
@@ -1451,12 +1431,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
-  "Seo first level heading of product"
-  seoH1: String
-  "Seo meta description of product"
-  seoMetaDescription: String
-  "Seo title of product"
-  seoTitle: String
+  "SEO attributes of the product page"
+  seo: SeoAttributes!
   "Localized product short description (domain dependent)"
   shortDescription: String
   "Product URL slug"
@@ -2404,12 +2380,8 @@ interface Product {
   reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
-  "Seo first level heading of product"
-  seoH1: String
-  "Seo meta description of product"
-  seoMetaDescription: String
-  "Seo title of product"
-  seoTitle: String
+  "SEO attributes of the product page"
+  seo: SeoAttributes!
   "Localized product short description (domain dependent)"
   shortDescription: String
   "Product URL slug"
@@ -3075,7 +3047,7 @@ type RegularCustomerUser implements BaseCustomerUser {
 }
 
 "Represents a product"
-type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
+type RegularProduct implements Product & Seo & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
   "Additional services offered with the product on the current domain"
   additionalServices: [AdditionalService!]!
@@ -3150,12 +3122,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
-  "Seo first level heading of product"
-  seoH1: String
-  "Seo meta description of product"
-  seoMetaDescription: String
-  "Seo title of product"
-  seoTitle: String
+  "SEO attributes of the product page"
+  seo: SeoAttributes!
   "Localized product short description (domain dependent)"
   shortDescription: String
   "Product URL slug"
@@ -3227,32 +3195,44 @@ enum SellingPriceTypeEnum {
   WITHOUT_VAT
 }
 
-"Represents SEO settings for specific page"
-type SeoPage implements Hreflang {
-  "Page's canonical link"
+"Represents entity with SEO attributes"
+interface Seo {
+  "SEO attributes of the entity's page"
+  seo: SeoAttributes!
+}
+
+"SEO attributes of a page"
+type SeoAttributes {
+  "Absolute canonical URL of the page"
   canonicalUrl: String
+  "Main heading of the page"
+  h1: String
+  "Description for meta tag, falls back to the entity description when not set"
+  metaDescription: String
+  "Value for the robots meta tag (e.g. \"noindex, nofollow\"), null keeps the storefront default"
+  metaRobots: String
+  "Document's title that is shown in a browser's title"
+  title: String
+}
+
+"Represents SEO settings for specific page"
+type SeoPage implements Hreflang & Seo {
   "Alternate links for hreflang meta tags"
   hreflangLinks: [HreflangLink!]!
-  "Description for meta tag"
-  metaDescription: String
   "Description for og:description meta tag"
   ogDescription: String
   "Image for og image meta tag by params"
   ogImage: Image
   "Title for og:title meta tag"
   ogTitle: String
-  "Document's title that is shown in a browser's title"
-  title: String
+  "SEO attributes of the page"
+  seo: SeoAttributes!
 }
 
 "Represents settings of SEO"
 type SeoSetting {
-  "Description of the content of a web page"
-  metaDescription: String
   "Robots.txt's file content"
   robotsTxtContent: String
-  "Document's title that is shown in a browser's title"
-  title: String
   "Complement to title"
   titleAddOn: String
 }
@@ -3337,7 +3317,7 @@ interface Slug {
   uuid: Uuid!
 }
 
-type Store implements Breadcrumb & Slug {
+type Store implements Breadcrumb & Slug & Seo {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Store address city"
@@ -3372,6 +3352,8 @@ type Store implements Breadcrumb & Slug {
   phone: String
   "Store address postcode"
   postcode: String!
+  "SEO attributes of the store page"
+  seo: SeoAttributes!
   "Store URL slug"
   slug: String!
   ""
@@ -3528,7 +3510,7 @@ type UpdatePaymentStatusResult {
 scalar Uuid
 
 "Represents a product"
-type Variant implements Product & Hreflang & Breadcrumb & Slug {
+type Variant implements Product & Seo & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
   "Additional services offered with the product on the current domain"
   additionalServices: [AdditionalService!]!
@@ -3604,12 +3586,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   reviews(after: String, before: String, first: Int, last: Int, orderingMode: ProductReviewOrderingModeEnum = null): ProductReviewConnection
   "Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant"
   reviewsSummary: ProductReviewsSummary
-  "Seo first level heading of product"
-  seoH1: String
-  "Seo meta description of product"
-  seoMetaDescription: String
-  "Seo title of product"
-  seoTitle: String
+  "SEO attributes of the product page"
+  seo: SeoAttributes!
   "Localized product short description (domain dependent)"
   shortDescription: String
   "Product URL slug"

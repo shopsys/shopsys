@@ -8,6 +8,7 @@ use App\Model\Product\Brand\Brand;
 use App\Model\Product\Brand\BrandDataFactory;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory;
+use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class BrandDomainTest extends TransactionFunctionalTestCase
@@ -32,8 +33,8 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     {
         $brandData = $this->brandDataFactory->create();
 
-        $brandData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $brandData->seoH1s[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $brandData->seo[self::SECOND_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFactory->create($brandData);
@@ -51,8 +52,10 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     {
         $brandData = $this->brandDataFactory->create();
 
-        $brandData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $brandData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->metaRobots = SeoMetaRobotsEnum::NOINDEX_NOFOLLOW;
+        $brandData->seo[self::FIRST_DOMAIN_ID]->canonicalUrl = 'https://example.com/canonical';
 
         /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFactory->create($brandData);
@@ -61,6 +64,8 @@ class BrandDomainTest extends TransactionFunctionalTestCase
 
         $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedBrand->getSeoTitle(self::FIRST_DOMAIN_ID));
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
+        $this->assertSame(SeoMetaRobotsEnum::NOINDEX_NOFOLLOW, $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getMetaRobots());
+        $this->assertSame('https://example.com/canonical', $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getCanonicalUrl());
     }
 
     private function getRefreshedBrandFromDatabase(Brand $brand): Brand

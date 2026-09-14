@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -28,14 +27,11 @@ const PersonalDataExportPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal data export')}>
-                <PersonalDataExportContent
-                    contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
-                />
-            </CommonLayout>
-        </>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" title={t('Personal data export')}>
+            <PersonalDataExportContent
+                contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
+            />
+        </CommonLayout>
     );
 };
 

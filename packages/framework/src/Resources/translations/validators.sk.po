@@ -49,6 +49,9 @@ msgstr "Číslo bankového účtu nemôže byť dlþhšie ako {{ limit }} znakov
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr "Fakturačné číslo spoločnosti {{ company_number }} už existuje pre doménu {{ domain_id }}."
 
+msgid "Canonical URL must be an absolute https:// URL"
+msgstr "Canonical URL musí byť absolútna adresa začínajúca https://"
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalógové číslo nemôže byť dlþhšie ako {{ limit }} znakov"
 
@@ -124,9 +127,6 @@ msgstr "Názov príznaku nemôže byť dlhší ako {{ limit }} znakov"
 msgid "Full name cannot be longer than {{ limit }} characters"
 msgstr "Celé meno nemôže byť dlhšie ako {{ limit }} znakov"
 
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr "Nadpis (H1) nemôže byť dlhší ako {{ limit }} znakov"
-
 msgid "Heureka API must be {{ limit }} characters"
 msgstr "Heureka API musí mať {{ limit }} znakov"
 
@@ -150,9 +150,6 @@ msgstr "Priezvisko nemôže byť dlhšie ako {{ limit }} znakov"
 
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Priezvisko kontaktnej osoby nemôže byť dlhšie ako {{ limit }} znakov"
-
-msgid "Link must be valid URL address"
-msgstr "Odkaz musí byť platná URL adresa"
 
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr "Názov nemôže byť dlhší ako {{ limit }} znakov"
@@ -242,7 +239,7 @@ msgid "Please choose unit"
 msgstr "Prosím, vyberte jednotku"
 
 msgid "Please define at least one URL."
-msgstr "Definujte aspoň jednu URL adresu."
+msgstr "Definujte prosím aspoň jednu URL adresu."
 
 msgid "Please enter BIC/SWIFT for domain %domainName%."
 msgstr "Zadajte, prosím, BIC/SWIFT pre doménu %domainName%."
@@ -384,6 +381,9 @@ msgstr "Prosím, zadajte názov príznaku vo všetkých jazykoch"
 
 msgid "Please enter full name"
 msgstr "Prosím, zadajte celé meno"
+
+msgid "Please enter heading (H1)"
+msgstr "Vyplňte prosím nadpis (H1)"
 
 msgid "Please enter identification number"
 msgstr "Prosím, zadajte identifikačné číslo"
@@ -673,14 +673,8 @@ msgstr "Množstvo položky \"%itemName%\" nesmie byť väčšie ako objednané m
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cieľ presmerovania musí byť relatívna cesta (s lomítkom na začiatku) alebo absolútna cesta začínajúca protokolom (http:// alebo https://)"
 
-msgid "Same description is used on another domain"
-msgstr "Rovnaký popis je použitý na inej doméne"
-
 msgid "Same title complement is used on another domain"
 msgstr "Rovnaký doplnok titulku je použitý na inej doméne"
-
-msgid "Same title is used on another domain"
-msgstr "Rovnaký titulok je použitý na inej doméne"
 
 msgid "Seo page with slug {{ pageSlug }} already exists"
 msgstr "SEO stránka so slugom {{ pageSlug }} už existuje"

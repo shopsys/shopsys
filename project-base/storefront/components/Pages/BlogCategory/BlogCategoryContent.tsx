@@ -4,7 +4,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
 import { useRef } from 'react';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { BlogCategoryHeader } from './BlogCategoryHeader';
 
@@ -15,16 +15,19 @@ type BlogCategoryContentProps = {
 export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
-    const title = useSeoTitleWithPagination(
+    const heading = useHeadingWithPagination(
+        blogCategory.seo.h1 || blogCategory.name,
         blogCategory.articlesTotalCount,
-        blogCategory.name,
-        undefined,
         DEFAULT_BLOG_PAGE_SIZE,
     );
 
     return (
         <VerticalStack gap="lg">
-            <BlogCategoryHeader description={blogCategory.description} image={blogCategory.mainImage} title={title} />
+            <BlogCategoryHeader
+                description={blogCategory.description}
+                heading={heading}
+                image={blogCategory.mainImage}
+            />
 
             <BlogLayout activeCategoryUuid={blogCategory.uuid}>
                 <BlogCategoryArticlesWrapper

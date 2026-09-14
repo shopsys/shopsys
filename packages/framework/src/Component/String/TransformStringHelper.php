@@ -123,6 +123,28 @@ class TransformStringHelper
             |> trim(...);
     }
 
+    /**
+     * Cuts the text at the last whitespace fitting into the limit, so that no word is cut in half.
+     * A first word longer than the limit is cut hard. Trailing punctuation left after the cut is removed.
+     */
+    public static function truncateToWholeWords(string $text, int $maxLength): string
+    {
+        if (mb_strlen($text) <= $maxLength) {
+            return $text;
+        }
+
+        $truncated = mb_substr($text, 0, $maxLength + 1);
+        $lastWhitespacePosition = mb_strrpos($truncated, ' ');
+
+        if ($lastWhitespacePosition !== false && $lastWhitespacePosition > 0) {
+            $truncated = mb_substr($truncated, 0, $lastWhitespacePosition);
+        } else {
+            $truncated = mb_substr($text, 0, $maxLength);
+        }
+
+        return rtrim($truncated, " \t\n\r,;:-");
+    }
+
     public function removeStringFromStart(string $string, string $stringToRemove): string
     {
         if (str_starts_with($string, $stringToRemove)) {

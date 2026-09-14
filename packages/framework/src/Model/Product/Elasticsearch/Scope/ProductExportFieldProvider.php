@@ -43,6 +43,8 @@ class ProductExportFieldProvider
     public const string SEO_H1 = 'seo_h1';
     public const string SEO_TITLE = 'seo_title';
     public const string SEO_META_DESCRIPTION = 'seo_meta_description';
+    public const string SEO_META_ROBOTS = 'seo_meta_robots';
+    public const string SEO_CANONICAL_URL = 'seo_canonical_url';
     public const string ACCESSORIES = 'accessories';
     public const string RELATED_PRODUCTS = 'related_products';
     public const string ADDITIONAL_SERVICES = 'additional_services';

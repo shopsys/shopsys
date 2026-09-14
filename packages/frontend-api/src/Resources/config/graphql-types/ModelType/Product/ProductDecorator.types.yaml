@@ -108,15 +108,9 @@ ProductDecorator:
                 description: "List of related products"
             parameters:
                 type: "[Parameter]!"
-            seoH1:
-                type: "String"
-                description: "Seo first level heading of product"
-            seoTitle:
-                type: "String"
-                description: "Seo title of product"
-            seoMetaDescription:
-                type: "String"
-                description: "Seo meta description of product"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the product page"
             hreflangLinks:
                 type: "[HreflangLink!]!"
                 description: "Alternate links for hreflang meta tags"

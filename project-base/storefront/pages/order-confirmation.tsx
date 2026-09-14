@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
@@ -64,24 +63,21 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 
     if (isInvalidPaymentReturn) {
         return (
-            <>
-                <MetaRobots content="noindex" />
-
-                <CommonLayout
-                    isFetchingData={false}
-                    pageTypeOverride="order-confirmation"
-                    title={t('Order confirmation')}
-                >
-                    <Webline>
-                        <ConfirmationPageContent
-                            content={t('Please check your order confirmation e-mail or sign in to your account.')}
-                            heading={t('Order confirmation can no longer be displayed.')}
-                            headingIcon={WarningIcon}
-                            headingVariant="error"
-                        />
-                    </Webline>
-                </CommonLayout>
-            </>
+            <CommonLayout
+                defaultMetaRobots="noindex"
+                isFetchingData={false}
+                pageTypeOverride="order-confirmation"
+                title={t('Order confirmation')}
+            >
+                <Webline>
+                    <ConfirmationPageContent
+                        content={t('Please check your order confirmation e-mail or sign in to your account.')}
+                        heading={t('Order confirmation can no longer be displayed.')}
+                        headingIcon={WarningIcon}
+                        headingVariant="error"
+                    />
+                </Webline>
+            </CommonLayout>
         );
     }
 
@@ -102,100 +98,97 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { orderPayment, orderRounding, orderTransport } = getOrderConfirmationSummaryItems(order);
 
     return (
-        <>
-            <MetaRobots content="noindex" />
+        <CommonLayout
+            defaultMetaRobots="noindex"
+            isFetchingData={isOrderFetching || isReturnHashFetching}
+            pageTypeOverride="order-confirmation"
+            title={t('Thank you for your order')}
+        >
+            <Webline tid={TIDs.pages_orderconfirmation}>
+                {hasPaymentStatusUpdateError ? (
+                    <ConfirmationPageContent
+                        content={t(
+                            'Your order was created, but we could not update the current payment status. Please check your order confirmation e-mail or sign in to your account.',
+                        )}
+                        heading={t('Payment status could not be verified.')}
+                        headingIcon={WarningIcon}
+                        headingVariant="error"
+                        orderDetailUrl={orderDetailUrl}
+                    />
+                ) : shouldShowPaymentGateway ? (
+                    <ConfirmationPageContent
+                        heading={t('Your order was created')}
+                        headingDescription={t('You are being redirected to the payment gateway.')}
+                        headingDescriptionRole="status"
+                        headingIcon={SpinnerIcon}
+                        headingVariant="info"
+                    />
+                ) : order.hasExternalPayment ? (
+                    <PaymentStatus order={order} />
+                ) : (
+                    <ConfirmationPageContent
+                        content={order.confirmationPageContent.content}
+                        heading={t('Your order was created')}
+                        headingIcon={CheckmarkIcon}
+                        headingVariant="success"
+                        orderDetailUrl={orderDetailUrl}
+                    />
+                )}
 
-            <CommonLayout
-                isFetchingData={isOrderFetching || isReturnHashFetching}
-                pageTypeOverride="order-confirmation"
-                title={t('Thank you for your order')}
-            >
-                <Webline tid={TIDs.pages_orderconfirmation}>
-                    {hasPaymentStatusUpdateError ? (
-                        <ConfirmationPageContent
-                            content={t(
-                                'Your order was created, but we could not update the current payment status. Please check your order confirmation e-mail or sign in to your account.',
-                            )}
-                            heading={t('Payment status could not be verified.')}
-                            headingIcon={WarningIcon}
-                            headingVariant="error"
-                            orderDetailUrl={orderDetailUrl}
-                        />
-                    ) : shouldShowPaymentGateway ? (
-                        <ConfirmationPageContent
-                            heading={t('Your order was created')}
-                            headingDescription={t('You are being redirected to the payment gateway.')}
-                            headingDescriptionRole="status"
-                            headingIcon={SpinnerIcon}
-                            headingVariant="info"
-                        />
-                    ) : order.hasExternalPayment ? (
-                        <PaymentStatus order={order} />
-                    ) : (
-                        <ConfirmationPageContent
-                            content={order.confirmationPageContent.content}
-                            heading={t('Your order was created')}
-                            headingIcon={CheckmarkIcon}
-                            headingVariant="success"
-                            orderDetailUrl={orderDetailUrl}
-                        />
-                    )}
+                <OrderConfirmationStepper flow={stepperFlow} />
 
-                    <OrderConfirmationStepper flow={stepperFlow} />
+                <div className="grid vl:grid-cols-3 gap-4 vl:gap-10">
+                    <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
+                        {shouldShowPaymentGateway && (
+                            <div className="mt-4">
+                                <GoPayGateway orderUrlHash={order.urlHash} orderUuid={order.uuid} />
+                            </div>
+                        )}
 
-                    <div className="grid vl:grid-cols-3 gap-4 vl:gap-10">
-                        <div className="vl:col-span-2 flex vl:flex-col flex-col-reverse gap-4">
-                            {shouldShowPaymentGateway && (
-                                <div className="mt-4">
-                                    <GoPayGateway orderUrlHash={order.urlHash} orderUuid={order.uuid} />
-                                </div>
-                            )}
+                        {!shouldShowPaymentGateway && isPaymentFailed && order.isAwaitingPayment && (
+                            <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />
+                        )}
 
-                            {!shouldShowPaymentGateway && isPaymentFailed && order.isAwaitingPayment && (
-                                <PaymentsInOrderSelect orderUrlHash={order.urlHash} orderUuid={order.uuid} />
-                            )}
+                        {(!order.hasExternalPayment ||
+                            hasPaymentStatusUpdateError ||
+                            isPaymentInProcess ||
+                            isPaymentSuccessful) && <OrderCustomerInfo order={order} />}
 
-                            {(!order.hasExternalPayment ||
-                                hasPaymentStatusUpdateError ||
-                                isPaymentInProcess ||
-                                isPaymentSuccessful) && <OrderCustomerInfo order={order} />}
-
-                            {(!order.hasExternalPayment || isPaymentSuccessful) && (
-                                <RegistrationAfterOrder
-                                    companyNumber={order.companyNumber}
-                                    orderEmail={order.email}
-                                    orderUrlHash={order.urlHash}
-                                    orderUuid={order.uuid}
-                                />
-                            )}
-                        </div>
-
-                        <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
-                            <OrderConfirmationProducts
-                                expectedDeliveryDate={order.expectedDeliveryDate}
-                                items={order.items}
+                        {(!order.hasExternalPayment || isPaymentSuccessful) && (
+                            <RegistrationAfterOrder
+                                companyNumber={order.companyNumber}
+                                orderEmail={order.email}
+                                orderUrlHash={order.urlHash}
+                                orderUuid={order.uuid}
                             />
-
-                            <OrderConfirmationSummary
-                                giftVouchers={order.giftVouchers}
-                                promoCode={order.promoCode}
-                                remainingAmountToPay={order.remainingAmountToPay}
-                                roundingPrice={orderRounding?.totalPrice}
-                                totalPrice={order.totalPrice}
-                                payment={{
-                                    name: orderPayment?.name,
-                                    price: orderPayment?.totalPrice.priceWithVat,
-                                }}
-                                transport={{
-                                    name: orderTransport?.name,
-                                    price: orderTransport?.totalPrice.priceWithVat,
-                                }}
-                            />
-                        </div>
+                        )}
                     </div>
-                </Webline>
-            </CommonLayout>
-        </>
+
+                    <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
+                        <OrderConfirmationProducts
+                            expectedDeliveryDate={order.expectedDeliveryDate}
+                            items={order.items}
+                        />
+
+                        <OrderConfirmationSummary
+                            giftVouchers={order.giftVouchers}
+                            promoCode={order.promoCode}
+                            remainingAmountToPay={order.remainingAmountToPay}
+                            roundingPrice={orderRounding?.totalPrice}
+                            totalPrice={order.totalPrice}
+                            payment={{
+                                name: orderPayment?.name,
+                                price: orderPayment?.totalPrice.priceWithVat,
+                            }}
+                            transport={{
+                                name: orderTransport?.name,
+                                price: orderTransport?.totalPrice.priceWithVat,
+                            }}
+                        />
+                    </div>
+                </div>
+            </Webline>
+        </CommonLayout>
     );
 };
 
@@ -214,13 +207,9 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 export default OrderConfirmationPage;
 
 const OrderConfirmationLoadingState: FC<{ title: string }> = ({ title }) => (
-    <>
-        <MetaRobots content="noindex" />
-
-        <CommonLayout isFetchingData pageTypeOverride="order-confirmation" title={title}>
-            <Webline tid={TIDs.pages_orderconfirmation} />
-        </CommonLayout>
-    </>
+    <CommonLayout defaultMetaRobots="noindex" isFetchingData pageTypeOverride="order-confirmation" title={title}>
+        <Webline tid={TIDs.pages_orderconfirmation} />
+    </CommonLayout>
 );
 
 const getOrderConfirmationGtmPageType = (

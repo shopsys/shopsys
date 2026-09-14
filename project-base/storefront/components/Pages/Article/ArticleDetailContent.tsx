@@ -14,7 +14,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
     return (
         <Webline width="vl">
             <VerticalStack gap="sm">
-                <h1>{article.seoH1 || article.articleName}</h1>
+                <h1>{article.seo.h1 || article.articleName}</h1>
 
                 <ArticleDate date={article.createdAt} tid={TIDs.article_creation_date} />
 

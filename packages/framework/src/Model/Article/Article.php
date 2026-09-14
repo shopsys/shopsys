@@ -10,6 +10,7 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -76,25 +77,11 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     protected $text;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoTitle;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoMetaDescription;
-
-    /**
-     * @var string|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $seoH1;
+    #[ORM\Embedded(class: SeoAttributes::class)]
+    protected $seo;
 
     /**
      * @var string
@@ -144,6 +131,7 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
         $this->domainId = $articleData->domainId;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->uuid = $articleData->uuid ?: Uuid::uuid4()->toString();
+        $this->seo = new SeoAttributes();
         $this->setData($articleData);
     }
 
@@ -156,9 +144,7 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     {
         $this->name = $articleData->name;
         $this->text = $articleData->text;
-        $this->seoTitle = $articleData->seoTitle;
-        $this->seoMetaDescription = $articleData->seoMetaDescription;
-        $this->seoH1 = $articleData->seoH1;
+        $this->seo->edit($articleData->seo);
         $this->placement = $articleData->placement;
         $this->hidden = $articleData->hidden;
         $this->createdAt = $articleData->createdAt;
@@ -213,7 +199,7 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
      */
     public function getSeoTitle()
     {
-        return $this->seoTitle;
+        return $this->seo->getTitle();
     }
 
     /**
@@ -221,7 +207,7 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
      */
     public function getSeoMetaDescription()
     {
-        return $this->seoMetaDescription;
+        return $this->seo->getMetaDescription();
     }
 
     /**
@@ -229,7 +215,15 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
      */
     public function getSeoH1()
     {
-        return $this->seoH1;
+        return $this->seo->getH1();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes()
+    {
+        return $this->seo;
     }
 
     /**

@@ -122,6 +122,7 @@
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
     * [SalesRepresentative](#salesrepresentative)
+    * [SeoAttributes](#seoattributes)
     * [SeoPage](#seopage)
     * [SeoSetting](#seosetting)
     * [Settings](#settings)
@@ -228,6 +229,7 @@
     * [ParameterFilterOptionInterface](#parameterfilteroptioninterface)
     * [Product](#product)
     * [ProductListable](#productlistable)
+    * [Seo](#seo)
     * [Slug](#slug)
 
 </details>
@@ -2771,29 +2773,11 @@ Placement of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="articlesite.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="articlesite.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Seo first level heading of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="articlesite.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="articlesite.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of article
+SEO attributes of the article page
 
 </td>
 </tr>
@@ -3046,29 +3030,11 @@ Date and time of the blog article publishing
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="blogarticle.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="blogarticle.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-The blog article SEO H1 heading
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="blogarticle.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article SEO meta description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="blogarticle.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article SEO title
+SEO attributes of the blog article page
 
 </td>
 </tr>
@@ -3406,29 +3372,11 @@ The blog category parent
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="blogcategory.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="blogcategory.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-The blog category SEO H1 heading
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="blogcategory.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog category SEO meta description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="blogcategory.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog category SEO title
+SEO attributes of the blog category page
 
 </td>
 </tr>
@@ -3604,29 +3552,11 @@ Paginated and ordered products of brand
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="brand.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="brand.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Brand SEO H1
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="brand.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Brand SEO meta description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="brand.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Brand SEO title
+SEO attributes of the brand page
 
 </td>
 </tr>
@@ -4372,29 +4302,11 @@ An array of links of prepared category SEO mixes of a given category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="category.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="category.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Seo first level heading of category
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="category.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of category
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="category.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of category
+SEO attributes of the category page
 
 </td>
 </tr>
@@ -6101,6 +6013,15 @@ Flag color in rgb format
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="flag.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
+<td>
+
+SEO attributes of the flag page
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="flag.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6929,29 +6850,11 @@ Aggregated rating of the approved reviews of the product and its visible variant
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="mainvariant.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="mainvariant.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="mainvariant.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="mainvariant.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
+SEO attributes of the product page
 
 </td>
 </tr>
@@ -10957,29 +10860,11 @@ Aggregated rating of the approved reviews of the product and its visible variant
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="regularproduct.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="regularproduct.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="regularproduct.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="regularproduct.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
+SEO attributes of the product page
 
 </td>
 </tr>
@@ -11135,6 +11020,68 @@ UUID
 </tbody>
 </table>
 
+### SeoAttributes
+
+SEO attributes of a page
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="seoattributes.canonicalurl">canonicalUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Absolute canonical URL of the page
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="seoattributes.h1">h1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Main heading of the page
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="seoattributes.metadescription">metaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Description for meta tag, falls back to the entity description when not set
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="seoattributes.metarobots">metaRobots</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Value for the robots meta tag (e.g. "noindex, nofollow"), null keeps the storefront default
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="seoattributes.title">title</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Document's title that is shown in a browser's title
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### SeoPage
 
 Represents SEO settings for specific page
@@ -11150,29 +11097,11 @@ Represents SEO settings for specific page
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="seopage.canonicalurl">canonicalUrl</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Page's canonical link
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="seopage.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
 Alternate links for hreflang meta tags
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="seopage.metadescription">metaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Description for meta tag
 
 </td>
 </tr>
@@ -11204,11 +11133,11 @@ Title for og:title meta tag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="seopage.title">title</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="seopage.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Document's title that is shown in a browser's title
+SEO attributes of the page
 
 </td>
 </tr>
@@ -11230,29 +11159,11 @@ Represents settings of SEO
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="seosetting.metadescription">metaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Description of the content of a web page
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="seosetting.robotstxtcontent">robotsTxtContent</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Robots.txt's file content
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="seosetting.title">title</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Document's title that is shown in a browser's title
 
 </td>
 </tr>
@@ -11744,6 +11655,15 @@ Store phone
 <td>
 
 Store address postcode
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="store.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
+<td>
+
+SEO attributes of the store page
 
 </td>
 </tr>
@@ -12720,29 +12640,11 @@ Aggregated rating of the approved reviews of the product and its visible variant
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="variant.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="variant.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="variant.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="variant.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
+SEO attributes of the product page
 
 </td>
 </tr>
@@ -16446,18 +16348,8 @@ Represents entity that is considered to be an article on the eshop
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="articleinterface.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="articleinterface.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="articleinterface.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="articleinterface.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -17430,29 +17322,11 @@ Aggregated rating of the approved reviews of the product and its visible variant
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="product.seoh1">seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong id="product.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="product.seometadescription">seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="product.seotitle">seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
+SEO attributes of the product page
 
 </td>
 </tr>
@@ -17597,6 +17471,34 @@ Paginated and ordered products
 </table>
 
 **Possible Types:** [Brand](#brand), [Category](#category), [Flag](#flag)
+
+### Seo
+
+Represents entity with SEO attributes
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="seo.seo">seo</strong></td>
+<td valign="top"><a href="#seoattributes">SeoAttributes</a>!</td>
+<td>
+
+SEO attributes of the entity's page
+
+</td>
+</tr>
+</tbody>
+</table>
+
+**Possible Types:** [ArticleSite](#articlesite), [BlogArticle](#blogarticle), [BlogCategory](#blogcategory), [Brand](#brand), [Category](#category), [Flag](#flag), [MainVariant](#mainvariant), [RegularProduct](#regularproduct), [SeoPage](#seopage), [Store](#store), [Variant](#variant)
 
 ### Slug
 

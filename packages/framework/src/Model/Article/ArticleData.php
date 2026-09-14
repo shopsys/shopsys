@@ -20,14 +20,9 @@ class ArticleData
     public $text;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData
      */
-    public $seoTitle;
-
-    /**
-     * @var string|null
-     */
-    public $seoMetaDescription;
+    public $seo;
 
     /**
      * @var int|null
@@ -48,11 +43,6 @@ class ArticleData
      * @var bool
      */
     public $hidden;
-
-    /**
-     * @var string|null
-     */
-    public $seoH1;
 
     /**
      * @var string|null

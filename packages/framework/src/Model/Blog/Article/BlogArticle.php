@@ -246,7 +246,7 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     public function getSeoTitle(int $domainId)
     {
-        return $this->getDomain($domainId)->getSeoTitle();
+        return $this->getSeoAttributes($domainId)->getTitle();
     }
 
     /**
@@ -254,7 +254,15 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     public function getSeoH1(int $domainId)
     {
-        return $this->getDomain($domainId)->getSeoH1();
+        return $this->getSeoAttributes($domainId)->getH1();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
+     */
+    public function getSeoAttributes(int $domainId)
+    {
+        return $this->getDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -270,7 +278,7 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     public function getSeoMetaDescription(int $domainId)
     {
-        return $this->getDomain($domainId)->getSeoMetaDescription();
+        return $this->getSeoAttributes($domainId)->getMetaDescription();
     }
 
     /**
@@ -313,16 +321,14 @@ class BlogArticle extends AbstractTranslatableEntity
     {
         foreach ($this->domains as $blogArticleDomain) {
             $domainId = $blogArticleDomain->getDomainId();
-            $blogArticleDomain->setSeoTitle($blogArticleData->seoTitles[$domainId]);
-            $blogArticleDomain->setSeoH1($blogArticleData->seoH1s[$domainId]);
-            $blogArticleDomain->setSeoMetaDescription($blogArticleData->seoMetaDescriptions[$domainId]);
+            $blogArticleDomain->getSeoAttributes()->edit($blogArticleData->seo[$domainId]);
             $blogArticleDomain->setPublishDate($blogArticleData->publishDates[$domainId]);
         }
     }
 
     public function createDomains(BlogArticleData $blogArticleData): void
     {
-        $domainIds = array_keys($blogArticleData->seoTitles);
+        $domainIds = array_keys($blogArticleData->seo);
 
         foreach ($domainIds as $domainId) {
             $categoryDomain = new BlogArticleDomain($this, $domainId);

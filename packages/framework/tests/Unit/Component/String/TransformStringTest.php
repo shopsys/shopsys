@@ -225,6 +225,57 @@ class TransformStringTest extends TestCase
         ];
     }
 
+    #[DataProvider('truncateToWholeWordsDataProvider')]
+    public function testTruncateToWholeWords(string $text, int $maxLength, string $expected): void
+    {
+        $this->assertSame($expected, TransformStringHelper::truncateToWholeWords($text, $maxLength));
+    }
+
+    public static function truncateToWholeWordsDataProvider(): iterable
+    {
+        yield 'text within the limit is untouched' => [
+            'text' => 'short text',
+            'maxLength' => 20,
+            'expected' => 'short text',
+        ];
+
+        yield 'text of exactly the limit is untouched' => [
+            'text' => 'ten chars!',
+            'maxLength' => 10,
+            'expected' => 'ten chars!',
+        ];
+
+        yield 'cut happens at the last whitespace within the limit' => [
+            'text' => 'lorem ipsum dolor sit amet',
+            'maxLength' => 14,
+            'expected' => 'lorem ipsum',
+        ];
+
+        yield 'word ending exactly at the limit is kept whole' => [
+            'text' => 'lorem ipsum dolor sit amet',
+            'maxLength' => 11,
+            'expected' => 'lorem ipsum',
+        ];
+
+        yield 'single word longer than the limit is cut hard' => [
+            'text' => 'supercalifragilisticexpialidocious',
+            'maxLength' => 10,
+            'expected' => 'supercalif',
+        ];
+
+        yield 'multibyte characters are counted as single characters' => [
+            'text' => 'příliš žluťoučký kůň úpěl ďábelské ódy',
+            'maxLength' => 22,
+            'expected' => 'příliš žluťoučký kůň',
+        ];
+
+        yield 'trailing punctuation left after the cut is removed' => [
+            'text' => 'first sentence, second sentence',
+            'maxLength' => 17,
+            'expected' => 'first sentence',
+        ];
+    }
+
     #[DataProvider('convertHtmlToPlainTextDataProvider')]
     public function testConvertHtmlToPlainText(?string $htmlString, ?string $expected): void
     {

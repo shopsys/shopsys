@@ -9,6 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesResultFactory;
 use Symfony\Component\Clock\DatePoint;
 
 class BlogArticleResolverMap extends ResolverMap
@@ -17,6 +18,7 @@ class BlogArticleResolverMap extends ResolverMap
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly SeoAttributesResultFactory $seoAttributesResultFactory,
     ) {
     }
 
@@ -45,6 +47,16 @@ class BlogArticleResolverMap extends ResolverMap
                 },
                 'mainBlogCategoryUuid' => function (array $blogArticleData) {
                     return $blogArticleData['mainBlogCategoryUuid'];
+                },
+                'seo' => function (array $blogArticleData) {
+                    return $this->seoAttributesResultFactory->create(
+                        $blogArticleData['seoTitle'],
+                        $blogArticleData['seoMetaDescription'],
+                        $blogArticleData['seoH1'],
+                        $blogArticleData['seoMetaRobots'],
+                        $blogArticleData['seoCanonicalUrl'],
+                        $blogArticleData['perex'],
+                    );
                 },
             ],
         ];

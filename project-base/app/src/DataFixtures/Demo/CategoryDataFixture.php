@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\NewProductsCategoryAu
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\OnStockCategoryAutomatedFilter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 
 class CategoryDataFixture extends AbstractReferenceFixture
 {
@@ -95,19 +96,19 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 $locale,
             );
 
-            $categoryData->seoH1s[$domainConfig->getId()] = t(
+            $categoryData->seo[$domainConfig->getId()]->h1 = t(
                 'Electronic devices',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,
             );
-            $categoryData->seoTitles[$domainConfig->getId()] = t(
+            $categoryData->seo[$domainConfig->getId()]->title = t(
                 'Electronic stuff',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,
             );
-            $categoryData->seoMetaDescriptions[$domainConfig->getId()] = t(
+            $categoryData->seo[$domainConfig->getId()]->metaDescription = t(
                 'All kind of electronic devices.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
@@ -287,6 +288,12 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $categoryData = $this->categoryDataFactory->create();
             $categoryData->name = $subcategoryNamesByLocale[$referenceName];
             $categoryData->parent = $this->getReference($parentReferenceName, Category::class);
+
+            if ($referenceName === self::CATEGORY_PRINTER_SUPPLIES) {
+                foreach ($categoryData->seo as $seoAttributesData) {
+                    $seoAttributesData->metaRobots = SeoMetaRobotsEnum::NOINDEX;
+                }
+            }
 
             $this->createCategory($categoryData, $referenceName);
         }
