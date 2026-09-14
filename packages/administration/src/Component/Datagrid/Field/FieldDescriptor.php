@@ -129,6 +129,15 @@ final class FieldDescriptor
         return $this->options['searchable'];
     }
 
+    /**
+     * The name of the filter of this field — the name of the field, with the dots of a path replaced the
+     * same way a filter derives its name from its path, as a form name cannot contain a dot.
+     */
+    public function getFilterName(): string
+    {
+        return str_replace('.', '_', $this->name);
+    }
+
     public function getHelp(): ?string
     {
         return $this->options['help'];

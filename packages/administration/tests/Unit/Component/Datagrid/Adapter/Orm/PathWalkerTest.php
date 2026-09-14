@@ -81,6 +81,24 @@ final class PathWalkerTest extends TestCase
     }
 
     /**
+     * A filter holds an entered integer within the range of its column, beyond which the query would fail.
+     */
+    public function testIntegerIsBoundedByTheRangeOfItsColumn(): void
+    {
+        $pathWalker = $this->createPathWalker();
+
+        $smallIntegerDescription = $pathWalker->walk(DummyProduct::class, 'rating')->description;
+        $integerDescription = $pathWalker->walk(DummyProduct::class, 'currency.id')->description;
+        $bigIntegerDescription = $pathWalker->walk(DummyProduct::class, 'viewCount')->description;
+        $textDescription = $pathWalker->walk(DummyProduct::class, 'name')->description;
+
+        $this->assertSame([-32768, 32767], [$smallIntegerDescription->minimumValue, $smallIntegerDescription->maximumValue]);
+        $this->assertSame([-2147483648, 2147483647], [$integerDescription->minimumValue, $integerDescription->maximumValue]);
+        $this->assertSame([null, null], [$bigIntegerDescription->minimumValue, $bigIntegerDescription->maximumValue]);
+        $this->assertSame([null, null], [$textDescription->minimumValue, $textDescription->maximumValue]);
+    }
+
+    /**
      * An embeddable is no value to compare, only its fields are.
      */
     public function testPathEndingWithEmbeddableIsRefused(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Expression;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException;
@@ -13,9 +14,18 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Enum\InvalidEnumCaseException;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 final class ExpressionOperatorEnumTest extends TestCase
 {
+    #[Override]
+    protected function setUp(): void
+    {
+        $translatorStub = $this->createStub(Translator::class);
+        $translatorStub->method('trans')->willReturnArgument(0);
+        Translator::injectSelf($translatorStub);
+    }
+
     /**
      * @return array<string, array{string, \Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum, \Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum, bool}>
      */
@@ -90,5 +100,19 @@ final class ExpressionOperatorEnumTest extends TestCase
         $this->expectException(InvalidEnumCaseException::class);
 
         (new ExpressionOperatorEnum())->getValueArity('somethingElse');
+    }
+
+    public function testOperatorIsLabelledForTheFilterForm(): void
+    {
+        $expressionOperatorEnum = new ExpressionOperatorEnum();
+
+        $this->assertSame('is', $expressionOperatorEnum->getLabel(ExpressionOperatorEnum::EQUALS));
+        $this->assertSame('is not filled', $expressionOperatorEnum->getLabel(ExpressionOperatorEnum::IS_NULL));
+        $this->assertSame('has some', $expressionOperatorEnum->getLabel(ExpressionOperatorEnum::IS_NOT_EMPTY));
+    }
+
+    public function testUnknownOperatorIsLabelledByItsName(): void
+    {
+        $this->assertSame('somethingElse', (new ExpressionOperatorEnum())->getLabel('somethingElse'));
     }
 }

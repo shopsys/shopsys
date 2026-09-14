@@ -45,6 +45,17 @@ final class PathWalker implements PathWalkerInterface
      */
     private const string MONEY_TYPE = 'money';
 
+    /**
+     * The integers a column of the type holds — a greater one fails the query instead of matching nothing. A big
+     * integer holds every integer of PHP.
+     *
+     * @var array<string, array{int, int}>
+     */
+    private const array INTEGER_RANGES = [
+        Types::SMALLINT => [-32768, 32767],
+        Types::INTEGER => [-2147483648, 2147483647],
+    ];
+
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
     ) {
@@ -81,7 +92,7 @@ final class PathWalker implements PathWalkerInterface
                 $fieldType = $classMetadata->getTypeOfField($field);
                 $steps[] = new PathStep(PathStepKind::FIELD, $field, $partPath, $fieldType);
 
-                return $this->finish($path, $steps, $crossesToMany, $this->toValueType($fieldType));
+                return $this->finish($path, $steps, $crossesToMany, $this->toValueType($fieldType), fieldType: $fieldType);
             }
 
             if ($isLast && $classMetadata->hasAssociation($field) === false) {
@@ -91,7 +102,7 @@ final class PathWalker implements PathWalkerInterface
                     $fieldType = $translationClassMetadata->getTypeOfField($field);
                     $steps[] = new PathStep(PathStepKind::TRANSLATED_FIELD, $field, $partPath, $fieldType);
 
-                    return $this->finish($path, $steps, $crossesToMany, $this->toValueType($fieldType));
+                    return $this->finish($path, $steps, $crossesToMany, $this->toValueType($fieldType), fieldType: $fieldType);
                 }
             }
 
@@ -112,7 +123,7 @@ final class PathWalker implements PathWalkerInterface
                 $identifierField = $targetClassMetadata->isIdentifierComposite ? $parts[$lastIndex] : null;
                 $steps[] = new PathStep(PathStepKind::IDENTITY, $field, $partPath, $identifierType, identifierField: $identifierField);
 
-                return $this->finish($path, $steps, $crossesToMany, $this->toValueType($identifierType));
+                return $this->finish($path, $steps, $crossesToMany, $this->toValueType($identifierType), fieldType: $identifierType);
             }
 
             $steps[] = new PathStep(
@@ -128,7 +139,7 @@ final class PathWalker implements PathWalkerInterface
             $classMetadata = $targetClassMetadata;
 
             if ($isLast) {
-                return $this->finish($path, $steps, $crossesToMany, PathValueTypeEnum::ASSOCIATION);
+                return $this->finish($path, $steps, $crossesToMany, PathValueTypeEnum::ASSOCIATION, $classMetadata->getName());
             }
         }
 
@@ -137,17 +148,26 @@ final class PathWalker implements PathWalkerInterface
 
     /**
      * @param list<\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathStep> $steps
+     * @param class-string|null $targetEntityClass
+     * @param string|null $fieldType Doctrine type of the terminal field, which bounds an integer
      */
     private function finish(
         string $path,
         array $steps,
         bool $crossesToMany,
         PathValueTypeEnum $valueType,
+        ?string $targetEntityClass = null,
+        ?string $fieldType = null,
     ): WalkedPath {
+        $integerRange = self::INTEGER_RANGES[$fieldType ?? ''] ?? null;
+
         return new WalkedPath($steps, new PathDescription(
             $path,
             $crossesToMany ? PathCardinalityEnum::TO_MANY : PathCardinalityEnum::TO_ONE,
             $valueType,
+            $targetEntityClass,
+            $integerRange[0] ?? null,
+            $integerRange[1] ?? null,
         ));
     }
 

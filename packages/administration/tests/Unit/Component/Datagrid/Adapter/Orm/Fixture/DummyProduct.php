@@ -28,6 +28,15 @@ final class DummyProduct
     #[ORM\Column(type: 'date', nullable: true)]
     public ?DateTime $releasedOn = null;
 
+    #[ORM\Column(type: 'smallint')]
+    public int $rating;
+
+    #[ORM\Column(type: 'bigint')]
+    public int $viewCount;
+
+    #[ORM\Column(type: 'boolean')]
+    public bool $isActive;
+
     #[ORM\ManyToOne(targetEntity: DummyCurrency::class)]
     #[ORM\JoinColumn(nullable: false)]
     public DummyCurrency $currency;

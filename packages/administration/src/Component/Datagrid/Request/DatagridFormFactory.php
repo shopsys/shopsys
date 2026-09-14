@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Request;
 
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\DatagridFilterFormType;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterPrototypesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -54,5 +58,49 @@ class DatagridFormFactory
         $term = trim($data->text);
 
         return $term === '' ? null : $term;
+    }
+
+    /**
+     * A filter with no rule composed — never submitted, or submitted empty — is shown as the starting point,
+     * one group with one rule, so the administrator never faces an empty panel.
+     */
+    public function createFilterForm(FilterCollection $filters, DatagridRequestState $state): FormInterface
+    {
+        if ($state->filterQuery !== null) {
+            $form = $this->createFilterFormWithData($filters, $state, new FilterFormData());
+            $form->submit($state->filterQuery);
+
+            if ($form->getData()->hasRules()) {
+                return $form;
+            }
+        }
+
+        return $this->createFilterFormWithData($filters, $state, FilterFormData::createStartingPoint());
+    }
+
+    /**
+     * The prototypes of the rules of the filter form, named as that form and never submitted.
+     */
+    public function createFilterPrototypesForm(FilterCollection $filters, DatagridRequestState $state): FormInterface
+    {
+        return $this->formFactory->createNamed(
+            $state->getFilterFormName(),
+            FilterPrototypesFormType::class,
+            null,
+            ['filters' => $filters],
+        );
+    }
+
+    protected function createFilterFormWithData(
+        FilterCollection $filters,
+        DatagridRequestState $state,
+        FilterFormData $data,
+    ): FormInterface {
+        return $this->formFactory->createNamed(
+            $state->getFilterFormName(),
+            DatagridFilterFormType::class,
+            $data,
+            ['filters' => $filters],
+        );
     }
 }

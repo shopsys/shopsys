@@ -14,12 +14,40 @@
     {% block datagrid_controls %}
         {# the domain control displays nothing without a choice, the domain condition applies anyway #}
         {% set domainChoice = domainControlScope is not null and domainControlScope.offersChoice %}
-        {% if quickSearch is not null %}
+        {% if quickSearch is not null or filterForm is not null %}
+            {# a composed filter outranks the quick search, so its tab is the one open #}
             <div class="row row-deck row-cards mb-3">
                 <div class="col-12{{ domainChoice ? ' col-xl-8' }}">
                     <div class="card">
+                        {% if quickSearch is not null and filterForm is not null %}
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                                    <li class="nav-item">
+                                        <a href="#datagrid-quick-search" class="nav-link{{ not filterActive ? ' active' }}" data-bs-toggle="tab">
+                                            {{ 'Quick search'|trans }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#datagrid-filter" class="nav-link{{ filterActive ? ' active' }}" data-bs-toggle="tab">
+                                            {{ 'Filter'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
                         <div class="card-body">
-                            {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid, embedded: true }) }}
+                            <div class="tab-content">
+                                {% if quickSearch is not null %}
+                                    <div class="tab-pane{{ not filterActive ? ' active show' }}" id="datagrid-quick-search">
+                                        {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid, embedded: true }) }}
+                                    </div>
+                                {% endif %}
+                                {% if filterForm is not null %}
+                                    <div class="tab-pane{{ filterActive or quickSearch is null ? ' active show' }}" id="datagrid-filter">
+                                        {{ component('Admin:Grid:Filters', { filterForm: filterForm, prototypesForm: filterPrototypesForm, gridView: grid, embedded: true, active: filterActive }) }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>

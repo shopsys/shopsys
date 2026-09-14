@@ -132,4 +132,10 @@ class FieldDescriptorTest extends TestCase
         /** @phpstan-ignore argument.type */
         new FieldDescriptor('name', ['searchable' => 'yes']);
     }
+
+    public function testFilterNameIsTheFieldNameWithoutDots(): void
+    {
+        $this->assertSame('status', (new FieldDescriptor('status'))->getFilterName());
+        $this->assertSame('customerUser_email', (new FieldDescriptor('customerUser.email'))->getFilterName());
+    }
 }

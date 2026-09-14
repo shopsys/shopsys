@@ -16,11 +16,15 @@ final class DatagridRequestStateTest extends TestCase
             'ProductReview_search' => [
                 'text' => 'hrnek',
             ],
+            'ProductReview_filter' => [
+                'groups' => [],
+            ],
         ]), 'ProductReview');
 
         $this->assertTrue($state->inRequest);
         $this->assertSame('ProductReview', $state->gridId);
         $this->assertSame(['text' => 'hrnek'], $state->quickSearchQuery);
+        $this->assertSame(['groups' => []], $state->filterQuery);
     }
 
     public function testNothingIsReadWithoutTheParameters(): void
@@ -31,15 +35,18 @@ final class DatagridRequestStateTest extends TestCase
 
         $this->assertTrue($state->inRequest, 'The forms are built anyway, so that the components can render them.');
         $this->assertNull($state->quickSearchQuery);
+        $this->assertNull($state->filterQuery);
     }
 
     public function testTheFormsOfAnotherDatagridAreNotRead(): void
     {
         $state = DatagridRequestState::fromRequest(new Request([
             'ProductReview_search' => ['text' => 'hrnek'],
+            'ProductReview_filter' => ['groups' => []],
         ]), 'Order');
 
         $this->assertNull($state->quickSearchQuery);
+        $this->assertNull($state->filterQuery);
     }
 
     public function testStateOutsideRequestBuildsNoForm(): void
@@ -48,6 +55,7 @@ final class DatagridRequestStateTest extends TestCase
 
         $this->assertFalse($state->inRequest);
         $this->assertNull($state->quickSearchQuery);
+        $this->assertNull($state->filterQuery);
     }
 
     /**
@@ -58,5 +66,6 @@ final class DatagridRequestStateTest extends TestCase
         $state = new DatagridRequestState('Product review');
 
         $this->assertSame('Product_review_search', $state->getQuickSearchFormName());
+        $this->assertSame('Product_review_filter', $state->getFilterFormName());
     }
 }
