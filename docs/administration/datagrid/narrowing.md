@@ -1,6 +1,7 @@
 # Narrowing the records
 
-A datagrid lists the records its adapter loads. Everything that narrows them does so through a **condition**: a small tree of plain data every adapter understands and
+A datagrid lists the records its adapter loads. Everything that narrows them — the domain control, a quick
+search — does so through a **condition**: a small tree of plain data every adapter understands and
 compiles into its own medium. The code narrowing a datagrid never sees a `QueryBuilder`, so the same code
 works over a Doctrine query and over records already in memory.
 
@@ -27,12 +28,37 @@ is what makes the contract safe and simple:
 - a request without a condition lists every record.
 
 `Datagrid::createView()` sends such a request itself, combining by `Condition::andX()` everything that
-narrows the datagrid — for now the fixed conditions added by `Datagrid::addCondition()`.
+narrows the datagrid: the condition of the domain control, the quick search and the fixed conditions added
+by `Datagrid::addCondition()`.
 
 ```php
 // a fixed scope the administrator neither sees nor switches off
 $datagrid->addCondition(Condition::equals('deleted', false));
 ```
+
+## Quick search
+
+Declaring a field `searchable` is all it takes:
+
+```php
+$datagrid
+    ->add('catnum', ['label' => t('Catalog number'), 'searchable' => true])
+    ->add('name', ['label' => t('Name'), 'searchable' => true]);
+```
+
+The datagrid renders a text input above the records (the `Admin:Grid:QuickSearch` component, added to the
+`datagrid_controls` block of the CRUD list template) and narrows the records by `Condition::orX()` of
+`contains` over every searchable field. The searched text travels in a GET form named `<gridId>_search`,
+so the pager keeps it and the URL can be shared; the order and the limit of the grid travel with the search
+and the page starts over.
+
+A searchable field is validated when the datagrid is built: it has to have a path of its own (a virtual
+field without a `property` has none) and the path has to lead to text (asked through
+`PathDescribingAdapterInterface::describePath()`), otherwise `FieldNotSearchableException` says which field
+and why. A field hidden by `visible: false` can still be searchable.
+
+Outside the CRUD controller the pieces are `Datagrid::getQuickSearch()` (null when no field is searchable or
+the datagrid is built outside a request) and the component: `component('Admin:Grid:QuickSearch', { quickSearch: datagrid.quickSearch, gridView: gridView })`.
 
 ## The condition tree
 

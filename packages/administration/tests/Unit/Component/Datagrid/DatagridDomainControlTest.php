@@ -11,6 +11,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionCompiler;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorApplicability;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -246,7 +247,7 @@ final class DatagridDomainControlTest extends TestCase
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturn($gridStub);
 
-        return new Datagrid($adapter, $gridFactoryStub, [
+        return new Datagrid($adapter, $gridFactoryStub, new ExpressionOperatorApplicability(), [
             'roleConstant' => 'ROLE_CRUD_TEST',
             'domainControlScope' => $scope,
         ]);
