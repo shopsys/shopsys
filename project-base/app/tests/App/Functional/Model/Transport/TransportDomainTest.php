@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Transport;
 
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -52,12 +53,9 @@ class TransportDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedTransport->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
+    #[Group('multidomain')]
     public function testCreateTransportWithDifferentVisibilityOnDomains(): void
     {
-        if (count($this->domain->getAllIds()) === 1) {
-            $this->markTestSkipped('Test is skipped for single domain');
-        }
-
         $transportData = $this->transportDataFactory->create();
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = true;

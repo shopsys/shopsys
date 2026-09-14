@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Model\Payment;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentData;
 use App\Model\Payment\PaymentDataFactory;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -55,12 +56,9 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedPayment->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
+    #[Group('multidomain')]
     public function testCreatePaymentWithDifferentVisibilityOnDomains(): void
     {
-        if (count($this->domain->getAllIds()) === 1) {
-            $this->markTestSkipped('Test is skipped for single domain');
-        }
-
         $paymentData = $this->createPaymentData();
 
         $paymentData->enabled[self::FIRST_DOMAIN_ID] = true;

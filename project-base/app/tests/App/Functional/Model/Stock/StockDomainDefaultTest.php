@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Stock;
 
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Stock\Exception\DefaultStockNotEnabledException;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
@@ -84,12 +85,9 @@ final class StockDomainDefaultTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedStock->isDefaultOnAnyDomain());
     }
 
+    #[Group('multidomain')]
     public function testEditDefaultAffectsOnlyGivenDomain(): void
     {
-        if (count($this->domain->getAllIds()) < 2) {
-            $this->markTestSkipped('Test requires at least two domains.');
-        }
-
         $secondDomainId = $this->domain->getAllIds()[1];
 
         $previousDefaultOnSecondDomain = $this->findDefaultStockForDomain($secondDomainId);
