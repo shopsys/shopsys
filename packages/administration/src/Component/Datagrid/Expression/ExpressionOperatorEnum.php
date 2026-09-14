@@ -11,12 +11,12 @@ use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
 
 /**
  * The operations an expression builder is able to express, and everything that is known about each of them
- * regardless of the medium — the shape of the value it compares (`getValueArity()`) and the paths it makes sense
- * on (`assertApplicable()`).
+ * regardless of the medium — the shape of the value it compares (`getValueArity()`), the paths it makes sense
+ * on (`assertApplicable()`) and how it reads in the filter form (`getLabel()`).
  *
  * The vocabulary is shared by every medium and every builder expresses every case in its `compare()`. A project
- * extends the vocabulary by a subclass of this enum adding the case together with its arity and applicability,
- * and by a builder of every medium it uses extending `AbstractExpressionBuilder` that expresses it.
+ * extends the vocabulary by a subclass of this enum adding the case together with its arity, applicability and
+ * label, and by a builder of every medium it uses extending `AbstractExpressionBuilder` that expresses it.
  */
 class ExpressionOperatorEnum extends AbstractEnum
 {
@@ -127,6 +127,15 @@ class ExpressionOperatorEnum extends AbstractEnum
         }
     }
 
+    /**
+     * How the operation reads in the filter form. A filter with a better word for its kind of value (a date
+     * is "before" rather than "less than") overrides `FilterInterface::getOperatorLabel()`.
+     */
+    public function getLabel(string $operator): string
+    {
+        return $this->getLabels()[$operator] ?? $operator;
+    }
+
     protected function getReasonOfInapplicability(string $operator, PathDescription $pathDescription): ?string
     {
         if (in_array($operator, static::TEXT_OPERATORS, true) && $this->isText($pathDescription) === false) {
@@ -151,5 +160,30 @@ class ExpressionOperatorEnum extends AbstractEnum
     protected function isText(PathDescription $pathDescription): bool
     {
         return $pathDescription->valueType === PathValueTypeEnum::STRING;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    protected function getLabels(): array
+    {
+        return [
+            self::EQUALS => t('is'),
+            self::NOT_EQUALS => t('is not'),
+            self::CONTAINS => t('contains'),
+            self::STARTS_WITH => t('starts with'),
+            self::ENDS_WITH => t('ends with'),
+            self::GREATER_THAN => t('is greater than'),
+            self::GREATER_THAN_OR_EQUAL => t('is greater or equal to'),
+            self::LESS_THAN => t('is less than'),
+            self::LESS_THAN_OR_EQUAL => t('is less or equal to'),
+            self::BETWEEN => t('is between'),
+            self::IN => t('is one of'),
+            self::NOT_IN => t('is none of'),
+            self::IS_NULL => t('is not filled'),
+            self::IS_NOT_NULL => t('is filled'),
+            self::IS_EMPTY => t('has none'),
+            self::IS_NOT_EMPTY => t('has some'),
+        ];
     }
 }

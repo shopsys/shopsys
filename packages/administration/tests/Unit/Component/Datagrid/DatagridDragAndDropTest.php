@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -59,6 +60,19 @@ final class DatagridDragAndDropTest extends TestCase
         $this->gridDataSource?->getPaginatedRows();
     }
 
+    public function testFilteredRecordsAreListedByTheirPositionWithoutDragAndDrop(): void
+    {
+        $gridMock = $this->createGridMock();
+        $gridMock->expects($this->never())->method('enableDragAndDrop');
+        $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition(), null, [
+            'groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'hrnek']]]],
+        ]);
+        $datagrid->filters()->add(TextFilter::new('name'));
+
+        $datagrid->createView();
+        $this->gridDataSource?->getPaginatedRows();
+    }
+
     private function createGridMock(): Grid&MockObject
     {
         $gridMock = $this->createMock(Grid::class);
@@ -85,9 +99,14 @@ final class DatagridDragAndDropTest extends TestCase
 
     /**
      * @param array<string, mixed>|null $quickSearchQuery
+     * @param array<string, mixed>|null $filterQuery
      */
-    private function createDatagrid(Grid $grid, DataSourceInterface $dataSource, ?array $quickSearchQuery): Datagrid
-    {
+    private function createDatagrid(
+        Grid $grid,
+        DataSourceInterface $dataSource,
+        ?array $quickSearchQuery,
+        ?array $filterQuery = null,
+    ): Datagrid {
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturnCallback(function (string $name, DataSourceInterface $gridDataSource) use ($grid): Grid {
             $this->gridDataSource = $gridDataSource;
@@ -121,7 +140,7 @@ final class DatagridDragAndDropTest extends TestCase
             $this->createStub(AdministratorGridFacade::class),
             $this->createStub(Security::class),
             DatagridNarrowingResolverFactory::create(),
-            DatagridNarrowingResolverFactory::createRequestState($quickSearchQuery),
+            DatagridNarrowingResolverFactory::createRequestState($quickSearchQuery, $filterQuery),
             null,
             [
                 'name' => DatagridNarrowingResolverFactory::GRID_ID,

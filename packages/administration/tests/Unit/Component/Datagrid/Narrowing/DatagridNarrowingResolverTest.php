@@ -11,6 +11,9 @@ use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlS
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowing;
 use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
@@ -19,8 +22,8 @@ use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
 
 /**
- * The rules of the searchable fields are covered by `SearchablePathResolverTest`; this asserts how the narrowing
- * is put together from them and from the request.
+ * The rules of the searchable fields and of the offered filters are covered by `SearchablePathResolverTest` and
+ * `FilterSetResolverTest`; this asserts how the narrowing is put together from them and from the request.
  */
 final class DatagridNarrowingResolverTest extends TestCase
 {
@@ -68,6 +71,78 @@ final class DatagridNarrowingResolverTest extends TestCase
         );
     }
 
+    public function testComposedRulesNarrowTheRecords(): void
+    {
+        $narrowing = $this->resolve(DatagridNarrowingResolverFactory::createRequestState(null, ['operator' => 'and', 'groups' => [
+            ['operator' => 'or', 'rules' => [
+                ['filter' => 'name', 'operator' => 'contains', 'value' => 'hrnek'],
+                ['filter' => 'price', 'operator' => 'greaterThan', 'value' => '100'],
+            ]],
+        ]]), declaredFilters: $this->createFilters());
+
+        $this->assertTrue($narrowing->filterActive);
+        $this->assertSame('Product_filter', $narrowing->filterPanel?->form->getName());
+        $this->assertEquals(
+            Condition::orX(Condition::contains('name', 'hrnek'), Condition::greaterThan('price', 100.0)),
+            $narrowing->condition,
+        );
+    }
+
+    /**
+     * The filter and the quick search are two ways of asking the same question, so a composed filter wins and the
+     * quick search is not applied, while its form still shows what was searched for.
+     */
+    public function testComposedFilterOutranksTheQuickSearch(): void
+    {
+        $narrowing = $this->resolve(DatagridNarrowingResolverFactory::createRequestState(
+            ['text' => 'talíř'],
+            ['groups' => [['rules' => [['filter' => 'name', 'operator' => 'equals', 'value' => 'Hrnek']]]]],
+        ), [$this->createSearchableField('name')], $this->createFilters());
+
+        $this->assertTrue($narrowing->filterActive);
+        $this->assertSame('talíř', $narrowing->quickSearch?->term);
+        $this->assertEquals(Condition::equals('name', 'Hrnek'), $narrowing->condition);
+    }
+
+    public function testQuickSearchAppliesWhenNoRuleIsComposed(): void
+    {
+        $narrowing = $this->resolve(
+            DatagridNarrowingResolverFactory::createRequestState(['text' => 'talíř'], ['groups' => []]),
+            [$this->createSearchableField('name')],
+            $this->createFilters(),
+        );
+
+        $this->assertFalse($narrowing->filterActive);
+        $this->assertEquals(Condition::orX(Condition::contains('name', 'talíř')), $narrowing->condition);
+    }
+
+    /**
+     * An invalid filter narrows nothing and shows its errors, instead of quietly listing more than the
+     * administrator asked for; the quick search stays outranked.
+     */
+    public function testInvalidFilterNarrowsNothing(): void
+    {
+        $narrowing = $this->resolve(DatagridNarrowingResolverFactory::createRequestState(
+            ['text' => 'talíř'],
+            ['groups' => [['rules' => [['filter' => 'price', 'operator' => 'contains', 'value' => 'x']]]]],
+        ), [$this->createSearchableField('name')], $this->createFilters());
+
+        $this->assertTrue($narrowing->filterActive);
+        $this->assertFalse($narrowing->filterPanel?->form->isValid());
+        $this->assertNull($narrowing->condition);
+    }
+
+    public function testNoFilterPanelWithoutFilters(): void
+    {
+        $narrowing = $this->resolve(DatagridNarrowingResolverFactory::createRequestState(null, [
+            'groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'x']]]],
+        ]));
+
+        $this->assertNull($narrowing->filterPanel);
+        $this->assertFalse($narrowing->filterActive);
+        $this->assertNull($narrowing->condition);
+    }
+
     /**
      * The form is rendered even before anything is searched, so the quick search exists without a term.
      */
@@ -87,6 +162,7 @@ final class DatagridNarrowingResolverTest extends TestCase
         $narrowing = $this->resolve(
             DatagridRequestState::outsideRequest(DatagridNarrowingResolverFactory::GRID_ID),
             [$this->createSearchableField('name')],
+            $this->createFilters(),
             $scope,
         );
 
@@ -112,14 +188,26 @@ final class DatagridNarrowingResolverTest extends TestCase
     private function resolve(
         DatagridRequestState $requestState,
         array $fields = [],
+        ?FilterCollection $declaredFilters = null,
         ?DomainControlScope $domainControlScope = null,
     ): DatagridNarrowing {
         return DatagridNarrowingResolverFactory::create()->resolve(
-            new CapturingAdapter($this->createStub(DataSourceInterface::class)),
+            new CapturingAdapter($this->createStub(DataSourceInterface::class), CapturingAdapter::getFilterPathDescriptions()),
             $fields,
+            $declaredFilters ?? new FilterCollection(),
             $requestState,
             $domainControlScope,
         );
+    }
+
+    private function createFilters(): FilterCollection
+    {
+        $filters = new FilterCollection();
+        $filters
+            ->add(TextFilter::new('name'))
+            ->add(NumericFilter::new('price'));
+
+        return $filters;
     }
 
     private function createSearchableField(string $name): FieldDescriptor
