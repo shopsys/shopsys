@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryDataFactory;
 use App\Model\Category\CategoryFacade;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
@@ -68,21 +69,16 @@ final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($friendlyUrlCountBefore, $friendlyUrlCountAfter);
     }
 
-    public function testMainFriendlyUrlsAreGeneratedForNewEntityAndKeptOnRename(): void
+    public function testMainFriendlyUrlIsGeneratedForNewEntityAndKeptOnRename(): void
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryData->name[$this->getFirstDomainLocale()] = 'Guarded test category';
-        $categoryData->name[$this->getSecondDomainLocale()] = 'Guarded test category second';
 
         $category = $this->categoryFacade->create($categoryData);
 
         $this->assertSame(
             'guarded-test-category',
             $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId())->getSlug(),
-        );
-        $this->assertSame(
-            'guarded-test-category-second',
-            $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::SECOND_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId())->getSlug(),
         );
 
         $friendlyUrlCountBeforeRename = count($this->friendlyUrlFacade->getAllByRouteNameAndEntityId(self::CATEGORY_ROUTE_NAME, $category->getId()));
@@ -98,6 +94,26 @@ final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($friendlyUrlCountBeforeRename, $friendlyUrlCountAfterRename);
     }
 
+    #[Group('multidomain')]
+    public function testMainFriendlyUrlsAreGeneratedForAllDomainsOfNewEntity(): void
+    {
+        $categoryData = $this->categoryDataFactory->create();
+        $categoryData->name[$this->getFirstDomainLocale()] = 'Multidomain test category';
+        $categoryData->name[$this->getSecondDomainLocale()] = 'Multidomain test category second';
+
+        $category = $this->categoryFacade->create($categoryData);
+
+        $this->assertSame(
+            'multidomain-test-category',
+            $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId())->getSlug(),
+        );
+        $this->assertSame(
+            'multidomain-test-category-second',
+            $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::SECOND_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId())->getSlug(),
+        );
+    }
+
+    #[Group('multidomain')]
     public function testMainFriendlyUrlIsGeneratedWhenNameIsFilledInPreviouslyEmptyLocale(): void
     {
         $categoryData = $this->categoryDataFactory->create();
