@@ -76,6 +76,9 @@ msgstr "Přidat další cenu s váhovým limitem"
 msgid "Add country"
 msgstr "Přidat stát"
 
+msgid "Add group of rules"
+msgstr "Přidat skupinu pravidel"
+
 msgid "Add item"
 msgstr "Přidat položku"
 
@@ -99,6 +102,9 @@ msgstr "Přidat zboží"
 
 msgid "Add requirement"
 msgstr "Přidat podmínku"
+
+msgid "Add rule"
+msgstr "Přidat pravidlo"
 
 msgid "Add some alternate language combinations"
 msgstr "Přidejte nějaké kombinace alternativních jazyků"
@@ -201,6 +207,9 @@ msgstr "Použitelné proměnné pro obsah"
 
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
+
+msgid "Apply filter"
+msgstr "Použít filtr"
 
 msgid "Approve review"
 msgstr "Schválit recenzi"
@@ -1081,6 +1090,9 @@ msgstr "Soubory"
 msgid "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 msgstr "Vyplňte údaje o odstoupení a uložte tento formulář, čímž změníte stav objednávky na Odstoupeno od smlouvy. Zavřením okna zůstane zachován aktuální stav."
 
+msgid "Filter"
+msgstr "Filtr"
+
 msgid "First name"
 msgstr "Jméno"
 
@@ -1107,6 +1119,9 @@ msgstr "Doprava a platba zdarma"
 
 msgid "Friday"
 msgstr "Pátek"
+
+msgid "From"
+msgstr "Od"
 
 msgid "From (with VAT)"
 msgstr "Od (s DPH)"
@@ -1990,6 +2005,9 @@ msgstr "Zamítnuto"
 msgid "Remove"
 msgstr "Odebrat"
 
+msgid "Remove group"
+msgstr "Odebrat skupinu"
+
 msgid "Remove rule"
 msgstr "Odebrat pravidlo"
 
@@ -2169,6 +2187,9 @@ msgstr "Hledání v přenosech"
 
 msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání ve nahraných souborech podle názvu souboru, přípony nebo přeloženého názvu. Je možné používat operátory * a ?."
+
+msgid "Search in: %fields%"
+msgstr "Hledat v: %fields%"
 
 msgid "Search navigation"
 msgstr "Vyhledat v navigaci"
@@ -2464,6 +2485,9 @@ msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to 
 msgid "Thursday"
 msgstr "Čtvrtek"
 
+msgid "To"
+msgstr "Do"
+
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr "Aby bylo možné tuto hodnotu smazat, je třeba nastavit novou, která se použije místo ní. Bohužel není za co nahrazovat, před smazáním musíte nejdřív vytvořit novou."
 
@@ -2752,8 +2776,20 @@ msgstr "administrátorů"
 msgid "advertisings"
 msgstr "reklam"
 
+msgid "all of the groups match"
+msgstr "všechny skupiny platí"
+
+msgid "all of the rules match"
+msgstr "všechna pravidla platí"
+
 msgid "and %count% more"
 msgstr "[1,4] a %count% další|[5,Inf] a %count% dalších"
+
+msgid "any of the groups matches"
+msgstr "některá ze skupin platí"
+
+msgid "any of the rules matches"
+msgstr "některé z pravidel platí"
 
 msgid "articles"
 msgstr "článků"
@@ -2772,6 +2808,9 @@ msgstr "stavy reklamací"
 
 msgid "complaints"
 msgstr "reklamace"
+
+msgid "contains"
+msgstr "obsahuje"
 
 msgid "countries"
 msgstr "státy"
@@ -2794,6 +2833,9 @@ msgstr "sleva"
 msgid "empty"
 msgstr "prázdné"
 
+msgid "ends with"
+msgstr "končí na"
+
 msgid "files"
 msgstr "soubory"
 
@@ -2812,8 +2854,53 @@ msgstr "g"
 msgid "gift plans"
 msgstr "dárkové plány"
 
+msgid "has none"
+msgstr "nemá žádné"
+
+msgid "has some"
+msgstr "má nějaké"
+
 msgid "inquiries"
 msgstr "poptávky"
+
+msgid "is"
+msgstr "je"
+
+msgid "is after"
+msgstr "je po"
+
+msgid "is before"
+msgstr "je před"
+
+msgid "is between"
+msgstr "je mezi"
+
+msgid "is filled"
+msgstr "je vyplněno"
+
+msgid "is greater or equal to"
+msgstr "je větší nebo rovno"
+
+msgid "is greater than"
+msgstr "je větší než"
+
+msgid "is less or equal to"
+msgstr "je menší nebo rovno"
+
+msgid "is less than"
+msgstr "je menší než"
+
+msgid "is none of"
+msgstr "není žádné z"
+
+msgid "is not"
+msgstr "není"
+
+msgid "is not filled"
+msgstr "není vyplněno"
+
+msgid "is one of"
+msgstr "je jedno z"
 
 msgid "or"
 msgstr "nebo"
@@ -2847,6 +2934,9 @@ msgstr "záznamů"
 
 msgid "sales representatives"
 msgstr "obchodní zástupci"
+
+msgid "starts with"
+msgstr "začíná na"
 
 msgid "subscribers"
 msgstr "odběratelé newsletteru"
