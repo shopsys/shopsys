@@ -8,9 +8,9 @@ use Override;
 use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Model\Navigation\NavigationItemCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
@@ -29,7 +29,7 @@ class NavigationController extends AbstractCrudController
         $config
             ->setEntityNamePlural(t('Navigation'))
             ->setMenuSection(SideMenuBuilder::ROOT_CMS, null, ['after' => SideMenuBuilder::SECTION_BLOG])
-            ->setListDomainControl(CrudListDomainControl::SWITCHER)
+            ->setListDomainControl(DomainControlType::SWITCHER)
             ->registerHandler(NavigationItemCrudHandler::class);
     }
 

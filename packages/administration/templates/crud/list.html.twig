@@ -11,11 +11,11 @@
 {% endblock %}
 
 {% block main_content %}
-    {% block domain_control %}
-        {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
-            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
-        {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}
-            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+    {% block datagrid_controls %}
+        {# the domain control displays nothing without a choice, the domain condition applies anyway #}
+        {% set domainChoice = domainControlScope is not null and domainControlScope.offersChoice %}
+        {% if domainChoice %}
+            {{ component('Admin:Grid:DomainControl', { scope: domainControlScope }) }}
         {% endif %}
     {% endblock %}
 

@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid;
 
+use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScopeFactory;
+use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
@@ -25,14 +30,48 @@ final class DatagridFactory
         private readonly AccessCheckerInterface $accessChecker,
         private readonly AdministratorGridFacade $administratorGridFacade,
         private readonly Security $security,
+        private readonly DomainControlScopeFactory $domainControlScopeFactory,
+        private readonly DatagridNarrowingResolver $datagridNarrowingResolver,
     ) {
     }
 
     /**
+     * The domain control of the datagrid is read from the CRUD definition unless given explicitly, which is how
+     * a datagrid is built in a test.
+     *
      * @param DatagridOptions $options
      */
-    public function create(AdapterInterface $adapter, array $options): Datagrid
-    {
-        return new Datagrid($adapter, $this->gridFactory, $this->accessChecker, $this->administratorGridFacade, $this->security, $options);
+    public function create(
+        AdapterInterface $adapter,
+        array $options,
+        ?DomainControlScope $domainControlScope = null,
+    ): Datagrid {
+        return new Datagrid(
+            $adapter,
+            $this->gridFactory,
+            $this->accessChecker,
+            $this->administratorGridFacade,
+            $this->security,
+            $this->datagridNarrowingResolver,
+            $domainControlScope ?? $this->createDomainControlScope($adapter, $options['crudDefinition'] ?? null),
+            $options,
+        );
+    }
+
+    /**
+     * The domain control of a CRUD datagrid follows its configuration; a datagrid outside CRUD has none.
+     */
+    private function createDomainControlScope(
+        AdapterInterface $adapter,
+        ?Definition $crudDefinition,
+    ): ?DomainControlScope {
+        if ($crudDefinition === null) {
+            return null;
+        }
+
+        return $this->domainControlScopeFactory->create(
+            $crudDefinition->getConfig()->getDomainControlConfig(),
+            $adapter instanceof EntityClassAwareAdapterInterface ? $adapter->getEntityClass() : null,
+        );
     }
 }
