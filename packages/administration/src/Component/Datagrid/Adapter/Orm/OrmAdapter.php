@@ -28,6 +28,7 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
         private readonly Localization $localization,
         private readonly HintsHelper $hintsHelper,
         private readonly CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor,
+        private readonly PathWalkerInterface $pathWalker,
         ?Closure $configureQuery,
     ) {
         $this->proxyQuery = $this->createProxyQuery($entityClass);
@@ -115,6 +116,11 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->managerRegistry->getManagerForClass($entityClass);
 
-        return new ProxyQuery($entityClass, $entityManager, $this->localization->getCurrentLocaleForTranslatableEntities());
+        return new ProxyQuery(
+            $entityClass,
+            $entityManager,
+            $this->pathWalker,
+            $this->localization->getCurrentLocaleForTranslatableEntities(),
+        );
     }
 }
