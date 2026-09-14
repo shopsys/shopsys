@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Fill in both bounds of the range."
+msgstr "Vyplňte obě hranice rozsahu."
+
 msgid "Payment transaction is not refundable."
 msgstr "Platební transakci nelze refundovat."
 
