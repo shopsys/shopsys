@@ -44,6 +44,7 @@ final class ExtendedClassNameResolverFixer implements ConfigurableFixerInterface
     private const array DEFAULT_EXCLUDED_CLASS_NAMES = [
         'Shopsys\FrameworkBundle\Component\Money\HiddenMoney',
         'Shopsys\FrameworkBundle\Component\Money\Money',
+        'Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface',
     ];
 
     public function __construct()

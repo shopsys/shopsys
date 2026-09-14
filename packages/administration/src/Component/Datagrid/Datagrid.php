@@ -18,6 +18,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSour
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
 use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowing;
 use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
 use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
@@ -44,6 +45,8 @@ final class Datagrid
     private ArrayCollection $fields;
 
     private DatagridRowActions $actions;
+
+    private FilterCollection $filters;
 
     private ?DatagridNarrowing $narrowing = null;
 
@@ -83,6 +86,7 @@ final class Datagrid
     ) {
         $this->fields = new ArrayCollection();
         $this->actions = new DatagridRowActions();
+        $this->filters = new FilterCollection();
         $this->options = $this->resolveOptions($options);
 
         $this->configureDefaultCrudActions();
@@ -98,17 +102,20 @@ final class Datagrid
     }
 
     /**
-     * What narrows the records on behalf of the administrator — the domain control and the quick search. Resolved
-     * from the fields on the first call (`createView()` makes one), so ask once the datagrid is configured; the
-     * fields cannot be changed after that, the change would never reach the narrowing.
+     * What narrows the records on behalf of the administrator — the domain control, the quick search and the filter
+     * panel. Resolved from the fields and the filters on the first call (`createView()` makes one), so ask once
+     * the datagrid is configured; the fields and the filters cannot be changed after that, the change would never
+     * reach the narrowing.
      *
      * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
      */
     public function getNarrowing(): DatagridNarrowing
     {
         return $this->narrowing ??= $this->narrowingResolver->resolve(
             $this->adapter,
             $this->getAccessibleFields(),
+            $this->getAccessibleFilters(),
             $this->requestState,
             $this->domainControlScope,
         );
@@ -326,6 +333,20 @@ final class Datagrid
     }
 
     /**
+     * The filters the administrator composes rules from, declared explicitly —
+     * `$datagrid->filters()->add(TextFilter::new('name'))`.
+     *
+     * The filters are offered in the alphabetical order of their labels. Declare them while configuring the datagrid,
+     * they are adapted to the adapter once the narrowing is resolved (see `getNarrowing()`).
+     */
+    public function filters(): FilterCollection
+    {
+        $this->assertNotNarrowedYet();
+
+        return $this->filters;
+    }
+
+    /**
      * Class for managing row actions in datagrid
      */
     public function actions(): DatagridRowActions
@@ -427,13 +448,40 @@ final class Datagrid
 
     /**
      * The fields the current administrator is allowed to see — only those are fetched, displayed and narrowed by,
-     * so that the quick search cannot tell what a field hidden from the administrator holds.
+     * so that neither the quick search nor a filter can tell what a field hidden from the administrator holds.
      *
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[]
      */
     private function getAccessibleFields(): array
     {
         return array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
+    }
+
+    /**
+     * The declared filters the current administrator is allowed to use — a filter declared under the name of a field
+     * hidden from the administrator, or over one of its properties, would tell what the field holds.
+     */
+    private function getAccessibleFilters(): FilterCollection
+    {
+        $hiddenFilterNames = [];
+        $hiddenPaths = [];
+
+        foreach ($this->fields as $field) {
+            if ($this->isAccessible($field) === false) {
+                $hiddenFilterNames[] = $field->getFilterName();
+                array_push($hiddenPaths, ...$field->getProperties());
+            }
+        }
+
+        $accessibleFilters = new FilterCollection();
+
+        foreach ($this->filters as $filter) {
+            if (in_array($filter->getName(), $hiddenFilterNames, true) === false && in_array($filter->getPath(), $hiddenPaths, true) === false) {
+                $accessibleFilters->add($filter);
+            }
+        }
+
+        return $accessibleFilters;
     }
 
     /**
