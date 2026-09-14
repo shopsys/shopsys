@@ -8,7 +8,9 @@ use Closure;
 use Doctrine\Persistence\ManagerRegistry;
 use Override;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactoryInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
@@ -28,6 +30,7 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
         private readonly Localization $localization,
         private readonly HintsHelper $hintsHelper,
         private readonly CrudEntityIdentifierExtractor $crudEntityIdentifierExtractor,
+        private readonly DqlExpressionBuilderFactoryInterface $dqlExpressionBuilderFactory,
         private readonly PathWalkerInterface $pathWalker,
         ?Closure $configureQuery,
     ) {
@@ -48,22 +51,31 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
     }
 
     /**
-     * @param array<\Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor> $fields
+     * The query built in the constructor is only a prototype — every request composes the selects and the
+     * condition on its own copy, so that the same request builds the very same query and the prototype is
+     * never touched by the joins and the parameters a condition needs.
      */
     #[Override]
-    public function getDatasource(string $identificationName, array $fields): DataSourceInterface
+    public function getDatasource(DatasourceRequest $request): DataSourceInterface
     {
-        $this->proxyQuery->addSelect($identificationName);
+        $proxyQuery = clone $this->proxyQuery;
+        $proxyQuery->addSelect($request->identificationName);
 
-        foreach ($fields as $field) {
+        foreach ($request->fields as $field) {
             foreach ($field->getSelectProperties() as $selectProperty) {
-                $this->proxyQuery->addSelect($selectProperty);
+                $proxyQuery->addSelect($selectProperty);
             }
         }
 
+        if ($request->condition !== null) {
+            $proxyQuery->applyExpression($this->dqlExpressionBuilderFactory->create($proxyQuery)->compile($request->condition));
+        }
+
+        $fields = $request->fields;
+
         return new DatagridDataSource(
-            $this->proxyQuery->getQueryBuilder(),
-            $identificationName,
+            $proxyQuery->getQueryBuilder(),
+            $request->identificationName,
             function ($row, $results) use ($fields) {
                 foreach ($fields as $field) {
                     if ($field->getTransform() === null && !$field->hasMultipleProperties()) {
