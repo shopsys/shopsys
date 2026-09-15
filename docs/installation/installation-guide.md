@@ -6,7 +6,9 @@ This document will provide you with information about ways of developing and run
 
 For new projects, the **Shopsys CLI** is automatically downloaded when you create a project using Composer:
 
-> **Windows Users:** Run these commands inside WSL2 (Windows Subsystem for Linux).
+!!! warning "Windows users"
+
+    Run these commands inside WSL2 (Windows Subsystem for Linux).
 
 ```bash
 composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs

@@ -6,7 +6,9 @@ By default, only the List action is enabled when you create a CRUD controller. T
 
 The handler acts as a bridge between your CRUD controller and your business logic (typically facades). Create a new class that implements any of extended interfaces of `Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface`
 
-> **Note:** For guidance on choosing the right handler interface for your needs, see [Choosing the Right Interface](../reference/handlers.md#choosing-the-right-interface).
+!!! note
+
+    For guidance on choosing the right handler interface for your needs, see [Choosing the Right Interface](../reference/handlers.md#choosing-the-right-interface).
 
 ```php
 <?php
