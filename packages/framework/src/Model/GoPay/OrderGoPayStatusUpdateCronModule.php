@@ -63,7 +63,8 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 }
             } catch (GoPayPaymentDownloadException $e) {
                 $this->logger->error($e->getMessage(), [
-                    'exception' => $e,
+                    ...$e->getLogContext(),
+                    'orderId' => $orderId,
                 ]);
                 $failedOrderIds[] = $orderId;
 
