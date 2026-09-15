@@ -4,7 +4,7 @@ This is a recommended configuration of PHP for project development using Shopsys
 
 ## Recommended `php.ini` settings
 
-```
+```ini
 ; do not recognize code between '<?' and '?>' tags as PHP source
 short_open_tag = Off
 

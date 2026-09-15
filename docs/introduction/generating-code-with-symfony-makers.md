@@ -6,12 +6,12 @@ Using these simple console commands, you can avoid writing a boilerplate code, a
 
 When implementing a new entity agenda, you can use
 
-```
+```sh
 php bin/console make:shopsys:entity-agenda
 ```
 
 To list all the available maker commands, use
 
-```
+```sh
 php bin/console make:shopsys
 ```

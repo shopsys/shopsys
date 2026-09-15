@@ -50,7 +50,7 @@ Now, you have two options:
 
 In the case you want to start demo of the application as fast as possible, you can simply execute the installation script and that is all:
 
-```
+```sh
 ./scripts/install.sh
 ```
 

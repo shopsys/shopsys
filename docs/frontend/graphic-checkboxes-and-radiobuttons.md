@@ -37,7 +37,7 @@ We prepared PSD file for create custom background image. You can [download it](.
 
 As you can see at layer structure, there are radiobuttons and checkboxes separately. Just make visible part that you want, make your changes and export as png file and save as original file:
 
-```
+```text
  `web/assets/frontend/images/custom_checkbox.png`
  `web/assets/frontend/images/custom_radio.png`
 ```

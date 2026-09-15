@@ -88,7 +88,7 @@ $this->sql('ALTER TABLE products ALTER ext_id DROP DEFAULT');
 
 Run the migration to create the column in your database:
 
-```
+```sh
 php phing db-migrations
 ```
 

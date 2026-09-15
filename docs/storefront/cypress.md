@@ -230,7 +230,7 @@ Usage examples
 
 - Success path (example: add to cart):
 
-```
+```ts
 cy.request({
   method: 'POST',
   url: 'graphql/',
@@ -250,7 +250,7 @@ cy.request({
 - Negative/validation scenario (two options):
     - Prefer asserting on the thrown message using `Cypress.once('fail', ...)` (keeps the command consistent and still fail-fast):
 
-```
+```ts
 Cypress.once('fail', (err) => {
   expect(String(err.message)).to.contain('RegistrationMutation failed');
   expect(String(err.message)).to.match(/Validation:/);
@@ -264,7 +264,7 @@ cy.request({ /* ... invalid input ... */, failOnStatusCode: false })
 
 - Or, if you need to inspect `errors` without throwing, skip `checkGQL` and assert on `response.body.errors` manually:
 
-```
+```ts
 cy.request({ /* ... */, failOnStatusCode: false }).then((res) => {
   const body = typeof res.body === 'string' ? JSON.parse(res.body) : res.body;
   expect(body.errors).to.be.an('array').and.not.empty;
@@ -738,7 +738,7 @@ Example of adding a new route to test:
 
 To run smoke tests, don't forget to setup your Docker file with volumes correctly first, and then use the dedicated make command:
 
-```
+```sh
 make run-smoke-tests
 ```
 

@@ -25,7 +25,7 @@ Knip finds several types of issues:
 
 When Knip finds issues, it outputs them like this:
 
-```
+```text
 Unused exports (2)
 SelectProps           type      components/Forms/Select/Select.tsx:13:13
 formatUserName        function  utils/formatting/user.ts:5:14

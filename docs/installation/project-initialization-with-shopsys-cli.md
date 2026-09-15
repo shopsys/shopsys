@@ -27,7 +27,7 @@ The `post-create-project-cmd` hook downloads `shopsys.phar` and runs `php shopsy
 
     Without an explicit version, Composer installs the latest stable release. To start a project from a not-yet-released version (e.g., the upcoming 20.0), append the development version of its branch to the package name — Composer resolves `20.0.x-dev` to the `20.0` branch of `shopsys/project-base`:
 
-    ```
+    ```sh
     composer create-project shopsys/project-base:20.0.x-dev --no-install --keep-vcs --ignore-platform-reqs
     ```
 

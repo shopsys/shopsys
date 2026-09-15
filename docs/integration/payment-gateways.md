@@ -103,7 +103,7 @@ Moreover, GoPay does not allow the usage of `localhost` or `127.0.0.1` as a retu
 - set the same domain URL in your `app/config/domains_urls.yaml` config file
 - edit your `storefront/.env.local`:
 
-```
+```sh
 DOMAIN_HOSTNAME_1=http://app.test:8000/
 PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1=http://app.test:8000/graphql/
 ```
