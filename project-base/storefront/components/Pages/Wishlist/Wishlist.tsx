@@ -1,6 +1,7 @@
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
+import { ProductListViewModeToggle } from 'components/Blocks/Product/ProductsList/ProductListViewModeToggle';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { Button } from 'components/Forms/Button/Button';
@@ -26,7 +27,6 @@ export const Wishlist: FC = () => {
     const { t } = useTranslation();
     const { wishlist, isProductListFetching, removeWishlist } = useWishlist();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const title = `${t('Wishlist')}${wishlist?.products.length ? ` (${wishlist.products.length})` : ''}`;
 
     const handleRemoveAllClick = () => {
         updatePortalContent(
@@ -46,17 +46,30 @@ export const Wishlist: FC = () => {
 
                 {wishlist?.products && !isProductListFetching && (
                     <>
-                        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
-                            <h1>{title}</h1>
+                        <div className="mb-4 flex flex-col gap-2">
+                            <div className="flex items-center justify-between gap-2">
+                                <h1>{t('Wishlist')}</h1>
 
-                            <Button
-                                aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
-                                variant="tertiary"
-                                onClick={handleRemoveAllClick}
-                            >
-                                <TrashCanIcon className="size-4" />
-                                {t('Remove all from wishlist')}
-                            </Button>
+                                <Button
+                                    aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
+                                    size="small"
+                                    title={t('Remove all from wishlist')}
+                                    variant="tertiary"
+                                    onClick={handleRemoveAllClick}
+                                >
+                                    <TrashCanIcon className="size-4" />
+                                    {t('Remove all')}
+                                </Button>
+                            </div>
+
+                            <div className="flex items-center justify-between gap-2 sm:justify-end">
+                                <div className="font-secondary text-input-placeholder-default text-xs">
+                                    {wishlist.products.length}{' '}
+                                    {t('products count', { count: wishlist.products.length })}
+                                </div>
+
+                                <ProductListViewModeToggle />
+                            </div>
                         </div>
 
                         <ProductsList
