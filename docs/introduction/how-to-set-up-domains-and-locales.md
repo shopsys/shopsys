@@ -5,7 +5,7 @@ For an explanation of the basic terms, please read [domain, multidomain and mult
 
 !!! tip "Automate with Shopsys CLI"
 
-    Setting up domains and locales manually can be complex. [Shopsys CLI](../installation/project-initialization-with-cli.md) automates this entire process - it guides you through domain configuration, locale settings, and URL setup interactively or via YAML configuration files.
+    Setting up domains and locales manually can be complex. [Shopsys CLI](../installation/project-initialization-with-shopsys-cli.md) automates this entire process - it guides you through domain configuration, locale settings, and URL setup interactively or via YAML configuration files.
 
 !!! note
 
