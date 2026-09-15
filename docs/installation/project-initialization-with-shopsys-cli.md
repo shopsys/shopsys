@@ -3,11 +3,15 @@
 Shopsys CLI (package name: `shopsys/cli`) is a command-line tool that automates the initialization and configuration of new Shopsys Platform projects.
 It simplifies multi-domain setup by providing interactive configuration prompts or YAML-based configuration files.
 
-> **Important:** The Shopsys CLI version is coupled with the Shopsys Platform version. Always use the CLI version that matches your target Platform version (e.g., use CLI 18.0 for Platform 18.0).
+!!! important
+
+    The Shopsys CLI version is coupled with the Shopsys Platform version. Always use the CLI version that matches your target Platform version (e.g., use CLI 18.0 for Platform 18.0).
 
 ## Installation
 
-> **Windows Users:** The Shopsys CLI must be run inside WSL2 (Windows Subsystem for Linux). Open your WSL2 terminal before running these commands.
+!!! warning "Windows users"
+
+    The Shopsys CLI must be run inside WSL2 (Windows Subsystem for Linux). Open your WSL2 terminal before running these commands.
 
 ### Automatic Installation (Recommended)
 
