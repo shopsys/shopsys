@@ -131,6 +131,23 @@ div.toc {
     font-size: 95%;
 }
 
+/** BLOCKQUOTE **/
+.rst-content blockquote {
+    margin: 0 0 24px;
+    padding: 4px 0 4px 20px;
+    border-left: 4px solid var(--color-dark-highlight);
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+.rst-content blockquote p {
+    margin-bottom: 0;
+}
+
+.rst-content blockquote p + p {
+    margin-top: 12px;
+}
+
 /** CODE **/
 .rst-content code {
     word-break: keep-all;
