@@ -9,6 +9,8 @@ sentry:
         ignore_exceptions:
             - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
             - Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+            - Symfony\Component\HttpKernel\Exception\GoneHttpException
+            - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
         release: '%env(SENTRY_RELEASE)%'
         traces_sample_rate: 0.1
     register_error_handler: false
