@@ -202,6 +202,9 @@ msgstr ""
 msgid "Applicable variables for Subject"
 msgstr ""
 
+msgid "Approve review"
+msgstr ""
+
 msgid "Approved"
 msgstr ""
 
@@ -1994,6 +1997,12 @@ msgid "Reset password"
 msgstr ""
 
 msgid "Return back"
+msgstr ""
+
+msgid "Review <strong><a href=\"{{ url }}\">{{ reviewName }}</a></strong> is no longer pending, so it cannot be approved."
+msgstr ""
+
+msgid "Review <strong><a href=\"{{ url }}\">{{ reviewName }}</a></strong> was approved."
 msgstr ""
 
 msgid "Reviewed product"

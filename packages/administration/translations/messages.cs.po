@@ -202,6 +202,9 @@ msgstr "Použitelné proměnné pro obsah"
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
 
+msgid "Approve review"
+msgstr "Schválit recenzi"
+
 msgid "Approved"
 msgstr "Schváleno"
 
@@ -1995,6 +1998,12 @@ msgstr "Resetovat heslo"
 
 msgid "Return back"
 msgstr "Vrátit zpět"
+
+msgid "Review <strong><a href=\"{{ url }}\">{{ reviewName }}</a></strong> is no longer pending, so it cannot be approved."
+msgstr "Recenze <strong><a href=\"{{ url }}\">{{ reviewName }}</a></strong> již není ve stavu čeká na schválení, proto ji nelze schválit."
+
+msgid "Review <strong><a href=\"{{ url }}\">{{ reviewName }}</a></strong> was approved."
+msgstr "Recenze <strong><a href=\"{{ url }}\">{{ reviewName }}</a></strong> byla schválena."
 
 msgid "Reviewed product"
 msgstr "Recenzovaný produkt"

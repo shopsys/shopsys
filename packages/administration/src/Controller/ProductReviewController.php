@@ -6,7 +6,10 @@ namespace Shopsys\AdministrationBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\AdministrationBundle\Component\Action\Action;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
@@ -14,12 +17,17 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Form\Admin\ProductReview\ProductReviewFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewEnabledChecker;
+use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewFacade;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewStatusEnum;
 use SortDirection;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[CrudController(ProductReview::class)]
 class ProductReviewController extends AbstractCrudController
@@ -27,6 +35,7 @@ class ProductReviewController extends AbstractCrudController
     public function __construct(
         protected readonly EntityLogFacade $entityLogFacade,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
+        protected readonly ProductReviewFacade $productReviewFacade,
     ) {
     }
 
@@ -41,6 +50,21 @@ class ProductReviewController extends AbstractCrudController
             ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
             ->registerHandler(ProductReviewEditHandler::class)
             ->disable(!$this->productReviewEnabledChecker->isEnabledOnAnyDomain());
+    }
+
+    #[Override]
+    protected function configureActions(ActionsConfig $actions): void
+    {
+        $actions->add(
+            ActionType::EDIT,
+            Action::create('approveReview', t('Approve review'))
+                ->setIcon('checked')
+                ->setAttribute('class', 'btn-success', true)
+                ->displayIf(fn (ProductReview $productReview) => $productReview->getStatus() === ProductReviewStatusEnum::STATUS_PENDING)
+                ->linkToRoute('admin_crud_product_review_approve', fn (ProductReview $productReview) => [
+                    'id' => $productReview->getId(),
+                ]),
+        );
     }
 
     #[Override]
@@ -142,5 +166,39 @@ class ProductReviewController extends AbstractCrudController
             'entityLogEntityName' => $this->entityLogFacade->getEntityNameByEntity(ProductReview::class),
             'productReview' => $productReview,
         ];
+    }
+
+    #[Route(path: '/product-review/approve/{id}', name: 'admin_crud_product_review_approve', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[CanEdit]
+    #[CsrfProtection]
+    public function approveAction(int $id): Response
+    {
+        /** @var \Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler $handler */
+        $handler = $this->definition->getHandlerForAction(ActionType::EDIT);
+        $productReview = $handler->getById($id);
+
+        if ($productReview->getStatus() !== ProductReviewStatusEnum::STATUS_PENDING) {
+            $this->addErrorFlashTwig(
+                t('Review <strong><a href="{{ url }}">{{ reviewName }}</a></strong> is no longer pending, so it cannot be approved.'),
+                [
+                    'reviewName' => $productReview->toHumanReadable(),
+                    'url' => $this->generateUrl('admin_crud_product_review_edit', ['id' => $id]),
+                ],
+            );
+
+            return $this->redirectToRoute('admin_crud_product_review_list');
+        }
+
+        $this->productReviewFacade->approve($productReview);
+
+        $this->addSuccessFlashTwig(
+            t('Review <strong><a href="{{ url }}">{{ reviewName }}</a></strong> was approved.'),
+            [
+                'reviewName' => $productReview->toHumanReadable(),
+                'url' => $this->generateUrl('admin_crud_product_review_edit', ['id' => $id]),
+            ],
+        );
+
+        return $this->redirectToRoute('admin_crud_product_review_list');
     }
 }
