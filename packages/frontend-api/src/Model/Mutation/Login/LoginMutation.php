@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class LoginMutation extends AbstractMutation
 {
@@ -35,15 +36,19 @@ class LoginMutation extends AbstractMutation
     {
         $input = $argument['input'];
 
-        $currentRequest = $this->checkLoginRateLimitAndGetCurrentRequest();
+        $currentRequest = $this->checkLoginRateLimitAndGetCurrentRequest($input['email']);
 
         try {
             $customerUser = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
         } catch (UserNotFoundException) {
+            $this->loginRateLimiter->consume($currentRequest);
+
             throw new InvalidCredentialsUserError('Log in failed.');
         }
 
         if (!$this->userPasswordHasher->isPasswordValid($customerUser, $input['password'])) {
+            $this->loginRateLimiter->consume($currentRequest);
+
             throw new InvalidCredentialsUserError('Log in failed.');
         }
 
@@ -72,11 +77,18 @@ class LoginMutation extends AbstractMutation
 
             return $tokensData;
         } catch (LoginAsRememberedUserException) {
+            $this->loginRateLimiter->consume($currentRequest);
+
             throw new InvalidCredentialsUserError('Invalid or expired exchange token.');
         }
     }
 
-    protected function checkLoginRateLimitAndGetCurrentRequest(): Request
+    /**
+     * Only failed attempts consume the limit (see the callers), a successful login must not,
+     * because DefaultLoginRateLimiter::reset() clears just the username+IP limit
+     * and the IP-wide limit would otherwise be exhausted by legitimate logins from a shared IP address
+     */
+    protected function checkLoginRateLimitAndGetCurrentRequest(string $username = ''): Request
     {
         $request = $this->requestStack->getCurrentRequest();
 
@@ -84,9 +96,11 @@ class LoginMutation extends AbstractMutation
             throw new InvalidCredentialsUserError('Request is not available.');
         }
 
-        $limit = $this->loginRateLimiter->consume($request);
+        $request->attributes->set(SecurityRequestAttributes::LAST_USERNAME, $username);
 
-        if (!$limit->isAccepted()) {
+        $limit = $this->loginRateLimiter->peek($request);
+
+        if (!$limit->isAccepted() || $limit->getRemainingTokens() === 0) {
             throw new TooManyLoginAttemptsUserError('Too many login attempts. Try again later.');
         }
 
