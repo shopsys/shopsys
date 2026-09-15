@@ -27,7 +27,7 @@ class GoPayRepository
             ->join('o.paymentTransactions', 'pt', Join::WITH, 'p.id = pt.payment')
             ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')
-            ->andWhere('pt.externalPaymentStatus NOT IN (:paymentStatuses)')
+            ->andWhere('(pt.externalPaymentStatus IS NULL OR pt.externalPaymentStatus NOT IN (:paymentStatuses))')
             ->orderBy('o.createdAt', SortDirection::Ascending)
             ->setParameter('fromDate', $fromDate)
             ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
