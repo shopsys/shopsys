@@ -37,6 +37,67 @@ class IndexDefinitionTest extends TestCase
         ];
     }
 
+    /**
+     * @return iterable<string, array{indexPrefix: string, domainId: int, indexName: string, expectedResult: bool}>
+     */
+    public static function getIsVersionedIndexNameOfData(): iterable
+    {
+        yield 'current mapping hash' => [
+            'indexPrefix' => '',
+            'domainId' => 1,
+            'indexName' => 'product_1_' . md5(serialize(['foo' => 'bar'])),
+            'expectedResult' => true,
+        ];
+
+        yield 'stale mapping hash' => [
+            'indexPrefix' => '',
+            'domainId' => 1,
+            'indexName' => 'product_1_c13d8712c2e1f24b29d873acc70044f5',
+            'expectedResult' => true,
+        ];
+
+        yield 'prefixed index' => [
+            'indexPrefix' => 'project-prefix',
+            'domainId' => 1,
+            'indexName' => 'project-prefix_product_1_c13d8712c2e1f24b29d873acc70044f5',
+            'expectedResult' => true,
+        ];
+
+        yield 'same index of another domain sharing the digit prefix' => [
+            'indexPrefix' => '',
+            'domainId' => 1,
+            'indexName' => 'product_10_c13d8712c2e1f24b29d873acc70044f5',
+            'expectedResult' => false,
+        ];
+
+        yield 'another index' => [
+            'indexPrefix' => '',
+            'domainId' => 1,
+            'indexName' => 'category_1_c13d8712c2e1f24b29d873acc70044f5',
+            'expectedResult' => false,
+        ];
+
+        yield 'unprefixed index while prefix is configured' => [
+            'indexPrefix' => 'project-prefix',
+            'domainId' => 1,
+            'indexName' => 'product_1_c13d8712c2e1f24b29d873acc70044f5',
+            'expectedResult' => false,
+        ];
+    }
+
+    #[DataProvider('getIsVersionedIndexNameOfData')]
+    public function testIsVersionedIndexNameOfMatchesAnyMappingHashOfTheSameAlias(
+        string $indexPrefix,
+        int $domainId,
+        string $indexName,
+        bool $expectedResult,
+    ): void {
+        $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
+        $indexDefinition = new IndexDefinition('product', $definitionDirectory, $indexPrefix, $domainId, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
+
+        $this->assertSame($expectedResult, $indexDefinition->isVersionedIndexNameOf($indexName));
+    }
+
     public function testGetDefinitionReturnsDefinition(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
