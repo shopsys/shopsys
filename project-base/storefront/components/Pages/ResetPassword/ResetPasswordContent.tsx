@@ -24,10 +24,7 @@ export const ResetPasswordContent: FC = () => {
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta();
     const [isSuccess, setIsSuccess] = useState(false);
-    const handleError = useErrorHandler({
-        form: formProviderMethods,
-        customMessage: formMeta.messages.error,
-    });
+    const handleError = useErrorHandler({ form: formProviderMethods });
 
     const {
         fieldState: { error },

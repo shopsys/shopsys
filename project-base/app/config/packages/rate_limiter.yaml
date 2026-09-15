@@ -5,6 +5,16 @@ framework:
             limit: 5
             interval: '1 minute'
             cache_pool: apply_code_to_cart_rate_limiter_cache
+        frontend_api_password_recovery_email:
+            policy: sliding_window
+            limit: 10
+            interval: '1 hour'
+            cache_pool: frontend_api_password_recovery_rate_limiter_cache
+        frontend_api_password_recovery_ip:
+            policy: sliding_window
+            limit: 40
+            interval: '1 hour'
+            cache_pool: frontend_api_password_recovery_rate_limiter_cache
         frontend_api_product_review_create:
             policy: fixed_window
             limit: 20

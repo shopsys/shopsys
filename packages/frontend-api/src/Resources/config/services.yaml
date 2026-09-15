@@ -79,6 +79,11 @@ services:
         arguments:
             $constraintValidatorFactory: '@validator.validator_factory'
 
+    Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserPasswordRecoveryMutation:
+        arguments:
+            $passwordRecoveryIpRateLimiter: '@limiter.frontend_api_password_recovery_ip'
+            $passwordRecoveryEmailRateLimiter: '@limiter.frontend_api_password_recovery_email'
+
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
