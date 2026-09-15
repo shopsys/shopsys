@@ -110,7 +110,7 @@ Sentry alert rule.
 
 2. **The agent fetches the ticket through the Atlassian MCP:**
 
-    ```
+    ```python
     getJiraIssue(cloudId, issueIdOrKey="<ticket-key>")
     ```
 
@@ -119,7 +119,7 @@ Sentry alert rule.
 
 3. **The agent pulls the runtime context from the Sentry MCP:**
 
-    ```
+    ```python
     list_issue_events(organizationSlug="shopsys", projectSlug="shopsys-platform",
                      issueId="<sentry-issue-id>", limit=5)
     ```
@@ -129,7 +129,7 @@ Sentry alert rule.
 
 4. **The agent identifies suspect commits:**
 
-    ```
+    ```python
     find_releases(organizationSlug="shopsys", projectSlug="shopsys-platform",
                   query="<release-sha>")
     ```
@@ -138,14 +138,14 @@ Sentry alert rule.
 
 5. _(Optional)_ **The agent inspects a Session Replay** if the event has one attached:
 
-    ```
+    ```python
     get_replay_details(organizationSlug="shopsys", replayId="<replay-id>")
     ```
 
 6. **The agent proposes a fix**, makes the code change locally, and opens a merge request. After
    the MR is merged it leaves a brief summary on the ticket:
 
-    ```
+    ```python
     addCommentToJiraIssue(cloudId, issueIdOrKey="<ticket-key>",
                          body="Fix merged in MR !1234. Root cause: ...")
     ```
@@ -171,14 +171,14 @@ Once per sprint (or monthly), have the agent run a structured review:
 
 1. **List performance issues, ranked by frequency:**
 
-    ```
+    ```python
     list_issues(organizationSlug="shopsys", projectSlug="shopsys-platform",
                 query="issue.category:performance", sortBy="frequency", limit=20)
     ```
 
 2. **For each of the top issues, pull a sample event:**
 
-    ```
+    ```python
     list_issue_events(organizationSlug="shopsys", projectSlug="shopsys-platform",
                      issueId="<id>", limit=1)
     ```
@@ -188,7 +188,7 @@ Once per sprint (or monthly), have the agent run a structured review:
 
 3. **Create a tracking ticket for issues worth fixing:**
 
-    ```
+    ```python
     createJiraIssue(cloudId, projectKey="SSP", issueTypeName="PRG US",
                     summary="Optimize <slow-operation>",
                     description="Sentry issue: <url>\nP95 duration: ...\n...")
