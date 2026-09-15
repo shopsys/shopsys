@@ -4,7 +4,7 @@ This document describes how errors flow from the Backend API through the Storefr
 
 ## Architecture Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              BACKEND (PHP)                                  │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -53,7 +53,7 @@ This document describes how errors flow from the Backend API through the Storefr
 
 ## GraphQL Error Processing Flow
 
-```
+```text
 GraphQL Error
       │
       ▼

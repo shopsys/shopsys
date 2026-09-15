@@ -14,7 +14,7 @@ Handlers implement specific interfaces based on the actions you need. Each handl
 
 Handlers use a hierarchical interface structure where each interface extends the previous one:
 
-```
+```text
 HandlerInterface (base)
     └── ReadHandlerInterface (adds getById)
         ├── DeleteHandlerInterface (adds delete)
@@ -122,7 +122,7 @@ Implement hook interfaces in your CRUD controller extensions:
 
 When a CRUD action is executed, hooks follow this pattern:
 
-```
+```text
 1. Entity retrieved (if applicable)
    ↓
 2. All before<Action>() hooks executed (in extension priority order)

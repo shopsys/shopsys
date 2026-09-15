@@ -195,7 +195,7 @@ Add the data attribute to input fields or textareas:
 
 The counter displays in the format:
 
-```
+```text
 Used: 45 characters. Recommended max. 160
 ```
 

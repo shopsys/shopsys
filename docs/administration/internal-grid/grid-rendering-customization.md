@@ -10,7 +10,7 @@ To customize your grid, you can use on of the following approaches:
 You can create your own template and set is as a parameter to the column definition. 
 
 Create a new template in your project, e.g. `templates/Admin/Grid/my_awesome_column.html.twig`:
-```
+```twig
 <span class="my-awesome-column">
     {{ value }}
 </span>
