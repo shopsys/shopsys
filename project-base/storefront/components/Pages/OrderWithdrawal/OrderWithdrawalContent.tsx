@@ -59,10 +59,10 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
             },
         });
 
-        if (isGuestOrder && result.error) {
+        if (result.error) {
             const { applicationError } = getUserFriendlyErrors(result.error, t);
 
-            if (applicationError?.type === 'order-withdrawal-already-requested') {
+            if (isGuestOrder && applicationError?.type === 'order-withdrawal-already-requested') {
                 setConfirmationEmailState('already-sent');
 
                 return;
@@ -76,6 +76,12 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
 
             if (applicationError?.type === 'order-cancelled') {
                 showErrorMessage(t('Withdrawal from contract is not possible for a cancelled order.'));
+
+                return;
+            }
+
+            if (applicationError?.type === 'access-denied') {
+                showErrorMessage(t('You are not authorized to request withdrawal from this order.'));
             }
 
             return;

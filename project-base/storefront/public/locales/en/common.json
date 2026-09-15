@@ -841,6 +841,7 @@
     "You": "You",
     "You are being redirected to the payment gateway.": "You are being redirected to the payment gateway.",
     "You are being redirected...": "You are being redirected...",
+    "You are not authorized to request withdrawal from this order.": "You are not authorized to request withdrawal from this order.",
     "You can also buy": "You can also buy",
     "You can attach up to {{ maxFilesCount }} photos in JPG or PNG format, each up to {{ max }}.": "You can attach up to {{ maxFilesCount }} photos in JPG or PNG format, each up to {{ max }}.",
     "You can withdraw from this order within 14 days of delivery.": "You can withdraw from this order within 14 days of delivery.",

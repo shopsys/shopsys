@@ -881,6 +881,7 @@
     "You": "Vy",
     "You are being redirected to the payment gateway.": "Probíhá přesměrování na platební bránu.",
     "You are being redirected...": "Budete přesměrováni...",
+    "You are not authorized to request withdrawal from this order.": "Nemáte oprávnění požádat o odstoupení od této objednávky.",
     "You can also buy": "Můžete si dokoupit",
     "You can attach up to {{ maxFilesCount }} photos in JPG or PNG format, each up to {{ max }}.": "Můžete přiložit až {{ maxFilesCount }} fotografií ve formátu JPG nebo PNG, každou do velikosti {{ max }}.",
     "You can withdraw from this order within 14 days of delivery.": "Můžete odstoupit od této objednávky do 14 dnů po doručení.",
