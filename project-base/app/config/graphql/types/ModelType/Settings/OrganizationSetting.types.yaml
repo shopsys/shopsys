@@ -1,0 +1,4 @@
+OrganizationSetting:
+    type: object
+    inherits:
+        - OrganizationSettingDecorator

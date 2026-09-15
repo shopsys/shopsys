@@ -1,0 +1,36 @@
+OrganizationSettingDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Organization settings for the current domain"
+        fields:
+            name:
+                type: "String"
+                description: "Company name"
+            companyTaxNumber:
+                type: "String"
+                description: "Tax number"
+            companyNumber:
+                type: "String"
+                description: "Company registration number"
+            description:
+                type: "String"
+                description: "Company description"
+            street:
+                type: "String"
+                description: "Street and house number"
+            city:
+                type: "String"
+                description: "City"
+            postcode:
+                type: "String"
+                description: "Postcode"
+            country:
+                type: "String"
+                description: "Country"
+            logo:
+                type: "String"
+                description: "Absolute organization logo URL"
+            socialNetworkUrls:
+                type: "[String!]!"
+                description: "Social network profile URLs"

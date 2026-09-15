@@ -440,6 +440,15 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\ProductVideo\\ProductVideoTranslations::getProductVideo$#'
             path: packages/framework/src/Model/ProductVideo/ProductVideoTranslations.php
+        # read by the GraphQL default field resolver via the OrganizationSettingDecorator fields, which the yaml usage provider only recognizes for FrontendApi classes
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\Seo\\OrganizationData::\$logo\ is\ never\ read\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Seo/OrganizationData.php
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\Seo\\OrganizationData::\$socialNetworkUrls\ is\ never\ read\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Seo/OrganizationData.php
         -
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Seo\\Page\\SeoPageDomain::getSeoPage$#'

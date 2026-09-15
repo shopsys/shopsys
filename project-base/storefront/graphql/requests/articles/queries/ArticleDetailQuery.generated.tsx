@@ -15,7 +15,7 @@ export type TypeArticleDetailQueryVariables = Exact<{
 
 
 export type TypeArticleDetailQuery = { article:
-    | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: string, seoH1: string | null, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> }
+    | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, modifiedAt: string | null, publishDate: string | null, createdAt: string, seoH1: string | null, articleName: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> }
     | Record<PropertyKey, never>
    | null };
 

@@ -54,6 +54,7 @@ const OrderDetailByHashPage: FC = () => {
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || isOrderFetching}>
                 <CommonLayout
+                    isNoIndex
                     breadcrumbs={breadcrumbs}
                     title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
                 >

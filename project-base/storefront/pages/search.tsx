@@ -37,6 +37,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex, nofollow" />
 
             <CommonLayout
+                isNoIndex
                 breadcrumbs={breadcrumbs}
                 isFetchingData={isSearchPageFetching}
                 pageTypeOverride={SkeletonEnum.Search}

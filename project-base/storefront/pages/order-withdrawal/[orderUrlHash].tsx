@@ -52,6 +52,7 @@ const OrderWithdrawalPage: FC = () => {
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl={orderDetailUrl} isWithAccess={hasAccess}>
                 <CommonLayout
+                    isNoIndex
                     breadcrumbs={breadcrumbs}
                     isFetchingData={isOrderFetching}
                     pageTypeOverride="order-withdrawal"
