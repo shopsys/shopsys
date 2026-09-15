@@ -76,7 +76,8 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
                 ));
             } catch (GoPayPaymentDownloadException $ex) {
                 $this->logger->error($ex->getMessage(), [
-                    'exception' => $ex,
+                    ...$ex->getLogContext(),
+                    'domainId' => $domain->getId(),
                 ]);
             }
         }
