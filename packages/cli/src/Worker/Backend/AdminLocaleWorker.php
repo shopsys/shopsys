@@ -52,7 +52,8 @@ final class AdminLocaleWorker extends AbstractWorker
             $data['parameters']['shopsys.allowed_admin_locales'] = $config->getUniqueLocales();
             $data['parameters']['locale'] = $config->domains[0]->locale;
 
-            $this->yamlHandler->writeYaml($filePath, $data);
+            // inline arrays keep the order of locales, block sequences would be sorted alphabetically by yaml-standards fixer
+            $this->yamlHandler->writeYaml($filePath, $data, 2);
 
             return WorkerResult::success(
                 'Allowed admin locales set',
