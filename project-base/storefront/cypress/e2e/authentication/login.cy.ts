@@ -8,7 +8,8 @@ import {
     logoutFromHeader,
     submitLoginForm,
 } from './authenticationSupport';
-import { staticData, url } from 'fixtures/demodata';
+import { PERSIST_STORE_NAME, staticData, url } from 'fixtures/demodata';
+import { TypeLoginTypeEnum } from 'graphql/types';
 import {
     checkAndHideSuccessToast,
     checkIsUserLoggedIn,
@@ -64,6 +65,13 @@ describe('Login Tests', () => {
         cy.getCookie('accessToken-1').should('be.null');
         cy.getCookie('refreshToken-1').should('be.null');
         cy.getCookie('refreshTokenPresent-1').should('be.null');
+
+        cy.visitAndWaitForStableAndInteractiveDOM(url.login);
+        cy.getByTID([TIDs.login_method_web, TIDs.last_used_login_method_badge])
+            .should('be.visible')
+            .and('contain.text', translations.login.lastUsed);
+        cy.reloadAndWaitForStableAndInteractiveDOM();
+        cy.getByTID([TIDs.login_method_web, TIDs.last_used_login_method_badge]).should('be.visible');
     });
 
     it('[Header] should login from header and then log out', function () {
@@ -96,5 +104,36 @@ describe('Login Tests', () => {
         cy.waitForStableAndInteractiveDOM();
 
         checkHeaderLoginFormValues('', '');
+    });
+
+    it('[Last Login Method] should keep the previous method after an unsuccessful email login', () => {
+        cy.window().then((win) => {
+            const persistStore = JSON.parse(win.localStorage.getItem(PERSIST_STORE_NAME)!);
+            persistStore.state.lastLoginType = TypeLoginTypeEnum.Google;
+            win.localStorage.setItem(PERSIST_STORE_NAME, JSON.stringify(persistStore));
+        });
+        cy.visitAndWaitForStableAndInteractiveDOM(url.login);
+
+        cy.getByTID([
+            [TIDs.social_network_login_link_, TypeLoginTypeEnum.Google],
+            TIDs.last_used_login_method_badge,
+        ])
+            .should('be.visible')
+            .and('contain.text', translations.login.lastUsed);
+        cy.getByTID([[TIDs.social_network_login_link_, TypeLoginTypeEnum.Google]])
+            .should('have.attr', 'aria-label')
+            .and('contain', translations.login.lastUsed);
+        cy.getByTID([TIDs.last_used_login_method_badge]).should('have.length', 1);
+        fillInEmailAndPasswordOnLoginPage(staticData.customer1.emailRegistered, 'invalid-password');
+        submitLoginForm();
+
+        cy.getByTID([
+            [TIDs.social_network_login_link_, TypeLoginTypeEnum.Google],
+            TIDs.last_used_login_method_badge,
+        ]).should('be.visible');
+        cy.window().then((win) => {
+            const persistStore = JSON.parse(win.localStorage.getItem(PERSIST_STORE_NAME)!);
+            expect(persistStore.state.lastLoginType).to.equal(TypeLoginTypeEnum.Google);
+        });
     });
 });

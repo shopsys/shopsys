@@ -50,6 +50,9 @@ export const translationKeys = {
     link: {
         orderDetail: 'Track',
     },
+    login: {
+        lastUsed: 'Last used',
+    },
     filter: {
         price: 'Price',
         from: 'from',

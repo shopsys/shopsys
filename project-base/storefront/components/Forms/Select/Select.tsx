@@ -171,7 +171,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 <span
                                     className={twJoin(
                                         'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
-                                        isOpen || comboBoxConfig.searchValue || activeOption
+                                        isOpen || comboBoxConfig.searchValue || activeOption || placeholder
                                             ? 'top-2.25 left-3 text-sm'
                                             : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                     )}

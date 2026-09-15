@@ -164,11 +164,11 @@ class SocialNetworkController extends AbstractController
             'redirect' => $this->getRedirectPathParameter($request, $domainRouter),
             'showCartMergeInfo' => $showCartMergeInfo ? 'true' : 'false',
             'isRegistration' => $isRegistration ? 'true' : 'false',
+            'socialNetwork' => $type,
         ];
 
         if ($addExceptionMessage) {
             $parameters['exceptionType'] = 'socialNetworkLoginException';
-            $parameters['socialNetwork'] = $type;
         }
 
         return $domainRouter->generate('front_social_network_login_page', $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
