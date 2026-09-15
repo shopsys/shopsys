@@ -60,6 +60,15 @@ class IndexDefinition
         return sprintf('%s_%s', $this->getIndexAlias(), $this->getDocumentDefinitionVersion());
     }
 
+    /**
+     * Whether the given concrete Elasticsearch index name is one of the versions of this index,
+     * regardless of the mapping hash it was created with (e.g. before or during a migration)
+     */
+    public function isVersionedIndexNameOf(string $indexName): bool
+    {
+        return str_starts_with($indexName, $this->getIndexAlias() . '_');
+    }
+
     public function getIndexAlias(): string
     {
         if ($this->indexPrefix === '') {
