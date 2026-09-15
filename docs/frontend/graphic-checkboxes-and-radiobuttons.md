@@ -2,12 +2,14 @@
 
 For replacing native checkboxes and radiobuttons we use image background, which has six positions:
 
-    - normal (top, left)
-    - normal + hover (top, center)
-    - normal + disabled (top, right)
-    - checked (bottom, left)
-    - checked + hover (bottom, center)
-    - checked + disabled (bottom, right)
+```text
+- normal (top, left)
+- normal + hover (top, center)
+- normal + disabled (top, right)
+- checked (bottom, left)
+- checked + hover (bottom, center)
+- checked + disabled (bottom, right)
+```
 
 ## Html structure
 
