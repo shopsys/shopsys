@@ -57,21 +57,21 @@ and we want to display all their names in bold, and also, we want to be more spe
 
 1.  Create a new template that extends to the original one and override the blocks you need:
 
-    <!-- language: lang-twig -->
+    ```twig
+    {# templates/Admin/Content/Salesman/listGrid.html.twig #}
+    {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
-        {# templates/Admin/Content/Salesman/listGrid.html.twig #}
-        {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
+    {% block grid_no_data %}
+        {{ 'There are no salesmen in your database.' }}
+    {% endblock %}
 
-        {% block grid_no_data %}
-            {{ 'There are no salesmen in your database.' }}
-        {% endblock %}
-
-        {% block grid_value_cell_id_name %}
-            <strong>{{ value }}</strong>
-        {% endblock %}
+    {% block grid_value_cell_id_name %}
+        <strong>{{ value }}</strong>
+    {% endblock %}
+    ```
 
 2.  Set the new theme for your grid:
 
-    <!-- language: lang-php -->
-
-        $grid->setTheme('Admin/Content/Salesman/listGrid.html.twig');
+    ```php
+    $grid->setTheme('Admin/Content/Salesman/listGrid.html.twig');
+    ```
