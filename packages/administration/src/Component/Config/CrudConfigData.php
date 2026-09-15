@@ -38,6 +38,7 @@ final readonly class CrudConfigData
         private ?string $menuIcon,
         private ?CrudListDomainControl $listDomainControl,
         private ?array $listAllowedDomainIds,
+        private bool $entityLogShown,
     ) {
         foreach ($this->enabledActions as $action) {
             if (array_key_exists($action->value, $this->handlerClasses) && $this->handlerClasses[$action->value] === null) {
@@ -183,5 +184,10 @@ final readonly class CrudConfigData
     public function getListAllowedDomainIds(): ?array
     {
         return $this->listAllowedDomainIds;
+    }
+
+    public function isEntityLogShown(): bool
+    {
+        return $this->entityLogShown;
     }
 }

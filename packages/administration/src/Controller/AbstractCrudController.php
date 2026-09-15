@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
@@ -74,6 +75,9 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public Domain $domain;
+
+    #[Required]
+    public LoggableEntityConfigFactory $loggableEntityConfigFactory;
 
     public function setDefinition(Definition $definition): void
     {
@@ -192,6 +196,15 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
+     * The edit page shows the change history when it is not hidden by the config and the entity has entity logging enabled
+     */
+    protected function isEntityLogShown(): bool
+    {
+        return $this->definition->getConfig()->isEntityLogShown()
+            && $this->loggableEntityConfigFactory->getLoggableSetupByEntity($this->definition->entityClass)->isLoggable();
+    }
+
+    /**
      * @return array<string, mixed>
      */
     protected function getEditViewData(object $entity): array
@@ -300,6 +313,7 @@ abstract class AbstractCrudController extends AdminBaseController
             'topActions' => $this->getConfiguredActions(ActionType::EDIT),
             'entity' => $entity,
             'form' => $form->createView(),
+            'showEntityLog' => $this->isEntityLogShown(),
             ...$this->getEditViewData($entity),
         ]);
     }

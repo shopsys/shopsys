@@ -8,8 +8,10 @@ use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Webmozart\Assert\Assert;
 
 #[AsTwigComponent(
     name: 'Admin:EntityLogTimeline',
@@ -26,7 +28,23 @@ class EntityLogTimelineComponent
     public function __construct(
         protected readonly EntityLogRepository $entityLogRepository,
         protected readonly ResolvedChangesFormatter $resolvedChangesFormatter,
+        protected readonly EntityLogFacade $entityLogFacade,
     ) {
+    }
+
+    /**
+     * The timeline is identified either by the logged entity itself or by the "entityName" and "entityId" props
+     */
+    public function mount(?object $entity = null): void
+    {
+        if ($entity === null) {
+            return;
+        }
+
+        Assert::methodExists($entity, 'getId', 'Only entities with getId() have an entity log, "%s" has none.');
+
+        $this->entityName = $this->entityLogFacade->getEntityNameByEntity($entity);
+        $this->entityId = $entity->getId();
     }
 
     /**

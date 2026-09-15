@@ -13,7 +13,6 @@ use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
-use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Form\Admin\ProductReview\ProductReviewFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
@@ -25,7 +24,6 @@ use SortDirection;
 class ProductReviewController extends AbstractCrudController
 {
     public function __construct(
-        protected readonly EntityLogFacade $entityLogFacade,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
     ) {
     }
@@ -127,20 +125,5 @@ class ProductReviewController extends AbstractCrudController
     protected function getEditTemplate(): string
     {
         return '@ShopsysAdministration/content/productReview/edit.html.twig';
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    #[Override]
-    protected function getEditViewData(object $entity): array
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\ProductReview\ProductReview $productReview */
-        $productReview = $entity;
-
-        return [
-            'entityLogEntityName' => $this->entityLogFacade->getEntityNameByEntity(ProductReview::class),
-            'productReview' => $productReview,
-        ];
     }
 }
