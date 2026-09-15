@@ -232,19 +232,24 @@ Usage examples
 
 ```ts
 cy.request({
-  method: 'POST',
-  url: 'graphql/',
-  headers: { 'Content-Type': 'application/json', /* optionally: 'X-Auth-Token': `Bearer ${accessToken}` */ },
-  body: JSON.stringify({
-    operationName: 'AddToCartMutation',
-    query: `mutation AddToCartMutation($input: AddToCartInput!) { AddToCart(input: $input) { cart { uuid } } }`,
-    variables: { input: { cartUuid, productUuid, quantity: 1 } },
-  }),
-  failOnStatusCode: false,
+    method: 'POST',
+    url: 'graphql/',
+    headers: {
+        'Content-Type': 'application/json',
+        /* optionally: 'X-Auth-Token': `Bearer ${accessToken}` */
+    },
+    body: JSON.stringify({
+        operationName: 'AddToCartMutation',
+        query: `mutation AddToCartMutation($input: AddToCartInput!) { AddToCart(input: $input) { cart { uuid } } }`,
+        variables: { input: { cartUuid, productUuid, quantity: 1 } },
+    }),
+    failOnStatusCode: false,
 })
-  .checkGQL('AddToCartMutation')
-  .its('AddToCart.cart.uuid')
-  .then((uuid) => { /* assertions */ });
+    .checkGQL('AddToCartMutation')
+    .its('AddToCart.cart.uuid')
+    .then((uuid) => {
+        /* assertions */
+    });
 ```
 
 - Negative/validation scenario (two options):
