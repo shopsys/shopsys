@@ -30,6 +30,10 @@ fragment ComplaintOrderedItemFragment on OrderItem {
         creationDate
     }
     product {
+        fullName
+        mainCategory {
+            name
+        }
         isVisible
         slug
         productType

@@ -83,7 +83,11 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                     className="col-span-2 col-start-1 row-start-1 mt-6 mb-5 flex items-center justify-center md:col-span-1 md:col-start-1 md:row-span-7 md:row-start-1 md:mb-0 md:pt-0"
                 >
                     <Image
-                        alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
+                        alt={generateProductImageAlt(
+                            product.fullName,
+                            product.mainCategory?.name,
+                            product.mainImage?.name,
+                        )}
                         className="h-55 w-55 object-contain mix-blend-multiply"
                         draggable={false}
                         height={HERO_IMAGE_SIZE}

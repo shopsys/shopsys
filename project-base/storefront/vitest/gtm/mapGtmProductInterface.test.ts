@@ -13,6 +13,7 @@ const listedProduct = {
     uuid: 'f7888ef5-ae16-4f5c-b98d-4a6c947a9f71',
     slug: '/test-product',
     fullName: 'Test product',
+    mainCategory: { name: 'Main category' },
     stockQuantity: 10,
     isAllowedNegativeStock: false,
     isSellingDenied: false,

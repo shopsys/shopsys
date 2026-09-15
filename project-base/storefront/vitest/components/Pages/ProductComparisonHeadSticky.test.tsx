@@ -28,7 +28,7 @@ vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
 }));
 
 vi.mock('components/Basic/Image/Image', () => ({
-    Image: () => <span role="img" />,
+    Image: ({ alt }: { alt: string }) => <span aria-label={alt} role="img" />,
 }));
 
 vi.mock('components/Layout/Webline/Webline', () => ({
@@ -55,7 +55,8 @@ vi.mock('utils/ui/useScrollTop', () => ({
 describe('ProductComparisonHeadSticky', () => {
     const product = {
         fullName: '32" Philips TV',
-        mainImage: { url: '/image.jpg' },
+        mainCategory: { name: 'TV, audio' },
+        mainImage: { name: null, url: '/image.jpg' },
         slug: '/32-philips-tv',
         uuid: 'product-uuid',
     } as TypeProductInProductListFragment;
@@ -123,7 +124,7 @@ describe('ProductComparisonHeadSticky', () => {
 
         expect(productLinks).toHaveLength(1);
         expect(productLinks[0]).toHaveAccessibleName('Go to product page of 32" Philips TV');
-        expect(within(productLinks[0]).getByRole('img')).toBeInTheDocument();
+        expect(within(productLinks[0]).getByRole('img')).toHaveAccessibleName('TV, audio - 32" Philips TV');
         expect(within(productLinks[0]).getByText('32" Philips TV')).toBeInTheDocument();
     });
 
