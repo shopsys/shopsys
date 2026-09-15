@@ -121,7 +121,7 @@ final class AdminApiContext extends AbstractContext
 
 Context dependencies ensure that a context only matches when all its required contexts also match. This creates a hierarchical system:
 
-```
+```text
 ConsoleContext (base CLI context)
 ├── ConsumerContext (message processing)
 └── CronContext (scheduled jobs)
