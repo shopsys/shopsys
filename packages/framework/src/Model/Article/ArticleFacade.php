@@ -74,7 +74,7 @@ class ArticleFacade
         $article->edit($articleData);
 
         if (!$article->isLinkType()) {
-            $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
+            $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $article->getDomainId(), $articleData->urls);
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
                 'front_article_detail',
                 $article->getId(),

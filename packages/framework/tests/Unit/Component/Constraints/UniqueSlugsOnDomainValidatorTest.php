@@ -10,15 +10,15 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomain;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainValidator;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
-class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
+class UniqueSlugsOnDomainValidatorTest extends ConstraintValidatorTestCase
 {
     /**
      * {@inheritdoc}
@@ -59,37 +59,30 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         $domainRouterFactoryStub = $this->createStub(DomainRouterFactory::class);
         $domainRouterFactoryStub->method('getRouter')->willReturn($routerStub);
 
-        return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryStub);
+        return new UniqueSlugsOnDomainValidator($domain, $domainRouterFactoryStub);
     }
 
     public function testValidateSameSlugsOnDifferentDomains(): void
     {
-        $values = [
-            1 => [
-                [UrlListData::FIELD_SLUG => 'new-url/'],
-            ],
-            2 => [
-                [UrlListData::FIELD_SLUG => 'new-url/'],
-            ],
+        $newUrlsData = [
+            [UrlListData::FIELD_SLUG => 'new-url/'],
         ];
-        $constraint = new UniqueSlugsOnDomains();
 
-        $this->validator->validate($values, $constraint);
+        $this->validator->validate($newUrlsData, new UniqueSlugsOnDomain(domainId: Domain::FIRST_DOMAIN_ID));
+        $this->validator->validate($newUrlsData, new UniqueSlugsOnDomain(domainId: Domain::SECOND_DOMAIN_ID));
+
         $this->assertNoViolation();
     }
 
     public function testValidateDuplicateSlugsOnSameDomain(): void
     {
-        $values = [
-            1 => [
-                [UrlListData::FIELD_SLUG => 'new-url/'],
-                [UrlListData::FIELD_SLUG => 'new-url/'],
-            ],
+        $newUrlsData = [
+            [UrlListData::FIELD_SLUG => 'new-url/'],
+            [UrlListData::FIELD_SLUG => 'new-url/'],
         ];
-        $constraint = new UniqueSlugsOnDomains();
-        $constraint->messageDuplicate = 'myMessage';
+        $constraint = new UniqueSlugsOnDomain(domainId: Domain::FIRST_DOMAIN_ID, messageDuplicate: 'myMessage');
 
-        $this->validator->validate($values, $constraint);
+        $this->validator->validate($newUrlsData, $constraint);
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ url }}', 'http://example.cz/new-url/')
@@ -98,16 +91,13 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 
     public function testValidateDuplicateEncodedAndDecodedSlugsOnSameDomain(): void
     {
-        $values = [
-            1 => [
-                [UrlListData::FIELD_SLUG => 'new-%75rl/'],
-                [UrlListData::FIELD_SLUG => 'new-url/'],
-            ],
+        $newUrlsData = [
+            [UrlListData::FIELD_SLUG => 'new-%75rl/'],
+            [UrlListData::FIELD_SLUG => 'new-url/'],
         ];
-        $constraint = new UniqueSlugsOnDomains();
-        $constraint->messageDuplicate = 'myMessage';
+        $constraint = new UniqueSlugsOnDomain(domainId: Domain::FIRST_DOMAIN_ID, messageDuplicate: 'myMessage');
 
-        $this->validator->validate($values, $constraint);
+        $this->validator->validate($newUrlsData, $constraint);
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ url }}', 'http://example.cz/new-url/')
@@ -116,16 +106,13 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 
     public function testValidateDuplicateSlugsWithDifferentEncodingCaseOnSameDomain(): void
     {
-        $values = [
-            1 => [
-                [UrlListData::FIELD_SLUG => 'new-caf%C3%A9/'],
-                [UrlListData::FIELD_SLUG => 'new-caf%c3%a9/'],
-            ],
+        $newUrlsData = [
+            [UrlListData::FIELD_SLUG => 'new-caf%C3%A9/'],
+            [UrlListData::FIELD_SLUG => 'new-caf%c3%a9/'],
         ];
-        $constraint = new UniqueSlugsOnDomains();
-        $constraint->messageDuplicate = 'myMessage';
+        $constraint = new UniqueSlugsOnDomain(domainId: Domain::FIRST_DOMAIN_ID, messageDuplicate: 'myMessage');
 
-        $this->validator->validate($values, $constraint);
+        $this->validator->validate($newUrlsData, $constraint);
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ url }}', 'http://example.cz/new-caf%C3%A9/')
@@ -134,15 +121,12 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 
     public function testValidateExistingSlug(): void
     {
-        $values = [
-            1 => [
-                [UrlListData::FIELD_SLUG => 'existing-url/'],
-            ],
+        $newUrlsData = [
+            [UrlListData::FIELD_SLUG => 'existing-url/'],
         ];
-        $constraint = new UniqueSlugsOnDomains();
-        $constraint->message = 'myMessage';
+        $constraint = new UniqueSlugsOnDomain(domainId: Domain::FIRST_DOMAIN_ID, message: 'myMessage');
 
-        $this->validator->validate($values, $constraint);
+        $this->validator->validate($newUrlsData, $constraint);
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ url }}', 'http://example.cz/existing-url/')
@@ -151,15 +135,12 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 
     public function testValidateExistingEncodedSlug(): void
     {
-        $values = [
-            1 => [
-                [UrlListData::FIELD_SLUG => 'existing-%75rl/'],
-            ],
+        $newUrlsData = [
+            [UrlListData::FIELD_SLUG => 'existing-%75rl/'],
         ];
-        $constraint = new UniqueSlugsOnDomains();
-        $constraint->message = 'myMessage';
+        $constraint = new UniqueSlugsOnDomain(domainId: Domain::FIRST_DOMAIN_ID, message: 'myMessage');
 
-        $this->validator->validate($values, $constraint);
+        $this->validator->validate($newUrlsData, $constraint);
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ url }}', 'http://example.cz/existing-url/')

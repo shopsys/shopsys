@@ -78,7 +78,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_blogcategory_detail', $blogCategory->getId(), $blogCategoryData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataByDomainId('front_blogcategory_detail', $blogCategory->getId(), $blogCategoryData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
 
         $this->imageFacade->manageImages($blogCategory, $blogCategoryData->image);

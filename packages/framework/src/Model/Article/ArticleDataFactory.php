@@ -56,7 +56,7 @@ class ArticleDataFactory
         $articleData->type = $article->getType();
         $articleData->url = $article->getUrl();
 
-        $articleData->urls->mainFriendlyUrlsByDomainId[$article->getDomainId()] =
+        $articleData->urls->mainFriendlyUrl =
             $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $article->getDomainId(),
                 'front_article_detail',

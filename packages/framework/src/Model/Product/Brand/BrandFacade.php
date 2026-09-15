@@ -65,7 +65,7 @@ class BrandFacade
         $this->imageFacade->manageImages($brand, $brandData->image);
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_brand_detail', $brand->getId(), $brandData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataByDomainId('front_brand_detail', $brand->getId(), $brandData->urls);
 
         foreach ($domains as $domain) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(

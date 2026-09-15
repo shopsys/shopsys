@@ -20,11 +20,12 @@ The allowed values of meta robots are defined in [`SeoMetaRobotsEnum`]({{github.
 
 ## Administration
 
-All SEO forms use [`SeoGroupType`]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoGroupType.php), a `GroupType` that renders one card per domain with the SEO attributes ([`SeoAttributesType`]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoAttributesType.php)) and the URL addresses (`UrlListType`) of that domain.
+All SEO forms use [`SeoGroupType`]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoGroupType.php), the "SEO" card of the entity form.
+The card is composed of standard building blocks: [`DomainSeoType`]({{github.link}}/packages/framework/src/Form/Admin/Seo/DomainSeoType.php) holds the SEO attributes ([`SeoAttributesType`]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoAttributesType.php)) and the URL addresses (`UrlListType`) of one domain, and `SeoGroupType` either renders one `DomainSeoType` per domain enabled in the administration via `MultidomainType`, or a single one for an entity that belongs to one domain.
 
 ```php
 $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
-    'placeholder_source_input_id' => 'brand_form_basicInformation_name',
+    'placeholder_source_path' => ['basicInformation', 'name'],
     'url_list_options' => $brand !== null ? [
         'route_name' => 'front_brand_detail',
         'entity_id' => $brand->getId(),
@@ -32,10 +33,10 @@ $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
 ]);
 ```
 
-- `domain_id` — `null` (default) renders a card for every domain enabled in the administration, an integer renders a single card for a single-domain entity (e.g. `Store`)
-- `placeholder_source_input_id` — ID of the name input whose value is shown as a live placeholder of the title and H1 (for multidomain forms the `{locale}` and `{domain_id}` placeholders in the ID are replaced per domain)
+- `domain_id` — `null` (default) renders a card for every domain enabled in the administration and maps the fields to `$seo[$domainId]` and `$urls[$domainId]` of the entity data, an integer renders a single card for a single-domain entity (e.g. `Store`) and maps the fields to `$seo` and `$urls`
+- `placeholder_source_path` — names of the nested fields leading from the form root to the name input whose value is shown as a live placeholder of the title and H1 (the `{locale}` and `{domain_id}` tokens are replaced per domain, e.g. `['name', '{locale}']` for a `LocalizedType` name); a wrong path fails when the form is rendered
 - `h1_required` — `false` by default
-- `url_list_options` — options passed to `UrlListType`, `null` renders no URL addresses
+- `url_list_options` — options passed to `UrlListType` (`route_name`, `entity_id`), `null` renders no URL addresses
 
 Title and meta description show the recommended length (60 and 160 characters).
 Projects that need to change the fields do it once in a form type extension of `SeoAttributesType`.

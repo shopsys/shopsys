@@ -294,7 +294,6 @@ Entity data can contain methods for getting part of it's data
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-use Shopsys\FrameworkBundle\Form\UrlListData;
 
 class BrandData
 {
@@ -314,7 +313,7 @@ class BrandData
     public $descriptions;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Form\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -328,7 +327,7 @@ class BrandData
         $this->name = '';
         $this->image = new ImageUploadData();
         $this->descriptions = [];
-        $this->urls = new UrlListData();
+        $this->urls = [];
         $this->seo = [];
     }
 }
@@ -401,7 +400,8 @@ To make the entity itself support image uploads, see [Adding Images to an Entity
 
 #### URL addresses
 
-To transfer URL addresses via the system, use PHPDoc annotation `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData` and initialize the field in the constructor as you can see in `BrandData` example above.
+To transfer URL addresses via the system, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData`, which holds the URL addresses of one domain.
+A multidomain entity holds an array of them indexed by domain ID (see `BrandData` above), an entity that belongs to a single domain holds one instance (see `ArticleData`).
 
 #### Multidomain
 

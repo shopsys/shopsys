@@ -11,8 +11,8 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomain;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainValidator;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
@@ -72,14 +72,12 @@ class UrlListTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    public function testSubmittedNewUrlIsMappedUnderItsDomainId(): void
+    public function testSubmittedNewUrlIsMapped(): void
     {
         $form = $this->createUrlListForm();
         $form->submit([
             'newUrls' => [
-                '1' => [
-                    ['slug' => 'url-list-type-test-unique-slug'],
-                ],
+                ['slug' => 'url-list-type-test-unique-slug'],
             ],
         ]);
 
@@ -88,36 +86,29 @@ class UrlListTypeTest extends TypeTestCase
         /** @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData */
         $urlListData = $form->getData();
 
-        $this->assertSame('url-list-type-test-unique-slug', $urlListData->newUrls[1][0][UrlListData::FIELD_SLUG]);
+        $this->assertSame('url-list-type-test-unique-slug', $urlListData->newUrls[0][UrlListData::FIELD_SLUG]);
     }
 
-    public function testNewUrlWithNotEnabledDomainIsRejected(): void
+    public function testDuplicateNewUrlSlugsAreRejected(): void
     {
         $form = $this->createUrlListForm();
         $form->submit([
             'newUrls' => [
-                '999' => [
-                    ['slug' => 'url-list-type-test-unique-slug'],
-                ],
+                ['slug' => 'url-list-type-test-duplicate-slug'],
+                ['slug' => 'url-list-type-test-duplicate-slug'],
             ],
         ]);
 
         $this->assertFalse($form->isValid());
     }
 
-    public function testDuplicateNewUrlSlugsOnSameDomainAreRejected(): void
+    public function testChoiceFieldsAreNotAddedForEntityWithoutUrls(): void
     {
         $form = $this->createUrlListForm();
-        $form->submit([
-            'newUrls' => [
-                '1' => [
-                    ['slug' => 'url-list-type-test-duplicate-slug'],
-                    ['slug' => 'url-list-type-test-duplicate-slug'],
-                ],
-            ],
-        ]);
 
-        $this->assertFalse($form->isValid());
+        $this->assertFalse($form->has('toDelete'));
+        $this->assertFalse($form->has('mainFriendlyUrl'));
+        $this->assertTrue($form->has('newUrls'));
     }
 
     #[Override]
@@ -134,8 +125,8 @@ class UrlListTypeTest extends TypeTestCase
             #[Override]
             public function getInstance(Constraint $constraint): ConstraintValidatorInterface
             {
-                if ($constraint instanceof UniqueSlugsOnDomains) {
-                    return new UniqueSlugsOnDomainsValidator($this->domain, $this->domainRouterFactory);
+                if ($constraint instanceof UniqueSlugsOnDomain) {
+                    return new UniqueSlugsOnDomainValidator($this->domain, $this->domainRouterFactory);
                 }
 
                 return parent::getInstance($constraint);
@@ -165,6 +156,7 @@ class UrlListTypeTest extends TypeTestCase
     {
         return $this->factory->create(UrlListType::class, null, [
             'route_name' => 'front_brand_detail',
+            'domain_id' => Domain::FIRST_DOMAIN_ID,
         ]);
     }
 }

@@ -59,7 +59,7 @@ class FlagFacade
 
         $this->dispatchFlagEvent($flag, FlagEvent::UPDATE);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_flag_detail', $flag->getId(), $flagData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataByDomainId('front_flag_detail', $flag->getId(), $flagData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
 
         return $flag;

@@ -79,7 +79,7 @@ class BlogArticleFacade
 
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_blogarticle_detail', $blogArticle->getId(), $blogArticleData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataByDomainId('front_blogarticle_detail', $blogArticle->getId(), $blogArticleData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticleId, $blogArticle->getNames());
 
         $this->imageFacade->manageImages($blogArticle, $blogArticleData->image);

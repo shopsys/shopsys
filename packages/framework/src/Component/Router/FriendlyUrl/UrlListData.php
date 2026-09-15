@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+/**
+ * URL addresses of an entity on a single domain, multidomain entities carry one instance per domain indexed by the domain ID
+ */
 class UrlListData
 {
     public const FIELD_SLUG = 'slug';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
     public $toDelete;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
-    public $mainFriendlyUrlsByDomainId;
+    public $mainFriendlyUrl;
 
     /**
-     * @var array<int, array<int, array<string, string>>>
+     * @var array<int, array<string, string>>
      *
-     * Format (indexed by domain id):
+     * Format:
      * [
-     *     1 => [
-     *         ['slug' => 'slug-for-the-first-domain'],
-     *         ...
-     *     ],
+     *     ['slug' => 'new-slug'],
      *     ...
      * ]
      * @see \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::saveUrlListFormData()
@@ -36,7 +36,7 @@ class UrlListData
     public function __construct()
     {
         $this->toDelete = [];
-        $this->mainFriendlyUrlsByDomainId = [];
+        $this->mainFriendlyUrl = null;
         $this->newUrls = [];
     }
 }

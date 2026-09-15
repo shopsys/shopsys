@@ -84,7 +84,7 @@ foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
     $domainId = $domainConfig->getId();
 
     $seoAttributesOptionsByDomainId[$domainId] = [
-        'placeholder_source_input_id' => 'category_form_name_' . $domainConfig->getLocale(),
+        'placeholder_source_path' => ['name', $domainConfig->getLocale()],
         'domain_id' => $domainId,
     ];
 }

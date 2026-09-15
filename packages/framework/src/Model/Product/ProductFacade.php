@@ -113,7 +113,7 @@ class ProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->uploadedFileFacade->manageFiles($product, $productData->files);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataByDomainId('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullNames());
 
         $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
@@ -158,7 +158,7 @@ class ProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->uploadedFileFacade->manageFiles($product, $productData->files);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataByDomainId('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullNames());
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);

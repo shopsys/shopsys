@@ -554,9 +554,9 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator }
 
-    Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator:
+    Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainValidator:
         tags:
-            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
+            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainValidator }
 
     Shopsys\FrameworkBundle\Form\RolesType:
         arguments:

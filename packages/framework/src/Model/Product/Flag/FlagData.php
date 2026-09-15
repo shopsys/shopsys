@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class FlagData
 {
     /**
@@ -29,7 +27,7 @@ class FlagData
     public $uuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -48,7 +46,7 @@ class FlagData
         $this->name = [];
         $this->visible = false;
         $this->rgbColor = '';
-        $this->urls = new UrlListData();
+        $this->urls = [];
         $this->promotionXy = null;
         $this->seo = [];
     }
