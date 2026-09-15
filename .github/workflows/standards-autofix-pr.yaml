@@ -95,7 +95,7 @@ jobs:
             -   name: Disable git hooks so the autofixer cannot plant executable files
                 run: git config --global core.hooksPath /dev/null
 
-            -   name: Download the failed standards check log of the latest Docker build run
+            -   name: Download the failed standards check logs of the latest Docker build run
                 id: standards_log
                 env:
                     GH_TOKEN: ${{ github.token }}
@@ -113,34 +113,47 @@ jobs:
                         exit 1
                     fi
 
-                    STANDARDS_JOB=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate \
-                        --jq '[.jobs[] | select(.name == "Check standards")][0] | "\(.id) \(.conclusion)"')
-                    STANDARDS_JOB_ID=${STANDARDS_JOB% *}
-                    STANDARDS_JOB_CONCLUSION=${STANDARDS_JOB#* }
-                    if [ -z "${STANDARDS_JOB_ID}" ] || [ "${STANDARDS_JOB_ID}" = "null" ]; then
-                        echo "::error::Run ${RUN_ID} has no \"Check standards\" job."
+                    JOBS_JSON=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate --slurp --jq '[.[].jobs[]]')
+
+                    # Both standards jobs are candidates; each failed one contributes a log, the autofixer
+                    # gets every log that exists and the step fails only when neither job failed.
+                    SKILL_ARGS="--merge-base=${MERGE_BASE}"
+                    FAILED_LOGS=0
+                    for JOB in "Check standards|standards|/tmp/standards.log|--standards-log" "Check Storefront standards|storefront standards|/tmp/standards-storefront.log|--storefront-standards-log"; do
+                        IFS='|' read -r JOB_NAME JOB_LABEL LOG_PATH LOG_FLAG <<< "${JOB}"
+                        JOB_ID=$(jq -r --arg name "${JOB_NAME}" '[.[] | select(.name == $name)][0].id // empty' <<< "${JOBS_JSON}")
+                        JOB_CONCLUSION=$(jq -r --arg name "${JOB_NAME}" '[.[] | select(.name == $name)][0].conclusion // empty' <<< "${JOBS_JSON}")
+                        if [ -z "${JOB_ID}" ]; then
+                            echo "Run ${RUN_ID} has no \"${JOB_NAME}\" job."
+                            continue
+                        fi
+                        if [ "${JOB_CONCLUSION}" != "failure" ]; then
+                            echo "\"${JOB_NAME}\" of run ${RUN_ID} did not fail (conclusion: ${JOB_CONCLUSION})."
+                            continue
+                        fi
+                        gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${JOB_ID}/logs" > "${LOG_PATH}"
+                        echo "Downloaded $(wc -l < "${LOG_PATH}") lines of the ${JOB_LABEL} log from job ${JOB_ID} of run ${RUN_ID}."
+                        SKILL_ARGS="${SKILL_ARGS} ${LOG_FLAG}=${LOG_PATH}"
+                        FAILED_LOGS=$((FAILED_LOGS + 1))
+                    done
+
+                    if [ "${FAILED_LOGS}" -eq 0 ]; then
+                        echo "::error::Neither \"Check standards\" nor \"Check Storefront standards\" of run ${RUN_ID} failed — nothing to fix."
                         exit 1
                     fi
-                    if [ "${STANDARDS_JOB_CONCLUSION}" != "failure" ]; then
-                        echo "::error::\"Check standards\" of run ${RUN_ID} did not fail (conclusion: ${STANDARDS_JOB_CONCLUSION}) — nothing to fix."
-                        exit 1
-                    fi
-
-                    gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${STANDARDS_JOB_ID}/logs" > /tmp/standards.log
-
-                    echo "Downloaded $(wc -l < /tmp/standards.log) lines from job ${STANDARDS_JOB_ID} of run ${RUN_ID}."
+                    echo "SKILL_ARGS=${SKILL_ARGS}" >> $GITHUB_OUTPUT
 
             -   name: Run Claude standards autofix
                 uses: anthropics/claude-code-action@v1
                 with:
                     github_token: ${{ github.token }}
                     claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-                    prompt: "/standards-autofix --merge-base=${{ steps.standards_log.outputs.MERGE_BASE }} --standards-log=/tmp/standards.log"
+                    prompt: "/standards-autofix ${{ steps.standards_log.outputs.SKILL_ARGS }}"
                     # "disableAllHooks" and "--strict-mcp-config" pin the agent to the configuration injected
                     # here — a ".claude/settings.json" hook or ".mcp.json" committed in the pull request branch
                     # would otherwise run commands on this runner outside the allowedTools allowlist, in the
                     # same job that later holds the push token. "core.hooksPath" above covers git hooks only.
-                    # File reads and writes are confined to the checkout and the downloaded log (the leading slash
+                    # File reads and writes are confined to the checkout and the downloaded logs (the leading slash
                     # anchors the rule to an absolute path) - everything else, /proc/self/environ and GITHUB_ENV in
                     # particular, is out of reach. The rule is an "Edit(...)" rule, not "Write(...)": path-scoped
                     # file rules only match under "Edit", which covers every file-editing tool including Write.
@@ -149,7 +162,7 @@ jobs:
                         --max-turns 120
                         --strict-mcp-config
                         --settings '{"disableAllHooks": true}'
-                        --allowedTools "Read(/${{ github.workspace }}/**),Read(/tmp/standards.log),Edit(/${{ github.workspace }}/**),Grep,Glob,Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git blame:*),Bash(git show:*),Bash(git add:*),Bash(git commit:*),Bash(git apply:*)"
+                        --allowedTools "Read(/${{ github.workspace }}/**),Read(/tmp/standards.log),Read(/tmp/standards-storefront.log),Edit(/${{ github.workspace }}/**),Grep,Glob,Bash(git status:*),Bash(git diff:*),Bash(git log:*),Bash(git blame:*),Bash(git show:*),Bash(git add:*),Bash(git commit:*),Bash(git apply:*)"
                         --disallowedTools "Bash(git push:*),Bash(git remote:*),Bash(git config:*),Bash(git fetch:*),Bash(git rebase:*)"
 
             -   name: Push fix commits

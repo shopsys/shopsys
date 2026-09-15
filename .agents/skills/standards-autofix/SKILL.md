@@ -2,13 +2,14 @@
 name: standards-autofix
 description: >
   Finishes a failed coding-standards check: the pipeline has already run `phing standards-fix`,
-  so this fixes by hand what the fixer could not (phpstan, phplint, twig-lint, leftover ecs),
-  then packages everything as fixup! commits targeting the PR commits that introduced each
-  violation. Used by CI when the "Check standards" job fails on a pull request; can also be run
-  locally on a branch. It never rewrites existing history — it only appends commits for the
-  author to review and autosquash.
+  so this fixes by hand what the fixer could not (phpstan, phplint, twig-lint, leftover ecs, and
+  the storefront's tsc, biome and knip), then packages everything as fixup! commits targeting the
+  PR commits that introduced each violation. Used by CI when the "Check standards" or
+  "Check Storefront standards" job fails on a pull request; can also be run locally on a branch.
+  It never rewrites existing history — it only appends commits for the author to review and
+  autosquash.
 user_invocable: true
-version: 1.0.0
+version: 1.1.0
 ---
 
 # standards-autofix (monorepo)
@@ -25,13 +26,14 @@ The method — mindset, the read-the-log → fix → fixup-commits flow, author 
 
 ## Environment delta (GitHub Actions instead of GitLab CI)
 
-You run in the `AI fix of failed standards` workflow (`.github/workflows/standards-autofix-pr.yaml`), started on demand by a `/standards-autofix` comment on the pull request or by a manual dispatch — never automatically. The job runs no containers at all: it checks the branch out, downloads the *Check standards* log of the latest completed Docker build run for the PR head, and hands it to you. Editing files is the entire mechanism.
+You run in the `AI fix of failed standards` workflow (`.github/workflows/standards-autofix-pr.yaml`), started on demand by a `/standards-autofix` comment on the pull request or by a manual dispatch — never automatically. The job runs no containers at all: it checks the branch out, downloads the logs of the failed *Check standards* and *Check Storefront standards* jobs of the latest completed Docker build run for the PR head, and hands them to you. Editing files is the entire mechanism.
 
-- **Target:** `$ARGUMENTS` carries the same `--merge-base` and `--standards-log` flags the canonical describes; there is no PR reference and no container name. Empty still means a local run on the current branch.
-- **Log content:** `--standards-log` is the raw GitHub Actions log of the *Check standards* job, so every line is prefixed with the job name, step name and a timestamp. The failure is `php phing standards` or `project-base/app/check-schema.sh`; the `ux:icons:lock` check lives in a different job here, so you will never see it.
-- **Paths are repo-relative** exactly as the log prints them — `packages/framework/src/...`, `project-base/app/src/...`. There is no `app/` prefix strip.
+- **Target:** `$ARGUMENTS` carries the same `--merge-base`, `--standards-log` and `--storefront-standards-log` flags the canonical describes; there is no PR reference and no container name. Only the jobs that failed contribute a log, so either log flag may be missing. Empty still means a local run on the current branch.
+- **Application log:** `--standards-log` is the raw GitHub Actions log of the *Check standards* job, so every line is prefixed with the job name, step name and a timestamp. The failure is `php phing standards` or `project-base/app/check-schema.sh`; the `ux:icons:lock` check lives in a different job here, so you will never see it.
+- **Storefront log:** `--storefront-standards-log` is the raw log of the *Check Storefront standards* job in the same format. The fixable failures are `pnpm run check` (tsc + biome) and `pnpm run knip`; the `check-next-public-variable.sh`, `check-code-gen.sh` and tailwind-for-admin steps need the application and go under "left for a human".
+- **Paths are repo-relative** exactly as the application log prints them — `packages/framework/src/...`, `project-base/app/src/...`. There is no `app/` prefix strip. The storefront log prints paths relative to `project-base/storefront/`, so prefix them with that directory.
 - **Conventions:** fixes in `packages/` follow the monorepo package rules (`protected`, no `final` except FormType, annotation docblocks); `project-base/` and `utils/` use `final`/`private`/full typehints — see `.agents/skills/coding-conventions/SKILL.md`.
-- **Schema drift** (`check-schema.sh`) cannot be fixed here — regenerating the schema needs the application. Report it under "left for a human".
+- **Schema drift** (`check-schema.sh`, `check-code-gen.sh`) cannot be fixed here — regenerating the schema needs the application. Report it under "left for a human".
 
 ## Reporting delta
 
