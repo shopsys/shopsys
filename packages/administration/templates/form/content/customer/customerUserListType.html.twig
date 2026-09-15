@@ -50,25 +50,14 @@
                                             {% endif %}
                                             {% if allowDelete %}
                                                 {% if customerUserCount > 1 %}
-                                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
-                                                    {% set deleteUrl = url('admin_customer_delete', {
-                                                        id: customerUser.id,
-                                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                                    }) %}
-                                                    <a href="{{ deleteUrl }}"
+                                                    <a href="{{ protectedUrl('admin_customer_delete', {id: customerUser.id}) }}"
                                                        class="me-2 link-secondary"
                                                        data-confirm-window
                                                        data-confirm-message="{{ deleteConfirmMessage }}"
                                                     >{{ ux_icon('trash') }}</a>
                                                 {% else %}
-                                                    {% set customerId = customerUser.customer.id %}
-                                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
-                                                    {% set deleteUrl = url('admin_customer_delete_all', {
-                                                        id: customerId,
-                                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                                    }) %}
                                                     <a class="me-2 link-secondary"
-                                                       href="{{ deleteUrl }}"
+                                                       href="{{ protectedUrl('admin_customer_delete_all', {id: customerUser.customer.id}) }}"
                                                        title={{ 'Delete'|trans }}
                                                        data-confirm-window
                                                        data-confirm-message="{{ 'This is the last customer user. It will remove all its related data. Do you really want to delete it ?'|trans }}"
@@ -78,14 +67,8 @@
                                             {{ loginAsUserLinkMacro.loginAsUserLink(customerUser,"me-2 link-secondary"
                                                 , true) }}
 
-                                            {% set customerId = customerUser.id %}
-                                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}
-                                            {% set sendResetPasswordUrl = url('admin_customer_send_reset_password', {
-                                                id: customerId,
-                                                (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                            }) %}
                                             <a class="link-secondary"
-                                               href="{{ sendResetPasswordUrl }}"
+                                               href="{{ protectedUrl('admin_customer_send_reset_password', {id: customerUser.id}) }}"
                                                title="{{ 'Send reset password'|trans }}"
                                                data-confirm-window
                                                data-confirm-message="{{ 'This will send an email to customer user for resetting password. Do you really want to send it ?'|trans }}"
