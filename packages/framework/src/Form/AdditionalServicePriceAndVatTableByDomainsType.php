@@ -7,9 +7,7 @@ namespace Shopsys\FrameworkBundle\Form;
 use Override;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +16,6 @@ final class AdditionalServicePriceAndVatTableByDomainsType extends AbstractType
 {
     public function __construct(
         private readonly Domain $domain,
-        private readonly VatFacade $vatFacade,
     ) {
     }
 
@@ -55,13 +52,13 @@ final class AdditionalServicePriceAndVatTableByDomainsType extends AbstractType
                 'help' => t('Yes = the service is an ancillary supply and takes over the VAT rate of the product it is attached to in the cart. No = the service is a separate supply with its own VAT rate.'),
             ]);
 
-            $vatsIndexedByDomainId->add((string)$domainConfig->getId(), ChoiceType::class, [
-                'required' => true,
+            // the field is rendered as required (asterisk) but the VAT rate is needed only when the product VAT rate
+            // is not used, so the NotBlank of VatChoiceType is disabled in favor of
+            // AdditionalServiceFormType::validateVats()
+            $vatsIndexedByDomainId->add((string)$domainConfig->getId(), VatChoiceType::class, [
+                'domain_id' => $domainConfig->getId(),
+                'constraints' => [],
                 'placeholder' => '---',
-                'choices' => $this->vatFacade->getAllForDomain($domainConfig->getId()),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'label' => 'VAT',
             ]);
         }
 
