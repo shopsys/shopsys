@@ -11,6 +11,6 @@ You can find the debug settings in the file `config/packages/dev/debug.yaml`:
 
 Start the server with the `server:dump` command, and whenever you call the `d()`, the dumped data will not be displayed in the output but sent to that server, which outputs it to its own console or an HTML file.
 
-```
+```sh
 php bin/console server:dump
 ```

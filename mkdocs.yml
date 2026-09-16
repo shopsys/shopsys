@@ -16,6 +16,7 @@ markdown_extensions:
             toc_depth: 2-4
     - admonition
     - def_list
+    - pymdownx.superfences
 
 plugins:
     -   awesome-pages:

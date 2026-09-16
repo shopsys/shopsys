@@ -11,7 +11,7 @@ There are two ways of retrieving `schema.graphql`.
 
 Run this command inside `php-fpm` container:
 
-```
+```sh
 php phing frontend-api-generate-graphql-schema
 ```
 

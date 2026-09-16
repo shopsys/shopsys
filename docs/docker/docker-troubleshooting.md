@@ -53,7 +53,7 @@ Because it would try to locate our localhost ports to the same values, which wou
 
 So we need to change the ports of the containers. Containers have their ports defined in this format.
 
-```
+```text
 8000:8000
 ```
 

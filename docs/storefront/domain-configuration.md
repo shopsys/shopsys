@@ -41,7 +41,7 @@ However, paths matching locales configured in `i18n.js` (currently `['default', 
 
 Fallback redirection would only be triggered in configurations where you have "orphaned" base URLs. For example, if domains were configured like this:
 
-```
+```text
 - http://127.0.0.1:8000/cs/ (Czech, domain 1)
 - http://127.0.0.1:8000/sk/ (Slovak, domain 2)
 Note: No domain configured for base http://127.0.0.1:8000/

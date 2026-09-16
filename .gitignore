@@ -32,3 +32,4 @@ mutagen.yml
 mutagen.yml.lock
 
 /.playwright-cli
+/.playwright-mcp

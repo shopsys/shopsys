@@ -8,7 +8,7 @@
 
 You can list all available Phing targets by running:
 
-```
+```sh
 php phing
 ```
 

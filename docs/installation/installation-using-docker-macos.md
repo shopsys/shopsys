@@ -50,7 +50,7 @@ Now, you have two options:
 
 In the case you want to start demo of the application as fast as possible, you can simply execute the installation script and that is all:
 
-```
+```sh
 ./scripts/install.sh
 ```
 
@@ -119,7 +119,6 @@ docker compose up -d
 !!! tip
 
     Once Mutagen is running and containers are up, you use standard `docker` and `docker compose` commands like you are used to.
-    ```
 
 !!! note
 
@@ -128,10 +127,13 @@ docker compose up -d
 !!! note
 
     To stop the environment (keeps containers):
+
     ```sh
     ./scripts/mutagen-stop.sh
     ```
+
     To remove containers completely:
+
     ```sh
     ./scripts/mutagen-down.sh
     ```

@@ -89,7 +89,7 @@ The system uses contexts to organize roles by their intended application area, e
 
 The system automatically manages role inheritance:
 
-```
+```text
 ROLE_SUPER_ADMIN (highest)
     └── ROLE_ALL (all FULL permissions)
         ├── ROLE_PRODUCT_FULL
