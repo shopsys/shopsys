@@ -48,9 +48,9 @@ class LuigisBoxCategoryFeedItemFactory
             $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_product_list', $category->getId()),
             array_reverse($hierarchyNames),
             $imageUrl,
-            $category->getSeoTitle($domainId),
-            $category->getSeoMetaDescription($domainId),
-            $category->getSeoH1($domainId),
+            $category->getSeoAttributes($domainId)->getTitle(),
+            $category->getSeoAttributes($domainId)->getMetaDescription(),
+            $category->getSeoAttributes($domainId)->getH1(),
         );
     }
 }

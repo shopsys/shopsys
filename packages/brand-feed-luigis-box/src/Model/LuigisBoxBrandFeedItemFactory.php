@@ -35,9 +35,9 @@ class LuigisBoxBrandFeedItemFactory
             $brand->getName(),
             $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_brand_detail', $brand->getId()),
             $imageUrl,
-            $brand->getSeoTitle($domainId),
-            $brand->getSeoMetaDescription($domainId),
-            $brand->getSeoH1($domainId),
+            $brand->getSeoAttributes($domainId)->getTitle(),
+            $brand->getSeoAttributes($domainId)->getMetaDescription(),
+            $brand->getSeoAttributes($domainId)->getH1(),
         );
     }
 }
