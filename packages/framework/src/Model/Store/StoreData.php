@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class StoreData
 {
     /**
@@ -112,9 +110,4 @@ class StoreData
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData
      */
     public $seo;
-
-    public function __construct()
-    {
-        $this->urls = new UrlListData();
-    }
 }

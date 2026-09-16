@@ -6,14 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BrandDataFactory
 {
     public function __construct(
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
@@ -39,6 +38,7 @@ class BrandDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seo[$domainId] = $this->seoAttributesDataFactory->create();
+            $brandData->urls[$domainId] = $this->urlListDataFactory->create();
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -66,18 +66,12 @@ class BrandDataFactory
             $brandData->descriptions[$translation->getLocale()] = $translation->getDescription();
         }
 
+        $brandData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_brand_detail', $brand->getId());
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
                 $brand->getSeoAttributes($domainId),
             );
-
-            $brandData->urls[$domainId] = new UrlListData();
-            $brandData->urls[$domainId]->mainFriendlyUrl =
-                $this->friendlyUrlFacade->findMainFriendlyUrl(
-                    $domainId,
-                    'front_brand_detail',
-                    $brand->getId(),
-                );
         }
 
         $brandData->image = $this->imageUploadDataFactory->createFromEntityAndType($brand);

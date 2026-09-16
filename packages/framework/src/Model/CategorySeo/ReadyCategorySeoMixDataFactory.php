@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
@@ -19,7 +18,7 @@ class ReadyCategorySeoMixDataFactory
         protected readonly FlagFacade $flagFacade,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly ReadyCategorySeoMixParameterParameterValueFactory $readyCategorySeoMixParameterValueFactory,
         protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
@@ -31,6 +30,7 @@ class ReadyCategorySeoMixDataFactory
     {
         $readyCategorySeoMixData = new ReadyCategorySeoMixData();
         $readyCategorySeoMixData->seo = $this->seoAttributesDataFactory->create();
+        $readyCategorySeoMixData->urls = $this->urlListDataFactory->create();
 
         return $readyCategorySeoMixData;
     }
@@ -54,18 +54,16 @@ class ReadyCategorySeoMixDataFactory
 
         $readyCategorySeoMixData = $this->createInstance();
 
-        $readyCategorySeoMixData->urls = new UrlListData();
         $readyCategorySeoMixData->image = $this->imageUploadDataFactory->create();
 
         if ($readyCategorySeoMix !== null) {
             $this->fillValuesFromReadyCategorySeoMix($readyCategorySeoMixData, $readyCategorySeoMix);
 
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
-                $readyCategorySeoMix->getDomainId(),
+            $readyCategorySeoMixData->urls = $this->urlListDataFactory->createForDomain(
                 'front_category_seo',
                 $readyCategorySeoMix->getId(),
+                $readyCategorySeoMix->getDomainId(),
             );
-            $readyCategorySeoMixData->urls->mainFriendlyUrl = $mainFriendlyUrl;
         }
 
         return $readyCategorySeoMixData;

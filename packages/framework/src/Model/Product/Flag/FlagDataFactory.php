@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class FlagDataFactory
 {
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
@@ -39,6 +38,7 @@ class FlagDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $flagData->seo[$domainId] = $this->seoAttributesDataFactory->create();
+            $flagData->urls[$domainId] = $this->urlListDataFactory->create();
         }
     }
 
@@ -64,9 +64,9 @@ class FlagDataFactory
         $flagData->uuid = $flag->getUuid();
         $flagData->promotionXy = $flag->getPromotionXy();
 
+        $flagData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_flag_detail', $flag->getId());
+
         foreach ($this->domain->getAllIds() as $domainId) {
-            $flagData->urls[$domainId] = new UrlListData();
-            $flagData->urls[$domainId]->mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_flag_detail', $flag->getId());
             $flagData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
                 $flag->getSeoAttributes($domainId),
             );
