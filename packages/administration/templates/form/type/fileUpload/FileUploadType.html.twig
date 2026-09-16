@@ -3,7 +3,11 @@
         {% if form.orderedFiles|length > 0 %}
             <div class="file-upload-card-container js-file-upload">
                 {% for fileForm in form.orderedFiles %}
-                    {% set file = files_by_id[fileForm.vars.value] %}
+                    {% set file = files_by_id[fileForm.vars.value]|default(null) %}
+                    {% if file is null %}
+                        {# the submitted form does not match the stored files, e.g. the entity was saved from another browser tab in the meantime, so the card cannot be rendered #}
+                        {% do fileForm.setRendered %}
+                    {% else %}
                     {% set isRemoved = false %}
                     {% if not multiple and loop.index > 1 %}
                         {% set isRemoved = true %}
@@ -72,7 +76,12 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
+
+                {# fields of the skipped cards must not be rendered by form_rest #}
+                {% do form.currentFilenamesIndexedById.setRendered %}
+                {% do form.namesIndexedById.setRendered %}
             </div>
         {% else %}
             {% do form.orderedFiles.setRendered %}

@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\MultipleFilesNotAllowedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
@@ -270,6 +271,11 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         }
 
         foreach ($uploadedFiles as $uploadedFile) {
+            // the file was removed from the entity from another browser tab after the form was loaded
+            if (!array_key_exists($uploadedFile->getId(), $relationsIndexedByUploadedFileId)) {
+                continue;
+            }
+
             $relation = $relationsIndexedByUploadedFileId[$uploadedFile->getId()];
             $relation->setPosition($i++);
 
@@ -285,7 +291,12 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     protected function updateTranslatedNames(array $namesIndexedByFileIdAndLocale): void
     {
         foreach ($namesIndexedByFileIdAndLocale as $fileId => $names) {
-            $this->getById($fileId)->setTranslatedNames($names);
+            try {
+                $this->getById($fileId)->setTranslatedNames($names);
+            } catch (FileNotFoundException) {
+                // the file was removed from another browser tab after the form was loaded
+                continue;
+            }
         }
     }
 
@@ -295,17 +306,20 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         string $type,
         UploadedFileData $uploadedFileData,
     ): int {
+        // new files follow the files stored now, which may differ from the ones the form knew about when the entity was saved from another browser tab in the meantime
+        $storedFilesCount = count($this->getUploadedFilesByEntity($entity, $type));
+
         $this->uploadFiles(
             $entity,
             $entityName,
             $type,
             $uploadedFileData->uploadedFiles,
             $uploadedFileData->uploadedFilenames,
-            count($uploadedFileData->orderedFiles),
+            $storedFilesCount,
             $uploadedFileData->names,
         );
 
-        return count($uploadedFileData->orderedFiles) + count($uploadedFileData->uploadedFiles);
+        return $storedFilesCount + count($uploadedFileData->uploadedFiles);
     }
 
     protected function handleSingleFile(
@@ -318,13 +332,13 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         $hasPickerSelection = count($uploadedFileData->relations) > 0;
         $orderedFiles = $uploadedFileData->orderedFiles;
 
-        if (count($orderedFiles) > 1) {
+        if ($temporaryFilename || $hasPickerSelection) {
+            // the new file replaces every stored one, including a file uploaded from another browser tab in the meantime
+            $currentFiles = $this->uploadedFileRepository->getUploadedFilesByEntity($entityName, $this->getEntityId($entity), $type);
+            $this->deleteRelationsByEntityAndUploadedFiles($entity, $currentFiles, $type);
+        } elseif (count($orderedFiles) > 1) {
             $filesToDelete = array_slice($orderedFiles, 1);
             $this->deleteRelationsByEntityAndUploadedFiles($entity, $filesToDelete, $type);
-        }
-
-        if (count($orderedFiles) > 0 && ($temporaryFilename || $hasPickerSelection)) {
-            $this->deleteRelationsByEntityAndUploadedFiles($entity, [array_first($orderedFiles)], $type);
         }
 
         if ($temporaryFilename && !$hasPickerSelection) {
