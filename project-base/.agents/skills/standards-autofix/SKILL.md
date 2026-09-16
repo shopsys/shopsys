@@ -2,12 +2,13 @@
 name: standards-autofix
 description: >
   Fixes the violations reported by a failed coding-standards check (ecs, phpstan, phplint,
-  twig-lint, markdown, yaml, eslint) by editing the source directly from the check's log, then
-  packages the fixes as fixup! commits targeting the commits that introduced each violation.
+  twig-lint, markdown, yaml, and the storefront's tsc, biome and knip) by editing the source
+  directly from the check's log, then packages the fixes as fixup! commits targeting the
+  commits that introduced each violation.
   Used by the GitLab CI job ai:standards-fix; can also be run locally on a branch. It never
   rewrites existing history — it only appends commits for the author to review and autosquash.
 user_invocable: true
-version: 2.0.0
+version: 2.1.0
 ---
 
 # Standards Autofix
@@ -19,17 +20,28 @@ version: 2.0.0
 | Flag | Meaning |
 |---|---|
 | `--merge-base=<sha>` | Merge-base with the base branch, already resolved. Use it literally; do not recompute it. |
-| `--standards-log=<path>` | The log of the failed standards check. This is your source of truth. |
+| `--standards-log=<path>` | The log of the failed application standards check (`php phing standards`). |
+| `--storefront-standards-log=<path>` | The log of the failed storefront standards check (`pnpm run check`, `pnpm run knip`). |
 
-Run locally with no flags to work on the current branch: get the violations by running `php phing standards` yourself and use `git merge-base HEAD <base>` for the range.
+Either log flag may be absent — only the checks that failed hand you a log. Whatever logs you get are your source of truth; handle each one in turn.
+
+Run locally with no flags to work on the current branch: get the violations by running `php phing standards` yourself (and `pnpm run check` / `pnpm run knip` in the storefront) and use `git merge-base HEAD <base>` for the range.
 
 ---
 
 ## Phase 1: Extract the violations from the log
 
-Read the `--standards-log` file. It is raw CI output — timestamps and ANSI escapes included — so read past the noise and pull out the actual findings.
+Read every log file you were given. They are raw CI output — timestamps and ANSI escapes included — so read past the noise and pull out the actual findings.
 
-Phing stops at the **first** failing target, in this order: `phplint`, `ecs`, `markdown-check`, `annotations-check`, `phpstan`, `twig-lint`, `yaml-standards`, `js-standards-check`. So the log shows one tool's failures, not all of them; more may surface on the next run once these are fixed. Say so in your summary rather than implying the branch is now clean.
+**Application log (`--standards-log`):** Phing stops at the **first** failing target, in this order: `phplint`, `ecs`, `markdown-check`, `annotations-check`, `phpstan`, `twig-lint`, `yaml-standards`, `js-standards-check`. So the log shows one tool's failures, not all of them; more may surface on the next run once these are fixed. Say so in your summary rather than implying the branch is now clean.
+
+**Storefront log (`--storefront-standards-log`):** the job runs several steps and the log holds whichever failed:
+
+- `pnpm run check` runs `tsc --pretty --noEmit` and `biome check` concurrently, so both tools' output is interleaved and prefixed with `[0]` / `[1]`. tsc reports `file:line:col - error TSxxxx: message` followed by the offending source line; biome reports `file:line:col <rule-id>` where the rule id is `lint/<group>/<rule>`, `assist/source/organizeImports` or `format`, followed by a diff-like suggestion — biome's suggested fix is the fix to make, it is authoritative for formatting and import ordering.
+- `pnpm run knip` lists unused files, exports, types and dependencies per file. Unused exports and types are yours to fix (drop the `export`, or delete the unused symbol when nothing in the file uses it either). Unused *dependencies* touch `package.json` — leave those for a human.
+- Schema and code generation freshness (`check-code-gen.sh`), unused `NEXT_PUBLIC_` variables and compiled tailwind styles need the running application to regenerate — report them under "left for a human".
+
+Paths in the storefront log are relative to the storefront root; prefix them with the storefront directory when you open the files.
 
 Build an explicit list before editing anything: for each violation record the **file**, the **line**, the **rule or error message**, and the **tool**. If the log is truncated or you cannot tell what a message refers to, leave that one alone and report it — a guessed fix is worse than an unfixed violation.
 
@@ -38,13 +50,13 @@ Build an explicit list before editing anything: for each violation record the **
 Work through your list, one violation at a time, smallest possible edit.
 
 - Open the file and read enough context to be sure the fix is right. The log gives you a line number, not a diagnosis.
-- Follow the project conventions (`.agents/skills/coding-conventions/SKILL.md`): `final` classes, `private` visibility, full typehints and return types.
+- Follow the project conventions (`.agents/skills/coding-conventions/SKILL.md`): `final` classes, `private` visibility, full typehints and return types. In the storefront follow the existing code around the violation and biome's own suggestion; never reach for `// biome-ignore`, `@ts-ignore` or `@ts-expect-error` unless the file already uses that pattern for the same reason.
 - Fix the violation, do not suppress it. Ignore-annotations or baseline entries are acceptable only for a genuine false positive, and only where the project already uses that pattern.
 - Change nothing the log did not name. No refactors, no drive-by cleanups, no reformatting of untouched code.
 
 **You cannot verify your work** — there is no container to re-run the tools in. Two consequences, and they shape everything you do:
 
-1. **Prefer certainty over coverage.** Where a fix is mechanical (an unused import, long array syntax, a missing return type the message spells out), make it. Where it needs judgement you cannot confirm (a PHPStan error whose real cause is in another file, a rule you are unsure of), leave it and list it under "left for a human".
+1. **Prefer certainty over coverage.** Where a fix is mechanical (an unused import, long array syntax, a missing return type the message spells out, a biome suggestion), make it. Where it needs judgement you cannot confirm (a PHPStan or tsc error whose real cause is in another file, a rule you are unsure of), leave it and list it under "left for a human".
 2. **CI is the verifier.** Your commits are pushed and the full standards check runs again on the result. That is the safety net — never claim a check passes.
 
 ## Phase 3: Package the diff as fixup commits
