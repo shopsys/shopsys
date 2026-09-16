@@ -6,7 +6,6 @@ namespace Shopsys\AdministrationBundle\Model\ProductReview;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Crud\Handler\EditHandlerInterface;
-use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\ProductReview\Exception\ProductReviewNotFoundException;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReviewData;
@@ -30,7 +29,7 @@ class ProductReviewEditHandler implements EditHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getById(int $id): Presentable
+    public function getById(int $id): ProductReview
     {
         $productReview = $this->productReviewFacade->getById($id);
 
