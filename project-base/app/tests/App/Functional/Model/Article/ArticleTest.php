@@ -48,9 +48,9 @@ class ArticleTest extends TransactionFunctionalTestCase
 
         $this->assertSame('Demonstrative name', $refreshedArticle->getName());
         $this->assertSame(Article::PLACEMENT_FOOTER_1, $refreshedArticle->getPlacement());
-        $this->assertSame('Demonstrative seo title', $refreshedArticle->getSeoTitle());
-        $this->assertSame('Demonstrative seo description', $refreshedArticle->getSeoMetaDescription());
-        $this->assertSame('Demonstrative seo H1', $refreshedArticle->getSeoH1());
+        $this->assertSame('Demonstrative seo title', $refreshedArticle->getSeoAttributes()->getTitle());
+        $this->assertSame('Demonstrative seo description', $refreshedArticle->getSeoAttributes()->getMetaDescription());
+        $this->assertSame('Demonstrative seo H1', $refreshedArticle->getSeoAttributes()->getH1());
         $this->assertEquals(new DatePoint('2000-01-01T01:01:01'), $refreshedArticle->getCreatedAt());
     }
 }

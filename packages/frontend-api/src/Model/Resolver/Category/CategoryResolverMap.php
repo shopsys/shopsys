@@ -105,7 +105,7 @@ class CategoryResolverMap extends ResolverMap
 
         return $this->seoAttributesQueryDtoFactory->create(
             $seoAttributes->getTitle() ?? $seoAttributes->getH1(),
-            $seoAttributes->getMetaDescription() ?? $category->getSeoMetaDescription($domainId),
+            $seoAttributes->getMetaDescription() ?? $category->getSeoAttributes($domainId)->getMetaDescription(),
             $seoAttributes->getH1(),
             $seoAttributes->getMetaRobots(),
             $seoAttributes->getCanonicalUrl(),

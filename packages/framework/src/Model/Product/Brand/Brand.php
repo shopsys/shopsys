@@ -171,30 +171,6 @@ class Brand extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getMetaDescription();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
-    {
-        return $this->getSeoAttributes($domainId)->getH1();
-    }
-
-    /**
      * @param string $locale
      * @return string
      */
