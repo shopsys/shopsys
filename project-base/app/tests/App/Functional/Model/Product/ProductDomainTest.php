@@ -63,15 +63,15 @@ class ProductDomainTest extends TransactionFunctionalTestCase
 
         $refreshedProduct = $this->getRefreshedProductFromDatabase($product);
 
-        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedProduct->getSeoTitle(self::FIRST_DOMAIN_ID));
-        $this->assertNull($refreshedProduct->getSeoTitle(self::SECOND_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedProduct->getSeoAttributes(self::FIRST_DOMAIN_ID)->getTitle());
+        $this->assertNull($refreshedProduct->getSeoAttributes(self::SECOND_DOMAIN_ID)->getTitle());
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedProduct->getSeoMetaDescription(self::SECOND_DOMAIN_ID),
+            $refreshedProduct->getSeoAttributes(self::SECOND_DOMAIN_ID)->getMetaDescription(),
         );
-        $this->assertNull($refreshedProduct->getSeoMetaDescription(self::FIRST_DOMAIN_ID));
-        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedProduct->getSeoH1(self::FIRST_DOMAIN_ID));
-        $this->assertNull($refreshedProduct->getSeoH1(self::SECOND_DOMAIN_ID));
+        $this->assertNull($refreshedProduct->getSeoAttributes(self::FIRST_DOMAIN_ID)->getMetaDescription());
+        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedProduct->getSeoAttributes(self::FIRST_DOMAIN_ID)->getH1());
+        $this->assertNull($refreshedProduct->getSeoAttributes(self::SECOND_DOMAIN_ID)->getH1());
         $this->assertSame(self::DEMONSTRATIVE_DESCRIPTION, $refreshedProduct->getDescription(self::SECOND_DOMAIN_ID));
         $this->assertNull($refreshedProduct->getDescription(self::FIRST_DOMAIN_ID));
         $this->assertSame(
@@ -99,12 +99,12 @@ class ProductDomainTest extends TransactionFunctionalTestCase
 
         $refreshedProduct = $this->getRefreshedProductFromDatabase($product);
 
-        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedProduct->getSeoTitle(self::FIRST_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedProduct->getSeoAttributes(self::FIRST_DOMAIN_ID)->getTitle());
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedProduct->getSeoMetaDescription(self::FIRST_DOMAIN_ID),
+            $refreshedProduct->getSeoAttributes(self::FIRST_DOMAIN_ID)->getMetaDescription(),
         );
-        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedProduct->getSeoH1(self::FIRST_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedProduct->getSeoAttributes(self::FIRST_DOMAIN_ID)->getH1());
         $this->assertSame(self::DEMONSTRATIVE_DESCRIPTION, $refreshedProduct->getDescription(self::FIRST_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SHORT_DESCRIPTION,

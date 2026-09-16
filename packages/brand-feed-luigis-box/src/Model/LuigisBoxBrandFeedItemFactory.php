@@ -29,15 +29,16 @@ class LuigisBoxBrandFeedItemFactory
         }
 
         $domainId = $domainConfig->getId();
+        $seoAttributes = $brand->getSeoAttributes($domainId);
 
         return new LuigisBoxBrandFeedItem(
             $brand->getId(),
             $brand->getName(),
             $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_brand_detail', $brand->getId()),
             $imageUrl,
-            $brand->getSeoTitle($domainId),
-            $brand->getSeoMetaDescription($domainId),
-            $brand->getSeoH1($domainId),
+            $seoAttributes->getTitle(),
+            $seoAttributes->getMetaDescription(),
+            $seoAttributes->getH1(),
         );
     }
 }

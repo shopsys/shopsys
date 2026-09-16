@@ -41,10 +41,10 @@ class BrandDomainTest extends TransactionFunctionalTestCase
 
         $refreshedBrand = $this->getRefreshedBrandFromDatabase($brand);
 
-        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedBrand->getSeoTitle(self::FIRST_DOMAIN_ID));
-        $this->assertNull($refreshedBrand->getSeoTitle(self::SECOND_DOMAIN_ID));
-        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::SECOND_DOMAIN_ID));
-        $this->assertNull($refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getTitle());
+        $this->assertNull($refreshedBrand->getSeoAttributes(self::SECOND_DOMAIN_ID)->getTitle());
+        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoAttributes(self::SECOND_DOMAIN_ID)->getH1());
+        $this->assertNull($refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getH1());
     }
 
     #[Group('singledomain')]
@@ -62,8 +62,8 @@ class BrandDomainTest extends TransactionFunctionalTestCase
 
         $refreshedBrand = $this->getRefreshedBrandFromDatabase($brand);
 
-        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedBrand->getSeoTitle(self::FIRST_DOMAIN_ID));
-        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getTitle());
+        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getH1());
         $this->assertSame(SeoMetaRobotsEnum::NOINDEX_NOFOLLOW, $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getMetaRobots());
         $this->assertSame('https://example.com/canonical', $refreshedBrand->getSeoAttributes(self::FIRST_DOMAIN_ID)->getCanonicalUrl());
     }

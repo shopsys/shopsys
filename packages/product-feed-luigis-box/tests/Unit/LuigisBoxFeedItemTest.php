@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCust
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPricesResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -233,6 +234,7 @@ class LuigisBoxFeedItemTest extends TestCase
         $this->defaultProduct->expects($this->any())->method('getEan')->willReturn(self::PRODUCT_EAN);
         $this->defaultProduct->expects($this->any())->method('getPartNo')->willReturn(self::PRODUCT_PART_NO);
         $this->defaultProduct->expects($this->any())->method('getCatnum')->willReturn(self::PRODUCT_SKU);
+        $this->defaultProduct->expects($this->any())->method('getSeoAttributes')->willReturn(new SeoAttributes());
 
         $this->mockProductPrice($this->defaultProduct, $this->defaultDomain, Price::zero());
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, self::PRODUCT_URL);

@@ -199,30 +199,6 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     }
 
     /**
-     * @return string|null
-     */
-    public function getSeoTitle()
-    {
-        return $this->seo->getTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
-    {
-        return $this->seo->getMetaDescription();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
-    {
-        return $this->seo->getH1();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
     public function getSeoAttributes()
