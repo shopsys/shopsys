@@ -590,7 +590,7 @@ final class ProductFormType extends AbstractType
     private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         return $builder->create('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'product_form_name_{locale}',
+            'placeholder_source_path' => ['name', '{locale}'],
             'url_list_options' => $product !== null ? [
                 'route_name' => 'front_product_detail',
                 'entity_id' => $product->getId(),

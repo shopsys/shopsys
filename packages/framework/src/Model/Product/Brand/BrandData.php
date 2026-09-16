@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class BrandData
 {
     /**
@@ -24,7 +22,7 @@ class BrandData
     public $descriptions;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -42,7 +40,7 @@ class BrandData
     {
         $this->name = '';
         $this->descriptions = [];
-        $this->urls = new UrlListData();
+        $this->urls = [];
         $this->seo = [];
     }
 }

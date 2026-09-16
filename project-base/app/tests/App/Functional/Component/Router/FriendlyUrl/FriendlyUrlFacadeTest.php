@@ -144,16 +144,14 @@ final class FriendlyUrlFacadeTest extends TransactionFunctionalTestCase
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
         $originalMainFriendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId())->getSlug();
         $urlListDataWithNewUrl = new UrlListData();
-        $urlListDataWithNewUrl->newUrls[Domain::FIRST_DOMAIN_ID][] = [
-            UrlListData::FIELD_SLUG => 'manually-managed-category-url',
-        ];
+        $urlListDataWithNewUrl->newUrls[] = 'manually-managed-category-url';
 
-        $this->friendlyUrlFacade->saveUrlListFormData(self::CATEGORY_ROUTE_NAME, $category->getId(), $urlListDataWithNewUrl);
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain(self::CATEGORY_ROUTE_NAME, $category->getId(), $urlListDataWithNewUrl, Domain::FIRST_DOMAIN_ID);
         $newFriendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug(Domain::FIRST_DOMAIN_ID, 'manually-managed-category-url');
         $this->assertNotNull($newFriendlyUrl);
         $urlListDataWithNewMain = new UrlListData();
-        $urlListDataWithNewMain->mainFriendlyUrlsByDomainId[Domain::FIRST_DOMAIN_ID] = $newFriendlyUrl;
-        $this->friendlyUrlFacade->saveUrlListFormData(self::CATEGORY_ROUTE_NAME, $category->getId(), $urlListDataWithNewMain);
+        $urlListDataWithNewMain->mainFriendlyUrl = $newFriendlyUrl;
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain(self::CATEGORY_ROUTE_NAME, $category->getId(), $urlListDataWithNewMain, Domain::FIRST_DOMAIN_ID);
         $this->em->clear();
 
         $mainFriendlyUrlAfterManualChange = $this->friendlyUrlFacade->getMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, self::CATEGORY_ROUTE_NAME, $category->getId());

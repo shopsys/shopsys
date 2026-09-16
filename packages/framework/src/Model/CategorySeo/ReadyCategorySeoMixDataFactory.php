@@ -65,7 +65,7 @@ class ReadyCategorySeoMixDataFactory
                 'front_category_seo',
                 $readyCategorySeoMix->getId(),
             );
-            $readyCategorySeoMixData->urls->mainFriendlyUrlsByDomainId[$readyCategorySeoMix->getDomainId()] = $mainFriendlyUrl;
+            $readyCategorySeoMixData->urls->mainFriendlyUrl = $mainFriendlyUrl;
         }
 
         return $readyCategorySeoMixData;

@@ -120,7 +120,7 @@ final class CategoryFormType extends AbstractType
             ]);
 
         $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'category_form_settings_name_{locale}',
+            'placeholder_source_path' => ['settings', 'name', '{locale}'],
             'url_list_options' => $options['scenario'] === self::SCENARIO_EDIT ? [
                 'route_name' => 'front_product_list',
                 'entity_id' => $options['category']?->getId(),

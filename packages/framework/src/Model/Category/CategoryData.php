@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class CategoryData
 {
     /**
@@ -34,7 +32,7 @@ class CategoryData
     public $enabled;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -74,7 +72,7 @@ class CategoryData
         $this->seo = [];
         $this->descriptions = [];
         $this->enabled = [];
-        $this->urls = new UrlListData();
+        $this->urls = [];
         $this->pluginData = [];
         $this->parametersPosition = [];
         $this->parametersCollapsed = [];

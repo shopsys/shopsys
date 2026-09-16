@@ -56,7 +56,7 @@ final class FlagFormType extends AbstractType
         $builder->add($builderBasicInformationGroup);
 
         $builder->add('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'flag_form_name_{locale}',
+            'placeholder_source_path' => ['name', '{locale}'],
             'url_list_options' => $options['flag'] !== null ? [
                 'route_name' => 'front_flag_detail',
                 'entity_id' => $options['flag']->getId(),

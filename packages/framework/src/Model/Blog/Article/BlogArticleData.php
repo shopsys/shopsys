@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Symfony\Component\Clock\DatePoint;
 
 class BlogArticleData
@@ -40,7 +39,7 @@ class BlogArticleData
     public $enabled;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -92,7 +91,7 @@ class BlogArticleData
         $this->descriptions = [];
         $this->categories = [];
         $this->enabled = [];
-        $this->urls = new UrlListData();
+        $this->urls = [];
         $this->visibleOnHomepage = true;
         $this->perexes = [];
         $this->createdAt = new DatePoint();
