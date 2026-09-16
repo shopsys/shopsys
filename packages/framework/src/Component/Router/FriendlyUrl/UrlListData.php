@@ -6,37 +6,27 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 class UrlListData
 {
-    public const FIELD_SLUG = 'slug';
-
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
     public $toDelete;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
-    public $mainFriendlyUrlsByDomainId;
+    public $mainFriendlyUrl;
 
     /**
-     * @var array<int, array<int, array<string, string>>>
+     * Slugs of the URL addresses to be created
      *
-     * Format (indexed by domain id):
-     * [
-     *     1 => [
-     *         ['slug' => 'slug-for-the-first-domain'],
-     *         ...
-     *     ],
-     *     ...
-     * ]
-     * @see \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::saveUrlListFormData()
+     * @var string[]
      */
     public array $newUrls;
 
     public function __construct()
     {
         $this->toDelete = [];
-        $this->mainFriendlyUrlsByDomainId = [];
+        $this->mainFriendlyUrl = null;
         $this->newUrls = [];
     }
 }

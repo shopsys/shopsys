@@ -58,7 +58,7 @@ class StoreDataFactory
             StoreFriendlyUrlProvider::ROUTE_NAME,
             $store->getId(),
         );
-        $storeData->urls->mainFriendlyUrlsByDomainId[$store->getDomainId()] = $mainFriendlyUrl;
+        $storeData->urls->mainFriendlyUrl = $mainFriendlyUrl;
 
         return $storeData;
     }

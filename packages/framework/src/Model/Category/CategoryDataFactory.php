@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class CategoryDataFactory
@@ -70,12 +71,12 @@ class CategoryDataFactory
             $categoryData->descriptions[$domainId] = $category->getDescription($domainId);
             $categoryData->enabled[$domainId] = $category->isEnabled($domainId);
 
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+            $categoryData->urls[$domainId] = new UrlListData();
+            $categoryData->urls[$domainId]->mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 'front_product_list',
                 $category->getId(),
             );
-            $categoryData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
 
         $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);

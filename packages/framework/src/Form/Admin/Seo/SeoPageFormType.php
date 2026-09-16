@@ -38,7 +38,8 @@ final class SeoPageFormType extends AbstractType
 
         $builder
             ->add($builderMainGroup)
-            ->add('seoGroup', SeoGroupType::class)
+            // the heading of a static page is given by the storefront, a SEO page cannot override it
+            ->add('seoGroup', SeoGroupType::class, ['with_h1' => false])
             ->add($builderOpenGraphGroup)
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_seopage_list',

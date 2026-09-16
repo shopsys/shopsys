@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class BlogCategoryData
 {
     /**
@@ -34,7 +32,7 @@ class BlogCategoryData
     public $enabled;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -55,6 +53,6 @@ class BlogCategoryData
         $this->parent = null;
         $this->descriptions = [];
         $this->enabled = [];
-        $this->urls = new UrlListData();
+        $this->urls = [];
     }
 }

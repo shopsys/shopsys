@@ -108,9 +108,10 @@ class ReadyCategorySeoMixFacade
         ReadyCategorySeoMix $readyCategorySeoMix,
         UrlListData $urlListData,
     ): void {
-        $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListData);
+        $domainId = $readyCategorySeoMix->getDomainId();
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain('front_category_seo', $readyCategorySeoMix->getId(), $urlListData, $domainId);
 
-        $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($readyCategorySeoMix->getDomainId(), 'front_category_seo', $readyCategorySeoMix->getId());
+        $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_category_seo', $readyCategorySeoMix->getId());
 
         if ($mainFriendlyUrl !== null) {
             return;
@@ -123,11 +124,9 @@ class ReadyCategorySeoMixFacade
         }
 
         $urlListDataForMainFriendlyUrl = new UrlListData();
-        $urlListDataForMainFriendlyUrl->mainFriendlyUrlsByDomainId = [
-            array_shift($readyCategoryMixAllFriendlyUrls),
-        ];
+        $urlListDataForMainFriendlyUrl->mainFriendlyUrl = array_shift($readyCategoryMixAllFriendlyUrls);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl);
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain('front_category_seo', $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl, $domainId);
     }
 
     protected function validateReadyCategoryMixFriendlyUrls(ReadyCategorySeoMix $readyCategorySeoMix): void

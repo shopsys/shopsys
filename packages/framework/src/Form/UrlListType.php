@@ -9,12 +9,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomain;
 use Shopsys\FrameworkBundle\Form\Exception\MissingRouteNameException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -24,6 +23,9 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * URL addresses of an entity on a single domain, multidomain entities render one instance per domain via MultidomainType
+ */
 final class UrlListType extends AbstractType
 {
     private const string UNIQUE_SLUGS_VALIDATION_GROUP = 'UniqueSlugs';
@@ -42,44 +44,19 @@ final class UrlListType extends AbstractType
             throw new MissingRouteNameException();
         }
 
-        $limitDomainsByIds = $this->getLimitDomainsByIds($options['domain_id']);
-        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain(
-            $options['route_name'],
-            (int)$options['entity_id'],
-            $limitDomainsByIds,
-        );
+        $friendlyUrls = $this->getFriendlyUrls($options);
 
-        $builder->add('toDelete', FormType::class);
-        $builder->add('mainFriendlyUrlsByDomainId', FormType::class);
-        $builder->add('newUrls', FormType::class, [
-            'required' => false,
-            'error_bubbling' => false,
-            'constraints' => $this->getNewUrlsConstraints($options, $friendlyUrlsByDomain),
-        ]);
-
-        foreach ($this->domain->getAdminEnabledDomainIds($limitDomainsByIds) as $domainId) {
-            $builder->get('newUrls')->add((string)$domainId, CollectionType::class, [
-                'entry_type' => FriendlyUrlType::class,
-                'required' => false,
-                'allow_add' => true,
-                'error_bubbling' => false,
-            ]);
-        }
-
-        foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
-            $builder->get('toDelete')->add(
-                $builder->create((string)$domainId, ChoiceType::class, [
+        if (count($friendlyUrls) > 0) {
+            $builder
+                ->add('toDelete', ChoiceType::class, [
                     'required' => false,
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $friendlyUrls,
                     'choice_label' => 'slug',
                     'choice_value' => 'slug',
-                ]),
-            );
-
-            $builder->get('mainFriendlyUrlsByDomainId')->add(
-                $builder->create((string)$domainId, ChoiceType::class, [
+                ])
+                ->add('mainFriendlyUrl', ChoiceType::class, [
                     'required' => $options['required'],
                     'multiple' => false,
                     'expanded' => true,
@@ -87,74 +64,60 @@ final class UrlListType extends AbstractType
                     'choice_label' => 'slug',
                     'choice_value' => 'slug',
                     'invalid_message' => 'Previously selected main URL dos not exist any more',
-                ]),
-            );
+                ]);
         }
+
+        $builder->add('newUrls', CollectionType::class, [
+            'entry_type' => FriendlyUrlType::class,
+            'required' => false,
+            'allow_add' => true,
+            'error_bubbling' => false,
+            'constraints' => $this->getNewUrlsConstraints($options, $friendlyUrls),
+        ]);
     }
 
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $limitDomainsByIds = $this->getLimitDomainsByIds($options['domain_id']);
-        $absoluteUrlsByDomainIdAndSlug = $this->getAbsoluteUrlsIndexedByDomainIdAndSlug(
-            $options['route_name'],
-            (int)$options['entity_id'],
-            $limitDomainsByIds,
-        );
-        $mainUrlsSlugsOnDomains = $this->getMainFriendlyUrlSlugsIndexedByDomainId(
-            $options['route_name'],
-            $options['entity_id'],
-            $limitDomainsByIds,
-        );
-
-        $view->vars['absoluteUrlsByDomainIdAndSlug'] = $absoluteUrlsByDomainIdAndSlug;
-        $view->vars['routeName'] = $options['route_name'];
-        $view->vars['entityId'] = $options['entity_id'];
-        $view->vars['mainUrlsSlugsOnDomains'] = $mainUrlsSlugsOnDomains;
-        $view->vars['domainUrlsById'] = $this->getDomainUrlsIndexedByDomainId($limitDomainsByIds);
+        $view->vars['domainUrl'] = $this->domain->getDomainConfigById($options['domain_id'])->getUrl();
+        $view->vars['absoluteUrlsBySlug'] = $this->getAbsoluteUrlsIndexedBySlug($options);
+        $view->vars['mainUrlSlug'] = $this->findMainFriendlyUrlSlug($options);
     }
 
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
+            ->setRequired('domain_id')
             ->setDefaults([
                 'data_class' => UrlListData::class,
+                'empty_data' => static fn (): UrlListData => new UrlListData(),
                 'required' => false,
                 'route_name' => null,
                 'entity_id' => null,
-                'domain_id' => null,
                 'validation_groups' => new GroupSequence(['Default', self::UNIQUE_SLUGS_VALIDATION_GROUP]),
             ])
-            ->setAllowedTypes('domain_id', ['int', 'null'])
-            ->setInfo(
-                'domain_id',
-                'Null means the URL addresses are edited for all domains at once, a domain id limits them to a single domain.',
-            );
-    }
-
-    /**
-     * @return int[]
-     */
-    private function getLimitDomainsByIds(?int $domainId): array
-    {
-        return $domainId === null ? [] : [$domainId];
+            ->setAllowedTypes('domain_id', 'int')
+            ->setAllowedTypes('route_name', ['string', 'null'])
+            ->setAllowedTypes('entity_id', ['int', 'null'])
+            ->setInfo('entity_id', 'Null means a new entity without any URL addresses yet.');
     }
 
     /**
      * @param array<string, mixed> $options
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][] $friendlyUrlsByDomain
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[] $friendlyUrls
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getNewUrlsConstraints(array $options, array $friendlyUrlsByDomain): array
+    private function getNewUrlsConstraints(array $options, array $friendlyUrls): array
     {
         $newUrlsConstraints = [
-            new UniqueSlugsOnDomains(
+            new UniqueSlugsOnDomain(
+                domainId: $options['domain_id'],
                 groups: [self::UNIQUE_SLUGS_VALIDATION_GROUP],
             ),
         ];
 
-        if ($options['required'] && count($friendlyUrlsByDomain) === 0 && $options['entity_id'] === null) {
+        if ($options['required'] && count($friendlyUrls) === 0 && $options['entity_id'] === null) {
             $newUrlsConstraints[] = new Callback(callback: [$this, 'validateAtLeastOneNewUrl']);
         }
 
@@ -162,113 +125,67 @@ final class UrlListType extends AbstractType
     }
 
     /**
-     * @param array<int, array<int, array<string, string>>> $newUrlsByDomainId
+     * @param string[] $newSlugs
      */
-    public function validateAtLeastOneNewUrl(array $newUrlsByDomainId, ExecutionContextInterface $context): void
+    public function validateAtLeastOneNewUrl(array $newSlugs, ExecutionContextInterface $context): void
     {
-        foreach ($newUrlsByDomainId as $newUrls) {
-            if (count($newUrls) > 0) {
-                return;
-            }
+        if (count($newSlugs) > 0) {
+            return;
         }
 
         $context->addViolation('Please define at least one URL.');
     }
 
     /**
-     * @param int[] $limitDomainsByIds
-     * @return array<int, string>
+     * @param array<string, mixed> $options
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    private function getDomainUrlsIndexedByDomainId(array $limitDomainsByIds): array
+    private function getFriendlyUrls(array $options): array
     {
-        $domainUrlsById = [];
-
-        foreach ($this->domain->getAdminEnabledDomains($limitDomainsByIds) as $domainConfig) {
-            $domainUrlsById[$domainConfig->getId()] = $domainConfig->getUrl();
+        if ($options['entity_id'] === null) {
+            return [];
         }
 
-        return $domainUrlsById;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
-     */
-    private function getFriendlyUrlsIndexedByDomain(string $routeName, int $entityId, array $limitDomainsByIds): array
-    {
-        $friendlyUrlsByDomain = [];
-
-        $friendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameDomainIdsAndEntityIds(
-            $routeName,
-            $entityId,
-            $this->domain->getAdminEnabledDomainIds($limitDomainsByIds),
+        return $this->friendlyUrlFacade->getAllByRouteNameDomainIdsAndEntityIds(
+            $options['route_name'],
+            $options['entity_id'],
+            [$options['domain_id']],
         );
-
-        foreach ($friendlyUrls as $friendlyUrl) {
-            $friendlyUrlsByDomain[$friendlyUrl->getDomainId()][] = $friendlyUrl;
-        }
-
-        return $friendlyUrlsByDomain;
     }
 
     /**
-     * @param int[] $limitDomainsByIds
-     * @return string[][]
+     * @param array<string, mixed> $options
+     * @return array<string, string>
      */
-    private function getAbsoluteUrlsIndexedByDomainIdAndSlug(
-        string $routeName,
-        int $entityId,
-        array $limitDomainsByIds,
-    ): array {
-        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($routeName, $entityId, $limitDomainsByIds);
-        $absoluteUrlsByDomainIdAndSlug = [];
+    private function getAbsoluteUrlsIndexedBySlug(array $options): array
+    {
+        $domainRouter = $this->domainRouterFactory->getRouter($options['domain_id']);
+        $absoluteUrlsBySlug = [];
 
-        foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
-            $domainRouter = $this->domainRouterFactory->getRouter($domainId);
-            $absoluteUrlsByDomainIdAndSlug[$domainId] = [];
-
-            foreach ($friendlyUrls as $friendlyUrl) {
-                $absoluteUrlsByDomainIdAndSlug[$domainId][$friendlyUrl->getSlug()] =
-                    $domainRouter->generateByFriendlyUrl(
-                        $friendlyUrl,
-                        [],
-                        UrlGeneratorInterface::ABSOLUTE_URL,
-                    );
-            }
-        }
-
-        return $absoluteUrlsByDomainIdAndSlug;
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getMainFriendlyUrlSlugsIndexedByDomainId(
-        string $routeName,
-        ?int $entityId,
-        array $limitDomainsByIds,
-    ): array {
-        $mainFriendlyUrlsSlugsByDomainId = [];
-
-        foreach ($this->domain->getAdminEnabledDomainIds($limitDomainsByIds) as $domainId) {
-            if ($entityId === null) {
-                $mainFriendlyUrlsSlugsByDomainId[$domainId] = null;
-
-                continue;
-            }
-
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
-                $domainId,
-                $routeName,
-                $entityId,
+        foreach ($this->getFriendlyUrls($options) as $friendlyUrl) {
+            $absoluteUrlsBySlug[$friendlyUrl->getSlug()] = $domainRouter->generateByFriendlyUrl(
+                $friendlyUrl,
+                [],
+                UrlGeneratorInterface::ABSOLUTE_URL,
             );
-
-            if ($mainFriendlyUrl !== null) {
-                $mainFriendlyUrlsSlugsByDomainId[$domainId] = $mainFriendlyUrl->getSlug();
-            } else {
-                $mainFriendlyUrlsSlugsByDomainId[$domainId] = null;
-            }
         }
 
-        return $mainFriendlyUrlsSlugsByDomainId;
+        return $absoluteUrlsBySlug;
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     */
+    private function findMainFriendlyUrlSlug(array $options): ?string
+    {
+        if ($options['entity_id'] === null) {
+            return null;
+        }
+
+        return $this->friendlyUrlFacade->findMainFriendlyUrl(
+            $options['domain_id'],
+            $options['route_name'],
+            $options['entity_id'],
+        )?->getSlug();
     }
 }

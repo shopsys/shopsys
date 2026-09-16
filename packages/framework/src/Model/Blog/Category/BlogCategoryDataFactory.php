@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BlogCategoryDataFactory
@@ -65,8 +66,8 @@ class BlogCategoryDataFactory
             );
             $blogCategoryData->enabled[$domainId] = $blogCategory->isEnabled($domainId);
 
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogcategory_detail', $blogCategory->getId());
-            $blogCategoryData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
+            $blogCategoryData->urls[$domainId] = new UrlListData();
+            $blogCategoryData->urls[$domainId]->mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogcategory_detail', $blogCategory->getId());
         }
     }
 

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BlogArticleDataFactory
@@ -79,8 +80,8 @@ class BlogArticleDataFactory
             $blogArticleData->statuses[$domainId] = $blogArticle->getStatus($domainId);
             $blogArticleData->publishDates[$domainId] = $blogArticle->getPublishDate($domainId);
 
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
-            $blogArticleData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
+            $blogArticleData->urls[$domainId] = new UrlListData();
+            $blogArticleData->urls[$domainId]->mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
         }
     }
 

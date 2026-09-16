@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BrandDataFactory
@@ -70,7 +71,8 @@ class BrandDataFactory
                 $brand->getSeoAttributes($domainId),
             );
 
-            $brandData->urls->mainFriendlyUrlsByDomainId[$domainId] =
+            $brandData->urls[$domainId] = new UrlListData();
+            $brandData->urls[$domainId]->mainFriendlyUrl =
                 $this->friendlyUrlFacade->findMainFriendlyUrl(
                     $domainId,
                     'front_brand_detail',

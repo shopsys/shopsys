@@ -115,7 +115,7 @@ final class BlogCategoryFormType extends AbstractType
     private function createSeoGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         return $builder->create('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'blog_category_form_settings_names_{locale}',
+            'placeholder_source_path' => ['settings', 'names', '{locale}'],
             'url_list_options' => $options['blogCategory'] !== null ? [
                 'route_name' => 'front_blogcategory_detail',
                 'entity_id' => $this->getBlogCategoryId($options['blogCategory']),
