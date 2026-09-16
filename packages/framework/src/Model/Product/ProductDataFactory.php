@@ -7,8 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -27,7 +26,7 @@ class ProductDataFactory
         protected readonly UnitFacade $unitFacade,
         protected readonly Domain $domain,
         protected readonly ParameterRepository $parameterRepository,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly ProductAccessoryRepository $productAccessoryRepository,
         protected readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         protected readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
@@ -86,6 +85,7 @@ class ProductDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->seo[$domainId] = $this->seoAttributesDataFactory->create();
+            $productData->urls[$domainId] = $this->urlListDataFactory->create();
         }
         $productData->descriptions = $nullForAllDomains;
         $productData->shortDescriptions = $nullForAllDomains;
@@ -143,7 +143,7 @@ class ProductDataFactory
                 $this->productPromotionXyDataFactory->createFromEntity($product->getPromotionXy($domainId));
         }
 
-        $this->fillUrls($productData, $product);
+        $productData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_product_detail', $product->getId());
 
         $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createFromProductForAllDomains($product);
 
@@ -173,19 +173,6 @@ class ProductDataFactory
         $productData->isAllowedNegativeStock = $product->isAllowedNegativeStock();
         $productData->personalPickupOnly = $product->isPersonalPickupOnly();
         $this->fillProductStockByProduct($productData, $product);
-    }
-
-    protected function fillUrls(ProductData $productData, Product $product): void
-    {
-        $mainFriendlyUrlsByDomainId = $this->friendlyUrlFacade->getMainFriendlyUrlsIndexedByDomains(
-            'front_product_detail',
-            $product->getId(),
-        );
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->urls[$domainId] = new UrlListData();
-            $productData->urls[$domainId]->mainFriendlyUrl = $mainFriendlyUrlsByDomainId[$domainId] ?? null;
-        }
     }
 
     /**

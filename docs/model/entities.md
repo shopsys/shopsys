@@ -403,6 +403,7 @@ To make the entity itself support image uploads, see [Adding Images to an Entity
 
 To transfer URL addresses via the system, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData`, which holds the URL addresses of one domain.
 A multidomain entity holds an array of them indexed by domain ID (see `BrandData` above), an entity that belongs to a single domain holds one instance (see `ArticleData`).
+The data factory creates them with `UrlListDataFactory` — `create()` for a new entity, `createForAllDomainsIndexedByDomainId()` or `createForDomain()` when editing (they load the main URL of every domain).
 
 #### Multidomain
 

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -34,7 +35,14 @@ trait UrlListTypeTestTrait
 
     private function createUrlListType(Domain $domain, DomainRouterFactory $domainRouterFactory): UrlListType
     {
-        return new UrlListType($this->createStub(FriendlyUrlFacade::class), $domainRouterFactory, $domain);
+        $friendlyUrlFacade = $this->createStub(FriendlyUrlFacade::class);
+
+        return new UrlListType(
+            $friendlyUrlFacade,
+            $domainRouterFactory,
+            $domain,
+            new UrlListDataFactory($friendlyUrlFacade, $domain),
+        );
     }
 
     private function createValidatorExtensionWithUniqueSlugsOnDomain(
