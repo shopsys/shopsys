@@ -3,7 +3,11 @@
         {% if form.orderedImages|length > 0 %}
             <div class="file-upload-card-container js-file-upload">
                 {% for imageForm in form.orderedImages %}
-                    {% set image = images_by_id[imageForm.vars.value] %}
+                    {% set image = images_by_id[imageForm.vars.value]|default(null) %}
+                    {% if image is null %}
+                        {# the submitted form does not match the stored images, e.g. the entity was saved from another browser tab in the meantime, so the card cannot be rendered #}
+                        {% do imageForm.setRendered %}
+                    {% else %}
                     {% set isRemoved = false %}
                     {% if not multiple and loop.index > 1 %}
                         {% set isRemoved = true %}
@@ -70,7 +74,11 @@
                             {{ form_widget(form.namesIndexedByImageIdAndLocale.children[imageForm.vars.value]) }}
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
+
+                {# fields of the skipped cards must not be rendered by form_rest #}
+                {% do form.namesIndexedByImageIdAndLocale.setRendered %}
             </div>
         {% else %}
             {% do form.orderedImages.setRendered %}

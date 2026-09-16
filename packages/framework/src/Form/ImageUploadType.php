@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
@@ -81,16 +83,29 @@ final class ImageUploadType extends AbstractType
             $builder->create('orderedImages', CollectionType::class, [
                 'required' => false,
                 'entry_type' => HiddenType::class,
+                // a form loaded before images were deleted from another browser tab submits more IDs than there are stored images, the transformer skips the unknown ones
+                'allow_add' => true,
             ])->addModelTransformer($this->imagesIdsToImagesTransformer),
         );
-        $builder->add('imagesToDelete', ChoiceType::class, [
-            'required' => false,
-            'multiple' => true,
-            'expanded' => true,
-            'choices' => $this->getImagesIndexedById($options),
-            'choice_label' => 'filename',
-            'choice_value' => 'id',
-        ])
+        $imagesIndexedById = $this->getImagesIndexedById($options);
+        $builder->add(
+            $builder->create('imagesToDelete', ChoiceType::class, [
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => $imagesIndexedById,
+                'choice_label' => 'filename',
+                'choice_value' => 'id',
+            ])->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                // an image already deleted from another browser tab is not a valid choice anymore, so it is dropped instead of failing the validation
+                static fn (FormEvent $event) => $event->setData(
+                    is_array($event->getData()) ? array_intersect($event->getData(), array_keys($imagesIndexedById)) : $event->getData(),
+                ),
+                // must run before the ChoiceType listener that validates the submitted values
+                128,
+            ),
+        )
         ->add('file', FileType::class, $this->getFileFieldOptions($options));
 
         $builder
@@ -111,6 +126,8 @@ final class ImageUploadType extends AbstractType
             ])->add(
                 $builder->create('namesIndexedByImageIdAndLocale', CollectionType::class, [
                     'required' => false,
+                    // names of images that were deleted from another browser tab in the meantime are ignored
+                    'allow_extra_fields' => true,
                     'entry_type' => LocalizedType::class,
                     'label' => false,
                     'entry_options' => [

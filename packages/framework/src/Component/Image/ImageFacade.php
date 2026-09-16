@@ -44,10 +44,9 @@ class ImageFacade
 
         if ($imageEntityConfig->isMultiple($type) === false) {
             if (count($uploadedFiles) > 0) {
-                $imagesToDelete = $orderedImages;
-            }
-
-            if (count($orderedImages) > 1) {
+                // the new image replaces every stored one, including an image uploaded from another browser tab in the meantime
+                $imagesToDelete = $this->getImagesByEntityIndexedById($entity, $type);
+            } elseif (count($orderedImages) > 1) {
                 array_shift($orderedImages);
                 $imagesToDelete = $orderedImages;
             }

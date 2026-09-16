@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ImagesIdsToImagesTransformer implements DataTransformerInterface
 {
@@ -48,10 +47,16 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
 
         if (is_array($imagesIds)) {
             foreach ($imagesIds as $imageId) {
+                // the image is not in the submitted form, e.g. it was uploaded from another browser tab after the form was loaded
+                if ($imageId === null || $imageId === '') {
+                    continue;
+                }
+
                 try {
                     $images[] = $this->imageFacade->getById((int)$imageId);
-                } catch (ImageNotFoundException $e) {
-                    throw new TransformationFailedException('Image not found', 0, $e);
+                } catch (ImageNotFoundException) {
+                    // the image was deleted from another browser tab after the form was loaded
+                    continue;
                 }
             }
         }
