@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
-class UniqueSlugsOnDomains extends Constraint
+/**
+ * Validates the new URL slugs of a single domain — no duplicates among themselves and no collision with an existing route
+ */
+class UniqueSlugsOnDomain extends Constraint
 {
     /**
      * @param array<string, mixed>|null $options
@@ -17,6 +20,7 @@ class UniqueSlugsOnDomains extends Constraint
      */
     #[HasNamedArguments]
     public function __construct(
+        public int $domainId,
         ?array $options = null,
         public string $message = 'Address {{ url }} already exists.',
         public string $messageDuplicate = 'Address {{ url }} can be entered only once.',

@@ -58,7 +58,7 @@ final class BrandFormType extends AbstractType
             ]);
 
         $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'brand_form_basicInformation_name',
+            'placeholder_source_path' => ['basicInformation', 'name'],
             'url_list_options' => $brand !== null ? [
                 'route_name' => 'front_brand_detail',
                 'entity_id' => $brand->getId(),

@@ -81,7 +81,7 @@ final class BlogArticleFormType extends AbstractType
     private function createSeoGroup(FormBuilderInterface $builder, ?BlogArticle $blogArticle): FormBuilderInterface
     {
         return $builder->create('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'blog_article_form_settings_names_{locale}',
+            'placeholder_source_path' => ['settings', 'names', '{locale}'],
             'url_list_options' => $blogArticle !== null ? [
                 'route_name' => 'front_blogarticle_detail',
                 'entity_id' => $blogArticle->getId(),

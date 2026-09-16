@@ -322,13 +322,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $readyCategorySeoMixData->seo->metaDescription = $metaDescription;
 
         $urlListData = new UrlListData();
-        $urlListData->newUrls = [];
-
-        foreach ($slugs as $slug) {
-            $urlListData->newUrls[$domainId][] = [
-                'slug' => $slug,
-            ];
-        }
+        $urlListData->newUrls = $slugs;
 
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->createOrEdit(
             $selectedCategorySeoMixCombination,

@@ -142,7 +142,7 @@ final class StoreFormType extends AbstractType
         $store = $options['store'];
 
         return $builder->create('seoGroup', SeoGroupType::class, [
-            'placeholder_source_input_id' => 'store_form_basicInformationGroup_name',
+            'placeholder_source_path' => ['basicInformationGroup', 'name'],
             'domain_id' => $store?->getDomainId() ?? $options['domain_id'],
             'url_list_options' => $store !== null ? [
                 'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,

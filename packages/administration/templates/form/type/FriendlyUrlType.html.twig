@@ -1,9 +1,9 @@
-{% block friendly_url_widget %}
+{% block friendly_url_row %}
     <div class="js-entity-url-list-new-row mb-2" data-index="{{ form.vars.name }}">
         <div class="row g-2">
             <div class="col input-group">
                 <span class="input-group-text">{{ domainUrl|default('') }}/</span>
-                {{ form_widget(form.slug) }}
+                {{ form_widget(form) }}
             </div>
 
             <div class="col-auto">
@@ -12,7 +12,7 @@
                 </button>
             </div>
         </div>
-        {{ form_errors(form.slug) }}
-        {{ form_help(form.slug) }}
+        {{ form_errors(form) }}
+        {{ form_help(form) }}
     </div>
 {% endblock %}

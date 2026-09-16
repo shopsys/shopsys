@@ -9,79 +9,67 @@
 {%- endblock %}
 
 {% block url_list_widget %}
-    {% import _self as urlList %}
-    <div class="js-entity-url-list mb-3">
+    <div class="js-entity-url-list js-entity-url-list-container mb-3">
         {{ form_errors(form.newUrls) }}
 
-        {% for domainId, domainUrl in form.vars.domainUrlsById %}
-            <div class="js-entity-url-list-container">
-                {{ urlList.domainUrls(form, domainId, domainUrl) }}
-            </div>
-        {% endfor %}
-    </div>
-{% endblock %}
+        {% if form.toDelete is defined %}
+            {% for childName, friendlyUrlForm in form.toDelete %}
+                {% set slug = friendlyUrlForm.vars.value %}
+                {% set absoluteUrl = form.vars.absoluteUrlsBySlug[slug] %}
+                {% set isMainUrl = slug is same as(form.vars.mainUrlSlug) %}
+                <div class="row align-items-baseline js-entity-url-list-friendly-url">
+                    <div class="col-auto{% if isMainUrl %} fw-bold{% endif %}">
+                        {{ form_widget(form.mainFriendlyUrl[childName], { label: absoluteUrl, attr: { class: 'js-entity-url-list-select-main' }, label_attr: { class: 'js-entity-url-list-row-label' } }) }}
+                        <div class="d-none">
+                            {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ absoluteUrl }}"
+                           title="{{ 'Open in a new tab'|trans }}"
+                           target="_blank"
+                           rel="noopener"
+                        >
+                            {{ ux_icon('forward-page') }}
+                        </a>
+                    </div>
 
-{% macro domainUrls(urlListForm, domainId, domainUrl) %}
-    {% if urlListForm.toDelete.children[domainId] is defined %}
-        {% set mainUrlSlug = urlListForm.vars.mainUrlsSlugsOnDomains[domainId] ?? null %}
-        {% for childName, friendlyUrlForm in urlListForm.toDelete.children[domainId] %}
-            {% set slug = friendlyUrlForm.vars.value %}
-            {% set absoluteUrl = urlListForm.vars.absoluteUrlsByDomainIdAndSlug[domainId][slug] %}
-            {% set isMainUrl = slug is same as(mainUrlSlug) %}
-            <div class="row align-items-baseline js-entity-url-list-friendly-url">
-                <div class="col-auto{% if isMainUrl %} fw-bold{% endif %}">
-                    {% set mainUrlRadioButton = urlListForm.mainFriendlyUrlsByDomainId[domainId][childName] %}
-                    {{ form_widget(mainUrlRadioButton, { label: absoluteUrl, attr: { class: 'js-entity-url-list-select-main' }, label_attr: { class: 'js-entity-url-list-row-label' } }) }}
-                    <div class="d-none">
-                        {{ form_widget(friendlyUrlForm, {attr: {class: 'js-entity-url-list-row-checkbox'}}) }}
+                    <div class="col-auto js-entity-url-list-info-main-delete" style="display: none">
+                        {{ info_icon('Main URL can\'t be deleted'|trans) }}
+                    </div>
+
+                    <div class="col-auto js-entity-url-list-row-delete-revert-wrapper">
+                        <span class="js-entity-url-list-row-delete-block">
+                            <button class="btn btn-sm btn-icon btn-link js-entity-url-list-row-delete-block-button" type="button">
+                               {{ ux_icon('delete', {class: 'icon ms-3'}) }}
+                            </button>
+                        </span>
+                        <span class="js-entity-url-list-row-revert-block" style="display: none">
+                            <button class="btn btn-sm btn-link js-entity-url-list-row-revert-block-button" type="button">
+                                {{ ux_icon('revert') }}
+                                {{ 'Return back'|trans }}
+                            </button>
+                        </span>
+                    </div>
+
+                    <div class="col-auto js-entity-url-list-row-revert-block" style="display: none">
+                        {{ info_icon('URL will be deleted after saving.'|trans) }}
                     </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ absoluteUrl }}"
-                       title="{{ 'Open in a new tab'|trans }}"
-                       target="_blank"
-                       rel="noopener"
-                    >
-                        {{ ux_icon('forward-page') }}
-                    </a>
-                </div>
+            {% endfor %}
+        {% endif %}
 
-                <div class="col-auto js-entity-url-list-info-main-delete" style="display: none">
-                    {{ info_icon('Main URL can\'t be deleted'|trans) }}
-                </div>
+        <div class="js-entity-url-list-new-urls mb-2"
+             data-new-url-prototype="{{ form_row(form.newUrls.vars.prototype, { domainUrl: form.vars.domainUrl })|e }}"
+        >
+            {% for newUrlForm in form.newUrls %}
+                {{ form_row(newUrlForm, { domainUrl: form.vars.domainUrl }) }}
+            {% endfor %}
+        </div>
 
-                <div class="col-auto js-entity-url-list-row-delete-revert-wrapper">
-                    <span class="js-entity-url-list-row-delete-block">
-                        <button class="btn btn-sm btn-icon btn-link js-entity-url-list-row-delete-block-button" type="button">
-                           {{ ux_icon('delete', {class: 'icon ms-3'}) }}
-                        </button>
-                    </span>
-                    <span class="js-entity-url-list-row-revert-block" style="display: none">
-                        <button class="btn btn-sm btn-link js-entity-url-list-row-revert-block-button" type="button">
-                            {{ ux_icon('revert') }}
-                            {{ 'Return back'|trans }}
-                        </button>
-                    </span>
-                </div>
-
-                <div class="col-auto js-entity-url-list-row-revert-block" style="display: none">
-                    {{ info_icon('URL will be deleted after saving.'|trans) }}
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-
-    {% set newUrlsForm = urlListForm.newUrls.children[domainId] %}
-    <div class="js-entity-url-list-new-urls mb-2"
-         data-new-url-prototype="{{ form_widget(newUrlsForm.vars.prototype, { domainUrl: domainUrl })|e }}"
-    >
-        {% for newUrlForm in newUrlsForm %}
-            {{ form_widget(newUrlForm, { domainUrl: domainUrl }) }}
-        {% endfor %}
+        <button type="button" class="js-entity-url-list-button-add-url btn">
+            {{ ux_icon('plus') }}
+            {{ 'Add URL'|trans }}
+        </button>
     </div>
-
-    <button type="button" class="js-entity-url-list-button-add-url btn">
-        {{ ux_icon('plus') }}
-        {{ 'Add URL'|trans }}
-    </button>
-{% endmacro %}
+{% endblock %}
