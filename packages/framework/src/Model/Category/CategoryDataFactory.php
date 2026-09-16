@@ -7,14 +7,13 @@ namespace Shopsys\FrameworkBundle\Model\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class CategoryDataFactory
 {
     public function __construct(
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
@@ -50,6 +49,7 @@ class CategoryDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seo[$domainId] = $this->seoAttributesDataFactory->create();
+            $categoryData->urls[$domainId] = $this->urlListDataFactory->create();
             $categoryData->descriptions[$domainId] = null;
             $categoryData->enabled[$domainId] = true;
         }
@@ -64,19 +64,14 @@ class CategoryDataFactory
         $categoryData->name = $category->getNames();
         $categoryData->parent = $category->getParent();
 
+        $categoryData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_product_list', $category->getId());
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
                 $category->getSeoAttributes($domainId),
             );
             $categoryData->descriptions[$domainId] = $category->getDescription($domainId);
             $categoryData->enabled[$domainId] = $category->isEnabled($domainId);
-
-            $categoryData->urls[$domainId] = new UrlListData();
-            $categoryData->urls[$domainId]->mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
-                $domainId,
-                'front_product_list',
-                $category->getId(),
-            );
         }
 
         $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);

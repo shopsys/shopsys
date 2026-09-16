@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomain;
 use Shopsys\FrameworkBundle\Form\Exception\MissingRouteNameException;
 use Symfony\Component\Form\AbstractType;
@@ -34,6 +35,7 @@ final class UrlListType extends AbstractType
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly DomainRouterFactory $domainRouterFactory,
         private readonly Domain $domain,
+        private readonly UrlListDataFactory $urlListDataFactory,
     ) {
     }
 
@@ -91,7 +93,7 @@ final class UrlListType extends AbstractType
             ->setRequired('domain_id')
             ->setDefaults([
                 'data_class' => UrlListData::class,
-                'empty_data' => static fn (): UrlListData => new UrlListData(),
+                'empty_data' => fn (): UrlListData => $this->urlListDataFactory->create(),
                 'required' => false,
                 'route_name' => null,
                 'entity_id' => null,

@@ -10,7 +10,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
@@ -37,6 +37,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         private readonly ParameterFacade $parameterFacade,
         private readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
+        private readonly UrlListDataFactory $urlListDataFactory,
     ) {
     }
 
@@ -321,7 +322,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $readyCategorySeoMixData->seo->title = $title;
         $readyCategorySeoMixData->seo->metaDescription = $metaDescription;
 
-        $urlListData = new UrlListData();
+        $urlListData = $this->urlListDataFactory->create();
         $urlListData->newUrls = $slugs;
 
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->createOrEdit(
