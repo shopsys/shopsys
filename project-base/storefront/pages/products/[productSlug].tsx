@@ -20,6 +20,7 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -62,7 +63,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
                 breadcrumbs={product?.breadcrumb}
                 breadcrumbsType="category"
                 canonicalQueryParams={[]}
-                description={product?.seo.metaDescription}
+                description={getMetaDescription(product?.seo.metaDescription, product?.description)}
                 hreflangLinks={product?.hreflangLinks}
                 isFetchingData={isProductFetching}
                 ogImageUrlDefault={firstImageUrl}

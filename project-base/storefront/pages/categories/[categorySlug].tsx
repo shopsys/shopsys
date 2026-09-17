@@ -30,6 +30,7 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -46,7 +47,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
     const title = useHeadingWithPagination(
-        categoryData?.seo.title || categoryData?.name,
+        categoryData?.seo.title || categoryData?.seo.h1 || categoryData?.name,
         categoryData?.products.totalCount,
     );
 
@@ -62,7 +63,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
                 defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
-                description={categoryData?.seo.metaDescription}
+                description={getMetaDescription(categoryData?.seo.metaDescription, categoryData?.description)}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
                 ogImageUrlDefault={firstImageUrl}

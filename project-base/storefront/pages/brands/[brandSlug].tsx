@@ -35,6 +35,7 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
@@ -71,7 +72,10 @@ const BrandDetailPage: NextPage = () => {
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
             breadcrumbsType="brandsOverview"
             defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
-            description={brandDetailData?.brand?.seo.metaDescription}
+            description={getMetaDescription(
+                brandDetailData?.brand?.seo.metaDescription,
+                brandDetailData?.brand?.description,
+            )}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
             isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
             ogImageUrlDefault={brandImageUrl}

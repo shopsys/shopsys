@@ -11,6 +11,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
     breadcrumb {
         ...BreadcrumbFragment
     }
+    perex
     text
     publishDate
     status

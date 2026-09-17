@@ -13,6 +13,7 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
@@ -40,7 +41,10 @@ const StoreDetailPage: NextPage = () => {
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             breadcrumbsType="stores"
             canonicalQueryParams={[]}
-            description={storeDetailData?.store?.seo.metaDescription}
+            description={getMetaDescription(
+                storeDetailData?.store?.seo.metaDescription,
+                storeDetailData?.store?.description,
+            )}
             isFetchingData={isStoreFetching}
             ogImageUrlDefault={storeImageUrl}
             seo={storeDetailData?.store?.seo}
