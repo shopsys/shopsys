@@ -194,7 +194,6 @@ class ProductArrayFieldMapper
             $data['seo_h1'],
             $data['seo_meta_robots'],
             $data['seo_canonical_url'],
-            $data['description'],
         );
     }
 

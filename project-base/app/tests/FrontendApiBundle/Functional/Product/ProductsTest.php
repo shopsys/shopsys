@@ -142,7 +142,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 ),
                 'seo' => [
                     'title' => null,
-                    'metaDescription' => trim(t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+                    'metaDescription' => null,
                     'h1' => null,
                     'metaRobots' => null,
                     'canonicalUrl' => null,
