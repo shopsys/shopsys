@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class FilesIdsToFilesTransformer implements DataTransformerInterface
 {
@@ -45,10 +44,16 @@ class FilesIdsToFilesTransformer implements DataTransformerInterface
 
         if (is_array($fileIds)) {
             foreach ($fileIds as $fileId) {
+                // the file is not in the submitted form, e.g. it was uploaded from another browser tab after the form was loaded
+                if ($fileId === null || (string)$fileId === '') {
+                    continue;
+                }
+
                 try {
                     $files[] = $this->uploadedFileFacade->getById((int)$fileId);
-                } catch (FileNotFoundException $e) {
-                    throw new TransformationFailedException('File not found', 0, $e);
+                } catch (FileNotFoundException) {
+                    // the file was deleted from another browser tab after the form was loaded
+                    continue;
                 }
             }
         }

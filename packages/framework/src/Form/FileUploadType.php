@@ -19,6 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\File;
@@ -64,16 +66,22 @@ final class FileUploadType extends AbstractType
     {
         $builder->resetModelTransformers();
 
+        $filesIndexedById = $this->getFilesIndexedById($options);
+
         $builder
             ->add(
                 $builder->create('orderedFiles', CollectionType::class, [
                     'required' => false,
                     'entry_type' => HiddenType::class,
+                    // a form loaded before files were removed from another browser tab submits more IDs than there are stored files, the transformer skips the unknown ones
+                    'allow_add' => true,
                 ])->addModelTransformer($this->filesIdsToFilesTransformer),
             )
             ->add(
                 $builder->create('currentFilenamesIndexedById', CollectionType::class, [
                     'required' => false,
+                    // filenames of files that were removed from another browser tab in the meantime are ignored
+                    'allow_extra_fields' => true,
                     'entry_type' => TextType::class,
                     'entry_options' => [
                         'constraints' => [
@@ -84,16 +92,38 @@ final class FileUploadType extends AbstractType
                             ),
                         ],
                     ],
-                ]),
+                ])->addEventListener(
+                    FormEvents::PRE_SUBMIT,
+                    // a file uploaded from another browser tab in the meantime is not in the submitted data, it keeps its current filename
+                    static function (FormEvent $event) use ($filesIndexedById): void {
+                        $submittedFilenames = is_array($event->getData()) ? $event->getData() : [];
+
+                        foreach ($filesIndexedById as $fileId => $file) {
+                            $submittedFilenames[$fileId] ??= $file->getName();
+                        }
+
+                        $event->setData($submittedFilenames);
+                    },
+                ),
             )
-            ->add('filesToDelete', ChoiceType::class, [
-                'required' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $this->getFilesIndexedById($options),
-                'choice_label' => 'filename',
-                'choice_value' => 'id',
-            ])
+            ->add(
+                $builder->create('filesToDelete', ChoiceType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'choices' => $filesIndexedById,
+                    'choice_label' => 'filename',
+                    'choice_value' => 'id',
+                ])->addEventListener(
+                    FormEvents::PRE_SUBMIT,
+                    // a file already removed from another browser tab is not a valid choice anymore, so it is dropped instead of failing the validation
+                    static fn (FormEvent $event) => $event->setData(
+                        is_array($event->getData()) ? array_intersect($event->getData(), array_keys($filesIndexedById)) : $event->getData(),
+                    ),
+                    // must run before the ChoiceType listener that validates the submitted values
+                    128,
+                ),
+            )
             ->add('file', FileType::class, [
                 'multiple' => $this->isMultiple($options),
                 'mapped' => false,
