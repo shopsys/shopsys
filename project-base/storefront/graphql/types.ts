@@ -1623,7 +1623,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
-  /** The deepest visible category of the product on the current domain */
+  /** Main category of the product */
   mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
@@ -2873,7 +2873,7 @@ export type TypeProduct = {
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
-  /** The deepest visible category of the product on the current domain */
+  /** Main category of the product */
   mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
@@ -3929,7 +3929,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
-  /** The deepest visible category of the product on the current domain */
+  /** Main category of the product */
   mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
@@ -4493,7 +4493,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
-  /** The deepest visible category of the product on the current domain */
+  /** Main category of the product */
   mainCategory: Maybe<TypeCategory>;
   /** Product image by params */
   mainImage: Maybe<TypeImage>;
