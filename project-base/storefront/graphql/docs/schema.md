@@ -11022,7 +11022,7 @@ UUID
 
 ### SeoAttributes
 
-SEO attributes of a page
+SEO attributes of a page exactly as set in the administration, the fallbacks (e.g. the name of the entity as the title) are up to the API consumer
 
 <table>
 <thead>
@@ -11057,7 +11057,7 @@ Main heading of the page
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Description for meta tag, falls back to the entity description when not set
+Description for meta tag
 
 </td>
 </tr>
