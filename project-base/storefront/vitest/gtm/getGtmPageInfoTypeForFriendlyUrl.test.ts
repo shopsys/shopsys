@@ -43,6 +43,7 @@ const blogArticleDetail = {
     id: 123,
     uuid: 'a1c1d337-b707-4e7e-9a9a-6875e1f5e708',
     name: 'Test blog article',
+    perex: null,
     slug: '/test-blog-article',
     link: '/blog/test-blog-article',
     text: null,

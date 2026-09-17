@@ -60,11 +60,12 @@ The resolvers of entities return the `SeoAttributes` embeddable itself, the reso
 
 ## Storefront
 
-Pages pass the `seo` field of the entity together with their fallbacks to `CommonLayout`, the `SeoMeta` component then renders the whole `<head>` part through the `useSeo()` hook.
+The API returns the attributes exactly as set in the administration, all the fallbacks live on the storefront. Pages pass the `seo` field of the entity together with their defaults (`defaultTitle`, `defaultDescription`, `defaultMetaRobots`) to `CommonLayout`, the `SeoMeta` component then renders the whole `<head>` part through the `useSeo()` hook, which is the only place deciding the precedence.
 
-- `<title>` is `seo.title` or the name of the entity, followed by the title add-on. Brand and store pages prefix the name with the entity type when no title is set (`getPrefixedSeoTitle()`).
+- `<title>` is the title of the SEO page, then `seo.title`, then `seo.h1` (so that e.g. a category SEO mix keeps its heading in the title) and finally `defaultTitle` (usually the name of the entity), followed by the title add-on. Brand and store pages prefix the name with the entity type (`getPrefixedSeoTitle()`).
 - H1 is `seo.h1` or the name of the entity. Static pages use `useSeoPageH1()` to let the SEO page override their hardcoded heading.
-- Paginated listings append the current page to both the title and the H1 with `useHeadingWithPagination()` (e.g. "Electronics page 2 from 5").
+- Meta description is the one of the SEO page, then `seo.metaDescription`, then the plain text of `defaultDescription` (the HTML description of the entity, the perex of a blog article, the text of an article) truncated to 160 characters at a word boundary (`getMetaDescription()`).
+- Paginated listings append the current page to both the title and the H1 with `useHeadingWithPagination()` (e.g. "Electronics page 2 from 5"). The title gets the suffix inside `useSeo()` from the `paginationTotalCount` and `paginationPageSize` props of `CommonLayout`, so it is appended to whichever title wins.
 - Meta robots are resolved in the order SEO page → entity → storefront default (`resolveMetaRobots()`). The value set in the administration is the source of truth, the storefront default (`noindex` for cart, checkout, customer section, search, filtered or sorted listings and blog article drafts, passed as `defaultMetaRobots` of `CommonLayout`) applies only when the administrator leaves _Default (not set)_.
 - Canonical URL is the one of the SEO page, then of the entity, then the generated self-canonical (`generateCanonicalUrl()`, which keeps only the whitelisted query parameters). On a `noindex` page neither canonical nor hreflang links (including `x-default`) are rendered, as the combination would send contradictory signals to the crawlers.
 
