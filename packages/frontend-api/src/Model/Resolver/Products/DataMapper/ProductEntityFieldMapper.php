@@ -8,6 +8,9 @@ use DateTimeImmutable;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -50,7 +53,7 @@ class ProductEntityFieldMapper
         protected readonly ProductSellableVariantsProvider $productSellableVariantsProvider,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
         protected readonly DataLoaderInterface $additionalServicesByProductIdBatchLoader,
-        protected readonly DataLoaderInterface $productMainCategoriesBatchLoader,
+        protected readonly CategoryFacade $categoryFacade,
     ) {
     }
 
@@ -87,9 +90,13 @@ class ProductEntityFieldMapper
         return $product->getCategoriesIndexedByDomainId()[$this->domain->getId()];
     }
 
-    public function getMainCategoryPromise(Product $product): Promise
+    public function getMainCategory(Product $product): ?Category
     {
-        return $this->productMainCategoriesBatchLoader->load($product->getId());
+        try {
+            return $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
+        } catch (CategoryNotFoundException) {
+            return null;
+        }
     }
 
     public function getAvailability(Product $product): ProductAvailabilityInfo

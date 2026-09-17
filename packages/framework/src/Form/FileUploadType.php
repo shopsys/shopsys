@@ -43,8 +43,6 @@ final class FileUploadType extends AbstractType
             ->setRequired(['entity', 'file_entity_class', 'file_type'])
             ->setDefault('file_type', UploadedFileTypeConfig::DEFAULT_TYPE_NAME)
             ->setDefault('data_class', UploadedFileData::class)
-            ->setDefault('names_help', t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'))
-            ->setAllowedTypes('names_help', ['string', 'null'])
             ->setAllowedTypes('entity', ['object', 'null'])
             ->setAllowedTypes('file_entity_class', 'string')
             ->setAllowedTypes('file_type', 'string');
@@ -227,7 +225,7 @@ final class FileUploadType extends AbstractType
             'allow_add' => true,
             'entry_options' => [
                 'label' => '',
-                'help' => $options['names_help'],
+                'help' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length([

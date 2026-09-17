@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -37,7 +38,7 @@ class ProductArrayFieldMapper
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly ProductReviewApiFacade $productReviewApiFacade,
         protected readonly DataLoaderInterface $additionalServicesByIdsBatchLoader,
-        protected readonly DataLoaderInterface $productMainCategoriesBatchLoader,
+        protected readonly DataLoaderInterface $categoriesBatchLoader,
     ) {
     }
 
@@ -76,7 +77,8 @@ class ProductArrayFieldMapper
 
     public function getMainCategoryPromise(array $data): Promise
     {
-        return $this->productMainCategoriesBatchLoader->load($data['id']);
+        return $this->categoriesBatchLoader->load([$data['main_category_id']])
+            ->then(static fn (array $categories): ?Category => array_first($categories));
     }
 
     /**

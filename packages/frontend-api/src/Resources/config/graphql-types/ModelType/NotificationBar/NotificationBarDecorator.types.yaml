@@ -13,7 +13,6 @@ NotificationBarDecorator:
             plainText:
                 type: "String!"
                 description: "Message of the notification without HTML markup"
-                resolve: '@=query("notificationBarPlainTextQuery", value)'
             rgbColor:
                 type: "String!"
                 description: "Color of the notification"
