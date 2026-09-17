@@ -75,6 +75,7 @@ const BrandDetailPage: NextPage = () => {
             {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
+                isNoIndex={!!currentFilter || !!currentSort}
                 breadcrumbs={brandDetailData?.brand?.breadcrumb}
                 breadcrumbsType="brandsOverview"
                 description={brandDetailData?.brand?.seoMetaDescription}

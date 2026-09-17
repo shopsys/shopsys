@@ -19,6 +19,7 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
+import { useSeo } from 'utils/seo/useSeo';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
@@ -32,6 +33,7 @@ const isArticleSite = (article: TypeArticleDetailQuery['article']): article is T
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
+    const { ogImageUrl } = useSeo({});
     const [{ data: articleDetailData, fetching: isArticleDetailFetching }] = useArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
@@ -52,13 +54,16 @@ const ArticleDetailPage: NextPage = () => {
             canonicalQueryParams={[]}
             description={article?.seoMetaDescription}
             isFetchingData={isArticleDetailFetching}
+            ogImageUrlDefault={article?.mainImage?.url}
             ogType={OgTypeEnum.Article}
             title={article?.seoTitle || article?.articleName}
         >
             {!!article && (
                 <>
                     <ArticleMetadata
-                        datePublished={article.createdAt}
+                        datePublished={article.publishDate}
+                        dateModified={article.modifiedAt}
+                        imageUrl={article.mainImage?.url || ogImageUrl}
                         description={article.seoMetaDescription}
                         headline={article.seoTitle || article.articleName}
                     />

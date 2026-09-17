@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -22,7 +23,7 @@ export const SearchMetadata: FC = () => {
                             '@type': 'SearchAction',
                             target: {
                                 '@type': 'EntryPoint',
-                                urlTemplate: `${searchUrl}?q={q}`,
+                                urlTemplate: `${getStringWithoutTrailingSlash(url)}${searchUrl}?q={q}`,
                             },
                             'query-input': 'required name=q',
                         },

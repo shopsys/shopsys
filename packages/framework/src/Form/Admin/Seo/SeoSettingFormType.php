@@ -9,18 +9,24 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\NotInArray;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Model\Seo\Organization;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationData;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 final class SeoSettingFormType extends AbstractType
 {
     public function __construct(
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,
+        private readonly OrganizationFacade $organizationFacade,
     ) {
     }
 
@@ -81,16 +87,70 @@ final class SeoSettingFormType extends AbstractType
                 'label' => 'Meta description',
             ]);
 
+        $builder->add($builderSettingsGroup);
+        $this->addOrganizationFields($builder, $options['domain_id']);
+
         $builder
-            ->add($builderSettingsGroup)
             ->add('actionBar', ActionBarType::class, [
                 'save_label' => t('Save changes'),
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    private function addOrganizationFields(FormBuilderInterface $builder, int $domainId): void
+    {
+        $organization = $builder->create('organization', GroupType::class, [
+            'inherit_data' => false,
+            'data_class' => OrganizationData::class,
+            'label' => 'Organization',
+            'required' => false,
+        ]);
+
+        $organization->add('name', TextType::class, [
+            'label' => 'Company name',
+            'required' => false,
+        ])
+            ->add('companyTaxNumber', TextType::class, [
+                'label' => 'Tax number',
+                'required' => false,
+            ])
+            ->add('companyNumber', TextType::class, [
+                'label' => 'Company number',
+                'required' => false,
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Company description',
+                'required' => false,
+            ])
+            ->add('street', TextType::class, [
+                'label' => 'Street and house number',
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'City',
+                'required' => false,
+            ])
+            ->add('postcode', TextType::class, [
+                'label' => 'Postcode',
+                'required' => false,
+            ])
+            ->add('country', TextType::class, [
+                'label' => 'Country',
+                'required' => false,
+            ])
+            ->add('image', ImageUploadType::class, [
+                'entity' => $this->organizationFacade->findByDomainId($domainId),
+                'image_entity_class' => Organization::class,
+                'label' => 'Organization logo',
+                'required' => false,
+                'file_constraints' => [
+                    new Constraints\Image(maxSize: '8M', extensions: ['jpg', 'jpeg', 'png'], minWidth: 200, minHeight: 200),
+                ],
+                'info_text' => t('JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px.'),
+            ]);
+
+        $builder->add($organization);
+    }
+
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
