@@ -4035,14 +4035,14 @@ export type TypeSeo = {
   seo: TypeSeoAttributes;
 };
 
-/** SEO attributes of a page */
+/** SEO attributes of a page exactly as set in the administration, the fallbacks (e.g. the name of the entity as the title) are up to the API consumer */
 export type TypeSeoAttributes = {
   __typename?: 'SeoAttributes';
   /** Absolute canonical URL of the page */
   canonicalUrl: Maybe<Scalars['String']['output']>;
   /** Main heading of the page */
   h1: Maybe<Scalars['String']['output']>;
-  /** Description for meta tag, falls back to the entity description when not set */
+  /** Description for meta tag */
   metaDescription: Maybe<Scalars['String']['output']>;
   /** Value for the robots meta tag (e.g. "noindex, nofollow"), null keeps the storefront default */
   metaRobots: Maybe<Scalars['String']['output']>;
