@@ -10,7 +10,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
-use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BrandResolverMap extends ResolverMap
@@ -20,7 +19,6 @@ class BrandResolverMap extends ResolverMap
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly DataLoaderInterface $brandSlugBatchLoader,
-        protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
     ) {
     }
 
@@ -36,12 +34,7 @@ class BrandResolverMap extends ResolverMap
                         UrlGeneratorInterface::ABSOLUTE_URL,
                     );
                 },
-                'seo' => function (Brand $brand) {
-                    return $this->seoAttributesQueryDtoFactory->createFromSeoAttributes(
-                        $brand->getSeoAttributes($this->domain->getId()),
-                        $brand->getDescription($this->domain->getLocale()),
-                    );
-                },
+                'seo' => fn (Brand $brand) => $brand->getSeoAttributes($this->domain->getId()),
                 'hreflangLinks' => function (Brand $brand) {
                     return $this->hreflangLinksFacade->getForBrand($brand, $this->domain->getId());
                 },

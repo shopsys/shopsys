@@ -16,8 +16,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
-use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDto;
-use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 
 class CategoryResolverMap extends ResolverMap
 {
@@ -29,7 +27,6 @@ class CategoryResolverMap extends ResolverMap
         protected readonly CategoryFacade $categoryFacade,
         protected readonly DataLoaderInterface $categorySlugBatchLoader,
         protected readonly DataLoaderInterface $categorySeoSlugBatchLoader,
-        protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
     ) {
     }
 
@@ -69,10 +66,7 @@ class CategoryResolverMap extends ResolverMap
         return match ($fieldName) {
             'uuid' => $category->getUuid(),
             'description' => $category->getDescription($this->domain->getId()),
-            'seo' => $this->seoAttributesQueryDtoFactory->createFromSeoAttributes(
-                $category->getSeoAttributes($this->domain->getId()),
-                $category->getDescription($this->domain->getId()),
-            ),
+            'seo' => $category->getSeoAttributes($this->domain->getId()),
             'slug' => $this->categorySlugBatchLoader->load($category->getId()),
             'originalCategorySlug' => null,
             default => $this->mapCommonFields($fieldName, $category),
@@ -86,30 +80,10 @@ class CategoryResolverMap extends ResolverMap
         return match ($fieldName) {
             'uuid' => $readyCategorySeoMix->getUuid(),
             'description' => $readyCategorySeoMix->getDescription() ?? '',
-            'seo' => $this->createSeoAttributesQueryDtoForReadyCategorySeoMix($readyCategorySeoMix),
+            'seo' => $readyCategorySeoMix->getSeoAttributes(),
             'slug' => $this->categorySeoSlugBatchLoader->load($readyCategorySeoMix->getId()),
             'originalCategorySlug' => $this->categorySlugBatchLoader->load($category->getId()),
             default => $this->mapCommonFields($fieldName, $category),
         };
-    }
-
-    /**
-     * Title falls back to the H1 of the SEO mix and meta description to the one of the underlying category
-     */
-    protected function createSeoAttributesQueryDtoForReadyCategorySeoMix(
-        ReadyCategorySeoMix $readyCategorySeoMix,
-    ): SeoAttributesQueryDto {
-        $domainId = $this->domain->getId();
-        $category = $readyCategorySeoMix->getCategory();
-        $seoAttributes = $readyCategorySeoMix->getSeoAttributes();
-
-        return $this->seoAttributesQueryDtoFactory->create(
-            $seoAttributes->getTitle() ?? $seoAttributes->getH1(),
-            $seoAttributes->getMetaDescription() ?? $category->getSeoAttributes($domainId)->getMetaDescription(),
-            $seoAttributes->getH1(),
-            $seoAttributes->getMetaRobots(),
-            $seoAttributes->getCanonicalUrl(),
-            $readyCategorySeoMix->getDescription() ?? $category->getDescription($domainId),
-        );
     }
 }

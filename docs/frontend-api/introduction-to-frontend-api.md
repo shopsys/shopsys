@@ -232,12 +232,7 @@ class CategoryResolverMap extends ResolverMap
     {
         return [
             'Category' => [
-                'seo' => function (Category $category) {
-                    return $this->seoAttributesQueryDtoFactory->createFromSeoAttributes(
-                        $category->getSeoAttributes($this->domain->getId()),
-                        $category->getDescription($this->domain->getId()),
-                    );
-                },
+                'seo' => fn (Category $category) => $category->getSeoAttributes($this->domain->getId()),
             ],
         ];
     }

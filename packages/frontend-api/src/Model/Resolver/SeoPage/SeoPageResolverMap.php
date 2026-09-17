@@ -9,14 +9,12 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
-use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 
 class SeoPageResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
-        protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
     ) {
     }
 
@@ -25,9 +23,7 @@ class SeoPageResolverMap extends ResolverMap
     {
         return [
             'SeoPage' => [
-                'seo' => fn (SeoPage $seoPage) => $this->seoAttributesQueryDtoFactory->createFromSeoAttributes(
-                    $seoPage->getSeoAttributes($this->domain->getId()),
-                ),
+                'seo' => fn (SeoPage $seoPage) => $seoPage->getSeoAttributes($this->domain->getId()),
                 'ogTitle' => fn (SeoPage $seoPage) => $seoPage->getSeoOgTitle($this->domain->getId()),
                 'ogDescription' => fn (SeoPage $seoPage) => $seoPage->getSeoOgDescription($this->domain->getId()),
                 'hreflangLinks' => fn (SeoPage $seoPage) => $this->hreflangLinksFacade->getForSeoPage($seoPage, $this->domain->getId()),

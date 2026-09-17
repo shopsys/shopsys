@@ -61,18 +61,12 @@ The attributes are then applied through `CommonLayout`.
 
 ## Frontend API
 
-Every GraphQL type with SEO attributes implements the `Seo` interface and exposes `seo: SeoAttributes!` (`title`, `metaDescription`, `h1`, `metaRobots`, `canonicalUrl`). `SeoPage` has no heading, its `h1` is always `null`.
-The resolvers build the value with [`SeoAttributesQueryDtoFactory`]({{github.link}}/packages/frontend-api/src/Model/Seo/SeoAttributesQueryDtoFactory.php):
+Every GraphQL type with SEO attributes implements the `Seo` interface and exposes `seo: SeoAttributes!` (`title`, `metaDescription`, `h1`, `metaRobots`, `canonicalUrl`) exactly as set in the administration — the API does not apply any fallbacks, that is the responsibility of the storefront. `SeoPage` has no heading, its `h1` is always `null`.
+The resolvers of entities return the `SeoAttributes` embeddable itself, the resolvers reading Elasticsearch build [`SeoAttributesQueryDto`]({{github.link}}/packages/frontend-api/src/Model/Seo/SeoAttributesQueryDto.php) with [`SeoAttributesQueryDtoFactory`]({{github.link}}/packages/frontend-api/src/Model/Seo/SeoAttributesQueryDtoFactory.php):
 
 ```php
-'seo' => $this->seoAttributesQueryDtoFactory->createFromSeoAttributes(
-    $category->getSeoAttributes($this->domain->getId()),
-    $category->getDescription($this->domain->getId()),
-),
+'seo' => fn (Category $category) => $category->getSeoAttributes($this->domain->getId()),
 ```
-
-When the meta description is not set, the factory creates it from the text passed as the second argument (e.g. the perex of a blog article or the description of a category), converted to plain text and truncated to 160 characters.
-Title and H1 are returned as they are set, the storefront falls back to the name of the entity.
 
 ## Storefront
 

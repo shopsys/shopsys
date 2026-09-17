@@ -10,7 +10,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
-use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 
 class FlagResolverMap extends ResolverMap
 {
@@ -18,7 +17,6 @@ class FlagResolverMap extends ResolverMap
         protected readonly Domain $domain,
         protected readonly DataLoaderInterface $flagSlugBatchLoader,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
-        protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
     ) {
     }
 
@@ -39,11 +37,7 @@ class FlagResolverMap extends ResolverMap
                 'hreflangLinks' => function (Flag $flag) {
                     return $this->hreflangLinksFacade->getForFlag($flag, $this->domain->getId());
                 },
-                'seo' => function (Flag $flag) {
-                    return $this->seoAttributesQueryDtoFactory->createFromSeoAttributes(
-                        $flag->getSeoAttributes($this->domain->getId()),
-                    );
-                },
+                'seo' => fn (Flag $flag) => $flag->getSeoAttributes($this->domain->getId()),
             ],
         ];
     }

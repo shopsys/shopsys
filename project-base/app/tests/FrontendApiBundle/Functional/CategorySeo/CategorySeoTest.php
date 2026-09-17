@@ -82,8 +82,8 @@ class CategorySeoTest extends GraphQlTestCase
             'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             'slug' => '/' . t('electronics-without-hdmi-in-sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             'seo' => [
-                'title' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                'metaDescription' => t('All kind of electronic devices.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'title' => null,
+                'metaDescription' => null,
                 'h1' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 'metaRobots' => null,
                 'canonicalUrl' => null,
