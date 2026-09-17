@@ -30,7 +30,6 @@ class ArticleResolverMap extends ResolverMap
                     $articleData['seoH1'],
                     $articleData['seoMetaRobots'],
                     $articleData['seoCanonicalUrl'],
-                    $articleData['text'],
                 );
             },
             'createdAt' => static function (array $blogArticleData) {

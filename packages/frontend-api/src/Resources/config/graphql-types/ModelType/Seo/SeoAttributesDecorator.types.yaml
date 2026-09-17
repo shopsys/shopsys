@@ -2,14 +2,14 @@ SeoAttributesDecorator:
     type: object
     decorator: true
     config:
-        description: "SEO attributes of a page"
+        description: "SEO attributes of a page exactly as set in the administration, the fallbacks (e.g. the name of the entity as the title) are up to the API consumer"
         fields:
             title:
                 type: "String"
                 description: "Document's title that is shown in a browser's title"
             metaDescription:
                 type: "String"
-                description: "Description for meta tag, falls back to the entity description when not set"
+                description: "Description for meta tag"
             h1:
                 type: "String"
                 description: "Main heading of the page"

@@ -55,7 +55,6 @@ class BlogArticleResolverMap extends ResolverMap
                         $blogArticleData['seoH1'],
                         $blogArticleData['seoMetaRobots'],
                         $blogArticleData['seoCanonicalUrl'],
-                        $blogArticleData['perex'],
                     );
                 },
             ],

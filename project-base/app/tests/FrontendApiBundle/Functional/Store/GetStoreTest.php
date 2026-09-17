@@ -428,7 +428,7 @@ class GetStoreTest extends GraphQlTestCase
                 'description' => t('A compact city store for quick parcel pickup. Please ring the bell if the door is closed during opening hours.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'seo' => [
                     'title' => null,
-                    'metaDescription' => t('A compact city store for quick parcel pickup. Please ring the bell if the door is closed during opening hours.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'metaDescription' => null,
                     'h1' => null,
                     'metaRobots' => null,
                     'canonicalUrl' => null,
