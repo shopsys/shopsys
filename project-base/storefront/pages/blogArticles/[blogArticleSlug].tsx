@@ -18,6 +18,7 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -46,6 +47,10 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const isFuturePublishDate =
         !!blogArticleData?.blogArticle?.publishDate && new Date(blogArticleData.blogArticle.publishDate) > new Date();
     const shouldNoIndex = isDraft || isPreview || isFuturePublishDate;
+    const metaDescription = getMetaDescription(
+        blogArticleData?.blogArticle?.seo.metaDescription,
+        blogArticleData?.blogArticle?.perex || blogArticleData?.blogArticle?.text,
+    );
 
     return (
         <CommonLayout
@@ -53,7 +58,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             breadcrumbsType="blogCategory"
             canonicalQueryParams={[]}
             defaultMetaRobots={shouldNoIndex ? 'noindex, nofollow' : undefined}
-            description={blogArticleData?.blogArticle?.seo.metaDescription}
+            description={metaDescription}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={isBlogArticleFetching}
             ogImageUrlDefault={blogArticleImageUrl}
@@ -66,7 +71,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
                     <ArticleMetadata
                         authorName={blogArticleData.blogArticle.author?.name}
                         datePublished={blogArticleData.blogArticle.publishDate}
-                        description={blogArticleData.blogArticle.seo.metaDescription}
+                        description={metaDescription}
                         headline={blogArticleData.blogArticle.seo.h1 || blogArticleData.blogArticle.name}
                         imageUrl={blogArticleData.blogArticle.mainImage?.url}
                     />
