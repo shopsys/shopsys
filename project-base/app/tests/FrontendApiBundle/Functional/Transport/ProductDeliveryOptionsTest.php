@@ -93,6 +93,44 @@ final class ProductDeliveryOptionsTest extends GraphQlTestCase
         }
     }
 
+    public function testOnlyEmailTransportIsReturnedForElectronicGiftVoucher(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300, Product::class);
+
+        $deliveryOptions = $this->getDeliveryOptionsForProduct($product);
+
+        $this->assertCount(1, $deliveryOptions);
+        $this->assertSame(TransportTypeEnum::TYPE_EMAIL, $deliveryOptions[0]['transport']['transportTypeCode']);
+    }
+
+    public function testEmailTransportIsNotReturnedForRegularProduct(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::IN_STOCK_PRODUCT_REFERENCE_ID, Product::class);
+
+        $this->assertNoEmailTransportInDeliveryOptions($product);
+    }
+
+    public function testEmailTransportIsNotReturnedForPrintedGiftVoucher(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000, Product::class);
+
+        $this->assertNoEmailTransportInDeliveryOptions($product);
+    }
+
+    public function testStoresForEmailTransportReturnUserError(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300, Product::class);
+        $emailTransport = $this->getReference(TransportDataFixture::TRANSPORT_EMAIL, Transport::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductDeliveryStoresQuery.graphql', [
+            'productUuid' => $product->getUuid(),
+            'transportUuid' => $emailTransport->getUuid(),
+        ]);
+
+        // the email transport is offered for the voucher, but there are no stores to pick it up at
+        $this->assertUserError($response, 'invalid-argument');
+    }
+
     public function testTransportOverProductWeightIsNotReturnedAtAll(): void
     {
         $lightProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::IN_STOCK_PRODUCT_REFERENCE_ID, Product::class);
@@ -235,6 +273,17 @@ final class ProductDeliveryOptionsTest extends GraphQlTestCase
         ]);
 
         $this->assertUserError($response, 'product-not-found');
+    }
+
+    private function assertNoEmailTransportInDeliveryOptions(Product $product): void
+    {
+        $deliveryOptions = $this->getDeliveryOptionsForProduct($product);
+
+        $this->assertNotEmpty($deliveryOptions);
+
+        foreach ($deliveryOptions as $deliveryOption) {
+            $this->assertNotSame(TransportTypeEnum::TYPE_EMAIL, $deliveryOption['transport']['transportTypeCode']);
+        }
     }
 
     /**
