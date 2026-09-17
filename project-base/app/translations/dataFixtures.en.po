@@ -1054,10 +1054,13 @@ msgstr ""
 msgid "Get to know Shopsys"
 msgstr ""
 
-msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart."
+msgid "Gift voucher - electronic or printed"
 msgstr ""
 
-msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value."
+msgid "Gift voucher for purchases in our online store. The voucher can be redeemed in the cart."
+msgstr ""
+
+msgid "Gift voucher for purchases in our online store. The voucher can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value."
 msgstr ""
 
 msgid "Gift wrapping"

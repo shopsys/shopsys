@@ -14,6 +14,7 @@ use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use InvalidArgumentException;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -31,14 +32,37 @@ use Symfony\Component\Clock\DatePoint;
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const string PRODUCT_PREFIX = 'product_';
-    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000 = 'product_electronic_gift_voucher_1000';
-    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_CUSTOM = 'VOUCHER-M';
-    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_500 = 'VOUCHER500';
-    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000 = 'VOUCHER1000';
-    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_2000 = 'VOUCHER2000';
-    public const string PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_1000 = 'VOUCHER-P1000';
+    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT = 'product_electronic_gift_voucher_main_variant';
+    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_500 = 'product_electronic_gift_voucher_variant_500';
+    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000 = 'product_electronic_gift_voucher_variant_1000';
+    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000 = 'product_electronic_gift_voucher_variant_2000';
+    public const string PRODUCT_COMBINED_GIFT_VOUCHER_MAIN_VARIANT = 'product_combined_gift_voucher_main_variant';
+    public const string PRODUCT_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000 = 'product_combined_gift_voucher_variant_electronic_1000';
+    public const string PRODUCT_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000 = 'product_combined_gift_voucher_variant_printed_1000';
+    public const string PRODUCT_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300 = 'product_electronic_gift_voucher_standalone_300';
+    public const string PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000 = 'product_printed_gift_voucher_standalone_1000';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT = 'VOUCHER-M';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_500 = 'VOUCHER500';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000 = 'VOUCHER1000';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000 = 'VOUCHER2000';
+    public const string PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_MAIN_VARIANT = 'VOUCHER-X';
+    public const string PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000 = 'VOUCHER-X1000E';
+    public const string PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000 = 'VOUCHER-X1000P';
+    public const string PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300 = 'VOUCHER-E300';
+    public const string PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_STANDALONE_1000 = 'VOUCHER-P1000';
     public const string PRODUCT_CATNUM_A4TECH_MOUSE = '5960453';
     private const string UUID_NAMESPACE = '5d92301d-1583-4505-842a-27fe6854f587';
+    private const array GIFT_VOUCHER_REFERENCE_NAMES_BY_CATNUM = [
+        self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT => self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT,
+        self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_500 => self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_500,
+        self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000 => self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000,
+        self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000 => self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000,
+        self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_MAIN_VARIANT => self::PRODUCT_COMBINED_GIFT_VOUCHER_MAIN_VARIANT,
+        self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000 => self::PRODUCT_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000,
+        self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000 => self::PRODUCT_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000,
+        self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300 => self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300,
+        self::PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_STANDALONE_1000 => self::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000,
+    ];
 
     private int $productNo = 1;
 
@@ -4085,28 +4109,30 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function createGiftVoucherProducts(): void
     {
         $electronicGiftVoucherPricesByCatnum = [
-            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_CUSTOM => null,
-            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_500 => '500',
-            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000 => '1000',
-            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_2000 => '2000',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT => null,
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_500 => '500',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000 => '1000',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000 => '2000',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300 => '300',
+            self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000 => '1000',
         ];
 
         foreach ($electronicGiftVoucherPricesByCatnum as $catnum => $price) {
-            $referenceName = $catnum === self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000
-                ? self::PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000
-                : null;
-
-            $this->createGiftVoucherProduct($catnum, $price, ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER, $referenceName);
+            $this->createGiftVoucherProduct($catnum, $price, ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER);
         }
 
-        $this->createGiftVoucherProduct(self::PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_1000, '1000', ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER);
+        $this->createGiftVoucherProduct(self::PRODUCT_CATNUM_PRINTED_GIFT_VOUCHER_STANDALONE_1000, '1000', ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER);
+        $this->createGiftVoucherProduct(self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000, '1000', ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER);
+
+        // the product type of a main variant is never used, it is resolved from the variants
+        // so the card combining an electronic and a printed variant keeps the default basic type an administrator would end up with
+        $this->createGiftVoucherProduct(self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_MAIN_VARIANT, null, ProductTypeEnum::TYPE_BASIC);
     }
 
     private function createGiftVoucherProduct(
         string $catnum,
         ?string $price,
         string $productType,
-        ?string $referenceName = null,
     ): void {
         $productData = $this->productDemoDataFactory->createDefaultData($catnum);
 
@@ -4121,26 +4147,33 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = $this->getGiftVoucherProductName($productType, $price, $locale, $domain->getId());
-            $productData->shortDescriptions[$domain->getId()] = t('Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = $this->getGiftVoucherProductName($catnum, $productType, $price, $locale, $domain->getId());
+            $productData->shortDescriptions[$domain->getId()] = t('Gift voucher for purchases in our online store. The voucher can be redeemed in the cart.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->descriptions[$domain->getId()] = t('Gift voucher for purchases in our online store. The voucher can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $product = $this->createProduct($productData);
 
-        if ($referenceName !== null) {
-            $this->addReference($referenceName, $product);
-        }
+        $this->addReference(self::GIFT_VOUCHER_REFERENCE_NAMES_BY_CATNUM[$catnum], $product);
     }
 
     private function getGiftVoucherProductName(
+        string $catnum,
         string $productType,
         ?string $price,
         string $locale,
         int $domainId,
     ): string {
-        if ($price === null) {
+        if ($catnum === self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT) {
             return t('Electronic gift voucher', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        if ($catnum === self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_MAIN_VARIANT) {
+            return t('Gift voucher - electronic or printed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        if ($price === null) {
+            throw new InvalidArgumentException(sprintf('Gift voucher "%s" needs a value to build its name', $catnum));
         }
 
         $domainCurrencyCode = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId)->getCode();
@@ -4189,10 +4222,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 '7700777',
                 '7700769Z',
             ],
-            'VOUCHER-M' => [
-                'VOUCHER500',
-                'VOUCHER1000',
-                'VOUCHER2000',
+            self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT => [
+                self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_500,
+                self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000,
+                self::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000,
+            ],
+            self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_MAIN_VARIANT => [
+                self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000,
+                self::PRODUCT_CATNUM_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000,
             ],
         ];
     }
