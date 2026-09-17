@@ -1425,7 +1425,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   isVisible: Boolean!
   "Product link"
   link: String!
-  "The deepest visible category of the product on the current domain"
+  "Main category of the product"
   mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
@@ -2382,7 +2382,7 @@ interface Product {
   isVisible: Boolean!
   "Product link"
   link: String!
-  "The deepest visible category of the product on the current domain"
+  "Main category of the product"
   mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
@@ -3130,7 +3130,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   isVisible: Boolean!
   "Product link"
   link: String!
-  "The deepest visible category of the product on the current domain"
+  "Main category of the product"
   mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
@@ -3585,7 +3585,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   isVisible: Boolean!
   "Product link"
   link: String!
-  "The deepest visible category of the product on the current domain"
+  "Main category of the product"
   mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image

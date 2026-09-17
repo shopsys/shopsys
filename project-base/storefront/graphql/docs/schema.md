@@ -6784,7 +6784,7 @@ Product link
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
-The deepest visible category of the product on the current domain
+Main category of the product
 
 </td>
 </tr>
@@ -10830,7 +10830,7 @@ Product link
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
-The deepest visible category of the product on the current domain
+Main category of the product
 
 </td>
 </tr>
@@ -12597,7 +12597,7 @@ Product link
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
-The deepest visible category of the product on the current domain
+Main category of the product
 
 </td>
 </tr>
@@ -17321,7 +17321,7 @@ Product link
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
-The deepest visible category of the product on the current domain
+Main category of the product
 
 </td>
 </tr>
