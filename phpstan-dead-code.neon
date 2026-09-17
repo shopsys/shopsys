@@ -315,16 +315,6 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Feed\\FeedRegistry::getFeedsForCurrentTime\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Model/Feed/FeedRegistry.php
-        # diagnostic payload for debugging failed GoPay calls
-        -
-            identifier: shipmonk.deadProperty.neverRead
-            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\GoPay\\Exception\\GoPayPaymentDownloadException::\$expectedCode\ is\ never\ read$#'
-            path: packages/framework/src/Model/GoPay/Exception/GoPayPaymentDownloadException.php
-        # diagnostic payload for debugging failed GoPay calls
-        -
-            identifier: shipmonk.deadProperty.neverRead
-            message: '#^Property\ Shopsys\\FrameworkBundle\\Model\\GoPay\\Exception\\GoPayPaymentDownloadException::\$responseData\ is\ never\ read$#'
-            path: packages/framework/src/Model/GoPay/Exception/GoPayPaymentDownloadException.php
         # project-implemented terms download filename api
         -
             identifier: shipmonk.deadMethod

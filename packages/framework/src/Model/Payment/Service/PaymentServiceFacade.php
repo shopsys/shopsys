@@ -116,7 +116,7 @@ class PaymentServiceFacade
                 $this->logger->error(
                     'GoPay API return error.',
                     [
-                        'exception' => $exception,
+                        ...$exception->getLogContext(),
                         'paymentTransactionId' => $paymentTransaction->getId(),
                         'externalPaymentIdentifier' => $paymentTransaction->getExternalPaymentIdentifier(),
                     ],
@@ -131,7 +131,7 @@ class PaymentServiceFacade
                 $this->logger->error(
                     'GoPay API return error while updating refunded transaction.',
                     [
-                        'exception' => $exception,
+                        ...$exception->getLogContext(),
                         'paymentTransactionId' => $paymentTransaction->getId(),
                         'externalPaymentIdentifier' => $paymentTransaction->getExternalPaymentIdentifier(),
                     ],

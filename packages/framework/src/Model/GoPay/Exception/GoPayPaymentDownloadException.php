@@ -18,4 +18,20 @@ class GoPayPaymentDownloadException extends Exception
     ) {
         parent::__construct('Unexpected response code');
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getLogContext(): array
+    {
+        return [
+            'exception' => $this,
+            'url' => $this->url,
+            'method' => $this->method,
+            'expectedCode' => $this->expectedCode,
+            'responseCode' => $this->responseData?->statusCode,
+            'responseBody' => $this->responseData?->rawBody,
+            'requestData' => $this->requestData,
+        ];
+    }
 }
