@@ -318,7 +318,7 @@ class ProductController extends AdminBaseController
 
         foreach ($products as $product) {
             if ($product->getCatnum() !== null) {
-                $response[$product->getCatnum()] = $product->getName();
+                $response[$product->getCatnum()] = $product->getFullName();
             }
         }
 

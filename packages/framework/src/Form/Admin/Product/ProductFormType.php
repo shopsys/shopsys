@@ -154,7 +154,7 @@ final class ProductFormType extends AbstractType
         ];
 
         if ($product !== null) {
-            $actionBarOptions['entity_name'] = $product->getName();
+            $actionBarOptions['entity_name'] = $product->getFullName();
             $actionBarOptions['entity_identifier'] = $product->getCatnum();
         }
 
@@ -621,7 +621,7 @@ final class ProductFormType extends AbstractType
                 'route_params' => [
                     'id' => $product->getMainVariant()->getId(),
                 ],
-                'route_label' => $product->getMainVariant()->getName(),
+                'route_label' => $product->getMainVariant()->getFullName(),
             ]);
 
             $variantGroup->add('variantAlias', LocalizedType::class, [

@@ -67,7 +67,7 @@ class ProductExtension extends AbstractExtension
             ]);
         }
 
-        return $product->getName();
+        return $product->getFullName();
     }
 
     public function getProductMainCategory(Product $product, int $domainId): Category

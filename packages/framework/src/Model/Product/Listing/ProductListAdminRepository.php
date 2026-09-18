@@ -8,12 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
+use Shopsys\FrameworkBundle\Model\Product\ProductFullNameDqlHelper;
 
 class ProductListAdminRepository
 {
@@ -39,6 +41,7 @@ class ProductListAdminRepository
             ->select('
                 p.id,
                 pt.name,
+                ' . ExtendedClassNameResolver::resolve(ProductFullNameDqlHelper::class)::getDqlExpression('pt') . ' AS fullName,
                 p.variantType,
                 p.productType,
                 p.catnum,
