@@ -3652,6 +3652,9 @@ msgstr ""
 msgid "TikTok URL"
 msgstr ""
 
+msgid "To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions."
+msgstr ""
+
 msgid "To fifty hundredths (halfs)"
 msgstr ""
 
