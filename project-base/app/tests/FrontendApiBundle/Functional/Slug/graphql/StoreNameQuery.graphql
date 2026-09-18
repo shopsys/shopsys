@@ -1,0 +1,5 @@
+query StoreNameQuery($urlSlug: String!) {
+    store(urlSlug: $urlSlug) {
+        name
+    }
+}
