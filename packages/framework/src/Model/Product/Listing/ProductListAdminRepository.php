@@ -39,6 +39,7 @@ class ProductListAdminRepository
             ->select('
                 p.id,
                 pt.name,
+                TRIM(CONCAT(COALESCE(pt.namePrefix, \'\'), \' \', COALESCE(pt.name, \'\'), \' \', COALESCE(pt.nameSuffix, \'\'))) AS fullName,
                 p.variantType,
                 p.productType,
                 p.catnum,

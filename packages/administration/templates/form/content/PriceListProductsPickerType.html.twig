@@ -84,7 +84,7 @@
                        target="_blank"
                        rel="noopener"
                     >
-                        {{ product.getName(getDomain().getDomainConfigById(domainId).getLocale()) }}
+                        {{ product.getFullName(getDomain().getDomainConfigById(domainId).getLocale()) }}
                         {{ ux_icon('forward-page') }}
                     </a>
                 {% endif %}
