@@ -76,6 +76,13 @@ class CronModule
     protected $lastDuration;
 
     /**
+     * @var string|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected $errorMessageOfLastRun;
+
+    /**
      * @param string $serviceId
      */
     public function __construct($serviceId)
@@ -201,5 +208,21 @@ class CronModule
     public function setLastDuration($duration): void
     {
         $this->lastDuration = $duration;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getErrorMessageOfLastRun()
+    {
+        return $this->errorMessageOfLastRun;
+    }
+
+    /**
+     * @param string|null $errorMessageOfLastRun
+     */
+    public function setErrorMessageOfLastRun($errorMessageOfLastRun): void
+    {
+        $this->errorMessageOfLastRun = $errorMessageOfLastRun;
     }
 }

@@ -129,3 +129,14 @@
         </span>
     {% endif %}
 {% endblock %}
+
+{% block grid_row %}
+    {{ parent() }}
+    {% if row is not null and row.errorMessageOfLastRun is not empty %}
+        <tr>
+            <td colspan="100" class="pt-1 ps-4 small text-danger font-monospace text-break" title="{{ 'Error message of the last run'|trans }}">
+                {{ ux_icon('exclamation-circle', {class: 'icon icon-sm me-1'}) }}{{ row.errorMessageOfLastRun }}
+            </td>
+        </tr>
+    {% endif %}
+{% endblock %}

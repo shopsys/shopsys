@@ -61,6 +61,13 @@ class CronModuleRun
     #[ORM\Column(type: 'integer', nullable: false)]
     protected $duration;
 
+    /**
+     * @var string|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected $errorMessage;
+
     public function __construct(
         CronModule $cronModule,
         string $status,
@@ -121,5 +128,13 @@ class CronModuleRun
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
 }

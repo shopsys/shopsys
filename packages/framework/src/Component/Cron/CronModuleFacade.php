@@ -104,6 +104,8 @@ class CronModuleFacade
             $cronModule->setLastDuration($lastCronDuration);
         }
 
+        $cronModule->setErrorMessageOfLastRun(null);
+
         $cronModuleRun = $this->cronModuleRunFactory->createFromFinishedCronModule($cronModule);
         $this->em->persist($cronModuleRun);
 
@@ -112,7 +114,7 @@ class CronModuleFacade
         $this->sentryCronMonitorFacade->reportSuccess($cronModuleConfig);
     }
 
-    public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
+    public function markCronAsFailed(CronModuleConfig $cronModuleConfig, ?string $errorMessage = null): void
     {
         $this->sentryCronMonitorFacade->reportFailure($cronModuleConfig);
 
@@ -138,25 +140,28 @@ class CronModuleFacade
             SET 
                 status = :errorStatus,
                 last_finished_at = :now,
-                last_duration = :lastDuration
+                last_duration = :lastDuration,
+                error_message_of_last_run = :errorMessage
             WHERE service_id = :serviceId',
             [
                 'errorStatus' => CronModule::CRON_STATUS_ERROR,
                 'serviceId' => $cronModuleConfig->getServiceId(),
                 'now' => $finishedAt->format('Y-m-d H:i:s'),
                 'lastDuration' => $lastCronDuration,
+                'errorMessage' => $errorMessage,
             ],
         );
 
         $connection->executeStatement(
-            'INSERT INTO cron_module_runs (cron_module_id, status, started_at, finished_at, duration) 
-                VALUES (:cronModuleId, :status, :startedAt, :finishedAt, :duration)',
+            'INSERT INTO cron_module_runs (cron_module_id, status, started_at, finished_at, duration, error_message) 
+                VALUES (:cronModuleId, :status, :startedAt, :finishedAt, :duration, :errorMessage)',
             [
                 'cronModuleId' => $cronModule->getServiceId(),
                 'status' => CronModule::CRON_STATUS_ERROR,
                 'startedAt' => $startedAt->format('Y-m-d H:i:s'),
                 'finishedAt' => $finishedAt->format('Y-m-d H:i:s'),
                 'duration' => $lastCronDuration,
+                'errorMessage' => $errorMessage,
             ],
         );
     }
