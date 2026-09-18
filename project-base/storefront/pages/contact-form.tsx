@@ -13,7 +13,7 @@ const ContactFormPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout title={t('Contact form')}>
+        <CommonLayout defaultTitle={t('Contact form')}>
             <ContactContent />
         </CommonLayout>
     );

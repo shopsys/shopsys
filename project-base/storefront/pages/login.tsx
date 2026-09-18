@@ -22,7 +22,7 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Login')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultTitle={t('Login')}>
             <LoginContent />
         </CommonLayout>
     );

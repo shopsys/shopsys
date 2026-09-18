@@ -30,8 +30,6 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
-import { getMetaDescription } from 'utils/seo/getMetaDescription';
-import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -46,11 +44,6 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
-    const title = useHeadingWithPagination(
-        categoryData?.seo.title || categoryData?.seo.h1 || categoryData?.name,
-        categoryData?.products.totalCount,
-    );
-
     const firstImageUrl = categoryData?.images[0]?.url;
 
     if (!categoryData && !isFetchingVisible) {
@@ -63,12 +56,13 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
                 defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
-                description={getMetaDescription(categoryData?.seo.metaDescription, categoryData?.description)}
+                defaultDescription={categoryData?.description}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
                 ogImageUrlDefault={firstImageUrl}
+                paginationTotalCount={categoryData?.products.totalCount}
                 seo={categoryData?.seo}
-                title={title}
+                defaultTitle={categoryData?.name}
             >
                 {!!categoryData && (
                     <CategoryDetailContent category={categoryData} isFetchingVisible={isFetchingVisible} />

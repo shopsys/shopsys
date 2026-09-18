@@ -16,7 +16,7 @@ const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout title={t('Brands')}>
+        <CommonLayout defaultTitle={t('Brands')}>
             <Webline>
                 <h1 className="mb-4">{t('Brands')}</h1>
             </Webline>

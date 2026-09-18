@@ -33,7 +33,6 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
-import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
@@ -54,11 +53,6 @@ const FlagDetailPage: NextPage = () => {
         },
     });
 
-    const title = useHeadingWithPagination(
-        flagDetailData?.flag?.seo.title || flagDetailData?.flag?.name,
-        flagDetailData?.flag?.products.totalCount,
-    );
-
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(flagDetailData?.flag);
     useGtmPageReadyEvent(pageReadyEvent, isFlagFetching);
 
@@ -67,11 +61,11 @@ const FlagDetailPage: NextPage = () => {
             breadcrumbs={flagDetailData?.flag?.breadcrumb}
             breadcrumbsType="category"
             defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
-            description={flagDetailData?.flag?.seo.metaDescription}
             hreflangLinks={flagDetailData?.flag?.hreflangLinks}
             isFetchingData={!filter && isFlagFetching && !flagDetailData}
+            paginationTotalCount={flagDetailData?.flag?.products.totalCount}
             seo={flagDetailData?.flag?.seo}
-            title={title}
+            defaultTitle={flagDetailData?.flag?.name}
         >
             {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
         </CommonLayout>

@@ -33,7 +33,7 @@ const UsersPage: FC = () => {
     }
 
     return (
-        <CustomerLayout breadcrumbs={breadcrumbs} title={t('Customer users')}>
+        <CustomerLayout breadcrumbs={breadcrumbs} defaultTitle={t('Customer users')}>
             <PageHero
                 icon={UserIcon}
                 title={t('Customer users')}

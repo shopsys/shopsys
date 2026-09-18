@@ -8,7 +8,7 @@ export const Error403Content: FC = () => {
     const { t } = useTranslation();
 
     return (
-        <CommonLayout title={t('Something wrong happened... Page not found')}>
+        <CommonLayout defaultTitle={t('Something wrong happened... Page not found')}>
             <ErrorPage
                 heading={t('Access denied')}
                 statusCode="403"

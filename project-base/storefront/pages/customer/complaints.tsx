@@ -50,7 +50,7 @@ const ComplaintsPage: FC = () => {
         <CustomerLayout
             breadcrumbs={breadcrumbs}
             paginationScrollTargetRef={paginationScrollTargetRef}
-            title={t('My complaints')}
+            defaultTitle={t('My complaints')}
         >
             <PageHero
                 icon={DocumentIcon}

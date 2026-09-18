@@ -22,7 +22,7 @@ const CatalogPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Catalog')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultTitle={t('Catalog')}>
             <Webline>
                 <h1 className="mb-4">{t('Catalog')}</h1>
             </Webline>

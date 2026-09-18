@@ -37,7 +37,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
             defaultMetaRobots="noindex, nofollow"
             isFetchingData={isSearchPageFetching}
             pageTypeOverride={SkeletonEnum.Search}
-            title={t('Search')}
+            defaultTitle={t('Search')}
         >
             <SearchPageContent
                 key={currentSearchString}

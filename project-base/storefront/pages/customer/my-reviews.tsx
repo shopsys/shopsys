@@ -44,7 +44,7 @@ const MyReviewsPage: FC = () => {
         <CustomerLayout
             breadcrumbs={breadcrumbs}
             paginationScrollTargetRef={paginationScrollTargetRef}
-            title={t('My reviews')}
+            defaultTitle={t('My reviews')}
         >
             <PageHero
                 description={t('Here you can find all your product reviews and their approval status.')}

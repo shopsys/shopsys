@@ -47,7 +47,7 @@ const ComplaintDetailPage: FC = () => {
                 breadcrumbs={breadcrumbs}
                 breadcrumbsType="complaintList"
                 isFetchingData={isComplaintDetailFetching}
-                title={`${t('Complaint number')} ${complaintNumber}`}
+                defaultTitle={`${t('Complaint number')} ${complaintNumber}`}
             >
                 {!!complaintData?.complaint && (
                     <>

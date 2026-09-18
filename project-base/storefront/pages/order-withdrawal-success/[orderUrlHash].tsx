@@ -44,7 +44,7 @@ const OrderWithdrawalSuccessPage: FC = () => {
             <CommonLayout
                 defaultMetaRobots="noindex"
                 pageTypeOverride="order-withdrawal-success"
-                title={t('Withdrawal request submitted')}
+                defaultTitle={t('Withdrawal request submitted')}
             >
                 <Webline>
                     <ConfirmationPageContent

@@ -28,7 +28,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
             defaultMetaRobots="noindex"
             isFetchingData={isCartFetchingOrUnavailable}
             pageTypeOverride="cart"
-            title={t('Shopping cart')}
+            defaultTitle={t('Shopping cart')}
         >
             {cart?.items.length ? <CartContent cart={cart} cartPreviewRef={cartPreviewRef} /> : <EmptyCart />}
         </CommonLayout>

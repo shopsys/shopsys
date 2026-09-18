@@ -27,7 +27,7 @@ const PersonalDataOverviewPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" title={t('Personal data overview')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" defaultTitle={t('Personal data overview')}>
             <PersonalDataOverviewContent
                 contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
             />

@@ -89,7 +89,7 @@ const NewComplaintPage: FC = () => {
 
     return (
         <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
-            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" title={t('New complaint')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" defaultTitle={t('New complaint')}>
                 <PageHero
                     icon={DocumentIcon}
                     title={t('New complaint')}
