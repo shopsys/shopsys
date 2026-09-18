@@ -11,7 +11,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { isProductSellable } from 'utils/product/isProductSellable';
+import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 
 type ProductVariant = TypeMainVariantDetailFragment['variants'][number];
 
@@ -147,7 +147,7 @@ const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onCli
         />
     );
 
-    if (!isProductSellable(variant)) {
+    if (!showProductDeliveryOptionsPopup(variant)) {
         return productAvailability;
     }
 
