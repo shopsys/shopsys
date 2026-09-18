@@ -39,7 +39,7 @@ const OrdersPage: FC = () => {
         <CustomerLayout
             breadcrumbs={breadcrumbs}
             paginationScrollTargetRef={paginationScrollTargetRef}
-            title={t('My orders')}
+            defaultTitle={t('My orders')}
         >
             <PageHero
                 icon={OrderIcon}

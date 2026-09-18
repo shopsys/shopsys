@@ -13,7 +13,6 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
-import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
@@ -32,8 +31,6 @@ const StoreDetailPage: NextPage = () => {
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(storeDetailData?.store);
     useGtmPageReadyEvent(pageReadyEvent, isStoreFetching);
 
-    const title =
-        storeDetailData?.store?.seo.title || getPrefixedSeoTitle(storeDetailData?.store?.storeName, t('Store'));
     const storeImageUrl = storeDetailData?.store?.storeImages[0]?.url;
 
     return (
@@ -41,14 +38,11 @@ const StoreDetailPage: NextPage = () => {
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             breadcrumbsType="stores"
             canonicalQueryParams={[]}
-            description={getMetaDescription(
-                storeDetailData?.store?.seo.metaDescription,
-                storeDetailData?.store?.description,
-            )}
+            defaultDescription={storeDetailData?.store?.description}
             isFetchingData={isStoreFetching}
             ogImageUrlDefault={storeImageUrl}
             seo={storeDetailData?.store?.seo}
-            title={title}
+            defaultTitle={getPrefixedSeoTitle(storeDetailData?.store?.storeName, t('Store'))}
         >
             {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}
         </CommonLayout>

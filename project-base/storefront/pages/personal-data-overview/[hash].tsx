@@ -35,7 +35,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     );
 
     return (
-        <CommonLayout defaultMetaRobots="noindex" title={t('Personal data overview')}>
+        <CommonLayout defaultMetaRobots="noindex" defaultTitle={t('Personal data overview')}>
             {arePersonalDataFetching ? <SkeletonPagePersonalDataOverview /> : content}
         </CommonLayout>
     );

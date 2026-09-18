@@ -35,9 +35,7 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
-import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
-import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
@@ -57,11 +55,6 @@ const BrandDetailPage: NextPage = () => {
         },
     });
 
-    const title = useHeadingWithPagination(
-        brandDetailData?.brand?.seo.title || getPrefixedSeoTitle(brandDetailData?.brand?.name, t('Brand')),
-        brandDetailData?.brand?.products.totalCount,
-    );
-
     const brandImageUrl = brandDetailData?.brand?.mainImage?.url;
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(brandDetailData?.brand);
@@ -72,15 +65,13 @@ const BrandDetailPage: NextPage = () => {
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
             breadcrumbsType="brandsOverview"
             defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
-            description={getMetaDescription(
-                brandDetailData?.brand?.seo.metaDescription,
-                brandDetailData?.brand?.description,
-            )}
+            defaultDescription={brandDetailData?.brand?.description}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
             isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
             ogImageUrlDefault={brandImageUrl}
+            paginationTotalCount={brandDetailData?.brand?.products.totalCount}
             seo={brandDetailData?.brand?.seo}
-            title={title}
+            defaultTitle={getPrefixedSeoTitle(brandDetailData?.brand?.name, t('Brand'))}
         >
             {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}
         </CommonLayout>

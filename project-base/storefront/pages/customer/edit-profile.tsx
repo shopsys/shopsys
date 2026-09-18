@@ -28,7 +28,7 @@ const EditProfilePage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CustomerLayout breadcrumbs={breadcrumbs} title={userProfileSectionLabel}>
+        <CustomerLayout breadcrumbs={breadcrumbs} defaultTitle={userProfileSectionLabel}>
             {currentCustomerUserData !== undefined && (
                 <>
                     <PageHero

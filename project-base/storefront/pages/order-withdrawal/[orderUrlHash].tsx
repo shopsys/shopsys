@@ -53,7 +53,7 @@ const OrderWithdrawalPage: FC = () => {
                 defaultMetaRobots="noindex"
                 isFetchingData={isOrderFetching}
                 pageTypeOverride="order-withdrawal"
-                title={t('Withdrawal from contract')}
+                defaultTitle={t('Withdrawal from contract')}
             >
                 {!!orderData?.order && <OrderWithdrawalContent order={orderData.order} />}
             </CommonLayout>
