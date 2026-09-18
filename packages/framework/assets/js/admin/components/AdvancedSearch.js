@@ -5,7 +5,9 @@ export default class AdvancedSearch {
     constructor($addRuleButton, $rulesContainer, $ruleTemplate) {
         $ruleTemplate.detach().removeClass('d-none').removeAttr('id').find('*[id]').removeAttr('id');
 
-        let newRuleIndexCounter = 0;
+        // Rules submitted earlier keep their "new_N" keys in the URL, so a fresh counter
+        // starting at 0 would collide with them and overwrite an existing rule on submit
+        let newRuleIndexCounter = AdvancedSearch.getNextNewRuleIndex($rulesContainer);
 
         this.updateAllValuesByOperator($rulesContainer);
 
@@ -30,6 +32,21 @@ export default class AdvancedSearch {
             const $rule = $(this).closest('.js-advanced-search-rule');
             AdvancedSearch.updateValueByOperator($rulesContainer, $rule, $(this).val());
         });
+    }
+
+    static getNextNewRuleIndex($rulesContainer) {
+        let maxIndex = -1;
+
+        $rulesContainer.find('[name*="[new_"]').each(function () {
+            const match = $(this)
+                .attr('name')
+                .match(/\[new_(\d+)\]/);
+            if (match !== null) {
+                maxIndex = Math.max(maxIndex, parseInt(match[1], 10));
+            }
+        });
+
+        return maxIndex + 1;
     }
 
     static updateRule($rulesContainer, $rule, filterName, newIndex) {
