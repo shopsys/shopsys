@@ -47,9 +47,9 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductReviewApiFacade $productReviewApiFacade,
         DataLoaderInterface $additionalServicesByIdsBatchLoader,
-        private DataLoaderInterface $categoriesBatchLoader,
-        private DataLoaderInterface $flagsBatchLoader,
-        private DataLoaderInterface $brandsBatchLoader,
+        DataLoaderInterface $categoriesBatchLoader,
+        private readonly DataLoaderInterface $flagsBatchLoader,
+        private readonly DataLoaderInterface $brandsBatchLoader,
     ) {
         parent::__construct(
             $categoryFacade,
@@ -65,6 +65,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $productAvailabilityFacade,
             $productReviewApiFacade,
             $additionalServicesByIdsBatchLoader,
+            $categoriesBatchLoader,
         );
     }
 

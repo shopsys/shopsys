@@ -86,7 +86,11 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                                 data-tid={TIDs.header_cart_list_item_image}
                             >
                                 <Image
-                                    alt=""
+                                    alt={generateProductImageAlt(
+                                        product.fullName,
+                                        product.mainCategory?.name,
+                                        product.mainImage?.name,
+                                    )}
                                     className="size-20 object-contain"
                                     height={80}
                                     src={product.mainImage?.url}
@@ -99,13 +103,17 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                             </span>
                         </ExtendedNextLink>
 
-                        <div className="pl-[6.5rem]">{additionalServicesToggle}</div>
+                        <div className="pl-26">{additionalServicesToggle}</div>
                     </div>
                 ) : (
                     <>
                         <div className="flex w-20 items-center justify-center">
                             <Image
-                                alt={generateProductImageAlt(product.fullName, product.categories[0]?.name)}
+                                alt={generateProductImageAlt(
+                                    product.fullName,
+                                    product.mainCategory?.name,
+                                    product.mainImage?.name,
+                                )}
                                 className="size-20 object-contain"
                                 height={80}
                                 src={product.mainImage?.url}

@@ -13,6 +13,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -66,6 +67,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method \DateTimeImmutable|null getExpectedRestockingDate(\App\Model\Product\Product $product)
  * @method array{average_rating: float|null, total_count: int, rating_counts: array<int, array{rating: int, count: int}>}|null getReviewsSummary(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAdditionalServices(\App\Model\Product\Product $product)
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @method \App\Model\Category\Category getMainCategory(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -93,6 +96,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductSellableVariantsProvider $productSellableVariantsProvider,
         ProductReviewApiFacade $productReviewApiFacade,
         DataLoaderInterface $additionalServicesByProductIdBatchLoader,
+        CategoryFacade $categoryFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
@@ -118,6 +122,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productSellableVariantsProvider,
             $productReviewApiFacade,
             $additionalServicesByProductIdBatchLoader,
+            $categoryFacade,
         );
     }
 

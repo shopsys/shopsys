@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { getImageProps } from 'next/image';
 import { DragEvent } from 'react';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 
 type BannerImageProps = {
     mobileSrc: string;
@@ -18,6 +19,7 @@ export const BannerImage: FC<BannerImageProps> = ({
     isFirst,
     children,
 }) => {
+    const isDesktop = useMediaMin('lg');
     const commonImageProps = {
         fill: true,
         priority: isFirst,
@@ -47,30 +49,30 @@ export const BannerImage: FC<BannerImageProps> = ({
             {isFirst && (
                 <Head>
                     <link
-                        key="carousel_preload_mobile"
-                        as="image"
-                        fetchPriority="high"
-                        href={`${mobileImageSrc}?width=480`}
-                        media="(max-width: 769px)"
-                        rel="preload"
-                    />
-                    <link
                         key="carousel_preload_desktop"
                         as="image"
                         fetchPriority="high"
                         href={`${desktopImageSrc}?width=1400`}
-                        media="(min-width: 770px)"
+                        media="(min-width: 769px)"
+                        rel="preload"
+                    />
+                    <link
+                        key="carousel_preload_mobile"
+                        as="image"
+                        fetchPriority="high"
+                        href={`${mobileImageSrc}?width=480`}
+                        media="(max-width: 768px)"
                         rel="preload"
                     />
                 </Head>
             )}
             <div className="relative h-62.5 vl:h-106.25 w-full grow md:h-86.25">
                 <picture>
-                    <source media="(min-width: 770px)" srcSet={`${desktopImageSrc}?width=1400`} />
-                    <source media="(max-width: 769px)" srcSet={`${mobileImageSrc}?width=480`} />
+                    <source media="(min-width: 769px)" srcSet={`${desktopImageSrc}?width=1400`} />
+                    <source media="(max-width: 768px)" srcSet={`${mobileImageSrc}?width=480`} />
                     <img
                         {...mobileImageProps}
-                        alt={mobileAlt}
+                        alt={isDesktop === false ? mobileAlt : desktopAlt}
                         className="h-full w-full object-cover"
                         decoding={isFirst ? 'auto' : 'async'}
                         fetchPriority={isFirst ? 'high' : undefined}
