@@ -136,6 +136,15 @@ final class PaymentFormType extends AbstractType
                     'class' => 'js-payment-gopay-payment-method',
                 ],
             ])
+            ->add('bankTransferQrCodeInfo', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions.', [
+                    '%placeholder%' => PaymentInstructionFacade::PLACEHOLDER_QR_CODE,
+                ]),
+                'row_attr' => [
+                    'class' => 'js-payment-bank-transfer',
+                ],
+            ])
             ->add('accountNumberByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'label' => 'Account number',

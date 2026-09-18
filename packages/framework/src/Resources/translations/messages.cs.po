@@ -3652,6 +3652,9 @@ msgstr "Čtvrtek"
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
+msgid "To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions."
+msgstr "Aby se zákazníkovi zobrazil QR kód, vložte do pokynů k platbě proměnnou <code>%placeholder%</code>."
+
 msgid "To fifty hundredths (halfs)"
 msgstr "Na padesátníky"
 

@@ -1,15 +1,34 @@
-<div>
-    <p>
-        {% trans into locale %}Payment instructions for bank transfer and QR payment{% endtrans %}
-    </p>
-    <p>
-        <img src="{{ qrCodeImageSrc }}" alt="{% trans into locale %}QR code{% endtrans %}" class="qr-code" />
-    </p>
-    <p>
-        {% trans into locale %}Total price{% endtrans %}: {{ totalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, locale)|hidePrice(order.customerUser) }}
-    </p>
-    <p>{% trans into locale %}Account number{% endtrans %}: {{ accountNumber }}</p>
-    <p>{% trans into locale %}Variable symbol{% endtrans %}: {{ orderNumber }}</p>
-    <p>{% trans into locale %}IBAN{% endtrans %}: {{ iban }}</p>
-    <p>{% trans into locale %}BIC/Swift{% endtrans %}: {{ bicSwift }}</p>
-</div>
+{# table layout + inline styles so the block renders the same on the storefront and in e-mail clients (no CSS classes or variables available there) #}
+{# label above value so long numbers (IBAN) fit on narrow mobile screens without breaking mid-string #}
+{% set labelStyle = 'padding: 8px 0 0; text-align: center; font-size: 13px; color: #6b7280;' %}
+{% set valueStyle = 'padding: 0 0 8px; text-align: center; font-family: Menlo, Consolas, monospace; font-weight: 600; overflow-wrap: anywhere;' %}
+
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin: 16px auto; max-width: 420px; width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; border-collapse: separate;">
+    <tr>
+        <td style="padding: 20px 24px; text-align: center; font-family: inherit;">
+            <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">
+                {% trans into locale %}Payment instructions for bank transfer and QR payment{% endtrans %}
+            </div>
+            <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">
+                {% trans into locale %}Total price{% endtrans %}: {{ totalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, locale)|hidePrice(order.customerUser) }}
+            </div>
+
+            <img src="{{ qrCodeImageSrc }}" alt="{% trans into locale %}QR code{% endtrans %}" class="qr-code" width="200" height="200" style="display: block; margin: 0 auto 16px;" />
+
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto; width: 100%; text-align: center; border-collapse: collapse;">
+                <tr><td style="{{ labelStyle }}">{% trans into locale %}Account number{% endtrans %}</td></tr>
+                <tr><td style="{{ valueStyle }}">{{ accountNumber }}</td></tr>
+                <tr><td style="{{ labelStyle }}">{% trans into locale %}Variable symbol{% endtrans %}</td></tr>
+                <tr><td style="{{ valueStyle }}">{{ orderNumber }}</td></tr>
+                {% if iban is not empty %}
+                    <tr><td style="{{ labelStyle }}">{% trans into locale %}IBAN{% endtrans %}</td></tr>
+                    <tr><td style="{{ valueStyle }}">{{ iban }}</td></tr>
+                {% endif %}
+                {% if bicSwift is not empty %}
+                    <tr><td style="{{ labelStyle }}">{% trans into locale %}BIC/Swift{% endtrans %}</td></tr>
+                    <tr><td style="{{ valueStyle }}">{{ bicSwift }}</td></tr>
+                {% endif %}
+            </table>
+        </td>
+    </tr>
+</table>
