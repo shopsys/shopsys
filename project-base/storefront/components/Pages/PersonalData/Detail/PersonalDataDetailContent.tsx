@@ -8,6 +8,7 @@ import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { useSeoPageH1 } from 'utils/seo/useSeoPageH1';
 
 type PersonalDataDetailContentProps = {
     personalDataDetail: TypePersonalDataDetailQuery;
@@ -15,6 +16,7 @@ type PersonalDataDetailContentProps = {
 
 export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ personalDataDetail }) => {
     const { t } = useTranslation();
+    const heading = useSeoPageH1(t('Personal data'));
     const formatPrice = useFormatPrice();
     const { formatDate } = useFormatDate();
 
@@ -27,7 +29,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
     return (
         <Webline>
             <VerticalStack gap="sm">
-                <h1>{t('Personal data')}</h1>
+                <h1>{heading}</h1>
 
                 <LinkButton href={exportLink} size="small" variant="secondary">
                     {t('Download as XML')}

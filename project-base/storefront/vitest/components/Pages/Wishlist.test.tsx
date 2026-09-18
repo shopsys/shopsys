@@ -78,6 +78,10 @@ vi.mock('utils/productLists/wishlist/useWishlist', () => ({
     }),
 }));
 
+vi.mock('utils/seo/useSeoPageH1', () => ({
+    useSeoPageH1: (defaultH1: string) => defaultH1,
+}));
+
 describe('Wishlist', () => {
     test('renders the product list view mode toggle for a non-empty wishlist', () => {
         render(<Wishlist />);

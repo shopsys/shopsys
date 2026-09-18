@@ -13,7 +13,7 @@ export const Error404Content: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout title={t('Something wrong happened... Page not found')}>
+        <CommonLayout defaultTitle={t('Something wrong happened... Page not found')}>
             <ErrorPage
                 heading={t('This page got lost.')}
                 statusCode={t('404')}

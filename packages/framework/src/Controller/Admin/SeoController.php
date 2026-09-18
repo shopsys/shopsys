@@ -32,8 +32,6 @@ class SeoController extends AdminBaseController
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $seoSettingData = [
-            'title' => $this->seoSettingFacade->getTitleMainPage($domainId),
-            'metaDescription' => $this->seoSettingFacade->getDescriptionMainPage($domainId),
             'titleAddOn' => $this->seoSettingFacade->getTitleAddOn($domainId),
         ];
 
@@ -43,8 +41,6 @@ class SeoController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $seoSettingData = $form->getData();
 
-            $this->seoSettingFacade->setTitleMainPage($seoSettingData['title'], $domainId);
-            $this->seoSettingFacade->setDescriptionMainPage($seoSettingData['metaDescription'], $domainId);
             $this->seoSettingFacade->setTitleAddOn($seoSettingData['titleAddOn'], $domainId);
 
             $this->addSuccessFlash(t('SEO attributes settings modified'));

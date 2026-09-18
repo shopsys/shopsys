@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
@@ -157,19 +158,9 @@ class ProductEntityFieldMapper
         return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $parameterValuesDataWithIcons]);
     }
 
-    public function getSeoH1(Product $product): ?string
+    public function getSeo(Product $product): SeoAttributes
     {
-        return $product->getSeoH1($this->domain->getId());
-    }
-
-    public function getSeoTitle(Product $product): ?string
-    {
-        return $product->getSeoTitle($this->domain->getId());
-    }
-
-    public function getSeoMetaDescription(Product $product): ?string
-    {
-        return $product->getSeoMetaDescription($this->domain->getId());
+        return $product->getSeoAttributes($this->domain->getId());
     }
 
     public function getOrderingPriority(Product $product): int

@@ -1,3 +1,6 @@
+// The static pages listed here have a SEO page (title, meta description, robots, ...) in the database whose slug has to match.
+// Whenever a slug is added or changed here, add a new database migration updating the SEO pages accordingly,
+// see Shopsys\FrameworkBundle\Migrations\Version20260909110000 for the one seeding the current slugs.
 export const routes = [
     {
         '/': '/',

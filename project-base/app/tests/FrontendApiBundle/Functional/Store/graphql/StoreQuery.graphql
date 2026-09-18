@@ -4,6 +4,13 @@ query StoreQuery($uuid: Uuid, $slug: String) {
         slug
         isDefault
         description
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
         street
         city
         postcode

@@ -22,6 +22,7 @@ class StoreResolverMap extends ResolverMap
         return [
             'Store' => [
                 'slug' => fn (Store $store) => $this->storeSlugBatchLoader->load($store->getId()),
+                'seo' => fn (Store $store) => $store->getSeoAttributes(),
             ],
         ];
     }

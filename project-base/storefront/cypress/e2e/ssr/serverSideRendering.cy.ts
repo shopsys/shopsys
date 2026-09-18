@@ -1,4 +1,4 @@
-import { COOKIES_STORE_NAME, staticData } from 'fixtures/demodata';
+import { COOKIES_STORE_NAME, staticData, url } from 'fixtures/demodata';
 import {
     fetchArticleSlug,
     fetchBlogCategoryLink,
@@ -45,6 +45,19 @@ describe('Server-side rendering tests', () => {
 
     const requestSsrPage = (url: string) => {
         return cy.request({ url, failOnStatusCode: false });
+    };
+
+    const assertIndexablePage = (html: string) => {
+        expect(html, 'Expected indexable page without robots meta tag').to.not.match(/<meta[^>]*name="robots"/);
+        expect(html, 'Expected indexable page with canonical link').to.match(/<link[^>]*rel="canonical"/);
+    };
+
+    const assertNoindexPage = (html: string, expectedRobots: string) => {
+        expect(html, `Expected robots meta tag "${expectedRobots}"`).to.match(
+            new RegExp(`<meta[^>]*content="${expectedRobots}"[^>]*name="robots"`),
+        );
+        expect(html, 'Expected noindex page without canonical link').to.not.match(/<link[^>]*rel="canonical"/);
+        expect(html, 'Expected noindex page without hreflang links').to.not.match(/<link[^>]*hreflang=/i);
     };
 
     const visitProductListingWithCookieListView = (entityType: 'brand' | 'flag', uuid: string) => {
@@ -112,7 +125,16 @@ describe('Server-side rendering tests', () => {
             return requestSsrPage(slug).then((response) => {
                 expect(response.status).to.eq(200);
                 assertSsrResponse(response.body, [data.catalogNumber, /<title[^>]*>.+<\/title>/]);
+                assertIndexablePage(response.body);
             });
+        });
+    });
+
+    it('[Search] should be server-rendered as noindex without canonical and hreflang links', () => {
+        requestSsrPage(url.search + 'kitty').then((response) => {
+            expect(response.status).to.eq(200);
+            assertSsrResponse(response.body, [/<title[^>]*>.+<\/title>/]);
+            assertNoindexPage(response.body, 'noindex, nofollow');
         });
     });
 

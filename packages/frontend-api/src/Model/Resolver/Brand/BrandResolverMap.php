@@ -34,15 +34,7 @@ class BrandResolverMap extends ResolverMap
                         UrlGeneratorInterface::ABSOLUTE_URL,
                     );
                 },
-                'seoTitle' => function (Brand $brand) {
-                    return $brand->getSeoTitle($this->domain->getId());
-                },
-                'seoMetaDescription' => function (Brand $brand) {
-                    return $brand->getSeoMetaDescription($this->domain->getId());
-                },
-                'seoH1' => function (Brand $brand) {
-                    return $brand->getSeoH1($this->domain->getId());
-                },
+                'seo' => fn (Brand $brand) => $brand->getSeoAttributes($this->domain->getId()),
                 'hreflangLinks' => function (Brand $brand) {
                     return $this->hreflangLinksFacade->getForBrand($brand, $this->domain->getId());
                 },

@@ -88,9 +88,6 @@ msgstr "<a href=\"%url%\">Článek se zásadami recenzí pro doménu %domainName
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
 
-msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
-msgstr "<a href=\"%url%\">SEO informace pro hlavní stránku domény %domainName% nejsou zcela nastaveny.</a>"
-
 msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr "<a href=\"%url%\">Doprava nebo platba nejsou nastaveny pro doménu %domainName%.</a>"
 
@@ -981,6 +978,9 @@ msgstr "Zamítnutí platby v autorizačním centru banky zákazníka z důvodu c
 
 msgid "Declined in the 3DS server"
 msgstr "Zamítnutí platby v systému 3D Secure banky zákazníka"
+
+msgid "Default (not set)"
+msgstr "Výchozí (nenastaveno)"
 
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
@@ -1885,9 +1885,6 @@ msgstr "Má akci X+Y"
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
 
-msgid "Headline"
-msgstr "Titulek"
-
 msgid "Heureka"
 msgstr "Heureka"
 
@@ -2191,6 +2188,9 @@ msgstr "Text zprávy"
 msgid "Meta description"
 msgstr "Meta description"
 
+msgid "Meta robots"
+msgstr "Meta robots"
+
 msgid "Min duration"
 msgstr "Min. trvání"
 
@@ -2460,6 +2460,9 @@ msgstr "Zobrazují se pouze produkty s datem vložení mladším než %count% dn
 
 msgid "Only products with active special price from a price list be displayed"
 msgstr "Zobrazují se pouze produkty s aktivní speciální cenou z ceníku"
+
+msgid "Open Graph"
+msgstr "Open Graph"
 
 msgid "Open Graph description"
 msgstr "Open Graph popis"
@@ -3373,9 +3376,6 @@ msgstr "Zaslat e-mail pro reset hesla"
 msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
-msgid "Seo"
-msgstr "Seo"
-
 msgid "Service type for Zboží.cz"
 msgstr "Typ služby pro Zboží.cz"
 
@@ -3613,6 +3613,12 @@ msgstr "Termíny vyzvednutí se řídí týdenní otevírací dobou <a href=\"%s
 msgid "The selected country is not valid."
 msgstr "Zvolená země není platná."
 
+msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
+msgstr "Vybraná hodnota se vždy použije tak, jak je. \"Výchozí (nenastaveno)\" nechá rozhodnutí na storefrontu, který uplatní svá pravidla pro tuto stránku, např. noindex pro filtrované výpisy, košík nebo objednávku."
+
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change."
+msgstr "Slug musí odpovídat konfiguraci stránky na storefrontu, pokud si nejste změnou jisti, poraďte se s vývojářem."
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
 
@@ -3736,14 +3742,8 @@ msgstr "Typ"
 msgid "URL"
 msgstr "URL"
 
-msgid "URL Settings"
-msgstr "Nastavení URL"
-
 msgid "URL addresses"
 msgstr "URL adresy"
-
-msgid "URL settings"
-msgstr "Nastavení URL"
 
 msgid "Unable to add"
 msgstr "Nelze přidat"

@@ -232,15 +232,7 @@ class CategoryResolverMap extends ResolverMap
     {
         return [
             'Category' => [
-                'seoH1' => function (Category $category) {
-                    return $category->getSeoH1($this->domain->getId());
-                },
-                'seoTitle' => function (Category $category) {
-                    return $category->getSeoTitle($this->domain->getId());
-                },
-                'seoMetaDescription' => function (Category $category) {
-                    return $category->getSeoMetaDescription($this->domain->getId());
-                },
+                'seo' => fn (Category $category) => $category->getSeoAttributes($this->domain->getId()),
             ],
         ];
     }

@@ -1,0 +1,5 @@
+query BrandNameQuery($urlSlug: String!) {
+    brand(urlSlug: $urlSlug) {
+        name
+    }
+}

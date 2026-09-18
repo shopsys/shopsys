@@ -7,6 +7,7 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { TypeRecommendationType } from 'graphql/types';
 import { type RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useSeoPageH1 } from 'utils/seo/useSeoPageH1';
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
 
@@ -17,11 +18,12 @@ type CartContentProps = {
 
 export const CartContent: FC<CartContentProps> = ({ cart, cartPreviewRef }) => {
     const { t } = useTranslation();
+    const heading = useSeoPageH1(t('Cart'));
     const { url, isLuigisBoxActive } = useDomainConfig();
 
     return (
         <VerticalStack gap="md">
-            <h1 className="sr-only">{t('Cart')}</h1>
+            <h1 className="sr-only">{heading}</h1>
 
             <Webline width="xl">
                 <CartSteps activeStep={1} domainUrl={url} />

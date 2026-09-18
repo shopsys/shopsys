@@ -23,9 +23,7 @@ class SeoPageResolverMap extends ResolverMap
     {
         return [
             'SeoPage' => [
-                'title' => fn (SeoPage $seoPage) => $seoPage->getSeoTitle($this->domain->getId()),
-                'metaDescription' => fn (SeoPage $seoPage) => $seoPage->getSeoMetaDescription($this->domain->getId()),
-                'canonicalUrl' => fn (SeoPage $seoPage) => $seoPage->getCanonicalUrl($this->domain->getId()),
+                'seo' => fn (SeoPage $seoPage) => $seoPage->getSeoAttributes($this->domain->getId()),
                 'ogTitle' => fn (SeoPage $seoPage) => $seoPage->getSeoOgTitle($this->domain->getId()),
                 'ogDescription' => fn (SeoPage $seoPage) => $seoPage->getSeoOgDescription($this->domain->getId()),
                 'hreflangLinks' => fn (SeoPage $seoPage) => $this->hreflangLinksFacade->getForSeoPage($seoPage, $this->domain->getId()),

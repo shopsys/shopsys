@@ -11,12 +11,13 @@ fragment BlogArticleDetailFragment on BlogArticle {
     breadcrumb {
         ...BreadcrumbFragment
     }
+    perex
     text
     publishDate
     status
-    seoTitle
-    seoMetaDescription
-    seoH1
+    seo {
+        ...SeoAttributesFragment
+    }
     hreflangLinks {
         ...HreflangLinksFragment
     }

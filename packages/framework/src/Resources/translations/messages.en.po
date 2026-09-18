@@ -88,9 +88,6 @@ msgstr ""
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
-msgstr ""
-
 msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr ""
 
@@ -980,6 +977,9 @@ msgid "Declined by issuer - wrong card number"
 msgstr ""
 
 msgid "Declined in the 3DS server"
+msgstr ""
+
+msgid "Default (not set)"
 msgstr ""
 
 msgid "Default VAT rate"
@@ -1885,9 +1885,6 @@ msgstr ""
 msgid "Heading (H1)"
 msgstr ""
 
-msgid "Headline"
-msgstr ""
-
 msgid "Heureka"
 msgstr ""
 
@@ -2191,6 +2188,9 @@ msgstr ""
 msgid "Meta description"
 msgstr ""
 
+msgid "Meta robots"
+msgstr ""
+
 msgid "Min duration"
 msgstr ""
 
@@ -2459,6 +2459,9 @@ msgid "Only products with \"Selling start date\" not older than %count% days are
 msgstr ""
 
 msgid "Only products with active special price from a price list be displayed"
+msgstr ""
+
+msgid "Open Graph"
 msgstr ""
 
 msgid "Open Graph description"
@@ -3373,9 +3376,6 @@ msgstr ""
 msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr ""
 
-msgid "Seo"
-msgstr ""
-
 msgid "Service type for Zboží.cz"
 msgstr ""
 
@@ -3613,6 +3613,12 @@ msgstr ""
 msgid "The selected country is not valid."
 msgstr ""
 
+msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
+msgstr ""
+
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change."
+msgstr ""
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr ""
 
@@ -3736,13 +3742,7 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-msgid "URL Settings"
-msgstr ""
-
 msgid "URL addresses"
-msgstr ""
-
-msgid "URL settings"
 msgstr ""
 
 msgid "Unable to add"

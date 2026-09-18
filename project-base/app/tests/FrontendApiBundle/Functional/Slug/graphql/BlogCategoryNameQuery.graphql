@@ -1,0 +1,5 @@
+query BlogCategoryNameQuery($urlSlug: String!) {
+    blogCategory(urlSlug: $urlSlug) {
+        name
+    }
+}

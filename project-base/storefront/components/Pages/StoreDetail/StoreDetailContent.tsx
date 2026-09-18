@@ -55,7 +55,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
         <VerticalStack gap="sm">
             <Webline>
                 <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:gap-5">
-                    <h1>{store.storeName}</h1>
+                    <h1>{store.seo.h1 || store.storeName}</h1>
 
                     <div data-tid={TIDs.store_opening_status}>
                         <OpeningStatus status={store.openingHours.status} />

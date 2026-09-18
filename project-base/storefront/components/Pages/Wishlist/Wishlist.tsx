@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
+import { useSeoPageH1 } from 'utils/seo/useSeoPageH1';
 
 const RemoveAllProductsPopup = dynamic(
     () =>
@@ -27,6 +28,7 @@ export const Wishlist: FC = () => {
     const { t } = useTranslation();
     const { wishlist, isProductListFetching, removeWishlist } = useWishlist();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const heading = useSeoPageH1(t('Wishlist'));
 
     const handleRemoveAllClick = () => {
         updatePortalContent(
@@ -48,7 +50,7 @@ export const Wishlist: FC = () => {
                     <>
                         <div className="mb-4 flex flex-col gap-2">
                             <div className="flex items-center justify-between gap-2">
-                                <h1>{t('Wishlist')}</h1>
+                                <h1>{heading}</h1>
 
                                 <Button
                                     aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}

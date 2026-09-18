@@ -1,5 +1,4 @@
 import { ArticleMetadata } from 'components/Basic/Head/ArticleMetadata';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
@@ -19,6 +18,7 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -47,35 +47,38 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const isFuturePublishDate =
         !!blogArticleData?.blogArticle?.publishDate && new Date(blogArticleData.blogArticle.publishDate) > new Date();
     const shouldNoIndex = isDraft || isPreview || isFuturePublishDate;
+    const metaDescription = getMetaDescription(
+        blogArticleData?.blogArticle?.seo.metaDescription,
+        blogArticleData?.blogArticle?.perex,
+    );
 
     return (
-        <>
-            {shouldNoIndex && <MetaRobots content="noindex, nofollow" />}
-            <CommonLayout
-                breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
-                breadcrumbsType="blogCategory"
-                canonicalQueryParams={[]}
-                description={blogArticleData?.blogArticle?.seoMetaDescription}
-                hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
-                isFetchingData={isBlogArticleFetching}
-                ogImageUrlDefault={blogArticleImageUrl}
-                ogType={OgTypeEnum.Article}
-                title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
-            >
-                {!!blogArticleData?.blogArticle && (
-                    <>
-                        <ArticleMetadata
-                            authorName={blogArticleData.blogArticle.author?.name}
-                            datePublished={blogArticleData.blogArticle.publishDate}
-                            description={blogArticleData.blogArticle.seoMetaDescription}
-                            headline={blogArticleData.blogArticle.seoTitle || blogArticleData.blogArticle.name}
-                            imageUrl={blogArticleData.blogArticle.mainImage?.url}
-                        />
-                        <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
-                    </>
-                )}
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
+            breadcrumbsType="blogCategory"
+            canonicalQueryParams={[]}
+            defaultDescription={blogArticleData?.blogArticle?.perex}
+            defaultMetaRobots={shouldNoIndex ? 'noindex, nofollow' : undefined}
+            hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
+            isFetchingData={isBlogArticleFetching}
+            ogImageUrlDefault={blogArticleImageUrl}
+            ogType={OgTypeEnum.Article}
+            seo={blogArticleData?.blogArticle?.seo}
+            defaultTitle={blogArticleData?.blogArticle?.name}
+        >
+            {!!blogArticleData?.blogArticle && (
+                <>
+                    <ArticleMetadata
+                        authorName={blogArticleData.blogArticle.author?.name}
+                        datePublished={blogArticleData.blogArticle.publishDate}
+                        description={metaDescription}
+                        headline={blogArticleData.blogArticle.seo.h1 || blogArticleData.blogArticle.name}
+                        imageUrl={blogArticleData.blogArticle.mainImage?.url}
+                    />
+                    <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
+                </>
+            )}
+        </CommonLayout>
     );
 };
 

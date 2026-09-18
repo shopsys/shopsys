@@ -22,7 +22,7 @@ const WishlistPage: NextPage<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(useGtmStaticPageReadyEvent(GtmPageType.wishlist, breadcrumbs));
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Wishlist')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultTitle={t('Wishlist')}>
             <Wishlist />
         </CommonLayout>
     );

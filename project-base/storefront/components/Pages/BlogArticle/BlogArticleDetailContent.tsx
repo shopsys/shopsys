@@ -30,7 +30,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 activeCategoryUuid={blogArticle.mainBlogCategoryUuid}
                 heading={
                     <h1 id={ARTICLE_INTRODUCTION_ANCHOR_ID} className="scroll-mt-fixed-header">
-                        {blogArticle.seoH1 || blogArticle.name}
+                        {blogArticle.seo.h1 || blogArticle.name}
                     </h1>
                 }
                 headings={headings}
