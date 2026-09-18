@@ -44,7 +44,7 @@ const StoresPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isInitialStoresFetching} title={t('Stores')}>
+        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isInitialStoresFetching} defaultTitle={t('Stores')}>
             <StoresWrapper
                 appliedSearchTextValue={appliedSearchTextValue}
                 isDistanceFromSearchText={isDistanceFromSearchText}

@@ -53,11 +53,11 @@ const ArticleDetailPage: NextPage = () => {
         <CommonLayout
             breadcrumbs={article?.breadcrumb}
             canonicalQueryParams={[]}
-            description={metaDescription}
+            defaultDescription={article?.text}
             isFetchingData={isArticleDetailFetching}
             ogType={OgTypeEnum.Article}
             seo={article?.seo}
-            title={article?.seo.title || article?.articleName}
+            defaultTitle={article?.articleName}
         >
             {!!article && (
                 <>

@@ -57,14 +57,14 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
             breadcrumbsType="blogCategory"
             canonicalQueryParams={[]}
+            defaultDescription={blogArticleData?.blogArticle?.perex}
             defaultMetaRobots={shouldNoIndex ? 'noindex, nofollow' : undefined}
-            description={metaDescription}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={isBlogArticleFetching}
             ogImageUrlDefault={blogArticleImageUrl}
             ogType={OgTypeEnum.Article}
             seo={blogArticleData?.blogArticle?.seo}
-            title={blogArticleData?.blogArticle?.seo.title || blogArticleData?.blogArticle?.name}
+            defaultTitle={blogArticleData?.blogArticle?.name}
         >
             {!!blogArticleData?.blogArticle && (
                 <>

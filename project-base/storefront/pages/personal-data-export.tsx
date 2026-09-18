@@ -27,7 +27,7 @@ const PersonalDataExportPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" title={t('Personal data export')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultMetaRobots="noindex" defaultTitle={t('Personal data export')}>
             <PersonalDataExportContent
                 contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
             />

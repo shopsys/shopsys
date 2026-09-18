@@ -67,7 +67,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                 defaultMetaRobots="noindex"
                 isFetchingData={false}
                 pageTypeOverride="order-confirmation"
-                title={t('Order confirmation')}
+                defaultTitle={t('Order confirmation')}
             >
                 <Webline>
                     <ConfirmationPageContent
@@ -102,7 +102,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             defaultMetaRobots="noindex"
             isFetchingData={isOrderFetching || isReturnHashFetching}
             pageTypeOverride="order-confirmation"
-            title={t('Thank you for your order')}
+            defaultTitle={t('Thank you for your order')}
         >
             <Webline tid={TIDs.pages_orderconfirmation}>
                 {hasPaymentStatusUpdateError ? (
@@ -207,7 +207,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 export default OrderConfirmationPage;
 
 const OrderConfirmationLoadingState: FC<{ title: string }> = ({ title }) => (
-    <CommonLayout defaultMetaRobots="noindex" isFetchingData pageTypeOverride="order-confirmation" title={title}>
+    <CommonLayout defaultMetaRobots="noindex" isFetchingData pageTypeOverride="order-confirmation" defaultTitle={title}>
         <Webline tid={TIDs.pages_orderconfirmation} />
     </CommonLayout>
 );

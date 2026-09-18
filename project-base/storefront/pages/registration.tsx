@@ -22,7 +22,7 @@ const RegistrationPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Registration')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultTitle={t('Registration')}>
             <RegistrationContent />
         </CommonLayout>
     );

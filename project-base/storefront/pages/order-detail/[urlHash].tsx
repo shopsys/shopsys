@@ -53,7 +53,7 @@ const OrderDetailByHashPage: FC = () => {
             <CommonLayout
                 breadcrumbs={breadcrumbs}
                 defaultMetaRobots="noindex"
-                title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
+                defaultTitle={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
             >
                 {!!orderData?.order && (
                     <Webline width="lg">

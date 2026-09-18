@@ -26,7 +26,7 @@ const ChangePasswordPage: FC = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CustomerLayout breadcrumbs={breadcrumbs} title={t('Change password')}>
+        <CustomerLayout breadcrumbs={breadcrumbs} defaultTitle={t('Change password')}>
             {currentCustomerUserData !== undefined && (
                 <>
                     <PageHero

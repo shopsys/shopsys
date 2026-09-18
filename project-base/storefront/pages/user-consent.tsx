@@ -28,7 +28,7 @@ const UserConsentPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('User consent update')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultTitle={t('User consent update')}>
             <UserConsentContent />
         </CommonLayout>
     );

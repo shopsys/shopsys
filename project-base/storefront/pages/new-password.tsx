@@ -50,7 +50,7 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
                     : [{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]
             }
             defaultMetaRobots="noindex"
-            title={t('Set new password')}
+            defaultTitle={t('Set new password')}
         >
             <NewPasswordContent email={emailParam} hash={hashParam} />
         </CommonLayout>

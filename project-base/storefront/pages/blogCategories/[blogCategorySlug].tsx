@@ -19,8 +19,6 @@ import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
-import { getMetaDescription } from 'utils/seo/getMetaDescription';
-import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -35,12 +33,6 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const title = useHeadingWithPagination(
-        blogCategoryData?.blogCategory?.seo.title || blogCategoryData?.blogCategory?.name,
-        blogCategoryData?.blogCategory?.articlesTotalCount,
-        DEFAULT_BLOG_PAGE_SIZE,
-    );
-
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(blogCategoryData?.blogCategory);
     useGtmPageReadyEvent(pageReadyEvent, isBlogCategoryFetching);
 
@@ -52,14 +44,13 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         <CommonLayout
             breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
             breadcrumbsType="blogCategory"
-            description={getMetaDescription(
-                blogCategoryData?.blogCategory?.seo.metaDescription,
-                blogCategoryData?.blogCategory?.description,
-            )}
+            defaultDescription={blogCategoryData?.blogCategory?.description}
             hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
             isFetchingData={isBlogCategoryFetching}
+            paginationPageSize={DEFAULT_BLOG_PAGE_SIZE}
+            paginationTotalCount={blogCategoryData?.blogCategory?.articlesTotalCount}
             seo={blogCategoryData?.blogCategory?.seo}
-            title={title}
+            defaultTitle={blogCategoryData?.blogCategory?.name}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
         </CommonLayout>

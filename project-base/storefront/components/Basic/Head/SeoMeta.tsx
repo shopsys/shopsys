@@ -18,6 +18,8 @@ type SeoMetaProps = {
     defaultMetaRobots?: MetaRobotsContent;
     canonicalQueryParams?: CanonicalQueryParameters;
     defaultHreflangLinks?: TypeHreflangLink[];
+    paginationTotalCount?: number;
+    paginationPageSize?: number;
     ogType?: OgTypeEnum | undefined;
     ogImageUrlDefault?: string | undefined;
 };
@@ -29,6 +31,8 @@ export const SeoMeta: FC<SeoMetaProps> = ({
     defaultMetaRobots,
     canonicalQueryParams,
     defaultHreflangLinks,
+    paginationTotalCount,
+    paginationPageSize,
     ogType = OgTypeEnum.Website,
     ogImageUrlDefault,
     children,
@@ -53,6 +57,8 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         defaultDescription,
         defaultMetaRobots,
         canonicalQueryParams,
+        paginationTotalCount,
+        paginationPageSize,
     });
 
     const currentUri = useRouter().asPath;
