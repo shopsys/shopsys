@@ -163,6 +163,8 @@ class CategoryTest extends GraphQlTestCase
                 $locale,
             ),
             t('Electronic gift voucher', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            $this->giftVoucherProductNameTestHelper->getExpectedGiftVoucherProductName(ProductTypeEnum::TYPE_ELECTRONIC_GIFT_VOUCHER, '300', $locale, Domain::FIRST_DOMAIN_ID),
+            t('Gift voucher - electronic or printed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             $this->giftVoucherProductNameTestHelper->getExpectedGiftVoucherProductName(ProductTypeEnum::TYPE_PRINTED_GIFT_VOUCHER, '1000', $locale, Domain::FIRST_DOMAIN_ID),
             t('Samsung Smart TV 3+1 Promo Pack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
