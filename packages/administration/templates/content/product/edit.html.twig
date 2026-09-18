@@ -1,9 +1,9 @@
 {% extends '@ShopsysAdministration/content/product/detail.html.twig' %}
 
-{% block title %}- {{ 'Editing product'|trans }} - {{ product.name }}{% endblock %}
+{% block title %}- {{ 'Editing product'|trans }} - {{ product.fullName }}{% endblock %}
 
 {% block pre_title %}{{ 'Editing product'|trans }}{% endblock %}
-{% block h1 %}{{ product.name|default(product.catnum) }}{% endblock %}
+{% block h1 %}{{ product.fullName|default(product.catnum) }}{% endblock %}
 
 {% block links_after_title %}
     {{ parent() }}

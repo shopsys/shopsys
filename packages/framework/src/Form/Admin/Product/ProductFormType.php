@@ -155,7 +155,7 @@ final class ProductFormType extends AbstractType
         ];
 
         if ($product !== null) {
-            $actionBarOptions['entity_name'] = $product->getName();
+            $actionBarOptions['entity_name'] = $product->getFullName();
             $actionBarOptions['entity_identifier'] = $product->getCatnum();
         }
 
