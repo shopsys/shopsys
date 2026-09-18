@@ -58,6 +58,7 @@ class LuigisBoxProductFeedItemFactory
         }
 
         $imageUrl = $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig);
+        $seoAttributes = $product->getSeoAttributes($domainId);
 
         $productPrices = $this->productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
             $product,
@@ -86,9 +87,9 @@ class LuigisBoxProductFeedItemFactory
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::SMALL_IMAGE_SIZE, self::SMALL_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::MEDIUM_IMAGE_SIZE, self::MEDIUM_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::LARGE_IMAGE_SIZE, self::LARGE_IMAGE_SIZE) : null,
-            $product->getSeoAttributes($domainId)->getTitle(),
-            $product->getSeoAttributes($domainId)->getMetaDescription(),
-            $product->getSeoAttributes($domainId)->getH1(),
+            $seoAttributes->getTitle(),
+            $seoAttributes->getMetaDescription(),
+            $seoAttributes->getH1(),
         );
     }
 
