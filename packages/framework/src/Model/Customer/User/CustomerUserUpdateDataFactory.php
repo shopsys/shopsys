@@ -183,6 +183,7 @@ class CustomerUserUpdateDataFactory
         $customerUserData->telephone = $order->getTelephoneData();
         $customerUserData->email = $order->getEmail();
         $customerUserData->password = $password;
+        $customerUserData->sendRegistrationMail = true;
 
         return $customerUserData;
     }
