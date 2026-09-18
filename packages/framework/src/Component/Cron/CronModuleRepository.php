@@ -99,7 +99,7 @@ class CronModuleRepository
     public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
     {
         return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
-            ->addSelect('cmr.duration, cmr.status')
+            ->addSelect('cmr.duration, cmr.status, cmr.errorMessage')
             ->where('cmr.cronModule = :cronModule')
             ->setParameter('cronModule', $cronModule)
             ->orderBy('cmr.startedAt', SortDirection::Descending);
