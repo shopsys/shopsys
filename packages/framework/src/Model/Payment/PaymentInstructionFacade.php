@@ -19,7 +19,7 @@ use Twig\Environment;
 
 class PaymentInstructionFacade
 {
-    protected const string PLACEHOLDER_QR_CODE = '{qr_code}';
+    public const string PLACEHOLDER_QR_CODE = '{qr_code}';
 
     public function __construct(
         protected readonly Domain $domain,
