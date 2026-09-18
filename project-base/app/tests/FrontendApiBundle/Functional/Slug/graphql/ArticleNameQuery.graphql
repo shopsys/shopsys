@@ -1,0 +1,5 @@
+query ArticleNameQuery($urlSlug: String!) {
+    article(urlSlug: $urlSlug) {
+        name
+    }
+}
