@@ -80,12 +80,13 @@ class CronModuleRunnerFacadeTest extends TestCase
         $cronModuleFacadeMock = $this->createMock(CronModuleFacade::class);
         $cronModuleFacadeMock->method('isModuleDisabled')->willReturn(false);
         $cronModuleFacadeMock->method('isModuleSuspended')->willReturn(false);
-        $cronModuleFacadeMock->expects($this->once())->method('markCronAsFailed');
+        $exception = new RuntimeException('Cron failed');
+        $cronModuleFacadeMock->expects($this->once())->method('markCronAsFailed')->with($this->anything(), $exception->getMessage());
         $cronModuleFacadeMock->expects($this->never())->method('markCronAsEnded');
         $cronModuleFacadeMock->expects($this->never())->method('unscheduleModule');
 
         $cronModuleExecutorStub = $this->createStub(CronModuleExecutor::class);
-        $cronModuleExecutorStub->method('runModule')->willThrowException(new RuntimeException('Cron failed'));
+        $cronModuleExecutorStub->method('runModule')->willThrowException($exception);
 
         $result = $this->createCronModuleRunnerFacade($cronModuleFacadeMock, $cronModuleExecutorStub)
             ->runModuleByServiceIdInContext($this->serviceId);

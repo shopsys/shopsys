@@ -30,10 +30,31 @@
 {% block grid_value_cell_id_status %}
     <strong class="text-nowrap">
         {% if row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
-            <span class="text-danger">
-                {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
-                {{ 'Error'|trans }}
-            </span>
+            {% if row.errorMessage is not empty %}
+                <span class="switch-text text-danger cursor-pointer"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#cron-run-error-{{ grid.getRowId(row) }}"
+                      aria-expanded="false"
+                      aria-controls="cron-run-error-{{ grid.getRowId(row) }}"
+                      title="{{ 'Toggle error'|trans }}"
+                >
+                    <span class="switch-text-a">
+                        {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
+                        {{ 'Error'|trans }}
+                        {{ ux_icon('chevron-down', {class: 'icon icon-sm'}) }}
+                    </span>
+                    <span class="switch-text-b">
+                        {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
+                        {{ 'Error'|trans }}
+                        {{ ux_icon('chevron-up', {class: 'icon icon-sm'}) }}
+                    </span>
+                </span>
+            {% else %}
+                <span class="text-danger">
+                    {{ ux_icon('exclamation-circle', {class: 'icon icon-sm'}) }}
+                    {{ 'Error'|trans }}
+                </span>
+            {% endif %}
         {% else %}
             <span class="text-success">
                 {{ ux_icon('checked', {class: 'icon icon-sm'}) }}
@@ -41,4 +62,15 @@
             </span>
         {% endif %}
     </strong>
+{% endblock %}
+
+{% block grid_row %}
+    {{ parent() }}
+    {% if row is not null and row.errorMessage is not empty %}
+        <tr class="collapse" id="cron-run-error-{{ grid.getRowId(row) }}">
+            <td colspan="100" class="pt-1 ps-4 small text-danger font-monospace text-break">
+                {{ row.errorMessage }}
+            </td>
+        </tr>
+    {% endif %}
 {% endblock %}
