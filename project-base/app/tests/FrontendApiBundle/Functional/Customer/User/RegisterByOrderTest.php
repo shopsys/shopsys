@@ -8,10 +8,13 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\Order;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RegisterByOrderTest extends GraphQlTestCase
 {
+    use MailerAssertionsTrait;
+
     /**
      * @inject
      */
@@ -34,6 +37,7 @@ class RegisterByOrderTest extends GraphQlTestCase
         $this->assertIsString($responseData['tokens']['refreshToken']);
 
         $this->assertCustomerUserIsRegisteredByOrder($order);
+        $this->assertRegistrationMailIsSentTo($order->getEmail());
     }
 
     public function testRegisterByOrderIsNotPossibleWithInvalidHash(): void
@@ -100,6 +104,13 @@ class RegisterByOrderTest extends GraphQlTestCase
         $this->assertSame($registeredCustomerUserDeliveryAddress->getCity(), $order->getDeliveryCity());
         $this->assertSame($registeredCustomerUserDeliveryAddress->getPostcode(), $order->getDeliveryPostcode());
         $this->assertSame($registeredCustomerUserDeliveryAddress->getCountry()->getId(), $order->getDeliveryCountry()->getId());
+    }
+
+    private function assertRegistrationMailIsSentTo(string $email): void
+    {
+        // mails are dispatched through Messenger, so the mailer only records them as queued
+        self::assertQueuedEmailCount(1);
+        self::assertEmailAddressContains(self::getMailerMessage(), 'To', $email);
     }
 
     private function assertOrderCannotBePairedUserErrorIsReturned(array $response): void
