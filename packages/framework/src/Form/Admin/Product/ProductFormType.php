@@ -663,7 +663,7 @@ final class ProductFormType extends AbstractType
                 'route_params' => [
                     'id' => $product->getMainVariant()->getId(),
                 ],
-                'route_label' => $product->getMainVariant()->getName(),
+                'route_label' => $product->getMainVariant()->getFullName(),
             ]);
 
             $variantGroup->add('variantAlias', LocalizedType::class, [
