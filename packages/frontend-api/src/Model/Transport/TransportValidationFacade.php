@@ -6,14 +6,12 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
 use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
-use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportPriceChangedException;
@@ -25,8 +23,6 @@ class TransportValidationFacade
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly CartApiFacade $cartApiFacade,
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
         protected readonly TransportPriceFacade $transportPriceFacade,
@@ -99,10 +95,8 @@ class TransportValidationFacade
         }
     }
 
-    public function checkTransportPaymentRelation(Transport $transport, ?string $cartUuid): void
+    public function checkTransportPaymentRelation(Transport $transport, Cart $cart): void
     {
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $payment = $cart->getPayment();
 
         if ($payment === null || in_array($payment, $transport->getPayments(), true)) {
