@@ -18,6 +18,8 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -41,11 +43,14 @@ class CartWatcherFacade
         protected readonly GiftCartFacade $giftCartFacade,
         protected readonly AdditionalServiceFacade $additionalServiceFacade,
         protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
+        protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly OrderInputPreloaderFacade $orderInputPreloaderFacade,
     ) {
     }
 
     public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
     {
+        $this->orderInputPreloaderFacade->preload($this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig()));
         $this->cartWithModificationsResult = $this->cartWithModificationsResultFactory->create($cart);
 
         $this->checkRemovedProductsItems($cart);
