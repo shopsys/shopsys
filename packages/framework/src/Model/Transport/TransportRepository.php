@@ -191,15 +191,17 @@ class TransportRepository
         $queryBuilder = $this->getQueryBuilderForAll()
             ->addSelect('td')
             ->addSelect('tt')
+            ->addSelect('tp')
             ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
+            ->leftJoin('t.prices', 'tp')
             ->setParameter('domainId', $domainConfig->getId())
             ->setParameter('locale', $domainConfig->getLocale());
 
         if ($totalWeight !== null) {
             $queryBuilder
-                ->join('t.prices', 'tp', Join::WITH, 'tp.domainId = :domainId')
-                ->andWhere('tp.maxWeight IS NULL OR tp.maxWeight >= :maxWeight')
+                ->join('t.prices', 'atp', Join::WITH, 'atp.domainId = :domainId')
+                ->andWhere('atp.maxWeight IS NULL OR atp.maxWeight >= :maxWeight')
                 ->setParameter('maxWeight', $totalWeight);
         }
 
