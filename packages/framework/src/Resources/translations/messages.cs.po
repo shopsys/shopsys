@@ -1717,6 +1717,9 @@ msgstr "Kategorie prvního sloupce"
 msgid "First name"
 msgstr "Jméno"
 
+msgid "First name (may be empty when the customer registers via a social network)"
+msgstr "Jméno (může být prázdné, pokud se zákazník registruje přes sociální síť)"
+
 msgid "Fix"
 msgstr "Oprava"
 
@@ -2085,6 +2088,9 @@ msgstr "Poslední modifikace"
 
 msgid "Last name"
 msgstr "Příjmení"
+
+msgid "Last name (may be empty when the customer registers via a social network)"
+msgstr "Příjmení (může být prázdné, pokud se zákazník registruje přes sociální síť)"
 
 msgid "Last order"
 msgstr "Poslední objednávka"

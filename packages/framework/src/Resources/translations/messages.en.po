@@ -1717,6 +1717,9 @@ msgstr ""
 msgid "First name"
 msgstr ""
 
+msgid "First name (may be empty when the customer registers via a social network)"
+msgstr ""
+
 msgid "Fix"
 msgstr ""
 
@@ -2084,6 +2087,9 @@ msgid "Last modification"
 msgstr ""
 
 msgid "Last name"
+msgstr ""
+
+msgid "Last name (may be empty when the customer registers via a social network)"
 msgstr ""
 
 msgid "Last order"
