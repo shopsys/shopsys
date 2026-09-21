@@ -111,6 +111,19 @@ class SentryCronMonitorFacadeTest extends TestCase
         $this->assertSame([], $facade->capturedCheckIns);
     }
 
+    public function testNoCheckInsWhenMonitoringIsDisabledForInstallation(): void
+    {
+        $facade = $this->createFacade(cronMonitoringEnabled: false);
+        $cronModuleConfig = $this->createMonitoredCronModuleConfig();
+
+        $facade->reportStart($cronModuleConfig);
+        $facade->reportSuccess($cronModuleConfig);
+        $facade->reportFailure($cronModuleConfig);
+        $facade->reportDisabledRunAsHealthy($cronModuleConfig);
+
+        $this->assertSame([], $facade->capturedCheckIns);
+    }
+
     public function testCheckInErrorIsSwallowedAndLogged(): void
     {
         $loggerMock = $this->createMock(LoggerInterface::class);
@@ -124,11 +137,14 @@ class SentryCronMonitorFacadeTest extends TestCase
         $this->assertSame([], $facade->capturedCheckIns);
     }
 
-    private function createFacade(?LoggerInterface $logger = null): TestSentryCronMonitorFacade
-    {
+    private function createFacade(
+        ?LoggerInterface $logger = null,
+        bool $cronMonitoringEnabled = true,
+    ): TestSentryCronMonitorFacade {
         return new TestSentryCronMonitorFacade(
             $logger ?? $this->createStub(LoggerInterface::class),
             new MonitorConfigFactory(),
+            $cronMonitoringEnabled,
         );
     }
 

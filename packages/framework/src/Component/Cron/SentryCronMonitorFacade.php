@@ -21,6 +21,7 @@ class SentryCronMonitorFacade
     public function __construct(
         protected readonly LoggerInterface $logger,
         protected readonly MonitorConfigFactory $monitorConfigFactory,
+        protected readonly bool $cronMonitoringEnabled = true,
     ) {
     }
 
@@ -74,8 +75,8 @@ class SentryCronMonitorFacade
     }
 
     /**
-     * Runs the given check-in only when monitoring is enabled, swallowing and logging any Sentry transport error
-     * so that a monitoring outage can never break cron execution.
+     * Runs the given check-in only when monitoring is enabled both for the installation and for the module,
+     * swallowing and logging any Sentry transport error so that a monitoring outage can never break cron execution.
      *
      * The monitor configuration is passed to the callback so that every check-in (including the closing ones)
      * carries it, letting Sentry upsert the monitor regardless of the order in which check-ins are ingested.
@@ -84,6 +85,10 @@ class SentryCronMonitorFacade
      */
     protected function runCheckIn(CronModuleConfig $cronModuleConfig, string $checkInType, callable $checkIn): void
     {
+        if (!$this->cronMonitoringEnabled) {
+            return;
+        }
+
         $sentryMonitorConfig = $cronModuleConfig->getSentryMonitorConfig();
 
         if ($sentryMonitorConfig === null) {
