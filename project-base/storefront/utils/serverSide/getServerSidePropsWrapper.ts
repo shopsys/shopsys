@@ -7,6 +7,7 @@ import { CookiesStoreState, getCookiesStoreState } from 'utils/cookies/cookiesSt
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
 import { logException } from 'utils/errors/logException';
 import { registerI18nConfig } from 'utils/i18n/registerI18nConfig';
+import { measureServerTiming } from './serverTiming';
 
 export const getServerSidePropsWrapper =
     (
@@ -18,48 +19,50 @@ export const getServerSidePropsWrapper =
             cookiesStoreState: CookiesStoreState;
         }) => GetServerSideProps,
     ): any =>
-    async (context: GetServerSidePropsContext) => {
-        const domainConfig = getDomainConfig(context);
-        const cookiesStoreState = getCookiesStoreState(domainConfig, context);
-        const createRedisClient = (await import('redis')).createClient;
-        const redisClient = createRedisClient({
-            url: `redis://${process.env.REDIS_HOST}`,
-            socket: {
-                connectTimeout: 5000,
-            },
-        });
-
-        // without a listener, node-redis emits a closed socket as an unhandled 'error' event, which crashes into uncaughtException
-        redisClient.on('error', (error) => logException(error));
-        await redisClient.connect();
-
-        try {
-            // next-translate/getT reads the config from globalThis; appWithI18n used to register it implicitly.
-            registerI18nConfig();
-            const t = await getT(domainConfig.defaultLocale, 'common');
-            const initServerSideProps = callback({
-                redisClient,
-                domainConfig,
-                ssrExchange: ssrExchange({ isClient: false }),
-                t,
-                cookiesStoreState,
-            });
-            const serverSideProps = await initServerSideProps(context);
-
-            if (!('props' in serverSideProps)) {
-                return serverSideProps;
-            }
-
-            return {
-                ...serverSideProps,
-                props: {
-                    ...(await serverSideProps.props),
-                    cookiesStore: cookiesStoreState,
+    async (context: GetServerSidePropsContext) =>
+        measureServerTiming(context.res, 'gssp', async () => {
+            const domainConfig = getDomainConfig(context);
+            const cookiesStoreState = getCookiesStoreState(domainConfig, context);
+            const createRedisClient = (await import('redis')).createClient;
+            const redisClient = createRedisClient({
+                url: `redis://${process.env.REDIS_HOST}`,
+                socket: {
+                    connectTimeout: 5000,
                 },
-            };
-        } finally {
-            if (redisClient.isOpen) {
-                await redisClient.disconnect();
+            });
+            // without a listener, node-redis emits a closed socket as an unhandled 'error' event, which crashes into uncaughtException
+            redisClient.on('error', (error) => logException(error));
+            await measureServerTiming(context.res, 'redis_connect', () => redisClient.connect());
+
+            try {
+                // next-translate/getT reads the config from globalThis; appWithI18n used to register it implicitly.
+                registerI18nConfig();
+                const t = await measureServerTiming(context.res, 'translations', () =>
+                    getT(domainConfig.defaultLocale, 'common'),
+                );
+                const initServerSideProps = callback({
+                    redisClient,
+                    domainConfig,
+                    ssrExchange: ssrExchange({ isClient: false }),
+                    t,
+                    cookiesStoreState,
+                });
+                const serverSideProps = await initServerSideProps(context);
+
+                if (!('props' in serverSideProps)) {
+                    return serverSideProps;
+                }
+
+                return {
+                    ...serverSideProps,
+                    props: {
+                        ...(await serverSideProps.props),
+                        cookiesStore: cookiesStoreState,
+                    },
+                };
+            } finally {
+                if (redisClient.isOpen) {
+                    await redisClient.disconnect();
+                }
             }
-        }
-    };
+        });
