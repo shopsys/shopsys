@@ -136,3 +136,21 @@ As a styling solution for checkboxes and radiobuttons, we use a very old approac
 ## 9. Fix console errors and warnings
 
 We all know how easy it is to get used to errors and warnings in the console, right? But remember, somebody put the log there for some reason. As it may seem like "It's working, so why care..." it can still lead to some performance issues and cause problems.
+
+## 10. Diagnose server response time
+
+Server timing diagnostics are disabled by default. To enable them, set `SERVER_TIMING=1` in the storefront server's environment (locally, in `project-base/storefront/.env.local`) and restart the storefront process. Set `SERVER_TIMING=0` or remove the variable and restart to disable them again. Only the exact value `1` enables diagnostics, including in production builds used on staging environments. This is a server-only setting; do not use the `NEXT_PUBLIC_` prefix.
+
+Enable this temporarily on a controlled diagnostic environment: the response exposes internal GraphQL operation names and shared cache hit/miss status to visitors. Leave it disabled on public production environments unless this exposure is intentional. Disabling it skips the measuring GraphQL exchange and wrapper timing; data fetching and error propagation remain unchanged.
+
+When enabled, open DevTools → Network, reload the page, and select the document request. Look for `Server-Timing` under Headers → Response Headers or inspect the Timing tab. The metrics describe this response only; they are not automatically stored or sent to Sentry or another monitoring service:
+
+- `gssp`: total time spent in the `getServerSideProps` wrapper, including data fetching and preparing props. It does not include Next.js HTML rendering after the wrapper returns, proxy queues, or network latency.
+- `redis_connect`: establishing the request's Redis connection.
+- `translations`: loading the initial `common` translation namespace.
+- `gql_<operation>`: elapsed time from starting a server-side GraphQL query to its final result, including authentication, cache lookup and backend work where applicable.
+- `cache_<operation>`: Redis lookup duration, with `desc="hit"` or `desc="miss"`. Queries that bypass Redis do not emit this metric.
+
+Metrics are local to each HTTP response and contain operation names, not variables, cache keys or customer data. Query durations overlap when requests run concurrently and must not be added together to calculate total SSR time. Cache timings are already included in the corresponding query timing.
+
+Compare repeated requests for the same page, customer state and deployment. Use the slowest query and cache outcomes to narrow down a high TTFB before changing caching or deferring data. A cache hit still requires client-side parsing and rendering; it does not imply low JavaScript blocking time.
