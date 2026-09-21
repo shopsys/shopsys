@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
@@ -30,6 +32,8 @@ class CurrentPromoCodeFacade
         protected readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
         protected readonly PromoCodeApplicableProductsTotalPriceCalculator $promoCodeApplicableProductsTotalPriceCalculator,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly OrderInputPreloaderFacade $orderInputPreloaderFacade,
     ) {
     }
 
@@ -194,6 +198,8 @@ class CurrentPromoCodeFacade
         if ($promoCode === null) {
             throw new InvalidPromoCodeException($enteredCode);
         }
+
+        $this->orderInputPreloaderFacade->preload($this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig()));
 
         $totalProductPrice = $this->promoCodeApplicableProductsTotalPriceCalculator->calculateTotalPrice($cart->getQuantifiedProductsWithoutGiftVouchers());
 
