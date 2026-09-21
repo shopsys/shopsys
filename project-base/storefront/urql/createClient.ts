@@ -46,7 +46,7 @@ export const createClient = ({
                     'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
                 },
             },
-            fetch: fetcher(redisClient),
+            fetch: fetcher(redisClient, context?.res),
         },
         false,
     );

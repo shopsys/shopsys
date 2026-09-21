@@ -1,8 +1,10 @@
 import { captureException } from '@sentry/nextjs';
+import type { ServerResponse } from 'http';
 import { jwtDecode } from 'jwt-decode';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { DOMAIN_ID_HEADER } from 'urql/createClient';
 import { isClient } from 'utils/isClient';
+import { recordServerTiming } from 'utils/serverSide/serverTiming';
 
 // Server-side only hash function for Redis cache keys
 const getHash = async (data: string): Promise<string> => {
@@ -157,7 +159,7 @@ const createCleanedInput = (input: URL | RequestInfo): URL | RequestInfo => {
 };
 
 export const fetcher =
-    (redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts> | undefined) =>
+    (redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts> | undefined, response?: ServerResponse) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
         if (!isClient && !redisClient) {
             captureException(
@@ -217,7 +219,14 @@ export const fetcher =
 
             const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${authBucket}`;
             const hash = `${key}${await getHash(body)}`;
+            const cacheStartedAt = performance.now();
             const fromCache = await redisClient.get(hash);
+            recordServerTiming(
+                response,
+                `cache_${queryName}`,
+                performance.now() - cacheStartedAt,
+                fromCache === null ? 'miss' : 'hit',
+            );
 
             if (fromCache !== null) {
                 const data = JSON.parse(fromCache);
