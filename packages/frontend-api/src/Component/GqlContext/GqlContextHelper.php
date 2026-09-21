@@ -26,4 +26,9 @@ class GqlContextHelper
     {
         return $this->getArgs($context)['orderUuid'] ?? null;
     }
+
+    public function getOrderUrlHash(?ArrayObject $context): ?string
+    {
+        return $this->getArgs($context)['orderUrlHash'] ?? null;
+    }
 }

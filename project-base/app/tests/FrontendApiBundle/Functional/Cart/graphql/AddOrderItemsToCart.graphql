@@ -1,11 +1,13 @@
 mutation AddOrderItemsToCart(
     $orderUuid: Uuid!,
+    $orderUrlHash: String,
     $cartUuid: Uuid,
     $shouldMerge: Boolean
 ) {
     AddOrderItemsToCart(
         input: {
             orderUuid: $orderUuid,
+            orderUrlHash: $orderUrlHash,
             cartUuid: $cartUuid,
             shouldMerge: $shouldMerge
         }) {

@@ -12,6 +12,8 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeAddOrderItemsToCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid?: string | null | undefined;
+  /** Order urlHash as a proof of access to the order for anonymous customers */
+  orderUrlHash?: string | null | undefined;
   /** UUID of the order based on which the cart should be prefilled */
   orderUuid: string;
   /** Information if the prefilled cart should be merged with the current cart */

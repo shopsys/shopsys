@@ -12929,6 +12929,15 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="addorderitemstocartinput.orderurlhash">orderUrlHash</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order urlHash as a proof of access to the order for anonymous customers
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="addorderitemstocartinput.orderuuid">orderUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>

@@ -47,7 +47,10 @@ class PriceQuery extends AbstractQuery
         $orderUuid = $this->gqlContextHelper->getOrderUuid($context);
 
         if ($cartUuid === null && $orderUuid !== null) {
-            $order = $this->orderApiFacade->getByUuid($orderUuid);
+            $order = $this->orderApiFacade->getAuthorizedOrder(
+                $orderUuid,
+                $this->gqlContextHelper->getOrderUrlHash($context),
+            );
 
             return $this->paymentPriceCalculation->calculatePrice(
                 $payment,

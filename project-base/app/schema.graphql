@@ -36,6 +36,8 @@ input AddNewCustomerUserDataInput {
 input AddOrderItemsToCartInput {
   "Cart identifier or null if customer is logged in"
   cartUuid: Uuid = null
+  "Order urlHash as a proof of access to the order for anonymous customers"
+  orderUrlHash: String = null
   "UUID of the order based on which the cart should be prefilled"
   orderUuid: Uuid!
   "Information if the prefilled cart should be merged with the current cart"
