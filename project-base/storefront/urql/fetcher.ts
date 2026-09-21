@@ -1,8 +1,8 @@
 import { captureException } from '@sentry/nextjs';
 import type { ServerResponse } from 'http';
-import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { DOMAIN_ID_HEADER } from 'urql/createClient';
 import { isClient } from 'utils/isClient';
+import type { AppRedisClient } from 'utils/redis/redisClient';
 import { recordServerTiming } from 'utils/serverSide/serverTiming';
 
 // Server-side only hash function for Redis cache keys
@@ -156,15 +156,9 @@ const createCleanedInput = (input: URL | RequestInfo): URL | RequestInfo => {
 };
 
 export const fetcher =
-    (redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts> | undefined, response?: ServerResponse) =>
+    (redisClient: AppRedisClient | undefined, response?: ServerResponse) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
-        if (!isClient && !redisClient) {
-            captureException(
-                'Redis client was missing on server. This will cause the Redis cache to not work properly.',
-            );
-        }
-
-        if (isClient || !init || process.env.GRAPHQL_REDIS_CACHE === '0' || !redisClient) {
+        if (isClient || !init || process.env.GRAPHQL_REDIS_CACHE === '0' || !redisClient?.isReady) {
             return fetch(createCleanedInput(input), createInit(init));
         }
 
@@ -241,7 +235,12 @@ export const fetcher =
             const res = await result.json();
 
             if (res.data !== undefined && res.error === undefined) {
-                await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
+                try {
+                    await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
+                } catch (error) {
+                    // A failed cache write must not repeat a successful backend request.
+                    captureException(error);
+                }
 
                 if (queryName === 'SettingsQuery') {
                     observeSettingsResponseForDefaultPricingGroup(domainId, res.data);
