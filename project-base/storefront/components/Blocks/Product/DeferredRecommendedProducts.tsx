@@ -39,7 +39,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
             recommenderClientIdentifier: getRecommenderClientIdentifier(pathname),
             limit: 10,
         },
-        pause: !isLuigisBoxActive,
+        pause: !isLuigisBoxActive || !isClientMounted,
     });
 
     const shouldRender = useDeferredRender('recommended_products');
@@ -57,11 +57,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
         setIsClientMounted(true);
     }, []);
 
-    const shouldShowSkeleton =
-        (isClientMounted && areRecommendedProductsFetching) ||
-        (isBasketPopup && !recommendedProductsData?.recommendedProducts.length && areRecommendedProductsFetching);
-
-    if (shouldShowSkeleton) {
+    if (!isClientMounted || areRecommendedProductsFetching) {
         return render(
             <SkeletonModuleProductSlider
                 isHeadingHidden

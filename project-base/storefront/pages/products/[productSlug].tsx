@@ -6,18 +6,14 @@ import {
     ProductDetailQueryDocument,
     useProductDetailQuery,
 } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
-import { RecommendedProductsQueryDocument } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
-import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 import { createClient } from 'urql/createClient';
 import { getBasePathWithLocale } from 'utils/domain/domainUtils';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
-import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -78,7 +74,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, ssrExchange, t, cookiesStoreState }) =>
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
             const client = createClient({
                 t,
@@ -125,20 +121,6 @@ export const getServerSideProps = getServerSidePropsWrapper(
                         permanent: false,
                     },
                 };
-            }
-
-            const productData = productResponse.data?.product;
-
-            if (domainConfig.isLuigisBoxActive && productData?.__typename === 'RegularProduct') {
-                await client
-                    .query(RecommendedProductsQueryDocument, {
-                        itemUuids: [productData.uuid],
-                        userIdentifier: cookiesStoreState.userIdentifier,
-                        recommendationType: TypeRecommendationType.ItemDetail,
-                        recommenderClientIdentifier: getRecommenderClientIdentifier(FriendlyPagesDestinations.product),
-                        limit: 10,
-                    })
-                    .toPromise();
             }
 
             return buildServerSideProps({
