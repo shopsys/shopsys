@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -14,20 +15,21 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotAvailableForCusto
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CurrentPromoCodeFacade
 {
+    protected const string PRICING_GROUPS_CACHE_NAMESPACE = 'promoCodePricingGroupsByPromoCodeId';
+
     public function __construct(
         protected readonly PromoCodeFacade $promoCodeFacade,
-        protected readonly PromoCodeProductRepository $promoCodeProductRepository,
         protected readonly Domain $domain,
         protected readonly ProductPromoCodeFiller $productPromoCodeFiller,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
         protected readonly PromoCodeApplicableProductsTotalPriceCalculator $promoCodeApplicableProductsTotalPriceCalculator,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -76,7 +78,7 @@ class CurrentPromoCodeFacade
     protected function validatePromoCodeByProductsInCart(PromoCode $promoCode, array $products): array
     {
         $domainId = $this->domain->getId();
-        $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
+        $allowedProductIds = $this->productPromoCodeFiller->getAllowedProductIds($promoCode);
         $allowedProductIdsByCriteria = $this->productPromoCodeFiller->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
         $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
@@ -159,7 +161,9 @@ class CurrentPromoCodeFacade
 
     protected function validatePricingGroup(PromoCode $promoCode): void
     {
-        $limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId(
+        $limitedPricingGroups = $this->inMemoryCache->getOrSaveValue(
+            static::PRICING_GROUPS_CACHE_NAMESPACE,
+            fn (): array => $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId()),
             $promoCode->getId(),
         );
 
