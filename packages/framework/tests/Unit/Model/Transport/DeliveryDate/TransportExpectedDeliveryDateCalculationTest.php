@@ -409,6 +409,30 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
     }
 
+    public function testClosedDaysAreLoadedOnceForTransportsWithDifferentDeliveryDates(): void
+    {
+        $closedDayFacadeMock = $this->createMock(ClosedDayFacade::class);
+        $closedDayFacadeMock
+            ->expects($this->once())
+            ->method('getClosedDaysWithEagerLoadedExcludedStores')
+            ->willReturn([$this->createClosedDayStub(false, [], '2026-07-17')]);
+        $transportExpectedDeliveryDateCalculation = $this->createTransportExpectedDeliveryDateCalculation($closedDayFacadeMock);
+
+        $sameDayDeliveryDate = $transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
+            $this->createTransportStubDeliveringOnNoSpecialDay(0),
+            null,
+            Domain::FIRST_DOMAIN_ID,
+        );
+        $nextDayDeliveryDate = $transportExpectedDeliveryDateCalculation->calculateExpectedDeliveryDate(
+            $this->createTransportStubDeliveringOnNoSpecialDay(1),
+            null,
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertDeliveryDateSame('2026-07-16 00:00:00', $sameDayDeliveryDate);
+        $this->assertDeliveryDateSame('2026-07-20 00:00:00', $nextDayDeliveryDate);
+    }
+
     public function testDeliveryDateIsNullWhenNoDayWithinThePostponeBoundIsAllowed(): void
     {
         // a pathological configuration closes every single day of the postpone window
