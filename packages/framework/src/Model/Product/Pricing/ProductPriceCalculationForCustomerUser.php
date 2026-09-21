@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -14,12 +15,15 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductPriceCalculationForCustomerUser
 {
+    protected const string PRICES_CACHE_NAMESPACE = 'productPricesByProductDomainAndPricingGroup';
+
     public function __construct(
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly Domain $domain,
         protected readonly SpecialPriceFacade $specialPriceFacade,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -30,6 +34,20 @@ class ProductPriceCalculationForCustomerUser
     ): ProductPricesResult {
         $pricingGroup = $this->getPricingGroupForCustomerUser($customerUser, $domainId);
 
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PRICES_CACHE_NAMESPACE,
+            fn (): ProductPricesResult => $this->calculatePrices($product, $domainId, $pricingGroup),
+            $product->getId(),
+            $domainId,
+            $pricingGroup->getId(),
+        );
+    }
+
+    protected function calculatePrices(
+        Product $product,
+        int $domainId,
+        PricingGroup $pricingGroup,
+    ): ProductPricesResult {
         $basicPrice = $this->productPriceCalculation->calculatePrice(
             $product,
             $domainId,

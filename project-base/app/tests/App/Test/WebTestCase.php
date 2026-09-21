@@ -8,6 +8,7 @@ use Override;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -77,6 +78,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      */
     protected Setting $setting;
 
+    /**
+     * @inject
+     */
+    protected InMemoryCache $inMemoryCache;
+
     #[Override]
     protected function setUp(): void
     {
@@ -85,6 +91,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $this->injectServices();
 
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+    }
+
+    protected function resetRequestScopedCache(): void
+    {
+        $this->inMemoryCache->reset();
     }
 
     protected function isMonorepo(): bool
