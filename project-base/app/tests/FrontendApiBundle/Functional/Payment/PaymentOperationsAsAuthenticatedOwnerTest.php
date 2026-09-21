@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class PaymentOperationsAsAuthenticatedOwnerTest extends GraphQlWithLoginTestCase
@@ -46,6 +47,26 @@ class PaymentOperationsAsAuthenticatedOwnerTest extends GraphQlWithLoginTestCase
 
         $this->assertNotNull($content['currentPayment']);
         $this->assertNotEmpty($content['availablePayments']);
+    }
+
+    public function testOrderPaymentsPricesByUuidForOwnOrder(): void
+    {
+        // make sure the payment is free when its price is calculated from the order
+        $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
+
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/OrderPaymentsPricesQuery.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
+        $orderPayments = $this->getResponseDataForGraphQlType($response, 'orderPayments');
+
+        $this->assertNotEmpty($orderPayments['availablePayments']);
+
+        foreach ($orderPayments['availablePayments'] as $paymentData) {
+            $this->assertSame($this->moneyFormatterHelper->formatWithMaxFractionDigits(Money::zero()), $paymentData['price']['priceWithoutVat']);
+        }
     }
 
     public function testChangePaymentInOrderByUuidForOwnOrder(): void

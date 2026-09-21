@@ -69,6 +69,23 @@ class PaymentOperationsAsNonOwnerCustomerUserTest extends GraphQlWithLoginTestCa
         $this->assertUserError($response, 'order-not-found');
     }
 
+    public function testPaymentPricesWithForeignOrderUuidVariableAreDenied(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/PaymentsPricesWithOrderUuidVariableQuery.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
+
+        $this->assertResponseContainsArrayOfErrors($response);
+
+        // the price resolver fails for every payment separately, so there is one error per payment
+        foreach ($this->getErrorsFromResponse($response) as $error) {
+            $this->assertSame('order-not-found', $error['extensions']['userCode']);
+        }
+    }
+
     public function testUpdatePaymentStatusWithValidUrlHashForForeignOrderSucceeds(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
