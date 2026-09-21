@@ -65,7 +65,9 @@ const useSyncServerNamespacesToCache = (
                 ...pageProps.__namespaces,
             }));
             setCachedNamespacesLang(pageProps.__lang);
-            setCachedTranslationVersion(pageProps.__translationVersion);
+            if (pageProps.__translationVersion !== undefined) {
+                setCachedTranslationVersion(pageProps.__translationVersion);
+            }
         }
     }, [pageProps.__lang, pageProps.__namespaces, pageProps.__translationVersion]);
 };
@@ -117,7 +119,9 @@ const useRefreshClientNamespaces = (
                         ...loadedNamespaces,
                     }));
                     setCachedNamespacesLang(locale);
-                    setCachedTranslationVersion(pageProps.__translationVersion);
+                    if (pageProps.__translationVersion !== undefined || shouldRefreshLocale) {
+                        setCachedTranslationVersion(pageProps.__translationVersion);
+                    }
                 }
             } catch (error) {
                 if (!isCancelled) {

@@ -151,6 +151,7 @@ describe('getAuthExchangeOptions', () => {
         });
         vi.stubGlobal('fetch', backendFetch);
         const redisClient = {
+            isReady: true,
             get: vi.fn().mockResolvedValue(JSON.stringify(anonymousData)),
             set: vi.fn(),
         };
