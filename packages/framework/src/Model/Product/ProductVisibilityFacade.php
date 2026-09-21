@@ -76,6 +76,17 @@ class ProductVisibilityFacade
         return $this->productVisibilityRepository->getProductVisibility($product, $pricingGroup, $domainId);
     }
 
+    /**
+     * @param int[] $productIds
+     */
+    public function preloadProductVisibilitiesByProductIds(
+        array $productIds,
+        PricingGroup $pricingGroup,
+        int $domainId,
+    ): void {
+        $this->productVisibilityRepository->preloadByProductIdsPricingGroupAndDomainId($productIds, $pricingGroup, $domainId);
+    }
+
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
     {
         $this->productVisibilityRepository->createAndRefreshProductVisibilitiesForPricingGroup($pricingGroup, $domainId);
