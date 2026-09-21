@@ -1717,6 +1717,9 @@ msgstr "Kategórie prvého stĺpca"
 msgid "First name"
 msgstr "Krstné meno"
 
+msgid "First name (may be empty when the customer registers via a social network)"
+msgstr "Krstné meno (môže byť prázdne, ak sa zákazník registruje cez sociálnu sieť)"
+
 msgid "Fix"
 msgstr "Opraviť"
 
@@ -2085,6 +2088,9 @@ msgstr "Posledná úprava"
 
 msgid "Last name"
 msgstr "Priezvisko"
+
+msgid "Last name (may be empty when the customer registers via a social network)"
+msgstr "Priezvisko (môže byť prázdne, ak sa zákazník registruje cez sociálnu sieť)"
 
 msgid "Last order"
 msgstr "Posledná objednávka"

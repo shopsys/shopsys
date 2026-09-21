@@ -224,8 +224,16 @@ class MailTemplateConfiguration
         $mailTemplateVariables = new MailTemplateVariables(t('Registration confirmation'));
 
         return $mailTemplateVariables
-            ->addVariable(RegistrationMail::VARIABLE_FIRST_NAME, t('First name'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(RegistrationMail::VARIABLE_LAST_NAME, t('Last name'), MailTemplateVariables::CONTEXT_BODY)
+            ->addVariable(
+                RegistrationMail::VARIABLE_FIRST_NAME,
+                t('First name (may be empty when the customer registers via a social network)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
+                RegistrationMail::VARIABLE_LAST_NAME,
+                t('Last name (may be empty when the customer registers via a social network)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
             ->addVariable(RegistrationMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(RegistrationMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
