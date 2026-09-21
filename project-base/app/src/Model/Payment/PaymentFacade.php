@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @property \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Transport\TransportRepository $transportRepository
  * @method \App\Model\Payment\Payment getEnabledOnDomainByUuid(string $uuid, int $domainId)
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactory $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory $paymentPriceFactory, \Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum $orderRoundingTypeEnum)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactory $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory $paymentPriceFactory, \Shopsys\FrameworkBundle\Model\Payment\OrderRoundingTypeEnum $orderRoundingTypeEnum, \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache)
  * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomainByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Payment\Payment[] getVisibleForOrder(\App\Model\Order\Order $order)
  * @method \App\Model\Payment\Payment[] getVisibleOnDomainByTransport(int $domainId, \App\Model\Transport\Transport $transport)
@@ -32,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @method \App\Model\Payment\Payment|null findPaymentByExternalMethodTransportAndDomainId(string $externalPaymentMethod, \App\Model\Transport\Transport $transport, int $domainId)
  * @method void validateOrderRoundingTypes(\App\Model\Payment\PaymentData $paymentData)
  * @method \App\Model\Payment\Payment getGiftVoucherPayment()
+ * @method \App\Model\Payment\Payment[] getAllOnCurrentDomainWithEagerLoadedRelations()
  */
 class PaymentFacade extends BasePaymentFacade
 {
