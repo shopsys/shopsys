@@ -11,12 +11,18 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationDataFactory
 {
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CountryFacade $countryFacade,
+        protected readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -54,12 +60,33 @@ class RegistrationDataFactory
 
     public function createFromSocialNetworkProfile(Profile $profile): RegistrationData
     {
+        $this->validateDataFromSocialNetwork($profile);
+
         $registrationData = $this->createForDomainId($this->domain->getId());
 
         $registrationData->firstName = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($profile->firstName);
         $registrationData->lastName = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($profile->lastName);
-        $registrationData->email = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($profile->email);
+        $registrationData->email = $profile->email;
 
         return $registrationData;
+    }
+
+    /**
+     * @throws \Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException
+     */
+    protected function validateDataFromSocialNetwork(Profile $profile): void
+    {
+        $violations = $this->validator->validate($profile->email, [
+            new NotBlank(message: 'Email is not filled'),
+            new Length(
+                max: 255,
+                maxMessage: 'Email cannot be longer than {{ limit }} characters',
+            ),
+            new Email(message: 'Email is not valid'),
+        ]);
+
+        if (count($violations) > 0) {
+            throw new SocialNetworkLoginException('Data from social network are not valid');
+        }
     }
 }
