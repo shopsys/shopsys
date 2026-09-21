@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use ArrayObject;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
@@ -24,6 +27,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Transport\Exception\TransportPriceM
 
 class PriceQuery extends AbstractQuery
 {
+    protected const string CART_CACHE_NAMESPACE = 'priceQueryCart';
+
     public function __construct(
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly Domain $domain,
@@ -35,6 +40,7 @@ class PriceQuery extends AbstractQuery
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly PaymentPriceProvider $paymentPriceProvider,
         protected readonly GqlContextHelper $gqlContextHelper,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -65,7 +71,7 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentPaymentPrice($payment);
         }
 
-        $cart = $this->cartApiFacade->findCart($customerUser, $cartUuid);
+        $cart = $this->findCart($customerUser, $cartUuid);
 
         if ($cart === null) {
             return $this->calculateIndependentPaymentPrice($payment);
@@ -99,7 +105,7 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentTransportPrice($transport);
         }
 
-        $cart = $this->cartApiFacade->findCart($customerUser, $cartUuid);
+        $cart = $this->findCart($customerUser, $cartUuid);
 
         if ($cart === null) {
             return $this->calculateIndependentTransportPrice($transport);
@@ -110,6 +116,16 @@ class PriceQuery extends AbstractQuery
         } catch (TransportPriceNotFoundException) {
             throw new TransportPriceMissingUserError('The transport has no price for the given cart, e.g. because the cart exceeds its weight limit.');
         }
+    }
+
+    protected function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Cart
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::CART_CACHE_NAMESPACE,
+            fn (): ?Cart => $this->cartApiFacade->findCart($customerUser, $cartUuid),
+            $customerUser?->getId() ?? 'anonymous',
+            $cartUuid ?? 'currentCustomerCart',
+        );
     }
 
     protected function calculateIndependentTransportPrice(Transport $transport): PriceInterface
