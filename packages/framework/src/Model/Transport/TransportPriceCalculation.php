@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -20,6 +21,21 @@ class TransportPriceCalculation
         protected readonly TransportPriceFacade $transportPriceFacade,
         protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
     ) {
+    }
+
+    public function calculatePriceForProcessedOrder(
+        Transport $transport,
+        OrderData $orderData,
+        int $domainId,
+        int $cartTotalWeight,
+    ): PriceInterface {
+        return $this->calculatePrice(
+            $transport,
+            $orderData->getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(),
+            $domainId,
+            $cartTotalWeight,
+            $orderData->freeTransportAndPaymentApplied,
+        );
     }
 
     public function calculatePrice(

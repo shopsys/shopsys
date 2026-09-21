@@ -121,11 +121,6 @@ class OrderInput
         $this->additionalData[$key] = $value;
     }
 
-    public function cleanAdditionalData(string $key): void
-    {
-        unset($this->additionalData[$key]);
-    }
-
     public function getFingerprint(): string
     {
         return md5(json_encode($this->getFingerprintData(), JSON_THROW_ON_ERROR));
