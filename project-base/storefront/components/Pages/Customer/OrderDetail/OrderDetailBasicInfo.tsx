@@ -94,7 +94,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 ns: 'accessibility',
                                 orderNumber: order.number,
                             })}
-                            onClick={() => addOrderItemsToEmptyCart(order.uuid)}
+                            onClick={() => addOrderItemsToEmptyCart(order.uuid, order.urlHash)}
                         >
                             {t('Repeat order')}
                         </Button>
