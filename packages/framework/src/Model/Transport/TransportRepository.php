@@ -208,6 +208,25 @@ class TransportRepository
             ->getResult();
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
+     */
+    public function preloadPricesByTransports(array $transports): void
+    {
+        if ($transports === []) {
+            return;
+        }
+
+        $this->getTransportRepository()
+            ->createQueryBuilder('t')
+            ->addSelect('tp')
+            ->leftJoin('t.prices', 'tp')
+            ->where('t IN (:transports)')
+            ->setParameter('transports', $transports)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function deleteAllPricesByTransport(Transport $transport): void
     {
         $this->em->createQueryBuilder()
