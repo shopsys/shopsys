@@ -6,6 +6,10 @@ AddOrderItemsToCartInputDecorator:
             orderUuid:
                 type: "Uuid!"
                 description: "UUID of the order based on which the cart should be prefilled"
+            orderUrlHash:
+                type: "String"
+                description: "Order urlHash as a proof of access to the order for anonymous customers"
+                defaultValue: null
             cartUuid:
                 type: "Uuid"
                 defaultValue: null

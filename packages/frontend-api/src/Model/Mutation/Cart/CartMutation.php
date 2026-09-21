@@ -109,11 +109,11 @@ class CartMutation extends AbstractMutation
         $cartUuid = $input['cartUuid'];
         $shouldMerge = $input['shouldMerge'];
 
+        $order = $this->orderApiFacade->getAuthorizedOrder($orderUuid, $input['orderUrlHash']);
+
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
-
-        $order = $this->orderApiFacade->getByUuid($orderUuid);
 
         if (!$shouldMerge) {
             $this->cartApiFacade->deleteCart($cart);
