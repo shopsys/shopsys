@@ -66,7 +66,7 @@ export const BannerImage: FC<BannerImageProps> = ({
                     />
                 </Head>
             )}
-            <div className="relative h-62.5 vl:h-106.25 w-full grow md:h-86.25">
+            <div className="relative h-62.5 vl:h-106.25 w-full shrink-0 md:h-86.25">
                 <picture>
                     <source media="(min-width: 769px)" srcSet={`${desktopImageSrc}?width=1400`} />
                     <source media="(max-width: 768px)" srcSet={`${mobileImageSrc}?width=480`} />
