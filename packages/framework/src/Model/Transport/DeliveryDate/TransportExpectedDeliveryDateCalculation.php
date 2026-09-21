@@ -31,6 +31,8 @@ class TransportExpectedDeliveryDateCalculation
      */
     protected const int MAX_POSTPONE_DAYS = 366;
 
+    protected const int CLOSED_DAYS_PRELOAD_WINDOW_DAYS = 2 * self::MAX_POSTPONE_DAYS;
+
     protected const string DATE_INDEX_FORMAT = 'Y-m-d';
     protected const string DISPATCH_DATE_CACHE_NAMESPACE = 'transportExpectedDeliveryDateDispatchDate';
     protected const string CLOSED_DAYS_CACHE_NAMESPACE = 'transportExpectedDeliveryDateClosedDays';
@@ -342,35 +344,43 @@ class TransportExpectedDeliveryDateCalculation
     }
 
     /**
-     * Fetches all the closed days the postponing may ever need in a single query; the window is cached
-     * per request, so every transport and store sharing the first candidate date reuses the same result
-     *
      * @return array<string, \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]>
      */
     protected function getClosedDaysForPostponeWindowIndexedByDate(
         int $domainId,
         DateTimeImmutable $startDate,
     ): array {
+        $today = $this->getToday($domainId);
+        $windowEndDate = $today->modify(sprintf('+%d days', static::CLOSED_DAYS_PRELOAD_WINDOW_DAYS));
+        $lastPostponedDate = $startDate->modify(sprintf('+%d days', static::MAX_POSTPONE_DAYS));
+
+        if ($startDate < $today || $lastPostponedDate > $windowEndDate) {
+            return $this->loadClosedDaysIndexedByDate($domainId, $startDate, $lastPostponedDate);
+        }
+
         return $this->inMemoryCache->getOrSaveValue(
             static::CLOSED_DAYS_CACHE_NAMESPACE,
-            function () use ($domainId, $startDate): array {
-                $closedDays = $this->closedDayFacade->getClosedDaysWithEagerLoadedExcludedStores(
-                    $domainId,
-                    $startDate,
-                    $startDate->modify(sprintf('+%d days', static::MAX_POSTPONE_DAYS)),
-                );
-
-                $closedDaysIndexedByDate = [];
-
-                foreach ($closedDays as $closedDay) {
-                    $closedDaysIndexedByDate[$closedDay->getDate()->format(static::DATE_INDEX_FORMAT)][] = $closedDay;
-                }
-
-                return $closedDaysIndexedByDate;
-            },
+            fn (): array => $this->loadClosedDaysIndexedByDate($domainId, $today, $windowEndDate),
             $domainId,
-            $startDate->format(static::DATE_INDEX_FORMAT),
         );
+    }
+
+    /**
+     * @return array<string, \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]>
+     */
+    protected function loadClosedDaysIndexedByDate(
+        int $domainId,
+        DateTimeImmutable $startDate,
+        DateTimeImmutable $endDate,
+    ): array {
+        $closedDays = $this->closedDayFacade->getClosedDaysWithEagerLoadedExcludedStores($domainId, $startDate, $endDate);
+        $closedDaysIndexedByDate = [];
+
+        foreach ($closedDays as $closedDay) {
+            $closedDaysIndexedByDate[$closedDay->getDate()->format(static::DATE_INDEX_FORMAT)][] = $closedDay;
+        }
+
+        return $closedDaysIndexedByDate;
     }
 
     /**
