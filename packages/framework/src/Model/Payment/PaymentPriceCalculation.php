@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -16,7 +18,25 @@ class PaymentPriceCalculation
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly PricingSetting $pricingSetting,
         protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
+    }
+
+    public function calculatePriceForProcessedOrder(
+        Payment $payment,
+        OrderData $orderData,
+        int $domainId,
+    ): PriceInterface {
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        return $this->calculatePrice(
+            $payment,
+            $orderData->getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(),
+            $domainId,
+            $orderData->freeTransportAndPaymentApplied,
+            $currency->getRoundingType(),
+            $currency->getRoundingPlacesPriceWithoutVat(),
+        );
     }
 
     public function calculatePrice(

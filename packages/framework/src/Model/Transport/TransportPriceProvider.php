@@ -7,21 +7,19 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 
 class TransportPriceProvider
 {
     public function __construct(
         protected readonly OrderInputFactory $orderInputFactory,
         protected readonly OrderProcessingFacade $orderProcessingFacade,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
     ) {
     }
 
@@ -48,21 +46,11 @@ class TransportPriceProvider
         Transport $transport,
         DomainConfig $domainConfig,
     ): PriceInterface {
-        $orderInput->setTransport($transport);
-
-        if (!$transport->isPacketery()) {
-            $orderInput->cleanAdditionalData(PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER);
-        }
-
         $orderData = $this->orderProcessingFacade->getProcessedOrderData($orderInput);
 
-        if (count($orderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT)) === 0) {
-            $totalWeight = $orderInput->findAdditionalData(AddTransportMiddleware::ADDITIONAL_DATA_CART_TOTAL_WEIGHT);
-            $message = sprintf('Transport price with domain ID "%d", transport ID "%d", and total weight %dg not found.', $domainConfig->getId(), $transport->getId(), $totalWeight);
+        /** @var int $cartTotalWeight */
+        $cartTotalWeight = $orderInput->findAdditionalData(AddTransportMiddleware::ADDITIONAL_DATA_CART_TOTAL_WEIGHT) ?? 0;
 
-            throw new TransportPriceNotFoundException($message);
-        }
-
-        return $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT];
+        return $this->transportPriceCalculation->calculatePriceForProcessedOrder($transport, $orderData, $domainConfig->getId(), $cartTotalWeight);
     }
 }

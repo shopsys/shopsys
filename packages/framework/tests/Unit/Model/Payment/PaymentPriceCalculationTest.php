@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -99,7 +100,7 @@ class PaymentPriceCalculationTest extends TestCase
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingStub, $freeTransportAndPaymentFacadeStub);
+        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingStub, $freeTransportAndPaymentFacadeStub, $this->createStub(CurrencyFacade::class));
 
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -163,7 +164,7 @@ class PaymentPriceCalculationTest extends TestCase
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingStub, $freeTransportAndPaymentFacadeStub);
+        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingStub, $freeTransportAndPaymentFacadeStub, $this->createStub(CurrencyFacade::class));
 
         $vatData = new VatData();
         $vatData->name = 'vat';
