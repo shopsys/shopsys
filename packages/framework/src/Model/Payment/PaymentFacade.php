@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
@@ -18,6 +19,8 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class PaymentFacade
 {
+    protected const string PAYMENTS_WITH_EAGER_LOADED_RELATIONS_CACHE_NAMESPACE = 'paymentsWithEagerLoadedRelationsByDomainId';
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PaymentRepository $paymentRepository,
@@ -30,6 +33,7 @@ class PaymentFacade
         protected readonly PaymentFactory $paymentFactory,
         protected readonly PaymentPriceFactory $paymentPriceFactory,
         protected readonly OrderRoundingTypeEnum $orderRoundingTypeEnum,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -91,9 +95,28 @@ class PaymentFacade
      */
     public function getVisibleOnCurrentDomain(): array
     {
-        $allPayments = $this->paymentRepository->getAllWithEagerLoadedTransportsAndDomainsAndTranslations($this->domain->getCurrentDomainConfig());
+        return $this->paymentVisibilityCalculation->filterVisible(
+            $this->getAllOnCurrentDomainWithEagerLoadedRelations(),
+            $this->domain->getId(),
+        );
+    }
 
-        return $this->paymentVisibilityCalculation->filterVisible($allPayments, $this->domain->getId());
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    protected function getAllOnCurrentDomainWithEagerLoadedRelations(): array
+    {
+        $domainConfig = $this->domain->getCurrentDomainConfig();
+
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PAYMENTS_WITH_EAGER_LOADED_RELATIONS_CACHE_NAMESPACE,
+            function () use ($domainConfig): array {
+                $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($domainConfig);
+
+                return $this->paymentRepository->getAllWithEagerLoadedTransportsAndDomainsAndTranslations($domainConfig);
+            },
+            $domainConfig->getId(),
+        );
     }
 
     /**
@@ -284,9 +307,17 @@ class PaymentFacade
      */
     protected function getVisibleOnDomainByTransport(int $domainId, Transport $transport): array
     {
-        $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
+        if ($domainId !== $this->domain->getId()) {
+            return $this->paymentVisibilityCalculation->filterVisible(
+                $this->paymentRepository->getAllByTransport($transport),
+                $domainId,
+            );
+        }
 
-        return $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $domainId);
+        return array_values(array_filter(
+            $this->getVisibleOnCurrentDomain(),
+            static fn (Payment $payment): bool => in_array($transport, $payment->getTransports(), true),
+        ));
     }
 
     public function hideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod, int $domainId): void
@@ -313,14 +344,10 @@ class PaymentFacade
 
     public function isPaymentVisibleAndEnabledOnCurrentDomain(Payment $payment): bool
     {
-        try {
-            $domainId = $this->domain->getId();
-            $payment = $this->getEnabledOnDomainByUuid($payment->getUuid(), $domainId);
-
-            return $this->paymentVisibilityCalculation->isVisible($payment, $domainId);
-        } catch (PaymentNotFoundException $exception) {
-            return false;
-        }
+        return array_any(
+            $this->getVisibleOnCurrentDomain(),
+            static fn (Payment $visiblePayment): bool => $visiblePayment->getId() === $payment->getId(),
+        );
     }
 
     public function findPaymentByExternalMethodTransportAndDomainId(
