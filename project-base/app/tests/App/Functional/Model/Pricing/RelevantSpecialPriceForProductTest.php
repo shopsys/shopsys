@@ -99,6 +99,7 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $priceList = $this->getReferenceForDomain(PriceListDataFixture::ACTIVE_ITEMS_ON_SALE_REFERENCE, self::TEST_DOMAIN_ID, PriceList::class);
         $priceListData = $this->priceListDataFactory->createFromPriceList($priceList);
         $this->priceListFacade->edit($priceList->getId(), $priceListData);
+        $this->resetRequestScopedCache();
 
         $specialPrice = $this->specialPriceFacade->findRelevantSpecialPrice($helloKittyProduct, self::TEST_DOMAIN_ID, $this->createBasicPrice());
         $this->assertNotNull($specialPrice, 'Special price should be set for product');
