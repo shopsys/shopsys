@@ -66,6 +66,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             [
                 'cartUuid' => $cartUuid,
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'shouldMerge' => $shouldMerge,
             ],
         );
@@ -136,6 +137,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             [
                 'cartUuid' => $cartUuid,
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'shouldMerge' => true,
             ],
         );
@@ -179,6 +181,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             [
                 'cartUuid' => $cartUuid,
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'shouldMerge' => false,
             ],
         );
@@ -217,6 +220,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
             [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'shouldMerge' => false,
             ],
         );
@@ -260,6 +264,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
             [
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'shouldMerge' => false,
             ],
         );
@@ -303,6 +308,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             [
                 'cartUuid' => $cartUuid,
                 'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
                 'shouldMerge' => $shouldMerge,
             ],
         );
