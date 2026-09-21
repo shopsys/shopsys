@@ -146,7 +146,7 @@ Enable this temporarily on a controlled diagnostic environment: the response exp
 When enabled, open DevTools → Network, reload the page, and select the document request. Look for `Server-Timing` under Headers → Response Headers or inspect the Timing tab. The metrics describe this response only; they are not automatically stored or sent to Sentry or another monitoring service:
 
 - `gssp`: total time spent in the `getServerSideProps` wrapper, including data fetching and preparing props. It does not include Next.js HTML rendering after the wrapper returns, proxy queues, or network latency.
-- `redis_connect`: establishing the request's Redis connection.
+- `redis_client`: obtaining the shared Redis client. This replaces `redis_connect`, which measured a new connection for each request. Connection attempts now run in the background and are not included in this metric.
 - `translations`: loading the initial `common` translation namespace.
 - `gql_<operation>`: elapsed time from starting a server-side GraphQL query to its final result, including authentication, cache lookup and backend work where applicable.
 - `cache_<operation>`: Redis lookup duration, with `desc="hit"` or `desc="miss"`. Queries that bypass Redis do not emit this metric.
@@ -154,3 +154,5 @@ When enabled, open DevTools → Network, reload the page, and select the documen
 Metrics are local to each HTTP response and contain operation names, not variables, cache keys or customer data. Query durations overlap when requests run concurrently and must not be added together to calculate total SSR time. Cache timings are already included in the corresponding query timing.
 
 Compare repeated requests for the same page, customer state and deployment. Use the slowest query and cache outcomes to narrow down a high TTFB before changing caching or deferring data. A cache hit still requires client-side parsing and rendering; it does not imply low JavaScript blocking time.
+
+SSR query caching and translation loading share one Redis connection per server process. Requests during startup or reconnection bypass the cache until the connection is ready; they still load data from the backend. Failed initial connection attempts are retried on a later request after a three-second cooldown. An established connection uses bounded automatic reconnects, and commands are not queued while Redis is offline. Requests never disconnect the shared client. Cache keys, domain separation and TTLs are unchanged.
