@@ -86,6 +86,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         }
 
         $this->productFacade->edit($product->getId(), $productData);
+        $this->resetRequestScopedCache();
 
         $modifiedItems2 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertNotEmpty($modifiedItems2);
