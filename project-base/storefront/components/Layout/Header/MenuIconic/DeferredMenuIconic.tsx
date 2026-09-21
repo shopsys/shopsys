@@ -7,8 +7,12 @@ const MenuIconic = dynamic(() => import('./MenuIconic').then((component) => comp
     loading: () => <MenuIconicPlaceholder />,
 });
 
-export const DeferredMenuIconic: FC = () => {
+type DeferredMenuIconicProps = {
+    isDesktop: boolean | undefined;
+};
+
+export const DeferredMenuIconic: FC<DeferredMenuIconicProps> = ({ isDesktop }) => {
     const shouldRender = useDeferredRender('menu_iconic');
 
-    return shouldRender ? <MenuIconic /> : <MenuIconicPlaceholder />;
+    return shouldRender && isDesktop ? <MenuIconic /> : <MenuIconicPlaceholder />;
 };
