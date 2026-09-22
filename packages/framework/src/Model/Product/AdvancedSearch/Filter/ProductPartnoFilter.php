@@ -61,7 +61,13 @@ class ProductPartnoFilter extends AbstractAdvancedSearchFilter
                 $searchValue = $this->getSearchValue($ruleData);
                 $dqlOperator = $this->getDqlOperator($ruleData->operator);
                 $parameterName = 'productPartno_' . $index;
-                $queryBuilder->andWhere('NORMALIZED(p.partno) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
+                $condition = 'NORMALIZED(p.partno) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')';
+
+                if ($ruleData->operator === self::OPERATOR_NOT_CONTAINS) {
+                    $condition = '(p.partno IS NULL OR ' . $condition . ')';
+                }
+
+                $queryBuilder->andWhere($condition);
                 $queryBuilder->setParameter($parameterName, $searchValue);
             }
         }
