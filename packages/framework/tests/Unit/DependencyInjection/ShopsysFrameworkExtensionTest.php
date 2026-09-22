@@ -60,12 +60,16 @@ class ShopsysFrameworkExtensionTest extends TestCase
         $container->registerExtension($extension);
 
         $extension->prepend($container);
+        $frameworkTasksConfig = $this->getPrependedPostDeployTasksConfig($container);
+        $this->assertNotEmpty($frameworkTasksConfig);
+        $lowestFrameworkPriority = min(array_column($frameworkTasksConfig, 'priority'));
+
         $container->loadFromExtension('shopsys_framework', [
             'post_deploy' => [
                 'tasks' => [
                     'project_task' => [
                         'run' => PostDeployTaskRunEnum::ALWAYS,
-                        'priority' => 100,
+                        'priority' => $lowestFrameworkPriority,
                         'service' => 'project_service',
                     ],
                 ],
@@ -83,9 +87,30 @@ class ShopsysFrameworkExtensionTest extends TestCase
             ->getDefinition(PostDeployTaskConfig::class)
             ->getArgument('$descriptors');
 
-        $this->assertCount(2, $descriptorDefinitions);
-        $this->assertDescriptorDefinition($descriptorDefinitions[0], 'recalculate_file_sizes', PostDeployTaskRunEnum::ONE_TIME, 100, RecalculateFileSizesTask::class);
-        $this->assertDescriptorDefinition($descriptorDefinitions[1], 'project_task', PostDeployTaskRunEnum::ALWAYS, 100, 'project_service');
+        $this->assertCount(count($frameworkTasksConfig) + 1, $descriptorDefinitions);
+
+        $projectTaskDefinition = array_pop($descriptorDefinitions);
+        $this->assertDescriptorDefinition($projectTaskDefinition, 'project_task', PostDeployTaskRunEnum::ALWAYS, $lowestFrameworkPriority, 'project_service');
+
+        $precedingTaskNames = array_map(
+            static fn (Definition $definition): string => $definition->getArgument('$name'),
+            $descriptorDefinitions,
+        );
+        $this->assertEqualsCanonicalizing(array_keys($frameworkTasksConfig), $precedingTaskNames);
+    }
+
+    /**
+     * @return array<string, array{run: string, priority: int, service: string|null}>
+     */
+    private function getPrependedPostDeployTasksConfig(ContainerBuilder $container): array
+    {
+        $tasksConfig = [];
+
+        foreach ($container->getExtensionConfig('shopsys_framework') as $config) {
+            $tasksConfig += $config['post_deploy']['tasks'] ?? [];
+        }
+
+        return $tasksConfig;
     }
 
     private function assertDescriptorDefinition(
