@@ -39,14 +39,6 @@ class Vat implements DomainSeparatedEntityInterface
     protected $percent;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    #[AsMcpColumn]
-    #[ORM\JoinColumn(nullable: true)]
-    #[ORM\ManyToOne(targetEntity: self::class)]
-    protected $replaceWith;
-
-    /**
      * @var int
      */
     #[AsMcpColumn]
@@ -92,27 +84,6 @@ class Vat implements DomainSeparatedEntityInterface
     public function getPercent()
     {
         return $this->percent;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    public function getReplaceWith()
-    {
-        return $this->replaceWith;
-    }
-
-    public function markForDeletion(self $newVat): void
-    {
-        $this->replaceWith = $newVat;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMarkedAsDeleted()
-    {
-        return $this->replaceWith !== null;
     }
 
     /**
