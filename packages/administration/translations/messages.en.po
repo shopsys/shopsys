@@ -73,10 +73,13 @@ msgstr ""
 msgid "Add another price with weight limit"
 msgstr ""
 
+msgid "Add condition"
+msgstr ""
+
 msgid "Add country"
 msgstr ""
 
-msgid "Add group of rules"
+msgid "Add group of conditions"
 msgstr ""
 
 msgid "Add item"
@@ -101,9 +104,6 @@ msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
-msgstr ""
-
-msgid "Add rule"
 msgstr ""
 
 msgid "Add some alternate language combinations"
@@ -151,6 +151,9 @@ msgstr ""
 msgid "Administrators overview"
 msgstr ""
 
+msgid "Advanced filter"
+msgstr ""
+
 msgid "Advanced search"
 msgstr ""
 
@@ -166,7 +169,13 @@ msgstr ""
 msgid "All"
 msgstr "All"
 
+msgid "All conditions"
+msgstr ""
+
 msgid "All domains"
+msgstr ""
+
+msgid "All groups"
 msgstr ""
 
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
@@ -208,6 +217,9 @@ msgstr ""
 msgid "Applicable variables for Subject"
 msgstr ""
 
+msgid "Applied conditions"
+msgstr ""
+
 msgid "Apply filter"
 msgstr ""
 
@@ -242,6 +254,12 @@ msgid "Articles by this author"
 msgstr ""
 
 msgid "Articles overview"
+msgstr ""
+
+msgid "At least one condition"
+msgstr ""
+
+msgid "At least one group"
 msgstr ""
 
 msgid "Authentication code"
@@ -395,6 +413,9 @@ msgid "Clean Storefront Query Cache"
 msgstr ""
 
 msgid "Clear"
+msgstr ""
+
+msgid "Clear the searched text"
 msgstr ""
 
 msgid "Close"
@@ -1522,6 +1543,9 @@ msgstr ""
 msgid "No complaints found."
 msgstr ""
 
+msgid "No condition is composed yet."
+msgstr ""
+
 msgid "No countries found. You have to create some first."
 msgstr ""
 
@@ -1987,6 +2011,9 @@ msgstr ""
 msgid "Remove rule"
 msgstr ""
 
+msgid "Remove this condition"
+msgstr ""
+
 msgid "Replace file"
 msgstr ""
 
@@ -2392,6 +2419,9 @@ msgstr ""
 msgid "The product is no longer in the catalogue."
 msgstr ""
 
+msgid "The quick search does not apply while the advanced filter narrows the records."
+msgstr ""
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr ""
 
@@ -2738,6 +2768,9 @@ msgid "all of the groups match"
 msgstr ""
 
 msgid "all of the rules match"
+msgstr ""
+
+msgid "and"
 msgstr ""
 
 msgid "any of the groups matches"

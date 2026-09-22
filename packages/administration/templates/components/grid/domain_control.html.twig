@@ -1,9 +1,25 @@
 {% if scope.isFilter %}
-    {% include (select ? '@ShopsysAdministration/partial/quick_domain_filter_select.html.twig' : '@ShopsysAdministration/partial/quick_domain_filter.html.twig') with {
-        domainConfigs: this.domainConfigs,
-        namespace: scope.filterNamespace,
-        selectedDomainId: scope.selectedDomainId,
-    } only %}
+    {# a single domain is no choice at all, so the datagrid shows no control for it #}
+    {% if this.domainConfigs|length > 1 %}
+        <div class="datagrid-domain-control">
+            {% if this.fitsIntoTabs %}
+                {% include '@ShopsysAdministration/components/grid/domain_tabs.html.twig' with {
+                    domainConfigs: this.domainConfigs,
+                    namespace: scope.filterNamespace,
+                    selectedDomainId: scope.selectedDomainId,
+                    class: 'd-none d-xl-flex',
+                } only %}
+            {% endif %}
+
+            {# the dropdown carries the choice where the tabs do not fit — too many domains, or a narrow window #}
+            {% include '@ShopsysAdministration/components/grid/domain_dropdown.html.twig' with {
+                domainConfigs: this.domainConfigs,
+                namespace: scope.filterNamespace,
+                selectedDomainId: scope.selectedDomainId,
+                class: this.fitsIntoTabs ? 'd-xl-none' : '',
+            } only %}
+        </div>
+    {% endif %}
 {% else %}
     {% include '@ShopsysAdministration/partial/switch_domain.html.twig' with {
         domainConfigs: this.domainConfigs,

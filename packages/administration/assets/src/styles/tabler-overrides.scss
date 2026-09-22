@@ -141,3 +141,285 @@ textarea.form-control.is-invalid {
         border-radius: 0;
     }
 }
+
+// the narrowing of a CRUD datagrid: domain tabs, quick search and the advanced filter read as one surface
+// together with the grid below them
+.datagrid-domain-control {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+.datagrid-domain-tabs {
+    // the active tab opens into the panel below it, so its bottom edge is painted over the border of the panel
+    --tblr-nav-tabs-link-active-bg: var(--tblr-bg-surface);
+    --tblr-nav-tabs-link-active-border-color: var(--tblr-border-color) var(--tblr-border-color) var(--tblr-bg-surface);
+
+    flex-wrap: wrap;
+    margin-bottom: calc(-1 * var(--tblr-border-width));
+    border-bottom: 0;
+
+    .nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.375rem 0.75rem;
+    }
+
+    span.nav-link {
+        cursor: default;
+    }
+}
+
+.datagrid-domain-dropdown {
+    margin-bottom: 0.5rem;
+}
+
+@include media-breakpoint-up(xl) {
+    .datagrid-domain-control:has(.datagrid-domain-tabs) + .datagrid-toolbar,
+    .datagrid-domain-control:has(.datagrid-domain-tabs) + .js-grid.card {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+
+.datagrid-toolbar {
+    margin-bottom: 0;
+    border-bottom: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.datagrid-toolbar + .js-grid.card {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.datagrid-toolbar__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.5rem;
+}
+
+.datagrid-quick-search {
+    flex: 1 1 18rem;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+.datagrid-toolbar__filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    white-space: nowrap;
+}
+
+.datagrid-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem var(--tblr-card-spacer-x, 1.25rem);
+    border-top: var(--tblr-border-width) solid var(--tblr-border-color);
+}
+
+// the words between the chips say how the conditions are combined
+.datagrid-chips__operator {
+    font-size: 0.8em;
+    color: var(--tblr-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+// several groups stay readable only when it is visible which conditions belong together
+.datagrid-chips__group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.375rem;
+    border: var(--tblr-border-width) dashed var(--tblr-border-color);
+    border-radius: var(--tblr-border-radius);
+}
+
+.datagrid-chips__note {
+    flex-basis: 100%;
+    font-size: 0.8em;
+}
+
+.datagrid-chips__reset {
+    margin-inline-start: auto;
+}
+
+a.datagrid-chip {
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--tblr-danger);
+        background-color: var(--tblr-bg-surface);
+        border-color: var(--tblr-danger);
+
+        .datagrid-chip__operator,
+        .datagrid-chip__remove {
+            color: inherit;
+        }
+    }
+}
+
+.datagrid-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 100%;
+    padding: 0.25rem 0.5rem;
+    font-weight: 400;
+    color: var(--tblr-body-color);
+    background-color: var(--tblr-bg-surface-secondary);
+    border: var(--tblr-border-width) solid var(--tblr-border-color);
+    transition:
+        color 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out;
+
+    .icon {
+        width: 1em;
+        height: 1em;
+    }
+}
+
+// the whole chip takes its condition back, so the cross is always there to say what a click does
+.datagrid-chip__remove {
+    display: inline-flex;
+    align-items: center;
+    margin-inline-start: 0.125rem;
+    color: var(--tblr-secondary);
+
+    .icon {
+        width: 0.9em;
+        height: 0.9em;
+    }
+}
+
+.datagrid-chip__field {
+    font-weight: 600;
+}
+
+.datagrid-chip__operator {
+    color: var(--tblr-secondary);
+}
+
+.datagrid-chip__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// the filter slides in from the side of the page; its rules scroll, its actions stay in sight
+.datagrid-filter-panel {
+    --tblr-offcanvas-width: min(36rem, 100vw);
+
+    .datagrid-filter,
+    .datagrid-filter__form {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .offcanvas-body {
+        flex: 1 1 auto;
+    }
+}
+
+.datagrid-filter__footer {
+    padding: 1rem var(--tblr-card-spacer-x, 1.25rem);
+    border-top: var(--tblr-border-width) solid var(--tblr-border-color);
+}
+
+.datagrid-filter__group {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    border: var(--tblr-border-width) solid var(--tblr-border-color);
+    border-radius: var(--tblr-border-radius);
+}
+
+.datagrid-filter__group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+// removing a whole group is a rare and destructive action, so it steps back until the group is worked with
+.datagrid-filter__group-remove {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.datagrid-filter__group:hover .datagrid-filter__group-remove,
+.datagrid-filter__group:focus-within .datagrid-filter__group-remove {
+    visibility: visible;
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .datagrid-filter__group-remove {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+// the panel is narrower than the window, so a rule always takes two lines: what is compared, and how
+.datagrid-filter__rule {
+    display: grid;
+    grid-template-areas:
+        'filter remove'
+        'fields fields';
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.datagrid-filter__rule + .datagrid-filter__rule {
+    padding-top: 0.75rem;
+    border-top: var(--tblr-border-width) dashed var(--tblr-border-color);
+}
+
+.datagrid-filter__filter {
+    grid-area: filter;
+    min-width: 0;
+}
+
+.datagrid-filter__fields {
+    display: grid;
+    grid-area: fields;
+    grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.6fr);
+    gap: 0.5rem;
+}
+
+.datagrid-filter__rule-remove {
+    grid-area: remove;
+}
+
+.datagrid-filter__operator,
+.datagrid-filter__value {
+    min-width: 0;
+}
+
+@include media-breakpoint-down(sm) {
+    .datagrid-filter__fields {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.datagrid-filter__empty {
+    padding: 1.5rem 0;
+    text-align: center;
+}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter\TwigComponent;
 
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData;
+use Shopsys\AdministrationBundle\Component\Datagrid\Url\DatagridNarrowingUrlFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
@@ -28,9 +29,14 @@ final class FiltersComponent
     public GridView $gridView;
 
     /**
-     * Rendered inside a card of the page (a tab next to the quick search) instead of a card of its own.
+     * Rendered inside the panel of the list toolbar instead of a card of its own.
      */
     public bool $embedded = false;
+
+    public function __construct(
+        private readonly DatagridNarrowingUrlFactory $narrowingUrlFactory,
+    ) {
+    }
 
     /**
      * Whether any rule was composed — the panel is then marked as active.
@@ -40,5 +46,13 @@ final class FiltersComponent
         $data = $this->filterForm->vars['data'] ?? null;
 
         return ($this->filterForm->vars['submitted'] ?? false) === true && $data instanceof FilterFormData && $data->hasRules();
+    }
+
+    /**
+     * The listing with the composed filter dropped.
+     */
+    public function getResetUrl(): string
+    {
+        return $this->narrowingUrlFactory->createUrlWithout([$this->filterForm->vars['full_name']]);
     }
 }

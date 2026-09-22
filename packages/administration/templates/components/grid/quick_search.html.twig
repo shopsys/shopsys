@@ -1,10 +1,41 @@
-{{ form_start(this.formView) }}
+{#
+The quick search of a datagrid. It renders its own input group instead of the shared
+`partial/_quick_search_form.html.twig`, so that the clearing cross stays inside the datagrid and the
+pages of the administration keep their own quick search unchanged.
+#}
+{{ form_start(this.formView, { attr: { class: 'datagrid-quick-search' } }) }}
     {# the order and the limit of the grid travel with the search, the page starts over #}
     {{ gridView.renderHiddenInputs('page') }}
-    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
-        form_input: this.formView.text,
-        form_submit: this.formView.submit,
-        hide_title: embedded,
-        placeholder: 'Search in: %fields%'|trans({ '%fields%': quickSearch.labelsByPath|join(', ') }),
-    } %}
+
+    {% if not embedded %}
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-secondary">{{ 'Quick search'|trans }}</h2>
+    {% endif %}
+
+    <div class="input-group input-group-flat">
+        {{ form_widget(this.formView.text, { attr: {
+            placeholder: 'Search in: %fields%'|trans({ '%fields%': quickSearch.labelsByPath|join(', ') }),
+        } }) }}
+
+        {% if this.formView.text.vars.value is not empty %}
+            <span class="input-group-text">
+                <a href="{{ this.resetUrl }}" class="link-secondary" title="{{ 'Clear the searched text'|trans }}">
+                    {{ ux_icon('delete') }}
+                </a>
+            </span>
+        {% endif %}
+
+        {{ form_widget(this.formView.submit, {
+            label: ux_icon('search'),
+            label_html: true,
+            attr: { class: 'btn btn-icon' },
+            full_name: ''
+        }) }}
+    </div>
+
+    {% if not embedded %}
+            </div>
+        </div>
+    {% endif %}
 {{ form_end(this.formView, { render_rest: false }) }}

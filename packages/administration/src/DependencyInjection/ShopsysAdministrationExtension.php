@@ -39,6 +39,8 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
         // Override Framework bundle parameter for RolesType simple permissions
         $container->setParameter('shopsys.administration.roles.simple_permissions', $config['roles']['simple_permissions']);
 
+        $container->setParameter('shopsys.administration.datagrid.max_domains_rendered_as_tabs', $config['datagrid']['max_domains_rendered_as_tabs']);
+
         $container->registerForAutoconfiguration(OrderDetailSectionProviderInterface::class)
             ->addTag('shopsys.order_detail_section_provider');
         $container->registerForAutoconfiguration(OrderDetailTabProviderInterface::class)

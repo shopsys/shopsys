@@ -1,0 +1,75 @@
+{% macro choiceLabel(choiceForm) %}
+    {%- set selectedChoice = choiceForm.vars.choices|filter(choice => choice.value == choiceForm.vars.value)|first -%}
+    {{- selectedChoice ? selectedChoice.label : choiceForm.vars.value -}}
+{% endmacro %}
+
+{% macro valueLabel(valueForm) %}
+    {%- if valueForm.vars.choices is defined -%}
+        {%- set selectedValues = valueForm.vars.value is iterable ? valueForm.vars.value : [valueForm.vars.value] -%}
+        {{- valueForm.vars.choices|filter(choice => choice.value in selectedValues)|map(choice => choice.label)|join(', ') -}}
+    {%- elseif valueForm.vars.selected_name is defined -%}
+        {{- valueForm.vars.selected_name -}}
+    {%- elseif valueForm.children is not empty -%}
+        {{- valueForm.children|map(boundForm => boundForm.vars.value)|filter(bound => bound is not empty)|join(' – ') -}}
+    {%- else -%}
+        {{- valueForm.vars.value -}}
+    {%- endif -%}
+{% endmacro %}
+
+{% macro ruleChip(ruleForm, removalUrl) %}
+    {# the whole chip takes its rule back, so the cross is what the chip does rather than a target of its own #}
+    <a href="{{ removalUrl }}" class="badge datagrid-chip" title="{{ 'Remove this condition'|trans }}">
+        <span class="visually-hidden">{{ 'Remove this condition'|trans }}:</span>
+        <span class="datagrid-chip__field">{{ _self.choiceLabel(ruleForm.filter) }}</span>
+        <span class="datagrid-chip__operator">{{ _self.choiceLabel(ruleForm.operator) }}</span>
+        {% if ruleForm.value is defined %}
+            <span class="datagrid-chip__value">{{ _self.valueLabel(ruleForm.value) }}</span>
+        {% endif %}
+        <span class="datagrid-chip__remove">{{ ux_icon('delete') }}</span>
+    </a>
+{% endmacro %}
+
+{% macro operatorWord(operatorForm) %}
+    {%- set isAnd = operatorForm.vars.value != constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\Data\\FilterGroupData::OPERATOR_OR') -%}
+    <span class="datagrid-chips__operator">{{ isAnd ? 'and'|trans : 'or'|trans }}</span>
+{% endmacro %}
+
+{% if this.narrowed %}
+    <div class="datagrid-chips" aria-label="{{ 'Applied conditions'|trans }}">
+        {% if quickSearch is not null and quickSearch.term is not empty %}
+            <a href="{{ this.quickSearchRemovalUrl }}" class="badge datagrid-chip" title="{{ 'Clear the searched text'|trans }}">
+                <span class="visually-hidden">{{ 'Clear the searched text'|trans }}:</span>
+                {{ ux_icon('search') }}
+                <span class="datagrid-chip__value">{{ quickSearch.term }}</span>
+                <span class="datagrid-chip__remove">{{ ux_icon('delete') }}</span>
+            </a>
+        {% endif %}
+
+        {% if filterActive %}
+            {# every composed rule is spelled out; the words between the chips say how they are combined #}
+            {% set severalGroups = filterForm.groups|length > 1 %}
+            {% for groupForm in filterForm.groups %}
+                {% if not loop.first %}
+                    {{ _self.operatorWord(filterForm.operator) }}
+                {% endif %}
+
+                <span class="{{ severalGroups ? 'datagrid-chips__group' }}">
+                    {% for ruleForm in groupForm.rules %}
+                        {% if not loop.first %}
+                            {{ _self.operatorWord(groupForm.operator) }}
+                        {% endif %}
+                        {{ _self.ruleChip(ruleForm, this.getRuleRemovalUrl(groupForm.vars.name, ruleForm.vars.name)) }}
+                    {% endfor %}
+                </span>
+            {% endfor %}
+        {% endif %}
+
+        <a href="{{ this.resetUrl }}" class="btn btn-sm datagrid-chips__reset">
+            {{ ux_icon('circle-cross') }} {{ 'Reset filter'|trans }}
+        </a>
+
+        {% if this.quickSearchOutranked %}
+            <span class="datagrid-chips__note text-secondary">{{ 'The quick search does not apply while the advanced filter narrows the records.'|trans }}</span>
+        {% endif %}
+    </div>
+{% endif %}

@@ -73,11 +73,14 @@ msgstr "Pridať ďalší parameter"
 msgid "Add another price with weight limit"
 msgstr "Pridať ďalšiu cenu s hmotnostným limitom"
 
+msgid "Add condition"
+msgstr "Pridať podmienku"
+
 msgid "Add country"
 msgstr "Pridať krajinu"
 
-msgid "Add group of rules"
-msgstr "Pridať skupinu pravidiel"
+msgid "Add group of conditions"
+msgstr "Pridať skupinu podmienok"
 
 msgid "Add item"
 msgstr "Pridať položku"
@@ -102,9 +105,6 @@ msgstr "Pridať produkt"
 
 msgid "Add requirement"
 msgstr "Pridať požiadavku"
-
-msgid "Add rule"
-msgstr "Pridať pravidlo"
 
 msgid "Add some alternate language combinations"
 msgstr "Pridať niektoré alternatívne kombinácie jazykov"
@@ -151,6 +151,9 @@ msgstr "Administrátori"
 msgid "Administrators overview"
 msgstr "Prehľad administrátorov"
 
+msgid "Advanced filter"
+msgstr "Rozšírený filter"
+
 msgid "Advanced search"
 msgstr "Pokročilé vyhľadávanie"
 
@@ -166,8 +169,14 @@ msgstr "Reklamy"
 msgid "All"
 msgstr "Všetko"
 
+msgid "All conditions"
+msgstr "Všetky podmienky"
+
 msgid "All domains"
 msgstr "Všetky domény"
+
+msgid "All groups"
+msgstr "Všetky skupiny"
 
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr "Všetky ceny musia byť spracované manuálne ak je zaškrtnuté, inak bude jednotková cena bez DPH a celkové ceny pre túto položku prepočítané automaticky."
@@ -208,6 +217,9 @@ msgstr "Použiteľné premenné pre obsah"
 msgid "Applicable variables for Subject"
 msgstr "Použiteľné premenné pre predmet"
 
+msgid "Applied conditions"
+msgstr "Použité podmienky"
+
 msgid "Apply filter"
 msgstr "Použiť filter"
 
@@ -243,6 +255,12 @@ msgstr "Články tohto autora"
 
 msgid "Articles overview"
 msgstr "Prehľad článkov"
+
+msgid "At least one condition"
+msgstr "Aspoň jedna podmienka"
+
+msgid "At least one group"
+msgstr "Aspoň jedna skupina"
 
 msgid "Authentication code"
 msgstr "Overovací kód"
@@ -396,6 +414,9 @@ msgstr "Vymazať cache dotazov obchodu"
 
 msgid "Clear"
 msgstr "Vymazať"
+
+msgid "Clear the searched text"
+msgstr "Vymazať hľadaný text"
 
 msgid "Close"
 msgstr "Zavrieť"
@@ -1522,6 +1543,9 @@ msgstr "Nenájdené žiadne stavy reklamácií."
 msgid "No complaints found."
 msgstr "Neboli nájdené žiadne reklámacie."
 
+msgid "No condition is composed yet."
+msgstr "Zatiaľ nie je zostavená žiadna podmienka."
+
 msgid "No countries found. You have to create some first."
 msgstr "Neboli nájdené žiadne krajiny. Najskôr musíte nejaké vytvoriť."
 
@@ -1987,6 +2011,9 @@ msgstr "Odstrániť skupinu"
 msgid "Remove rule"
 msgstr "Odstrániť pravidlo"
 
+msgid "Remove this condition"
+msgstr "Odstrániť túto podmienku"
+
 msgid "Replace file"
 msgstr "Nahradiť súbor"
 
@@ -2392,6 +2419,9 @@ msgstr "Produkt už nie je v katalógu. Toto bolo katalógové číslo v čase d
 msgid "The product is no longer in the catalogue."
 msgstr "Produkt už nie je v katalógu."
 
+msgid "The quick search does not apply while the advanced filter narrows the records."
+msgstr "Rýchle hľadanie sa neuplatní, kým záznamy zužuje rozšírený filter."
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul> Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
 
@@ -2739,6 +2769,9 @@ msgstr "všetky skupiny platia"
 
 msgid "all of the rules match"
 msgstr "všetky pravidlá platia"
+
+msgid "and"
+msgstr "a"
 
 msgid "any of the groups matches"
 msgstr "niektorá zo skupín platí"

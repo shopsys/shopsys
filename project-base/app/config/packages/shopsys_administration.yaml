@@ -7,6 +7,11 @@ shopsys_administration:
     #       - 'your_custom_public_route'
     #       - 'admin_health_check'
 
+    datagrid:
+        # How many domains the domain filter of a datagrid offers as a row of tabs
+        # above this many it offers a dropdown instead
+        max_domains_rendered_as_tabs: 6
+
     roles:
         # Enable simple permissions (VIEW, FULL) instead of all permissions
         simple_permissions: false

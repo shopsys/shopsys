@@ -18,6 +18,8 @@ export default class extends Controller {
         'ruleTemplate',
         'prototype',
         'groupsOperator',
+        'emptyState',
+        'addGroup',
     ];
 
     static values = {
@@ -30,7 +32,7 @@ export default class extends Controller {
         this.ruleTargets.forEach(rule => {
             this.markValueArity(rule);
         });
-        this.updateGroupsOperatorVisibility();
+        this.updateGroupsVisibility();
     }
 
     addGroup() {
@@ -42,12 +44,12 @@ export default class extends Controller {
         this.groupsTarget.appendChild(group);
         this.appendRule(group);
         this.registerContent(group);
-        this.updateGroupsOperatorVisibility();
+        this.updateGroupsVisibility();
     }
 
     removeGroup(event) {
         event.currentTarget.closest('[data-datagrid-filter-target~="group"]').remove();
-        this.updateGroupsOperatorVisibility();
+        this.updateGroupsVisibility();
     }
 
     addRule(event) {
@@ -163,9 +165,23 @@ export default class extends Controller {
         return indexes.length > 0 ? Math.max(...indexes) + 1 : 0;
     }
 
-    updateGroupsOperatorVisibility() {
+    /**
+     * The operator between the groups means something only from the second group on, and the empty state
+     * takes over from the "add a group" button as long as there is nothing to add one next to.
+     */
+    updateGroupsVisibility() {
+        const groupCount = this.groupTargets.length;
+
         if (this.hasGroupsOperatorTarget) {
-            this.groupsOperatorTarget.hidden = this.groupTargets.length < 2;
+            this.groupsOperatorTarget.hidden = groupCount < 2;
+        }
+
+        if (this.hasEmptyStateTarget) {
+            this.emptyStateTarget.hidden = groupCount > 0;
+        }
+
+        if (this.hasAddGroupTarget) {
+            this.addGroupTarget.hidden = groupCount === 0;
         }
     }
 

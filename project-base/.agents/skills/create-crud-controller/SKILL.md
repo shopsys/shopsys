@@ -205,13 +205,15 @@ actions: `add` / `update` / `delete` / `reorder`), `filters()` (`add` / `remove`
   works on dot paths (to-many paths become `EXISTS`) and does not tie the list to Doctrine.
   `configureQuery()` stays for what only DQL can say (computed columns, joins, `HAVING`).
 
-Both the quick search and the filters are switched by tabs above the datagrid; when the list
-also has a domain filter, it moves to a select on the right of them.
+The quick search and the button opening the filter share one row of a toolbar above the datagrid;
+the filter itself slides in from the side of the page, and every applied rule is spelled out on a chip
+below the toolbar, and clicking a chip takes that one rule back. A domain filter becomes the row of tabs on top of the toolbar.
 
 **Multi-domain lists**: `setListDomainControl(DomainControlType::FILTER|SWITCHER|NONE, $allowedDomainIds, $filterNamespace)`
 in `configure()`. For entities implementing `DomainSeparatedEntityInterface` the domain
-condition is applied for you (`FILTER` is the default, the tabs/select show only when more
-than one domain is allowed); other entities get no domain control unless you narrow them by
+condition is applied for you (`FILTER` is the default, the domain control shows only when more
+than one domain is allowed, as tabs up to `shopsys_administration.datagrid.max_domains_rendered_as_tabs`
+domains and as a dropdown above that or in a narrow window); other entities get no domain control unless you narrow them by
 `addCondition()` yourself. `$datagrid->getDomainControlScope()` tells whether the domain
 column is worth displaying.
 

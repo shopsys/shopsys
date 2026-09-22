@@ -6,11 +6,13 @@ import registerTooltip from './utils/registerTooltip';
 
 function initSelect($container) {
     $container.filterAllNodes('select').each((_key, el) => {
-        const modalContent = el.closest('.modal-content');
+        // a modal and an offcanvas both trap the focus inside themselves, and the dropdown of the select is
+        // focused when it opens — left in the body, it would be focused out and closed again right away
+        const focusTrappingContainer = el.closest('.modal-content, .offcanvas');
         const settings = {
             allowEmptyOption: true,
             maxOptions: null,
-            dropdownParent: modalContent ?? 'body',
+            dropdownParent: focusTrappingContainer ?? 'body',
             plugins: {
                 dropdown_input: {},
                 no_backspace_delete: {},
@@ -24,8 +26,8 @@ function initSelect($container) {
 
         const ts = new TomSelect(el, settings);
 
-        if (modalContent) {
-            positionModalSelectDropdown(ts, modalContent);
+        if (focusTrappingContainer) {
+            positionTrappedSelectDropdown(ts, focusTrappingContainer);
         }
 
         ts.control_input.addEventListener('keydown', evt => {
@@ -37,12 +39,16 @@ function initSelect($container) {
     });
 }
 
-function positionModalSelectDropdown(ts, modalContent) {
+/**
+ * The dropdown of a select inside a container that scrolls on its own (a modal, an offcanvas) is positioned
+ * against the viewport and closed when anything under it scrolls, so it never drifts away from its control.
+ */
+function positionTrappedSelectDropdown(ts, container) {
     const listenerOptions = { capture: true, passive: true };
     const scrollTargets = new Set(
         [
-            modalContent.querySelector('.modal-body'),
-            modalContent.closest('.modal'),
+            container.querySelector('.modal-body, .offcanvas-body'),
+            container.closest('.modal'),
             window,
             window.visualViewport,
         ].filter(Boolean),

@@ -1,10 +1,44 @@
 {% set form = filterForm %}
 
+{% macro operatorSwitch(operatorForm, labels) %}
+    {# the choice is rendered by hand as a button group, so the form type keeps offering it as a plain select #}
+    {# a prototype carries no value; the first choice is checked there, the way a browser picks the first option of a select #}
+    {% set selectedValue = operatorForm.vars.value is not empty ? operatorForm.vars.value : operatorForm.vars.choices|first.value %}
+    <div class="btn-group btn-group-sm datagrid-filter__operator-switch" role="group">
+        {% for choice in operatorForm.vars.choices %}
+            {% set choiceId = operatorForm.vars.id ~ '_' ~ loop.index0 %}
+            <input type="radio"
+                   class="btn-check"
+                   autocomplete="off"
+                   name="{{ operatorForm.vars.full_name }}"
+                   id="{{ choiceId }}"
+                   value="{{ choice.value }}"
+                   {% if choice.value == selectedValue %}checked{% endif %}
+            >
+            <label class="btn" for="{{ choiceId }}">{{ labels[choice.value]|default(choice.label) }}</label>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro groupsOperatorSwitch(operatorForm) %}
+    {{ _self.operatorSwitch(operatorForm, {
+        (constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\Data\\FilterGroupData::OPERATOR_AND')): 'All groups'|trans,
+        (constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\Data\\FilterGroupData::OPERATOR_OR')): 'At least one group'|trans,
+    }) }}
+{% endmacro %}
+
+{% macro groupOperatorSwitch(operatorForm) %}
+    {{ _self.operatorSwitch(operatorForm, {
+        (constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\Data\\FilterGroupData::OPERATOR_AND')): 'All conditions'|trans,
+        (constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\Data\\FilterGroupData::OPERATOR_OR')): 'At least one condition'|trans,
+    }) }}
+{% endmacro %}
+
 {% macro ruleFields(fieldsForm) %}
-    <div class="datagrid-filter__operator" style="flex: 0 0 14rem">
+    <div class="datagrid-filter__operator">
         {{ form_widget(fieldsForm.operator) }}
     </div>
-    <div class="flex-grow-1" data-datagrid-filter-target="value">
+    <div class="datagrid-filter__value" data-datagrid-filter-target="value">
         {% if fieldsForm.value is defined %}
             {{ form_widget(fieldsForm.value) }}
             {{ form_errors(fieldsForm.value) }}
@@ -13,45 +47,45 @@
 {% endmacro %}
 
 {% macro rule(ruleForm) %}
-    <div class="d-flex gap-2 align-items-start mb-2" data-datagrid-filter-target="rule">
-        <div style="flex: 0 0 14rem">
+    <div class="datagrid-filter__rule" data-datagrid-filter-target="rule">
+        <div class="datagrid-filter__filter">
             {{ form_widget(ruleForm.filter) }}
         </div>
-        <div class="d-flex gap-2 flex-grow-1" data-datagrid-filter-target="ruleFields">
+        <div class="datagrid-filter__fields" data-datagrid-filter-target="ruleFields">
             {{ _self.ruleFields(ruleForm) }}
         </div>
-        <button type="button" class="btn btn-icon btn-ghost-secondary" data-action="datagrid-filter#removeRule" title="{{ 'Remove rule'|trans }}">
+        <button type="button" class="btn btn-icon btn-ghost-secondary datagrid-filter__rule-remove" data-action="datagrid-filter#removeRule" title="{{ 'Remove rule'|trans }}">
             {{ ux_icon('circle-cross') }}
         </button>
     </div>
 {% endmacro %}
 
 {% macro group(groupForm) %}
-    <div class="border rounded p-2 mb-2" data-datagrid-filter-target="group">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            {{ form_widget(groupForm.operator, { attr: { class: 'form-select form-select-sm w-auto' } }) }}
-            <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm" data-action="datagrid-filter#removeGroup" title="{{ 'Remove group'|trans }}">
+    <div class="datagrid-filter__group" data-datagrid-filter-target="group">
+        <div class="datagrid-filter__group-header">
+            {{ _self.groupOperatorSwitch(groupForm.operator) }}
+            <button type="button" class="btn btn-icon btn-ghost-secondary btn-sm datagrid-filter__group-remove" data-action="datagrid-filter#removeGroup" title="{{ 'Remove group'|trans }}">
                 {{ ux_icon('trash') }}
             </button>
         </div>
-        <div data-datagrid-filter-target="rules">
+        <div class="datagrid-filter__rules" data-datagrid-filter-target="rules">
             {% for ruleForm in groupForm.rules %}
                 {{ _self.rule(ruleForm) }}
             {% endfor %}
         </div>
-        <button type="button" class="btn btn-sm" data-action="datagrid-filter#addRule">
-            {{ ux_icon('circle-plus') }} {{ 'Add rule'|trans }}
+        <button type="button" class="btn btn-sm btn-ghost-primary" data-action="datagrid-filter#addRule">
+            {{ ux_icon('circle-plus') }} {{ 'Add condition'|trans }}
         </button>
     </div>
 {% endmacro %}
 
-<div class="{{ embedded ? '' : 'card mb-3' }}"
+<div class="datagrid-filter{{ embedded ? '' : ' card mb-3' }}"
      data-controller="datagrid-filter"
      data-datagrid-filter-group-prototype-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\DatagridFilterFormType::GROUP_PROTOTYPE_NAME') }}"
      data-datagrid-filter-rule-prototype-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\FilterGroupType::RULE_PROTOTYPE_NAME') }}"
      data-datagrid-filter-prototypes-name-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\Datagrid\\Filter\\Form\\DatagridFilterFormType::PROTOTYPES_NAME') }}"
 >
-    {{ form_start(form) }}
+    {{ form_start(form, { attr: { class: 'datagrid-filter__form' } }) }}
         {# the order and the limit of the grid travel with the filter, the page starts over #}
         {{ gridView.renderHiddenInputs('page') }}
 
@@ -64,11 +98,11 @@
             </div>
         {% endif %}
 
-        <div class="{{ embedded ? '' : 'card-body' }}">
+        <div class="{{ embedded ? 'offcanvas-body' : 'card-body' }}">
             {{ form_errors(form) }}
 
             <div class="mb-2" data-datagrid-filter-target="groupsOperator" {% if form.groups|length < 2 %}hidden{% endif %}>
-                {{ form_widget(form.operator, { attr: { class: 'form-select form-select-sm w-auto' } }) }}
+                {{ _self.groupsOperatorSwitch(form.operator) }}
             </div>
 
             <div data-datagrid-filter-target="groups">
@@ -77,13 +111,21 @@
                 {% endfor %}
             </div>
 
-            <button type="button" class="btn btn-sm" data-action="datagrid-filter#addGroup">
-                {{ ux_icon('circle-plus') }} {{ 'Add group of rules'|trans }}
+            {# an empty filter asks for a condition, not for a group — the group is created along with it #}
+            <div class="datagrid-filter__empty" data-datagrid-filter-target="emptyState" {% if form.groups|length > 0 %}hidden{% endif %}>
+                <p class="text-secondary">{{ 'No condition is composed yet.'|trans }}</p>
+                <button type="button" class="btn btn-primary" data-action="datagrid-filter#addGroup">
+                    {{ ux_icon('circle-plus') }} {{ 'Add condition'|trans }}
+                </button>
+            </div>
+
+            <button type="button" class="btn btn-sm" data-action="datagrid-filter#addGroup" data-datagrid-filter-target="addGroup" {% if form.groups|length == 0 %}hidden{% endif %}>
+                {{ ux_icon('circle-plus') }} {{ 'Add group of conditions'|trans }}
             </button>
         </div>
 
-        <div class="{{ embedded ? 'd-flex justify-content-end gap-2 mt-3' : 'card-footer card-footer-no-bg d-flex justify-content-end gap-2' }}">
-            <a href="{{ gridView.url({ (form.vars.full_name): null }, 'page') }}" class="btn">
+        <div class="{{ embedded ? 'datagrid-filter__footer' : 'card-footer card-footer-no-bg' }} d-flex flex-wrap justify-content-end gap-2">
+            <a href="{{ this.resetUrl }}" class="btn">
                 {{ ux_icon('circle-cross') }} {{ 'Reset filter'|trans }}
             </a>
             <button type="submit" class="btn btn-primary">

@@ -1,0 +1,44 @@
+{#
+The domain filter of a datagrid as a dropdown — for more domains than fit into a row of tabs, and for a
+window too narrow for them.
+
+@var domainConfigs: \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+@var namespace: string
+@var selectedDomainId: int|null
+@var class: string
+#}
+<div class="dropdown datagrid-domain-dropdown {{ class|default('') }}">
+    <a href="#"
+       class="btn dropdown-toggle"
+       data-bs-toggle="dropdown"
+       role="button"
+       aria-label="{{ 'Domain'|trans }}"
+    >
+        <span class="quick-filter-row">
+            {% if selectedDomainId is null %}
+                <span class="quick-filter-icon">{{ ux_icon('world') }}</span>
+                {{ 'All domains'|trans }}
+            {% else %}
+                {{ domain_icon(selectedDomainId) }}
+                {{ getDomainName(selectedDomainId) }}
+            {% endif %}
+        </span>
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item quick-filter-row{% if selectedDomainId is null %} active{% endif %}"
+           href="{{ url('admin_domainfilter_selectdomain', { domainId: null, namespace: namespace }) }}"
+        >
+            <span class="quick-filter-icon">{{ ux_icon('world') }}</span>
+            {{ 'All domains'|trans }}
+        </a>
+
+        {% for domainConfig in domainConfigs %}
+            <a class="dropdown-item quick-filter-row{% if domainConfig.id == selectedDomainId %} active{% endif %}"
+               href="{{ url('admin_domainfilter_selectdomain', { domainId: domainConfig.id, namespace: namespace }) }}"
+            >
+                {{ domain_icon(domainConfig.id) }}
+                {{ domainConfig.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Search\TwigComponent;
 
 use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
+use Shopsys\AdministrationBundle\Component\Datagrid\Url\DatagridNarrowingUrlFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
@@ -24,14 +25,27 @@ final class QuickSearchComponent
     public GridView $gridView;
 
     /**
-     * Rendered inside a card of the page (a tab next to the filter) instead of a card of its own.
+     * Rendered inside the toolbar of the list instead of a card of its own.
      */
     public bool $embedded = false;
 
     private ?FormView $formView = null;
 
+    public function __construct(
+        private readonly DatagridNarrowingUrlFactory $narrowingUrlFactory,
+    ) {
+    }
+
     public function getFormView(): FormView
     {
         return $this->formView ??= $this->quickSearch->form->createView();
+    }
+
+    /**
+     * The listing with the searched text dropped — offered as a cross in the input while something is searched for.
+     */
+    public function getResetUrl(): string
+    {
+        return $this->narrowingUrlFactory->createUrlWithout([$this->quickSearch->form->getName()]);
     }
 }

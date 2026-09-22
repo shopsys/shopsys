@@ -1,0 +1,40 @@
+{#
+The domain filter of a datagrid as a row of tabs the grid opens into. Kept apart from
+`partial/quick_domain_filter.html.twig`, which the administration renders on its own pages.
+
+@var domainConfigs: \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+@var namespace: string
+@var selectedDomainId: int|null
+@var class: string
+#}
+<ul class="nav nav-tabs datagrid-domain-tabs {{ class|default('') }}" role="tablist">
+    <li class="nav-item" role="presentation">
+        {% if selectedDomainId is null %}
+            <span class="nav-link active" aria-current="page">
+                {{ ux_icon('world') }}
+                {{ 'All domains'|trans }}
+            </span>
+        {% else %}
+            <a class="nav-link" href="{{ url('admin_domainfilter_selectdomain', { domainId: null, namespace: namespace }) }}">
+                {{ ux_icon('world') }}
+                {{ 'All domains'|trans }}
+            </a>
+        {% endif %}
+    </li>
+
+    {% for domainConfig in domainConfigs %}
+        <li class="nav-item" role="presentation">
+            {% if domainConfig.id == selectedDomainId %}
+                <span class="nav-link active" aria-current="page">
+                    {{ domain_icon(domainConfig.id) }}
+                    {{ domainConfig.name }}
+                </span>
+            {% else %}
+                <a class="nav-link" href="{{ url('admin_domainfilter_selectdomain', { domainId: domainConfig.id, namespace: namespace }) }}">
+                    {{ domain_icon(domainConfig.id) }}
+                    {{ domainConfig.name }}
+                </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

@@ -47,8 +47,8 @@ $datagrid
 ```
 
 The datagrid renders a text input above the records (the `Admin:Grid:QuickSearch` component, added to the
-`datagrid_controls` block of the CRUD list template; next to a filter it becomes a tab of the same card) and
-narrows the records by `Condition::orX()` of
+`datagrid_controls` block of the CRUD list template, where it shares one row of the toolbar with the button
+opening the filter) and narrows the records by `Condition::orX()` of
 `contains` over every searchable field. The searched text travels in a GET form named `<gridId>_search`,
 so the pager keeps it and the URL can be shared; the order and the limit of the grid travel with the search
 and the page starts over.

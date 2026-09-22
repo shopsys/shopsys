@@ -11,59 +11,64 @@
 {% endblock %}
 
 {% block main_content %}
-    {% block datagrid_controls %}
-        {% if quickSearch is not null or filterForm is not null %}
-            {# a composed filter outranks the quick search, so its tab is the one open; render() hands the form over as its view #}
-            {% set filterActive = filterForm is not null and filterForm.vars.submitted and filterForm.vars.data.hasRules() %}
-            <div class="row row-deck row-cards mb-3">
-                <div class="col-12{{ domainControlScope is not null ? ' col-xl-8' }}">
-                    <div class="card">
-                        {% if quickSearch is not null and filterForm is not null %}
-                            <div class="card-header">
-                                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
-                                    <li class="nav-item">
-                                        <a href="#datagrid-quick-search" class="nav-link{{ not filterActive ? ' active' }}" data-bs-toggle="tab">
-                                            {{ 'Quick search'|trans }}
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#datagrid-filter" class="nav-link{{ filterActive ? ' active' }}" data-bs-toggle="tab">
-                                            {{ 'Filter'|trans }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+    {# the filter narrows the datagrid only once a rule is composed, which is also when the button counts them #}
+    {% set filterActive = filterForm is not null and filterForm.vars.submitted and filterForm.vars.data.hasRules() %}
+    {% set filterRuleCount = filterActive ? filterForm.vars.data.groups|reduce((count, group) => count + group.rules|length, 0) : 0 %}
+    {% set filterPanelId = filterForm is not null ? filterForm.vars.id ~ '_panel' %}
+
+    {# the domain tabs, the toolbar and the grid read as one surface, so they are styled as one shell #}
+    <div class="datagrid-shell">
+        {% block datagrid_controls %}
+            {% if domainControlScope is not null %}
+                {{ component('Admin:Grid:DomainControl', { scope: domainControlScope }) }}
+            {% endif %}
+
+            {% if quickSearch is not null or filterForm is not null %}
+                <div class="card datagrid-toolbar">
+                    <div class="card-body datagrid-toolbar__row">
+                        {% if quickSearch is not null %}
+                            {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid, embedded: true }) }}
                         {% endif %}
-                        <div class="card-body">
-                            <div class="tab-content">
-                                {% if quickSearch is not null %}
-                                    <div class="tab-pane{{ not filterActive ? ' active show' }}" id="datagrid-quick-search">
-                                        {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid, embedded: true }) }}
-                                    </div>
+
+                        {% if filterForm is not null %}
+                            {# the panel only hides the composed rules, it never drops them — that is what the bar of active conditions is for #}
+                            <button type="button"
+                                    class="btn datagrid-toolbar__filter-toggle"
+                                    data-bs-toggle="offcanvas"
+                                    data-bs-target="#{{ filterPanelId }}"
+                                    aria-controls="{{ filterPanelId }}"
+                            >
+                                {{ ux_icon('filter') }}
+                                {{ 'Advanced filter'|trans }}
+                                {% if filterRuleCount > 0 %}
+                                    <span class="badge bg-blue-lt text-blue-lt-fg">{{ filterRuleCount }}</span>
                                 {% endif %}
-                                {% if filterForm is not null %}
-                                    <div class="tab-pane{{ filterActive or quickSearch is null ? ' active show' }}" id="datagrid-filter">
-                                        {{ component('Admin:Grid:Filters', { filterForm: filterForm, gridView: grid, embedded: true }) }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
+                            </button>
+                        {% endif %}
                     </div>
+
+                    {{ component('Admin:Grid:ActiveFilters', {
+                        filterForm: filterForm,
+                        quickSearch: quickSearch,
+                        filterActive: filterActive,
+                    }) }}
                 </div>
-                {% if domainControlScope is not null %}
-                    <div class="col-12 col-xl-4">
-                        <div class="card">
-                            <div class="card-body d-grid align-items-center row-gap-2 column-gap-3" style="grid-template-columns: auto minmax(0, 1fr)">
-                                {{ component('Admin:Grid:DomainControl', { scope: domainControlScope, select: true }) }}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
+            {% endif %}
+        {% endblock %}
+
+        {{ grid.render }}
+    </div>
+
+    {% block datagrid_filter_panel %}
+        {% if filterForm is not null %}
+            {# the filter slides in from the side of the page, so the records stay where they are while it is composed #}
+            <div class="offcanvas offcanvas-end datagrid-filter-panel" tabindex="-1" id="{{ filterPanelId }}" aria-labelledby="{{ filterPanelId }}_title">
+                <div class="offcanvas-header">
+                    <h2 class="offcanvas-title" id="{{ filterPanelId }}_title">{{ 'Advanced filter'|trans }}</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                {{ component('Admin:Grid:Filters', { filterForm: filterForm, gridView: grid, embedded: true }) }}
             </div>
-        {% elseif domainControlScope is not null %}
-            {{ component('Admin:Grid:DomainControl', { scope: domainControlScope }) }}
         {% endif %}
     {% endblock %}
-
-    {{ grid.render }}
 {% endblock %}

@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\TwigComp
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
@@ -26,12 +27,12 @@ final class DomainControlComponent
     public DomainControlScope $scope;
 
     /**
-     * The domain filter as a compact select (next to the search of the list) instead of the row of tabs.
+     * @param int $maxDomainsRenderedAsTabs Above this many domains the row of tabs is wider than any window, so the choice is offered as a dropdown
      */
-    public bool $select = false;
-
     public function __construct(
         private readonly Domain $domain,
+        #[Autowire(param: 'shopsys.administration.datagrid.max_domains_rendered_as_tabs')]
+        private readonly int $maxDomainsRenderedAsTabs,
     ) {
     }
 
@@ -44,5 +45,13 @@ final class DomainControlComponent
             $this->domain->getAdminEnabledDomains(),
             fn (DomainConfig $domainConfig): bool => in_array($domainConfig->getId(), $this->scope->domainIds, true),
         ));
+    }
+
+    /**
+     * Whether the domains are few enough to be offered as a row of tabs; the dropdown carries them otherwise.
+     */
+    public function fitsIntoTabs(): bool
+    {
+        return count($this->getDomainConfigs()) <= $this->maxDomainsRenderedAsTabs;
     }
 }

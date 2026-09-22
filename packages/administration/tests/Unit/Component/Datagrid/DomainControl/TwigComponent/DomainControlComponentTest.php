@@ -49,17 +49,28 @@ final class DomainControlComponentTest extends TestCase
         $this->assertCount(2, $component->getDomainConfigs());
     }
 
+    public function testTooManyDomainsForTheRowOfTabsAreOfferedAsDropdown(): void
+    {
+        $scope = new DomainControlScope(DomainControlType::FILTER, [1, 2, 3], null, 'crud_test');
+
+        $this->assertTrue($this->createComponent([1, 2, 3], $scope, 3)->fitsIntoTabs());
+        $this->assertFalse($this->createComponent([1, 2, 3], $scope, 2)->fitsIntoTabs());
+    }
+
     /**
      * @param int[] $adminEnabledDomainIds
      */
-    private function createComponent(array $adminEnabledDomainIds, DomainControlScope $scope): DomainControlComponent
-    {
+    private function createComponent(
+        array $adminEnabledDomainIds,
+        DomainControlScope $scope,
+        int $maxDomainsRenderedAsTabs = 6,
+    ): DomainControlComponent {
         $domainStub = $this->createStub(Domain::class);
         $domainStub->method('getAdminEnabledDomains')->willReturn(
             array_map(fn (int $domainId): DomainConfig => $this->createDomainConfig($domainId), $adminEnabledDomainIds),
         );
 
-        $component = new DomainControlComponent($domainStub);
+        $component = new DomainControlComponent($domainStub, $maxDomainsRenderedAsTabs);
         $component->scope = $scope;
 
         return $component;
