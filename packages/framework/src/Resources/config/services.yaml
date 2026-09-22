@@ -158,6 +158,7 @@ services:
     Shopsys\FrameworkBundle\Component\Cron\SentryCronMonitorFacade:
         arguments:
             $logger: '@monolog.logger.cron'
+            $cronMonitoringEnabled: '%env(bool:SENTRY_CRON_MONITORING_ENABLED)%'
 
     Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig:
         arguments:

@@ -115,6 +115,7 @@ The `shopsys.cron` tag supports these monitoring attributes:
 Things to be aware of:
 
 - check-ins are only sent when Sentry is configured via the `SENTRY_DSN` environment variable; without a DSN, they are no-ops
+- check-ins can be switched off for a whole installation with `SENTRY_CRON_MONITORING_ENABLED=0` while error reporting stays on — use it in review or CI environments where many instances would share one Sentry environment and flood the monitors with overlapping check-ins
 - the monitor schedule is evaluated in the `shopsys.cron_timezone` timezone (the server timezone when the parameter is not set), the same timezone used for evaluating cron expressions
 - modules within one instance run sequentially, so a module can start several minutes after its scheduled time when earlier modules run long — set `sentryCheckinMargin` generously for modules with a fixed schedule time
 - the minute field of a monitored module's cron expression must align with the instance's `run_every_min` grid — for example, `7 * * * *` never runs with `run_every_min: 5`, yet Sentry would expect a check-in every hour and report it as missed

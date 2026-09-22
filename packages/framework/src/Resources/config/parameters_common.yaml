@@ -6,6 +6,8 @@ parameters:
     env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
     env(MAILER_FORCE_WHITELIST): 0
     env(REDIS_PREFIX): ''
+    # Set to 0 to stop sending Sentry cron check-ins (e.g. in review environments where many instances share one Sentry environment)
+    env(SENTRY_CRON_MONITORING_ENABLED): '1'
 
     # Seed for demo data generation
     faker.seed: 1234
