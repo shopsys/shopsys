@@ -1,5 +1,5 @@
 const ORDER_CONFIRMATION_CONTEXT_STORAGE_KEY = 'orderConfirmationContext';
-const ORDER_CONFIRMATION_CONTEXT_TTL_IN_MS = 30 * 60 * 1000;
+const ORDER_CONFIRMATION_CONTEXT_TTL_IN_MS = 60 * 60 * 1000;
 
 type OrderConfirmationContext = {
     orderUrlHash: string;

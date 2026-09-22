@@ -9,6 +9,7 @@ import { OperationResult } from 'urql';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { storeAuthNotification } from 'utils/auth/authNotificationStorage';
 import { performAuthHardNavigation } from 'utils/auth/performAuthHardNavigation';
+import { clearOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 type LoginHandler = (
@@ -50,6 +51,7 @@ export const useHandleActionsAfterLogin = () => {
     const handleActionsAfterLogin = (showCartMergeInfo: boolean, rewriteUrl: string | undefined) => {
         updateCartUuid(null);
         updateProductListUuids({});
+        clearOrderConfirmationContext();
 
         storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');
@@ -70,6 +72,7 @@ export const useLoginAfterPasswordRecovery = () => {
     const handleActionsAfterPasswordRecovery = (showCartMergeInfo: boolean) => {
         updateCartUuid(null);
         updateProductListUuids({});
+        clearOrderConfirmationContext();
 
         storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');

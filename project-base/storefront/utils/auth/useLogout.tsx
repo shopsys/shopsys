@@ -4,6 +4,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { storeAuthNotification } from 'utils/auth/authNotificationStorage';
 import { performAuthHardNavigation } from 'utils/auth/performAuthHardNavigation';
+import { clearOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const useLogout = () => {
@@ -19,6 +20,7 @@ export const useLogout = () => {
 
         if (logoutResult.data?.Logout) {
             resetContactInformation();
+            clearOrderConfirmationContext();
             updateProductListUuids({});
             storeAuthNotification(domainConfig.domainId, 'logout');
 

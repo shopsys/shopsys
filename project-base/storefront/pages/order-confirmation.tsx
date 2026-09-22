@@ -1,5 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
@@ -74,10 +75,12 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                 >
                     <Webline>
                         <ConfirmationPageContent
-                            content={t('Please check your order confirmation e-mail or sign in to your account.')}
-                            heading={t('Order confirmation can no longer be displayed.')}
-                            headingIcon={WarningIcon}
-                            headingVariant="error"
+                            content={t(
+                                'It took a while, so for security reasons this page no longer shows the order details. If you have completed the payment, it will be processed automatically. You will find all the details in the order confirmation e-mail, or after signing in to your account.',
+                            )}
+                            heading={t('Your order is fine, but we can no longer show it here.')}
+                            headingIcon={InfoIcon}
+                            headingVariant="info"
                         />
                     </Webline>
                 </CommonLayout>
