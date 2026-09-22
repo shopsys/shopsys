@@ -1,4 +1,4 @@
-import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
+import { CollapsibleDescription } from 'components/Blocks/CollapsibleDescription/CollapsibleDescription';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
@@ -43,14 +43,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
     return (
         <VerticalStack gap="md">
-            <CollapsibleDescriptionWithImage
-                currentPage={currentPage}
-                description={category.description}
-                imageName={category.images[0]?.name || category.name}
-                imageUrl={category.images[0]?.url}
-                textClassName="max-w-5xl"
-                title={title}
-            />
+            <CollapsibleDescription currentPage={currentPage} description={category.description} title={title} />
 
             <SimpleNavigation
                 isWithoutSlider
