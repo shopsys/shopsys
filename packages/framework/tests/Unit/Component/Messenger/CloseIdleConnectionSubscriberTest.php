@@ -6,10 +6,9 @@ namespace Tests\FrameworkBundle\Unit\Component\Messenger;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
-use Override;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Redis;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Messenger\CloseIdleConnectionSubscriber;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Symfony\Component\Messenger\Event\WorkerRunningEvent;
@@ -17,32 +16,13 @@ use Symfony\Component\Messenger\Worker;
 
 class CloseIdleConnectionSubscriberTest extends TestCase
 {
-    private ManagerRegistry|MockObject $managerRegistryMock;
-
-    private RedisFacade|MockObject $redisFacadeMock;
-
-    private CloseIdleConnectionSubscriber $subscriber;
-
-    #[Override]
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->managerRegistryMock = $this->createMock(ManagerRegistry::class);
-        $this->redisFacadeMock = $this->createMock(RedisFacade::class);
-        $this->subscriber = new CloseIdleConnectionSubscriber($this->managerRegistryMock, $this->redisFacadeMock);
-    }
-
     public function testGetSubscribedEvents(): void
     {
-        $this->managerRegistryMock->expects($this->never())->method('getConnections');
-        $this->redisFacadeMock->expects($this->never())->method('getConnections');
-
         $expected = [
             WorkerRunningEvent::class => 'onWorkerRunning',
         ];
 
-        $this->assertEquals($expected, iterator_to_array(CloseIdleConnectionSubscriber::getSubscribedEvents()));
+        $this->assertEquals($expected, iterator_to_array(ExtendedClassNameResolver::resolve(CloseIdleConnectionSubscriber::class)::getSubscribedEvents()));
     }
 
     public function testWhenWorkerIsIdle(): void
@@ -52,12 +32,14 @@ class CloseIdleConnectionSubscriberTest extends TestCase
 
         $redisConnection = $this->createMock(Redis::class);
 
-        $this->managerRegistryMock
+        $managerRegistryMock = $this->createMock(ManagerRegistry::class);
+        $managerRegistryMock
             ->expects($this->once())
             ->method('getConnections')
             ->willReturn([$dbConnection1, $dbConnection2]);
 
-        $this->redisFacadeMock
+        $redisFacadeMock = $this->createMock(RedisFacade::class);
+        $redisFacadeMock
             ->expects($this->once())
             ->method('getConnections')
             ->willReturn([$redisConnection]);
@@ -77,22 +59,45 @@ class CloseIdleConnectionSubscriberTest extends TestCase
         $worker = $this->createStub(Worker::class);
         $event = new WorkerRunningEvent($worker, true);
 
-        $this->subscriber->onWorkerRunning($event);
+        $this->createSubscriber($managerRegistryMock, $redisFacadeMock)->onWorkerRunning($event);
     }
 
     public function testWhenWorkerIsNotIdle(): void
     {
-        $this->managerRegistryMock
+        $managerRegistryMock = $this->createMock(ManagerRegistry::class);
+        $managerRegistryMock
             ->expects($this->never())
             ->method('getConnections');
 
-        $this->redisFacadeMock
+        $redisFacadeMock = $this->createMock(RedisFacade::class);
+        $redisFacadeMock
             ->expects($this->never())
             ->method('getConnections');
 
         $worker = $this->createStub(Worker::class);
         $event = new WorkerRunningEvent($worker, false);
 
-        $this->subscriber->onWorkerRunning($event);
+        $this->createSubscriber($managerRegistryMock, $redisFacadeMock)->onWorkerRunning($event);
+    }
+
+    public function testOnlyInitializedLazyRedisProxiesAreClosed(): void
+    {
+        $neverUsedRedis = new LazyRedisProxyStub(initialized: false);
+        $usedRedis = new LazyRedisProxyStub(initialized: true);
+
+        $redisFacadeStub = $this->createStub(RedisFacade::class);
+        $redisFacadeStub->method('getConnections')->willReturn([$neverUsedRedis, $usedRedis]);
+
+        $this->createSubscriber($this->createStub(ManagerRegistry::class), $redisFacadeStub)->onWorkerRunning(new WorkerRunningEvent($this->createStub(Worker::class), true));
+
+        $this->assertFalse($neverUsedRedis->closed, 'closing a never used lazy proxy would connect it first');
+        $this->assertTrue($usedRedis->closed);
+    }
+
+    private function createSubscriber(
+        ManagerRegistry $managerRegistry,
+        RedisFacade $redisFacade,
+    ): CloseIdleConnectionSubscriber {
+        return new CloseIdleConnectionSubscriber($managerRegistry, $redisFacade);
     }
 }
