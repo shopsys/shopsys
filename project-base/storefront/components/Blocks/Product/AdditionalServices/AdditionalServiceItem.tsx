@@ -4,6 +4,7 @@ import {
     AdditionalServiceLabel,
 } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceLabel';
 import {
+    AdditionalServiceAccessiblePrice,
     AdditionalServiceAddOnPrice,
     AdditionalServiceCartPrice,
 } from 'components/Blocks/Product/AdditionalServices/AdditionalServicePrice';
@@ -12,6 +13,7 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TIDs } from 'cypress/tids';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
 type AdditionalServiceDescriptionButtonProps = {
@@ -80,6 +82,7 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
 }) => {
     const priceWithVat = additionalService.price.priceWithVat;
     const checkboxId = `additional-service-${checkboxInstanceId}-${additionalService.uuid}`;
+    const priceDescriptionId = `${checkboxId}-price`;
     const isSelectedInCart = isInCartList === true && isSelected && quantity !== undefined;
     const isTotalPriceShown = showSelectedServiceTotalPrice === true && isSelected;
     const isUnitShown = isSelected ? !isTotalPriceShown : showSelectedServiceTotalPrice === true;
@@ -121,6 +124,7 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
                 )}
             >
                 <Checkbox
+                    aria-describedby={isPriceVisible(priceWithVat) ? priceDescriptionId : undefined}
                     disabled={isDisabled}
                     id={checkboxId}
                     label={<span aria-hidden="true" />}
@@ -128,6 +132,16 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
                     name={checkboxId}
                     value={isSelected}
                     onChange={() => onToggleService(additionalService, !isSelected)}
+                />
+
+                <AdditionalServiceAccessiblePrice
+                    id={priceDescriptionId}
+                    isSelectedInCart={isSelectedInCart}
+                    isTotalPriceShown={isTotalPriceShown}
+                    priceWithVat={priceWithVat}
+                    quantity={quantity}
+                    showUnit={isUnitShown}
+                    unitName={unitName}
                 />
 
                 <AdditionalServiceImageLabel

@@ -94,6 +94,7 @@ describe('AdditionalServices', () => {
         expect(descriptionButton).toHaveAttribute('data-tooltip-label', 'Show additional service description');
 
         const checkbox = screen.getByRole('checkbox', { name: /Service 1/ });
+        expect(checkbox).toHaveAccessibleDescription('Price: €10');
         const checkboxLabel = checkbox.parentElement?.querySelector('label');
         const checkboxVisual = checkboxLabel?.children[0];
         const serviceName = screen.getByText('Service 1');
@@ -298,6 +299,7 @@ describe('AdditionalServices', () => {
 
         expect(screen.queryByText('(€10)')).not.toBeInTheDocument();
         const checkbox = screen.getByRole('checkbox', { name: /Service 1/ });
+        expect(checkbox).toHaveAccessibleDescription('Price: 3 × €10 / pcs, €30');
         const checkboxVisual = checkbox.parentElement?.querySelector('label')?.children[0];
         expect(checkbox).toBeChecked();
         expect(checkboxVisual).toHaveClass('size-5', 'border-input-border-active', 'bg-input-fill');
