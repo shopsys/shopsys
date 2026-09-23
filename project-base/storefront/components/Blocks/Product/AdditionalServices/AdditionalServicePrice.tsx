@@ -1,4 +1,5 @@
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -84,5 +85,45 @@ export const AdditionalServiceCartPrice: FC<AdditionalServiceCartPriceProps> = (
                 </span>
             </span>
         </>
+    );
+};
+
+type AdditionalServiceAccessiblePriceProps = {
+    id: string;
+    isSelectedInCart: boolean;
+    isTotalPriceShown: boolean;
+    priceWithVat: string;
+    quantity?: number;
+    showUnit: boolean;
+    unitName: string;
+};
+
+export const AdditionalServiceAccessiblePrice: FC<AdditionalServiceAccessiblePriceProps> = ({
+    id,
+    isSelectedInCart,
+    isTotalPriceShown,
+    priceWithVat,
+    quantity,
+    showUnit,
+    unitName,
+}) => {
+    const formatPrice = useFormatPrice();
+    const { t } = useTranslation();
+
+    if (!isPriceVisible(priceWithVat)) {
+        return null;
+    }
+
+    const totalPrice = quantity === undefined ? priceWithVat : mapPriceForCalculations(priceWithVat) * quantity;
+    const displayedPrice = isTotalPriceShown ? totalPrice : priceWithVat;
+    const unitPrice = showUnit ? ` / ${unitName}` : '';
+    const priceDescription = isSelectedInCart
+        ? `${quantity} × ${formatPrice(priceWithVat)} / ${unitName}, ${formatPrice(totalPrice)}`
+        : `${formatPrice(displayedPrice)}${unitPrice}`;
+
+    return (
+        <span className="sr-only" id={id}>
+            {t('Price')}: {priceDescription}
+        </span>
     );
 };
