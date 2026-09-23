@@ -33,7 +33,7 @@ describe('Payment Select Tests', () => {
 
     it('[Select Payment] should select payment on delivery', function () {
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         checkCanGoToNextOrderStep();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after payment selection', {
@@ -50,11 +50,11 @@ describe('Payment Select Tests', () => {
 
     it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', function () {
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeSelectionOfPaymentByName(translations.payment.creditCard);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         checkCanGoToNextOrderStep();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after changing payment selection', {
@@ -71,7 +71,7 @@ describe('Payment Select Tests', () => {
 
     it('[Remove Payment Repeated Click] should remove payment using repeated clicks', function () {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -82,7 +82,7 @@ describe('Payment Select Tests', () => {
         });
 
         changeSelectionOfPaymentByName(translations.payment.creditCard);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -95,7 +95,7 @@ describe('Payment Select Tests', () => {
 
     it('[Remove Payment Button Click] should remove payment using reset button', function () {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -106,7 +106,7 @@ describe('Payment Select Tests', () => {
         });
 
         removePaymentSelectionUsingButton();
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -119,7 +119,7 @@ describe('Payment Select Tests', () => {
 
     it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', function () {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -130,7 +130,7 @@ describe('Payment Select Tests', () => {
         });
 
         removeTransportSelectionUsingButton();
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing transport', {
             blackout: [
@@ -141,7 +141,7 @@ describe('Payment Select Tests', () => {
         });
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(),

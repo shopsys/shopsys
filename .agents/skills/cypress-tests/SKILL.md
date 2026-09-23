@@ -376,6 +376,14 @@ each `TIDs.expected_delivery_date_message` element with `staticData.expectedDeli
 `staticData.expectedPersonalPickupDateMessage` when the element's real text starts with the translated
 "Personal pickup" prefix (the delivery vs. pickup wording is deterministic, so snapshots keep it truthful).
 
+## Transport and payment readiness
+
+`waitForTransportAndPaymentToBeInteractive(paymentState)` requires the expected payment-section state:
+use `'absent'` when no transport is selected, and `'available'` when the payment section must be visible
+with enabled radio inputs. Deselecting only the payment keeps the section `'available'`.
+Do not infer this state from a one-time DOM lookup: an exiting payment section can still be mounted
+while its removal animation is running.
+
 ## Known Gotcha: .within() + waitForStableAndInteractiveDOM
 
 **NEVER** call `cy.waitForStableAndInteractiveDOM()` inside `.within()` — it does `cy.get('body[data-hydrated="true"]')` which fails when scoped to a non-body element.
