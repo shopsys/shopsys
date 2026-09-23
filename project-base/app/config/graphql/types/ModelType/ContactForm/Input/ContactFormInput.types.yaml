@@ -2,3 +2,10 @@ ContactFormInput:
     type: input-object
     inherits:
         - 'ContactFormInputDecorator'
+    config:
+        fields:
+            # honey pot of SpamProtectedFormEnum::getHoneyPotFieldNameIndexedByFormName(),
+            # nullable and unvalidated on purpose and the mutation never reads it
+            subject:
+                type: "String"
+                description: "Subject of the message"

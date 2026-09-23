@@ -1,6 +1,8 @@
+import { HoneyPotInput } from 'components/Forms/HoneyPot/HoneyPotInput';
 import { FormHTMLAttributes, KeyboardEvent, SubmitEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { HoneyPot } from 'utils/forms/honeyPot';
 import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -12,6 +14,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type FormProps = NativeProps & {
     formName: string;
+    honeyPot?: HoneyPot;
     preventEnterSubmission?: boolean;
 };
 
@@ -22,6 +25,7 @@ export const Form: FC<FormProps> = ({
     className,
     tid,
     formName,
+    honeyPot,
     preventEnterSubmission = false,
     onKeyDown,
 }) => {
@@ -60,6 +64,7 @@ export const Form: FC<FormProps> = ({
             onKeyDown={handleKeyDown}
             onSubmit={controlledOnSubmitHandler}
         >
+            {honeyPot !== undefined && <HoneyPotInput fieldName={honeyPot.fieldName} />}
             {children}
         </form>
     );

@@ -209,11 +209,6 @@ class GetFilteredStoresTest extends GraphQlTestCase
 
     public function testStoresSearchRateLimitIsConsumedOnlyWhenSearchTextIsFilled(): void
     {
-        $this->configureCurrentClient(null, null, [
-            'CONTENT_TYPE' => 'application/graphql',
-            'REMOTE_ADDR' => sprintf('10.255.%d.%d', random_int(0, 255), random_int(1, 254)),
-        ]);
-
         for ($attempt = 0; $attempt < self::STORES_SEARCH_RATE_LIMIT; $attempt++) {
             $this->getResponseEdges(searchText: '');
         }

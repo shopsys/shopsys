@@ -15,6 +15,8 @@ export type TypeContactFormInput = {
   message: string;
   /** Name of the sender */
   name: string;
+  /** Subject of the message */
+  subject?: string | null | undefined;
 };
 
 export type TypeContactFormMutationVariables = Exact<{

@@ -50,11 +50,11 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         cy.reloadAndWaitForStableAndInteractiveDOM();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first change and refresh', {
@@ -66,15 +66,15 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         });
 
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         chooseTransportPersonalCollectionAndStore(
             staticData.transport.personalCollection.storePardubice.uuid,
             translations.transport.personalCollection,
             translations.transportGroup.pickupPoint,
         );
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeSelectionOfPaymentByName(translations.payment.cash);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         cy.reloadAndWaitForStableAndInteractiveDOM();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second change and refresh', {

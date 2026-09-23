@@ -92,7 +92,7 @@ describe('Gift Voucher Tests (SSP-4184)', () => {
 
         cy.getByTID([TIDs.pages_order_email_gift_voucher_info]).should('be.visible');
         cy.getByTID([TIDs.pages_order_email_gift_voucher_description]).should('be.visible').and('not.be.empty');
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         cy.getByTID([TIDs.pages_order_transport])
             .find(`input[name="transport"][value="${staticData.transport.email.uuid}"]`)
             .should('not.exist');

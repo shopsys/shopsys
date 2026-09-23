@@ -35,7 +35,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -57,7 +57,7 @@ describe('Transport Select Tests', () => {
             translations.transport.personalCollection,
             translations.transportGroup.pickupPoint,
         );
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -87,7 +87,7 @@ describe('Transport Select Tests', () => {
             translations.transport.personalCollection,
         );
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
 
         cy.getByTID([TIDs.pages_order_payment]).should('be.visible');
         cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name]).should(
@@ -124,7 +124,7 @@ describe('Transport Select Tests', () => {
             });
 
         cy.realPress('{enter}');
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         cy.getByTID([TIDs.pages_order_payment]).should('be.visible');
     });
 
@@ -133,11 +133,11 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting, deselecting, and selecting again', {
             blackout: [
@@ -153,7 +153,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -164,7 +164,7 @@ describe('Transport Select Tests', () => {
         });
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -180,7 +180,7 @@ describe('Transport Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
@@ -191,7 +191,7 @@ describe('Transport Select Tests', () => {
         });
 
         removeTransportSelectionUsingButton();
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('absent');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
@@ -251,7 +251,7 @@ describe('Transport Select Tests', () => {
 
         goToNextOrderStep();
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
-        waitForTransportAndPaymentToBeInteractive();
+        waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page with enough products', {
             blackout: [

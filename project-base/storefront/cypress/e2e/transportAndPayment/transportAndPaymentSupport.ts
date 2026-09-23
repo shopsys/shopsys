@@ -86,17 +86,18 @@ const checkTransportSectionIsInteractive = () => {
     });
 };
 
-export const waitForTransportAndPaymentToBeInteractive = () => {
+export const waitForTransportAndPaymentToBeInteractive = (paymentState: 'absent' | 'available') => {
     cy.getByTID([TIDs.loader_overlay], { timeout: 10000 }).should('not.exist');
     checkTransportSectionIsInteractive();
 
-    cy.get('body').then(($body) => {
-        const paymentSectionSelector = `[data-tid=${TIDs.pages_order_payment}]`;
+    if (paymentState === 'absent') {
+        cy.getByTID([TIDs.pages_order_payment]).should('not.exist');
 
-        if ($body.find(paymentSectionSelector).length > 0) {
-            checkSectionHasEnabledRadios(TIDs.pages_order_payment);
-        }
-    });
+        return;
+    }
+
+    cy.getByTID([TIDs.pages_order_payment]).should('be.visible');
+    checkSectionHasEnabledRadios(TIDs.pages_order_payment);
 };
 
 export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {

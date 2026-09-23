@@ -31,6 +31,7 @@ const ApplicationErrors = {
     'register-by-order-is-not-possible': 'flash-message',
     'store-not-found': 'flash-message',
     'too-many-code-application-attempts': 'flash-message',
+    'too-many-form-submissions': 'flash-message',
     'too-many-login-attempts': 'flash-message',
     'too-many-password-recovery-attempts': 'flash-message',
     'too-many-store-search-attempts': 'flash-message',

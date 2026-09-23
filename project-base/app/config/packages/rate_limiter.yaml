@@ -5,6 +5,12 @@ framework:
             limit: 5
             interval: '1 minute'
             cache_pool: apply_code_to_cart_rate_limiter_cache
+        # one configuration shared by every form protected by FormSpamProtectionFacade, the quota is counted per form and IP address
+        frontend_api_form_spam_protection:
+            policy: fixed_window
+            limit: 3
+            interval: '5 minutes'
+            cache_pool: form_spam_protection_rate_limiter_cache
         frontend_api_password_recovery_email:
             policy: sliding_window
             limit: 10

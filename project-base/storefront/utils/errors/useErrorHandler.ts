@@ -49,7 +49,11 @@ export function useErrorHandler<TFormValues extends FieldValues = FieldValues>(
                 switch (decision.action) {
                     case 'toast':
                         showErrorMessage(
-                            decision.origin === 'application' && customMessage ? customMessage : decision.message,
+                            // customMessage is only a fallback for errors that have no message of their own,
+                            // otherwise it would hide the mapped message of a known error code
+                            decision.origin === 'application' && decision.errorType === 'default' && customMessage
+                                ? customMessage
+                                : decision.message,
                             context.gtmOrigin,
                             {
                                 errorType: decision.errorType,
