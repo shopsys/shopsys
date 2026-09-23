@@ -47,12 +47,6 @@ parameters:
             path: packages/framework/src/Component/Deprecations/DeprecationHelper.php
         -
             identifier: shipmonk.deadProperty.neverRead
-            path: packages/framework/src/Component/EntityLog/Attribute/EntityLogIdentify.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/EntityLog/Attribute/Loggable.php
-        -
-            identifier: shipmonk.deadProperty.neverRead
             path: packages/framework/src/Component/EntityLog/ChangeSet/CollectionChanges.php
         -
             identifier: shipmonk.deadConstant
