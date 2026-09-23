@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useRef } from 'react';
 import { useHashNavigation } from 'utils/ui/useHashNavigation';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -16,8 +16,14 @@ const HashNavigation = () => {
     return (
         <>
             <a href="#reviews">Reviews</a>
-            <section ref={parametersRef}>Parameters</section>
-            <section ref={reviewsRef}>Reviews section</section>
+            <section ref={parametersRef} tabIndex={-1}>
+                Parameters
+            </section>
+            <section ref={reviewsRef} tabIndex={-1}>
+                <h2 tabIndex={-1}>Reviews</h2>
+                <span>Reviews section</span>
+                <button type="button">First review action</button>
+            </section>
             <output>{activeSection}</output>
         </>
     );
@@ -39,5 +45,16 @@ describe('useHashNavigation', () => {
         expect(window.location.hash).toBe('#reviews');
         expect(screen.getByRole('status')).toHaveTextContent('reviews');
         expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
+        expect(screen.getByRole('heading', { name: 'Reviews' })).toHaveFocus();
+    });
+
+    test('moves focus to the linked section after opening a URL with a hash', async () => {
+        window.history.replaceState(null, '', '#reviews');
+
+        render(<HashNavigation />);
+
+        await waitFor(() => expect(screen.getByRole('heading', { name: 'Reviews' })).toHaveFocus());
+
+        expect(scrollIntoViewMock).toHaveBeenCalledWith({ block: 'start' });
     });
 });

@@ -20,6 +20,7 @@ export const ProductDetailOverviewSection = ({ description, sectionRef }: Produc
             data-tid={`${TIDs.product_detail_section_}${PRODUCT_DETAIL_SECTIONS_IDS.overview}`}
             id={PRODUCT_DETAIL_SECTIONS_IDS.overview}
             ref={sectionRef}
+            tabIndex={-1}
         >
             <Webline width="vl">
                 <ProductDetailSectionHeading>{t('Overview')}</ProductDetailSectionHeading>
