@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\ProductReview\Image;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
-use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -15,7 +14,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
-#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[LoggableChild]
 #[ORM\Table(name: 'product_review_images')]
 #[ORM\Entity]
 class ProductReviewImage

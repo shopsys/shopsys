@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Order\Item;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -31,7 +30,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \App\Model\Product\Product|null getProductGift()
  */
 #[AsMcpTable]
-#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[LoggableChild]
 #[ORM\Table(name: 'order_items')]
 #[ORM\Entity]
 class OrderItem extends BaseOrderItem

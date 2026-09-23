@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
-use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -19,7 +18,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
-#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[LoggableChild]
 #[ORM\Table(name: 'payment_transactions')]
 #[ORM\Entity]
 class PaymentTransaction

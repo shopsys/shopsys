@@ -15,7 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
-#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
+#[Loggable]
 #[ORM\Table(name: 'gift_vouchers')]
 #[ORM\Index(columns: ['domain_id'])]
 #[ORM\Entity]

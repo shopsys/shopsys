@@ -36,7 +36,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use SortDirection;
 
 #[AsMcpTable]
-#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
+#[Loggable]
 #[ORM\Table(name: 'orders')]
 #[ORM\Entity]
 class Order implements DomainSeparatedEntityInterface

@@ -12,7 +12,7 @@ The principle of use will be described on these examples.
 
 The attributes `Loggable` and `LoggableChild` are used to mark the entity to be logged.
 Both of these attributes have logging strategy settings available.
-If I want to log all properties in the base, I use the `Loggable(Loggable::STRATEGY_INCLUDE_ALL)` strategy.
+If I want to log all properties in the base, I use plain `Loggable`, which uses the default `Loggable::STRATEGY_INCLUDE_ALL` strategy.
 If I would like to not log certain properties, I can mark them with the `ExcludeLog` attribute.
 Conversely, if I want to log only a few properties from an entity, it would be better to use the `Loggable(Loggable::STRATEGY_EXCLUDE_ALL)` strategy and then mark which properties I want to log using the `Log` attribute.
 
@@ -23,7 +23,7 @@ Conversely, if I want to log only a few properties from an entity, it would be b
 ```php
 #[ORM\Table(name: 'orders')]
 #[ORM\Entity]
-#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
+#[Loggable]
 class Order
 {
     ...
@@ -34,7 +34,7 @@ or
 ```php
 #[ORM\Table(name: 'order_items')]
 #[ORM\Entity]
-#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[LoggableChild]
 class OrderItem
 {
     ...
@@ -51,7 +51,7 @@ In the case of OrderItem, it's the `$order` property.
 ```php
 #[ORM\Table(name: 'order_items')]
 #[ORM\Entity]
-#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[LoggableChild]
 class OrderItem
 {
     ...
@@ -77,7 +77,7 @@ Some entities are translatable and you need to mark them like this: `EntityLogId
 In the background, the administration locale is inserted when such a method is called.
 
 ```php
-#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
+#[LoggableChild]
 class OrderItem
 {
     ...
