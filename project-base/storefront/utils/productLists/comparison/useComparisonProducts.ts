@@ -1,25 +1,35 @@
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
-import { useEffect, useRef, useState } from 'react';
+import { TypeProductListTypeEnum } from 'graphql/types';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 import { mobileFirstSizes } from 'utils/mediaQueries';
-import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
+
+const subscribeToResize = (onChange: () => void) => {
+    window.addEventListener('resize', onChange);
+    return () => window.removeEventListener('resize', onChange);
+};
+const getIsDesktop = () => window.innerWidth >= mobileFirstSizes.md;
+const getServerIsDesktop = () => true;
 
 export const useComparisonProducts = (
     comparedProducts: TypeProductInProductListFragment[],
     onMoveProduct?: (productUuid: string, afterProductUuid: string | null) => Promise<boolean>,
 ) => {
-    const { width } = useGetWindowSize();
+    const isDesktop = useSyncExternalStore(subscribeToResize, getIsDesktop, getServerIsDesktop);
     const [productOrder, setProductOrder] = useState<string[]>([]);
     const latestOrder = useRef<string[]>([]);
     const pendingMoves = useRef<{ productUuid: string; afterProductUuid: string | null }[]>([]);
     const lastMovedOrder = useRef<string[]>([]);
     const savingOrder = useRef(false);
     const [parameterOrder, setParameterOrder] = useState(comparedProducts.map((product) => product.uuid));
+
     useEffect(() => {
         setParameterOrder((previous) => [
             ...previous.filter((uuid) => comparedProducts.some((product) => product.uuid === uuid)),
             ...comparedProducts.filter((product) => !previous.includes(product.uuid)).map((product) => product.uuid),
         ]);
     }, [comparedProducts]);
+
     const parameterSourceProducts = [
         ...parameterOrder
             .map((uuid) => comparedProducts.find((product) => product.uuid === uuid))
@@ -53,13 +63,18 @@ export const useComparisonProducts = (
             savingOrder.current = false;
         }
     };
+
     const orderedProducts = [
         ...productOrder
             .map((uuid) => comparedProducts.find((product) => product.uuid === uuid))
             .filter((product): product is TypeProductInProductListFragment => !!product),
         ...comparedProducts.filter((product) => !productOrder.includes(product.uuid)),
     ];
-    const [mobileSelection, setMobileSelection] = useState<string[]>([]);
+
+    const listUuid = usePersistStore((s) => s.productListUuids[TypeProductListTypeEnum.Comparison]);
+    const selection = usePersistStore((s) => s.comparisonSelection);
+    const updateSelection = usePersistStore((s) => s.updateComparisonSelection);
+    const mobileSelection = selection?.listUuid === listUuid ? (selection?.productUuids ?? []) : [];
     const mobileProducts = mobileSelection
         .map((uuid) => comparedProducts.find((product) => product.uuid === uuid))
         .filter((product): product is TypeProductInProductListFragment => !!product);
@@ -68,12 +83,14 @@ export const useComparisonProducts = (
             mobileProducts.push(product);
         }
     });
-    const visibleProducts = width > 0 && width < mobileFirstSizes.md ? mobileProducts : orderedProducts;
+    const visibleProducts = isDesktop ? orderedProducts : mobileProducts;
 
     const selectMobileProduct = (index: number, uuid: string) => {
-        setMobileSelection(
-            mobileProducts.map((product, productIndex) => (productIndex === index ? uuid : product.uuid)),
-        );
+        if (!listUuid) return;
+        updateSelection({
+            listUuid,
+            productUuids: mobileProducts.map((product, productIndex) => (productIndex === index ? uuid : product.uuid)),
+        });
     };
 
     return {
@@ -83,6 +100,6 @@ export const useComparisonProducts = (
         reorderProducts,
         saveProductMove,
         parameterSourceProducts,
-        canReorder: width >= mobileFirstSizes.md && comparedProducts.length > 1,
+        canReorder: isDesktop && comparedProducts.length > 1,
     };
 };
