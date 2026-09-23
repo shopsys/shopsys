@@ -62,8 +62,8 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
 
             <h3 className="h5 mb-2 max-lg:hidden">{title}</h3>
 
-            <div
-                aria-labelledby={toggleButtonId}
+            <section
+                aria-label={title}
                 className={twJoin(
                     'grid transition-[grid-template-rows] duration-200 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col',
                     isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
@@ -82,7 +82,7 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
                         {children}
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     );
 };

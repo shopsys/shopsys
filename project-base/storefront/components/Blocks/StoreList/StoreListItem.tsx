@@ -107,12 +107,14 @@ export const StoreListItem: FC<StoreListItemProps> = ({
                     onKeyDown={summaryKeyDownHandler}
                 />
 
-                <StoreInfoToggleButton
-                    isExpanded={isExpanded}
-                    store={store}
-                    storeInfoId={storeInfoId}
-                    onClick={toggleStoreInfoHandler}
-                />
+                {isSelectionMode && (
+                    <StoreInfoToggleButton
+                        isExpanded={isExpanded}
+                        store={store}
+                        storeInfoId={storeInfoId}
+                        onClick={toggleStoreInfoHandler}
+                    />
+                )}
             </div>
 
             <div id={storeInfoId}>
