@@ -16,8 +16,13 @@ const HashNavigation = () => {
     return (
         <>
             <a href="#reviews">Reviews</a>
-            <section ref={parametersRef}>Parameters</section>
-            <section ref={reviewsRef}>Reviews section</section>
+            <section ref={parametersRef} tabIndex={-1}>
+                Parameters
+            </section>
+            <section ref={reviewsRef} tabIndex={-1}>
+                Reviews section
+                <button type="button">First review action</button>
+            </section>
             <output>{activeSection}</output>
         </>
     );
@@ -39,5 +44,6 @@ describe('useHashNavigation', () => {
         expect(window.location.hash).toBe('#reviews');
         expect(screen.getByRole('status')).toHaveTextContent('reviews');
         expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
+        expect(screen.getByText('Reviews section').closest('section')).toHaveFocus();
     });
 });
