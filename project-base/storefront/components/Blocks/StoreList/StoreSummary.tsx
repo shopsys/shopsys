@@ -1,3 +1,4 @@
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import { OpeningHoursOfPickupDay } from 'components/Blocks/OpeningHours/OpeningHoursOfPickupDay';
 import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
@@ -121,6 +122,13 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
                     )}
                 </div>
             </div>
+
+            {!isSelectionMode && (
+                <ArrowIcon
+                    aria-hidden="true"
+                    className={twMergeCustom('size-6 shrink-0 text-icon-less transition', isExpanded && 'rotate-180')}
+                />
+            )}
         </div>
     );
 };
