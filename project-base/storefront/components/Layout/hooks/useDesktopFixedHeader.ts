@@ -1,4 +1,4 @@
-import { type RefObject, useCallback, useEffect, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { isClient } from 'utils/isClient';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
@@ -11,6 +11,7 @@ export const useDesktopFixedHeader = (headerRef: RefObject<HTMLElement | null>) 
     const [fixedHeaderHeight, setFixedHeaderHeight] = useState(0);
     const [showDesktopFixedHeader, setShowDesktopFixedHeader] = useState(false);
     const [isFixedHeaderVisible, setIsFixedHeaderVisible] = useState(false);
+    const focusToRestoreRef = useRef<Element | null>(null);
     const fixedHeaderRef = useCallback((element: HTMLDivElement | null) => {
         setFixedHeaderElement(element);
     }, []);
@@ -33,6 +34,12 @@ export const useDesktopFixedHeader = (headerRef: RefObject<HTMLElement | null>) 
         }
 
         const observer = new IntersectionObserver(([entry]) => {
+            const outgoingHeader = entry.isIntersecting ? fixedHeaderElement : headerElement;
+
+            if (outgoingHeader?.contains(document.activeElement)) {
+                focusToRestoreRef.current = document.activeElement;
+            }
+
             setShowDesktopFixedHeader(!entry.isIntersecting);
         });
 
@@ -41,7 +48,26 @@ export const useDesktopFixedHeader = (headerRef: RefObject<HTMLElement | null>) 
         return () => {
             observer.disconnect();
         };
-    }, [headerRef, isDesktop]);
+    }, [fixedHeaderElement, headerRef, isDesktop]);
+
+    useLayoutEffect(() => {
+        if (!focusToRestoreRef.current || isFixedHeaderVisible !== showDesktopFixedHeader) {
+            return;
+        }
+
+        const incomingHeader = showDesktopFixedHeader ? fixedHeaderElement : headerRef.current;
+
+        if (!incomingHeader) {
+            return;
+        }
+
+        // Wait until the incoming header is interactive, without overriding focus moved by navigation or a popup.
+        if (document.activeElement === document.body || document.activeElement === focusToRestoreRef.current) {
+            incomingHeader.focus({ preventScroll: true });
+        }
+
+        focusToRestoreRef.current = null;
+    }, [fixedHeaderElement, headerRef, isFixedHeaderVisible, showDesktopFixedHeader]);
 
     useEffect(() => {
         if (!showDesktopFixedHeader) {
