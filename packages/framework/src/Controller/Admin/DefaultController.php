@@ -246,6 +246,7 @@ class DefaultController extends AdminBaseController
                 'maximalDuration' => $maximalDuration,
                 'averageDuration' => $averageDuration,
                 'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
+                'errorMessageOfLastRun' => $cronModule->getErrorMessageOfLastRun(),
             ];
         }
 

@@ -76,7 +76,7 @@ class CronModuleRunnerFacade
                     $this->cronModuleFacade->isModuleSuspended($cronModuleConfig),
                 );
             } catch (Throwable $throwable) {
-                $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
+                $this->cronModuleFacade->markCronAsFailed($cronModuleConfig, $throwable->getMessage());
                 $this->logger->error('Cron module ended with error', [
                     'exception' => $throwable,
                 ]);

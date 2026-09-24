@@ -1021,6 +1021,9 @@ msgstr "ID entity"
 msgid "Error"
 msgstr "Chyba"
 
+msgid "Error message of the last run"
+msgstr "Chybové hlásenie posledného behu"
+
 msgid "Excl. VAT"
 msgstr "Bez DPH"
 
@@ -2451,6 +2454,9 @@ msgstr "Na stotstiny (centy)"
 
 msgid "To whole numbers"
 msgstr "Na celé čísla"
+
+msgid "Toggle error"
+msgstr "Zobraziť/skryť chybu"
 
 msgid "Toggle navigation"
 msgstr "Zobraziť/skryť navigáciu"

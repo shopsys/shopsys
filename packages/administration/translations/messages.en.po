@@ -1021,6 +1021,9 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
+msgid "Error message of the last run"
+msgstr ""
+
 msgid "Excl. VAT"
 msgstr ""
 
@@ -2450,6 +2453,9 @@ msgid "To hundredths (cents)"
 msgstr ""
 
 msgid "To whole numbers"
+msgstr ""
+
+msgid "Toggle error"
 msgstr ""
 
 msgid "Toggle navigation"
