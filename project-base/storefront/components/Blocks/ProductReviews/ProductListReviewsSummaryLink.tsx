@@ -2,7 +2,7 @@ import type { ExtendedNextLinkProps } from 'components/Basic/ExtendedNextLink/Ex
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { formatAverageRating, getProductReviewsSummary } from 'components/Blocks/ProductReviews/productReviewUtils';
 import { ReviewStars } from 'components/Blocks/ProductReviews/ReviewStars';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from 'components/Pages/ProductDetail/ProductDetailSections/ProductDetailSections';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from 'components/Pages/ProductDetail/ProductDetailSections/productDetailSectionsConstants';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
