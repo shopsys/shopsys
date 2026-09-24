@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { PRODUCT_VARIANTS_ID, ProductAction } from 'components/Blocks/Product/ProductAction';
+import { ProductAction } from 'components/Blocks/Product/ProductAction';
+import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/productActionConstants';
 import { getButtonIconClassName } from 'components/Forms/Button/Button';
 import type { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
