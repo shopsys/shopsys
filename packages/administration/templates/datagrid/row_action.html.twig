@@ -1,6 +1,5 @@
-{% set url = action_url(actionRoute, row) %}
-
 {% if action_has_access(actionRoute) %}
+    {% set url = action_url(actionRoute, row) %}
     {% set tag = disabled ? 'span' : 'a' %}
 
     <{{ tag }}

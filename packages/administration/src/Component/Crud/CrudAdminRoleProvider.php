@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Security\Role\CoreRoleProviderInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleCollection;
+use Shopsys\FrameworkBundle\Component\Security\Role\RoleIdentifierHelper;
 
 final class CrudAdminRoleProvider implements CoreRoleProviderInterface
 {
@@ -43,10 +44,23 @@ final class CrudAdminRoleProvider implements CoreRoleProviderInterface
                 continue;
             }
 
+            // the permissions the access control rules of the enabled actions require on the role of the CRUD controller
+            // must be available on it, rules of other roles (explicit role, ForRole of the handling class) do not influence it
+            $roleConstant = $crudControllerDefinition->getRoleConstant();
             $requiredPermissions = [];
 
-            foreach ($config->getActions() as $actionType) {
-                $requiredPermissions[] = $actionType->toPermission();
+            foreach ($crudControllerDefinition->actions as $action) {
+                if (!$config->isActionEnabled($action->name)) {
+                    continue;
+                }
+
+                foreach ($action->accessControlRules as $rule) {
+                    $permission = RoleIdentifierHelper::getPermissionFromIdentifier($rule->roleIdentifier);
+
+                    if ($permission !== null && RoleIdentifierHelper::getRoleConstantFromIdentifier($rule->roleIdentifier) === $roleConstant) {
+                        $requiredPermissions[] = $permission;
+                    }
+                }
             }
 
             $role = new Role(

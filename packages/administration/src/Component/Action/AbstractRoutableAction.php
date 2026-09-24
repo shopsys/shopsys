@@ -48,17 +48,18 @@ abstract class AbstractRoutableAction extends AbstractAction
     }
 
     /**
-     * Can be used to generate link to another CRUD controller. This will generate link to the CRUD controller with provided page type.
-     * If you are linking to page type that requires entity ID, you must provide callable function that will return entity ID.
+     * Can be used to generate link to an action of a CRUD controller, either a built-in one (ActionType) or a custom one (by its name).
+     * If the action works with a single record, the closure returns the entity ID, an action with more route parameters
+     * gets them as an array from the closure. Linking to an unknown action fails when the action is rendered, links to disabled actions are hidden.
      *
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param null|\Closure(mixed): int $id
+     * @param null|\Closure(mixed): (int|array<string, mixed>) $parameters
      */
-    public function linkToCrud(string $crudController, ActionType $actionType, ?Closure $id = null): static
+    public function linkToCrud(string $crudController, ActionType|string $action, ?Closure $parameters = null): static
     {
         Assert::subclassOf($crudController, AbstractCrudController::class);
 
-        $this->actionRoute = new CrudActionRouteData($crudController, $actionType, $id);
+        $this->actionRoute = new CrudActionRouteData($crudController, $action, $parameters);
 
         return $this;
     }

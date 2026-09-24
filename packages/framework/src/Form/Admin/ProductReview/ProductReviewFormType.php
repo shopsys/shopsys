@@ -53,10 +53,7 @@ final class ProductReviewFormType extends AbstractType
             'allow_delete' => false,
         ]);
 
-        $builder->add('actionBar', ActionBarType::class, [
-            'back_route' => 'admin_crud_product_review_list',
-            'entity' => $productReview,
-        ]);
+        $builder->add('actionBar', ActionBarType::class);
     }
 
     /**

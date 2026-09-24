@@ -502,18 +502,19 @@ The `ActionBarType` form type provides a standardized action bar, rendered at th
 
 #### Available Options
 
-| Option       | Type                          | Default Value           | Description                                                                                       |
-| ------------ | ----------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
-| `back_route` | <code>string&#124;null</code> | `null`                  | Symfony route name for the back button. Cannot be used with `back_url`.                           |
-| `back_url`   | <code>string&#124;null</code> | `null`                  | Absolute or relative URL for the back button. Cannot be used with `back_route`.                   |
-| `back_label` | `string`                      | `t('Back to overview')` | Label for the back button.                                                                        |
-| `save_label` | <code>string&#124;null</code> | `null`                  | Label for the save button. Defaults to `"Save changes"` if `entity` is set, otherwise `"Create"`. |
-| `entity`     | <code>object&#124;null</code> | `null`                  | The entity associated with the form. Used to determine the save button label.                     |
-| `mapped`     | `bool`                        | `false`                 | Always set to `false`.                                                                            |
+| Option       | Type                          | Default Value           | Description                                                                                                                                                                                                                                                                                    |
+| ------------ | ----------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `back_route` | <code>string&#124;null</code> | `null`                  | Symfony route name for the back button. Cannot be used with `back_url`. In the administration, a form handled by a [CRUD controller](../administration/crud-controller/index.md) action defaults to the list route of that controller.                                                         |
+| `back_url`   | <code>string&#124;null</code> | `null`                  | Absolute or relative URL for the back button. Cannot be used with `back_route`.                                                                                                                                                                                                                |
+| `back_label` | `string`                      | `t('Back to overview')` | Label for the back button.                                                                                                                                                                                                                                                                     |
+| `save_label` | <code>string&#124;null</code> | `null`                  | Label for the save button. Defaults to `"Save changes"` if `entity` is set, otherwise `"Create"`. In the administration, the built-in create and edit actions of a [CRUD controller](../administration/crud-controller/index.md) set the label by the action, so `entity` is not needed there. |
+| `entity`     | <code>object&#124;null</code> | `null`                  | The entity associated with the form. Used to determine the save button label.                                                                                                                                                                                                                  |
+| `mapped`     | `bool`                        | `false`                 | Always set to `false`.                                                                                                                                                                                                                                                                         |
 
 #### Constraints
 
 - If `back_route` is set, `back_url` must be `null`, and vice versa.
+- The CRUD default of `back_route` is applied only when neither `back_route` nor `back_url` is set, so both options can still be used in CRUD controller forms.
 
 #### Form Fields
 

@@ -8,19 +8,23 @@ use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider;
+use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlRuleFactory;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlData;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\RouteAccessControlDataProvider;
 use Shopsys\AdministrationBundle\Component\Security\Attribute\AttributeProcessor;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouterFactory;
+use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
 use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Contracts\Cache\CacheInterface;
+use Tests\AdministrationBundle\Unit\Component\Crud\ReviewCrudControllerRegistryFactory;
+use Tests\AdministrationBundle\Unit\DependencyInjection\Compiler\Fixtures\ReviewCrudController;
 
 class RouteAccessControlDataProviderTest extends TestCase
 {
@@ -50,10 +54,8 @@ class RouteAccessControlDataProviderTest extends TestCase
         $this->routeCollection = new RouteCollection(); // Use real RouteCollection
         $this->roleRegistry = $this->createStub(RoleRegistryInterface::class);
 
-        // Create real AttributeProcessor with mocked dependencies
-        $accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
-        $this->accessControlRuleFactory = $accessControlRuleFactory;
-        $this->attributeProcessor = new AttributeProcessor($accessControlRuleFactory, new CrudRoleConstantProvider());
+        $this->accessControlRuleFactory = new AccessControlRuleFactory($this->roleRegistry);
+        $this->attributeProcessor = new AttributeProcessor();
 
         // Set up role registry to return stub roles for any identifier
         $this->roleRegistry
@@ -302,6 +304,38 @@ class RouteAccessControlDataProviderTest extends TestCase
         $this->assertEmpty($routeData->accessControlRules);
     }
 
+    public function testCrudRoutesUseTheRulesResolvedAtBuildTime(): void
+    {
+        $this->setupRouteCollection([
+            'admin_crud_review_approve' => $this->createCrudRoute('/admin/review/approve/{id}', ReviewCrudController::class . '::approveAction', 'approve'),
+            'admin_crud_review_edit' => $this->createCrudRoute('/admin/review/edit/{id}', ReviewCrudController::class . '::editAction', 'edit'),
+        ]);
+
+        $result = $this->createProvider(EnvironmentType::DEVELOPMENT)->getAll();
+
+        $approveRules = $result['admin_crud_review_approve']->accessControlRules;
+        $this->assertCount(1, $approveRules);
+        // the role registry stub returns the requested identifier as the role constant
+        $this->assertSame('ROLE_CRUD_REVIEW_EDIT', $approveRules[0]->role->getConstant());
+        $this->assertSame(Permission::EDIT, $approveRules[0]->permission);
+
+        $editRules = $result['admin_crud_review_edit']->accessControlRules;
+        $this->assertCount(2, $editRules);
+        $this->assertSame([HttpMethod::POST], $editRules[0]->httpMethods);
+        $this->assertSame([HttpMethod::GET], $editRules[1]->httpMethods);
+    }
+
+    private function createCrudRoute(string $path, string $controller, string $actionName): Route
+    {
+        $route = $this->createRoute($path, $controller);
+        $route->setDefault(CrudRouteProvider::IS_CRUD_CONTROLLER, true);
+        $route->setDefault(CrudRouteProvider::CRUD_ACTION, $actionName);
+        $route->setDefault(CrudRouteProvider::CRUD_ROLE_CONSTANT, ReviewCrudControllerRegistryFactory::ROLE_CONSTANT);
+        $route->setDefault(CrudRouteProvider::CRUD_CONTROLLER_CLASS, ReviewCrudController::class);
+
+        return $route;
+    }
+
     private function createProvider(
         string $environment,
         ?CacheInterface $cache = null,
@@ -315,6 +349,7 @@ class RouteAccessControlDataProviderTest extends TestCase
             'admin',
             $this->attributeProcessor,
             $this->accessControlRuleFactory,
+            ReviewCrudControllerRegistryFactory::create(),
         );
     }
 

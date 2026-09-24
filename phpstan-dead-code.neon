@@ -23,6 +23,9 @@ parameters:
             path: packages/administration/src/Component/Crud/CrudRegistryItem.php
         -
             identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Crud/Form/CrudFormConfigurator.php
+        -
+            identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/Adapter/Orm/ProxyQuery.php
         -
             identifier: shipmonk.deadMethod
@@ -36,6 +39,10 @@ parameters:
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Security/AccessControl/AccessControlDataProviderInterface.php
+        # the fixture methods of the ReflectionHelper test are only reflected, never called
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/framework/tests/Unit/Component/Reflection/Fixtures/*
         -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php

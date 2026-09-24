@@ -19,6 +19,7 @@ services:
             $entityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
             $crudControllers: '%shopsys.admin.crud_controllers%'
             $crudControllerExtensions: '%shopsys.admin.crud_controllers_extensions%'
+            $crudActions: '%shopsys.admin.crud_actions%'
 
     Shopsys\AdministrationBundle\Component\Crud\CrudRoleConstantProvider:
         arguments:
