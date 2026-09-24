@@ -2,7 +2,8 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { WriteIcon } from 'components/Basic/Icon/WriteIcon';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
+import { Button } from 'components/Forms/Button/Button';
+import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductReviewsActionsProps = {

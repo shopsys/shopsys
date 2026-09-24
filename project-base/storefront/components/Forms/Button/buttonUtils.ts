@@ -1,0 +1,72 @@
+import { twJoin } from 'tailwind-merge';
+import type { ButtonBaseProps } from './Button';
+
+export const getButtonIconClassName = (size: ButtonBaseProps['size']) =>
+    twJoin(
+        size === 'small' && 'size-4',
+        size === 'medium' && 'size-4 md:size-5',
+        size === 'large' && 'size-5',
+        size === 'xlarge' && 'size-6',
+    );
+
+export const getButtonClassName = (
+    variant: ButtonBaseProps['variant'],
+    size: ButtonBaseProps['size'],
+    hasDisabledLook: ButtonBaseProps['hasDisabledLook'],
+    hasDisabledCursor: ButtonBaseProps['hasDisabledCursor'],
+) => {
+    return twJoin(
+        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-secondary font-semibold transition-all hover:no-underline',
+        'outline-2 -outline-offset-2',
+        size === 'small' && 'px-3 py-2.5 text-xs',
+        size === 'medium' && 'px-3 py-2.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
+        size === 'large' && 'px-4 py-2 text-sm sm:py-2.5',
+        size === 'xlarge' && 'px-4 py-2.5 text-sm sm:px-5 sm:py-3.5 sm:text-lg',
+        variant === 'primary' && [
+            'bg-button-primary-bg-default text-button-primary-text-default outline-button-primary-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered hover:outline-button-primary-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-primary-bg-active active:text-button-primary-text-active active:outline-button-primary-border-active',
+            hasDisabledLook &&
+                'bg-button-primary-bg-disabled text-button-primary-text-disabled outline-button-primary-border-disabled',
+        ],
+        variant === 'secondary' && [
+            'bg-button-secondary-bg-default text-button-secondary-text-default outline-button-secondary-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-secondary-bg-hovered hover:text-button-secondary-text-hovered hover:outline-button-secondary-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-secondary-bg-active active:text-button-secondary-text-active active:outline-button-secondary-border-active',
+            hasDisabledLook &&
+                'bg-button-secondary-bg-disabled text-button-secondary-text-disabled outline-button-secondary-border-disabled',
+        ],
+        variant === 'tertiary' && [
+            'bg-button-tertiary-bg-default text-button-tertiary-text-default outline-button-tertiary-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-tertiary-bg-hovered hover:text-button-tertiary-text-hovered hover:outline-button-tertiary-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-tertiary-bg-active active:text-button-tertiary-text-active active:outline-button-tertiary-border-active',
+            hasDisabledLook &&
+                'bg-button-tertiary-bg-disabled text-button-tertiary-text-disabled outline-button-tertiary-border-disabled',
+        ],
+        variant === 'danger' && [
+            'bg-button-danger-bg-default text-button-danger-text-default outline-button-danger-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-danger-bg-hovered hover:text-button-danger-text-hovered hover:outline-button-danger-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-danger-bg-active active:text-button-danger-text-active active:outline-button-danger-border-active',
+            hasDisabledLook &&
+                'bg-button-danger-bg-disabled text-button-danger-text-disabled outline-button-danger-border-disabled',
+        ],
+        variant === 'inverted' && [
+            'bg-button-inverted-bg-default text-button-inverted-text-default outline-button-inverted-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-inverted-bg-hovered hover:text-button-inverted-text-hovered hover:outline-button-inverted-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-inverted-bg-active active:text-button-inverted-text-active active:outline-button-inverted-border-active',
+            hasDisabledLook &&
+                'bg-button-inverted-bg-disabled text-button-inverted-text-disabled outline-button-inverted-border-disabled',
+        ],
+        (hasDisabledLook || hasDisabledCursor) && 'cursor-no-drop',
+    );
+};
