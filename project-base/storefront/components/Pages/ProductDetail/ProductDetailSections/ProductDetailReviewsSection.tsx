@@ -6,7 +6,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
 
 type ProductDetailReviewsSectionProps = ProductReviewsContentProps & {
     sectionRef: RefObject<HTMLDivElement | null>;
