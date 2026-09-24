@@ -15,6 +15,7 @@ import { ProductDetailParametersSection } from './ProductDetailParametersSection
 import { ProductDetailRelatedProductsSection } from './ProductDetailRelatedProductsSection';
 import { ProductDetailReviewsSection } from './ProductDetailReviewsSection';
 import { ProductDetailSectionNavigation } from './ProductDetailSectionNavigation';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
 
 type ProductDetailSectionsProps = {
     description: string | null;
@@ -28,14 +29,6 @@ type ProductDetailSectionsProps = {
     productVariants?: ReviewedProductVariantType[];
     reviewsTotalCount?: number;
 };
-
-export const PRODUCT_DETAIL_SECTIONS_IDS = {
-    overview: 'overview',
-    parameters: 'parameters',
-    reviews: 'reviews',
-    files: 'files',
-    relatedProducts: 'related-products',
-} as const;
 
 export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     description,
