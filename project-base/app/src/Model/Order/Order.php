@@ -42,7 +42,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \App\Model\Order\Item\OrderItem[] getItemsSortedWithRelatedItems()
  */
 #[AsMcpTable]
-#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
+#[Loggable]
 #[ORM\Table(name: 'orders')]
 #[ORM\Entity]
 class Order extends BaseOrder

@@ -125,10 +125,11 @@ class LoggableEntityConfigFactory
                 continue;
             }
 
-            $isLocalized = $identifyAttributes[0]->getArguments()[0] ?? false;
+            /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify $entityLogIdentify */
+            $entityLogIdentify = $identifyAttributes[0]->newInstance();
 
             $loggableSetup->setEntityReadableNameFunctionName($reflectionMethod->getName());
-            $loggableSetup->setIsLocalized($isLocalized);
+            $loggableSetup->setIsLocalized($entityLogIdentify->isLocalized);
 
             break;
         }
@@ -139,7 +140,10 @@ class LoggableEntityConfigFactory
         $attributes = $reflectionClass->getAttributes(Loggable::class, ReflectionAttribute::IS_INSTANCEOF);
 
         if (count($attributes) > 0) {
-            return $attributes[0]->getArguments()[0] ?? null;
+            /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable $loggable */
+            $loggable = $attributes[0]->newInstance();
+
+            return $loggable->getStrategy();
         }
 
         return null;

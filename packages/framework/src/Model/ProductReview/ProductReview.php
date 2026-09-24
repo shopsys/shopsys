@@ -23,7 +23,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
-#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
+#[Loggable]
 #[ORM\Table(name: 'product_reviews')]
 #[ORM\Index(columns: ['domain_id', 'status'])]
 #[ORM\Index(columns: ['product_id', 'domain_id', 'status'])]
