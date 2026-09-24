@@ -112,6 +112,7 @@ class GenerateMigrationCommand extends Command
             $chosenNamespace = $io->choice(
                 'There is more than one namespace available as the destination of generated migrations. Which namespace would you like to choose?',
                 $availableNamespaces,
+                array_first($availableNamespaces),
             );
 
             return new MigrationsLocation($migrationDirectoriesIndexedByNamespace[$chosenNamespace], $chosenNamespace);
