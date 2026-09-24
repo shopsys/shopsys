@@ -11,20 +11,24 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ form(form) }}
+    {% block before_form %}{% endblock %}
 
-    {{ block('entity_log') }}
-{% endblock %}
+    {% block form %}
+        {{ form(form) }}
+    {% endblock %}
 
-{% block entity_log %}
-    {% if showEntityLog|default(false) %}
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">{{ 'History'|trans }}</h3>
+    {% block after_form %}{% endblock %}
+
+    {% block entity_log %}
+        {% if showEntityLog|default(false) %}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'History'|trans }}</h3>
+                </div>
+                <div class="card-body">
+                    {{ component('Admin:EntityLogTimeline', { entity: entity }) }}
+                </div>
             </div>
-            <div class="card-body">
-                {{ component('Admin:EntityLogTimeline', { entity: entity }) }}
-            </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    {% endblock %}
 {% endblock %}
