@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { Select } from 'components/Forms/Select/Select';
+import { PRODUCT_COMPARISON_END_TRIGGER_ID } from 'components/Pages/ProductComparison/productComparisonConstants';
 import { m } from 'framer-motion';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { CSSProperties, useState } from 'react';
@@ -12,7 +13,7 @@ import { useComparisonFocus } from 'utils/productLists/comparison/useComparisonF
 import { useComparisonProducts } from 'utils/productLists/comparison/useComparisonProducts';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 import { ProductComparisonBody } from './ProductComparisonBody';
-import { PRODUCT_COMPARISON_END_TRIGGER_ID, ProductComparisonHead } from './ProductComparisonHead';
+import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 
 type ProductComparisonContentProps = {
