@@ -4,6 +4,8 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 
+const MAX_PRODUCT_LIST_FLAGS = 3;
+
 type ProductFlagsProps = {
     flags: TypeSimpleFlagFragment[];
     percentageDiscount: number | null;
@@ -20,8 +22,10 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
     const { t } = useTranslation();
 
     const hasVisibleFlags = visibleItemsConfig.flags && flags.length > 0;
-    const hasVisibleDiscount = visibleItemsConfig.discount && !!percentageDiscount;
     const isValidDiscountPercentage = percentageDiscount !== null && percentageDiscount > 0 && percentageDiscount < 100;
+    const hasVisibleDiscount = visibleItemsConfig.discount && isValidDiscountPercentage;
+    const isProductList = variant !== 'detail' && variant !== 'comparison';
+    const visibleFlags = isProductList ? flags.slice(0, MAX_PRODUCT_LIST_FLAGS - (hasVisibleDiscount ? 1 : 0)) : flags;
 
     if (!hasVisibleFlags && !hasVisibleDiscount) {
         return null;
@@ -37,28 +41,26 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
     };
 
     return (
-        <div className={twMergeCustom('absolute flex flex-col items-start gap-1', variantTwClass[variant])}>
+        <div className={twMergeCustom('absolute flex max-w-full flex-col items-start gap-1', variantTwClass[variant])}>
             {visibleItemsConfig.flags &&
                 flags.length > 0 &&
-                flags.map(({ uuid, name, rgbColor }) => {
+                visibleFlags.map(({ uuid, name, rgbColor }) => {
                     return (
-                        <Flag
-                            key={uuid}
-                            className={variant === 'gridHeader' ? 'max-w-full' : undefined}
-                            rgbBgColor={rgbColor}
-                        >
+                        <Flag key={uuid} className="max-w-full" rgbBgColor={rgbColor}>
                             {variant === 'gridHeader' ? (
                                 <span className="wrap-break-word line-clamp-2">{name}</span>
                             ) : (
-                                name
+                                <span className="wrap-break-word min-w-0">{name}</span>
                             )}
                         </Flag>
                     );
                 })}
 
-            {visibleItemsConfig.discount && isValidDiscountPercentage && (
-                <Flag type="discount">
-                    -{percentageDiscount}% {t('disount')}
+            {hasVisibleDiscount && (
+                <Flag className="max-w-full" type="discount">
+                    <span className="wrap-break-word min-w-0">
+                        -{percentageDiscount}% {t('disount')}
+                    </span>
                 </Flag>
             )}
         </div>
