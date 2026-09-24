@@ -48,7 +48,7 @@ ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendly
 ```
 
 The fixer wraps the call and adds the import.
-It applies to every class in the configured namespaces (`namespace_prefixes`, by default `Shopsys\`) except the excluded namespaces (`excluded_namespace_prefixes`, by default the standalone tools that do not ship the framework) and the excluded classes (`excluded_class_names`, by default `Money` and `HiddenMoney`, which are documented as not extendable although they are not final).
+It applies to every class in the configured namespaces (`namespace_prefixes`, by default `Shopsys\`) except the excluded namespaces (`excluded_namespace_prefixes`, by default the standalone tools that do not ship the framework) and the excluded classes together with their descendants and implementations (`excluded_class_names`, by default `Money` and `HiddenMoney`, which are documented as not extendable although they are not final).
 Final classes, enums, `self`, `static`, `parent`, calls inside the class itself and code in the global namespace are left alone.
 
 #### `Shopsys/missing_button_type`
