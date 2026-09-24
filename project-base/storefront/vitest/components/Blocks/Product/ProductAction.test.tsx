@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/productActionConstants';
-import { getButtonIconClassName } from 'components/Forms/Button/Button';
+import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import type { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
