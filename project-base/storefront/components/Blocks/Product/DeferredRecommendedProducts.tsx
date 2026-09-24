@@ -9,8 +9,8 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
-import { VISIBLE_SLIDER_ITEMS_BASKET_POPUP } from './ProductsSlider';
 import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
+import { VISIBLE_SLIDER_ITEMS_BASKET_POPUP } from './productsSliderConstants';
 
 const ProductsSlider = dynamic(() => import('./ProductsSlider').then((component) => component.ProductsSlider), {
     ssr: false,
