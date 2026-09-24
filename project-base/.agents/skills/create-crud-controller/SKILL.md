@@ -212,7 +212,7 @@ extensions can add fields to. `setFormOption()` must be called before `useBuilde
   `#[CanView]` / `#[CanEdit]` / `#[CanDelete]` (no role needed — they fall back to the
   controller's role) and `#[CsrfProtection]` for state-changing GETs (the action link then
   carries the token automatically).
-- Page with extra content (any of list / detail / create / edit): `$config->setTemplate(ActionType::EDIT, '…')`
+- Page with extra content (any of list / detail / create / edit): `$config->setTemplate(ActionType::<PAGE>, '…')`
   in `configure()` — the template extends the default one (`@ShopsysAdministration/crud/edit.html.twig`)
   and only overrides the block where the extra content goes (`before_form`, `form`, `after_form`, `entity_log`
   on create/edit, `domain_control`, `before_grid`, `grid`, `after_grid` on list — no `parent()` needed). The edit
