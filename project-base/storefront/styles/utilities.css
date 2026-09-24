@@ -38,10 +38,6 @@
     @apply [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden;
 }
 
-@utility animate-in {
-    animation: animateIn 0.3s ease 0.05s both;
-}
-
 @utility scroll-mt-fixed-header {
     scroll-margin-top: calc(var(--fixed-header-height, 0px) + var(--spacing-5));
 }
