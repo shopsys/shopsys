@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\MigrationBundle\Command;
 
+use Doctrine\Migrations\Metadata\AvailableMigrationsList;
+use Doctrine\Migrations\Metadata\MigrationPlan;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Override;
@@ -16,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'shopsys:migrations:migrate',
@@ -37,6 +40,9 @@ class MigrateCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $availableMigrationsList = $this->migrationLockPlanCalculator->getMigrations();
+        $migrationPlans = $this->getMigrationPlansUntilLatestVersion($availableMigrationsList);
+
         try {
             $this->em->wrapInTransaction(function () use ($output): void {
                 $this->executeDoctrineMigrateCommand($output);
@@ -51,7 +57,7 @@ class MigrateCommand extends Command
             throw new MigrateCommandException($message, $ex);
         }
 
-        $availableMigrationsList = $this->migrationLockPlanCalculator->getMigrations();
+        $this->writeExecutedMigrations($migrationPlans, $availableMigrationsList, new SymfonyStyle($input, $output));
         $this->migrationsLock->saveNewMigrations($availableMigrationsList);
 
         return Command::SUCCESS;
@@ -75,6 +81,53 @@ class MigrateCommand extends Command
 
             throw new MigrateCommandException($message);
         }
+    }
+
+    /**
+     * @return \Doctrine\Migrations\Metadata\MigrationPlan[]
+     */
+    protected function getMigrationPlansUntilLatestVersion(AvailableMigrationsList $availableMigrationsList): array
+    {
+        if (count($availableMigrationsList) === 0) {
+            return [];
+        }
+
+        return $this->migrationLockPlanCalculator
+            ->getPlanUntilVersion($availableMigrationsList->getLast()->getVersion())
+            ->getItems();
+    }
+
+    /**
+     * Doctrine reports only the target version,
+     * so the migrations executed in the committed transaction are listed explicitly
+     *
+     * @param \Doctrine\Migrations\Metadata\MigrationPlan[] $migrationPlans
+     */
+    protected function writeExecutedMigrations(
+        array $migrationPlans,
+        AvailableMigrationsList $availableMigrationsList,
+        SymfonyStyle $io,
+    ): void {
+        $migrationsCount = count($migrationPlans);
+
+        if ($migrationsCount === 0) {
+            return;
+        }
+
+        if ($migrationsCount === count($availableMigrationsList)) {
+            // all available migrations were executed (e.g. on a fresh database), listing them would only flood the output
+            $io->text(sprintf('Executed all %d available migrations.', $migrationsCount));
+
+            return;
+        }
+
+        $io->text($migrationsCount === 1
+            ? 'Executed 1 migration:'
+            : sprintf('Executed %d migrations in this order:', $migrationsCount));
+        $io->listing(array_map(
+            static fn (MigrationPlan $migrationPlan): string => (string)$migrationPlan->getVersion(),
+            $migrationPlans,
+        ));
     }
 
     protected function executeCheckSchemaCommand(OutputInterface $output): void
