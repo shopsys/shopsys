@@ -1,13 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { CompactProductItemProps } from 'components/Blocks/Product/ProductsList/CompactProductListItem';
-import {
-    PREDEFINED_VISIBLE_ITEMS_CONFIGS,
-    ProductItemProps,
-} from 'components/Blocks/Product/ProductsList/ProductListItem';
+import { ProductItemProps } from 'components/Blocks/Product/ProductsList/ProductListItem';
 import {
     CompactProductsListContent,
     ProductsListContent,
 } from 'components/Blocks/Product/ProductsList/ProductsListContent';
+import { PREDEFINED_VISIBLE_ITEMS_CONFIGS } from 'components/Blocks/Product/ProductsList/productListItemConstants';
 import { ProductsSliderProps } from 'components/Blocks/Product/ProductsSlider';
 import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
