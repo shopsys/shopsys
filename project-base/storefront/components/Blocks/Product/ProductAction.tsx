@@ -1,6 +1,6 @@
 import { AddToCart, AddToCartContent } from 'components/Blocks/Product/AddToCart';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
-import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -10,6 +10,8 @@ import { CurrentCartType } from 'types/cart';
 import { FunctionComponentProps } from 'types/globals';
 import { OnProductAddedToCart } from 'utils/cart/useAddToCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { showWatchdogButton } from 'utils/product/showWatchdogButton';
+import { PRODUCT_VARIANTS_ID } from './productActionConstants';
 
 type PurchaseAction = 'sellingDenied' | 'outOfStock' | 'inquiry' | 'chooseVariant' | 'addToCart' | 'none';
 
@@ -48,8 +50,6 @@ type ProductActionProps = {
     currentCart?: Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
     onProductAddedToCart?: OnProductAddedToCart;
 } & FunctionComponentProps;
-
-export const PRODUCT_VARIANTS_ID = 'product-variants';
 
 export const ProductAction: FC<ProductActionProps> = ({
     currentCart,

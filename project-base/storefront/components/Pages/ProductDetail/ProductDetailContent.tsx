@@ -5,7 +5,7 @@ import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisit
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { ProductEmailDeliveryInfo } from 'components/Blocks/Product/ProductEmailDeliveryInfo';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
-import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
+import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useOpenReviewPopupFromUrl';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -22,6 +22,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { isProductSellable } from 'utils/product/isProductSellable';
 import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
+import { showWatchdogButton } from 'utils/product/showWatchdogButton';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
