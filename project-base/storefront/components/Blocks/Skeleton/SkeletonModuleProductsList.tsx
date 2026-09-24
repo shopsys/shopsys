@@ -1,5 +1,5 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { productListTwClass } from 'components/Blocks/Product/ProductsList/productsListConstants';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
