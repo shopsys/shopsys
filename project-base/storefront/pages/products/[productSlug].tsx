@@ -1,4 +1,4 @@
-import { STRUCTURED_DATA_REVIEWS_COUNT } from 'components/Basic/Head/ProductMetadata';
+import { STRUCTURED_DATA_REVIEWS_COUNT } from 'components/Basic/Head/productMetadataConstants';
 import { SkeletonPageProductDetail } from 'components/Blocks/Skeleton/SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from 'components/Blocks/Skeleton/SkeletonPageProductDetailMainVariant';
 import { CommonLayout } from 'components/Layout/CommonLayout';

@@ -1,4 +1,4 @@
-import { STRUCTURED_DATA_REVIEWS_COUNT } from 'components/Basic/Head/ProductMetadata';
+import { STRUCTURED_DATA_REVIEWS_COUNT } from 'components/Basic/Head/productMetadataConstants';
 import { ProductReviewsQueryDocument } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { ProductDetailQueryDocument } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 import { TypeProductReviewOrderingModeEnum } from 'graphql/types';
