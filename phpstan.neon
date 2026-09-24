@@ -28,7 +28,7 @@ parameters:
             - %currentWorkingDirectory%/packages/maker/templates
         twigTemplateDirectoryPaths:
             - %currentWorkingDirectory%/packages
-            - %currentWorkingDirectory%/project-base/app
+            - %currentWorkingDirectory%/project-base/app/templates
         yamlConfigDirectoryPaths:
             - %currentWorkingDirectory%/packages
             - %currentWorkingDirectory%/project-base/app/config
