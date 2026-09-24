@@ -1,9 +1,9 @@
+import { getCurrentVisibleSliderItems } from 'components/Blocks/Product/ProductsSlider';
 import {
-    getCurrentVisibleSliderItems,
-    getProductsSliderTwClass,
     VISIBLE_SLIDER_ITEMS,
     VISIBLE_SLIDER_ITEMS_BASKET_POPUP,
-} from 'components/Blocks/Product/ProductsSlider';
+} from 'components/Blocks/Product/productsSliderConstants';
+import { getProductsSliderTwClass } from 'components/Blocks/Product/productsSliderUtils';
 import { describe, expect, test } from 'vitest';
 
 describe('ProductsSlider', () => {

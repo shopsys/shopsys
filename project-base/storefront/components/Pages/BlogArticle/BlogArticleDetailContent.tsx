@@ -5,7 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'components/Blocks/ArticleAnchorNavigation/ArticleAnchorNavigation';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
-import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';
+import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/productsSliderConstants';
 import { BlogLayout } from 'components/Layout/BlogLayout';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { BlogArticleAuthorBox } from 'components/Pages/BlogArticle/BlogArticleAuthorBox';
