@@ -119,8 +119,9 @@ function deploy() {
 
     # Default whitelisted IPs (will be merged with WHITELIST_IPS environment variable if set)
     # You can define whitelisted IPs here when using HTTP authentication, see https://github.com/shopsys/deployment#whitelist-ip-addresses
-    # GoPay IPs
-    DEFAULT_WHITELIST_IPS="52.28.190.73,52.28.96.25,54.93.75.231,54.93.48.200,52.28.11.107"
+    GOPAY_WHITELIST_IPS="52.28.190.73,52.28.96.25,54.93.75.231,54.93.48.200,52.28.11.107"
+    PAGESPEEDONE_WHITELIST_IPS="18.192.177.19"
+    DEFAULT_WHITELIST_IPS="${GOPAY_WHITELIST_IPS},${PAGESPEEDONE_WHITELIST_IPS}"
 
     VARS=(
         TAG
