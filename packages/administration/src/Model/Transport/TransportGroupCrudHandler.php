@@ -25,7 +25,7 @@ class TransportGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getById(int $id): Presentable
+    public function getById(int $id): TransportGroup
     {
         return $this->transportGroupFacade->getById($id);
     }
@@ -43,7 +43,7 @@ class TransportGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function create(object $data): Presentable
+    public function create(object $data): TransportGroup
     {
         Assert::isInstanceOf($data, TransportGroupData::class);
 

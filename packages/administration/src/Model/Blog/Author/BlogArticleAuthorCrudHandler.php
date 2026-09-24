@@ -22,7 +22,7 @@ class BlogArticleAuthorCrudHandler implements CrudHandlerInterface
     }
 
     #[Override]
-    public function getById(int $id): Presentable
+    public function getById(int $id): BlogArticleAuthor
     {
         return $this->blogArticleAuthorFacade->getById($id);
     }
@@ -34,7 +34,7 @@ class BlogArticleAuthorCrudHandler implements CrudHandlerInterface
     }
 
     #[Override]
-    public function create(object $data): Presentable
+    public function create(object $data): BlogArticleAuthor
     {
         Assert::isInstanceOf($data, BlogArticleAuthorData::class);
 

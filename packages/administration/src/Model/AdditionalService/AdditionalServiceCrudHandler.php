@@ -25,7 +25,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getById(int $id): Presentable
+    public function getById(int $id): AdditionalService
     {
         return $this->additionalServiceFacade->getById($id);
     }
@@ -43,7 +43,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function create(object $data): Presentable
+    public function create(object $data): AdditionalService
     {
         Assert::isInstanceOf($data, AdditionalServiceData::class);
 

@@ -134,9 +134,11 @@ narrower). Pick the narrowest interface from `Shopsys\AdministrationBundle\Compo
 Rules that bite:
 
 - Never implement the bare `HandlerInterface` — it's only a marker for service discovery.
-- `getById()` **must return a `Presentable`** — the entity has to implement
-  `Shopsys\FrameworkBundle\Component\Utils\Presentable` (`toHumanReadable()`), otherwise the
-  CRUD registry throws a `RuntimeException` the first time the controller is loaded. Let
+- `getById()` and `create()` declare the **concrete entity** as their return type
+  (`getById(int $id): <Entity>`, see `ProductReviewEditHandler`), not the interface's `Presentable`.
+  The entity has to implement `Shopsys\FrameworkBundle\Component\Utils\Presentable`
+  (`toHumanReadable()`), otherwise the CRUD registry throws a `RuntimeException` the first time
+  the controller is loaded. Let
   `getById()` throw the facade's not-found exception (they extend `NotFoundHttpException`, so
   the page is a 404).
 - One handler per action; `CrudHandlerInterface` claims all actions, so it cannot be mixed
@@ -144,8 +146,9 @@ Rules that bite:
   `unregisterHandler()` + `registerHandler()`.
 - Handlers are plain services. The `App\` resource glob in `app/config/services.yaml`
   matches class names ending in `Handler` — keep that suffix or register the service by hand.
-- Start each method with `Assert::isInstanceOf($entity, <Entity>::class)` (see
-  `TransportGroupCrudHandler`) — the interface is typed `object`.
+- Start each method that receives the entity or the data object with
+  `Assert::isInstanceOf($entity, <Entity>::class)` (see `TransportGroupCrudHandler`) — the
+  interface types parameters as `Presentable` / `object` and PHP does not allow narrowing them.
 - Handlers hold no business logic. Everything goes through the facade; a handler may only
   add access filtering (see `ProductReviewEditHandler::getById()`).
 
