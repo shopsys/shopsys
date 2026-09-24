@@ -1,5 +1,6 @@
 import { ArticleProductHero } from 'components/Blocks/Product/ArticleProductHero';
-import { ProductsSlider, VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/productsSliderConstants';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { TypeProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
