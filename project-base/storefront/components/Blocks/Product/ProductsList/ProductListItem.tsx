@@ -11,6 +11,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { isProductSellable } from 'utils/product/isProductSellable';
 import { ProductListItemGridView } from './ProductListItemGridView';
 import { ProductListItemListView } from './ProductListItemListView';
+import { PREDEFINED_VISIBLE_ITEMS_CONFIGS } from './productListItemConstants';
 
 export type ProductVisibleItemsConfigType = {
     addToCart?: boolean;
@@ -136,24 +137,3 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 );
 
 ProductListItem.displayName = 'ProductItem';
-
-export const PREDEFINED_VISIBLE_ITEMS_CONFIGS = {
-    largeItem: {
-        productListButtons: true,
-        addToCart: true,
-        flags: true,
-        discount: false,
-        price: true,
-        storeAvailability: true,
-        priceFromWord: true,
-        reviews: true,
-    } as ProductVisibleItemsConfigType,
-    mediumItem: {
-        flags: true,
-        discount: false,
-        price: true,
-        storeAvailability: true,
-        priceFromWord: true,
-        reviews: true,
-    } as ProductVisibleItemsConfigType,
-} as const;
