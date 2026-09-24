@@ -1,5 +1,4 @@
 import Translation from 'bazinga-translator';
-import Register from 'framework/common/utils/Register';
 
 const translations = require('./translations.json');
 
@@ -15,4 +14,4 @@ export default function loadTranslations() {
     });
 }
 
-new Register().registerCallback(loadTranslations, 200);
+loadTranslations();
