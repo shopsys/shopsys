@@ -50,9 +50,9 @@ class CartTest extends TransactionFunctionalTestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero(), Money::zero());
         $cart->addItem($cartItem1);
-        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
+        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero(), Money::zero());
         $cart->addItem($cartItem2);
 
         $this->em->persist($cart);
@@ -77,7 +77,7 @@ class CartTest extends TransactionFunctionalTestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Money::zero(), Money::zero());
         $cart->addItem($cartItem);
 
         $cart->clean();

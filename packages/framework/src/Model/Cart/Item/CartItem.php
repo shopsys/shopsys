@@ -71,6 +71,13 @@ class CartItem
     protected $watchedPrice;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
+    protected $watchedPriceWithoutVat;
+
+    /**
      * @var \DateTimeImmutable
      */
     #[AsMcpColumn]
@@ -113,11 +120,13 @@ class CartItem
         Product $product,
         int $quantity,
         ?Money $watchedPrice,
+        ?Money $watchedPriceWithoutVat,
         string $type = CartItemTypeEnum::TYPE_PRODUCT,
     ) {
         $this->cart = $cart;
         $this->product = $product;
         $this->setWatchedPrice($watchedPrice);
+        $this->setWatchedPriceWithoutVat($watchedPriceWithoutVat);
         $this->changeQuantity($quantity);
         $this->addedAt = new DatePoint();
         $this->uuid = Uuid::uuid4()->toString();
@@ -178,6 +187,22 @@ class CartItem
     public function setWatchedPrice($watchedPrice): void
     {
         $this->watchedPrice = $watchedPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getWatchedPriceWithoutVat()
+    {
+        return $this->watchedPriceWithoutVat;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPriceWithoutVat
+     */
+    public function setWatchedPriceWithoutVat($watchedPriceWithoutVat): void
+    {
+        $this->watchedPriceWithoutVat = $watchedPriceWithoutVat;
     }
 
     public function isSimilarItemAs(self $cartItem): bool

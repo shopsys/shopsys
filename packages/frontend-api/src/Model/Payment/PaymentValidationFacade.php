@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\Watcher\WatchedPriceComparator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -26,6 +27,7 @@ class PaymentValidationFacade
         protected readonly PaymentPriceProvider $paymentPriceProvider,
         protected readonly OrderFacade $orderFacade,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
+        protected readonly WatchedPriceComparator $watchedPriceComparator,
     ) {
     }
 
@@ -37,9 +39,11 @@ class PaymentValidationFacade
             $this->domain->getCurrentDomainConfig(),
         );
 
-        $paymentWatchedPrice = $cart->getPaymentWatchedPrice();
-
-        if ($paymentWatchedPrice === null || !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice)) {
+        if ($this->watchedPriceComparator->isPriceChanged(
+            $calculatedPaymentPrice,
+            $cart->getPaymentWatchedPrice(),
+            $cart->getPaymentWatchedPriceWithoutVat(),
+        )) {
             throw new PaymentPriceChangedException($calculatedPaymentPrice);
         }
     }

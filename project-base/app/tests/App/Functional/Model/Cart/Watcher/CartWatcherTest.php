@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
+use Shopsys\FrameworkBundle\Model\Cart\Watcher\WatchedPriceComparator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -64,6 +65,11 @@ class CartWatcherTest extends TransactionFunctionalTestCase
      */
     private GiftPlanSettingFacade $giftPlanSettingFacade;
 
+    /**
+     * @inject
+     */
+    private WatchedPriceComparator $watchedPriceComparator;
+
     public function testGetModifiedPriceItemsAndUpdatePrices(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
@@ -71,7 +77,13 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePricesForCurrentUser($product)->sellingProductPrice;
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
-        $cartItem = new CartItem($cart, $product, 1, $productPrice->getPrice()->getPriceWithVat());
+        $cartItem = new CartItem(
+            $cart,
+            $product,
+            1,
+            $productPrice->getPrice()->getPriceWithVat(),
+            $productPrice->getPrice()->getPriceWithoutVat(),
+        );
         $cart->addItem($cartItem);
 
         $modifiedItems1 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
@@ -130,6 +142,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             $productVisibilityFacadeStub,
             $this->domain,
             $this->giftPlanSettingFacade,
+            $this->watchedPriceComparator,
         );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);

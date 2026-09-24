@@ -619,6 +619,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher: ~
 
+    Shopsys\FrameworkBundle\Model\Cart\Watcher\WatchedPriceComparator: ~
+
     Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFriendlyUrlDataProvider:
         tags:
             - {name: shopsys.friendly_url_provider}

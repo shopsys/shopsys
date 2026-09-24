@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
@@ -27,22 +27,23 @@ class CartTransportDataFactory
     ): CartTransportData {
         $domainId = $this->domain->getId();
         $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $domainId);
-        $watchedPriceWithVat = $this->getTransportWatchedPriceWithVat($domainId, $cart, $transport);
+        $watchedPrice = $this->getTransportWatchedPrice($domainId, $cart, $transport);
 
         $cartTransportData = new CartTransportData();
         $cartTransportData->transport = $transport;
-        $cartTransportData->watchedPrice = $watchedPriceWithVat;
+        $cartTransportData->watchedPrice = $watchedPrice->getPriceWithVat();
+        $cartTransportData->watchedPriceWithoutVat = $watchedPrice->getPriceWithoutVat();
         $cartTransportData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
 
         return $cartTransportData;
     }
 
-    protected function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
+    protected function getTransportWatchedPrice(int $domainId, Cart $cart, Transport $transport): PriceInterface
     {
         return $this->transportPriceProvider->getTransportPrice(
             $cart,
             $transport,
             $this->domain->getDomainConfigById($domainId),
-        )->getPriceWithVat();
+        );
     }
 }

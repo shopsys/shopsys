@@ -75,6 +75,7 @@ class MergeCartFacade
                     $itemToMerge->getProduct(),
                     $itemToMerge->getQuantity(),
                     $itemToMerge->getWatchedPrice(),
+                    $itemToMerge->getWatchedPriceWithoutVat(),
                     $itemToMerge->getType(),
                 );
                 $newCartItem->setAdditionalServices($itemToMerge->getAdditionalServices());

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class CartTransportFacade
 {
@@ -33,9 +33,10 @@ class CartTransportFacade
         $this->updateTransportInCart($cart, null, null);
     }
 
-    public function setTransportWatchedPrice(Cart $cart, Money $transportWatchedPrice): void
+    public function setTransportWatchedPrice(Cart $cart, PriceInterface $transportWatchedPrice): void
     {
-        $cart->setTransportWatchedPrice($transportWatchedPrice);
+        $cart->setTransportWatchedPrice($transportWatchedPrice->getPriceWithVat());
+        $cart->setTransportWatchedPriceWithoutVat($transportWatchedPrice->getPriceWithoutVat());
         $this->entityManager->flush();
     }
 

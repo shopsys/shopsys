@@ -14,7 +14,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \App\Model\Product\Product getProduct()
  * @method bool isSimilarItemAs(\App\Model\Cart\Item\CartItem $cartItem)
  * @property \App\Model\Cart\Cart $cart
- * @method __construct(\App\Model\Cart\Cart $cart, \App\Model\Product\Product $product, int $quantity, \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice, string $type = \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum::TYPE_PRODUCT)
+ * @method __construct(\App\Model\Cart\Cart $cart, \App\Model\Product\Product $product, int $quantity, \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice, \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPriceWithoutVat, string $type = \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum::TYPE_PRODUCT)
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'cart_items')]
