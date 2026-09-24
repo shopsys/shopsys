@@ -7,8 +7,9 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { FunctionComponentProps } from 'types/globals';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
-import { PREDEFINED_VISIBLE_ITEMS_CONFIGS, ProductItemProps } from './ProductListItem';
+import { ProductItemProps } from './ProductListItem';
 import { ProductListItemImage } from './ProductListItemImage';
+import { PREDEFINED_VISIBLE_ITEMS_CONFIGS } from './productListItemConstants';
 
 type ProductListItemPlaceholderProps = {
     product: TypeListedProductFragment;
