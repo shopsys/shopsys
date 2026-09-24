@@ -1,4 +1,5 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { GiftVouchersExceedPayableAmountWarning } from 'components/Pages/Order/GiftVouchersExceedPayableAmountWarning';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
@@ -21,6 +22,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { isPickupPlaceTransport } from 'utils/transport';
 import { EmailGiftVoucherInfo } from './EmailGiftVoucherInfo';
 import { NoAvailablePaymentInfo } from './NoAvailablePaymentInfo';
 import { PaidByGiftVoucherInfo } from './PaidByGiftVoucherInfo';
@@ -102,6 +104,25 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const shouldShowSelectedPayment = !!payment;
     const shouldShowPaymentList = !payment;
     const hasNoSelectablePayment = transport !== null && !isNothingLeftToPay && selectablePayments.length === 0;
+    const isTransportSelected =
+        !isChangingTransportInCart &&
+        !!transport &&
+        transports.some(
+            (availableTransport) =>
+                availableTransport.uuid === transport.uuid &&
+                availableTransport.productsBlockingSelectionInCart.length === 0,
+        ) &&
+        (!isPickupPlaceTransport(transport.transportTypeCode) || !!pickupPlace?.identifier);
+    const isPaymentSelected =
+        !isTransportSelectionLoading &&
+        isTransportSelected &&
+        selectablePayments.some((availablePayment) => availablePayment.uuid === payment?.uuid);
+    const transportHeading = isTransportSelected ? t('Selected transport') : t('Choose transport');
+    const paymentHeading = isPaymentSelected
+        ? t('Selected payment')
+        : onlySelectablePayment
+          ? t('Payment')
+          : t('Choose payment');
 
     const isKeyboardSelection = (event: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLInputElement>) =>
         event.detail === 0;
@@ -205,8 +226,13 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 />
                             </div>
                         )}
-                        <div className="mb-3 flex items-center justify-between">
-                            <h2 className="h4">{t('Choose transport')}</h2>
+                        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                            <h2 className="h4 flex items-center gap-2">
+                                {isTransportSelected && (
+                                    <CheckmarkIcon aria-hidden="true" className="size-5 shrink-0 text-text-success" />
+                                )}
+                                {transportHeading}
+                            </h2>
 
                             <AnimatePresence initial={false}>
                                 {!!transport && transports.length > 1 && (
@@ -223,7 +249,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         </div>
 
                         <fieldset>
-                            <legend className="sr-only">{t('Choose transport type')}</legend>
+                            <legend className="sr-only">{transportHeading}</legend>
 
                             <ul>
                                 <AnimatePresence initial={false}>
@@ -323,9 +349,15 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                         {!hasNoSelectablePayment && (
                             <>
-                                <div className="mb-3 flex items-center justify-between">
-                                    <h2 ref={paymentHeadingRef} className="h4" tabIndex={-1}>
-                                        {onlySelectablePayment ? t('Payment') : t('Choose payment')}
+                                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                                    <h2 ref={paymentHeadingRef} className="h4 flex items-center gap-2" tabIndex={-1}>
+                                        {isPaymentSelected && (
+                                            <CheckmarkIcon
+                                                aria-hidden="true"
+                                                className="size-5 shrink-0 text-text-success"
+                                            />
+                                        )}
+                                        {paymentHeading}
                                     </h2>
 
                                     <AnimatePresence initial={false}>
@@ -346,9 +378,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 </div>
 
                                 <fieldset>
-                                    <legend className="sr-only">
-                                        {onlySelectablePayment ? t('Payment') : t('Choose payment type')}
-                                    </legend>
+                                    <legend className="sr-only">{paymentHeading}</legend>
 
                                     <ul>
                                         <AnimatePresence initial={false}>
