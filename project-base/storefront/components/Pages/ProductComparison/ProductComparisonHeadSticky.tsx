@@ -1,13 +1,16 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import {
+    PRODUCT_COMPARISON_END_TRIGGER_ID,
+    PRODUCT_COMPARISON_STICKY_TRIGGER_ID,
+} from 'components/Pages/ProductComparison/productComparisonConstants';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { ReactNode, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { useScrollTop } from 'utils/ui/useScrollTop';
-import { PRODUCT_COMPARISON_END_TRIGGER_ID, PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from './ProductComparisonHead';
 
 type ProductComparisonHeadStickyProps = {
     comparedProducts: TypeProductInProductListFragment[];
