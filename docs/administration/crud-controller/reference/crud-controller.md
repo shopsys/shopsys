@@ -228,6 +228,43 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 
     Calling `useFormType()` after `useBuilder()` (or vice versa) throws `CrudFormAlreadyConfiguredException`. This also applies to [extensions](../getting-started/extending-existing-crud-controller.md#extending-forms) — if the controller uses `useFormType()`, extensions cannot call `useBuilder()`. When using `useBuilder()`, extensions can call `useBuilder()` too and will receive the same builder instance to add their fields.
 
+## Templates
+
+The pages are rendered by the templates in `@ShopsysAdministration/crud/` (`list.html.twig`, `new.html.twig`, `edit.html.twig`, `detail.html.twig`).
+To add content to the edit page, override `getEditTemplate()` in the controller and extend the default template:
+
+```php
+#[Override]
+protected function getEditTemplate(): string
+{
+    return '@ShopsysAdministration/content/productReview/edit.html.twig';
+}
+```
+
+The templates define empty blocks around the main content, so the extending template only overrides the block at the position it needs — no `parent()` calls required:
+
+| Template | Blocks (in order) |
+|---|---|
+| `new.html.twig`, `edit.html.twig` | `before_form`, `form`, `after_form` (+ `entity_log` on the edit page, see below) |
+| `list.html.twig` | `domain_control`, `before_grid`, `grid`, `after_grid` |
+
+```twig
+{% extends '@ShopsysAdministration/crud/edit.html.twig' %}
+
+{% block before_form %}
+    {{ include('@ShopsysAdministration/content/productReview/basicInformation.html.twig', { productReview: entity }) }}
+{% endblock %}
+```
+
+Extra variables for the template can be provided by overriding `getEditViewData(object $entity): array`.
+
+### Change history on the edit page
+
+The edit page displays the change history of the record (the `Admin:EntityLogTimeline` component) in the `entity_log` block below the form
+whenever the entity has [entity logging](../../../model/log-entity-changes.md) enabled by the `#[Loggable]` attribute.
+Nothing has to be configured to get it — an entity that is logged shows its log.
+A custom edit template can replace or remove the history by overriding the `entity_log` block.
+
 ## CRUD Config
 
 The `CrudConfig` class is used to configure the behavior of the Crud Controller. It is used in the `configure` method of the Crud Controller.

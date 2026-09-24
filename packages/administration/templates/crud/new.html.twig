@@ -11,5 +11,11 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ form(form) }}
+    {% block before_form %}{% endblock %}
+
+    {% block form %}
+        {{ form(form) }}
+    {% endblock %}
+
+    {% block after_form %}{% endblock %}
 {% endblock %}

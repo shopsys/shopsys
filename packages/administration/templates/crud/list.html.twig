@@ -11,11 +11,19 @@
 {% endblock %}
 
 {% block main_content %}
-    {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
-        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
-    {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}
-        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
-    {% endif %}
+    {% block domain_control %}
+        {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
+            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
+        {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}
+            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+        {% endif %}
+    {% endblock %}
 
-    {{ grid.render }}
+    {% block before_grid %}{% endblock %}
+
+    {% block grid %}
+        {{ grid.render }}
+    {% endblock %}
+
+    {% block after_grid %}{% endblock %}
 {% endblock %}
