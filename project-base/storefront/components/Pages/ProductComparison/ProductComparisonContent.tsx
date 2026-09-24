@@ -1,11 +1,12 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
+import { PRODUCT_COMPARISON_END_TRIGGER_ID } from 'components/Pages/ProductComparison/productComparisonConstants';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useEffect } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 import { ProductComparisonBody } from './ProductComparisonBody';
-import { PRODUCT_COMPARISON_END_TRIGGER_ID, ProductComparisonHead } from './ProductComparisonHead';
+import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 
 type ProductComparisonContentProps = {

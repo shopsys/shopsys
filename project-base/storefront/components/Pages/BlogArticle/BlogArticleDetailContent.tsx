@@ -3,7 +3,6 @@ import { Flag } from 'components/Basic/Flag/Flag';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
-import { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'components/Blocks/ArticleAnchorNavigation/ArticleAnchorNavigation';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/productsSliderConstants';
 import { BlogLayout } from 'components/Layout/BlogLayout';
@@ -12,7 +11,7 @@ import { BlogArticleAuthorBox } from 'components/Pages/BlogArticle/BlogArticleAu
 import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useMemo } from 'react';
-import { getArticleHtmlHeadingAnchors } from 'utils/articleHeadingAnchors';
+import { ARTICLE_INTRODUCTION_ANCHOR_ID, getArticleHtmlHeadingAnchors } from 'utils/articleHeadingAnchors';
 
 type BlogArticleDetailContentProps = {
     blogArticle: TypeBlogArticleDetailFragment;
