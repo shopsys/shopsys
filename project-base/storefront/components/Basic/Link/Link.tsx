@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ButtonBaseProps, getButtonClassName } from 'components/Forms/Button/Button';
+import { ButtonBaseProps } from 'components/Forms/Button/Button';
+import { getButtonClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
 import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

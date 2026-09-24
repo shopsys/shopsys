@@ -1,5 +1,6 @@
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
-import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
+import { Button } from 'components/Forms/Button/Button';
+import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
