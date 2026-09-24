@@ -1,9 +1,9 @@
 import { act, render, screen, within } from '@testing-library/react';
+import { ProductComparisonHeadSticky } from 'components/Pages/ProductComparison/ProductComparisonHeadSticky';
 import {
     PRODUCT_COMPARISON_END_TRIGGER_ID,
     PRODUCT_COMPARISON_STICKY_TRIGGER_ID,
-} from 'components/Pages/ProductComparison/ProductComparisonHead';
-import { ProductComparisonHeadSticky } from 'components/Pages/ProductComparison/ProductComparisonHeadSticky';
+} from 'components/Pages/ProductComparison/productComparisonConstants';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import type React from 'react';
 import { useScrollTop } from 'utils/ui/useScrollTop';
