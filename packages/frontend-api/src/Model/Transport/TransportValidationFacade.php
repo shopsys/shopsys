@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\Watcher\WatchedPriceComparator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
@@ -30,6 +31,7 @@ class TransportValidationFacade
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
         protected readonly TransportPriceFacade $transportPriceFacade,
+        protected readonly WatchedPriceComparator $watchedPriceComparator,
     ) {
     }
 
@@ -85,9 +87,11 @@ class TransportValidationFacade
             $this->domain->getCurrentDomainConfig(),
         );
 
-        $transportWatchedPrice = $cart->getTransportWatchedPrice();
-
-        if ($transportWatchedPrice === null || !$calculatedTransportPrice->getPriceWithVat()->equals($transportWatchedPrice)) {
+        if ($this->watchedPriceComparator->isPriceChanged(
+            $calculatedTransportPrice,
+            $cart->getTransportWatchedPrice(),
+            $cart->getTransportWatchedPriceWithoutVat(),
+        )) {
             throw new TransportPriceChangedException($calculatedTransportPrice);
         }
     }

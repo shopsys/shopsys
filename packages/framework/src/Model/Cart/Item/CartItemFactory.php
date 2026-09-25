@@ -22,11 +22,12 @@ class CartItemFactory
         Product $product,
         int $quantity,
         ?Money $watchedPrice,
+        ?Money $watchedPriceWithoutVat,
         string $type,
     ): CartItem {
         $this->cartItemTypeEnum->validateCase($type);
         $entityClassName = $this->entityNameResolver->resolve(CartItem::class);
 
-        return new $entityClassName($cart, $product, $quantity, $watchedPrice, $type);
+        return new $entityClassName($cart, $product, $quantity, $watchedPrice, $watchedPriceWithoutVat, $type);
     }
 }

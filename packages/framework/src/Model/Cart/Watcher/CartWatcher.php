@@ -21,6 +21,7 @@ class CartWatcher
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly Domain $domain,
         protected readonly GiftPlanSettingFacade $giftPlanSettingFacade,
+        protected readonly WatchedPriceComparator $watchedPriceComparator,
     ) {
     }
 
@@ -36,10 +37,15 @@ class CartWatcher
                 $cartItem->getProduct(),
             )->sellingProductPrice->getPrice();
 
-            if (!$price->getPriceWithVat()->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
+            if ($this->watchedPriceComparator->isPriceChanged(
+                $price,
+                $cartItem->getWatchedPrice() ?? Money::zero(),
+                $cartItem->getWatchedPriceWithoutVat(),
+            )) {
                 $modifiedItems[] = $cartItem;
             }
             $cartItem->setWatchedPrice($price->getPriceWithVat());
+            $cartItem->setWatchedPriceWithoutVat($price->getPriceWithoutVat());
         }
 
         $giftPrice = $this->giftPlanSettingFacade->getInputGiftPrice($this->domain->getId());

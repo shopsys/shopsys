@@ -98,6 +98,13 @@ class Cart
     protected $transportWatchedPrice;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
+    protected $transportWatchedPriceWithoutVat;
+
+    /**
      * @var string|null
      */
     #[AsMcpColumn]
@@ -118,6 +125,13 @@ class Cart
     #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
     protected $paymentWatchedPrice;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
+    protected $paymentWatchedPriceWithoutVat;
 
     /**
      * @var string|null
@@ -421,6 +435,7 @@ class Cart
     {
         $this->transport = null;
         $this->transportWatchedPrice = null;
+        $this->transportWatchedPriceWithoutVat = null;
         $this->pickupPlaceIdentifier = null;
         $this->setModifiedNow();
     }
@@ -429,6 +444,7 @@ class Cart
     {
         $this->transport = $cartTransportData->transport;
         $this->transportWatchedPrice = $cartTransportData->watchedPrice;
+        $this->transportWatchedPriceWithoutVat = $cartTransportData->watchedPriceWithoutVat;
         $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
         $this->setModifiedNow();
     }
@@ -437,6 +453,7 @@ class Cart
     {
         $this->payment = $cartPaymentData->payment;
         $this->paymentWatchedPrice = $cartPaymentData->watchedPrice;
+        $this->paymentWatchedPriceWithoutVat = $cartPaymentData->watchedPriceWithoutVat;
         $this->paymentGoPayBankSwift = $cartPaymentData->goPayBankSwift;
         $this->setModifiedNow();
     }
@@ -445,6 +462,7 @@ class Cart
     {
         $this->payment = null;
         $this->paymentWatchedPrice = null;
+        $this->paymentWatchedPriceWithoutVat = null;
         $this->paymentGoPayBankSwift = null;
         $this->setModifiedNow();
     }
@@ -487,6 +505,22 @@ class Cart
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getTransportWatchedPriceWithoutVat()
+    {
+        return $this->transportWatchedPriceWithoutVat;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $transportWatchedPriceWithoutVat
+     */
+    public function setTransportWatchedPriceWithoutVat($transportWatchedPriceWithoutVat): void
+    {
+        $this->transportWatchedPriceWithoutVat = $transportWatchedPriceWithoutVat;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
     public function getPayment()
@@ -516,6 +550,22 @@ class Cart
     public function setPaymentWatchedPrice($paymentWatchedPrice): void
     {
         $this->paymentWatchedPrice = $paymentWatchedPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getPaymentWatchedPriceWithoutVat()
+    {
+        return $this->paymentWatchedPriceWithoutVat;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $paymentWatchedPriceWithoutVat
+     */
+    public function setPaymentWatchedPriceWithoutVat($paymentWatchedPriceWithoutVat): void
+    {
+        $this->paymentWatchedPriceWithoutVat = $paymentWatchedPriceWithoutVat;
     }
 
     public function getTotalWeight(): int

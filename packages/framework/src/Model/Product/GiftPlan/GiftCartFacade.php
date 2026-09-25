@@ -48,7 +48,7 @@ class GiftCartFacade
                 continue;
             }
 
-            $newCartItem = $this->cartItemFactory->create($cart, $giftProduct, $giftQuantity, $giftPrice, CartItemTypeEnum::TYPE_PRODUCT_GIFT);
+            $newCartItem = $this->cartItemFactory->create($cart, $giftProduct, $giftQuantity, $giftPrice, null, CartItemTypeEnum::TYPE_PRODUCT_GIFT);
             $cart->addItem($newCartItem);
             $cart->setModifiedNow();
             $this->em->persist($newCartItem);

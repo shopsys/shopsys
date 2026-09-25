@@ -79,7 +79,14 @@ class CartFacade
             $quantity -= $notOnStockQuantity;
         }
 
-        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat(), CartItemTypeEnum::TYPE_PRODUCT);
+        $newCartItem = $this->cartItemFactory->create(
+            $cart,
+            $product,
+            $quantity,
+            $productPrice->getPrice()->getPriceWithVat(),
+            $productPrice->getPrice()->getPriceWithoutVat(),
+            CartItemTypeEnum::TYPE_PRODUCT,
+        );
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 
