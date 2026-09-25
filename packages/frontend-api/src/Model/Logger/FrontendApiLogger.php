@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Logger;
 
+use GraphQL\Error\ClientAware;
 use Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException;
 use Override;
 use Psr\Log\LoggerInterface;
@@ -41,6 +42,8 @@ class FrontendApiLogger implements LoggerInterface
 
                     $context['violations'][] = $violation;
                 }
+            } elseif ($throwable instanceof ClientAware && $throwable->isClientSafe()) {
+                $level = LogLevel::INFO;
             }
         }
 
