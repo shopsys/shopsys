@@ -44,14 +44,8 @@
     {% if not row.isB2bCompany %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% else %}
-        {% set customerId = row.customerId %}
-        {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
-        {% set deleteUrl = url('admin_customer_delete_all', {
-            id: customerId,
-            (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-        }) %}
         <a class="px-1 link-secondary"
-           href="{{ deleteUrl }}"
+           href="{{ protectedUrl('admin_customer_delete_all', {id: row.customerId}) }}"
            title={{ 'Delete'|trans }}
            data-confirm-window
            data-confirm-message="{{ 'This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?'|trans }}"
