@@ -5,6 +5,7 @@ import { createRef, type ReactNode } from 'react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 let boundaryTop = 1_000;
+let isDesktop = false;
 
 vi.mock('components/Basic/HorizontalScrollHint/HorizontalScrollHint', () => ({
     HorizontalScrollHint: ({
@@ -27,7 +28,7 @@ vi.mock('components/Layout/Webline/Webline', () => ({
 }));
 
 vi.mock('utils/ui/useMediaMin', () => ({
-    useMediaMin: () => false,
+    useMediaMin: () => isDesktop,
 }));
 
 vi.mock('components/Pages/ProductDetail/ProductDetailSections/ProductDetailStickyAction', () => ({
@@ -39,6 +40,7 @@ vi.mock('components/Pages/ProductDetail/ProductDetailSections/ProductDetailStick
 describe('ProductDetailSectionNavigation', () => {
     beforeEach(() => {
         boundaryTop = 1_000;
+        isDesktop = false;
         vi.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) =>
             window.setTimeout(() => callback(0), 0),
         );
@@ -54,6 +56,47 @@ describe('ProductDetailSectionNavigation', () => {
 
     afterEach(() => {
         vi.restoreAllMocks();
+    });
+
+    test.each([
+        false,
+        true,
+    ])('hides a single navigation item while preserving the sticky action (desktop: %s)', async (desktop) => {
+        isDesktop = desktop;
+
+        render(
+            <ProductDetailSectionNavigation
+                activeSection={null}
+                product={{} as TypeProductDetailFragment}
+                sections={[{ id: 'reviews', label: 'Reviews' }]}
+                stickyActionBoundaryRef={createRef<HTMLDivElement>()}
+                onSectionClick={vi.fn()}
+            />,
+        );
+
+        expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: 'Reviews' })).not.toBeInTheDocument();
+        await waitFor(() => expect(screen.getByTestId('sticky-action')).toHaveAttribute('data-visible', 'true'));
+    });
+
+    test('allows navigation between multiple sections', () => {
+        const onSectionClick = vi.fn();
+
+        render(
+            <ProductDetailSectionNavigation
+                activeSection={null}
+                sections={[
+                    { id: 'overview', label: 'Overview' },
+                    { id: 'reviews', label: 'Reviews' },
+                ]}
+                stickyActionBoundaryRef={createRef<HTMLDivElement>()}
+                onSectionClick={onSectionClick}
+            />,
+        );
+        fireEvent.click(screen.getByRole('button', { name: 'Reviews' }));
+
+        expect(screen.getByRole('navigation')).toBeInTheDocument();
+        expect(onSectionClick).toHaveBeenCalledWith('reviews');
     });
 
     test('keeps the mobile sticky action hidden during viewport boundary fluctuations', async () => {

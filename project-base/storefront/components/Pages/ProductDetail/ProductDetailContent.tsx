@@ -98,20 +98,25 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             </div>
 
                             {(isWatchdogButtonVisible || isPurchaseActionVisible) && (
-                                <div
-                                    className={twJoin(
-                                        'grid items-stretch gap-3',
-                                        areMultiplePurchaseActionsVisible ? 'sm:grid-cols-2' : 'sm:max-w-80',
-                                    )}
-                                >
+                                <div className="flex flex-col flex-wrap gap-3 sm:flex-row">
                                     {isWatchdogButtonVisible && (
                                         <WatchDogButton
-                                            className="h-auto min-h-10 w-full text-balance sm:min-h-14"
+                                            className={twJoin(
+                                                'h-auto min-h-10 w-full text-balance sm:min-h-14',
+                                                areMultiplePurchaseActionsVisible
+                                                    ? 'min-w-max flex-1 whitespace-nowrap'
+                                                    : 'sm:max-w-60',
+                                            )}
                                             product={product}
                                         />
                                     )}
 
-                                    {isPurchaseActionVisible && <DeferredProductDetailAddToCart product={product} />}
+                                    {isPurchaseActionVisible && (
+                                        <DeferredProductDetailAddToCart
+                                            isInPurchaseActionsRow={areMultiplePurchaseActionsVisible}
+                                            product={product}
+                                        />
+                                    )}
                                 </div>
                             )}
 
