@@ -81,6 +81,7 @@ const product = {
     fullName: 'Television 22" Sencor',
     images: [{ __typename: 'Image', name: 'Product image', url: '/product.jpg' }],
     isInquiryType: false,
+    mainCategory: { name: 'TV, audio' },
     price: {
         __typename: 'ProductPrice',
         basicPrice: {
@@ -137,10 +138,10 @@ describe('Product detail accessibility', () => {
         expect(screen.getByRole('tooltip')).toHaveTextContent('Download');
     });
 
-    test('does not repeat the sticky product name in image alt or title text', () => {
+    test('uses the configured image description in the sticky action', () => {
         const { container } = render(<ProductDetailStickyAction isVisible placement="inline" product={product} />);
 
-        expect(container.querySelector('[data-alt]')).toHaveAttribute('data-alt', '');
+        expect(container.querySelector('[data-alt]')).toHaveAttribute('data-alt', 'Product image');
         expect(screen.getByText(product.fullName)).not.toHaveAttribute('title');
     });
 

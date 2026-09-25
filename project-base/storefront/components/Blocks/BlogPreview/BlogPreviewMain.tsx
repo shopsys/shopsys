@@ -5,6 +5,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 import { ArticleLink } from './BlogPreviewElements';
 
 type MainProps = {
@@ -32,7 +33,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                 >
                     <div className="overflow-hidden rounded-xl">
                         <Image
-                            alt={article.mainImage?.name || article.name}
+                            alt={getImageAlt(article.mainImage?.name, article.name)}
                             className="aspect-video size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 xl:aspect-16/11"
                             height={220}
                             sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"

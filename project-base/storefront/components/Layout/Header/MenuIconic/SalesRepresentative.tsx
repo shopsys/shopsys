@@ -6,6 +6,7 @@ import { TypeSalesRepresentative } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 type SalesRepresentativeProps = {
     onContactClick?: () => void;
@@ -31,7 +32,7 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
             <div className="flex items-center gap-2">
                 {salesRepresentative.image && (
                     <Image
-                        alt={t('Need advice?')}
+                        alt={getImageAlt(salesRepresentative.image.name, fullName || t('Your sales representative'))}
                         className="size-12 rounded-full object-cover"
                         height={48}
                         src={salesRepresentative.image.url}

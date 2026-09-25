@@ -8,6 +8,7 @@ import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { TIDs } from 'cypress/tids';
 import { useTransportsImage } from 'graphql/requests/transports/queries/TransportsImage.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 export const FooterExtras = () => {
     const { t } = useTranslation();
@@ -31,7 +32,7 @@ export const FooterExtras = () => {
                                 <Tooltip key={transport.mainImage?.name || index} label={transport.name}>
                                     <div className="flex items-center">
                                         <Image
-                                            alt={transport.name}
+                                            alt={getImageAlt(transport.mainImage?.name, transport.name)}
                                             className="h-8 w-16 object-contain object-center"
                                             height={32}
                                             src={transport.mainImage?.url}

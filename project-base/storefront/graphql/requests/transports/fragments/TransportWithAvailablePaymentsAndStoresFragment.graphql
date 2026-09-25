@@ -30,6 +30,9 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
         products {
             uuid
             fullName
+            mainCategory {
+                name
+            }
             mainImage {
                 ...ImageFragment
             }

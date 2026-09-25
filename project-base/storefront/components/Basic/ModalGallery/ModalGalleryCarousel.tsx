@@ -5,6 +5,7 @@ import { YouTubeThumbnail } from 'components/Basic/YouTubeThumbnail/YouTubeThumb
 import { createRef, RefObject, useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
 
 type ModalGalleryCarouselProps = {
     items: MediaCarouselItem[];
@@ -65,7 +66,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                             >
                                 {isImage && (
                                     <Image
-                                        alt={galleryItem.name || `${galleryName}-${index}`}
+                                        alt={getImageAlt(galleryItem.name, galleryName)}
                                         className="max-h-full w-auto object-contain mix-blend-multiply"
                                         draggable={false}
                                         hash={galleryItem.url.split('?')[1]}
