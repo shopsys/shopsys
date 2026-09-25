@@ -137,6 +137,7 @@ Translator.transChoice('{1}Load next item|]1,Inf[Load next items', loadNextCount
 ```
 
 JavaScript translations are extracted and translated during compilation of JavaScript.
+The administration loads the catalogue as soon as its bundle is evaluated, so the translations are available from the start – in Stimulus controllers already in `connect()`.
 
 ## Possible ways of changing translations
 
