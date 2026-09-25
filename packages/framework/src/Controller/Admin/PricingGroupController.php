@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupSettingsFormType;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\InvalidPricingGroupReplacementException;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupIsUsedException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupInlineEdit;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -75,8 +77,12 @@ class PricingGroupController extends AdminBaseController
                     ],
                 );
             }
-        } catch (PricingGroupNotFoundException $ex) {
+        } catch (PricingGroupNotFoundException) {
             $this->addErrorFlash(t('Selected pricing group doesn\'t exist.'));
+        } catch (PricingGroupIsUsedException) {
+            $this->addErrorFlash(t('Pricing group is used and cannot be deleted without choosing a replacement.'));
+        } catch (InvalidPricingGroupReplacementException) {
+            $this->addErrorFlash(t('Selected replacement pricing group must be a different pricing group from the same domain.'));
         }
 
         return $this->redirectToRoute('admin_pricinggroup_list');
@@ -90,16 +96,14 @@ class PricingGroupController extends AdminBaseController
         try {
             $pricingGroup = $this->pricingGroupFacade->getById($id);
 
-            $selectedDomain = $this->adminDomainTabsFacade->getSelectedDomainConfig();
-
-            if ($this->pricingGroupSettingFacade->isPricingGroupUsedOnDomain($pricingGroup, $selectedDomain)) {
+            if ($this->pricingGroupSettingFacade->isPricingGroupUsed($pricingGroup)) {
                 $message = t(
                     'For removing pricing group "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                     . 'Which pricing group you want to set instead?',
                     ['%name%' => $pricingGroup->getName()],
                 );
 
-                if ($this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($pricingGroup, $selectedDomain)) {
+                if ($this->pricingGroupSettingFacade->isPricingGroupSetAsDefault($pricingGroup)) {
                     $message = t(
                         'Pricing group "%name%" set as default. For deleting it you have to choose other one to be set everywhere '
                         . 'where the existing one is used. Which pricing group you want to set instead?',
@@ -124,7 +128,7 @@ class PricingGroupController extends AdminBaseController
                 'admin_pricinggroup_delete',
                 $id,
             );
-        } catch (PricingGroupNotFoundException $ex) {
+        } catch (PricingGroupNotFoundException) {
             return new Response(t('Selected pricing group doesn\'t exist.'));
         }
     }
@@ -146,9 +150,8 @@ class PricingGroupController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $pricingGroupSettingsFormData = $form->getData();
 
-            $this->pricingGroupSettingFacade->setDefaultPricingGroupForDomain(
+            $this->pricingGroupSettingFacade->setPricingGroupAsDefault(
                 $pricingGroupSettingsFormData['defaultPricingGroup'],
-                $this->adminDomainTabsFacade->getSelectedDomainConfig(),
             );
 
             $this->addSuccessFlash(t('Default pricing group settings modified'));

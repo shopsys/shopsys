@@ -2851,6 +2851,9 @@ msgstr ""
 msgid "Pricing group <strong>{{ name }}</strong> deleted and replaced by group <strong>{{ newName }}</strong>."
 msgstr ""
 
+msgid "Pricing group is used and cannot be deleted without choosing a replacement."
+msgstr ""
+
 msgid "Pricing groups"
 msgstr ""
 
@@ -3314,6 +3317,9 @@ msgid "Selected product doesn't exist."
 msgstr ""
 
 msgid "Selected promo code doesn't exist."
+msgstr ""
+
+msgid "Selected replacement pricing group must be a different pricing group from the same domain."
 msgstr ""
 
 msgid "Selected sales representative doesn't exist."
