@@ -30,6 +30,7 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
             setActiveSection(sectionId);
             updateHash(sectionId);
             section.ref.current.scrollIntoView({ behavior: 'smooth' });
+            section.ref.current.focus({ preventScroll: true });
         }
     };
 

@@ -2,7 +2,7 @@ import { AnimateNavigationMenu } from 'components/Basic/Animations/AnimateNaviga
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
-import type { FocusEventHandler } from 'react';
+import type { FocusEventHandler, KeyboardEventHandler } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -78,6 +78,17 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
         setNavigationOverlayTop(navigationRef.current?.getBoundingClientRect().bottom ?? null);
     }, []);
 
+    const focusFirstNavigationMenuLink = useCallback(() => {
+        const firstNavigationMenuLink = navigationMenuRef.current?.querySelector<HTMLAnchorElement>('a[href]');
+
+        if (!firstNavigationMenuLink) {
+            return;
+        }
+
+        shouldFocusNavigationMenuRef.current = false;
+        firstNavigationMenuLink.focus();
+    }, []);
+
     useEffect(() => {
         if (!hasOverflowNavigationItems) {
             setIsMoreMenuOpened(false);
@@ -102,9 +113,8 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
             return;
         }
 
-        shouldFocusNavigationMenuRef.current = false;
-        navigationMenuRef.current?.querySelector<HTMLAnchorElement>('a[href]')?.focus();
-    }, [activeNavigationItem]);
+        focusFirstNavigationMenuLink();
+    }, [activeNavigationItem, focusFirstNavigationMenuLink]);
 
     useEffect(() => {
         if (activeNavigationItemKeyDelayed === null && !isMoreMenuOpenedDelayed) {
@@ -143,6 +153,20 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
         shouldFocusNavigationMenuRef.current = false;
     };
 
+    const handleNavigationMenuKeyDown: KeyboardEventHandler<HTMLElement> = (event) => {
+        if (event.key !== 'Escape' || activeNavigationItemMenuId === undefined) {
+            return;
+        }
+
+        const activeNavigationItemTrigger = Array.from(
+            navigationRef.current?.querySelectorAll<HTMLButtonElement>('button[aria-controls]') ?? [],
+        ).find((button) => button.getAttribute('aria-controls') === activeNavigationItemMenuId);
+
+        event.stopPropagation();
+        closeNavigationMenu();
+        activeNavigationItemTrigger?.focus();
+    };
+
     const closeMoreMenu = () => {
         setIsMoreMenuOpened(false);
         setHasMoreMenuBeenOpened(false);
@@ -153,6 +177,12 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
         updateNavigationOverlayTop();
         setShouldOpenMenuImmediately(openImmediately);
         shouldFocusNavigationMenuRef.current = focusMenu;
+
+        // ArrowDown must move focus even when pointer hover has already opened this menu.
+        if (focusMenu && activeNavigationItemKeyDelayed === navigationItemKey) {
+            focusFirstNavigationMenuLink();
+        }
+
         setActiveNavigationItemKey(navigationItemKey);
     };
 
@@ -197,6 +227,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
             id={id}
             tabIndex={-1}
             onBlur={handleNavigationBlur}
+            onKeyDown={handleNavigationMenuKeyDown}
             onMouseLeave={handleNavigationMouseLeave}
         >
             <ul
@@ -284,6 +315,7 @@ export const Navigation: FC<NavigationProps> = ({ navigation, id = 'main-navigat
                                     className="vl:mx-auto grid w-full vl:max-w-default-max-width gap-8 p-8"
                                 >
                                     <NavigationItemColumn
+                                        ariaLabel={activeNavigationItem.name}
                                         columnCategories={activeNavigationItem.categoriesByColumns}
                                         skeletonType={activeNavigationItemSkeletonType}
                                         onLinkClick={closeNavigationMenu}

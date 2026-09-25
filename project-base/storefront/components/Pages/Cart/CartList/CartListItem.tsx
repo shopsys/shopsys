@@ -62,9 +62,11 @@ export const CartListItem: FC<CartListItemProps> = ({
         mapPriceForCalculations(productPrice.priceWithoutVat) * payableQuantity,
     );
     const cartItemDescriptionId = `product-${uuid}-cart-summary`;
+    const cartItemAvailabilityDescriptionId = `product-${uuid}-availability-summary`;
+    const cartItemAvailabilityDescription = `${t('Availability')}: ${product.availability.name}.`;
     const cartItemSummary = [
         t('Code: {{ catalogNumber }}.', { ns: 'accessibility', catalogNumber: product.catalogNumber }),
-        `${t('Availability')}: ${product.availability.name}.`,
+        cartItemAvailabilityDescription,
         t('Quantity: {{ quantity }} {{ unit }}.', {
             ns: 'accessibility',
             quantity,
@@ -230,6 +232,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                                         ns: 'accessibility',
                                         productName: product.fullName,
                                     })}
+                                    aria-describedby={cartItemAvailabilityDescriptionId}
                                 >
                                     {productIdentityContent}
                                 </ExtendedNextLink>
@@ -253,6 +256,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
                         {isCartItemPartiallyAvailable(product, quantity) ? (
                             <CartItemPartialAvailability
+                                id={cartItemAvailabilityDescriptionId}
                                 className="col-start-2 vl:col-start-4 vl:row-span-3 vl:row-start-1 vl:w-40 min-w-0 vl:self-center text-sm xl:w-52"
                                 expectedRestockingDate={product.expectedRestockingDate}
                                 stockQuantity={product.stockQuantity ?? 0}
@@ -260,6 +264,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                             />
                         ) : (
                             <ProductAvailability
+                                id={cartItemAvailabilityDescriptionId}
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
                                 isPersonalPickupOnly={product.isPersonalPickupOnly}

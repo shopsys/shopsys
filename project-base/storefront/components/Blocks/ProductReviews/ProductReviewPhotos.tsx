@@ -61,6 +61,7 @@ export const ProductReviewPhotos: FC<ProductReviewPhotosProps> = ({
                     <li key={image.url}>
                         <button
                             aria-label={t('View review photos in gallery', { ns: 'accessibility' })}
+                            data-focus-style="ring"
                             title={t('Open gallery')}
                             type="button"
                             className={twJoin(
