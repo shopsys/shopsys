@@ -9,6 +9,8 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FrameworkBundle\Form\WysiwygTypeExtension;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Symfony\Component\Asset\Packages;
+use Symfony\Reprise\Asset\EntrypointsLookupInterface;
 
 final class CKEditorTypeTest extends AbstractHtmlContentFieldTestCase
 {
@@ -40,8 +42,8 @@ final class CKEditorTypeTest extends AbstractHtmlContentFieldTestCase
             CKEditorType::class => [
                 new WysiwygTypeExtension(
                     $localization,
-                    // configureOptions() reads the file to build the contentsCss option, so it has to exist
-                    __DIR__ . '/CKEditorTypeTest/entrypoints.json',
+                    $this->createStub(EntrypointsLookupInterface::class),
+                    $this->createStub(Packages::class),
                     $this->createWysiwygCdnDataTransformer(),
                 ),
             ],

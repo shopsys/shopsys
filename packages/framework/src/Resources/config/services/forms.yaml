@@ -32,7 +32,5 @@ services:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\MoneyType }
 
     Shopsys\FrameworkBundle\Form\WysiwygTypeExtension:
-        arguments:
-            $entrypointsPath: '%shopsys.json_entrypoints_path%'
         tags:
             - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }

@@ -1,6 +1,7 @@
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Translator from 'bazinga-translator';
-import Check from 'icons/tabler/check.svg';
+import Check from 'icons/tabler/check.svg?raw';
+import $ from 'jquery';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 

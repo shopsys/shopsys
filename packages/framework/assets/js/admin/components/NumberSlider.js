@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import noUiSlider from 'nouislider';
 import Register from '../../common/utils/Register';
 

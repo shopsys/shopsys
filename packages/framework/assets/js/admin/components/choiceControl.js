@@ -1,3 +1,4 @@
+import $ from 'jquery';
 export function select(choiceListSelector, value) {
     const $choiceList = $($(choiceListSelector));
 

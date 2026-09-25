@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { KeyCodes } from '../../common/utils/KeyCodes';
 import Register from '../../common/utils/Register';
 

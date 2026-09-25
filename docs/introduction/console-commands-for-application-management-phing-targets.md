@@ -319,7 +319,7 @@ This command build assets once in production mode (without source map, with comp
 
 #### npm-watch
 
-Webpack keep ‘watch’-ing for any changes we make in our code and once we save the changes, it will rerun by itself to rebuild the package.
+Rsbuild keeps ‘watch’-ing for any changes we make in our code and once we save the changes, it will rerun by itself to rebuild the package.
 
 Useful when modifying only js files.
 

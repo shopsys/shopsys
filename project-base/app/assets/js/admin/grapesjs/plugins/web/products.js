@@ -1,6 +1,7 @@
 import Tagify from '@yaireo/tagify';
 import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
+import $ from 'jquery';
 import { productsBlockIcon } from '../shared/blockIcons';
 
 export default grapesjs.plugins.add('products', editor => {

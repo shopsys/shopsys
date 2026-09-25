@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 

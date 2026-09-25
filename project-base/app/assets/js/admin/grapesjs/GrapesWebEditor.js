@@ -3,6 +3,7 @@ import Translator from 'bazinga-translator';
 import grapesjs from 'grapesjs';
 import ckeditorPlugin from 'grapesjs-plugin-ckeditor';
 import webPagePlugin from 'grapesjs-preset-webpage';
+import $ from 'jquery';
 import { cs } from './locales/cs.js';
 import { en } from './locales/en.js';
 

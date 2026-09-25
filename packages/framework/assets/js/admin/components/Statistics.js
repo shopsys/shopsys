@@ -1,5 +1,6 @@
 import Translator from 'bazinga-translator';
 import { Chart } from 'chart.js/auto';
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
 const cronTimeoutLinePlugin = {

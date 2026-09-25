@@ -1,6 +1,7 @@
 import ModalWindow from '@shopsys/administration/src/js/utils/modalWindow';
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 
 export default class McpManualToken {
     constructor($container) {

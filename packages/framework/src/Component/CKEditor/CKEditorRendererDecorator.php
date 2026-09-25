@@ -29,8 +29,9 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
     #[Override]
     public function renderWidget(string $id, array $config, array $options = []): string
     {
+        // plain DOM instead of jQuery: this inline script runs before the ES module bundles define window.$
         return sprintf(
-            '$("#%s-preview").click(function() {
+            'document.getElementById("%s-preview").addEventListener("click", function() {
                 %s
             });',
             $id,
