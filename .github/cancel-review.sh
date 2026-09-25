@@ -9,18 +9,16 @@ if [ -n "$BRANCH_NAME" ]; then
     docker exec github-runner-rabbitmq-1 rabbitmqctl delete_vhost "${BRANCH_NAME}" || true
     docker exec github-runner-elasticsearch-1 curl -X DELETE "localhost:9200/${BRANCH_NAME}_*" 2>/dev/null || true
 
-    BASE_DIR="/home/github-runner/actions-runner/_work/shopsys/shopsys"
+    REVIEWS_DIR="/home/github-runner/reviews"
 
-    if [ -d "$BASE_DIR/$BRANCH_NAME" ]; then
-        cd "$BASE_DIR/$BRANCH_NAME"
-
-        docker compose down -v --remove-orphans
+    if [ -n "$(docker ps -a -q --filter "label=com.docker.compose.project=${BRANCH_NAME}")" ]; then
+        docker compose -p "${BRANCH_NAME}" down -v --remove-orphans
         docker system prune -a -f
-        cd ..
-        rm -rf "$BRANCH_NAME"
     else
-        echo "Info: Branch directory not found - review has already been cancelled."
+        echo "Info: Review containers not found - review has already been cancelled."
     fi
+
+    rm -rf "${REVIEWS_DIR:?}/${BRANCH_NAME}"
 else
     echo "Error: Branch name not provided."
 fi

@@ -1165,6 +1165,8 @@ jobs:
         runs-on: [self-hosted, linux, review-stage]
         timeout-minutes: 10
         env:
+            REVIEWS_DIR: /home/github-runner/reviews
+            BRANCH_REVIEW_DIR: /home/github-runner/reviews/${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             TRAEFIK_HOSTS: ${{ needs.variables.outputs.TRAEFIK_HOSTS }}
@@ -1186,8 +1188,9 @@ jobs:
         steps:
             -   name: Create branch directory
                 run: |
-                    rm -rf ${BRANCH_NAME_ESCAPED}
-                    mkdir ${BRANCH_NAME_ESCAPED}
+                    mkdir -p ${REVIEWS_DIR}
+                    rm -rf ${BRANCH_REVIEW_DIR}
+                    mkdir ${BRANCH_REVIEW_DIR}
             -   name: Set ENV variables required for review
                 run: |
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
@@ -1196,47 +1199,49 @@ jobs:
                 uses: actions/download-artifact@v8
                 with:
                     name: docker-compose-review
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Download docker-compose.review.simplified.yml from artifacts
                 uses: actions/download-artifact@v8
                 with:
                     name: docker-compose-review-simplified
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Download set-urls-for-review-sh from artifacts
                 uses: actions/download-artifact@v8
                 with:
                     name: set-urls-for-review
-                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Download ci-www.conf from artifacts
                 uses: actions/download-artifact@v8
                 with:
                     name: ci-www-conf
-                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Download nginx.conf from artifacts
                 uses: actions/download-artifact@v8
                 with:
                     name: nginx-conf
-                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Download 12-set-env-variables.envsh from artifacts
                 uses: actions/download-artifact@v8
                 with:
                     name: 12-set-env-variables-envsh
-                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Download rabbitmq-vhost-sh from artifacts
                 uses: actions/download-artifact@v8
                 with:
                     name: rabbitmq-vhost-sh
-                    path: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+                    path: ${{ env.BRANCH_REVIEW_DIR }}
             -   name: Move docker-compose.review.yml to branch folder
                 if: "contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
-                    mv docker-compose.review.yml ${BRANCH_NAME_ESCAPED}/docker-compose.yml
+                    mv ${BRANCH_REVIEW_DIR}/docker-compose.review.yml ${BRANCH_REVIEW_DIR}/docker-compose.yml
             -   name: Move docker-compose.review.simplified.yml to branch folder
                 if: "!contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
-                    mv docker-compose.review.simplified.yml ${BRANCH_NAME_ESCAPED}/docker-compose.yml
-                    bash ./${BRANCH_NAME_ESCAPED}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
+                    mv ${BRANCH_REVIEW_DIR}/docker-compose.review.simplified.yml ${BRANCH_REVIEW_DIR}/docker-compose.yml
+                    bash ${BRANCH_REVIEW_DIR}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
             -   name: Start project
                 run: |
-                    cd ${BRANCH_NAME_ESCAPED}
+                    cd ${BRANCH_REVIEW_DIR}
                     chmod +x set-urls-for-review.sh
                     chmod +x 12-set-env-variables.envsh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
