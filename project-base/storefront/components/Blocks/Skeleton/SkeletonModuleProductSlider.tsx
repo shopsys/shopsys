@@ -1,10 +1,8 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import type { ProductItemProps } from 'components/Blocks/Product/ProductsList/ProductListItem';
-import {
-    getProductsSliderTwClass,
-    type ProductsSliderProps,
-    VISIBLE_SLIDER_ITEMS,
-} from 'components/Blocks/Product/ProductsSlider';
+import { type ProductsSliderProps } from 'components/Blocks/Product/ProductsSlider';
+import { VISIBLE_SLIDER_ITEMS } from 'components/Blocks/Product/productsSliderConstants';
+import { getProductsSliderTwClass } from 'components/Blocks/Product/productsSliderUtils';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';

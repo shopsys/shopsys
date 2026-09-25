@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
-import { PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from 'components/Pages/ProductComparison/ProductComparisonHead';
 import { ProductComparisonHeadItem } from 'components/Pages/ProductComparison/ProductComparisonHeadItem';
+import { PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from 'components/Pages/ProductComparison/productComparisonConstants';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import type React from 'react';
 import { describe, expect, test, vi } from 'vitest';

@@ -8,7 +8,11 @@ const CartInHeader = dynamic(() => import('./CartInHeader').then((component) => 
     loading: () => <SkeletonModuleCartInHeader />,
 });
 
-export const DeferredCartInHeader: FC = () => {
+type DeferredCartInHeaderProps = {
+    isDesktop: boolean | undefined;
+};
+
+export const DeferredCartInHeader: FC<DeferredCartInHeaderProps> = ({ isDesktop }) => {
     const { canCreateOrder } = useAuthorization();
     const shouldRender = useDeferredRender('cart_in_header');
 
@@ -18,7 +22,7 @@ export const DeferredCartInHeader: FC = () => {
 
     return (
         <div className="order-3 vl:order-4 vl:flex hidden">
-            {shouldRender ? <CartInHeader /> : <SkeletonModuleCartInHeader />}
+            {shouldRender && isDesktop ? <CartInHeader /> : <SkeletonModuleCartInHeader />}
         </div>
     );
 };

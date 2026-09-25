@@ -58,11 +58,19 @@ const SkeletonModuleProductGridListItem: FC<SkeletonModuleProductGridListItemPro
 }) => (
     <div
         className={twMergeCustom(
-            'flex w-full flex-col gap-2.5 rounded-xl bg-skeleton-less px-2.5 py-5 sm:p-5',
+            'flex h-full w-full flex-col gap-2.5 rounded-xl bg-skeleton-less px-2.5 py-5 sm:p-5',
+            size === 'large' && 'border border-transparent pt-4 pb-2.5 sm:pt-4 sm:pb-5',
             size === 'medium' && 'pt-10 pb-2.5 sm:pt-10 sm:pb-5',
             isBasketPopup && 'border border-transparent',
         )}
     >
+        {size === 'large' && (visibleItemsConfig?.productListButtons ?? visibleItemsConfig === undefined) && (
+            <div className="-mb-2.5 flex h-6 justify-end gap-1">
+                <Skeleton className="size-5" />
+                <Skeleton className="size-5" />
+            </div>
+        )}
+
         <Skeleton
             className={twMergeCustom(
                 'h-45',
@@ -73,15 +81,20 @@ const SkeletonModuleProductGridListItem: FC<SkeletonModuleProductGridListItemPro
             )}
         />
 
+        {size === 'large' && (visibleItemsConfig?.reviews ?? visibleItemsConfig === undefined) && (
+            <Skeleton className="h-8.5 w-4/6 sm:h-4" />
+        )}
+
         <div
             className={twMergeCustom(
                 'flex flex-col gap-1',
-                size === 'medium' && 'min-h-15',
+                (size === 'large' || size === 'medium') && 'min-h-15',
                 isBasketPopup && 'sm:min-h-10',
             )}
         >
             <Skeleton className="h-4" />
             <Skeleton className={twMergeCustom('h-4', size !== 'medium' && 'w-4/6')} />
+            {size === 'large' && <Skeleton className="h-4 w-4/6" />}
             {size === 'medium' && <Skeleton className={twMergeCustom('h-4 w-4/6', isBasketPopup && 'sm:hidden')} />}
         </div>
 
@@ -91,6 +104,7 @@ const SkeletonModuleProductGridListItem: FC<SkeletonModuleProductGridListItemPro
             <div
                 className={twMergeCustom(
                     'flex flex-col gap-1',
+                    size === 'large' && 'min-h-10 xs:min-h-15 sm:min-h-10',
                     size === 'medium' && 'min-h-15',
                     isBasketPopup && 'sm:min-h-10',
                 )}

@@ -1,6 +1,7 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 import { DeferredAutocompleteSearch } from './AutocompleteSearch/DeferredAutocompleteSearch';
 import { DeferredCartInHeader } from './Cart/DeferredCartInHeader';
 import { Logo } from './Logo/Logo';
@@ -13,6 +14,8 @@ type HeaderProps = {
 };
 
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
+    const isDesktop = useMediaMin('vl');
+
     return (
         <Webline>
             {simpleHeader ? (
@@ -29,14 +32,14 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                     <Logo />
 
                     <div className="vl:relative order-6 vl:order-2 vl:block hidden h-12 w-full vl:max-w-100 vl:flex-1 transition xl:ml-12">
-                        <DeferredAutocompleteSearch />
+                        <DeferredAutocompleteSearch isDesktop={isDesktop} />
                     </div>
 
                     <div className="order-2 ml-auto vl:flex hidden">
-                        <DeferredMenuIconic />
+                        <DeferredMenuIconic isDesktop={isDesktop} />
                     </div>
 
-                    <DeferredCartInHeader />
+                    <DeferredCartInHeader isDesktop={isDesktop} />
                 </div>
             )}
         </Webline>
