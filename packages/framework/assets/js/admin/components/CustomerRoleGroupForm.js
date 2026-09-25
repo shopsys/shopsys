@@ -9,13 +9,20 @@ export default class CustomerRoleGroupForm {
             return;
         }
 
-        $allRolesCheckbox.on('change', function () {
-            if ($(this).is(':checked')) {
-                $individualRolesCheckboxes.prop('checked', false).prop('disabled', true);
+        const applyAllRolesState = function () {
+            if ($allRolesCheckbox.is(':checked')) {
+                $individualRolesCheckboxes.prop('checked', true).prop('disabled', true);
             } else {
-                $individualRolesCheckboxes.prop('disabled', false);
+                $individualRolesCheckboxes.prop('checked', false).prop('disabled', false);
             }
-        });
+        };
+
+        $allRolesCheckbox.on('change', applyAllRolesState);
+
+        // the "all" scope grants every individual permission, so show them as checked also on page load
+        if ($allRolesCheckbox.is(':checked')) {
+            applyAllRolesState();
+        }
     }
 
     static init($container) {
