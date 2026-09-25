@@ -19,6 +19,9 @@ framework:
     session:
         cookie_httponly: true
         cookie_lifetime: 31536000 # 365 days * 24 hours * 3600 seconds
+        # The session cookie is marked as secure when the request comes over HTTPS
+        # (requires correctly configured trusted_proxies when running behind an HTTPS-terminating proxy)
+        cookie_secure: auto
         # Disable the default PHP session garbage collection.
         # Session garbage collection is responsibility of hosting.
         gc_probability: 0
