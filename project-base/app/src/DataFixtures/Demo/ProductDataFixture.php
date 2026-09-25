@@ -1706,12 +1706,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('54" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('100" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => '54',
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '100',
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('CRT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -3898,12 +3898,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('36" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('65" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => '36',
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '65',
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('CRT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -3966,12 +3966,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('24" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('48" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SCREEN_SIZE => '24',
+                ParameterDataFixture::PARAM_SCREEN_SIZE => '48',
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('CRT', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
