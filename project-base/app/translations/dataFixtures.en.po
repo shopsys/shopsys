@@ -43,6 +43,9 @@ msgstr "%topic%: what to look for"
 msgid "100 Czech crowns ticket"
 msgstr ""
 
+msgid "100\" Philips [V]"
+msgstr ""
+
 msgid "123.8x58.6 mm"
 msgstr ""
 
@@ -68,9 +71,6 @@ msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 msgstr ""
 
 msgid "220 x 250 x 9 mm"
-msgstr ""
-
-msgid "24\" Philips CRT [V]"
 msgstr ""
 
 msgid "24\" Philips [V]"
@@ -130,9 +130,6 @@ msgstr ""
 msgid "36\" Hyundai [V]"
 msgstr ""
 
-msgid "36\" Philips CRT [V]"
-msgstr ""
-
 msgid "36\" Philips [V]"
 msgstr ""
 
@@ -157,6 +154,9 @@ msgstr ""
 msgid "47\" LG 47LA790V (FHD)"
 msgstr ""
 
+msgid "48\" Philips [V]"
+msgstr ""
+
 msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
 msgstr ""
 
@@ -172,13 +172,13 @@ msgstr ""
 msgid "51,5\" Sencor [V]"
 msgstr ""
 
-msgid "54\" Philips CRT [V]"
-msgstr ""
-
 msgid "54\" Philips [V]"
 msgstr ""
 
 msgid "60\" Sencor [V]"
+msgstr ""
+
+msgid "65\" Philips [V]"
 msgstr ""
 
 msgid "800 × 480 px"

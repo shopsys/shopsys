@@ -97,10 +97,10 @@ export const staticData = {
             catnum: '5960453',
             name: 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black',
         },
-        philips54CRT: {
+        philips100: {
             uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb',
             catnum: '9176588',
-            name: '54" Philips CRT [V]',
+            name: '100" Philips [V]',
         },
         panasonicDmcFt5ep: {
             catnum: '5965907',

@@ -43,6 +43,9 @@ msgstr "%topic%: na co se zaměřit"
 msgid "100 Czech crowns ticket"
 msgstr "100 Korun českých - poukázka"
 
+msgid "100\" Philips [V]"
+msgstr "100\" Philips [V]"
+
 msgid "123.8x58.6 mm"
 msgstr "123.8x58.6x7.6mm"
 
@@ -69,9 +72,6 @@ msgstr "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 
 msgid "220 x 250 x 9 mm"
 msgstr "220 x 250 x 9 mm"
-
-msgid "24\" Philips CRT [V]"
-msgstr "24\" Philips CRT [V]"
 
 msgid "24\" Philips [V]"
 msgstr "24\" Philips [V]"
@@ -130,9 +130,6 @@ msgstr "36\" Hyundai PLASMA [V]"
 msgid "36\" Hyundai [V]"
 msgstr "36\" Hyundai [V]"
 
-msgid "36\" Philips CRT [V]"
-msgstr "36\" Philips CRT [V]"
-
 msgid "36\" Philips [V]"
 msgstr "36\" Philips [V]"
 
@@ -157,6 +154,9 @@ msgstr "Cinema 3D Smart TV LG 47LA790V se Cinema 3D Screen Designem je 3D televi
 msgid "47\" LG 47LA790V (FHD)"
 msgstr "47\" LG 47LA790V (FHD)"
 
+msgid "48\" Philips [V]"
+msgstr "48\" Philips [V]"
+
 msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
 msgstr "480 x 310 x 10 mm<br /><br />Filtr je potreba si nůžkami upravit pro zakrytí celeho povrchu tukového filtru."
 
@@ -172,14 +172,14 @@ msgstr "495 x 200 x 8 mm"
 msgid "51,5\" Sencor [V]"
 msgstr "51,5\" Sencor [V]"
 
-msgid "54\" Philips CRT [V]"
-msgstr "54\" Philips CRT [V]"
-
 msgid "54\" Philips [V]"
 msgstr "54\" Philips [V]"
 
 msgid "60\" Sencor [V]"
 msgstr "60\" Sencor [V]"
+
+msgid "65\" Philips [V]"
+msgstr "65\" Philips [V]"
 
 msgid "800 × 480 px"
 msgstr "800 × 480 px"
