@@ -139,11 +139,11 @@ final class BlogArticleContentFactory
                 <h2>{$productsHeading}</h2>
                 <p>{$productsParagraph}</p>
             </div>
-            <div class="gjs-products" data-products="9177759,5965879P,9184449,9176544M,7700768">
+            <div class="gjs-products" data-products="9177759,5965879P,9184449,PHILIPS-M,7700768">
                 <div class="gjs-product" data-product="9177759"></div>
                 <div class="gjs-product" data-product="5965879P"></div>
                 <div class="gjs-product" data-product="9184449"></div>
-                <div class="gjs-product" data-product="9176544M"></div>
+                <div class="gjs-product" data-product="PHILIPS-M"></div>
                 <div class="gjs-product" data-product="7700768"></div>
             </div>
         EOT));

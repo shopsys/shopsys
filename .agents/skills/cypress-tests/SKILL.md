@@ -464,7 +464,7 @@ staticData.products.helloKitty; // { uuid, name, catnum: '9177759' }
 staticData.products.philips32PFL4308; // { uuid, catnum: '9176508' }
 staticData.products.televisionPhilipsM; // { uuid } — main variant with 6 sellable variants (incl. philips100)
 staticData.products.a4techMouse; // { uuid, catnum: '5960453', name }
-staticData.products.philips100; // { uuid, catnum: '9176588', name: '100" Philips [V]' } — variant of televisionPhilipsM
+staticData.products.philips100; // { uuid, catnum: 'PHILIPS100', name: '100" Philips [V]' } — variant of televisionPhilipsM
 staticData.products.panasonicDmcFt5ep; // { catnum: '5965907', name: 'PANASONIC DMC FT5EP' }
 staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift plan (gift: giftTicket100czk)
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product

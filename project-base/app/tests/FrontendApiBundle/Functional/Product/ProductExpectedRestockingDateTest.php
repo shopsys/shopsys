@@ -18,7 +18,7 @@ use function sleep;
 final class ProductExpectedRestockingDateTest extends GraphQlTestCase
 {
     /**
-     * A main variant with two variants ('7700769XCX' from the demo data)
+     * A main variant with two variants ('SENCOR-M' from the demo data)
      */
     private const int MAIN_VARIANT_REFERENCE_ID = 83;
 

@@ -1653,7 +1653,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176544');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS36');
 
         $productData->partno = '32PFL4308I';
         $productData->ean = '8845781243205';
@@ -1689,7 +1689,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176588');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS100');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -2048,7 +2048,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('18981438');
+        $productData = $this->productDemoDataFactory->createDefaultData('T27D590EZ');
 
         $productData->partno = 'LT27D590EZ';
         $productData->ean = '8845781245940';
@@ -2086,7 +2086,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176544M');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS-M');
 
         $productData->partno = '32PFL4308';
         $productData->ean = '8845781243205';
@@ -2342,7 +2342,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('7700777');
+        $productData = $this->productDemoDataFactory->createDefaultData('SENCOR51');
 
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245937';
@@ -2371,7 +2371,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('7700769Z');
+        $productData = $this->productDemoDataFactory->createDefaultData('SENCOR60');
 
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
@@ -2484,7 +2484,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('7700769XCX');
+        $productData = $this->productDemoDataFactory->createDefaultData('SENCOR-M');
 
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
@@ -2632,7 +2632,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('1532564');
+        $productData = $this->productDemoDataFactory->createDefaultData('EH-22M');
 
         $productData->partno = '6758B001';
         $productData->ean = '8845781245914';
@@ -2660,7 +2660,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('15964035');
+        $productData = $this->productDemoDataFactory->createDefaultData('EOS-700E');
 
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
@@ -3837,7 +3837,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176522');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS24');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3871,7 +3871,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('917652236');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS65');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3905,7 +3905,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('917652254');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS54');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3939,7 +3939,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('91765223');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS48');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3973,7 +3973,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('91765542');
+        $productData = $this->productDemoDataFactory->createDefaultData('HYUNDAI36PLASMA');
 
         $productData->partno = '32PFL4360';
         $productData->ean = '8845781243205';
@@ -4006,7 +4006,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('91765782');
+        $productData = $this->productDemoDataFactory->createDefaultData('HYUNDAI27PLASMA');
 
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
@@ -4171,23 +4171,23 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     public static function getVariantCatnumsByMainVariantCatnum(): array
     {
         return [
-            '9176544M' => [
-                '9176544', // 36 / led
-                '9176588', // 54 / crt
-                '9176522', // 24 / led
-                '917652236', // 36 / crt
-                '917652254', // 54 / led
-                '91765223', // 24 / crt
+            'PHILIPS-M' => [
+                'PHILIPS36', // 36 / led
+                'PHILIPS100', // 100 / crt
+                'PHILIPS24', // 24 / led
+                'PHILIPS65', // 65 / crt
+                'PHILIPS54', // 54 / led
+                'PHILIPS48', // 48 / crt
             ],
             '32PFL4400' => [
                 '9176554', // 36 / led
                 '9176578', // 27 / led
-                '91765542', // 36 / plasma
-                '91765782', // 27 / plasma
+                'HYUNDAI36PLASMA', // 36 / plasma
+                'HYUNDAI27PLASMA', // 27 / plasma
             ],
-            '7700769XCX' => [
-                '7700777',
-                '7700769Z',
+            'SENCOR-M' => [
+                'SENCOR51',
+                'SENCOR60',
             ],
             'VOUCHER-M' => [
                 'VOUCHER500',

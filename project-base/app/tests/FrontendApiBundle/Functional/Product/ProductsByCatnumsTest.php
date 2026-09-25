@@ -13,7 +13,7 @@ class ProductsByCatnumsTest extends ProductsGraphQlTestCase
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/productVariantReviewsSummaryByCatnum.graphql',
             [
-                'catnums' => ['9176544M', '9176522'],
+                'catnums' => ['PHILIPS-M', 'PHILIPS24'],
             ],
         );
         $data = $this->getResponseDataForGraphQlType($response, 'productsByCatnums');
@@ -35,9 +35,9 @@ class ProductsByCatnumsTest extends ProductsGraphQlTestCase
                     '9177759',
                     '532564',
                     'non-existing', // non-existing product – should be ignored
-                    '9176544M', // main variant – should be present in the result
+                    'PHILIPS-M', // main variant – should be present in the result
                     '5964035', // non-visible product – should be ignored
-                    '9176522', // variant product – should be present in the result
+                    'PHILIPS24', // variant product – should be present in the result
                 ],
             ],
         );
@@ -52,10 +52,10 @@ class ProductsByCatnumsTest extends ProductsGraphQlTestCase
                 'catalogNumber' => '532564',
             ], [
                 'name' => t('Television Philips [M]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'catalogNumber' => '9176544M',
+                'catalogNumber' => 'PHILIPS-M',
             ], [
                 'name' => t('24" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'catalogNumber' => '9176522',
+                'catalogNumber' => 'PHILIPS24',
             ],
         ];
 

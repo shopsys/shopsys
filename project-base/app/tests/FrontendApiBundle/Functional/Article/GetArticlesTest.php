@@ -219,7 +219,7 @@ class GetArticlesTest extends GraphQlTestCase
                     $firstDomainLocale,
                 ) . '
                     |||[gjc-comp-ProductList&#61;9177759,5964035]|||
-                    |||[gjc-comp-ProductList&#61;9177759,9176508,5965879P,532564,1532564,5960453]|||
+                    |||[gjc-comp-ProductList&#61;9177759,9176508,5965879P,532564,EH-22M,5960453]|||
                     <div class="row">
                         <div class="column">
                             <div class="gjs-text-ckeditor" id="ic192p" style="text-align: center">
