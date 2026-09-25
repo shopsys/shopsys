@@ -16,6 +16,7 @@ jobs:
                     echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
     cancel-review-after-branch-merge:
         name: Cancel review after branch merge
+        if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
         runs-on: [self-hosted, linux, review-stage]
         needs: variables
         steps:
@@ -27,8 +28,10 @@ jobs:
                     persist-credentials: false
             -   name: Cancel review
                 working-directory: cancel-review-after-branch-merge
+                env:
+                    BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
-                    /bin/bash ./.github/cancel-review.sh ${{ needs.variables.outputs.BRANCH_NAME }}
+                    /bin/bash ./.github/cancel-review.sh "${BRANCH_NAME}"
     remove-branch-from-split-repositories:
         name: Remove branch from split repositories
         needs: variables
@@ -43,5 +46,7 @@ jobs:
                 run: |
                     echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
             -   name: Remove split branches from packages
+                env:
+                    BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
-                    bash ./.github/monorepo/remove_branch.sh "${{ needs.variables.outputs.BRANCH_NAME }}" "${REMOTE_TEMPLATE}"
+                    bash ./.github/monorepo/remove_branch.sh "${BRANCH_NAME}" "${REMOTE_TEMPLATE}"

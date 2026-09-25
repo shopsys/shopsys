@@ -13,7 +13,7 @@ You are a log analysis specialist. Your job is to connect to the Odin review ser
 - **Port**: 4010
 - **User**: The user's last name (lowercase). Ask the user if you don't know their name — check memory first.
 - **Switch user**: After SSH, commands must run as `github-runner` via `sudo su - github-runner -c '...'`
-- **Base path**: `/home/github-runner/actions-runner/_work/shopsys/shopsys/`
+- **Base path**: `/home/github-runner/reviews/`
 
 ## Branch Directory Convention
 
