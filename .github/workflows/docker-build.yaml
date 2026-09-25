@@ -1274,6 +1274,46 @@ jobs:
         with:
             review_base_url: https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
         secrets: inherit
+    split-branch-check:
+        name: Check split repositories
+        # Force-splits the PR branch into the split repositories (the same thing monorepo-force-split-branch.yaml does
+        # on demand) and waits for the checks the split repositories run on push. This catches what passes in the
+        # monorepo but breaks in a standalone package — a dependency missing in the package's composer.json, PHPStan
+        # on the package alone, or the project-base build against the dev-* branches of the packages.
+        # Fork and dependabot PRs do not get ACTIONS_GIT_PUSH_TOKEN; protected branches are split by monorepo-split.yaml.
+        # Draft PRs are skipped so that work in progress does not run CI in all split repositories on every push.
+        # Advisory only - deliberately not part of the "Build successful" gate, its result is visible on the PR checks.
+        if: |
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.draft == false &&
+            github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' &&
+            github.actor != 'dependabot[bot]'
+        runs-on: ubuntu-22.04
+        # project-base runs its full build with Cypress tests in the split repository — that alone takes 60-80 minutes
+        timeout-minutes: 120
+        env:
+            SPLIT_BRANCH: ${{ github.head_ref }}
+            GH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
+        steps:
+            -   name: GIT checkout branch - ${{ github.head_ref }}
+                uses: actions/checkout@v7
+                with:
+                    ref: refs/heads/${{ github.head_ref }}
+                    fetch-depth: 0
+                    persist-credentials: false
+            -   name: Install git-filter-repo
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y git-filter-repo
+            -   name: Force split branch ${{ github.head_ref }} into the split repositories
+                env:
+                    REMOTE_TEMPLATE: https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/
+                    SPLIT_HEADS_FILE: ${{ runner.temp }}/split-heads.txt
+                run: bash ./.github/monorepo/split-repositories.sh "${SPLIT_BRANCH}" "${REMOTE_TEMPLATE}" true
+            -   name: Wait for checks of the split repositories
+                env:
+                    SPLIT_HEADS_FILE: ${{ runner.temp }}/split-heads.txt
+                run: bash ./.github/monorepo/wait-for-split-checks.sh "${SPLIT_BRANCH}" "${SPLIT_HEADS_FILE}" 110
     build-successful:
         if: |
             always()
