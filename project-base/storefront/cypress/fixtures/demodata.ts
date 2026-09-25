@@ -84,12 +84,12 @@ export const staticData = {
             catnum: '9176508',
         },
         televisionPhilipsM: {
-            uuid: 'f9c91468-c6b1-5b3f-b34e-1a2eef918504',
+            uuid: 'ae664654-3885-59fe-b1cb-ce6df4bc705c',
         },
         televisionHyundaiM: {
             uuid: '0c625610-00b3-5a9a-bccd-a271db880461',
             outOfStockVariantCatnum: '9176578',
-            expectedRestockVariantCatnum: '91765782',
+            expectedRestockVariantCatnum: 'HYUNDAI27PLASMA',
             inStockVariantCatnum: '9176554',
         },
         a4techMouse: {
@@ -98,8 +98,8 @@ export const staticData = {
             name: 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black',
         },
         philips100: {
-            uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb',
-            catnum: '9176588',
+            uuid: 'a6f85d96-58f4-5a1b-9e63-51539e9911ff',
+            catnum: 'PHILIPS100',
             name: '100" Philips [V]',
         },
         panasonicDmcFt5ep: {
