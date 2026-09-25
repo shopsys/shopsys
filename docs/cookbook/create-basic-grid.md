@@ -1,5 +1,7 @@
 # Create Basic Grid
 
+[TOC]
+
 In this cookbook, we will create a new grid to display salesmen data in the administration.
 We will learn how to use the grid factory properly, configure the data displayed, and override the default data presentation.
 In the end, we will be able to even sort our grid by column, paginate large result sets and delete records.

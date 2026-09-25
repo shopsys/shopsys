@@ -1,5 +1,7 @@
 # GTM Event Objects
 
+[TOC]
+
 These objects represent all GTM events. They are composed of GtmEventInterface, GtmEventType, and the content of the event. Each event has a description of all its properties.
 
 ## GtmEventInterface<EventType, EventContent>

@@ -1,5 +1,7 @@
 # GTM Event Factories
 
+[TOC]
+
 These factories are responsible for creating and preparing GTM event objects. They can be written either as basic `get` methods, such as `getGtmCartViewEvent`, or as hooks, such as `useGtmStaticPageReadyEvent`. The difference between them is
 
 ## getGtmCartViewEvent

@@ -1,5 +1,7 @@
 # Console Commands for Application Management (Phing Targets)
 
+[TOC]
+
 ## Phing
 
 [Phing](https://www.phing.info/) is a PHP project build tool with similar capabilities as GNU `make`. It can be configured via XML to install your application, run automatic tests and code standards checks, build CSS files from LESS and more.

@@ -1,5 +1,7 @@
 # Basic Data Import
 
+[TOC]
+
 This cookbook will guide you through the process of importing data into your e-shop from an external source,
 e.g., from an information system.
 
