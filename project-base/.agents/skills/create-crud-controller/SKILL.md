@@ -126,17 +126,19 @@ narrower). Pick the narrowest interface from `Shopsys\AdministrationBundle\Compo
 | Interface | Adds | Enables |
 |---|---|---|
 | `ReadHandlerInterface` | `getById(int): Presentable` | detail |
-| `DeleteHandlerInterface` | `delete(object)` | delete (+ detail) |
-| `EditHandlerInterface` | `createDataFromEntity(object): object`, `edit(object, object)` | edit (+ detail) |
+| `DeleteHandlerInterface` | `delete(Presentable)` | delete (+ detail) |
+| `EditHandlerInterface` | `createDataFromEntity(Presentable): object`, `edit(Presentable, object)` | edit (+ detail) |
 | `CreateHandlerInterface` | `createData(): object`, `create(object): Presentable` | create (+ detail) |
 | `CrudHandlerInterface` | all of the above | everything |
 
 Rules that bite:
 
 - Never implement the bare `HandlerInterface` — it's only a marker for service discovery.
-- `getById()` **must return a `Presentable`** — the entity has to implement
-  `Shopsys\FrameworkBundle\Component\Utils\Presentable` (`toHumanReadable()`), otherwise the
-  CRUD registry throws a `RuntimeException` the first time the controller is loaded. Let
+- `getById()` and `create()` declare the **concrete entity** as their return type
+  (`getById(int $id): <Entity>`, see `ProductReviewEditHandler`), not the interface's `Presentable`.
+  The entity has to implement `Shopsys\FrameworkBundle\Component\Utils\Presentable`
+  (`toHumanReadable()`), otherwise the CRUD registry throws a `RuntimeException` the first time
+  the controller is loaded. Let
   `getById()` throw the facade's not-found exception (they extend `NotFoundHttpException`, so
   the page is a 404).
 - One handler per action; `CrudHandlerInterface` claims all actions, so it cannot be mixed
@@ -144,8 +146,9 @@ Rules that bite:
   `unregisterHandler()` + `registerHandler()`.
 - Handlers are plain services. The `App\` resource glob in `app/config/services.yaml`
   matches class names ending in `Handler` — keep that suffix or register the service by hand.
-- Start each method with `Assert::isInstanceOf($entity, <Entity>::class)` (see
-  `TransportGroupCrudHandler`) — the interface is typed `object`.
+- Start each method that receives the entity or the data object with
+  `Assert::isInstanceOf($entity, <Entity>::class)` (see `TransportGroupCrudHandler`) — the
+  interface types parameters as `Presentable` / `object` and PHP does not allow narrowing them.
 - Handlers hold no business logic. Everything goes through the facade; a handler may only
   add access filtering (see `ProductReviewEditHandler::getById()`).
 
@@ -188,7 +191,7 @@ configuration reference has the join-vs-subselect guidance.
 
 ```php
 #[Override]
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(<Entity>FormType::class, ['<entity>' => $entity]);   // $entity is null on create
 }
@@ -220,9 +223,9 @@ extensions can add fields to. `setFormOption()` must be called before `useBuilde
 final class <Entity>ControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface
 {
     public function configureDatagrid(Datagrid $datagrid): void { $datagrid->remove('…')->add('…', […]); }
-    public function beforeEdit(object $entity, object $data): void {}
-    public function afterEdit(object $entity, object $data): void {}
-    public function onEditError(object $entity, object $data, Throwable $exception): void {}
+    public function beforeEdit(Presentable $entity, object $data): void {}
+    public function afterEdit(Presentable $entity, object $data): void {}
+    public function onEditError(Presentable $entity, object $data, Throwable $exception): void {}
 }
 ```
 
