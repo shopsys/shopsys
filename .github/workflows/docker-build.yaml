@@ -1270,9 +1270,7 @@ jobs:
     ai-acceptance-criteria:
         name: AI acceptance criteria
         needs: [variables, review]
-        # Advisory only - deliberately not part of the "Build successful" gate. A draft marked ready for review is
-        # picked up by the ai-acceptance-criteria-ready-for-review workflow instead, so that event does not rebuild
-        # this whole pipeline.
+        # Advisory only - deliberately not part of the "Build successful" gate.
         if: |
             !cancelled() &&
             github.event_name == 'pull_request' &&
