@@ -20,7 +20,6 @@ vi.mock('components/Blocks/Product/AdditionalServices/AdditionalServices', () =>
 }));
 
 vi.mock('components/Blocks/Product/ProductAction', () => ({
-    PRODUCT_VARIANTS_ID: 'product-variants',
     ProductAction: () => null,
 }));
 
@@ -29,8 +28,11 @@ vi.mock('components/Blocks/Product/ProductPrice', () => ({
 }));
 
 vi.mock('components/Blocks/Product/Watchdog/WatchDogButton', () => ({
-    showWatchdogButton: () => false,
     WatchDogButton: () => null,
+}));
+
+vi.mock('utils/product/showWatchdogButton', () => ({
+    showWatchdogButton: () => false,
 }));
 
 vi.mock('components/Layout/Webline/Webline', () => ({

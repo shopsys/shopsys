@@ -11,7 +11,12 @@ const AutocompleteSearch = dynamic<AutocompleteSearchProps>(
     },
 );
 
-export const DeferredAutocompleteSearch: FC<AutocompleteSearchProps> = ({
+type DeferredAutocompleteSearchProps = AutocompleteSearchProps & {
+    isDesktop: boolean | undefined;
+};
+
+export const DeferredAutocompleteSearch: FC<DeferredAutocompleteSearchProps> = ({
+    isDesktop,
     inputRef,
     popupClassName,
     shouldFocusOnMount,
@@ -20,7 +25,7 @@ export const DeferredAutocompleteSearch: FC<AutocompleteSearchProps> = ({
 }) => {
     const shouldRender = useDeferredRender('autocomplete_search');
 
-    return shouldRender ? (
+    return shouldRender && isDesktop ? (
         <AutocompleteSearch
             inputRef={inputRef}
             popupClassName={popupClassName}

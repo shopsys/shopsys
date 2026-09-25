@@ -1,6 +1,6 @@
 import { formatAverageRating } from 'components/Blocks/ProductReviews/productReviewUtils';
 import { ReviewStars } from 'components/Blocks/ProductReviews/ReviewStars';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from 'components/Pages/ProductDetail/ProductDetailSections/ProductDetailSections';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from 'components/Pages/ProductDetail/ProductDetailSections/productDetailSectionsConstants';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductReviewsSummaryFragment } from 'graphql/requests/productReviews/fragments/ProductReviewsSummaryFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

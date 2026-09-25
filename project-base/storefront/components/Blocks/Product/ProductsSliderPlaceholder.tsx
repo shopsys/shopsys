@@ -4,7 +4,9 @@ import { twJoin } from 'tailwind-merge';
 import { ProductPrice } from './ProductPrice';
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceholder';
-import { getProductsSliderTwClass, type ProductsSliderProps, VISIBLE_SLIDER_ITEMS } from './ProductsSlider';
+import { type ProductsSliderProps } from './ProductsSlider';
+import { VISIBLE_SLIDER_ITEMS } from './productsSliderConstants';
+import { getProductsSliderTwClass } from './productsSliderUtils';
 
 type ProductsSliderPlaceholderProps = {
     size?: ProductItemProps['size'];

@@ -1,5 +1,5 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
+import { VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/productsSliderConstants';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 
