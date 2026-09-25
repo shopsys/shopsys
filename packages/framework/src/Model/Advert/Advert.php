@@ -120,6 +120,7 @@ class Advert implements DomainSeparatedEntityInterface
 
     public function __construct(AdvertData $advertData)
     {
+        $this->uuid = $advertData->uuid;
         $this->setData($advertData);
     }
 
@@ -137,7 +138,6 @@ class Advert implements DomainSeparatedEntityInterface
         $this->link = $advertData->link;
         $this->positionName = $advertData->positionName;
         $this->hidden = $advertData->hidden;
-        $this->uuid = $advertData->uuid;
 
         $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
         $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
