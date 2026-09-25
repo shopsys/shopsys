@@ -42,29 +42,72 @@ jobs:
                 run: docker compose exec storefront pnpm run knip
             -   name: Run storefront unit tests
                 run: docker compose exec storefront pnpm test--no-watch
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
+    # Cypress tests run in parallel groups, the same groups the shopsys/shopsys monorepo uses (see the GROUP
+    # handling in storefront/cypress/cypress.config.ts). Each leg builds its own application, so the legs do not
+    # depend on the build job above and start right away.
+    tests-storefront-acceptance:
+        name: Run Cypress tests
+        runs-on: ubuntu-22.04
+        strategy:
+            fail-fast: false
+            matrix:
+                group: [ authentication, b2b, cart, comparison, complaints, customerUsers, filterAndSort, freeShipping, limitedUser, order, seoCategory, ssr, stores, transportAndPayment, visits, others ]
+        steps:
+            -   name: Sleep for 15 seconds to ensure that split packages has been promoted to packagist.org
+                run: sleep 15s
+                shell: bash
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Configure application
+                run: echo 1 | ./scripts/configure.sh
+            -   name: Install composer dependencies
+                run: docker compose exec -T php-fpm composer install
+            -   name: Build application
+                run: docker compose exec -T php-fpm php phing db-create frontend-api-generate-new-keys build-demo-dev-quick
+            -   name: Build Storefront part of application
+                run: |
+                    docker compose cp php-fpm:/var/www/html/schema.graphql schema.graphql
+                    docker compose cp ./schema.graphql storefront:/home/node/app/schema.graphql
+                    docker compose exec storefront pnpm install --frozen-lockfile
             -   name: Switch storefront to production mode
+                # the production build downloads Google Fonts (next/font/google) and now runs in every leg at once,
+                # a throttled response fails the build, so a failed build is retried a few times
                 run: |
                     docker compose down storefront
-                    docker compose up -d --wait storefront-cypress
-            -   name: Run Cypress tests
-                run: docker compose run -e TEST_LOCALE=en -e B2B_DOMAIN_ID=2 -e B2B_BASE_URL=http://127.0.0.2:8000 cypress
+                    for i in 1 2 3; do
+                        if docker compose up -d --wait storefront-cypress; then
+                            break
+                        fi
+                        echo "storefront production build failed (attempt $i/3)"
+                        docker compose logs storefront-cypress | tail -n 50
+                        docker compose down storefront-cypress
+                        [ $i -eq 3 ] && exit 1
+                        sleep 30
+                    done
+            -   name: Run Cypress tests for ${{ matrix.group }}
+                run: docker compose run -e GROUP=${{ matrix.group }} -e TEST_LOCALE=en -e B2B_DOMAIN_ID=2 -e B2B_BASE_URL=http://127.0.0.2:8000 cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v7
                 with:
-                    name: cypress-videos
+                    name: cypress-videos-${{ matrix.group }}
                     path: ./storefront/cypress/videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v7
                 with:
-                    name: cypress-screenshots
+                    name: cypress-screenshots-${{ matrix.group }}
                     path: ./storefront/cypress/screenshots
             -   name: Upload Cypress snapshot diffs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v7
                 with:
-                    name: cypress-snapshot-diffs
+                    name: cypress-snapshot-diffs-${{ matrix.group }}
                     path: ./storefront/cypress/snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
@@ -74,7 +117,7 @@ jobs:
                 run: docker compose logs webserver
             -   name: Storefront container logs
                 if: ${{ failure() }}
-                run: docker compose logs storefront
+                run: docker compose logs storefront-cypress
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
@@ -127,29 +170,82 @@ jobs:
                 run: docker compose exec storefront pnpm run knip
             -   name: Run storefront unit tests
                 run: docker compose exec storefront pnpm test--no-watch
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
+    tests-storefront-acceptance-single-domain:
+        name: Run Cypress tests on single domain
+        runs-on: ubuntu-22.04
+        strategy:
+            fail-fast: false
+            matrix:
+                group: [ authentication, b2b, cart, comparison, complaints, customerUsers, filterAndSort, freeShipping, limitedUser, order, seoCategory, ssr, stores, transportAndPayment, visits, others ]
+        steps:
+            -   name: Sleep for 15 seconds to ensure that split packages has been promoted to packagist.org
+                run: sleep 15s
+                shell: bash
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v6
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.5'
+            -   name: Download Shopsys CLI
+                run: |
+                    CLI_VERSION=$(grep '"shopsys/framework"' app/composer.json | grep -oE '[0-9]+\.[0-9]+' | head -1)
+                    echo "CLI version: $CLI_VERSION"
+                    gh release download "$CLI_VERSION" --repo shopsys/cli --pattern 'shopsys.phar'
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Configure project for single domain
+                run: php shopsys.phar configure . --config=.github/single-domain-config.yaml
+            -   name: Configure application
+                run: echo 1 | ./scripts/configure.sh
+            -   name: Install composer dependencies
+                run: docker compose exec -T php-fpm composer install
+            -   name: Build application
+                run: docker compose exec -T php-fpm php phing db-create frontend-api-generate-new-keys build-demo-dev-quick
+            -   name: Build Storefront part of application
+                run: |
+                    docker compose cp php-fpm:/var/www/html/schema.graphql schema.graphql
+                    docker compose cp ./schema.graphql storefront:/home/node/app/schema.graphql
+                    docker compose exec storefront pnpm install --frozen-lockfile
             -   name: Switch storefront to production mode
+                # the production build downloads Google Fonts (next/font/google) and now runs in every leg at once,
+                # a throttled response fails the build, so a failed build is retried a few times
                 run: |
                     docker compose down storefront
-                    docker compose up -d --wait storefront-cypress
-            -   name: Run Cypress tests
-                run: docker compose run -e TEST_LOCALE=en cypress
+                    for i in 1 2 3; do
+                        if docker compose up -d --wait storefront-cypress; then
+                            break
+                        fi
+                        echo "storefront production build failed (attempt $i/3)"
+                        docker compose logs storefront-cypress | tail -n 50
+                        docker compose down storefront-cypress
+                        [ $i -eq 3 ] && exit 1
+                        sleep 30
+                    done
+            -   name: Run Cypress tests for ${{ matrix.group }}
+                run: docker compose run -e GROUP=${{ matrix.group }} -e TEST_LOCALE=en cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v7
                 with:
-                    name: cypress-videos
+                    name: cypress-videos-single-domain-${{ matrix.group }}
                     path: ./storefront/cypress/videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v7
                 with:
-                    name: cypress-screenshots
+                    name: cypress-screenshots-single-domain-${{ matrix.group }}
                     path: ./storefront/cypress/screenshots
             -   name: Upload Cypress snapshot diffs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v7
                 with:
-                    name: cypress-snapshot-diffs
+                    name: cypress-snapshot-diffs-single-domain-${{ matrix.group }}
                     path: ./storefront/cypress/snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
@@ -159,7 +255,7 @@ jobs:
                 run: docker compose logs webserver
             -   name: Storefront container logs
                 if: ${{ failure() }}
-                run: docker compose logs storefront
+                run: docker compose logs storefront-cypress
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
