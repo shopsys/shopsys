@@ -1,3 +1,5 @@
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeAvailabilityStatusEnum, TypeCartItemTypeEnum, TypeProductTypeEnum } from 'graphql/types';
 import { getGtmCreateOrderEventOrderPart } from 'gtm/factories/getGtmCreateOrderEvent';
 import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { describe, expect, test } from 'vitest';
@@ -37,6 +39,53 @@ const cart = {
 } as any;
 
 describe('getGtmCreateOrderEventOrderPart', () => {
+    test('keeps purchased and gifted copies of the same voucher distinct in the order', () => {
+        const purchasedItem = {
+            uuid: 'purchased-voucher',
+            type: TypeCartItemTypeEnum.Product,
+            quantity: 1,
+            additionalServices: [],
+            product: {
+                __typename: 'RegularProduct',
+                id: 72,
+                catalogNumber: 'VOUCHER-72',
+                productType: TypeProductTypeEnum.ElectronicGiftVoucher,
+                slug: '/voucher',
+                flags: [],
+                availability: { status: TypeAvailabilityStatusEnum.InStock },
+                price: { priceWithoutVat: '4', priceWithVat: '4.84', vatAmount: '0.84' },
+                giftPrice: { priceWithoutVat: '0.96', priceWithVat: '1.16', vatAmount: '0.20' },
+            },
+        } as unknown as TypeCartItemFragment;
+        const giftItem = { ...purchasedItem, uuid: 'gift-voucher', type: TypeCartItemTypeEnum.ProductGift };
+
+        const result = getGtmCreateOrderEventOrderPart(
+            { ...cart, items: [purchasedItem, giftItem] },
+            payment,
+            [],
+            '202600001',
+            undefined,
+            domainConfig,
+        );
+
+        expect(result.products).toEqual([
+            expect.objectContaining({
+                id: 72,
+                sku: 'VOUCHER-72',
+                productType: 'voucher',
+                quantity: 1,
+                priceWithVat: 4.84,
+            }),
+            expect.objectContaining({
+                id: 'gift-72',
+                sku: 'gift-VOUCHER-72',
+                productType: 'gift',
+                quantity: 1,
+                priceWithVat: 1.16,
+            }),
+        ]);
+    });
+
     test('should include payment, transport and discount order values', () => {
         const result = getGtmCreateOrderEventOrderPart(
             cart,

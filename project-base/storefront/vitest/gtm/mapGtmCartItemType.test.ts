@@ -1,5 +1,5 @@
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { TypeCartItemTypeEnum, TypeParameterTypeEnum } from 'graphql/types';
+import { TypeCartItemTypeEnum, TypeParameterTypeEnum, TypeProductTypeEnum } from 'graphql/types';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { describe, expect, test } from 'vitest';
 
@@ -130,6 +130,56 @@ describe('mapGtmCartItemType', () => {
         const result = mapGtmCartItemType(cartItem, 'https://example.com', undefined, 1);
 
         expect(result.quantity).toBe(1);
+    });
+
+    test('should map product gifts with gift type and price', () => {
+        const productGiftCartItem = {
+            ...cartItem,
+            type: TypeCartItemTypeEnum.ProductGift,
+            product: {
+                ...cartItem.product,
+                giftPrice: {
+                    priceWithoutVat: '80',
+                    priceWithVat: '96.80',
+                    vatAmount: '16.80',
+                },
+            },
+        } as unknown as TypeCartItemFragment;
+
+        const result = mapGtmCartItemType(productGiftCartItem, 'https://example.com');
+
+        expect(result).toMatchObject({
+            id: 'gift-195',
+            sku: 'gift-123456',
+            productType: 'gift',
+            priceWithoutVat: 80,
+            priceWithVat: 96.8,
+            vatAmount: 16.8,
+            variant: 'color: black; size: 100x22 cm',
+        });
+    });
+
+    test.each([
+        { productType: TypeProductTypeEnum.Basic, expectedType: 'product' },
+        { productType: TypeProductTypeEnum.ElectronicGiftVoucher, expectedType: 'voucher' },
+        { productType: TypeProductTypeEnum.PrintedGiftVoucher, expectedType: 'voucher' },
+    ])('separates purchased and gifted $productType without changing the catalog product', ({
+        productType,
+        expectedType,
+    }) => {
+        const purchasedItem = {
+            ...regularProductCartItem,
+            product: { ...regularProductCartItem.product, productType },
+        };
+        const giftItem = { ...purchasedItem, uuid: 'gift-row', type: TypeCartItemTypeEnum.ProductGift };
+
+        const gift = mapGtmCartItemType(giftItem, 'https://example.com');
+        const purchased = mapGtmCartItemType(purchasedItem, 'https://example.com');
+
+        expect(gift).toMatchObject({ id: 'gift-195', sku: 'gift-123456', productType: 'gift', priceWithVat: 0 });
+        expect(purchased).toMatchObject({ id: 195, sku: '123456', productType: expectedType, priceWithVat: 121 });
+        expect(purchasedItem.product).toMatchObject({ id: 195, catalogNumber: '123456', productType });
+        expect(mapGtmCartItemType(giftItem, 'https://example.com')).toEqual(gift);
     });
 
     test('should not add variant parameters for regular product cart items', () => {

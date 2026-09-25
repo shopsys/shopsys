@@ -108,10 +108,10 @@ export type GtmConsentInfoType = {
 
 export type GtmProductAvailabilityType = 'in_stock' | 'out_of_stock' | 'expected_restock';
 
-export type GtmProductType = 'product' | 'service' | 'voucher';
+export type GtmProductType = 'gift' | 'product' | 'service' | 'voucher';
 
 export type GtmProductInterface = {
-    id: number;
+    id: number | string;
     name: string;
     availability: GtmProductAvailabilityType;
     availability_date?: string;
