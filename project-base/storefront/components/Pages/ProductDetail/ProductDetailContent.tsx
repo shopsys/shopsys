@@ -3,6 +3,7 @@ import { DeliveryOptionsLink } from 'components/Blocks/Popup/DeliveryOptionsPopu
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
+import { ProductEmailDeliveryInfo } from 'components/Blocks/Product/ProductEmailDeliveryInfo';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { showWatchdogButton, WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useOpenReviewPopupFromUrl';
@@ -11,7 +12,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ProductAdditionalServicesSelectionProvider } from 'components/providers/ProductAdditionalServicesSelectionProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeRecommendationType } from 'graphql/types';
+import { TypeProductTypeEnum, TypeRecommendationType } from 'graphql/types';
 import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmProductDetailViewEvent';
@@ -20,6 +21,7 @@ import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { isProductSellable } from 'utils/product/isProductSellable';
+import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
@@ -51,7 +53,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
     const isWatchdogButtonVisible = showWatchdogButton(product);
     const isPurchaseActionVisible =
         product.isInquiryType || (!product.isSellingDenied && !product.isCurrentlyOutOfStock);
-    const isDeliveryOptionsVisible = isProductSellable(product);
+    const isDeliveryOptionsVisible = showProductDeliveryOptionsPopup(product);
+    const isEmailDeliveryInfoVisible =
+        isProductSellable(product) && product.productType === TypeProductTypeEnum.ElectronicGiftVoucher;
     const areMultiplePurchaseActionsVisible = isWatchdogButtonVisible && isPurchaseActionVisible;
 
     return (
@@ -118,6 +122,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             {isDeliveryOptionsVisible && (
                                 <DeliveryOptionsLink preselectedProductUuid={product.uuid} products={[product]} />
                             )}
+
+                            {isEmailDeliveryInfoVisible && <ProductEmailDeliveryInfo />}
                         </div>
 
                         {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (

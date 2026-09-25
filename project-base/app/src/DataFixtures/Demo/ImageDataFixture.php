@@ -377,26 +377,25 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             );
         }
 
-        $giftVoucherProductsIdsIndexedByImagesIds = [
-            741 => 155,
-            742 => 156,
-            743 => 157,
-            744 => 158,
-            745 => 159,
+        $giftVoucherProductReferenceNamesIndexedByImagesIds = [
+            741 => ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_MAIN_VARIANT,
+            742 => ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_500,
+            743 => ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000,
+            744 => ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_2000,
+            745 => ProductDataFixture::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000,
+            746 => ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300,
+            747 => ProductDataFixture::PRODUCT_COMBINED_GIFT_VOUCHER_MAIN_VARIANT,
+            748 => ProductDataFixture::PRODUCT_COMBINED_GIFT_VOUCHER_VARIANT_ELECTRONIC_1000,
+            749 => ProductDataFixture::PRODUCT_COMBINED_GIFT_VOUCHER_VARIANT_PRINTED_1000,
         ];
 
-        foreach ($giftVoucherProductsIdsIndexedByImagesIds as $imageId => $productId) {
-            $names = [];
-
-            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-                $names[$locale] = 'Product ' . $productId . ' image';
-            }
-
+        foreach ($giftVoucherProductReferenceNamesIndexedByImagesIds as $imageId => $productReferenceName) {
+            $product = $this->getReference($productReferenceName, Product::class);
             $this->saveImageIntoDb(
-                $productId,
+                $product->getId(),
                 'product',
                 $imageId,
-                $names,
+                $this->imageDataFixtureNameFactory->createProductImageNames($product, false, Image::DEFAULT_IMAGE_POSITION),
                 null,
                 Image::DEFAULT_IMAGE_POSITION,
                 self::IMAGE_TYPE_PNG,

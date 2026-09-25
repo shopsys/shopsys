@@ -2,6 +2,7 @@ import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragme
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 
 export type DeliveryOptionsProduct = {
+    __typename: 'RegularProduct' | 'Variant';
     uuid: string;
     fullName: string;
     mainImage?: TypeImageFragment | null;

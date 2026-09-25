@@ -38,6 +38,8 @@ export const DeliveryOptionsPopup: FC<DeliveryOptionsPopupProps> = ({ products, 
     );
     const [openCollapsiblePanel, setOpenCollapsiblePanel] = useState<CollapsiblePanel | null>(null);
     const selectedProduct = products.find((product) => product.uuid === selectedProductUuid) ?? null;
+    // the variants of a main variant get the select even when a single one is left, so the visitor sees which variant the options belong to
+    const isVariantSelectVisible = products.some((product) => product.__typename === 'Variant');
     const [{ data: productDeliveryOptionsData, fetching: isFetchingDeliveryOptions, error: deliveryOptionsError }] =
         useProductDeliveryOptionsQuery({
             variables: { productUuid: selectedProduct?.uuid ?? '' },
@@ -163,7 +165,7 @@ export const DeliveryOptionsPopup: FC<DeliveryOptionsPopupProps> = ({ products, 
                     )}
                 </p>
 
-                {products.length > 1 && (
+                {isVariantSelectVisible && (
                     <div className="mt-3">
                         <DeliveryOptionsVariantSelect
                             products={products}

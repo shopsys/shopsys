@@ -1054,11 +1054,14 @@ msgstr "Genius repro SP-M120 černá"
 msgid "Get to know Shopsys"
 msgstr "Poznejte Shopsys"
 
-msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart."
-msgstr "Dárkový poukaz na nákup v našem e-shopu. Poukaz doručujeme e-mailem po zaplacení objednávky a lze jej uplatnit v košíku."
+msgid "Gift voucher - electronic or printed"
+msgstr "Dárkový poukaz - elektronický nebo tištěný"
 
-msgid "Gift voucher for purchases in our online store. The voucher is delivered by email after the order is paid and can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value."
-msgstr "Dárkový poukaz na nákup v našem e-shopu. Poukaz doručujeme e-mailem po zaplacení objednávky a lze jej uplatnit v košíku. Vztahuje se na celý sortiment včetně nákladů na dopravu a platbu a lze jej uplatnit pouze jednou, v plné výši."
+msgid "Gift voucher for purchases in our online store. The voucher can be redeemed in the cart."
+msgstr "Dárkový poukaz na nákup v našem e-shopu. Poukaz lze uplatnit v košíku."
+
+msgid "Gift voucher for purchases in our online store. The voucher can be redeemed in the cart. It applies to the entire assortment including transport and payment costs and can be used only once, in its full value."
+msgstr "Dárkový poukaz na nákup v našem e-shopu. Poukaz lze uplatnit v košíku. Vztahuje se na celý sortiment včetně nákladů na dopravu a platbu a lze jej uplatnit pouze jednou, v plné výši."
 
 msgid "Gift wrapping"
 msgstr "Dárkové balení"

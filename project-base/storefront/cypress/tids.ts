@@ -244,6 +244,7 @@ export enum TIDs {
     // Delivery options popup
     product_detail_delivery_options_link = 'product_detail_delivery_options_link',
     product_detail_delivery_options_popup = 'product_detail_delivery_options_popup',
+    product_detail_email_delivery_info = 'product_detail_email_delivery_info',
     delivery_options_variant_select = 'delivery_options_variant_select',
     delivery_options_variant_option_ = 'delivery_options_variant_option_',
     delivery_options_variant_image = 'delivery_options_variant_image',

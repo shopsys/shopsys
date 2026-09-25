@@ -116,7 +116,7 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
             );
             self::assertTrue($giftVoucher->isUnredeemed());
             self::assertSame($order->getEmail(), $giftVoucher->getCustomerEmail());
-            self::assertSame(ProductDataFixture::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_1000, $giftVoucher->getProductCatnum());
+            self::assertSame(ProductDataFixture::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000, $giftVoucher->getProductCatnum());
             self::assertSame($voucherOrderItem->getName(), $giftVoucher->getProductName());
             self::assertSame($order->getDomainId(), $giftVoucher->getDomainId());
             self::assertTrue($giftVoucher->getValueWithVat()->equals($voucherOrderItemUnitPriceWithVat));
@@ -410,7 +410,7 @@ final class GiftVoucherOrderFlowTest extends GraphQlWithLoginTestCase
 
     private function getElectronicGiftVoucherProduct(): Product
     {
-        return $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000, Product::class);
+        return $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000, Product::class);
     }
 
     private function createUnredeemedGiftVoucherWithValue(Money $value): GiftVoucher

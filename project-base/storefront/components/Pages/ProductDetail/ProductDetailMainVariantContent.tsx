@@ -3,6 +3,7 @@ import { DeliveryOptionsLink } from 'components/Blocks/Popup/DeliveryOptionsPopu
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/ProductAction';
+import { ProductEmailDeliveryInfo } from 'components/Blocks/Product/ProductEmailDeliveryInfo';
 import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useOpenReviewPopupFromUrl';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -14,6 +15,7 @@ import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmPr
 import { useRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { isProductSellable } from 'utils/product/isProductSellable';
+import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { ProductDetailTitle } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
@@ -42,6 +44,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
     const mainVariantImagesWithVariantImages = [...product.images, ...variantImages];
     const sellableVariants = product.variants.filter(isProductSellable);
+    const deliveryOptionsProducts = product.variants.filter(showProductDeliveryOptionsPopup);
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(product);
     useGtmPageReadyEvent(pageReadyEvent, isProductDetailFetching);
@@ -84,11 +87,17 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                             reviewsSummary={product.reviewsSummary}
                         />
 
-                        {sellableVariants.length > 0 && <DeliveryOptionsLink products={sellableVariants} />}
+                        {deliveryOptionsProducts.length > 0 && (
+                            <DeliveryOptionsLink products={deliveryOptionsProducts} />
+                        )}
+
+                        {deliveryOptionsProducts.length === 0 && sellableVariants.length > 0 && (
+                            <ProductEmailDeliveryInfo />
+                        )}
                     </div>
                 </Webline>
 
-                <ProductVariantsTable deliveryOptionsProducts={sellableVariants} variants={product.variants} />
+                <ProductVariantsTable deliveryOptionsProducts={deliveryOptionsProducts} variants={product.variants} />
 
                 <ProductDetailSections
                     description={product.description}
