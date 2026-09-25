@@ -132,6 +132,30 @@ describe('mapGtmCartItemType', () => {
         expect(result.quantity).toBe(1);
     });
 
+    test('should map product gifts with gift type and price', () => {
+        const productGiftCartItem = {
+            ...cartItem,
+            type: TypeCartItemTypeEnum.ProductGift,
+            product: {
+                ...cartItem.product,
+                giftPrice: {
+                    priceWithoutVat: '80',
+                    priceWithVat: '96.80',
+                    vatAmount: '16.80',
+                },
+            },
+        } as unknown as TypeCartItemFragment;
+
+        const result = mapGtmCartItemType(productGiftCartItem, 'https://example.com');
+
+        expect(result).toMatchObject({
+            productType: 'gift',
+            priceWithoutVat: 80,
+            priceWithVat: 96.8,
+            vatAmount: 16.8,
+        });
+    });
+
     test('should not add variant parameters for regular product cart items', () => {
         const result = mapGtmCartItemType(regularProductCartItem, 'https://example.com');
 
