@@ -69,6 +69,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                 <MetaRobots content="noindex" />
 
                 <CommonLayout
+                    isNoIndex
                     isFetchingData={false}
                     pageTypeOverride="order-confirmation"
                     title={t('Order confirmation')}
@@ -109,6 +110,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
 
             <CommonLayout
+                isNoIndex
                 isFetchingData={isOrderFetching || isReturnHashFetching}
                 pageTypeOverride="order-confirmation"
                 title={t('Thank you for your order')}
@@ -220,7 +222,7 @@ const OrderConfirmationLoadingState: FC<{ title: string }> = ({ title }) => (
     <>
         <MetaRobots content="noindex" />
 
-        <CommonLayout isFetchingData pageTypeOverride="order-confirmation" title={title}>
+        <CommonLayout isNoIndex isFetchingData pageTypeOverride="order-confirmation" title={title}>
             <Webline tid={TIDs.pages_orderconfirmation} />
         </CommonLayout>
     </>

@@ -1,3 +1,4 @@
+import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
@@ -53,6 +54,7 @@ export type CommonLayoutProps = {
     ogType?: OgTypeEnum | undefined;
     ogImageUrlDefault?: string | undefined;
     bottomContent?: ReactNode;
+    isNoIndex?: boolean;
 };
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
@@ -68,6 +70,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     ogType,
     ogImageUrlDefault,
     bottomContent,
+    isNoIndex = false,
 }) => {
     const { t } = useTranslation();
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
@@ -112,6 +115,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
     return (
         <>
+            {!!breadcrumbs?.length && !isNoIndex && <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />}
             <SeoMeta
                 canonicalQueryParams={canonicalQueryParams}
                 defaultDescription={description}

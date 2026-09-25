@@ -47,6 +47,7 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex" />
             <CommonLayout
+                isNoIndex
                 title={t('Set new password')}
                 breadcrumbs={
                     hash === '' || email === ''
