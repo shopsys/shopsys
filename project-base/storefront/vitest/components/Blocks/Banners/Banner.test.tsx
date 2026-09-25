@@ -15,7 +15,9 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
 
 const banner = {
     __typename: 'SliderItem',
+    id: 42,
     uuid: '8e6a3287-e691-457a-baf4-6ca6a67e10ac',
+    gtmCreative: 'shopsys-platform-banner',
     name: 'Shopsys Platform',
     link: 'https://www.shopsys.com',
     routeName: null,

@@ -1,4 +1,6 @@
 import { TypePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
+import { GtmPromotionType } from 'gtm/types/events';
+import { useGtmPromotionListViewEvent } from 'gtm/utils/pageReadyEvents/useGtmPromotionListViewEvent';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { CategoryCard } from './CategoryCard';
@@ -15,6 +17,14 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
         MAX_VISIBLE_PROMOTED_CATEGORIES,
     );
     const hasFeaturedCategory = visiblePromotedCategories.length > 4;
+    const promotions: GtmPromotionType[] = visiblePromotedCategories.map((category) => ({
+        promotionId: 'homepage_promoted_categories',
+        promotionName: 'Homepage - recommended categories',
+        creativeName: category.name,
+        creativeSlot: category.id,
+    }));
+
+    useGtmPromotionListViewEvent(promotions);
 
     return (
         <ul
@@ -31,6 +41,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                     <li key={category.uuid} className={twJoin('group', isFirstItemLarge && 'vl:row-span-2')}>
                         <CategoryCard
                             category={category}
+                            promotion={promotions[index]}
                             size={isFirstItemLarge ? 'large' : 'default'}
                             variant="homepage"
                         />

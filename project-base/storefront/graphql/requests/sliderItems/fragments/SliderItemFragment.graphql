@@ -1,6 +1,8 @@
 fragment SliderItemFragment on SliderItem {
     __typename
+    id
     uuid
+    gtmCreative
     name
     link
     routeName

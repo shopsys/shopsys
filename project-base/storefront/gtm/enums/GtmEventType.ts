@@ -10,6 +10,8 @@ export enum GtmEventType {
     cart_view = 'ec.cart_view',
     product_list_view = 'ec.product_list_view',
     product_click = 'ec.product_click',
+    promotion_list_view = 'ec.promotion_list_view',
+    promotion_click = 'ec.promotion_click',
     product_detail_view = 'ec.product_detail_view',
     payment_and_transport_view = 'ec.payment_and_transport_view',
     autocomplete_results_view = 'ec.autocomplete_results_view',
