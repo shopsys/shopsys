@@ -33,7 +33,7 @@ final class ProductType extends AbstractType
             'placeholder' => t('Choose product'),
             'picker_title' => t('Assign product'),
             'enable_remove' => false,
-            'item_name' => 'name',
+            'item_name' => 'fullName',
             'allow_main_variants' => true,
             'allow_variants' => true,
             'required' => true,

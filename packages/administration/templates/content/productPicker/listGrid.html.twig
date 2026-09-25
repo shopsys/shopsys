@@ -3,7 +3,7 @@
 {% block grid_action_cell_type_edit %}{% endblock %}
 
 {% block grid_value_cell_id_name_product_name %}
-    {{ row.name|nameWithFallbackOnEmpty }}
+    {{ row.fullName|nameWithFallbackOnEmpty }}
 {% endblock %}
 
 {% block grid_value_cell_id_select %}
@@ -19,7 +19,7 @@
            data-product-picker-product-image-url="{{ url('admin_productpicker_productimage') }}"
            data-product-picker-product-id="{{ row.id }}"
            data-product-picker-domain-id="{{ domainId }}"
-           data-product-picker-product-name="{{ row.name }}"
+           data-product-picker-product-name="{{ row.fullName }}"
            data-product-picker-product-price="{{ row.priceForProductList ? row.priceForProductList.amount|round(2) : 0 }}"
            data-product-picker-product-ean="{{ row.ean }}"
            data-product-picker-product-catnum="{{ row.catnum }}"
@@ -37,7 +37,7 @@
                 data-js-single-picker-window-select
                 data-picker-instance-id="{{ jsInstanceId }}"
                 data-picker-id="{{ row.id }}"
-                data-picker-name="{{ row.name }}"
+                data-picker-name="{{ row.fullName }}"
         >
             <span class="js-products-picker-icon icon-wrapper">
                 {{ ux_icon('plus') }}
