@@ -451,6 +451,9 @@ msgstr ""
 msgid "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
 msgstr "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
 
+msgid "Browse all products in our demo shop that were made in Germany."
+msgstr ""
+
 msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
 msgstr "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
 
@@ -1579,6 +1582,15 @@ msgstr ""
 msgid "Ordinary customer"
 msgstr ""
 
+msgid "Ostrava department store"
+msgstr ""
+
+msgid "Ostrava department store offers personal pickup, a service desk and a wide range of electronics in stock."
+msgstr ""
+
+msgid "Ostrava department store | Demo shop"
+msgstr ""
+
 msgid "Other"
 msgstr ""
 
@@ -1759,6 +1771,12 @@ msgstr "Product news"
 msgid "Product news | Demo shop"
 msgstr "Product news | Demo shop"
 
+msgid "Products made in Germany"
+msgstr ""
+
+msgid "Products made in Germany | Demo shop"
+msgstr ""
+
 msgid "Products worth comparing"
 msgstr "Products worth comparing"
 
@@ -1932,12 +1950,6 @@ msgstr "She checks dimensions, compatibility, warranty conditions, and delivery 
 
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
-
-msgid "Shopsys Platform - Title page"
-msgstr ""
-
-msgid "Shopsys Platform - the best solution for your eshop."
-msgstr ""
 
 msgid "Shopsys team collaborating in an office"
 msgstr "Shopsys team collaborating in an office"

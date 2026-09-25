@@ -78,24 +78,24 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     {
         $categoryData = $this->categoryDataFactory->create();
 
-        $categoryData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $categoryData->seoMetaDescriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
-        $categoryData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $categoryData->seo[self::SECOND_DOMAIN_ID]->metaDescription = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);
 
-        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedCategory->getSeoTitle(self::FIRST_DOMAIN_ID));
-        $this->assertNull($refreshedCategory->getSeoTitle(self::SECOND_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedCategory->getSeoAttributes(self::FIRST_DOMAIN_ID)->getTitle());
+        $this->assertNull($refreshedCategory->getSeoAttributes(self::SECOND_DOMAIN_ID)->getTitle());
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedCategory->getSeoMetaDescription(self::SECOND_DOMAIN_ID),
+            $refreshedCategory->getSeoAttributes(self::SECOND_DOMAIN_ID)->getMetaDescription(),
         );
-        $this->assertNull($refreshedCategory->getSeoMetaDescription(self::FIRST_DOMAIN_ID));
-        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoH1(self::FIRST_DOMAIN_ID));
-        $this->assertNull($refreshedCategory->getSeoH1(self::SECOND_DOMAIN_ID));
+        $this->assertNull($refreshedCategory->getSeoAttributes(self::FIRST_DOMAIN_ID)->getMetaDescription());
+        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoAttributes(self::FIRST_DOMAIN_ID)->getH1());
+        $this->assertNull($refreshedCategory->getSeoAttributes(self::SECOND_DOMAIN_ID)->getH1());
     }
 
     #[Group('singledomain')]
@@ -103,21 +103,21 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     {
         $categoryData = $this->categoryDataFactory->create();
 
-        $categoryData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
-        $categoryData->seoMetaDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
-        $categoryData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->title = self::DEMONSTRATIVE_SEO_TITLE;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->metaDescription = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
+        $categoryData->seo[self::FIRST_DOMAIN_ID]->h1 = self::DEMONSTRATIVE_SEO_H1;
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);
 
-        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedCategory->getSeoTitle(self::FIRST_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedCategory->getSeoAttributes(self::FIRST_DOMAIN_ID)->getTitle());
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedCategory->getSeoMetaDescription(self::FIRST_DOMAIN_ID),
+            $refreshedCategory->getSeoAttributes(self::FIRST_DOMAIN_ID)->getMetaDescription(),
         );
-        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoH1(self::FIRST_DOMAIN_ID));
+        $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoAttributes(self::FIRST_DOMAIN_ID)->getH1());
     }
 
     private function getRefreshedCategoryFromDatabase(Category $category): Category

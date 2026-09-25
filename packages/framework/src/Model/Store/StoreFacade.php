@@ -54,7 +54,7 @@ class StoreFacade
         $store = $this->getById($id);
         $store->edit($storeData);
         $this->refreshStoreOpeningHours($store, $storeData);
-        $this->friendlyUrlFacade->saveUrlListFormData(StoreFriendlyUrlProvider::ROUTE_NAME, $store->getId(), $storeData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain(StoreFriendlyUrlProvider::ROUTE_NAME, $store->getId(), $storeData->urls, $store->getDomainId());
         $this->em->flush();
 
         $this->imageFacade->manageImages($store, $storeData->image);

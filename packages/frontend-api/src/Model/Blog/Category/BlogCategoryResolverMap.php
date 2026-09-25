@@ -31,15 +31,7 @@ class BlogCategoryResolverMap extends ResolverMap
     {
         return [
             'BlogCategory' => [
-                'seoH1' => function (BlogCategory $blogCategory) {
-                    return $blogCategory->getSeoH1($this->domain->getId());
-                },
-                'seoTitle' => function (BlogCategory $blogCategory) {
-                    return $blogCategory->getSeoTitle($this->domain->getId());
-                },
-                'seoMetaDescription' => function (BlogCategory $blogCategory) {
-                    return $blogCategory->getSeoMetaDescription($this->domain->getId());
-                },
+                'seo' => fn (BlogCategory $blogCategory) => $blogCategory->getSeoAttributes($this->domain->getId()),
                 'parent' => function (BlogCategory $blogCategory) {
                     return $blogCategory->getParent();
                 },

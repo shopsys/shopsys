@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Form\Constraints\NotInArray;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,15 +29,11 @@ final class SeoSettingFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $titlesOnOtherDomains = [];
         $titleAddOnsOnOtherDomains = [];
-        $descriptionsOnOtherDomains = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
             if ($domainId !== $options['domain_id']) {
-                $titlesOnOtherDomains[] = $this->seoSettingFacade->getTitleMainPage($domainId);
                 $titleAddOnsOnOtherDomains[] = $this->seoSettingFacade->getTitleAddOn($domainId);
-                $descriptionsOnOtherDomains[] = $this->seoSettingFacade->getDescriptionMainPage($domainId);
             }
         }
 
@@ -47,16 +42,6 @@ final class SeoSettingFormType extends AbstractType
         ]);
 
         $builderSettingsGroup
-            ->add('title', TextType::class, [
-                'required' => false,
-                'constraints' => [
-                    new NotInArray(
-                        array: array_diff($titlesOnOtherDomains, [null]),
-                        message: 'Same title is used on another domain',
-                    ),
-                ],
-                'label' => 'Headline',
-            ])
             ->add('titleAddOn', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -69,16 +54,6 @@ final class SeoSettingFormType extends AbstractType
                 'help' => t(
                     'Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”.',
                 ),
-            ])
-            ->add('metaDescription', TextareaType::class, [
-                'required' => false,
-                'constraints' => [
-                    new NotInArray(
-                        array: array_diff($descriptionsOnOtherDomains, [null]),
-                        message: 'Same description is used on another domain',
-                    ),
-                ],
-                'label' => 'Meta description',
             ]);
 
         $builder

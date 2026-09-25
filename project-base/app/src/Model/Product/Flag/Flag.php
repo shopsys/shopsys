@@ -13,6 +13,8 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 /**
  * @method void setTranslations(\App\Model\Product\Flag\FlagData $flagData)
  * @method __construct(\App\Model\Product\Flag\FlagData $flagData)
+ * @method void setDomains(\App\Model\Product\Flag\FlagData $flagData)
+ * @method void createDomains(\App\Model\Product\Flag\FlagData $flagData)
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'flags')]

@@ -87,6 +87,8 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
             'seoTitle' => null,
             'seoMetaDescription' => null,
             'seoH1' => null,
+            'seoMetaRobots' => null,
+            'seoCanonicalUrl' => null,
             'categories' => [],
             'mainSlug' => '',
             'products' => [],

@@ -225,16 +225,13 @@ Allows to input custom filenames and translated names for uploaded files.
 
 ### [FriendlyUrlType]({{github.link}}/packages/framework/src/Form/FriendlyUrlType.php)
 
-Displays a select box with domain urls and text field that lets you to create friendly url on selected domain with your valid slug.
-Uses `DomainType` to display select box with domain urls.
-
-#### limit_domains_by_ids
-
-Limits list of displayed domains to provided ids.
+Displays a text field for the slug of a new friendly URL and validates its URL encoding.
+It is used by `UrlListType` for every new URL.
 
 ### [UrlListType]({{github.link}}/packages/framework/src/Form/UrlListType.php)
 
-Uses `FriendlyUrlType` to display a list of friendly URLs for each domain that lets you delete and create friendly URLs with unique slugs and select which URL should be the main for the domain.
+Displays the friendly URLs of an entity on a single domain (`UrlListData`) — lets you delete them, create new ones with unique slugs via `FriendlyUrlType`, and select the main URL.
+Multidomain entities render one `UrlListType` per domain via `MultidomainType`.
 
 #### route_name
 
@@ -243,10 +240,46 @@ Defines which route should the URLs go into.
 #### entity_id
 
 Defines what is the entity ID that the URLs are assigned to.
+Defaults to `null` for a new entity without any URLs yet.
 
-#### limit_domains_by_ids
+#### domain_id
 
-Limits list of displayed domains to provided ids.
+Required, the domain of the URLs.
+
+### [SeoGroupType]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoGroupType.php)
+
+Renders the SEO card of an entity — the [SEO attributes](../model/seo-attributes.md) and the URL addresses of each domain.
+Adds one `DomainSeoType` per domain enabled in the administration via `MultidomainType`, or a single `DomainSeoType` when `domain_id` is set.
+
+#### domain_id
+
+Limits the group to the single domain the entity belongs to and maps the fields to `$seo` and `$urls` of the entity data instead of `$seo[$domainId]` and `$urls[$domainId]`.
+Defaults to `null`, which renders a card for every domain enabled in the administration.
+
+#### placeholder_source_path
+
+Names of the nested fields leading from the form root to the input whose value is displayed as a live placeholder of the title and H1, e.g. `['basicInformation', 'name']`.
+The `{locale}` and `{domain_id}` tokens are replaced per domain, a wrong path fails when the form is rendered.
+
+#### h1_required
+
+Defaults to `false`.
+
+#### url_list_options
+
+Options passed to `UrlListType` (`route_name`, `entity_id`).
+Defaults to `null`, which renders no URL addresses.
+
+### [DomainSeoType]({{github.link}}/packages/framework/src/Form/Admin/Seo/DomainSeoType.php)
+
+The SEO attributes (`SeoAttributesType`) and the URL addresses (`UrlListType`) of an entity on a single domain.
+Inherits the entity data (`inherit_data`) and maps its fields to `seo`/`urls` or, with the `multidomain` option, to `seo[domainId]`/`urls[domainId]`.
+Requires the `domain_id` option, accepts `multidomain` (`false` by default), `placeholder_source_path`, `h1_required` and `url_list_options` with the same meaning as in `SeoGroupType`.
+
+### [SeoAttributesType]({{github.link}}/packages/framework/src/Form/Admin/Seo/SeoAttributesType.php)
+
+Displays the fields of `SeoAttributesData` — title, meta description, H1, meta robots and canonical URL.
+Requires the `domain_id` option, accepts `placeholder_source_path` and `h1_required` with the same meaning as in `SeoGroupType`.
 
 ### [ImageUploadType]({{github.link}}/packages/framework/src/Form/ImageUploadType.php)
 

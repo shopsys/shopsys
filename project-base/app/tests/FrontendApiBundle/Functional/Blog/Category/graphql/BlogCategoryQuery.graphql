@@ -1,0 +1,32 @@
+query BlogCategoryQuery($uuid: Uuid, $urlSlug: String) {
+    blogCategory(uuid: $uuid, urlSlug: $urlSlug) {
+        uuid
+        name
+        description
+        parent {
+            name
+        }
+        children {
+            name
+        }
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
+        link
+        slug
+        breadcrumb {
+            name
+            slug
+        }
+        blogCategoriesTree {
+            name
+            children {
+                name
+            }
+        }
+    }
+}

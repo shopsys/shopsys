@@ -19,7 +19,7 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({
     const defaultPaginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
     return (
-        <CommonLayout {...props}>
+        <CommonLayout {...props} defaultMetaRobots="noindex">
             <Breadcrumbs key="breadcrumb" breadcrumbs={breadcrumbs ?? []} type={props.breadcrumbsType} />
 
             <Webline width="xl">

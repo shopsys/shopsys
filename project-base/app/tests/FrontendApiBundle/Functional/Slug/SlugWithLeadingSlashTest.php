@@ -26,6 +26,8 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class SlugWithLeadingSlashTest extends GraphQlTestCase
 {
+    private const string SEO_PAGE_QUERY_PATH = __DIR__ . '/../_graphql/query/SeoPageQuery.graphql';
+
     /**
      * @inject
      */
@@ -37,7 +39,7 @@ class SlugWithLeadingSlashTest extends GraphQlTestCase
      */
     public function testSlugQueriesAcceptSlugWithAndWithoutLeadingSlash(): void
     {
-        $bareSlugsByField = [
+        $bareSlugsByGraphQlType = [
             'product' => $this->getMainSlug('front_product_detail', $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class)->getId()),
             'brand' => $this->getMainSlug('front_brand_detail', $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId()),
             'flag' => $this->getMainSlug('front_flag_detail', $this->getReference(FlagDataFixture::FLAG_PRODUCT_MADEIN_DE, Flag::class)->getId()),
@@ -48,14 +50,14 @@ class SlugWithLeadingSlashTest extends GraphQlTestCase
             'blogCategory' => $this->getMainSlug('front_blogcategory_detail', $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)->getId()),
         ];
 
-        foreach ($bareSlugsByField as $field => $bareSlug) {
-            $nameWithoutLeadingSlash = $this->getEntityNameByUrlSlug($field, $bareSlug);
-            $nameWithLeadingSlash = $this->getEntityNameByUrlSlug($field, '/' . $bareSlug);
+        foreach ($bareSlugsByGraphQlType as $graphQlType => $bareSlug) {
+            $nameWithoutLeadingSlash = $this->getEntityNameByUrlSlug($graphQlType, $bareSlug);
+            $nameWithLeadingSlash = $this->getEntityNameByUrlSlug($graphQlType, '/' . $bareSlug);
 
             $this->assertSame(
                 $nameWithoutLeadingSlash,
                 $nameWithLeadingSlash,
-                sprintf('Query "%s" must resolve the same entity for slug with and without a leading slash.', $field),
+                sprintf('Query "%s" must resolve the same entity for slug with and without a leading slash.', $graphQlType),
             );
         }
     }
@@ -64,10 +66,10 @@ class SlugWithLeadingSlashTest extends GraphQlTestCase
     {
         $pageSlug = SeoPageDataFixture::FIRST_DEMO_SEO_PAGE;
 
-        $titleWithoutLeadingSlash = $this->getSeoPageTitleByPageSlug($pageSlug);
-        $titleWithLeadingSlash = $this->getSeoPageTitleByPageSlug('/' . $pageSlug);
+        $seoPageWithoutLeadingSlash = $this->getSeoPageByPageSlug($pageSlug);
+        $seoPageWithLeadingSlash = $this->getSeoPageByPageSlug('/' . $pageSlug);
 
-        $this->assertSame($titleWithoutLeadingSlash, $titleWithLeadingSlash);
+        $this->assertSame($seoPageWithoutLeadingSlash, $seoPageWithLeadingSlash);
     }
 
     private function getMainSlug(string $routeName, int $entityId): string
@@ -75,19 +77,25 @@ class SlugWithLeadingSlashTest extends GraphQlTestCase
         return $this->friendlyUrlFacade->getMainFriendlyUrlSlug(Domain::FIRST_DOMAIN_ID, $routeName, $entityId);
     }
 
-    private function getEntityNameByUrlSlug(string $field, string $urlSlug): string
+    private function getEntityNameByUrlSlug(string $graphQlType, string $urlSlug): string
     {
-        $response = $this->getResponseContentForQuery(sprintf('{ %s(urlSlug: "%s") { name } }', $field, $urlSlug));
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $field);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/' . ucfirst($graphQlType) . 'NameQuery.graphql',
+            ['urlSlug' => $urlSlug],
+        );
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
 
-        return $this->getResponseDataForGraphQlType($response, $field)['name'];
+        return $this->getResponseDataForGraphQlType($response, $graphQlType)['name'];
     }
 
-    private function getSeoPageTitleByPageSlug(string $pageSlug): string
+    /**
+     * @return array<string, mixed>
+     */
+    private function getSeoPageByPageSlug(string $pageSlug): array
     {
-        $response = $this->getResponseContentForQuery(sprintf('{ seoPage(pageSlug: "%s") { title } }', $pageSlug));
+        $response = $this->getResponseContentForGql(self::SEO_PAGE_QUERY_PATH, ['pageSlug' => $pageSlug]);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'seoPage');
 
-        return $this->getResponseDataForGraphQlType($response, 'seoPage')['title'];
+        return $this->getResponseDataForGraphQlType($response, 'seoPage');
     }
 }

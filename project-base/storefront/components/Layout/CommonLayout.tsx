@@ -3,6 +3,7 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -10,7 +11,7 @@ import { type ReactNode, useEffect, useRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
-import { OgTypeEnum } from 'types/seo';
+import { MetaRobotsContent, OgTypeEnum } from 'types/seo';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
@@ -42,12 +43,16 @@ const getCurrentHashTarget = (): HTMLElement | null => {
 };
 
 export type CommonLayoutProps = {
-    title?: string | null;
-    description?: string | null;
+    seo?: TypeSeoAttributesFragment | null;
+    defaultTitle?: string | null;
+    defaultDescription?: string | null;
+    defaultMetaRobots?: MetaRobotsContent;
     breadcrumbs?: TypeBreadcrumbFragment[];
     breadcrumbsType?: FriendlyPagesTypesKey;
     canonicalQueryParams?: CanonicalQueryParameters;
     hreflangLinks?: TypeHreflangLink[];
+    paginationTotalCount?: number;
+    paginationPageSize?: number;
     isFetchingData?: boolean;
     pageTypeOverride?: PageType;
     ogType?: OgTypeEnum | undefined;
@@ -57,12 +62,16 @@ export type CommonLayoutProps = {
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
     children,
-    description,
-    title,
+    seo,
+    defaultDescription,
+    defaultTitle,
+    defaultMetaRobots,
     breadcrumbs,
     breadcrumbsType,
     canonicalQueryParams,
     hreflangLinks,
+    paginationTotalCount,
+    paginationPageSize,
     isFetchingData,
     pageTypeOverride,
     ogType,
@@ -114,11 +123,15 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
         <>
             <SeoMeta
                 canonicalQueryParams={canonicalQueryParams}
-                defaultDescription={description}
+                defaultDescription={defaultDescription}
                 defaultHreflangLinks={hreflangLinks}
-                defaultTitle={title}
+                defaultMetaRobots={defaultMetaRobots}
+                defaultTitle={defaultTitle}
                 ogImageUrlDefault={ogImageUrlDefault}
                 ogType={ogType}
+                paginationPageSize={paginationPageSize}
+                paginationTotalCount={paginationTotalCount}
+                seo={seo}
             />
 
             <div className="flex h-full min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] vl:pb-0">
@@ -155,8 +168,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     id="main-content"
                     tabIndex={-1}
                     aria-label={
-                        title
-                            ? t('Main content: {{pageTitle}}', { ns: 'accessibility', pageTitle: title })
+                        defaultTitle
+                            ? t('Main content: {{pageTitle}}', { ns: 'accessibility', pageTitle: defaultTitle })
                             : t('Main content', { ns: 'accessibility' })
                     }
                 >

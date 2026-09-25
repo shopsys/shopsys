@@ -1,0 +1,8 @@
+fragment SeoAttributesFragment on SeoAttributes {
+    __typename
+    title
+    metaDescription
+    h1
+    metaRobots
+    canonicalUrl
+}

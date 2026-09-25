@@ -22,19 +22,9 @@ class SeoPageData
     public $pageSlugsIndexedByDomainId;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitlesIndexedByDomainId;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptionsIndexedByDomainId;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $canonicalUrlsIndexedByDomainId;
+    public $seo;
 
     /**
      * @var string[]|null[]
@@ -54,9 +44,7 @@ class SeoPageData
     public function __construct()
     {
         $this->pageSlugsIndexedByDomainId = [];
-        $this->seoTitlesIndexedByDomainId = [];
-        $this->seoMetaDescriptionsIndexedByDomainId = [];
-        $this->canonicalUrlsIndexedByDomainId = [];
+        $this->seo = [];
         $this->seoOgTitlesIndexedByDomainId = [];
         $this->seoOgDescriptionsIndexedByDomainId = [];
         $this->defaultPage = false;

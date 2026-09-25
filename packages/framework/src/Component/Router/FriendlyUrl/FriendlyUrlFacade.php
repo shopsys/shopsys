@@ -167,37 +167,45 @@ class FriendlyUrlFacade
         return $this->getAbsoluteUrlByRouteNameAndEntityId($this->domain->getId(), $routeName, $entityId);
     }
 
-    public function saveUrlListFormData(string $routeName, int $entityId, UrlListData $urlListData): void
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[] $urlListDataByDomainId
+     */
+    public function saveUrlListFormData(string $routeName, int $entityId, array $urlListDataByDomainId): void
     {
         $toFlush = [];
 
-        foreach ($urlListData->mainFriendlyUrlsByDomainId as $friendlyUrl) {
-            if ($friendlyUrl !== null) {
-                $this->setFriendlyUrlAsMain($friendlyUrl);
-                $toFlush[] = $friendlyUrl;
+        foreach ($urlListDataByDomainId as $domainId => $urlListData) {
+            if ($urlListData->mainFriendlyUrl !== null) {
+                $this->setFriendlyUrlAsMain($urlListData->mainFriendlyUrl);
+                $toFlush[] = $urlListData->mainFriendlyUrl;
             }
-        }
 
-        foreach ($urlListData->toDelete as $friendlyUrls) {
-            foreach ($friendlyUrls as $friendlyUrl) {
+            foreach ($urlListData->toDelete as $friendlyUrl) {
                 if (!$friendlyUrl->isMain()) {
                     $this->em->remove($friendlyUrl);
                     $toFlush[] = $friendlyUrl;
                 }
             }
-        }
 
-        foreach ($urlListData->newUrls as $urlData) {
-            $domainId = $urlData[UrlListData::FIELD_DOMAIN];
-            $newSlug = $urlData[UrlListData::FIELD_SLUG];
-            $newFriendlyUrl = $this->friendlyUrlFactory->create($routeName, $entityId, $domainId, $newSlug);
-            $this->em->persist($newFriendlyUrl);
-            $toFlush[] = $newFriendlyUrl;
+            foreach ($urlListData->newUrls as $newSlug) {
+                $newFriendlyUrl = $this->friendlyUrlFactory->create($routeName, $entityId, $domainId, $newSlug);
+                $this->em->persist($newFriendlyUrl);
+                $toFlush[] = $newFriendlyUrl;
+            }
         }
 
         if (count($toFlush) > 0) {
             $this->em->flush();
         }
+    }
+
+    public function saveUrlListFormDataForDomain(
+        string $routeName,
+        int $entityId,
+        UrlListData $urlListData,
+        int $domainId,
+    ): void {
+        $this->saveUrlListFormData($routeName, $entityId, [$domainId => $urlListData]);
     }
 
     protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl): void

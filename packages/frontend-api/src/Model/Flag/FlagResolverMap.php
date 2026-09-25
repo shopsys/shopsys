@@ -37,6 +37,7 @@ class FlagResolverMap extends ResolverMap
                 'hreflangLinks' => function (Flag $flag) {
                     return $this->hreflangLinksFacade->getForFlag($flag, $this->domain->getId());
                 },
+                'seo' => fn (Flag $flag) => $flag->getSeoAttributes($this->domain->getId()),
             ],
         ];
     }

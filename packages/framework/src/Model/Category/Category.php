@@ -253,19 +253,11 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoAttributes(int $domainId)
     {
-        return $this->getCategoryDomain($domainId)->getSeoTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
-    {
-        return $this->getCategoryDomain($domainId)->getSeoH1();
+        return $this->getCategoryDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -283,14 +275,6 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     public function isVisible(int $domainId)
     {
         return $this->getCategoryDomain($domainId)->isVisible();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getCategoryDomain($domainId)->getSeoMetaDescription();
     }
 
     /**
@@ -335,9 +319,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     {
         foreach ($this->domains as $categoryDomain) {
             $domainId = $categoryDomain->getDomainId();
-            $categoryDomain->setSeoTitle($categoryData->seoTitles[$domainId]);
-            $categoryDomain->setSeoH1($categoryData->seoH1s[$domainId]);
-            $categoryDomain->setSeoMetaDescription($categoryData->seoMetaDescriptions[$domainId]);
+            $categoryDomain->getSeoAttributes()->edit($categoryData->seo[$domainId]);
             $categoryDomain->setDescription($categoryData->descriptions[$domainId]);
             $categoryDomain->setEnabled($categoryData->enabled[$domainId]);
         }
@@ -345,7 +327,7 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
 
     protected function createDomains(CategoryData $categoryData): void
     {
-        $domainIds = array_keys($categoryData->seoTitles);
+        $domainIds = array_keys($categoryData->seo);
 
         foreach ($domainIds as $domainId) {
             $categoryDomain = new CategoryDomain($this, $domainId);

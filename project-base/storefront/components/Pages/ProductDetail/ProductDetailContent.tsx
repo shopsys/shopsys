@@ -23,7 +23,7 @@ import { isProductSellable } from 'utils/product/isProductSellable';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
-import { ProductDetailTitle } from './ProductDetailElements';
+import { ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
@@ -61,7 +61,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
             <VerticalStack gap="md">
                 <Webline className="flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6 vl:gap-y-2">
                     <div className="order-1 vl:col-start-2 vl:row-start-1 flex flex-col">
-                        <ProductDetailTitle
+                        <ProductDetailHeading
+                            heading={product.seo.h1}
                             name={product.name}
                             namePrefix={product.namePrefix}
                             nameSuffix={product.nameSuffix}

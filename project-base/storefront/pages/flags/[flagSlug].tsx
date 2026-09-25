@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
@@ -35,7 +34,6 @@ import {
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useResetSessionFilters } from 'utils/seo/useResetOriginalCategorySlug';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
@@ -55,25 +53,22 @@ const FlagDetailPage: NextPage = () => {
         },
     });
 
-    const seoTitle = useSeoTitleWithPagination(flagDetailData?.flag?.products.totalCount, flagDetailData?.flag?.name);
-
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(flagDetailData?.flag);
     useGtmPageReadyEvent(pageReadyEvent, isFlagFetching);
 
     return (
-        <>
-            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
-
-            <CommonLayout
-                breadcrumbs={flagDetailData?.flag?.breadcrumb}
-                breadcrumbsType="category"
-                hreflangLinks={flagDetailData?.flag?.hreflangLinks}
-                isFetchingData={!filter && isFlagFetching && !flagDetailData}
-                title={seoTitle}
-            >
-                {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
-            </CommonLayout>
-        </>
+        <CommonLayout
+            breadcrumbs={flagDetailData?.flag?.breadcrumb}
+            breadcrumbsType="category"
+            defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
+            hreflangLinks={flagDetailData?.flag?.hreflangLinks}
+            isFetchingData={!filter && isFlagFetching && !flagDetailData}
+            paginationTotalCount={flagDetailData?.flag?.products.totalCount}
+            seo={flagDetailData?.flag?.seo}
+            defaultTitle={flagDetailData?.flag?.name}
+        >
+            {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
+        </CommonLayout>
     );
 };
 

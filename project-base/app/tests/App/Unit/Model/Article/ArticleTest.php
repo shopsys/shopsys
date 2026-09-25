@@ -8,6 +8,7 @@ use App\Model\Article\Article;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData;
 use Symfony\Component\Clock\DatePoint;
 
 class ArticleTest extends TestCase
@@ -19,6 +20,7 @@ class ArticleTest extends TestCase
         $articleData->domainId = Domain::FIRST_DOMAIN_ID;
         $articleData->name = 'Demonstrative name';
         $articleData->placement = Article::PLACEMENT_NONE;
+        $articleData->seo = new SeoAttributesData();
 
         $article = new Article($articleData);
 

@@ -41,6 +41,7 @@ class LuigisBoxCategoryFeedItemFactory
         }
 
         $domainId = $domainConfig->getId();
+        $seoAttributes = $category->getSeoAttributes($domainId);
 
         return new LuigisBoxCategoryFeedItem(
             $category->getId(),
@@ -48,9 +49,9 @@ class LuigisBoxCategoryFeedItemFactory
             $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_product_list', $category->getId()),
             array_reverse($hierarchyNames),
             $imageUrl,
-            $category->getSeoTitle($domainId),
-            $category->getSeoMetaDescription($domainId),
-            $category->getSeoH1($domainId),
+            $seoAttributes->getTitle(),
+            $seoAttributes->getMetaDescription(),
+            $seoAttributes->getH1(),
         );
     }
 }

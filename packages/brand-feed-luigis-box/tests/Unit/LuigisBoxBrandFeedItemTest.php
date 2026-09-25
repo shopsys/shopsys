@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 
 class LuigisBoxBrandFeedItemTest extends TestCase
 {
@@ -32,6 +33,7 @@ class LuigisBoxBrandFeedItemTest extends TestCase
         $brand = $this->createStub(Brand::class);
         $brand->method('getId')->willReturn(self::BRAND_ID);
         $brand->method('getName')->willReturn(self::BRAND_NAME);
+        $brand->method('getSeoAttributes')->willReturn(new SeoAttributes());
 
         $friendlyUrlFacadeMock = $this->createMock(FriendlyUrlFacade::class);
         $friendlyUrlFacadeMock->expects($this->any())->method('getAbsoluteUrlByRouteNameAndEntityId')

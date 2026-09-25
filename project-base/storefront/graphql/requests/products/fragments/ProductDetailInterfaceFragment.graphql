@@ -48,8 +48,9 @@ fragment ProductDetailInterfaceFragment on Product {
     }
     stockQuantity
     isAllowedNegativeStock
-    seoTitle
-    seoMetaDescription
+    seo {
+        ...SeoAttributesFragment
+    }
     hreflangLinks {
         ...HreflangLinksFragment
     }
