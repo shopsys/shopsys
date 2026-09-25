@@ -89,7 +89,7 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
     private function createTransportPriceCalculationStub(Price $transportPrice): TransportPriceCalculation
     {
         $transportPriceCalculation = $this->createStub(TransportPriceCalculation::class);
-        $transportPriceCalculation->method('calculatePrice')->willReturn($transportPrice);
+        $transportPriceCalculation->method('calculatePriceForProcessedOrder')->willReturn($transportPrice);
 
         return $transportPriceCalculation;
     }

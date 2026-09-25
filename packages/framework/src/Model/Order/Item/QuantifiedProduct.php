@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class QuantifiedProduct
@@ -39,5 +40,24 @@ class QuantifiedProduct
     public function setAdditionalData(string $key, mixed $additionalData): void
     {
         $this->additionalData[$key] = $additionalData;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getFingerprintData(): array
+    {
+        $additionalData = $this->additionalData;
+        $additionalData[self::ADDITIONAL_SERVICES_KEY] = array_map(
+            static fn (AdditionalService $additionalService): int => $additionalService->getId(),
+            array_values($additionalData[self::ADDITIONAL_SERVICES_KEY] ?? []),
+        );
+        ksort($additionalData);
+
+        return [
+            'productId' => $this->product->getId(),
+            'quantity' => $this->quantity,
+            'additionalData' => $additionalData,
+        ];
     }
 }

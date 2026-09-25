@@ -209,6 +209,27 @@ class ProductRepository
     }
 
     /**
+     * @param int[] $productIds
+     */
+    public function preloadWithDomainsVatsAndTranslationsByIds(array $productIds): void
+    {
+        if ($productIds === []) {
+            return;
+        }
+
+        $this->em->createQueryBuilder()
+            ->select('p, pd, v, pt')
+            ->from(Product::class, 'p')
+            ->join('p.domains', 'pd')
+            ->join('pd.vat', 'v')
+            ->leftJoin('p.translations', 'pt')
+            ->where('p.id IN (:productIds)')
+            ->setParameter('productIds', array_values(array_unique($productIds)))
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param int[] $ids
      * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product>
      */

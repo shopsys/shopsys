@@ -4,6 +4,7 @@ shopsys_framework:
         - '/elfinder'
     order:
         processing_middlewares:
+            - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PreloadOrderInputDataMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetCustomerUserMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddAdditionalServicesMiddleware'

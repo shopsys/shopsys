@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
@@ -12,11 +13,18 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductPromoCodeFiller
 {
+    protected const string PROMO_CODE_FLAGS_CACHE_NAMESPACE = 'promoCodeFlagsByPromoCodeId';
+
+    protected const string ALLOWED_PRODUCT_IDS_CACHE_NAMESPACE = 'promoCodeAllowedProductIdsByPromoCodeId';
+
+    protected const string ALLOWED_PRODUCT_IDS_BY_CRITERIA_CACHE_NAMESPACE = 'promoCodeAllowedProductIdsByBrandsAndCategories';
+
     public function __construct(
         protected readonly PromoCodeProductRepository $promoCodeProductRepository,
         protected readonly PromoCodeCategoryRepository $promoCodeCategoryRepository,
         protected readonly PromoCodeBrandRepository $promoCodeBrandRepository,
         protected readonly PromoCodeFlagRepository $promoCodeFlagRepository,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -29,7 +37,7 @@ class ProductPromoCodeFiller
         int $domainId,
         PromoCode $promoCode,
     ): array {
-        $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
+        $allowedProductIds = $this->getAllowedProductIds($promoCode);
         $allowedProductIdsByCriteria = $this->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
         $totalAllowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
@@ -106,7 +114,7 @@ class ProductPromoCodeFiller
         PromoCode $validEnteredPromoCode,
         int $domainId,
     ): ?Product {
-        $promoCodeFlags = $this->promoCodeFlagRepository->getFlagsByPromoCodeId($validEnteredPromoCode->getId());
+        $promoCodeFlags = $this->getPromoCodeFlags($validEnteredPromoCode);
 
         $productFlagIds = $product->getFlagsIdsForDomain($domainId);
         $productSatisfies = true;
@@ -127,9 +135,46 @@ class ProductPromoCodeFiller
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[]
+     */
+    protected function getPromoCodeFlags(PromoCode $promoCode): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PROMO_CODE_FLAGS_CACHE_NAMESPACE,
+            fn (): array => $this->promoCodeFlagRepository->getFlagsByPromoCodeId($promoCode->getId()),
+            $promoCode->getId(),
+        );
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getAllowedProductIds(PromoCode $promoCode): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::ALLOWED_PRODUCT_IDS_CACHE_NAMESPACE,
+            fn (): array => $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId()),
+            $promoCode->getId(),
+        );
+    }
+
+    /**
      * @return int[]
      */
     public function getAllowedProductIdsForBrandsAndCategories(PromoCode $promoCode, int $domainId): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::ALLOWED_PRODUCT_IDS_BY_CRITERIA_CACHE_NAMESPACE,
+            fn (): array => $this->loadAllowedProductIdsForBrandsAndCategories($promoCode, $domainId),
+            $promoCode->getId(),
+            $domainId,
+        );
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function loadAllowedProductIdsForBrandsAndCategories(PromoCode $promoCode, int $domainId): array
     {
         $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId(
             $promoCode->getId(),
