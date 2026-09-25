@@ -37,8 +37,10 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const { canSeePrices } = useAuthorization();
     const addingToCartProductUuidsRef = useRef(new Set<string>());
     const cartItemQuantitiesRef = useRef(new Map<string, number>());
+    const cartItemsRef = useRef(cart?.items ?? []);
 
     useEffect(() => {
+        cartItemsRef.current = cart?.items ?? [];
         cartItemQuantitiesRef.current = new Map(
             cart?.items.map((item) => [item.product.uuid, item.quantity] as const) ?? [],
         );
@@ -58,6 +60,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         addingToCartProductUuidsRef.current.add(productUuid);
 
         try {
+            const previousCartItems = cartItemsRef.current;
             const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
             const initialQuantity = cartItemQuantitiesRef.current.get(productUuid) ?? itemToBeAdded?.quantity ?? 0;
             const addToCartActionResult = await addToCartMutation({
@@ -101,6 +104,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
 
             const cartWithAdditionalServices = (await onProductAddedToCart?.(addedCartItem)) ?? null;
             const updatedCart = cartWithAdditionalServices ?? addToCartResult.cart;
+            cartItemsRef.current = updatedCart.items;
             const updatedCartItem =
                 cartWithAdditionalServices?.items.find((cartItem) => cartItem.uuid === addedCartItem.uuid) ??
                 addedCartItem;
@@ -117,6 +121,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
                     gtmProductListName,
                     isUserLoggedIn,
                     !canSeePrices,
+                    previousCartItems,
                 );
             });
 
