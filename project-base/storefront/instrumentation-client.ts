@@ -34,9 +34,9 @@ if (isSentryEnabled) {
 
     // Lazy load replay integration if enabled
     if (enableReplays) {
-        import('@sentry/nextjs').then((lazyLoadedSentry) => {
+        import('utils/sentry/replayIntegration').then(({ replayIntegration }) => {
             Sentry.addIntegration(
-                lazyLoadedSentry.replayIntegration({
+                replayIntegration({
                     maskAllText: false,
                     blockAllMedia: false,
                     maskAllInputs: false,
@@ -47,9 +47,9 @@ if (isSentryEnabled) {
 
     // Lazy load feedback integration if enabled
     if (enableFeedback) {
-        import('@sentry/nextjs').then((lazyLoadedSentry) => {
+        import('utils/sentry/feedbackIntegration').then(({ feedbackIntegration }) => {
             Sentry.addIntegration(
-                lazyLoadedSentry.feedbackIntegration({
+                feedbackIntegration({
                     colorScheme: 'system',
                 }),
             );
