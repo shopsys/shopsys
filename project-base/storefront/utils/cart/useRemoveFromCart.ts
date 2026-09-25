@@ -3,8 +3,10 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { getGtmMappedCart } from 'gtm/utils/getGtmMappedCart';
 import { useRef } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
@@ -15,6 +17,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { fetchCart } = useCurrentCart();
     const { canSeePrices } = useAuthorization();
+    const isUserLoggedIn = useIsUserLoggedIn();
 
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const removingCartItemUuidsRef = useRef(new Set<string>());
@@ -35,8 +38,10 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
                 fetchCart({ requestPolicy: 'network-only' });
             }
 
-            if (removeItemFromCartActionResult.data?.RemoveFromCart.uuid !== undefined) {
-                updateCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid);
+            const updatedCart = removeItemFromCartActionResult.data?.RemoveFromCart;
+
+            if (updatedCart?.uuid !== undefined) {
+                updateCartUuid(updatedCart.uuid);
 
                 import('gtm/handlers/onGtmRemoveFromCartEventHandler').then(({ onGtmRemoveFromCartEventHandler }) => {
                     onGtmRemoveFromCartEventHandler(
@@ -46,6 +51,15 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
                         gtmProductListName,
                         url,
                         !canSeePrices,
+                        updatedCart.items.length
+                            ? getGtmMappedCart(
+                                  updatedCart,
+                                  updatedCart.promoCodes,
+                                  isUserLoggedIn,
+                                  domainConfig,
+                                  updatedCart.uuid,
+                              )
+                            : undefined,
                     );
                 });
 
