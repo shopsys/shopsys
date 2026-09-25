@@ -74,7 +74,7 @@
         "@graphql-codegen/introspection": "~6.0.1",
         "@graphql-codegen/near-operation-file-preset": "^5.2.1",
         "@graphql-codegen/typescript": "^6.0.2",
-        "@graphql-codegen/typescript-operations": "~6.0.4",
+        "@graphql-codegen/typescript-operations": "~6.1.6",
         "@graphql-codegen/typescript-urql": "~5.0.1",
         "@mswjs/interceptors": "0.41.9",
         "@tailwindcss/cli": "^4.3.1",
