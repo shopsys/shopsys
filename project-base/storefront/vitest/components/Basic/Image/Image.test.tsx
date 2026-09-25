@@ -21,4 +21,10 @@ describe('Image', () => {
 
         expect(screen.getByRole('img', { name: 'Product' })).toHaveAttribute('data-unoptimized', 'false');
     });
+
+    test('skips responsive variants for GIF images', () => {
+        render(<Image alt="Animated product" height={32} src="/images/product.gif" width={64} />);
+
+        expect(screen.getByRole('img', { name: 'Animated product' })).toHaveAttribute('data-unoptimized', 'true');
+    });
 });
