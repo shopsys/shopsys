@@ -5,6 +5,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { getLinkType } from 'components/Blocks/SimpleNavigation/simpleNavigationUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { onGtmPromotionClickEventHandler } from 'gtm/handlers/onGtmPromotionClickEventHandler';
+import { GtmPromotionType } from 'gtm/types/events';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
@@ -26,6 +28,7 @@ type CategoryCardProps = {
     showChildren?: boolean;
     variant?: CategoryCardVariant;
     size?: CategoryCardSize;
+    promotion?: GtmPromotionType;
 };
 
 const MAX_VISIBLE_SUBCATEGORIES = 6;
@@ -35,6 +38,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     showChildren = true,
     variant = 'homepage',
     size = 'default',
+    promotion,
 }) => {
     const { t } = useTranslation();
     const isLarge = size === 'large';
@@ -92,6 +96,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 aria-label={primaryAriaLabel}
                 href={href}
                 type={linkType}
+                onClick={() => promotion && onGtmPromotionClickEventHandler(promotion, href)}
                 className={twMergeCustom(
                     'flex aspect-square size-full max-h-37.5 cursor-pointer flex-col items-center justify-center gap-0 rounded-xl px-5 py-2.5 text-center no-underline transition-[box-shadow,border-color,background-color,color] duration-300 ease-in-out',
                     'border border-background-more bg-background-more text-text-default',

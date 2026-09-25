@@ -1,6 +1,10 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
+import { onGtmPromotionClickEventHandler } from 'gtm/handlers/onGtmPromotionClickEventHandler';
+import { mapGtmBannerPromotion } from 'gtm/mappers/mapGtmBannerPromotion';
+import { GtmPromotionType } from 'gtm/types/events';
+import { useGtmPromotionListViewEvent } from 'gtm/utils/pageReadyEvents/useGtmPromotionListViewEvent';
 import { startTransition, useEffect, useEffectEvent, useReducer, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
@@ -120,10 +124,14 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     );
 
     const currentBanner = sliderItems[bannerSliderState.sliderPosition];
+    const promotions: GtmPromotionType[] = sliderItems.map(mapGtmBannerPromotion);
+    const currentPromotion = promotions[bannerSliderState.sliderPosition];
 
     const skeletonType = currentBanner.routeName
         ? getPageTypeKey(currentBanner.routeName)
         : getSkeletonTypeFromLink(currentBanner.link);
+
+    useGtmPromotionListViewEvent(promotions);
 
     return (
         <div className="flex flex-col" data-tid={TIDs.banners_slider}>
@@ -148,6 +156,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                             startInterval();
                         }
                     }}
+                    onClick={() => onGtmPromotionClickEventHandler(currentPromotion, currentBanner.link)}
                 >
                     <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
                         <div

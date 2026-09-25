@@ -20,6 +20,7 @@ vi.mock('next/image', () => ({
 
 const advert = {
     __typename: 'AdvertImage',
+    id: 42,
     categories: [],
     link: null,
     mainImage: {

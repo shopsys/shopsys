@@ -23,7 +23,7 @@ export type TypeFriendlyUrlRouteEnum =
 export type TypeSliderItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeSliderItemsQuery = { sliderItems: Array<{ __typename: 'SliderItem', uuid: string, name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, description: string | null, rgbBackgroundColor: string, opacity: number, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } }> };
+export type TypeSliderItemsQuery = { sliderItems: Array<{ __typename: 'SliderItem', id: number, uuid: string, gtmCreative: string | null, name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, description: string | null, rgbBackgroundColor: string, opacity: number, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } }> };
 
 
 export const SliderItemsQueryDocument = gql`

@@ -97,6 +97,8 @@ export type TypeAdditionalServiceMainImageArgs = {
 export type TypeAdvert = {
   /** Restricted categories of the advert (the advert is shown in these categories only) */
   categories: Array<TypeCategory>;
+  /** ID of advert */
+  id: Scalars['Int']['output'];
   /** Name of advert */
   name: Scalars['String']['output'];
   /** Position of advert */
@@ -113,6 +115,8 @@ export type TypeAdvertCode = TypeAdvert & {
   categories: Array<TypeCategory>;
   /** Advert code */
   code: Scalars['String']['output'];
+  /** ID of advert */
+  id: Scalars['Int']['output'];
   /** Name of advert */
   name: Scalars['String']['output'];
   /** Position of advert */
@@ -127,6 +131,8 @@ export type TypeAdvertImage = TypeAdvert & {
   __typename?: 'AdvertImage';
   /** Restricted categories of the advert (the advert is shown in these categories only) */
   categories: Array<TypeCategory>;
+  /** ID of advert */
+  id: Scalars['Int']['output'];
   /** Advert images */
   images: Array<TypeImage>;
   /** Advert link */
@@ -4151,6 +4157,8 @@ export type TypeSliderItem = {
   gtmCreative: Maybe<Scalars['String']['output']>;
   /** GTM ID */
   gtmId: Scalars['String']['output'];
+  /** ID */
+  id: Scalars['Int']['output'];
   /** Slider item images */
   images: Array<TypeImage>;
   /** Target link */
