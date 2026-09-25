@@ -8,6 +8,11 @@ on:
     pull_request:
         branches:
             - '**'
+        types:
+            - opened
+            - synchronize
+            - reopened
+            - ready_for_review
     workflow_dispatch:
 concurrency:
     group: ${{ github.ref }}
@@ -1149,6 +1154,7 @@ jobs:
         if: |
             always() && !failure() && !cancelled() &&
             github.actor != 'dependabot[bot]' &&
+            github.event.pull_request.draft != true &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
