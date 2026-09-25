@@ -19,6 +19,10 @@ if [ -n "$BRANCH_NAME" ]; then
     fi
 
     rm -rf "${REVIEWS_DIR:?}/${BRANCH_NAME}"
+
+    # Reviews deployed before the shared reviews directory existed live in the workspace of the runner,
+    # remove this once no such review is left
+    rm -rf /home/github-runner/actions-runner*/_work/shopsys/shopsys/"${BRANCH_NAME}"
 else
     echo "Error: Branch name not provided."
 fi
