@@ -43,6 +43,9 @@ msgstr "%topic%: what to look for"
 msgid "100 Czech crowns ticket"
 msgstr ""
 
+msgid "100\" Philips [V]"
+msgstr ""
+
 msgid "123.8x58.6 mm"
 msgstr ""
 
@@ -68,9 +71,6 @@ msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 msgstr ""
 
 msgid "220 x 250 x 9 mm"
-msgstr ""
-
-msgid "24\" Philips CRT [V]"
 msgstr ""
 
 msgid "24\" Philips [V]"
@@ -130,9 +130,6 @@ msgstr ""
 msgid "36\" Hyundai [V]"
 msgstr ""
 
-msgid "36\" Philips CRT [V]"
-msgstr ""
-
 msgid "36\" Philips [V]"
 msgstr ""
 
@@ -157,6 +154,9 @@ msgstr ""
 msgid "47\" LG 47LA790V (FHD)"
 msgstr ""
 
+msgid "48\" Philips [V]"
+msgstr ""
+
 msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
 msgstr ""
 
@@ -172,13 +172,13 @@ msgstr ""
 msgid "51,5\" Sencor [V]"
 msgstr ""
 
-msgid "54\" Philips CRT [V]"
-msgstr ""
-
 msgid "54\" Philips [V]"
 msgstr ""
 
 msgid "60\" Sencor [V]"
+msgstr ""
+
+msgid "65\" Philips [V]"
 msgstr ""
 
 msgid "800 × 480 px"
@@ -206,6 +206,9 @@ msgid "<h2>A4tech X710BK</h2><p>This gaming mouse features five buttons and a sc
 msgstr ""
 
 msgid "<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr ""
+
+msgid "<h2>Canon EH-22M</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
 msgstr ""
 
 msgid "<h2>Canon PIXMA MG2450</h2><p>Stylish and affordable, accessible multifunction devices for the home. Easy <strong> printing, scanning and copying </strong> in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print <strong> FINE technology </strong> Which guarantee excellent print quality. The printer has a system of four ink colors hidden in two ink cartridges, which provide easy user service and stable print quality throughout the life. <strong> You can reach the XL cartridges </strong> FINE, which provide significantly greater number of print pages between ink replacement. This is ideal if you are printing large volumes.<br><br>Software <strong> My Image Garden </strong> will reveal the full range of functions PIXMA printers. It offers solutions for the layout and printing photos, scanning, and access to online services. Due to advanced features such as face detection, it will scan all the pictures on your computer (even those long forgotten), and compile them into great designs to print. Service <strong> CREATIVE PARK PREMIUM</strong> you can download and print photos, images and artwork from internationally recognized photographers and artists. Create greeting cards, calendars or stunning 3D paper products, such as the space shuttle Endeavour.</p>"
@@ -493,7 +496,7 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
-msgid "Canon EH-22L"
+msgid "Canon EH-22L camera case"
 msgstr ""
 
 msgid "Canon EH-22L. High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."

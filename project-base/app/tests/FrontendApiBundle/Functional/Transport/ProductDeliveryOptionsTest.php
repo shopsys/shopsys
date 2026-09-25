@@ -48,7 +48,7 @@ final class ProductDeliveryOptionsTest extends GraphQlTestCase
     private const int SOLD_OUT_WITHOUT_VALID_RESTOCKING_DATE_PRODUCT_REFERENCE_ID = 21;
 
     /**
-     * '7700769XCX' from the demo data — a main variant
+     * 'SENCOR-M' from the demo data — a main variant
      */
     private const int MAIN_VARIANT_REFERENCE_ID = 83;
 

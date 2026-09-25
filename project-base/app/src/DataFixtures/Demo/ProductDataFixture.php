@@ -338,7 +338,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('Canon EH-22L camera case', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Canon EH-22L. High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -1653,7 +1653,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176544');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS36');
 
         $productData->partno = '32PFL4308I';
         $productData->ean = '8845781243205';
@@ -1689,7 +1689,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176588');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS100');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -1704,7 +1704,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('54" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('100" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -2048,7 +2048,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('18981438');
+        $productData = $this->productDemoDataFactory->createDefaultData('T27D590EZ');
 
         $productData->partno = 'LT27D590EZ';
         $productData->ean = '8845781245940';
@@ -2086,7 +2086,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176544M');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS-M');
 
         $productData->partno = '32PFL4308';
         $productData->ean = '8845781243205';
@@ -2342,7 +2342,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('7700777');
+        $productData = $this->productDemoDataFactory->createDefaultData('SENCOR51');
 
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245937';
@@ -2371,7 +2371,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('7700769Z');
+        $productData = $this->productDemoDataFactory->createDefaultData('SENCOR60');
 
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
@@ -2484,7 +2484,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('7700769XCX');
+        $productData = $this->productDemoDataFactory->createDefaultData('SENCOR-M');
 
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
@@ -2632,7 +2632,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('1532564');
+        $productData = $this->productDemoDataFactory->createDefaultData('EH-22M');
 
         $productData->partno = '6758B001';
         $productData->ean = '8845781245914';
@@ -2647,7 +2647,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Canon EH-22M', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+            $productData->descriptions[$domain->getId()] = t('<h2>Canon EH-22M</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
@@ -2660,7 +2660,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('15964035');
+        $productData = $this->productDemoDataFactory->createDefaultData('EOS-700E');
 
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
@@ -3837,7 +3837,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('9176522');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS24');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3871,7 +3871,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('917652236');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS65');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3886,7 +3886,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('36" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('65" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3905,7 +3905,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('917652254');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS54');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3939,7 +3939,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('91765223');
+        $productData = $this->productDemoDataFactory->createDefaultData('PHILIPS48');
 
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
@@ -3954,7 +3954,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('24" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('48" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3973,7 +3973,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('91765542');
+        $productData = $this->productDemoDataFactory->createDefaultData('HYUNDAI36PLASMA');
 
         $productData->partno = '32PFL4360';
         $productData->ean = '8845781243205';
@@ -4006,7 +4006,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData('91765782');
+        $productData = $this->productDemoDataFactory->createDefaultData('HYUNDAI27PLASMA');
 
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
@@ -4171,23 +4171,23 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     public static function getVariantCatnumsByMainVariantCatnum(): array
     {
         return [
-            '9176544M' => [
-                '9176544', // 36 / led
-                '9176588', // 54 / crt
-                '9176522', // 24 / led
-                '917652236', // 36 / crt
-                '917652254', // 54 / led
-                '91765223', // 24 / crt
+            'PHILIPS-M' => [
+                'PHILIPS36', // 36 / led
+                'PHILIPS100', // 100 / crt
+                'PHILIPS24', // 24 / led
+                'PHILIPS65', // 65 / crt
+                'PHILIPS54', // 54 / led
+                'PHILIPS48', // 48 / crt
             ],
             '32PFL4400' => [
                 '9176554', // 36 / led
                 '9176578', // 27 / led
-                '91765542', // 36 / plasma
-                '91765782', // 27 / plasma
+                'HYUNDAI36PLASMA', // 36 / plasma
+                'HYUNDAI27PLASMA', // 27 / plasma
             ],
-            '7700769XCX' => [
-                '7700777',
-                '7700769Z',
+            'SENCOR-M' => [
+                'SENCOR51',
+                'SENCOR60',
             ],
             'VOUCHER-M' => [
                 'VOUCHER500',

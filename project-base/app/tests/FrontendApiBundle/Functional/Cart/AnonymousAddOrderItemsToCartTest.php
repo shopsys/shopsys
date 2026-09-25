@@ -202,7 +202,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
             [
                 'quantity' => 1,
                 'product' => [
-                    'name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'name' => t('Canon EH-22L camera case', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ],
             ],
             [
