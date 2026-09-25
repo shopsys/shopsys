@@ -9,6 +9,8 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 type ProductListCallbacks = {
     addProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
+    removeProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
+    removeProductError: (productUuid: string) => void;
 };
 
 const { productListCallbacksRef, toggleProductInListWithGtmMock } = vi.hoisted(() => ({
@@ -62,6 +64,29 @@ describe('useComparison', () => {
         });
         vi.useRealTimers();
         useSessionStore.setState({ storedFocusElement: null });
+    });
+
+    test('notifies about removals only after success, keeping the previous notification on failure', () => {
+        const onProductRemoved = vi.fn();
+        const { result } = renderHook(() => useComparison({ onProductRemoved }));
+
+        act(() => productListCallbacksRef.current?.removeProductSuccess(undefined, 'first-product'));
+        expect(onProductRemoved).toHaveBeenLastCalledWith('first-product');
+
+        act(() => {
+            result.current.toggleProductInComparison(
+                { uuid: 'second-product' } as ProductInterfaceType,
+                GtmProductListNameType.product_comparison_page,
+            );
+        });
+        expect(onProductRemoved).toHaveBeenCalledTimes(1);
+
+        act(() => productListCallbacksRef.current?.removeProductError('second-product'));
+        expect(onProductRemoved).toHaveBeenCalledTimes(1);
+
+        act(() => productListCallbacksRef.current?.removeProductSuccess(undefined, 'second-product'));
+        expect(onProductRemoved).toHaveBeenCalledTimes(2);
+        expect(onProductRemoved).toHaveBeenLastCalledWith('second-product');
     });
 
     test('does not restore stale focus after the comparison toast closes', () => {

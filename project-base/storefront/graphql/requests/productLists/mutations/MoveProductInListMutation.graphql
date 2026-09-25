@@ -1,0 +1,5 @@
+mutation MoveProductInListMutation($input: ProductListMoveProductInput!) {
+    MoveProductInList(input: $input) {
+        ...ProductListFragment
+    }
+}

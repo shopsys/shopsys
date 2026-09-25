@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices/AdditionalServices';
 import { CartItemPartialAvailability } from 'components/Blocks/Product/CartItemPartialAvailability';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
@@ -237,9 +238,11 @@ export const CartListItem: FC<CartListItemProps> = ({
                                 <div>{productIdentityContent}</div>
                             )}
 
-                            <div className="text-sm text-text-less">
-                                {t('Code')}: {product.catalogNumber}
-                            </div>
+                            <SelectableCode
+                                className="block text-sm text-text-less"
+                                label={t('Code')}
+                                value={product.catalogNumber}
+                            />
                         </div>
 
                         {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (

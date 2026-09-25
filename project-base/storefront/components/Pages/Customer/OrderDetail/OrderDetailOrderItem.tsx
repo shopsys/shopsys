@@ -5,6 +5,7 @@ import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
@@ -203,9 +204,13 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                         </div>
                     </div>
 
-                    <span className="vl:w-auto w-full text-sm text-text-less">
-                        {t('Code')}: {orderItem.catnum}
-                    </span>
+                    {orderItem.catnum && (
+                        <SelectableCode
+                            className="vl:w-auto w-full text-sm text-text-less"
+                            label={t('Code')}
+                            value={orderItem.catnum}
+                        />
+                    )}
 
                     <span>
                         {orderItem.quantity} {orderItem.unit}

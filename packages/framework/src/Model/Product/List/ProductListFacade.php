@@ -44,6 +44,29 @@ class ProductListFacade
         return $productList;
     }
 
+    public function moveProduct(ProductList $productList, Product $product, ?Product $afterProduct): ProductList
+    {
+        $productListItem = $this->getProductListItem($productList, $product);
+        $position = 0;
+
+        if ($afterProduct !== null) {
+            $afterPosition = $this->getProductListItem($productList, $afterProduct)->getPosition();
+            $position = $afterPosition < $productListItem->getPosition() ? $afterPosition + 1 : $afterPosition;
+        }
+
+        $productListItem->setPosition($position);
+        $productList->setUpdatedAtToNow();
+        $this->entityManager->flush();
+
+        return $productList;
+    }
+
+    protected function getProductListItem(ProductList $productList, Product $product): ProductListItem
+    {
+        return $productList->findProductListItemByProduct($product)
+            ?? throw new ProductNotInListException(sprintf('Product with UUID %s does not exist in the list with UUID %s.', $product->getUuid(), $productList->getUuid()));
+    }
+
     /**
      * @return int[]
      */
@@ -84,11 +107,7 @@ class ProductListFacade
 
     public function removeProductFromList(ProductList $productList, Product $product): ?ProductList
     {
-        $productListItem = $productList->findProductListItemByProduct($product);
-
-        if ($productListItem === null) {
-            throw new ProductNotInListException(sprintf('Product with UUID %s does not exist in the list with UUID %s.', $product->getUuid(), $productList->getUuid()));
-        }
+        $productListItem = $this->getProductListItem($productList, $product);
         $productList->removeItem($productListItem);
         $this->entityManager->remove($productListItem);
         $this->entityManager->flush();
@@ -152,7 +171,7 @@ class ProductListFacade
         foreach (array_reverse($productListToMergeFrom->getItems()) as $productListItem) {
             try {
                 $this->addProductToList($productListToMergeTo, $productListItem->getProduct());
-            } catch (ProductAlreadyInListException $e) {
+            } catch (ProductAlreadyInListException) {
                 // Product is already in the list, so we can skip it
                 continue;
             }

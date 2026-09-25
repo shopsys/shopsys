@@ -1,0 +1,6 @@
+mutation MoveProductInListMutation($uuid: Uuid!, $type: ProductListTypeEnum!, $productUuid: Uuid!, $afterProductUuid: Uuid) {
+    MoveProductInList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $productUuid, afterProductUuid: $afterProductUuid}) {
+        uuid
+        products { id }
+    }
+}

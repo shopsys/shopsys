@@ -135,7 +135,6 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 )}
 
                 <header
-                    aria-hidden={isOriginalHeaderHidden || undefined}
                     className="bg-background-brand focus-visible:outline-hidden"
                     id="site-header"
                     inert={isOriginalHeaderHidden || undefined}

@@ -51,7 +51,7 @@ class ProductList
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem>
      */
     #[ORM\OneToMany(targetEntity: ProductListItem::class, mappedBy: 'productList', cascade: ['remove'])]
-    #[ORM\OrderBy(['createdAt' => SortDirection::Descending, 'id' => SortDirection::Descending])]
+    #[ORM\OrderBy(['position' => SortDirection::Ascending, 'id' => SortDirection::Descending])]
     protected $items;
 
     /**

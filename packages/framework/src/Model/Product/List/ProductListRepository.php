@@ -30,7 +30,7 @@ class ProductListRepository
             ->from(ProductListItem::class, 'pli')
             ->join('pli.product', 'p')
             ->where('pli.productList = :productList')
-            ->orderBy('pli.createdAt', SortDirection::Descending)
+            ->orderBy('pli.position', SortDirection::Ascending)
             ->addOrderBy('pli.id', SortDirection::Descending)
             ->setParameter('productList', $productList)
             ->getQuery()

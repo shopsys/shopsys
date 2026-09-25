@@ -9,6 +9,7 @@ type ProductListStoreValue = Partial<{
 }>;
 
 type UserState = {
+    comparisonSelection: { listUuid: string; productUuids: string[] } | null;
     cartUuid: string | null;
     productListUuids: ProductListStoreValue;
     userConsent: UserConsentFormType | null;
@@ -16,6 +17,7 @@ type UserState = {
 };
 
 export type UserSlice = UserState & {
+    updateComparisonSelection: (value: UserState['comparisonSelection']) => void;
     updateCartUuid: (value: string | null) => void;
     updateProductListUuids: (value: ProductListStoreValue) => void;
     updateUserConsent: (userConsent: UserConsentFormType) => void;
@@ -23,6 +25,7 @@ export type UserSlice = UserState & {
 };
 
 export const defaultUserState: UserState = {
+    comparisonSelection: null,
     cartUuid: null,
     productListUuids: {},
     userConsent: null,
@@ -32,6 +35,9 @@ export const defaultUserState: UserState = {
 export const createUserSlice: StateCreator<UserSlice> = (set) => ({
     ...defaultUserState,
 
+    updateComparisonSelection: (comparisonSelection) => {
+        set({ comparisonSelection });
+    },
     updateCartUuid: (cartUuid) => {
         set({ cartUuid });
     },

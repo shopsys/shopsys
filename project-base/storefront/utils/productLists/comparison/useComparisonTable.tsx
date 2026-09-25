@@ -1,100 +1,87 @@
-import { useState } from 'react';
-import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
-import { useComponentUpdate } from 'utils/useComponentUpdate';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const useComparisonTable = (
-    productsCompareCount: number,
-): {
-    isArrowLeftActive: boolean;
-    isArrowRightActive: boolean;
-    shouldShowArrows: boolean;
-    handleSlideLeft: () => void;
-    handleSlideRight: () => void;
-    calcMaxMarginLeft: () => void;
-    tableFirstColumnWidth: number | undefined;
-    tableMarginLeft: number;
-} => {
-    const [isArrowLeftActive, setArrowLeftActive] = useState(true);
-    const [isArrowRightActive, setArrowRightActive] = useState(true);
-    const [tableMarginLeft, setTableMarginLeft] = useState(0);
-    const [tableMaxMarginLeft, setTableMaxMarginLeft] = useState(0);
-    const [tableFirstColumnWidth, setTableFirstColumnWidth] = useState<number>();
-    const shouldShowArrows = tableMaxMarginLeft > 0;
-    const { width } = useGetWindowSize();
-    const getProductColumnWidth = () =>
-        document.getElementById('js-table-compare-product')?.getBoundingClientRect().width ?? 0;
+export const useComparisonTable = (productsCompareCount: number) => {
+    const scrollRef = useRef<HTMLElement>(null);
+    const [geometry, setGeometry] = useState({
+        left: 0,
+        max: 0,
+        firstColumn: 0,
+        productColumn: 0,
+        viewportLeft: 0,
+        viewportWidth: 0,
+    });
 
-    const handleSlideLeft = () => {
-        const marginLeft = tableMarginLeft;
-        let newMarginLeft = 0;
-        let productMarginLeft = 0;
-
-        for (let i = 0; i < productsCompareCount; i++) {
-            productMarginLeft += getProductColumnWidth();
-            if (productMarginLeft < marginLeft) {
-                newMarginLeft = productMarginLeft;
-            } else {
-                break;
-            }
+    const calcMaxMarginLeft = useCallback(() => {
+        const viewport = scrollRef.current;
+        if (!viewport) {
+            return;
         }
+        const cells = viewport.querySelector('#js-table-compare-head')?.children;
+        const next = {
+            left: viewport.scrollLeft,
+            viewportLeft: viewport.getBoundingClientRect().left + viewport.clientLeft,
+            viewportWidth: viewport.clientWidth,
+            max: Math.max(0, viewport.scrollWidth - viewport.clientWidth),
+            firstColumn: cells?.[0]?.getBoundingClientRect().width ?? 0,
+            productColumn: cells?.[1]?.getBoundingClientRect().width ?? 0,
+        };
+        setGeometry((previous) =>
+            Object.keys(next).every((key) => next[key as keyof typeof next] === previous[key as keyof typeof next])
+                ? previous
+                : next,
+        );
+    }, []);
 
-        setMargin(newMarginLeft);
-    };
-
-    const handleSlideRight = () => {
-        const marginLeft = tableMarginLeft;
-        let productMarginLeft = 0;
-
-        for (let i = 0; i < productsCompareCount; i++) {
-            productMarginLeft += getProductColumnWidth();
-            if (productMarginLeft > marginLeft) {
-                setMargin(productMarginLeft);
-                break;
-            }
+    useEffect(() => {
+        const viewport = scrollRef.current;
+        if (!viewport) {
+            return;
         }
-    };
-
-    const setMargin = (marginLeft: number) => {
-        if (marginLeft > 0) {
-            setArrowLeftActive(true);
-        } else {
-            setArrowLeftActive(false);
+        const observer = new ResizeObserver(calcMaxMarginLeft);
+        observer.observe(viewport);
+        const table = viewport.querySelector('table');
+        if (table) {
+            observer.observe(table);
         }
-
-        if (marginLeft > tableMaxMarginLeft) {
-            marginLeft = tableMaxMarginLeft;
-            setArrowRightActive(false);
-        } else {
-            setArrowRightActive(true);
-        }
-
-        setTableMarginLeft(marginLeft);
-    };
-
-    const calcMaxMarginLeft = () => {
-        const tableWrapperWidth = document.getElementById('js-table-compare-wrap')?.getBoundingClientRect().width ?? 0;
-        const columnsWidth = document.getElementById('js-table-compare')?.getBoundingClientRect().width ?? 0;
-        const firstColumnWidth = document
-            .getElementById('js-table-compare-head')
-            ?.firstElementChild?.getBoundingClientRect().width;
-
-        setTableMaxMarginLeft(Math.max(0, columnsWidth - tableWrapperWidth));
-        setTableFirstColumnWidth(firstColumnWidth);
-    };
-
-    useComponentUpdate(() => {
         calcMaxMarginLeft();
-        setMargin(tableMarginLeft);
-    }, [width, tableMaxMarginLeft]);
+        window.addEventListener('resize', calcMaxMarginLeft);
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('resize', calcMaxMarginLeft);
+        };
+    }, [productsCompareCount, calcMaxMarginLeft]);
+
+    const slide = (direction: number) => {
+        scrollRef.current?.scrollBy({
+            left: direction * geometry.productColumn,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        });
+    };
+
+    const revealProduct = (index: number) => {
+        const availableWidth = geometry.viewportWidth - geometry.firstColumn;
+        const start = index * geometry.productColumn;
+        const end = start + geometry.productColumn;
+        if (start < geometry.left) {
+            scrollRef.current?.scrollTo({ left: start });
+        } else if (end > geometry.left + availableWidth) {
+            scrollRef.current?.scrollTo({ left: end - availableWidth });
+        }
+    };
 
     return {
-        isArrowLeftActive,
-        isArrowRightActive,
-        shouldShowArrows,
-        handleSlideLeft,
-        handleSlideRight,
+        revealProduct,
+        scrollRef,
+        viewportLeft: geometry.viewportLeft,
+        viewportWidth: geometry.viewportWidth,
+        isArrowLeftActive: geometry.left > 1,
+        isArrowRightActive: geometry.left < geometry.max - 1,
+        shouldShowArrows: geometry.max > 1,
+        handleSlideLeft: () => slide(-1),
+        handleSlideRight: () => slide(1),
         calcMaxMarginLeft,
-        tableFirstColumnWidth,
-        tableMarginLeft,
+        tableFirstColumnWidth: geometry.firstColumn,
+        productColumnWidth: geometry.productColumn,
+        tableMarginLeft: geometry.left,
     };
 };

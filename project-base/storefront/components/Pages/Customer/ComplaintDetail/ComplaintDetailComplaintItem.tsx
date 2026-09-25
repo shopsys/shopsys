@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CustomerRecordRowInfo } from 'components/Pages/Customer/CustomerRecordElements';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
@@ -86,9 +87,13 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     <div className="wrap-break-word min-w-0 font-secondary font-semibold text-sm">{productLink}</div>
                 </div>
 
-                <span className="vl:w-auto w-full font-secondary font-semibold text-sm text-text-less">
-                    {t('Code')}: {complaintItem.catnum}
-                </span>
+                {complaintItem.catnum && (
+                    <SelectableCode
+                        className="vl:w-auto w-full font-secondary font-semibold text-sm text-text-less"
+                        label={t('Code')}
+                        value={complaintItem.catnum}
+                    />
+                )}
 
                 <span className="vl:text-left text-right font-secondary font-semibold">
                     {complaintItem.quantity}

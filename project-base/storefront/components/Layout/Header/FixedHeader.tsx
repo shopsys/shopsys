@@ -22,7 +22,6 @@ export const FixedHeader: FC<FixedHeaderProps> = ({ fixedHeaderRef, isVisible, n
 
     return (
         <div
-            aria-hidden={!isVisible || undefined}
             className={twJoin(
                 'fixed inset-x-0 top-0 z-1040 bg-background-brand shadow-lg',
                 RemoveScroll.classNames.fullWidth,
@@ -33,6 +32,7 @@ export const FixedHeader: FC<FixedHeaderProps> = ({ fixedHeaderRef, isVisible, n
             data-tid={isVisible ? TIDs.fixed_header : undefined}
             inert={!isVisible || undefined}
             ref={fixedHeaderRef}
+            tabIndex={-1}
         >
             <Webline>
                 <div className="group/header flex flex-wrap items-center justify-between gap-x-7 gap-y-3 pt-3">
