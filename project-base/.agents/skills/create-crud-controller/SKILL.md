@@ -45,12 +45,12 @@ Read the source first — the docblocks are complete and the code is short. Docs
 | Extending an existing CRUD controller | `vendor/shopsys/administration/src/Controller/AbstractCrudControllerExtension.php` | [Extending](https://docs.shopsys.com/en/latest/administration/crud-controller/getting-started/extending-existing-crud-controller/) |
 | Roles, `#[ForRole]`, `#[CanView]`… | `vendor/shopsys/framework/src/Component/Security/Attribute/` | [Admin rights](https://docs.shopsys.com/en/latest/administration/admin-rights/) |
 | Menu sections and positioning | `vendor/shopsys/framework/src/Model/AdminNavigation/SideMenuBuilder.php` (constants) | [Administration menu](https://docs.shopsys.com/en/latest/administration/administration-menu/#positioning-menu-items) |
-| Page templates you can override | `vendor/shopsys/administration/templates/crud/{list,detail,new,edit}.html.twig` | — |
+| Page templates you can override | `vendor/shopsys/administration/templates/crud/{list,detail,new,edit}.html.twig` | [`setTemplate()`](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/crud-controller/#settemplateactiontype-actiontype-string-template) and [`configureTemplateParameters()`](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/crud-controller/#template-parameters) sections of the configuration reference |
 
 Working examples shipped with the platform (`vendor/shopsys/administration/src/`):
 
 - `Controller/TransportGroupController.php` + `Model/Transport/TransportGroupCrudHandler.php` — the minimal full CRUD: FormType, one column, drag-and-drop ordering, `#[ForRole]`, menu positioning.
-- `Controller/BlogArticleAuthorController.php` — full CRUD plus a custom edit template with an extra grid (`getEditTemplate()` / `getEditViewData()`).
+- `Controller/BlogArticleAuthorController.php` — full CRUD plus a custom edit template with an extra grid (`setTemplate(ActionType::EDIT, …)` / `configureTemplateParameters()`).
 - `Controller/ProductReviewController.php` + `Model/ProductReview/ProductReviewEditHandler.php` — edit-only handler, `configureQuery()` with computed columns, templates per column, domain quick filter, `disable()` by feature flag.
 
 ## What you get and how it fits together
@@ -61,7 +61,7 @@ Working examples shipped with the platform (`vendor/shopsys/administration/src/`
                                               ── configureQuery(QueryBuilder) list DQL (root alias is `o`)
                                               ── configureForm(...)           create/edit form: useFormType() OR useBuilder()
                                               ── configureActions(...)        top buttons per page (ActionType::LIST/EDIT/…)
-                                              ── getEditTemplate()/getEditViewData()  custom edit page
+                                              ── configureTemplateParameters(...)  extra variables for a template replaced via $config->setTemplate()
 Handler (implements *HandlerInterface)        ── getById / createData / create / createDataFromEntity / edit / delete → delegates to the Facade
 Entity implements Presentable                 ── toHumanReadable() used in titles, breadcrumbs, flash messages
 Extension (#[CrudControllerExtension])        ── same configure*() methods + before/after/onError hooks, for controllers you don't own
@@ -81,6 +81,10 @@ Extension (#[CrudControllerExtension])        ── same configure*() methods +
   for actions that have a handler.
 - **Default row actions** (edit, delete) and the **New** top button appear automatically
   when the matching action is enabled — you don't add them.
+- **The actions themselves are `final`** (`listAction()`, `detailAction()`, `createAction()`,
+  `editAction()`, `deleteAction()`). Everything is customised through the `configure*()`
+  hooks, `setTemplate()` and the extension hooks; a flow they cannot express gets its own
+  `#[Route]` action after `disableAction()` of the built-in one.
 
 ## Workflow
 
@@ -208,8 +212,15 @@ extensions can add fields to. `setFormOption()` must be called before `useBuilde
   `#[CanView]` / `#[CanEdit]` / `#[CanDelete]` (no role needed — they fall back to the
   controller's role) and `#[CsrfProtection]` for state-changing GETs (the action link then
   carries the token automatically).
-- Edit page with extra content: override `getEditTemplate()` (extend
-  `@ShopsysAdministration/crud/edit.html.twig`) and `getEditViewData()`.
+- Page with extra content (any of list / detail / create / edit): `$config->setTemplate(ActionType::<PAGE>, '…')`
+  in `configure()` — the template extends the default one (`@ShopsysAdministration/crud/edit.html.twig`)
+  and only overrides the block where the extra content goes (`before_form`, `form`, `after_form`, `entity_log`
+  on create/edit, `domain_control`, `before_grid`, `grid`, `after_grid` on list — no `parent()` needed). The edit
+  page gets the record as `entity` and shows the change history of `#[Loggable]` entities on its own. Hand it extra variables from `configureTemplateParameters(CrudTemplateParameters $templateParameters)`:
+  the context of the rendered action is on `$templateParameters` — check `$templateParameters->isAction(ActionType::EDIT)`
+  (or `hasEntity()` for every page showing a record), get the entity with `$templateParameters->getEntity(<Entity>::class)`
+  (fails fast when missing or of another class, PHPStan knows the type) and call `$templateParameters->set('name', $value)`.
+  See `BlogArticleAuthorController`.
 
 ### 6. Extending a CRUD controller you don't own
 
@@ -231,6 +242,10 @@ final class <Entity>ControllerExtension extends AbstractCrudControllerExtension 
 - Hooks: `CrudCreate|Edit|DeleteHookExtensionInterface` — run inside the same DB transaction;
   an exception in a hook rolls everything back. Add your own flash message to replace the
   default one; call `addErrorFlash()` in `on*Error` for a custom error text.
+- Templates: `setTemplate()` in `configure()` and `configureTemplateParameters()` work the same
+  as in the controller; the extension runs after it, so it can read the controller's variables
+  with `has()` / `get()`. `setTemplate()` replaces the template the controller configured —
+  extend that one (not `@ShopsysAdministration/crud/…`), or the controller's extra content disappears.
 - `#[ForRole]` on the extension overrides the extended controller's role.
 - Don't extend the controller class itself and don't re-register it — extensions are the
   supported mechanism, and the admin CRUD controllers in `vendor/` are not `final` only

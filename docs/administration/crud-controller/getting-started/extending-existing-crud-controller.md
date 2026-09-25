@@ -78,6 +78,42 @@ public function configureForm(CrudFormConfigurator $formConfigurator, ?object $e
 
     Calling `useBuilder()` in an extension when the controller used `useFormType()` will throw `CrudFormAlreadyConfiguredException`. If you need to extend a form defined via FormType, use [Symfony's form extension mechanism](https://symfony.com/doc/current/form/create_form_type_extension.html) instead.
 
+### Templates and additional parameters
+
+Extensions can replace the template of an action via `setTemplate()` in `configure()` and pass additional variables to it via `configureTemplateParameters()`.
+Extensions are called after the original controller, so they can read its variables with `has()` and `get()`.
+
+!!! warning
+
+    `setTemplate()` in an extension replaces the template the controller configured, not only the default one.
+    Extend the controller's template (e.g. `@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig`) rather than `@ShopsysAdministration/crud/…`, otherwise the content the controller adds to the page disappears.
+
+```php
+// OrderControllerExtension.php
+
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
+use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
+use Shopsys\FrameworkBundle\Model\Order\Order;
+
+public function configure(CrudConfig $config): void
+{
+    $config->setTemplate(ActionType::EDIT, 'Admin/Order/edit.html.twig');
+}
+
+public function configureTemplateParameters(CrudTemplateParameters $templateParameters): void
+{
+    if ($templateParameters->isAction(ActionType::EDIT)) {
+        $templateParameters->set(
+            'orderItemsGridView',
+            $this->createOrderItemsGrid($templateParameters->getEntity(Order::class))->createView(),
+        );
+    }
+}
+```
+
+See the CRUD Controller reference for [`setTemplate()`](../reference/crud-controller.md#settemplateactiontype-actiontype-string-template) and [template parameters](../reference/crud-controller.md#template-parameters) for details.
+
 ### Using Hooks
 
 Extensions can implement hook interfaces to add custom logic before, after, or on error during CRUD operations.
