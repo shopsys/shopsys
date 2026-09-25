@@ -4,6 +4,13 @@
     {{ 'No product found.'|trans }}
 {% endblock %}
 
+{# the listed price is the manual input price of the first domain, so it must be displayed with the currency of the first domain (not the default admin currency) #}
+{% block grid_value_cell_id_price %}
+    {% if value is not null %}
+        {{ value|priceWithCurrencyByDomainId(getFirstDomain().id) }}
+    {% endif %}
+{% endblock %}
+
 {% block grid_value_cell_id_name %}
     {% if row.productType == TYPE_INQUIRY %}
         <span class="cursor-help badge badge-pill bg-indigo-lt"
