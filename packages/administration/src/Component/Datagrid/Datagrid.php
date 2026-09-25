@@ -11,14 +11,29 @@ use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorApplicability;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use SortDirection;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -33,6 +48,28 @@ final class Datagrid
     private ArrayCollection $fields;
 
     private DatagridRowActions $actions;
+
+    /**
+     * @var \Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface[]
+     */
+    private array $conditions = [];
+
+    private FilterCollection $filters;
+
+    private ?FormInterface $filterForm = null;
+
+    /**
+     * The filter form is derived from the declared filters, so it is built once they are configured.
+     */
+    private bool $filterFormResolved = false;
+
+    private ?QuickSearch $quickSearch = null;
+
+    /**
+     * The quick search is derived from the fields, so it is built once they are configured and rebuilt
+     * whenever a field changes.
+     */
+    private bool $quickSearchResolved = false;
 
     private string $identificationName = 'id';
 
@@ -62,13 +99,41 @@ final class Datagrid
     public function __construct(
         private readonly AdapterInterface $adapter,
         private readonly GridFactory $gridFactory,
+        private readonly ExpressionOperatorApplicability $expressionOperatorApplicability,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
         $this->actions = new DatagridRowActions();
+        $this->filters = new FilterCollection();
         $this->options = $this->resolveOptions($options);
 
         $this->configureDefaultCrudActions();
+    }
+
+    public function getDomainControlScope(): ?DomainControlScope
+    {
+        return $this->options['domainControlScope'];
+    }
+
+    public function getRequestState(): DatagridRequestState
+    {
+        return $this->options['requestState'] ??= new DatagridRequestState();
+    }
+
+    /**
+     * The quick search over the fields declared `searchable`, null when there is none or when the datagrid
+     * is built outside a request. Ask once the fields are configured.
+     *
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     */
+    public function getQuickSearch(): ?QuickSearch
+    {
+        if ($this->quickSearchResolved === false) {
+            $this->quickSearch = $this->createQuickSearch();
+            $this->quickSearchResolved = true;
+        }
+
+        return $this->quickSearch;
     }
 
     /**
@@ -82,6 +147,9 @@ final class Datagrid
             'name' => 'datagrid',
             'crudDefinition' => null,
             'pagination' => true,
+            'domainControlScope' => null,
+            'requestState' => null,
+            'filterEnvironment' => null,
         ]);
 
         $resolver->setRequired('roleConstant');
@@ -90,6 +158,9 @@ final class Datagrid
         $resolver->setAllowedTypes('crudDefinition', [Definition::class, 'null']);
         $resolver->setAllowedTypes('pagination', 'bool');
         $resolver->setAllowedTypes('roleConstant', 'string');
+        $resolver->setAllowedTypes('domainControlScope', [DomainControlScope::class, 'null']);
+        $resolver->setAllowedTypes('requestState', [DatagridRequestState::class, 'null']);
+        $resolver->setAllowedTypes('filterEnvironment', [FilterEnvironment::class, 'null']);
 
         return $resolver->resolve($options);
     }
@@ -217,6 +288,7 @@ final class Datagrid
         }
 
         $this->fields->set($name, new FieldDescriptor($name, $options));
+        $this->quickSearchResolved = false;
 
         return $this;
     }
@@ -243,6 +315,7 @@ final class Datagrid
         }
 
         $this->fields->get($name)->update($options);
+        $this->quickSearchResolved = false;
 
         return $this;
     }
@@ -264,8 +337,59 @@ final class Datagrid
         }
 
         $this->fields->remove($name);
+        $this->quickSearchResolved = false;
 
         return $this;
+    }
+
+    /**
+     * Narrows the listed records by a fixed condition the administrator neither sees nor switches off —
+     * "only records that are not deleted", "only orders of the customer this datagrid belongs to".
+     *
+     * The condition is data of the shared vocabulary, so it works over any adapter. What only the query
+     * can say (a default join, an aggregate) still goes to `configureQuery()` of the CRUD controller or
+     * to a `DqlCondition`.
+     */
+    public function addCondition(ConditionInterface $condition): self
+    {
+        $this->conditions[] = $condition;
+
+        return $this;
+    }
+
+    /**
+     * The filters the administrator composes rules from — `$datagrid->filters()->add(TextFilter::new('name'))`.
+     * Declare them while configuring the datagrid; they are adapted to the adapter when the form is first asked for.
+     */
+    public function filters(): FilterCollection
+    {
+        return $this->filters;
+    }
+
+    /**
+     * The submitted filter form, null when no filter is declared or the datagrid is built outside a request.
+     * Ask once the filters are declared.
+     *
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     */
+    public function getFilterForm(): ?FormInterface
+    {
+        if ($this->filterFormResolved === false) {
+            $this->filterForm = $this->createFilterForm();
+            $this->filterFormResolved = true;
+        }
+
+        return $this->filterForm;
+    }
+
+    /**
+     * Whether the administrator composed any filter rule — the filter then outranks the quick search.
+     */
+    public function hasFilterRules(): bool
+    {
+        $filterForm = $this->getFilterForm();
+
+        return $filterForm?->isSubmitted() === true && $filterForm->getData()->hasRules();
     }
 
     /**
@@ -278,7 +402,9 @@ final class Datagrid
 
     public function createView(): GridView
     {
-        $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
+        $this->addDomainFieldIfWorthDisplaying();
+
+        $datasource = $this->adapter->getDatasource($this->createDatasourceRequest());
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
         if ($this->fields->isEmpty() || $this->fields->forAll(fn ($key, FieldDescriptor $field) => $field->isVisible() === false)) {
@@ -323,6 +449,150 @@ final class Datagrid
         }
 
         return $grid->createView();
+    }
+
+    /**
+     * Everything one listing asks of the adapter — the fields to select and the condition combining all that
+     * narrows the datagrid.
+     */
+    private function createDatasourceRequest(): DatasourceRequest
+    {
+        return new DatasourceRequest(
+            $this->identificationName,
+            $this->fields->getValues(),
+            $this->composeCondition(
+                $this->getDomainControlScope()?->createCondition(),
+                $this->createSearchCondition(),
+                ...$this->conditions,
+            ),
+        );
+    }
+
+    /**
+     * What the administrator searched for, null when nothing. The filter and the quick search are two ways
+     * of asking the same question, so only one of them applies — the filter whenever any rule was composed,
+     * the quick search otherwise. An invalid filter (a malformed date, a rule of a filter that no longer
+     * exists) narrows nothing and shows its errors instead of quietly listing more than the administrator asked for.
+     */
+    private function createSearchCondition(): ?ConditionInterface
+    {
+        if ($this->hasFilterRules()) {
+            $filterForm = $this->getFilterForm();
+
+            return $filterForm?->isValid() === true ? $this->filters->createCondition($filterForm->getData()) : null;
+        }
+
+        return $this->getQuickSearch()?->createCondition();
+    }
+
+    /**
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     */
+    private function createFilterForm(): ?FormInterface
+    {
+        if ($this->filters->isEmpty()) {
+            return null;
+        }
+
+        $filterEnvironment = $this->options['filterEnvironment']
+            ?? throw new InvalidArgumentException('The datagrid declares filters, so it needs the "filterEnvironment" option to adapt them to its adapter.');
+        $this->filters->resolveFor($filterEnvironment);
+
+        return $this->getRequestState()->createFilterForm($this->filters);
+    }
+
+    /**
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     */
+    private function createQuickSearch(): ?QuickSearch
+    {
+        $labelsByPath = [];
+
+        foreach ($this->fields as $field) {
+            if ($field->isSearchable() === false) {
+                continue;
+            }
+
+            $path = $field->getSelectProperty();
+
+            if ($path === null) {
+                throw new FieldNotSearchableException($field->getName(), 'a virtual field without a property has no path to search in.');
+            }
+
+            $this->assertSearchable($field, $path);
+            $labelsByPath[$path] = $field->getLabel();
+        }
+
+        $quickSearchForm = $this->getRequestState()->quickSearchForm;
+
+        if ($labelsByPath === [] || $quickSearchForm === null) {
+            return null;
+        }
+
+        // a composed filter outranks the quick search, so its term is not shown either
+        $term = $this->hasFilterRules() ? null : $this->getRequestState()->getSearchTerm();
+
+        return new QuickSearch($quickSearchForm, $term, $labelsByPath);
+    }
+
+    /**
+     * A search over a date or a number fails in the database, so the declaration is refused right away.
+     * An adapter without a schema cannot be asked; the check then happens when the expression is built.
+     */
+    private function assertSearchable(FieldDescriptor $field, string $path): void
+    {
+        if ($this->adapter->getExpressionCapabilities()->supportsOperator(ExpressionOperatorEnum::CONTAINS) === false) {
+            throw new FieldNotSearchableException($field->getName(), sprintf('the adapter "%s" cannot search text.', $this->adapter::class));
+        }
+
+        if ($this->adapter instanceof PathDescribingAdapterInterface === false) {
+            return;
+        }
+
+        try {
+            $this->expressionOperatorApplicability->assertApplicable(ExpressionOperatorEnum::CONTAINS, $this->adapter->describePath($path));
+        } catch (PathNotFoundException | OperatorNotApplicableToPathException $exception) {
+            throw new FieldNotSearchableException($field->getName(), $exception->getMessage(), $exception);
+        }
+    }
+
+    /**
+     * Displays the domain of every record when the domain control works with several domains.
+     *
+     * Displaying the domain and limiting the records to the domains of the control are independent —
+     * the limit is a part of every request the datagrid sends to its adapter, so hiding or removing the
+     * field never widens the listed records. Adding the field manually takes precedence.
+     */
+    private function addDomainFieldIfWorthDisplaying(): void
+    {
+        $domainControlScope = $this->getDomainControlScope();
+
+        if ($domainControlScope === null || $domainControlScope->isDomainWorthDisplaying() === false) {
+            return;
+        }
+
+        if ($this->fields->containsKey($domainControlScope->domainIdPath)) {
+            return;
+        }
+
+        $this->add($domainControlScope->domainIdPath, [
+            'label' => t('Domain'),
+            'template' => '@ShopsysAdministration/datagrid/cell/domain_icon.html.twig',
+        ]);
+    }
+
+    /**
+     * Everything narrowing the datagrid, combined by AND — null when nothing narrows it.
+     */
+    private function composeCondition(?ConditionInterface ...$conditions): ?ConditionInterface
+    {
+        $conditions = array_values(array_filter($conditions));
+
+        return match (count($conditions)) {
+            0 => null,
+            1 => $conditions[0],
+            default => Condition::andX(...$conditions),
+        };
     }
 
     private function configureDefaultCrudActions(): void

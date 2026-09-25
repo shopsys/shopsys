@@ -76,6 +76,9 @@ msgstr "Pridať ďalšiu cenu s hmotnostným limitom"
 msgid "Add country"
 msgstr "Pridať krajinu"
 
+msgid "Add group of rules"
+msgstr "Pridať skupinu pravidiel"
+
 msgid "Add item"
 msgstr "Pridať položku"
 
@@ -99,6 +102,9 @@ msgstr "Pridať produkt"
 
 msgid "Add requirement"
 msgstr "Pridať požiadavku"
+
+msgid "Add rule"
+msgstr "Pridať pravidlo"
 
 msgid "Add some alternate language combinations"
 msgstr "Pridať niektoré alternatívne kombinácie jazykov"
@@ -201,6 +207,9 @@ msgstr "Použiteľné premenné pre obsah"
 
 msgid "Applicable variables for Subject"
 msgstr "Použiteľné premenné pre predmet"
+
+msgid "Apply filter"
+msgstr "Použiť filter"
 
 msgid "Approve review"
 msgstr "Schváliť recenziu"
@@ -1074,6 +1083,9 @@ msgstr "Súbory"
 
 msgid "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 msgstr "Vyplňte údaje o odstúpení a uložte tento formulár, čím zmeníte stav objednávky na Odstúpené od zmluvy. Zatvorením okna zostane zachovaný aktuálny stav."
+
+msgid "Filter"
+msgstr "Filter"
 
 msgid "First name"
 msgstr "Krstné meno"
@@ -1975,6 +1987,9 @@ msgstr "Zamietnuto"
 msgid "Remove"
 msgstr "Odstrániť"
 
+msgid "Remove group"
+msgstr "Odstrániť skupinu"
+
 msgid "Remove rule"
 msgstr "Odstrániť pravidlo"
 
@@ -2148,6 +2163,9 @@ msgstr "Hľadať v prenosoch"
 
 msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
 msgstr "Hľadať v nahraných súboroch podľa názvu súboru, prípony alebo preloženého názvu. Je možné použiť zástupné znaky * a ?."
+
+msgid "Search in: %fields%"
+msgstr "Hľadať v: %fields%"
 
 msgid "Search navigation"
 msgstr "Vyhľadať v navigácii"
@@ -2725,6 +2743,18 @@ msgstr "administrátorov"
 msgid "advertisings"
 msgstr "reklám"
 
+msgid "all of the groups match"
+msgstr "všetky skupiny platia"
+
+msgid "all of the rules match"
+msgstr "všetky pravidlá platia"
+
+msgid "any of the groups matches"
+msgstr "niektorá zo skupín platí"
+
+msgid "any of the rules matches"
+msgstr "niektoré z pravidiel platí"
+
 msgid "articles"
 msgstr "článkov"
 
@@ -2742,6 +2772,9 @@ msgstr "stavy reklamácií"
 
 msgid "complaints"
 msgstr "reklamácie"
+
+msgid "contains"
+msgstr "obsahuje"
 
 msgid "countries"
 msgstr "štáty"
@@ -2764,6 +2797,9 @@ msgstr "zľava"
 msgid "empty"
 msgstr "prázdne"
 
+msgid "ends with"
+msgstr "končí na"
+
 msgid "files"
 msgstr "súbory"
 
@@ -2782,8 +2818,53 @@ msgstr "g"
 msgid "gift plans"
 msgstr "darčekové plány"
 
+msgid "has none"
+msgstr "nemá žiadne"
+
+msgid "has some"
+msgstr "má nejaké"
+
 msgid "inquiries"
 msgstr "dopyty"
+
+msgid "is"
+msgstr "je"
+
+msgid "is after"
+msgstr "je po"
+
+msgid "is before"
+msgstr "je pred"
+
+msgid "is between"
+msgstr "je medzi"
+
+msgid "is filled"
+msgstr "je vyplnené"
+
+msgid "is greater or equal to"
+msgstr "je väčšie alebo rovné"
+
+msgid "is greater than"
+msgstr "je väčšie ako"
+
+msgid "is less or equal to"
+msgstr "je menšie alebo rovné"
+
+msgid "is less than"
+msgstr "je menšie ako"
+
+msgid "is none of"
+msgstr "nie je žiadne z"
+
+msgid "is not"
+msgstr "nie je"
+
+msgid "is not filled"
+msgstr "nie je vyplnené"
+
+msgid "is one of"
+msgstr "je jedno z"
 
 msgid "or"
 msgstr "alebo"
@@ -2818,8 +2899,14 @@ msgstr "záznamy"
 msgid "sales representatives"
 msgstr "obchodní zástupcovia"
 
+msgid "starts with"
+msgstr "začína na"
+
 msgid "subscribers"
 msgstr "odberateľia"
+
+msgid "to"
+msgstr "do"
 
 msgid "today"
 msgstr "dnes"

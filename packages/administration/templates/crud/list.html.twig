@@ -11,11 +11,57 @@
 {% endblock %}
 
 {% block main_content %}
-    {% block domain_control %}
-        {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
-            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
-        {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}
-            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+    {% block datagrid_controls %}
+        {% if quickSearch is not null or filterForm is not null %}
+            {# a composed filter outranks the quick search, so its tab is the one open; render() hands the form over as its view #}
+            {% set filterActive = filterForm is not null and filterForm.vars.submitted and filterForm.vars.data.hasRules() %}
+            <div class="row row-deck row-cards mb-3">
+                <div class="col-12{{ domainControlScope is not null ? ' col-xl-8' }}">
+                    <div class="card">
+                        {% if quickSearch is not null and filterForm is not null %}
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                                    <li class="nav-item">
+                                        <a href="#datagrid-quick-search" class="nav-link{{ not filterActive ? ' active' }}" data-bs-toggle="tab">
+                                            {{ 'Quick search'|trans }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#datagrid-filter" class="nav-link{{ filterActive ? ' active' }}" data-bs-toggle="tab">
+                                            {{ 'Filter'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="tab-content">
+                                {% if quickSearch is not null %}
+                                    <div class="tab-pane{{ not filterActive ? ' active show' }}" id="datagrid-quick-search">
+                                        {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: grid, embedded: true }) }}
+                                    </div>
+                                {% endif %}
+                                {% if filterForm is not null %}
+                                    <div class="tab-pane{{ filterActive or quickSearch is null ? ' active show' }}" id="datagrid-filter">
+                                        {{ component('Admin:Grid:Filters', { filterForm: filterForm, gridView: grid, embedded: true }) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if domainControlScope is not null %}
+                    <div class="col-12 col-xl-4">
+                        <div class="card">
+                            <div class="card-body d-grid align-items-center row-gap-2 column-gap-3" style="grid-template-columns: auto minmax(0, 1fr)">
+                                {{ component('Admin:Grid:DomainControl', { scope: domainControlScope, select: true }) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% elseif domainControlScope is not null %}
+            {{ component('Admin:Grid:DomainControl', { scope: domainControlScope }) }}
         {% endif %}
     {% endblock %}
 
