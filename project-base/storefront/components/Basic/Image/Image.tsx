@@ -43,7 +43,8 @@ export const Image: FC<ImageProps> = ({ src, hash, tid, unoptimized, ...props })
     const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl;
 
     const finalSrc = getSrcFromImageUrl(finalImageUrl);
-    const shouldSkipOptimization = unoptimized || shouldLoadFallbackImage || finalSrc.split('?', 1)[0].endsWith('.svg');
+    const shouldSkipOptimization =
+        unoptimized || shouldLoadFallbackImage || /\.(?:gif|svg)$/i.test(finalSrc.split('?', 1)[0]);
 
     useEffect(() => {
         setError(null);
