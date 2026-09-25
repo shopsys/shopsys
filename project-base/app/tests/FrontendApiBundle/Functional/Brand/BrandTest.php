@@ -58,7 +58,7 @@ class BrandTest extends GraphQlTestCase
                 'edges' => [
                     [
                         'node' => [
-                            'name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                            'name' => t('Canon EH-22L camera case', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                         ],
                     ],
                     [
