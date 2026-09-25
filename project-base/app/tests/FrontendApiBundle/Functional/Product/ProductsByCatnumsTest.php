@@ -48,7 +48,7 @@ class ProductsByCatnumsTest extends ProductsGraphQlTestCase
                 'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'catalogNumber' => '9177759',
             ], [
-                'name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Canon EH-22L camera case', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'catalogNumber' => '532564',
             ], [
                 'name' => t('Television Philips [M]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
