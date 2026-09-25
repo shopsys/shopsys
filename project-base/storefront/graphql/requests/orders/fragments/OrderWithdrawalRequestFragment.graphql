@@ -6,4 +6,5 @@ fragment OrderWithdrawalRequestFragment on OrderWithdrawalRequest {
     telephone
     note
     requestedAt
+    confirmed
 }
