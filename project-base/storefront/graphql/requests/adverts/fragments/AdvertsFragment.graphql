@@ -1,5 +1,6 @@
 fragment AdvertsFragment on Advert {
     __typename
+    id
     uuid
     name
     positionName

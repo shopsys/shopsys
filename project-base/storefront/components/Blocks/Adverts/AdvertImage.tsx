@@ -2,6 +2,8 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { TypeAdvertsFragment_AdvertImage } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
 import { TypeImage } from 'graphql/types';
+import { onGtmPromotionClickEventHandler } from 'gtm/handlers/onGtmPromotionClickEventHandler';
+import { GtmPromotionType } from 'gtm/types/events';
 import { getImageProps, type ImageLoader } from 'next/image';
 import { twJoin } from 'tailwind-merge';
 
@@ -14,6 +16,7 @@ type ImageComponentProps = {
 
 type AdvertImageProps = {
     advert: TypeAdvertsFragment_AdvertImage;
+    promotion?: GtmPromotionType;
 };
 
 const advertImageLoader: ImageLoader = ({ src, width }) => `${src}?width=${width || '0'}`;
@@ -75,6 +78,7 @@ const ImageComponent = ({ mainImage, mainImageMobile, altBackup, positionName }:
 
 export const AdvertImage: FC<AdvertImageProps> = ({
     advert: { mainImage, mainImageMobile, name, link, positionName },
+    promotion,
 }) => {
     if (!link) {
         return (
@@ -92,6 +96,7 @@ export const AdvertImage: FC<AdvertImageProps> = ({
             className="group block focus-visible:outline-hidden"
             data-focus-color="preserve"
             href={link}
+            onClick={() => promotion && onGtmPromotionClickEventHandler(promotion, link)}
             target="_blank"
         >
             <ImageComponent

@@ -16,12 +16,14 @@ export type TypeFriendlyUrlRouteEnum =
   | 'FRONT_PRODUCT_LIST'
   | 'FRONT_STORES_DETAIL';
 
-export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, description: string | null, rgbBackgroundColor: string, opacity: number, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } };
+export type TypeSliderItemFragment = { __typename: 'SliderItem', id: number, uuid: string, gtmCreative: string | null, name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, description: string | null, rgbBackgroundColor: string, opacity: number, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } };
 
 export const SliderItemFragment = gql`
     fragment SliderItemFragment on SliderItem {
   __typename
+  id
   uuid
+  gtmCreative
   name
   link
   routeName

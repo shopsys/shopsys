@@ -68,6 +68,8 @@ type AddToCartResult {
 interface Advert {
   "Restricted categories of the advert (the advert is shown in these categories only)"
   categories: [Category!]!
+  "ID of advert"
+  id: Int!
   "Name of advert"
   name: String!
   "Position of advert"
@@ -83,6 +85,8 @@ type AdvertCode implements Advert {
   categories: [Category!]!
   "Advert code"
   code: String!
+  "ID of advert"
+  id: Int!
   "Name of advert"
   name: String!
   "Position of advert"
@@ -96,6 +100,8 @@ type AdvertCode implements Advert {
 type AdvertImage implements Advert {
   "Restricted categories of the advert (the advert is shown in these categories only)"
   categories: [Category!]!
+  "ID of advert"
+  id: Int!
   "Advert images"
   images(type: String = null): [Image!]!
   "Advert link"
@@ -3313,6 +3319,8 @@ type SliderItem {
   gtmCreative: String
   "GTM ID"
   gtmId: String!
+  "ID"
+  id: Int!
   "Slider item images"
   images(type: String = null): [Image!]!
   "Target link"

@@ -1,5 +1,6 @@
 fragment ListedCategoryFragment on Category {
     __typename
+    id
     uuid
     name
     slug

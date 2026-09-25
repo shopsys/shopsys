@@ -3,6 +3,9 @@ AdvertDecorator:
     decorator: true
     config:
         fields:
+            id:
+                type: "Int!"
+                description: "ID of advert"
             uuid:
                 type: "Uuid!"
                 description: "UUID"
