@@ -1,6 +1,7 @@
 {#
 @var title: string
 @var form_input: FormTypeInterface
+@var form_extra_input: FormTypeInterface (optional, rendered before form_input)
 @var form_submit: FormTypeInterface
 @var info_message: string
 @var placeholder: string
@@ -15,6 +16,9 @@
 {% endif %}
 
         <div class="input-group input-group-flat">
+            {% if form_extra_input|default(false) %}
+                {{ form_widget(form_extra_input) }}
+            {% endif %}
             {{ form_widget(form_input, { attr: { placeholder: placeholder|default(null) } }) }}
             {% if info_message|default(false) %}
                 <span class="input-group-text">

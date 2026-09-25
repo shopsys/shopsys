@@ -15,8 +15,10 @@
     {{ form_start(form) }}
     {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
         title: 'Search in transfers'|trans,
-        form_input: form.transfer,
+        form_extra_input: form.transfer,
+        form_input: form.searchText,
         form_submit: form.submit,
+        placeholder: 'Search in transfer issue messages...'|trans,
     } %}
     {{ form_end(form) }}
 
