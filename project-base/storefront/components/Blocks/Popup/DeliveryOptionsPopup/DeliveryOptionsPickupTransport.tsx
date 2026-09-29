@@ -8,7 +8,6 @@ import {
 import { useMemo } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
-import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { DeliveryOptionRow } from './DeliveryOptionRow';
 import { DeliveryOptionsProduct } from './deliveryOptionsPopupTypes';
 import { getProductDeliveryStoresConnectionFromData } from './deliveryOptionsPopupUtils';
@@ -46,7 +45,7 @@ export const DeliveryOptionsPickupTransport: FC<DeliveryOptionsPickupTransportPr
     });
 
     const mappedStores = useMemo(
-        () => (stores === null ? [] : (mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || []) ?? [])),
+        () => (stores === null ? [] : (mapConnectionEdges(stores.edges || []) ?? [])),
         [stores],
     );
 

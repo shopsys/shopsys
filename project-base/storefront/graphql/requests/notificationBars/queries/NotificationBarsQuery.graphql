@@ -1,5 +1,14 @@
 query NotificationBars @redisCache(ttl: 300) {
     notificationBars {
-        ...NotificationBarsFragment
+        __typename
+        uuid
+        text
+        plainText
+        rgbColor
+        validityFrom
+        validityTo
+        mainImage {
+            ...ImageFragment
+        }
     }
 }

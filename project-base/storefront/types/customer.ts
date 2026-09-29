@@ -1,4 +1,6 @@
-import { TypeCountry, TypeCustomerUserRoleGroup, TypeLoginInfo, TypeSalesRepresentative } from 'graphql/types';
+import { TypeLoginInfoFragment } from 'graphql/requests/customer/fragments/LoginInfoFragment.generated';
+import { TypeSalesRepresentativeFragment } from 'graphql/requests/customer/fragments/SalesRepresentativeFragment.generated';
+import { TypeCountry, TypeCustomerUserRoleGroup } from 'graphql/types';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
@@ -62,8 +64,8 @@ export type CurrentCustomerType = {
     deliveryAddresses: DeliveryAddressType[];
     pricingGroup: string;
     hasPasswordSet: boolean;
-    loginInfo: TypeLoginInfo;
+    loginInfo: TypeLoginInfoFragment;
     roles: string[];
     roleGroup: TypeCustomerUserRoleGroup;
-    salesRepresentative?: TypeSalesRepresentative | null;
+    salesRepresentative?: TypeSalesRepresentativeFragment | null;
 };

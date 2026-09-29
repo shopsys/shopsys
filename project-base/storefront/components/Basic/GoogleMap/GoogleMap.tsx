@@ -1,7 +1,6 @@
 import { getPublicConfigProperty } from 'envConfig';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';
-import { TypeMapStoreFragment } from 'graphql/requests/stores/fragments/MapStoreFragment.generated';
 import { useMapStoresQuery } from 'graphql/requests/stores/queries/MapStoresQuery.generated';
 import { TypeCoordinates } from 'graphql/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -88,7 +87,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
 
     const [{ data: mapStoresData }] = useMapStoresQuery({ pause: markers !== undefined });
     const effectiveMarkers = useMemo(
-        () => markers ?? mapConnectionEdges<TypeMapStoreFragment>(mapStoresData?.stores.edges),
+        () => markers ?? mapConnectionEdges(mapStoresData?.stores.edges),
         [mapStoresData?.stores.edges, markers],
     );
     const validMarkers = useMemo(
