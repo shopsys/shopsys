@@ -1,15 +1,12 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum, TypeProductReviewOrderingModeEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
-
-export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
 
 type ProductMetadataProps = {
     product: TypeProductDetailFragment | TypeMainVariantDetailFragment;
@@ -22,33 +19,22 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
 
     const reviewsSummary = product.reviewsSummary;
     const hasReviews = !!reviewsSummary && reviewsSummary.totalCount > 0;
-    const [{ data: productReviewsData }] = useProductReviewsQuery({
-        variables: {
-            productUuid: product.uuid,
-            orderingMode: TypeProductReviewOrderingModeEnum.Newest,
-            first: STRUCTURED_DATA_REVIEWS_COUNT,
-            after: null,
-        },
-        pause: !hasReviews,
-    });
 
-    const reviews = (mapConnectionEdges(productReviewsData?.product?.reviews?.edges ?? undefined) ?? []).map(
-        (productReview) => ({
-            '@type': 'Review',
-            author: {
-                '@type': 'Person',
-                name: productReview.reviewerName ?? t('Anonymous customer'),
-            },
-            datePublished: productReview.createdAt.slice(0, 10),
-            ...(productReview.text !== null && { reviewBody: productReview.text }),
-            reviewRating: {
-                '@type': 'Rating',
-                ratingValue: productReview.rating,
-                bestRating: 5,
-                worstRating: 1,
-            },
-        }),
-    );
+    const reviews = (mapConnectionEdges(product.reviews?.edges) ?? []).map((productReview) => ({
+        '@type': 'Review',
+        author: {
+            '@type': 'Person',
+            name: productReview.reviewerName ?? t('Anonymous customer'),
+        },
+        datePublished: productReview.createdAt.slice(0, 10),
+        ...(productReview.text !== null && { reviewBody: productReview.text }),
+        reviewRating: {
+            '@type': 'Rating',
+            ratingValue: productReview.rating,
+            bestRating: 5,
+            worstRating: 1,
+        },
+    }));
 
     return (
         <Head>

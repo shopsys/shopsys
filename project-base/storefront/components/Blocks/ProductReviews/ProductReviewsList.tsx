@@ -1,10 +1,9 @@
 import { ProductReviewItem } from 'components/Blocks/ProductReviews/ProductReviewItem';
-import { TypeCustomerUserProductReviewFragment } from 'graphql/requests/productReviews/fragments/CustomerUserProductReviewFragment.generated';
 import { TypeProductReviewFragment } from 'graphql/requests/productReviews/fragments/ProductReviewFragment.generated';
 
 type ProductReviewsListProps = {
     isProductNameShown: boolean;
-    pendingReviews: TypeCustomerUserProductReviewFragment[];
+    pendingReviews: TypeProductReviewFragment[];
     reviews: TypeProductReviewFragment[];
 };
 
