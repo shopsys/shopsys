@@ -181,7 +181,7 @@ const getOrderWithUpdatedPaymentStatus = (
         return null;
     }
 
-    if (!paymentStatusUpdateResult) {
+    if (!order.hasExternalPayment || !paymentStatusUpdateResult) {
         return order;
     }
 

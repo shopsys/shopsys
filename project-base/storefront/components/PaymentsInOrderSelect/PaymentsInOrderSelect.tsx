@@ -57,6 +57,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                 selectedPaymentForChange.name,
                 selectedPaymentSwiftForChange,
                 selectedPaymentForChange.type !== TypePaymentTypeEnum.GoPay && withRedirectAfterChanging,
+                selectedPaymentForChange.type === TypePaymentTypeEnum.BankTransfer,
             );
             if (
                 selectedPaymentForChange.type === TypePaymentTypeEnum.GoPay &&
