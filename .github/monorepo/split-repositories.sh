@@ -5,6 +5,8 @@ set -e -o pipefail
 SPLIT_BRANCH=$1
 REMOTE_TEMPLATE=$2
 FORCE=${3:-false}
+# optional file where every pushed package is recorded as "<package> <commit sha>" for wait-for-split-checks.sh
+SPLIT_HEADS_FILE=${SPLIT_HEADS_FILE:-}
 
 set -u
 
@@ -22,6 +24,10 @@ fi
 echo -e "${BLUE}Splitting branch '$SPLIT_BRANCH'...${NC}"
 
 WORKSPACE=`pwd`
+
+if [[ -n "$SPLIT_HEADS_FILE" ]]; then
+    : > "$SPLIT_HEADS_FILE"
+fi
 
 if [[ "$FORCE" == true ]]; then
     PUSH_OPTS="--force"
@@ -67,5 +73,9 @@ echo -e "${BLUE}Pushing to remotes${NC}"
 for PACKAGE in $(get_all_packages); do
     echo -e "${BLUE}Push ${GREEN}\"${PACKAGE}\"${NC}"
     cd ${WORKSPACE}/split/${PACKAGE}
-     git push "${REMOTE_TEMPLATE}${PACKAGE}.git" ${SPLIT_BRANCH} ${PUSH_OPTS} --verbose
+    git push "${REMOTE_TEMPLATE}${PACKAGE}.git" ${SPLIT_BRANCH} ${PUSH_OPTS} --verbose
+
+    if [[ -n "$SPLIT_HEADS_FILE" ]]; then
+        echo "${PACKAGE} $(git rev-parse "${SPLIT_BRANCH}")" >> "$SPLIT_HEADS_FILE"
+    fi
 done
