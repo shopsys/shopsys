@@ -1,6 +1,5 @@
 import { mergeProductReviewConnections } from 'components/Blocks/ProductReviews/mergeProductReviewConnections';
 import { TypeProductReviewConnectionFragment } from 'graphql/requests/productReviews/fragments/ProductReviewConnectionFragment.generated';
-import { TypeProductReviewFragment } from 'graphql/requests/productReviews/fragments/ProductReviewFragment.generated';
 import {
     ProductReviewsQueryDocument,
     TypeProductReviewsQuery,
@@ -57,7 +56,7 @@ export const useProductReviewsData = (
         }
     }, [data, initialProductReviews, orderingMode]);
 
-    const reviews = mapConnectionEdges<TypeProductReviewFragment>(productReviews?.edges ?? undefined) ?? [];
+    const reviews = mapConnectionEdges(productReviews?.edges ?? undefined) ?? [];
     const hasMoreReviews = (productReviews?.totalCount ?? 0) > reviews.length;
 
     const loadMoreReviews = useCallback(async () => {

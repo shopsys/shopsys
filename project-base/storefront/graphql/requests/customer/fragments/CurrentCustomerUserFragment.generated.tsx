@@ -5,7 +5,6 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { BaseCustomerUserFragment } from './BaseCustomerUserFragment.generated';
-import { LoginInfoFragment } from './LoginInfoFragment.generated';
 /** Available customer user roles */
 export type TypeCustomerUserRoleEnum =
   | 'ROLE_API_ALL'
@@ -44,8 +43,9 @@ export const CurrentCustomerUserFragment = gql`
     companyTaxNumber
   }
   loginInfo {
-    ...LoginInfoFragment
+    __typename
+    externalId
+    loginType
   }
 }
-    ${BaseCustomerUserFragment}
-${LoginInfoFragment}`;
+    ${BaseCustomerUserFragment}`;

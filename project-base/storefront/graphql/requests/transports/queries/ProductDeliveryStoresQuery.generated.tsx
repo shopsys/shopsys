@@ -6,7 +6,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ProductDeliveryStoreConnectionFragment } from '../../stores/fragments/ProductDeliveryStoreConnectionFragment.generated';
+import { ListedStoreFragment } from '../../stores/fragments/ListedStoreFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCoordinates = {
@@ -48,10 +48,28 @@ export const ProductDeliveryStoresQueryDocument = gql`
     first: $first
     after: $after
   ) {
-    ...ProductDeliveryStoreConnectionFragment
+    __typename
+    searchCoordinates {
+      latitude
+      longitude
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      __typename
+      node {
+        __typename
+        store {
+          ...ListedStoreFragment
+        }
+        expectedDeliveryDate
+      }
+    }
   }
 }
-    ${ProductDeliveryStoreConnectionFragment}`;
+    ${ListedStoreFragment}`;
 
 export function useProductDeliveryStoresQuery(options: Omit<Urql.UseQueryArgs<TypeProductDeliveryStoresQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeProductDeliveryStoresQuery, TypeProductDeliveryStoresQueryVariables>({ query: ProductDeliveryStoresQueryDocument, ...options });

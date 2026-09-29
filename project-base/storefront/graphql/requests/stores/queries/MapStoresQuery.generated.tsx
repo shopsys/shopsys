@@ -6,7 +6,6 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { MapStoreFragment } from '../fragments/MapStoreFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeMapStoresQueryVariables = Exact<{ [key: string]: never; }>;
@@ -20,12 +19,16 @@ export const MapStoresQueryDocument = gql`
   stores {
     edges {
       node {
-        ...MapStoreFragment
+        __typename
+        identifier: uuid
+        name: city
+        latitude
+        longitude
       }
     }
   }
 }
-    ${MapStoreFragment}`;
+    `;
 
 export function useMapStoresQuery(options?: Omit<Urql.UseQueryArgs<TypeMapStoresQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeMapStoresQuery, TypeMapStoresQueryVariables>({ query: MapStoresQueryDocument, ...options });

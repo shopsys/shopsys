@@ -1,5 +1,12 @@
 fragment SimpleArticleInterfaceFragment on ArticleInterface {
     __typename
     ...SimpleArticleSiteFragment
-    ...SimpleBlogArticleFragment
+    ... on BlogArticle {
+        __typename
+        name
+        slug
+        mainImage {
+            ...ImageFragment
+        }
+    }
 }
