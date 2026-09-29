@@ -1,6 +1,7 @@
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
+import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -13,8 +14,9 @@ import { isTextSelected } from 'utils/ui/isTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
+import { CompactProductItemProps } from './ProductsList/CompactProductListItem';
 import { ProductItemProps } from './ProductsList/ProductListItem';
-import { ProductsListContent } from './ProductsList/ProductsListContent';
+import { CompactProductsListContent, ProductsListContent } from './ProductsList/ProductsListContent';
 
 export const VISIBLE_SLIDER_ITEMS = 6;
 export const VISIBLE_SLIDER_ITEMS_BASKET_POPUP = 4;
@@ -75,33 +77,43 @@ export const getCurrentVisibleSliderItems = ({
 };
 
 export type ProductsSliderProps = {
-    products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin?: GtmMessageOriginType;
     isWithArrows?: boolean;
     wrapperClassName?: string;
-    productItemProps?: Partial<ProductItemProps>;
     visibleSliderItems?: number;
     variant?: ProductsSliderVariant;
     isLuigisEnabled?: boolean;
     ariaAnchorName: string;
     highlightFirstItemBadgeText?: string;
-};
+} & (
+    | {
+          cardVariant?: 'full';
+          products: TypeListedProductFragment[];
+          productItemProps?: Partial<ProductItemProps>;
+      }
+    | {
+          cardVariant: 'compact';
+          products: TypeCompactProductFragment[];
+          productItemProps?: Partial<CompactProductItemProps>;
+      }
+);
 
-export const ProductsSlider: FC<ProductsSliderProps> = ({
-    products,
-    gtmProductListName,
-    gtmMessageOrigin = GtmMessageOriginType.other,
-    tid,
-    wrapperClassName,
-    isWithArrows = true,
-    productItemProps,
-    visibleSliderItems = VISIBLE_SLIDER_ITEMS,
-    variant = 'default',
-    isLuigisEnabled,
-    ariaAnchorName,
-    highlightFirstItemBadgeText,
-}) => {
+export const ProductsSlider: FC<ProductsSliderProps> = (props) => {
+    const {
+        products,
+        gtmProductListName,
+        gtmMessageOrigin = GtmMessageOriginType.other,
+        tid,
+        wrapperClassName,
+        isWithArrows = true,
+        productItemProps,
+        visibleSliderItems = VISIBLE_SLIDER_ITEMS,
+        variant = 'default',
+        isLuigisEnabled,
+        ariaAnchorName,
+        highlightFirstItemBadgeText,
+    } = props;
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement | null>>>();
@@ -207,6 +219,24 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
+    const listProps = {
+        gtmMessageOrigin,
+        gtmProductListName,
+        highlightFirstItemBadgeText,
+        keyboardFocusableProductIndices,
+        productRefs: productElementRefs,
+        swipeHandlers: handlers,
+        className: twMergeCustom([
+            'hide-scrollbar -my-2 grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain py-2',
+            getProductsSliderTwClass(variant),
+            wrapperClassName,
+        ]),
+    };
+    const productClassName = twMergeCustom(
+        'mx-1 snap-center first:ml-0 last:mr-0 md:mx-2 md:snap-start',
+        productItemProps?.className,
+    );
+
     return (
         <>
             <div
@@ -242,27 +272,25 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 )}
 
                 <div className="focus-visible:outline-hidden" ref={sliderRef} tabIndex={-1}>
-                    <ProductsListContent
-                        gtmMessageOrigin={gtmMessageOrigin}
-                        gtmProductListName={gtmProductListName}
-                        highlightFirstItemBadgeText={highlightFirstItemBadgeText}
-                        keyboardFocusableProductIndices={keyboardFocusableProductIndices}
-                        productRefs={productElementRefs}
-                        products={products}
-                        swipeHandlers={handlers}
-                        className={twMergeCustom([
-                            'hide-scrollbar -my-2 grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain py-2',
-                            getProductsSliderTwClass(variant),
-                            wrapperClassName,
-                        ])}
-                        productItemProps={{
-                            className: twMergeCustom(
-                                'mx-1 snap-center first:ml-0 last:mr-0 md:mx-2 md:snap-start',
-                                productItemProps?.className,
-                            ),
-                            ...productItemProps,
-                        }}
-                    />
+                    {props.cardVariant === 'compact' ? (
+                        <CompactProductsListContent
+                            {...listProps}
+                            products={props.products}
+                            productItemProps={{
+                                className: productClassName,
+                                ...props.productItemProps,
+                            }}
+                        />
+                    ) : (
+                        <ProductsListContent
+                            {...listProps}
+                            products={props.products}
+                            productItemProps={{
+                                className: productClassName,
+                                ...props.productItemProps,
+                            }}
+                        />
+                    )}
                 </div>
             </div>
 

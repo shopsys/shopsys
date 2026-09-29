@@ -98,7 +98,7 @@ export const getGtmSendFormEvent = (
 
 ```ts
 export const getGtmProductClickEvent = (
-  product: ListedProductFragment | SimpleProductFragment, // information about the product clicked by the user
+  product: TypeCompactProductFragment, // information about the product clicked by the user
   gtmProductListName: GtmProductListNameType, // name of the list from which the product was clicked
   listIndex: number, // index of the product within the list
   domainUrl: string // URL of the current domain
@@ -245,7 +245,7 @@ export const getGtmTransportChangeEvent = (
 
 ```ts
 export const getGtmProductListViewEvent = (
-  products: ListedProductFragment[], // products contained in the viewed list
+  products: TypeCompactProductFragment[], // products contained in the viewed list
   gtmProductListName: GtmProductListNameType, // name of the viewed list
   currentPage: number, // current page of the viewed list
   pageSize: number, // page size of the viewed list
