@@ -31,7 +31,14 @@ query AutocompleteSearchQuery(
         }
         first: $maxCategoryCount
     ) {
-        ...SimpleCategoryConnectionFragment
+        __typename
+        totalCount
+        edges {
+            __typename
+            node {
+                ...SimpleCategoryFragment
+            }
+        }
     }
     productsSearch: productsSearch(
         searchInput: {

@@ -6,7 +6,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { BlogCategoriesFragment } from '../fragments/BlogCategoriesFragment.generated';
+import { SimpleBlogCategoryFragment } from '../fragments/SimpleBlogCategoryFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBlogCategoriesVariables = Exact<{ [key: string]: never; }>;
@@ -18,10 +18,22 @@ export type TypeBlogCategories = { blogCategories: Array<{ __typename: 'BlogCate
 export const BlogCategoriesDocument = gql`
     query BlogCategories @redisCache(ttl: 3600) {
   blogCategories {
-    ...BlogCategoriesFragment
+    ...SimpleBlogCategoryFragment
+    children {
+      ...SimpleBlogCategoryFragment
+      children {
+        ...SimpleBlogCategoryFragment
+        children {
+          ...SimpleBlogCategoryFragment
+          children {
+            ...SimpleBlogCategoryFragment
+          }
+        }
+      }
+    }
   }
 }
-    ${BlogCategoriesFragment}`;
+    ${SimpleBlogCategoryFragment}`;
 
 export function useBlogCategories(options?: Omit<Urql.UseQueryArgs<TypeBlogCategoriesVariables>, 'query'>) {
   return Urql.useQuery<TypeBlogCategories, TypeBlogCategoriesVariables>({ query: BlogCategoriesDocument, ...options });

@@ -7,7 +7,6 @@ import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { HreflangLinksFragment } from '../../hreflangLinks/fragments/HreflangLinksFragment.generated';
 import { BreadcrumbFragment } from '../../breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { CategoryPreviewFragment } from './CategoryPreviewFragment.generated';
 import { ListedProductConnectionPreviewFragment } from '../../products/fragments/ListedProductConnectionPreviewFragment.generated';
 import { CategoryBestsellerFragment } from './CategoryBestsellerFragment.generated';
 /** Product Availability statuses */
@@ -95,7 +94,17 @@ export const CategoryDetailFragment = gql`
     name
   }
   children {
-    ...CategoryPreviewFragment
+    __typename
+    uuid
+    name
+    slug
+    mainImage {
+      ...ImageFragment
+    }
+    products {
+      __typename
+      totalCount
+    }
   }
   products(orderingMode: $orderingMode, filter: $filter) {
     ...ListedProductConnectionPreviewFragment
@@ -108,6 +117,5 @@ export const CategoryDetailFragment = gql`
     ${ImageFragment}
 ${HreflangLinksFragment}
 ${BreadcrumbFragment}
-${CategoryPreviewFragment}
 ${ListedProductConnectionPreviewFragment}
 ${CategoryBestsellerFragment}`;

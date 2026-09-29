@@ -1,5 +1,0 @@
-fragment PricingSettingFragment on PricingSetting {
-    __typename
-    defaultCurrencyCode
-    minimumFractionDigits
-}

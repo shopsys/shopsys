@@ -7,7 +7,6 @@ import gql from 'graphql-tag';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.generated';
 import { DeliveryAddressFragment } from './DeliveryAddressFragment.generated';
 import { CustomerUserRoleGroupFragment } from './CustomerUserRoleGroupGragment.generated';
-import { SalesRepresentativeFragment } from './SalesRepresentativeFragment.generated';
 /** Available customer user roles */
 export type TypeCustomerUserRoleEnum =
   | 'ROLE_API_ALL'
@@ -74,10 +73,23 @@ export const BaseCustomerUserFragment = gql`
     ...CustomerUserRoleGroupFragment
   }
   salesRepresentative {
-    ...SalesRepresentativeFragment
+    __typename
+    email
+    firstName
+    image {
+      url
+      name
+    }
+    lastName
+    telephone
+    telephoneData {
+      prefix
+      countryCode
+      number
+    }
+    uuid
   }
 }
     ${CountryFragment}
 ${DeliveryAddressFragment}
-${CustomerUserRoleGroupFragment}
-${SalesRepresentativeFragment}`;
+${CustomerUserRoleGroupFragment}`;

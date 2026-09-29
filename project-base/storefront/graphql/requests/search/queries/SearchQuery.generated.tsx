@@ -8,7 +8,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { SimpleArticleInterfaceFragment } from '../../articlesInterface/fragments/SimpleArticleInterfaceFragment.generated';
 import { ListedBrandFragment } from '../../brands/fragments/ListedBrandFragment.generated';
-import { ListedCategoryConnectionFragment } from '../../categories/fragments/ListedCategoryConnectionFragment.generated';
+import { ListedCategoryFragment } from '../../categories/fragments/ListedCategoryFragment.generated';
 import { ProductFilterOptionsFragment } from '../../productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { ListedProductConnectionFragment } from '../../products/fragments/ListedProductConnectionFragment.generated';
 import * as Urql from 'urql';
@@ -119,7 +119,14 @@ export const SearchQueryDocument = gql`
   categoriesSearch(
     searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
-    ...ListedCategoryConnectionFragment
+    __typename
+    totalCount
+    edges {
+      __typename
+      node {
+        ...ListedCategoryFragment
+      }
+    }
   }
   productsSearch(
     after: $endCursor
@@ -144,7 +151,7 @@ export const SearchQueryDocument = gql`
 }
     ${SimpleArticleInterfaceFragment}
 ${ListedBrandFragment}
-${ListedCategoryConnectionFragment}
+${ListedCategoryFragment}
 ${ProductFilterOptionsFragment}
 ${ListedProductConnectionFragment}`;
 

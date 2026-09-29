@@ -9,7 +9,6 @@ import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { CartModificationsFragment } from './CartModificationsFragment.generated';
 import { TransportWithAvailablePaymentsAndStoresFragment } from '../../transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.generated';
-import { PromoCodeFragment } from './PromoCodeFragment.generated';
 import { AppliedGiftVoucherFragment } from './AppliedGiftVoucherFragment.generated';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
@@ -152,7 +151,14 @@ export const CartFragment = gql`
     ...SimplePaymentFragment
   }
   promoCodes {
-    ...PromoCodeFragment
+    __typename
+    code
+    type
+    discountPrice {
+      priceWithVat
+      priceWithoutVat
+      vatAmount
+    }
   }
   giftVouchers {
     ...AppliedGiftVoucherFragment
@@ -172,5 +178,4 @@ ${PriceFragment}
 ${CartModificationsFragment}
 ${TransportWithAvailablePaymentsAndStoresFragment}
 ${SimplePaymentFragment}
-${PromoCodeFragment}
 ${AppliedGiftVoucherFragment}`;

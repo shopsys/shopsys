@@ -27,3 +27,57 @@ make generate-schema
 ```
 
 After this, you should see your hooks generated near your operation files, and the global types file generated in as `/graphql/types.ts`.
+
+## Generated types and fragments
+
+Only edit `.graphql` source files in `graphql/requests`. Files with a `.generated.` suffix and `graphql/types.ts` are generated artifacts; recreate them with `make generate-schema` after changing an operation or fragment.
+
+Use a generated operation type for data that belongs to one operation and is passed through its local component tree. It keeps a component contract tied to exactly the fields the operation fetches:
+
+```ts
+import type { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
+
+type SearchProductsContentProps = {
+    productsSearch: TypeSearchProductsQuery['productsSearch'];
+};
+```
+
+Prefer inference inside an operation's component tree. `mapConnectionEdges` derives the node type from the actual input and skips missing edges and nodes. There is no need to supply a fragment type or cast the result:
+
+```ts
+const products = mapConnectionEdges(productsSearch.edges);
+```
+
+When components need a named data contract, prefer the existing generated fragment type instead of removing the fragment and recreating its name through an operation-derived alias:
+
+```ts
+import type { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
+
+type OrderProps = {
+    order: TypeListedOrderFragment;
+};
+```
+
+Operation-derived aliases are available when they genuinely simplify local code, but are not a goal of fragment cleanup. Use `NonNullable` only where the caller actually checks for a missing value. Do not use schema object types from `graphql/types.ts` as query result types: those describe all available fields, including ones the operation did not select.
+
+### Choosing fragment boundaries
+
+Write an unshared selection directly in its query, mutation or owning fragment when doing so simplifies the whole feature without introducing a replacement type layer. `NotificationBarsQuery.graphql` is a small example: all bar fields are visible in the query, shared image fields still use `ImageFragment`, and consumers do not need a new alias.
+
+Use a fragment for an intentionally shared GraphQL selection. `CartFragment` is returned by queries and mutations; `ListedProductFragment` supplies the same product-card data in several contexts. Sharing can also occur between branches of one operation. Do not combine two selections merely because their fields happen to match today: they should represent a contract intended to evolve together.
+
+Fragments have a second useful role: providing named generated types for components and helpers. `ListedOrderFragment`, the navigation fragments and `TransportWithAvailablePaymentsFragment` serve this purpose even when they have only one direct GraphQL spread. Keep these contracts rather than replacing straightforward imports with handwritten aliases and nested `NonNullable` or `Extract` expressions. Count both GraphQL reuse and type consumers when assessing a fragment.
+
+A single-use fragment can also improve readability when a substantial, cohesive selection makes its parent easier to understand. For example, `CartModificationsFragment` groups cart-change messages and `TransportWithAvailablePaymentsAndStoresFragment` groups transport, payment and pickup data inside the large shared cart selection.
+
+Small fragments used only inside a shared parent and without their own type consumers can be inlined there: `ProductFilterOptionsFragment` contains its brands, flags and parameter branches. Conversely, `ProductReviewFragment` remains a named generated contract for review components. Reusing a parent does not by itself require or rule out a fragment for each child.
+
+Prefer inference where no explicit contract is needed, such as mapping connection edges. Preserve useful named generated types elsewhere. Judge the whole change by readability and maintenance effort, not the number of deleted fragments.
+
+Preserve `__typename`, field aliases, arguments, directives and type conditions when inlining. For example, article links keep their `... on ArticleLink` condition, and parameter filters retain their checkbox, color and slider inline fragments. `__typename` is needed by application logic and URQL cache reads; see [best practices](./best-practises.md).
+
+### Connectors and verification
+
+Keep adapters that perform real transformations, such as normalizing nullable customer fields for forms or flattening telephone data. A generated API response and a form model have different responsibilities. Do not add a connector or duplicate response interface merely to rename a generated type.
+
+After a refactor, regenerate with `make generate-schema`, check TypeScript and verify affected behavior. Inlining a selection does not by itself reduce response data, improve type safety or prove a performance improvement. Its benefit is making an operation's fields easier to find. Generated fragment types are also type-safe; the separate `mapConnectionEdges` inference improvement avoids claiming fields absent from the actual input.

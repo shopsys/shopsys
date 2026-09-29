@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -15,7 +14,7 @@ type BlogPreviewPlaceholderProps = Pick<BlogPreviewProps, 'blogArticles' | 'blog
 export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogArticles, blogName, blogUrl }) => {
     const { t } = useTranslation();
 
-    const blogItems = mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles);
+    const blogItems = mapConnectionEdges(blogArticles);
     const blogMainItems = blogItems?.slice(0, 3);
     const blogSideItems = blogItems?.slice(3);
 

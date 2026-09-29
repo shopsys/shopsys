@@ -1,5 +1,4 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TypeProductReviewFragment } from 'graphql/requests/productReviews/fragments/ProductReviewFragment.generated';
 import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -33,23 +32,23 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
         pause: !hasReviews,
     });
 
-    const reviews = (
-        mapConnectionEdges<TypeProductReviewFragment>(productReviewsData?.product?.reviews?.edges ?? undefined) ?? []
-    ).map((productReview) => ({
-        '@type': 'Review',
-        author: {
-            '@type': 'Person',
-            name: productReview.reviewerName ?? t('Anonymous customer'),
-        },
-        datePublished: productReview.createdAt.slice(0, 10),
-        ...(productReview.text !== null && { reviewBody: productReview.text }),
-        reviewRating: {
-            '@type': 'Rating',
-            ratingValue: productReview.rating,
-            bestRating: 5,
-            worstRating: 1,
-        },
-    }));
+    const reviews = (mapConnectionEdges(productReviewsData?.product?.reviews?.edges ?? undefined) ?? []).map(
+        (productReview) => ({
+            '@type': 'Review',
+            author: {
+                '@type': 'Person',
+                name: productReview.reviewerName ?? t('Anonymous customer'),
+            },
+            datePublished: productReview.createdAt.slice(0, 10),
+            ...(productReview.text !== null && { reviewBody: productReview.text }),
+            reviewRating: {
+                '@type': 'Rating',
+                ratingValue: productReview.rating,
+                bestRating: 5,
+                worstRating: 1,
+            },
+        }),
+    );
 
     return (
         <Head>

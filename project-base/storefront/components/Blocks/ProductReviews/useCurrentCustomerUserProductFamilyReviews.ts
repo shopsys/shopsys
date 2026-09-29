@@ -42,7 +42,7 @@ export const useCurrentCustomerUserProductFamilyReviews = (
         });
 
     const ownReviews =
-        mapConnectionEdges<TypeCustomerUserProductReviewFragment>(
+        mapConnectionEdges(
             isMounted ? currentCustomerUserProductReviewsData?.currentCustomerUserProductReviews.edges : undefined,
         ) ?? [];
 
