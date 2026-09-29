@@ -1,5 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
+import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import dynamic from 'next/dynamic';
 import { forwardRef } from 'react';
 import { generateProductImageAlt } from 'utils/productAltText';
@@ -15,7 +16,7 @@ type ProductListItemImageProps = {
     imageCount?: number;
     isWithImageGallery?: boolean;
     size: ProductItemProps['size'];
-    product: ProductItemProps['product'];
+    product: TypeCompactProductFragment;
     visibleItemsConfig: ProductItemProps['visibleItemsConfig'];
     tid?: string;
     isProductFlagsVisible?: boolean;

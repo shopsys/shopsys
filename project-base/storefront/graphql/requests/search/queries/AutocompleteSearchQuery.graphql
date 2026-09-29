@@ -48,12 +48,13 @@ query AutocompleteSearchQuery(
         }
         first: $maxProductCount
     ) {
-        orderingMode
-        defaultOrderingMode
+        __typename
         totalCount
-        productFilterOptions {
-            ...ProductFilterOptionsFragment
+        edges {
+            __typename
+            node {
+                ...CompactProductFragment
+            }
         }
-        ...ListedProductConnectionFragment
     }
 }

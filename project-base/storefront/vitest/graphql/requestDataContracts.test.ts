@@ -1,6 +1,7 @@
 import { type DocumentNode, print } from 'graphql';
 import { AdvertsQueryDocument } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { BlogArticlesQueryDocument } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
+import { AutocompleteFavoritesQueryDocument } from 'graphql/requests/autocomplete/queries/AutocompleteFavoritesQuery.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
 import { CatalogCategoriesQueryDocument } from 'graphql/requests/categories/queries/CatalogCategoriesQuery.generated';
@@ -10,6 +11,8 @@ import { PersonalDataDetailQueryDocument } from 'graphql/requests/personalData/q
 import { CreateProductReviewMutationDocument } from 'graphql/requests/productReviews/mutations/CreateProductReviewMutation.generated';
 import { CurrentCustomerUserProductFamilyReviewsQueryDocument } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductFamilyReviewsQuery.generated';
 import { ProductDetailQueryDocument } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
+import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
+import { AutocompleteSearchQueryDocument } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { SearchProductsQueryDocument } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
 import { SearchQueryDocument } from 'graphql/requests/search/queries/SearchQuery.generated';
 import { StoresQueryDocument } from 'graphql/requests/stores/queries/StoresQuery.generated';
@@ -106,5 +109,52 @@ describe('operation-owned data contracts', () => {
         expect(fieldsAt(BlogCategoryArticlesDocument, ['blogCategory', 'blogArticles', 'pageInfo'])).toEqual([
             'hasNextPage',
         ]);
+    });
+});
+
+const purchaseFields = [
+    'stockQuantity',
+    'isAllowedNegativeStock',
+    'unit',
+    'isCurrentlyOutOfStock',
+    'availableStoresCount',
+    'isPersonalPickupOnly',
+    'isInquiryType',
+];
+
+describe('compact product contract', () => {
+    test.each([
+        ['search', AutocompleteSearchQueryDocument, ['productsSearch', 'edges', 'node']],
+        ['favorites', AutocompleteFavoritesQueryDocument, ['autocompleteFavorites', 'products']],
+    ] as const)('%s omits purchase-only data but retains visual and analytics data', (_, document, path) => {
+        const fields = fieldsAt(document, [...path]);
+
+        for (const field of purchaseFields) {
+            expect(fields).not.toContain(field);
+        }
+        expect(fields).toEqual(
+            expect.arrayContaining([
+                'id',
+                'uuid',
+                'slug',
+                'fullName',
+                'catalogNumber',
+                'brand',
+                'categories',
+                'price',
+                'availability',
+                'expectedRestockingDate',
+                'productType',
+                'reviewsSummary',
+                'mainVariant',
+                'variantsCount',
+            ]),
+        );
+    });
+
+    test('article and last-visited sliders share the full product card', () => {
+        expect(fieldsAt(ProductsByCatnumsDocument, ['productsByCatnums'])).toEqual(
+            expect.arrayContaining(purchaseFields),
+        );
     });
 });
