@@ -313,9 +313,13 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.forms_spinbox_decrease}
                     tooltipLabel={minValueDecreaseIcon ? minValueDecreaseTitle : undefined}
                     isTooltipDisabled={!isDecreaseOnMinValue}
-                    onClick={onDecreaseClick}
-                    onMouseDown={() => {
-                        if (!isDecreaseOnMinValue) {
+                    onClick={(event) => {
+                        if (event.button === 0) {
+                            onDecreaseClick();
+                        }
+                    }}
+                    onMouseDown={(event) => {
+                        if (event.button === 0 && !isDecreaseOnMinValue) {
                             setIsHoldingDecrease(true);
                         }
                     }}
@@ -367,13 +371,13 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     size={size}
                     tid={TIDs.forms_spinbox_increase}
                     hasPendingLook={hasPendingLook}
-                    onClick={() => {
-                        if (!isIncreaseDisabled) {
+                    onClick={(event) => {
+                        if (event.button === 0 && !isIncreaseDisabled) {
                             handleValueChange(step);
                         }
                     }}
-                    onMouseDown={() => {
-                        if (!isIncreaseDisabled) {
+                    onMouseDown={(event) => {
+                        if (event.button === 0 && !isIncreaseDisabled) {
                             setIsHoldingIncrease(true);
                         }
                     }}
@@ -390,10 +394,10 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 Spinbox.displayName = 'Spinbox';
 
 type SpinboxButtonProps = {
-    onClick: () => void;
-    onMouseDown: () => void;
-    onMouseUp: () => void;
-    onMouseLeave: () => void;
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+    onMouseDown: React.MouseEventHandler<HTMLButtonElement>;
+    onMouseUp: React.MouseEventHandler<HTMLButtonElement>;
+    onMouseLeave: React.MouseEventHandler<HTMLButtonElement>;
     disabled: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     ariaLabel: string;
