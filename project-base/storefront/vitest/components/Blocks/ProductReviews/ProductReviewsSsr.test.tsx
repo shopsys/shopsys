@@ -89,7 +89,7 @@ const createTestClient = (isClient: boolean) => {
                 operations.push(operation);
 
                 const name = getQueryName(operation);
-                if (name === 'CurrentCustomerUserProductReviewsQuery') {
+                if (name === 'CurrentCustomerUserProductFamilyReviewsQuery') {
                     return never;
                 }
 
@@ -164,7 +164,7 @@ describe('product reviews SSR', () => {
         expect(screen.queryByRole('button', { name: 'Write a review' })).not.toBeInTheDocument();
         expect(screen.getByRole('status')).toBeInTheDocument();
         expect(new Set(browser.operations.map(getQueryName))).toEqual(
-            new Set(['CurrentCustomerUserQuery', 'CurrentCustomerUserProductReviewsQuery']),
+            new Set(['CurrentCustomerUserQuery', 'CurrentCustomerUserProductFamilyReviewsQuery']),
         );
         expect(onRecoverableError).not.toHaveBeenCalled();
 
