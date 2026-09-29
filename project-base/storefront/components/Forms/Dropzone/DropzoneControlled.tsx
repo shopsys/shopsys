@@ -162,9 +162,10 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
     const legendText =
         legend ??
         t(
-            'Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.',
+            'Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum total file size is {{ maxTotal }}. Maximum files count is {{ maxFilesCount }}.',
             {
                 max: formatBytes(VALIDATION_CONSTANTS.fileMaxSize),
+                maxTotal: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
                 maxFilesCount: VALIDATION_CONSTANTS.maxFilesCount,
             },
         );
