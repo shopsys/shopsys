@@ -160,7 +160,9 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                             : t('Main content', { ns: 'accessibility' })
                     }
                 >
-                    <Adverts withWebline className="mb-4" positionName="header" />
+                    {!isPageLoading && !isFetchingData && (
+                        <Adverts withWebline className="mb-4" positionName="header" />
+                    )}
 
                     {!!breadcrumbs && !isPageLoading && !isFetchingData && (
                         <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
@@ -174,7 +176,9 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                         {children}
                     </SkeletonManager>
 
-                    <Adverts withWebline className="mt-10" positionName="footer" />
+                    {!isPageLoading && !isFetchingData && (
+                        <Adverts withWebline className="mt-10" positionName="footer" />
+                    )}
                 </main>
 
                 <footer
