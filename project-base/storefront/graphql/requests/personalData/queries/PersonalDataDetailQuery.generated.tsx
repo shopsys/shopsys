@@ -6,7 +6,9 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { PersonalDataDetailFragment } from '../fragments/PersonalDataDetailFragment.generated';
+import { OrderDetailItemFragment } from '../../orders/fragments/OrderDetailItemFragment.generated';
+import { CountryFragment } from '../../countries/fragments/CountryFragment.generated';
+import { BaseCustomerUserFragment } from '../../customer/fragments/BaseCustomerUserFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Product Availability statuses */
@@ -95,10 +97,85 @@ export type TypePersonalDataDetailQuery = { accessPersonalData: { __typename: 'P
 export const PersonalDataDetailQueryDocument = gql`
     query PersonalDataDetailQuery($hash: String!) {
   accessPersonalData(hash: $hash) {
-    ...PersonalDataDetailFragment
+    __typename
+    orders {
+      __typename
+      uuid
+      city
+      companyName
+      number
+      creationDate
+      items {
+        ...OrderDetailItemFragment
+      }
+      firstName
+      lastName
+      telephone
+      companyNumber
+      companyTaxNumber
+      street
+      city
+      postcode
+      country {
+        ...CountryFragment
+      }
+      deliveryFirstName
+      deliveryLastName
+      deliveryCompanyName
+      deliveryTelephone
+      deliveryStreet
+      deliveryCity
+      deliveryPostcode
+      deliveryCountry {
+        ...CountryFragment
+      }
+      productItems {
+        ...OrderDetailItemFragment
+      }
+      totalPrice {
+        priceWithVat
+      }
+    }
+    customerUser {
+      ...BaseCustomerUserFragment
+    }
+    newsletterSubscriber {
+      __typename
+      email
+      createdAt
+    }
+    exportLink
+    complaints {
+      __typename
+      uuid
+      number
+      createdAt
+      status
+      deliveryFirstName
+      deliveryLastName
+      deliveryCompanyName
+      deliveryCity
+      deliveryPostcode
+      deliveryStreet
+      deliveryTelephone
+      deliveryCountry {
+        name
+      }
+      items {
+        __typename
+        productName
+        quantity
+        description
+        orderItem {
+          uuid
+        }
+      }
+    }
   }
 }
-    ${PersonalDataDetailFragment}`;
+    ${OrderDetailItemFragment}
+${CountryFragment}
+${BaseCustomerUserFragment}`;
 
 export function usePersonalDataDetailQuery(options: Omit<Urql.UseQueryArgs<TypePersonalDataDetailQueryVariables>, 'query'>) {
   return Urql.useQuery<TypePersonalDataDetailQuery, TypePersonalDataDetailQueryVariables>({ query: PersonalDataDetailQueryDocument, ...options });

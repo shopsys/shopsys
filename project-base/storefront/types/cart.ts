@@ -1,9 +1,10 @@
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeCartModificationsFragment } from 'graphql/requests/cart/fragments/CartModificationsFragment.generated';
+import { TypePromoCodeFragment } from 'graphql/requests/cart/fragments/PromoCodeFragment.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
-import { Maybe, TypeAppliedGiftVoucher, TypePromoCode } from 'graphql/types';
+import { Maybe, TypeAppliedGiftVoucher } from 'graphql/types';
 import { UseQueryExecute } from 'urql';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
@@ -15,7 +16,7 @@ export type CurrentCartType = {
     pickupPlace: Maybe<StoreOrPacketeryPoint>;
     payment: Maybe<TypeSimplePaymentFragment>;
     paymentGoPayBankSwift: Maybe<string>;
-    promoCodes: TypePromoCode[];
+    promoCodes: TypePromoCodeFragment[];
     giftVouchers: AppliedGiftVoucherType[];
     isCartFetchingOrUnavailable: boolean;
     modifications: Maybe<TypeCartModificationsFragment>;

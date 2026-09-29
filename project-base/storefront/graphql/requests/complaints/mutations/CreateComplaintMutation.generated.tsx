@@ -6,7 +6,9 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { CreateComplaintFragment } from '../fragments/CreateComplaintFragment.generated';
+import { CountryFragment } from '../../countries/fragments/CountryFragment.generated';
+import { ComplaintItemFragment } from '../fragments/ComplaintItemFragment.generated';
+import { ComplaintResolutionFragment } from '../fragments/ComplaintResolutionFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Product Availability statuses */
@@ -136,10 +138,31 @@ export type TypeCreateComplaint = { CreateComplaint: { uuid: string, number: str
 export const CreateComplaintDocument = gql`
     mutation CreateComplaint($input: ComplaintInput!) {
   CreateComplaint(input: $input) {
-    ...CreateComplaintFragment
+    uuid
+    number
+    deliveryFirstName
+    deliveryLastName
+    deliveryCompanyName
+    deliveryTelephone
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+      ...CountryFragment
+    }
+    createdAt
+    items {
+      ...ComplaintItemFragment
+    }
+    resolution {
+      ...ComplaintResolutionFragment
+    }
+    bankAccountNumber
   }
 }
-    ${CreateComplaintFragment}`;
+    ${CountryFragment}
+${ComplaintItemFragment}
+${ComplaintResolutionFragment}`;
 
 export function useCreateComplaint() {
   return Urql.useMutation<TypeCreateComplaint, TypeCreateComplaintVariables>(CreateComplaintDocument);

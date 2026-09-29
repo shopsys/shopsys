@@ -2,7 +2,11 @@ query MapStoresQuery @redisCache(ttl: 3600) {
     stores {
         edges {
             node {
-                ...MapStoreFragment
+                __typename
+                identifier: uuid
+                name: city
+                latitude
+                longitude
             }
         }
     }

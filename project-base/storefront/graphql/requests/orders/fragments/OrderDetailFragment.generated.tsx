@@ -7,7 +7,6 @@ import gql from 'graphql-tag';
 import { OrderDetailItemFragment } from './OrderDetailItemFragment.generated';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { AppliedGiftVoucherFragment } from '../../cart/fragments/AppliedGiftVoucherFragment.generated';
-import { OrderWithdrawalRequestFragment } from './OrderWithdrawalRequestFragment.generated';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
   /** Product availability status for electronically delivered products */
@@ -152,7 +151,14 @@ export const OrderDetailFragment = gql`
   }
   deliveredAt
   withdrawalRequest {
-    ...OrderWithdrawalRequestFragment
+    __typename
+    email
+    firstName
+    lastName
+    telephone
+    note
+    requestedAt
+    confirmed
   }
   canRequestWithdrawal
   isWithdrawalBlockedByPurchasedGiftVoucher
@@ -165,5 +171,4 @@ export const OrderDetailFragment = gql`
 }
     ${OrderDetailItemFragment}
 ${PriceFragment}
-${AppliedGiftVoucherFragment}
-${OrderWithdrawalRequestFragment}`;
+${AppliedGiftVoucherFragment}`;

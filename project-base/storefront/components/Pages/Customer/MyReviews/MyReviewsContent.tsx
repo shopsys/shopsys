@@ -5,7 +5,6 @@ import { SkeletonModuleCustomerComplaints } from 'components/Blocks/Skeleton/Ske
 import { CustomerEmptyContent } from 'components/Pages/Customer/CustomerEmptyContent';
 import { MyReviewItem } from 'components/Pages/Customer/MyReviews/MyReviewItem';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
-import { TypeCustomerUserProductReviewFragment } from 'graphql/requests/productReviews/fragments/CustomerUserProductReviewFragment.generated';
 import { useCurrentCustomerUserProductReviewsQuery } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { type RefObject, useEffect, useRef } from 'react';
@@ -38,9 +37,7 @@ export const MyReviewsContent: FC<MyReviewsContentProps> = ({ paginationScrollTa
         requestPolicy: 'cache-and-network',
     });
 
-    const myReviews = mapConnectionEdges<TypeCustomerUserProductReviewFragment>(
-        myReviewsData?.currentCustomerUserProductReviews.edges,
-    );
+    const myReviews = mapConnectionEdges(myReviewsData?.currentCustomerUserProductReviews.edges);
 
     useEffect(() => {
         // CommonLayout corrects hash scrolling for the fixed header on desktop.
