@@ -227,10 +227,11 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                                 name={formMeta.fields.images.name}
                                 render={(dropzone) => <FormLine>{dropzone}</FormLine>}
                                 legend={t(
-                                    'You can attach up to {{ maxFilesCount }} photos in JPG or PNG format, each up to {{ max }}.',
+                                    'You can attach up to {{ maxFilesCount }} photos in JPG or PNG format, each up to {{ max }}. The total size of all photos can be up to {{ maxTotal }}.',
                                     {
                                         maxFilesCount: VALIDATION_CONSTANTS.reviewMaxFilesCount,
                                         max: formatBytes(VALIDATION_CONSTANTS.fileMaxSize),
+                                        maxTotal: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
                                     },
                                 )}
                             />
