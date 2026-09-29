@@ -866,9 +866,9 @@ class SideMenuBuilder
         );
 
         $stockMenu = $menu->addChild(static::SECTION_STOCKS, ['label' => t('Stocking')]);
-        $stockMenu->addChild(static::LIST_STOCK, ['route' => 'admin_stock_list', 'label' => t('Warehouses')]);
-        $stockMenu->addChild(static::NEW_STOCK, ['route' => 'admin_stock_new', 'display' => false, 'label' => t('New warehouse')]);
-        $stockMenu->addChild(static::EDIT_STOCK, ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
+        $stockListMenu = $stockMenu->addChild(static::LIST_STOCK, ['route' => 'admin_stock_list', 'label' => t('Warehouses')]);
+        $stockListMenu->addChild(static::NEW_STOCK, ['route' => 'admin_stock_new', 'display' => false, 'label' => t('New warehouse')]);
+        $stockListMenu->addChild(static::EDIT_STOCK, ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
         $stockMenu->addChild(static::STOCK_SETTINGS, ['route' => 'admin_stock_settings', 'label' => t('Warehouse settings')]);
 
         $constantsMenu = $menu->addChild(static::SECTION_CONSTANTS, ['label' => t('Language constants')]);
