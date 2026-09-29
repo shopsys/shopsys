@@ -21,9 +21,22 @@ parameters:
         -
             identifier: shipmonk.deadProperty.neverRead
             path: packages/administration/src/Component/Crud/CrudRegistryItem.php
+        # public API of the CRUD form configuration used by project controllers, exercised only by tests in the monorepo
         -
             identifier: shipmonk.deadMethod
-            path: packages/administration/src/Component/Datagrid/Adapter/Orm/ProxyQuery.php
+            path: packages/administration/src/Component/Crud/Form/CrudFormConfigurator.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Condition/Condition.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/AbstractFilter.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/EntityFilter.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/FilterInterface.php
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/Datagrid.php

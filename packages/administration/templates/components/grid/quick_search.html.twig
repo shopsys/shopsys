@@ -1,0 +1,10 @@
+{{ form_start(this.formView) }}
+    {# the order and the limit of the grid travel with the search, the page starts over #}
+    {{ gridView.renderHiddenInputs('page') }}
+    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
+        form_input: this.formView.text,
+        form_submit: this.formView.submit,
+        hide_title: embedded,
+        placeholder: 'Search in: %fields%'|trans({ '%fields%': quickSearch.labelsByPath|join(', ') }),
+    } %}
+{{ form_end(this.formView, { render_rest: false }) }}

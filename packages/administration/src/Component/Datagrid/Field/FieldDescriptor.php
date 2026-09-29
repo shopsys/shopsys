@@ -16,7 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     help?: string|null,
  *     template?: string|null,
  *     transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
- *     property?: string|null
+ *     property?: string|null,
+ *     searchable?: bool
  * }
  */
 final class FieldDescriptor
@@ -52,6 +53,7 @@ final class FieldDescriptor
             'template' => null,
             'transform' => null,
             'property' => null,
+            'searchable' => false,
         ]);
 
         $optionsResolver->setAllowedTypes('label', 'string');
@@ -62,6 +64,7 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('template', ['string', 'null']);
         $optionsResolver->setAllowedTypes('transform', [Closure::class, 'null']);
         $optionsResolver->setAllowedTypes('property', ['string', 'null']);
+        $optionsResolver->setAllowedTypes('searchable', 'bool');
 
         return $optionsResolver->resolve($options);
     }
@@ -103,6 +106,15 @@ final class FieldDescriptor
     public function isVirtual(): bool
     {
         return $this->options['virtual'];
+    }
+
+    /**
+     * Whether the quick search of the datagrid searches in this field. The field has to have a path of its
+     * own (see `getSelectProperty()`) leading to text; the datagrid refuses any other.
+     */
+    public function isSearchable(): bool
+    {
+        return $this->options['searchable'];
     }
 
     public function getHelp(): ?string

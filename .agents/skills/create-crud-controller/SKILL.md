@@ -37,6 +37,7 @@ A CRUD controller in the monorepo is framework code that every downstream projec
 | Entity, Facade, Data, DataFactory | `packages/framework/src/Model/<Area>/` (existing model layer) | `Shopsys\FrameworkBundle\Model\<Area>` |
 | Admin FormType | `packages/framework/src/Form/Admin/<Area>/<Entity>FormType.php` | `Shopsys\FrameworkBundle\Form\Admin\<Area>` |
 | Column / edit templates | `packages/administration/templates/content/<entity>/…` (`@ShopsysAdministration/content/<entity>/…`) | — |
+| Own datagrid filter type (reusable across projects) | `packages/administration/src/Component/Datagrid/Filter/<Name>Filter.php` extending `AbstractFilter` | `Shopsys\AdministrationBundle\Component\Datagrid\Filter` |
 | Menu section constants | `packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php` | — |
 | Existing role constants | `packages/framework/src/Component/Security/Role/AdminRoleConstant.php` | — |
 
@@ -54,11 +55,12 @@ Package code follows `.agents/skills/coding-conventions/SKILL.md`, which inverts
 
 ## Docs, translations, upgrade notes — you own them here
 
-- **Documentation is local** — `docs/administration/crud-controller/` (getting-started + reference), `docs/administration/datagrid/`, `docs/administration/admin-rights.md`, `docs/administration/administration-menu.md`. Search it with `.agents/skills/docs-researcher/SKILL.md` instead of docs.shopsys.com. When you change the CRUD component itself (`AbstractCrudController`, `CrudConfig`, handler or hook interfaces, `Datagrid`), update the matching reference page in the same PR.
+- **Documentation is local** — `docs/administration/crud-controller/` (getting-started + reference), `docs/administration/datagrid/` (`fields.md`, `narrowing.md` for the domain control, the quick search and `addCondition()`, `filters.md` for the filter types and how to write one), `docs/administration/admin-rights.md`, `docs/administration/administration-menu.md`. Search it with `.agents/skills/docs-researcher/SKILL.md` instead of docs.shopsys.com. When you change the CRUD component itself (`AbstractCrudController`, `CrudConfig`, handler or hook interfaces, `Datagrid`), update the matching reference page in the same PR.
 - **Translations**: `php phing translations-dump` (php-fpm container, `.agents/skills/shopsys-commands/SKILL.md`) writes the new `t()` keys and the auto-generated entity names into `packages/*/translations/*.po` — those `.po` changes are part of the package and belong in the commit (commit message conventions in `.agents/skills/commit-conventions/SKILL.md`).
 - **Upgrade notes** (`upgrade-notes/_template.md`, `/generate-upgrade-notes`) whenever a project has to react: a new CRUD controller that replaces a legacy `packages/framework/src/Controller/Admin/*Controller.php` (list the removed routes, templates and menu items; keep the old `AdminRoleConstant` role via `#[ForRole]` so administrator permissions survive), a new `ROLE_CRUD_*` role, or any signature change in the CRUD component. Note the `{pullRequestId}` placeholder is backfilled by `/adhoc-pr`.
 
 ## Tests
 
-- Unit tests for CRUD-component code go to `packages/administration/tests/Unit/…` and run with `--configuration packages/administration/phpunit.xml` (`.agents/skills/test-writing/SKILL.md`).
+- Unit tests for CRUD-component code go to `packages/administration/tests/Unit/…` and run with `--configuration packages/administration/phpunit.xml` (`.agents/skills/test-writing/SKILL.md`). A new filter type gets one next to `DateFilterTest` / `EntityFilterTest` in `tests/Unit/Component/Datagrid/Filter/`; a whole-class `shipmonk.deadMethod` entry in `phpstan-dead-code.neon` is needed only for members no shipped controller calls yet.
+- Functional tests of the datagrid narrowing live in `project-base/app/tests/App/Functional/Component/Datagrid/` (`QuickSearchListTest`, `FilterListTest`, `DomainControlNarrowingTest`) and use `ProductReviewController` as the shipped list with searchable fields and filters.
 - The HTTP smoke test and functional tests still live in `project-base/app/tests/` — route customisation is `project-base/app/tests/App/Smoke/Http/RouteConfigCustomization.php`, and the entity with id `1` the smoke test requests comes from `project-base/app/src/DataFixtures/Demo/`.

@@ -1,0 +1,12 @@
+{% if scope.isFilter %}
+    {% include (select ? '@ShopsysAdministration/partial/quick_domain_filter_select.html.twig' : '@ShopsysAdministration/partial/quick_domain_filter.html.twig') with {
+        domainConfigs: this.domainConfigs,
+        namespace: scope.filterNamespace,
+        selectedDomainId: scope.selectedDomainId,
+    } only %}
+{% else %}
+    {% include '@ShopsysAdministration/partial/switch_domain.html.twig' with {
+        domainConfigs: this.domainConfigs,
+        selectedDomainId: scope.selectedDomainId,
+    } only %}
+{% endif %}
