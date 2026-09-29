@@ -22,7 +22,12 @@ fragment ComplaintDetailFragment on Complaint {
         ...ComplaintItemFragment
     }
     order {
-        ...OrderDetailFragment
+        __typename
+        uuid
+        number
+        customerUser {
+            uuid
+        }
     }
     manualDocumentNumber
 }

@@ -2,6 +2,9 @@ query BlogCategoryArticles($uuid: Uuid!, $endCursor: String!, $pageSize: Int) {
     blogCategory(uuid: $uuid) {
         blogArticles(after: $endCursor, first: $pageSize) {
             ...BlogArticleConnectionFragment
+            pageInfo {
+                hasNextPage
+            }
         }
     }
 }

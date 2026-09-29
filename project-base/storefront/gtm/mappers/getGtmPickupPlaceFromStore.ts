@@ -17,7 +17,6 @@ export const getGtmPickupPlaceFromStore = (store: StoreOrPacketeryPoint): StoreO
     openingHours: store.openingHours,
     postcode: store.postcode,
     street: store.street,
-    mainImage: null,
     distance: null,
     specialMessage: store.specialMessage ?? null,
     phone: store.phone ?? null,
