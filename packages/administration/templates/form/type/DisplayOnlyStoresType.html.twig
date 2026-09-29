@@ -1,0 +1,5 @@
+{% block display_only_stores_widget %}
+    <div class="form-control-plaintext badges-list">
+        {% include '@ShopsysAdministration/partial/store_links.html.twig' with { stores: stores } only %}
+    </div>
+{% endblock %}

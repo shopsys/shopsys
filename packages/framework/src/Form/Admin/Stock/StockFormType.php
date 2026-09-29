@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Stock;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyStoresType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -17,6 +18,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -26,6 +28,7 @@ final class StockFormType extends AbstractType
 
     public function __construct(
         private readonly StockFacade $stockFacade,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -89,6 +92,21 @@ final class StockFormType extends AbstractType
 
         $builder->add($stockDataBuilder);
         $builder->add($stockDomainsBuilder);
+
+        if ($this->stock !== null) {
+            $builder->add(
+                $builder->create('assignedStores', GroupType::class, [
+                    'label' => 'Assigned stores',
+                ])->add('stores', DisplayOnlyStoresType::class, [
+                    'label' => false,
+                    'stores' => $this->stock->getStores(),
+                    'help' => t('Products stocked in this warehouse are ready for personal pickup at these stores. A warehouse is assigned to a store on the store detail. <a href="%listUrl%">Manage stores</a>', [
+                        '%listUrl%' => $this->urlGenerator->generate('admin_store_list'),
+                    ]),
+                    'help_html' => true,
+                ]),
+            );
+        }
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_stock_list',
             'entity' => $options['stock'],

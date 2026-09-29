@@ -343,6 +343,9 @@ msgstr "Priradiť produkty"
 msgid "Assign to category"
 msgstr "Priradiť ku kategórii"
 
+msgid "Assigned stores"
+msgstr "Priradené predajne"
+
 msgid "Attribute %attribute% was changed %changes%"
 msgstr "Atribút %attribute% bol zmenený %changes%"
 
@@ -2952,6 +2955,9 @@ msgstr "Parametre produktov vybratej kategórie"
 
 msgid "Products stocked in the selected warehouse are ready for personal pickup at this store. Products from other warehouses are transferred first, which postpones the expected delivery date by the transfer days set per domain. <a href=\"%listUrl%\">Manage warehouses</a> &middot; <a href=\"%settingsUrl%\">Set transfer days</a>"
 msgstr "Produkty zo zvoleného skladu sú na tejto predajni pripravené na osobný odber. Produkty z ostatných skladov sa najprv prevážajú, čo posunie očakávaný dátum doručenia o dni prevozu nastavené pre doménu. <a href=\"%listUrl%\">Spravovať sklady</a> &middot; <a href=\"%settingsUrl%\">Nastaviť dni prevozu</a>"
+
+msgid "Products stocked in this warehouse are ready for personal pickup at these stores. A warehouse is assigned to a store on the store detail. <a href=\"%listUrl%\">Manage stores</a>"
+msgstr "Produkty skladom v tomto sklade sú pripravené na osobný odber na týchto predajniach. Sklad sa predajni priraďuje na detaile predajne. <a href=\"%listUrl%\">Spravovať predajne</a>"
 
 msgid "Products with a lower average rating do not show stars in product lists (the product detail always shows them). Leave empty to show stars for every reviewed product. It's possible to set a value from 1 to 5 with one decimal place (e.g., 4.5)."
 msgstr "Produkty s nižším priemerným hodnotením nezobrazujú vo výpisoch produktov hviezdičky (na detaile produktu sa zobrazujú vždy). Ponechajte prázdne, ak sa majú hviezdičky zobrazovať pri všetkých produktoch s recenziou. Je možné nastaviť hodnotu od 1 do 5 s jedným desatinným miestom (napr. 4,5)."
