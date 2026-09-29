@@ -123,7 +123,7 @@ export const getTransportGroupChoices = (
 };
 
 export const getShouldDisplayTransportGroups = (transportGroupChoices: TransportGroupChoice[]): boolean => {
-    if (transportGroupChoices.length === 0) {
+    if (transportGroupChoices.length < 2) {
         return false;
     }
 

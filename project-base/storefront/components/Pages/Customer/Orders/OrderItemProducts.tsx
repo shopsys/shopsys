@@ -22,15 +22,15 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
             {items.slice(0, 4).map((item) => {
                 const product = item.product;
 
-                if (!product?.mainImage?.url) {
+                if (!product) {
                     return null;
                 }
 
                 return (
                     <CustomerRecordProductImage
                         key={product.link}
-                        image={product.mainImage.url}
-                        imageAlt={product.mainImage.name ?? ''}
+                        image={product.mainImage?.url}
+                        imageAlt={product.mainImage?.name ?? ''}
                         isVisible={product.isVisible}
                         link={product.link}
                         quantity={item.quantity}

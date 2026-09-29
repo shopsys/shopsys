@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
@@ -90,6 +90,26 @@ describe('Spinbox Component', () => {
             await user.click(decreaseButton);
 
             expect(input).toHaveValue(4);
+        });
+
+        test('does not change the value when the increase button is right-clicked', () => {
+            vi.useFakeTimers();
+
+            try {
+                const { container } = render(<Spinbox {...defaultProps} />);
+                const input = container.querySelector('input[type="number"]') as HTMLInputElement;
+                const increaseButton = screen.getByRole('button', { name: 'Increase quantity' });
+
+                fireEvent.mouseDown(increaseButton, { button: 2 });
+                fireEvent.click(increaseButton, { button: 2 });
+                act(() => {
+                    vi.advanceTimersByTime(200);
+                });
+
+                expect(input).toHaveValue(5);
+            } finally {
+                vi.useRealTimers();
+            }
         });
 
         test('does not decrease below minimum', async () => {
