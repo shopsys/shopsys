@@ -12,6 +12,8 @@
     "Apply discount coupon or gift voucher code": "Apply discount coupon or gift voucher code",
     "Average rating {{ averageRating }} out of 5": "Average rating {{ averageRating }} out of 5",
     "Average rating {{ averageRating }} out of 5, go to reviews": "Average rating {{ averageRating }} out of 5, go to reviews",
+    "Average rating {{ averageRating }} out of 5, review count {{ count }}, go to reviews_one": "Average rating {{ averageRating }} out of 5, review count {{ count }}, go to reviews",
+    "Average rating {{ averageRating }} out of 5, review count {{ count }}, go to reviews_other": "Average rating {{ averageRating }} out of 5, review count {{ count }}, go to reviews",
     "Breadcrumb navigation": "Breadcrumb navigation",
     "By clicking this button you will set this address as your default delivery address:": "By clicking this button you will set this address as your default delivery address:",
     "Call sales representative": "Call sales representative",
