@@ -13,7 +13,11 @@ import { getFirstValidationErrorPerField, parseGraphqlError } from 'utils/errors
 export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate): ParsedErrors => {
     const errors: ParsedErrors = {};
 
-    if (originalError.networkError) {
+    if (originalError.response?.status === 413) {
+        errors.networkError = t(
+            'The uploaded files are too large. Please reduce their total size and try again.',
+        ) as string;
+    } else if (originalError.networkError) {
         errors.networkError = t('Could not connect to server. Check your network.') as string;
     } else if (originalError.graphQLErrors.length > 0) {
         for (const graphqlError of originalError.graphQLErrors) {

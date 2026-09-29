@@ -59,6 +59,12 @@ describe('DropzoneControlled', () => {
 
         await user.upload(input, firstFile);
         await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(1));
+
+        if (showPreviews) {
+            expect(screen.getByText('first.jpg')).toHaveAttribute('title', 'first.jpg');
+            expect(screen.getByText('5 Bytes')).toBeInTheDocument();
+        }
+
         await user.upload(input, secondFile);
         await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(2));
         await user.upload(input, duplicateFirstFile);

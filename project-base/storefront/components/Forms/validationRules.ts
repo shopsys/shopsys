@@ -236,6 +236,12 @@ export const validateNewPasswordConfirm = (t: Translate): Schema => {
     return passwordConfirmValidationSchema(t, 'newPassword', t('Please enter new password again'));
 };
 
+const isTotalFilesSizeValid = (value: unknown): boolean => {
+    const totalSize = (value as File[] | undefined)?.reduce((totalSize, file) => totalSize + file.size, 0);
+
+    return totalSize === undefined || totalSize <= VALIDATION_CONSTANTS.totalFilesMaxSize;
+};
+
 export const validateOptionalImageFiles = (t: Translate, maxFilesCount: number): Schema => {
     return Yup.array()
         .of(
@@ -249,6 +255,13 @@ export const validateOptionalImageFiles = (t: Translate, maxFilesCount: number):
                     return file.size <= VALIDATION_CONSTANTS.fileMaxSize && file.size > 0;
                 },
             ),
+        )
+        .test(
+            'totalFileSize',
+            t('Maximum total file size is {{ max }}', {
+                max: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
+            }),
+            isTotalFilesSizeValid,
         )
         .max(maxFilesCount, t('Maximum files count is {{ max }}', { max: maxFilesCount }));
 };
@@ -270,6 +283,13 @@ export const validateImageFile = (t: Translate): Schema => {
                 ),
         )
         .min(1, t('Please attach files'))
+        .test(
+            'totalFileSize',
+            t('Maximum total file size is {{ max }}', {
+                max: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
+            }),
+            isTotalFilesSizeValid,
+        )
         .max(
             VALIDATION_CONSTANTS.maxFilesCount,
             t('Maximum files count is {{ max }}', { max: VALIDATION_CONSTANTS.maxFilesCount }),
