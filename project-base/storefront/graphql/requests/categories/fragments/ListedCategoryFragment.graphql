@@ -6,8 +6,4 @@ fragment ListedCategoryFragment on Category {
     mainImage {
         ...ImageFragment
     }
-    products {
-        __typename
-        totalCount
-    }
 }

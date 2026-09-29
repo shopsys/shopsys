@@ -1,0 +1,9 @@
+fragment CartItemModificationFragment on CartItem {
+    __typename
+    uuid
+    product {
+        __typename
+        uuid
+        fullName
+    }
+}

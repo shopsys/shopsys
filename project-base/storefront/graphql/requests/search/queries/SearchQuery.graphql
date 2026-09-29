@@ -61,17 +61,6 @@ query SearchQuery(
             parameters: $parameters
         }
     ) {
-        orderingMode
-        defaultOrderingMode
-        totalCount
-        productFilterOptions {
-            ...ProductFilterOptionsFragment
-        }
-        ...ListedProductConnectionFragment
-        edges {
-            node {
-                imagesCount
-            }
-        }
+        ...SearchResultsConnectionFragment
     }
 }

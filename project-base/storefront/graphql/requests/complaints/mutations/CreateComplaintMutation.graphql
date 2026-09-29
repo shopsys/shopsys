@@ -1,24 +1,5 @@
 mutation CreateComplaint($input: ComplaintInput!) {
     CreateComplaint(input: $input) {
         uuid
-        number
-        deliveryFirstName
-        deliveryLastName
-        deliveryCompanyName
-        deliveryTelephone
-        deliveryStreet
-        deliveryCity
-        deliveryPostcode
-        deliveryCountry {
-            ...CountryFragment
-        }
-        createdAt
-        items {
-            ...ComplaintItemFragment
-        }
-        resolution {
-            ...ComplaintResolutionFragment
-        }
-        bankAccountNumber
     }
 }

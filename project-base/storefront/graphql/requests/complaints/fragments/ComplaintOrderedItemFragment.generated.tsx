@@ -4,8 +4,8 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
+import { OrderItemAdditionalServiceFragment } from '../../orders/fragments/OrderItemAdditionalServiceFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
   | 'additionalService'
@@ -44,22 +44,7 @@ export const ComplaintOrderedItemFragment = gql`
     priceWithVat
   }
   relatedItems {
-    __typename
-    uuid
-    name
-    catnum
-    quantity
-    unit
-    type
-    mainImage {
-      ...ImageFragment
-    }
-    unitPrice {
-      ...PriceFragment
-    }
-    totalPrice {
-      ...PriceFragment
-    }
+    ...OrderItemAdditionalServiceFragment
   }
   order {
     uuid
@@ -79,5 +64,5 @@ export const ComplaintOrderedItemFragment = gql`
     }
   }
 }
-    ${ImageFragment}
-${PriceFragment}`;
+    ${OrderItemAdditionalServiceFragment}
+${ImageFragment}`;

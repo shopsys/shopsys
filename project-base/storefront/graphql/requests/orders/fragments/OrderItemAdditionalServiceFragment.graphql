@@ -1,0 +1,18 @@
+fragment OrderItemAdditionalServiceFragment on OrderItem {
+    __typename
+    uuid
+    name
+    catnum
+    quantity
+    unit
+    type
+    mainImage {
+        ...ImageFragment
+    }
+    unitPrice {
+        ...PriceFragment
+    }
+    totalPrice {
+        ...PriceFragment
+    }
+}
