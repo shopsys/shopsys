@@ -1,0 +1,13 @@
+{%- set limit = limit|default(10) -%}
+{%- if stores is empty -%}
+    <span class="text-secondary">{{ 'Not assigned to any store'|trans }}</span>
+{%- else -%}
+    {%- for store in stores|slice(0, limit) -%}
+        <a href="{{ url('admin_store_edit', { id: store.id }) }}" class="badge badge-pill bg-secondary-lt" target="_blank" rel="noopener">
+            {{- store.name }} ({{ getDomainName(store.domainId) }})
+        </a>
+    {% endfor -%}
+    {%- if stores|length > limit -%}
+        <a href="{{ url('admin_store_list') }}" target="_blank" rel="noopener">{{ 'and %count% more'|trans({ '%count%': stores|length - limit }) }}</a>
+    {%- endif -%}
+{%- endif -%}

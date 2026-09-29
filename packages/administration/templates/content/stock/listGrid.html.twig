@@ -7,6 +7,12 @@
     {% endfor %}
 {% endblock %}
 
+{% block grid_value_cell_id_stores %}
+    <div class="badges-list">
+        {% include '@ShopsysAdministration/partial/store_links.html.twig' with { stores: storesByStockId[row.s.id] | default([]) } only %}
+    </div>
+{% endblock %}
+
 {% block grid_pager_totalcount %}
     {% set entityName = 'Warehouse'|trans %}
     {{ parent() }}

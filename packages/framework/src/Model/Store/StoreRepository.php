@@ -141,6 +141,27 @@ class StoreRepository
     }
 
     /**
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Store\Store[]>
+     */
+    public function getStoresIndexedByStockId(): array
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store[] $stores */
+        $stores = $this->getAllStoresQueryBuilder()
+            ->andWhere('s.stock IS NOT NULL')
+            ->addOrderBy('s.domainId', SortDirection::Ascending)
+            ->getQuery()
+            ->getResult();
+
+        $storesByStockId = [];
+
+        foreach ($stores as $store) {
+            $storesByStockId[$store->getStock()->getId()][] = $store;
+        }
+
+        return $storesByStockId;
+    }
+
+    /**
      * @return int[]
      */
     public function getStoreCountsByDomainIdIndexedByStockId(int $domainId): array

@@ -144,6 +144,14 @@ class StoreFacade
     }
 
     /**
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Store\Store[]>
+     */
+    public function getStoresIndexedByStockId(): array
+    {
+        return $this->storeRepository->getStoresIndexedByStockId();
+    }
+
+    /**
      * @return int[]
      */
     public function getStoreCountsByDomainIdIndexedByStockId(int $domainId): array

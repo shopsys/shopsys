@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,7 @@ class StockController extends AdminBaseController
         protected readonly StockSettingsDataFacade $stockSettingsDataFacade,
         protected readonly StockSettingsDataFactory $stockSettingsDataFactory,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly StoreFacade $storeFacade,
     ) {
     }
 
@@ -229,6 +231,7 @@ class StockController extends AdminBaseController
         $grid = $this->gridFactory->create('stockList', $dataSource, AdminRoleConstant::ROLE_STOCK);
 
         $grid->addColumn('name', 's.name', t('Name'));
+        $grid->addColumn('stores', 's.id', t('Stores'));
         $grid->setDefaultOrder('s.position');
 
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
@@ -239,6 +242,7 @@ class StockController extends AdminBaseController
 
         $grid->setTheme('@ShopsysAdministration/content/stock/listGrid.html.twig', [
             'defaultDomainIdsByStockId' => $this->stockFacade->getDefaultDomainIdsIndexedByStockId(),
+            'storesByStockId' => $this->storeFacade->getStoresIndexedByStockId(),
         ]);
 
         return $grid;

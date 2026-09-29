@@ -56,13 +56,16 @@ class StoreController extends AdminBaseController
     protected function getGrid(): Grid
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-        $queryBuilder = $this->storeFacade->getStoresByDomainIdQueryBuilder($domainId);
+        $queryBuilder = $this->storeFacade->getStoresByDomainIdQueryBuilder($domainId)
+            ->leftJoin('s.stock', 'st')
+            ->addSelect('st');
 
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 's.id');
 
         $grid = $this->gridFactory->create('storeList', $dataSource, AdminRoleConstant::ROLE_STORE);
 
         $grid->addColumn('name', 's.name', t('Name'));
+        $grid->addColumn('stock', 'st.name', t('Warehouse'));
         $grid->setDefaultOrder('s.position');
 
         $grid->addEditActionColumn('admin_store_edit', ['id' => 's.id']);

@@ -1612,11 +1612,17 @@ msgstr "Doposud se nikdo nepřihlásil k odběru newsletteru."
 msgid "No units found. You have to create some first."
 msgstr "Nebyly nalezeny žádné jednotky. Nejprve musíte nějaké vytvořit."
 
+msgid "No warehouse associated"
+msgstr "Žádný sklad není přiřazen"
+
 msgid "No watchdog found."
 msgstr "Žádný hlídací pes nebyl nalezen"
 
 msgid "No withdrawal request data."
 msgstr "Nejsou dostupná žádná data žádosti o odstoupení."
+
+msgid "Not assigned to any store"
+msgstr "Žádná prodejna není přiřazena"
 
 msgid "Not granted"
 msgstr "Neuděleno"
@@ -2727,6 +2733,9 @@ msgstr "administrátorů"
 
 msgid "advertisings"
 msgstr "reklam"
+
+msgid "and %count% more"
+msgstr "[1,4] a %count% další|[5,Inf] a %count% dalších"
 
 msgid "articles"
 msgstr "článků"

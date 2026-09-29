@@ -1612,11 +1612,17 @@ msgstr "Neboli nájdení žiadni odoberatelia."
 msgid "No units found. You have to create some first."
 msgstr "Neboli nájdené žiadne jednotky. Najskôr musíte nejaké vytvoriť."
 
+msgid "No warehouse associated"
+msgstr "Žiadny sklad nie je priradený"
+
 msgid "No watchdog found."
 msgstr "Nebol nájdený žiadny watchdog."
 
 msgid "No withdrawal request data."
 msgstr "Nie sú dostupné žiadne údaje žiadosti o odstúpenie."
+
+msgid "Not assigned to any store"
+msgstr "Žiadna predajňa nie je priradená"
 
 msgid "Not granted"
 msgstr "Neudelené"
@@ -2727,6 +2733,9 @@ msgstr "administrátorov"
 
 msgid "advertisings"
 msgstr "reklám"
+
+msgid "and %count% more"
+msgstr "{1} a %count% ďalšia|[2,4] a %count% ďalšie|[5,Inf] a %count% ďalších"
 
 msgid "articles"
 msgstr "článkov"

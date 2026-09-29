@@ -1612,10 +1612,16 @@ msgstr ""
 msgid "No units found. You have to create some first."
 msgstr ""
 
+msgid "No warehouse associated"
+msgstr ""
+
 msgid "No watchdog found."
 msgstr ""
 
 msgid "No withdrawal request data."
+msgstr ""
+
+msgid "Not assigned to any store"
 msgstr ""
 
 msgid "Not granted"
@@ -2726,6 +2732,9 @@ msgid "administrators"
 msgstr ""
 
 msgid "advertisings"
+msgstr ""
+
+msgid "and %count% more"
 msgstr ""
 
 msgid "articles"
