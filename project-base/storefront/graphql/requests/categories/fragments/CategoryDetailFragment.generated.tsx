@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { HreflangLinksFragment } from '../../hreflangLinks/fragments/HreflangLinksFragment.generated';
 import { BreadcrumbFragment } from '../../breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { ListedCategoryFragment } from './ListedCategoryFragment.generated';
 import { ListedProductConnectionPreviewFragment } from '../../products/fragments/ListedProductConnectionPreviewFragment.generated';
 import { CategoryBestsellerFragment } from './CategoryBestsellerFragment.generated';
 /** Product Availability statuses */
@@ -52,7 +53,7 @@ export type TypeProductTypeEnum =
   /** Gift voucher delivered printed as a regular product */
   | 'PRINTED_GIFT_VOUCHER';
 
-export type TypeCategoryDetailFragment = { __typename: 'Category', id: number, uuid: string, slug: string, originalCategorySlug: string | null, zboziCategory: string | null, name: string, description: string | null, seoH1: string | null, seoTitle: string | null, seoMetaDescription: string | null, automatedFilters: Array<Types.TypeCategoryAutomatedFilterEnum>, images: Array<{ __typename: 'Image', name: string | null, url: string }>, readyCategorySeoMixLinks: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ hreflang: string, href: string }>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, categoryHierarchy: Array<{ id: number, name: string }>, children: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } }>, products: { __typename: 'ProductConnection', orderingMode: Types.TypeProductOrderingModeEnum, defaultOrderingMode: Types.TypeProductOrderingModeEnum | null, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<
+export type TypeCategoryDetailFragment = { __typename: 'Category', id: number, uuid: string, slug: string, originalCategorySlug: string | null, zboziCategory: string | null, name: string, description: string | null, seoH1: string | null, seoTitle: string | null, seoMetaDescription: string | null, automatedFilters: Array<Types.TypeCategoryAutomatedFilterEnum>, images: Array<{ __typename: 'Image', name: string | null, url: string }>, readyCategorySeoMixLinks: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ hreflang: string, href: string }>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, categoryHierarchy: Array<{ id: number, name: string }>, children: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }>, products: { __typename: 'ProductConnection', orderingMode: Types.TypeProductOrderingModeEnum, defaultOrderingMode: Types.TypeProductOrderingModeEnum | null, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<
         | { __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> }
         | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean, colorIcon: { url: string, anchorText: string } | null }> }
         | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, isSelectable: boolean, unit: { __typename: 'Unit', name: string } | null }
@@ -94,17 +95,7 @@ export const CategoryDetailFragment = gql`
     name
   }
   children {
-    __typename
-    uuid
-    name
-    slug
-    mainImage {
-      ...ImageFragment
-    }
-    products {
-      __typename
-      totalCount
-    }
+    ...ListedCategoryFragment
   }
   products(orderingMode: $orderingMode, filter: $filter) {
     ...ListedProductConnectionPreviewFragment
@@ -117,5 +108,6 @@ export const CategoryDetailFragment = gql`
     ${ImageFragment}
 ${HreflangLinksFragment}
 ${BreadcrumbFragment}
+${ListedCategoryFragment}
 ${ListedProductConnectionPreviewFragment}
 ${CategoryBestsellerFragment}`;

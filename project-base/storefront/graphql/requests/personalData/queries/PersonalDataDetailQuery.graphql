@@ -9,7 +9,10 @@ query PersonalDataDetailQuery($hash: String!) {
             number
             creationDate
             items {
-                ...OrderDetailItemFragment
+                __typename
+                uuid
+                type
+                name
             }
             firstName
             lastName
@@ -33,14 +36,35 @@ query PersonalDataDetailQuery($hash: String!) {
                 ...CountryFragment
             }
             productItems {
-                ...OrderDetailItemFragment
+                __typename
+                uuid
+                quantity
             }
             totalPrice {
                 priceWithVat
             }
         }
         customerUser {
-            ...BaseCustomerUserFragment
+            __typename
+            uuid
+            firstName
+            lastName
+            email
+            telephone
+            street
+            city
+            postcode
+            country {
+                ...CountryFragment
+            }
+            deliveryAddresses {
+                ...DeliveryAddressFragment
+            }
+            ... on CompanyCustomerUser {
+                companyName
+                companyNumber
+                companyTaxNumber
+            }
         }
         newsletterSubscriber {
             __typename

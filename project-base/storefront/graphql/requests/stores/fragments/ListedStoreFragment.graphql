@@ -19,7 +19,4 @@ fragment ListedStoreFragment on Store {
     country {
         ...CountryFragment
     }
-    mainImage {
-        ...ImageFragment
-    }
 }

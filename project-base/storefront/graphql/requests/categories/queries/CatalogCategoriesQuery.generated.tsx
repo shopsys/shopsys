@@ -6,25 +6,19 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
+import { ListedCategoryFragment } from '../fragments/ListedCategoryFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCatalogCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeCatalogCategoriesQuery = { categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> }> };
+export type TypeCatalogCategoriesQuery = { categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, children: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> };
 
 
 export const CatalogCategoriesQueryDocument = gql`
     query CatalogCategoriesQuery {
   categories {
-    __typename
-    uuid
-    name
-    slug
-    mainImage {
-      ...ImageFragment
-    }
+    ...ListedCategoryFragment
     children {
       __typename
       uuid
@@ -33,7 +27,7 @@ export const CatalogCategoriesQueryDocument = gql`
     }
   }
 }
-    ${ImageFragment}`;
+    ${ListedCategoryFragment}`;
 
 export function useCatalogCategoriesQuery(options?: Omit<Urql.UseQueryArgs<TypeCatalogCategoriesQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeCatalogCategoriesQuery, TypeCatalogCategoriesQueryVariables>({ query: CatalogCategoriesQueryDocument, ...options });

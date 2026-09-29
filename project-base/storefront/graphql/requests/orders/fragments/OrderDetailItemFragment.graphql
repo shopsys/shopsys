@@ -13,25 +13,9 @@ fragment OrderDetailItemFragment on OrderItem {
     quantity
     unit
     type
-    catnum
     relatedItems {
-        __typename
-        uuid
-        name
-        catnum
-        quantity
-        unit
-        type
+        ...OrderItemAdditionalServiceFragment
         deliveryDaysExtension
-        mainImage {
-            ...ImageFragment
-        }
-        unitPrice {
-            ...PriceFragment
-        }
-        totalPrice {
-            ...PriceFragment
-        }
     }
     order {
         uuid
