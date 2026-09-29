@@ -1,11 +1,11 @@
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { mapGtmListedProductType } from 'gtm/mappers/mapGtmListedProductType';
 import { GtmProductListViewEventType } from 'gtm/types/events';
 
 export const getGtmProductListViewEvent = (
-    products: TypeListedProductFragment[],
+    products: TypeCompactProductFragment[],
     gtmProductListName: GtmProductListNameType,
     currentPageWithLoadMore: number,
     pageSize: number,

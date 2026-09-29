@@ -36,6 +36,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
             </SearchResultSectionTitle>
 
             <ProductsSlider
+                cardVariant="compact"
                 ariaAnchorName="product-slider-autocomplete"
                 gtmProductListName={GtmProductListNameType.autocomplete_search_results}
                 isWithArrows={false}

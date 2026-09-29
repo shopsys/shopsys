@@ -31,6 +31,7 @@ export const AutocompleteFavoritesResult: FC<AutocompleteFavoritesResultProps> =
                     <SearchResultSectionTitle>{t('Products')}</SearchResultSectionTitle>
 
                     <ProductsSlider
+                        cardVariant="compact"
                         ariaAnchorName="product-slider-autocomplete-favorites"
                         gtmProductListName={GtmProductListNameType.autocomplete_favorites}
                         highlightFirstItemBadgeText={t('Top pick')}

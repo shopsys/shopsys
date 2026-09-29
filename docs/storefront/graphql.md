@@ -76,6 +76,20 @@ Prefer inference where no explicit contract is needed, such as mapping connectio
 
 Preserve `__typename`, field aliases, arguments, directives and type conditions when inlining. For example, article links keep their `... on ArticleLink` condition, and parameter filters retain their checkbox, color and slider inline fragments. `__typename` is needed by application logic and URQL cache reads; see [best practices](./best-practises.md).
 
+### Shared items, operation-specific lists
+
+Share a cohesive item contract without forcing every consumer to fetch the same surrounding list metadata. Autocomplete selects only `totalCount` and `edges` (with their `__typename` fields), while full search additionally needs filters, ordering and pagination. `SearchQuery` and `SearchProductsQuery` share these full-search requirements through `SearchResultsConnectionFragment`; autocomplete does not use it. Keep different requirements in their owning operations instead of adding optional fields to a handwritten response type.
+
+Before splitting an item fragment, check all consumers, including analytics, cache updates and conditional UI. A field hidden by a compact card can still be required by its analytics event. Extract a smaller shared contract only when the consumers genuinely need different data and the saving justifies the additional component and type boundaries. Avoid both a universal fragment that accumulates unrelated requirements and tiny fragments for every group of fields.
+
+Removing a requested field can save more than response bytes when its resolver performs work lazily. Autocomplete no longer requests `productFilterOptions`, so the standard product connection does not invoke its filter-options closure. This does not eliminate product retrieval or result counting, and other search providers may compute facets as part of their search request. Measure before claiming a latency improvement.
+
+### Separate display, actions and page details
+
+`CompactProductFragment` is the shared display and analytics contract for autocomplete, favorites and last-visited cards. `ListedProductFragment` spreads it and adds the stock, unit and pickup fields used by full shopping cards. Shared display fields are maintained once. Both variants accept their generated fragment types; compact cards do not initialize cart or wishlist/comparison action hooks. Select the card with `cardVariant="compact"`, independently of the slider's layout `variant`. Compact configuration cannot enable purchase controls without the full data contract.
+
+Reuse already-loaded data before introducing another request: product JSON-LD reads the initial five newest reviews from product detail; the review query remains available for pagination and sorting. Similarly, cart-change messages use a small named item contract while live cart items and cart mutation responses retain their complete state. A mutation that only invalidates a list can return identity, but that is not a general rule for all mutations.
+
 ### Connectors and verification
 
 Keep adapters that perform real transformations, such as normalizing nullable customer fields for forms or flattening telephone data. A generated API response and a form model have different responsibilities. Do not add a connector or duplicate response interface merely to rename a generated type.

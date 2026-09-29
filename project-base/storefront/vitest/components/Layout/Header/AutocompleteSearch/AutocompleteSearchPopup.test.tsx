@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AutocompleteSearchPopup } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearchPopup';
 import { type TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { describe, expect, test, vi } from 'vitest';
 
 const mockRouterPush = vi.fn();
@@ -36,19 +35,7 @@ const autocompleteSearchResults = {
     categoriesSearch: { __typename: 'CategoryConnection', totalCount: 0, edges: [] },
     productsSearch: {
         __typename: 'ProductConnection',
-        defaultOrderingMode: null,
         edges: [],
-        orderingMode: TypeProductOrderingModeEnum.Relevance,
-        pageInfo: { hasNextPage: false },
-        productFilterOptions: {
-            __typename: 'ProductFilterOptions',
-            brands: [],
-            flags: [],
-            inStock: 0,
-            maximalPrice: '0',
-            minimalPrice: '0',
-            parameters: [],
-        },
         totalCount: 0,
     },
 } satisfies TypeAutocompleteSearchQuery;
