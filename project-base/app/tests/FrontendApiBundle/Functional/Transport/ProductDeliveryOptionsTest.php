@@ -149,7 +149,7 @@ final class ProductDeliveryOptionsTest extends GraphQlTestCase
     public function testStoreExpectedDeliveryDateForProductMatchesTheCalculation(): void
     {
         $personalPickupTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::IN_STOCK_PRODUCT_REFERENCE_ID, Product::class);
 
         $storeNodesByUuid = $this->getDeliveryStoreNodesIndexedByStoreUuid($product, $personalPickupTransport);

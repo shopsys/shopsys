@@ -19,7 +19,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
 
     public function testCreateOrderWithPersonalPickupStore(): void
     {
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
 
         $expected = [
             'deliveryFirstName' => 'firstName',

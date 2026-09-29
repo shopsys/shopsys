@@ -139,7 +139,7 @@ class ProductTest extends GraphQlTestCase
                 'name' => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
-            'stockQuantity' => 2700,
+            'stockQuantity' => 2400,
             'imagesCount' => 2,
             'isAllowedNegativeStock' => true,
             'expectedRestockingDate' => null,
@@ -386,7 +386,7 @@ class ProductTest extends GraphQlTestCase
                     $firstDomainLocale,
                 ),
             ],
-            'availableStoresCount' => 1,
+            'availableStoresCount' => 7,
             'breadcrumb' => [
                 [
                     'name' => $mainCategory->getName($firstDomainLocale),

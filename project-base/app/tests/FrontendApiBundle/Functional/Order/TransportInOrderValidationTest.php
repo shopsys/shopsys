@@ -102,7 +102,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testDeletedPickupPlaceUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPersonal, $store->getUuid());
         $this->storeFacade->delete($store->getId());
@@ -120,7 +120,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testRequiredPickupPlaceIdentifier(): void
     {
         $this->addCardPaymentToDemoCart();
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $demoCartUuid = CartDataFixture::CART_UUID;
         $this->addTransportToCart($demoCartUuid, $transportPersonal, $store->getUuid());

@@ -147,7 +147,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     'name' => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'status' => AvailabilityStatusEnum::IN_STOCK,
                 ],
-                'stockQuantity' => 900,
+                'stockQuantity' => 800,
                 'categories' => [
                     [
                         'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

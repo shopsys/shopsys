@@ -173,7 +173,7 @@ class CartTransportTest extends GraphQlTestCase
     public function testTransportPickupPlaceIdentifierIsReturnedFromCart(): void
     {
         $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $pickupPlaceIdentifier = $store->getUuid();
         $getCartQuery = '{
             cart(cartInput: {
@@ -192,7 +192,7 @@ class CartTransportTest extends GraphQlTestCase
     public function testTransportPickupPlaceIdentifierIsReturnedAfterAddingToCart(): void
     {
         $response = $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $pickupPlaceIdentifier = $store->getUuid();
         $responseData = $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
 
@@ -205,7 +205,7 @@ class CartTransportTest extends GraphQlTestCase
         $pickupPlaceIdentifier = null;
 
         if ($transportReferenceName === TransportDataFixture::TRANSPORT_PERSONAL) {
-            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+            $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
             $pickupPlaceIdentifier = $store->getUuid();
         }
 

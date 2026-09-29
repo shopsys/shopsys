@@ -58,7 +58,7 @@ class TotalItemsPriceBeforeDiscountTest extends GraphQlTestCase
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         $testingTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $pickupPlaceIdentifier = $store->getUuid();
         $this->addTransportToCart($newlyCreatedCart, $testingTransport, $pickupPlaceIdentifier);
 

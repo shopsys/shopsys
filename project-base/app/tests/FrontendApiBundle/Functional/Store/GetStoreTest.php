@@ -123,7 +123,7 @@ class GetStoreTest extends GraphQlTestCase
     #[Group('multidomain')]
     public function testStoreOnSecondDomainIsNotAvailable(): void
     {
-        $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 9, Store::class);
+        $storeOnSecondDomain = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, Domain::SECOND_DOMAIN_ID, Store::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
             'uuid' => $storeOnSecondDomain->getUuid(),
@@ -136,6 +136,7 @@ class GetStoreTest extends GraphQlTestCase
             $errors['message'],
         );
 
+        // slug of a store that exists only on the Slovak domain, Czech slugs exist on the first domain as well
         $urlSlug = 'zilina';
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
             'slug' => $urlSlug,
@@ -190,7 +191,7 @@ class GetStoreTest extends GraphQlTestCase
     public function testGetStoreOpeningHours(
         array $openingRangesModifiers,
         bool $isPublicHolidayToday,
-        array $publicHolidayExcludedStoresIds,
+        array $publicHolidayExcludedStoreReferences,
         string $expectedStatus,
         array $expectedOpeningRangesModifiers,
     ): void {
@@ -199,7 +200,7 @@ class GetStoreTest extends GraphQlTestCase
 
         if ($isPublicHolidayToday) {
             $today = (new DatePoint())->setTimezone(new DateTimeZone('Europe/Prague'))->modify('today');
-            $this->createClosedDay($today, $publicHolidayExcludedStoresIds);
+            $this->createClosedDay($today, $publicHolidayExcludedStoreReferences);
         }
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreOpeningHoursQuery.graphql', [
@@ -227,7 +228,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '-2 hour', 'closingTime' => '+2 hour'],
             ],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-2 hour', 'closingTime' => '+2 hour'],
@@ -239,7 +240,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
             'isPublicHolidayToday' => true,
-            'publicHolidayExcludedStoresIds' => [1],
+            'publicHolidayExcludedStoreReferences' => [StoreDataFixture::STORE_FIRST],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
@@ -251,7 +252,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
             'isPublicHolidayToday' => true,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [],
         ];
@@ -259,7 +260,7 @@ class GetStoreTest extends GraphQlTestCase
         yield 'store not opened at all' => [
             'openingRangesModifiers' => [],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [],
         ];
@@ -269,7 +270,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
             ],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
@@ -281,7 +282,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
             ],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
@@ -293,7 +294,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
             ],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
@@ -307,7 +308,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
             ],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
@@ -323,7 +324,7 @@ class GetStoreTest extends GraphQlTestCase
                 ['openingTime' => '+2 hour', 'closingTime' => '+3 hour'],
             ],
             'isPublicHolidayToday' => false,
-            'publicHolidayExcludedStoresIds' => [],
+            'publicHolidayExcludedStoreReferences' => [],
             'expectedStatus' => StoreOpeningTypeEnum::STATUS_CLOSED_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
@@ -512,18 +513,19 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param string[] $storesIds
+     * @param string[] $excludedStoreReferences
      */
-    private function createClosedDay(DateTimeImmutable $date, array $storesIds = []): ClosedDay
+    private function createClosedDay(DateTimeImmutable $date, array $excludedStoreReferences = []): ClosedDay
     {
         $closedDayData = $this->closedDayDataFactory->create();
 
         $closedDayData->domainId = $this->domain->getId();
         $closedDayData->name = '';
         $closedDayData->date = $date;
-        $closedDayData->excludedStores = array_map(function (string $storeId): Store {
-            return $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId), Store::class);
-        }, $storesIds);
+        $closedDayData->excludedStores = array_map(
+            fn (string $storeReference): Store => $this->getReferenceForDomain($storeReference, $this->domain->getId(), Store::class),
+            $excludedStoreReferences,
+        );
 
         return $this->closedDayFacade->create($closedDayData);
     }
