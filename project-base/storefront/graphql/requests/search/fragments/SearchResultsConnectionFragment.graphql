@@ -1,0 +1,14 @@
+fragment SearchResultsConnectionFragment on ProductConnection {
+    orderingMode
+    defaultOrderingMode
+    totalCount
+    productFilterOptions {
+        ...ProductFilterOptionsFragment
+    }
+    ...ListedProductConnectionFragment
+    edges {
+        node {
+            imagesCount
+        }
+    }
+}

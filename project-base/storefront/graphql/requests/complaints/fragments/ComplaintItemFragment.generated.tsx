@@ -4,20 +4,9 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { OrderDetailItemFragment } from '../../orders/fragments/OrderDetailItemFragment.generated';
+import { OrderItemAdditionalServiceFragment } from '../../orders/fragments/OrderItemAdditionalServiceFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { FileFragment } from '../../files/fragments/FileFragment.generated';
-/** Product Availability statuses */
-export type TypeAvailabilityStatusEnum =
-  /** Product availability status for electronically delivered products */
-  | 'Digital'
-  /** Product is out of stock with a known expected restocking date */
-  | 'ExpectedRestock'
-  /** Product availability status in stock */
-  | 'InStock'
-  /** Product availability status out of stock */
-  | 'OutOfStock';
-
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
   | 'additionalService'
@@ -29,34 +18,7 @@ export type TypeOrderItemTypeEnum =
   | 'rounding'
   | 'transport';
 
-/** One of possible product types */
-export type TypeProductTypeEnum =
-  /** Basic product */
-  | 'BASIC'
-  /** Gift voucher delivered by email after the order is paid */
-  | 'ELECTRONIC_GIFT_VOUCHER'
-  /** Product with inquiry form instead of add to cart button */
-  | 'INQUIRY'
-  /** Gift voucher delivered printed as a regular product */
-  | 'PRINTED_GIFT_VOUCHER';
-
-/** One of the possible methods of the transport type */
-export type TypeTransportTypeEnum =
-  | 'common'
-  | 'email'
-  | 'packetery'
-  | 'personal_pickup';
-
-export type TypeComplaintItemFragment = { uuid: string, quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, deliveryDaysExtension: number | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string, customerUser:
-        | { uuid: string }
-        | { uuid: string }
-        | { uuid: string }
-        | { uuid: string }
-       | null, withdrawalRequest: { __typename: 'OrderWithdrawalRequest' } | null }, product:
-      | { fullName: string, uuid: string, catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, mainCategory: { name: string } | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-      | { fullName: string, uuid: string, catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, mainCategory: { name: string } | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-      | { fullName: string, uuid: string, catalogNumber: string, slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, isCurrentlyOutOfStock: boolean, promotionBuyQuantity: number | null, promotionFreeQuantity: number | null, mainCategory: { name: string } | null, categories: Array<{ name: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { name: string, status: Types.TypeAvailabilityStatusEnum } }
-     | null, transport: { name: string, transportTypeCode: Types.TypeTransportTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null, payment: { name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null, files: Array<{ __typename: 'File', anchorText: string, url: string, viewUrl: string | null, filesize: number | null, extension: string | null }> | null, product:
+export type TypeComplaintItemFragment = { uuid: string, quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', deliveryDaysExtension: number | null, uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }> } | null, files: Array<{ __typename: 'File', anchorText: string, url: string, viewUrl: string | null, filesize: number | null, extension: string | null }> | null, product:
     | { fullName: string, slug: string, isVisible: boolean, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
     | { fullName: string, slug: string, isVisible: boolean, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
     | { fullName: string, slug: string, isVisible: boolean, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
@@ -68,7 +30,16 @@ export const ComplaintItemFragment = gql`
   quantity
   description
   orderItem {
-    ...OrderDetailItemFragment
+    __typename
+    uuid
+    unit
+    totalPrice {
+      priceWithVat
+    }
+    relatedItems {
+      ...OrderItemAdditionalServiceFragment
+      deliveryDaysExtension
+    }
   }
   files {
     ...FileFragment
@@ -87,6 +58,6 @@ export const ComplaintItemFragment = gql`
   catnum
   productName
 }
-    ${OrderDetailItemFragment}
+    ${OrderItemAdditionalServiceFragment}
 ${FileFragment}
 ${ImageFragment}`;

@@ -10,8 +10,7 @@ import { SimpleArticleInterfaceFragment } from '../../articlesInterface/fragment
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { ListedBrandFragment } from '../../brands/fragments/ListedBrandFragment.generated';
 import { SimpleCategoryFragment } from '../../categories/fragments/SimpleCategoryFragment.generated';
-import { ProductFilterOptionsFragment } from '../../productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { ListedProductConnectionFragment } from '../../products/fragments/ListedProductConnectionFragment.generated';
+import { SearchResultsConnectionFragment } from '../fragments/SearchResultsConnectionFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Product Availability statuses */
@@ -136,26 +135,14 @@ export const SearchQueryDocument = gql`
     first: $pageSize
     searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
-    orderingMode
-    defaultOrderingMode
-    totalCount
-    productFilterOptions {
-      ...ProductFilterOptionsFragment
-    }
-    ...ListedProductConnectionFragment
-    edges {
-      node {
-        imagesCount
-      }
-    }
+    ...SearchResultsConnectionFragment
   }
 }
     ${SimpleArticleInterfaceFragment}
 ${ListedBrandFragment}
 ${SimpleCategoryFragment}
 ${ImageFragment}
-${ProductFilterOptionsFragment}
-${ListedProductConnectionFragment}`;
+${SearchResultsConnectionFragment}`;
 
 export function useSearchQuery(options: Omit<Urql.UseQueryArgs<TypeSearchQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeSearchQuery, TypeSearchQueryVariables>({ query: SearchQueryDocument, ...options });

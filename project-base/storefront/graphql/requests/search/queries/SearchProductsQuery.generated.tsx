@@ -6,8 +6,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ProductFilterOptionsFragment } from '../../productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { ListedProductConnectionFragment } from '../../products/fragments/ListedProductConnectionFragment.generated';
+import { SearchResultsConnectionFragment } from '../fragments/SearchResultsConnectionFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Product Availability statuses */
@@ -107,22 +106,10 @@ export const SearchProductsQueryDocument = gql`
     first: $pageSize
     searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
-    orderingMode
-    defaultOrderingMode
-    totalCount
-    productFilterOptions {
-      ...ProductFilterOptionsFragment
-    }
-    ...ListedProductConnectionFragment
-    edges {
-      node {
-        imagesCount
-      }
-    }
+    ...SearchResultsConnectionFragment
   }
 }
-    ${ProductFilterOptionsFragment}
-${ListedProductConnectionFragment}`;
+    ${SearchResultsConnectionFragment}`;
 
 export function useSearchProductsQuery(options: Omit<Urql.UseQueryArgs<TypeSearchProductsQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>({ query: SearchProductsQueryDocument, ...options });

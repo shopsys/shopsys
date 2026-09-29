@@ -20,7 +20,6 @@ vi.mock('next/image', () => ({
 
 const advert = {
     __typename: 'AdvertImage',
-    categories: [],
     link: null,
     mainImage: {
         __typename: 'Image',
@@ -34,7 +33,6 @@ const advert = {
     },
     name: 'Summer promotion',
     positionName: 'footer',
-    type: 'image',
     uuid: '8e6a3287-e691-457a-baf4-6ca6a67e10ac',
 } satisfies TypeAdvertsFragment_AdvertImage;
 
