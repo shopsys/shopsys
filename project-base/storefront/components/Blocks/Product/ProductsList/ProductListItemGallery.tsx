@@ -2,7 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { MediaCarouselPagination } from 'components/Basic/MediaCarousel/MediaCarouselPagination';
 import { MediaCarouselTrack, MediaCarouselTrackHandle } from 'components/Basic/MediaCarousel/MediaCarouselTrack';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import { useProductListItemImagesQuery } from 'graphql/requests/products/queries/ProductListItemImagesQuery.generated';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -12,7 +12,7 @@ type ProductListItemGalleryProps = {
     imageAlt: string;
     imageCount: number;
     imageSize: number;
-    product: TypeListedProductFragment;
+    product: TypeCompactProductFragment;
 };
 
 export type ProductListItemGalleryHandle = {

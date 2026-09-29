@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { ProductPrice } from './ProductPrice';
 import { ProductItemProps } from './ProductsList/ProductListItem';
@@ -7,9 +8,10 @@ import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceh
 import { getProductsSliderTwClass, type ProductsSliderProps, VISIBLE_SLIDER_ITEMS } from './ProductsSlider';
 
 type ProductsSliderPlaceholderProps = {
+    products: TypeListedProductFragment[];
     size?: ProductItemProps['size'];
     visibleItemsConfig?: ProductItemProps['visibleItemsConfig'];
-} & Pick<ProductsSliderProps, 'products' | 'variant' | 'visibleSliderItems'>;
+} & Pick<ProductsSliderProps, 'variant' | 'visibleSliderItems'>;
 
 export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
     products,
