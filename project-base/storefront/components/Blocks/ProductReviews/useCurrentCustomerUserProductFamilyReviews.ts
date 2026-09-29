@@ -1,6 +1,6 @@
 import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
-import { TypeCustomerUserProductReviewFragment } from 'graphql/requests/productReviews/fragments/CustomerUserProductReviewFragment.generated';
-import { useCurrentCustomerUserProductReviewsQuery } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated';
+import { TypeProductFamilyReviewFragment } from 'graphql/requests/productReviews/fragments/ProductFamilyReviewFragment.generated';
+import { useCurrentCustomerUserProductFamilyReviewsQuery } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductFamilyReviewsQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeProductReviewStatusEnum } from 'graphql/types';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ const OWN_REVIEWS_OF_PRODUCT_LIMIT = 50;
 
 type CurrentCustomerUserProductFamilyReviews = {
     isLoading: boolean;
-    pendingOwnReviews: TypeCustomerUserProductReviewFragment[];
+    pendingOwnReviews: TypeProductFamilyReviewFragment[];
     reviewedProductReviewUuid: string | null;
     reviewedProductUuids: Set<string>;
 };
@@ -36,7 +36,7 @@ export const useCurrentCustomerUserProductFamilyReviews = (
     const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
 
     const [{ data: currentCustomerUserProductReviewsData, fetching: areOwnReviewsFetching }] =
-        useCurrentCustomerUserProductReviewsQuery({
+        useCurrentCustomerUserProductFamilyReviewsQuery({
             variables: { productUuid, first: OWN_REVIEWS_OF_PRODUCT_LIMIT },
             pause: !isMounted || !isUserLoggedIn || !areProductReviewsEnabled,
         });

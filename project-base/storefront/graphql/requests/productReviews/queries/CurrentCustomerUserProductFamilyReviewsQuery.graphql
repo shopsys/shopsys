@@ -1,0 +1,9 @@
+query CurrentCustomerUserProductFamilyReviewsQuery($productUuid: Uuid!, $first: Int) {
+    currentCustomerUserProductReviews(productUuid: $productUuid, first: $first) {
+        edges {
+            node {
+                ...ProductFamilyReviewFragment
+            }
+        }
+    }
+}

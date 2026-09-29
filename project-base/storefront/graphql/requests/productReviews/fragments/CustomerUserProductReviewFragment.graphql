@@ -1,18 +1,9 @@
 fragment CustomerUserProductReviewFragment on ProductReview {
-    __typename
-    uuid
-    reviewerName
-    rating
-    text
-    createdAt
-    isVerifiedPurchase
+    ...ProductReviewFragment
     status
     rejectionReason
-    responseText
-    responseCreatedAt
     rejectedImagesCount
     productUuid
-    productName
     product {
         slug
         isVisible
@@ -20,8 +11,5 @@ fragment CustomerUserProductReviewFragment on ProductReview {
         mainImage {
             url
         }
-    }
-    images {
-        ...ImageFragment
     }
 }
