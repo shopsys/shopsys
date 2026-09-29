@@ -7,6 +7,8 @@ import { CatalogCategoriesQueryDocument } from 'graphql/requests/categories/quer
 import { CreateComplaintDocument } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { ComplaintQueryDocument } from 'graphql/requests/complaints/queries/ComplaintQuery.generated';
 import { PersonalDataDetailQueryDocument } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
+import { CreateProductReviewMutationDocument } from 'graphql/requests/productReviews/mutations/CreateProductReviewMutation.generated';
+import { CurrentCustomerUserProductFamilyReviewsQueryDocument } from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductFamilyReviewsQuery.generated';
 import { ProductDetailQueryDocument } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 import { SearchProductsQueryDocument } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
 import { SearchQueryDocument } from 'graphql/requests/search/queries/SearchQuery.generated';
@@ -39,6 +41,7 @@ describe('operation-owned data contracts', () => {
         expect(adverts).not.toContain('categories');
         expect(fieldsAt(StoresQueryDocument, ['stores', 'edges', 'node'])).not.toContain('mainImage');
         expect(fieldsAt(ProductDetailQueryDocument, ['product', 'gifts'])).not.toContain('giftPrice');
+        expect(fieldsAt(CreateProductReviewMutationDocument, ['CreateProductReview'])).toEqual(['__typename', 'uuid']);
     });
 
     test('full search operations keep identical root arguments for their shared result selection', () => {
@@ -85,6 +88,17 @@ describe('operation-owned data contracts', () => {
 
     test('catalog links do not resolve product counts', () => {
         expect(fieldsAt(CatalogCategoriesQueryDocument, ['categories'])).not.toContain('products');
+    });
+
+    test('product-family reviews keep moderation identity without account-page product details', () => {
+        const fields = fieldsAt(CurrentCustomerUserProductFamilyReviewsQueryDocument, [
+            'currentCustomerUserProductReviews',
+            'edges',
+            'node',
+        ]);
+        expect(fields).toEqual(expect.arrayContaining(['uuid', 'productUuid', 'status', 'rating', 'text', 'images']));
+        expect(fields).not.toContain('product');
+        expect(fields).not.toContain('rejectionReason');
     });
 
     test('blog homepage omits pagination while category retains next-page information', () => {
