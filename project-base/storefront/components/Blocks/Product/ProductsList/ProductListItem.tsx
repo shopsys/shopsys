@@ -5,12 +5,13 @@ import type { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import type { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { forwardRef } from 'react';
+import type { CurrentCartType } from 'types/cart';
 import type { FunctionComponentProps } from 'types/globals';
 import type { ProductListViewModeType } from 'types/product';
-import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { isProductSellable } from 'utils/product/isProductSellable';
 import { ProductListItemGridView } from './ProductListItemGridView';
 import { ProductListItemListView } from './ProductListItemListView';
+import { PREDEFINED_VISIBLE_ITEMS_CONFIGS } from './productListItemConstants';
 
 export type ProductVisibleItemsConfigType = {
     addToCart?: boolean;
@@ -26,6 +27,7 @@ export type ProductVisibleItemsConfigType = {
 export type { ProductListViewModeType } from 'types/product';
 
 export type ProductItemProps = {
+    currentCart: Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
     product: TypeListedProductFragment;
     listIndex: number;
     gtmProductListName: GtmProductListNameType;
@@ -50,6 +52,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     (
         {
             product,
+            currentCart,
             listIndex,
             gtmProductListName,
             gtmMessageOrigin,
@@ -73,11 +76,10 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     ) => {
         const { url } = useDomainConfig();
         const { canCreateOrder, canSeePrices } = useAuthorization();
-        const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
-        const currentCart = { cart, isCartFetchingOrUnavailable };
         const isProductActionDependentOnCart =
             visibleItemsConfig.addToCart && canCreateOrder && isProductSellable(product);
-        const shouldShowProductActionSkeleton = !!isProductActionDependentOnCart && isCartFetchingOrUnavailable;
+        const shouldShowProductActionSkeleton =
+            !!isProductActionDependentOnCart && currentCart.isCartFetchingOrUnavailable;
 
         const handleProductClick = () => {
             onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
@@ -136,24 +138,3 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 );
 
 ProductListItem.displayName = 'ProductItem';
-
-export const PREDEFINED_VISIBLE_ITEMS_CONFIGS = {
-    largeItem: {
-        productListButtons: true,
-        addToCart: true,
-        flags: true,
-        discount: false,
-        price: true,
-        storeAvailability: true,
-        priceFromWord: true,
-        reviews: true,
-    } as ProductVisibleItemsConfigType,
-    mediumItem: {
-        flags: true,
-        discount: false,
-        price: true,
-        storeAvailability: true,
-        priceFromWord: true,
-        reviews: true,
-    } as ProductVisibleItemsConfigType,
-} as const;

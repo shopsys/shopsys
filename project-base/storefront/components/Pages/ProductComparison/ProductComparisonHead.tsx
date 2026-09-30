@@ -2,9 +2,7 @@ import { TypeProductInProductListFragment } from 'graphql/requests/productLists/
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
-
-export const PRODUCT_COMPARISON_STICKY_TRIGGER_ID = 'js-product-comparison-sticky-trigger';
-export const PRODUCT_COMPARISON_END_TRIGGER_ID = 'js-table-compare-wrap';
+import { PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from './productComparisonConstants';
 
 type ProductComparisonHeadProps = {
     comparedProducts: TypeProductInProductListFragment[];

@@ -2,7 +2,7 @@ import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeliveryOptionsLink } from 'components/Blocks/Popup/DeliveryOptionsPopup/DeliveryOptionsLink';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
-import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/ProductAction';
+import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/productActionConstants';
 import { useOpenReviewPopupFromUrl } from 'components/Blocks/ProductReviews/useOpenReviewPopupFromUrl';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';

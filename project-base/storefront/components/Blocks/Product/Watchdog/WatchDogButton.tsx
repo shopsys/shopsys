@@ -1,12 +1,13 @@
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
-import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
+import { Button } from 'components/Forms/Button/Button';
+import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { WatchDogProductType } from 'types/product';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { showWatchdogButton } from 'utils/product/showWatchdogButton';
 
 const WatchdogPopup = dynamic(
     () => import('components/Blocks/Popup/WatchdogPopup').then((component) => component.WatchdogPopup),
@@ -14,13 +15,6 @@ const WatchdogPopup = dynamic(
         ssr: false,
     },
 );
-
-export const showWatchdogButton = (product: WatchDogProductType): boolean =>
-    !!product.uuid &&
-    !product.isInquiryType &&
-    (product.availability.status === TypeAvailabilityStatusEnum.OutOfStock ||
-        product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock ||
-        product.isSellingDenied);
 
 type WatchDogButtonProps = {
     className?: string;

@@ -2,7 +2,6 @@ import { Image } from 'components/Basic/Image/Image';
 import { MediaCarouselNavigationButton } from 'components/Basic/MediaCarousel/MediaCarouselNavigationButton';
 import { MediaCarouselPagination } from 'components/Basic/MediaCarousel/MediaCarouselPagination';
 import { MediaCarouselTrack, MediaCarouselTrackHandle } from 'components/Basic/MediaCarousel/MediaCarouselTrack';
-import { getYouTubeThumbnailUrl } from 'components/Basic/YouTubeThumbnail/YouTubeThumbnail';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
@@ -10,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
+import { getYouTubeThumbnailUrl } from 'utils/youtube/getYouTubeThumbnailUrl';
 
 import { ProductDetailGalleryItem } from './ProductDetailGallery.types';
 import { ProductDetailGallerySlide } from './ProductDetailGallerySlide';

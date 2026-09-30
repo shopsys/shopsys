@@ -90,7 +90,20 @@ class CategoryTest extends GraphQlTestCase
         $electronicsSlug = '/' . $this->transformStringHelper->createFriendlyUrlSlug($electronicsName);
 
         $this->assertSame($electronicsName, $responseData['name']);
-        $this->assertSame(t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['description']);
+        $this->assertSame(t(
+            'Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video '
+                . 'games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home '
+                . 'office activities (e.g., desktop computers, printers, paper shredders, etc.). Choose a television for movie nights, '
+                . 'a computer for work and study, or a mobile phone for staying in touch on the go. Explore cameras and accessories '
+                . 'for capturing everyday moments, printers for your home office, and audio equipment for listening to your favourite '
+                . 'music. When comparing devices, consider their size, performance, connectivity, and compatibility with the equipment '
+                . 'you already own. Use the subcategories to narrow your selection, then filter products by the features that matter '
+                . 'to you. Product details provide specifications and availability to help you compare your options. Whether you are '
+                . 'replacing a single device or equipping a new home, start with how and where you plan to use it.',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $this->getLocaleForFirstDomain(),
+        ), $responseData['description']);
         $this->assertSame($electronicsSlug, $responseData['slug']);
         $this->assertSame(t('Electronic devices', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['seoH1']);
         $this->assertSame(t('Electronic stuff', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['seoTitle']);

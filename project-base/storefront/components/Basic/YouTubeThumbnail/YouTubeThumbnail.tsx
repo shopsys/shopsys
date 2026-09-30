@@ -1,13 +1,11 @@
 import { Image } from 'components/Basic/Image/Image';
 import type { ComponentProps } from 'react';
 import { useEffect, useState } from 'react';
+import { getYouTubeThumbnailUrl } from 'utils/youtube/getYouTubeThumbnailUrl';
 
 type YouTubeThumbnailProps = Omit<ComponentProps<typeof Image>, 'onError' | 'src'> & {
     videoId: string;
 };
-
-export const getYouTubeThumbnailUrl = (videoId: string, isHighResolution = true) =>
-    `https://img.youtube.com/vi/${videoId}/${isHighResolution ? 'maxresdefault' : 'hqdefault'}.jpg`;
 
 export const YouTubeThumbnail: FC<YouTubeThumbnailProps> = ({ videoId, ...imageProps }) => {
     const [shouldUseFallback, setShouldUseFallback] = useState(false);

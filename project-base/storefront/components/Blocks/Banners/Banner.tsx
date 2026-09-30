@@ -14,7 +14,7 @@ type BannerProps = {
 const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, className }) => (
     <div
         className={twMergeCustom(
-            'mt-auto flex flex-col justify-center px-14 py-6 lg:absolute lg:right-0 lg:h-full lg:w-113.75',
+            'flex grow flex-col justify-center px-14 py-6 lg:absolute lg:right-0 lg:h-full lg:w-113.75',
             className,
         )}
         style={{

@@ -1,6 +1,5 @@
 import { useSessionStore } from 'store/useSessionStore';
-
-export const OVERLAY_PORTAL_ROOT_ID = 'overlay-portal-root';
+import { OVERLAY_PORTAL_ROOT_ID } from './portalConstants';
 
 export const Portal: FC = () => {
     const portalContent = useSessionStore((s) => s.portalContent);

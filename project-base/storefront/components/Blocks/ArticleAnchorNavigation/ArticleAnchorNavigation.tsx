@@ -7,8 +7,6 @@ import { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'utils/articleHeadingAnchors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
-export { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'utils/articleHeadingAnchors';
-
 type ArticleAnchorNavigationProps = {
     headings: ArticleHeading[];
 };

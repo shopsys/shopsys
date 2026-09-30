@@ -1,4 +1,5 @@
-import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/productsSliderConstants';
 import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';

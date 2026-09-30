@@ -1,4 +1,4 @@
-import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
+import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/portalConstants';
 import {
     PRODUCT_LIST_CONTROLS_ELEMENT_ID,
     scrollToProductListControls,

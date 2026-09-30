@@ -1,4 +1,5 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { Button } from 'components/Forms/Button/Button';
 import { AnimatePresence } from 'framer-motion';
 import { TypeCategoryBestsellerFragment } from 'graphql/requests/categories/fragments/CategoryBestsellerFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -90,19 +91,17 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
             </div>
 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
-                <div className="text-center">
-                    <button
-                        aria-controls="bestsellers-list"
-                        aria-expanded={!isCollapsed}
-                        aria-label={ariaLabel}
-                        className="cursor-pointer rounded-sm font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
-                        tabIndex={0}
-                        title={t('Toggle bestseller list')}
-                        onClick={handleShowMoreClick}
-                    >
-                        {isCollapsed ? showMoreLabel : showLessLabel}
-                    </button>
-                </div>
+                <Button
+                    aria-controls="bestsellers-list"
+                    aria-expanded={!isCollapsed}
+                    className="mx-auto flex"
+                    aria-label={ariaLabel}
+                    variant="tertiary"
+                    title={t('Toggle bestseller list')}
+                    onClick={handleShowMoreClick}
+                >
+                    {isCollapsed ? showMoreLabel : showLessLabel}
+                </Button>
             )}
         </div>
     );

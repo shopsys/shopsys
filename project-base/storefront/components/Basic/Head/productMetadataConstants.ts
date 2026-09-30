@@ -1,0 +1,1 @@
+export const STRUCTURED_DATA_REVIEWS_COUNT = 5;

@@ -7,7 +7,7 @@ import { TypeParameterTypeEnum } from 'graphql/types';
 import { Fragment, RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from './ProductDetailSections';
+import { PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
 
 type ProductDetailParametersSectionProps = {
     parameters: TypeParameterFragment[];

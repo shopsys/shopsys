@@ -8,14 +8,8 @@ import {
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { PromotedCategoriesQueryDocument } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import { PromotedProductsQueryDocument } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
-import {
-    RecommendedProductsQueryDocument,
-    TypeRecommendedProductsQueryVariables,
-} from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { SliderItemsQueryDocument } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
-import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
-import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -29,9 +23,9 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, t, cookiesStoreState }) =>
+    ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps<TypeBlogArticlesQueryVariables | TypeRecommendedProductsQueryVariables>({
+            initServerSideProps<TypeBlogArticlesQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,
@@ -40,20 +34,6 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     { query: SliderItemsQueryDocument },
                     { query: PromotedProductsQueryDocument },
                     { query: BlogArticlesQueryDocument, variables: BLOG_PREVIEW_VARIABLES },
-                    ...(domainConfig.isLuigisBoxActive
-                        ? [
-                              {
-                                  query: RecommendedProductsQueryDocument,
-                                  variables: {
-                                      itemUuids: [],
-                                      userIdentifier: cookiesStoreState.userIdentifier,
-                                      recommendationType: TypeRecommendationType.Personalized,
-                                      recommenderClientIdentifier: getRecommenderClientIdentifier(context.resolvedUrl),
-                                      limit: 10,
-                                  },
-                              },
-                          ]
-                        : []),
                 ],
                 t,
             }),

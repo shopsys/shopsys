@@ -51,7 +51,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                     <div className="flex size-12 w-auto items-center justify-center" aria-hidden="true">
                                         <Image
                                             alt=""
-                                            className="object-contain mix-blend-multiply"
+                                            className="h-auto max-h-full w-auto max-w-full rounded-md object-contain mix-blend-multiply"
                                             height={40}
                                             width={40}
                                             src={mainImageUrl}

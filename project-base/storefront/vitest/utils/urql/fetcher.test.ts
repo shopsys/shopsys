@@ -18,8 +18,9 @@ const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
 const mockRedisClientGet = vi.fn((): string | null => null);
-const mockRedisClientSet = vi.fn(() => null);
+const mockRedisClientSet = vi.fn(async (): Promise<string | null> => null);
 const mockRedisClient = {
+    isReady: true,
     get: mockRedisClientGet,
     set: mockRedisClientSet,
 } as unknown as RedisClientType;
@@ -109,7 +110,8 @@ describe('fetcher test', () => {
         isClientGetter.mockReset();
         isClientGetter.mockImplementation(() => false);
         mockRedisClientGet.mockReset();
-        mockRedisClientSet.mockClear();
+        mockRedisClientSet.mockReset();
+        Object.assign(mockRedisClient, { isReady: true });
         mockRedisClientGet.mockImplementation(() => null);
         mockRedisClientGet.mockImplementation((): string | null => null);
         mockFetch.mockImplementation(() =>
@@ -122,16 +124,48 @@ describe('fetcher test', () => {
         );
     });
 
-    test('using fetcher on the server without Redis should capture an exception in Sentry but still make a request', () => {
+    test('using fetcher on the server without Redis should skip cache and still make a request', () => {
         isClientGetter.mockImplementation(() => false);
 
         const testFetcher = fetcher(undefined);
         testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE);
 
-        expect(captureException).toBeCalledWith(
-            'Redis client was missing on server. This will cause the Redis cache to not work properly.',
-        );
+        expect(captureException).not.toBeCalled();
         expect(mockFetch).toBeCalledWith(TEST_URL, REQUEST_WITHOUT_DIRECTIVE);
+    });
+
+    test('bypasses cache while the shared connection is reconnecting', async () => {
+        Object.assign(mockRedisClient, { isReady: false });
+
+        await fetcher(mockRedisClient)(TEST_URL, REQUEST_WITH_DIRECTIVE);
+
+        expect(mockRedisClientGet).not.toHaveBeenCalled();
+        expect(mockRedisClientSet).not.toHaveBeenCalled();
+        expect(mockFetch).toHaveBeenCalledExactlyOnceWith(TEST_URL, REQUEST_WITHOUT_DIRECTIVE);
+    });
+
+    test('falls back to the backend when the connection fails during a cache read', async () => {
+        const error = new Error('Redis connection lost');
+        mockRedisClientGet.mockImplementationOnce(() => {
+            throw error;
+        });
+
+        const response = await fetcher(mockRedisClient)(TEST_URL, REQUEST_WITH_DIRECTIVE);
+
+        expect(await response.json()).toEqual({ data: TEST_RESPONSE_BODY });
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(captureException).toHaveBeenCalledWith(error);
+    });
+
+    test('returns the backend response without repeating the request when a cache write fails', async () => {
+        const error = new Error('Redis connection lost');
+        mockRedisClientSet.mockRejectedValueOnce(error);
+
+        const response = await fetcher(mockRedisClient)(TEST_URL, REQUEST_WITH_DIRECTIVE);
+
+        expect(await response.json()).toEqual({ data: TEST_RESPONSE_BODY });
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(captureException).toHaveBeenCalledWith(error);
     });
 
     test('using fetcher on the client should filter out the cache directive even if used with a Redis client', () => {

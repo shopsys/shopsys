@@ -3,7 +3,7 @@ import { ProductListItemPlaceholder } from 'components/Blocks/Product/ProductsLi
 import {
     productListTwClass,
     productListViewModeListTwClass,
-} from 'components/Blocks/Product/ProductsList/ProductsList';
+} from 'components/Blocks/Product/ProductsList/productsListConstants';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { CategoryDetailProductsWrapperProps } from './CategoryDetailProductsWrapper';

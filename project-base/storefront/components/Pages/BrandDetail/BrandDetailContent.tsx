@@ -1,4 +1,4 @@
-import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
+import { CollapsibleDescription } from 'components/Blocks/CollapsibleDescription/CollapsibleDescription';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
@@ -27,13 +27,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
 
     return (
         <VerticalStack gap="md">
-            <CollapsibleDescriptionWithImage
-                currentPage={currentPage}
-                description={brand.description}
-                imageName={brand.mainImage?.name || brand.name}
-                imageUrl={brand.mainImage?.url}
-                title={title}
-            />
+            <CollapsibleDescription currentPage={currentPage} description={brand.description} title={title} />
 
             <FilteredProductsWrapper>
                 <DeferredFilterPanel

@@ -2,11 +2,11 @@ import { DocumentNode } from 'graphql';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GetServerSidePropsContext } from 'next';
 import { Translate } from 'next-translate';
-import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { Client, OperationResult, SSRData, SSRExchange } from 'urql';
 import { CookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import type { AppRedisClient } from 'utils/redis/redisClient';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -41,13 +41,13 @@ export type InitServerSidePropsParameters<VariablesType> = {
 } & (
     | {
           client: Client;
-          redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
+          redisClient: AppRedisClient | undefined;
           ssrExchange: SSRExchange;
           t?: never;
       }
     | {
           client?: never;
-          redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
+          redisClient: AppRedisClient | undefined;
           ssrExchange?: SSRExchange;
           t: Translate;
       }
@@ -64,7 +64,7 @@ export type PrefetchLayoutParams<VariablesType> = {
 export type BuildServerSidePropsParams = {
     layoutResult: LayoutQueryResult;
     client: Client;
-    redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
+    redisClient: AppRedisClient | undefined;
     ssrExchange: SSRExchange;
     context: GetServerSidePropsContext;
     domainConfig: DomainConfigType;

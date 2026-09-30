@@ -9,8 +9,8 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
-import { VISIBLE_SLIDER_ITEMS_BASKET_POPUP } from './ProductsSlider';
 import { ProductsSliderPlaceholder } from './ProductsSliderPlaceholder';
+import { VISIBLE_SLIDER_ITEMS_BASKET_POPUP } from './productsSliderConstants';
 
 const ProductsSlider = dynamic(() => import('./ProductsSlider').then((component) => component.ProductsSlider), {
     ssr: false,
@@ -39,7 +39,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
             recommenderClientIdentifier: getRecommenderClientIdentifier(pathname),
             limit: 10,
         },
-        pause: !isLuigisBoxActive,
+        pause: !isLuigisBoxActive || !isClientMounted,
     });
 
     const shouldRender = useDeferredRender('recommended_products');
@@ -57,11 +57,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
         setIsClientMounted(true);
     }, []);
 
-    const shouldShowSkeleton =
-        (isClientMounted && areRecommendedProductsFetching) ||
-        (isBasketPopup && !recommendedProductsData?.recommendedProducts.length && areRecommendedProductsFetching);
-
-    if (shouldShowSkeleton) {
+    if (!isClientMounted || areRecommendedProductsFetching) {
         return render(
             <SkeletonModuleProductSlider
                 isHeadingHidden
