@@ -118,6 +118,19 @@ class DatagridTest extends TestCase
         $this->assertSame(['name'], $this->fetchedFieldNames);
     }
 
+    public function testClassIsSetToColumn(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $datagrid
+            ->add('name')
+            ->add('price', ['class' => 'text-end']);
+
+        $datagrid->createView();
+
+        $this->assertSame('', $this->columnsById['name']->getClassAttribute());
+        $this->assertSame('text-end', $this->columnsById['price']->getClassAttribute());
+    }
+
     public function testCombinedFieldIsOrderedByAllProperties(): void
     {
         $datagrid = $this->createDatagrid();

@@ -213,7 +213,8 @@ final class Datagrid
      *       transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
      *       property?: string|string[]|null,
      *       role?: string|null,
-     *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null
+     *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
+     *       class?: string|null
      *   } $options
      * @phpstan-param FieldOptions $options
      */
@@ -241,7 +242,8 @@ final class Datagrid
      *      transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
      *      property?: string|string[]|null,
      *      role?: string|null,
-     *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null
+     *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
+     *      class?: string|null
      *  } $options
      * @phpstan-param FieldOptions $options
      */
@@ -340,6 +342,10 @@ final class Datagrid
                 'template' => $field->getTemplate(),
                 'help' => $field->getHelp(),
             ]);
+
+            if ($field->getClass() !== null) {
+                $column->setClassAttribute($field->getClass());
+            }
 
             if ($field->hasMultipleProperties()) {
                 // the combined value is stored under the field name, so ordering must target the underlying properties instead

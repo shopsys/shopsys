@@ -83,6 +83,7 @@ class FieldDescriptorTest extends TestCase
         $this->assertFalse($fieldDescriptor->isRestricted());
         $this->assertNull($fieldDescriptor->getRole());
         $this->assertNull($fieldDescriptor->getPermission());
+        $this->assertNull($fieldDescriptor->getClass());
     }
 
     public function testFieldIsRestrictedByRoleOrPermission(): void

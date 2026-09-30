@@ -29,6 +29,7 @@ The following options are available for fields:
   Such a field is sorted by all the properties in the given order, `transform` receives the whole array and without `template` (or `transform`) the values are simply joined with a space.
 - `role` - Role constant (e.g. `ROLE_PRODUCT`) the administrator needs to see the field. The field is then neither fetched nor displayed for other administrators. If not set, the role of the datagrid (the CRUD controller) is used.
 - `permission` - Permission (`Shopsys\FrameworkBundle\Component\Security\Role\Permission`) on the role the administrator needs to see the field. If not set, `Permission::VIEW` is used. The field is restricted only when `role` or `permission` is set.
+- `class` - CSS class added to the header and the cells of the column, e.g. `text-end` for numeric columns.
 
 ```php
 $datagrid->add('name', [
@@ -72,10 +73,11 @@ $datagrid
         'property' => ['lastName', 'firstName'],
     ])
 
-    // The column is displayed only to administrators allowed to view products
+    // The column is displayed only to administrators allowed to view products, aligned to the right
     ->add('purchasePrice', [
         'label' => t('Purchase price'),
         'role' => 'ROLE_PRODUCT',
+        'class' => 'text-end',
     ])
 
     // The column is displayed only to administrators allowed to edit records of this datagrid

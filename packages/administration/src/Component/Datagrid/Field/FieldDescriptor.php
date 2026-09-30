@@ -19,7 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
  *     property?: string|string[]|null,
  *     role?: string|null,
- *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null
+ *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
+ *     class?: string|null
  * }
  */
 final class FieldDescriptor
@@ -57,6 +58,7 @@ final class FieldDescriptor
             'property' => null,
             'role' => null,
             'permission' => null,
+            'class' => null,
         ]);
 
         $optionsResolver->setAllowedTypes('label', 'string');
@@ -70,6 +72,7 @@ final class FieldDescriptor
         $optionsResolver->setAllowedValues('property', fn (string|array|null $property) => $property !== []);
         $optionsResolver->setAllowedTypes('role', ['string', 'null']);
         $optionsResolver->setAllowedTypes('permission', [Permission::class, 'null']);
+        $optionsResolver->setAllowedTypes('class', ['string', 'null']);
 
         return $optionsResolver->resolve($options);
     }
@@ -153,6 +156,11 @@ final class FieldDescriptor
     public function isRestricted(): bool
     {
         return $this->options['role'] !== null || $this->options['permission'] !== null;
+    }
+
+    public function getClass(): ?string
+    {
+        return $this->options['class'];
     }
 
     /**
