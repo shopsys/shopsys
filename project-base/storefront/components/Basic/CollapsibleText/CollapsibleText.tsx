@@ -53,17 +53,22 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, textClassName 
         };
 
         window.addEventListener('scroll', collapseAtTop, { passive: true });
-        window.scrollTo({ top: 0, behavior: shouldReduceMotion ? 'instant' : 'smooth' });
         collapseAtTop();
 
         return () => window.removeEventListener('scroll', collapseAtTop);
-    }, [isScrollingToTop, shouldReduceMotion]);
+    }, [isScrollingToTop]);
 
     const handleButtonClick = () => {
         hasInteractedRef.current = true;
 
         if (showFullDescription) {
             setIsScrollingToTop(true);
+            window.scrollTo({ top: 0, behavior: shouldReduceMotion ? 'instant' : 'smooth' });
+
+            if (window.scrollY <= 1) {
+                setShowFullDescription(false);
+                setIsScrollingToTop(false);
+            }
         } else {
             setShowFullDescription(true);
         }
