@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     help?: string|null,
  *     template?: string|null,
  *     transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
- *     property?: string|null
+ *     property?: string|string[]|null
  * }
  */
 final class FieldDescriptor
@@ -61,7 +61,8 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('help', ['string', 'null']);
         $optionsResolver->setAllowedTypes('template', ['string', 'null']);
         $optionsResolver->setAllowedTypes('transform', [Closure::class, 'null']);
-        $optionsResolver->setAllowedTypes('property', ['string', 'null']);
+        $optionsResolver->setAllowedTypes('property', ['string', 'string[]', 'null']);
+        $optionsResolver->setAllowedValues('property', fn (string|array|null $property) => $property !== []);
 
         return $optionsResolver->resolve($options);
     }
@@ -123,19 +124,50 @@ final class FieldDescriptor
         return $this->options['transform'];
     }
 
-    public function getSelectProperty(): ?string
+    /**
+     * Field combines values of multiple properties (the "property" option is an array)
+     */
+    public function hasMultipleProperties(): bool
     {
-        if ($this->isVirtual()) {
-            return null;
-        }
-
-        return $this->options['property'] ?? $this->getName();
+        return is_array($this->options['property']);
     }
 
+    /**
+     * Properties (in dot notation) the field takes its value from, the field name when no property is configured
+     *
+     * @return string[]
+     */
+    public function getProperties(): array
+    {
+        return (array)($this->options['property'] ?? $this->getName());
+    }
+
+    /**
+     * Properties fetched from the data source, none for virtual fields
+     *
+     * @return string[]
+     */
+    public function getSelectProperties(): array
+    {
+        if ($this->isVirtual()) {
+            return [];
+        }
+
+        return $this->getProperties();
+    }
+
+    /**
+     * Row key the grid reads the value of the field from, null when the field has no value at all
+     */
     public function getMappingProperty(): ?string
     {
         if ($this->isVirtual() && $this->options['property'] === null && $this->getTransform() === null) {
             return null;
+        }
+
+        // Values computed by the adapter (transformed or combined from multiple properties) are stored under the field name
+        if ($this->getTransform() !== null || $this->hasMultipleProperties()) {
+            return $this->getName();
         }
 
         return $this->options['property'] ?? $this->getName();
