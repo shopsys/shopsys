@@ -25,6 +25,8 @@ The following options are available for fields:
 - `template` - The template that is used to render the field. The template is a path to a Twig template file. Look at the [Define your own column template](../internal-grid/grid-rendering-customization.md#1-define-your-own-column-template) section for more information about the template.
 - `transform` - A callback function that is used to transform the data right after data are fetched. The callback function receives the value of the field as the first parameter, row as the second argument and all rows as the third parameter.
 - `property` - The property of the entity that is used to fetch the data. If not set, the field name is used as the property name.
+  It can also be an array of properties - then all of them are fetched and the value of the field is an array of their values indexed by the property (e.g. `['lastName' => 'Doe', 'firstName' => 'John']`).
+  Such a field is sorted by all the properties in the given order, `transform` receives the whole array and without `template` (or `transform`) the values are simply joined with a space.
 
 ```php
 $datagrid->add('name', [
@@ -53,6 +55,19 @@ $datagrid
     ->add('status', [
         'label' => t('Status name'),
         'property' => 'status.name',
+    ])
+
+    // You can combine multiple properties in one field, the template then reads them from the `value` array
+    ->add('customer', [
+        'label' => t('Customer'),
+        'property' => ['lastName', 'firstName', 'customerUser.id'],
+        'template' => '@ShopsysAdministration/content/order/grid/customer.html.twig',
+    ])
+
+    // Without a template the values are joined with a space, e.g. "Doe John"
+    ->add('customerName', [
+        'label' => t('Customer'),
+        'property' => ['lastName', 'firstName'],
     ])
     
     // You can use the transform option to modify the value of the field

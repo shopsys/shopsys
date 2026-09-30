@@ -1,7 +1,7 @@
-{{ value }} {{ row.firstName }}
+{{ value.lastName }} {{ value.firstName }}
 
-{% if row['customerUser.id'] is not null %}
-    <a href="{{ url('admin_customer_edit', { id: row['customerUser.id'] }) }}">
+{% if value['customerUser.id'] is not null %}
+    <a href="{{ url('admin_customer_edit', { id: value['customerUser.id'] }) }}">
         {{ ux_icon('forward-page', {class: 'icon-sm'}) }}
     </a>
 {% endif %}

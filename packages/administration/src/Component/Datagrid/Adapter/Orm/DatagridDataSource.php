@@ -13,16 +13,26 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
 {
+    public const string ORDER_PROPERTIES_SEPARATOR = ',';
+
+    /**
+     * Fields combining multiple properties pass them as a comma-separated list (see Datagrid::createView()),
+     * the rows are then ordered by all of them in the given order
+     */
     #[Override]
     protected function addQueryOrder(
         QueryBuilder $queryBuilder,
         string $orderSourceColumnName,
         string $orderDirection,
     ): void {
-        $queryBuilder->orderBy(
-            str_replace('.', '__', $orderSourceColumnName),
-            $this->resolveSortDirection($orderDirection),
-        );
+        $queryBuilder->resetDQLPart('orderBy');
+
+        foreach (explode(self::ORDER_PROPERTIES_SEPARATOR, $orderSourceColumnName) as $orderProperty) {
+            $queryBuilder->addOrderBy(
+                str_replace('.', '__', $orderProperty),
+                $this->resolveSortDirection($orderDirection),
+            );
+        }
     }
 
     #[Override]
