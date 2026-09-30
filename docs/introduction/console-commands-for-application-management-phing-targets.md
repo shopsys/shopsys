@@ -309,19 +309,18 @@ Lists all available background jobs. If there is more than one cron instance reg
 
 For more information, see [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](../introduction/cron.md).
 
+#### npm
+
+This command installs npm dependencies, exports JavaScript translations, and builds assets once in production mode (minified, without source maps)
+
 #### npm-dev
 
-This command build assets once in development mode (with source map, without compilation)
-
-#### npm-build
-
-This command build assets once in production mode (without source map, with compilation)
+This command builds assets once in development mode (with source maps, without minification)
 
 #### npm-watch
 
-Webpack keep ‘watch’-ing for any changes we make in our code and once we save the changes, it will rerun by itself to rebuild the package.
-
-Useful when modifying only js files.
+This command starts the Rsbuild dev server, which serves the assets from memory and updates them in the browser whenever we save a change.
+After the dev server is stopped, run `npm-dev` or `npm` to build the assets again.
 
 #### translations-dump
 
