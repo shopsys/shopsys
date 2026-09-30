@@ -25,7 +25,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getById(int $id): Presentable
+    public function getById(int $id): AdditionalService
     {
         return $this->additionalServiceFacade->getById($id);
     }
@@ -43,7 +43,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function create(object $data): Presentable
+    public function create(object $data): AdditionalService
     {
         Assert::isInstanceOf($data, AdditionalServiceData::class);
 
@@ -54,7 +54,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, AdditionalService::class);
 
@@ -65,7 +65,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, AdditionalService::class);
         Assert::isInstanceOf($data, AdditionalServiceData::class);
@@ -77,7 +77,7 @@ class AdditionalServiceCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function delete(object $entity): void
+    public function delete(Presentable $entity): void
     {
         Assert::isInstanceOf($entity, AdditionalService::class);
 

@@ -12,6 +12,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Model\Transport\TransportGroupCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportGroupFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
@@ -45,7 +46,7 @@ class TransportGroupController extends AbstractCrudController
     }
 
     #[Override]
-    protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
         $formConfigurator->useFormType(TransportGroupFormType::class, [
             'transportGroup' => $entity,

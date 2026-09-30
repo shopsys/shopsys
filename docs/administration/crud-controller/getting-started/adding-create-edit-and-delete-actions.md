@@ -28,7 +28,7 @@ class OrderDeleteHandler implements DeleteHandlerInterface
     ) {
     }
 
-    public function getById(int $id): Presentable
+    public function getById(int $id): Order
     {
         return $this->orderFacade->getById($id);
     }
@@ -44,7 +44,8 @@ class OrderDeleteHandler implements DeleteHandlerInterface
 
 !!! tip "Narrow the `object` parameters with `Assert::isInstanceOf()`"
 
-    Handler interfaces declare data objects as plain `object` and entities as the generic `Presentable` (or `object`), because the interfaces are shared by all CRUD controllers.
+    Handler interfaces declare entities as the generic `Presentable` and data objects as plain `object`, because the interfaces are shared by all CRUD controllers.
+    Methods returning the entity (`getById()`, `create()`) declare the concrete entity class as their return type instead.
     Start every method that receives an entity or a data object with `Assert::isInstanceOf()` (from `webmozart/assert`).
     The assert fails fast with a clear message when the handler is registered for a wrong entity, and thanks to
     the `phpstan/phpstan-webmozart-assert` extension PHPStan narrows the type, so calls like `$entity->getId()`
@@ -102,19 +103,19 @@ class OrderEditHandler implements EditHandlerInterface
     ) {
     }
 
-    public function getById(int $id): Presentable
+    public function getById(int $id): Order
     {
         return $this->orderFacade->getById($id);
     }
 
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, Order::class);
 
         return $this->orderDataFactory->createFromOrder($entity);
     }
 
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, Order::class);
         Assert::isInstanceOf($data, OrderData::class);
@@ -136,7 +137,6 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface;
-use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Webmozart\Assert\Assert;
 
 class OrderCreateHandler implements CreateHandlerInterface
@@ -147,7 +147,7 @@ class OrderCreateHandler implements CreateHandlerInterface
     ) {
     }
 
-    public function getById(int $id): Presentable
+    public function getById(int $id): Order
     {
         return $this->orderFacade->getById($id);
     }
@@ -157,7 +157,7 @@ class OrderCreateHandler implements CreateHandlerInterface
         return $this->orderDataFactory->create();
     }
 
-    public function create(object $data): Presentable
+    public function create(object $data): Order
     {
         Assert::isInstanceOf($data, OrderData::class);
 
@@ -189,7 +189,7 @@ class OrderCrudHandler implements CrudHandlerInterface
     ) {
     }
 
-    public function getById(int $id): Presentable
+    public function getById(int $id): Order
     {
         return $this->orderFacade->getById($id);
     }
@@ -201,14 +201,14 @@ class OrderCrudHandler implements CrudHandlerInterface
         $this->orderFacade->deleteById($entity->getId());
     }
 
-    public function createDataFromEntity(object $entity): object
+    public function createDataFromEntity(Presentable $entity): object
     {
         Assert::isInstanceOf($entity, Order::class);
 
         return $this->orderDataFactory->createFromOrder($entity);
     }
 
-    public function edit(object $entity, object $data): void
+    public function edit(Presentable $entity, object $data): void
     {
         Assert::isInstanceOf($entity, Order::class);
         Assert::isInstanceOf($data, OrderData::class);
@@ -221,7 +221,7 @@ class OrderCrudHandler implements CrudHandlerInterface
         return $this->orderDataFactory->create();
     }
 
-    public function create(object $data): Presentable
+    public function create(object $data): Order
     {
         Assert::isInstanceOf($data, OrderData::class);
 
@@ -264,8 +264,9 @@ You can use an existing FormType class:
 
 ```php
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useFormType(OrderFormType::class, [
         'order' => $entity,
@@ -277,9 +278,10 @@ Or build the form inline using the builder:
 
 ```php
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-protected function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+protected function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
 {
     $formConfigurator->useBuilder()
         ->add('name', TextType::class, [
@@ -289,4 +291,4 @@ protected function configureForm(CrudFormConfigurator $formConfigurator, ?object
 }
 ```
 
-See [configureForm reference](../reference/crud-controller.md#configureformcrudformconfigurator-formconfigurator-object-entity--null-void) for more details.
+See [configureForm reference](../reference/crud-controller.md#configureformcrudformconfigurator-formconfigurator-presentable-entity-null-void) for more details.

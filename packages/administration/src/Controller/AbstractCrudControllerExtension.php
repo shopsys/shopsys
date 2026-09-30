@@ -10,6 +10,7 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
@@ -32,7 +33,7 @@ abstract class AbstractCrudControllerExtension extends AdminBaseController
     {
     }
 
-    public function configureForm(CrudFormConfigurator $formConfigurator, ?object $entity = null): void
+    public function configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void
     {
     }
 
