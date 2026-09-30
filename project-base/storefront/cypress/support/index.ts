@@ -298,6 +298,7 @@ export const takeSnapshotAndCompare = (
     callbackBeforeBlackout?.();
     disableAnimationsBeforeScreenshot();
     loseFocus();
+    changeExpectedDeliveryDateSummariesToStaticDemodata();
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
     removePointerEventsBeforeScreenshot([
         ...ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS,
@@ -431,6 +432,14 @@ const blackoutBeforeScreenshot = (blackout: Blackout[]) => {
             });
         });
     }
+};
+
+const changeExpectedDeliveryDateSummariesToStaticDemodata = () => {
+    cy.get('body').then(($body) => {
+        $body.find(`[data-tid="${TIDs.expected_delivery_date_summary}"]`).each((_, summaryElement) => {
+            Cypress.$(summaryElement).children().last().text(staticData.expectedDeliveryDate);
+        });
+    });
 };
 
 const removeBlackoutsAfterScreenshot = () => {

@@ -22,7 +22,7 @@ type PersistStoreProviderProps = {
 };
 
 const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
-const PERSIST_STORE_VERSION = 4;
+const PERSIST_STORE_VERSION = 5;
 
 const createPersistStore = (domainId: number) => {
     const storeName = `${PERSIST_STORE_NAME}-${domainId}`;
@@ -98,6 +98,14 @@ const createPersistStore = (domainId: number) => {
                     // Auth notifications use tab-scoped session storage since version 4.
                     if (version < 4) {
                         migratedPersistedState = removeLegacyAuthState(migratedPersistedState);
+                    }
+
+                    // Version 5 adds the last successfully used login method.
+                    if (version < 5) {
+                        migratedPersistedState = {
+                            ...migratedPersistedState,
+                            lastLoginType: defaultUserState.lastLoginType,
+                        };
                     }
 
                     return migratedPersistedState as PersistStore;

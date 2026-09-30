@@ -61,7 +61,10 @@ export const loginInThirdOrderStep = (password: string) => {
 
 export const openHeaderCartByMouseover = () => {
     getHeaderElementByTID(TIDs.header_cart_link).trigger('mouseover');
-    cy.wait(1000);
+    cy.getByTID([TIDs.header_cart_popover])
+        .should('be.visible')
+        .and('have.css', 'opacity', '1')
+        .and('have.css', 'transform', 'none');
     cy.scrollTo('topLeft');
 };
 

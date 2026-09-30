@@ -56,11 +56,12 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
         const imageSize = getProductListItemImageSize(size);
         const imageAlt = generateProductImageAlt(product.fullName, product.categories[0]?.name);
         const isGalleryEnabled = isWithImageGallery && imageCount > 1;
+        const imageTid = tid || TIDs.product_list_item_image;
 
         return (
             <div
                 className="mx-auto flex w-full flex-col items-center justify-center"
-                data-tid={tid || TIDs.product_list_item_image}
+                data-tid={isGalleryEnabled ? imageTid : undefined}
                 style={{ maxWidth: imageSize }}
             >
                 {isGalleryEnabled ? (
@@ -73,7 +74,11 @@ export const ProductListItemImage = forwardRef<ProductListItemImageHandle, Produ
                     />
                 ) : (
                     <>
-                        <div className="flex w-full items-center justify-center" style={{ height: imageSize }}>
+                        <div
+                            className="flex w-full items-center justify-center"
+                            data-tid={imageTid}
+                            style={{ height: imageSize }}
+                        >
                             <Image
                                 alt={imageAlt}
                                 className="h-full w-full object-contain mix-blend-multiply"

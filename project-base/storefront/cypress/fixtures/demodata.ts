@@ -129,6 +129,7 @@ export const staticData = {
     },
     expectedDeliveryDateMessage: 'Delivery on Tuesday 10/26',
     expectedPersonalPickupDateMessage: 'Personal pickup on Tuesday 10/26',
+    expectedDeliveryDate: '10/26/1999',
     complaint: {
         number: '1234567890',
         creationDate: '10/26/1999',
@@ -256,6 +257,7 @@ export const COOKIES_STORE_NAME = 'cookiesStore-1';
 export const DEFAULT_PERSIST_STORE_STATE = {
     state: {
         cartUuid: null as string | null,
+        lastLoginType: null as string | null,
         productListUuids: {},
         userConsent: {
             statistics: false,
@@ -295,5 +297,5 @@ export const DEFAULT_PERSIST_STORE_STATE = {
         },
         packeteryPickupPoint: null,
     },
-    version: 4,
+    version: 5,
 };
