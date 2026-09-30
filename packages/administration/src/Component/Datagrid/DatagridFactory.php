@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid;
 
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 
 /**
  * @phpstan-type DatagridOptions array{
@@ -19,6 +20,7 @@ final class DatagridFactory
 {
     public function __construct(
         private readonly GridFactory $gridFactory,
+        private readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -27,6 +29,6 @@ final class DatagridFactory
      */
     public function create(AdapterInterface $adapter, array $options): Datagrid
     {
-        return new Datagrid($adapter, $this->gridFactory, $options);
+        return new Datagrid($adapter, $this->gridFactory, $this->accessChecker, $options);
     }
 }
