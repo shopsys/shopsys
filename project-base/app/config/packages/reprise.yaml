@@ -1,0 +1,9 @@
+reprise:
+    # the Symfony() plugin's outputPath in rsbuild.config.ts
+    output_path: '%kernel.project_dir%/web/build'
+    # the tags are already at the top of <head>, so Link preload headers only add noise (Safari "preloaded but not used" warnings)
+    preload: false
+
+when@prod:
+    reprise:
+        cache: true
