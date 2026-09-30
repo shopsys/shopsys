@@ -163,15 +163,32 @@ class PaymentRepository
         return $this->getQueryBuilderForAll()
             ->addSelect('pd')
             ->addSelect('pt')
-            ->addSelect('pp')
             ->addSelect('t')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
-            ->leftJoin('p.prices', 'pp')
             ->leftJoin('p.transports', 't')
             ->setParameter('locale', $domainConfig->getLocale())
             ->setParameter('domainId', $domainConfig->getId())
             ->getQuery()->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
+     */
+    public function preloadPricesByPayments(array $payments): void
+    {
+        if ($payments === []) {
+            return;
+        }
+
+        $this->getPaymentRepository()
+            ->createQueryBuilder('p')
+            ->addSelect('pp')
+            ->leftJoin('p.prices', 'pp')
+            ->where('p IN (:payments)')
+            ->setParameter('payments', $payments)
+            ->getQuery()
+            ->getResult();
     }
 
     public function findPaymentByExternalMethodTransportAndDomainId(

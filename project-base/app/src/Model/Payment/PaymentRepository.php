@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository as BasePaymentReposi
  * @method \App\Model\Payment\Payment[] getAllWithEagerLoadedTransportsAndDomainsAndTranslations(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method \App\Model\Payment\Payment|null findPaymentByExternalMethodTransportAndDomainId(string $externalPaymentMethod, \App\Model\Transport\Transport $transport, int $domainId)
  * @method \App\Model\Payment\Payment[] getAllByType(string $type)
+ * @method void preloadPricesByPayments(\App\Model\Payment\Payment[] $payments)
  */
 class PaymentRepository extends BasePaymentRepository
 {

@@ -112,8 +112,10 @@ class PaymentFacade
             static::PAYMENTS_WITH_EAGER_LOADED_RELATIONS_CACHE_NAMESPACE,
             function () use ($domainConfig): array {
                 $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($domainConfig);
+                $payments = $this->paymentRepository->getAllWithEagerLoadedTransportsAndDomainsAndTranslations($domainConfig);
+                $this->paymentRepository->preloadPricesByPayments($payments);
 
-                return $this->paymentRepository->getAllWithEagerLoadedTransportsAndDomainsAndTranslations($domainConfig);
+                return $payments;
             },
             $domainConfig->getId(),
         );
