@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Translator from 'bazinga-translator';
-import IconFolder from 'icons/tabler/folder-filled.svg';
+import IconFolder from 'icons/tabler/folder-filled.svg?raw';
 
 /*
   Bootstrap - File Input
