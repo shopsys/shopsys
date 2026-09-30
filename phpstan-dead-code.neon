@@ -8,6 +8,9 @@ parameters:
         # whole api classes
         -
             identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Action/AbstractAction.php
+        -
+            identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Action/AbstractRoutableAction.php
         -
             identifier: shipmonk.deadMethod
