@@ -2953,6 +2953,9 @@ msgstr ""
 msgid "Products parameters of selected category"
 msgstr ""
 
+msgid "Products stocked in a warehouse assigned to a store are ready for personal pickup there, products from other warehouses are transferred first (transfer days are set per domain). Warehouses are assigned to stores on the store detail. <a href=\"%warehousesUrl%\" target=\"_blank\">Manage warehouses</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Manage stores</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Set transfer days</a>"
+msgstr ""
+
 msgid "Products stocked in the selected warehouse are ready for personal pickup at this store. Products from other warehouses are transferred first, which postpones the expected delivery date by the transfer days set per domain. <a href=\"%listUrl%\">Manage warehouses</a> &middot; <a href=\"%settingsUrl%\">Set transfer days</a>"
 msgstr ""
 

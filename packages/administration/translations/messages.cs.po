@@ -238,6 +238,9 @@ msgstr "Články tohoto autora"
 msgid "Articles overview"
 msgstr "Přehled článků"
 
+msgid "Assigned stores"
+msgstr "Přiřazené prodejny"
+
 msgid "Authentication code"
 msgstr "Ověřovací kód"
 
@@ -2490,6 +2493,9 @@ msgstr "Celková cena"
 
 msgid "Total price including VAT"
 msgstr "Celková cena s DPH"
+
+msgid "Total stock quantity"
+msgstr "Celková skladová zásoba"
 
 msgid "Tracking"
 msgstr "Sledování zásilky"

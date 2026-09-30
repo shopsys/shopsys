@@ -2953,6 +2953,9 @@ msgstr "Prehľad Products"
 msgid "Products parameters of selected category"
 msgstr "Parametre produktov vybratej kategórie"
 
+msgid "Products stocked in a warehouse assigned to a store are ready for personal pickup there, products from other warehouses are transferred first (transfer days are set per domain). Warehouses are assigned to stores on the store detail. <a href=\"%warehousesUrl%\" target=\"_blank\">Manage warehouses</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Manage stores</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Set transfer days</a>"
+msgstr "Produkty zo skladu priradeného predajni sú na nej pripravené na osobný odber, produkty z ostatných skladov sa najprv prevážajú (dni prevozu sa nastavujú pre doménu). Sklady sa predajniam priraďujú na detaile predajne. <a href=\"%warehousesUrl%\" target=\"_blank\">Spravovať sklady</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Spravovať predajne</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Nastaviť dni prevozu</a>"
+
 msgid "Products stocked in the selected warehouse are ready for personal pickup at this store. Products from other warehouses are transferred first, which postpones the expected delivery date by the transfer days set per domain. <a href=\"%listUrl%\">Manage warehouses</a> &middot; <a href=\"%settingsUrl%\">Set transfer days</a>"
 msgstr "Produkty zo zvoleného skladu sú na tejto predajni pripravené na osobný odber. Produkty z ostatných skladov sa najprv prevážajú, čo posunie očakávaný dátum doručenia o dni prevozu nastavené pre doménu. <a href=\"%listUrl%\">Spravovať sklady</a> &middot; <a href=\"%settingsUrl%\">Nastaviť dni prevozu</a>"
 

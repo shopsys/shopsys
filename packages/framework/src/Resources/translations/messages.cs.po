@@ -2953,6 +2953,9 @@ msgstr "Přehled zboží"
 msgid "Products parameters of selected category"
 msgstr "Parametry produktů vybrané kategorie"
 
+msgid "Products stocked in a warehouse assigned to a store are ready for personal pickup there, products from other warehouses are transferred first (transfer days are set per domain). Warehouses are assigned to stores on the store detail. <a href=\"%warehousesUrl%\" target=\"_blank\">Manage warehouses</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Manage stores</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Set transfer days</a>"
+msgstr "Produkty ze skladu přiřazeného prodejně jsou na ní připraveny k osobnímu odběru, produkty z ostatních skladů se nejdřív převážejí (dny převozu se nastavují pro doménu). Sklady se prodejnám přiřazují na detailu prodejny. <a href=\"%warehousesUrl%\" target=\"_blank\">Spravovat sklady</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Spravovat prodejny</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Nastavit dny převozu</a>"
+
 msgid "Products stocked in the selected warehouse are ready for personal pickup at this store. Products from other warehouses are transferred first, which postpones the expected delivery date by the transfer days set per domain. <a href=\"%listUrl%\">Manage warehouses</a> &middot; <a href=\"%settingsUrl%\">Set transfer days</a>"
 msgstr "Produkty ze zvoleného skladu jsou na této prodejně připraveny k osobnímu odběru. Produkty z ostatních skladů se nejdřív převážejí, což posune očekávané datum doručení o dny převozu nastavené pro doménu. <a href=\"%listUrl%\">Spravovat sklady</a> &middot; <a href=\"%settingsUrl%\">Nastavit dny převozu</a>"
 

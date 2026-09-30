@@ -6,14 +6,23 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Stock;
 
 use Override;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Webmozart\Assert\Assert;
 
 final class ProductStockFormType extends AbstractType
 {
+    public function __construct(
+        private readonly StockFacade $stockFacade,
+    ) {
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,6 +41,20 @@ final class ProductStockFormType extends AbstractType
                 ),
             ],
         ]);
+    }
+
+    #[Override]
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        parent::buildView($view, $form, $options);
+
+        $productStockData = $form->getData();
+        Assert::isInstanceOf($productStockData, ProductStockData::class);
+
+        $stock = $this->stockFacade->getById($productStockData->stockId);
+
+        $view->vars['stock'] = $stock;
+        $view->vars['enabled_domain_ids'] = array_keys(array_filter($stock->getEnabledIndexedByDomainId()));
     }
 
     /**

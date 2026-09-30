@@ -238,6 +238,9 @@ msgstr ""
 msgid "Articles overview"
 msgstr ""
 
+msgid "Assigned stores"
+msgstr ""
+
 msgid "Authentication code"
 msgstr ""
 
@@ -2489,6 +2492,9 @@ msgid "Total price"
 msgstr ""
 
 msgid "Total price including VAT"
+msgstr ""
+
+msgid "Total stock quantity"
 msgstr ""
 
 msgid "Tracking"

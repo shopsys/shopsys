@@ -1,0 +1,47 @@
+{% block product_stocks_widget %}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="row mb-3">
+            <div class="fw-semibold text-body-secondary col-form-label col-xl-2">{{ 'Total stock quantity'|trans }}</div>
+            <div class="col-xl-10 col-form-label">
+                <div class="badges-list">
+                    {% for domainId, totalQuantity in total_stock_quantities_by_domain_id %}
+                        <span class="badge badge-pill {{ totalQuantity > 0 ? 'bg-green-lt' : 'bg-red-lt' }}">
+                            {% if isMultidomain() %}
+                                {{ domain_icon(domainId) }}
+                                {{ getDomainName(domainId) }}:
+                            {% endif %}
+                            <strong data-product-stocks-target="totalQuantity" data-domain-id="{{ domainId }}">{{ totalQuantity }}</strong>
+                            {{ unit_name }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% for stockForm in form %}
+            {{ form_row(stockForm) }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block product_stock_form_row %}
+    <div class="row mb-3">
+        {{ form_label(form.productQuantity, form.vars.value.name, { translation_domain: false }) }}
+
+        <div class="col">
+            {{ form_widget(form.productQuantity, { attr: form.productQuantity.vars.attr|merge({
+                'data-product-stocks-target': 'quantity',
+                'data-domain-ids': form.vars.enabled_domain_ids|join(','),
+                'data-action': 'input->product-stocks#recalculate',
+            }) }) }}
+            {{ form_errors(form.productQuantity) }}
+
+            <div class="form-text">
+                {% if stock.stores is not empty %}
+                    {{ 'Assigned stores'|trans }}:
+                {% endif %}
+                {% include '@ShopsysAdministration/partial/store_links.html.twig' with { stores: stock.stores, skipTabNavigation: true } only %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
