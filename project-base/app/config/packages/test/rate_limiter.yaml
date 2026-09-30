@@ -1,0 +1,4 @@
+framework:
+    rate_limiter:
+        frontend_api_order_withdrawal_request:
+            policy: no_limit

@@ -35,4 +35,19 @@ class WithdrawalRequestData
      * @var \DateTimeImmutable|null
      */
     public $requestedAt;
+
+    /**
+     * @var bool
+     */
+    public $confirmed;
+
+    /**
+     * @var string|null
+     */
+    public $confirmationHash;
+
+    public function __construct()
+    {
+        $this->confirmed = false;
+    }
 }

@@ -64,7 +64,7 @@ class OrderResolverMap extends ResolverMap
                     return $this->withdrawalSettingFacade->getWithdrawalDeadline($order);
                 },
                 'withdrawalRequest' => function (Order $order) {
-                    return $this->withdrawalRequestFacade->findByOrder($order);
+                    return $this->withdrawalRequestFacade->findIncludingUnconfirmedByOrder($order);
                 },
             ],
         ];
