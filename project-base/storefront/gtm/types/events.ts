@@ -18,6 +18,13 @@ import {
     GtmUserInfoType,
 } from './objects';
 
+export type GtmPromotionType = {
+    promotionId: string | number;
+    promotionName: string;
+    creativeName: string;
+    creativeSlot: string | number | undefined;
+};
+
 export type GtmEventInterface<EventType, EventContent> = {
     event: EventType;
     _clear: boolean;
@@ -169,6 +176,24 @@ export type GtmProductClickEventType = GtmEventInterface<
             listName: GtmProductListNameType;
             products: GtmListedProductType[] | undefined;
             arePricesHidden: boolean;
+        };
+    }
+>;
+
+export type GtmPromotionListViewEventType = GtmEventInterface<
+    GtmEventType.promotion_list_view,
+    {
+        ecommerce: {
+            promotions: GtmPromotionType[];
+        };
+    }
+>;
+
+export type GtmPromotionClickEventType = GtmEventInterface<
+    GtmEventType.promotion_click,
+    {
+        ecommerce: GtmPromotionType & {
+            destinationURL: string;
         };
     }
 >;

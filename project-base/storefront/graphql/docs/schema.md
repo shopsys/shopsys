@@ -2335,6 +2335,15 @@ Advert code
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="advertcode.id">id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ID of advert
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="advertcode.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -2391,6 +2400,15 @@ UUID
 <td>
 
 Restricted categories of the advert (the advert is shown in these categories only)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="advertimage.id">id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ID of advert
 
 </td>
 </tr>
@@ -11478,6 +11496,15 @@ GTM ID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="slideritem.id">id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ID
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="slideritem.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -16386,6 +16413,15 @@ Represents and encapsulates an ISO-8601 encoded UTC date-time value
 <td>
 
 Restricted categories of the advert (the advert is shown in these categories only)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="advert.id">id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ID of advert
 
 </td>
 </tr>

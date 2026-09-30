@@ -5,11 +5,12 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeListedCategoryFragment = { __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } };
+export type TypeListedCategoryFragment = { __typename: 'Category', id: number, uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } };
 
 export const ListedCategoryFragment = gql`
     fragment ListedCategoryFragment on Category {
   __typename
+  id
   uuid
   name
   slug

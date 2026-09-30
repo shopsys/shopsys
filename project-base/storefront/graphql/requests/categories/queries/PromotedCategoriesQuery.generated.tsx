@@ -12,7 +12,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypePromotedCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypePromotedCategoriesQuery = { promotedCategories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } }> };
+export type TypePromotedCategoriesQuery = { promotedCategories: Array<{ __typename: 'Category', id: number, uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } }> };
 
 
 export const PromotedCategoriesQueryDocument = gql`

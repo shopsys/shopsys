@@ -27,9 +27,16 @@ const addEmailHashIfNeeded = async (event: EventWithUser): Promise<EventWithUser
 export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
     if (isClient) {
         window.dataLayer = window.dataLayer ?? [];
+        const eventWithUser = event as EventWithUser;
 
-        addEmailHashIfNeeded(event as EventWithUser).then((eventWithHash) => {
-            window.dataLayer?.push(eventWithHash);
-        });
+        if (eventWithUser.user?.email && !eventWithUser.user.emailHash) {
+            addEmailHashIfNeeded(eventWithUser).then((eventWithHash) => {
+                window.dataLayer?.push(eventWithHash);
+            });
+
+            return;
+        }
+
+        window.dataLayer.push(event);
     }
 };

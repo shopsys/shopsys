@@ -4,6 +4,9 @@ SliderItem:
         - 'SliderItemDecorator'
     config:
         fields:
+            id:
+                type: "Int!"
+                description: "ID"
             uuid:
                 type: "Uuid!"
                 description: "UUID"
