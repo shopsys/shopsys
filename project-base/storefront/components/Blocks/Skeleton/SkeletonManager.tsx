@@ -1,3 +1,4 @@
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { ComponentType, useEffect } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
@@ -95,7 +96,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
 }) => {
     const redirectPageType = useSessionStore((s) => s.redirectPageType);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const hadClientSideNavigation = useSessionStore((s) => s.hadClientSideNavigation);
+    const shouldReduceMotion = useReducedMotion();
     const pageType = redirectPageType ?? pageTypeOverride;
 
     useEffect(() => {
@@ -110,11 +111,28 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
         }
     }, [isPageLoading]);
 
-    if (!isPageLoading && !isFetchingData) {
-        return <div className={hadClientSideNavigation ? 'animate-in' : undefined}>{children}</div>;
-    }
-
     const SkeletonComponent = pageType ? SKELETON_COMPONENT_MAP[pageType] : null;
+    const isSkeletonVisible = !!SkeletonComponent && (isPageLoading || !!isFetchingData);
 
-    return SkeletonComponent ? <SkeletonComponent /> : children;
+    return (
+        <div aria-busy={isSkeletonVisible} className="relative isolate">
+            <AnimatePresence initial={false} mode="popLayout">
+                {isSkeletonVisible && (
+                    <m.div
+                        key="skeleton"
+                        animate={{ opacity: 1 }}
+                        aria-hidden="true"
+                        className="pointer-events-none relative z-above bg-background-default"
+                        exit={{ opacity: 0 }}
+                        inert
+                        transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: 'easeOut' }}
+                    >
+                        <SkeletonComponent />
+                    </m.div>
+                )}
+            </AnimatePresence>
+
+            {!isSkeletonVisible && <div>{children}</div>}
+        </div>
+    );
 };
