@@ -3959,7 +3959,7 @@ msgid "Warehouse detail"
 msgstr "Detail skladu"
 
 msgid "Warehouse settings"
-msgstr "Nastavenia Warehouse"
+msgstr "Nastavenia skladov"
 
 msgid "Warehouses"
 msgstr "Sklady"

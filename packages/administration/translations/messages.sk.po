@@ -2666,7 +2666,7 @@ msgid "Warehouse"
 msgstr "Sklad"
 
 msgid "Warehouse settings"
-msgstr "Nastavenia Warehouse"
+msgstr "Nastavenia skladov"
 
 msgid "Warehouses"
 msgstr "Sklady"
