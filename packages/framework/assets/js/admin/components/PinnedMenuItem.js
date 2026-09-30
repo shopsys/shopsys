@@ -1,6 +1,6 @@
 import { Tooltip } from '@tabler/core';
-import PinIcon from 'icons/tabler/pin.svg';
-import PinnedIcon from 'icons/tabler/pinned-filled.svg';
+import PinIcon from 'icons/tabler/pin.svg?raw';
+import PinnedIcon from 'icons/tabler/pinned-filled.svg?raw';
 import $ from 'jquery';
 import Sortable from 'sortablejs';
 import Ajax from '../../common/utils/Ajax';
