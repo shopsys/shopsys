@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { hasAuthNotification } from 'utils/auth/authNotificationStorage';
+import { hasAuthNotificationFromPreviousDocument } from 'utils/auth/authNotificationStorage';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ToastContainerWithAuthNotifications = dynamic(
@@ -14,7 +14,7 @@ const ToastContainerWithAuthNotifications = dynamic(
 
 export const DeferredToastContainer = () => {
     const { domainId } = useDomainConfig();
-    const [hasInitialAuthNotification] = useState(() => hasAuthNotification(domainId));
+    const [hasInitialAuthNotification] = useState(() => hasAuthNotificationFromPreviousDocument(domainId));
     const shouldRender = useDeferredRender('tertiary_loaders');
 
     return shouldRender || hasInitialAuthNotification ? <ToastContainerWithAuthNotifications /> : null;

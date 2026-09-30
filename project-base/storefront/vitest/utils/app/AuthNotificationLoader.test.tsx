@@ -61,6 +61,18 @@ vi.mock('utils/useDeferredRender', () => ({
     useDeferredRender: () => false,
 }));
 
+const AUTH_NOTIFICATION_STORAGE_KEY = 'shopsys-platform-auth-notification-1';
+
+// a new document keeps the session storage but not the knowledge that the notification was stored by the previous one
+const simulateDocumentNavigation = () => {
+    const storedAuthNotification = sessionStorage.getItem(AUTH_NOTIFICATION_STORAGE_KEY);
+    consumeAuthNotification(1);
+
+    if (storedAuthNotification !== null) {
+        sessionStorage.setItem(AUTH_NOTIFICATION_STORAGE_KEY, storedAuthNotification);
+    }
+};
+
 const renderToastNotifications = () =>
     render(
         <StrictMode>
@@ -71,6 +83,7 @@ const renderToastNotifications = () =>
 describe('AuthNotificationLoader', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        consumeAuthNotification(1);
         sessionStorage.clear();
         authState.hasAccessToken = true;
         authState.hasRefreshToken = true;
@@ -94,6 +107,7 @@ describe('AuthNotificationLoader', () => {
 
     test('shows and consumes a notification after a document navigation in strict mode', async () => {
         storeAuthNotification(1, 'login');
+        simulateDocumentNavigation();
 
         renderToastNotifications();
 
@@ -103,6 +117,7 @@ describe('AuthNotificationLoader', () => {
 
     test('does not defer a stored authentication notification', async () => {
         storeAuthNotification(1, 'login');
+        simulateDocumentNavigation();
 
         const { rerender } = render(
             <StrictMode>
@@ -160,6 +175,17 @@ describe('AuthNotificationLoader', () => {
         expect(getAuthNotification(1)).toBeNull();
     });
 
+    test('does not handle a notification created in the current document before the loader mounts', () => {
+        authState.isUserLoggedIn = false;
+        storeAuthNotification(1, 'login');
+
+        renderToastNotifications();
+
+        expect(reloadMock).not.toHaveBeenCalled();
+        expect(screen.queryByText('Successfully logged in')).not.toBeInTheDocument();
+        expect(getAuthNotification(1)).toBe('login');
+    });
+
     test('keeps a registration notification across a reload caused by authentication state mismatch', async () => {
         authState.isUserLoggedIn = false;
         const { unmount } = renderToastNotifications();
@@ -174,6 +200,7 @@ describe('AuthNotificationLoader', () => {
         expect(getAuthNotification(1)).toBe('registration');
 
         unmount();
+        simulateDocumentNavigation();
         authState.isUserLoggedIn = true;
         renderToastNotifications();
 
@@ -184,6 +211,7 @@ describe('AuthNotificationLoader', () => {
     test('keeps a login notification stored while the customer query is fetching', async () => {
         authState.isCustomerUserFetching = true;
         storeAuthNotification(1, 'login');
+        simulateDocumentNavigation();
         const { rerender } = renderToastNotifications();
 
         expect(screen.queryByText('Successfully logged in')).not.toBeInTheDocument();
@@ -204,6 +232,7 @@ describe('AuthNotificationLoader', () => {
         authState.isCustomerUserFetching = true;
         authState.isUserLoggedIn = false;
         storeAuthNotification(1, 'login');
+        simulateDocumentNavigation();
         const { rerender } = renderToastNotifications();
 
         expect(reloadMock).not.toHaveBeenCalled();
@@ -224,6 +253,7 @@ describe('AuthNotificationLoader', () => {
         authState.hasRefreshToken = false;
         authState.isCustomerUserStale = true;
         storeAuthNotification(1, 'logout');
+        simulateDocumentNavigation();
         const { rerender } = renderToastNotifications();
 
         expect(screen.queryByText('Successfully logged out')).not.toBeInTheDocument();
@@ -246,6 +276,7 @@ describe('AuthNotificationLoader', () => {
         ['registration-with-cart-modifications', 'Your account has been created and you are logged in now'],
     ] as const)('shows both messages for %s exactly once', async (authNotification, successMessage) => {
         storeAuthNotification(1, authNotification);
+        simulateDocumentNavigation();
 
         renderToastNotifications();
 
@@ -267,6 +298,7 @@ describe('AuthNotificationLoader', () => {
             type: 'social-login-fail',
             socialNetworkType: TypeLoginTypeEnum.Google,
         });
+        simulateDocumentNavigation();
 
         renderToastNotifications();
 

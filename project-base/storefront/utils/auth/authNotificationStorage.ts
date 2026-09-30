@@ -5,6 +5,9 @@ import { isClient } from 'utils/isClient';
 
 const AUTH_NOTIFICATION_STORAGE_KEY = 'shopsys-platform-auth-notification';
 
+// the current document is about to navigate away, so its own notifications belong to the next document
+const domainIdsWithNotificationStoredInCurrentDocument = new Set<number>();
+
 const stringAuthNotifications: AuthNotification[] = [
     'login',
     'login-with-cart-modifications',
@@ -20,6 +23,7 @@ export const storeAuthNotification = (domainId: number, authNotification: AuthNo
 
     try {
         sessionStorage.setItem(getStorageKey(domainId), JSON.stringify(authNotification));
+        domainIdsWithNotificationStoredInCurrentDocument.add(domainId);
     } catch (error) {
         logException(error);
     }
@@ -59,8 +63,8 @@ export const getAuthNotification = (domainId: number): AuthNotification | null =
     }
 };
 
-export const hasAuthNotification = (domainId: number): boolean => {
-    if (!isClient) {
+export const hasAuthNotificationFromPreviousDocument = (domainId: number): boolean => {
+    if (!isClient || domainIdsWithNotificationStoredInCurrentDocument.has(domainId)) {
         return false;
     }
 
@@ -82,6 +86,7 @@ export const consumeAuthNotification = (domainId: number): AuthNotification | nu
 
     try {
         sessionStorage.removeItem(getStorageKey(domainId));
+        domainIdsWithNotificationStoredInCurrentDocument.delete(domainId);
     } catch (error) {
         logException(error);
 

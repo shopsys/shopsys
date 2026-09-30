@@ -3,7 +3,11 @@ import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/C
 import { useRouter } from 'next/router';
 import { useEffect, useEffectEvent, useState } from 'react';
 import { AuthNotification } from 'types/auth';
-import { consumeAuthNotification, getAuthNotification, hasAuthNotification } from 'utils/auth/authNotificationStorage';
+import {
+    consumeAuthNotification,
+    getAuthNotification,
+    hasAuthNotificationFromPreviousDocument,
+} from 'utils/auth/authNotificationStorage';
 import { getAccessTokenFromCookies, hasRefreshTokenInCookies } from 'utils/auth/getTokensFromCookies';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
@@ -22,7 +26,7 @@ export const AuthNotificationLoader = () => {
         !isCustomerUserFetching && !isCustomerUserStale && isUserLoggedIn === hasAuthCookies;
     // A notification created in this document must wait for the auth redirect to finish before it can be consumed.
     const [readyNotificationDomainId, setReadyNotificationDomainId] = useState<number | null>(() =>
-        hasAuthNotification(domainConfig.domainId) ? domainConfig.domainId : null,
+        hasAuthNotificationFromPreviousDocument(domainConfig.domainId) ? domainConfig.domainId : null,
     );
 
     const showAuthNotification = useEffectEvent((authNotification: AuthNotification) => {
