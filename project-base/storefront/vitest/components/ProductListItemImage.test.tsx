@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { ProductListItemImage } from 'components/Blocks/Product/ProductsList/ProductListItemImage';
+import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -116,6 +117,23 @@ describe('ProductListItemImage', () => {
         expect(imageContainer).toHaveClass('w-full');
         expect(imageContainer).toHaveStyle({ maxWidth: '180px' });
         expect(imageContainer).not.toHaveStyle({ width: '180px' });
+    });
+
+    test('places the image TID on the fixed-size image slot outside galleries', () => {
+        render(
+            <ProductListItemImage
+                product={product}
+                size="large"
+                tid={TIDs.category_bestseller_image}
+                visibleItemsConfig={{ flags: false }}
+            />,
+        );
+
+        const imageSlot = screen.getByRole('img').parentElement;
+
+        expect(imageSlot).toHaveAttribute('data-tid', TIDs.category_bestseller_image);
+        expect(imageSlot).toHaveStyle({ height: '180px' });
+        expect(imageSlot?.parentElement).not.toHaveAttribute('data-tid');
     });
 
     test('keeps the product card background in the same compositing layer as gallery images', () => {

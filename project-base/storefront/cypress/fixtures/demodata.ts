@@ -129,6 +129,7 @@ export const staticData = {
     },
     expectedDeliveryDateMessage: 'Delivery on Tuesday 10/26',
     expectedPersonalPickupDateMessage: 'Personal pickup on Tuesday 10/26',
+    expectedDeliveryDate: '10/26/1999',
     complaint: {
         number: '1234567890',
         creationDate: '10/26/1999',
