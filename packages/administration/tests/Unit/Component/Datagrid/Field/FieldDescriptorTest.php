@@ -7,6 +7,7 @@ namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Field;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 class FieldDescriptorTest extends TestCase
@@ -73,6 +74,21 @@ class FieldDescriptorTest extends TestCase
                 'expectedSortable' => false,
             ],
         ];
+    }
+
+    public function testFieldIsNotRestrictedByDefault(): void
+    {
+        $fieldDescriptor = new FieldDescriptor('name');
+
+        $this->assertFalse($fieldDescriptor->isRestricted());
+        $this->assertNull($fieldDescriptor->getRole());
+        $this->assertNull($fieldDescriptor->getPermission());
+    }
+
+    public function testFieldIsRestrictedByRoleOrPermission(): void
+    {
+        $this->assertTrue(new FieldDescriptor('name', ['role' => 'ROLE_PRODUCT'])->isRestricted());
+        $this->assertTrue(new FieldDescriptor('name', ['permission' => Permission::EDIT])->isRestricted());
     }
 
     public function testEmptyPropertyArrayIsNotAllowed(): void

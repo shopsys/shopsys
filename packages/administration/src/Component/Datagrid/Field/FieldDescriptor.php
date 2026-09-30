@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Field;
 
 use Closure;
+use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -16,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     help?: string|null,
  *     template?: string|null,
  *     transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
- *     property?: string|string[]|null
+ *     property?: string|string[]|null,
+ *     role?: string|null,
+ *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null
  * }
  */
 final class FieldDescriptor
@@ -52,6 +55,8 @@ final class FieldDescriptor
             'template' => null,
             'transform' => null,
             'property' => null,
+            'role' => null,
+            'permission' => null,
         ]);
 
         $optionsResolver->setAllowedTypes('label', 'string');
@@ -63,6 +68,8 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('transform', [Closure::class, 'null']);
         $optionsResolver->setAllowedTypes('property', ['string', 'string[]', 'null']);
         $optionsResolver->setAllowedValues('property', fn (string|array|null $property) => $property !== []);
+        $optionsResolver->setAllowedTypes('role', ['string', 'null']);
+        $optionsResolver->setAllowedTypes('permission', [Permission::class, 'null']);
 
         return $optionsResolver->resolve($options);
     }
@@ -122,6 +129,30 @@ final class FieldDescriptor
     public function getTransform(): ?Closure
     {
         return $this->options['transform'];
+    }
+
+    /**
+     * Role constant the administrator needs to see the field, null means the role of the datagrid
+     */
+    public function getRole(): ?string
+    {
+        return $this->options['role'];
+    }
+
+    /**
+     * Permission on the role the administrator needs to see the field, null means VIEW
+     */
+    public function getPermission(): ?Permission
+    {
+        return $this->options['permission'];
+    }
+
+    /**
+     * Field is displayed only to administrators with the configured role or permission
+     */
+    public function isRestricted(): bool
+    {
+        return $this->options['role'] !== null || $this->options['permission'] !== null;
     }
 
     /**

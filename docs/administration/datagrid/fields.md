@@ -27,6 +27,8 @@ The following options are available for fields:
 - `property` - The property of the entity that is used to fetch the data. If not set, the field name is used as the property name.
   It can also be an array of properties - then all of them are fetched and the value of the field is an array of their values indexed by the property (e.g. `['lastName' => 'Doe', 'firstName' => 'John']`).
   Such a field is sorted by all the properties in the given order, `transform` receives the whole array and without `template` (or `transform`) the values are simply joined with a space.
+- `role` - Role constant (e.g. `ROLE_PRODUCT`) the administrator needs to see the field. The field is then neither fetched nor displayed for other administrators. If not set, the role of the datagrid (the CRUD controller) is used.
+- `permission` - Permission (`Shopsys\FrameworkBundle\Component\Security\Role\Permission`) on the role the administrator needs to see the field. If not set, `Permission::VIEW` is used. The field is restricted only when `role` or `permission` is set.
 
 ```php
 $datagrid->add('name', [
@@ -68,6 +70,18 @@ $datagrid
     ->add('customerName', [
         'label' => t('Customer'),
         'property' => ['lastName', 'firstName'],
+    ])
+
+    // The column is displayed only to administrators allowed to view products
+    ->add('purchasePrice', [
+        'label' => t('Purchase price'),
+        'role' => 'ROLE_PRODUCT',
+    ])
+
+    // The column is displayed only to administrators allowed to edit records of this datagrid
+    ->add('internalNote', [
+        'label' => t('Internal note'),
+        'permission' => Permission::EDIT,
     ])
     
     // You can use the transform option to modify the value of the field
