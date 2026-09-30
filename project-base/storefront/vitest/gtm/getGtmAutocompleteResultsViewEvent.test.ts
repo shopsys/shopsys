@@ -10,8 +10,6 @@ const autocompleteSearchResult = {
             uuid: '92c929d6-0fc5-4df2-8dbd-b7a94b2d9629',
             name: 'Smart article',
             slug: '/smart-article',
-            placement: 'footer',
-            external: false,
         },
     ],
     brandSearch: [{ __typename: 'Brand', name: 'Smart brand', slug: '/smart-brand' }],
