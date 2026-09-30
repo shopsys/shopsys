@@ -30,7 +30,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
     public function renderWidget(string $id, array $config, array $options = []): string
     {
         return sprintf(
-            '$("#%s-preview").click(function() {
+            'document.getElementById("%s-preview").addEventListener("click", function() {
                 %s
             });',
             $id,
