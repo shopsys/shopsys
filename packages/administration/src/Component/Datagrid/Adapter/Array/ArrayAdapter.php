@@ -6,14 +6,16 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
-use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatagridRowProcessor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 
 final class ArrayAdapter implements AdapterInterface
 {
+    /**
+     * @param mixed[][] $data
+     */
     public function __construct(
         private readonly array $data,
-        private readonly ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory,
     ) {
     }
 
@@ -23,6 +25,17 @@ final class ArrayAdapter implements AdapterInterface
     #[Override]
     public function getDatasource(string $identificationName, array $fields): DataSourceInterface
     {
-        return $this->arrayWithPaginationDataSourceFactory->create($this->data, $identificationName);
+        $propertyPaths = [];
+
+        foreach ($fields as $field) {
+            $propertyPaths = [...$propertyPaths, ...$field->getSelectProperties()];
+        }
+
+        return new ArrayDatagridDataSource(
+            $this->data,
+            $identificationName,
+            new DatagridRowProcessor($fields),
+            array_unique($propertyPaths),
+        );
     }
 }

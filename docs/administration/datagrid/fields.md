@@ -6,7 +6,7 @@ Fields are the building blocks of a datagrid. They are used to define the column
 
 Fields are defined by the `Datagrid` class using the `add(string $name, array $options)`, `update(string $name, array $options)` and `remove(string $name)` methods. The `$name` parameter is the name of the field and the `$options` parameter is an array of options that define the behavior of the field.
 
-In case you are using `OrmAdapter`, you can use dot notation to access nested properties of the entity. Here are some examples of how to define field names:
+You can use dot notation to access nested properties of the entity (`OrmAdapter`) or nested arrays of the row (`ArrayAdapter`, the value is then available in the row under the whole path, e.g. `row['product.id']`). Here are some examples of how to define field names:
 
 - `$datagrid->add('domainId')` - This will fetch the `domainId` property of the entity.
 - `$datagrid->add('currency.code')` - This will join the `currency` relation and fetch the `code` property of the `Currency` entity.
