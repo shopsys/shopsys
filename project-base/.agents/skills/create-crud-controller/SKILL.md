@@ -180,8 +180,13 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 ```
 
 Field options: `label`, `visible`, `sortable`, `virtual` (not selected from the entity —
-pair with `property` or `transform`), `property` (DQL path, e.g. `product.id`), `template`,
-`transform`, `help`. Datagrid methods: `add` / `update` / `remove` / `reorder`,
+pair with `property` or `transform`), `property` (DQL path, e.g. `product.id`, or an array of
+paths — all are fetched, the template gets them as `value.<path>`, the column sorts by all of
+them and without a template they are joined with a space; prefer this over hidden helper
+fields), `template`, `transform`, `help`, `role` / `permission` (show the column only to
+administrators with the permission on the role; role defaults to the controller role,
+permission to `Permission::VIEW`; the data is not fetched for others), `class` (CSS class of the
+header and cells, e.g. `text-end`). Datagrid methods: `add` / `update` / `remove` / `reorder`,
 `setDefaultOrder`, `setPagination`, `enableDragAndDrop(field)`, `actions()` (row actions:
 `add` / `update` / `delete` / `reorder`).
 
