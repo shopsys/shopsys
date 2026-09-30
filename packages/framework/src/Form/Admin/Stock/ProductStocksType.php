@@ -45,15 +45,19 @@ final class ProductStocksType extends AbstractType
     {
         parent::finishView($view, $form, $options);
 
-        $totalStockQuantitiesByDomainId = array_fill_keys($this->domain->getAllIds(), 0);
+        $adminEnabledDomainIds = $this->domain->getAdminEnabledDomainIds();
+        $totalStockQuantitiesByDomainId = array_fill_keys($adminEnabledDomainIds, 0);
 
         foreach ($view->children as $childView) {
             /** @var int[] $stockEnabledDomainIds */
             $stockEnabledDomainIds = $childView->vars['enabled_domain_ids'];
+            $stockDisplayedDomainIds = array_intersect($stockEnabledDomainIds, $adminEnabledDomainIds);
+
+            $childView->vars['is_displayed'] = $stockDisplayedDomainIds !== [] || $stockEnabledDomainIds === [];
 
             $quantity = (int)$childView->children['productQuantity']->vars['value'];
 
-            foreach ($stockEnabledDomainIds as $domainId) {
+            foreach ($stockDisplayedDomainIds as $domainId) {
                 $totalStockQuantitiesByDomainId[$domainId] += $quantity;
             }
         }

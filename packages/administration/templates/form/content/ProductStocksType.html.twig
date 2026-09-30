@@ -19,7 +19,13 @@
         </div>
 
         {% for stockForm in form %}
-            {{ form_row(stockForm) }}
+            {% if stockForm.vars.is_displayed %}
+                {{ form_row(stockForm) }}
+            {% else %}
+                {% for field in stockForm %}
+                    {{ form_widget(field, { type: 'hidden' }) }}
+                {% endfor %}
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
