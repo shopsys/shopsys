@@ -105,7 +105,7 @@ final class OrderInputPreloaderFacadeTest extends FunctionalTestCase
 
         $queriesOnPreloadedTables = array_filter(
             $queryCountingMiddleware->getExecutedQueries(),
-            static fn (array $executedQuery): bool => preg_match('~product_manual_input_prices|price_list_product_prices|product_visibilities~', $executedQuery['sql']) === 1,
+            static fn (string $executedQuery): bool => preg_match('~product_manual_input_prices|price_list_product_prices|product_visibilities~', $executedQuery) === 1,
         );
 
         $this->assertSame([], $queriesOnPreloadedTables);
