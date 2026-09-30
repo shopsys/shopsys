@@ -32,10 +32,6 @@ class ProductManualInputPriceRepository
         Product $product,
         PricingGroup $pricingGroup,
     ): ?ProductManualInputPrice {
-        if ($product->getId() === null) {
-            return null;
-        }
-
         return $this->getProductManualInputPriceRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),
