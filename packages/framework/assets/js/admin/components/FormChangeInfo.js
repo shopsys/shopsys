@@ -1,5 +1,5 @@
 import Translator from 'bazinga-translator';
-import AlertTriangle from 'icons/tabler/alert-triangle.svg';
+import AlertTriangle from 'icons/tabler/alert-triangle.svg?raw';
 import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
