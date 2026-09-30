@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -36,10 +36,10 @@ class TransportPriceProviderTest extends TestCase
         $orderInputFactoryStub->method('createFromCart')->willReturn($orderInput);
 
         $orderData = $this->createStub(OrderData::class);
-        $orderProcessingFacadeMock = $this->createMock(OrderProcessingFacade::class);
-        $orderProcessingFacadeMock
+        $orderProcessorMock = $this->createMock(OrderProcessor::class);
+        $orderProcessorMock
             ->expects($this->once())
-            ->method('getProcessedOrderData')
+            ->method('processMemoized')
             ->with($this->callback(static fn (OrderInput $processedOrderInput): bool => $processedOrderInput->getTransport() === null))
             ->willReturn($orderData);
 
@@ -50,7 +50,7 @@ class TransportPriceProviderTest extends TestCase
             ->with($transport, $orderData, Domain::FIRST_DOMAIN_ID, self::CART_TOTAL_WEIGHT)
             ->willReturn($transportPrice);
 
-        $transportPriceProvider = new TransportPriceProvider($orderInputFactoryStub, $orderProcessingFacadeMock, $transportPriceCalculationMock);
+        $transportPriceProvider = new TransportPriceProvider($orderInputFactoryStub, $orderProcessorMock, $transportPriceCalculationMock);
 
         $this->assertSame($transportPrice, $transportPriceProvider->getTransportPrice($this->createStub(Cart::class), $transport, $domainConfig));
     }

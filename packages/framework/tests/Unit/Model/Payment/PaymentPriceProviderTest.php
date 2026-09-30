@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
@@ -31,10 +31,10 @@ class PaymentPriceProviderTest extends TestCase
         $orderInputFactoryStub->method('createFromCart')->willReturn(new OrderInput($domainConfig));
 
         $orderData = $this->createStub(OrderData::class);
-        $orderProcessingFacadeMock = $this->createMock(OrderProcessingFacade::class);
-        $orderProcessingFacadeMock
+        $orderProcessorMock = $this->createMock(OrderProcessor::class);
+        $orderProcessorMock
             ->expects($this->once())
-            ->method('getProcessedOrderData')
+            ->method('processMemoized')
             ->with($this->callback(static fn (OrderInput $processedOrderInput): bool => $processedOrderInput->getPayment() === null))
             ->willReturn($orderData);
 
@@ -45,7 +45,7 @@ class PaymentPriceProviderTest extends TestCase
             ->with($payment, $orderData, Domain::FIRST_DOMAIN_ID)
             ->willReturn($paymentPrice);
 
-        $paymentPriceProvider = new PaymentPriceProvider($orderInputFactoryStub, $orderProcessingFacadeMock, $paymentPriceCalculationMock);
+        $paymentPriceProvider = new PaymentPriceProvider($orderInputFactoryStub, $orderProcessorMock, $paymentPriceCalculationMock);
 
         $this->assertSame($paymentPrice, $paymentPriceProvider->getPaymentPrice($this->createStub(Cart::class), $payment, $domainConfig));
     }

@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-final class OrderProcessingFacadeTest extends TransactionFunctionalTestCase
+final class OrderProcessorTest extends TransactionFunctionalTestCase
 {
     /**
      * @inject
@@ -54,7 +54,7 @@ final class OrderProcessingFacadeTest extends TransactionFunctionalTestCase
     private function createCartWithProduct(string $productReferenceName): Cart
     {
         $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists(
-            new CustomerUserIdentifier('order-processing-facade-test'),
+            new CustomerUserIdentifier('order-processor-test'),
         );
         $product = $this->getReference($productReferenceName, Product::class);
         $this->cartFacade->addProductToExistingCart($product, 1, $cart);

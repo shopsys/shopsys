@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -18,7 +18,7 @@ class TransportPriceProvider
 {
     public function __construct(
         protected readonly OrderInputFactory $orderInputFactory,
-        protected readonly OrderProcessingFacade $orderProcessingFacade,
+        protected readonly OrderProcessor $orderProcessor,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
     ) {
     }
@@ -46,7 +46,7 @@ class TransportPriceProvider
         Transport $transport,
         DomainConfig $domainConfig,
     ): PriceInterface {
-        $orderData = $this->orderProcessingFacade->getProcessedOrderData($orderInput);
+        $orderData = $this->orderProcessor->processMemoized($orderInput);
 
         /** @var int $cartTotalWeight */
         $cartTotalWeight = $orderInput->findAdditionalData(AddTransportMiddleware::ADDITIONAL_DATA_CART_TOTAL_WEIGHT) ?? 0;
