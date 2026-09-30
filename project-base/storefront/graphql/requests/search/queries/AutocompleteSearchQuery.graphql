@@ -12,7 +12,16 @@ query AutocompleteSearchQuery(
             userIdentifier: $userIdentifier
         }
     ) {
-        ...SimpleArticleInterfaceFragment
+        __typename
+        ... on ArticleSite {
+            uuid
+            name
+            slug
+        }
+        ... on BlogArticle {
+            name
+            slug
+        }
     }
     brandSearch(
         searchInput: {

@@ -6,7 +6,6 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { SimpleArticleInterfaceFragment } from '../../articlesInterface/fragments/SimpleArticleInterfaceFragment.generated';
 import { SimpleBrandFragment } from '../../brands/fragments/SimpleBrandFragment.generated';
 import { SimpleCategoryFragment } from '../../categories/fragments/SimpleCategoryFragment.generated';
 import { CompactProductFragment } from '../../products/fragments/CompactProductFragment.generated';
@@ -44,8 +43,8 @@ export type TypeAutocompleteSearchQueryVariables = Exact<{
 
 
 export type TypeAutocompleteSearchQuery = { articlesSearch: Array<
-    | { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean }
-    | { __typename: 'BlogArticle', name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
+    | { __typename: 'ArticleSite', uuid: string, name: string, slug: string }
+    | { __typename: 'BlogArticle', name: string, slug: string }
   >, brandSearch: Array<{ __typename: 'Brand', name: string, slug: string }>, categoriesSearch: { __typename: 'CategoryConnection', totalCount: number, edges: Array<{ __typename: 'CategoryEdge', node: { __typename: 'Category', uuid: string, name: string, slug: string } | null } | null> | null }, productsSearch: { __typename: 'ProductConnection', totalCount: number, edges: Array<{ __typename: 'ProductEdge', node:
         | { __typename: 'MainVariant', variantsCount: number, id: number, uuid: string, slug: string, fullName: string, isSellingDenied: boolean, expectedRestockingDate: string | null, catalogNumber: string, isMainVariant: boolean, productType: Types.TypeProductTypeEnum, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null }
         | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, isSellingDenied: boolean, expectedRestockingDate: string | null, catalogNumber: string, isMainVariant: boolean, productType: Types.TypeProductTypeEnum, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null }
@@ -58,7 +57,16 @@ export const AutocompleteSearchQueryDocument = gql`
   articlesSearch(
     searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
   ) {
-    ...SimpleArticleInterfaceFragment
+    __typename
+    ... on ArticleSite {
+      uuid
+      name
+      slug
+    }
+    ... on BlogArticle {
+      name
+      slug
+    }
   }
   brandSearch(
     searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
@@ -92,8 +100,7 @@ export const AutocompleteSearchQueryDocument = gql`
     }
   }
 }
-    ${SimpleArticleInterfaceFragment}
-${SimpleBrandFragment}
+    ${SimpleBrandFragment}
 ${SimpleCategoryFragment}
 ${CompactProductFragment}`;
 
