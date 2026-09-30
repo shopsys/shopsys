@@ -59,7 +59,7 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 ## Key Configuration Files
 
 - **Docker**: `/docker-compose.yml`, `/docker/`
-- **Build**: `/project-base/app/build.xml` (Phing), `/project-base/app/webpack.config.js`
+- **Build**: `/project-base/app/build.xml` (Phing), `/project-base/app/rsbuild.config.ts`
 - **Dependencies**: `/composer.json`, `/project-base/storefront/package.json`
 - **Code Quality**: `/ecs.php`, `/phpstan.neon`, `/project-base/storefront/biome.json`
 - **Database**: Doctrine ORM with PostgreSQL, migrations in `/project-base/app/src/Migrations/`
