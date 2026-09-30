@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository as BaseTransport
  * @method \App\Model\Transport\Transport[] getAllWithEagerLoadedDomainsAndTranslations(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, int|null $totalWeight = null)
  * @method void deleteAllPricesByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Transport\Transport[] getAllByType(string $type)
+ * @method void preloadPricesByTransports(\App\Model\Transport\Transport[] $transports)
  */
 class TransportRepository extends BaseTransportRepository
 {

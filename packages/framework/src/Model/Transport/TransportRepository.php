@@ -191,21 +191,38 @@ class TransportRepository
         $queryBuilder = $this->getQueryBuilderForAll()
             ->addSelect('td')
             ->addSelect('tt')
-            ->addSelect('tp')
             ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
-            ->leftJoin('t.prices', 'tp')
             ->setParameter('domainId', $domainConfig->getId())
             ->setParameter('locale', $domainConfig->getLocale());
 
         if ($totalWeight !== null) {
             $queryBuilder
-                ->join('t.prices', 'atp', Join::WITH, 'atp.domainId = :domainId')
-                ->andWhere('atp.maxWeight IS NULL OR atp.maxWeight >= :maxWeight')
+                ->join('t.prices', 'tp', Join::WITH, 'tp.domainId = :domainId')
+                ->andWhere('tp.maxWeight IS NULL OR tp.maxWeight >= :maxWeight')
                 ->setParameter('maxWeight', $totalWeight);
         }
 
         return $queryBuilder
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
+     */
+    public function preloadPricesByTransports(array $transports): void
+    {
+        if ($transports === []) {
+            return;
+        }
+
+        $this->getTransportRepository()
+            ->createQueryBuilder('t')
+            ->addSelect('tp')
+            ->leftJoin('t.prices', 'tp')
+            ->where('t IN (:transports)')
+            ->setParameter('transports', $transports)
             ->getQuery()
             ->getResult();
     }
