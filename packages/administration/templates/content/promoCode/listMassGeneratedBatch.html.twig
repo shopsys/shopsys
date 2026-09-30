@@ -7,7 +7,7 @@
     {{ gridView.render() }}
     {% if downloadBatchId is not null %}
         <script type="text/javascript">
-            $(document).ready(function () {
+            document.addEventListener('DOMContentLoaded', function () {
                 document.location.href = '{{ url('admin_promocode_downloadmassgeneratebatch', {batchId: downloadBatchId}) }}';
             });
         </script>
