@@ -21,6 +21,7 @@ import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformatio
 import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
+import { DragHandleIcon } from 'components/Basic/Icon/DragHandleIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { ExternalLinkIcon } from 'components/Basic/Icon/ExternalLinkIcon';
 import { EyeCrossedIcon } from 'components/Basic/Icon/EyeCrossedIcon';
@@ -63,6 +64,7 @@ import { TagIcon } from 'components/Basic/Icon/TagIcon';
 import { ThumbUpIcon } from 'components/Basic/Icon/ThumbUpIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
+import { UndoIcon } from 'components/Basic/Icon/UndoIcon';
 import { UploadIcon } from 'components/Basic/Icon/UploadIcon';
 import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
@@ -149,6 +151,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <DownloadIcon className="size-10" />
                 <span className="text-center text-xs break-all">DownloadIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <DragHandleIcon className="size-10" />
+                <span className="text-center text-xs break-all">DragHandleIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ExitIcon className="size-10" />
@@ -317,6 +323,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <TruckClockIcon className="size-10" />
                 <span className="text-center text-xs break-all">TruckClockIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <UndoIcon className="size-10" />
+                <span className="text-center text-xs break-all">UndoIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <UploadIcon className="size-10" />

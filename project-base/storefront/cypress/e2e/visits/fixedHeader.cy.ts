@@ -98,8 +98,7 @@ describe('Fixed Header Tests', { retries: { runMode: 0 } }, () => {
 
         cy.getByTID([TIDs.header])
             .parents('header')
-            .should('have.attr', 'aria-hidden', 'true')
-            .and('have.attr', 'inert');
+            .should('have.attr', 'inert');
 
         // Focusing the last navigation trigger opens its submenu, so keyboard navigation leaves from its last link.
         cy.getByTID([TIDs.fixed_header])

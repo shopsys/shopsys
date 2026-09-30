@@ -1,52 +1,31 @@
 import { act, renderHook } from '@testing-library/react';
 import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
-import { afterEach, describe, expect, test, vi } from 'vitest';
-
-vi.mock('utils/ui/useGetWindowSize', () => ({
-    useGetWindowSize: () => ({ height: 800, width: 1280 }),
-}));
-
-vi.mock('utils/useComponentUpdate', () => ({
-    useComponentUpdate: vi.fn(),
-}));
-
-const createRect = (width: number): DOMRect => ({
-    bottom: 0,
-    height: 0,
-    left: 0,
-    right: width,
-    top: 0,
-    width,
-    x: 0,
-    y: 0,
-    toJSON: vi.fn(),
-});
+import { describe, expect, test, vi } from 'vitest';
 
 describe('useComparisonTable', () => {
-    afterEach(() => {
-        vi.restoreAllMocks();
-        document.body.replaceChildren();
-    });
-
-    test('measures the first column width for the sticky comparison head', () => {
-        document.body.innerHTML = `
-            <div id="js-table-compare-wrap"></div>
-            <table id="js-table-compare">
-                <thead>
-                    <tr id="js-table-compare-head"><td></td><th></th></tr>
-                </thead>
-            </table>
-        `;
-        const tableWrapper = document.getElementById('js-table-compare-wrap');
-        const table = document.getElementById('js-table-compare');
-        const firstColumn = document.querySelector('#js-table-compare-head > td');
-        vi.spyOn(tableWrapper!, 'getBoundingClientRect').mockReturnValue(createRect(800));
-        vi.spyOn(table!, 'getBoundingClientRect').mockReturnValue(createRect(1_236));
-        vi.spyOn(firstColumn!, 'getBoundingClientRect').mockReturnValue(createRect(256));
+    test('tracks native scrolling and disables the next arrow at the exact end', () => {
+        const viewport = document.createElement('div');
+        viewport.innerHTML =
+            '<table><thead><tr><td><div id="js-table-compare-head"><div></div><div></div></div></td></tr></thead></table>';
+        Object.defineProperties(viewport, { clientWidth: { value: 800 }, scrollWidth: { value: 1200 } });
+        const cells = viewport.querySelector('#js-table-compare-head')!.children;
+        vi.spyOn(cells[0], 'getBoundingClientRect').mockReturnValue({ width: 192 } as DOMRect);
+        vi.spyOn(cells[1], 'getBoundingClientRect').mockReturnValue({ width: 252 } as DOMRect);
         const { result } = renderHook(() => useComparisonTable(4));
+        result.current.scrollRef.current = viewport;
 
         act(() => result.current.calcMaxMarginLeft());
 
-        expect(result.current.tableFirstColumnWidth).toBe(256);
+        expect(result.current.tableFirstColumnWidth).toBe(192);
+        expect(result.current.productColumnWidth).toBe(252);
+        expect(result.current.isArrowLeftActive).toBe(false);
+        expect(result.current.isArrowRightActive).toBe(true);
+
+        viewport.scrollLeft = 400;
+        act(() => result.current.calcMaxMarginLeft());
+
+        expect(result.current.tableMarginLeft).toBe(400);
+        expect(result.current.isArrowRightActive).toBe(false);
+        expect(result.current.isArrowLeftActive).toBe(true);
     });
 });

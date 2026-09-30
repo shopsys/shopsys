@@ -166,7 +166,7 @@ const checkAndHideToast = (tid: TIDs, text?: string) => {
         cy.getByTID([tid]).should('be.visible');
     }
 
-    cy.getByTID([tid]).click({ force: true });
+    cy.getByTID([tid]).closest('.Toastify__toast').find('button.Toastify__close-button').click({ force: true });
     cy.getByTID([tid]).should('not.exist');
 };
 

@@ -1,0 +1,12 @@
+ProductListMoveProductInputDecorator:
+    type: input-object
+    config:
+        fields:
+            productListInput:
+                type: "ProductListInput!"
+            productUuid:
+                type: "Uuid!"
+                description: "Product to move"
+            afterProductUuid:
+                type: "Uuid"
+                description: "Product after which the moved product is placed, null moves it to the top"
