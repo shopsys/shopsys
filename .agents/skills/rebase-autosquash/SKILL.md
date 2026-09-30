@@ -93,8 +93,8 @@ facts in the chat.
 
 `.github/workflows/rebase-pr.yaml` runs this skill via `claude-code-action` —
 triggered from the Actions tab (`workflow_dispatch` with a PR number) or by a
-`/rebase` comment on the PR (write permission required). Differences from a local
-PR-mode run:
+`/rebase` PR comment — newly posted, or edited into an existing comment (write
+permission required). Differences from a local PR-mode run:
 
 - The workflow itself hard-gates the trigger (exact `/rebase` command, commenter
   write permission, PR open and not from a fork) before Claude starts — the skill's
