@@ -31,7 +31,7 @@
         "@next/bundle-analyzer": "~15.5.18",
         "@radix-ui/react-popover": "^1.1.23",
         "@radix-ui/react-tooltip": "^1.2.16",
-        "@sentry/nextjs": "~10.75.3",
+        "@sentry/nextjs": "~11.1.0",
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.2.1",
         "@urql/exchange-graphcache": "~7.2.4",

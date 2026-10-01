@@ -1,6 +1,7 @@
 import { getPublicConfigProperty } from 'envConfig';
 import { SENTRY_APPLICATION_KEY } from 'sentryApplicationKey';
 import * as Sentry from '@sentry/nextjs';
+import { sentryDataCollection } from 'utils/sentry/dataCollection';
 import { getTracePropagationTargetsFromPublicGraphqlEndpoints as getPublicGraphqlTracePropagationTargets } from 'utils/sentry/tracePropagationTargets';
 
 const dsn = getPublicConfigProperty('sentryDsn');
@@ -16,6 +17,7 @@ const tracePropagationTargets = getPublicGraphqlTracePropagationTargets(
 if (isSentryEnabled) {
     Sentry.init({
         dsn: dsn,
+        dataCollection: sentryDataCollection,
         environment: environment,
         release: release,
         tracesSampleRate: 0.1,
@@ -37,9 +39,9 @@ if (isSentryEnabled) {
         import('@sentry/nextjs').then((lazyLoadedSentry) => {
             Sentry.addIntegration(
                 lazyLoadedSentry.replayIntegration({
-                    maskAllText: false,
-                    blockAllMedia: false,
-                    maskAllInputs: false,
+                    maskAllText: true,
+                    blockAllMedia: true,
+                    maskAllInputs: true,
                 }),
             );
         });
