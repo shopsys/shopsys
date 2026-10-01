@@ -54,18 +54,17 @@ describe('ProductListViewModeToggle', () => {
             inactiveButtonName: 'Show products in grid view',
             productListViewMode: 'list' as const,
         },
-    ])('marks the $productListViewMode view as active', ({
-        activeButtonName,
-        inactiveButtonName,
-        productListViewMode,
-    }) => {
-        productListViewModeState.value = productListViewMode;
+    ])(
+        'marks the $productListViewMode view as active',
+        ({ activeButtonName, inactiveButtonName, productListViewMode }) => {
+            productListViewModeState.value = productListViewMode;
 
-        render(<ProductListViewModeToggle />);
+            render(<ProductListViewModeToggle />);
 
-        expect(screen.getByRole('button', { name: activeButtonName })).toHaveAttribute('aria-pressed', 'true');
-        expect(screen.getByRole('button', { name: inactiveButtonName })).toHaveAttribute('aria-pressed', 'false');
-    });
+            expect(screen.getByRole('button', { name: activeButtonName })).toHaveAttribute('aria-pressed', 'true');
+            expect(screen.getByRole('button', { name: inactiveButtonName })).toHaveAttribute('aria-pressed', 'false');
+        },
+    );
 
     test.each([
         { buttonName: 'Show products in grid view', productListViewMode: 'grid' as const },

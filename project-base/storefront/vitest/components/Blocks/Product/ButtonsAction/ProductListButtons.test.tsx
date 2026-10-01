@@ -92,18 +92,18 @@ const activeButtonScenarios: { button: ReactElement; name: string }[] = [
 ];
 
 describe('Product list action buttons', () => {
-    test.each(buttonScenarios)('shows the $tooltipLabel tooltip for an icon-only action', ({
-        button,
-        tooltipLabel,
-    }) => {
-        render(button);
-        const trigger = screen.getByRole('button');
+    test.each(buttonScenarios)(
+        'shows the $tooltipLabel tooltip for an icon-only action',
+        ({ button, tooltipLabel }) => {
+            render(button);
+            const trigger = screen.getByRole('button');
 
-        fireEvent.focus(trigger);
+            fireEvent.focus(trigger);
 
-        expect(trigger).not.toHaveAttribute('title');
-        expect(screen.getByRole('tooltip')).toHaveTextContent(tooltipLabel);
-    });
+            expect(trigger).not.toHaveAttribute('title');
+            expect(screen.getByRole('tooltip')).toHaveTextContent(tooltipLabel);
+        },
+    );
 
     test('does not add a custom tooltip when the action has visible text', () => {
         render(
@@ -133,19 +133,19 @@ describe('Product list action buttons', () => {
         { isProductInComparison: true, isWithText: false },
         { isProductInComparison: false, isWithText: true },
         { isProductInComparison: true, isWithText: true },
-    ])('does not announce a dialog when isProductInComparison is $isProductInComparison and isWithText is $isWithText', ({
-        isProductInComparison,
-        isWithText,
-    }) => {
-        render(
-            <ProductCompareButton
-                isProductInComparison={isProductInComparison}
-                isWithText={isWithText}
-                productName="Test product"
-                toggleProductInComparison={vi.fn()}
-            />,
-        );
+    ])(
+        'does not announce a dialog when isProductInComparison is $isProductInComparison and isWithText is $isWithText',
+        ({ isProductInComparison, isWithText }) => {
+            render(
+                <ProductCompareButton
+                    isProductInComparison={isProductInComparison}
+                    isWithText={isWithText}
+                    productName="Test product"
+                    toggleProductInComparison={vi.fn()}
+                />,
+            );
 
-        expect(screen.getByRole('button')).not.toHaveAttribute('aria-haspopup');
-    });
+            expect(screen.getByRole('button')).not.toHaveAttribute('aria-haspopup');
+        },
+    );
 });
