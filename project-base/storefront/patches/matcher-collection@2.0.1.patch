@@ -1,0 +1,19 @@
+--- a/index.js
++++ b/index.js
+@@ -15,13 +15,10 @@
+         return false;
+     };
+     MatcherCollection.prototype.mayContain = function (value) {
+-        var parts = value.split(/\/|\\/g).filter(Boolean);
++        value = value.replace(/\\/g, '/') || '/';
+         for (var i = 0; i < this.matchers.length; i++) {
+-            var matcher = this.matchers[i];
+-            for (var j = 0; j < matcher.set.length; j++) {
+-                if (matcher.matchOne(parts, matcher.set[j], true)) {
+-                    return true;
+-                }
++            if (this.matchers[i].match(value, true)) {
++                return true;
+             }
+         }
+         return false;
