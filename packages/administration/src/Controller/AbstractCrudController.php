@@ -39,12 +39,15 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 
 #[AutoconfigureTag('shopsys.admin.crud_controllers')]
 abstract class AbstractCrudController extends AdminBaseController
 {
+    protected const string DOMAIN_ID_DATA_PROPERTY = 'domainId';
+
     protected Definition $definition;
 
     #[Required]
@@ -79,6 +82,9 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public LoggableEntityConfigFactory $loggableEntityConfigFactory;
+
+    #[Required]
+    public PropertyAccessorInterface $propertyAccessor;
 
     public function setDefinition(Definition $definition): void
     {
@@ -175,13 +181,39 @@ abstract class AbstractCrudController extends AdminBaseController
      */
     protected function applyListDomainFilter(QueryBuilder $queryBuilder): void
     {
-        if ($this->definition->getConfig()->getListDomainControl() === null
-            || !is_a($this->definition->entityClass, DomainSeparatedEntityInterface::class, true)
-        ) {
+        if (!$this->isListDomainFilterApplicable()) {
             return;
         }
 
         $this->addListDomainIdsCondition($queryBuilder, $queryBuilder->getRootAliases()[0] . '.domainId');
+    }
+
+    /**
+     * The list domain control applies to the entity itself only when the entity is domain-separated
+     */
+    protected function isListDomainFilterApplicable(): bool
+    {
+        return $this->definition->getConfig()->getListDomainControl() !== null
+            && is_a($this->definition->entityClass, DomainSeparatedEntityInterface::class, true);
+    }
+
+    /**
+     * Presets the domain of a new record of a domain-separated entity to the domain selected in the list domain control
+     * (the first domain of the list when "All domains" is selected), so handlers do not resolve the selected domain themselves
+     */
+    protected function presetSelectedListDomain(object $data): void
+    {
+        if (!$this->isListDomainFilterApplicable()
+            || !$this->propertyAccessor->isWritable($data, static::DOMAIN_ID_DATA_PROPERTY)
+        ) {
+            return;
+        }
+
+        $this->propertyAccessor->setValue(
+            $data,
+            static::DOMAIN_ID_DATA_PROPERTY,
+            $this->getSelectedListDomainId() ?? array_first($this->getListDomainIds()),
+        );
     }
 
     /**
@@ -313,6 +345,7 @@ abstract class AbstractCrudController extends AdminBaseController
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\CreateHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::CREATE);
         $data = $handler->createData();
+        $this->presetSelectedListDomain($data);
 
         $formConfigurator = new CrudFormConfigurator($this->formFactory, $data, ActionType::CREATE);
         $this->configureForm($formConfigurator, null);

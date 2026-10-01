@@ -145,6 +145,7 @@ public function configure(CrudConfig $config): void
 
 When the entity implements `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface`, the domain condition is applied to the list query automatically (no `configureQuery()` code is needed).
 A selected domain limits the list to that domain, and the "All domains" option of a quick filter limits it to the domains available to the administrator (intersected with the configured allowed domain IDs).
+The create page presets the `domainId` of the data object returned by the handler to the selected domain (the first domain of the list when "All domains" is selected), so handlers do not resolve the selected domain themselves.
 
 #### Entities without `DomainSeparatedEntityInterface`
 
