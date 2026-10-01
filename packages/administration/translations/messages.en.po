@@ -13,6 +13,9 @@ msgstr ""
 msgid "%count% entries"
 msgstr ""
 
+msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
+msgstr ""
+
 msgid "%count% item|%count% items"
 msgstr ""
 
@@ -148,6 +151,9 @@ msgstr ""
 msgid "Advanced search"
 msgstr ""
 
+msgid "Advert"
+msgstr ""
+
 msgid "Advertising"
 msgstr ""
 
@@ -209,6 +215,9 @@ msgid "Approved"
 msgstr ""
 
 msgid "Are you sure?"
+msgstr ""
+
+msgid "Area"
 msgstr ""
 
 msgid "Article"
@@ -400,6 +409,9 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+msgid "Closed day"
+msgstr ""
+
 msgid "Closed days"
 msgstr ""
 
@@ -538,13 +550,7 @@ msgstr ""
 msgid "Create new administrator role group"
 msgstr ""
 
-msgid "Create new advertising"
-msgstr ""
-
 msgid "Create new article"
-msgstr ""
-
-msgid "Create new banner"
 msgstr ""
 
 msgid "Create new blog article"
@@ -577,9 +583,6 @@ msgstr ""
 msgid "Create new gift plan"
 msgstr ""
 
-msgid "Create new holiday or internal day"
-msgstr ""
-
 msgid "Create new item"
 msgstr ""
 
@@ -589,25 +592,10 @@ msgstr ""
 msgid "Create new parameter"
 msgstr ""
 
-msgid "Create new parameter group"
-msgstr ""
-
-msgid "Create new price list"
-msgstr ""
-
 msgid "Create new product"
 msgstr ""
 
-msgid "Create new sales representative"
-msgstr ""
-
-msgid "Create new store"
-msgstr ""
-
 msgid "Create new warehouse"
-msgstr ""
-
-msgid "Create notification bar"
 msgstr ""
 
 msgid "Create payment"
@@ -677,6 +665,9 @@ msgid "Customers overview"
 msgstr ""
 
 msgid "Dashboard"
+msgstr ""
+
+msgid "Date"
 msgstr ""
 
 msgid "Date and time"
@@ -772,10 +763,22 @@ msgstr ""
 msgid "Do you really want to mark the order as paid? This cannot be undone."
 msgstr ""
 
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgstr ""
+
 msgid "Do you really want to remove the order?"
 msgstr ""
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
+msgstr ""
+
+msgid "Do you really want to remove this parameter group? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
+msgstr ""
+
+msgid "Do you really want to remove this store? This step is irreversible!"
 msgstr ""
 
 msgid "Domain"
@@ -803,6 +806,9 @@ msgid "Drag your files here"
 msgstr ""
 
 msgid "Duration (seconds)"
+msgstr ""
+
+msgid "E-mail"
 msgstr ""
 
 msgid "E-mail whitelist"
@@ -844,13 +850,7 @@ msgstr ""
 msgid "Edit parameter"
 msgstr ""
 
-msgid "Edit parameter group"
-msgstr ""
-
 msgid "Edit personal data"
-msgstr ""
-
-msgid "Edit store"
 msgstr ""
 
 msgid "Edit the combination with SEO values"
@@ -877,13 +877,7 @@ msgstr ""
 msgid "Editing administrator role group"
 msgstr ""
 
-msgid "Editing advertising"
-msgstr ""
-
 msgid "Editing article"
-msgstr ""
-
-msgid "Editing banner"
 msgstr ""
 
 msgid "Editing blog article"
@@ -925,18 +919,6 @@ msgstr ""
 msgid "Editing gift voucher"
 msgstr ""
 
-msgid "Editing holiday / internal day"
-msgstr ""
-
-msgid "Editing holiday / internal day - {{ name }}"
-msgstr ""
-
-msgid "Editing navigation item"
-msgstr ""
-
-msgid "Editing notification bar"
-msgstr ""
-
 msgid "Editing order - Nr. %number%"
 msgstr ""
 
@@ -946,22 +928,13 @@ msgstr ""
 msgid "Editing payment"
 msgstr ""
 
-msgid "Editing price list"
-msgstr ""
-
 msgid "Editing product"
 msgstr ""
 
 msgid "Editing promo code"
 msgstr ""
 
-msgid "Editing sales representative"
-msgstr ""
-
 msgid "Editing shipping"
-msgstr ""
-
-msgid "Editing store"
 msgstr ""
 
 msgid "Editing warehouse"
@@ -1030,7 +1003,13 @@ msgstr ""
 msgid "Error message of the last run"
 msgstr ""
 
+msgid "Error while importing CSV file."
+msgstr ""
+
 msgid "Excl. VAT"
+msgstr ""
+
+msgid "Excluded stores"
 msgstr ""
 
 msgid "Expected delivery date"
@@ -1177,9 +1156,6 @@ msgstr ""
 msgid "Holidays and internal days"
 msgstr ""
 
-msgid "Holidays and internal days overview"
-msgstr ""
-
 msgid "Holidays import"
 msgstr ""
 
@@ -1274,6 +1250,9 @@ msgid "Last action"
 msgstr ""
 
 msgid "Last name"
+msgstr ""
+
+msgid "Last update"
 msgstr ""
 
 msgid "Legal & Compliance"
@@ -1381,6 +1360,12 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
+msgid "Navigation item"
+msgstr ""
+
+msgid "Navigation items"
+msgstr ""
+
 msgid "New SEO page"
 msgstr ""
 
@@ -1390,13 +1375,7 @@ msgstr ""
 msgid "New administrator role group"
 msgstr ""
 
-msgid "New advertising"
-msgstr ""
-
 msgid "New article"
-msgstr ""
-
-msgid "New banner"
 msgstr ""
 
 msgid "New blog article"
@@ -1409,9 +1388,6 @@ msgid "New brand"
 msgstr ""
 
 msgid "New category"
-msgstr ""
-
-msgid "New closed day"
 msgstr ""
 
 msgid "New country"
@@ -1438,25 +1414,16 @@ msgstr ""
 msgid "New gift voucher"
 msgstr ""
 
-msgid "New navigation item"
-msgstr ""
-
-msgid "New notification bar"
-msgstr ""
-
 msgid "New orders"
 msgstr ""
 
 msgid "New parameter"
 msgstr ""
 
-msgid "New parameter group"
-msgstr ""
-
 msgid "New payment"
 msgstr ""
 
-msgid "New price list"
+msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
 msgstr ""
 
 msgid "New product"
@@ -1471,13 +1438,7 @@ msgstr ""
 msgid "New registered customers"
 msgstr ""
 
-msgid "New sales representative"
-msgstr ""
-
 msgid "New shipping"
-msgstr ""
-
-msgid "New store"
 msgstr ""
 
 msgid "New value"
@@ -1499,9 +1460,6 @@ msgid "No URLs so far."
 msgstr ""
 
 msgid "No VAT rate found. You have to create some first."
-msgstr ""
-
-msgid "No advertising found. You have to create some first."
 msgstr ""
 
 msgid "No articles found on this domain. You have to create some first."
@@ -1573,9 +1531,6 @@ msgstr ""
 msgid "No orders status found."
 msgstr ""
 
-msgid "No page found."
-msgstr ""
-
 msgid "No parameters found. You have to create some first."
 msgstr ""
 
@@ -1588,9 +1543,6 @@ msgstr ""
 msgid "No product found."
 msgstr ""
 
-msgid "No product list found."
-msgstr ""
-
 msgid "No promo codes found. You have to create some first."
 msgstr ""
 
@@ -1600,13 +1552,7 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-msgid "No sales representatives found."
-msgstr ""
-
 msgid "No shipping created so far."
-msgstr ""
-
-msgid "No store is created. You have to create one first."
 msgstr ""
 
 msgid "No subscribers found."
@@ -1756,9 +1702,6 @@ msgstr ""
 msgid "Parameter groups"
 msgstr ""
 
-msgid "Parameter groups overview"
-msgstr ""
-
 msgid "Parameter value of type color"
 msgstr ""
 
@@ -1846,7 +1789,10 @@ msgstr ""
 msgid "Price list"
 msgstr ""
 
-msgid "Price list overview"
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
+msgstr ""
+
+msgid "Price list name"
 msgstr ""
 
 msgid "Price lists"
@@ -1919,6 +1865,9 @@ msgid "Promoted products"
 msgstr ""
 
 msgid "Public access"
+msgstr ""
+
+msgid "Public holiday"
 msgstr ""
 
 msgid "Published"
@@ -2224,6 +2173,9 @@ msgstr ""
 msgid "Selected order doesn't exist."
 msgstr ""
 
+msgid "Selected price list does not exist."
+msgstr ""
+
 msgid "Sellable"
 msgstr ""
 
@@ -2290,10 +2242,16 @@ msgstr ""
 msgid "Site [abbreviation]"
 msgstr "S"
 
+msgid "Slider item"
+msgstr ""
+
 msgid "Slider items"
 msgstr ""
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
+msgstr ""
+
+msgid "Some items cannot be imported due to errors:"
 msgstr ""
 
 msgid "Special price"
@@ -2311,7 +2269,7 @@ msgstr ""
 msgid "Store"
 msgstr ""
 
-msgid "Store list"
+msgid "Store <strong>{{ name }}</strong> was set as default."
 msgstr ""
 
 msgid "Storefront URL:"
@@ -2374,6 +2332,9 @@ msgstr ""
 msgid "Terms and conditions settings"
 msgstr ""
 
+msgid "Text"
+msgstr ""
+
 msgid "Text review"
 msgstr ""
 
@@ -2398,13 +2359,13 @@ msgstr ""
 msgid "The product is no longer in the catalogue."
 msgstr ""
 
+msgid "The selected country is not valid."
+msgstr ""
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr ""
 
 msgid "There are no parameter values of type color yet."
-msgstr ""
-
-msgid "There is no parameter group yet."
 msgstr ""
 
 msgid "There is no warehouse on this domain yet."
@@ -2656,6 +2617,9 @@ msgstr ""
 msgid "View order on Frontend"
 msgstr ""
 
+msgid "Visibility"
+msgstr ""
+
 msgid "Visibility and sellability for unlogged customers"
 msgstr ""
 
@@ -2737,9 +2701,6 @@ msgstr ""
 msgid "administrators"
 msgstr ""
 
-msgid "advertisings"
-msgstr ""
-
 msgid "and %count% more"
 msgstr ""
 
@@ -2818,9 +2779,6 @@ msgstr ""
 msgid "parameters"
 msgstr ""
 
-msgid "product lists"
-msgstr ""
-
 msgid "products"
 msgstr ""
 
@@ -2831,9 +2789,6 @@ msgid "ready category seo mixes"
 msgstr ""
 
 msgid "records"
-msgstr ""
-
-msgid "sales representatives"
 msgstr ""
 
 msgid "subscribers"
@@ -2864,4 +2819,10 @@ msgid "without VAT"
 msgstr ""
 
 msgid "yesterday"
+msgstr ""
+
+msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
+msgstr ""
+
+msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""

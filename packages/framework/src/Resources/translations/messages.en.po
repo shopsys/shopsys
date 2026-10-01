@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
-msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
-msgstr ""
-
 msgid "%name% agrees with privacy policy."
 msgstr ""
 
@@ -107,9 +104,6 @@ msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
-msgstr ""
-
-msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr ""
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
@@ -212,18 +206,6 @@ msgid "Administrators"
 msgstr ""
 
 msgid "Administrators overview"
-msgstr ""
-
-msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
-msgstr ""
-
-msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
-msgstr ""
-
-msgid "Advertising <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Advertising system"
 msgstr ""
 
 msgid "All roles"
@@ -419,9 +401,6 @@ msgid "Bank transfer"
 msgstr ""
 
 msgid "Bank transfer not completed"
-msgstr ""
-
-msgid "Banners"
 msgstr ""
 
 msgid "Basic"
@@ -1003,6 +982,9 @@ msgstr ""
 msgid "Default store"
 msgstr ""
 
+msgid "Default store cannot be removed"
+msgstr ""
+
 msgid "Default unit"
 msgstr ""
 
@@ -1141,9 +1123,6 @@ msgstr ""
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
-msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
-msgstr ""
-
 msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
@@ -1157,9 +1136,6 @@ msgid "Do you really want to remove this administrator role group?"
 msgstr ""
 
 msgid "Do you really want to remove this administrator?"
-msgstr ""
-
-msgid "Do you really want to remove this advert?"
 msgstr ""
 
 msgid "Do you really want to remove this article?"
@@ -1189,31 +1165,13 @@ msgstr ""
 msgid "Do you really want to remove this gift plan?"
 msgstr ""
 
-msgid "Do you really want to remove this holiday / internal day?"
-msgstr ""
-
 msgid "Do you really want to remove this language constant translation?"
-msgstr ""
-
-msgid "Do you really want to remove this navigation item?"
-msgstr ""
-
-msgid "Do you really want to remove this notification bar?"
-msgstr ""
-
-msgid "Do you really want to remove this page?"
-msgstr ""
-
-msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
 msgstr ""
 
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and parameters of the extended SEO category where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
 msgid "Do you really want to remove this payment?"
-msgstr ""
-
-msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
 msgstr ""
 
 msgid "Do you really want to remove this product?"
@@ -1223,9 +1181,6 @@ msgid "Do you really want to remove this promo code?"
 msgstr ""
 
 msgid "Do you really want to remove this shipping?"
-msgstr ""
-
-msgid "Do you really want to remove this store? This step is irreversible!"
 msgstr ""
 
 msgid "Do you really want to remove this subscriber?"
@@ -1273,9 +1228,6 @@ msgstr ""
 msgid "Duration (mm:ss)"
 msgstr ""
 
-msgid "E-mail"
-msgstr ""
-
 msgid "E-mail addresses whitelist"
 msgstr ""
 
@@ -1309,9 +1261,6 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-msgid "Edit store"
-msgstr ""
-
 msgid "Editing SEO page"
 msgstr ""
 
@@ -1325,12 +1274,6 @@ msgid "Editing administrator role group"
 msgstr ""
 
 msgid "Editing administrator role group - %name%"
-msgstr ""
-
-msgid "Editing advertising"
-msgstr ""
-
-msgid "Editing advertising - %name%"
 msgstr ""
 
 msgid "Editing article"
@@ -1420,25 +1363,10 @@ msgstr ""
 msgid "Editing gift voucher - %code%"
 msgstr ""
 
-msgid "Editing holiday / internal day - {{ name }}"
-msgstr ""
-
-msgid "Editing item"
-msgstr ""
-
-msgid "Editing notification bar"
-msgstr ""
-
 msgid "Editing order"
 msgstr ""
 
-msgid "Editing page"
-msgstr ""
-
 msgid "Editing parameter"
-msgstr ""
-
-msgid "Editing parameter group"
 msgstr ""
 
 msgid "Editing parameter value of type color"
@@ -1453,12 +1381,6 @@ msgstr ""
 msgid "Editing payment - %name%"
 msgstr ""
 
-msgid "Editing price list"
-msgstr ""
-
-msgid "Editing price list - %name%"
-msgstr ""
-
 msgid "Editing product"
 msgstr ""
 
@@ -1471,19 +1393,10 @@ msgstr ""
 msgid "Editing promo code - %code%"
 msgstr ""
 
-msgid "Editing sales representative"
-msgstr ""
-
-msgid "Editing sales representative - %label%"
-msgstr ""
-
 msgid "Editing shipping"
 msgstr ""
 
 msgid "Editing shipping - %name%"
-msgstr ""
-
-msgid "Editing slider page - %name%"
 msgstr ""
 
 msgid "Editing warehouse - %name%"
@@ -1562,9 +1475,6 @@ msgid "Error occurred while uploading file: %message%"
 msgstr ""
 
 msgid "Error occurred, try again please."
-msgstr ""
-
-msgid "Error while importing CSV file."
 msgstr ""
 
 msgid "Exchange"
@@ -1921,21 +1831,6 @@ msgstr ""
 msgid "Hiding product"
 msgstr ""
 
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Holiday / internal day detail"
-msgstr ""
-
-msgid "Holidays and internal days"
-msgstr ""
-
 msgid "Holidays import"
 msgstr ""
 
@@ -2272,18 +2167,6 @@ msgstr ""
 msgid "Namespace"
 msgstr ""
 
-msgid "Navigation"
-msgstr ""
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr ""
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
-msgstr ""
-
-msgid "Navigation item <strong>{{ name }}</strong> has been removed"
-msgstr ""
-
 msgid "Navigation item type"
 msgstr ""
 
@@ -2302,9 +2185,6 @@ msgstr ""
 msgid "New administrator role group"
 msgstr ""
 
-msgid "New advertising"
-msgstr ""
-
 msgid "New article"
 msgstr ""
 
@@ -2318,9 +2198,6 @@ msgid "New brand"
 msgstr ""
 
 msgid "New category"
-msgstr ""
-
-msgid "New closed day"
 msgstr ""
 
 msgid "New country"
@@ -2344,19 +2221,7 @@ msgstr ""
 msgid "New gift voucher"
 msgstr ""
 
-msgid "New item"
-msgstr ""
-
-msgid "New notification bar"
-msgstr ""
-
-msgid "New page"
-msgstr ""
-
 msgid "New parameter"
-msgstr ""
-
-msgid "New parameter group"
 msgstr ""
 
 msgid "New password settings URL address"
@@ -2365,25 +2230,13 @@ msgstr ""
 msgid "New payment"
 msgstr ""
 
-msgid "New price list"
-msgstr ""
-
-msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
-msgstr ""
-
 msgid "New product"
 msgstr ""
 
 msgid "New promo code"
 msgstr ""
 
-msgid "New sales representative"
-msgstr ""
-
 msgid "New shipping"
-msgstr ""
-
-msgid "New store"
 msgstr ""
 
 msgid "New warehouse"
@@ -2426,15 +2279,6 @@ msgid "Note"
 msgstr ""
 
 msgid "Nothing to choose from."
-msgstr ""
-
-msgid "Notification bar"
-msgstr ""
-
-msgid "Notification bar has been successfuly created"
-msgstr ""
-
-msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
 msgid "Number of delivery days for out of stock products in XML feeds"
@@ -2566,9 +2410,6 @@ msgstr ""
 msgid "Packetery"
 msgstr ""
 
-msgid "Page <strong>{{ name }}</strong> deleted"
-msgstr ""
-
 msgid "Page name"
 msgstr ""
 
@@ -2588,12 +2429,6 @@ msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
 msgstr ""
 
 msgid "Parameter <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr ""
-
-msgid "Parameter groups"
 msgstr ""
 
 msgid "Parameter type"
@@ -2824,25 +2659,7 @@ msgstr ""
 msgid "Price including VAT rounding"
 msgstr ""
 
-msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
-msgstr ""
-
-msgid "Price list <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Price list name"
-msgstr ""
-
 msgid "Price list overview"
-msgstr ""
-
-msgid "Price lists"
 msgstr ""
 
 msgid "Prices"
@@ -3187,18 +3004,6 @@ msgstr ""
 msgid "Sales representative"
 msgstr ""
 
-msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
-msgstr ""
-
-msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was edited"
-msgstr ""
-
-msgid "Sales representative <strong>{{ label }}</strong> deleted."
-msgstr ""
-
-msgid "Sales representatives"
-msgstr ""
-
 msgid "Sample customer name"
 msgstr ""
 
@@ -3271,9 +3076,6 @@ msgstr ""
 msgid "Selected administrator role group doesn't exist."
 msgstr ""
 
-msgid "Selected advertisement doesn't exist."
-msgstr ""
-
 msgid "Selected article doesn't exist."
 msgstr ""
 
@@ -3310,28 +3112,13 @@ msgstr ""
 msgid "Selected gift plan doesn't exist."
 msgstr ""
 
-msgid "Selected holiday / internal day doesn't exist."
-msgstr ""
-
-msgid "Selected navigation item does not exist."
-msgstr ""
-
-msgid "Selected notification bar does not exist"
-msgstr ""
-
 msgid "Selected order status doesn't exist."
-msgstr ""
-
-msgid "Selected page doesn't exist."
 msgstr ""
 
 msgid "Selected parameter doesn't exist."
 msgstr ""
 
 msgid "Selected payment doesn't exist."
-msgstr ""
-
-msgid "Selected price list does not exist."
 msgstr ""
 
 msgid "Selected pricing group doesn't exist."
@@ -3344,9 +3131,6 @@ msgid "Selected promo code doesn't exist."
 msgstr ""
 
 msgid "Selected replacement pricing group must be a different pricing group from the same domain."
-msgstr ""
-
-msgid "Selected sales representative doesn't exist."
 msgstr ""
 
 msgid "Selected shipping doesn't exist."
@@ -3478,16 +3262,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
 msgid "Slug"
-msgstr ""
-
-msgid "Some items cannot be imported due to errors:"
 msgstr ""
 
 msgid "Sorting priority"
@@ -3539,21 +3314,6 @@ msgid "Stocking"
 msgstr ""
 
 msgid "Store"
-msgstr ""
-
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr ""
-
-msgid "Store <strong>{{ name }}</strong> was deleted"
-msgstr ""
-
-msgid "Store <strong>{{ name }}</strong> was set as default."
-msgstr ""
-
-msgid "Store does not exist"
 msgstr ""
 
 msgid "Storefront queries cache has been cleaned."
@@ -3613,9 +3373,6 @@ msgstr ""
 msgid "Test email sent to %email%."
 msgstr ""
 
-msgid "Text"
-msgstr ""
-
 msgid "Text review"
 msgstr ""
 
@@ -3638,9 +3395,6 @@ msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr ""
 
 msgid "The pickup dates are driven by the weekly opening hours of the <a href=\"%storesUrl%\" target=\"_blank\">stores</a> and by the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day."
-msgstr ""
-
-msgid "The selected country is not valid."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."
@@ -4159,9 +3913,6 @@ msgstr ""
 msgid "without positioning"
 msgstr ""
 
-msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
-msgstr ""
-
 msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
 msgstr ""
 
@@ -4169,7 +3920,4 @@ msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must 
 msgstr ""
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
-msgstr ""
-
-msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""
