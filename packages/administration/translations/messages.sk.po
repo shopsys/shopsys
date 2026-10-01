@@ -13,6 +13,9 @@ msgstr "%categoryName% - Filtry"
 msgid "%count% entries"
 msgstr "%count% záznamov"
 
+msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
+msgstr "%count% položka z CSV súboru bola úspešne importovaná.|%count% položky z CSV súboru boli úspešne importované.|%count% položiek z CSV súboru bolo úspešne importovaných."
+
 msgid "%count% item|%count% items"
 msgstr "{1} %count% položka|[2,4] %count% položky|[5,Inf] %count% položiek"
 
@@ -148,6 +151,9 @@ msgstr "Prehľad administrátorov"
 msgid "Advanced search"
 msgstr "Pokročilé vyhľadávanie"
 
+msgid "Advert"
+msgstr "Reklama"
+
 msgid "Advertising"
 msgstr "Reklama"
 
@@ -210,6 +216,9 @@ msgstr "Schváleno"
 
 msgid "Are you sure?"
 msgstr "Naozaj?"
+
+msgid "Area"
+msgstr "Oblasť"
 
 msgid "Article"
 msgstr "Článok"
@@ -399,6 +408,9 @@ msgstr "Vymazať"
 
 msgid "Close"
 msgstr "Zavrieť"
+
+msgid "Closed day"
+msgstr "Sviatok / interný deň"
 
 msgid "Closed days"
 msgstr "Sviatky a interné dni"
@@ -679,6 +691,9 @@ msgstr "Prehľad zákazníkov"
 msgid "Dashboard"
 msgstr "Dashboard"
 
+msgid "Date"
+msgstr "Dátum"
+
 msgid "Date and time"
 msgstr "Dátum a čas"
 
@@ -772,11 +787,26 @@ msgstr "Naozaj chcete odstrániť túto položku?"
 msgid "Do you really want to mark the order as paid? This cannot be undone."
 msgstr "Naozaj chcete označiť objednávku ako zaplatenú? Túto akciu nie je možné vrátiť späť."
 
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgstr "Naozaj chcete trvalo odstrániť obchodného zástupcu \"%label%\"? Nie je používaný nikde."
+
 msgid "Do you really want to remove the order?"
 msgstr "Naozaj chcete odstrániť objednávku?"
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Naozaj chcete odstrániť túto kategóriu aj s ich SEO mixami?"
+
+msgid "Do you really want to remove this holiday / internal day?"
+msgstr "Naozaj chcete odstrániť tento sviatok / interný deň?"
+
+msgid "Do you really want to remove this parameter group? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
+msgstr "Naozaj chcete odstrániť túto skupinu parametrov? Odstránením tejto skupiny parametrov zrušíte všetky skupiny pre priradené parametre. Tento krok je nezvratný!"
+
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
+msgstr "Naozaj chcete odstrániť tento zoznam produktov? Špeciálne ceny pre produkty v tomto zozname budú odstránené."
+
+msgid "Do you really want to remove this store? This step is irreversible!"
+msgstr "Naozaj chcete odstrániť tento obchod? Tento krok je nezvratný!"
 
 msgid "Domain"
 msgstr "Doména"
@@ -804,6 +834,9 @@ msgstr "Pretiahnite sem vaše súbory"
 
 msgid "Duration (seconds)"
 msgstr "Trvánie (sekundy)"
+
+msgid "E-mail"
+msgstr "E-mail"
 
 msgid "E-mail whitelist"
 msgstr "Whitelist e-mailových adres"
@@ -844,14 +877,8 @@ msgstr "Upraviť poznámku"
 msgid "Edit parameter"
 msgstr "Upraviť parameter"
 
-msgid "Edit parameter group"
-msgstr "Upraviť skupinu parametrov"
-
 msgid "Edit personal data"
 msgstr "Upraviť osobné údaje"
-
-msgid "Edit store"
-msgstr "Upraviť predajňu"
 
 msgid "Edit the combination with SEO values"
 msgstr "Úprava kombinácie s SEO hodnotami"
@@ -877,14 +904,8 @@ msgstr "Upravovanie administrátora"
 msgid "Editing administrator role group"
 msgstr "Upravovanie skupiny rolí administrátora"
 
-msgid "Editing advertising"
-msgstr "Upravovanie reklamy"
-
 msgid "Editing article"
 msgstr "Upravovanie článku"
-
-msgid "Editing banner"
-msgstr "Upravovanie banneru"
 
 msgid "Editing blog article"
 msgstr "Upravovanie blogového článku"
@@ -925,18 +946,6 @@ msgstr "Úprava darčekového plánu"
 msgid "Editing gift voucher"
 msgstr "Editácia darčekového poukazu"
 
-msgid "Editing holiday / internal day"
-msgstr "Úprava sviatku / interného dňa"
-
-msgid "Editing holiday / internal day - {{ name }}"
-msgstr "Úprava sviatku / interného dňa - {{ name }}"
-
-msgid "Editing navigation item"
-msgstr "Úprava položky navigácie"
-
-msgid "Editing notification bar"
-msgstr "Úprava panelu upozornení"
-
 msgid "Editing order - Nr. %number%"
 msgstr "Úprava objednávky - č. %number%"
 
@@ -946,23 +955,14 @@ msgstr "Úprava parametra typu farba"
 msgid "Editing payment"
 msgstr "Úprava platby"
 
-msgid "Editing price list"
-msgstr "Úprava cenníka"
-
 msgid "Editing product"
 msgstr "Úprava produktu"
 
 msgid "Editing promo code"
 msgstr "Upraviť promo kód"
 
-msgid "Editing sales representative"
-msgstr "Upraviť obchodného zástupcu"
-
 msgid "Editing shipping"
 msgstr "Úprava doručovania"
-
-msgid "Editing store"
-msgstr "Úprava predajne"
 
 msgid "Editing warehouse"
 msgstr "Úprava skladu"
@@ -1030,8 +1030,14 @@ msgstr "Chyba"
 msgid "Error message of the last run"
 msgstr "Chybové hlásenie posledného behu"
 
+msgid "Error while importing CSV file."
+msgstr "Chyba pri importe CSV súboru."
+
 msgid "Excl. VAT"
 msgstr "Bez DPH"
+
+msgid "Excluded stores"
+msgstr "Vylúčené obchody"
 
 msgid "Expected delivery date"
 msgstr "Predpokladaný termín doručenia"
@@ -1177,9 +1183,6 @@ msgstr "Sviatok / interný deň"
 msgid "Holidays and internal days"
 msgstr "Sviatky a interné dni"
 
-msgid "Holidays and internal days overview"
-msgstr "Prehľad sviatkov a interných dní"
-
 msgid "Holidays import"
 msgstr "Import sviatkov"
 
@@ -1275,6 +1278,9 @@ msgstr "Posledná akcia"
 
 msgid "Last name"
 msgstr "Priezvisko"
+
+msgid "Last update"
+msgstr "Posledná aktualizácia"
 
 msgid "Legal & Compliance"
 msgstr "Právne predpisy"
@@ -1381,6 +1387,12 @@ msgstr "Názov"
 msgid "Navigation"
 msgstr "Navigácia"
 
+msgid "Navigation item"
+msgstr "Položka navigácie"
+
+msgid "Navigation items"
+msgstr "Položky navigácie"
+
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
@@ -1390,14 +1402,8 @@ msgstr "Nový administrátor"
 msgid "New administrator role group"
 msgstr "Nová skupina rolí administrátora"
 
-msgid "New advertising"
-msgstr "Nová reklama"
-
 msgid "New article"
 msgstr "Nový článok"
-
-msgid "New banner"
-msgstr "Nový banner"
 
 msgid "New blog article"
 msgstr "Nový blogový článok"
@@ -1410,9 +1416,6 @@ msgstr "Nová značka"
 
 msgid "New category"
 msgstr "Nová kategória"
-
-msgid "New closed day"
-msgstr "Nový sviatok / interný deň"
 
 msgid "New country"
 msgstr "Nová krajina"
@@ -1438,26 +1441,17 @@ msgstr "Nový darčekový plán"
 msgid "New gift voucher"
 msgstr "Nový darčekový poukaz"
 
-msgid "New navigation item"
-msgstr "Nová navigačná položka"
-
-msgid "New notification bar"
-msgstr "Nový notifikačný panel"
-
 msgid "New orders"
 msgstr "Nové objednávky"
 
 msgid "New parameter"
 msgstr "Nový parameter"
 
-msgid "New parameter group"
-msgstr "Nová skupina parametrov"
-
 msgid "New payment"
 msgstr "Nová platba"
 
-msgid "New price list"
-msgstr "Nový cenník"
+msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
+msgstr "Nový cenník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený."
 
 msgid "New product"
 msgstr "Nový produkt"
@@ -1471,14 +1465,8 @@ msgstr "Nový záznam"
 msgid "New registered customers"
 msgstr "Novoregistrovaní zákazníci"
 
-msgid "New sales representative"
-msgstr "Nový obchodný zástupca"
-
 msgid "New shipping"
 msgstr "Nová doručovacia metóda"
-
-msgid "New store"
-msgstr "Nový obchod"
 
 msgid "New value"
 msgstr "Nová hodnota"
@@ -1500,9 +1488,6 @@ msgstr "Zatiaľ žiadne URL."
 
 msgid "No VAT rate found. You have to create some first."
 msgstr "Neboli nájdené žiadne DPH sadzby. Najskôr musíte nejaké vytvoriť."
-
-msgid "No advertising found. You have to create some first."
-msgstr "Neboli nájdené žiadne reklámy. Najskôr musíte nejaké vytvoriť."
 
 msgid "No articles found on this domain. You have to create some first."
 msgstr "Na tejto doméne neboli nájdené žiadne články. Najskôr musíte nejaké vytvoriť."
@@ -1573,9 +1558,6 @@ msgstr "Nebola nájdená žiadna objednávka."
 msgid "No orders status found."
 msgstr "Nenájdený žiaden stav objednávky."
 
-msgid "No page found."
-msgstr "Nebola nájdená žiadna stránka."
-
 msgid "No parameters found. You have to create some first."
 msgstr "Neboli nájdené žiadne parametre. Najskôr musíte nejaké vytvoriť."
 
@@ -1588,9 +1570,6 @@ msgstr "Neboli nájdené žiadne cenové skupiny. Najskôr musíte nejakú vytvo
 msgid "No product found."
 msgstr "Nebol nájdený žiadny produkt."
 
-msgid "No product list found."
-msgstr "Nebol nájdený žiadny cenník."
-
 msgid "No promo codes found. You have to create some first."
 msgstr "Neboli nájdené žiadne zľavové kupóny. Najskôr musíte nejaký vytvoriť."
 
@@ -1600,14 +1579,8 @@ msgstr "Neboli nájdené žiadne záznamy."
 msgid "No results found"
 msgstr "Neboli nájdené žiadne výsledky."
 
-msgid "No sales representatives found."
-msgstr "Neboli nájdení žiadni obchodní zástupcovia."
-
 msgid "No shipping created so far."
 msgstr "Zatiaľ nebola vytvorená žiadna doprava."
-
-msgid "No store is created. You have to create one first."
-msgstr "Nie je vytvorená žiadna predajňa. Najskôr musíte jednu vytvoriť."
 
 msgid "No subscribers found."
 msgstr "Neboli nájdení žiadni odoberatelia."
@@ -1756,9 +1729,6 @@ msgstr "Skupina parametrov"
 msgid "Parameter groups"
 msgstr "Skupiny parametrov"
 
-msgid "Parameter groups overview"
-msgstr "Prehľad skupín parametrov"
-
 msgid "Parameter value of type color"
 msgstr "Hodnota parametra typu farba"
 
@@ -1846,8 +1816,11 @@ msgstr "Zaokrúhlenie ceny s DPH"
 msgid "Price list"
 msgstr "Cenník"
 
-msgid "Price list overview"
-msgstr "Prehľad cenníkov"
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
+msgstr "Cenník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol nahradený."
+
+msgid "Price list name"
+msgstr "Názov cenníka"
 
 msgid "Price lists"
 msgstr "Cenníky"
@@ -1920,6 +1893,9 @@ msgstr "Propagované produkty"
 
 msgid "Public access"
 msgstr "Verejný prístup"
+
+msgid "Public holiday"
+msgstr "Sviatok"
 
 msgid "Published"
 msgstr "Zverejnené"
@@ -2227,6 +2203,9 @@ msgstr "Vybrať hodnotu"
 msgid "Selected order doesn't exist."
 msgstr "Vybraná objednávka neexistuje."
 
+msgid "Selected price list does not exist."
+msgstr "Zvolený cenník neexistuje."
+
 msgid "Sellable"
 msgstr "Predajné"
 
@@ -2293,11 +2272,17 @@ msgstr "Stránka"
 msgid "Site [abbreviation]"
 msgstr "S"
 
+msgid "Slider item"
+msgstr "Banner"
+
 msgid "Slider items"
 msgstr "Bannery"
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
 msgstr "Niektoré údaje nemusia byť lokalizované alebo slúžia technickým administrátorom e-shopu."
+
+msgid "Some items cannot be imported due to errors:"
+msgstr "Niečé položky nemôžu byť importované kvôli chybám:"
 
 msgid "Special price"
 msgstr "Špeciálna cena"
@@ -2314,8 +2299,8 @@ msgstr "Zastaví sa pri prvej chybe"
 msgid "Store"
 msgstr "Obchod"
 
-msgid "Store list"
-msgstr "Zoznam Store"
+msgid "Store <strong>{{ name }}</strong> was set as default."
+msgstr "Obchod <strong>{{ name }}</strong> bol nastavený ako predvolený."
 
 msgid "Storefront URL:"
 msgstr "URL na storefrontu:"
@@ -2377,6 +2362,9 @@ msgstr "Obchodné podmienky"
 msgid "Terms and conditions settings"
 msgstr "Nastavenia Terms and conditions"
 
+msgid "Text"
+msgstr "Text"
+
 msgid "Text review"
 msgstr "Textová recenzia"
 
@@ -2401,14 +2389,14 @@ msgstr "Produkt už nie je v katalógu. Toto bolo katalógové číslo v čase d
 msgid "The product is no longer in the catalogue."
 msgstr "Produkt už nie je v katalógu."
 
+msgid "The selected country is not valid."
+msgstr "Vybraná krajina nie je platná."
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul> Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Zatiaľ nie sú žiadne hodnoty parametrov typu farba."
-
-msgid "There is no parameter group yet."
-msgstr "Zatiaľ neexistuje žiadna skupina parametrov."
 
 msgid "There is no warehouse on this domain yet."
 msgstr "Na tejto doméne zatiaľ neexistuje žiadny sklad."
@@ -2659,6 +2647,9 @@ msgstr "Zobraziť povolených príjemcov."
 msgid "View order on Frontend"
 msgstr "Zobraziť objednávku na frontende"
 
+msgid "Visibility"
+msgstr "Viditeľnosť"
+
 msgid "Visibility and sellability for unlogged customers"
 msgstr "Viditeľnosť a predateľnosť pre neprihlásených zákazníkov"
 
@@ -2740,9 +2731,6 @@ msgstr "Máte neuložené zmeny. Naozaj chcete zavrieť editor bez uloženia?"
 msgid "administrators"
 msgstr "administrátorov"
 
-msgid "advertisings"
-msgstr "reklám"
-
 msgid "and %count% more"
 msgstr "{1} a %count% ďalšia|[2,4] a %count% ďalšie|[5,Inf] a %count% ďalších"
 
@@ -2821,9 +2809,6 @@ msgstr "hodnoty parametrov"
 msgid "parameters"
 msgstr "parametre"
 
-msgid "product lists"
-msgstr "zoznamy produktov"
-
 msgid "products"
 msgstr "produkty"
 
@@ -2835,9 +2820,6 @@ msgstr "pripravené seo kombinácie kategórií"
 
 msgid "records"
 msgstr "záznamy"
-
-msgid "sales representatives"
-msgstr "obchodní zástupcovia"
 
 msgid "subscribers"
 msgstr "odberateľia"
@@ -2868,3 +2850,9 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
+
+msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
+msgstr "{1} Importovaný <strong>%count%</strong> sviatok.|[2,4] Importované <strong>%count%</strong> sviatky.|[5,Inf] Importovaných <strong>%count%</strong> sviatkov."
+
+msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
+msgstr "{1}Obchodný zástupca \"%label%\" je priradený %count% zákazníkovi a bude odstránený ak budete pokračovať.<br><br> Zákazník:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[2,10]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[11,Inf]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br> +%extraCount% viac<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo?"
