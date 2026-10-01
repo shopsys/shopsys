@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isClient } from 'utils/isClient';
@@ -18,7 +19,11 @@ export const PageGuard: FC<PageGuardProps> = ({ isWithAccess, errorRedirectUrl, 
             router.replace(errorRedirectUrl);
         }
 
-        return null;
+        return (
+            <Head>
+                <meta content="noindex" name="robots" />
+            </Head>
+        );
     }
 
     return <>{children}</>;
