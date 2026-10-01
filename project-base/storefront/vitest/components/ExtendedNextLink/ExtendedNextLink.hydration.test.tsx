@@ -142,79 +142,77 @@ describe('ExtendedNextLink SSR and hydration', () => {
         vi.unstubAllEnvs();
     });
 
-    test.each(cases)('$name produces matching server and client links', async ({
-        props,
-        expectedHref,
-        currentLocale = 'default',
-        expectedNavigation,
-    }) => {
-        const router: NextRouter = {
-            basePath: '',
-            locale: currentLocale,
-            defaultLocale: 'default',
-            locales: ['default', 'en', 'cs', 'sk'],
-            pathname: '/',
-            route: '/',
-            query: {},
-            asPath: '/',
-            isFallback: false,
-            isReady: true,
-            isPreview: false,
-            isLocaleDomain: false,
-            push: vi.fn().mockResolvedValue(true),
-            replace: vi.fn().mockResolvedValue(true),
-            reload: vi.fn(),
-            back: vi.fn(),
-            forward: vi.fn(),
-            prefetch: vi.fn().mockResolvedValue(undefined),
-            beforePopState: vi.fn(),
-            events: { on: vi.fn(), off: vi.fn(), emit: vi.fn() },
-        };
-        const element = (
-            <RouterContext.Provider value={router}>
-                <DomainConfigProvider
-                    domainConfig={{
-                        ...defaultTestDomainConfig,
-                        url: `${origin}/${currentLocale === 'default' ? '' : `${currentLocale}/`}`,
-                    }}
-                >
-                    <ExtendedNextLink {...props}>Link</ExtendedNextLink>
-                </DomainConfigProvider>
-            </RouterContext.Provider>
-        );
-        const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
-        const onRecoverableError = vi.fn();
-        let html: string;
-
-        vi.stubGlobal('window', undefined);
-        try {
-            html = renderToString(element);
-        } finally {
-            vi.unstubAllGlobals();
-        }
-
-        const container = document.createElement('div');
-        container.innerHTML = html;
-        document.body.append(container);
-        const serverHref = container.querySelector('a')?.getAttribute('href');
-
-        await act(async () => {
-            render(element, { container, hydrate: true, onRecoverableError });
-        });
-
-        expect(consoleError).not.toHaveBeenCalled();
-        expect(onRecoverableError).not.toHaveBeenCalled();
-        expect(serverHref).toBe(expectedHref);
-        expect(container.querySelector('a')).toHaveAttribute('href', expectedHref);
-
-        if (expectedNavigation) {
-            fireEvent.click(container.querySelector('a')!);
-
-            expect(router.push).toHaveBeenCalledWith(
-                expect.any(String),
-                expectedNavigation.as,
-                expect.objectContaining({ locale: expectedNavigation.locale }),
+    test.each(cases)(
+        '$name produces matching server and client links',
+        async ({ props, expectedHref, currentLocale = 'default', expectedNavigation }) => {
+            const router: NextRouter = {
+                basePath: '',
+                locale: currentLocale,
+                defaultLocale: 'default',
+                locales: ['default', 'en', 'cs', 'sk'],
+                pathname: '/',
+                route: '/',
+                query: {},
+                asPath: '/',
+                isFallback: false,
+                isReady: true,
+                isPreview: false,
+                isLocaleDomain: false,
+                push: vi.fn().mockResolvedValue(true),
+                replace: vi.fn().mockResolvedValue(true),
+                reload: vi.fn(),
+                back: vi.fn(),
+                forward: vi.fn(),
+                prefetch: vi.fn().mockResolvedValue(undefined),
+                beforePopState: vi.fn(),
+                events: { on: vi.fn(), off: vi.fn(), emit: vi.fn() },
+            };
+            const element = (
+                <RouterContext.Provider value={router}>
+                    <DomainConfigProvider
+                        domainConfig={{
+                            ...defaultTestDomainConfig,
+                            url: `${origin}/${currentLocale === 'default' ? '' : `${currentLocale}/`}`,
+                        }}
+                    >
+                        <ExtendedNextLink {...props}>Link</ExtendedNextLink>
+                    </DomainConfigProvider>
+                </RouterContext.Provider>
             );
-        }
-    });
+            const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+            const onRecoverableError = vi.fn();
+            let html: string;
+
+            vi.stubGlobal('window', undefined);
+            try {
+                html = renderToString(element);
+            } finally {
+                vi.unstubAllGlobals();
+            }
+
+            const container = document.createElement('div');
+            container.innerHTML = html;
+            document.body.append(container);
+            const serverHref = container.querySelector('a')?.getAttribute('href');
+
+            await act(async () => {
+                render(element, { container, hydrate: true, onRecoverableError });
+            });
+
+            expect(consoleError).not.toHaveBeenCalled();
+            expect(onRecoverableError).not.toHaveBeenCalled();
+            expect(serverHref).toBe(expectedHref);
+            expect(container.querySelector('a')).toHaveAttribute('href', expectedHref);
+
+            if (expectedNavigation) {
+                fireEvent.click(container.querySelector('a')!);
+
+                expect(router.push).toHaveBeenCalledWith(
+                    expect.any(String),
+                    expectedNavigation.as,
+                    expect.objectContaining({ locale: expectedNavigation.locale }),
+                );
+            }
+        },
+    );
 });
