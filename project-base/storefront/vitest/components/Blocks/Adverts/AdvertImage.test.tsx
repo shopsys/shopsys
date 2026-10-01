@@ -59,36 +59,34 @@ describe('AdvertImage', () => {
         await waitFor(() => expect(image).toHaveAttribute('alt', advert.mainImage.name));
     });
 
-    test.each([
-        'header',
-        'footer',
-        'cartPreview',
-        'productListSecondRow',
-    ])('pushes a promotion click to dataLayer when the %s advert opens in a new tab', (positionName) => {
-        const promotion = {
-            promotionId: advert.uuid,
-            promotionName: positionName,
-            creativeName: advert.name,
-            creativeSlot: positionName === 'cartPreview' ? 'cart' : undefined,
-        };
-        window.dataLayer = [];
-        render(
-            <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
-                <AdvertImage advert={{ ...advert, positionName, link: '/summer-sale/' }} promotion={promotion} />
-            </DomainConfigProvider>,
-        );
+    test.each(['header', 'footer', 'cartPreview', 'productListSecondRow'])(
+        'pushes a promotion click to dataLayer when the %s advert opens in a new tab',
+        (positionName) => {
+            const promotion = {
+                promotionId: advert.uuid,
+                promotionName: positionName,
+                creativeName: advert.name,
+                creativeSlot: positionName === 'cartPreview' ? 'cart' : undefined,
+            };
+            window.dataLayer = [];
+            render(
+                <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
+                    <AdvertImage advert={{ ...advert, positionName, link: '/summer-sale/' }} promotion={promotion} />
+                </DomainConfigProvider>,
+            );
 
-        fireEvent.click(screen.getByRole('img', { name: 'Promotional offer' }));
+            fireEvent.click(screen.getByRole('img', { name: 'Promotional offer' }));
 
-        expect(screen.getByRole('link')).toHaveAttribute('target', '_blank');
-        expect(window.dataLayer).toEqual([
-            {
-                event: 'ec.promotion_click',
-                ecommerce: { ...promotion, destinationURL: '/summer-sale/' },
-                _clear: true,
-            },
-        ]);
-    });
+            expect(screen.getByRole('link')).toHaveAttribute('target', '_blank');
+            expect(window.dataLayer).toEqual([
+                {
+                    event: 'ec.promotion_click',
+                    ecommerce: { ...promotion, destinationURL: '/summer-sale/' },
+                    _clear: true,
+                },
+            ]);
+        },
+    );
 
     test('renders responsive sources as one semantic image', () => {
         const { container } = render(<AdvertImage advert={advert} />);
