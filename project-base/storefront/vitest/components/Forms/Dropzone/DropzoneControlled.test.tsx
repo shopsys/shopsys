@@ -40,34 +40,34 @@ describe('DropzoneControlled', () => {
         vi.unstubAllGlobals();
     });
 
-    test.each([
-        false,
-        true,
-    ])('adds, deduplicates and removes files without render-time updates (previews: %s)', async (showPreviews) => {
-        const user = userEvent.setup();
-        const consoleError = vi.spyOn(console, 'error');
-        const onSubmit = vi.fn();
-        const firstFile = new File(['first'], 'first.jpg', { type: 'image/jpeg', lastModified: 1 });
-        const secondFile = new File(['second'], 'second.jpg', { type: 'image/jpeg', lastModified: 2 });
-        const duplicateFirstFile = new File(['first'], 'first.jpg', { type: 'image/jpeg', lastModified: 1 });
-        const { container } = render(
-            <StrictMode>
-                <UploadForm showPreviews={showPreviews} onSubmit={onSubmit} />
-            </StrictMode>,
-        );
-        const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
+    test.each([false, true])(
+        'adds, deduplicates and removes files without render-time updates (previews: %s)',
+        async (showPreviews) => {
+            const user = userEvent.setup();
+            const consoleError = vi.spyOn(console, 'error');
+            const onSubmit = vi.fn();
+            const firstFile = new File(['first'], 'first.jpg', { type: 'image/jpeg', lastModified: 1 });
+            const secondFile = new File(['second'], 'second.jpg', { type: 'image/jpeg', lastModified: 2 });
+            const duplicateFirstFile = new File(['first'], 'first.jpg', { type: 'image/jpeg', lastModified: 1 });
+            const { container } = render(
+                <StrictMode>
+                    <UploadForm showPreviews={showPreviews} onSubmit={onSubmit} />
+                </StrictMode>,
+            );
+            const input = container.querySelector<HTMLInputElement>('input[type="file"]')!;
 
-        await user.upload(input, firstFile);
-        await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(1));
-        await user.upload(input, secondFile);
-        await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(2));
-        await user.upload(input, duplicateFirstFile);
-        await user.click(screen.getAllByRole('button', { name: 'Remove file' })[0]);
-        await user.click(screen.getByRole('button', { name: 'Submit' }));
+            await user.upload(input, firstFile);
+            await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(1));
+            await user.upload(input, secondFile);
+            await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(2));
+            await user.upload(input, duplicateFirstFile);
+            await user.click(screen.getAllByRole('button', { name: 'Remove file' })[0]);
+            await user.click(screen.getByRole('button', { name: 'Submit' }));
 
-        await waitFor(() => expect(onSubmit).toHaveBeenCalledOnce());
-        expect(onSubmit.mock.calls[0][0].files).toEqual([secondFile]);
-        expect(screen.getAllByRole('listitem')).toHaveLength(1);
-        expect(consoleError).not.toHaveBeenCalled();
-    });
+            await waitFor(() => expect(onSubmit).toHaveBeenCalledOnce());
+            expect(onSubmit.mock.calls[0][0].files).toEqual([secondFile]);
+            expect(screen.getAllByRole('listitem')).toHaveLength(1);
+            expect(consoleError).not.toHaveBeenCalled();
+        },
+    );
 });
