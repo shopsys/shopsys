@@ -36,7 +36,7 @@
         "@urql/exchange-auth": "~2.2.1",
         "@urql/exchange-graphcache": "~7.2.4",
         "cookies-next": "~4.3.0",
-        "framer-motion": "^12.40.0",
+        "framer-motion": "^13.4.6",
         "google-map-react": "^2.2.5",
         "graphql": "~16.14.0",
         "graphql-tag": "~2.12.7",
