@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/nextjs';
+import { sentryDataCollection } from 'utils/sentry/dataCollection';
 import { getTracePropagationTargetsFromInternalEndpoint } from 'utils/sentry/tracePropagationTargets';
 
 export function register() {
@@ -11,6 +12,7 @@ export function register() {
     const tracePropagationTargets = getTracePropagationTargetsFromInternalEndpoint(process.env.INTERNAL_ENDPOINT);
     const sentryConfig = {
         dsn: sentryDsn,
+        dataCollection: sentryDataCollection,
         environment: process.env.SENTRY_ENVIRONMENT,
         release: process.env.SENTRY_RELEASE,
         tracesSampleRate: 0.1,
