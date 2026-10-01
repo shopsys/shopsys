@@ -11,17 +11,20 @@ describe('OrderPaymentStatusBadge', () => {
         [true, false, 'Paid', 'bg-status-badge-bg-success'],
         [false, true, 'Processing', 'bg-status-badge-bg-warning'],
         [false, false, 'Not paid', 'bg-status-badge-bg-error'],
-    ] as const)('renders the payment state as the corresponding status badge', (orderIsPaid, orderHasPaymentInProcess, label, expectedClass) => {
-        render(
-            <OrderPaymentStatusBadge
-                orderHasExternalPayment
-                orderHasPaymentInProcess={orderHasPaymentInProcess}
-                orderIsPaid={orderIsPaid}
-            />,
-        );
+    ] as const)(
+        'renders the payment state as the corresponding status badge',
+        (orderIsPaid, orderHasPaymentInProcess, label, expectedClass) => {
+            render(
+                <OrderPaymentStatusBadge
+                    orderHasExternalPayment
+                    orderHasPaymentInProcess={orderHasPaymentInProcess}
+                    orderIsPaid={orderIsPaid}
+                />,
+            );
 
-        expect(screen.getByText(label)).toHaveClass(expectedClass);
-    });
+            expect(screen.getByText(label)).toHaveClass(expectedClass);
+        },
+    );
 
     test('does not render a badge for an order without external payment', () => {
         const { container } = render(
