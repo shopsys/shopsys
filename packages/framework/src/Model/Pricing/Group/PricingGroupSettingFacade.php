@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
@@ -17,10 +16,10 @@ class PricingGroupSettingFacade
     ) {
     }
 
-    public function isPricingGroupUsedOnDomain(PricingGroup $pricingGroup, DomainConfig $domainConfig): bool
+    public function isPricingGroupUsed(PricingGroup $pricingGroup): bool
     {
         return $this->pricingGroupRepository->existsCustomerUserWithPricingGroup($pricingGroup)
-            || $this->isPricingGroupDefaultOnDomain($pricingGroup, $domainConfig);
+            || $this->isPricingGroupSetAsDefault($pricingGroup);
     }
 
     public function getDefaultPricingGroupByDomainId(int $domainId): PricingGroup
@@ -49,22 +48,17 @@ class PricingGroupSettingFacade
         return $this->getDefaultPricingGroupByDomainId($this->domain->getId());
     }
 
-    public function getDefaultPricingGroupByDomain(DomainConfig $domainConfig): PricingGroup
-    {
-        return $this->getDefaultPricingGroupByDomainId($domainConfig->getId());
-    }
-
-    public function setDefaultPricingGroupForDomain(PricingGroup $pricingGroup, DomainConfig $domainConfig): void
+    public function setPricingGroupAsDefault(PricingGroup $pricingGroup): void
     {
         $this->setting->setForDomain(
             Setting::DEFAULT_PRICING_GROUP,
             $pricingGroup->getId(),
-            $domainConfig->getId(),
+            $pricingGroup->getDomainId(),
         );
     }
 
-    public function isPricingGroupDefaultOnDomain(PricingGroup $pricingGroup, DomainConfig $domainConfig): bool
+    public function isPricingGroupSetAsDefault(PricingGroup $pricingGroup): bool
     {
-        return $pricingGroup === $this->getDefaultPricingGroupByDomain($domainConfig);
+        return $pricingGroup === $this->getDefaultPricingGroupByDomainId($pricingGroup->getDomainId());
     }
 }
