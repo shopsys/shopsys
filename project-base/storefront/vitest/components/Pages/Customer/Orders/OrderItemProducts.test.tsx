@@ -48,6 +48,7 @@ describe('OrderItemProducts', () => {
         );
 
         expect(screen.getByTestId('product-image')).toHaveAttribute('data-image', 'fallback');
+        expect(screen.getByTestId('product-image')).toHaveTextContent('Product without image');
     });
 
     test('wraps product previews in a row and links to remaining products', () => {

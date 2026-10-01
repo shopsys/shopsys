@@ -4,6 +4,7 @@ import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/Vide
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 import { ProductDetailGalleryItem } from './ProductDetailGallery/ProductDetailGallery.types';
 import { ProductDetailGalleryMain } from './ProductDetailGallery/ProductDetailGalleryMain';
@@ -55,7 +56,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
 
         updatePortalContent(
             <DynamicModalGallery
-                galleryName={productName}
+                galleryName={generateProductImageAlt(productName, categoryName)}
                 initialIndex={initialIndex}
                 items={galleryItems}
                 onCloseModal={closePortalContent}
@@ -78,7 +79,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
 
             {hasMultipleItems && (
                 <ProductDetailGalleryThumbnails
+                    categoryName={categoryName}
                     galleryItems={galleryItems}
+                    productName={productName}
                     selectedIndex={selectedIndex}
                     onOpenGallery={openGallery}
                 />

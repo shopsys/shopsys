@@ -45,6 +45,10 @@ fragment OrderDetailItemFragment on OrderItem {
         }
     }
     product {
+        fullName
+        mainCategory {
+            name
+        }
         uuid
         catalogNumber
         slug
@@ -73,14 +77,16 @@ fragment OrderDetailItemFragment on OrderItem {
         }
     }
     transport {
+        name
         transportTypeCode
         mainImage {
-            url
+            ...ImageFragment
         }
     }
     payment {
+        name
         mainImage {
-            url
+            ...ImageFragment
         }
     }
 }

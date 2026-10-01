@@ -1429,6 +1429,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   isVisible: Boolean!
   "Product link"
   link: String!
+  "Main category of the product"
+  mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
   "Localized product name (domain dependent)"
@@ -1635,6 +1637,8 @@ type NotificationBar {
   images(type: String = null): [Image!]!
   "Notification bar image by params"
   mainImage(type: String = null): Image
+  "Message of the notification without HTML markup"
+  plainText: String!
   "Color of the notification"
   rgbColor: String!
   "Message of the notification"
@@ -2388,6 +2392,8 @@ interface Product {
   isVisible: Boolean!
   "Product link"
   link: String!
+  "Main category of the product"
+  mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
   "Localized product name (domain dependent)"
@@ -3142,6 +3148,8 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   isVisible: Boolean!
   "Product link"
   link: String!
+  "Main category of the product"
+  mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
   "Localized product name (domain dependent)"
@@ -3595,6 +3603,8 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   isVisible: Boolean!
   "Product link"
   link: String!
+  "Main category of the product"
+  mainCategory: Category
   "Product image by params"
   mainImage(type: String = null): Image
   mainVariant: MainVariant

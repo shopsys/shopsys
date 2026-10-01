@@ -5,6 +5,7 @@ import { TIDs } from 'cypress/tids';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
+import { generateProductImageAlt } from 'utils/productAltText';
 import { DeliveryOptionsProduct } from './deliveryOptionsPopupTypes';
 
 type DeliveryOptionsVariantSelectProps = {
@@ -50,7 +51,7 @@ const DeliveryOptionsVariantContent: FC<{ product: DeliveryOptionsProduct; tid?:
             <span className="relative h-10 w-10 shrink-0" data-tid={TIDs.delivery_options_variant_image}>
                 <Image
                     fill
-                    alt={product.mainImage?.name ?? product.fullName}
+                    alt={generateProductImageAlt(product.fullName, product.mainCategory?.name, product.mainImage?.name)}
                     className="object-contain mix-blend-multiply"
                     sizes="40px"
                     src={product.mainImage?.url}

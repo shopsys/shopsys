@@ -5,11 +5,15 @@ import { TIDs } from 'cypress/tids';
 import { useEffect, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { getImageAlt } from 'utils/imageAltText';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 import { ProductDetailGalleryItem } from './ProductDetailGallery.types';
 
 type ProductDetailGalleryThumbnailsProps = {
+    categoryName?: string;
     galleryItems: ProductDetailGalleryItem[];
+    productName: string;
     selectedIndex: number;
     onOpenGallery: (initialIndex: number) => void;
 };
@@ -17,7 +21,9 @@ type ProductDetailGalleryThumbnailsProps = {
 const VISIBLE_THUMBNAIL_COUNT = 5;
 
 export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsProps> = ({
+    categoryName,
     galleryItems,
+    productName,
     selectedIndex,
     onOpenGallery,
 }) => {
@@ -67,7 +73,7 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                         >
                             {isImage && (
                                 <Image
-                                    alt=""
+                                    alt={generateProductImageAlt(productName, categoryName, galleryItem.name)}
                                     className="size-full object-contain object-center p-1 mix-blend-multiply"
                                     height={64}
                                     src={galleryItem.url}
@@ -79,7 +85,7 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                             {isVideo && (
                                 <>
                                     <YouTubeThumbnail
-                                        alt=""
+                                        alt={getImageAlt(galleryItem.description, productName)}
                                         className="size-full object-contain object-center p-1 mix-blend-multiply"
                                         height={64}
                                         tid={TIDs.product_gallery_video}

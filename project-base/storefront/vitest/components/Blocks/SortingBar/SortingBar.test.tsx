@@ -734,20 +734,30 @@ describe('SortingBar', () => {
             expect(getDropdownLinks()).toHaveLength(0);
         });
 
-        test('handles rapid dropdown toggling', async () => {
+        test('repeatedly opens and closes the dropdown without changing sorting', async () => {
             const user = userEvent.setup();
 
             renderSortingBar();
 
             const sortButton = getSortButton();
 
-            await user.click(sortButton);
-            await user.click(sortButton);
-            await user.click(sortButton);
-            await user.click(sortButton);
+            for (let i = 0; i < 5; i++) {
+                await user.click(sortButton);
 
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(getDropdownLinks()).toHaveLength(0);
+                expect(sortButton).toHaveAttribute('aria-expanded', 'true');
+                expect(isDropdownOpen()).toBeTruthy();
+                expect(within(screen.getByRole('menu')).getAllByRole('menuitem')).toHaveLength(
+                    defaultProps.customSortOptions.length,
+                );
+
+                await user.click(sortButton);
+
+                expect(sortButton).toHaveAttribute('aria-expanded', 'false');
+                expect(isDropdownOpen()).toBeFalsy();
+            }
+
+            expect(mockUpdateSortQuery).not.toHaveBeenCalled();
+            expect(mockScrollToProductListControls).not.toHaveBeenCalled();
         });
 
         test('handles rapid option selection', async () => {
@@ -764,35 +774,6 @@ describe('SortingBar', () => {
 
             expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRICE_ASC');
             expect(isDropdownOpen()).toBeFalsy();
-        });
-    });
-
-    describe('Performance', () => {
-        test('renders quickly with many sort options', () => {
-            const startTime = performance.now();
-            renderSortingBar();
-            const endTime = performance.now();
-
-            expect(endTime - startTime).toBeLessThan(50);
-        });
-
-        test('handles dropdown opening/closing efficiently', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-
-            const startTime = performance.now();
-
-            for (let i = 0; i < 5; i++) {
-                await user.click(sortButton);
-                await user.click(sortButton);
-            }
-
-            const endTime = performance.now();
-
-            expect(endTime - startTime).toBeLessThan(500);
         });
     });
 

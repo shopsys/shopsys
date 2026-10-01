@@ -44,6 +44,9 @@ ProductDecorator:
             categories:
                 type: "[Category!]!"
                 description: "List of categories"
+            mainCategory:
+                type: "Category"
+                description: "Main category of the product"
             flags:
                 type: "[Flag!]!"
                 description: "List of flags"

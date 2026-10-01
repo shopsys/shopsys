@@ -2,6 +2,7 @@ import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
 import { TypeProductGiftFragment } from 'graphql/requests/products/fragments/ProductGiftFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 type ProductGiftProps = {
     gifts: TypeProductGiftFragment[];
@@ -25,7 +26,7 @@ export const ProductGift: FC<ProductGiftProps> = ({ gifts }) => {
 
                         <div className="flex h-12 shrink-0 items-center justify-center">
                             <Image
-                                alt={mainImage?.name || gift.name}
+                                alt={generateProductImageAlt(gift.fullName, gift.mainCategory?.name, mainImage?.name)}
                                 className="aspect-video h-7 object-contain object-center mix-blend-multiply"
                                 height={28}
                                 src={mainImage?.url}

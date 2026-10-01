@@ -11,7 +11,6 @@ type ColorLabelWrapperProps = NativeProps & {
     label?: string;
     bgColor: string;
     imageUrl?: string;
-    imageName?: string;
     count?: number;
     checked?: boolean;
     disabled?: boolean;
@@ -21,7 +20,6 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
     label,
     bgColor,
     imageUrl,
-    imageName,
     count,
     disabled,
     checked,
@@ -39,8 +37,9 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             )}
         >
             <ColorPreview
-                colorIcon={imageUrl ? { url: imageUrl, anchorText: imageName || label } : null}
+                imageAlt={label ?? ''}
                 imageClassName="p-0.5"
+                imageUrl={imageUrl}
                 rgbHex={bgColor}
                 className={twMergeCustom(
                     'size-7 border border-icon-default bg-input-bg-default transition',

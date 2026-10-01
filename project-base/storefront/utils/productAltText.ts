@@ -1,3 +1,9 @@
-export const generateProductImageAlt = (productName: string, categoryName?: string): string => {
-    return categoryName ? `${categoryName} - ${productName}` : productName;
+import { getImageAlt } from 'utils/imageAltText';
+
+export const generateProductImageAlt = (
+    productName: string,
+    categoryName?: string | null,
+    imageName?: string | null,
+): string => {
+    return getImageAlt(imageName, categoryName ? `${categoryName} - ${productName}` : productName);
 };

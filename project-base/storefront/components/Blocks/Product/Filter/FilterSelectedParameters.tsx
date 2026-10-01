@@ -169,7 +169,6 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                                       rgbHex: string;
                                                       colorIcon?: {
                                                           url: string;
-                                                          anchorText: string;
                                                       };
                                                   }[]
                                               ).filter((selectedParameterValue) => {
@@ -250,7 +249,8 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                                 >
                                                     <ColorPreview
                                                         className="mr-2"
-                                                        colorIcon={selectedValue.colorIcon}
+                                                        imageAlt={selectedValue.text}
+                                                        imageUrl={selectedValue.colorIcon?.url}
                                                         rgbHex={selectedValue.rgbHex}
                                                     />
                                                     {selectedValue.text}

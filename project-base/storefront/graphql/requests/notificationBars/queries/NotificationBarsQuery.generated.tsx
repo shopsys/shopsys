@@ -12,7 +12,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeNotificationBarsVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeNotificationBars = { notificationBars: Array<{ __typename: 'NotificationBar', uuid: string, text: string, rgbColor: string, validityFrom: string | null, validityTo: string | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> | null };
+export type TypeNotificationBars = { notificationBars: Array<{ __typename: 'NotificationBar', uuid: string, text: string, plainText: string, rgbColor: string, validityFrom: string | null, validityTo: string | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> | null };
 
 
 export const NotificationBarsDocument = gql`
