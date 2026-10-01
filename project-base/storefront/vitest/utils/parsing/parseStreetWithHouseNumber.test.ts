@@ -12,11 +12,10 @@ describe('parseStreetWithHouseNumber', () => {
         expect(parseStreetWithHouseNumber(street)).toEqual(expected);
     });
 
-    test.each([
-        'Street',
-        '123',
-        '17. listopadu',
-    ])('keeps street without complete street and house number unchanged: %s', (street) => {
-        expect(parseStreetWithHouseNumber(street)).toEqual({ street });
-    });
+    test.each(['Street', '123', '17. listopadu'])(
+        'keeps street without complete street and house number unchanged: %s',
+        (street) => {
+            expect(parseStreetWithHouseNumber(street)).toEqual({ street });
+        },
+    );
 });

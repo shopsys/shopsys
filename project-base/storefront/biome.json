@@ -51,7 +51,7 @@
     "linter": {
         "enabled": true,
         "rules": {
-            "recommended": true,
+            "preset": "recommended",
             "a11y": {
                 "noNoninteractiveElementInteractions": "error",
                 "noStaticElementInteractions": "error",

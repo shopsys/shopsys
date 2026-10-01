@@ -14,19 +14,19 @@ describe('PageHero', () => {
         expect(description).not.toHaveAttribute('aria-atomic');
     });
 
-    test.each<PageHeroDescriptionRole>([
-        'status',
-        'alert',
-    ])('renders a dynamic description with the requested %s role', (descriptionRole) => {
-        render(
-            <PageHero
-                description="Dynamic page description"
-                descriptionRole={descriptionRole}
-                icon={TestIcon}
-                title="Page title"
-            />,
-        );
+    test.each<PageHeroDescriptionRole>(['status', 'alert'])(
+        'renders a dynamic description with the requested %s role',
+        (descriptionRole) => {
+            render(
+                <PageHero
+                    description="Dynamic page description"
+                    descriptionRole={descriptionRole}
+                    icon={TestIcon}
+                    title="Page title"
+                />,
+            );
 
-        expect(screen.getByRole(descriptionRole)).toHaveTextContent('Dynamic page description');
-    });
+            expect(screen.getByRole(descriptionRole)).toHaveTextContent('Dynamic page description');
+        },
+    );
 });
