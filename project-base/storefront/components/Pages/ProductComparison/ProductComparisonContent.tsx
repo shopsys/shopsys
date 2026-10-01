@@ -18,7 +18,7 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 type ProductComparisonContentProps = {
     comparedProducts: TypeProductInProductListFragment[];
     onMoveProduct: (productUuid: string, afterProductUuid: string | null) => Promise<boolean>;
-    onRemove: (product: TypeProductInProductListFragment) => void;
+    onRemove: (product: TypeProductInProductListFragment, index: number) => void;
 };
 
 export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({

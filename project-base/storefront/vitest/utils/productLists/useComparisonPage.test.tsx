@@ -7,6 +7,7 @@ import { beforeEach, expect, test, vi } from 'vitest';
 const mocks = vi.hoisted(() => ({
     callbacks: {} as {
         onProductRemoved: (uuid: string) => void;
+        onProductRemoveError: (uuid: string) => void;
         onProductAdded: (uuid: string, list: TypeProductListFragment) => void;
     },
     comparison: null as TypeProductListFragment | null,
@@ -123,4 +124,29 @@ test('keeps the restored product in its original position while saving the order
         expect(await pending).toBe(true);
     });
     expect(result.current.products.map((product) => product.uuid)).toEqual(['a', 'b', 'c']);
+});
+
+test('uses the displayed position when a product is removed before the reordered list reaches the cache', async () => {
+    mocks.comparison = list(['b', 'a']);
+    const { result } = renderHook(() => useComparisonPage());
+
+    act(() =>
+        result.current.handleRemove({ uuid: 'b', fullName: 'b' } as TypeProductListFragment['products'][number], 1),
+    );
+    act(() => mocks.callbacks.onProductRemoved('b'));
+    mocks.comparison = list(['a']);
+
+    const action = mocks.success.mock.calls[0][1].action as ReactElement<{ onUndo: () => Promise<boolean> }>;
+    let pending!: Promise<boolean>;
+    act(() => {
+        pending = action.props.onUndo();
+    });
+    await act(async () => {
+        mocks.callbacks.onProductAdded('b', list(['b', 'a']));
+        await pending;
+    });
+
+    expect(mocks.move).toHaveBeenCalledWith({
+        input: { productListInput: { uuid: 'list', type: 'COMPARISON' }, productUuid: 'b', afterProductUuid: 'a' },
+    });
 });

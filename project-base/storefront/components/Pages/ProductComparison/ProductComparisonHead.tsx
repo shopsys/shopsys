@@ -15,7 +15,7 @@ type ProductComparisonHeadProps = {
     onReorderEnd?: (productUuid: string) => void;
     onReorder?: (uuids: string[]) => void;
     onProductFocus?: (index: number) => void;
-    onRemove: (product: TypeProductInProductListFragment) => void;
+    onRemove: (product: TypeProductInProductListFragment, index: number) => void;
 };
 
 export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({
@@ -77,7 +77,7 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({
                                 listIndex={allProducts.findIndex((item) => item.uuid === product.uuid)}
                                 product={product}
                                 stickyTriggerId={index === 0 ? PRODUCT_COMPARISON_STICKY_TRIGGER_ID : undefined}
-                                toggleProductInComparison={() => onRemove(product)}
+                                toggleProductInComparison={() => onRemove(product, index)}
                             />
                         ))}
                     </Reorder.Group>
