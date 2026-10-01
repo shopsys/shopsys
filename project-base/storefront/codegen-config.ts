@@ -1,6 +1,8 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 import { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
 
+// Keep @graphql-codegen/near-operation-file-preset at 5.2.1 until it is compatible with
+// @graphql-codegen/typescript-urql again. Version 5.2.2 generates invalid `import * from` statements.
 const codegenTypescriptConfig = {
     typesPrefix: 'Type',
     withHooks: true,
