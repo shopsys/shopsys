@@ -214,7 +214,7 @@ describe('Select combobox label', () => {
 describe('Select closing', () => {
     test('closes after clicking outside even when a parent stops bubbling mouse events', () => {
         render(
-            <dialog open onMouseDown={(event) => event.stopPropagation()}>
+            <dialog open>
                 <Select
                     activeOption={null}
                     ariaLabel="Choose color"
@@ -226,6 +226,7 @@ describe('Select closing', () => {
                 <textarea aria-label="Review text" />
             </dialog>,
         );
+        screen.getByRole('dialog').addEventListener('mousedown', (event) => event.stopPropagation());
 
         const selectToggleButton = screen.getByRole('button', { name: 'Choose color' });
         fireEvent.click(selectToggleButton);
