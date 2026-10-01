@@ -157,6 +157,7 @@ When a CRUD action is executed, hooks follow this pattern:
 
     - **Success flow**: Add any flash message in your hooks or handler. The default success message will only be shown when no custom messages were added during the operation.
     - **Error flow**: Call `addErrorFlash()` in your `on<Action>Error()` hook to provide a custom user-friendly message. The default error message will only be shown when no other error messages were provided.
+    - **Refused operations**: when the facade throws an exception implementing `Shopsys\FrameworkBundle\Component\Utils\UserFacingExceptionInterface`, its `getUserFacingMessage()` is shown as the error flash instead of the default message, so the handler stays a plain delegation.
 
 **Important Notes:**
 

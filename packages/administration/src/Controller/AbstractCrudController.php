@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFa
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
+use Shopsys\FrameworkBundle\Component\Utils\UserFacingExceptionInterface;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -299,27 +300,15 @@ abstract class AbstractCrudController extends AdminBaseController
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->onEditError($entity, $data, $exception), CrudEditHookExtensionInterface::class);
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
-
-                if ($this->hasErrorMessages() === false) {
-                    $this->addErrorFlashTwig(
-                        t('An error occurred while saving <strong>{{ objectName }}</strong>.'),
-                        [
-                            'objectName' => $entity->toHumanReadable(),
-                        ],
-                    );
-                }
-
-                $this->logger->error(
-                    'Error from CrudController while running edit action',
+                $this->addErrorFlashForFailedAction(
+                    $exception,
+                    t('An error occurred while saving <strong>{{ objectName }}</strong>.'),
                     [
-                        'message' => $exception->getMessage(),
-                        'controllerClass' => static::class,
-                        'action' => ActionType::EDIT,
-                        'exception' => $exception,
-                        'entityClass' => $this->definition->entityClass,
-                        'entityId' => $id,
+                        'objectName' => $entity->toHumanReadable(),
                     ],
                 );
+
+                $this->logActionError(ActionType::EDIT, $exception, $id);
             }
         }
 
@@ -370,21 +359,9 @@ abstract class AbstractCrudController extends AdminBaseController
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->onCreateError($data, $exception), CrudCreateHookExtensionInterface::class);
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
+                $this->addErrorFlashForFailedAction($exception, t('An error occurred while creating.'));
 
-                if ($this->hasErrorMessages() === false) {
-                    $this->addErrorFlashTwig(t('An error occurred while creating.'));
-                }
-
-                $this->logger->error(
-                    'Error from CrudController while running create action',
-                    [
-                        'message' => $exception->getMessage(),
-                        'controllerClass' => static::class,
-                        'action' => ActionType::CREATE,
-                        'exception' => $exception,
-                        'entityClass' => $this->definition->entityClass,
-                    ],
-                );
+                $this->logActionError(ActionType::CREATE, $exception);
             }
         }
 
@@ -422,27 +399,15 @@ abstract class AbstractCrudController extends AdminBaseController
         } catch (Throwable $exception) {
             $this->executeExtensions(fn (CrudDeleteHookExtensionInterface $extension) => $extension->onDeleteError($entity, $exception), CrudDeleteHookExtensionInterface::class);
             $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
-
-            if ($this->hasErrorMessages() === false) {
-                $this->addErrorFlashTwig(
-                    t('An error occurred while deleting <strong>{{ objectName }}</strong>.'),
-                    [
-                        'objectName' => $entity->toHumanReadable(),
-                    ],
-                );
-            }
-
-            $this->logger->error(
-                'Error from CrudController while running delete action',
+            $this->addErrorFlashForFailedAction(
+                $exception,
+                t('An error occurred while deleting <strong>{{ objectName }}</strong>.'),
                 [
-                    'message' => $exception->getMessage(),
-                    'controllerClass' => static::class,
-                    'action' => ActionType::DELETE,
-                    'exception' => $exception,
-                    'entityClass' => $this->definition->entityClass,
-                    'entityId' => $id,
+                    'objectName' => $entity->toHumanReadable(),
                 ],
             );
+
+            $this->logActionError(ActionType::DELETE, $exception, $id);
         }
 
         return $this->redirect(
@@ -495,6 +460,53 @@ abstract class AbstractCrudController extends AdminBaseController
         foreach ($extensions as $extension) {
             $callback($extension);
         }
+    }
+
+    /**
+     * An error flash added by an extension hook wins, then the message of a user-facing exception, then the generic message of the action
+     *
+     * @param array<string, mixed> $genericErrorMessageParameters
+     */
+    protected function addErrorFlashForFailedAction(
+        Throwable $exception,
+        string $genericErrorMessageTemplate,
+        array $genericErrorMessageParameters = [],
+    ): void {
+        if ($this->hasErrorMessages()) {
+            return;
+        }
+
+        if ($exception instanceof UserFacingExceptionInterface) {
+            $this->addErrorFlash($exception->getUserFacingMessage());
+
+            return;
+        }
+
+        $this->addErrorFlashTwig($genericErrorMessageTemplate, $genericErrorMessageParameters);
+    }
+
+    /**
+     * A user-facing exception is an expected refusal of the operation, not a failure worth an error log entry
+     */
+    protected function logActionError(ActionType $actionType, Throwable $exception, ?int $entityId = null): void
+    {
+        if ($exception instanceof UserFacingExceptionInterface) {
+            return;
+        }
+
+        $context = [
+            'message' => $exception->getMessage(),
+            'controllerClass' => static::class,
+            'action' => $actionType,
+            'exception' => $exception,
+            'entityClass' => $this->definition->entityClass,
+        ];
+
+        if ($entityId !== null) {
+            $context['entityId'] = $entityId;
+        }
+
+        $this->logger->error(sprintf('Error from CrudController while running %s action', $actionType->value), $context);
     }
 
     private function addEditSuccessFlash(Presentable $entity, int $id): void
