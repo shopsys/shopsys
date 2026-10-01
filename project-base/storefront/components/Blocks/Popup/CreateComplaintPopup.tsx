@@ -257,6 +257,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
 
                             <DropzoneControlled
                                 required
+                                showPreviews
                                 control={formProviderMethods.control}
                                 disabled={isSubmitting}
                                 formName={formMeta.formName}
