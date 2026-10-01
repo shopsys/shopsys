@@ -81,29 +81,29 @@ describe('useChangePaymentInOrder', () => {
         expect(paymentEventMock).toHaveBeenCalledExactlyOnceWith('123456', 'Bank transfer', true, undefined, 1);
     });
 
-    test.each(domains)('stays on $confirmationPath with query and hash without reloading', async ({
-        url,
-        confirmationPath,
-    }) => {
-        domainMock.mockReturnValue({ url });
-        routerMock.asPath = `${confirmationPath}?source=payment#instructions`;
-        const { result } = renderHook(() => useChangePaymentInOrder());
+    test.each(domains)(
+        'stays on $confirmationPath with query and hash without reloading',
+        async ({ url, confirmationPath }) => {
+            domainMock.mockReturnValue({ url });
+            routerMock.asPath = `${confirmationPath}?source=payment#instructions`;
+            const { result } = renderHook(() => useChangePaymentInOrder());
 
-        await result.current.changePaymentInOrderHandler(
-            'order-uuid',
-            'order-hash',
-            'bank-uuid',
-            'Bank transfer',
-            undefined,
-            true,
-            true,
-        );
+            await result.current.changePaymentInOrderHandler(
+                'order-uuid',
+                'order-hash',
+                'bank-uuid',
+                'Bank transfer',
+                undefined,
+                true,
+                true,
+            );
 
-        expect(routerMock.push).not.toHaveBeenCalled();
-        expect(routerMock.reload).not.toHaveBeenCalled();
-        expect(getValidOrderConfirmationContext(url)?.orderUrlHash).toBe('order-hash');
-        expect(paymentEventMock).toHaveBeenCalledExactlyOnceWith('123456', 'Bank transfer', true, undefined, 1);
-    });
+            expect(routerMock.push).not.toHaveBeenCalled();
+            expect(routerMock.reload).not.toHaveBeenCalled();
+            expect(getValidOrderConfirmationContext(url)?.orderUrlHash).toBe('order-hash');
+            expect(paymentEventMock).toHaveBeenCalledExactlyOnceWith('123456', 'Bank transfer', true, undefined, 1);
+        },
+    );
 
     test('redirects a logged-in customer to confirmation for bank transfer', async () => {
         loggedInMock.mockReturnValue(true);
@@ -144,22 +144,22 @@ describe('useChangePaymentInOrder', () => {
         expect(paymentEventMock).not.toHaveBeenCalled();
     });
 
-    test.each([
-        false,
-        true,
-    ])('keeps the order detail destination for other payments (logged in: %s)', async (isLoggedIn) => {
-        loggedInMock.mockReturnValue(isLoggedIn);
-        const { result } = renderHook(() => useChangePaymentInOrder());
+    test.each([false, true])(
+        'keeps the order detail destination for other payments (logged in: %s)',
+        async (isLoggedIn) => {
+            loggedInMock.mockReturnValue(isLoggedIn);
+            const { result } = renderHook(() => useChangePaymentInOrder());
 
-        await result.current.changePaymentInOrderHandler('order-uuid', 'order-hash', 'cash-uuid', 'Cash');
+            await result.current.changePaymentInOrderHandler('order-uuid', 'order-hash', 'cash-uuid', 'Cash');
 
-        expect(routerMock.push).toHaveBeenCalledExactlyOnceWith(
-            isLoggedIn
-                ? { pathname: '/customer/order-detail', query: { orderNumber: '123456' } }
-                : '/order-detail/order-hash',
-        );
-        expect(getValidOrderConfirmationContext(domains[0].url)).toBeNull();
-    });
+            expect(routerMock.push).toHaveBeenCalledExactlyOnceWith(
+                isLoggedIn
+                    ? { pathname: '/customer/order-detail', query: { orderNumber: '123456' } }
+                    : '/order-detail/order-hash',
+            );
+            expect(getValidOrderConfirmationContext(domains[0].url)).toBeNull();
+        },
+    );
 
     test('respects disabled navigation', async () => {
         const { result } = renderHook(() => useChangePaymentInOrder());
