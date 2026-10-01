@@ -6,4 +6,4 @@ export const yupResolver = <TFieldValues extends FieldValues>(
     schema: ObjectSchema<Record<keyof TFieldValues, any>>,
 ): Resolver<TFieldValues> =>
     // Form types describe raw input values; submit handlers perform any required data transformations explicitly.
-    hookFormYupResolver(schema, undefined, { raw: true }) as Resolver<TFieldValues>;
+    hookFormYupResolver(schema, undefined, { raw: true }) as unknown as Resolver<TFieldValues>;
