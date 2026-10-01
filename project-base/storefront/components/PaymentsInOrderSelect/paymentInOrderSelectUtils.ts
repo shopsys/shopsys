@@ -4,6 +4,7 @@ import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandl
 import { useRouter } from 'next/router';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { saveOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -13,8 +14,8 @@ export const useChangePaymentInOrder = () => {
     const router = useRouter();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { url } = useDomainConfig();
-    const [orderByHashUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
-        [{ url: '/order-detail/:urlHash', param: '' }, '/customer/order-detail'],
+    const [orderByHashUrl, customerOrderDetailUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
+        [{ url: '/order-detail/:urlHash', param: '' }, '/customer/order-detail', '/order-confirmation'],
         url,
     );
 
@@ -27,6 +28,7 @@ export const useChangePaymentInOrder = () => {
         paymentName: string,
         paymentGoPayBankSwift?: string | null,
         withRedirectAfterChanging = true,
+        shouldRedirectToOrderConfirmation = false,
     ) => {
         const { data: changePaymentInOrderData } = await changePaymentInOrder({
             input: { orderUuid, orderUrlHash, paymentGoPayBankSwift: paymentGoPayBankSwift ?? null, paymentUuid },
@@ -47,7 +49,13 @@ export const useChangePaymentInOrder = () => {
 
         let redirectPromise: Promise<boolean>;
 
-        if (isUserLoggedIn) {
+        if (shouldRedirectToOrderConfirmation) {
+            saveOrderConfirmationContext(editedOrder.urlHash, url);
+
+            const currentPath = router.asPath.split(/[?#]/)[0];
+            redirectPromise =
+                currentPath === orderConfirmationUrl ? Promise.resolve(true) : router.push(orderConfirmationUrl);
+        } else if (isUserLoggedIn) {
             redirectPromise = router.push({
                 pathname: customerOrderDetailUrl,
                 query: { orderNumber: editedOrder.number },
