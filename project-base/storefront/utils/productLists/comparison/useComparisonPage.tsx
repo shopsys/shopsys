@@ -29,11 +29,13 @@ export const useComparisonPage = () => {
     const [, moveProductInListMutation] = useMoveProductInListMutation();
     const emptyStateRef = useRef<HTMLDivElement>(null);
     const focusEmptyStateAfterRemoval = useRef(false);
+    const removedProducts = useRef(new Map<string, { product: TypeProductInProductListFragment; index: number }>());
     const [restoringProduct, setRestoringProduct] = useState<{ uuid: string; index: number } | null>(null);
     const undoRequests = useRef(new Map<string, (list: TypeProductListFragment | null | undefined) => void>());
     const { comparison, isProductListFetching, removeComparison, toggleProductInComparison, isProductInComparison } =
         useComparison({
             onProductRemoved: handleProductRemoved,
+            onProductRemoveError: (uuid) => removedProducts.current.delete(uuid),
             onProductAdded: (uuid, list) => finishUndo(uuid, list),
             onAddProductError: (uuid) => finishUndo(uuid, null),
         });
@@ -95,8 +97,10 @@ export const useComparisonPage = () => {
     }
 
     function handleProductRemoved(productUuid: string): void {
-        const index = products.findIndex((item) => item.uuid === productUuid);
-        const product = products[index];
+        const removedProduct = removedProducts.current.get(productUuid);
+        removedProducts.current.delete(productUuid);
+        const index = removedProduct?.index ?? products.findIndex((item) => item.uuid === productUuid);
+        const product = removedProduct?.product ?? products[index];
         if (product) {
             showSuccessMessage(t('{{ productName }} was removed from comparison.', { productName: product.fullName }), {
                 toastId: COMPARISON_UNDO_TOAST_ID,
@@ -107,9 +111,10 @@ export const useComparisonPage = () => {
         }
     }
 
-    const handleRemove = (product: TypeProductInProductListFragment) => {
+    const handleRemove = (product: TypeProductInProductListFragment, index: number) => {
         focusEmptyStateAfterRemoval.current =
             products.length === 1 && !!document.activeElement?.closest('[data-comparison-product]');
+        removedProducts.current.set(product.uuid, { product, index });
         toggleProductInComparison(
             product,
             GtmProductListNameType.product_comparison_page,

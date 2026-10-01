@@ -12,11 +12,17 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type ComparisonCallbacks = {
     onProductRemoved?: (productUuid: string) => void;
+    onProductRemoveError?: (productUuid: string) => void;
     onProductAdded?: (productUuid: string, productList: TypeProductListFragment | null | undefined) => void;
     onAddProductError?: (productUuid: string) => void;
 };
 
-export const useComparison = ({ onProductRemoved, onProductAdded, onAddProductError }: ComparisonCallbacks = {}) => {
+export const useComparison = ({
+    onProductRemoved,
+    onProductRemoveError,
+    onProductAdded,
+    onAddProductError,
+}: ComparisonCallbacks = {}) => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const {
@@ -50,6 +56,7 @@ export const useComparison = ({ onProductRemoved, onProductAdded, onAddProductEr
             removeProductError: (productUuid) => {
                 clearProductListGtmContext(productUuid);
                 showErrorMessage(t('Unable to remove product from comparison.'));
+                onProductRemoveError?.(productUuid);
             },
             removeProductSuccess: (result, productUuid) => {
                 if (!result) {
