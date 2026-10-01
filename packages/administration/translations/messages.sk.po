@@ -2059,6 +2059,9 @@ msgstr "SEO stránka"
 msgid "SEO pages"
 msgstr "SEO stránky"
 
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity."
+msgstr "SEO stránky sa používajú len pre statické stránky storefrontu (napr. košík, vyhľadávanie alebo zákaznícka sekcia). Ak chcete nastaviť SEO konkrétnej entity, napr. článku, použite SEO nastavenia v administrácii danej entity."
+
 msgid "Sale including/excluding VAT"
 msgstr "Predaj s/bez DPH"
 

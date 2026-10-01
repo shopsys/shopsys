@@ -2044,6 +2044,9 @@ msgstr ""
 msgid "Integrations"
 msgstr ""
 
+msgid "Internal name of the page for the administration, it is not displayed on the storefront."
+msgstr ""
+
 msgid "Internal note"
 msgstr ""
 
@@ -3646,7 +3649,7 @@ msgstr ""
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
 msgstr ""
 
-msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change."
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."

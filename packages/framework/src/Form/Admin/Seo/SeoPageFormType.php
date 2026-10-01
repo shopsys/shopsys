@@ -83,6 +83,7 @@ final class SeoPageFormType extends AbstractType
         $group
             ->add('pageName', TextType::class, [
                 'label' => 'Page name',
+                'help' => t('Internal name of the page for the administration, it is not displayed on the storefront.'),
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(message: 'Please enter page name'),
@@ -92,7 +93,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => true,
                 'label' => 'Page slug',
-                'help' => t('The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change.'),
+                'help' => t('The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity.'),
                 'options_by_domain_id' => $optionsByDomainId,
                 'entry_options' => [
                     'constraints' => [
