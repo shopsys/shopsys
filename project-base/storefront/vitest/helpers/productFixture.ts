@@ -1,0 +1,37 @@
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
+
+export const createProduct = (uuid: string): TypeListedProductFragment => ({
+    __typename: 'RegularProduct',
+    id: uuid === 'first-product' ? 1 : 2,
+    uuid,
+    slug: `/${uuid}`,
+    fullName: uuid,
+    stockQuantity: 10,
+    isAllowedNegativeStock: false,
+    unit: { __typename: 'Unit', name: 'pcs' },
+    isSellingDenied: false,
+    isCurrentlyOutOfStock: false,
+    flags: [],
+    mainImage: null,
+    price: {
+        __typename: 'ProductPrice',
+        priceWithVat: '121',
+        priceWithoutVat: '100',
+        vatAmount: '21',
+        isPriceFrom: false,
+        percentageDiscount: null,
+        basicPrice: { __typename: 'Price', priceWithVat: '121' },
+    },
+    expectedRestockingDate: null,
+    availability: { __typename: 'Availability', name: 'In stock', status: TypeAvailabilityStatusEnum.InStock },
+    availableStoresCount: 1,
+    isPersonalPickupOnly: false,
+    catalogNumber: uuid,
+    brand: null,
+    categories: [],
+    isMainVariant: false,
+    isInquiryType: false,
+    reviewsSummary: null,
+    productType: TypeProductTypeEnum.Basic,
+});

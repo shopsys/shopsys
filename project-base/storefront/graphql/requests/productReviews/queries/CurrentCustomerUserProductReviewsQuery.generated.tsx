@@ -26,7 +26,7 @@ export type TypeCurrentCustomerUserProductReviewsQueryVariables = Exact<{
 }>;
 
 
-export type TypeCurrentCustomerUserProductReviewsQuery = { currentCustomerUserProductReviews: { totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { __typename: 'ProductReview', uuid: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, responseText: string | null, responseCreatedAt: string | null, rejectedImagesCount: number, productUuid: string | null, productName: string, product:
+export type TypeCurrentCustomerUserProductReviewsQuery = { currentCustomerUserProductReviews: { totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { __typename: 'ProductReview', status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, rejectedImagesCount: number, productUuid: string | null, uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, product:
           | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
           | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
           | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }

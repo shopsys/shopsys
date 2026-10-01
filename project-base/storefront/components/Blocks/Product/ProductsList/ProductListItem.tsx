@@ -1,3 +1,4 @@
+import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import type { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -9,6 +10,7 @@ import type { FunctionComponentProps } from 'types/globals';
 import type { ProductListViewModeType } from 'types/product';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { isProductSellable } from 'utils/product/isProductSellable';
+import { ProductListItemAddToCart, ProductListItemButtons } from './ProductListItemActions';
 import { ProductListItemGridView } from './ProductListItemGridView';
 import { ProductListItemListView } from './ProductListItemListView';
 
@@ -111,25 +113,55 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             <ProductListItemGridView
                 allowKeyboardFocus={allowKeyboardFocus}
                 className={className}
-                currentCart={currentCart}
                 forwardedRef={ref}
-                gtmMessageOrigin={gtmMessageOrigin}
-                gtmProductListName={gtmProductListName}
                 highlightBadgeText={highlightBadgeText}
                 imageCount={imageCount}
-                isProductInComparison={isProductInComparison}
-                isProductInWishlist={isProductInWishlist}
                 isWithImageGallery={isWithImageGallery}
-                listIndex={listIndex}
                 product={product}
-                shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
                 size={size}
                 textSize={textSize}
                 textSizePrice={textSizePrice}
-                toggleProductInComparison={toggleProductInComparison}
-                toggleProductInWishlist={toggleProductInWishlist}
                 visibleItemsConfig={visibleItemsConfig}
                 onProductClick={handleProductClick}
+                productListButtons={
+                    visibleItemsConfig.productListButtons && (
+                        <ProductListItemButtons
+                            allowKeyboardFocus={allowKeyboardFocus}
+                            isProductInComparison={isProductInComparison}
+                            isProductInWishlist={isProductInWishlist}
+                            productName={product.fullName}
+                            toggleProductInComparison={toggleProductInComparison}
+                            toggleProductInWishlist={toggleProductInWishlist}
+                        />
+                    )
+                }
+                availability={
+                    visibleItemsConfig.storeAvailability &&
+                    !product.isSellingDenied && (
+                        <ProductAvailability
+                            availability={product.availability}
+                            availableStoresCount={product.availableStoresCount}
+                            isPersonalPickupOnly={product.isPersonalPickupOnly}
+                            className="row-start-6 mt-2.5 min-h-10 xs:min-h-15 sm:min-h-10"
+                            isInquiryType={product.isInquiryType}
+                        />
+                    )
+                }
+                addToCart={
+                    visibleItemsConfig.addToCart && (
+                        <ProductListItemAddToCart
+                            allowKeyboardFocus={allowKeyboardFocus}
+                            currentCart={currentCart}
+                            gtmMessageOrigin={gtmMessageOrigin}
+                            gtmProductListName={gtmProductListName}
+                            listIndex={listIndex}
+                            product={product}
+                            productActionClassName="col-start-1 row-start-7 mt-2.5 w-full"
+                            shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
+                            skeletonClassName="col-start-1 row-start-7 mt-2.5 w-full"
+                        />
+                    )
+                }
             />
         );
     },

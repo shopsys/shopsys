@@ -1,10 +1,15 @@
 query SettingsQuery @redisCache(ttl: 3600) {
     settings {
         pricing {
-            ...PricingSettingFragment
+            __typename
+            defaultCurrencyCode
+            minimumFractionDigits
         }
         seo {
-            ...SeoSettingFragment
+            __typename
+            title
+            titleAddOn
+            metaDescription
         }
         contactFormMainText
         emailTransportDescription

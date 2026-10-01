@@ -4,9 +4,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.generated';
-import { ListedProductPriceFragment } from './ListedProductPriceFragment.generated';
-import { AvailabilityFragment } from '../../availabilities/fragments/AvailabilityFragment.generated';
+import { CompactProductFragment } from './CompactProductFragment.generated';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
   /** Product availability status for electronically delivered products */
@@ -29,11 +27,11 @@ export type TypeProductTypeEnum =
   /** Gift voucher delivered printed as a regular product */
   | 'PRINTED_GIFT_VOUCHER';
 
-export type TypeListedProductFragment_MainVariant = { __typename: 'MainVariant', variantsCount: number, id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, expectedRestockingDate: string | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null };
+export type TypeListedProductFragment_MainVariant = { __typename: 'MainVariant', stockQuantity: number | null, isAllowedNegativeStock: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, isPersonalPickupOnly: boolean, isInquiryType: boolean, variantsCount: number, id: number, uuid: string, slug: string, fullName: string, isSellingDenied: boolean, expectedRestockingDate: string | null, catalogNumber: string, isMainVariant: boolean, productType: Types.TypeProductTypeEnum, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null };
 
-export type TypeListedProductFragment_RegularProduct = { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, expectedRestockingDate: string | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null };
+export type TypeListedProductFragment_RegularProduct = { __typename: 'RegularProduct', stockQuantity: number | null, isAllowedNegativeStock: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, isPersonalPickupOnly: boolean, isInquiryType: boolean, id: number, uuid: string, slug: string, fullName: string, isSellingDenied: boolean, expectedRestockingDate: string | null, catalogNumber: string, isMainVariant: boolean, productType: Types.TypeProductTypeEnum, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null };
 
-export type TypeListedProductFragment_Variant = { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, stockQuantity: number | null, isAllowedNegativeStock: boolean, isSellingDenied: boolean, isCurrentlyOutOfStock: boolean, expectedRestockingDate: string | null, availableStoresCount: number | null, isPersonalPickupOnly: boolean, catalogNumber: string, isMainVariant: boolean, isInquiryType: boolean, productType: Types.TypeProductTypeEnum, mainVariant: { __typename: 'MainVariant', reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null } | null, unit: { __typename: 'Unit', name: string }, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null };
+export type TypeListedProductFragment_Variant = { __typename: 'Variant', stockQuantity: number | null, isAllowedNegativeStock: boolean, isCurrentlyOutOfStock: boolean, availableStoresCount: number | null, isPersonalPickupOnly: boolean, isInquiryType: boolean, id: number, uuid: string, slug: string, fullName: string, isSellingDenied: boolean, expectedRestockingDate: string | null, catalogNumber: string, isMainVariant: boolean, productType: Types.TypeProductTypeEnum, unit: { __typename: 'Unit', name: string }, mainVariant: { __typename: 'MainVariant', reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null } | null, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, percentageDiscount: number | null, basicPrice: { __typename: 'Price', priceWithVat: string } }, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, brand: { __typename: 'Brand', name: string } | null, categories: Array<{ __typename: 'Category', name: string }>, reviewsSummary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number } | null };
 
 export type TypeListedProductFragment =
   | TypeListedProductFragment_MainVariant
@@ -43,66 +41,16 @@ export type TypeListedProductFragment =
 
 export const ListedProductFragment = gql`
     fragment ListedProductFragment on Product {
-  __typename
-  id
-  uuid
-  slug
-  fullName
+  ...CompactProductFragment
   stockQuantity
   isAllowedNegativeStock
   unit {
     __typename
     name
   }
-  isSellingDenied
   isCurrentlyOutOfStock
-  flags {
-    ...SimpleFlagFragment
-  }
-  mainImage {
-    __typename
-    url
-  }
-  price {
-    ...ListedProductPriceFragment
-  }
-  expectedRestockingDate
-  availability {
-    ...AvailabilityFragment
-  }
   availableStoresCount
   isPersonalPickupOnly
-  catalogNumber
-  brand {
-    __typename
-    name
-  }
-  categories {
-    __typename
-    name
-  }
-  isMainVariant
   isInquiryType
-  reviewsSummary {
-    __typename
-    averageRating
-    totalCount
-  }
-  productType
-  ... on MainVariant {
-    variantsCount
-  }
-  ... on Variant {
-    mainVariant {
-      __typename
-      reviewsSummary {
-        __typename
-        averageRating
-        totalCount
-      }
-    }
-  }
 }
-    ${SimpleFlagFragment}
-${ListedProductPriceFragment}
-${AvailabilityFragment}`;
+    ${CompactProductFragment}`;

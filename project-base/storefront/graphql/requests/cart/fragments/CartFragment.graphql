@@ -30,7 +30,14 @@ fragment CartFragment on Cart {
         ...SimplePaymentFragment
     }
     promoCodes {
-        ...PromoCodeFragment
+        __typename
+        code
+        type
+        discountPrice {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
     }
     giftVouchers {
         ...AppliedGiftVoucherFragment

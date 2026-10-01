@@ -1,63 +1,13 @@
 fragment ListedProductFragment on Product {
-    __typename
-    id
-    uuid
-    slug
-    fullName
+    ...CompactProductFragment
     stockQuantity
     isAllowedNegativeStock
     unit {
         __typename
         name
     }
-    isSellingDenied
     isCurrentlyOutOfStock
-    flags {
-        ...SimpleFlagFragment
-    }
-    mainImage {
-        __typename
-        url
-    }
-    price {
-        ...ListedProductPriceFragment
-    }
-    expectedRestockingDate
-    availability {
-        ...AvailabilityFragment
-    }
     availableStoresCount
     isPersonalPickupOnly
-    catalogNumber
-    brand {
-        __typename
-        name
-    }
-    categories {
-        __typename
-        name
-    }
-    isMainVariant
     isInquiryType
-    reviewsSummary {
-        __typename
-        averageRating
-        totalCount
-    }
-    productType
-
-    ... on MainVariant {
-        variantsCount
-    }
-
-    ... on Variant {
-        mainVariant {
-            __typename
-            reviewsSummary {
-                __typename
-                averageRating
-                totalCount
-            }
-        }
-    }
 }

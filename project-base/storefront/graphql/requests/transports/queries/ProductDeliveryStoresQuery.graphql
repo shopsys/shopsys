@@ -14,6 +14,24 @@ query ProductDeliveryStoresQuery(
         first: $first
         after: $after
     ) {
-        ...ProductDeliveryStoreConnectionFragment
+        __typename
+        searchCoordinates {
+            latitude
+            longitude
+        }
+        pageInfo {
+            hasNextPage
+            endCursor
+        }
+        edges {
+            __typename
+            node {
+                __typename
+                store {
+                    ...ListedStoreFragment
+                }
+                expectedDeliveryDate
+            }
+        }
     }
 }

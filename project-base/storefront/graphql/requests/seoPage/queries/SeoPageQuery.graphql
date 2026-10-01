@@ -1,5 +1,16 @@
 query SeoPageQuery($pageSlug: String!) @redisCache(ttl: 3600) {
     seoPage(pageSlug: $pageSlug) {
-        ...SeoPageFragment
+        __typename
+        title
+        metaDescription
+        canonicalUrl
+        ogTitle
+        ogDescription
+        ogImage {
+            ...ImageFragment
+        }
+        hreflangLinks {
+            ...HreflangLinksFragment
+        }
     }
 }

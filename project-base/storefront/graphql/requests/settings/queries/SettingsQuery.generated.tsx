@@ -6,8 +6,6 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { PricingSettingFragment } from '../fragments/PricingSettingFragment.generated';
-import { SeoSettingFragment } from '../fragments/SeoSettingFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** One of the possible methods of the customer user login */
@@ -28,10 +26,15 @@ export const SettingsQueryDocument = gql`
     query SettingsQuery @redisCache(ttl: 3600) {
   settings {
     pricing {
-      ...PricingSettingFragment
+      __typename
+      defaultCurrencyCode
+      minimumFractionDigits
     }
     seo {
-      ...SeoSettingFragment
+      __typename
+      title
+      titleAddOn
+      metaDescription
     }
     contactFormMainText
     emailTransportDescription
@@ -55,8 +58,7 @@ export const SettingsQueryDocument = gql`
     defaultPricingGroupId
   }
 }
-    ${PricingSettingFragment}
-${SeoSettingFragment}`;
+    `;
 
 export function useSettingsQuery(options?: Omit<Urql.UseQueryArgs<TypeSettingsQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeSettingsQuery, TypeSettingsQueryVariables>({ query: SettingsQueryDocument, ...options });

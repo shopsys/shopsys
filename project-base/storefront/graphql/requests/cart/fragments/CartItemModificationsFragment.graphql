@@ -1,18 +1,18 @@
 fragment CartItemModificationsFragment on CartItemModificationsResult {
     __typename
     noLongerListableCartItems {
-        ...CartItemFragment
+        ...CartItemModificationFragment
     }
     cartItemsWithModifiedPrice {
-        ...CartItemFragment
+        ...CartItemModificationFragment
     }
     cartItemsWithChangedQuantity {
-        ...CartItemFragment
+        ...CartItemModificationFragment
     }
     cartItemsWithRemovedAdditionalServices {
-        ...CartItemFragment
+        ...CartItemModificationFragment
     }
     cartItemsWithModifiedAdditionalServicePrices {
-        ...CartItemFragment
+        ...CartItemModificationFragment
     }
 }

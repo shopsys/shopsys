@@ -5,7 +5,18 @@ query OrdersQuery (
     $statuslessFilter: OrderFilterInput
 ){
     orders (after: $after, filter: $filter, first: $first) {
-        ...OrderListFragment
+        __typename
+        totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
+        edges {
+            __typename
+            node {
+                ...ListedOrderFragment
+            }
+            cursor
+        }
     }
     orderStatusCounts(filter: $statuslessFilter) {
         status {

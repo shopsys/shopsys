@@ -3,7 +3,16 @@ fragment ComplaintItemFragment on ComplaintItem {
     quantity
     description
     orderItem {
-        ...OrderDetailItemFragment
+        __typename
+        uuid
+        unit
+        totalPrice {
+            priceWithVat
+        }
+        relatedItems {
+            ...OrderItemAdditionalServiceFragment
+            deliveryDaysExtension
+        }
     }
     files {
         ...FileFragment

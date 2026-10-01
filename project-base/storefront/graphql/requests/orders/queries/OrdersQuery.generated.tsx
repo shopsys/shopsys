@@ -6,7 +6,8 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { OrderListFragment } from '../fragments/OrderListFragment.generated';
+import { PageInfoFragment } from '../../pageInfo/fragments/PageInfoFragment.generated';
+import { ListedOrderFragment } from '../fragments/ListedOrderFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Filter orders */
@@ -67,7 +68,18 @@ export type TypeOrdersQuery = { orders: { __typename: 'OrderConnection', totalCo
 export const OrdersQueryDocument = gql`
     query OrdersQuery($after: String, $filter: OrderFilterInput, $first: Int, $statuslessFilter: OrderFilterInput) {
   orders(after: $after, filter: $filter, first: $first) {
-    ...OrderListFragment
+    __typename
+    totalCount
+    pageInfo {
+      ...PageInfoFragment
+    }
+    edges {
+      __typename
+      node {
+        ...ListedOrderFragment
+      }
+      cursor
+    }
   }
   orderStatusCounts(filter: $statuslessFilter) {
     status {
@@ -78,7 +90,8 @@ export const OrdersQueryDocument = gql`
     count
   }
 }
-    ${OrderListFragment}`;
+    ${PageInfoFragment}
+${ListedOrderFragment}`;
 
 export function useOrdersQuery(options?: Omit<Urql.UseQueryArgs<TypeOrdersQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeOrdersQuery, TypeOrdersQueryVariables>({ query: OrdersQueryDocument, ...options });
