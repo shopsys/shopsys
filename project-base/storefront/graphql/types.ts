@@ -36,6 +36,8 @@ export type TypeAddNewCustomerUserDataInput = {
 export type TypeAddOrderItemsToCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  /** Order urlHash as a proof of access to the order for anonymous customers */
+  orderUrlHash?: InputMaybe<Scalars['String']['input']>;
   /** UUID of the order based on which the cart should be prefilled */
   orderUuid: Scalars['Uuid']['input'];
   /** Information if the prefilled cart should be merged with the current cart */

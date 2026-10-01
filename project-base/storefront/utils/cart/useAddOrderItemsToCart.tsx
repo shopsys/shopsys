@@ -56,25 +56,30 @@ export const useAddOrderItemsToCart = () => {
         }
     };
 
-    const addOrderItemsToEmptyCart = async (orderUuid: string) => {
+    const addOrderItemsToEmptyCart = async (orderUuid: string, orderUrlHash: string | null = null) => {
         storeCurrentFocus();
 
         if (cart?.items.length) {
             updatePortalContent(
                 <MergeCartsPopup
                     mergeOrderItemsWithCurrentCart={mergeOrderItemsWithCurrentCart}
+                    orderForPrefillingUrlHash={orderUrlHash}
                     orderForPrefillingUuid={orderUuid}
                 />,
             );
 
             return;
         }
-        handleAddingItemsToCart({ orderUuid, cartUuid: null, shouldMerge: false });
+        handleAddingItemsToCart({ orderUuid, orderUrlHash, cartUuid: null, shouldMerge: false });
     };
 
-    const mergeOrderItemsWithCurrentCart = async (orderUuid: string, shouldMerge = false) => {
+    const mergeOrderItemsWithCurrentCart = async (
+        orderUuid: string,
+        orderUrlHash: string | null,
+        shouldMerge = false,
+    ) => {
         const cartUuid = shouldMerge && cart?.uuid ? cart.uuid : null;
-        handleAddingItemsToCart({ orderUuid, cartUuid, shouldMerge });
+        handleAddingItemsToCart({ orderUuid, orderUrlHash, cartUuid, shouldMerge });
     };
 
     return addOrderItemsToEmptyCart;

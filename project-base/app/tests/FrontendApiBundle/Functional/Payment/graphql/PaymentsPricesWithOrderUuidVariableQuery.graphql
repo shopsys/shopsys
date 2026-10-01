@@ -1,0 +1,14 @@
+# Reproduces the attack shape: a variable named `orderUuid` lands in the GraphQL context regardless of the field
+# it is used in, so the public `payments.price` would be calculated from that order. The `cart` field only consumes
+# the variable, it returns null for an unknown UUID without producing an error.
+query PaymentsPricesWithOrderUuidVariable($orderUuid: Uuid!) {
+    cart(cartInput: { cartUuid: $orderUuid }) {
+        uuid
+    }
+    payments {
+        uuid
+        price {
+            priceWithoutVat
+        }
+    }
+}

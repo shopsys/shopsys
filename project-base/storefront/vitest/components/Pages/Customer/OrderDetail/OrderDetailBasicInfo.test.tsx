@@ -1,12 +1,14 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { OrderDetailBasicInfo } from 'components/Pages/Customer/OrderDetail/OrderDetailBasicInfo';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import { ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 
-const { orderDetailOrderItemMock } = vi.hoisted(() => ({
+const { orderDetailOrderItemMock, addOrderItemsToEmptyCartMock, authorizationMock } = vi.hoisted(() => ({
     orderDetailOrderItemMock: vi.fn(),
+    addOrderItemsToEmptyCartMock: vi.fn(),
+    authorizationMock: { canCreateOrder: false },
 }));
 
 vi.mock('components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids', () => ({
@@ -32,11 +34,11 @@ vi.mock('components/Pages/Customer/OrderDetail/OrderDetailOrderItem', () => ({
 }));
 
 vi.mock('components/providers/AuthorizationProvider', () => ({
-    useAuthorization: () => ({ canCreateOrder: false }),
+    useAuthorization: () => authorizationMock,
 }));
 
 vi.mock('utils/cart/useAddOrderItemsToCart', () => ({
-    useAddOrderItemsToCart: () => vi.fn(),
+    useAddOrderItemsToCart: () => addOrderItemsToEmptyCartMock,
 }));
 
 vi.mock('utils/formatting/useFormatDate', () => ({
@@ -55,47 +57,47 @@ vi.mock('utils/mappers/price', () => ({
     isPriceVisible: () => false,
 }));
 
+const productUuid = 'reviewed-product-uuid';
+const order = {
+    uuid: 'order-uuid',
+    number: '1234567890',
+    creationDate: '2026-09-01T08:00:00+02:00',
+    status: 'Done',
+    totalPrice: {
+        priceWithVat: '100',
+        priceWithoutVat: '80',
+    },
+    hasExternalPayment: false,
+    hasPaymentInProcess: false,
+    isPaid: true,
+    urlHash: 'order-url-hash',
+    productReviewsAllowed: true,
+    reviewedProductUuids: [productUuid],
+    customerUser: null,
+    trackingNumber: null,
+    trackingUrl: null,
+    promoCode: null,
+    note: null,
+    giftVouchers: [] as TypeOrderDetailFragment['giftVouchers'],
+    purchasedGiftVouchers: [] as TypeOrderDetailFragment['purchasedGiftVouchers'],
+    remainingAmountToPay: '0',
+    items: [
+        {
+            name: 'Reviewed product',
+            type: TypeOrderItemTypeEnum.Product,
+            product: {
+                uuid: productUuid,
+                isVisible: true,
+                isSellingDenied: false,
+                isInquiryType: false,
+                isCurrentlyOutOfStock: false,
+            },
+        },
+    ],
+} as TypeOrderDetailFragment;
+
 describe('OrderDetailBasicInfo', () => {
     test('passes products reviewed from a guest order to the review action', () => {
-        const productUuid = 'reviewed-product-uuid';
-        const order = {
-            uuid: 'order-uuid',
-            number: '1234567890',
-            creationDate: '2026-09-01T08:00:00+02:00',
-            status: 'Done',
-            totalPrice: {
-                priceWithVat: '100',
-                priceWithoutVat: '80',
-            },
-            hasExternalPayment: false,
-            hasPaymentInProcess: false,
-            isPaid: true,
-            urlHash: 'order-url-hash',
-            productReviewsAllowed: true,
-            reviewedProductUuids: [productUuid],
-            customerUser: null,
-            trackingNumber: null,
-            trackingUrl: null,
-            promoCode: null,
-            note: null,
-            giftVouchers: [] as TypeOrderDetailFragment['giftVouchers'],
-            purchasedGiftVouchers: [] as TypeOrderDetailFragment['purchasedGiftVouchers'],
-            remainingAmountToPay: '0',
-            items: [
-                {
-                    name: 'Reviewed product',
-                    type: TypeOrderItemTypeEnum.Product,
-                    product: {
-                        uuid: productUuid,
-                        isVisible: true,
-                        isSellingDenied: false,
-                        isInquiryType: false,
-                        isCurrentlyOutOfStock: false,
-                    },
-                },
-            ],
-        } as TypeOrderDetailFragment;
-
         render(<OrderDetailBasicInfo order={order} />);
 
         expect(orderDetailOrderItemMock).toHaveBeenCalledOnce();
@@ -105,5 +107,14 @@ describe('OrderDetailBasicInfo', () => {
         };
         expect(orderItemProps.isOrderFromRegisteredCustomer).toBe(false);
         expect(orderItemProps.reviewedProductUuids).toEqual(new Set([productUuid]));
+    });
+
+    test('repeating the order passes its urlHash as the proof of access to the order', () => {
+        authorizationMock.canCreateOrder = true;
+
+        const { container } = render(<OrderDetailBasicInfo order={order} />);
+        fireEvent.click(container.querySelector('[data-tid="order_detail_repeat_order_button"]')!);
+
+        expect(addOrderItemsToEmptyCartMock).toHaveBeenCalledWith(order.uuid, order.urlHash);
     });
 });
