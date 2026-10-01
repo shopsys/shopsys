@@ -163,24 +163,24 @@ describe('mapGtmCartItemType', () => {
         { productType: TypeProductTypeEnum.Basic, expectedType: 'product' },
         { productType: TypeProductTypeEnum.ElectronicGiftVoucher, expectedType: 'voucher' },
         { productType: TypeProductTypeEnum.PrintedGiftVoucher, expectedType: 'voucher' },
-    ])('separates purchased and gifted $productType without changing the catalog product', ({
-        productType,
-        expectedType,
-    }) => {
-        const purchasedItem = {
-            ...regularProductCartItem,
-            product: { ...regularProductCartItem.product, productType },
-        };
-        const giftItem = { ...purchasedItem, uuid: 'gift-row', type: TypeCartItemTypeEnum.ProductGift };
+    ])(
+        'separates purchased and gifted $productType without changing the catalog product',
+        ({ productType, expectedType }) => {
+            const purchasedItem = {
+                ...regularProductCartItem,
+                product: { ...regularProductCartItem.product, productType },
+            };
+            const giftItem = { ...purchasedItem, uuid: 'gift-row', type: TypeCartItemTypeEnum.ProductGift };
 
-        const gift = mapGtmCartItemType(giftItem, 'https://example.com');
-        const purchased = mapGtmCartItemType(purchasedItem, 'https://example.com');
+            const gift = mapGtmCartItemType(giftItem, 'https://example.com');
+            const purchased = mapGtmCartItemType(purchasedItem, 'https://example.com');
 
-        expect(gift).toMatchObject({ id: 'gift-195', sku: 'gift-123456', productType: 'gift', priceWithVat: 0 });
-        expect(purchased).toMatchObject({ id: 195, sku: '123456', productType: expectedType, priceWithVat: 121 });
-        expect(purchasedItem.product).toMatchObject({ id: 195, catalogNumber: '123456', productType });
-        expect(mapGtmCartItemType(giftItem, 'https://example.com')).toEqual(gift);
-    });
+            expect(gift).toMatchObject({ id: 'gift-195', sku: 'gift-123456', productType: 'gift', priceWithVat: 0 });
+            expect(purchased).toMatchObject({ id: 195, sku: '123456', productType: expectedType, priceWithVat: 121 });
+            expect(purchasedItem.product).toMatchObject({ id: 195, catalogNumber: '123456', productType });
+            expect(mapGtmCartItemType(giftItem, 'https://example.com')).toEqual(gift);
+        },
+    );
 
     test('should not add variant parameters for regular product cart items', () => {
         const result = mapGtmCartItemType(regularProductCartItem, 'https://example.com');
