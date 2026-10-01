@@ -265,7 +265,8 @@ describe('SortingBar', () => {
 
             await pressEscapeKey();
 
-            expect(isDropdownOpen()).toBeTruthy();
+            expect(isDropdownOpen()).toBeFalsy();
+            expect(sortButton).toHaveAttribute('aria-expanded', 'false');
         });
 
         test('closes dropdown when overlay is clicked', async () => {
@@ -596,18 +597,30 @@ describe('SortingBar', () => {
             const sortButton = getSortButton();
             await user.click(sortButton);
 
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            priceAscLink?.focus();
+            const sortMenu = screen.getByRole('menu', { name: 'Sort options' });
+            const priceAscLink = within(sortMenu).getByText('Price ascending');
+            priceAscLink.focus();
+            expect(priceAscLink).toHaveFocus();
 
             await pressEscapeKey();
 
-            await waitFor(
-                () => {
-                    const isStillOpen = isDropdownOpen();
-                    expect(isStillOpen).toBeTruthy();
-                },
-                { timeout: 100 },
-            );
+            expect(isDropdownOpen()).toBeFalsy();
+            expect(sortButton).toHaveFocus();
+        });
+
+        test('does not move focus on Escape when the dropdown is closed', async () => {
+            const user = userEvent.setup();
+            renderSortingBar();
+
+            const sortButton = getSortButton();
+            await user.click(sortButton);
+            await user.click(sortButton);
+            sortButton.blur();
+
+            await pressEscapeKey();
+
+            expect(isDropdownOpen()).toBeFalsy();
+            expect(sortButton).not.toHaveFocus();
         });
 
         test('returns focus to button after option selection', async () => {
