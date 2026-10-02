@@ -39,6 +39,7 @@ class DatagridNarrowingResolver
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $fields The fields the administrator is allowed to see
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection $declaredFilters The declared filters the administrator is allowed to use
      * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
      * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
      */
     public function resolve(
@@ -49,7 +50,7 @@ class DatagridNarrowingResolver
         ?DomainControlScope $domainControlScope,
     ): DatagridNarrowing {
         $labelsByPath = $this->searchablePathResolver->resolve($adapter, $fields);
-        $filters = $this->filterSetResolver->resolve($adapter, $declaredFilters);
+        $filters = $this->filterSetResolver->resolve($adapter, $fields, $declaredFilters);
 
         $quickSearch = $labelsByPath !== [] && $requestState->inRequest ? $this->createQuickSearch($labelsByPath, $requestState) : null;
         $filterPanel = $filters->isEmpty() === false && $requestState->inRequest ? $this->createFilterPanel($filters, $requestState) : null;

@@ -110,6 +110,7 @@ class ProductReviewController extends AbstractCrudController
             ])
             ->add('isVerifiedPurchase', [
                 'label' => t('Verified purchase'),
+                'filterable' => true,
             ])
             ->add('statusValue', [
                 'visible' => false,

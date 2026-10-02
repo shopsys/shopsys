@@ -11,8 +11,8 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 
 /**
- * Makes the filters offered to the administrator from the declared ones and adapts them to the medium of
- * the datagrid.
+ * Makes the filters offered to the administrator — those picked for the fields declared `filterable` merged with
+ * the declared ones — and adapts them to the medium of the datagrid.
  *
  * The declared filters stay untouched: the offered ones are their copies, so one declaration can serve several
  * datagrids over different media.
@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 class FilterSetResolver
 {
     public function __construct(
+        protected readonly FilterGuesser $filterGuesser,
         protected readonly ExpressionOperatorEnum $expressionOperatorEnum,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
@@ -27,10 +28,15 @@ class FilterSetResolver
     }
 
     /**
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $fields
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
      * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
      */
-    public function resolve(AdapterInterface $adapter, FilterCollection $declaredFilters): FilterCollection
-    {
+    public function resolve(
+        AdapterInterface $adapter,
+        array $fields,
+        FilterCollection $declaredFilters,
+    ): FilterCollection {
         $environment = new FilterEnvironment(
             $adapter,
             $this->expressionOperatorEnum,
@@ -38,7 +44,7 @@ class FilterSetResolver
         );
         $filters = new FilterCollection();
 
-        foreach ($this->sort($this->collect($declaredFilters)) as $filter) {
+        foreach ($this->sort($this->collect($fields, $declaredFilters, $environment)) as $filter) {
             $filter->resolveFor($environment);
             $filters->add($filter);
         }
@@ -47,13 +53,27 @@ class FilterSetResolver
     }
 
     /**
-     * Copies of the declared filters, so that adapting them to the medium never changes a declaration.
+     * A filter declared under the name of a field replaces the picked one, so a field is only guessed for when
+     * nothing was declared for it — and a field whose filter cannot be guessed can still be declared explicitly.
      *
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $fields
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface[]
      */
-    protected function collect(FilterCollection $declaredFilters): array
+    protected function collect(array $fields, FilterCollection $declaredFilters, FilterEnvironment $environment): array
     {
         $filtersByName = [];
+
+        foreach ($fields as $field) {
+            if ($field->isFilterable() === false) {
+                continue;
+            }
+
+            $filterName = $field->getFilterName();
+            $filtersByName[$filterName] = $declaredFilters->has($filterName)
+                ? clone $declaredFilters->get($filterName)
+                : $this->filterGuesser->guess($field, $environment);
+        }
 
         foreach ($declaredFilters as $filter) {
             $filtersByName[$filter->getName()] ??= clone $filter;
@@ -64,8 +84,8 @@ class FilterSetResolver
 
     /**
      * The alphabetical order of the labels in the language of the administration — the administrator looks a filter
-     * up by its name, and the order then does not depend on where the filter was declared (a controller or an
-     * extension).
+     * up by its name, and the order then does not depend on where the field or the filter was declared (a controller
+     * or an extension).
      *
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface[] $filters
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface[]

@@ -21,7 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     role?: string|null,
  *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
  *     class?: string|null,
- *     searchable?: bool
+ *     searchable?: bool,
+ *     filterable?: bool
  * }
  */
 final class FieldDescriptor
@@ -61,6 +62,7 @@ final class FieldDescriptor
             'permission' => null,
             'class' => null,
             'searchable' => false,
+            'filterable' => false,
         ]);
 
         $optionsResolver->setAllowedTypes('label', 'string');
@@ -76,6 +78,7 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('permission', [Permission::class, 'null']);
         $optionsResolver->setAllowedTypes('class', ['string', 'null']);
         $optionsResolver->setAllowedTypes('searchable', 'bool');
+        $optionsResolver->setAllowedTypes('filterable', 'bool');
 
         return $optionsResolver->resolve($options);
     }
@@ -127,6 +130,15 @@ final class FieldDescriptor
     public function isSearchable(): bool
     {
         return $this->options['searchable'];
+    }
+
+    /**
+     * Whether the datagrid offers a filter over this field, picked by the kind of value its path leads to.
+     * A filter declared by `Datagrid::filters()` under the same name (see `getFilterName()`) takes precedence.
+     */
+    public function isFilterable(): bool
+    {
+        return $this->options['filterable'];
     }
 
     /**

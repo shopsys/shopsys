@@ -133,6 +133,20 @@ class FieldDescriptorTest extends TestCase
         new FieldDescriptor('name', ['searchable' => 'yes']);
     }
 
+    public function testFieldIsNotFilterableByDefault(): void
+    {
+        $this->assertFalse((new FieldDescriptor('name'))->isFilterable());
+    }
+
+    public function testFilterableCanBeSwitchedOnByUpdate(): void
+    {
+        $field = new FieldDescriptor('name');
+
+        $field->update(['filterable' => true]);
+
+        $this->assertTrue($field->isFilterable());
+    }
+
     public function testFilterNameIsTheFieldNameWithoutDots(): void
     {
         $this->assertSame('status', (new FieldDescriptor('status'))->getFilterName());
