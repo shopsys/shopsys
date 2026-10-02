@@ -68,13 +68,23 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
         >
             {!!blogArticleData?.blogArticle && (
                 <>
-                    <ArticleMetadata
-                        authorName={blogArticleData.blogArticle.author?.name}
-                        datePublished={blogArticleData.blogArticle.publishDate}
-                        description={metaDescription}
-                        headline={blogArticleData.blogArticle.seo.h1 || blogArticleData.blogArticle.name}
-                        imageUrl={blogArticleData.blogArticle.mainImage?.url}
-                    />
+                    {!shouldNoIndex && (
+                        <ArticleMetadata
+                            type="BlogPosting"
+                            dateModified={blogArticleData.blogArticle.modifiedAt}
+                            authorJobTitle={blogArticleData.blogArticle.author?.jobTitle}
+                            authorImage={blogArticleData.blogArticle.author?.mainImage?.url}
+                            authorName={blogArticleData.blogArticle.author?.name}
+                            datePublished={blogArticleData.blogArticle.publishDate}
+                            description={metaDescription}
+                            headline={
+                                blogArticleData.blogArticle.seo.title ||
+                                blogArticleData.blogArticle.seo.h1 ||
+                                blogArticleData.blogArticle.name
+                            }
+                            imageUrl={blogArticleData.blogArticle.mainImage?.url}
+                        />
+                    )}
                     <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
                 </>
             )}

@@ -2,10 +2,15 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { useOrganizationMetadata } from 'utils/seo/useOrganizationMetadata';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
 
 type ArticleMetadataProps = {
     headline: string;
+    type?: 'Article' | 'BlogPosting';
+    dateModified?: string | null;
+    authorJobTitle?: string | null;
+    authorImage?: string | null;
     datePublished?: string | null;
     description?: string | null;
     imageUrl?: string | null;
@@ -14,12 +19,17 @@ type ArticleMetadataProps = {
 
 export const ArticleMetadata: FC<ArticleMetadataProps> = ({
     headline,
+    type = 'Article',
+    dateModified,
+    authorJobTitle,
+    authorImage,
     datePublished,
     description,
     imageUrl,
     authorName,
 }) => {
     const { url } = useDomainConfig();
+    const publisher = useOrganizationMetadata();
     const router = useRouter();
     const currentUrl = getStringWithoutTrailingSlash(url) + router.asPath;
 
@@ -32,12 +42,21 @@ export const ArticleMetadata: FC<ArticleMetadataProps> = ({
                 dangerouslySetInnerHTML={{
                     __html: serializeJsonForScriptTag({
                         '@context': 'https://schema.org/',
-                        '@type': 'Article',
+                        '@type': type,
+                        publisher,
+                        ...(dateModified && { dateModified }),
                         headline,
                         ...(datePublished && { datePublished }),
                         ...(description && { description }),
                         ...(imageUrl && { image: imageUrl }),
-                        ...(authorName && { author: { '@type': 'Person', name: authorName } }),
+                        ...(authorName && {
+                            author: {
+                                '@type': 'Person',
+                                name: authorName,
+                                jobTitle: authorJobTitle || undefined,
+                                image: authorImage || undefined,
+                            },
+                        }),
                         url: currentUrl,
                     }),
                 }}

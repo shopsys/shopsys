@@ -13,6 +13,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
     }
     perex
     text
+    modifiedAt
     publishDate
     status
     seo {

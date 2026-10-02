@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
@@ -14,6 +15,7 @@ class ArticleDataFactory
     public function __construct(
         protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly Domain $domain,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
         protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
@@ -42,6 +44,7 @@ class ArticleDataFactory
 
     protected function fillFromArticle(ArticleData $articleData, Article $article): void
     {
+        $articleData->image = $this->imageUploadDataFactory->createFromEntityAndType($article);
         $articleData->name = $article->getName();
         $articleData->text = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat(
             $article->getText(),
@@ -52,6 +55,7 @@ class ArticleDataFactory
         $articleData->placement = $article->getPlacement();
         $articleData->hidden = $article->isHidden();
         $articleData->createdAt = $article->getCreatedAt();
+        $articleData->publishDate = $article->getPublishDate();
         $articleData->external = $article->isExternal();
         $articleData->type = $article->getType();
         $articleData->url = $article->getUrl();
@@ -61,6 +65,7 @@ class ArticleDataFactory
 
     protected function fillNew(ArticleData $articleData, int $domainId): void
     {
+        $articleData->image = $this->imageUploadDataFactory->create();
         $articleData->domainId = $domainId;
         $articleData->seo = $this->seoAttributesDataFactory->create();
         $articleData->urls = $this->urlListDataFactory->create();

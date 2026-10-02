@@ -10,13 +10,16 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'articles')]
 #[ORM\Entity]
+#[EntityImage]
 class Article implements OrderableEntityInterface, DomainSeparatedEntityInterface
 {
     public const PLACEMENT_NONE = 'none';
@@ -130,6 +133,20 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     #[ORM\Column(type: 'string', nullable: true)]
     protected $url;
 
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $publishDate;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    protected $modifiedAt;
+
     public function __construct(ArticleData $articleData)
     {
         $this->domainId = $articleData->domainId;
@@ -146,6 +163,8 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
 
     protected function setData(ArticleData $articleData): void
     {
+        $this->publishDate = $articleData->publishDate;
+        $this->modifiedAt = new DatePoint();
         $this->name = $articleData->name;
         $this->text = $articleData->text;
         $this->seo->edit($articleData->seo);
@@ -245,6 +264,22 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPublishDate()
+    {
+        return $this->publishDate;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
     }
 
     /**
