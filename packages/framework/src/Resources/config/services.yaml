@@ -203,6 +203,8 @@ services:
     Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder: ~
 
     Shopsys\FrameworkBundle\Component\Doctrine\ToggleableDebugDataHolder:
+        arguments:
+            - '@Shopsys\FrameworkBundle\Component\Doctrine\ToggleableDebugDataHolder.inner'
         decorates: doctrine.debug_data_holder
 
     Shopsys\FrameworkBundle\Component\Domain\Domain:
