@@ -68,7 +68,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, errors, gtmMessageOrig
 
     return (
         <Popup
-            className="w-11/12 max-w-lg"
+            size="small"
             contentClassName="overflow-y-auto"
             role="alertdialog"
             title={t('Please check inserted details')}

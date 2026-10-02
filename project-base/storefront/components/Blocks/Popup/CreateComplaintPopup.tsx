@@ -175,7 +175,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     };
 
     return (
-        <Popup className="w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={t('Create complaint')}>
+        <Popup contentClassName="overflow-y-auto" title={t('Create complaint')}>
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
                     <FormContentWrapper>

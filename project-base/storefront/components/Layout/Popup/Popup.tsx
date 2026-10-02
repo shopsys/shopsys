@@ -14,6 +14,14 @@ import useWindowDimensions from 'utils/useWindowDimensions';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
+type PopupSize = 'small' | 'medium' | 'large';
+
+const popupWidthClassNameBySize: Record<PopupSize, string> = {
+    small: 'w-[min(32rem,calc(100vw-2.5rem))]',
+    medium: 'w-[min(50rem,calc(100vw-2.5rem))]',
+    large: 'w-[min(72rem,calc(100vw-2.5rem))]',
+};
+
 type PopupProps = {
     title: string;
     ariaDescription?: string;
@@ -24,6 +32,7 @@ type PopupProps = {
     children?: React.ReactNode;
     className?: string;
     role?: 'dialog' | 'alertdialog';
+    size?: PopupSize;
     onClose?: () => void;
 };
 
@@ -37,6 +46,7 @@ export const Popup: React.FC<PopupProps> = ({
     contentClassName,
     key,
     role = 'dialog',
+    size = 'medium',
     onClose,
 }) => {
     const { t } = useTranslation();
@@ -124,7 +134,8 @@ export const Popup: React.FC<PopupProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'fixed z-maximum mx-5 flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
+                            'fixed z-maximum mx-5 flex max-h-[80vh] cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
+                            popupWidthClassNameBySize[size],
                             className,
                         )}
                         initial={{

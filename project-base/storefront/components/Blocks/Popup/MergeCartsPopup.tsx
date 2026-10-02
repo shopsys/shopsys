@@ -24,7 +24,7 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
     const orderForPrefillingUrlHashRef = useRef(orderForPrefillingUrlHash);
 
     return (
-        <Popup title={t('Do you want to merge the current cart and items from the previous order?')}>
+        <Popup size="small" title={t('Do you want to merge the current cart and items from the previous order?')}>
             <div className="flex justify-between">
                 <Button
                     tid={TIDs.repeat_order_dont_merge_carts_button}
