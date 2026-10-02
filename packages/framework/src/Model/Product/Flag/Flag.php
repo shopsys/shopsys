@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -21,8 +23,9 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'flags')]
 #[ORM\Entity]
-class Flag extends AbstractTranslatableEntity
+class Flag extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
+    protected const GEDMO_SORTABLE_LAST_POSITION = -1;
     /**
      * @var int
      */
@@ -73,6 +76,14 @@ class Flag extends AbstractTranslatableEntity
     protected $lockedForDeletion;
 
     /**
+     * @var int
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'integer')]
+    #[Gedmo\SortablePosition]
+    protected $position;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy|null
      */
     #[AsMcpColumn]
@@ -85,6 +96,7 @@ class Flag extends AbstractTranslatableEntity
         $this->uuid = $flagData->uuid;
 
         $this->translations = new ArrayCollection();
+        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->setData($flagData);
         $this->lockedForDeletion = false;
     }
@@ -195,5 +207,22 @@ class Flag extends AbstractTranslatableEntity
     public function isLockedForDeletion()
     {
         return $this->lockedForDeletion;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    #[Override]
+    public function setPosition($position): void
+    {
+        $this->position = $position;
     }
 }

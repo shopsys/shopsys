@@ -480,9 +480,9 @@ describe('FilterGroupGeneric', () => {
 
             render(<FilterGroupGeneric {...defaultProps} options={longNameOptions} />);
 
-            expect(
-                screen.getByText('This is a very long filter name that might cause layout issues'),
-            ).toBeInTheDocument();
+            const longName = 'This is a very long filter name that might cause layout issues';
+
+            expect(screen.getByText(longName)).toHaveAttribute('title', longName);
         });
 
         test('handles rapid successive clicks', async () => {
