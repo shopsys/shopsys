@@ -12,12 +12,16 @@ use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
+use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use SortDirection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -62,6 +66,7 @@ final class Datagrid
     public function __construct(
         private readonly AdapterInterface $adapter,
         private readonly GridFactory $gridFactory,
+        private readonly AccessCheckerInterface $accessChecker,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
@@ -206,7 +211,10 @@ final class Datagrid
      *       help?: string|null,
      *       template?: string|null,
      *       transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
-     *       property?: string|null
+     *       property?: string|string[]|null,
+     *       role?: string|null,
+     *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
+     *       class?: string|null
      *   } $options
      * @phpstan-param FieldOptions $options
      */
@@ -232,7 +240,10 @@ final class Datagrid
      *      help?: string|null,
      *      template?: string|null,
      *      transform?: null|\Closure(mixed $value, mixed[] $row, mixed[][] $results): mixed,
-     *      property?: string|null
+     *      property?: string|string[]|null,
+     *      role?: string|null,
+     *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
+     *      class?: string|null
      *  } $options
      * @phpstan-param FieldOptions $options
      */
@@ -278,23 +289,19 @@ final class Datagrid
 
     public function createView(): GridView
     {
-        $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
+        // fields the administrator is not allowed to see are neither fetched nor displayed
+        $accessibleFields = array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
+
+        $datasource = $this->adapter->getDatasource($this->identificationName, $accessibleFields);
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
-        if ($this->fields->isEmpty() || $this->fields->forAll(fn ($key, FieldDescriptor $field) => $field->isVisible() === false)) {
+        $visibleFields = array_filter($accessibleFields, static fn (FieldDescriptor $field) => $field->isVisible());
+
+        if (count($visibleFields) === 0) {
             return $grid->createView();
         }
 
-        foreach ($this->fields as $field) {
-            if ($field->isVisible() === false) {
-                continue;
-            }
-
-            $grid->addColumn($field->getName(), $field->getMappingProperty() ?? $this->identificationName, $field->getLabel(), $this->dragAndDropEntityClass !== null ? false : $field->isSortable(), [
-                'template' => $field->getTemplate(),
-                'help' => $field->getHelp(),
-            ]);
-        }
+        $this->addColumns($grid, $visibleFields);
 
         if ($this->dragAndDropEntityClass !== null && $this->defaultOrder !== null) {
             // Pagination is intentionally left disabled - reordering and saving positions must work
@@ -323,6 +330,40 @@ final class Datagrid
         }
 
         return $grid->createView();
+    }
+
+    /**
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $fields
+     */
+    private function addColumns(Grid $grid, array $fields): void
+    {
+        foreach ($fields as $field) {
+            $column = $grid->addColumn($field->getName(), $field->getMappingProperty() ?? $this->identificationName, $field->getLabel(), $this->dragAndDropEntityClass !== null ? false : $field->isSortable(), [
+                'template' => $field->getTemplate(),
+                'help' => $field->getHelp(),
+            ]);
+
+            if ($field->getClass() !== null) {
+                $column->setClassAttribute($field->getClass());
+            }
+
+            if ($field->hasMultipleProperties()) {
+                // the combined value is stored under the field name, so ordering must target the underlying properties instead
+                $column->setOrderSourceColumnName(implode(DatagridDataSource::ORDER_PROPERTIES_SEPARATOR, $field->getProperties()));
+            }
+        }
+    }
+
+    private function isAccessible(FieldDescriptor $field): bool
+    {
+        if (!$field->isRestricted()) {
+            return true;
+        }
+
+        return $this->accessChecker->hasPermission(
+            $field->getRole() ?? $this->options['roleConstant'],
+            $field->getPermission() ?? Permission::VIEW,
+        );
     }
 
     private function configureDefaultCrudActions(): void
