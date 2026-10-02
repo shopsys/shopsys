@@ -109,7 +109,8 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
 
     return (
         <Popup
-            className="h-[min(760px,80dvh)] max-h-[80dvh] w-11/12 max-w-6xl"
+            size="large"
+            className="h-[min(760px,80dvh)] max-h-[80dvh]"
             contentClassName="flex min-h-0 flex-1 flex-col overflow-hidden"
             title={t('Choose the store where you are going to pick up your order')}
         >

@@ -133,7 +133,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
     const popupTitle = mode === 'edit' ? t('Edit customer user') : t('Add customer user');
 
     return (
-        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto" title={popupTitle}>
+        <Popup contentClassName="overflow-y-auto" title={popupTitle}>
             <FormProvider {...formProviderMethods}>
                 <Form
                     formName={formMeta.formName}

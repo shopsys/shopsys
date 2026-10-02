@@ -79,6 +79,7 @@ describe('Popup accessibility', () => {
         const popup = screen.getByRole('alertdialog', { name: 'Comparison' });
 
         expect(popup).toHaveAccessibleDescription('Product added to comparison.');
+        expect(popup).toHaveClass('w-[min(50rem,calc(100vw-2.5rem))]');
     });
 
     test('uses checkout login title as accessible dialog name even when popup title is visually hidden', () => {

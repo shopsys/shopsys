@@ -14,7 +14,7 @@ export const AdditionalServiceDescriptionPopup: FC<AdditionalServiceDescriptionP
     onClose,
 }) => {
     return (
-        <Popup className="w-11/12 max-w-2xl" contentClassName="overflow-y-auto" title={name} onClose={onClose}>
+        <Popup size="small" contentClassName="overflow-y-auto" title={name} onClose={onClose}>
             <div data-tid={TIDs.additional_service_description_popup}>
                 <UserText htmlContent={description} />
             </div>
