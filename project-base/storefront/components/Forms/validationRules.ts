@@ -250,6 +250,16 @@ export const validateOptionalImageFiles = (t: Translate, maxFilesCount: number):
                 },
             ),
         )
+        .test(
+            'totalFileSize',
+            t('Maximum total file size is {{ max }}', {
+                max: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
+            }),
+            (files) =>
+                !files ||
+                files.reduce((totalSize, file) => totalSize + (file as File).size, 0) <=
+                    VALIDATION_CONSTANTS.totalFilesMaxSize,
+        )
         .max(maxFilesCount, t('Maximum files count is {{ max }}', { max: maxFilesCount }));
 };
 
@@ -270,6 +280,16 @@ export const validateImageFile = (t: Translate): Schema => {
                 ),
         )
         .min(1, t('Please attach files'))
+        .test(
+            'totalFileSize',
+            t('Maximum total file size is {{ max }}', {
+                max: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
+            }),
+            (files) =>
+                !files ||
+                files.reduce((totalSize, file) => totalSize + (file as File).size, 0) <=
+                    VALIDATION_CONSTANTS.totalFilesMaxSize,
+        )
         .max(
             VALIDATION_CONSTANTS.maxFilesCount,
             t('Maximum files count is {{ max }}', { max: VALIDATION_CONSTANTS.maxFilesCount }),

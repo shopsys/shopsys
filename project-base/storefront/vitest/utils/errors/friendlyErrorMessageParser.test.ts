@@ -6,6 +6,22 @@ import { describe, expect, test, vi } from 'vitest';
 const createMockT = () => vi.fn((key: string) => key) as unknown as Translate;
 
 describe('getUserFriendlyErrors', () => {
+    test('should return a specific error for a request that exceeds the upload size limit', () => {
+        const mockT = createMockT();
+        const error = new CombinedError({
+            response: new Response(null, { status: 413 }),
+        });
+
+        const result = getUserFriendlyErrors(error, mockT);
+
+        expect(result.networkError).toBe(
+            'The uploaded files are too large. Please reduce their total size and try again.',
+        );
+        expect(mockT).toHaveBeenCalledWith(
+            'The uploaded files are too large. Please reduce their total size and try again.',
+        );
+    });
+
     test('should return networkError for network failures', () => {
         const mockT = createMockT();
         const error = new CombinedError({
