@@ -27,6 +27,7 @@ The following options are available for fields:
 - `property` - The property of the entity that is used to fetch the data. If not set, the field name is used as the property name.
   It can also be an array of properties - then all of them are fetched and the value of the field is an array of their values indexed by the property (e.g. `['lastName' => 'Doe', 'firstName' => 'John']`).
   Such a field is sorted by all the properties in the given order, `transform` receives the whole array and without `template` (or `transform`) the values are simply joined with a space.
+  See [Template of a field combining multiple properties](#template-of-a-field-combining-multiple-properties) for how to render the values.
 - `role` - Role constant (e.g. `ROLE_PRODUCT`) the administrator needs to see the field. The field is then neither fetched nor displayed for other administrators. If not set, the role of the datagrid (the CRUD controller) is used.
 - `permission` - Permission (`Shopsys\FrameworkBundle\Component\Security\Role\Permission`) on the role the administrator needs to see the field. If not set, `Permission::VIEW` is used. The field is restricted only when `role` or `permission` is set.
 - `class` - CSS class added to the header and the cells of the column, e.g. `text-end` for numeric columns.
@@ -42,6 +43,39 @@ $datagrid->add('name', [
     },
 ]);
 ```
+
+## Template of a field combining multiple properties
+
+When the `property` option is an array, the field has no single value to render, so it usually needs a `template`.
+The template receives the same variables as any other [column template](../internal-grid/grid-rendering-customization.md#1-define-your-own-column-template), only `value` is an array of the fetched values indexed by the property names, in the order they are listed in the `property` option:
+
+```php
+$datagrid->add('product', [
+    'label' => t('Product'),
+    'property' => ['productName', 'catnum', 'product.id'],
+    'template' => '@ShopsysAdministration/content/productReview/grid/product.html.twig',
+]);
+```
+
+```twig
+{# value = {'productName': 'Canon EOS 700D', 'catnum': '7700768', 'product.id': 1} #}
+{{ value.productName }}
+{% if value['product.id'] is not null %}
+    <a href="{{ url('admin_product_edit', { id: value['product.id'] }) }}">
+        {{ ux_icon('forward-page', {class: 'icon-sm'}) }}
+    </a>
+{% endif %}
+
+<div class="small text-secondary">{{ value.catnum }}</div>
+```
+
+Keep these rules in mind:
+
+- A property in dot notation keeps the dot in its key, so it must be accessed with the bracket syntax (`value['product.id']`). The dot syntax (`value.product.id`) would look for a nested `product` array and fail.
+- A property of an optional relation (e.g. `product.id` of a review whose product was deleted) is `null` when the relation is missing, so check it before using it in a link or a method call.
+- The `row` variable still contains each fetched property under its own key (`row['product.id']`), the same way as for fields with a single property. Prefer `value` though - it only contains the properties of the field and does not depend on which other fields the datagrid defines.
+- When `transform` is set as well, the array is passed to the callback and `value` in the template is whatever the callback returns. It is handy to turn the array into an object or a DTO before rendering.
+- Sorting by the column orders the rows by all the properties in the given order, so put the most significant property first (`['lastName', 'firstName']`).
 
 ## Examples
 
