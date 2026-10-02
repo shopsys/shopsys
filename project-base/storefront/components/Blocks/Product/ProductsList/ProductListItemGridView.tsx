@@ -73,7 +73,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                 visibleItemsConfig.discount) && (
                 <div className="relative z-above grid grid-cols-[minmax(0,1fr)_auto] items-start gap-1">
                     <div className="relative min-w-0">
-                        <div className="flex flex-col items-start gap-1">
+                        <div className="flex min-h-11 flex-col items-start gap-1">
                             {highlightBadgeText && (
                                 <Flag className="max-w-full" type="highlight">
                                     <span className="wrap-break-word line-clamp-2">{highlightBadgeText}</span>

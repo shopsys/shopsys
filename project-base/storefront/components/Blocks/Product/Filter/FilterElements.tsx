@@ -42,7 +42,7 @@ export const FilterGroupContent: FC<{ keyName?: string; id?: string }> = ({ chil
 );
 
 export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled }) => (
-    <div className={twJoin(isDisabled && 'opacity-30')}>{children}</div>
+    <div className={twJoin('w-full min-w-0', isDisabled && 'opacity-30')}>{children}</div>
 );
 
 export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyName }) => (

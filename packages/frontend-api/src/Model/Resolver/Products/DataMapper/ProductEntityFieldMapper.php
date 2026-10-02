@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFileResolver;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -313,7 +314,7 @@ class ProductEntityFieldMapper
                 $flagsIndexedById[$variantFlag->getId()] = $variantFlag;
             }
         }
-        ksort($flagsIndexedById);
+        uasort($flagsIndexedById, static fn (Flag $firstFlag, Flag $secondFlag) => $firstFlag->getPosition() <=> $secondFlag->getPosition());
 
         return array_values($flagsIndexedById);
     }

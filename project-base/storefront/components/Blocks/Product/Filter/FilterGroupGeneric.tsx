@@ -73,8 +73,10 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
         const optionLabel =
             filterField === 'flags' ? (
-                <Flag className="flex h-5 w-fit items-center leading-0" rgbBgColor={option.rgbColor}>
-                    {option.name}
+                <Flag className="flex h-5 w-fit min-w-0 max-w-full items-center" rgbBgColor={option.rgbColor}>
+                    <span className="block min-w-0 truncate" title={option.name}>
+                        {option.name}
+                    </span>
                 </Flag>
             ) : (
                 option.name
@@ -87,6 +89,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                     disabled={isDisabled}
                     id={`${filterField}.${index}.checked`}
                     label={optionLabel}
+                    labelWrapperClassName="min-w-0"
                     name={`${filterField}.${index}.checked`}
                     value={isChecked}
                     onChange={() => handleCheck(option.uuid)}
