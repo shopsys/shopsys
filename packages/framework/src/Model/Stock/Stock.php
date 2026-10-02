@@ -19,7 +19,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[ORM\Entity]
 class Stock implements OrderableEntityInterface
 {
-    protected const GEDMO_SORTABLE_LAST_POSITION = 1;
+    protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int

@@ -7,6 +7,14 @@
     {% endif %}
 {% endblock %}
 
+{% block grid_value_cell_id_stock %}
+    {% if row.st.id is not null %}
+        <a href="{{ url('admin_stock_edit', { id: row.st.id }) }}">{{ value }}</a>
+    {% else %}
+        <span class="text-secondary">{{ 'No warehouse associated'|trans }}</span>
+    {% endif %}
+{% endblock %}
+
 {% block grid_pager_totalcount %}
     {% set entityName = 'Store'|trans %}
     {{ parent() }}

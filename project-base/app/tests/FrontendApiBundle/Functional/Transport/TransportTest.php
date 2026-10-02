@@ -119,7 +119,7 @@ class TransportTest extends GraphQlTestCase
     public function testStoreExpectedDeliveryDateMatchesCalculation(): void
     {
         $personalPickupTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreExpectedDeliveryDateQuery.graphql', [
             'storeUuid' => $store->getUuid(),
@@ -139,7 +139,7 @@ class TransportTest extends GraphQlTestCase
 
     public function testStoreExpectedDeliveryDateReturnsUserErrorForUnknownTransport(): void
     {
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreExpectedDeliveryDateQuery.graphql', [
             'storeUuid' => $store->getUuid(),
@@ -151,7 +151,7 @@ class TransportTest extends GraphQlTestCase
 
     public function testStoreExpectedDeliveryDateReturnsUserErrorForNonPickupTransport(): void
     {
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreExpectedDeliveryDateQuery.graphql', [
             'storeUuid' => $store->getUuid(),

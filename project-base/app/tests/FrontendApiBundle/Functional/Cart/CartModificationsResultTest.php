@@ -289,7 +289,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
 
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
         $this->storeFacade->delete($store->getId());
 
@@ -302,7 +302,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
 
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
 
         $transportModifications = $this->getTransportModificationsForCartQuery($newlyCreatedCart['uuid']);
@@ -346,7 +346,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
         $this->setTestingProductAsPersonalPickupOnly();
 

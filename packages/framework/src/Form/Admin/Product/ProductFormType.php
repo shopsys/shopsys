@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
-use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStocksType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductCatnum;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Form\FileUploadType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
@@ -478,9 +479,16 @@ final class ProductFormType extends AbstractType
                 'help' => t('If the product is out of stock, its availability is displayed as "Expecting [date]". A date in the past is ignored.'),
             ]);
 
-            $stockGroupBuilder->add('productStockData', CollectionType::class, [
-                'required' => false,
-                'entry_type' => ProductStockFormType::class,
+            $stockGroupBuilder->add('productStockData', ProductStocksType::class, [
+                'unit_name' => $product?->getUnit()->getName(),
+            ]);
+            $stockGroupBuilder->add('stocksInfo', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('Products stocked in a warehouse assigned to a store are ready for personal pickup there, products from other warehouses are transferred first (transfer days are set per domain). Warehouses are assigned to stores on the store detail. <a href="%warehousesUrl%" target="_blank">Manage warehouses</a> &middot; <a href="%storesUrl%" target="_blank">Manage stores</a> &middot; <a href="%transferDaysUrl%" target="_blank">Set transfer days</a>', [
+                    '%warehousesUrl%' => $this->urlGenerator->generate('admin_stock_list'),
+                    '%storesUrl%' => $this->urlGenerator->generate('admin_store_list'),
+                    '%transferDaysUrl%' => $this->urlGenerator->generate('admin_stock_settings'),
+                ]),
             ]);
         }
 

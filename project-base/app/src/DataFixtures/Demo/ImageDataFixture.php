@@ -531,7 +531,11 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         ];
 
         foreach ($storesImagesData as $imageId) {
-            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . '1', Store::class);
+            $store = $this->getReferenceForDomain(
+                StoreDataFixture::STORE_FIRST,
+                $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getId(),
+                Store::class,
+            );
             $names = [];
 
             foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {

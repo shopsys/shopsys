@@ -69,7 +69,7 @@ class DeliveryAddressIsNotStoredForPacketeryOrPersonalPickupTest extends GraphQl
     {
         return match ($transportDataFixtureReference) {
             TransportDataFixture::TRANSPORT_PACKETERY => '26145',
-            TransportDataFixture::TRANSPORT_PERSONAL => $this->getReference(StoreDataFixture::STORE_PREFIX . '1', Store::class)->getUuid(),
+            TransportDataFixture::TRANSPORT_PERSONAL => $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class)->getUuid(),
             default => throw new InvalidArgumentException('Invalid transport data fixture reference'),
         };
     }

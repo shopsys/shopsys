@@ -42,7 +42,7 @@ class SlugWithLeadingSlashTest extends GraphQlTestCase
             'brand' => $this->getMainSlug('front_brand_detail', $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId()),
             'flag' => $this->getMainSlug('front_flag_detail', $this->getReference(FlagDataFixture::FLAG_PRODUCT_MADEIN_DE, Flag::class)->getId()),
             'category' => $this->getMainSlug('front_product_list', $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class)->getId()),
-            'store' => $this->getMainSlug('front_stores_detail', $this->getReference(StoreDataFixture::STORE_PREFIX . '1', Store::class)->getId()),
+            'store' => $this->getMainSlug('front_stores_detail', $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class)->getId()),
             'article' => $this->getMainSlug('front_article_detail', $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, Domain::FIRST_DOMAIN_ID, Article::class)->getId()),
             'blogArticle' => $this->getMainSlug('front_blogarticle_detail', $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE, BlogArticle::class)->getId()),
             'blogCategory' => $this->getMainSlug('front_blogcategory_detail', $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)->getId()),

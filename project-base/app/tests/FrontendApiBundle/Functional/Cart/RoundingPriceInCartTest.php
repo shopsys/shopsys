@@ -122,7 +122,7 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'transportUuid' => $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class)->getUuid(),
-            'pickupPlaceIdentifier' => $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class)->getUuid(),
+            'pickupPlaceIdentifier' => $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class)->getUuid(),
         ]);
         $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
 

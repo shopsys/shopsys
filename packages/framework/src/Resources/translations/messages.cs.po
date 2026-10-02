@@ -343,6 +343,9 @@ msgstr "Přiřadit produkty"
 msgid "Assign to category"
 msgstr "Přiřazení do kategorie"
 
+msgid "Assigned stores"
+msgstr "Přiřazené prodejny"
+
 msgid "Attribute %attribute% was changed %changes%"
 msgstr "Atribut %attribute% byl změněn %changes%"
 
@@ -2949,6 +2952,15 @@ msgstr "Přehled zboží"
 
 msgid "Products parameters of selected category"
 msgstr "Parametry produktů vybrané kategorie"
+
+msgid "Products stocked in a warehouse assigned to a store are ready for personal pickup there, products from other warehouses are transferred first (transfer days are set per domain). Warehouses are assigned to stores on the store detail. <a href=\"%warehousesUrl%\" target=\"_blank\">Manage warehouses</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Manage stores</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Set transfer days</a>"
+msgstr "Produkty ze skladu přiřazeného prodejně jsou na ní připraveny k osobnímu odběru, produkty z ostatních skladů se nejdřív převážejí (dny převozu se nastavují pro doménu). Sklady se prodejnám přiřazují na detailu prodejny. <a href=\"%warehousesUrl%\" target=\"_blank\">Spravovat sklady</a> &middot; <a href=\"%storesUrl%\" target=\"_blank\">Spravovat prodejny</a> &middot; <a href=\"%transferDaysUrl%\" target=\"_blank\">Nastavit dny převozu</a>"
+
+msgid "Products stocked in the selected warehouse are ready for personal pickup at this store. Products from other warehouses are transferred first, which postpones the expected delivery date by the transfer days set per domain. <a href=\"%listUrl%\">Manage warehouses</a> &middot; <a href=\"%settingsUrl%\">Set transfer days</a>"
+msgstr "Produkty ze zvoleného skladu jsou na této prodejně připraveny k osobnímu odběru. Produkty z ostatních skladů se nejdřív převážejí, což posune očekávané datum doručení o dny převozu nastavené pro doménu. <a href=\"%listUrl%\">Spravovat sklady</a> &middot; <a href=\"%settingsUrl%\">Nastavit dny převozu</a>"
+
+msgid "Products stocked in this warehouse are ready for personal pickup at these stores. A warehouse is assigned to a store on the store detail. <a href=\"%listUrl%\">Manage stores</a>"
+msgstr "Produkty skladem v tomto skladu jsou připraveny k osobnímu odběru na těchto prodejnách. Sklad se prodejně přiřazuje na detailu prodejny. <a href=\"%listUrl%\">Spravovat prodejny</a>"
 
 msgid "Products with a lower average rating do not show stars in product lists (the product detail always shows them). Leave empty to show stars for every reviewed product. It's possible to set a value from 1 to 5 with one decimal place (e.g., 4.5)."
 msgstr "Produkty s nižším průměrným hodnocením nezobrazují ve výpisech produktů hvězdičky (na detailu produktu se zobrazují vždy). Ponechte prázdné, pokud se mají hvězdičky zobrazovat u všech produktů s recenzí. Je možné nastavit hodnotu od 1 do 5 s jedním desetinným místem (např. 4,5)."

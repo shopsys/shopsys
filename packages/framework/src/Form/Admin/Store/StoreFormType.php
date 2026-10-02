@@ -129,6 +129,14 @@ final class StoreFormType extends AbstractType
                 'required' => false,
                 'label' => 'Warehouse',
                 'placeholder' => 'No warehouse associated',
+                'help' => t(
+                    'Products stocked in the selected warehouse are ready for personal pickup at this store. Products from other warehouses are transferred first, which postpones the expected delivery date by the transfer days set per domain. <a href="%listUrl%">Manage warehouses</a> &middot; <a href="%settingsUrl%">Set transfer days</a>',
+                    [
+                        '%listUrl%' => $this->urlGenerator->generate('admin_stock_list'),
+                        '%settingsUrl%' => $this->urlGenerator->generate('admin_stock_settings'),
+                    ],
+                ),
+                'help_html' => true,
                 'choices' => $this->stockFacade->getAllStocks(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',

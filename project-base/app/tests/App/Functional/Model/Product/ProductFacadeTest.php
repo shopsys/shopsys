@@ -61,7 +61,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->name[$this->getFirstDomainLocale()] = 'Test product';
         $productData->categoriesByDomainId[Domain::FIRST_DOMAIN_ID][] = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
-        $stock = $this->getReference(StocksDataFixture::STOCK_PREFIX . 1, Stock::class);
+        $stock = $this->getReference(StocksDataFixture::STOCK_CENTRAL_CZ, Stock::class);
 
         $productStockData = $this->productStockDataFactory->createFromStock($stock);
         $productStockData->productQuantity = 10;

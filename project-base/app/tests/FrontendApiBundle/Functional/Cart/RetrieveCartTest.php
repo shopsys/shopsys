@@ -334,7 +334,7 @@ class RetrieveCartTest extends GraphQlTestCase
                 'name' => t('In stock', [], Translator::CUSTOMER_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
-            'stockQuantity' => 2700,
+            'stockQuantity' => 2400,
             'categories' => [
                 [
                     'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -534,7 +534,7 @@ class RetrieveCartTest extends GraphQlTestCase
                     $firstDomainLocale,
                 ),
             ],
-            'availableStoresCount' => 1,
+            'availableStoresCount' => 7,
             'breadcrumb' => [
                 [
                     'name' => $mainCategory->getName($firstDomainLocale),
