@@ -49,10 +49,20 @@ class SecurityHeadersResponseListener
         return [
             'default-src' => [
                 'http://cdnjs.cloudflare.com', // elFinder uses protocol-relative URLs that might resolve to HTTP in the development environment
+                // the default CSP has only default-src, so it has to allow the Rsbuild dev server and its websocket
+                'http://localhost:35729',
+                'ws://localhost:35729',
             ],
             'script-src' => [
-                'http://localhost:35729', // Webpack Encore's dev server for hot module replacement
+                'http://localhost:35729', // Rsbuild's dev server
                 'http://cdnjs.cloudflare.com', // elFinder uses protocol-relative URLs that might resolve to HTTP in the development environment
+            ],
+            'style-src' => [
+                'http://localhost:35729', // Rsbuild's dev server
+            ],
+            'connect-src' => [
+                'ws://localhost:35729', // Rsbuild's dev server hot module replacement websocket
+                'http://localhost:35729',
             ],
         ];
     }

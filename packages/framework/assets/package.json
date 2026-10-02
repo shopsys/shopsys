@@ -19,9 +19,7 @@
         "flatpickr": "^4.6.13",
         "intl-messageformat": "^11.2.5",
         "jquery": "^4.0.0",
-        "jquery-hoverintent": "^1.10.1",
         "nouislider": "^15.8.1",
-        "select2": "^4.0.13",
         "sortablejs": "^1.15.6"
     },
     "devDependencies": {
@@ -29,7 +27,6 @@
         "@biomejs/biome": "^2.2.0",
         "@shopsys/biome-config": "file:vendor/shopsys/biome-config",
         "babel-jest": "^30.4.1",
-        "core-js": "^3.13.1",
         "jest": "^30.4.2",
         "jest-environment-jsdom": "^30.4.1"
     }
