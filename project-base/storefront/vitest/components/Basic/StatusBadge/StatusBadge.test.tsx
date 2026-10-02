@@ -7,6 +7,8 @@ const variantClasses: Record<StatusBadgeVariant, string> = {
     error: 'bg-status-badge-bg-error text-status-badge-text-error',
     success: 'bg-status-badge-bg-success text-status-badge-text-success',
     warning: 'bg-status-badge-bg-warning text-status-badge-text-warning',
+    neutral: 'bg-background-more text-text-default',
+    info: 'bg-status-badge-bg-info text-status-badge-text-info',
 };
 
 describe('StatusBadge', () => {

@@ -1,5 +1,5 @@
-import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
-import { UserEditIcon } from 'components/Basic/Icon/UserEditIcon';
+import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
+import { StatusBadge } from 'components/Basic/StatusBadge/StatusBadge';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { SkeletonCustomerUsersTable } from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
 import { Button } from 'components/Forms/Button/Button';
@@ -10,11 +10,11 @@ import { useRemoveCustomerUserMutation } from 'graphql/requests/customer/mutatio
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCurrentCustomerUsers } from 'utils/user/useCurrentCustomerUsers';
+import { CustomerUserActions } from './CustomerUserActions';
 
 const DeleteCustomerUserPopup = dynamic(
     () =>
@@ -64,23 +64,17 @@ export const CustomerUsersTable: FC = () => {
         showSuccessMessage(t('User has been deleted'));
     };
 
-    const openDeleteCustomerUserPopup = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        customerUserToBeDeletedUuid: string,
-    ) => {
-        e.stopPropagation();
+    const openDeleteCustomerUserPopup = (customerUser: TypeSimpleCustomerUserFragment) => {
         updatePortalContent(
             <DeleteCustomerUserPopup
-                deleteCustomerUserHandler={() => deleteItemHandler(customerUserToBeDeletedUuid)}
+                customerUserName={`${customerUser.firstName} ${customerUser.lastName}`}
+                customerUserEmail={customerUser.email}
+                deleteCustomerUserHandler={() => deleteItemHandler(customerUser.uuid)}
             />,
         );
     };
 
-    const openManageCustomerUserPopup = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        customerUser?: TypeSimpleCustomerUserFragment,
-    ) => {
-        e.stopPropagation();
+    const openManageCustomerUserPopup = (customerUser?: TypeSimpleCustomerUserFragment) => {
         updatePortalContent(
             <ManageCustomerUserPopup
                 customerUser={customerUser}
@@ -90,83 +84,86 @@ export const CustomerUsersTable: FC = () => {
         );
     };
 
-    const addNewUserButton = (
-        <Button
-            aria-haspopup="dialog"
-            className="w-fit"
-            data-tid={TIDs.customer_users_add_button}
-            size="small"
-            onClick={(e) => openManageCustomerUserPopup(e)}
-        >
-            {t('Add new user')}
-        </Button>
-    );
-
-    if (customerUsersIsFetching) {
-        return (
-            <div className="flex w-full flex-col items-center gap-4">
-                {addNewUserButton}
-                <div className="flex w-full flex-col">
-                    <SkeletonCustomerUsersTable />
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className="flex w-full flex-col items-center gap-4" data-tid={TIDs.customer_users_table}>
-            {addNewUserButton}
-            <Table className="w-full border-0 p-0">
-                {customerUsers.map((user) => (
-                    <Row
-                        key={user.uuid}
-                        className="mb-2 flex vl:table-row flex-col rounded-md border-none bg-table-bg-contrast vl:bg-table-bg-default vl:odd:bg-table-bg-contrast"
-                    >
-                        <Cell className="py-2 text-left font-bold text-sm uppercase leading-5">
-                            {user.lastName} {user.firstName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
-                        </Cell>
+        <div className="flex w-full flex-col gap-6" data-tid={TIDs.customer_users_table}>
+            <Button
+                aria-haspopup="dialog"
+                className="w-fit self-center"
+                tid={TIDs.customer_users_add_button}
+                size="small"
+                onClick={() => openManageCustomerUserPopup()}
+            >
+                <PlusIcon aria-hidden="true" className="size-4" />
+                {t('Add new user')}
+            </Button>
 
-                        <Cell
-                            className={twJoin(
-                                'vl:table-cell py-2 text-left text-sm leading-5',
-                                'max-w-64 vl:max-w-56 overflow-x-auto whitespace-nowrap sm:max-w-full',
-                                '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
-                            )}
+            {customerUsersIsFetching ? (
+                <SkeletonCustomerUsersTable />
+            ) : (
+                <Table
+                    className="w-full"
+                    tableClassName="table-fixed"
+                    head={
+                        <Row className="hidden border-border-less/50 border-b bg-background-default odd:bg-background-default sm:table-row">
+                            <Cell
+                                isHead
+                                scope="col"
+                                className="w-1/2 py-3 text-left font-medium text-text-less text-xs"
+                            >
+                                {t('User')}
+                            </Cell>
+                            <Cell isHead scope="col" className="py-3 text-left font-medium text-text-less text-xs">
+                                {t('Role group')}
+                            </Cell>
+                            <Cell
+                                isHead
+                                scope="col"
+                                align="right"
+                                className="w-28 py-3 font-medium text-text-less text-xs"
+                            >
+                                {t('Actions')}
+                            </Cell>
+                        </Row>
+                    }
+                >
+                    {customerUsers.map((user) => (
+                        <Row
+                            key={user.uuid}
+                            className="grid grid-cols-[minmax(0,1fr)_auto] items-center border-border-less/50 border-b bg-background-default py-3 transition-colors odd:bg-background-default hover:bg-background-more sm:table-row sm:py-0"
                         >
-                            {user.email}
-                        </Cell>
-                        <Cell className="vl:table-cell py-2 text-left text-sm leading-5">{user.roleGroup.name}</Cell>
-                        <Cell align="right" className="flex vl:flex-row flex-row-reverse vl:justify-end gap-2 py-2">
-                            <Button
-                                className="flex-1"
-                                data-tid={TIDs.customer_users_edit_button}
-                                size="small"
-                                variant="tertiary"
-                                onClick={(e) => openManageCustomerUserPopup(e, user)}
-                            >
-                                <UserEditIcon className="size-4" /> <span className="sm:block">{t('Edit')}</span>
-                            </Button>
-                            <Button
-                                aria-haspopup="dialog"
-                                className="flex-1"
-                                hasDisabledLook={currentCustomerUserUuid === user.uuid}
-                                disabled={currentCustomerUserUuid === user.uuid}
-                                title={
-                                    user.uuid === currentCustomerUserUuid
-                                        ? t('You cannot delete your own account')
-                                        : undefined
-                                }
-                                data-tid={TIDs.customer_users_delete_button}
-                                size="small"
-                                variant="tertiary"
-                                onClick={(e) => openDeleteCustomerUserPopup(e, user.uuid)}
-                            >
-                                <CloseIcon className="size-4" /> <span className="sm:block">{t('Delete')}</span>
-                            </Button>
-                        </Cell>
-                    </Row>
-                ))}
-            </Table>
+                            <Cell className="col-span-2 py-2 sm:py-4">
+                                <div className="flex flex-wrap items-center gap-2 font-semibold">
+                                    <span className="wrap-anywhere">
+                                        {user.firstName} {user.lastName}
+                                    </span>
+                                    {currentCustomerUserUuid === user.uuid && (
+                                        <StatusBadge variant="info">{t('You')}</StatusBadge>
+                                    )}
+                                </div>
+                                <a
+                                    className="wrap-anywhere mt-1 inline-block text-text-less text-xs no-underline hover:text-link-hovered hover:underline focus-visible:outline-2 focus-visible:outline-border-active"
+                                    href={`mailto:${user.email}`}
+                                >
+                                    {user.email}
+                                </a>
+                            </Cell>
+                            <Cell className="py-2 sm:py-4">
+                                <StatusBadge className="max-w-full text-wrap" variant="neutral">
+                                    {user.roleGroup.name}
+                                </StatusBadge>
+                            </Cell>
+                            <Cell align="right" className="py-2 sm:py-4">
+                                <CustomerUserActions
+                                    customerUser={user}
+                                    isCurrentUser={currentCustomerUserUuid === user.uuid}
+                                    onDelete={() => openDeleteCustomerUserPopup(user)}
+                                    onEdit={() => openManageCustomerUserPopup(user)}
+                                />
+                            </Cell>
+                        </Row>
+                    ))}
+                </Table>
+            )}
         </div>
     );
 };
