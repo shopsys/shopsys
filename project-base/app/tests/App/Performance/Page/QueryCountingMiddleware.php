@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\App\Performance\Page;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver as DriverInterface;
 use Doctrine\DBAL\Driver\Middleware;
 use Override;
+use ReflectionClass;
 
 final class QueryCountingMiddleware implements Middleware
 {
-    private int $queryCount = 0;
+    /**
+     * @var string[]
+     */
+    private array $executedQueries = [];
+
+    public static function createInjectedInto(Connection $connection): self
+    {
+        $queryCountingMiddleware = new self();
+
+        $driverProperty = new ReflectionClass($connection)->getProperty('driver');
+        $driverProperty->setValue($connection, $queryCountingMiddleware->wrap($driverProperty->getValue($connection)));
+        $connection->close();
+
+        return $queryCountingMiddleware;
+    }
 
     /**
      * {@inheritdoc}
@@ -21,13 +37,21 @@ final class QueryCountingMiddleware implements Middleware
         return new QueryCountingDriver($driver, $this);
     }
 
-    public function incrementQueryCount(): void
+    public function recordQuery(string $sql): void
     {
-        $this->queryCount++;
+        $this->executedQueries[] = $sql;
     }
 
     public function getQueryCount(): int
     {
-        return $this->queryCount;
+        return count($this->executedQueries);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getExecutedQueries(): array
+    {
+        return $this->executedQueries;
     }
 }

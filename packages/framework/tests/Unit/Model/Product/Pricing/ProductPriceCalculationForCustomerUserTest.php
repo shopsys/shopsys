@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Product\Pricing;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
@@ -65,6 +66,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $pricingGroupSettingFacadeStub,
             $domainStub,
             $specialPriceFacadeStub,
+            new InMemoryCache(),
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
@@ -114,6 +116,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $pricingGroupFacadeMock,
             $domainStub,
             $specialPriceFacadeStub,
+            new InMemoryCache(),
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId(
@@ -121,5 +124,61 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $domainId,
         )->sellingProductPrice;
         $this->assertSame($expectedProductPrice, $productPrice);
+    }
+
+    public function testPricesAreCalculatedAgainForAnotherPricingGroup(): void
+    {
+        $productPriceCalculationMock = $this->createProductPriceCalculationMock(2);
+        $productPriceCalculationForCustomerUser = $this->createProductPriceCalculationForCustomerUser($productPriceCalculationMock);
+        $product = $this->createEntityStub(Product::class, 1);
+
+        $firstPrices = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId($product, Domain::FIRST_DOMAIN_ID, $this->createCustomerUserStubWithPricingGroupId(1));
+        $secondPrices = $productPriceCalculationForCustomerUser->calculatePricesForCustomerUserAndDomainId($product, Domain::FIRST_DOMAIN_ID, $this->createCustomerUserStubWithPricingGroupId(2));
+
+        $this->assertNotSame($firstPrices, $secondPrices);
+    }
+
+    private function createProductPriceCalculationMock(int $expectedCalculatePriceCalls): ProductPriceCalculation
+    {
+        $productPriceCalculationMock = $this->createMock(ProductPriceCalculation::class);
+        $productPriceCalculationMock->expects($this->exactly($expectedCalculatePriceCalls))->method('calculatePrice')->willReturnCallback(
+            static fn (Product $product, int $domainId, PricingGroup $pricingGroup): ProductPrice => new ProductPrice(new Price(Money::create(1), Money::create(1)), $pricingGroup, false),
+        );
+
+        return $productPriceCalculationMock;
+    }
+
+    private function createProductPriceCalculationForCustomerUser(
+        ProductPriceCalculation $productPriceCalculation,
+    ): ProductPriceCalculationForCustomerUser {
+        return new ProductPriceCalculationForCustomerUser(
+            $productPriceCalculation,
+            $this->createStub(CurrentCustomerUser::class),
+            $this->createStub(PricingGroupSettingFacade::class),
+            $this->createStub(Domain::class),
+            $this->createStub(SpecialPriceFacade::class),
+            new InMemoryCache(),
+        );
+    }
+
+    private function createCustomerUserStubWithPricingGroupId(int $pricingGroupId): CustomerUser
+    {
+        $customerUserStub = $this->createStub(CustomerUser::class);
+        $customerUserStub->method('getPricingGroup')->willReturn($this->createEntityStub(PricingGroup::class, $pricingGroupId));
+
+        return $customerUserStub;
+    }
+
+    /**
+     * @template T of object
+     * @param class-string<T> $entityClassName
+     * @return T
+     */
+    private function createEntityStub(string $entityClassName, int $id): object
+    {
+        $entityStub = $this->createStub($entityClassName);
+        $entityStub->method('getId')->willReturn($id);
+
+        return $entityStub;
     }
 }

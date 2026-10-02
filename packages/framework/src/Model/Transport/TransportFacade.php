@@ -281,6 +281,7 @@ class TransportFacade
     ): array {
         $domainId = $this->domain->getId();
         $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $totalWeight);
+        $this->transportRepository->preloadPricesByTransports($transports);
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 

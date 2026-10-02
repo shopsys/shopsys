@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
@@ -22,7 +21,6 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
 
     public function __construct(
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
@@ -38,16 +36,10 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
             return $orderProcessingStack->processNext($orderProcessingData);
         }
 
-        $domainId = $orderProcessingData->getDomainId();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-
-        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+        $paymentPrice = $this->paymentPriceCalculation->calculatePriceForProcessedOrder(
             $payment,
-            $orderProcessingData->orderData->getProductsAndAdditionalServicesTotalPriceAfterAppliedDiscounts(),
-            $domainId,
-            $orderProcessingData->orderData->freeTransportAndPaymentApplied,
-            $currency->getRoundingType(),
-            $currency->getRoundingPlacesPriceWithoutVat(),
+            $orderProcessingData->orderData,
+            $orderProcessingData->getDomainId(),
         );
 
         $orderItemData = $this->createPaymentItemData($paymentPrice, $payment, $orderProcessingData->getDomainConfig());

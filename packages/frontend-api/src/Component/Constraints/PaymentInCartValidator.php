@@ -6,9 +6,12 @@ namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentUnavailableForRemainingAmountToPayInCartException;
 use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
@@ -22,6 +25,8 @@ class PaymentInCartValidator extends ConstraintValidator
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
         protected readonly PaymentValidationFacade $paymentValidationFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CartApiFacade $cartApiFacade,
     ) {
     }
 
@@ -42,8 +47,9 @@ class PaymentInCartValidator extends ConstraintValidator
 
         try {
             $payment = $this->paymentFacade->getEnabledOnDomainByUuid($paymentUuid, $this->domain->getId());
-            $this->checkPaymentTransportRelation($payment, $value->cartUuid, $constraint);
-            $this->checkPaymentSuitabilityForRemainingAmountToPay($payment, $value->cartUuid, $constraint);
+            $cart = $this->cartApiFacade->getCartCreateIfNotExists($this->currentCustomerUser->findCurrentCustomerUser(), $value->cartUuid);
+            $this->checkPaymentTransportRelation($payment, $cart, $constraint);
+            $this->checkPaymentSuitabilityForRemainingAmountToPay($payment, $cart, $constraint);
         } catch (PaymentNotFoundException $exception) {
             $this->context->buildViolation($constraint->unavailablePaymentMessage)
                 ->setCode($constraint::UNAVAILABLE_PAYMENT_ERROR)
@@ -54,11 +60,11 @@ class PaymentInCartValidator extends ConstraintValidator
 
     protected function checkPaymentTransportRelation(
         Payment $payment,
-        ?string $cartUuid,
+        Cart $cart,
         PaymentInCart $constraint,
     ): void {
         try {
-            $this->paymentValidationFacade->checkPaymentTransportRelation($payment, $cartUuid);
+            $this->paymentValidationFacade->checkPaymentTransportRelation($payment, $cart);
         } catch (InvalidPaymentTransportCombinationException $exception) {
             $this->context->buildViolation($constraint->invalidPaymentTransportCombinationMessage)
                 ->setCode($constraint::INVALID_PAYMENT_TRANSPORT_COMBINATION_ERROR)
@@ -68,11 +74,11 @@ class PaymentInCartValidator extends ConstraintValidator
 
     protected function checkPaymentSuitabilityForRemainingAmountToPay(
         Payment $payment,
-        ?string $cartUuid,
+        Cart $cart,
         PaymentInCart $constraint,
     ): void {
         try {
-            $this->paymentValidationFacade->checkPaymentSuitabilityForRemainingAmountToPayInCart($payment, $cartUuid);
+            $this->paymentValidationFacade->checkPaymentSuitabilityForRemainingAmountToPay($payment, $cart);
         } catch (PaymentUnavailableForRemainingAmountToPayInCartException $exception) {
             $this->context->buildViolation($constraint->unavailablePaymentMessage)
                 ->setCode($constraint::UNAVAILABLE_PAYMENT_ERROR)

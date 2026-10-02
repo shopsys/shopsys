@@ -32,9 +32,29 @@ class ProductManualInputPriceRepository
         Product $product,
         PricingGroup $pricingGroup,
     ): ?ProductManualInputPrice {
-        return $this->getProductManualInputPriceRepository()->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroup,
+        return $this->getProductManualInputPriceRepository()->find([
+            'product' => $product->getId(),
+            'pricingGroup' => $pricingGroup->getId(),
         ]);
+    }
+
+    /**
+     * @param int[] $productIds
+     */
+    public function preloadByProductIdsAndPricingGroup(array $productIds, PricingGroup $pricingGroup): void
+    {
+        if ($productIds === []) {
+            return;
+        }
+
+        $this->em->createQueryBuilder()
+            ->select('pmip')
+            ->from(ProductManualInputPrice::class, 'pmip')
+            ->where('pmip.product IN (:productIds)')
+            ->andWhere('pmip.pricingGroup = :pricingGroup')
+            ->setParameter('productIds', $productIds)
+            ->setParameter('pricingGroup', $pricingGroup)
+            ->getQuery()
+            ->getResult();
     }
 }

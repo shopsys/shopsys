@@ -172,6 +172,25 @@ class PaymentRepository
             ->getQuery()->getResult();
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
+     */
+    public function preloadPricesByPayments(array $payments): void
+    {
+        if ($payments === []) {
+            return;
+        }
+
+        $this->getPaymentRepository()
+            ->createQueryBuilder('p')
+            ->addSelect('pp')
+            ->leftJoin('p.prices', 'pp')
+            ->where('p IN (:payments)')
+            ->setParameter('payments', $payments)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findPaymentByExternalMethodTransportAndDomainId(
         string $externalPaymentMethod,
         Transport $transport,

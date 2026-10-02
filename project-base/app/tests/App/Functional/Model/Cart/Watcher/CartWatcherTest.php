@@ -7,7 +7,6 @@ namespace Tests\App\Functional\Model\Cart\Watcher;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
-use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -16,13 +15,11 @@ use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -47,17 +44,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private VatFacade $vatFacade;
-
-    /**
-     * @inject
-     */
     private ProductFacade $productFacade;
-
-    /**
-     * @inject
-     */
-    private ProductInputPriceDataFactory $productInputPriceDataFactory;
 
     /**
      * @inject
@@ -86,6 +73,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         }
 
         $this->productFacade->edit($product->getId(), $productData);
+        $this->resetRequestScopedCache();
 
         $modifiedItems2 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertNotEmpty($modifiedItems2);
@@ -114,12 +102,10 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        /** @var \App\Model\Product\ProductData $productData */
-        $productData = $this->productDataFactory->create();
-        $productData->name = [];
-        $this->setVatsAndPrices($productData);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6', Product::class);
+        $this->assertTrue($product->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
 
-        $cartItemStub = $this->createCartItemStub($productData);
+        $cartItemStub = $this->createCartItemStub($product);
 
         $currentCustomerUserStub = $this->createCustomerUserStub();
 
@@ -139,20 +125,8 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $notListableItems);
     }
 
-    private function setVatsAndPrices(ProductData $productData): void
+    public function createCartItemStub(Product $product): CartItem
     {
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(
-                $this->vatFacade->getDefaultVatForDomain($domainId),
-                [1 => Money::zero(), 2 => Money::zero()],
-            );
-        }
-    }
-
-    public function createCartItemStub(ProductData $productData): CartItem
-    {
-        $product = Product::create($productData);
-
         $cartItemStub = $this->createStub(CartItem::class);
 
         $cartItemStub

@@ -394,19 +394,9 @@ class OrderFacade
 
     public function createOrderDataFromCart(Cart $cart, DomainConfig $domainConfig): OrderData
     {
-        $orderData = $this->orderDataFactory->create();
-
-        return $this->fillOrderDataFromCart($orderData, $cart, $domainConfig);
-    }
-
-    protected function fillOrderDataFromCart(OrderData $orderData, Cart $cart, DomainConfig $domainConfig): OrderData
-    {
         $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
 
-        return $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
+        return $this->orderProcessor->processMemoized($orderInput);
     }
 
     public function updatePaymentByLastPaymentTransaction(Order $order): void

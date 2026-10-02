@@ -79,6 +79,31 @@ class ProductVisibilityRepository
     }
 
     /**
+     * @param int[] $productIds
+     */
+    public function preloadByProductIdsPricingGroupAndDomainId(
+        array $productIds,
+        PricingGroup $pricingGroup,
+        int $domainId,
+    ): void {
+        if ($productIds === []) {
+            return;
+        }
+
+        $this->em->createQueryBuilder()
+            ->select('pv')
+            ->from(ProductVisibility::class, 'pv')
+            ->where('pv.product IN (:productIds)')
+            ->andWhere('pv.pricingGroup = :pricingGroup')
+            ->andWhere('pv.domainId = :domainId')
+            ->setParameter('productIds', $productIds)
+            ->setParameter('pricingGroup', $pricingGroup)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[]
      */
     public function findProductVisibilitiesByDomainIdAndProduct(int $domainId, Product $product): array

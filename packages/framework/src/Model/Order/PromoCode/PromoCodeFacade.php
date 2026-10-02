@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\LimitNotReachedException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandFactory;
@@ -22,6 +23,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PromoCodeFacade
 {
+    protected const string HIGHEST_LIMIT_CACHE_NAMESPACE = 'promoCodeHighestLimitByPromoCodeIdAndPrice';
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PromoCodeRepository $promoCodeRepository,
@@ -37,6 +40,7 @@ class PromoCodeFacade
         protected readonly PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
         protected readonly PromoCodeFlagRepository $promoCodeFlagRepository,
         protected readonly HashGenerator $hashGenerator,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -332,9 +336,14 @@ class PromoCodeFacade
         PromoCode $promoCode,
         PriceInterface $price,
     ): PromoCodeLimit {
-        $promoCodeLimit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
-            $promoCode,
-            $price->getPriceWithVat(),
+        $promoCodeLimit = $this->inMemoryCache->getOrSaveValue(
+            static::HIGHEST_LIMIT_CACHE_NAMESPACE,
+            fn (): ?PromoCodeLimit => $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
+                $promoCode,
+                $price->getPriceWithVat(),
+            ),
+            $promoCode->getId(),
+            $price->getPriceWithVat()->getAmount(),
         );
 
         if ($promoCodeLimit === null) {
