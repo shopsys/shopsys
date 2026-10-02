@@ -68,8 +68,8 @@ assert_remote_template_variable() {
 }
 
 assert_split_branch_is_not_protected() {
-    if [[ "$SPLIT_BRANCH" == "master" || "$SPLIT_BRANCH" == "main" || "$SPLIT_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
-        echo -e "${RED}You cannot work with master, main or version-like branch!${NC}"
+    if [[ "$SPLIT_BRANCH" == "master" || "$SPLIT_BRANCH" == "main" || "$SPLIT_BRANCH" == "alpha" || "$SPLIT_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
+        echo -e "${RED}You cannot work with master, main, alpha or version-like branch!${NC}"
         exit 1
     fi
 }
@@ -79,4 +79,18 @@ assert_split_branch_variable() {
         echo -e "${RED}You must provide a branch name to work on!${NC}"
         exit 1
     fi
+}
+
+# The branch name ends up in git commands and in a sed expression, so it must be a well-formed branch name
+assert_split_branch_is_valid_ref() {
+    if ! git check-ref-format --branch "$SPLIT_BRANCH" > /dev/null 2>&1; then
+        echo -e "${RED}\"${SPLIT_BRANCH}\" is not a valid branch name!${NC}"
+        exit 1
+    fi
+}
+
+# Escapes a value for use in the replacement part of a sed "s" command with "~" as the delimiter
+# ("~" itself cannot appear in a branch name, "&" and "\" can)
+escape_for_sed_replacement() {
+    printf '%s' "$1" | sed -e 's/[\\&~]/\\&/g'
 }
