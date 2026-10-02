@@ -25,6 +25,7 @@ export const ProductDetailRelatedProductsSection = ({
             data-tid={`${TIDs.product_detail_section_}${PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts}`}
             id={PRODUCT_DETAIL_SECTIONS_IDS.relatedProducts}
             ref={sectionRef}
+            tabIndex={-1}
         >
             <Webline>
                 <ProductDetailSectionHeading className="mb-3">{t('Related Products')}</ProductDetailSectionHeading>

@@ -10,6 +10,12 @@ type UseHashNavigationReturn = {
     activeSection: string | null;
 };
 
+const focusSectionHeading = (sectionElement: HTMLElement) => {
+    const headingElement = sectionElement.querySelector<HTMLElement>('h2[tabindex="-1"]');
+
+    (headingElement ?? sectionElement).focus({ preventScroll: true });
+};
+
 export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationReturn => {
     const [activeSection, setActiveSection] = useState<string | null>(null);
     const isUserScrollingRef = useRef(true);
@@ -30,6 +36,7 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
             setActiveSection(sectionId);
             updateHash(sectionId);
             section.ref.current.scrollIntoView({ behavior: 'smooth' });
+            focusSectionHeading(section.ref.current);
         }
     };
 
@@ -90,6 +97,9 @@ export const useHashNavigation = (sections: SectionRef[]): UseHashNavigationRetu
 
             animationFrameId = window.requestAnimationFrame(() => {
                 section.ref.current?.scrollIntoView({ block: 'start' });
+                if (section.ref.current) {
+                    focusSectionHeading(section.ref.current);
+                }
                 animationFrameId = null;
             });
         };

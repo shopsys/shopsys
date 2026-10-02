@@ -20,6 +20,7 @@ export const ProductDetailReviewsSection: FC<ProductDetailReviewsSectionProps> =
             className="scroll-mt-fixed-header-with-navigation"
             id={PRODUCT_DETAIL_SECTIONS_IDS.reviews}
             ref={sectionRef}
+            tabIndex={-1}
         >
             <Webline width="vl">
                 <ProductDetailSectionHeading>{t('Reviews')}</ProductDetailSectionHeading>

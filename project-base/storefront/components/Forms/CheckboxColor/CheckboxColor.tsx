@@ -38,7 +38,6 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
         label={label}
     >
         <input
-            aria-label={label}
             checked={value}
             className="peer sr-only"
             disabled={disabled}

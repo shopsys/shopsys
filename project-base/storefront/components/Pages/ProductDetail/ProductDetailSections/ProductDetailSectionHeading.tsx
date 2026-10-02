@@ -6,5 +6,9 @@ type ProductDetailSectionHeadingProps = {
 };
 
 export const ProductDetailSectionHeading = ({ className, children }: ProductDetailSectionHeadingProps) => {
-    return <h2 className={twMergeCustom('h3 mb-4', className)}>{children}</h2>;
+    return (
+        <h2 className={twMergeCustom('h3 mb-4', className)} tabIndex={-1}>
+            {children}
+        </h2>
+    );
 };

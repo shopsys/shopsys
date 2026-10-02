@@ -40,6 +40,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                 imageAlt={label ?? ''}
                 imageClassName="p-0.5"
                 imageUrl={imageUrl}
+                isDecorative
                 rgbHex={bgColor}
                 className={twMergeCustom(
                     'size-7 border border-icon-default bg-input-bg-default transition',
