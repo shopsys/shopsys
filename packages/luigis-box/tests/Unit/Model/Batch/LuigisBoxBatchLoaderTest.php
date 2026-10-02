@@ -68,7 +68,7 @@ class LuigisBoxBatchLoaderTest extends TestCase
         $facets = [['name' => 'brand']];
         $productHit = ['id' => 11, 'name' => 'Product'];
         $category = ['id' => 21, 'name' => 'Category'];
-        $article = ['id' => 31, 'name' => 'Article'];
+        $article = ['id' => 31, 'index' => 'article', 'name' => 'Article'];
         $brand = ['id' => 41, 'name' => 'Brand'];
         $calledTypes = [];
 
@@ -246,6 +246,42 @@ class LuigisBoxBatchLoaderTest extends TestCase
 
         $this->assertBatchLoadResult($result[0], [$autocompleteProductHit], 1);
         $this->assertBatchLoadResult($result[1], [$searchProductHit], 3);
+    }
+
+    public function testArticlesAreSortedByLuigisBoxOrder(): void
+    {
+        $blogArticle = ['id' => 5, 'index' => 'blog_article', 'name' => 'Pinned blog article'];
+        $article = ['id' => 31, 'index' => 'article', 'name' => 'Article'];
+        $otherBlogArticle = ['id' => 31, 'index' => 'blog_article', 'name' => 'Blog article with same ID'];
+        $searchBatchLoadData = $this->createSearchBatchLoadData(TypeInLuigisBoxEnum::ARTICLE, 50);
+        $this->luigisBoxClient->expects($this->once())
+            ->method('getDataForMultiple')
+            ->with([$searchBatchLoadData])
+            ->willReturn([
+                [
+                    TypeInLuigisBoxEnum::ARTICLE => new LuigisBoxResult(
+                        [5, 31, 31, 99],
+                        ['blog_article-5', 'article-31', 'blog_article-31', 'article-99'],
+                        4,
+                        [],
+                    ),
+                ],
+            ]);
+        $this->domain->expects($this->once())->method('getId')->willReturn(1);
+        $this->combinedArticleElasticsearchFacade->expects($this->once())->method('getArticlesByIds')
+            ->with(['blog_article' => ['5', '31'], 'article' => ['31', '99']], 1, 4)
+            ->willReturn([$otherBlogArticle, $article, $blogArticle]);
+        $this->filterQueryFactory->expects($this->never())->method('createSellableProductsByProductIdsFilter');
+        $this->productElasticsearchRepository->expects($this->never())->method('getSortedProductsResultByFilterQuery');
+        $this->categoryFacade->expects($this->never())->method('getVisibleCategoriesByIds');
+        $this->brandFacade->expects($this->never())->method('getBrandsByIds');
+        $loader = $this->createLoader();
+
+        $promise = $loader->loadByBatchData([$searchBatchLoadData]);
+
+        $result = $this->resolvePromise($promise);
+
+        $this->assertBatchLoadResult($result[0], [$blogArticle, $article, $otherBlogArticle], 4);
     }
 
     /**
