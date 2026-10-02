@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
-use Hybridauth\User\Profile;
 use Monolog\Logger;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
@@ -19,10 +18,6 @@ use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SocialNetworkFacade
 {
@@ -33,7 +28,6 @@ class SocialNetworkFacade
         protected readonly Logger $logger,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly LoginAsUserFacade $loginAsUserFacade,
-        protected readonly ValidatorInterface $validator,
         protected readonly Domain $domain,
     ) {
     }
@@ -46,8 +40,6 @@ class SocialNetworkFacade
 
             $adapter = $hybridauth->authenticate($type);
             $userProfile = $adapter->getUserProfile();
-
-            $this->validateDataFromSocialNetwork($userProfile);
 
             $registrationData = $this->registrationDataFactory->createFromSocialNetworkProfile($userProfile);
 
@@ -82,22 +74,6 @@ class SocialNetworkFacade
             $this->logger->error($message, ['exception' => $exception]);
 
             throw new SocialNetworkLoginException(message: $message, previous: $exception);
-        }
-    }
-
-    protected function validateDataFromSocialNetwork(Profile $userProfile): void
-    {
-        $violations = $this->validator->validate($userProfile->email, [
-            new NotBlank(message: 'Email is not filled'),
-            new Length(
-                max: 255,
-                maxMessage: 'Email cannot be longer than {{ limit }} characters',
-            ),
-            new Email(message: 'Email is not valid'),
-        ]);
-
-        if (count($violations) > 0) {
-            throw new SocialNetworkLoginException('Data from social network are not valid');
         }
     }
 }
