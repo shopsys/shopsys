@@ -30,31 +30,20 @@ class MyService
 `InMemoryCache` also allows you to use callback as value for saving item to the cache for easier managing of complicated data resolving.
 
 ```php
-public function getProductParameterValues(Product $product, ?string $locale = null)
+public function getProductParameterValues(Product $product, ?string $locale = null): array
 {
+    $locale ??= $this->localization->getCurrentLocaleForTranslatableEntities();
+
     return $this->inMemoryCache->getOrSaveValue(
         static::PARAMETER_VALUES_CACHE_NAMESPACE,
-        function () use ($product, $locale) {
-            $locale = $locale ?? $this->localization->getLocale();
-
-            $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
+        function () use ($product, $locale): array {
+            return $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
                 $product,
                 $locale,
             );
-
-            foreach ($productParameterValues as $index => $productParameterValue) {
-                $parameter = $productParameterValue->getParameter();
-
-                if ($parameter->getName($locale) === null
-                    || $productParameterValue->getValue()->getLocale() !== $locale
-                ) {
-                    unset($productParameterValues[$index]);
-                }
-            }
-
-            return $productParameterValues;
         },
         $product->getId(),
+        $locale,
     );
 }
 ```
