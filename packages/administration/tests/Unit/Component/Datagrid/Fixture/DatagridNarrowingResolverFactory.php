@@ -7,6 +7,7 @@ namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture;
 use DateTimeZone;
 use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterGuesser;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterSetResolver;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\DatagridFilterFormType;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterPrototypesFormType;
@@ -67,7 +68,7 @@ final class DatagridNarrowingResolverFactory
             }
         };
 
-        return new FilterSetResolver(new ExpressionOperatorEnum(), $displayTimeZoneProvider, $administratorLocalizationFacade);
+        return new FilterSetResolver(new FilterGuesser(), new ExpressionOperatorEnum(), $displayTimeZoneProvider, $administratorLocalizationFacade);
     }
 
     /**
