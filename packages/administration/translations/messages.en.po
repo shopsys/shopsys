@@ -2155,6 +2155,9 @@ msgstr ""
 msgid "Search by slug..."
 msgstr ""
 
+msgid "Search in transfer issue messages..."
+msgstr ""
+
 msgid "Search in transfers"
 msgstr ""
 

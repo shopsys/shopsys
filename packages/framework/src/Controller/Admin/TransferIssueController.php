@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\CanDelete;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Transfer\TransferIssueSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
@@ -30,6 +31,7 @@ class TransferIssueController extends AdminBaseController
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -53,6 +55,14 @@ class TransferIssueController extends AdminBaseController
                 $queryBuilder
                     ->andWhere('ti.transfer = :transfer')
                     ->setParameter('transfer', $filteredTransfer);
+            }
+
+            $searchText = $form->getData()['searchText'];
+
+            if ($searchText !== null && $searchText !== '') {
+                $queryBuilder
+                    ->andWhere('NORMALIZED(ti.message) LIKE NORMALIZED(:searchText)')
+                    ->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
             }
         }
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'ti.id');
