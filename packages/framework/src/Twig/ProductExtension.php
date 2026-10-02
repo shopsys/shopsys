@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -17,7 +16,6 @@ class ProductExtension extends AbstractExtension
 {
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
-        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
     }
 
@@ -46,10 +44,6 @@ class ProductExtension extends AbstractExtension
             new TwigFunction(
                 'findProductMainCategory',
                 $this->findProductMainCategory(...),
-            ),
-            new TwigFunction(
-                'getProductParameterValues',
-                $this->getProductParameterValues(...),
             ),
         ];
     }
@@ -80,13 +74,5 @@ class ProductExtension extends AbstractExtension
         int $domainId,
     ): ?Category {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
-     */
-    public function getProductParameterValues(Product $product): array
-    {
-        return $this->productCachedAttributesFacade->getProductParameterValues($product);
     }
 }
