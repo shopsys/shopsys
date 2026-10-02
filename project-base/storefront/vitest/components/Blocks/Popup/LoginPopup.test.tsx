@@ -79,6 +79,7 @@ describe('Popup accessibility', () => {
         const popup = screen.getByRole('alertdialog', { name: 'Comparison' });
 
         expect(popup).toHaveAccessibleDescription('Product added to comparison.');
+        expect(popup).toHaveClass('w-[min(50rem,calc(100vw-2.5rem))]');
     });
 
     test('moves initial focus from the page to the popup title', () => {

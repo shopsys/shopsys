@@ -70,7 +70,7 @@ export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUui
 
     return (
         <Popup
-            className="w-11/12 lg:w-1/2"
+            size="medium"
             title={t('Ask a product question')}
             ariaDescription={t('Fill in your name, email and question and we will get back to you by email.', {
                 ns: 'accessibility',

@@ -51,9 +51,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
 
     return (
         <Popup
+            size="large"
             hideCloseButton
             ariaDescription={ariaDescription}
-            className="max-h-[calc(100dvh-2rem)] vl:max-h-[85vh] w-11/12 max-w-5xl overflow-hidden"
+            className="max-h-[calc(100dvh-2rem)] vl:max-h-[85vh] overflow-hidden"
             contentClassName="-mx-5 -mb-5 min-h-0 overflow-y-auto px-5 vl:m-0 vl:px-0 vl:pb-2"
             title={t('Great choice! We have added your item to the cart')}
         >
