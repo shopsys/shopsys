@@ -330,7 +330,7 @@ class RequiredSettingExtension extends AbstractExtension
                 $this->requiredSettingsMessages[] = t(
                     '<a href="%url%">Public holidays for year %year% are not set.</a>',
                     [
-                        '%url%' => $this->router->generate('admin_closedday_list'),
+                        '%url%' => $this->router->generate('admin_crud_closed_day_list'),
                         '%year%' => $year,
                     ],
                 );

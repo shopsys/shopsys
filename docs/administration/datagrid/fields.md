@@ -65,19 +65,54 @@ $datagrid
             return $status->getId();
         },
     ])
-    
-    // You can also use the transform option to prefetch some data at once and use it
-    ->add('isVisible', [
-        'property' => 'id',
-        'transform' => function (int $value, array $row, array $results) {
-            $productIds = array_column($results, 'id');
-            
-            // Be sure that you are not making multiple queries for the same data
-            $productVisibility = $this->productVisibilityFacade->getProductVisibilityIndexedByProductId($productIds);
-
-            return $productVisibility[$value];
-        },
-    ])
 ;
 
+```
+
+## Batch loading per-row data
+
+A `transform` runs once per row, so looking the data up inside it (`$this->facade->getById($row['id'])`) issues one query per row.
+`Shopsys\AdministrationBundle\Component\Datagrid\Transform\BatchLoadedRowTransformFactory` creates a transform that loads the data of all rows of the page in one query on the first call and serves the following rows from memory.
+Rows the loader returns nothing for get `null`.
+When the datagrid uses another identifier than `id` (`$datagrid->setIdentifier()`), pass it as the last argument of both factory methods.
+
+```php
+public function __construct(
+    private readonly BatchLoadedRowTransformFactory $batchLoadedRowTransformFactory,
+    private readonly AdvertFacade $advertFacade,
+    private readonly ClosedDayFacade $closedDayFacade,
+    private readonly CustomerUserFacade $customerUserFacade,
+) {
+}
+
+protected function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        // the value is the entity loaded for the row (indexed by its identifier automatically)
+        ->add('preview', [
+            'label' => t('Preview'),
+            'virtual' => true,
+            'transform' => $this->batchLoadedRowTransformFactory->createFromEntitiesLoader(
+                $this->advertFacade->getByIds(...),
+            ),
+            'template' => '@ShopsysAdministration/content/advert/grid/preview.html.twig',
+        ])
+        // the second closure maps the loaded entity to the displayed value
+        ->add('excludedStores', [
+            'label' => t('Excluded stores'),
+            'virtual' => true,
+            'transform' => $this->batchLoadedRowTransformFactory->createFromEntitiesLoader(
+                $this->closedDayFacade->getByIdsWithEagerLoadedExcludedStores(...),
+                static fn (ClosedDay $closedDay): array => $closedDay->getExcludedStores(),
+            ),
+        ])
+        // for values that are not entities, the loader returns them already indexed by the row identifier
+        ->add('customerEmails', [
+            'visible' => false,
+            'virtual' => true,
+            'transform' => $this->batchLoadedRowTransformFactory->createFromIndexedLoader(
+                $this->customerUserFacade->getEmailsOfCustomerUsersIndexedBySalesRepresentativeId(...),
+            ),
+        ]);
+}
 ```

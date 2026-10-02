@@ -125,20 +125,25 @@ class CustomerUserRepository
     }
 
     /**
-     * @return string[]
+     * @param int[] $salesRepresentativeIds
+     * @return array<int, string[]>
      */
-    public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array
+    public function getEmailsOfCustomerUsersIndexedBySalesRepresentativeId(array $salesRepresentativeIds): array
     {
-        $customers = $this->getCustomerUserRepository()
-            ->createQueryBuilder('c')
-            ->select('c')
-            ->where('c.salesRepresentative = :salesRepresentativeId')
-            ->setParameter('salesRepresentativeId', $salesRepresentativeId)
+        $rows = $this->getCustomerUserRepository()
+            ->createQueryBuilder('u')
+            ->select('IDENTITY(u.salesRepresentative) AS salesRepresentativeId, u.email')
+            ->where('u.salesRepresentative IN (:salesRepresentativeIds)')
+            ->setParameter('salesRepresentativeIds', $salesRepresentativeIds)
             ->getQuery()
             ->getArrayResult();
 
-        return array_map(function ($item) {
-            return $item['email'];
-        }, $customers);
+        $emailsIndexedBySalesRepresentativeId = array_fill_keys($salesRepresentativeIds, []);
+
+        foreach ($rows as $row) {
+            $emailsIndexedBySalesRepresentativeId[(int)$row['salesRepresentativeId']][] = $row['email'];
+        }
+
+        return $emailsIndexedBySalesRepresentativeId;
     }
 }
