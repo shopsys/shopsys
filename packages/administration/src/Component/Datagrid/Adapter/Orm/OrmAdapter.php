@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Override;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -54,11 +55,9 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
         $this->proxyQuery->addSelect($identificationName);
 
         foreach ($fields as $field) {
-            if ($field->getSelectProperty() === null) {
-                continue;
+            foreach ($field->getSelectProperties() as $selectProperty) {
+                $this->proxyQuery->addSelect($selectProperty);
             }
-
-            $this->proxyQuery->addSelect($field->getSelectProperty());
         }
 
         return new DatagridDataSource(
@@ -66,15 +65,44 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface
             $identificationName,
             function ($row, $results) use ($fields) {
                 foreach ($fields as $field) {
-                    if ($field->getTransform() !== null) {
-                        $row[$field->getName()] = call_user_func($field->getTransform(), $row[$field->getName()] ?? null, $row, $results);
+                    if ($field->getTransform() === null && !$field->hasMultipleProperties()) {
+                        // the grid reads the value directly from the selected property
+                        continue;
                     }
+
+                    $row[$field->getName()] = $this->computeFieldValue($field, $row, $results);
                 }
 
                 return $row;
             },
             $this->hintsHelper->getDefaultHints(),
         );
+    }
+
+    /**
+     * @param mixed[] $row
+     * @param mixed[][] $results
+     */
+    private function computeFieldValue(FieldDescriptor $field, array $row, array $results): mixed
+    {
+        $valuesByProperty = [];
+
+        foreach ($field->getProperties() as $property) {
+            $valuesByProperty[$property] = $row[$property] ?? null;
+        }
+
+        $value = $field->hasMultipleProperties() ? $valuesByProperty : reset($valuesByProperty);
+
+        if ($field->getTransform() !== null) {
+            return call_user_func($field->getTransform(), $value, $row, $results);
+        }
+
+        if (is_array($value) && $field->getTemplate() === null) {
+            // without a template there is nothing to render the combined values with, so they are joined into one string
+            return implode(' ', array_filter($value, static fn (mixed $propertyValue) => $propertyValue !== null && $propertyValue !== ''));
+        }
+
+        return $value;
     }
 
     /**

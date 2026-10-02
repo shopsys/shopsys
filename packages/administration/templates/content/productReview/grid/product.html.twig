@@ -1,0 +1,8 @@
+{{ value.productName }}
+{% if value['product.id'] is not null %}
+    <a href="{{ url('admin_product_edit', { id: value['product.id'] }) }}">
+        {{ ux_icon('forward-page', {class: 'icon-sm'}) }}
+    </a>
+{% endif %}
+
+<div class="small text-secondary">{{ value.catnum }}</div>

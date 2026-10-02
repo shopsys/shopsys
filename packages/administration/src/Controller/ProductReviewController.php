@@ -88,26 +88,14 @@ class ProductReviewController extends AbstractCrudController
             ->add('createdAt', [
                 'label' => t('Date and time'),
             ])
-            ->add('productName', [
+            ->add('product', [
                 'label' => t('Product'),
-                'template' => '@ShopsysAdministration/content/productReview/grid/productName.html.twig',
+                'property' => ['productName', 'catnum', 'product.id'],
+                'template' => '@ShopsysAdministration/content/productReview/grid/product.html.twig',
             ])
-            ->add('productId', [
-                'visible' => false,
-                'property' => 'product.id',
-            ])
-            ->add('customerUserId', [
-                'visible' => false,
-                'property' => 'customerUser.id',
-            ])
-            ->add('catnum', [
-                'visible' => false,
-            ])
-            ->add('firstName', [
-                'visible' => false,
-            ])
-            ->add('lastName', [
+            ->add('reviewer', [
                 'label' => t('Reviewer'),
+                'property' => ['lastName', 'firstName', 'customerUser.id'],
                 'template' => '@ShopsysAdministration/content/productReview/grid/reviewer.html.twig',
             ])
             ->add('rating', [

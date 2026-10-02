@@ -67,6 +67,16 @@ class Column
         return $this->orderSourceColumnName;
     }
 
+    /**
+     * Allows ordering by a different data source column than the one the displayed value is read from
+     */
+    public function setOrderSourceColumnName(string $orderSourceColumnName): self
+    {
+        $this->orderSourceColumnName = $orderSourceColumnName;
+
+        return $this;
+    }
+
     public function getHelp(): ?string
     {
         return $this->help;
