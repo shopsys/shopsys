@@ -16,7 +16,7 @@ use SortDirection;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository)
  * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder(\Doctrine\ORM\QueryBuilder $productsQueryBuilder, string $locale)
  */
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
@@ -117,7 +117,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), SortDirection::Ascending)
+            ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {

@@ -46,19 +46,22 @@ class FlagRepository
             }
         }
 
-        return $this->sortFlagsById($allFlags);
+        return $this->sortFlagsByPosition($allFlags);
     }
 
     /**
      * @param \App\Model\Product\Flag\Flag[][] $flagsIndexedByKeyAndId
      * @return \App\Model\Product\Flag\Flag[][]
      */
-    private function sortFlagsById(array $flagsIndexedByKeyAndId): array
+    private function sortFlagsByPosition(array $flagsIndexedByKeyAndId): array
     {
         $allFlagsValues = [];
 
         foreach ($flagsIndexedByKeyAndId as $flagsIndexedById) {
-            ksort($flagsIndexedById);
+            uasort(
+                $flagsIndexedById,
+                static fn (Flag $firstFlag, Flag $secondFlag) => $firstFlag->getPosition() <=> $secondFlag->getPosition(),
+            );
             $allFlagsValues[] = array_values($flagsIndexedById);
         }
 
