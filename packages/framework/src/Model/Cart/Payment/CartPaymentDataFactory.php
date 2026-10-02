@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class CartPaymentDataFactory
 {
@@ -24,22 +24,23 @@ class CartPaymentDataFactory
     {
         $domainId = $this->domain->getId();
         $payment = $this->paymentFacade->getEnabledOnDomainByUuid($paymentUuid, $domainId);
-        $watchedPriceWithVat = $this->getPaymentWatchedPriceWithVat($domainId, $cart, $payment);
+        $watchedPrice = $this->getPaymentWatchedPrice($domainId, $cart, $payment);
 
         $cartPaymentData = new CartPaymentData();
         $cartPaymentData->payment = $payment;
-        $cartPaymentData->watchedPrice = $watchedPriceWithVat;
+        $cartPaymentData->watchedPrice = $watchedPrice->getPriceWithVat();
+        $cartPaymentData->watchedPriceWithoutVat = $watchedPrice->getPriceWithoutVat();
         $cartPaymentData->goPayBankSwift = $goPayBankSwift;
 
         return $cartPaymentData;
     }
 
-    protected function getPaymentWatchedPriceWithVat(int $domainId, Cart $cart, Payment $payment): Money
+    protected function getPaymentWatchedPrice(int $domainId, Cart $cart, Payment $payment): PriceInterface
     {
         return $this->paymentPriceProvider->getPaymentPrice(
             $cart,
             $payment,
             $this->domain->getDomainConfigById($domainId),
-        )->getPriceWithVat();
+        );
     }
 }

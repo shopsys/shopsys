@@ -101,7 +101,7 @@ class TransportAndPaymentWatcherFacade
             $this->transportValidationFacade->checkTransportPriceAndWeightLimit($transport, $cart);
         } catch (TransportPriceChangedException $exception) {
             $this->cartWithModificationsResult->setTransportPriceChanged(true);
-            $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice()->getPriceWithVat());
+            $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice());
         } catch (TransportPriceNotFoundException) {
             $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
             $this->cartTransportFacade->unsetCartTransport($cart);
@@ -114,7 +114,7 @@ class TransportAndPaymentWatcherFacade
             $this->paymentValidationFacade->checkPaymentPrice($payment, $cart);
         } catch (PaymentPriceChangedException $exception) {
             $this->cartWithModificationsResult->setPaymentPriceChanged(true);
-            $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice()->getPriceWithVat());
+            $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice());
         }
     }
 

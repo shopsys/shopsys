@@ -13,5 +13,7 @@ class CartPaymentData
 
     public Money $watchedPrice;
 
+    public Money $watchedPriceWithoutVat;
+
     public ?string $goPayBankSwift;
 }

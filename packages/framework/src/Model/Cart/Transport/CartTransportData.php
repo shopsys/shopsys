@@ -13,5 +13,7 @@ class CartTransportData
 
     public Money $watchedPrice;
 
+    public Money $watchedPriceWithoutVat;
+
     public ?string $pickupPlaceIdentifier;
 }

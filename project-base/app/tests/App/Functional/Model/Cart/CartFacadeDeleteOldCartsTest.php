@@ -137,7 +137,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $product = $this->getProductById(1);
         $cart = $cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Money::zero(), Money::zero());
 
         $this->em->persist($cartItem);
         $this->em->flush();

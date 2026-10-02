@@ -37,10 +37,10 @@ class CartTest extends TestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero(), Money::zero());
         $cart->addItem($cartItem1);
 
-        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
+        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero(), Money::zero());
         $cart->addItem($cartItem2);
 
         $this->assertSame(2, $cart->getItemsCount());
@@ -64,7 +64,7 @@ class CartTest extends TestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Money::zero(), Money::zero());
         $cart->addItem($cartItem);
 
         $this->assertFalse($cart->isEmpty());
@@ -96,7 +96,7 @@ class CartTest extends TestCase
 
     private function createCartItemWithId(Cart $cart, Product $product, int $id): CartItem
     {
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Money::zero(), Money::zero());
 
         $idReflectionProperty = new ReflectionProperty(CartItem::class, 'id');
         $idReflectionProperty->setValue($cartItem, $id);
@@ -132,9 +132,9 @@ class CartTest extends TestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero(), Money::zero());
         $cart->addItem($cartItem1);
-        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
+        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero(), Money::zero());
         $cart->addItem($cartItem2);
 
         $cart->clean();
