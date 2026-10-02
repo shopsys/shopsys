@@ -131,7 +131,7 @@ describe('Product Add To Cart Tests', () => {
     it('[Product Variant Add] should add variant product to cart from product detail', function () {
         visitEntityByUuid('product', staticData.products.televisionPhilipsM.uuid);
 
-        addVariantToCartFromMainVariantDetail(staticData.products.philips54CRT.catnum);
+        addVariantToCartFromMainVariantDetail(staticData.products.philips100.catnum);
         checkPopupIsVisible();
         loseFocus();
         cy.waitForStableAndInteractiveDOM();

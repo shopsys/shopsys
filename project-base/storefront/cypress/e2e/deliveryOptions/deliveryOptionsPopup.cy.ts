@@ -57,16 +57,16 @@ describe('Delivery Options Popup Tests', () => {
             capture: TIDs.layout_popup,
         });
 
-        chooseVariantInDeliveryOptionsPopup(staticData.products.philips54CRT.uuid);
-        checkVariantSelectShowsProductName(staticData.products.philips54CRT.name);
+        chooseVariantInDeliveryOptionsPopup(staticData.products.philips100.uuid);
+        checkVariantSelectShowsProductName(staticData.products.philips100.name);
         checkDeliveryOptionsPanelsAreVisible();
     });
 
     it('[Main Variant] should open delivery options with the clicked variant preselected', () => {
         visitEntityByUuid('product', staticData.products.televisionPhilipsM.uuid);
 
-        openDeliveryOptionsPopupUsingVariantAvailability(staticData.products.philips54CRT.catnum);
-        checkVariantSelectShowsProductName(staticData.products.philips54CRT.name);
+        openDeliveryOptionsPopupUsingVariantAvailability(staticData.products.philips100.catnum);
+        checkVariantSelectShowsProductName(staticData.products.philips100.name);
         checkDeliveryOptionsPanelsAreVisible();
     });
 });
