@@ -12,7 +12,6 @@ use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -31,6 +30,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Datagrid
 {
+    /**
+     * Separates the properties a field combining multiple properties is ordered by in the order source column of the grid
+     */
+    public const string ORDER_PROPERTIES_SEPARATOR = ',';
+
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection<string, \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor>
      */
@@ -349,7 +353,7 @@ final class Datagrid
 
             if ($field->hasMultipleProperties()) {
                 // the combined value is stored under the field name, so ordering must target the underlying properties instead
-                $column->setOrderSourceColumnName(implode(DatagridDataSource::ORDER_PROPERTIES_SEPARATOR, $field->getProperties()));
+                $column->setOrderSourceColumnName(implode(self::ORDER_PROPERTIES_SEPARATOR, $field->getProperties()));
             }
         }
     }

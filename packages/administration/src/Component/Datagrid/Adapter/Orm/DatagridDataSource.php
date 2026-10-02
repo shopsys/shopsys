@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 
 use Doctrine\ORM\QueryBuilder;
 use Override;
+use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Doctrine\DatagridHydrator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -13,10 +14,8 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
 {
-    public const string ORDER_PROPERTIES_SEPARATOR = ',';
-
     /**
-     * Fields combining multiple properties pass them as a comma-separated list (see Datagrid::createView()),
+     * Fields combining multiple properties pass them as a list separated by Datagrid::ORDER_PROPERTIES_SEPARATOR,
      * the rows are then ordered by all of them in the given order
      */
     #[Override]
@@ -27,7 +26,7 @@ final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
     ): void {
         $queryBuilder->resetDQLPart('orderBy');
 
-        foreach (explode(self::ORDER_PROPERTIES_SEPARATOR, $orderSourceColumnName) as $orderProperty) {
+        foreach (explode(Datagrid::ORDER_PROPERTIES_SEPARATOR, $orderSourceColumnName) as $orderProperty) {
             $queryBuilder->addOrderBy(
                 str_replace('.', '__', $orderProperty),
                 $this->resolveSortDirection($orderDirection),
