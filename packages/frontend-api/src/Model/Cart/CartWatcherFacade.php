@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class CartWatcherFacade
 {
@@ -41,6 +42,7 @@ class CartWatcherFacade
         protected readonly GiftCartFacade $giftCartFacade,
         protected readonly AdditionalServiceFacade $additionalServiceFacade,
         protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
     ) {
     }
 
@@ -94,7 +96,12 @@ class CartWatcherFacade
             $cart->removeItemById($cartItem->getId());
             $this->em->remove($cartItem);
 
-            $this->cartWithModificationsResult->addNoLongerListableCartItem($cartItem);
+            // a product that is not visible is not exported to Elasticsearch, so it cannot be reported as a cart item
+            if ($this->isProductOfCartItemVisible($cartItem)) {
+                $this->cartWithModificationsResult->addNoLongerListableCartItem($cartItem);
+            } else {
+                $this->cartWithModificationsResult->setCartHasRemovedProducts();
+            }
         }
     }
 
@@ -314,5 +321,14 @@ class CartWatcherFacade
             $promoCodeDiscountPrice = $orderData->getPromoCodeDiscountPrice();
             $this->cartWithModificationsResult->addPromoCode($promoCode, $promoCodeDiscountPrice);
         }
+    }
+
+    protected function isProductOfCartItemVisible(CartItem $cartItem): bool
+    {
+        return $this->productVisibilityFacade->getProductVisibility(
+            $cartItem->getProduct(),
+            $this->currentCustomerUser->getPricingGroup(),
+            $this->domain->getId(),
+        )->isVisible();
     }
 }

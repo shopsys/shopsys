@@ -246,6 +246,14 @@ services:
         arguments:
             $filesBatchLoader: '@first_file_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFieldsTypeDecoratorListener:
+        arguments:
+            $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
+            $defaultFieldResolver: '@overblog_graphql.default_field_resolver'
+        tags:
+            # must run after Overblog\GraphQLBundle\EventListener\TypeDecoratorListener (priority 0) has applied the resolver maps
+            - { name: kernel.event_listener, event: graphql.type_loaded, method: onTypeLoaded, priority: -10 }
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
             $filesBatchLoader: '@files_batch_loader'
