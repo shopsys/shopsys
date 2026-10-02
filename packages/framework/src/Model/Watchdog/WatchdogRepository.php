@@ -8,10 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductFullNameDqlHelper;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
@@ -69,13 +71,13 @@ class WatchdogRepository
     {
         return $this->getQueryBuilder()
             ->select('IDENTITY(w.product) as productId')
-            ->addSelect('pt.name as productName')
+            ->addSelect(ExtendedClassNameResolver::resolve(ProductFullNameDqlHelper::class)::getDqlExpression('pt') . ' as productName')
             ->addSelect('p.catnum as productCatnum')
             ->addSelect('COUNT(w.product) as watchdogCount')
             ->join('w.product', 'p')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $locale)
-            ->groupBy('w.product, pt.name, p.catnum');
+            ->groupBy('w.product, pt.namePrefix, pt.name, pt.nameSuffix, p.catnum');
     }
 
     public function getWatchdogsByProductQueryBuilder(Product $product): QueryBuilder

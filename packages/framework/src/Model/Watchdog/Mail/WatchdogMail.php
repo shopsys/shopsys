@@ -71,7 +71,7 @@ class WatchdogMail
     protected function getSubjectVariablesReplacements(Product $product, string $locale): array
     {
         return [
-            self::VARIABLE_PRODUCT_NAME => fn () => $this->mailerHelper->escapeOptionalString($product->getName($locale)),
+            self::VARIABLE_PRODUCT_NAME => fn () => $this->mailerHelper->escapeOptionalString($product->getFullName($locale)),
         ];
     }
 

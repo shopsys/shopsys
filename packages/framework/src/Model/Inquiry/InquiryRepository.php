@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Inquiry\Exception\InquiryNotFoundException;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
+use Shopsys\FrameworkBundle\Model\Product\ProductFullNameDqlHelper;
 use SortDirection;
 
 class InquiryRepository
@@ -41,7 +42,7 @@ class InquiryRepository
         return $this->getInquiryRepository()
             ->createQueryBuilder('i')
             ->addSelect('IDENTITY(i.product) as productId')
-            ->addSelect('pt.name as productName')
+            ->addSelect(ExtendedClassNameResolver::resolve(ProductFullNameDqlHelper::class)::getDqlExpression('pt') . ' as productName')
             ->addSelect('CONCAT(i.lastName, \' \', i.firstName) as fullName')
             ->addSelect('CONCAT(i.companyName, \' (\', i.companyNumber, \')\') as company')
             ->addSelect(ExtendedClassNameResolver::resolve(PhoneNumberSearchHelper::class)::getDqlExpression('i') . ' as telephone')
