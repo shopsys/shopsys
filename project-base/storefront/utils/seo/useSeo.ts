@@ -1,56 +1,73 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
+import { MetaRobotsContent } from 'types/seo';
 import { getImageAlt } from 'utils/imageAltText';
-import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
+import { isNoindexMetaRobots } from 'utils/seo/isNoindexMetaRobots';
+import { resolveMetaRobots } from 'utils/seo/resolveMetaRobots';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
+import { useSeoPage } from 'utils/seo/useSeoPage';
 
 type UseSeoHookProps = {
+    seo?: TypeSeoAttributesFragment | null;
     defaultTitle?: string | null;
     defaultDescription?: string | null;
+    defaultMetaRobots?: MetaRobotsContent;
     canonicalQueryParams?: CanonicalQueryParameters;
+    paginationTotalCount?: number;
+    paginationPageSize?: number;
 };
 
-export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps) => {
+/**
+ * Resolves the SEO tags of the page. The SEO page (override for the URL) wins, then the SEO attributes of the entity
+ * (product, category, ...) and finally the defaults passed by the page:
+ * - title: SEO page → seo.title → seo.h1 → defaultTitle (usually the name of the entity), the current page
+ *   information of a paginated list is appended to whichever title wins
+ * - description: SEO page → seo.metaDescription → plain text of defaultDescription (the HTML description of the
+ *   entity, the perex of a blog article, ...) truncated to whole words
+ */
+export const useSeo = ({
+    seo,
+    defaultTitle,
+    defaultDescription,
+    defaultMetaRobots,
+    canonicalQueryParams,
+    paginationTotalCount,
+    paginationPageSize,
+}: UseSeoHookProps) => {
     const { url } = useDomainConfig();
     const router = useRouter();
 
-    const pageSlug = extractSeoPageSlugFromUrl(router.asPath, url);
-
     const [{ data: settingsData }] = useSettingsQuery();
-    const [{ data: seoPageData }] = useSeoPageQuery({
-        variables: {
-            pageSlug: pageSlug!,
-        },
-        pause: !pageSlug,
-    });
+    const seoPage = useSeoPage();
 
-    const preferredTitle = seoPageData?.seoPage?.title;
-    const preferredDescription = seoPageData?.seoPage?.metaDescription;
-    const preferredCanonicalUrl = seoPageData?.seoPage?.canonicalUrl;
-    const preferredOgTitle = seoPageData?.seoPage?.ogTitle;
-    const preferredOgDescription = seoPageData?.seoPage?.ogDescription;
-    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.url;
+    const titleSuffix = settingsData?.settings?.seo.titleAddOn;
+    const title = useHeadingWithPagination(
+        seoPage?.seo.title || seo?.title || seo?.h1 || defaultTitle,
+        paginationTotalCount,
+        paginationPageSize,
+    );
 
-    const fallbackTitle = settingsData?.settings?.seo.title;
-    const fallbackDescription = settingsData?.settings?.seo.metaDescription;
-    const fallbackTitleSuffix = settingsData?.settings?.seo.titleAddOn;
-
-    const canonicalUrl = preferredCanonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
-    const title = preferredTitle ?? defaultTitle ?? fallbackTitle ?? '';
+    const metaRobots = resolveMetaRobots(seoPage?.seo.metaRobots, seo?.metaRobots, defaultMetaRobots);
+    const canonicalUrl =
+        seoPage?.seo.canonicalUrl || seo?.canonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
 
     return {
-        title,
-        titleSuffix: fallbackTitleSuffix ?? '',
-        description: preferredDescription ?? defaultDescription ?? fallbackDescription ?? '',
-        ogTitle: preferredOgTitle,
-        ogDescription: preferredOgDescription,
-        ogImageUrl: preferredOgImageUrl,
-        ogImageAlt: preferredOgImageUrl
-            ? getImageAlt(seoPageData?.seoPage?.ogImage?.name, getImageAlt(preferredOgTitle, title))
-            : undefined,
-        hreflangLinks: seoPageData?.seoPage?.hreflangLinks,
+        title: title ?? '',
+        titleSuffix: titleSuffix ?? '',
+        description: seoPage?.seo.metaDescription || getMetaDescription(seo?.metaDescription, defaultDescription),
+        metaRobots,
+        isNoindex: isNoindexMetaRobots(metaRobots),
         canonicalUrl,
+        ogTitle: seoPage?.ogTitle,
+        ogDescription: seoPage?.ogDescription,
+        ogImageUrl: seoPage?.ogImage?.url,
+        ogImageAlt: seoPage?.ogImage?.url
+            ? getImageAlt(seoPage.ogImage.name, getImageAlt(seoPage.ogTitle, title ?? ''))
+            : undefined,
+        hreflangLinks: seoPage?.hreflangLinks,
     };
 };

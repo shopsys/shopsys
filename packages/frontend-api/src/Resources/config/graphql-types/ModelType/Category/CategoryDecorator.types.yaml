@@ -7,6 +7,7 @@ CategoryDecorator:
             - 'Breadcrumb'
             - 'Slug'
             - 'ProductListable'
+            - 'Seo'
         fields:
             id:
                 type: "Int!"
@@ -61,15 +62,9 @@ CategoryDecorator:
                 type: "[Product!]!"
                 description: "Best selling products"
                 resolve: '@=query("bestSellingProductsByCategoryQuery", value)'
-            seoH1:
-                type: "String"
-                description: "Seo first level heading of category"
-            seoTitle:
-                type: "String"
-                description: "Seo title of category"
-            seoMetaDescription:
-                type: "String"
-                description: "Seo meta description of category"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the category page"
             categoryHierarchy:
                 type: "[CategoryHierarchyItem!]!"
                 description: "All parent category names with their IDs and UUIDs"

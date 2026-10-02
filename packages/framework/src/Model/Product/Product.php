@@ -838,9 +838,7 @@ class Product extends AbstractTranslatableEntity
     {
         foreach ($this->domains as $productDomain) {
             $domainId = $productDomain->getDomainId();
-            $productDomain->setSeoTitle($productData->seoTitles[$domainId]);
-            $productDomain->setSeoH1($productData->seoH1s[$domainId]);
-            $productDomain->setSeoMetaDescription($productData->seoMetaDescriptions[$domainId]);
+            $productDomain->getSeoAttributes()->edit($productData->seo[$domainId]);
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
             $productDomain->setVat($productData->productInputPricesByDomain[$domainId]->vat);
@@ -896,27 +894,11 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoH1(int $domainId)
+    public function getSeoAttributes(int $domainId)
     {
-        return $this->getProductDomain($domainId)->getSeoH1();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
-    {
-        return $this->getProductDomain($domainId)->getSeoTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getProductDomain($domainId)->getSeoMetaDescription();
+        return $this->getProductDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -964,7 +946,7 @@ class Product extends AbstractTranslatableEntity
 
     protected function createDomains(ProductData $productData): void
     {
-        $domainIds = array_keys($productData->seoTitles);
+        $domainIds = array_keys($productData->seo);
 
         foreach ($domainIds as $domainId) {
             $productDomain = new ProductDomain($this, $domainId);

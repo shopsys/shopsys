@@ -25,10 +25,15 @@ class SeoPageTest extends GraphQlTestCase
         $seoPage = $this->getReference($pageSlug, SeoPage::class);
 
         $domainId = $this->domain->getId();
+        $seoAttributes = $seoPage->getSeoAttributes($domainId);
 
-        self::assertEquals($seoPage->getSeoTitle($domainId), $data['title']);
-        self::assertEquals($seoPage->getSeoMetaDescription($domainId), $data['metaDescription']);
-        self::assertEquals($seoPage->getCanonicalUrl($domainId), $data['canonicalUrl']);
+        self::assertSame([
+            'title' => $seoAttributes->getTitle(),
+            'metaDescription' => $seoAttributes->getMetaDescription(),
+            'h1' => $seoAttributes->getH1(),
+            'metaRobots' => $seoAttributes->getMetaRobots(),
+            'canonicalUrl' => $seoAttributes->getCanonicalUrl(),
+        ], $data['seo']);
         self::assertEquals($seoPage->getSeoOgTitle($domainId), $data['ogTitle']);
         self::assertEquals($seoPage->getSeoOgDescription($domainId), $data['ogDescription']);
     }

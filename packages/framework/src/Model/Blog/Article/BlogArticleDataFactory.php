@@ -7,15 +7,17 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class BlogArticleDataFactory
 {
     public function __construct(
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
+        protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
     ) {
     }
 
@@ -40,9 +42,8 @@ class BlogArticleDataFactory
         $blogArticleData->image = $this->imageUploadDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $blogArticleData->seoMetaDescriptions[$domainId] = null;
-            $blogArticleData->seoTitles[$domainId] = null;
-            $blogArticleData->seoH1s[$domainId] = null;
+            $blogArticleData->seo[$domainId] = $this->seoAttributesDataFactory->create();
+            $blogArticleData->urls[$domainId] = $this->urlListDataFactory->create();
             $blogArticleData->enabled[$domainId] = true;
             $blogArticleData->statuses[$domainId] = BlogArticleStatusEnum::STATUS_DRAFT;
             $blogArticleData->publishDates[$domainId] = null;
@@ -72,15 +73,14 @@ class BlogArticleDataFactory
 
         $blogArticleData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogArticle);
 
+        $blogArticleData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_blogarticle_detail', $blogArticle->getId());
+
         foreach ($this->domain->getAllIds() as $domainId) {
-            $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticle->getSeoMetaDescription($domainId);
-            $blogArticleData->seoTitles[$domainId] = $blogArticle->getSeoTitle($domainId);
-            $blogArticleData->seoH1s[$domainId] = $blogArticle->getSeoH1($domainId);
+            $blogArticleData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
+                $blogArticle->getSeoAttributes($domainId),
+            );
             $blogArticleData->statuses[$domainId] = $blogArticle->getStatus($domainId);
             $blogArticleData->publishDates[$domainId] = $blogArticle->getPublishDate($domainId);
-
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
-            $blogArticleData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
     }
 

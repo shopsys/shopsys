@@ -1,0 +1,9 @@
+{% set attr = (attr|default({}))|merge({class: ('alert alert-' ~ level ~ ' ' ~ attr.class|default(''))|trim, role: 'alert'}) %}
+<div{% for attrName, attrValue in attr %}{% if attrValue is same as(true) %} {{ attrName }}="{{ attrName }}"{% elseif attrValue is not same as(false) %} {{ attrName }}="{{ attrValue }}"{% endif %}{% endfor %}>
+    <div class="alert-icon">
+        {{ ux_icon(level, {class: 'icon alert-icon'}) }}
+    </div>
+    <div>
+        {{ message|raw }}
+    </div>
+</div>

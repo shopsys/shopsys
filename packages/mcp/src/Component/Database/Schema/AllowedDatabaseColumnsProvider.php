@@ -100,6 +100,10 @@ class AllowedDatabaseColumnsProvider
      */
     protected function getColumnNamesByFieldName(ClassMetadata $classMetadata, string $fieldName): array
     {
+        if (isset($classMetadata->embeddedClasses[$fieldName])) {
+            return $this->getEmbeddedColumnNames($classMetadata, $fieldName);
+        }
+
         if ($classMetadata->hasField($fieldName)) {
             return [$this->normalizeColumnName($classMetadata->getColumnName($fieldName))];
         }
@@ -122,6 +126,24 @@ class AllowedDatabaseColumnsProvider
             }
 
             $columnNames[] = $this->normalizeColumnName($joinColumn->name);
+        }
+
+        return $columnNames;
+    }
+
+    /**
+     * Exposing an embedded property exposes the columns of all fields inlined from the embeddable
+     *
+     * @return array<int, string>
+     */
+    protected function getEmbeddedColumnNames(ClassMetadata $classMetadata, string $fieldName): array
+    {
+        $columnNames = [];
+
+        foreach ($classMetadata->getFieldNames() as $embeddedFieldName) {
+            if (str_starts_with($embeddedFieldName, $fieldName . '.')) {
+                $columnNames[] = $this->normalizeColumnName($classMetadata->getColumnName($embeddedFieldName));
+            }
         }
 
         return $columnNames;

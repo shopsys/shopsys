@@ -88,9 +88,6 @@ msgstr "<a href=\"%url%\">Článok so zásadami recenzií pre doménu %domainNam
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Sviatky pre rok %year% nie sú nastavené.</a>"
 
-msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
-msgstr "<a href=\"%url%\">SEO informácie pre hlavnú stránku domény %domainName% nie sú úplne nastavené.</a>"
-
 msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr "<a href=\"%url%\">Doprava alebo platba nie je nastavená pre doménu %domainName%.</a>"
 
@@ -984,6 +981,9 @@ msgstr "Zamietnuté bankou - nesprávne číslo karty"
 
 msgid "Declined in the 3DS server"
 msgstr "Zamietnuté na 3DS serveri"
+
+msgid "Default (not set)"
+msgstr "Predvolené (nenastavené)"
 
 msgid "Default VAT rate"
 msgstr "Predvolená sadzba DPH"
@@ -1891,9 +1891,6 @@ msgstr "Má akciu X+Y zdarma"
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
 
-msgid "Headline"
-msgstr "Nadpis"
-
 msgid "Heureka"
 msgstr "Heureka"
 
@@ -2046,6 +2043,9 @@ msgstr "Návod"
 
 msgid "Integrations"
 msgstr "Integrácie"
+
+msgid "Internal name of the page for the administration, it is not displayed on the storefront."
+msgstr "Interný názov stránky pre administráciu, na storefronte sa nezobrazuje."
 
 msgid "Internal note"
 msgstr "Interná poznámka"
@@ -2202,6 +2202,9 @@ msgstr "Text správy"
 
 msgid "Meta description"
 msgstr "Meta popis"
+
+msgid "Meta robots"
+msgstr "Meta robots"
 
 msgid "Min duration"
 msgstr "Minimálne trvanie"
@@ -2472,6 +2475,9 @@ msgstr "Zobrazujú sa iba produkty s dátumom začatia predaja nie starším ako
 
 msgid "Only products with active special price from a price list be displayed"
 msgstr "Budú zobrazené iba produkty s aktívnou špeciálnou cenou z cenníka"
+
+msgid "Open Graph"
+msgstr "Open Graph"
 
 msgid "Open Graph description"
 msgstr "Open Graph popis"
@@ -3403,9 +3409,6 @@ msgstr "Zaslať e-mail pre reset hesla"
 msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr "Odesílanie e-mailov je vypnuté, z aplikácie nebude odoslaný žiadny e-mail."
 
-msgid "Seo"
-msgstr "Seo"
-
 msgid "Service type for Zboží.cz"
 msgstr "Typ služby pre Zboží.cz"
 
@@ -3643,6 +3646,12 @@ msgstr "Termíny vyzdvihnutia sa riadia týždennou otváracou dobou <a href=\"%
 msgid "The selected country is not valid."
 msgstr "Vybraná krajina nie je platná."
 
+msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
+msgstr "Vybraná hodnota sa vždy použije tak, ako je. \"Predvolené (nenastavené)\" nechá rozhodnutie na storefronte, ktorý uplatní svoje pravidlá pre túto stránku, napr. noindex pre filtrované výpisy, košík alebo objednávku."
+
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity."
+msgstr "Slug musí zodpovedať konfigurácii stránky na storefronte, ak si nie ste zmenou istí, poraďte sa s vývojárom. Ak slug patrí inej entite, napr. článku, stránka používa SEO nastavenia tejto entity."
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové množstvá sú nastavené pre varianty produktu osobne."
 
@@ -3660,6 +3669,9 @@ msgstr "Táto mena nemôže byť odstránená, je nastavená ako predvolená ale
 
 msgid "This email was sent from the contact form located below the panel of categories."
 msgstr "Tento e-mail bol odoslaný z kontaktného formulára umiestneného pod panelom kategórií."
+
+msgid "This is a cross-domain canonical URL – it points to a different domain than the one being edited."
+msgstr "Toto je canonical URL smerujúca na inú doménu, než ktorú práve upravujete."
 
 msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
 msgstr "Toto sa používa na zoradenie parametrov v detaile produktu a zoradenie parametrov na vyhladavacej stránke pri použití Luigi's Box. Pre zoradenie parametrov vo filtri použite nastavenia v kategórii."
@@ -3769,14 +3781,8 @@ msgstr "Typ"
 msgid "URL"
 msgstr "URL"
 
-msgid "URL Settings"
-msgstr "Nastavenia URL"
-
 msgid "URL addresses"
 msgstr "URL adresy"
-
-msgid "URL settings"
-msgstr "Nastavenia URL"
 
 msgid "Unable to add"
 msgstr "Nemožno pridať"

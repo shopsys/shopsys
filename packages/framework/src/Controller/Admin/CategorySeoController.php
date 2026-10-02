@@ -272,10 +272,21 @@ class CategorySeoController extends AdminBaseController
         string $newCombinationsUrl,
         string $selfUrl,
     ): Response {
+        if ($selectedCategorySeoMixCombination === null) {
+            // saving the SEO mix is impossible without a selected combination anyway
+            throw $this->createNotFoundException('No SEO mix combination is selected.');
+        }
+
+        if (!in_array($selectedCategorySeoMixCombination->getDomainId(), $this->domain->getAdminEnabledDomainIds(), true)) {
+            // the domain ID comes from the client as a part of the selected combination JSON
+            throw $this->createNotFoundException(sprintf('Domain with ID "%s" is not enabled for the current administrator.', $selectedCategorySeoMixCombination->getDomainId()));
+        }
+
         $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixData, [
             'method' => 'POST',
             'new_combination_url' => $newCombinationsUrl,
-            'readyCategorySeoMix' => $selectedCategorySeoMixCombination !== null ? $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) : null,
+            'readyCategorySeoMix' => $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
+            'domain_id' => $selectedCategorySeoMixCombination->getDomainId(),
         ]);
 
         $readyCategorySeoCombinationFormType->handleRequest($request);

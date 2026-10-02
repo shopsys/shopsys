@@ -6,6 +6,7 @@ BlogCategoryDecorator:
             - 'Breadcrumb'
             - 'Slug'
             - 'Hreflang'
+            - 'Seo'
         fields:
             uuid:
                 type: "Uuid!"
@@ -22,15 +23,9 @@ BlogCategoryDecorator:
             children:
                 type: "[BlogCategory!]!"
                 description: "The blog category children"
-            seoTitle:
-                type: "String"
-                description: "The blog category SEO title"
-            seoMetaDescription:
-                type: "String"
-                description: "The blog category SEO meta description"
-            seoH1:
-                type: "String"
-                description: "The blog category SEO H1 heading"
+            seo:
+                type: "SeoAttributes!"
+                description: "SEO attributes of the blog category page"
             blogArticles:
                 type: "BlogArticleConnection!"
                 description: "Paginated blog articles of the given blog category"

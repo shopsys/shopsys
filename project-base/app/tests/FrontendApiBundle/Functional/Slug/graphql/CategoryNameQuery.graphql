@@ -1,0 +1,5 @@
+query CategoryNameQuery($urlSlug: String!) {
+    category(urlSlug: $urlSlug) {
+        name
+    }
+}

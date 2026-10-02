@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { isProductSellable } from 'utils/product/isProductSellable';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
-import { ProductDetailTitle } from './ProductDetailElements';
+import { ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
@@ -60,7 +60,8 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <VerticalStack gap="md">
                 <Webline className="flex flex-col gap-5">
                     <div className="order-1 vl:order-2 scroll-mt-fixed-header xl:mt-3" id={PRODUCT_VARIANTS_ID}>
-                        <ProductDetailTitle
+                        <ProductDetailHeading
+                            heading={product.seo.h1}
                             name={product.name}
                             namePrefix={product.namePrefix}
                             nameSuffix={product.nameSuffix}

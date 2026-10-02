@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributes;
 
 class LuigisBoxCategoryFeedItemTest extends TestCase
 {
@@ -58,6 +59,7 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
         $this->defaultCategoryStub = $this->createStub(Category::class);
         $this->defaultCategoryStub->method('getId')->willReturn(self::CATEGORY_ID);
         $this->defaultCategoryStub->method('getName')->willReturnMap([['en', self::CATEGORY_NAME]]);
+        $this->defaultCategoryStub->method('getSeoAttributes')->willReturn(new SeoAttributes());
 
         $this->stubCategoryUrl($this->defaultCategoryStub, $this->defaultDomain, self::CATEGORY_URL);
     }

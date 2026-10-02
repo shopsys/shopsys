@@ -2,6 +2,13 @@ query FlagQuery($uuid: Uuid, $firstProducts: Int!, $filter: ProductFilter) {
     flag(uuid: $uuid) {
         name
         rgbColor
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
         slug
         breadcrumb {
             name

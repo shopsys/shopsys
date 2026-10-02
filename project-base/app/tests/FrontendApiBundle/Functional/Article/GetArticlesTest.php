@@ -56,13 +56,13 @@ class GetArticlesTest extends GraphQlTestCase
                 $this->assertNotEmpty($edge['node']['text'], '#' . $index);
                 $this->assertStringNotContainsString('Morbi posuere', $edge['node']['text'], '#' . $index);
                 $this->assertStringNotContainsString('Lorem ipsum', $edge['node']['text'], '#' . $index);
-                $this->assertSame($edge['node']['name'], $edge['node']['seoH1'], '#' . $index);
+                $this->assertSame($edge['node']['name'], $edge['node']['seo']['h1'], '#' . $index);
                 $this->assertSame(
                     t('%articleTitle% | Demo shop', ['%articleTitle%' => $edge['node']['name']], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    $edge['node']['seoTitle'],
+                    $edge['node']['seo']['title'],
                     '#' . $index,
                 );
-                $this->assertNotEmpty($edge['node']['seoMetaDescription'], '#' . $index);
+                $this->assertNotEmpty($edge['node']['seo']['metaDescription'], '#' . $index);
             }
         }
     }
@@ -179,9 +179,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Job at Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -192,9 +189,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Cooperation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -205,9 +199,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('For press', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -314,9 +305,6 @@ class GetArticlesTest extends GraphQlTestCase
                     <a class="gjs-button-link button-link-position-center" title="More products" href="' . $categoryElectronicsUrl . '">
                         <div class="gjs-text-ckeditor text">More products</div>
                     </a>',
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Goods care', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -327,9 +315,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Installment plan', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -340,9 +325,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Complaint', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -353,9 +335,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Frequently Asked Questions FAQ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -366,9 +345,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Transport and payment', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -379,9 +355,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Withdrawal from contract', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -392,9 +365,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Terms and conditions of eshop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -405,9 +375,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Where to find us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -418,9 +385,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Department stores services', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -431,9 +395,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -444,9 +405,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -457,9 +415,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -470,9 +425,6 @@ class GetArticlesTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
             [
                 'name' => t('How we work with reviews', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -491,9 +443,6 @@ class GetArticlesTest extends GraphQlTestCase
                 'name' => t('How Dina chooses reliable electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'placement' => Article::PLACEMENT_NONE,
                 'text' => t('<p>Article text for search testing, the search phrase is &#34;Dina&#34;.</p>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
             ],
         ];
     }

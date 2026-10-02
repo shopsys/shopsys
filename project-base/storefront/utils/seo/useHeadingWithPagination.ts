@@ -3,24 +3,25 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
-export const useSeoTitleWithPagination = (
+/**
+ * Appends the current page information to a heading (document title or H1) of a paginated list
+ */
+export const useHeadingWithPagination = (
+    heading: string | null | undefined,
     totalCount: number | undefined,
-    name: string | null | undefined,
-    seoTitle?: string | null | undefined,
     pageSize: number = DEFAULT_PAGE_SIZE,
 ) => {
     const { t } = useTranslation();
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
-    const title = seoTitle || name;
 
     if (!totalCount || totalCount <= pageSize) {
-        return title;
+        return heading;
     }
 
     if (currentLoadMore > 0) {
         const totalPages = Math.ceil(totalCount / pageSize);
-        return `${title} ${t('page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}', {
+        return `${heading} ${t('page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}', {
             currentPage,
             totalPages,
             currentPageWithLoadMore: Math.min(currentPage + currentLoadMore, totalPages),
@@ -28,11 +29,11 @@ export const useSeoTitleWithPagination = (
     }
 
     if (currentPage > 1) {
-        return `${title} ${t('page {{ currentPage }} from {{ totalPages }}', {
+        return `${heading} ${t('page {{ currentPage }} from {{ totalPages }}', {
             currentPage,
             totalPages: Math.ceil(totalCount / pageSize),
         })}`;
     }
 
-    return title;
+    return heading;
 };

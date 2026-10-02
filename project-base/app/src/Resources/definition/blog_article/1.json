@@ -204,6 +204,13 @@
                 "analyzer": "edge_ngram_without_diacritic",
                 "search_analyzer": "full_without_diacritic"
             },
+            "seoMetaRobots": {
+                "type": "keyword"
+            },
+            "seoCanonicalUrl": {
+                "type": "keyword",
+                "index": false
+            },
             "seoH1": {
                 "type": "text",
                 "analyzer": "edge_ngram_without_diacritic",

@@ -209,9 +209,7 @@ export type TypeArticleEdge = {
 export type TypeArticleInterface = {
   breadcrumb: Array<TypeLink>;
   name: Scalars['String']['output'];
-  seoH1: Maybe<Scalars['String']['output']>;
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  seoTitle: Maybe<Scalars['String']['output']>;
+  seo: TypeSeoAttributes;
   slug: Scalars['String']['output'];
   text: Maybe<Scalars['String']['output']>;
   uuid: Scalars['Uuid']['output'];
@@ -247,7 +245,7 @@ export enum TypeArticlePlacementTypeEnum {
   None = 'none'
 }
 
-export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlogArticleInterface & TypeSlug & {
+export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlogArticleInterface & TypeSeo & TypeSlug & {
   __typename?: 'ArticleSite';
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
@@ -259,12 +257,8 @@ export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlo
   name: Scalars['String']['output'];
   /** Placement of article */
   placement: Scalars['String']['output'];
-  /** Seo first level heading of article */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Seo meta description of article */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Seo title of article */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the article page */
+  seo: TypeSeoAttributes;
   /** Article URL slug */
   slug: Scalars['String']['output'];
   /** Text of article */
@@ -346,7 +340,7 @@ export type TypeBaseCustomerUser = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHreflang & TypeSlug & {
+export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHreflang & TypeSeo & TypeSlug & {
   __typename?: 'BlogArticle';
   /** The author of the blog article */
   author: Maybe<TypeBlogArticleAuthor>;
@@ -374,12 +368,8 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   perex: Maybe<Scalars['String']['output']>;
   /** Date and time of the blog article publishing */
   publishDate: Maybe<Scalars['DateTime']['output']>;
-  /** The blog article SEO H1 heading */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** The blog article SEO meta description */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** The blog article SEO title */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the blog article page */
+  seo: TypeSeoAttributes;
   /** The blog article URL slug */
   slug: Scalars['String']['output'];
   /** The blog article status (draft, preview, published) */
@@ -441,7 +431,7 @@ export type TypeBlogArticleEdge = {
   node: Maybe<TypeBlogArticle>;
 };
 
-export type TypeBlogCategory = TypeBreadcrumb & TypeHreflang & TypeSlug & {
+export type TypeBlogCategory = TypeBreadcrumb & TypeHreflang & TypeSeo & TypeSlug & {
   __typename?: 'BlogCategory';
   /** Total count of blog articles in this category */
   articlesTotalCount: Scalars['Int']['output'];
@@ -465,12 +455,8 @@ export type TypeBlogCategory = TypeBreadcrumb & TypeHreflang & TypeSlug & {
   name: Scalars['String']['output'];
   /** The blog category parent */
   parent: Maybe<TypeBlogCategory>;
-  /** The blog category SEO H1 heading */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** The blog category SEO meta description */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** The blog category SEO title */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the blog category page */
+  seo: TypeSeoAttributes;
   /** The blog category URL slug */
   slug: Scalars['String']['output'];
   /** The blog category UUID */
@@ -492,7 +478,7 @@ export type TypeBlogCategoryMainImageArgs = {
 };
 
 /** Represents a brand */
-export type TypeBrand = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSlug & {
+export type TypeBrand = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSeo & TypeSlug & {
   __typename?: 'Brand';
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
@@ -512,12 +498,8 @@ export type TypeBrand = TypeBreadcrumb & TypeHreflang & TypeProductListable & Ty
   name: Scalars['String']['output'];
   /** Paginated and ordered products of brand */
   products: TypeProductConnection;
-  /** Brand SEO H1 */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Brand SEO meta description */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Brand SEO title */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the brand page */
+  seo: TypeSeoAttributes;
   /** Brand URL slug */
   slug: Scalars['String']['output'];
   /** UUID */
@@ -688,7 +670,7 @@ export type TypeCartTransportModificationsResult = {
 };
 
 /** Represents a category */
-export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
+export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSeo & TypeSlug & {
   __typename?: 'Category';
   /** Automated filters for the category */
   automatedFilters: Array<TypeCategoryAutomatedFilterEnum>;
@@ -720,12 +702,8 @@ export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
   products: TypeProductConnection;
   /** An array of links of prepared category SEO mixes of a given category */
   readyCategorySeoMixLinks: Array<TypeLink>;
-  /** Seo first level heading of category */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Seo meta description of category */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Seo title of category */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the category page */
+  seo: TypeSeoAttributes;
   /** Category URL slug */
   slug: Scalars['String']['output'];
   /** UUID */
@@ -1396,7 +1374,7 @@ export type TypeFile = {
 };
 
 /** Represents a flag */
-export type TypeFlag = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSlug & {
+export type TypeFlag = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSeo & TypeSlug & {
   __typename?: 'Flag';
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
@@ -1410,6 +1388,8 @@ export type TypeFlag = TypeBreadcrumb & TypeHreflang & TypeProductListable & Typ
   products: TypeProductConnection;
   /** Flag color in rgb format */
   rgbColor: Scalars['String']['output'];
+  /** SEO attributes of the flag page */
+  seo: TypeSeoAttributes;
   /** URL slug of flag */
   slug: Scalars['String']['output'];
   /** UUID */
@@ -1577,7 +1557,7 @@ export type TypeMainBlogCategoryData = {
 };
 
 /** Represents a product */
-export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
+export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSeo & TypeSlug & {
   __typename?: 'MainVariant';
   accessories: Array<TypeProduct>;
   /** Additional services offered with the product on the current domain */
@@ -1655,12 +1635,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
-  /** Seo first level heading of product */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Seo meta description of product */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Seo title of product */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the product page */
+  seo: TypeSeoAttributes;
   /** Localized product short description (domain dependent) */
   shortDescription: Maybe<Scalars['String']['output']>;
   /** Product URL slug */
@@ -2921,12 +2897,8 @@ export type TypeProduct = {
   reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
-  /** Seo first level heading of product */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Seo meta description of product */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Seo title of product */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the product page */
+  seo: TypeSeoAttributes;
   /** Localized product short description (domain dependent) */
   shortDescription: Maybe<Scalars['String']['output']>;
   /** Product URL slug */
@@ -3907,7 +3879,7 @@ export type TypeRegularCustomerUser = TypeBaseCustomerUser & {
 };
 
 /** Represents a product */
-export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
+export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSeo & TypeSlug & {
   __typename?: 'RegularProduct';
   accessories: Array<TypeProduct>;
   /** Additional services offered with the product on the current domain */
@@ -3985,12 +3957,8 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
-  /** Seo first level heading of product */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Seo meta description of product */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Seo title of product */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the product page */
+  seo: TypeSeoAttributes;
   /** Localized product short description (domain dependent) */
   shortDescription: Maybe<Scalars['String']['output']>;
   /** Product URL slug */
@@ -4097,34 +4065,47 @@ export enum TypeSellingPriceTypeEnum {
   WithVat = 'WITH_VAT'
 }
 
-/** Represents SEO settings for specific page */
-export type TypeSeoPage = TypeHreflang & {
-  __typename?: 'SeoPage';
-  /** Page's canonical link */
+/** Represents entity with SEO attributes */
+export type TypeSeo = {
+  /** SEO attributes of the entity's page */
+  seo: TypeSeoAttributes;
+};
+
+/** SEO attributes of a page exactly as set in the administration, the fallbacks (e.g. the name of the entity as the title) are up to the API consumer */
+export type TypeSeoAttributes = {
+  __typename?: 'SeoAttributes';
+  /** Absolute canonical URL of the page */
   canonicalUrl: Maybe<Scalars['String']['output']>;
-  /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<TypeHreflangLink>;
+  /** Main heading of the page, always null for SeoPage as the heading of a static page is given by the storefront */
+  h1: Maybe<Scalars['String']['output']>;
   /** Description for meta tag */
   metaDescription: Maybe<Scalars['String']['output']>;
+  /** Value for the robots meta tag (e.g. "noindex, nofollow"), null keeps the storefront default */
+  metaRobots: Maybe<Scalars['String']['output']>;
+  /** Document's title that is shown in a browser's title */
+  title: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents SEO settings for specific page */
+export type TypeSeoPage = TypeHreflang & TypeSeo & {
+  __typename?: 'SeoPage';
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Description for og:description meta tag */
   ogDescription: Maybe<Scalars['String']['output']>;
   /** Image for og image meta tag by params */
   ogImage: Maybe<TypeImage>;
   /** Title for og:title meta tag */
   ogTitle: Maybe<Scalars['String']['output']>;
-  /** Document's title that is shown in a browser's title */
-  title: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the page */
+  seo: TypeSeoAttributes;
 };
 
 /** Represents settings of SEO */
 export type TypeSeoSetting = {
   __typename?: 'SeoSetting';
-  /** Description of the content of a web page */
-  metaDescription: Maybe<Scalars['String']['output']>;
   /** Robots.txt's file content */
   robotsTxtContent: Maybe<Scalars['String']['output']>;
-  /** Document's title that is shown in a browser's title */
-  title: Maybe<Scalars['String']['output']>;
   /** Complement to title */
   titleAddOn: Maybe<Scalars['String']['output']>;
 };
@@ -4221,7 +4202,7 @@ export type TypeSlug = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type TypeStore = TypeBreadcrumb & TypeSlug & {
+export type TypeStore = TypeBreadcrumb & TypeSeo & TypeSlug & {
   __typename?: 'Store';
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
@@ -4257,6 +4238,8 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   phone: Maybe<Scalars['String']['output']>;
   /** Store address postcode */
   postcode: Scalars['String']['output'];
+  /** SEO attributes of the store page */
+  seo: TypeSeoAttributes;
   /** Store URL slug */
   slug: Scalars['String']['output'];
   specialMessage: Maybe<Scalars['String']['output']>;
@@ -4471,7 +4454,7 @@ export type TypeUpdatePaymentStatusResult = {
 };
 
 /** Represents a product */
-export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
+export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSeo & TypeSlug & {
   __typename?: 'Variant';
   accessories: Array<TypeProduct>;
   /** Additional services offered with the product on the current domain */
@@ -4550,12 +4533,8 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   reviews: Maybe<TypeProductReviewConnection>;
   /** Aggregated rating of the approved reviews of the product and its visible variants. Null for a variant — the reviews of the whole family are aggregated on its main variant */
   reviewsSummary: Maybe<TypeProductReviewsSummary>;
-  /** Seo first level heading of product */
-  seoH1: Maybe<Scalars['String']['output']>;
-  /** Seo meta description of product */
-  seoMetaDescription: Maybe<Scalars['String']['output']>;
-  /** Seo title of product */
-  seoTitle: Maybe<Scalars['String']['output']>;
+  /** SEO attributes of the product page */
+  seo: TypeSeoAttributes;
   /** Localized product short description (domain dependent) */
   shortDescription: Maybe<Scalars['String']['output']>;
   /** Product URL slug */

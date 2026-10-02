@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Symfony\Component\Clock\DatePoint;
 
 class ArticleData
@@ -20,14 +19,9 @@ class ArticleData
     public $text;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData
      */
-    public $seoTitle;
-
-    /**
-     * @var string|null
-     */
-    public $seoMetaDescription;
+    public $seo;
 
     /**
      * @var int|null
@@ -48,11 +42,6 @@ class ArticleData
      * @var bool
      */
     public $hidden;
-
-    /**
-     * @var string|null
-     */
-    public $seoH1;
 
     /**
      * @var string|null
@@ -81,7 +70,6 @@ class ArticleData
 
     public function __construct()
     {
-        $this->urls = new UrlListData();
         $this->hidden = false;
         $this->createdAt = new DatePoint();
     }

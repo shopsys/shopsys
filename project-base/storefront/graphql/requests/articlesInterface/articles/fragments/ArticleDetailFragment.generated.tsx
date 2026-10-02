@@ -5,7 +5,8 @@ import * as Types from '../../../../types';
 
 import gql from 'graphql-tag';
 import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.generated';
-export type TypeArticleDetailFragment = { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: string, seoH1: string | null, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> };
+import { SeoAttributesFragment } from '../../../seo/fragments/SeoAttributesFragment.generated';
+export type TypeArticleDetailFragment = { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, createdAt: string, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, seo: { __typename: 'SeoAttributes', title: string | null, metaDescription: string | null, h1: string | null, metaRobots: string | null, canonicalUrl: string | null } };
 
 export const ArticleDetailFragment = gql`
     fragment ArticleDetailFragment on ArticleSite {
@@ -18,9 +19,10 @@ export const ArticleDetailFragment = gql`
   breadcrumb {
     ...BreadcrumbFragment
   }
-  seoTitle
-  seoMetaDescription
   createdAt
-  seoH1
+  seo {
+    ...SeoAttributesFragment
+  }
 }
-    ${BreadcrumbFragment}`;
+    ${BreadcrumbFragment}
+${SeoAttributesFragment}`;

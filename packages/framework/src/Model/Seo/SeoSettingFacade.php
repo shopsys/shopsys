@@ -11,9 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDisp
 
 class SeoSettingFacade
 {
-    public const SEO_TITLE_MAIN_PAGE = 'seoTitleMainPage';
     public const SEO_TITLE_ADD_ON = 'seoTitleAddOn';
-    public const SEO_META_DESCRIPTION_MAIN_PAGE = 'seoMetaDescriptionMainPage';
     public const SEO_ROBOTS_TXT_CONTENT = 'seoRobotsTxtContent';
     public const SEO_ALTERNATIVE_DOMAINS = 'seoAlternativeDomains';
 
@@ -24,33 +22,6 @@ class SeoSettingFacade
     ) {
     }
 
-    public function getTitleMainPage(int $domainId): ?string
-    {
-        return $this->setting->getForDomain(self::SEO_TITLE_MAIN_PAGE, $domainId);
-    }
-
-    public function getDescriptionMainPage(int $domainId): ?string
-    {
-        return $this->setting->getForDomain(self::SEO_META_DESCRIPTION_MAIN_PAGE, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @return string[]
-     */
-    public function getDescriptionsMainPageIndexedByDomainIds(array $domainConfigs): array
-    {
-        $descriptionsMainPageByDomainIds = [];
-
-        foreach ($domainConfigs as $domainConfig) {
-            $descriptionsMainPageByDomainIds[$domainConfig->getId()] = $this->getDescriptionMainPage(
-                $domainConfig->getId(),
-            );
-        }
-
-        return $descriptionsMainPageByDomainIds;
-    }
-
     public function getTitleAddOn(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SEO_TITLE_ADD_ON, $domainId);
@@ -59,16 +30,6 @@ class SeoSettingFacade
     public function getRobotsTxtContent(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SEO_ROBOTS_TXT_CONTENT, $domainId);
-    }
-
-    public function setTitleMainPage(?string $value, int $domainId): void
-    {
-        $this->setting->setForDomain(self::SEO_TITLE_MAIN_PAGE, $value, $domainId);
-    }
-
-    public function setDescriptionMainPage(?string $value, int $domainId): void
-    {
-        $this->setting->setForDomain(self::SEO_META_DESCRIPTION_MAIN_PAGE, $value, $domainId);
     }
 
     public function setTitleAddOn(?string $value, int $domainId): void

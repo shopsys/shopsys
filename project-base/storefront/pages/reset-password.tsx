@@ -22,7 +22,7 @@ const ResetPasswordPage: FC<ServerSidePropsType> = () => {
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Reset password')}>
+        <CommonLayout breadcrumbs={breadcrumbs} defaultTitle={t('Reset password')}>
             <ResetPasswordContent />
         </CommonLayout>
     );

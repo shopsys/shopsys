@@ -7,9 +7,9 @@ fragment BrandDetailFragment on Brand {
         ...BreadcrumbFragment
     }
     name
-    seoH1
-    seoTitle
-    seoMetaDescription
+    seo {
+        ...SeoAttributesFragment
+    }
     hreflangLinks {
         ...HreflangLinksFragment
     }

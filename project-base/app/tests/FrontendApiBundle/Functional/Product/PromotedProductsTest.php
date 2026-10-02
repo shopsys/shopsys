@@ -52,9 +52,13 @@ class PromotedProductsTest extends GraphQlTestCase
                     uuid
                     name
                     shortDescription
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     link
                     unit {
                         name
@@ -123,9 +127,13 @@ class PromotedProductsTest extends GraphQlTestCase
                     uuid
                     name
                     shortDescription
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
+                    seo {
+                        title
+                        metaDescription
+                        h1
+                        metaRobots
+                        canonicalUrl
+                    }
                     link
                     unit {
                         name

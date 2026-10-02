@@ -1,0 +1,27 @@
+query BlogArticleQuery($uuid: Uuid, $urlSlug: String) {
+    blogArticle(uuid: $uuid, urlSlug: $urlSlug) {
+        name
+        uuid
+        text
+        createdAt
+        visibleOnHomepage
+        publishDate
+        perex
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
+        blogCategories {
+            name
+        }
+        link
+        slug
+        breadcrumb {
+            name
+            slug
+        }
+    }
+}

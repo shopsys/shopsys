@@ -358,6 +358,13 @@
             "seo_meta_description": {
                 "type": "text"
             },
+            "seo_meta_robots": {
+                "type": "keyword"
+            },
+            "seo_canonical_url": {
+                "type": "keyword",
+                "index": false
+            },
             "accessories": {
                 "type": "integer"
             },

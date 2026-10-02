@@ -8,8 +8,8 @@ fragment ArticleDetailFragment on ArticleSite {
     breadcrumb {
         ...BreadcrumbFragment
     }
-    seoTitle
-    seoMetaDescription
     createdAt
-    seoH1
+    seo {
+        ...SeoAttributesFragment
+    }
 }

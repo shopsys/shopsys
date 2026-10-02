@@ -237,19 +237,11 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoAttributes(int $domainId)
     {
-        return $this->getDomain($domainId)->getSeoTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
-    {
-        return $this->getDomain($domainId)->getSeoH1();
+        return $this->getDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -267,14 +259,6 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     public function isVisible(int $domainId)
     {
         return $this->getDomain($domainId)->isVisible();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getDomain($domainId)->getSeoMetaDescription();
     }
 
     /**
@@ -309,16 +293,14 @@ class BlogCategory extends AbstractTranslatableEntity implements TreeSelectionEn
     {
         foreach ($this->domains as $blogCategoryDomain) {
             $domainId = $blogCategoryDomain->getDomainId();
-            $blogCategoryDomain->setSeoTitle($blogCategoryData->seoTitles[$domainId]);
-            $blogCategoryDomain->setSeoH1($blogCategoryData->seoH1s[$domainId]);
-            $blogCategoryDomain->setSeoMetaDescription($blogCategoryData->seoMetaDescriptions[$domainId]);
+            $blogCategoryDomain->getSeoAttributes()->edit($blogCategoryData->seo[$domainId]);
             $blogCategoryDomain->setEnabled($blogCategoryData->enabled[$domainId]);
         }
     }
 
     public function createDomains(BlogCategoryData $blogCategoryData): void
     {
-        $domainIds = array_keys($blogCategoryData->seoTitles);
+        $domainIds = array_keys($blogCategoryData->seo);
 
         foreach ($domainIds as $domainId) {
             $blogCategoryDomain = new BlogCategoryDomain($this, $domainId);

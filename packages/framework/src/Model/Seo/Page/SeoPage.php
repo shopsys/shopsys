@@ -52,7 +52,6 @@ class SeoPage
     public function __construct(
         SeoPageData $seoPageData,
     ) {
-        $this->pageName = $seoPageData->pageName;
         $this->domains = new ArrayCollection();
 
         $this->createDomains($seoPageData);
@@ -81,27 +80,11 @@ class SeoPage
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoAttributes(int $domainId)
     {
-        return $this->getSeoPageDomain($domainId)->getSeoTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getSeoPageDomain($domainId)->getSeoMetaDescription();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCanonicalUrl(int $domainId)
-    {
-        return $this->getSeoPageDomain($domainId)->getCanonicalUrl();
+        return $this->getSeoPageDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -141,17 +124,17 @@ class SeoPage
 
     protected function setData(SeoPageData $seoPageData): void
     {
+        $this->pageName = $seoPageData->pageName;
         $this->setDomains($seoPageData);
         $this->defaultPage = $seoPageData->defaultPage;
     }
 
     protected function createDomains(SeoPageData $seoPageData): void
     {
-        $domainIds = array_keys($seoPageData->seoTitlesIndexedByDomainId);
+        $domainIds = array_keys($seoPageData->seo);
 
         foreach ($domainIds as $domainId) {
             $seoPageDomain = new SeoPageDomain($domainId, $this);
-            $seoPageDomain->setPageSlug($seoPageData->pageSlugsIndexedByDomainId[$domainId]);
             $this->domains->add($seoPageDomain);
         }
 
@@ -163,9 +146,8 @@ class SeoPage
         foreach ($this->domains as $seoPageDomain) {
             $domainId = $seoPageDomain->getDomainId();
 
-            $seoPageDomain->setSeoTitle($seoPageData->seoTitlesIndexedByDomainId[$domainId]);
-            $seoPageDomain->setSeoMetaDescription($seoPageData->seoMetaDescriptionsIndexedByDomainId[$domainId]);
-            $seoPageDomain->setCanonicalUrl($seoPageData->canonicalUrlsIndexedByDomainId[$domainId]);
+            $seoPageDomain->setPageSlug($seoPageData->pageSlugsIndexedByDomainId[$domainId]);
+            $seoPageDomain->getSeoAttributes()->edit($seoPageData->seo[$domainId]);
             $seoPageDomain->setSeoOgTitle($seoPageData->seoOgTitlesIndexedByDomainId[$domainId]);
             $seoPageDomain->setSeoOgDescription($seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId]);
         }

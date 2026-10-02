@@ -451,6 +451,9 @@ msgstr "Knihomoľ"
 msgid "Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use."
 msgstr "Doplňte svoj článok fotografiami elektroniky v každodennom prostredí. O súbory na publikovanie a údaje o autorstve požiadajte náš tím pre médiá a uveďte, ktoré snímky chcete použiť."
 
+msgid "Browse all products in our demo shop that were made in Germany."
+msgstr "Pozrite si všetky produkty v našom demo eshope, ktoré boli vyrobené v Nemecku."
+
 msgid "Build scalable B2C and B2B stores on an open commerce platform designed for complex projects."
 msgstr "Vytvárajte škálovateľné B2C a B2B e-shopy na otvorenej e-commerce platforme navrhnutej pre komplexné projekty."
 
@@ -1579,6 +1582,15 @@ msgstr "Objednávky sú pripravené pri pulte na prízemí vedľa showroomu. Per
 msgid "Ordinary customer"
 msgstr "Bežný zákazník"
 
+msgid "Ostrava department store"
+msgstr "Obchodný dom Ostrava"
+
+msgid "Ostrava department store offers personal pickup, a service desk and a wide range of electronics in stock."
+msgstr "Obchodný dom Ostrava ponúka osobný odber, servisnú priehradku a široký výber elektroniky skladom."
+
+msgid "Ostrava department store | Demo shop"
+msgstr "Obchodný dom Ostrava | Demo eshop"
+
 msgid "Other"
 msgstr "Iné"
 
@@ -1759,6 +1771,12 @@ msgstr "Produktové novinky"
 msgid "Product news | Demo shop"
 msgstr "Produktové novinky | Demo obchod"
 
+msgid "Products made in Germany"
+msgstr "Produkty vyrobené v Nemecku"
+
+msgid "Products made in Germany | Demo shop"
+msgstr "Produkty vyrobené v Nemecku | Demo eshop"
+
 msgid "Products worth comparing"
 msgstr ""
 
@@ -1932,12 +1950,6 @@ msgstr ""
 
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
-
-msgid "Shopsys Platform - Title page"
-msgstr "Shopsys Platform - Titulná stránka"
-
-msgid "Shopsys Platform - the best solution for your eshop."
-msgstr "Shopsys Platform - najlepšie riešenie pre váš internetový obchod."
 
 msgid "Shopsys team collaborating in an office"
 msgstr "Tím Shopsys spolupracujúci v kancelárii"

@@ -1,4 +1,3 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
@@ -31,7 +30,6 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -46,12 +44,6 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
-    const seoTitle = useSeoTitleWithPagination(
-        categoryData?.products.totalCount,
-        categoryData?.name,
-        categoryData?.seoTitle,
-    );
-
     const firstImageUrl = categoryData?.images[0]?.url;
 
     if (!categoryData && !isFetchingVisible) {
@@ -60,16 +52,17 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <PageDefer>
-            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
-
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
-                description={categoryData?.seoMetaDescription}
+                defaultMetaRobots={currentFilter || currentSort ? 'noindex, follow' : undefined}
+                defaultDescription={categoryData?.description}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
                 ogImageUrlDefault={firstImageUrl}
-                title={seoTitle}
+                paginationTotalCount={categoryData?.products.totalCount}
+                seo={categoryData?.seo}
+                defaultTitle={categoryData?.name}
             >
                 {!!categoryData && (
                     <CategoryDetailContent category={categoryData} isFetchingVisible={isFetchingVisible} />

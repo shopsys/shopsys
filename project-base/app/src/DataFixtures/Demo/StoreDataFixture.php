@@ -39,6 +39,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const string ATTR_LOCATION_LATITUDE = 'latitude';
     private const string ATTR_LOCATION_LONGITUDE = 'longitude';
     private const string ATTR_REFERENCE_NAME = 'referenceName';
+    private const string ATTR_SEO_TITLE = 'seoTitle';
+    private const string ATTR_SEO_META_DESCRIPTION = 'seoMetaDescription';
+    private const string ATTR_SEO_H1 = 'seoH1';
 
     public const string STORE_FIRST = 'store_first';
 
@@ -89,6 +92,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_SPECIAL_MESSAGE => t('Tomorrow will be 20% discount for all items', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
                 self::ATTR_LOCATION_LATITUDE => '49.8574975',
                 self::ATTR_LOCATION_LONGITUDE => '18.2738861',
+                self::ATTR_SEO_TITLE => t('Ostrava department store | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
+                self::ATTR_SEO_META_DESCRIPTION => t('Ostrava department store offers personal pickup, a service desk and a wide range of electronics in stock.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
+                self::ATTR_SEO_H1 => t('Ostrava department store', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
             ],
             [
                 self::ATTR_NAME => 'Pardubice',
@@ -300,6 +306,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         $storeData->specialMessage = $demoRow[self::ATTR_SPECIAL_MESSAGE];
         $storeData->latitude = $demoRow[self::ATTR_LOCATION_LATITUDE];
         $storeData->longitude = $demoRow[self::ATTR_LOCATION_LONGITUDE];
+        $storeData->seo->title = $demoRow[self::ATTR_SEO_TITLE] ?? null;
+        $storeData->seo->metaDescription = $demoRow[self::ATTR_SEO_META_DESCRIPTION] ?? null;
+        $storeData->seo->h1 = $demoRow[self::ATTR_SEO_H1] ?? null;
 
         return $storeData;
     }

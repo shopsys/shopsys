@@ -4,6 +4,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
+import { SeoAttributesFragment } from '../../seo/fragments/SeoAttributesFragment.generated';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.generated';
 import { OpeningHoursFragment } from './OpeningHoursFragment.generated';
 import { BreadcrumbFragment } from '../../breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -19,7 +20,7 @@ export type TypeStoreOpeningStatusEnum =
   /** Store will be opened soon */
   | 'OPEN_SOON';
 
-export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, email: string | null, phone: string | null, directions: string | null, specialMessage: string | null, latitude: string | null, longitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ date: string, dayOfWeek: number, openingHoursRanges: Array<{ openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> };
+export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, email: string | null, phone: string | null, directions: string | null, specialMessage: string | null, latitude: string | null, longitude: string | null, storeName: string, seo: { __typename: 'SeoAttributes', title: string | null, metaDescription: string | null, h1: string | null, metaRobots: string | null, canonicalUrl: string | null }, country: { __typename: 'Country', name: string, code: string }, openingHours: { status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ date: string, dayOfWeek: number, openingHoursRanges: Array<{ openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> };
 
 export const StoreDetailFragment = gql`
     fragment StoreDetailFragment on Store {
@@ -28,6 +29,9 @@ export const StoreDetailFragment = gql`
   slug
   storeName: name
   description
+  seo {
+    ...SeoAttributesFragment
+  }
   street
   city
   postcode
@@ -50,7 +54,8 @@ export const StoreDetailFragment = gql`
     ...ImageFragment
   }
 }
-    ${CountryFragment}
+    ${SeoAttributesFragment}
+${CountryFragment}
 ${OpeningHoursFragment}
 ${BreadcrumbFragment}
 ${ImageFragment}`;

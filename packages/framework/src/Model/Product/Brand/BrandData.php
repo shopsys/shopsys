@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class BrandData
 {
     /**
@@ -24,24 +22,14 @@ class BrandData
     public $descriptions;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
+    public $seo;
 
     /**
      * @var string|null
@@ -52,9 +40,7 @@ class BrandData
     {
         $this->name = '';
         $this->descriptions = [];
-        $this->urls = new UrlListData();
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->urls = [];
+        $this->seo = [];
     }
 }

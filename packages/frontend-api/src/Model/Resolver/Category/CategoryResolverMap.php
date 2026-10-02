@@ -66,9 +66,7 @@ class CategoryResolverMap extends ResolverMap
         return match ($fieldName) {
             'uuid' => $category->getUuid(),
             'description' => $category->getDescription($this->domain->getId()),
-            'seoH1' => $category->getSeoH1($this->domain->getId()),
-            'seoTitle' => $category->getSeoTitle($this->domain->getId()),
-            'seoMetaDescription' => $category->getSeoMetaDescription($this->domain->getId()),
+            'seo' => $category->getSeoAttributes($this->domain->getId()),
             'slug' => $this->categorySlugBatchLoader->load($category->getId()),
             'originalCategorySlug' => null,
             default => $this->mapCommonFields($fieldName, $category),
@@ -82,9 +80,7 @@ class CategoryResolverMap extends ResolverMap
         return match ($fieldName) {
             'uuid' => $readyCategorySeoMix->getUuid(),
             'description' => $readyCategorySeoMix->getDescription() ?? '',
-            'seoH1' => $readyCategorySeoMix->getH1(),
-            'seoTitle' => $readyCategorySeoMix->getTitle() ?? $readyCategorySeoMix->getH1(),
-            'seoMetaDescription' => $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($this->domain->getId()),
+            'seo' => $readyCategorySeoMix->getSeoAttributes(),
             'slug' => $this->categorySeoSlugBatchLoader->load($readyCategorySeoMix->getId()),
             'originalCategorySlug' => $this->categorySlugBatchLoader->load($category->getId()),
             default => $this->mapCommonFields($fieldName, $category),

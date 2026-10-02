@@ -49,6 +49,9 @@ msgstr ""
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr ""
 
+msgid "Canonical URL must be an absolute https:// URL"
+msgstr ""
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -124,9 +127,6 @@ msgstr ""
 msgid "Full name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Heureka API must be {{ limit }} characters"
 msgstr ""
 
@@ -149,9 +149,6 @@ msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Link must be valid URL address"
 msgstr ""
 
 msgid "Name cannot be longer than {{ limit }} characters"
@@ -383,6 +380,9 @@ msgid "Please enter flag name in all languages"
 msgstr ""
 
 msgid "Please enter full name"
+msgstr ""
+
+msgid "Please enter heading (H1)"
 msgstr ""
 
 msgid "Please enter identification number"
@@ -673,13 +673,7 @@ msgstr ""
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr ""
 
-msgid "Same description is used on another domain"
-msgstr ""
-
 msgid "Same title complement is used on another domain"
-msgstr ""
-
-msgid "Same title is used on another domain"
 msgstr ""
 
 msgid "Seo page with slug {{ pageSlug }} already exists"

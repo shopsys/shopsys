@@ -11,7 +11,7 @@ type StyleguidePageProps = ServerSidePropsType & {
 
 const StyleguidePage: FC<StyleguidePageProps> = ({ tailwindColors }) => {
     return (
-        <CommonLayout title="Styleguide">
+        <CommonLayout defaultTitle="Styleguide">
             <StyleguideContent tailwindColors={tailwindColors} />
 
             <ErrorDebugSettingsContent />

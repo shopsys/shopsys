@@ -7,30 +7,32 @@ namespace Shopsys\FrameworkBundle\Form;
 use Override;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlSlugNormalizer;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * Slug of a new friendly URL, rendered as one row of the URL address list
+ */
 final class FriendlyUrlType extends AbstractType
 {
     public const string SLUG_REGEX = '/^(?:[A-Za-z0-9_\-\/]|%[0-9A-Fa-f]{2})+$/';
 
     #[Override]
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function getParent(): string
     {
-        $builder->add(UrlListData::FIELD_DOMAIN, DomainType::class, [
-            'displayUrl' => true,
-            'required' => true,
-            'limit_domains_by_ids' => $options['limit_domains_by_ids'],
-        ]);
+        return TextType::class;
+    }
 
-        $builder->add(UrlListData::FIELD_SLUG, TextType::class, [
+    #[Override]
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
             'required' => true,
+            'label' => false,
             'attr' => [
                 'placeholder' => 'slug',
             ],
@@ -40,16 +42,6 @@ final class FriendlyUrlType extends AbstractType
                 new Constraints\Callback(callback: [$this, 'validateSlugEncoding']),
             ],
         ]);
-    }
-
-    #[Override]
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver
-            ->setDefaults([
-                'limit_domains_by_ids' => [],
-            ])
-            ->setAllowedTypes('limit_domains_by_ids', 'array');
     }
 
     public function validateSlugEncoding(mixed $slug, ExecutionContextInterface $context): void

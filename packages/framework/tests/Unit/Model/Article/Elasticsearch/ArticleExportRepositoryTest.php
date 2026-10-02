@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportRepository;
+use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData;
 
 class ArticleExportRepositoryTest extends TestCase
 {
@@ -81,6 +82,7 @@ class ArticleExportRepositoryTest extends TestCase
         $articleData->name = 'Article';
         $articleData->placement = Article::PLACEMENT_FOOTER_1;
         $articleData->type = $type;
+        $articleData->seo = new SeoAttributesData();
 
         if ($type === Article::TYPE_LINK) {
             $articleData->url = 'https://www.shopsys.com';

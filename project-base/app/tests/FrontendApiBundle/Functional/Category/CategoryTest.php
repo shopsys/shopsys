@@ -92,14 +92,13 @@ class CategoryTest extends GraphQlTestCase
         $this->assertSame($electronicsName, $responseData['name']);
         $this->assertSame(t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['description']);
         $this->assertSame($electronicsSlug, $responseData['slug']);
-        $this->assertSame(t('Electronic devices', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['seoH1']);
-        $this->assertSame(t('Electronic stuff', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['seoTitle']);
-        $this->assertSame(t(
-            'All kind of electronic devices.',
-            [],
-            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->getLocaleForFirstDomain(),
-        ), $responseData['seoMetaDescription']);
+        $this->assertSame([
+            'title' => t('Electronic stuff', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+            'metaDescription' => t('All kind of electronic devices.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+            'h1' => t('Electronic devices', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+            'metaRobots' => null,
+            'canonicalUrl' => null,
+        ], $responseData['seo']);
         $this->assertSame([
             ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
             ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],

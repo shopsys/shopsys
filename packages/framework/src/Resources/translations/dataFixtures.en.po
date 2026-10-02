@@ -61,9 +61,6 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
-msgid "Catalog"
-msgstr ""
-
 msgid "Confirm withdrawal from contract - order no. {order_number}"
 msgstr ""
 
@@ -129,9 +126,6 @@ msgstr ""
 
 msgid "Your watched product is back in stock!"
 msgstr ""
-
-msgid "catalog-slug"
-msgstr "catalog"
 
 msgid "pcs"
 msgstr ""

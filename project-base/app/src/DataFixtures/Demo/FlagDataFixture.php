@@ -88,6 +88,15 @@ final class FlagDataFixture extends AbstractReferenceFixture
             $flagData->name[$locale] = t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+
+            $flagData->seo[$domainId]->title = t('Products made in Germany | Demo shop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $flagData->seo[$domainId]->h1 = t('Products made in Germany', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $flagData->seo[$domainId]->metaDescription = t('Browse all products in our demo shop that were made in Germany.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
         $this->createFlag($flagData, self::FLAG_PRODUCT_MADEIN_DE);
 
 

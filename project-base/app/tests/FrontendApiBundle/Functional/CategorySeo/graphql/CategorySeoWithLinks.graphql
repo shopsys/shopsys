@@ -2,9 +2,13 @@ query CategorySeoWithLinks($urlSlug: String!) {
     category(urlSlug: $urlSlug){
         name
         slug
-        seoH1
-        seoTitle
-        seoMetaDescription
+        seo {
+            title
+            metaDescription
+            h1
+            metaRobots
+            canonicalUrl
+        }
         bestsellers {
             name
         }

@@ -246,19 +246,11 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoAttributes(int $domainId)
     {
-        return $this->getDomain($domainId)->getSeoTitle();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
-    {
-        return $this->getDomain($domainId)->getSeoH1();
+        return $this->getDomain($domainId)->getSeoAttributes();
     }
 
     /**
@@ -267,14 +259,6 @@ class BlogArticle extends AbstractTranslatableEntity
     public function isVisible(int $domainId)
     {
         return $this->getDomain($domainId)->isVisible();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
-    {
-        return $this->getDomain($domainId)->getSeoMetaDescription();
     }
 
     /**
@@ -317,16 +301,14 @@ class BlogArticle extends AbstractTranslatableEntity
     {
         foreach ($this->domains as $blogArticleDomain) {
             $domainId = $blogArticleDomain->getDomainId();
-            $blogArticleDomain->setSeoTitle($blogArticleData->seoTitles[$domainId]);
-            $blogArticleDomain->setSeoH1($blogArticleData->seoH1s[$domainId]);
-            $blogArticleDomain->setSeoMetaDescription($blogArticleData->seoMetaDescriptions[$domainId]);
+            $blogArticleDomain->getSeoAttributes()->edit($blogArticleData->seo[$domainId]);
             $blogArticleDomain->setPublishDate($blogArticleData->publishDates[$domainId]);
         }
     }
 
     public function createDomains(BlogArticleData $blogArticleData): void
     {
-        $domainIds = array_keys($blogArticleData->seoTitles);
+        $domainIds = array_keys($blogArticleData->seo);
 
         foreach ($domainIds as $domainId) {
             $categoryDomain = new BlogArticleDomain($this, $domainId);

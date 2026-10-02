@@ -19,7 +19,6 @@ import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -34,13 +33,6 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const seoTitle = useSeoTitleWithPagination(
-        blogCategoryData?.blogCategory?.articlesTotalCount,
-        blogCategoryData?.blogCategory?.name,
-        blogCategoryData?.blogCategory?.seoTitle,
-        DEFAULT_BLOG_PAGE_SIZE,
-    );
-
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(blogCategoryData?.blogCategory);
     useGtmPageReadyEvent(pageReadyEvent, isBlogCategoryFetching);
 
@@ -52,10 +44,13 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         <CommonLayout
             breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
             breadcrumbsType="blogCategory"
-            description={blogCategoryData?.blogCategory?.seoMetaDescription}
+            defaultDescription={blogCategoryData?.blogCategory?.description}
             hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
             isFetchingData={isBlogCategoryFetching}
-            title={seoTitle}
+            paginationPageSize={DEFAULT_BLOG_PAGE_SIZE}
+            paginationTotalCount={blogCategoryData?.blogCategory?.articlesTotalCount}
+            seo={blogCategoryData?.blogCategory?.seo}
+            defaultTitle={blogCategoryData?.blogCategory?.name}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
         </CommonLayout>

@@ -19,6 +19,7 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
+import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
@@ -46,21 +47,24 @@ const ArticleDetailPage: NextPage = () => {
         return <Error404Content />;
     }
 
+    const metaDescription = getMetaDescription(article?.seo.metaDescription, article?.text);
+
     return (
         <CommonLayout
             breadcrumbs={article?.breadcrumb}
             canonicalQueryParams={[]}
-            description={article?.seoMetaDescription}
+            defaultDescription={article?.text}
             isFetchingData={isArticleDetailFetching}
             ogType={OgTypeEnum.Article}
-            title={article?.seoTitle || article?.articleName}
+            seo={article?.seo}
+            defaultTitle={article?.articleName}
         >
             {!!article && (
                 <>
                     <ArticleMetadata
                         datePublished={article.createdAt}
-                        description={article.seoMetaDescription}
-                        headline={article.seoTitle || article.articleName}
+                        description={metaDescription}
+                        headline={article.seo.h1 || article.articleName}
                     />
                     <ArticleDetailContent article={article} />
                 </>

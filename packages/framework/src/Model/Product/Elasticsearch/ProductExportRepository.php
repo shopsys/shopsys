@@ -178,9 +178,11 @@ class ProductExportRepository
             ProductExportFieldProvider::IS_ALLOWED_NEGATIVE_STOCK => $product->isAllowedNegativeStock(),
             ProductExportFieldProvider::VARIANTS => $this->extractVariantIds($product),
             ProductExportFieldProvider::MAIN_VARIANT_ID => $product->isVariant() ? $product->getMainVariant()->getId() : null,
-            ProductExportFieldProvider::SEO_H1 => $product->getSeoH1($domainId),
-            ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
-            ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
+            ProductExportFieldProvider::SEO_H1 => $product->getSeoAttributes($domainId)->getH1(),
+            ProductExportFieldProvider::SEO_TITLE => $product->getSeoAttributes($domainId)->getTitle(),
+            ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoAttributes($domainId)->getMetaDescription(),
+            ProductExportFieldProvider::SEO_META_ROBOTS => $product->getSeoAttributes($domainId)->getMetaRobots(),
+            ProductExportFieldProvider::SEO_CANONICAL_URL => $product->getSeoAttributes($domainId)->getCanonicalUrl(),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
             ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsIds($product),
             ProductExportFieldProvider::ADDITIONAL_SERVICES => $this->extractAdditionalServiceIds($product, $domainId),
@@ -601,48 +603,48 @@ class ProductExportRepository
     protected function extractSearchingSeoTitles(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
-            $variantSeoTitles = [$product->getSeoTitle($domainId) ?? ''];
+            $variantSeoTitles = [$product->getSeoAttributes($domainId)->getTitle() ?? ''];
             $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
-                $variantSeoTitles[] = $variant->getSeoTitle($domainId) ?? '';
+                $variantSeoTitles[] = $variant->getSeoAttributes($domainId)->getTitle() ?? '';
             }
 
             return trim(implode(self::VALUE_SEPARATOR, array_unique($variantSeoTitles)));
         }
 
-        return $product->getSeoTitle($domainId) ?? '';
+        return $product->getSeoAttributes($domainId)->getTitle() ?? '';
     }
 
     protected function extractSearchingSeoH1s(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
-            $variantSeoH1s = [$product->getSeoH1($domainId) ?? ''];
+            $variantSeoH1s = [$product->getSeoAttributes($domainId)->getH1() ?? ''];
             $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
-                $variantSeoH1s[] = $variant->getSeoH1($domainId) ?? '';
+                $variantSeoH1s[] = $variant->getSeoAttributes($domainId)->getH1() ?? '';
             }
 
             return trim(implode(self::VALUE_SEPARATOR, array_unique($variantSeoH1s)));
         }
 
-        return $product->getSeoH1($domainId) ?? '';
+        return $product->getSeoAttributes($domainId)->getH1() ?? '';
     }
 
     protected function extractSearchingSeoMetaDescriptions(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
-            $variantSeoMetaDescriptions = [$product->getSeoMetaDescription($domainId) ?? ''];
+            $variantSeoMetaDescriptions = [$product->getSeoAttributes($domainId)->getMetaDescription() ?? ''];
             $variants = $this->productSellableVariantsProvider->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
-                $variantSeoMetaDescriptions[] = $variant->getSeoMetaDescription($domainId) ?? '';
+                $variantSeoMetaDescriptions[] = $variant->getSeoAttributes($domainId)->getMetaDescription() ?? '';
             }
 
             return trim(implode(self::VALUE_SEPARATOR, array_unique($variantSeoMetaDescriptions)));
         }
 
-        return $product->getSeoMetaDescription($domainId) ?? '';
+        return $product->getSeoAttributes($domainId)->getMetaDescription() ?? '';
     }
 }

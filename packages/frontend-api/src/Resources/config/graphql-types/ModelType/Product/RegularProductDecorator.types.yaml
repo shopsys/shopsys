@@ -6,6 +6,7 @@ RegularProductDecorator:
     config:
         interfaces:
             - 'Product'
+            - 'Seo'
             - 'Hreflang'
             - 'Breadcrumb'
             - 'Slug'

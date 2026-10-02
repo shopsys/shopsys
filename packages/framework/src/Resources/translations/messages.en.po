@@ -88,9 +88,6 @@ msgstr ""
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">SEO information for main page for domain %domainName% is not fully set.</a>"
-msgstr ""
-
 msgid "<a href=\"%url%\">Shipping or payment is not set for domain %domainName%.</a>"
 msgstr ""
 
@@ -983,6 +980,9 @@ msgid "Declined by issuer - wrong card number"
 msgstr ""
 
 msgid "Declined in the 3DS server"
+msgstr ""
+
+msgid "Default (not set)"
 msgstr ""
 
 msgid "Default VAT rate"
@@ -1891,9 +1891,6 @@ msgstr ""
 msgid "Heading (H1)"
 msgstr ""
 
-msgid "Headline"
-msgstr ""
-
 msgid "Heureka"
 msgstr ""
 
@@ -2045,6 +2042,9 @@ msgid "Instructions"
 msgstr ""
 
 msgid "Integrations"
+msgstr ""
+
+msgid "Internal name of the page for the administration, it is not displayed on the storefront."
 msgstr ""
 
 msgid "Internal note"
@@ -2201,6 +2201,9 @@ msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
+msgstr ""
+
+msgid "Meta robots"
 msgstr ""
 
 msgid "Min duration"
@@ -2471,6 +2474,9 @@ msgid "Only products with \"Selling start date\" not older than %count% days are
 msgstr ""
 
 msgid "Only products with active special price from a price list be displayed"
+msgstr ""
+
+msgid "Open Graph"
 msgstr ""
 
 msgid "Open Graph description"
@@ -3403,9 +3409,6 @@ msgstr ""
 msgid "Sending emails is turned off, no email will be sent from the app."
 msgstr ""
 
-msgid "Seo"
-msgstr ""
-
 msgid "Service type for Zboží.cz"
 msgstr ""
 
@@ -3643,6 +3646,12 @@ msgstr ""
 msgid "The selected country is not valid."
 msgstr ""
 
+msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
+msgstr ""
+
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity."
+msgstr ""
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr ""
 
@@ -3659,6 +3668,9 @@ msgid "This currency can't be deleted, it is set as default or is saved with ord
 msgstr ""
 
 msgid "This email was sent from the contact form located below the panel of categories."
+msgstr ""
+
+msgid "This is a cross-domain canonical URL – it points to a different domain than the one being edited."
 msgstr ""
 
 msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
@@ -3769,13 +3781,7 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-msgid "URL Settings"
-msgstr ""
-
 msgid "URL addresses"
-msgstr ""
-
-msgid "URL settings"
 msgstr ""
 
 msgid "Unable to add"

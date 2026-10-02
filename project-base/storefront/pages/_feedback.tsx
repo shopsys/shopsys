@@ -34,7 +34,7 @@ const Feedback: FC<ServerSidePropsType> = () => {
     };
 
     return (
-        <CommonLayout title={t('Reporting feedback')}>
+        <CommonLayout defaultTitle={t('Reporting feedback')}>
             <VerticalStack gap="md">
                 <Webline>
                     <h1>{t('Reporting feedback')}</h1>

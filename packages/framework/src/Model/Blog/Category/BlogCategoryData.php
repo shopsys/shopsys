@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-
 class BlogCategoryData
 {
     /**
@@ -14,19 +12,9 @@ class BlogCategoryData
     public $names;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData[]
      */
-    public $seoTitles;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoMetaDescriptions;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $seoH1s;
+    public $seo;
 
     /**
      * @var string[]|null[]
@@ -44,7 +32,7 @@ class BlogCategoryData
     public $enabled;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData[]
      */
     public $urls;
 
@@ -61,12 +49,10 @@ class BlogCategoryData
     public function __construct()
     {
         $this->names = [];
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->seo = [];
         $this->parent = null;
         $this->descriptions = [];
         $this->enabled = [];
-        $this->urls = new UrlListData();
+        $this->urls = [];
     }
 }

@@ -16,7 +16,7 @@ import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getImageAlt } from 'utils/imageAltText';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
-import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
 
 const AdvancedSeoCategories = dynamic(() =>
@@ -37,7 +37,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
-    const title = useSeoTitleWithPagination(category.products.totalCount, category.name, category.seoH1);
+    const heading = useHeadingWithPagination(category.seo.h1 || category.name, category.products.totalCount);
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(category);
     useGtmPageReadyEvent(pageReadyEvent, isFetchingVisible);
@@ -49,8 +49,8 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 description={category.description}
                 imageName={getImageAlt(category.images[0]?.name, category.name)}
                 imageUrl={category.images[0]?.url}
+                heading={heading}
                 textClassName="max-w-5xl"
-                title={title}
             />
 
             <SimpleNavigation

@@ -2059,6 +2059,9 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity."
+msgstr ""
+
 msgid "Sale including/excluding VAT"
 msgstr ""
 
