@@ -44,29 +44,18 @@ class ProductCachedAttributesFacade
      */
     public function getProductParameterValues(Product $product, ?string $locale = null): array
     {
+        $locale ??= $this->localization->getCurrentLocaleForTranslatableEntities();
+
         return $this->inMemoryCache->getOrSaveValue(
             static::PARAMETER_VALUES_CACHE_NAMESPACE,
             function () use ($product, $locale): array {
-                $locale ??= $this->localization->getCurrentLocaleForTranslatableEntities();
-
-                $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
+                return $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
                     $product,
                     $locale,
                 );
-
-                foreach ($productParameterValues as $index => $productParameterValue) {
-                    $parameter = $productParameterValue->getParameter();
-
-                    if ($parameter->getName($locale) === null
-                        || $productParameterValue->getValue()->getLocale() !== $locale
-                    ) {
-                        unset($productParameterValues[$index]);
-                    }
-                }
-
-                return $productParameterValues;
             },
             $product->getId(),
+            $locale,
         );
     }
 }
