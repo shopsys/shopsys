@@ -6,16 +6,12 @@ namespace Tests\App\Functional\Controller\Admin;
 
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use App\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Tests\App\Test\Client;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTestCase
 {
-    private const string ADMIN_IP_ADDRESS = '127.0.0.1';
-
     /**
      * @inject
      */
@@ -25,17 +21,18 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
     {
         self::ensureKernelShutdown();
         $client = static::createClient([], ['HTTP_HOST' => '127.0.0.1:8000']);
+        $administrationClientTestHelper = new AdministrationClientTestHelper($client);
         $client->catchExceptions(false);
-        $authorizePath = $this->generatePath($client, 'admin_superadmin_mcp_oauth_authorize');
-        $tokenPath = $this->generatePath($client, 'mcp_oauth_token');
-        $registerPath = $this->generatePath($client, 'mcp_oauth_register');
+        $authorizePath = $administrationClientTestHelper->generatePath('admin_superadmin_mcp_oauth_authorize');
+        $tokenPath = $administrationClientTestHelper->generatePath('mcp_oauth_token');
+        $registerPath = $administrationClientTestHelper->generatePath('mcp_oauth_register');
         $redirectUri = 'http://127.0.0.1:8765/callback';
         $registration = $this->registerClient($client, $registerPath, $redirectUri, 'Claude Code');
         $superadministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
         $codeVerifier = 'shopsys-mcp-code-verifier';
         $codeChallenge = $this->createPkceCodeChallenge($codeVerifier);
 
-        $this->logInAdministrator($client, $superadministrator->getId());
+        $administrationClientTestHelper->logInAdministrator($superadministrator->getId());
         $crawler = $client->request('GET', $authorizePath, [
             'response_type' => 'code',
             'client_id' => $registration['client_id'],
@@ -98,16 +95,17 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
     {
         self::ensureKernelShutdown();
         $client = static::createClient([], ['HTTP_HOST' => '127.0.0.1:8000']);
+        $administrationClientTestHelper = new AdministrationClientTestHelper($client);
         $client->catchExceptions(false);
-        $authorizePath = $this->generatePath($client, 'admin_superadmin_mcp_oauth_authorize');
-        $registerPath = $this->generatePath($client, 'mcp_oauth_register');
+        $authorizePath = $administrationClientTestHelper->generatePath('admin_superadmin_mcp_oauth_authorize');
+        $registerPath = $administrationClientTestHelper->generatePath('mcp_oauth_register');
         $redirectUri = 'http://127.0.0.1:8765/callback';
         $registration = $this->registerClient($client, $registerPath, $redirectUri, 'Claude Code');
         $superadministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
         $codeVerifier = 'shopsys-mcp-code-verifier';
         $codeChallenge = $this->createPkceCodeChallenge($codeVerifier);
 
-        $this->logInAdministrator($client, $superadministrator->getId());
+        $administrationClientTestHelper->logInAdministrator($superadministrator->getId());
         $crawler = $client->request('GET', $authorizePath, [
             'response_type' => 'code',
             'client_id' => $registration['client_id'],
@@ -148,15 +146,16 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
     {
         self::ensureKernelShutdown();
         $client = static::createClient([], ['HTTP_HOST' => '127.0.0.1:8000']);
+        $administrationClientTestHelper = new AdministrationClientTestHelper($client);
         $client->catchExceptions(false);
-        $authorizePath = $this->generatePath($client, 'admin_superadmin_mcp_oauth_authorize');
-        $registerPath = $this->generatePath($client, 'mcp_oauth_register');
+        $authorizePath = $administrationClientTestHelper->generatePath('admin_superadmin_mcp_oauth_authorize');
+        $registerPath = $administrationClientTestHelper->generatePath('mcp_oauth_register');
         $registeredRedirectUri = 'http://127.0.0.1:8765/callback';
         $mismatchedRedirectUri = 'http://127.0.0.1:8765/other-callback';
         $registration = $this->registerClient($client, $registerPath, $registeredRedirectUri, 'Claude Code');
         $superadministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
 
-        $this->logInAdministrator($client, $superadministrator->getId());
+        $administrationClientTestHelper->logInAdministrator($superadministrator->getId());
         $client->request('GET', $authorizePath, [
             'response_type' => 'code',
             'client_id' => $registration['client_id'],
@@ -177,10 +176,11 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
     {
         self::ensureKernelShutdown();
         $client = static::createClient([], ['HTTP_HOST' => '127.0.0.1:8000']);
+        $administrationClientTestHelper = new AdministrationClientTestHelper($client);
         $client->catchExceptions(false);
-        $authorizePath = $this->generatePath($client, 'admin_superadmin_mcp_oauth_authorize');
-        $tokenPath = $this->generatePath($client, 'mcp_oauth_token');
-        $registerPath = $this->generatePath($client, 'mcp_oauth_register');
+        $authorizePath = $administrationClientTestHelper->generatePath('admin_superadmin_mcp_oauth_authorize');
+        $tokenPath = $administrationClientTestHelper->generatePath('mcp_oauth_token');
+        $registerPath = $administrationClientTestHelper->generatePath('mcp_oauth_register');
         $registeredRedirectUri = 'http://localhost:3118/callback';
         $authorizationRedirectUri = 'http://127.0.0.1:51582/callback';
         $tokenRedirectUri = 'http://[::1]:41234/callback';
@@ -189,7 +189,7 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
         $codeVerifier = 'shopsys-mcp-code-verifier';
         $codeChallenge = $this->createPkceCodeChallenge($codeVerifier);
 
-        $this->logInAdministrator($client, $superadministrator->getId());
+        $administrationClientTestHelper->logInAdministrator($superadministrator->getId());
         $crawler = $client->request('GET', $authorizePath, [
             'response_type' => 'code',
             'client_id' => $registration['client_id'],
@@ -237,17 +237,18 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
     {
         self::ensureKernelShutdown();
         $client = static::createClient([], ['HTTP_HOST' => '127.0.0.1:8000']);
+        $administrationClientTestHelper = new AdministrationClientTestHelper($client);
         $client->catchExceptions(false);
-        $authorizePath = $this->generatePath($client, 'admin_superadmin_mcp_oauth_authorize');
-        $tokenPath = $this->generatePath($client, 'mcp_oauth_token');
-        $registerPath = $this->generatePath($client, 'mcp_oauth_register');
+        $authorizePath = $administrationClientTestHelper->generatePath('admin_superadmin_mcp_oauth_authorize');
+        $tokenPath = $administrationClientTestHelper->generatePath('mcp_oauth_token');
+        $registerPath = $administrationClientTestHelper->generatePath('mcp_oauth_register');
         $redirectUri = 'http://127.0.0.1:8765/callback';
         $registration = $this->registerClient($client, $registerPath, $redirectUri, 'Claude Code');
         $superadministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
         $codeVerifier = 'shopsys-mcp-code-verifier';
         $codeChallenge = $this->createPkceCodeChallenge($codeVerifier);
 
-        $this->logInAdministrator($client, $superadministrator->getId());
+        $administrationClientTestHelper->logInAdministrator($superadministrator->getId());
         $crawler = $client->request('GET', $authorizePath, [
             'response_type' => 'code',
             'client_id' => $registration['client_id'],
@@ -324,26 +325,8 @@ final class McpOAuthAuthorizationControllerTest extends TransactionFunctionalTes
         return $registration;
     }
 
-    private function logInAdministrator(Client $client, int $administratorId): void
-    {
-        $administrator = $client->getContainer()->get(AdministratorFacade::class)->getById($administratorId);
-        $client->getContainer()->get(AdministratorActivityFacade::class)->create(
-            $administrator,
-            self::ADMIN_IP_ADDRESS,
-        );
-        $client->loginUser($administrator, 'administration');
-    }
-
     private function createPkceCodeChallenge(string $codeVerifier): string
     {
         return rtrim(strtr(base64_encode(hash('sha256', $codeVerifier, true)), '+/', '-_'), '=');
-    }
-
-    private function generatePath(Client $client, string $routeName): string
-    {
-        /** @var \Symfony\Component\Routing\RouterInterface $router */
-        $router = $client->getContainer()->get('router');
-
-        return $router->generate($routeName);
     }
 }
