@@ -64,6 +64,7 @@ class FilterListTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $crawler->filter('form [data-datagrid-filter-target="group"]'));
         $this->assertCount(1, $crawler->filter('form [data-datagrid-filter-target="rule"]'));
         $this->assertGreaterThan(0, $crawler->filter('template[data-datagrid-filter-target="prototype"][data-filter="status"][data-arity="list"]')->count());
+        $this->assertGreaterThan(0, $crawler->filter('template[data-datagrid-filter-target="prototype"][data-filter="isVerifiedPurchase"][data-arity="none"]')->count());
         // the page renames the fields of a prototype to those of a rule by this part of their names
         $listPrototype = $crawler->filter('template[data-datagrid-filter-target="prototype"][data-filter="status"][data-arity="list"]');
         $this->assertCount(1, $listPrototype->filter('select[name$="[prototypes][status][list][operator]"]'));

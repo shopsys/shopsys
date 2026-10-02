@@ -106,6 +106,7 @@ final class Datagrid
      * the datagrid is configured; a later change of the fields or the filters does not change it.
      *
      * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
      * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
      */
     public function getNarrowing(): DatagridNarrowing
@@ -258,7 +259,8 @@ final class Datagrid
      *       role?: string|null,
      *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
      *       class?: string|null,
-     *       searchable?: bool
+     *       searchable?: bool,
+     *       filterable?: bool
      *   } $options
      * @phpstan-param FieldOptions $options
      */
@@ -288,7 +290,8 @@ final class Datagrid
      *      role?: string|null,
      *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
      *      class?: string|null,
-     *      searchable?: bool
+     *      searchable?: bool,
+     *      filterable?: bool
      *  } $options
      * @phpstan-param FieldOptions $options
      */
@@ -328,6 +331,8 @@ final class Datagrid
      * The filters the administrator composes rules from, declared explicitly —
      * `$datagrid->filters()->add(TextFilter::new('name'))`.
      *
+     * A field declared `'filterable' => true` gets a filter picked by the kind of value its path leads to; a filter
+     * declared here under the name of that field (see `FieldDescriptor::getFilterName()`) replaces the picked one.
      * The filters are offered in the alphabetical order of their labels. Declare them while configuring the datagrid,
      * they are adapted to the adapter once the narrowing is resolved (see `getNarrowing()`).
      */

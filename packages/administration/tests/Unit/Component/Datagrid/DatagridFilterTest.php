@@ -69,9 +69,20 @@ final class DatagridFilterTest extends TestCase
         );
     }
 
+    public function testRestrictedFieldGetsNoFilterWithoutPermission(): void
+    {
+        $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
+        $datagrid = $this->createDatagrid($adapter, [], false);
+        $datagrid
+            ->add('name', ['filterable' => true])
+            ->add('purchasePrice', ['filterable' => true, 'role' => 'ROLE_PURCHASE_PRICES']);
+
+        $this->assertSame(['name'], $this->getOfferedFilterNames($datagrid));
+    }
+
     /**
-     * A filter declared under the name of a field the administrator may not see would tell what the field holds, so it
-     * is left out with the field — and so is a filter declared over a property of the field under another name.
+     * A declared filter replaces the one picked for the field of its name, so it has to be left out with the field —
+     * and so does a filter declared over a property of the field under another name.
      */
     public function testFilterDeclaredForRestrictedFieldIsNotOfferedWithoutPermission(): void
     {
@@ -80,10 +91,9 @@ final class DatagridFilterTest extends TestCase
             'groups' => [['rules' => [['filter' => 'purchasePrice', 'operator' => 'greaterThan', 'value' => '100']]]],
         ], false);
         $datagrid
-            ->add('name')
-            ->add('purchasePrice', ['role' => 'ROLE_PURCHASE_PRICES']);
+            ->add('name', ['filterable' => true])
+            ->add('purchasePrice', ['filterable' => true, 'role' => 'ROLE_PURCHASE_PRICES']);
         $datagrid->filters()
-            ->add(TextFilter::new('name'))
             ->add(NumericFilter::new('purchasePrice'))
             ->add(NumericFilter::new('purchasePrice')->setName('cost'));
 
