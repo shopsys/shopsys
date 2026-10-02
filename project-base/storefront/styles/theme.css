@@ -205,9 +205,11 @@
     --color-skeleton-default: var(--color-gray-200);
     --color-skeleton-less: var(--color-gray-100);
 
+    --color-status-badge-bg-info: var(--color-primary-100);
     --color-status-badge-bg-error: var(--color-red-100);
     --color-status-badge-bg-success: var(--color-green-100);
     --color-status-badge-bg-warning: var(--color-orange-100);
+    --color-status-badge-text-info: var(--color-primary-800);
     --color-status-badge-text-error: var(--color-red-800);
     --color-status-badge-text-success: var(--color-green-800);
     --color-status-badge-text-warning: var(--color-orange-800);

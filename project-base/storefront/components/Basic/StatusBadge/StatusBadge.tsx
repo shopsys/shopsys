@@ -1,7 +1,7 @@
 import { type ElementType } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
-export type StatusBadgeVariant = 'error' | 'success' | 'warning';
+export type StatusBadgeVariant = 'error' | 'success' | 'warning' | 'neutral' | 'info';
 
 type StatusBadgeProps = {
     icon?: ElementType;
@@ -13,6 +13,8 @@ export const StatusBadge: FC<StatusBadgeProps> = ({ children, className, icon: I
         error: 'bg-status-badge-bg-error text-status-badge-text-error',
         success: 'bg-status-badge-bg-success text-status-badge-text-success',
         warning: 'bg-status-badge-bg-warning text-status-badge-text-warning',
+        neutral: 'bg-background-more text-text-default',
+        info: 'bg-status-badge-bg-info text-status-badge-text-info',
     };
 
     return (
