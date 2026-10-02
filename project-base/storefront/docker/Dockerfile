@@ -53,6 +53,9 @@ RUN chown -R root:root $APP_DIR \
     && mkdir -p $APP_DIR/.next/cache \
     && chown -R node:node $APP_DIR/.next/cache
 
+COPY docker/entrypoint.sh /entrypoint.sh
+
 USER node
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["pnpm", "start"]
