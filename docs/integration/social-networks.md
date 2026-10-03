@@ -32,11 +32,15 @@ For local development, login via social networks usually requires https.
 - log into Google account and create [OAuth 2.0 Client IDs](https://console.cloud.google.com/apis/credentials)
     - Create a project.
     - Click on "+ create credentials" and select "OAuth client ID".
-    - Click on "configure consent screen" and fill in the required fields (choose an "internal" user type).
+    - Click on "configure consent screen" and fill in the required fields (choose an "external" user type — the "internal" type is available only to users within your Google Workspace organization, so your customers would not be able to log in).
     - After you configure the consent screen, once again click on "+ create credentials" and select "OAuth client ID".
     - As an application type, choose "web application" and fill in the required fields.
     - You need to add an authorized redirect URI here, which is `{eshop_domain}/social-network/login/google`.
 - in detail, you will find `Client ID` and `Client secret`
+
+!!! warning
+
+    With the "external" user type, the application starts in the "Testing" publishing status, and only explicitly added test users can log in. Publish the application to make the login available to all customers.
 
 ### Seznam
 
