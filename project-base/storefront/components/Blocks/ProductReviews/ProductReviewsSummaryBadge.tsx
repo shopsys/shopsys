@@ -17,15 +17,22 @@ export const ProductReviewsSummaryBadge: FC<ProductReviewsSummaryBadgeProps> = (
         return null;
     }
 
+    const formattedAverageRating = formatAverageRating(reviewsSummary.averageRating, defaultLocale);
+
     return (
         <div className="flex items-center gap-2 self-start text-sm">
             <ReviewStars rating={reviewsSummary.averageRating} />
 
-            <span className="font-semibold text-text-default">
-                {formatAverageRating(reviewsSummary.averageRating, defaultLocale)}
+            <span aria-hidden="true" className="font-semibold text-text-default">
+                {formattedAverageRating}
             </span>
 
             <a
+                aria-label={t('Average rating {{ averageRating }} out of 5, review count {{ count }}, go to reviews', {
+                    ns: 'accessibility',
+                    averageRating: formattedAverageRating,
+                    count: reviewsSummary.totalCount,
+                })}
                 className="text-link-default text-sm no-underline hover:text-link-hovered hover:underline"
                 href={`#${PRODUCT_DETAIL_SECTIONS_IDS.reviews}`}
             >

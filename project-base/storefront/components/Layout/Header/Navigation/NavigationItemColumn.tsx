@@ -5,6 +5,7 @@ import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 
 type NavigationItemColumnProps = {
+    ariaLabel: string;
     columnCategories: TypeColumnCategoriesFragment[];
     skeletonType?: PageType;
     onLinkClick: () => void;
@@ -12,6 +13,7 @@ type NavigationItemColumnProps = {
 };
 
 export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
+    ariaLabel,
     className,
     columnCategories,
     skeletonType,
@@ -23,7 +25,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
     );
 
     return (
-        <ul className={twJoin('grid grid-cols-4 gap-10', className)}>
+        <ul aria-label={ariaLabel} className={twJoin('grid grid-cols-4 gap-10', className)}>
             {sortedColumnCategories.flatMap((columnCategories) =>
                 columnCategories.categories.map((columnCategory, columnCategoryIndex) => {
                     const mainImageUrl = columnCategory.mainImage?.url;
@@ -63,7 +65,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                             </ExtendedNextLink>
 
                             {!!columnCategory.children.length && (
-                                <ul className="mt-0 ml-13 flex flex-col gap-1.5">
+                                <ul aria-label={columnCategory.name} className="mt-0 ml-13 flex flex-col gap-1.5">
                                     {columnCategory.children.map((columnCategoryChild) => (
                                         <li key={columnCategoryChild.name} className="group/child-category">
                                             <ExtendedNextLink

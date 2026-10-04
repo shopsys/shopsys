@@ -47,6 +47,7 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
             data-tid={`${TIDs.product_detail_section_}${PRODUCT_DETAIL_SECTIONS_IDS.files}`}
             id={PRODUCT_DETAIL_SECTIONS_IDS.files}
             ref={sectionRef}
+            tabIndex={-1}
         >
             <Webline width="vl">
                 <ProductDetailSectionHeading>{t('Files')}</ProductDetailSectionHeading>

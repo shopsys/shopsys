@@ -104,6 +104,8 @@ describe('StoreListItem', () => {
         const storeCard = container.querySelector(`[data-tid="${TIDs.store_list_item_}store-uuid"]`)!;
         const storeSummary = storeCard.querySelector('[role="button"]')!;
 
+        expect(screen.getAllByRole('button', { name: 'Expand store info Test store' })).toHaveLength(1);
+
         fireEvent.click(storeSummary);
 
         expect(screen.getByText('Store opening hours detail')).toBeInTheDocument();
@@ -213,23 +215,18 @@ describe('StoreListItem', () => {
         expect(screen.getByText('7 AM - 5 PM')).toBeInTheDocument();
     });
 
-    test('keeps the store info toggle appearance consistent when expanded', () => {
+    test('uses a single expandable control in default mode', () => {
         const { container } = render(
             <StoreListItem isDistanceFromSearchText={false} isSelected={false} store={store} />,
         );
-        const collapsedToggle = container.querySelector<HTMLButtonElement>(
-            'button[aria-label="Expand store info Test store"]',
-        )!;
+        const collapsedToggle = container.querySelector<HTMLElement>('[role="button"]')!;
 
-        expect(collapsedToggle).toHaveClass('size-8', 'rounded-md');
-        expect(collapsedToggle).not.toHaveClass('rounded-none');
+        expect(collapsedToggle).toHaveAccessibleName('Expand store info Test store');
+        expect(screen.getAllByRole('button')).toHaveLength(1);
 
         fireEvent.click(collapsedToggle);
 
-        const expandedToggle = container.querySelector<HTMLButtonElement>(
-            'button[aria-label="Collapse store info Test store"]',
-        )!;
-        expect(expandedToggle).toHaveClass('size-8', 'rounded-md');
-        expect(expandedToggle).not.toHaveClass('rounded-none');
+        expect(collapsedToggle).toHaveAccessibleName('Collapse store info Test store');
+        expect(screen.getAllByRole('button')).toHaveLength(1);
     });
 });

@@ -14,10 +14,12 @@ export const DeliveryOptionsAddressPanel: FC<DeliveryOptionsAddressPanelProps> =
     }
 
     return (
-        <div className="flex flex-col divide-y divide-border-less">
+        <ul className="flex flex-col divide-y divide-border-less">
             {deliveryOptions.map((deliveryOption) => (
-                <DeliveryOptionRow key={deliveryOption.transport.uuid} deliveryOption={deliveryOption} />
+                <li key={deliveryOption.transport.uuid}>
+                    <DeliveryOptionRow deliveryOption={deliveryOption} />
+                </li>
             ))}
-        </div>
+        </ul>
     );
 };

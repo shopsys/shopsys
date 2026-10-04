@@ -214,6 +214,7 @@ export enum TIDs {
     toast_success = 'toast_success',
     toast_error = 'toast_error',
     toast_info = 'toast_info',
+    toast_close_button = 'toast_close_button',
 
     // Stores
     stores_map = 'stores_map',

@@ -6,7 +6,7 @@ import { twMergeCustom } from 'utils/twMerge';
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     'id' | 'onChange',
-    'name' | 'disabled' | 'required' | 'onBlur' | 'className'
+    'name' | 'disabled' | 'required' | 'onBlur' | 'className' | 'aria-describedby'
 >;
 
 export type CheckboxProps = NativeProps & {
@@ -18,7 +18,19 @@ export type CheckboxProps = NativeProps & {
 
 export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
     (
-        { id, name, label, count, required, disabled, onChange, value, className, labelWrapperClassName },
+        {
+            id,
+            name,
+            label,
+            count,
+            required,
+            disabled,
+            onChange,
+            value,
+            className,
+            labelWrapperClassName,
+            'aria-describedby': ariaDescribedBy,
+        },
         checkboxForwardedRef,
     ) => (
         <LabelWrapper
@@ -33,6 +45,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
         >
             <input
                 // class "peer" is used for styling in LabelWrapper
+                aria-describedby={ariaDescribedBy}
                 checked={value}
                 className={twMergeCustom('peer sr-only', className)}
                 disabled={disabled}

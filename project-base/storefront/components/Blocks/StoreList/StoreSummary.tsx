@@ -1,3 +1,4 @@
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import { OpeningHoursOfPickupDay } from 'components/Blocks/OpeningHours/OpeningHoursOfPickupDay';
 import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
@@ -63,7 +64,8 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
             aria-expanded={isSelectionMode ? undefined : isExpanded}
             aria-label={ariaLabel}
             className={twMergeCustom(
-                'group flex w-full cursor-pointer items-center gap-2.5 pr-4 text-left outline-hidden',
+                'group flex cursor-pointer items-center text-left outline-hidden',
+                isSelectionMode ? 'w-full gap-2.5 pr-4' : 'flex-1 gap-4',
                 !isExpanded && '-my-2.5 -ml-5 py-2.5 pl-5',
             )}
             data-tid={isSelectionMode ? TIDs.store_select_button : undefined}
@@ -121,6 +123,14 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
                     )}
                 </div>
             </div>
+
+            {!isSelectionMode && (
+                <span aria-hidden="true" className="flex size-8 shrink-0 items-center justify-center">
+                    <ArrowIcon
+                        className={twMergeCustom('size-6 text-icon-less transition', isExpanded && 'rotate-180')}
+                    />
+                </span>
+            )}
         </div>
     );
 };
