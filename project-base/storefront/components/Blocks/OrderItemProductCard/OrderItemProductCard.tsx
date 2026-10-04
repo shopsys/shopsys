@@ -41,13 +41,15 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     return (
         <li className="flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
             <div className="flex items-center gap-2.5">
-                <div className="flex size-20 items-center justify-center">
+                <div
+                    className="flex size-20 shrink-0 items-center justify-center"
+                    data-tid={TIDs.order_summary_cart_item_image}
+                >
                     <Image
                         alt={generateProductImageAlt(fullName, categoryName, mainImage?.name)}
                         className="size-auto max-h-20 max-w-20 mix-blend-multiply"
                         height={80}
                         src={mainImage?.url}
-                        tid={TIDs.order_summary_cart_item_image}
                         width={80}
                     />
                 </div>
