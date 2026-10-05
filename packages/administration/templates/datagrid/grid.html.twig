@@ -342,16 +342,16 @@
 
 {% block grid_pager %}
     <div class="container">
-        <div class="row">
-            <div class="col-lg-4 mb-3 mb-lg-0 d-flex justify-content-center justify-content-lg-start">
+        <div class="row gy-2 align-items-center">
+            <div class="col-auto col-lg-4 d-flex justify-content-start">
                 {{ gridView.renderBlock('grid_pager_totalcount', { 'pageCount': grid.pageCount }) }}
             </div>
 
-            <div class="col-lg mb-3 mb-lg-0 d-flex justify-content-center">
+            <div class="col-auto col-lg ms-auto ms-lg-0 d-flex justify-content-end justify-content-lg-center">
                 {{ gridView.renderBlock('grid_pager_selectpage') }}
             </div>
 
-            <div class="col-lg-4 d-flex justify-content-center justify-content-lg-end">
+            <div class="col-lg-4 d-none d-lg-flex justify-content-lg-end">
                 {{ gridView.renderBlock('grid_pager_results_perpage') }}
             </div>
         </div>
