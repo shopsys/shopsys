@@ -18,7 +18,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Configure application
-                run: echo 1 | ./scripts/configure.sh
+                run: ./scripts/configure.sh --os=linux
             -   name: Install composer dependencies
                 run: docker compose exec -T php-fpm composer install
             -   name: Build application
@@ -103,7 +103,7 @@ jobs:
             -   name: Configure project for single domain
                 run: php shopsys.phar configure . --config=.github/single-domain-config.yaml
             -   name: Configure application
-                run: echo 1 | ./scripts/configure.sh
+                run: ./scripts/configure.sh --os=linux
             -   name: Install composer dependencies
                 run: docker compose exec -T php-fpm composer install
             -   name: Build application
