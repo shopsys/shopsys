@@ -21,9 +21,9 @@ class CropZerosExtension extends AbstractExtension
         ];
     }
 
-    public function cropZeros(string $value): string
+    public function cropZeros(string|int|float|null $value): string
     {
-        return preg_replace('/(?:[,.]0+|([,.]\d*?)0+)$/', '$1', $value);
+        return preg_replace('/(?:[,.]0+|([,.]\d*?)0+)$/', '$1', (string)$value);
     }
 
     public function getName(): string
