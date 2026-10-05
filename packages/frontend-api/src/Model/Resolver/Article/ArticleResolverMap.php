@@ -32,6 +32,12 @@ class ArticleResolverMap extends ResolverMap
                     $articleData['seoCanonicalUrl'],
                 );
             },
+            'modifiedAt' => static function (array $articleData) {
+                return ($articleData['modifiedAt'] ?? null) !== null ? new DatePoint($articleData['modifiedAt']) : null;
+            },
+            'publishDate' => static function (array $articleData) {
+                return ($articleData['publishDate'] ?? null) !== null ? new DatePoint($articleData['publishDate']) : null;
+            },
             'createdAt' => static function (array $blogArticleData) {
                 return new DatePoint($blogArticleData['createdAt']);
             },

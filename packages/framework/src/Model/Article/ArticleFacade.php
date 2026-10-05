@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher;
@@ -14,6 +15,7 @@ class ArticleFacade
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly ImageFacade $imageFacade,
         protected readonly ArticleRepository $articleRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ArticleFactory $articleFactory,
@@ -61,6 +63,8 @@ class ArticleFacade
             $this->em->flush();
         }
 
+        $this->imageFacade->manageImages($article, $articleData->image);
+
         $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
@@ -83,6 +87,8 @@ class ArticleFacade
             );
         }
         $this->em->flush();
+
+        $this->imageFacade->manageImages($article, $articleData->image);
 
         $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);

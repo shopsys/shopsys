@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\HreflangSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoRobotsSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\OrganizationFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +24,8 @@ class SeoController extends AdminBaseController
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly OrganizationFacade $organizationFacade,
+        protected readonly OrganizationDataFactory $organizationDataFactory,
     ) {
     }
 
@@ -33,6 +37,7 @@ class SeoController extends AdminBaseController
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $seoSettingData = [
             'titleAddOn' => $this->seoSettingFacade->getTitleAddOn($domainId),
+            'organization' => $this->organizationDataFactory->findOrCreateForDomain($domainId),
         ];
 
         $form = $this->createForm(SeoSettingFormType::class, $seoSettingData, ['domain_id' => $domainId]);
@@ -42,6 +47,8 @@ class SeoController extends AdminBaseController
             $seoSettingData = $form->getData();
 
             $this->seoSettingFacade->setTitleAddOn($seoSettingData['titleAddOn'], $domainId);
+
+            $this->organizationFacade->edit($domainId, $seoSettingData['organization']);
 
             $this->addSuccessFlash(t('SEO attributes settings modified'));
 

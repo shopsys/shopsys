@@ -20,6 +20,7 @@ import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { getMetaDescription } from 'utils/seo/getMetaDescription';
+import { useSeo } from 'utils/seo/useSeo';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
 
@@ -33,6 +34,7 @@ const isArticleSite = (article: TypeArticleDetailQuery['article']): article is T
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
+    const { ogImageUrl } = useSeo({});
     const [{ data: articleDetailData, fetching: isArticleDetailFetching }] = useArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
@@ -55,6 +57,7 @@ const ArticleDetailPage: NextPage = () => {
             canonicalQueryParams={[]}
             defaultDescription={article?.text}
             isFetchingData={isArticleDetailFetching}
+            ogImageUrlDefault={article?.mainImage?.url}
             ogType={OgTypeEnum.Article}
             seo={article?.seo}
             defaultTitle={article?.articleName}
@@ -62,9 +65,11 @@ const ArticleDetailPage: NextPage = () => {
             {!!article && (
                 <>
                     <ArticleMetadata
-                        datePublished={article.createdAt}
+                        datePublished={article.publishDate}
+                        dateModified={article.modifiedAt}
+                        imageUrl={article.mainImage?.url || ogImageUrl}
                         description={metaDescription}
-                        headline={article.seo.h1 || article.articleName}
+                        headline={article.seo.title || article.seo.h1 || article.articleName}
                     />
                     <ArticleDetailContent article={article} />
                 </>

@@ -1,3 +1,4 @@
+import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
@@ -14,6 +15,7 @@ import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { MetaRobotsContent, OgTypeEnum } from 'types/seo';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
+import { useSeo } from 'utils/seo/useSeo';
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 import { DeferredFooter } from './Footer/DeferredFooter';
 import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';
@@ -79,6 +81,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     bottomContent,
 }) => {
     const { t } = useTranslation();
+    const { isNoindex } = useSeo({ seo, defaultMetaRobots });
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
     const setIsUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
     const router = useRouter();
@@ -121,6 +124,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
     return (
         <>
+            {!!breadcrumbs?.length && !isNoindex && <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />}
             <SeoMeta
                 canonicalQueryParams={canonicalQueryParams}
                 defaultDescription={defaultDescription}
