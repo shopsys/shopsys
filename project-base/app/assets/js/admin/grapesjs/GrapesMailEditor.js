@@ -35,6 +35,14 @@ export default class GrapesMailEditor {
             noticeOnUnload: false,
             avoidInlineStyle: false,
             forceClass: false,
+            nativeDnD: false,
+            // Keep a drop area after the last block without exporting the extra spacing.
+            canvasCss: `
+                .gjs-editable {
+                    min-height: 50px !important;
+                    padding-block: 1px 32px !important;
+                }
+            `,
             plugins: defaultPlugins.concat(customPlugins),
             i18n: {
                 locale: Translator.locale,
@@ -148,13 +156,6 @@ export default class GrapesMailEditor {
                 },
             },
         });
-
-        editor.addStyle(`
-            .gjs-editable {
-                min-height: 50px !important;
-                padding-block: 1px !important;
-            }
-        `);
 
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);

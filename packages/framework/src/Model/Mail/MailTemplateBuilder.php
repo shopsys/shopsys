@@ -218,15 +218,15 @@ class MailTemplateBuilder
                                     </tr>
                                     <tr>
                                         <td style="padding:30px;">
+                                            <!--[if mso]>
+                                            <table role="presentation" border="0" cellspacing="0" cellpadding="0"><tr><td>
+                                            <![endif]-->
                                             <div style="max-width:600px; margin:0 auto;" data-gjs-type="editable" class="gjs-editable main">
-                                                <!--[if mso]>
-                                                <table role="presentation" border="0" cellspacing="0" cellpadding="0"><tr><td>
-                                                <![endif]-->
                                                 {$content}
-                                                <!--[if mso]>
-                                                </td></tr></table>
-                                                <![endif]-->
                                             </div>
+                                            <!--[if mso]>
+                                            </td></tr></table>
+                                            <![endif]-->
                                         </td>
                                     </tr>
                                 </table>
