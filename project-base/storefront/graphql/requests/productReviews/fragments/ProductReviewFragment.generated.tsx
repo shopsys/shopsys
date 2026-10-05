@@ -5,13 +5,20 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeProductReviewFragment = { __typename: 'ProductReview', uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> };
+export type TypeProductReviewFragment = { __typename: 'ProductReview', uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, product:
+    | { fullName: string }
+    | { fullName: string }
+    | { fullName: string }
+   | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> };
 
 export const ProductReviewFragment = gql`
     fragment ProductReviewFragment on ProductReview {
   __typename
   uuid
   productName
+  product {
+    fullName
+  }
   reviewerName
   rating
   text

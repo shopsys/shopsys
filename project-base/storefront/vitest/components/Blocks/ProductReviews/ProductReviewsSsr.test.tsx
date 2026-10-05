@@ -58,6 +58,7 @@ const createReviewConnection = ({
                 __typename: 'ProductReview',
                 uuid: `${productUuid}-${orderingMode}-${offset + index + 1}`,
                 productName: 'Product',
+                product: null,
                 reviewerName: `Reviewer ${offset + index + 1}`,
                 rating: 5,
                 text: `${productUuid} ${orderingMode} review ${offset + index + 1}`,
