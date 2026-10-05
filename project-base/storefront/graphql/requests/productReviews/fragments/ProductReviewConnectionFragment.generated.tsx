@@ -16,7 +16,11 @@ export type TypeProductReviewOrderingModeEnum =
   /** Order by date of creation, newest first */
   | 'NEWEST';
 
-export type TypeProductReviewConnectionFragment = { totalCount: number, orderingMode: Types.TypeProductReviewOrderingModeEnum, summary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number, ratingCounts: Array<{ __typename: 'ProductReviewRatingCount', rating: number, count: number }> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { __typename: 'ProductReview', uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } | null } | null> | null };
+export type TypeProductReviewConnectionFragment = { totalCount: number, orderingMode: Types.TypeProductReviewOrderingModeEnum, summary: { __typename: 'ProductReviewsSummary', averageRating: number | null, totalCount: number, ratingCounts: Array<{ __typename: 'ProductReviewRatingCount', rating: number, count: number }> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { __typename: 'ProductReview', uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, product:
+        | { fullName: string }
+        | { fullName: string }
+        | { fullName: string }
+       | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } | null } | null> | null };
 
 export const ProductReviewConnectionFragment = gql`
     fragment ProductReviewConnectionFragment on ProductReviewConnection {

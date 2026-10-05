@@ -24,7 +24,11 @@ export type TypeCurrentCustomerUserProductFamilyReviewsQueryVariables = Exact<{
 }>;
 
 
-export type TypeCurrentCustomerUserProductFamilyReviewsQuery = { currentCustomerUserProductReviews: { edges: Array<{ node: { __typename: 'ProductReview', productUuid: string | null, status: Types.TypeProductReviewStatusEnum, uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } | null } | null> | null } };
+export type TypeCurrentCustomerUserProductFamilyReviewsQuery = { currentCustomerUserProductReviews: { edges: Array<{ node: { __typename: 'ProductReview', productUuid: string | null, status: Types.TypeProductReviewStatusEnum, uuid: string, productName: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, responseText: string | null, responseCreatedAt: string | null, product:
+          | { fullName: string }
+          | { fullName: string }
+          | { fullName: string }
+         | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } | null } | null> | null } };
 
 
 export const CurrentCustomerUserProductFamilyReviewsQueryDocument = gql`

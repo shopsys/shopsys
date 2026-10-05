@@ -93,14 +93,13 @@ describe('operation-owned data contracts', () => {
         expect(fieldsAt(CatalogCategoriesQueryDocument, ['categories'])).not.toContain('products');
     });
 
-    test('product-family reviews keep moderation identity without account-page product details', () => {
-        const fields = fieldsAt(CurrentCustomerUserProductFamilyReviewsQueryDocument, [
-            'currentCustomerUserProductReviews',
-            'edges',
-            'node',
-        ]);
+    test('product-family reviews keep moderation identity and fetch only the gallery product name', () => {
+        const path = ['currentCustomerUserProductReviews', 'edges', 'node'];
+        const fields = fieldsAt(CurrentCustomerUserProductFamilyReviewsQueryDocument, path);
         expect(fields).toEqual(expect.arrayContaining(['uuid', 'productUuid', 'status', 'rating', 'text', 'images']));
-        expect(fields).not.toContain('product');
+        expect(fieldsAt(CurrentCustomerUserProductFamilyReviewsQueryDocument, [...path, 'product'])).toEqual([
+            'fullName',
+        ]);
         expect(fields).not.toContain('rejectionReason');
     });
 

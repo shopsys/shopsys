@@ -20,7 +20,7 @@ type ProductReviewItemProps = {
     leadingContent?: ReactNode;
     productReview: Pick<
         TypeProductReviewFragment,
-        'reviewerName' | 'productName' | 'rating' | 'text' | 'createdAt' | 'images'
+        'reviewerName' | 'productName' | 'product' | 'rating' | 'text' | 'createdAt' | 'images'
     > &
         Partial<Pick<TypeProductReviewFragment, 'responseText' | 'responseCreatedAt'>>;
     productName?: ReactNode;
@@ -121,7 +121,7 @@ export const ProductReviewItem: FC<ProductReviewItemProps> = ({
 
                     <ProductReviewPhotos
                         isOnGreyBackground={arePhotosOnGreyBackground}
-                        galleryName={productReview.productName}
+                        galleryName={productReview.product?.fullName ?? productReview.productName}
                         images={productReview.images}
                     />
 

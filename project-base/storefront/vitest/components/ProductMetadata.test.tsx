@@ -29,6 +29,7 @@ const reviews = {
                 __typename: 'ProductReview',
                 uuid: 'review',
                 productName: 'Product',
+                product: { fullName: 'Product' },
                 reviewerName: null,
                 rating: 5,
                 text: 'Great </script> product',
