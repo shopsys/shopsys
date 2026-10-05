@@ -260,8 +260,10 @@
                 </div>
             </div>
 
-            {{ entityName|default('records'|trans)|trim }}:
-            {{ grid.paginationResults.fromItem }} - {{ grid.paginationResults.toItem }} {{ 'from'|trans }} {{ grid.totalCount }}
+            <span class="text-nowrap">
+                {{ entityName|default('records'|trans)|trim }}:
+                {{ grid.paginationResults.fromItem }} - {{ grid.paginationResults.toItem }} {{ 'from'|trans }} {{ grid.totalCount }}
+            </span>
         </div>
     </div>
 {% endblock %}
