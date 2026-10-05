@@ -8,6 +8,7 @@ FROM base AS dependencies
 
 WORKDIR /tmp/build
 COPY package.json pnpm-lock.yaml ./
+COPY patches ./patches
 
 RUN set -eux; \
     for i in 1 2 3 4 5; do \
