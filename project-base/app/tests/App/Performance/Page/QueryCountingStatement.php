@@ -14,6 +14,7 @@ final class QueryCountingStatement extends AbstractStatementMiddleware
     public function __construct(
         Statement $statement,
         private readonly QueryCountingMiddleware $middleware,
+        private readonly string $sql,
     ) {
         parent::__construct($statement);
     }
@@ -24,7 +25,7 @@ final class QueryCountingStatement extends AbstractStatementMiddleware
     #[Override]
     public function execute(): Result
     {
-        $this->middleware->incrementQueryCount();
+        $this->middleware->recordQuery($this->sql);
 
         return parent::execute();
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Cart;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -25,6 +27,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundU
 
 class CartApiFacade
 {
+    protected const string CART_CACHE_NAMESPACE = 'cartApiFacadeCartByCustomerUserAndCartUuid';
+
     public function __construct(
         protected readonly CartFacade $cartFacade,
         protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
@@ -33,6 +37,8 @@ class CartApiFacade
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly AdditionalServiceApiFacade $additionalServiceApiFacade,
+        protected readonly InMemoryCache $inMemoryCache,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -69,6 +75,24 @@ class CartApiFacade
     }
 
     public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
+    {
+        $cacheKeyParts = [$customerUser?->getId() ?? 'anonymous', $cartUuid ?? 'currentCustomerCart'];
+
+        if ($this->inMemoryCache->hasItem(static::CART_CACHE_NAMESPACE, ...$cacheKeyParts)) {
+            $cart = $this->inMemoryCache->getItem(static::CART_CACHE_NAMESPACE, ...$cacheKeyParts);
+
+            if ($this->em->contains($cart)) {
+                return $cart;
+            }
+        }
+
+        $cart = $this->resolveCartCreateIfNotExists($customerUser, $cartUuid);
+        $this->inMemoryCache->save(static::CART_CACHE_NAMESPACE, $cart, ...$cacheKeyParts);
+
+        return $cart;
+    }
+
+    protected function resolveCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
     {
         if ($customerUser === null && $cartUuid !== null) {
             $cart = $this->getCartByUuid($cartUuid);

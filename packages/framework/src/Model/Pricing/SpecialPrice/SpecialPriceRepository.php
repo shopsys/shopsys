@@ -43,6 +43,26 @@ class SpecialPriceRepository
     }
 
     /**
+     * @param int[] $productIds
+     * @return array<int, array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}>
+     */
+    public function getRelevantSpecialPricesByProductIdsIndexedByProductId(array $productIds, int $domainId): array
+    {
+        if ($productIds === []) {
+            return [];
+        }
+
+        $currentAndFutureSpecialPrices = $this->createCurrentAndFutureSpecialPricesQueryBuilder($productIds, $domainId)->getQuery()->getResult();
+        $relevantSpecialPricesIndexedByProductId = [];
+
+        foreach ($currentAndFutureSpecialPrices as $specialPrice) {
+            $relevantSpecialPricesIndexedByProductId[(int)$specialPrice['productId']] ??= $specialPrice;
+        }
+
+        return $relevantSpecialPricesIndexedByProductId;
+    }
+
+    /**
      * @param int[] $variantIds
      */
     protected function getCurrentAndFutureSpecialPricesQueryBuilder(
@@ -50,6 +70,14 @@ class SpecialPriceRepository
         int $domainId,
         array $variantIds = [],
     ): QueryBuilder {
+        return $this->createCurrentAndFutureSpecialPricesQueryBuilder([...$variantIds, $product->getId()], $domainId);
+    }
+
+    /**
+     * @param int[] $productIds
+     */
+    protected function createCurrentAndFutureSpecialPricesQueryBuilder(array $productIds, int $domainId): QueryBuilder
+    {
         $currentDate = $this->clock->now();
 
         return $this->em->createQueryBuilder()
@@ -62,7 +90,7 @@ class SpecialPriceRepository
             (:currentDate BETWEEN pl.validFrom AND pl.validTo)
             OR (:currentDate < pl.validFrom)
         ')
-            ->setParameter('productIds', [...$variantIds, $product->getId()])
+            ->setParameter('productIds', $productIds)
             ->setParameter('domainId', $domainId)
             ->setParameter('currentDate', $currentDate)
             ->orderBy('CASE

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Performance\Page;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use PHPUnit\Framework\Attributes\Group;
-use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
@@ -196,7 +194,7 @@ class AllPagesTest extends KernelTestCase
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
-        $queryCounter = $this->injectQueryCounter($entityManager);
+        $queryCounter = QueryCountingMiddleware::createInjectedInto($entityManager->getConnection());
         $startTime = microtime(true);
         $entityManager->beginTransaction();
         $response = static::$kernel->handle($request);
@@ -274,25 +272,6 @@ class AllPagesTest extends KernelTestCase
         $router = static::getContainer()->get('test.service_container')->get(AdministrationRouter::class);
 
         return new SymfonyRouterAdapter($router);
-    }
-
-    private function injectQueryCounter(EntityManagerInterface $entityManager): QueryCountingMiddleware
-    {
-        $connection = $entityManager->getConnection();
-
-        $queryCountingMiddleware = new QueryCountingMiddleware();
-
-        $connectionReflection = new ReflectionClass($connection);
-        $driverProperty = $connectionReflection->getProperty('_driver');
-        $currentDriver = $driverProperty->getValue($connection);
-
-        $wrappedDriver = $queryCountingMiddleware->wrap($currentDriver);
-
-        $driverProperty->setValue($connection, $wrappedDriver);
-
-        $connection->close();
-
-        return $queryCountingMiddleware;
     }
 
     private function createPerformanceTestSampleQualifier(): PerformanceTestSampleQualifier

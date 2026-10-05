@@ -36,9 +36,11 @@ class CartWatcher
                 $cartItem->getProduct(),
             )->sellingProductPrice->getPrice();
 
-            if (!$price->getPriceWithVat()->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
-                $modifiedItems[] = $cartItem;
+            if ($price->getPriceWithVat()->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
+                continue;
             }
+
+            $modifiedItems[] = $cartItem;
             $cartItem->setWatchedPrice($price->getPriceWithVat());
         }
 

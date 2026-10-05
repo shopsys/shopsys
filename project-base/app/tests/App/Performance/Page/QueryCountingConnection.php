@@ -28,6 +28,7 @@ final class QueryCountingConnection extends AbstractConnectionMiddleware
         return new QueryCountingStatement(
             parent::prepare($sql),
             $this->middleware,
+            $sql,
         );
     }
 
@@ -37,7 +38,7 @@ final class QueryCountingConnection extends AbstractConnectionMiddleware
     #[Override]
     public function query(string $sql): Result
     {
-        $this->middleware->incrementQueryCount();
+        $this->middleware->recordQuery($sql);
 
         return parent::query($sql);
     }
@@ -48,7 +49,7 @@ final class QueryCountingConnection extends AbstractConnectionMiddleware
     #[Override]
     public function exec(string $sql): int
     {
-        $this->middleware->incrementQueryCount();
+        $this->middleware->recordQuery($sql);
 
         return parent::exec($sql);
     }
