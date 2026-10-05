@@ -55,9 +55,6 @@ msgstr "-- Vyberte jednotku --"
 msgid "-- Create new price list --"
 msgstr "-- Vytvoriť nový cenník --"
 
-msgid "-- Select name of the transfer --"
-msgstr "-- Vyberte názov prenosu --"
-
 msgid "-- auto filled --"
 msgstr "-- automaticky vyplnené --"
 
@@ -228,6 +225,9 @@ msgstr "Všetky role"
 
 msgid "All search results"
 msgstr "Všetky výsledky vyhľadávania"
+
+msgid "All transfers"
+msgstr "Všetky prenosy"
 
 msgid "Allow negative stock"
 msgstr "Povoliť záporný stav skladu"

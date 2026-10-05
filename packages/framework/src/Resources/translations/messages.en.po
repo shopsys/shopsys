@@ -55,9 +55,6 @@ msgstr ""
 msgid "-- Create new price list --"
 msgstr ""
 
-msgid "-- Select name of the transfer --"
-msgstr ""
-
 msgid "-- auto filled --"
 msgstr ""
 
@@ -227,6 +224,9 @@ msgid "All roles"
 msgstr ""
 
 msgid "All search results"
+msgstr ""
+
+msgid "All transfers"
 msgstr ""
 
 msgid "Allow negative stock"

@@ -1360,6 +1360,9 @@ msgstr "Přehled měrných jednotek"
 msgid "Medium"
 msgstr "Střední"
 
+msgid "Message text"
+msgstr "Text zprávy"
+
 msgid "Mixed"
 msgstr "Různé"
 
@@ -2158,6 +2161,9 @@ msgstr "Vyhledat dle názvu sekce…"
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
 
+msgid "Search in transfer issue messages..."
+msgstr "Hledat v textech problémů v přenosech..."
+
 msgid "Search in transfers"
 msgstr "Hledání v přenosech"
 
@@ -2505,6 +2511,9 @@ msgstr "Sledování zásilky"
 
 msgid "Tracking saved."
 msgstr "Sledování zásilky uloženo."
+
+msgid "Transfer"
+msgstr "Přenos"
 
 msgid "Transfer issues"
 msgstr "Problémy v přenosech"

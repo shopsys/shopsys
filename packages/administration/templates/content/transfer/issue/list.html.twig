@@ -13,11 +13,47 @@
 
 {% block main_content %}
     {{ form_start(form) }}
-    {% include '@ShopsysAdministration/partial/_quick_search_form.html.twig' with {
-        title: 'Search in transfers'|trans,
-        form_input: form.transfer,
-        form_submit: form.submit,
-    } %}
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-secondary">
+                {{ 'Search in transfers'|trans }}
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" for="{{ form.transfer.vars.id }}">{{ 'Transfer'|trans }}</label>
+                    {{ form_widget(form.transfer, { attr: {
+                        'data-controller': 'submit-on-change',
+                        'data-action': 'submit-on-change#submit',
+                    } }) }}
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label" for="{{ form.searchText.vars.id }}">{{ 'Message text'|trans }}</label>
+                    <div class="input-group input-group-flat">
+                        {{ form_widget(form.searchText, { attr: { placeholder: 'Search in transfer issue messages...'|trans } }) }}
+
+                        {% if form.transfer.vars.value or form.searchText.vars.value %}
+                            <span class="input-group-text">
+                                <a href="{{ url('admin_transferissue_list') }}"
+                                   class="link-secondary border-0 bg-transparent p-0"
+                                   data-bs-toggle="tooltip"
+                                   title="{{ 'Reset filter'|trans }}"
+                                >
+                                    {{ ux_icon('circle-cross') }}
+                                </a>
+                            </span>
+                        {% endif %}
+
+                        {{ form_widget(form.submit, {
+                            label: ux_icon('search'),
+                            label_html: true,
+                            attr: { class: 'btn btn-icon' },
+                            full_name: ''
+                        }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{ form_end(form) }}
 
     {{ gridView.render() }}
