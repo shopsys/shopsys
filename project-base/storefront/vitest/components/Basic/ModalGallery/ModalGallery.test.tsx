@@ -86,7 +86,7 @@ describe('ModalGallery', () => {
             <ModalGallery galleryName="Test gallery" initialIndex={2} items={images} onCloseModal={vi.fn()} />,
         );
 
-        const dialog = screen.getByRole('dialog', { name: 'Gallery' });
+        const dialog = screen.getByRole('dialog', { name: 'Test gallery' });
         const galleryTrack = screen.getByRole('list', { name: 'Gallery content' });
 
         expect(dialog).toHaveClass(
@@ -100,7 +100,7 @@ describe('ModalGallery', () => {
         expect(dialog.querySelector('section')).toHaveClass('min-w-0');
         expect(dialog.querySelector('footer')).toHaveClass('min-w-0');
         expect(within(galleryTrack).getByRole('img', { name: 'Back view' })).toHaveAttribute('data-src', '/back.jpg');
-        expect(screen.queryByLabelText('Test gallery, slide 3 of 3')).not.toBeInTheDocument();
+        expect(screen.getByLabelText('Test gallery, slide 3 of 3')).toHaveTextContent('3 / 3');
         expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus();
         expect(screen.getByRole('toolbar', { name: 'Gallery navigation' })).toHaveClass('hidden', 'vl:block');
         const thumbnailTablist = screen.getByRole('tablist', { name: 'Gallery thumbnails' });
