@@ -31,7 +31,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             expect(component.container).toBeInTheDocument();
         });
 
-        expect(component).toMatchFileSnapshot('snap-1.test.tsx.snap');
+        await expect(component).toMatchFileSnapshot('snap-1.test.tsx.snap');
     });
 
     test('render ExtendedNextLink with static type and `as` prop', async () => {
@@ -49,7 +49,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             expect(component.container).toBeInTheDocument();
         });
 
-        expect(component).toMatchFileSnapshot('snap-2.test.tsx.snap');
+        await expect(component).toMatchFileSnapshot('snap-2.test.tsx.snap');
     });
 
     test('render ExtendedNextLink with a friendly page type', async () => {
@@ -67,7 +67,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             expect(component.container).toBeInTheDocument();
         });
 
-        expect(component).toMatchFileSnapshot('snap-3.test.tsx.snap');
+        await expect(component).toMatchFileSnapshot('snap-3.test.tsx.snap');
     });
 
     test('render ExtendedNextLink with a friendly page type and URL query', async () => {
@@ -89,7 +89,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             expect(component.container).toBeInTheDocument();
         });
 
-        expect(component).toMatchFileSnapshot('snap-4.test.tsx.snap');
+        await expect(component).toMatchFileSnapshot('snap-4.test.tsx.snap');
     });
 
     test('render ExtendedNextLink opening in a new tab, which gets rel="noopener"', async () => {
@@ -107,7 +107,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             expect(component.container).toBeInTheDocument();
         });
 
-        expect(component).toMatchFileSnapshot('snap-5.test.tsx.snap');
+        await expect(component).toMatchFileSnapshot('snap-5.test.tsx.snap');
     });
 
     test.each([
