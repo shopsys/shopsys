@@ -1,5 +1,6 @@
 import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import Translator from 'bazinga-translator';
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
 export default class MassActionConfirm {

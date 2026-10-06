@@ -1,16 +1,14 @@
 import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers';
-import { startStimulusApp } from '@symfony/stimulus-bridge';
+import { startStimulusApp } from '@symfony/reprise/stimulus';
 
-export const app = startStimulusApp(
-    require.context('@symfony/stimulus-bridge/lazy-controller-loader!./controllers', true, /\.[jt]sx?$/),
-);
+// registers controllers.json (UX packages) and local controllers from assets/controllers
+export const app = startStimulusApp();
 
 app.load(
     definitionsFromContext(
-        require.context(
-            '@symfony/stimulus-bridge/lazy-controller-loader!@shopsys/administration/src/controllers',
-            true,
-            /\.[jt]sx?$/,
-        ),
+        import.meta.webpackContext('@shopsys/administration/src/controllers', {
+            recursive: true,
+            regExp: /\.[jt]sx?$/,
+        }),
     ),
 );

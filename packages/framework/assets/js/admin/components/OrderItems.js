@@ -2,6 +2,7 @@ import ConfirmWindow from '@shopsys/administration/src/js/utils/confirmWindow';
 import { getComponent } from '@symfony/ux-live-component';
 import { Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
+import $ from 'jquery';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 import Register from '../../common/utils/Register';
 import FormChangeInfo from './FormChangeInfo';

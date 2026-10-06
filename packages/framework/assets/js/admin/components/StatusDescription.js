@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Register from '../../common/utils/Register';
 
 const PRIORITY_AFTER_INIT_COMPONENTS = 600;

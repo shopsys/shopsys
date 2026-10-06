@@ -1,6 +1,7 @@
 import Translator from 'bazinga-translator';
-import Check from 'icons/tabler/check.svg';
-import Denied from 'icons/tabler/circle-x-filled.svg';
+import Check from 'icons/tabler/check.svg?raw';
+import Denied from 'icons/tabler/circle-x-filled.svg?raw';
+import $ from 'jquery';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 

@@ -1,22 +1,22 @@
-# Npm and webpack
+# Npm and Rsbuild
 
-## Introduction to npm, webpack and webpack encore
+## Introduction to npm, Rsbuild and Symfony Reprise
 
 A [npm](https://www.npmjs.com/) is a package manager it allows you to install javascripts packages from other developers and to eventually publish your own packages.
 
-A [webpack](https://webpack.js.org/) is a bundler for javascript and friends.
+A [Rsbuild](https://rsbuild.rs/) is a bundler for javascript and friends.
 Packs many modules into a few bundled assets and allows Code Splitting for loading parts of the application on demand.
 
-A [webpack encore](https://github.com/symfony/webpack-encore) is powerful API for processing & compiling assets built around Webpack.
+A [Symfony Reprise](https://github.com/symfony/reprise) is the Symfony integration layer for modern bundlers - it generates the `entrypoints.json` and `manifest.json` files that the `reprise_entry_*` Twig functions read, and points the templates to the running dev server during development.
 
 ## What do we use them for?
 
 We use npm to manage and install frontend packages.
 
-To compile the code into something the browser understands we bundle the code through Webpack.
+To compile the code into something the browser understands we bundle the code through Rsbuild.
 These build/compile operations are provided as npm script to make them easy to run.
 
-We configure a webpack with a webpack encore.
+We configure the bundler in `rsbuild.config.ts`, where the Symfony Reprise plugin takes care of the Symfony integration.
 
 ## How do we use them?
 
@@ -33,7 +33,7 @@ Once a dependency is installed you can use it in a JS file in your application.
 For example, if you install `counterup2` you can import and use it:
 
 ```js
-// assets/js/frontend/components/CounterUp.js
+// assets/js/admin/components/CounterUp.js
 import counterUp from 'counterup2';
 // ...
 
@@ -54,38 +54,29 @@ export default class CounterUp {
 When compiling your application the process is clever enough to understand when a dependency has already been imported from a different file - meaning that everything is ultimately only ever imported once.
 However, you should import dependencies into each file to ensure that that particular file will work independently.
 
-If you want to add a new component that will listen to a certain event (for example), you have to import the component in the main file.
-For frontend, this is the `assets/js/frontend/frontend.js` file, for the administration is the `assets/js/admin/admin.js` file.
+If you want to add a new component that will listen to a certain event (for example), you have to import the component in the main file `assets/js/admin/admin.js`.
 The addition works just like a component installed over npm except that relative paths are used.
 
 ```js
-// assets/js/frontend/frontend.js
+// assets/js/admin/admin.js
 import './components/CounterUp';
 // ...
 ```
 
-When we are editing a javascript and friends files, the change must go through the bundler (webpack).
+When we are editing a javascript and friends files, the change must go through the bundler (Rsbuild).
 All javascript and friends files are built using the `npm run build` command.
 But it would be impractical if we had to run a command in the console with every change.
 Therefore we can use `npm run watch` for development.
-This command checks if a file has changed and if it does, changes are propagated into the resulting bundle.
-The `npm run watch` command launches the webpack in development mode, which means creating source maps to help you debug your project.
+This command starts the Rsbuild dev server and Reprise points the templates to it automatically.
+Changed styles are swapped in the browser in place, and a change in JavaScript reloads the page automatically.
+The assets are served by the dev server only, so after you stop it, run `npm run dev` or `npm run build` to get the assets back.
 
-### Livereload
+To build the assets once without minification and with source maps (e.g. for debugging), run `npm run dev`.
 
-The watch command is linked to the [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin).
-The [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin) plugin will refresh your page the moment you change any asset.
+## Translations
 
-## Constants and translations
-
-In previous versions, the constants were automatically replaced from the backend to the frontend.
-This feature has been removed.
-Used constants have been moved to utils `assets/js/js/utils/constants.js`.
-It is up to you whether you have constants in this file or in individual files.
-We think that synchronization of frontend and backend constants is not necessary, but this point can be reopened in the future.
-
-By contrast, translations are included in the watch command, and with every change in the js file, the webpack finds the appropriate translations.
-You can manually generate translations using the `npm run trans` command. The resulting json translation file is created in the `assets/js/translations.json` and frontend works with this json file.
+Translations are exported by the `npm` phing target before the build; the plain `npm run watch` does not re-export them.
+You can manually generate translations using the `npm run trans` command. The resulting json translation file is created in the `assets/js/translations.json` and the administration works with this json file.
 How to work with translation you can read [translation](../introduction/translations.md) article.
 
 ## Some use cases
@@ -95,14 +86,7 @@ How to work with translation you can read [translation](../introduction/translat
 - you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
 - you can edit files
 - (you may notice changes in the console)
-- you can test changes (after page reload)
-
-### I want to add new javascript file to frontend
-
-- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can create new javascript file (path of new file is `assets/js/frontend/myNewFile.js`)
-- you can use this new file in some other file (`import ./frontend/myNewFile.js`)
-- or, when file contains global event listener, import new file in `assets/js/frontend/frontend.js` (`import ./myNewFile.js`)
+- you can see the changes in the browser (the page reloads automatically)
 
 ### I want to add new javascript file to admin
 
@@ -117,51 +101,51 @@ How to work with translation you can read [translation](../introduction/translat
 - you can add package via npm `npm install <package-name>`
 - you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
 - you can use new package (`import <package-name>`) in some file
-- you can test changes (after page reload)
+- you can see the changes in the browser (the page reloads automatically)
 
-### I want to override function from @shopsys/framework common package
+### I want to override method from @shopsys/framework package
 
-For example, we can override method `showFormErrorsWindowOnFrontend` from `@shopsys/framework/common/validation/customizeBundle.js` on frontend.
+For example, we can override method `onChange` of the `CategoryTreeSorting` class from `@shopsys/framework/js/admin/components/CategoryTreeSorting.js`.
 
 - you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you have to import `CustomizeBundle` in `assets/js/frontend/frontend.js`
+- you have to import `CategoryTreeSorting` in `assets/js/admin/admin.js`
 
 ```js
-import CustomizeBundle from 'framework/common/validation/customizeBundle';
+import CategoryTreeSorting from 'framework/admin/components/CategoryTreeSorting';
 // ...
 ```
 
-- you can prepare new function
+- you can prepare new method
 
 ```js
-const myOverridedShowFormErrorsWindow = (container) => {
-    console.log('Hello my overrided showFormErrorsWindow method.');
+const myOverriddenOnChange = function () {
+    console.log('Hello my overridden onChange method.');
 };
 ```
 
 - you have to replace the original method with the new one
 
 ```js
-CustomizeBundle.showFormErrorsWindow = myOverridedShowFormErrorsWindow;
+CategoryTreeSorting.prototype.onChange = myOverriddenOnChange;
 ```
 
-- you can test changes (after page reload)
+- you can see the changes in the browser (the page reloads automatically)
 
 Full example might look like this:
 
 ```js
-import CustomizeBundle from 'framework/common/validation/customizeBundle';
+import CategoryTreeSorting from 'framework/admin/components/CategoryTreeSorting';
 
-const myOverridedShowFormErrorsWindow = (container) => {
-    console.log('Hello my overrided showFormErrorsWindow method.');
+const myOverriddenOnChange = function () {
+    console.log('Hello my overridden onChange method.');
 };
 
-CustomizeBundle.showFormErrorsWindow = myOverridedShowFormErrorsWindow;
+CategoryTreeSorting.prototype.onChange = myOverriddenOnChange;
 ```
 
 This principle is called [Monkey Patching](https://www.sitepoint.com/pragmatic-monkey-patching/).
 
-### I want to override class from @shopsys/framework common package
+### I want to override class from @shopsys/framework package
 
 You can use ES6 syntax to override class.
 You certainly know key word `extend`.
