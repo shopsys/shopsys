@@ -10,7 +10,6 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
-use function sleep;
 
 class ProductCurrentlyOutOfStockTest extends GraphQlTestCase
 {
@@ -72,9 +71,6 @@ class ProductCurrentlyOutOfStockTest extends GraphQlTestCase
         $this->productFacade->edit($product->getId(), $productData);
 
         $this->handleDispatchedRecalculationMessages();
-
-        // wait for elastic to reindex
-        sleep(1);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/ProductQuery.graphql', [
             'uuid' => $product->getUuid(),
