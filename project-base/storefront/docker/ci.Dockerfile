@@ -1,4 +1,4 @@
-FROM node:24.14.0-alpine3.22 AS development
+FROM node:24.15.0-alpine3.22 AS development
 
 ENV COREPACK_HOME=/usr/local/share/corepack
 RUN apk add --no-cache icu-data-full libc6-compat
