@@ -76,6 +76,8 @@ const getRobotsTxtContent = (
         '/order-confirmation',
         '/personal-data-export',
         '/personal-data-overview',
+        '/wishlist',
+        '/product-comparison',
         '/order/contact-information',
         '/order/transport-and-payment',
         '/grapesjs-template',
