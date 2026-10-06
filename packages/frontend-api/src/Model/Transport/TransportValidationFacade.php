@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -73,7 +74,7 @@ class TransportValidationFacade
         }
     }
 
-    public function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void
+    public function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): PriceInterface
     {
         $calculatedTransportPrice = $this->transportPriceProvider->getTransportPrice(
             $cart,
@@ -81,11 +82,11 @@ class TransportValidationFacade
             $this->domain->getCurrentDomainConfig(),
         );
 
-        $transportWatchedPrice = $cart->getTransportWatchedPrice();
-
-        if ($transportWatchedPrice === null || !$calculatedTransportPrice->getPriceWithVat()->equals($transportWatchedPrice)) {
+        if ($cart->isTransportWatchedPriceChanged($calculatedTransportPrice)) {
             throw new TransportPriceChangedException($calculatedTransportPrice);
         }
+
+        return $calculatedTransportPrice;
     }
 
     public function checkRequiredPickupPlaceIdentifier(Transport $transport, ?string $pickupPlaceIdentifier): void

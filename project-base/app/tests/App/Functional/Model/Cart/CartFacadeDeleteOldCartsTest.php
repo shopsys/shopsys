@@ -7,10 +7,10 @@ namespace Tests\App\Functional\Model\Cart;
 use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Clock\DatePoint;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -137,7 +137,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $product = $this->getProductById(1);
         $cart = $cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Price::zero());
 
         $this->em->persist($cartItem);
         $this->em->flush();

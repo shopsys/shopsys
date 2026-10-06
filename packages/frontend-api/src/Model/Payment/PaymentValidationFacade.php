@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentUnavailableForRemainingAmountToPayInCartException;
@@ -25,7 +26,7 @@ class PaymentValidationFacade
     ) {
     }
 
-    public function checkPaymentPrice(Payment $payment, Cart $cart): void
+    public function checkPaymentPrice(Payment $payment, Cart $cart): PriceInterface
     {
         $calculatedPaymentPrice = $this->paymentPriceProvider->getPaymentPrice(
             $cart,
@@ -33,11 +34,11 @@ class PaymentValidationFacade
             $this->domain->getCurrentDomainConfig(),
         );
 
-        $paymentWatchedPrice = $cart->getPaymentWatchedPrice();
-
-        if ($paymentWatchedPrice === null || !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice)) {
+        if ($cart->isPaymentWatchedPriceChanged($calculatedPaymentPrice)) {
             throw new PaymentPriceChangedException($calculatedPaymentPrice);
         }
+
+        return $calculatedPaymentPrice;
     }
 
     public function checkPaymentSuitabilityForRemainingAmountToPay(Payment $payment, Cart $cart): void

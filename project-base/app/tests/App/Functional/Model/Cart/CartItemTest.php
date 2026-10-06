@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -59,9 +60,9 @@ class CartItemTest extends TransactionFunctionalTestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
-        $cartItem2 = new CartItem($cart, $product1, 3, Money::zero());
-        $cartItem3 = new CartItem($cart, $product2, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Price::zero());
+        $cartItem2 = new CartItem($cart, $product1, 3, Price::zero());
+        $cartItem3 = new CartItem($cart, $product2, 1, Price::zero());
 
         $this->assertTrue($cartItem1->isSimilarItemAs($cartItem2));
         $this->assertFalse($cartItem1->isSimilarItemAs($cartItem3));

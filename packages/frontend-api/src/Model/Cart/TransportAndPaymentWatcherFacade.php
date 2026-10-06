@@ -98,10 +98,14 @@ class TransportAndPaymentWatcherFacade
     protected function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void
     {
         try {
-            $this->transportValidationFacade->checkTransportPriceAndWeightLimit($transport, $cart);
+            $transportPrice = $this->transportValidationFacade->checkTransportPriceAndWeightLimit($transport, $cart);
+
+            if ($cart->getTransportWatchedPrice() === null) {
+                $this->cartTransportFacade->setTransportWatchedPrice($cart, $transportPrice);
+            }
         } catch (TransportPriceChangedException $exception) {
             $this->cartWithModificationsResult->setTransportPriceChanged(true);
-            $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice()->getPriceWithVat());
+            $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice());
         } catch (TransportPriceNotFoundException) {
             $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
             $this->cartTransportFacade->unsetCartTransport($cart);
@@ -111,10 +115,14 @@ class TransportAndPaymentWatcherFacade
     protected function checkPaymentPrice(Cart $cart, Payment $payment): void
     {
         try {
-            $this->paymentValidationFacade->checkPaymentPrice($payment, $cart);
+            $paymentPrice = $this->paymentValidationFacade->checkPaymentPrice($payment, $cart);
+
+            if ($cart->getPaymentWatchedPrice() === null) {
+                $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $paymentPrice);
+            }
         } catch (PaymentPriceChangedException $exception) {
             $this->cartWithModificationsResult->setPaymentPriceChanged(true);
-            $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice()->getPriceWithVat());
+            $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice());
         }
     }
 
@@ -154,7 +162,7 @@ class TransportAndPaymentWatcherFacade
         $transport = $cart->getTransport();
 
         if ($transport === null) {
-            if ($cart->getTransportWatchedPrice() !== null) {
+            if ($cart->hasTransportWatchedPrice()) {
                 // this might happen when transport is set to null in cart thanks to "onDelete=SET NULL" ORM setting
                 $this->setTransportInCartUnavailable($cart);
             }
@@ -187,7 +195,7 @@ class TransportAndPaymentWatcherFacade
         $payment = $cart->getPayment();
 
         if ($payment === null) {
-            if ($cart->getPaymentWatchedPrice() !== null) {
+            if ($cart->hasPaymentWatchedPrice()) {
                 // this might happen when payment is set to null in cart thanks to "onDelete=SET NULL" ORM setting
                 $this->setPaymentInCartUnavailable($cart);
             }

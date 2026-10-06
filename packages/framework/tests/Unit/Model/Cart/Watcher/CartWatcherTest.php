@@ -24,9 +24,9 @@ class CartWatcherTest extends TestCase
 {
     public function testUnchangedPriceLeavesCartItemUntouched(): void
     {
-        $cartItemMock = $this->createCartItemMock(Money::create(121));
+        $cartItemMock = $this->createCartItemMock(Money::create(121), Money::create(100));
         $cartItemMock->expects($this->never())->method('setWatchedPrice');
-        $cartWatcher = $this->createCartWatcher(Money::create(121));
+        $cartWatcher = $this->createCartWatcher(Money::create(121), Money::create(100));
 
         $modifiedItems = $cartWatcher->getModifiedPriceItemsAndUpdatePrices($this->createCart($cartItemMock));
 
@@ -35,37 +35,66 @@ class CartWatcherTest extends TestCase
 
     public function testChangedPriceIsWrittenToCartItemAndReported(): void
     {
-        $cartItemMock = $this->createCartItemMock(Money::create(121));
-        $cartItemMock->expects($this->once())->method('setWatchedPrice')->with(Money::create(242));
-        $cartWatcher = $this->createCartWatcher(Money::create(242));
+        $cartItemMock = $this->createCartItemMock(Money::create(121), Money::create(100));
+        $cartItemMock->expects($this->once())->method('setWatchedPrice')->with(new Price(Money::create(200), Money::create(242)));
+        $cartWatcher = $this->createCartWatcher(Money::create(242), Money::create(200));
 
         $modifiedItems = $cartWatcher->getModifiedPriceItemsAndUpdatePrices($this->createCart($cartItemMock));
 
         $this->assertSame([$cartItemMock], $modifiedItems);
     }
 
-    private function createCartWatcher(Money $currentPriceWithVat): CartWatcher
+    public function testChangedPriceWithoutVatIsWrittenToCartItemAndReported(): void
     {
-        $productPrice = new ProductPrice(new Price(Money::create(100), $currentPriceWithVat), $this->createStub(PricingGroup::class), false);
+        $cartItemMock = $this->createCartItemMock(Money::create(121), Money::create(100));
+        $cartItemMock->expects($this->once())->method('setWatchedPrice')->with(new Price(Money::create(110), Money::create(121)));
+        $cartWatcher = $this->createCartWatcher(Money::create(121), Money::create(110));
+
+        $modifiedItems = $cartWatcher->getModifiedPriceItemsAndUpdatePrices($this->createCart($cartItemMock));
+
+        $this->assertSame([$cartItemMock], $modifiedItems);
+    }
+
+    public function testMissingWatchedPriceIsTakenOverWithoutBeingReported(): void
+    {
+        $cartItemMock = $this->createCartItemMock(null, null);
+        $cartItemMock->expects($this->once())->method('setWatchedPrice')->with(new Price(Money::create(100), Money::create(121)));
+        $cartWatcher = $this->createCartWatcher(Money::create(121), Money::create(100));
+
+        $modifiedItems = $cartWatcher->getModifiedPriceItemsAndUpdatePrices($this->createCart($cartItemMock));
+
+        $this->assertSame([], $modifiedItems);
+    }
+
+    private function createCartWatcher(Money $currentPriceWithVat, Money $currentPriceWithoutVat): CartWatcher
+    {
+        $productPrice = new ProductPrice(new Price($currentPriceWithoutVat, $currentPriceWithVat), $this->createStub(PricingGroup::class), false);
         $productPriceCalculationStub = $this->createStub(ProductPriceCalculationForCustomerUser::class);
         $productPriceCalculationStub->method('calculatePricesForCurrentUser')->willReturn(new ProductPricesResult($productPrice, $productPrice));
-
-        $giftPlanSettingFacadeStub = $this->createStub(GiftPlanSettingFacade::class);
-        $giftPlanSettingFacadeStub->method('getInputGiftPrice')->willReturn(Money::zero());
 
         return new CartWatcher(
             $productPriceCalculationStub,
             $this->createStub(ProductVisibilityFacade::class),
             $this->createStub(Domain::class),
-            $giftPlanSettingFacadeStub,
+            $this->createStub(GiftPlanSettingFacade::class),
         );
     }
 
-    private function createCartItemMock(Money $watchedPrice): CartItem&MockObject
-    {
-        $cartItemMock = $this->createMock(CartItem::class);
+    private function createCartItemMock(
+        ?Money $watchedPriceWithVat,
+        ?Money $watchedPriceWithoutVat,
+    ): CartItem&MockObject {
+        $cartItemMock = $this->getMockBuilder(CartItem::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getProduct', 'setWatchedPrice'])
+            ->getMock();
         $cartItemMock->method('getProduct')->willReturn($this->createStub(Product::class));
-        $cartItemMock->method('getWatchedPrice')->willReturn($watchedPrice);
+
+        // the stored watched price is set directly, because setWatchedPrice() is mocked
+        (function () use ($watchedPriceWithVat, $watchedPriceWithoutVat): void {
+            $this->watchedPriceWithVat = $watchedPriceWithVat;
+            $this->watchedPriceWithoutVat = $watchedPriceWithoutVat;
+        })->call($cartItemMock);
 
         return $cartItemMock;
     }

@@ -7,10 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -68,7 +69,14 @@ class CartItem
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
-    protected $watchedPrice;
+    protected $watchedPriceWithVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
+    protected $watchedPriceWithoutVat;
 
     /**
      * @var \DateTimeImmutable
@@ -112,7 +120,7 @@ class CartItem
         Cart $cart,
         Product $product,
         int $quantity,
-        ?Money $watchedPrice,
+        ?PriceInterface $watchedPrice,
         string $type = CartItemTypeEnum::TYPE_PRODUCT,
     ) {
         $this->cart = $cart;
@@ -164,20 +172,26 @@ class CartItem
         return $this->quantity;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getWatchedPrice()
+    public function getWatchedPrice(): ?Price
     {
-        return $this->watchedPrice;
+        if ($this->watchedPriceWithVat === null || $this->watchedPriceWithoutVat === null) {
+            return null;
+        }
+
+        return new Price($this->watchedPriceWithoutVat, $this->watchedPriceWithVat);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice
-     */
-    public function setWatchedPrice($watchedPrice): void
+    public function isWatchedPriceChanged(PriceInterface $currentPrice): bool
     {
-        $this->watchedPrice = $watchedPrice;
+        $watchedPrice = $this->getWatchedPrice();
+
+        return $watchedPrice !== null && !$currentPrice->equals($watchedPrice);
+    }
+
+    public function setWatchedPrice(?PriceInterface $watchedPrice): void
+    {
+        $this->watchedPriceWithVat = $watchedPrice?->getPriceWithVat();
+        $this->watchedPriceWithoutVat = $watchedPrice?->getPriceWithoutVat();
     }
 
     public function isSimilarItemAs(self $cartItem): bool
