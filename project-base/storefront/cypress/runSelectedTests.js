@@ -35,7 +35,7 @@ promptFn(prompt).then((answers) => {
         console.log('No TYPE variable specified. Using "regression"');
     }
 
-    const command = `cypress run --env visualRegressionType=${typeValue} --spec ${filesToRun.join(',')}`;
+    const command = `cypress run --expose visualRegressionType=${typeValue} --spec ${filesToRun.join(',')}`;
     console.log(`Running command: ${command}`);
 
     const child = spawn(command, { shell: true });

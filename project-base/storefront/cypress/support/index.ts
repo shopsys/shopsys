@@ -54,7 +54,7 @@ const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
     TIDs.simple_header_contact,
     TIDs.header_cart,
 ];
-const SKIP_SNAPHOTS = Cypress.env('skipSnapshots');
+const SKIP_SNAPHOTS = Cypress.expose('skipSnapshots');
 
 Cypress.Commands.add(
     'getByTID',
@@ -150,7 +150,7 @@ Cypress.on('uncaught:exception', (err) => {
 
 addCompareSnapshotCommand({
     capture: 'fullPage',
-    errorThreshold: Cypress.env('visualRegressionErrorThreshold'),
+    errorThreshold: Cypress.expose('visualRegressionErrorThreshold'),
 });
 
 export const initializePersistStoreInLocalStorageToDefaultValues = () => {

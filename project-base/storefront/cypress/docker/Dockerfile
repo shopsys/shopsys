@@ -8,7 +8,7 @@ COPY ./docker/entrypoint.sh /
 
 RUN set -eux; \
     for i in 1 2 3 4 5; do \
-        npm ci --force && break; \
+        npm ci && break; \
         if [ "$i" -eq 5 ]; then \
             exit 1; \
         fi; \
