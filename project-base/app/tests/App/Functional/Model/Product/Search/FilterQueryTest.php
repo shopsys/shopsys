@@ -13,9 +13,7 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
-use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -33,22 +31,12 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     /**
      * @inject
      */
-    private Client $elasticsearchClient;
-
-    /**
-     * @inject
-     */
     private FilterQueryFactory $filterQueryFactory;
 
     /**
      * @inject
      */
     private PriceConverter $priceConverter;
-
-    /**
-     * @inject
-     */
-    private IndexDefinitionLoader $indexDefinitionLoader;
 
     public function testBrand(): void
     {
