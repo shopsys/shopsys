@@ -19,6 +19,10 @@ $CDN_API_SALT = $_ENV['CDN_API_SALT'] ?? '';
 $CDN_DOMAIN = $_ENV['CDN_DOMAIN'] ?? '';
 $CDN_RESIZE_DISABLE = isEnvTruthy($_ENV['CDN_RESIZE_DISABLE'] ?? false);
 
+// Strip image metadata (EXIF, GPS, ...). Keep it stripped unless you really need it:
+// user-uploaded images (e.g. product review photos) may contain sensitive data such as geolocation
+$stripImageMetadata = true;
+
 $imagePath = $_SERVER['DOCUMENT_URI'] ?? '';
 $IMAGE_URL = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $imagePath;
 
@@ -30,7 +34,9 @@ if ($CDN_RESIZE_DISABLE === true) {
 $allowedImageSizes = [16, 24, 32, 48, 64, 96, 128, 256, 384, 480, 768, 1024, 1440, 1920];
 sort($allowedImageSizes);
 
-$resize = $_GET['resize'] ?? 'fit';
+$allowedResizeTypes = ['fit', 'fill', 'auto', 'crop'];
+$requestedResize = $_GET['resize'] ?? 'fit';
+$resize = in_array($requestedResize, $allowedResizeTypes, true) ? $requestedResize : 'fit';
 $width = findExactOrClosestLargerOrLargestImageSize(isset($_GET['width']) ? max(0, (int)$_GET['width']) : 0, $allowedImageSizes);
 $height = findExactOrClosestLargerOrLargestImageSize(isset($_GET['height']) ? max(0, (int)$_GET['height']) : 0, $allowedImageSizes);
 $gravity = 'no';
@@ -45,9 +51,9 @@ if ($CDN_DOMAIN === '' || $CDN_API_KEY === '' || $CDN_API_SALT === '') {
     # see https://docs.imgproxy.net/usage/processing
     $imgProxyInternalUrl = $_ENV['IMG_PROXY_INTERNAL_URL'] ?? 'http://img-proxy:8080';
     $webserverInternalUrl = $_ENV['WEBSERVER_INTERNAL_URL'] ?? 'http://webserver:8080';
-    $imageUrl = sprintf('%s/unsafe_signature/rs:%s:%s:%s:%s/g:%s/plain/%s/%s', $imgProxyInternalUrl, $resize, $width, $height, $enlarge, $gravity, $webserverInternalUrl, $imagePath);
+    $imageUrl = sprintf('%s/unsafe_signature/rs:%s:%s:%s:%s/g:%s/sm:%d/plain/%s/%s', $imgProxyInternalUrl, $resize, $width, $height, $enlarge, $gravity, (int)$stripImageMetadata, $webserverInternalUrl, $imagePath);
 } else {
-    # see https://support.vshosting.cz/en/CDN/manipulating-images-in-cdn/
+    # see https://support.vshosting.cz/en/CDN/manipulating-images-in-cdn/ and https://support.vshosting.cz/en/CDN/preserving-image-metadata-on-cdn/
     $ttl = 1209600;
 
     $keyBin = pack("H*", $CDN_API_KEY);
@@ -68,13 +74,13 @@ if ($CDN_DOMAIN === '' || $CDN_API_KEY === '' || $CDN_API_SALT === '') {
         |> base64_encode(...)
         |> (fn($v) => strtr($v, '+/', '-_'))
         |> (fn($v) => rtrim($v, '='));
-    $path = "/{$resize}/{$width}/{$height}/{$gravity}/{$enlarge}/{$encodedUrl}.{$extension}";
+    $path = "/resize:{$resize}:{$width}:{$height}:{$enlarge}/gravity:{$gravity}/sm:" . (int)$stripImageMetadata . "/{$encodedUrl}.{$extension}";
     $signature = hash_hmac('sha256', $saltBin . "/" . $ttl . "/" . $path, $keyBin, true)
         |> base64_encode(...)
         |> (fn($v) => strtr($v, '+/', '-_'))
         |> (fn($v) => rtrim($v, '='));
 
-    $imageUrl = sprintf("%s/zoh4eiLi/IMG/%d/%s%s", $CDN_DOMAIN, $ttl, $signature, $path);
+    $imageUrl = sprintf("%s/zoh4eiLi/v2/IMG/%d/%s%s", $CDN_DOMAIN, $ttl, $signature, $path);
 }
 
 try {
