@@ -58,6 +58,9 @@ In the case you want to start demo of the application as fast as possible, you c
 
     `--skip-aliasing` may be used in case you have already enabled second domain, or you do not want to enable it for some reason. When using this option you will not be asked for sudo password.
 
+    The script detects your operating system and asks you to confirm it by pressing Enter.
+    `--os=mac` may be used to select it in advance, for example in scripts and CI pipelines where no interactive terminal is available.
+
 After the script is finished with installing the application, you can skip all the other steps and see [the last chapter of Application Setup Guide](./installation-using-docker-application-setup.md#2-see-it-in-your-browser) to get all the important information you might need right after the installation.
 
 #### Option 2
