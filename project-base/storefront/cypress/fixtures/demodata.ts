@@ -215,8 +215,8 @@ export const url = {
 
 type RouteMap = Record<string, string>;
 
-const b2bDomainId = Cypress.env('B2B_DOMAIN_ID') ? Number(Cypress.env('B2B_DOMAIN_ID')) : null;
-const b2bBaseUrl = (Cypress.env('B2B_BASE_URL') as string) || null;
+const b2bDomainId = Cypress.expose('B2B_DOMAIN_ID') ? Number(Cypress.expose('B2B_DOMAIN_ID')) : null;
+const b2bBaseUrl = (Cypress.expose('B2B_BASE_URL') as string) || null;
 
 // null when B2B is not configured — B2B test files check this and skip
 export const b2bDomain =

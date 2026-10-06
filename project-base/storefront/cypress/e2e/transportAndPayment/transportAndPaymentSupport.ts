@@ -44,7 +44,7 @@ export const chooseTransportPersonalCollectionAndStore = (
 export const changeSelectionOfTransportByName = (transportName: string, transportGroupName?: string) => {
     cy.get('body').then(($body) => {
         const transportLabelSelector = `[data-tid="${TIDs.pages_order_transport}"] [data-tid="${TIDs.pages_order_selectitem_label_name}"]`;
-        const visibleTransportLabel = [...$body.find(transportLabelSelector)].find(
+        const visibleTransportLabel = $body.find(transportLabelSelector).toArray().find(
             (transportLabel) =>
                 transportLabel.textContent?.includes(transportName) && Cypress.$(transportLabel).is(':visible'),
         );
