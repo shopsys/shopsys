@@ -16,6 +16,8 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
  * Slugs are looked up by the locale of each domain, a domain with a locale not listed here gets the English slugs.
  * A page is matched by its name or, when the name differs (e.g. the translated "Catalog"), by one of its slugs;
  * a matched page gets the current name, slugs and robots, a missing page is created.
+ * A slug already used on the domain by another page (e.g. one created in the administration) is left to that page,
+ * the matched page gets only the robots on that domain (a missing page is not created there).
  */
 final class Version20260909110000 extends AbstractMigration implements DomainAwareInterface
 {
@@ -250,6 +252,15 @@ final class Version20260909110000 extends AbstractMigration implements DomainAwa
             foreach ($this->getAllDomainIds() as $domainId) {
                 $pageSlug = $seoPage['slugs'][$this->getDomainLocale($domainId)] ?? $seoPage['slugs'][self::FALLBACK_LOCALE];
 
+                if ($this->isPageSlugUsedByAnotherSeoPage($pageSlug, $domainId, $seoPageId)) {
+                    $this->sql(
+                        'UPDATE seo_page_domains SET seo_meta_robots = :metaRobots WHERE seo_page_id = :seoPageId AND domain_id = :domainId',
+                        ['metaRobots' => $seoPage['metaRobots'], 'seoPageId' => $seoPageId, 'domainId' => $domainId],
+                    );
+
+                    continue;
+                }
+
                 $this->upsertSeoPageDomain($seoPageId, $domainId, $pageSlug, $seoPage['metaRobots']);
             }
         }
@@ -279,6 +290,14 @@ final class Version20260909110000 extends AbstractMigration implements DomainAwa
         )->fetchOne();
 
         return $seoPageId === false ? null : (int)$seoPageId;
+    }
+
+    private function isPageSlugUsedByAnotherSeoPage(string $pageSlug, int $domainId, int $seoPageId): bool
+    {
+        return $this->sqlQuery(
+            'SELECT 1 FROM seo_page_domains WHERE domain_id = :domainId AND page_slug = :pageSlug AND seo_page_id != :seoPageId',
+            ['domainId' => $domainId, 'pageSlug' => $pageSlug, 'seoPageId' => $seoPageId],
+        )->fetchOne() !== false;
     }
 
     private function upsertSeoPageDomain(int $seoPageId, int $domainId, string $pageSlug, ?string $metaRobots): void
