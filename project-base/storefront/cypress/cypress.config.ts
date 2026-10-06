@@ -36,7 +36,7 @@ export default defineConfig({
     video: true,
     videosFolder: 'videos',
     trashAssetsBeforeRuns: true,
-    env: {
+    expose: {
         TEST_LOCALE: process.env.TEST_LOCALE,
         B2B_DOMAIN_ID: process.env.B2B_DOMAIN_ID || '',
         B2B_BASE_URL: process.env.B2B_BASE_URL || '',
@@ -165,7 +165,7 @@ export default defineConfig({
                 }
             }
 
-            config.env.projectPages = getProjectPages();
+            config.expose.projectPages = getProjectPages();
 
             return config;
         },

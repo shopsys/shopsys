@@ -20,10 +20,10 @@ type RoutesForSmokeTestsType = {
 };
 
 context('Smoke tests', () => {
-    const TEST_LOCALE = Cypress.env('TEST_LOCALE');
+    const TEST_LOCALE = Cypress.expose('TEST_LOCALE');
     const { routes } = require('/config/routes');
     const translatedRoutes = routes[0];
-    const projectPages = Cypress.env('projectPages');
+    const projectPages = Cypress.expose('projectPages');
 
     const filteredRoutes: Record<string, RoutesForSmokeTestsType> = {
         // static routes
