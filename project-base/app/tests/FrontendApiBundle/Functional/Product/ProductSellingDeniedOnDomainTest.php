@@ -9,7 +9,6 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
-use function sleep;
 
 class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 {
@@ -32,9 +31,6 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
         $this->productFacade->edit($product->getId(), $productData);
 
         $this->handleDispatchedRecalculationMessages();
-
-        // wait for elastic to reindex
-        sleep(1);
 
         self::assertTrue($product->isCalculatedSellingDenied($this->domain->getId()));
 
