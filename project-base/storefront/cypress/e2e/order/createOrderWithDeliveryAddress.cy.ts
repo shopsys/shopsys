@@ -4,13 +4,19 @@ import {
     registerAndCreateOrderForDeliveryAddressTests,
     fillBillingInfoForDeliveryAddressTests,
     clickOnOrderDetailButtonOnThankYouPage,
-    clickOnSendOrderButton,
+    sendOrderAndCheckConfirmation,
+    checkCreatedOrderInDetail,
+    checkOrderDeliveryAddress,
+    checkOrderDeliveryContact,
+    checkDeliveryAddressInThirdStep,
+    checkDeliveryContactInThirdStep,
     changeOrderConfirmationDynamicPartsToStaticDemodata,
     changeOrderDetailDynamicPartsToStaticDemodata,
     checkOrderConfirmationStatusText,
     checkOrderDetailFromOrderPage,
     checkOrderDetailFromOrderPageWithComplaintButton,
     selectDeliveryAddressCard,
+    checkSelectedDeliveryAddress,
     clickAddNewAddressButton,
     fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
@@ -45,24 +51,27 @@ describe('Create Order With Delivery Address Tests', () => {
     it('[Preserve Form On Refresh] should keep filled delivery address after page refresh', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'contact information form before filling', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clearAndFillDeliveryAdressInThirdStep(staticData.deliveryAddress);
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'contact information form after refresh', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        checkDeliveryAddressInThirdStep(staticData.deliveryAddress);
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryAddress(staticData.deliveryAddress);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
@@ -70,9 +79,6 @@ describe('Create Order With Delivery Address Tests', () => {
     it('[Preserve Form On Checkbox Change] should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
 
         clearAndFillDeliveryAdressInThirdStep(staticData.deliveryAddress);
         loseFocus();
@@ -81,17 +87,17 @@ describe('Create Order With Delivery Address Tests', () => {
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after checking again', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
 
-        clickOnSendOrderButton();
+        checkDeliveryAddressInThirdStep(staticData.deliveryAddress);
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryAddress(staticData.deliveryAddress);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
@@ -115,16 +121,19 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         loseFocus();
         clickAddNewAddressButton();
         fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information with new delivery address', {
+        checkSelectedDeliveryAddress(staticData.deliveryAddress);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(4), 'contact information with new delivery address', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryAddress(staticData.deliveryAddress);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPageWithComplaintButton(
             translations.transport.czechPost,
@@ -140,23 +149,29 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with default address', {
+        checkSelectedDeliveryAddress(staticData.deliveryAddress);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(5), 'with default address', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
         clickAddNewAddressButton();
         fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress2);
+        selectDeliveryAddressCard(staticData.deliveryAddress2);
+        checkSelectedDeliveryAddress(staticData.deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'changed contact information after refresh', {
+        checkSelectedDeliveryAddress(staticData.deliveryAddress2);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(6), 'changed contact information after refresh', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryAddress(staticData.deliveryAddress2);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
@@ -169,34 +184,35 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with default address', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
+        checkSelectedDeliveryAddress(staticData.deliveryAddress);
 
         clickAddNewAddressButton();
         fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress2);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with changed delivery address', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
+        selectDeliveryAddressCard(staticData.deliveryAddress2);
+        checkSelectedDeliveryAddress(staticData.deliveryAddress2);
 
-        selectDeliveryAddressCard(0);
+        selectDeliveryAddressCard(staticData.deliveryAddress);
+        checkSelectedDeliveryAddress(staticData.deliveryAddress);
         loseFocus();
-        selectDeliveryAddressCard(1);
+        selectDeliveryAddressCard(staticData.deliveryAddress2);
+        checkSelectedDeliveryAddress(staticData.deliveryAddress2);
         loseFocus();
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(),
+            getSnapshotFullIndexAsString(9),
             'with changed delivery address after switching back from default',
             {
                 blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             },
         );
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryAddress(staticData.deliveryAddress2);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
@@ -220,7 +236,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     it('[Preserve Pickup On Refresh] should prefill delivery address from selected pickup point and keep delivery contact after refresh', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(10), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
@@ -230,7 +246,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
 
         clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(11), 'contact information form after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
@@ -238,12 +254,15 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             ],
         });
 
-        clickOnSendOrderButton();
+        checkDeliveryContactInThirdStep(staticData.deliveryAddress);
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryContact(staticData.deliveryAddress);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
             `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
@@ -254,13 +273,6 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     it('[Preserve Pickup On Checkbox Change] should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours_in_contact_information },
-            ],
-        });
 
         clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress);
         loseFocus();
@@ -269,20 +281,16 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after checking again', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours_in_contact_information },
-            ],
-        });
 
-        clickOnSendOrderButton();
+        checkDeliveryContactInThirdStep(staticData.deliveryAddress);
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryContact(staticData.deliveryAddress);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
             `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
@@ -307,7 +315,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(14), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
@@ -315,9 +323,10 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             ],
         });
 
+        checkDeliveryContactInThirdStep({ firstName: '', lastName: '', phone: '' });
         clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(15), 'contact information form after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.footer_copyright },
@@ -325,12 +334,15 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             ],
         });
 
-        clickOnSendOrderButton();
+        checkDeliveryContactInThirdStep(staticData.deliveryAddress2);
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryContact(staticData.deliveryAddress2);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPageWithComplaintButton(
             `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
@@ -349,14 +361,8 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours_in_contact_information },
-            ],
-        });
 
+        checkDeliveryContactInThirdStep({ firstName: '', lastName: '', phone: '' });
         clearAndFillDeliveryContactInThirdStep(staticData.deliveryAddress2);
         loseFocus();
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
@@ -364,20 +370,16 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after checking again', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-                { tid: TIDs.opening_hours_in_contact_information },
-            ],
-        });
 
-        clickOnSendOrderButton();
+        checkDeliveryContactInThirdStep(staticData.deliveryAddress2);
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
+        checkCreatedOrderInDetail();
+        checkOrderDeliveryContact(staticData.deliveryAddress2);
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPageWithComplaintButton(
             `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
