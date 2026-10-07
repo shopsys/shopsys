@@ -44,6 +44,7 @@ services:
         container_name: shopsys-framework-php-fpm
         volumes:
             - web-volume:/var/www/html/project-base/app/web
+            - ./docker/conf/cypress-rate-limiter.yaml:/var/www/html/project-base/app/config/packages/zz_cypress_rate_limiter.yaml:ro
 
     php-consumer:
         restart: always
