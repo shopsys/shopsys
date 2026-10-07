@@ -4,8 +4,8 @@ Paths use the standalone project layout; apply the monorepo delta when applicabl
 
 ## Configuration and placement
 
-- Read `storefront/vitest.config.js` and `storefront/vitest/setup.ts`. Tests are discovered under `vitest/**/*.test.{js,ts,tsx}`, not beside production files outside that directory.
-- The current environment is `jsdom`, with React and tsconfig-path plugins. `clearMocks` and `restoreMocks` are enabled. Do not add duplicate global setup to individual files.
+- Read `storefront/vitest.config.mjs` and `storefront/vitest/setup.ts`. Tests are discovered under `vitest/**/*.test.{js,ts,tsx}`, not beside production files outside that directory.
+- The current environment is `jsdom`, with the React plugin and Vite's native `resolve.tsconfigPaths` resolution. `clearMocks` and `restoreMocks` are enabled. Do not add duplicate global setup to individual files.
 - Shared setup loads `@testing-library/jest-dom/vitest` matchers and initializes `window.__ENV`. This dependency does not mean the runner is Jest: use Vitest's `vi` APIs.
 - Vitest 5 runs with Vite 8 and jsdom 30. The storefront Docker images use Node 24.15.0, the minimum supported Node 24 release for jsdom 30; rebuild an older image before running these tests. Keep the Undici override limited to versions below 8 so jsdom can use its required Undici 8 dependency.
 - Reuse `storefront/vitest/helpers/mockPublicConfig.ts` for public/domain config fixtures. Copy before mutating shared values; choose domain, locale and timezone explicitly when the behavior depends on them.
