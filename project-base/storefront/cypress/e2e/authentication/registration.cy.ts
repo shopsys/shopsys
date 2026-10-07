@@ -41,7 +41,7 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
         goToRegistrationPageFromFixedHeader();
     });
 
-    it('[Register B2C] should register as a B2C customer', function () {
+    it('[Register B2C] should register as a B2C customer', () => {
         goToRegistrationPageFromHeader();
         const email = 'register-as-b2c@shopsys.com';
         clearAndFillInRegstrationFormEmail(email, translations.placeholder.email);
@@ -79,7 +79,7 @@ describe('Registration Tests (B2B)', { retries: { runMode: 0 } }, () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('[Register B2B] should register as a B2B (company) customer', function () {
+    it('[Register B2B] should register as a B2B (company) customer', () => {
         goToRegistrationPageFromHeader();
         const email = 'register-as-b2b@shopsys.com';
         clearAndFillInRegstrationFormEmail(email, translations.placeholder.email);
@@ -117,7 +117,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         cy.visitAndWaitForStableAndInteractiveDOM(url.registration);
     });
 
-    it('[Empty Form] should disallow registration with empty registration form, show flash message, then allow after filling', function () {
+    it('[Empty Form] should disallow registration with empty registration form, show flash message, then allow after filling', () => {
         submitRegistrationForm();
         checkRegistrationValidationErrors();
         cy.getByTID([TIDs.form_line_error]).should('have.length.greaterThan', 0);
@@ -140,7 +140,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         checkIsUserLoggedIn();
     });
 
-    it('[Invalid Info] should disallow registration with invalid info, but then allow after correction', function () {
+    it('[Invalid Info] should disallow registration with invalid info, but then allow after correction', () => {
         const email = 'registration-with-existing-email@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email), false);
 

@@ -24,7 +24,7 @@ describe('Cart In Header Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('[Cart Header Remove] should remove products from cart using cart in header and then display empty cart message', function () {
+    it('[Cart Header Remove] should remove products from cart using cart in header and then display empty cart message', () => {
         changeBlogArticleDynamicPartsToStaticDemodata();
         openHeaderCartByMouseover();
         removeProductFromHeaderCartWithSpinbox(staticData.products.helloKitty.catnum, 2);
@@ -57,7 +57,7 @@ describe('Cart In Header Tests', () => {
         });
     });
 
-    it('[Cart Header Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', function () {
+    it('[Cart Header Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', () => {
         openHeaderCartByMouseover();
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -78,7 +78,7 @@ describe('Cart In Header Tests', () => {
         );
     });
 
-    it('[Cart Header Gift] should display gift item without remove controls', function () {
+    it('[Cart Header Gift] should display gift item without remove controls', () => {
         cy.addProductToCartForTest(staticData.products.delonghi.uuid);
         cy.reloadAndWaitForStableAndInteractiveDOM();
 
@@ -98,7 +98,7 @@ describe('Cart In Header Tests', () => {
         ]).should('not.exist');
     });
 
-    it('[Cart Header Hover] should switch between cart and customer menu popovers', function () {
+    it('[Cart Header Hover] should switch between cart and customer menu popovers', () => {
         getHeaderElementByTID(TIDs.header_cart)
             .should('be.visible')
             .realHover({ scrollBehavior: false })
