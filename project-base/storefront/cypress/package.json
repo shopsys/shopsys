@@ -20,7 +20,6 @@
         "cypress": "16.1.1",
         "cypress-real-events": "1.15.1",
         "cypress-visual-regression": "6.0.1",
-        "cypress-wait-for-stable-dom": "^0.1.0",
         "glob": "^13.0.6",
         "inquirer": "^14.2.3",
         "typescript": "~5.9.3",

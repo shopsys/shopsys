@@ -345,7 +345,7 @@ the lookup table. This does not authorize baseline regeneration or automatic acc
 
 ### Blackout rules
 
-- `blackoutBeforeScreenshot` skips missing TIDs; assert required content before the screenshot.
+- Screenshot blackouts skip missing TIDs; assert required content before the screenshot.
 - Place image blackout TIDs on fixed-size wrappers, not the intrinsic dimensions of an `<img>`.
 - Only blackout TIDs present on the page being screenshotted
 - Common blackouts for ALL pages: `footer_social_links`, `footer_payment_images`, `footer_copyright`
@@ -406,6 +406,20 @@ page, on pickup places, and in the product-detail delivery options popup. Before
 each `TIDs.expected_delivery_date_message` element with `staticData.expectedDeliveryDateMessage`, or with
 `staticData.expectedPersonalPickupDateMessage` when the element's real text starts with the translated
 "Personal pickup" prefix (the delivery vs. pickup wording is deterministic, so snapshots keep it truthful).
+
+## Shared interaction and screenshot readiness
+
+`waitForStableAndInteractiveDOM()` waits for hydration, pending `useDeferredRender()` commits,
+loading indicators and one quiet DOM interval. Visit/reload helpers call it once. The shared
+observer has a deadline and disconnects on success, timeout or navigation; do not reintroduce
+`cypress-wait-for-stable-dom` or duplicate blanket waits.
+
+`data-deferred-render-pending` tracks deferred hook commits, not all lazy imports or API requests.
+Keep scenario-specific assertions for required content and real interaction readiness.
+`takeSnapshotAndCompare()` additionally retains page scrolling, prepares temporary styles,
+waits for fonts and relevant unmasked images, then settles the DOM before measuring masks.
+It restores styles/masks after capture and on failure. Do not disable deferred rendering,
+change its scheduling, or increase fixed waits to hide a failure. Keep image TIDs on fixed wrappers.
 
 ## Transport and payment readiness
 
