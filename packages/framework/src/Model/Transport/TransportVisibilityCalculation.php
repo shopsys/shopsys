@@ -96,7 +96,8 @@ class TransportVisibilityCalculation
         return array_values(array_filter(
             $transports,
             fn (Transport $transport): bool => ($excludingProductsByTransportId[$transport->getId()] ?? []) === []
-                && ($transport->isPersonalPickup() || !$product->isPersonalPickupOnly()),
+                && ($transport->isPersonalPickup() || !$product->isPersonalPickupOnly())
+                && $transport->isEmailType() === $product->isElectronicGiftVoucher(),
         ));
     }
 

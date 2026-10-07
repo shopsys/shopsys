@@ -139,7 +139,7 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
 
     public function testPromoCodeIsNotApplicableToCartWithOnlyGiftVoucherProducts(): void
     {
-        $voucherProduct = $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000, Product::class);
+        $voucherProduct = $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => null,
             'productUuid' => $voucherProduct->getUuid(),
@@ -171,7 +171,7 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
 
         $totalDiscountPriceBeforeAddingVoucherProduct = $this->getCartPrices()['totalDiscountPrice']['priceWithVat'];
 
-        $this->addProductToFixtureCart($this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000, Product::class));
+        $this->addProductToFixtureCart($this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000, Product::class));
 
         $totalDiscountPriceAfterAddingVoucherProduct = $this->getCartPrices()['totalDiscountPrice']['priceWithVat'];
 
@@ -182,7 +182,7 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
     {
         $totalPriceWithoutVoucherProduct = Money::create($this->getCartPrices()['totalPrice']['priceWithVat']);
 
-        $this->addProductToFixtureCart($this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_1000, Product::class));
+        $this->addProductToFixtureCart($this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000, Product::class));
 
         $totalPriceWithVat = Money::create($this->getCartPrices()['totalPrice']['priceWithVat']);
         $giftVoucherProductItemsPrice = $totalPriceWithVat->subtract($totalPriceWithoutVoucherProduct);

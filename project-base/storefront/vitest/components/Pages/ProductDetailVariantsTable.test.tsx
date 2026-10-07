@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ProductVariantsTable } from 'components/Pages/ProductDetail/ProductDetailVariantsTable';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { PropsWithChildren } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -66,6 +66,7 @@ const variant = {
     isSellingDenied: false,
     isInquiryType: false,
     isVisible: true,
+    productType: TypeProductTypeEnum.Basic,
     availability: {
         name: 'In stock',
         status: TypeAvailabilityStatusEnum.InStock,
@@ -93,6 +94,24 @@ describe('ProductVariantsTable', () => {
         render(<ProductVariantsTable deliveryOptionsProducts={[variant]} variants={[variant]} />);
 
         expect(screen.getByText(/Ready to ship.*1 store/)).toHaveClass('underline');
+    });
+
+    test('keeps availability non-interactive for a variant delivered by email', () => {
+        const electronicGiftVoucherVariant = {
+            ...variant,
+            productType: TypeProductTypeEnum.ElectronicGiftVoucher,
+            availability: {
+                __typename: 'Availability' as const,
+                name: 'Sent by email after payment',
+                status: TypeAvailabilityStatusEnum.Digital,
+            },
+            availableStoresCount: null,
+        };
+
+        render(<ProductVariantsTable deliveryOptionsProducts={[]} variants={[electronicGiftVoucherVariant]} />);
+
+        expect(screen.getByText('Sent by email after payment')).toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: /Sent by email/ })).not.toBeInTheDocument();
     });
 
     test('keeps availability non-interactive for an unsellable variant', () => {

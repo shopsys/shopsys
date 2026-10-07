@@ -18,7 +18,6 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
@@ -52,12 +51,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
-        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::PRICE_TYPE_WITH_VAT) {
-            $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('319');
-        } else {
-            $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('318.85');
-        }
-
+        // the cheapest product is the standalone electronic gift voucher with a zero VAT, so the input price type plays no role
+        $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('300');
         $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('31448');
 
         $materials = [
@@ -330,7 +325,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $this->assertSame(6, $data['products']['productFilterOptions']['inStock']);
+        $this->assertSame(8, $data['products']['productFilterOptions']['inStock']);
         $this->assertSame($minimalPrice, $data['products']['productFilterOptions']['minimalPrice']);
         $this->assertSame($maximalPrice, $data['products']['productFilterOptions']['maximalPrice']);
 

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ProductDetailAvailability } from 'components/Pages/ProductDetail/ProductDetailAvailability';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
 import { describe, expect, test, vi } from 'vitest';
 
 const openDeliveryOptionsPopupMock = vi.hoisted(() => vi.fn());
@@ -31,6 +31,7 @@ const product = {
     isMainVariant: false,
     isSellingDenied: false,
     isVisible: true,
+    productType: TypeProductTypeEnum.Basic,
 } as unknown as TypeProductDetailFragment;
 
 describe('ProductDetailAvailability', () => {
@@ -48,6 +49,26 @@ describe('ProductDetailAvailability', () => {
 
         expect(availabilityButton).toHaveAttribute('aria-haspopup', 'dialog');
         expect(openDeliveryOptionsPopupMock).toHaveBeenCalledWith([product], product.uuid);
+    });
+
+    test('keeps availability non-interactive for a product delivered by email', () => {
+        render(
+            <ProductDetailAvailability
+                product={{
+                    ...product,
+                    productType: TypeProductTypeEnum.ElectronicGiftVoucher,
+                    availability: {
+                        __typename: 'Availability',
+                        name: 'Sent by email after payment',
+                        status: TypeAvailabilityStatusEnum.Digital,
+                    },
+                }}
+            />,
+        );
+
+        expect(screen.getByText('Sent by email after payment')).toBeInTheDocument();
+        expect(screen.queryByRole('button')).not.toBeInTheDocument();
+        expect(openDeliveryOptionsPopupMock).not.toHaveBeenCalled();
     });
 
     test('shows shipping readiness and store availability as separate facts', () => {

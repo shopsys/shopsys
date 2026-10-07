@@ -1,7 +1,7 @@
 import { useOpenDeliveryOptionsPopup } from 'components/Blocks/Popup/DeliveryOptionsPopup/useOpenDeliveryOptionsPopup';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { isProductSellable } from 'utils/product/isProductSellable';
+import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 
 type ProductDetailAvailabilityProps = {
     product: TypeProductDetailFragment;
@@ -24,7 +24,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
         />
     );
 
-    if (!isProductSellable(product)) {
+    if (!showProductDeliveryOptionsPopup(product)) {
         return productAvailability;
     }
 
