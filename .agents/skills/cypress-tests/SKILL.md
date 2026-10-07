@@ -1096,6 +1096,7 @@ docker compose exec -T storefront sh -lc 'cd cypress && npm run generate-snapsho
 - **Deferred rendering**: preserve page-capture scrolling; the storefront intentionally delays rendering for web vitals. Hydration or a quiet DOM alone does not prove that all deferred content is ready.
 - **Retries in runMode**: 2 (configurable per test with `{ retries: { runMode: 0 } }`)
 - **Test groups**: Controlled by `GROUP` env var for CI (e.g., `GROUP=authentication`, `GROUP=b2b`)
+- **Promo-code rate limit**: The GitHub Actions Cypress compose file mounts `docker/conf/cypress-rate-limiter.yaml` only into its PHP test container. Like `when@test`, it disables only the apply-code quota because scenarios/retries share an IP; production limits remain unchanged. Verify throttling separately, not through cart-flow timing or longer waits.
 - **Translation loading**: Auto-loads `.po` files from `/app/app-translations/`, falls back to English
 
 ## Keeping This Skill Up-to-Date
