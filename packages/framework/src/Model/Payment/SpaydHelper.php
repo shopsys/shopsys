@@ -11,9 +11,6 @@ class SpaydHelper
      * @param float|null $amount Amount (e.g., 1250.50), can be null
      * @param string $currency Currency, e.g., CZK or EUR
      * @param string|null $bankIdentifierCode BIC/SWIFT (required for international EUR payment)
-     * @param string|null $variableSymbol Variable symbol
-     * @param string|null $specificSymbol Specific symbol
-     * @param string|null $constantSymbol Constant symbol
      * @param string|null $message Message for the recipient
      */
     public static function createSpayd(
