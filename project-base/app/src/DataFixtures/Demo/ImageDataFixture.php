@@ -21,6 +21,7 @@ use LogicException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
@@ -29,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
+use Shopsys\FrameworkBundle\Model\Seo\Organization;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
 use Symfony\Component\Clock\DatePoint;
@@ -71,6 +73,8 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         26 => 626,
         27 => 636,
     ];
+
+    private const int FIRST_ORGANIZATION_IMAGE_ID = 810;
 
     public function __construct(
         FilesystemOperator $filesystem,
@@ -128,6 +132,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processBlogArticleImages();
         $this->processBlogArticleAuthorImages();
         $this->processSalesRepresentativeImages();
+        $this->processOrganizationImages();
 
         $this->syncDatabaseSequences(['images.id']);
     }
@@ -618,6 +623,32 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
+    private function processOrganizationImages(): void
+    {
+        $imageId = self::FIRST_ORGANIZATION_IMAGE_ID;
+        $names = [];
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+            $names[$locale] = t('Shopsys logo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $organization = $this->getReferenceForDomain(
+                OrganizationDataFixture::ORGANIZATION,
+                $domainConfig->getId(),
+                Organization::class,
+            );
+
+            $this->saveImageIntoDb(
+                $organization->getId(),
+                'organization',
+                $imageId++,
+                $names,
+                extension: self::IMAGE_TYPE_PNG,
+            );
+        }
+    }
+
     private function processBlogCategoryImages(): void
     {
         $blogCategoryImagesData = [
@@ -715,6 +746,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             BlogArticleDataFixture::class,
             BrandDataFixture::class,
             CategoryDataFixture::class,
+            OrganizationDataFixture::class,
             PaymentDataFixture::class,
             ReadyCategorySeoDataFixture::class,
             SalesRepresentativeDataFixture::class,

@@ -1957,6 +1957,12 @@ msgstr "She checks dimensions, compatibility, warranty conditions, and delivery 
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
 
+msgid "Shopsys Platform is an e-commerce platform for growing online stores. This demo shop presents its features on a catalog of electronics, books, toys and more."
+msgstr ""
+
+msgid "Shopsys logo"
+msgstr ""
+
 msgid "Shopsys team collaborating in an office"
 msgstr "Shopsys team collaborating in an office"
 
