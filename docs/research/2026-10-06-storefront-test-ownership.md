@@ -47,7 +47,7 @@ rg --no-heading -o '^\s*it(\.skip|\.only)?\(' project-base/storefront/cypress/e2
 rg --no-heading -o 'takeSnapshotAndCompare\(' project-base/storefront/cypress/e2e -g '*.cy.ts' | wc -l
 ```
 
-Vitest discovery matches `project-base/storefront/vitest.config.js:10`.
+Vitest discovery matches the `test.include` setting in `project-base/storefront/vitest.config.mjs`.
 
 | Vitest directory | Test files |
 |---|---:|
