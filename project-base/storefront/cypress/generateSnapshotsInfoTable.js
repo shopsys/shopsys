@@ -4,8 +4,8 @@ const glob = require('glob');
 
 const getSnapshotIndexingFunction = (snapshotGroupIndex, snapshotSubgroupIndex) => {
     let snapshotGroupCounter = 0;
-    return () => {
-        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotGroupCounter++}`;
+    return (snapshotIndex) => {
+        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotIndex ?? snapshotGroupCounter++}`;
     };
 };
 
@@ -46,7 +46,7 @@ try {
     process.exit(1);
 }
 
-const fileNames = glob.sync('./e2e/**/*.cy.ts').reverse();
+const fileNames = glob.sync('./e2e/**/*.cy.ts').sort().reverse();
 
 // Markdown file path
 const outputMarkdownFilePath = './snapshots-info-table.md';
@@ -78,7 +78,7 @@ for (let fileName of fileNames) {
     }
 
     // Find all occurrences of it('...',)
-    const testMatches = Array.from(content.matchAll(/it\(['"`](.*?)['"`],/g));
+    const testMatches = Array.from(content.matchAll(/\bit\(\s*['"`](.*?)['"`]\s*,/g));
 
     testMatches.forEach((match, index) => {
         const testName = match[1];
@@ -87,8 +87,12 @@ for (let fileName of fileNames) {
         const testContent = content.substring(match.index, testMatches[index + 1]?.index);
         const snapshotMatches = [...testContent.matchAll(/takeSnapshotAndCompare\(\s*(.*?),\s*['"`]([^'"`]+)['"`]/gs)];
         snapshotMatches.forEach((snapshotMatch) => {
+            const indexMatch = snapshotMatch[1].trim().match(/^getSnapshotFullIndexAsString\(\s*(\d+)?\s*\)$/);
+            if (!indexMatch) {
+                throw new Error(`Unsupported snapshot index in ${fileName}: ${snapshotMatch[1]}`);
+            }
             groupedData[snapshotGroupName].push({
-                snapshotId: getSnapshotFullIndexAsString(),
+                snapshotId: getSnapshotFullIndexAsString(indexMatch[1] === undefined ? undefined : Number(indexMatch[1])),
                 testName,
                 snapshotDetail: snapshotMatch[2],
                 file: fileName.split('/').pop(),
