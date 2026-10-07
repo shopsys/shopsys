@@ -15,5 +15,3 @@ domains:
             facebook: true
             google: true
             seznam: true
-metatag_site_name:
-    site_name: 'Shopsys Platform'
