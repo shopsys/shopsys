@@ -1,6 +1,8 @@
 import {
     changeExpectedDeliveryDateMessagesToStaticDemodata,
     changeSelectionOfPaymentByName,
+    checkSelectedTransport,
+    checkSelectedPayment,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
     openTransportGroupByName,
@@ -36,14 +38,8 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
     it('[Preselect T&P] should preselect transport and payment from last order for logged-in user', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'preselected transport and payment', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(staticData.transport.czechPost.uuid);
+        checkSelectedPayment(staticData.payment.onDelivery.uuid);
     });
 
     it('[Change T&P And Preserve On Refresh] should change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', () => {
@@ -56,14 +52,8 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive('available');
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first change and refresh', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.onDelivery.uuid);
 
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive('absent');
@@ -76,8 +66,13 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfPaymentByName(translations.payment.cash);
         waitForTransportAndPaymentToBeInteractive('available');
         cy.reloadAndWaitForStableAndInteractiveDOM();
+        checkSelectedTransport(staticData.transport.personalCollection.uuid);
+        checkSelectedPayment(staticData.payment.cash.uuid);
+        cy.getByTID([TIDs.pages_order_transport])
+            .find(`label[for="${staticData.transport.personalCollection.uuid}"]`)
+            .should('contain.text', staticData.transport.personalCollection.storePardubice.name);
         changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second change and refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(2), 'after second change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },

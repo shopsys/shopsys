@@ -102,6 +102,9 @@ navigation, and assertions — rather than copying only its primary action.
 - Inspect the relevant React component when lifecycle behavior matters. Verify desktop/mobile variants,
   popovers versus drawers, portals, mounted versus merely hidden content, disabled/loading states, debounce,
   and animations before choosing assertions.
+- For transport/payment selection, wait until the outgoing option list is removed before changing the
+  selection again. After clearing payment, assert that every option label is visible inside the payment
+  section; mounted enabled radios alone do not prove that the animated list has expanded for a screenshot.
 - Add a new interaction pattern only when no project pattern fits, and model it on the closest verified flow.
 
 ## CRITICAL RULE: Always Use cy.getByTID()
@@ -227,7 +230,7 @@ describe('Feature Tests (SSP-XXXX)', () => {
         cy.getByTID([TIDs.some_element]).should('be.visible').click();
         cy.waitForStableAndInteractiveDOM();
 
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'snapshot name', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'snapshot name', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -326,9 +329,24 @@ Each test category needs a unique value in `support/index.ts`. Always check the 
 const SUBGROUP_INDEX = 0; // unique per .cy.ts file in the group
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.MY_GROUP, SUBGROUP_INDEX);
 
-// Each call returns: "groupIndex-subgroupIndex-counter"
-// e.g.: "13-0-0", "13-0-1", "13-0-2"
+// Prefer explicit, stable IDs for new specs and specs undergoing capture consolidation.
+takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'empty state');
+takeSnapshotAndCompare(getSnapshotFullIndexAsString(3), 'filled state');
 ```
+
+Keep existing snapshot indices and labels when removing neighboring captures; gaps are intentional.
+Use explicit IDs consistently throughout a converted spec, with a unique ID per capture.
+Do not mix explicit and automatic IDs in one spec. The no-argument form remains supported
+for untouched legacy specs, but its sequential IDs depend on the preceding executed tests.
+Legacy retry tracking uses the complete `Cypress.currentTest.titlePath`, including parent suites;
+never identify tests by the leaf title alone because sibling suites can reuse it.
+New captures in an explicit-ID spec get a new unused index; do not backfill removed IDs.
+
+Different entry points or persistence paths do not each need a screenshot of the same state.
+Before removing a capture, identify its retained visual owner and preserve explicit assertions
+for the original flow. Keep distinct layout/overlay/form states and required deferred readiness.
+Remove only the corresponding obsolete PNGs, preserve retained reference names, and regenerate
+the lookup table. This does not authorize baseline regeneration or automatic acceptance of diffs.
 
 ### Blackout rules
 
@@ -351,6 +369,7 @@ When taking snapshots, NEVER forget to blackout images and icons that may differ
 | Add-to-cart popup | `add_to_cart_popup_image` |
 | Cart | `cart_list_item_image` |
 | Order summary sidebar | `order_summary_cart_item_image` |
+| Products blocking transport selection | `transport_unavailability_product_image` |
 | Order confirmation | `order_summary_cart_item_image` (same component as order summary) |
 | Order list (customer orders) | `order_list_product_image` |
 | Order detail | `order_detail_item_image` |
@@ -468,7 +487,7 @@ cy.waitForStableAndInteractiveDOM();
 | `goToPageThroughSimpleNavigation(index)`                                  | Click pagination page by index                                       |
 | `checkCanGoToNextOrderStep()`                                             | Assert order next button is visible and not disabled                 |
 | `takeSnapshotAndCompare(name, label, options?, callbackBeforeBlackout?)`  | Take visual regression snapshot                                      |
-| `getSnapshotIndexingFunction(group, subgroup)`                            | Returns counter function for snapshot naming                         |
+| `getSnapshotIndexingFunction(group, subgroup)`                            | Returns snapshot ID function; pass an explicit stable index, or omit for legacy counting |
 | `checktHeadlineText(translationKey)`                                      | Check h1 text matches translation (with fallback)                    |
 | `checkFormLineError(errorText?)`                                          | Assert form_line_error exists with optional translated text          |
 | `checkNumberOfApiRequestsTriggeredByActions(actions, count, requestName)` | Intercept and count GraphQL requests                                 |
@@ -478,7 +497,7 @@ cy.waitForStableAndInteractiveDOM();
 ### Products
 
 ```typescript
-staticData.products.helloKitty; // { uuid, name, catnum: '9177759' }
+staticData.products.helloKitty; // { uuid, name, fullName, catnum: '9177759' }
 staticData.products.philips32PFL4308; // { uuid, catnum: '9176508' }
 staticData.products.televisionPhilipsM; // { uuid } — main variant with 6 sellable variants (incl. philips100)
 staticData.products.a4techMouse; // { uuid, catnum: '5960453', name }
@@ -488,6 +507,9 @@ staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift 
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product
 staticData.products.electronicGiftVoucher1000; // { uuid, catnum: 'VOUCHER1000', name } — electronic gift voucher product (voucher-only carts skip transport)
 ```
+
+Use `fullName ?? name` for exact displayed/API product-name assertions; `name` remains
+the base name used by search scenarios. The Hello Kitty fixture includes a prefix and suffix.
 
 ### Categories
 
@@ -995,7 +1017,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
     it('[Empty Comparison] should show empty comparison page', () => {
         visitComparisonPage();
         checkComparisonIsEmpty();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty comparison', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'empty comparison', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -1011,7 +1033,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         goToComparisonFromPopup();
         checkUrl(url.productComparison);
         checkComparisonProductCount(1);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'one product from listing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'one product from listing', {
             blackout: [
                 { tid: TIDs.comparison_product_image },
                 { tid: TIDs.footer_social_links },
