@@ -37,11 +37,18 @@ describe('Delivery Options Popup Tests', () => {
 
         cy.getByTID([TIDs.delivery_options_variant_select]).should('not.exist');
         checkDeliveryOptionsPanelsAreVisible();
+        cy.getByTID([TIDs.overlay]).should('be.visible');
 
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'popup for a regular product', {
-            capture: TIDs.layout_popup,
-            blackout: [{ tid: TIDs.transport_and_payment_list_item_image }],
+            capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, zIndex: 20000 },
+                { tid: TIDs.product_detail_main_image, zIndex: 5 },
+                { tid: TIDs.product_gallery_image, zIndex: 5 },
+                { tid: TIDs.product_gallery_video, zIndex: 5 },
+            ],
         });
     });
 
@@ -52,9 +59,16 @@ describe('Delivery Options Popup Tests', () => {
 
         cy.getByTID([TIDs.delivery_options_variant_select]).should('be.visible');
         checkDeliveryOptionsPanelsAreNotPresent();
+        cy.getByTID([TIDs.overlay]).should('be.visible');
 
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'popup with an unselected variant select', {
-            capture: TIDs.layout_popup,
+            capture: 'viewport',
+            preserveFixed: [TIDs.layout_popup],
+            blackout: [
+                { tid: TIDs.product_detail_main_image, zIndex: 5 },
+                { tid: TIDs.product_gallery_image, zIndex: 5 },
+                { tid: TIDs.product_gallery_video, zIndex: 5 },
+            ],
         });
 
         chooseVariantInDeliveryOptionsPopup(staticData.products.philips100.uuid);
