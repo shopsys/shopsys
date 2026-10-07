@@ -55,8 +55,6 @@ const BrandDetailPage: NextPage = () => {
         },
     });
 
-    const brandImageUrl = brandDetailData?.brand?.mainImage?.url;
-
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(brandDetailData?.brand);
     useGtmPageReadyEvent(pageReadyEvent, isBrandFetching);
 
@@ -68,7 +66,7 @@ const BrandDetailPage: NextPage = () => {
             defaultDescription={brandDetailData?.brand?.description}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
             isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
-            ogImageUrlDefault={brandImageUrl}
+            ogImage={brandDetailData?.brand?.mainImage}
             paginationTotalCount={brandDetailData?.brand?.products.totalCount}
             seo={brandDetailData?.brand?.seo}
             defaultTitle={getPrefixedSeoTitle(brandDetailData?.brand?.name, t('Brand'))}

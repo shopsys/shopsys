@@ -10,7 +10,9 @@ fragment SeoSettingFragment on SeoSetting {
         city
         postcode
         country
-        logo
+        logo {
+            ...ImageFragment
+        }
         socialNetworkUrls
     }
     titleAddOn

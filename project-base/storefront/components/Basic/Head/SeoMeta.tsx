@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import Head from 'next/head';
@@ -20,7 +21,7 @@ type SeoMetaProps = {
     paginationTotalCount?: number;
     paginationPageSize?: number;
     ogType?: OgTypeEnum | undefined;
-    ogImageUrlDefault?: string | undefined;
+    ogImage?: TypeImageFragment | null;
 };
 
 export const SeoMeta: FC<SeoMetaProps> = ({
@@ -33,7 +34,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
     paginationTotalCount,
     paginationPageSize,
     ogType = OgTypeEnum.Website,
-    ogImageUrlDefault,
+    ogImage,
     children,
 }) => {
     const [areMissingRequiredTagsReported, setAreMissingRequiredTagsReported] = useState(false);
@@ -44,7 +45,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         description,
         ogTitle: ogTitleFromProps,
         ogDescription: ogDescriptionFromProps,
-        ogImageUrl: ogImageUrlFromProps,
+        ogImageUrl,
         ogImageAlt,
         metaRobots,
         isNoindex,
@@ -60,6 +61,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         canonicalQueryParams,
         paginationTotalCount,
         paginationPageSize,
+        ogImage,
     });
 
     const currentUri = useRouter().asPath;
@@ -82,7 +84,6 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
     const ogTitle = ogTitleFromProps ?? title;
     const ogDescription = ogDescriptionFromProps ?? description;
-    const ogImageUrl = ogImageUrlFromProps ?? ogImageUrlDefault;
     // Open Graph expects the ll_TT format, so the most likely country of the domain language is added (e.g. cs → cs_CZ)
     const { language, region } = new Intl.Locale(defaultLocale).maximize();
     const ogLocale = region ? `${language}_${region}` : language;

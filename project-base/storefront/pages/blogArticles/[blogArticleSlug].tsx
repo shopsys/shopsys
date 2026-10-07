@@ -33,8 +33,6 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const blogArticleImageUrl = blogArticleData?.blogArticle?.mainImage?.url;
-
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(blogArticleData?.blogArticle);
     useGtmPageReadyEvent(pageReadyEvent, isBlogArticleFetching);
 
@@ -61,7 +59,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             defaultMetaRobots={shouldNoIndex ? 'noindex, nofollow' : undefined}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={isBlogArticleFetching}
-            ogImageUrlDefault={blogArticleImageUrl}
+            ogImage={blogArticleData?.blogArticle?.mainImage}
             ogType={OgTypeEnum.Article}
             seo={blogArticleData?.blogArticle?.seo}
             defaultTitle={blogArticleData?.blogArticle?.name}

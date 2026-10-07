@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 const mocks = vi.hoisted(() => ({
     defaultLocale: 'cs',
     organizationName: 'Example s.r.o.' as string | null,
+    logo: null as { __typename: 'Image'; name: string | null; url: string } | null,
     router: { asPath: '/', query: {} as Record<string, string> },
     seoPage: null as { seo: { canonicalUrl: string } } | null,
 }));
@@ -13,6 +14,7 @@ const mocks = vi.hoisted(() => ({
 beforeEach(() => {
     mocks.defaultLocale = 'cs';
     mocks.organizationName = 'Example s.r.o.';
+    mocks.logo = null;
     mocks.router = { asPath: '/', query: {} };
     mocks.seoPage = null;
 });
@@ -26,7 +28,16 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({ default: () => ({ t: (key: 
 vi.mock('utils/seo/useSeoPage', () => ({ useSeoPage: () => mocks.seoPage }));
 vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
     useSettingsQuery: () => [
-        { data: { settings: { seo: { titleAddOn: null, organization: { name: mocks.organizationName } } } } },
+        {
+            data: {
+                settings: {
+                    seo: {
+                        titleAddOn: null,
+                        organization: { name: mocks.organizationName, logo: mocks.logo },
+                    },
+                },
+            },
+        },
     ],
 }));
 
@@ -125,6 +136,42 @@ describe('Open Graph and Twitter tags', () => {
         const tag = renderTags(<SeoMeta defaultTitle="Title" />);
 
         expect(tag('meta[name="twitter:domain"]')).toBe('shop.example');
+        expect(tag('meta[name="twitter:card"]')).toBe('summary');
+    });
+
+    test('output the resized image of the entity with its ALT and a large Twitter card', () => {
+        const tag = renderTags(
+            <SeoMeta
+                defaultTitle="Title"
+                ogImage={{ __typename: 'Image', name: 'Product ALT', url: 'https://shop.example/product.jpg' }}
+            />,
+        );
+
+        expect(tag('meta[property="og:image"]')).toBe('https://shop.example/product.jpg?preset=og');
+        expect(tag('meta[name="twitter:image"]')).toBe('https://shop.example/product.jpg?preset=og');
+        expect(tag('meta[property="og:image:alt"]')).toBe('Product ALT');
+        expect(tag('meta[name="twitter:image:alt"]')).toBe('Product ALT');
+        expect(tag('meta[name="twitter:card"]')).toBe('summary_large_image');
+    });
+
+    test('output the resized organization logo when the page has no image', () => {
+        mocks.logo = { __typename: 'Image', name: 'Logo ALT', url: 'https://shop.example/logo.png' };
+        const tag = renderTags(<SeoMeta defaultTitle="Title" />);
+
+        expect(tag('meta[property="og:image"]')).toBe('https://shop.example/logo.png?preset=og');
+        expect(tag('meta[property="og:image:alt"]')).toBe('Logo ALT');
+    });
+
+    test('omit an image in a format social networks do not support', () => {
+        const tag = renderTags(
+            <SeoMeta
+                defaultTitle="Title"
+                ogImage={{ __typename: 'Image', name: 'Product ALT', url: 'https://shop.example/product.svg' }}
+            />,
+        );
+
+        expect(tag('meta[property="og:image"]')).toBeUndefined();
+        expect(tag('meta[property="og:image:alt"]')).toBeUndefined();
         expect(tag('meta[name="twitter:card"]')).toBe('summary');
     });
 });
