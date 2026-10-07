@@ -1,5 +1,7 @@
 # Cypress
 
+[TOC]
+
 For E2E testing, we use [Cypress](https://www.cypress.io/). Below you can read answers to some of the questions you might have.
 
 ## How to structure your cypress folder?
