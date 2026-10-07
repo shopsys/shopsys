@@ -38,6 +38,26 @@ export const useDeferredRender = (place: DeferPlace) => {
     const [shouldRender, setShouldRender] = useState(!shouldUseDefer || !isDeferredPage || hadClientSideNavigation);
 
     useEffect(() => {
+        if (shouldRender) {
+            return;
+        }
+
+        // Expose pending render commits, not elapsed timer durations, for browser readiness checks.
+        const body = document.body;
+        const updatePendingCount = (change: number) => {
+            const pending = Number(body.getAttribute('data-deferred-render-pending') ?? 0) + change;
+            if (pending === 0) {
+                body.removeAttribute('data-deferred-render-pending');
+            } else {
+                body.setAttribute('data-deferred-render-pending', String(pending));
+            }
+        };
+
+        updatePendingCount(1);
+        return () => updatePendingCount(-1);
+    }, [shouldRender]);
+
+    useEffect(() => {
         let timer: NodeJS.Timeout | undefined;
 
         if (!shouldRender) {
