@@ -38,6 +38,7 @@ services:
         container_name: shopsys-framework-php-fpm
         volumes:
             - web-volume:/var/www/html/web
+            - ./gitlab/cypress-rate-limiter.yaml:/var/www/html/config/packages/zz_cypress_rate_limiter.yaml:ro
         ports:
             - "35729:35729"
 
