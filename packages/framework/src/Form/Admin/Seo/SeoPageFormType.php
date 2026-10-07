@@ -8,9 +8,11 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSeoPageSlug;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
@@ -25,6 +27,7 @@ final class SeoPageFormType extends AbstractType
 {
     public function __construct(
         protected readonly Domain $domain,
+        protected readonly AdministrationRouter $administrationRouter,
     ) {
     }
 
@@ -116,6 +119,12 @@ final class SeoPageFormType extends AbstractType
         ]);
 
         $builderOpenGraphGroup
+            ->add('openGraphInfo', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href="%seoSettingsUrl%" target="_blank">SEO attributes</a> is used.', [
+                    '%seoSettingsUrl%' => $this->administrationRouter->generate('admin_seo_index'),
+                ]),
+            ])
             ->add('seoOgTitlesIndexedByDomainId', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
@@ -137,14 +146,10 @@ final class SeoPageFormType extends AbstractType
                 'image_entity_class' => SeoPage::class,
                 'image_type' => SeoPageFacade::IMAGE_TYPE_OG,
                 'file_constraints' => [
-                    new Constraints\File(
-                        maxSize: '15M',
-                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
-                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ),
+                    new Constraints\Image(maxSize: '8M', extensions: ['jpg', 'jpeg', 'png'], minWidth: 200, minHeight: 200),
                 ],
                 'entity' => $seoPage,
-                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'info_text' => t('JPG or PNG, up to 8 MB. Recommended size: 1200×630 px (1.91:1), acceptable minimum: 600×315 px, required minimum: 200×200 px.'),
                 'label' => false,
             ]);
 

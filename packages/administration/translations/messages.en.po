@@ -2062,7 +2062,7 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO attributes</a> is used."
 msgstr ""
 
 msgid "Sale including/excluding VAT"

@@ -3685,6 +3685,9 @@ msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 
+msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, articles, brands and stores) use their own image, page title and meta description."
+msgstr "Tyto údaje se zveřejňují jako strukturovaná data na každé stránce storefrontu a doplňují také Open Graph (og) tagy, které čtou sociální sítě při sdílení stránky. Název firmy je názvem webu (og:site_name) u každé sdílené stránky. Logo se použije jako obrázek pro sdílení (og:image) jen tehdy, když stránka nemá vlastní obrázek, např. úvodní stránka bez Open Graph obrázku v její <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO stránce</a>, stránky příznaků nebo produkty a kategorie bez obrázků.<br>Statické stránky (úvodní stránka, košík, vyhledávání…) přebírají titulek, popis a obrázek pro sdílení ze své SEO stránky; entity (např. produkty, kategorie, články, značky a prodejny) používají vlastní obrázek, titulek stránky a meta description."
+
 msgid "Third column categories"
 msgstr "Kategorie třetího sloupce"
 
@@ -3720,6 +3723,9 @@ msgstr "Čtvrtek"
 
 msgid "TikTok URL"
 msgstr "TikTok URL"
+
+msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO attributes</a> is used."
+msgstr "Titulek, popis a obrázek zobrazené při sdílení této stránky na sociálních sítích. Pokud je Open Graph titulek nebo popis prázdný, použije se titulek stránky nebo meta description. Bez Open Graph obrázku se použije logo firmy ze <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO atributů</a>."
 
 msgid "To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions."
 msgstr "Aby se zákazníkovi zobrazil QR kód, vložte do pokynů k platbě proměnnou <code>%placeholder%</code>."

@@ -7,9 +7,11 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Seo;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Form\Constraints\NotInArray;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Model\Seo\Organization;
 use Shopsys\FrameworkBundle\Model\Seo\OrganizationData;
 use Shopsys\FrameworkBundle\Model\Seo\OrganizationFacade;
@@ -27,6 +29,7 @@ final class SeoSettingFormType extends AbstractType
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly OrganizationFacade $organizationFacade,
+        private readonly AdministrationRouter $administrationRouter,
     ) {
     }
 
@@ -81,10 +84,17 @@ final class SeoSettingFormType extends AbstractType
             'required' => false,
         ]);
 
-        $organization->add('name', TextType::class, [
-            'label' => 'Company name',
-            'required' => false,
-        ])
+        $organization
+            ->add('openGraphInfo', MessageType::class, [
+                'message_level' => MessageType::MESSAGE_LEVEL_INFO,
+                'data' => t('These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href="%seoPagesUrl%" target="_blank">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, articles, brands and stores) use their own image, page title and meta description.', [
+                    '%seoPagesUrl%' => $this->administrationRouter->generate('admin_seopage_list'),
+                ]),
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'Company name',
+                'required' => false,
+            ])
             ->add('companyTaxNumber', TextType::class, [
                 'label' => 'Tax identification number',
                 'required' => false,
