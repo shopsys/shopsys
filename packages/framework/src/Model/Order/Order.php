@@ -186,6 +186,7 @@ class Order implements DomainSeparatedEntityInterface
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $telephonePrefixCountryCode;
 
@@ -285,6 +286,7 @@ class Order implements DomainSeparatedEntityInterface
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $deliveryTelephonePrefixCountryCode;
 
