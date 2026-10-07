@@ -214,12 +214,9 @@ class CurrentPromoCodeFacade
      */
     public function validatePromoCode(PromoCode $promoCode, PriceInterface $totalProductPrice, array $products): array
     {
-        $products = array_values(array_filter(
-            $products,
-            static fn (Product $product) => !$product->isGiftVoucher(),
-        ));
+        $applicableProducts = $this->getProductsApplicableForPromoCode($promoCode, $products);
 
-        if ($products === []) {
+        if ($applicableProducts === []) {
             throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
         }
 
@@ -231,13 +228,32 @@ class CurrentPromoCodeFacade
         $this->validatePricingGroup($promoCode);
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainingUses($promoCode);
-        $allowedProductIdsByProducts = $this->validatePromoCodeByProductsInCart($promoCode, $products);
-        $allowedProductIdsByFlags = $this->validatePromoCodeByFlags($promoCode, $products);
+        $allowedProductIdsByProducts = $this->validatePromoCodeByProductsInCart($promoCode, $applicableProducts);
+        $allowedProductIdsByFlags = $this->validatePromoCodeByFlags($promoCode, $applicableProducts);
 
         if ($promoCode->isFreeTransportAndPaymentType() === false) {
             $this->validateLimit($promoCode, $totalProductPrice);
         }
 
         return array_intersect($allowedProductIdsByProducts, $allowedProductIdsByFlags);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    protected function getProductsApplicableForPromoCode(PromoCode $promoCode, array $products): array
+    {
+        if ($promoCode->isFreeTransportAndPaymentType()) {
+            return array_values(array_filter(
+                $products,
+                static fn (Product $product) => !$product->isElectronicGiftVoucher(),
+            ));
+        }
+
+        return array_values(array_filter(
+            $products,
+            static fn (Product $product) => !$product->isGiftVoucher(),
+        ));
     }
 }
