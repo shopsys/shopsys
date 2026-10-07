@@ -1,6 +1,7 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { SkeletonModuleArticleParagraphs } from './SkeletonModuleArticleParagraphs';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 
 export const SkeletonPageBlogArticle: FC = () => (
@@ -23,11 +24,7 @@ export const SkeletonPageBlogArticle: FC = () => (
                         </div>
 
                         <Skeleton className="h-10 w-3/5" />
-                        <Skeleton className="h-4 w-4/5" />
-                        <Skeleton className="h-4" />
-                        <Skeleton className="h-4" />
-                        <Skeleton className="h-4" />
-                        <Skeleton className="h-4" />
+                        <SkeletonModuleArticleParagraphs />
                     </VerticalStack>
                 </div>
             </div>
