@@ -4,7 +4,7 @@ import { checkUrl, getHeaderElementByTID } from 'support';
 import { TIDs } from 'tids';
 
 export const checkCartContents = (
-    expectedItems: { product: { catnum: string; name: string }; quantity: number }[],
+    expectedItems: { product: { catnum: string; name: string; fullName?: string }; quantity: number }[],
 ) => {
     cy.getByTID([TIDs.pages_cart_list_item_name]).should('have.length', expectedItems.length);
 
@@ -14,7 +14,7 @@ export const checkCartContents = (
             .and('contain.text', product.catnum);
         cy.getByTID([[TIDs.pages_cart_list_item_, product.catnum], TIDs.pages_cart_list_item_name])
             .should('be.visible')
-            .and('have.text', product.name);
+            .and('have.text', product.fullName ?? product.name);
         cy.getByTID([[TIDs.pages_cart_list_item_, product.catnum], TIDs.spinbox_input])
             .should('be.visible')
             .and('have.value', String(quantity));

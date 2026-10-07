@@ -24,18 +24,19 @@ import { TIDs } from 'tids';
 const SUBGROUP_INDEX = 3;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
 
-const checkAddedProduct = (product: { uuid: string; catnum: string; name: string }) => {
+const checkAddedProduct = (product: { uuid: string; catnum: string; name: string; fullName?: string }) => {
+    const fullName = product.fullName ?? product.name;
     cy.wait('@addToCartMutation')
         .its('response.body.data.AddToCart.cart.items')
         .should('have.length', 1)
         .its('0')
         .should('include', { quantity: 1 })
         .its('product')
-        .should('include', { uuid: product.uuid, catalogNumber: product.catnum, fullName: product.name });
+        .should('include', { uuid: product.uuid, catalogNumber: product.catnum, fullName });
     cy.getByTID([TIDs.layout_popup]).should('be.visible').and('contain.text', product.catnum);
     cy.getByTID([TIDs.layout_popup, TIDs.blocks_product_addtocartpopup_product_name])
         .should('be.visible')
-        .and('have.text', product.name);
+        .and('have.text', fullName);
     cy.getByTID([TIDs.layout_popup, TIDs.add_to_cart_popup_quantity])
         .should('be.visible')
         .and('have.text', '1');

@@ -505,7 +505,7 @@ cy.waitForStableAndInteractiveDOM();
 ### Products
 
 ```typescript
-staticData.products.helloKitty; // { uuid, name, catnum: '9177759' }
+staticData.products.helloKitty; // { uuid, name, fullName, catnum: '9177759' }
 staticData.products.philips32PFL4308; // { uuid, catnum: '9176508' }
 staticData.products.televisionPhilipsM; // { uuid } — main variant with 6 sellable variants (incl. philips100)
 staticData.products.a4techMouse; // { uuid, catnum: '5960453', name }
@@ -515,6 +515,9 @@ staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift 
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product
 staticData.products.electronicGiftVoucher1000; // { uuid, catnum: 'VOUCHER1000', name } — electronic gift voucher product (voucher-only carts skip transport)
 ```
+
+Use `fullName ?? name` for exact displayed/API product-name assertions; `name` remains
+the base name used by search scenarios. The Hello Kitty fixture includes a prefix and suffix.
 
 ### Categories
 

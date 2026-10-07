@@ -77,6 +77,7 @@ export const staticData = {
         helloKitty: {
             uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
             name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
+            fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
             catnum: '9177759',
         },
         philips32PFL4308: {

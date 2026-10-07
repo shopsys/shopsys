@@ -11,6 +11,10 @@ import {
     removeProductFromCartPage,
     removePromoCodeOnCartPage,
 } from './cartSupport';
+import {
+    checkFreeTransportBannerShowsFree,
+    checkFreeTransportBannerShowsRemaining,
+} from 'e2e/freeShipping/freeShippingSupport';
 import { checkEmptyCartTextIsVisible, checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import {
     changeExpectedDeliveryDateMessagesToStaticDemodata,
@@ -282,12 +286,18 @@ describe('Cart Page Tests', () => {
     });
 
     it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', () => {
-        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 10);
+        // Philips only allows personal pickup, so it cannot be part of a PPL pricing scenario.
+        removeProductFromCartPage(staticData.products.philips32PFL4308.catnum);
+        checkCartContents([{ product: staticData.products.helloKitty, quantity: 2 }]);
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 13);
         cy.reloadAndWaitForStableAndInteractiveDOM();
+        checkCartContents([{ product: staticData.products.helloKitty, quantity: 15 }]);
+        checkFreeTransportBannerShowsFree();
 
         clickOnPromoCodeButton();
         applyCodeOnCartPage('test');
         checkAndHideSuccessToast(translations.toast.success.codeAdded);
+        checkFreeTransportBannerShowsRemaining();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(12),
             'cart page with non-free transport after applying promocode',

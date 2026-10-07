@@ -283,7 +283,12 @@ export const checkThatContactInformationWasRemovedFromLocalStorage = () => {
         const { contactInformation } = JSON.parse(storedState!).state;
         const expected = JSON.parse(JSON.stringify(DEFAULT_PERSIST_STORE_STATE.state.contactInformation));
 
-        expect(contactInformation).to.deep.equal(expected);
+        // Reloading the empty form initializes its default phone prefix, not customer data.
+        expect(contactInformation).to.deep.equal({
+            ...expected,
+            telephonePrefix: '+420',
+            telephonePrefixCountryCode: 'CZ',
+        });
     });
 };
 
@@ -428,22 +433,14 @@ export const selectDeliveryAddressCard = (address: { firstName: string; lastName
 };
 
 export const checkSelectedDeliveryAddress = (address: { firstName: string; lastName: string; street: string }) => {
+    cy.get('#contact-information-form-isDeliveryAddressDifferentFromBilling').should('be.checked');
     cy.getByTID([TIDs.blocks_addresslist]).find('[aria-pressed="true"]').should('have.length', 1);
-    getDeliveryAddressCard(address)
-        .should(($card) => {
-            expect($card).to.be.visible;
-            expect($card).to.contain.text(address.street);
-            expect($card).to.have.attr('aria-pressed', 'true');
-        })
-        .invoke('attr', 'data-tid')
-        .then((tid) => {
-            const uuid = tid!.slice(TIDs.blocks_addresslist_addresscard_.length);
-            cy.window().should((window) => {
-                const { contactInformation } = JSON.parse(window.localStorage.getItem(PERSIST_STORE_NAME)!).state;
-                expect(contactInformation.deliveryAddressUuid).to.equal(uuid);
-                expect(contactInformation.isDeliveryAddressDifferentFromBilling).to.equal(true);
-            });
-        });
+    // The selected default can come from the account without being copied to localStorage.
+    getDeliveryAddressCard(address).should(($card) => {
+        expect($card).to.be.visible;
+        expect($card).to.contain.text(address.street);
+        expect($card).to.have.attr('aria-pressed', 'true');
+    });
 };
 
 export const clickAddNewAddressButton = () => {
