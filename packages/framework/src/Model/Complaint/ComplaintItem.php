@@ -6,12 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'complaint_items')]
 #[ORM\Entity]
 class ComplaintItem
@@ -40,6 +44,7 @@ class ComplaintItem
      * @var \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(name: 'complaint_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Complaint::class, inversedBy: 'items')]
     protected $complaint;
@@ -152,6 +157,7 @@ class ComplaintItem
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getProductName()
     {
         return $this->productName;

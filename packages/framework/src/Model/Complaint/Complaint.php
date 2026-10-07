@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
@@ -19,6 +22,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'complaints')]
 #[ORM\Entity]
 class Complaint implements DomainSeparatedEntityInterface
@@ -105,6 +109,7 @@ class Complaint implements DomainSeparatedEntityInterface
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $deliveryTelephonePrefixCountryCode;
 
@@ -243,6 +248,7 @@ class Complaint implements DomainSeparatedEntityInterface
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getNumber()
     {
         return $this->number;
