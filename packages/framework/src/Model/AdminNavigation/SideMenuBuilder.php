@@ -844,7 +844,7 @@ class SideMenuBuilder
         $closedDayMenu->addChild(static::HOLIDAYS_IMPORT, ['route' => 'admin_closedday_holidaysimport', 'label' => t('Holidays import'), 'display' => false]);
 
         $seoMenu = $menu->addChild(static::SECTION_SEO, ['label' => t('SEO')]);
-        $seoMenu->addChild(static::SEO, ['route' => 'admin_seo_index', 'label' => t('SEO')]);
+        $seoMenu->addChild(static::SEO, ['route' => 'admin_seo_index', 'label' => t('SEO and Open Graph')]);
         $seoMenu->addChild(static::ROBOTS, ['route' => 'admin_seo_robots', 'label' => t('Robots.txt')]);
         $seoMenu->addChild(static::HREFLANG, ['route' => 'admin_seo_hreflang', 'label' => t('Alternate language settings')]);
         $seoMenu->addChild(static::LIST_UNUSED_FRIENDLY_URL, ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);

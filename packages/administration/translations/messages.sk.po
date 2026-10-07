@@ -2050,11 +2050,11 @@ msgstr "SEO"
 msgid "SEO & Marketing Tools"
 msgstr "SEO a marketingové nástroje"
 
-msgid "SEO attributes"
-msgstr "SEO atribúty"
+msgid "SEO and Open Graph"
+msgstr "SEO a Open Graph"
 
-msgid "SEO attributes settings"
-msgstr "Nastavenia SEO attributes"
+msgid "SEO and Open Graph settings"
+msgstr "Nastavenia SEO a Open Graph"
 
 msgid "SEO page"
 msgstr "SEO stránka"
@@ -2062,8 +2062,8 @@ msgstr "SEO stránka"
 msgid "SEO pages"
 msgstr "SEO stránky"
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO attributes</a> is used."
-msgstr "SEO stránky sa používajú len pre statické stránky storefrontu (napr. košík, vyhľadávanie alebo zákaznícka sekcia). Ak chcete nastaviť SEO konkrétnej entity, napr. článku, použite SEO nastavenia v administrácii danej entity. SEO stránky tiež určujú názov, popis a obrázok zobrazené pri zdieľaní stránky na sociálnych sieťach. Bez Open Graph obrázka sa použije logo firmy zo <a href=\"%seoSettingsUrl%\">SEO atribútov</a>."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
+msgstr "SEO stránky sa používajú len pre statické stránky storefrontu (napr. košík, vyhľadávanie alebo zákaznícka sekcia). Ak chcete nastaviť SEO konkrétnej entity, napr. článku, použite SEO nastavenia v administrácii danej entity. SEO stránky tiež určujú názov, popis a obrázok zobrazené pri zdieľaní stránky na sociálnych sieťach. Bez Open Graph obrázka sa použije logo firmy z <a href=\"%seoSettingsUrl%\">nastavenia SEO a Open Graph</a>."
 
 msgid "Sale including/excluding VAT"
 msgstr "Predaj s/bez DPH"
