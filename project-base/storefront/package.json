@@ -52,7 +52,7 @@
         "react-day-picker": "^10.0.1",
         "react-dom": "~19.2.7",
         "react-dropzone": "^15.0.0",
-        "react-hook-form": "~7.81.0",
+        "react-hook-form": "~7.85.0",
         "react-infinite-scroll-component": "~7.2.1",
         "react-remove-scroll": "^2.7.2",
         "react-swipeable": "~7.0.2",
