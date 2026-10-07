@@ -33,7 +33,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         cy.addProductToCartForTest();
     });
 
-    it('[Preselect T&P] should preselect transport and payment from last order for logged-in user', function () {
+    it('[Preselect T&P] should preselect transport and payment from last order for logged-in user', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeExpectedDeliveryDateMessagesToStaticDemodata();
@@ -46,7 +46,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         });
     });
 
-    it('[Change T&P And Preserve On Refresh] should change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
+    it('[Change T&P And Preserve On Refresh] should change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
@@ -101,7 +101,7 @@ describe('Last Order Transport Overweight Tests', { retries: { runMode: 0 } }, (
         cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid);
     });
 
-    it('[Last Order Overweight] should show no toast and keep Czech post unavailable when restored transport exceeds weight limit', function () {
+    it('[Last Order Overweight] should show no toast and keep Czech post unavailable when restored transport exceeds weight limit', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         cy.getByTID([TIDs.toast_info]).should('not.exist');

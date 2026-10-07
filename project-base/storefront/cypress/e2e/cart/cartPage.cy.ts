@@ -46,7 +46,7 @@ describe('Cart Page Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
     });
 
-    it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
+    it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', () => {
         cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
 
         increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
@@ -115,7 +115,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
+    it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', () => {
         cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
 
         increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
@@ -163,7 +163,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Remove Products] should remove products from cart', function () {
+    it('[Remove Products] should remove products from cart', () => {
         removeProductFromCartPage(staticData.products.philips32PFL4308.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first removal', {
@@ -186,7 +186,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Quantity Spinbox Decrease] min spinbox button should stay clickable for removing the cart item', function () {
+    it('[Quantity Spinbox Decrease] min spinbox button should stay clickable for removing the cart item', () => {
         checkCartItemSpinboxDecreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
         cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
@@ -197,7 +197,7 @@ describe('Cart Page Tests', () => {
         checkCartItemSpinboxDecreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
     });
 
-    it('[Quantity Spinbox Increase] max spinbox button should be always clickable', function () {
+    it('[Quantity Spinbox Increase] max spinbox button should be always clickable', () => {
         checkCartItemSpinboxIncreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
         cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
@@ -208,7 +208,7 @@ describe('Cart Page Tests', () => {
         checkCartItemSpinboxIncreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
     });
 
-    it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
+    it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', () => {
         clickOnPromoCodeButton();
         applyCodeOnCartPage('test');
         checkAndHideSuccessToast(translations.toast.success.codeAdded);
@@ -262,7 +262,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', function () {
+    it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', () => {
         clickOnPromoCodeButton();
 
         applyCodeOnCartPage('test');
@@ -288,7 +288,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', function () {
+    it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', () => {
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 10);
         cy.reloadAndWaitForStableAndInteractiveDOM();
 

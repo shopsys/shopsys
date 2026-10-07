@@ -29,7 +29,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Prefilled Cart] should log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
+    it('[Prefilled Cart] should log in, add product to cart to an already prefilled cart, and empty cart after log out', () => {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.addProductToCartForTest(staticData.products.philips32PFL4308.uuid).then((cart) =>
@@ -69,7 +69,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         checkEmptyCartTextIsVisible();
     });
 
-    it('[Empty Cart] should log in, add product to an empty cart, and empty cart after log out', function () {
+    it('[Empty Cart] should log in, add product to an empty cart, and empty cart after log out', () => {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -97,7 +97,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         checkEmptyCartTextIsVisible();
     });
 
-    it('[Merge Cart] should repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', function () {
+    it('[Merge Cart] should repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', () => {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -153,7 +153,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         });
     });
 
-    it("[Discard Cart] should discard user's previous cart after logging in in order 3rd step", function () {
+    it("[Discard Cart] should discard user's previous cart after logging in in order 3rd step", () => {
         const email = 'discard-user-cart-after-login-in-order-3rd-step@shopsys.com';
         const registrationInput = generateCustomerRegistrationData('commonCustomer', email);
         cy.registerAsNewUser(registrationInput);

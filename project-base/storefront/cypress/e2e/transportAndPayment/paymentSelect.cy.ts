@@ -31,7 +31,7 @@ describe('Payment Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
     });
 
-    it('[Select Payment] should select payment on delivery', function () {
+    it('[Select Payment] should select payment on delivery', () => {
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive('available');
         checkCanGoToNextOrderStep();
@@ -48,7 +48,7 @@ describe('Payment Select Tests', () => {
         checkUrl(url.order.contactInformation);
     });
 
-    it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', function () {
+    it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', () => {
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive('available');
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
@@ -69,7 +69,7 @@ describe('Payment Select Tests', () => {
         checkUrl(url.order.contactInformation);
     });
 
-    it('[Remove Payment Repeated Click] should remove payment using repeated clicks', function () {
+    it('[Remove Payment Repeated Click] should remove payment using repeated clicks', () => {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
@@ -93,7 +93,7 @@ describe('Payment Select Tests', () => {
         });
     });
 
-    it('[Remove Payment Button Click] should remove payment using reset button', function () {
+    it('[Remove Payment Button Click] should remove payment using reset button', () => {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
@@ -117,7 +117,7 @@ describe('Payment Select Tests', () => {
         });
     });
 
-    it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', function () {
+    it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', () => {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
         changeExpectedDeliveryDateMessagesToStaticDemodata();

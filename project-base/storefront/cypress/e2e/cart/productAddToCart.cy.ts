@@ -28,7 +28,7 @@ describe('Product Add To Cart Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Brand Page Add] should add product to cart from brand page', function () {
+    it('[Brand Page Add] should add product to cart from brand page', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverview);
 
         goToPageThroughSimpleNavigation(22);
@@ -47,7 +47,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Product Detail Add] should add product to cart from product detail', function () {
+    it('[Product Detail Add] should add product to cart from product detail', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         addToCartOnProductDetailPage();
@@ -67,7 +67,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Product Detail Add - Rapid Enter] should send only one AddToCart request while button is processing', function () {
+    it('[Product Detail Add - Rapid Enter] should send only one AddToCart request while button is processing', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -85,7 +85,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Cart Page Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', function () {
+    it('[Cart Page Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', () => {
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 2).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
@@ -110,7 +110,7 @@ describe('Product Add To Cart Tests', () => {
         );
     });
 
-    it('[Category Page Add] should add product to cart from category page', function () {
+    it('[Category Page Add] should add product to cart from category page', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         addProductToCartFromProductList(staticData.products.helloKitty.catnum);
@@ -128,7 +128,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Product Variant Add] should add variant product to cart from product detail', function () {
+    it('[Product Variant Add] should add variant product to cart from product detail', () => {
         visitEntityByUuid('product', staticData.products.televisionPhilipsM.uuid);
 
         addVariantToCartFromMainVariantDetail(staticData.products.philips100.catnum);
@@ -143,7 +143,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Promoted Products Add] should add product to cart from promoted products on homepage', function () {
+    it('[Promoted Products Add] should add product to cart from promoted products on homepage', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         addProductToCartFromPromotedProductsOnHomepage(staticData.products.helloKitty.catnum);
@@ -162,7 +162,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Search Page Add] should add product to cart from search results page', function () {
+    it('[Search Page Add] should add product to cart from search results page', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         searchProductByNameWithAutocomplete(staticData.products.helloKitty.name);
@@ -184,7 +184,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Product Card Quantity Adjust] should switch between add to cart button and quantity spinbox', function () {
+    it('[Product Card Quantity Adjust] should switch between add to cart button and quantity spinbox', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {

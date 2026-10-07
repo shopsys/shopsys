@@ -36,7 +36,7 @@ describe('Contact Information Page Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Anon Empty Cart] should redirect to cart page and not display contact information form if cart is empty and user is not logged in', function () {
+    it('[Anon Empty Cart] should redirect to cart page and not display contact information form if cart is empty and user is not logged in', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         checkTransportSelectionIsNotVisible();
@@ -45,7 +45,7 @@ describe('Contact Information Page Tests', () => {
         checkEmptyCartTextIsVisible();
     });
 
-    it('[Anon Transport & Payment] should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', function () {
+    it('[Anon Transport & Payment] should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
@@ -65,7 +65,7 @@ describe('Contact Information Page Tests', () => {
     it(
         '[Logged Empty Cart] should redirect to cart page and not display contact information form if cart is empty and user is logged in',
         { retries: { runMode: 0 } },
-        function () {
+        () => {
             cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
@@ -79,7 +79,7 @@ describe('Contact Information Page Tests', () => {
     it(
         '[Logged Transport & Payment] should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in',
         { retries: { runMode: 0 } },
-        function () {
+        () => {
             cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
             cy.addProductToCartForTest();
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -98,7 +98,7 @@ describe('Contact Information Page Tests', () => {
         },
     );
 
-    it('[Preserve Contact Form] should keep filled contact information after page refresh', function () {
+    it('[Preserve Contact Form] should keep filled contact information after page refresh', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
@@ -126,7 +126,7 @@ describe('Contact Information Page Tests', () => {
     it(
         '[Logged Preserve Contact Form] should keep changed contact information after page refresh for logged-in user',
         { retries: { runMode: 0 } },
-        function () {
+        () => {
             cy.registerAsNewUser(
                 generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
             );
@@ -146,7 +146,7 @@ describe('Contact Information Page Tests', () => {
         },
     );
 
-    it('[Logout Clear Form] should remove contact information after logout', { retries: { runMode: 0 } }, function () {
+    it('[Logout Clear Form] should remove contact information after logout', { retries: { runMode: 0 } }, () => {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'remove-contact-information-after-logout@shopsys.com'),
         );
@@ -174,7 +174,7 @@ describe('Contact Information Page Tests', () => {
         checkThatContactInformationWasRemovedFromLocalStorage();
     });
 
-    it('[Invalid Email] should not reopen the closed error popup while the invalid email is being corrected', function () {
+    it('[Invalid Email] should not reopen the closed error popup while the invalid email is being corrected', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
@@ -204,7 +204,7 @@ describe('Contact Information Page Tests', () => {
         cy.getByTID([TIDs.layout_popup]).should('not.exist');
     });
 
-    it('[Invalid Email Prefill] should not report the invalid email restored from local storage until the field is left', function () {
+    it('[Invalid Email Prefill] should not report the invalid email restored from local storage until the field is left', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);

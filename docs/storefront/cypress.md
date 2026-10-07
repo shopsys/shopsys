@@ -346,36 +346,17 @@ describe('<Domain Specific Functionality> tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should do something', function () {
-        ...
-    });
-});
-```
-
-### Using the `function` keyword for `it()` blocks
-
-In order to be able to use the `this` keyword inside `it()` blocks and thus access the title of the test, you must use the `function` keyword instead of arrow syntax. So, you should do this:
-
-```ts
-describe('Some tests', () => {
-    it('should do something', function () {
-        ...
-        takeSnapshotAndCompare(this.test?.title, ...)
-    });
-});
-```
-
-But not this:
-
-```ts
-describe('Some tests', () => {
     it('should do something', () => {
         ...
-        // 'this' is not available in arrow functions
-        takeSnapshotAndCompare(this.test?.title, ...)
     });
 });
 ```
+
+### Using arrow functions for `it()` blocks
+
+Use arrow functions for `it()` blocks. Snapshot names are generated with `getSnapshotIndexingFunction()` and do not require access to `this.test?.title`.
+
+Keep `function` callbacks where Mocha's context is required, such as a `before()` hook calling `this.skip()`. Arrow functions cannot access that context.
 
 ### Custom cypress commands
 

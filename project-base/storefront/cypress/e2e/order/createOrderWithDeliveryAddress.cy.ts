@@ -42,7 +42,7 @@ describe('Create Order With Delivery Address Tests', () => {
         fillBillingInfoForDeliveryAddressTests();
     });
 
-    it('[Preserve Form On Refresh] should keep filled delivery address after page refresh', function () {
+    it('[Preserve Form On Refresh] should keep filled delivery address after page refresh', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
@@ -67,7 +67,7 @@ describe('Create Order With Delivery Address Tests', () => {
         checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
 
-    it('[Preserve Form On Checkbox Change] should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
+    it('[Preserve Form On Checkbox Change] should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
@@ -102,7 +102,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Logged Popup Add Address] should add delivery address via popup for logged-in user and take snapshot after saving', function () {
+    it('[Logged Popup Add Address] should add delivery address via popup for logged-in user and take snapshot after saving', () => {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'delivery-address-popup-snapshots@shopsys.com'),
         );
@@ -132,7 +132,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         );
     });
 
-    it('[Logged Default Fill New] should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', function () {
+    it('[Logged Default Fill New] should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', () => {
         registerAndCreateOrderForDeliveryAddressTests(
             'first-select-saved-then-fill-and-keep-filled-after-refresh@shopsys.com',
         );
@@ -161,7 +161,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         checkOrderDetailFromOrderPage(translations.transport.czechPost, translations.payment.onDelivery);
     });
 
-    it('[Logged Default Fill New Default] should first select saved default delivery address for logged-in user, then fill new delivery address, then change it to a saved one and back to the new address which should stay filled', function () {
+    it('[Logged Default Fill New Default] should first select saved default delivery address for logged-in user, then fill new delivery address, then change it to a saved one and back to the new address which should stay filled', () => {
         registerAndCreateOrderForDeliveryAddressTests(
             'first-select-saved-then-change-to-new-then-to-saved-and-to-new-again-logged-in@shopsys.com',
         );
@@ -217,7 +217,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         fillBillingInfoForDeliveryAddressTests();
     });
 
-    it('[Preserve Pickup On Refresh] should prefill delivery address from selected pickup point and keep delivery contact after refresh', function () {
+    it('[Preserve Pickup On Refresh] should prefill delivery address from selected pickup point and keep delivery contact after refresh', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
@@ -251,7 +251,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         );
     });
 
-    it('[Preserve Pickup On Checkbox Change] should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', function () {
+    it('[Preserve Pickup On Checkbox Change] should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         loseFocus();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
@@ -296,7 +296,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Logged No Prefill On Pickup Preserve On Refresh] should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', function () {
+    it('[Logged No Prefill On Pickup Preserve On Refresh] should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', () => {
         registerAndCreateOrderForDeliveryAddressTests(
             'no-prefill-contact-information-with-selected-pickup-place@shopsys.com',
             staticData.transport.personalCollection.uuid,
@@ -338,7 +338,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         );
     });
 
-    it('[Logged No Prefill On Pickup Preserve On Checkbox Change] should not prefill delivery contact for logged-in user with saved address and pickup point, but keep filled delivery information after unchecking and checking checkbox for different delivery address', function () {
+    it('[Logged No Prefill On Pickup Preserve On Checkbox Change] should not prefill delivery contact for logged-in user with saved address and pickup point, but keep filled delivery information after unchecking and checking checkbox for different delivery address', () => {
         registerAndCreateOrderForDeliveryAddressTests(
             'keep-delivery-address-with-saved-after-uncheck@shopsys.com',
             staticData.transport.personalCollection.uuid,

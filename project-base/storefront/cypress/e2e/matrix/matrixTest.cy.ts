@@ -16,7 +16,7 @@ describe('Matrix Test for blank others group visit tests with screenshots', () =
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Matrix] should visit matrix page with screenshot', function () {
+    it('[Matrix] should visit matrix page with screenshot', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         changeBlogArticleDynamicPartsToStaticDemodata();
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'matrix page', {
