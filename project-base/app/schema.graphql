@@ -2056,8 +2056,8 @@ type OrganizationSetting {
   country: String
   "Company description"
   description: String
-  "Absolute organization logo URL"
-  logo: String
+  "Organization logo"
+  logo: Image
   "Company name"
   name: String
   "Postcode"
