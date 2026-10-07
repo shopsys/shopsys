@@ -1113,7 +1113,7 @@ jobs:
             -   name: Run Cypress tests
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
                         docker compose run -e TEST_LOCALE=en cypress-regenerate
                     else
                         docker compose run -e TEST_LOCALE=en cypress
