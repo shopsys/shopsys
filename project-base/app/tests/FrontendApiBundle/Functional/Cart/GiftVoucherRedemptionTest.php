@@ -166,6 +166,18 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
         yield 'printed gift voucher' => [ProductDataFixture::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000];
     }
 
+    public function testFreeTransportAndPaymentPromoCodeIsNotNeededForCartWithOnlyElectronicGiftVoucherProducts(): void
+    {
+        $electronicGiftVoucherOnlyCartUuid = $this->createCartWithProduct(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::PROMO_CODE_FOR_FREE_TRANSPORT_PAYMENT, 1, PromoCode::class);
+
+        $this->assertApplyPromoCodeValidationError(
+            $electronicGiftVoucherOnlyCartUuid,
+            $promoCode->getCode(),
+            PromoCodeConstraint::FREE_TRANSPORT_AND_PAYMENT_NOT_NEEDED_ERROR,
+        );
+    }
+
     public function testFreeTransportAndPaymentPromoCodeMakesTransportOfPrintedGiftVoucherFree(): void
     {
         $printedGiftVoucherOnlyCartUuid = $this->createCartWithProduct(ProductDataFixture::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000);
