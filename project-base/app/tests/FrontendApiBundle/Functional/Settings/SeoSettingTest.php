@@ -113,27 +113,11 @@ class SeoSettingTest extends GraphQlTestCase
     }
 
     /**
-     * @return array{name: string|null, companyTaxNumber: string|null, city: string|null, logo: string|null, socialNetworkUrls: string[]}
+     * @return array{name: string|null, companyTaxNumber: string|null, city: string|null, logo: array{url: string, name: string|null}|null, socialNetworkUrls: string[]}
      */
     private function getOrganizationFromApi(): array
     {
-        $query = '
-            query {
-                settings {
-                    seo {
-                        organization {
-                            name
-                            companyTaxNumber
-                            city
-                            logo
-                            socialNetworkUrls
-                        }
-                    }
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SeoOrganizationQuery.graphql');
 
         return $this->getResponseDataForGraphQlType($response, 'settings')['seo']['organization'];
     }
