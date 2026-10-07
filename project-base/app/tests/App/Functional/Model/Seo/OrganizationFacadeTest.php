@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
@@ -82,6 +83,7 @@ final class OrganizationFacadeTest extends TransactionFunctionalTestCase
 
     public function testReplacingAndDeletingLogoPreservesOtherDomainLogo(): void
     {
+        $this->detachDemoLogosWithoutDeletingFiles();
         $paths = [];
 
         try {
@@ -112,6 +114,21 @@ final class OrganizationFacadeTest extends TransactionFunctionalTestCase
         }
     }
 
+    /**
+     * Replacing or deleting a logo deletes the file of the previous one, which a transaction rollback does not restore.
+     * A DQL delete bypasses the Doctrine listener that deletes image files, so the demo logo files stay untouched
+     * and their rows are restored by the rollback.
+     */
+    private function detachDemoLogosWithoutDeletingFiles(): void
+    {
+        $this->em->createQueryBuilder()
+            ->delete(Image::class, 'i')
+            ->where('i.entityName = :entityName')
+            ->setParameter('entityName', 'organization')
+            ->getQuery()
+            ->execute();
+    }
+
     private function uploadLogo(int $domainId): string
     {
         $filename = 'organization-test-' . bin2hex(random_bytes(8)) . '.jpg';
@@ -136,6 +153,7 @@ final class OrganizationFacadeTest extends TransactionFunctionalTestCase
         $firstDomainData->companyVatNumber = 'SK2120123456';
         $secondDomainData = $this->organizationDataFactory->findOrCreateForDomain(Domain::SECOND_DOMAIN_ID);
         $secondDomainData->name = 'Second domain company';
+        $secondDomainData->companyVatNumber = null;
 
         $this->organizationFacade->edit(Domain::FIRST_DOMAIN_ID, $firstDomainData);
         $this->organizationFacade->edit(Domain::SECOND_DOMAIN_ID, $secondDomainData);
@@ -148,7 +166,6 @@ final class OrganizationFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame('SK2120123456', $firstOrganization->companyVatNumber);
         $this->assertNull($secondOrganization->companyVatNumber);
         $this->assertSame('Second domain company', $secondOrganization->name);
-        $this->assertEmpty($firstOrganization->image->orderedImages);
         $apiOrganization = $this->organizationApiFacade->getOrganization(Domain::FIRST_DOMAIN_ID);
         $this->assertSame('2120123456', $apiOrganization->companyTaxNumber);
         $this->assertSame('SK2120123456', $apiOrganization->companyVatNumber);
@@ -174,6 +191,7 @@ final class OrganizationFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame('SK2120123456', $organization->companyVatNumber);
         $this->assertSame('Ostrava', $organization->city);
         $this->assertArrayHasKey('image', $view->children['organization']->children);
+        $this->assertNotEmpty($view->children['organization']->children['image']->vars['images_by_id']);
         $this->assertTrue($view->children['organization']->vars['renders_in_own_card']);
         $this->tokenStorage->setToken(null);
         $this->requestStack->pop();
