@@ -3,6 +3,7 @@ import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
 import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
 import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
+import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { normalizeTelephone } from 'utils/formaters/normalizeTelephone';
@@ -43,6 +44,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
             <InformationCard
                 heading={isPickupPlaceOrder ? t('Pickup place') : t('Delivery address')}
                 icon={<DeliveryAddressIcon className="size-8" />}
+                tid={TIDs.order_detail_delivery_address}
             >
                 {isEmailDeliveryOrder ? (
                     <span>{t('Delivered by email')}</span>

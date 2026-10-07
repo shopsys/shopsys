@@ -111,7 +111,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
 
                         <div className="flex flex-1 items-center justify-between gap-4 vl:gap-6 md:justify-end">
                             <div className="font-secondary">
-                                <span className="font-semibold">{quantity}</span>
+                                <span className="font-semibold" data-tid={TIDs.add_to_cart_popup_quantity}>
+                                    {quantity}
+                                </span>
                                 <span className="text-sm text-text-less">&nbsp;{product.unit.name}</span>
                             </div>
 

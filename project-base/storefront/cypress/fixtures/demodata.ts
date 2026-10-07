@@ -80,6 +80,7 @@ export const staticData = {
             catnum: '9177759',
         },
         philips32PFL4308: {
+            name: '32" Philips 32PFL4308',
             uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
             catnum: '9176508',
         },

@@ -1,5 +1,6 @@
 /// <reference types="cypress-wait-for-stable-dom" />
 import './api';
+import { createSnapshotIndexer } from './snapshotIndexing';
 import { loadAllTranslations, t, type TranslationsType } from './translations';
 import 'cypress-real-events';
 import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command';
@@ -575,28 +576,11 @@ export const checkCanGoToNextOrderStep = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).should('be.visible').and('not.be.disabled');
 };
 
-export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) => {
-    let snapshotCounter = 0;
-    let counterAtTestStart = 0;
-    let lastTestTitle = '';
-    let lastRetryAttempt = 0;
-
-    return () => {
-        const currentTest = Cypress.currentTest?.title ?? '';
-        const currentRetry = Cypress.currentRetry;
-
-        if (currentTest !== lastTestTitle) {
-            lastTestTitle = currentTest;
-            counterAtTestStart = snapshotCounter;
-            lastRetryAttempt = 0;
-        } else if (currentRetry > lastRetryAttempt) {
-            snapshotCounter = counterAtTestStart;
-            lastRetryAttempt = currentRetry;
-        }
-
-        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotCounter++}`;
-    };
-};
+export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) =>
+    createSnapshotIndexer(snapshotGroupIndex, snapshotSubgroupIndex, () => ({
+        title: Cypress.currentTest?.title ?? '',
+        retry: Cypress.currentRetry,
+    }));
 
 export const checktHeadlineText = (translationKey: string) => {
     return cy.wrap(null).then(() => {

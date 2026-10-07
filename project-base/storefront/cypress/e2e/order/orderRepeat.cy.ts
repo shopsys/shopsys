@@ -1,4 +1,5 @@
 import { repeatOrderFromOrderDetail, repeatOrderFromOrderList } from './orderSupport';
+import { checkCartContents } from 'e2e/cart/cartSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
 import {
@@ -31,14 +32,10 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         repeatOrderFromOrderList();
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after repeat', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 3 },
+            { product: staticData.products.philips100, quantity: 4 },
+        ]);
     });
 
     it('[Logged Repeat With Prefilled And Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', () => {
@@ -56,7 +53,12 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         repeatOrderFromOrderList(true);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after repeat', {
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 3 },
+            { product: staticData.products.philips100, quantity: 8 },
+            { product: staticData.products.a4techMouse, quantity: 2 },
+        ]);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -81,14 +83,10 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         repeatOrderFromOrderList(false);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after repeat', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 3 },
+            { product: staticData.products.philips100, quantity: 4 },
+        ]);
     });
 });
 
@@ -112,14 +110,10 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         repeatOrderFromOrderDetail();
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after repeat', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 3 },
+            { product: staticData.products.philips100, quantity: 4 },
+        ]);
     });
 
     it('[Anon Repeat With Prefilled Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', () => {
@@ -140,14 +134,11 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         repeatOrderFromOrderDetail(true);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after repeat', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 3 },
+            { product: staticData.products.philips100, quantity: 8 },
+            { product: staticData.products.a4techMouse, quantity: 2 },
+        ]);
     });
 
     it('[Anon Repeat With Prefilled No Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', () => {
@@ -168,13 +159,9 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         repeatOrderFromOrderDetail(false);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after repeat', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 3 },
+            { product: staticData.products.philips100, quantity: 4 },
+        ]);
     });
 });

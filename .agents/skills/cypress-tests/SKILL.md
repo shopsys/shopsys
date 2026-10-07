@@ -227,7 +227,7 @@ describe('Feature Tests (SSP-XXXX)', () => {
         cy.getByTID([TIDs.some_element]).should('be.visible').click();
         cy.waitForStableAndInteractiveDOM();
 
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'snapshot name', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'snapshot name', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -326,9 +326,22 @@ Each test category needs a unique value in `support/index.ts`. Always check the 
 const SUBGROUP_INDEX = 0; // unique per .cy.ts file in the group
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.MY_GROUP, SUBGROUP_INDEX);
 
-// Each call returns: "groupIndex-subgroupIndex-counter"
-// e.g.: "13-0-0", "13-0-1", "13-0-2"
+// Prefer explicit, stable IDs for new specs and specs undergoing capture consolidation.
+takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'empty state');
+takeSnapshotAndCompare(getSnapshotFullIndexAsString(3), 'filled state');
 ```
+
+Keep existing snapshot indices and labels when removing neighboring captures; gaps are intentional.
+Use explicit IDs consistently throughout a converted spec, with a unique ID per capture.
+Do not mix explicit and automatic IDs in one spec. The no-argument form remains supported
+for untouched legacy specs, but its sequential IDs depend on the preceding executed tests.
+New captures in an explicit-ID spec get a new unused index; do not backfill removed IDs.
+
+Different entry points or persistence paths do not each need a screenshot of the same state.
+Before removing a capture, identify its retained visual owner and preserve explicit assertions
+for the original flow. Keep distinct layout/overlay/form states and required deferred readiness.
+Remove only the corresponding obsolete PNGs, preserve retained reference names, and regenerate
+the lookup table. This does not authorize baseline regeneration or automatic acceptance of diffs.
 
 ### Blackout rules
 
@@ -468,7 +481,7 @@ cy.waitForStableAndInteractiveDOM();
 | `goToPageThroughSimpleNavigation(index)`                                  | Click pagination page by index                                       |
 | `checkCanGoToNextOrderStep()`                                             | Assert order next button is visible and not disabled                 |
 | `takeSnapshotAndCompare(name, label, options?, callbackBeforeBlackout?)`  | Take visual regression snapshot                                      |
-| `getSnapshotIndexingFunction(group, subgroup)`                            | Returns counter function for snapshot naming                         |
+| `getSnapshotIndexingFunction(group, subgroup)`                            | Returns snapshot ID function; pass an explicit stable index, or omit for legacy counting |
 | `checktHeadlineText(translationKey)`                                      | Check h1 text matches translation (with fallback)                    |
 | `checkFormLineError(errorText?)`                                          | Assert form_line_error exists with optional translated text          |
 | `checkNumberOfApiRequestsTriggeredByActions(actions, count, requestName)` | Intercept and count GraphQL requests                                 |
@@ -995,7 +1008,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
     it('[Empty Comparison] should show empty comparison page', () => {
         visitComparisonPage();
         checkComparisonIsEmpty();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty comparison', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'empty comparison', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -1011,7 +1024,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         goToComparisonFromPopup();
         checkUrl(url.productComparison);
         checkComparisonProductCount(1);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'one product from listing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'one product from listing', {
             blackout: [
                 { tid: TIDs.comparison_product_image },
                 { tid: TIDs.footer_social_links },

@@ -1,8 +1,9 @@
 import {
     checkContactInformationFormIsNotVisible,
+    checkContactInformationInThirdStep,
+    checkSelectedDeliveryAddress,
     checkEmptyCartTextIsVisible,
     checkThatContactInformationWasRemovedFromLocalStorage,
-    checkTransportSelectionIsNotVisible,
     checkTransportSelectionIsVisible,
     clearPostcodeInThirdStep,
     clickOnSendOrderButton,
@@ -13,7 +14,6 @@ import {
     clickAddNewAddressButton,
     fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
-import { changeExpectedDeliveryDateMessagesToStaticDemodata } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
@@ -39,7 +39,7 @@ describe('Contact Information Page Tests', () => {
     it('[Anon Empty Cart] should redirect to cart page and not display contact information form if cart is empty and user is not logged in', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        checkTransportSelectionIsNotVisible();
+        checkContactInformationFormIsNotVisible();
         checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
         checkEmptyCartTextIsVisible();
@@ -52,14 +52,6 @@ describe('Contact Information Page Tests', () => {
         checkContactInformationFormIsNotVisible();
         checkTransportSelectionIsVisible();
         checkUrl(url.order.transportAndPayment);
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
     });
 
     it(
@@ -69,7 +61,7 @@ describe('Contact Information Page Tests', () => {
             cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-            checkTransportSelectionIsNotVisible();
+            checkContactInformationFormIsNotVisible();
             checkEmptyCartTextIsVisible();
             checkUrl(url.cart);
             checkEmptyCartTextIsVisible();
@@ -87,14 +79,6 @@ describe('Contact Information Page Tests', () => {
             checkContactInformationFormIsNotVisible();
             checkTransportSelectionIsVisible();
             checkUrl(url.order.transportAndPayment);
-            changeExpectedDeliveryDateMessagesToStaticDemodata();
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page', {
-                blackout: [
-                    { tid: TIDs.transport_and_payment_list_item_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
-            });
         },
     );
 
@@ -117,8 +101,20 @@ describe('Contact Information Page Tests', () => {
         );
         fillInNoteInThirdStep(staticData.orderNote);
         loseFocus();
+        const expectedContact = {
+            email: staticData.customer1.email,
+            telephone: staticData.customer1.phone,
+            firstName: staticData.customer1.firstName,
+            lastName: staticData.customer1.lastName,
+            street: staticData.customer1.billingStreet,
+            city: staticData.customer1.billingCity,
+            postcode: staticData.customer1.billingPostCode,
+            note: staticData.orderNote,
+        };
+        checkContactInformationInThirdStep(expectedContact);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
+        checkContactInformationInThirdStep(expectedContact);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(2), 'contact information page after reload', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
     });
@@ -127,20 +123,36 @@ describe('Contact Information Page Tests', () => {
         '[Logged Preserve Contact Form] should keep changed contact information after page refresh for logged-in user',
         { retries: { runMode: 0 } },
         () => {
-            cy.registerAsNewUser(
-                generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
+            const registrationInput = generateCustomerRegistrationData(
+                'commonCustomer',
+                'refresh-page-contact-information@shopsys.com',
             );
+            cy.registerAsNewUser(registrationInput);
             cy.addProductToCartForTest();
             cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
             cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-            fillCustomerInformationInThirdStep('123', ' changed', ' changed');
+            cy.get('#contact-information-form-telephone').clear();
+            fillCustomerInformationInThirdStep(staticData.customer1.phone, ' changed', ' changed');
             clearPostcodeInThirdStep();
             fillBillingAdressInThirdStep(' changed 123', ' changed', '29292');
             fillInNoteInThirdStep(staticData.orderNote);
             loseFocus();
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
+            const expectedContact = {
+                email: registrationInput.email,
+                telephone: staticData.customer1.phone,
+                firstName: `${registrationInput.firstName} changed`,
+                lastName: `${registrationInput.lastName} changed`,
+                street: `${registrationInput.street} changed 123`,
+                city: `${registrationInput.city} changed`,
+                postcode: '29292',
+                note: staticData.orderNote,
+            };
+            checkContactInformationInThirdStep(expectedContact);
+            cy.reloadAndWaitForStableAndInteractiveDOM();
+            checkContactInformationInThirdStep(expectedContact);
+            takeSnapshotAndCompare(getSnapshotFullIndexAsString(3), 'contact information page after reload', {
                 blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             });
         },
@@ -159,19 +171,27 @@ describe('Contact Information Page Tests', () => {
         loseFocus();
         clickAddNewAddressButton();
         fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form before logout', {
-            blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
-        });
+        checkSelectedDeliveryAddress(staticData.deliveryAddress);
 
         cy.logout();
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty contact information form after logout', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(5), 'empty contact information form after logout', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
         checkThatContactInformationWasRemovedFromLocalStorage();
+        checkContactInformationInThirdStep({
+            email: '',
+            telephone: '',
+            firstName: '',
+            lastName: '',
+            street: '',
+            city: '',
+            postcode: '',
+            note: '',
+        });
     });
 
     it('[Invalid Email] should not reopen the closed error popup while the invalid email is being corrected', () => {

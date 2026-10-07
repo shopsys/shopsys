@@ -1,5 +1,7 @@
 import {
     changeExpectedDeliveryDateMessagesToStaticDemodata,
+    checkSelectedPayment,
+    checkSelectedTransport,
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     removePaymentSelectionUsingButton,
@@ -34,9 +36,11 @@ describe('Payment Select Tests', () => {
     it('[Select Payment] should select payment on delivery', () => {
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.onDelivery.uuid);
         checkCanGoToNextOrderStep();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after payment selection', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'after payment selection', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -51,13 +55,19 @@ describe('Payment Select Tests', () => {
     it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', () => {
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.onDelivery.uuid);
         changeSelectionOfPaymentByName(translations.payment.onDelivery);
         waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(null);
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.creditCard.uuid);
         checkCanGoToNextOrderStep();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after changing payment selection', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'after changing payment selection', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -72,19 +82,15 @@ describe('Payment Select Tests', () => {
     it('[Remove Payment Repeated Click] should remove payment using repeated clicks', () => {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.creditCard.uuid);
 
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(null);
         changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(3), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -96,63 +102,28 @@ describe('Payment Select Tests', () => {
     it('[Remove Payment Button Click] should remove payment using reset button', () => {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.creditCard.uuid);
 
         removePaymentSelectionUsingButton();
         waitForTransportAndPaymentToBeInteractive('available');
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(null);
     });
 
     it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', () => {
         changeSelectionOfPaymentByName(translations.payment.creditCard);
         waitForTransportAndPaymentToBeInteractive('available');
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkSelectedPayment(staticData.payment.creditCard.uuid);
 
         removeTransportSelectionUsingButton();
         waitForTransportAndPaymentToBeInteractive('absent');
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing transport', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkSelectedTransport(null);
 
         changeSelectionOfTransportByName(translations.transport.czechPost, translations.transportGroup.deliveryToAddress);
         waitForTransportAndPaymentToBeInteractive('available');
-        changeExpectedDeliveryDateMessagesToStaticDemodata();
-        takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(),
-            'after selecting transport incompatible with the previous payment',
-            {
-                blackout: [
-                    { tid: TIDs.transport_and_payment_list_item_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
-            },
-        );
+        checkSelectedTransport(staticData.transport.czechPost.uuid);
+        checkSelectedPayment(null);
     });
 });

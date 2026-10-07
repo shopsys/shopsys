@@ -1,11 +1,46 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
 import { staticData } from 'fixtures/demodata';
-import { translations } from 'support';
+import { t, translations } from 'support';
 import { TIDs } from 'tids';
 
 const getTransportGroupButtonByName = (transportGroupName: string) =>
     cy.getByTID([TIDs.transport_group_button]).contains(transportGroupName).closest('button');
+
+const checkSelectedOption = (sectionTid: TIDs, expectedUuid: string | null) => {
+    const selectedOption = cy.getByTID([sectionTid]).find('input[type="radio"]:checked');
+
+    if (expectedUuid === null) {
+        selectedOption.should('not.exist');
+
+        return;
+    }
+
+    selectedOption.should('have.length', 1).and('have.value', expectedUuid);
+};
+
+export const checkSelectedTransport = (expectedUuid: string | null) => {
+    checkSelectedOption(TIDs.pages_order_transport, expectedUuid);
+};
+
+export const checkSelectedPayment = (expectedUuid: string | null) => {
+    checkSelectedOption(TIDs.pages_order_payment, expectedUuid);
+};
+
+export const checkTransportPrice = (transportUuid: string, expected: 'free' | 'paid') => {
+    cy.getByTID([TIDs.pages_order_transport]).find(`label[for="${transportUuid}"]`).within(() => {
+        if (expected === 'free') {
+            t('Free').then((free) => {
+                cy.getByTID([TIDs.transport_and_payment_price]).should('have.text', free);
+            });
+        } else {
+            cy.getByTID([TIDs.transport_and_payment_price])
+                .should('be.visible')
+                .invoke('text')
+                .should('match', /[1-9]/);
+        }
+    });
+};
 
 export const openTransportGroupByName = (transportGroupName: string) => {
     getTransportGroupButtonByName(transportGroupName).then(($button) => {

@@ -3,7 +3,8 @@ import {
     fillCustomerInformationInThirdStep,
     fillBillingAdressInThirdStep,
     fillInNoteInThirdStep,
-    clickOnSendOrderButton,
+    sendOrderAndCheckConfirmation,
+    checkCreatedOrderInDetail,
     clickOnOrderDetailButtonOnThankYouPage,
     fillRegistrationInfoAfterOrder,
     changeOrderDetailDynamicPartsToStaticDemodata,
@@ -64,13 +65,14 @@ describe('Create Order Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translationKeys.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
             translations.transport.czechPost,
@@ -84,7 +86,7 @@ describe('Create Order Tests', () => {
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        fillEmailInThirdStep(staticData.customer1.emailRegistered);
+        fillEmailInThirdStep(staticData.customer1.email);
         fillCustomerInformationInThirdStep(
             staticData.customer1.phone,
             staticData.customer1.firstName,
@@ -101,13 +103,14 @@ describe('Create Order Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translationKeys.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
             translations.transport.czechPost,
@@ -145,13 +148,14 @@ describe('Create Order Tests', () => {
             ],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translations.order.confirmation.personalCollection);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
             `${translations.transport.personalCollection} ${staticData.transport.personalCollection.storeOstrava.name}`,
@@ -182,13 +186,14 @@ describe('Create Order Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translationKeys.order.confirmation.card);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPage(
             translations.transport.ppl,
@@ -227,13 +232,14 @@ describe('Create Order Tests', () => {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
 
-        clickOnSendOrderButton();
+        sendOrderAndCheckConfirmation();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
         checkOrderConfirmationStatusText(translationKeys.order.confirmation.czechPost);
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
+        checkCreatedOrderInDetail();
         changeOrderDetailDynamicPartsToStaticDemodata();
         checkOrderDetailFromOrderPageWithPromoCode(
             translations.transport.czechPost,
@@ -266,7 +272,7 @@ describe('Create Order Tests', () => {
                 blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             });
 
-            clickOnSendOrderButton();
+            sendOrderAndCheckConfirmation();
             cy.waitForStableAndInteractiveDOM();
             changeOrderConfirmationDynamicPartsToStaticDemodata();
             checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
@@ -279,6 +285,7 @@ describe('Create Order Tests', () => {
 
             cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
             goToOrderDetailFromOrderList();
+            checkCreatedOrderInDetail();
             changeOrderDetailDynamicPartsToStaticDemodata(true);
             checkOrderDetailFromOrderPageWithComplaintButton(
                 translations.transport.czechPost,
@@ -314,13 +321,14 @@ describe('Create Order Tests', () => {
                 blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
             });
 
-            clickOnSendOrderButton();
+            sendOrderAndCheckConfirmation();
             cy.waitForStableAndInteractiveDOM();
             changeOrderConfirmationDynamicPartsToStaticDemodata();
             mouseOverUserMenuButton();
             checkOrderConfirmationStatusText(translations.order.confirmation.czechPost);
 
             clickOnOrderDetailButtonOnThankYouPage();
+            checkCreatedOrderInDetail();
             changeOrderDetailDynamicPartsToStaticDemodata();
             checkOrderDetailFromOrderPageWithComplaintButton(
                 translations.transport.czechPost,
