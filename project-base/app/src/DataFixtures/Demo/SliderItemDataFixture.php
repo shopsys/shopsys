@@ -40,7 +40,6 @@ class SliderItemDataFixture extends AbstractReferenceFixture
             $sliderItemData = $this->sliderItemDataFactory->create();
             $sliderItemData->domainId = $domainId;
             $sliderItemData->hidden = false;
-            $sliderItemData->gtmId = 'sliderItemTest';
             $sliderItemData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Terms of promotion' . $domainId)->toString();
 
             $sliderItemData->name = t('Shopsys Platform', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

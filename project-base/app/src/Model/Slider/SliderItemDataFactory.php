@@ -49,8 +49,5 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
 
         $sliderItemData->image = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_WEB);
         $sliderItemData->mobileImage = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
-
-        $sliderItemData->gtmId = $sliderItem->getGtmId();
-        $sliderItemData->gtmCreative = $sliderItem->getGtmCreative();
     }
 }

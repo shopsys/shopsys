@@ -11603,24 +11603,6 @@ Slider description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="slideritem.gtmcreative">gtmCreative</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-GTM creative
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="slideritem.gtmid">gtmId</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-GTM ID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="slideritem.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>

@@ -3349,10 +3349,6 @@ type Settings {
 type SliderItem {
   "Slider description"
   description: String
-  "GTM creative"
-  gtmCreative: String
-  "GTM ID"
-  gtmId: String!
   "Slider item images"
   images(type: String = null): [Image!]!
   "Target link"
