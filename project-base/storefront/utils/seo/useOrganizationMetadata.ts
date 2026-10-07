@@ -23,7 +23,7 @@ export const useOrganizationMetadata = () => {
             : undefined,
         description: organization?.description || undefined,
         address: Object.values(address).some(Boolean) ? { '@type': 'PostalAddress', ...address } : undefined,
-        logo: organization?.logo || undefined,
+        logo: organization?.logo?.url,
         sameAs: organization?.socialNetworkUrls.length ? organization.socialNetworkUrls : undefined,
     };
 };

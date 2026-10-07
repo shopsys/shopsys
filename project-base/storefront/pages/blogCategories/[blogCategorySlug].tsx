@@ -47,6 +47,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
             defaultDescription={blogCategoryData?.blogCategory?.description}
             hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
             isFetchingData={isBlogCategoryFetching}
+            ogImage={blogCategoryData?.blogCategory?.mainImage}
             paginationPageSize={DEFAULT_BLOG_PAGE_SIZE}
             paginationTotalCount={blogCategoryData?.blogCategory?.articlesTotalCount}
             seo={blogCategoryData?.blogCategory?.seo}

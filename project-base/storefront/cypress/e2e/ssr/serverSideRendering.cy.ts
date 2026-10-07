@@ -129,6 +129,8 @@ describe('Server-side rendering tests', () => {
                     /<title[^>]*>.+<\/title>/,
                     /<meta[^>]*content="website"[^>]*property="og:type"/,
                     /<meta[^>]*content="[^"]+"[^>]*property="og:site_name"/,
+                    /<meta[^>]*content="[^"]+\?preset=og"[^>]*property="og:image"/,
+                    /<meta[^>]*content="summary_large_image"[^>]*name="twitter:card"/,
                 ]);
                 assertIndexablePage(response.body);
             });
