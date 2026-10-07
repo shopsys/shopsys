@@ -385,30 +385,36 @@ Another thing is that you should modify `cypress.d.ts`, where you should put typ
 
 Another important part of our cypress tests is visual regression. This allows us to take a screenshot of the application at any point and compare it with a base screenshot every time the tests are run. This way you make sure that the app looks the same, and that your changes did not break it visually.
 
-For this purpose, the `takeSnapshotAndCompare` helper method can be used. You can use it multiple times in each test, just remember to provide the screenshot name, which will be used to store the snapshot under `/snapshots`.
+For this purpose, the `takeSnapshotAndCompare` helper method can be used. Initialize `getSnapshotIndexingFunction()` with the snapshot group and a subgroup index unique within that group. Pass an explicit, stable index for each capture and a descriptive label; together they form the snapshot filename under `/snapshots`. Keep existing indices when removing other captures.
 
 ```ts
-it('should do something', function () {
+import { getSnapshotIndexingFunction, SNAPSHOT_GROUP, takeSnapshotAndCompare } from 'support';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
+
+it('should do something', () => {
     ...
     // do something
     ...
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+    takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'screenshot name suffix');
     ...
     // do something else
     ...
-    takeSnapshotAndCompare(this.test?.title, 'another screenshot name suffix');
+    takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'another screenshot name suffix');
 });
 ```
 
-Remember this can be leveraged to make sure that an action does not change the UI by comparing to the same screenshot.
+To verify that an action does not change the UI, reuse the same snapshot ID and label for both captures:
 
 ```ts
-it('should do something', function () {
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+it('should do something', () => {
+    const snapshotId = getSnapshotFullIndexAsString(2);
+    takeSnapshotAndCompare(snapshotId, 'screenshot name suffix');
     ...
     // do something that should not change the UI
     ...
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+    takeSnapshotAndCompare(snapshotId, 'screenshot name suffix');
 });
 ```
 
