@@ -18,7 +18,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Logged Repeat With Empty] should repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
+    it('[Logged Repeat With Empty] should repeat order (pre-fill cart) for logged-in user with initially empty cart', () => {
         const email = 'order-repeat-logged-in-with-empty-cart@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3);
@@ -41,7 +41,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         });
     });
 
-    it('[Logged Repeat With Prefilled And Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', function () {
+    it('[Logged Repeat With Prefilled And Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', () => {
         const email = 'order-repeat-logged-in-with-filled-cart-and-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3);
@@ -66,7 +66,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         });
     });
 
-    it('[Logged Repeat With Prefilled And No Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', function () {
+    it('[Logged Repeat With Prefilled And No Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', () => {
         const email = 'order-repeat-logged-in-with-filled-cart-without-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3);
@@ -97,7 +97,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Anon Repeat With Empty] should repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {
+    it('[Anon Repeat With Empty] should repeat order (pre-fill cart) for unlogged user with initially empty cart', () => {
         const email = 'order-repeat-unlogged-with-empty-cart@shopsys.com';
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -122,7 +122,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         });
     });
 
-    it('[Anon Repeat With Prefilled Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', function () {
+    it('[Anon Repeat With Prefilled Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', () => {
         const email = 'order-repeat-unlogged-with-filled-cart-and-merging@shopsys.com';
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -150,7 +150,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         });
     });
 
-    it('[Anon Repeat With Prefilled No Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', function () {
+    it('[Anon Repeat With Prefilled No Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', () => {
         const email = 'order-repeat-unlogged-with-filled-cart-without-merging@shopsys.com';
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
