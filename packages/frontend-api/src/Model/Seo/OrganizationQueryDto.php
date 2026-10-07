@@ -7,6 +7,11 @@ namespace Shopsys\FrontendApiBundle\Model\Seo;
 class OrganizationQueryDto
 {
     /**
+     * @var int|null
+     */
+    public $id;
+
+    /**
      * @var string|null
      */
     public $name;
@@ -50,11 +55,6 @@ class OrganizationQueryDto
      * @var string|null
      */
     public $country;
-
-    /**
-     * @var string|null
-     */
-    public $logo;
 
     /**
      * @var string[]

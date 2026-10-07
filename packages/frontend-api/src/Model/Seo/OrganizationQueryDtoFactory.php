@@ -16,10 +16,9 @@ class OrganizationQueryDtoFactory
     /**
      * @param string[] $socialNetworkUrls
      */
-    public function create(?Organization $organization, ?string $logo, array $socialNetworkUrls): OrganizationQueryDto
+    public function create(?Organization $organization, array $socialNetworkUrls): OrganizationQueryDto
     {
         $organizationQueryDto = $this->createInstance();
-        $organizationQueryDto->logo = $logo;
         $organizationQueryDto->socialNetworkUrls = $socialNetworkUrls;
 
         if ($organization !== null) {
@@ -33,6 +32,7 @@ class OrganizationQueryDtoFactory
         OrganizationQueryDto $organizationQueryDto,
         Organization $organization,
     ): void {
+        $organizationQueryDto->id = $organization->getId();
         $organizationQueryDto->name = $organization->getName();
         $organizationQueryDto->companyTaxNumber = $organization->getCompanyTaxNumber();
         $organizationQueryDto->companyVatNumber = $organization->getCompanyVatNumber();

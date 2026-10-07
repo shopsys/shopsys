@@ -32,8 +32,9 @@ OrganizationSettingDecorator:
                 type: "String"
                 description: "Country"
             logo:
-                type: "String"
-                description: "Absolute organization logo URL"
+                type: "Image"
+                description: "Organization logo"
+                resolve: '@=query("logoByOrganizationPromiseQuery", value)'
             socialNetworkUrls:
                 type: "[String!]!"
                 description: "Social network profile URLs"
