@@ -29,7 +29,8 @@
                 "noExplicitAny": "off"
             },
             "correctness": {
-                "noConstructorReturn": "off"
+                "noConstructorReturn": "off",
+                "noUnusedImports": "error"
             }
         }
     },
