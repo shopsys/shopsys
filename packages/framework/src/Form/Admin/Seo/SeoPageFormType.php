@@ -121,7 +121,7 @@ final class SeoPageFormType extends AbstractType
         $builderOpenGraphGroup
             ->add('openGraphInfo', MessageType::class, [
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
-                'data' => t('Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href="%seoSettingsUrl%" target="_blank">SEO attributes</a> is used.', [
+                'data' => t('Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href="%seoSettingsUrl%" target="_blank">SEO and Open Graph</a> is used.', [
                     '%seoSettingsUrl%' => $this->administrationRouter->generate('admin_seo_index'),
                 ]),
             ])

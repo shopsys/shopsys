@@ -3193,7 +3193,10 @@ msgstr ""
 msgid "SEO Page <strong>{{ name }}</strong> removed"
 msgstr ""
 
-msgid "SEO attributes settings modified"
+msgid "SEO and Open Graph"
+msgstr ""
+
+msgid "SEO and Open Graph settings modified"
 msgstr ""
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
@@ -3724,7 +3727,7 @@ msgstr ""
 msgid "TikTok URL"
 msgstr ""
 
-msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO attributes</a> is used."
+msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO and Open Graph</a> is used."
 msgstr ""
 
 msgid "To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions."

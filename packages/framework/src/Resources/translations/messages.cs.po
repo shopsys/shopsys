@@ -3193,8 +3193,11 @@ msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla 
 msgid "SEO Page <strong>{{ name }}</strong> removed"
 msgstr "SEO stránka <strong>{{ name }}</strong> byla smazána"
 
-msgid "SEO attributes settings modified"
-msgstr "Natavení SEO atributů bylo upraveno"
+msgid "SEO and Open Graph"
+msgstr "SEO a Open Graph"
+
+msgid "SEO and Open Graph settings modified"
+msgstr "Nastavení SEO a Open Graph bylo upraveno"
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
 msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
@@ -3724,8 +3727,8 @@ msgstr "Čtvrtek"
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
-msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO attributes</a> is used."
-msgstr "Titulek, popis a obrázek zobrazené při sdílení této stránky na sociálních sítích. Pokud je Open Graph titulek nebo popis prázdný, použije se titulek stránky nebo meta description. Bez Open Graph obrázku se použije logo firmy ze <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO atributů</a>."
+msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO and Open Graph</a> is used."
+msgstr "Titulek, popis a obrázek zobrazené při sdílení této stránky na sociálních sítích. Pokud je Open Graph titulek nebo popis prázdný, použije se titulek stránky nebo meta description. Bez Open Graph obrázku se použije logo firmy z <a href=\"%seoSettingsUrl%\" target=\"_blank\">nastavení SEO a Open Graph</a>."
 
 msgid "To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions."
 msgstr "Aby se zákazníkovi zobrazil QR kód, vložte do pokynů k platbě proměnnou <code>%placeholder%</code>."

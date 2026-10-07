@@ -48,7 +48,7 @@ Static storefront pages (homepage, cart, search, customer section, ...) have no 
 The slug of a SEO page has to match the storefront route (`config/routes.ts` in the storefront), the homepage is the SEO page with the slug `/`.
 SEO pages additionally carry the Open Graph title, description and image, and have no H1: the heading of a static page is given by the storefront (the `with_h1` option of `SeoGroupType` hides the field).
 
-The title add-on appended to every page title stays in _Settings > SEO_.
+The title add-on appended to every page title stays in _Settings > SEO > SEO and Open Graph_.
 
 #### Adding a static page
 
