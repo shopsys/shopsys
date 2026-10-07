@@ -11,7 +11,7 @@ describe('Comparison Race Condition Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Comparison Add - Rapid Click] should send only one AddProductToList request while button is processing', function () {
+    it('[Comparison Add - Rapid Click] should send only one AddProductToList request while button is processing', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -27,7 +27,7 @@ describe('Comparison Race Condition Tests', () => {
         );
     });
 
-    it('[Comparison Remove - Rapid Click] should send only one RemoveProductFromList request while button is processing', function () {
+    it('[Comparison Remove - Rapid Click] should send only one RemoveProductFromList request while button is processing', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         cy.getByTID([TIDs.product_compare_button]).first().should('be.visible').click();
@@ -46,7 +46,7 @@ describe('Comparison Race Condition Tests', () => {
         );
     });
 
-    it('[Comparison Add - Different Products Rapid Click] should send only one AddProductToList request when no list exists yet', function () {
+    it('[Comparison Add - Different Products Rapid Click] should send only one AddProductToList request when no list exists yet', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         checkNumberOfApiRequestsTriggeredByActions(

@@ -30,7 +30,7 @@ describe('Transport Select Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Transport Home] should select transport to home', function () {
+    it('[Transport Home] should select transport to home', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -46,7 +46,7 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Personal Collection] should select personal pickup transport', function () {
+    it('[Personal Collection] should select personal pickup transport', () => {
         changeDayOfWeekInTransportsApiResponse(1);
         changeDayOfWeekInChangeTransportMutationResponse(1);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
@@ -68,7 +68,7 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Transport Groups] should expand groups and select transport from opened group', function () {
+    it('[Transport Groups] should expand groups and select transport from opened group', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -96,7 +96,7 @@ describe('Transport Select Tests', () => {
         );
     });
 
-    it('[Transport Groups Keyboard] should allow keyboard navigation without selecting transport by arrow keys', function () {
+    it('[Transport Groups Keyboard] should allow keyboard navigation without selecting transport by arrow keys', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -128,7 +128,7 @@ describe('Transport Select Tests', () => {
         cy.getByTID([TIDs.pages_order_payment]).should('be.visible');
     });
 
-    it('[Change Transport] should select a transport, deselect it, and then change the transport option', function () {
+    it('[Change Transport] should select a transport, deselect it, and then change the transport option', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -148,7 +148,7 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Remove Transport Repeated Click] should be able to remove transport using repeated clicks', function () {
+    it('[Remove Transport Repeated Click] should be able to remove transport using repeated clicks', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -175,7 +175,7 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Remove Transport Button Click] should remove transport using reset button', function () {
+    it('[Remove Transport Button Click] should remove transport using reset button', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -202,7 +202,7 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Anon No Transport Empty Cart] should redirect to cart page and not display transport options if cart is empty and user is not logged in', function () {
+    it('[Anon No Transport Empty Cart] should redirect to cart page and not display transport options if cart is empty and user is not logged in', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         checkTransportSelectionIsNotVisible();
@@ -214,7 +214,7 @@ describe('Transport Select Tests', () => {
     it(
         '[Logged No Transport Empty Cart] should redirect to cart page and not display transport options if cart is empty and user is logged in',
         { retries: { runMode: 0 } },
-        function () {
+        () => {
             cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -225,7 +225,7 @@ describe('Transport Select Tests', () => {
         },
     );
 
-    it('[Transport Fee] should change price for transport when cart is large enough for transport to be free', function () {
+    it('[Transport Fee] should change price for transport when cart is large enough for transport to be free', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
