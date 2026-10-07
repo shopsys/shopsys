@@ -418,7 +418,10 @@ observer has a deadline and disconnects on success, timeout or navigation; do no
 Keep scenario-specific assertions for required content and real interaction readiness.
 `takeSnapshotAndCompare()` additionally retains page scrolling, prepares temporary styles,
 waits for fonts and relevant unmasked images, then settles the DOM before measuring masks.
-It restores styles/masks after capture and on failure. Do not disable deferred rendering,
+It restores temporary styles/masks after capture and on failure. Scrollbars are hidden once
+per document in `window:before:load`, before the application measures scroll-lock compensation;
+do not toggle scrollbar visibility around individual captures or rely on a preceding screenshot.
+Do not disable deferred rendering,
 change its scheduling, or increase fixed waits to hide a failure. Keep image TIDs on fixed wrappers.
 
 ## Transport and payment readiness

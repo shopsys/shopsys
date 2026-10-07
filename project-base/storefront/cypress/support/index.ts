@@ -1,6 +1,6 @@
 import './api';
 import { waitForDomStability } from './domStability';
-import { createScreenshotBlackouts, prepareScreenshotStyles } from './screenshotStyles';
+import { createScreenshotBlackouts, hideScrollbarsBeforeAppLoad, prepareScreenshotStyles } from './screenshotStyles';
 import { createSnapshotIndexer } from './snapshotIndexing';
 import { loadAllTranslations, t, type TranslationsType } from './translations';
 import 'cypress-real-events';
@@ -29,6 +29,10 @@ before(() => {
 export { loadAllTranslations, t };
 
 let restoreScreenshotStyles: (() => void) | undefined;
+
+Cypress.on('window:before:load', (win) => {
+    hideScrollbarsBeforeAppLoad(win.document);
+});
 
 afterEach(() => {
     restoreScreenshotStyles?.();

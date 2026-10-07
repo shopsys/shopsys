@@ -4,6 +4,18 @@ type ScreenshotStyleOptions = {
     disablePointerEventsSelectors: string[];
 };
 
+export const hideScrollbarsBeforeAppLoad = (doc: Document): void => {
+    if (doc.getElementById('cypress-hidden-scrollbars')) {
+        return;
+    }
+
+    // Scroll-lock components must measure the same width before and after any capture.
+    const style = doc.createElement('style');
+    style.id = 'cypress-hidden-scrollbars';
+    style.textContent = '::-webkit-scrollbar { display: none; } * { scrollbar-width: none !important; }';
+    doc.head.appendChild(style);
+};
+
 export const prepareScreenshotStyles = (doc: Document, options: ScreenshotStyleOptions): (() => void) => {
     const restorers: (() => void)[] = [];
     const overrideStyle = (element: HTMLElement, property: string, value: string) => {
@@ -20,8 +32,6 @@ export const prepareScreenshotStyles = (doc: Document, options: ScreenshotStyleO
     };
     const style = doc.createElement('style');
     style.textContent = `
-        ::-webkit-scrollbar { display: none; }
-        * { scrollbar-width: none !important; }
         *, *::before, *::after {
             transition: none !important;
             animation: none !important;

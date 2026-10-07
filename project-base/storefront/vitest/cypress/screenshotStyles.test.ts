@@ -1,11 +1,16 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { createScreenshotBlackouts, prepareScreenshotStyles } from '../../cypress/support/screenshotStyles';
+import {
+    createScreenshotBlackouts,
+    hideScrollbarsBeforeAppLoad,
+    prepareScreenshotStyles,
+} from '../../cypress/support/screenshotStyles';
 
 const options = { preserveFixedSelectors: [], disablePointerEventsSelectors: ['button'] };
 
 describe('temporary screenshot DOM changes', () => {
     afterEach(() => {
         document.body.replaceChildren();
+        document.getElementById('cypress-hidden-scrollbars')?.remove();
     });
 
     test('restores original inline values and priorities without undoing unrelated changes', () => {
@@ -44,6 +49,33 @@ describe('temporary screenshot DOM changes', () => {
         expect(document.querySelector('footer')!.style.display).toBe('none');
         restore();
         expect(document.querySelector('footer')!.style.display).toBe('');
+    });
+
+    test('does not change scrollbar visibility when preparing a capture', () => {
+        const originalScrollbarWidth = window.getComputedStyle(document.body).scrollbarWidth;
+        const restore = prepareScreenshotStyles(document, options);
+
+        try {
+            expect(window.getComputedStyle(document.body).scrollbarWidth).toBe(originalScrollbarWidth);
+        } finally {
+            restore();
+        }
+    });
+
+    test('keeps scrollbars hidden before, between and after captures without accumulating styles', () => {
+        const originalStyles = document.head.querySelectorAll('style').length;
+        hideScrollbarsBeforeAppLoad(document);
+        hideScrollbarsBeforeAppLoad(document);
+        expect(document.head.querySelectorAll('style')).toHaveLength(originalStyles + 1);
+        expect(window.getComputedStyle(document.body).scrollbarWidth).toBe('none');
+
+        for (let capture = 0; capture < 2; capture++) {
+            const restore = prepareScreenshotStyles(document, options);
+            expect(window.getComputedStyle(document.body).scrollbarWidth).toBe('none');
+            restore();
+            expect(window.getComputedStyle(document.body).scrollbarWidth).toBe('none');
+            expect(document.head.querySelectorAll('style')).toHaveLength(originalStyles + 1);
+        }
     });
 
     test('measures masks in the captured document and removes only its own nodes', () => {
