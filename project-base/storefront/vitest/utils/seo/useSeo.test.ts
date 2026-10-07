@@ -9,7 +9,7 @@ vi.mock('graphql/requests/seoPage/queries/SeoPageQuery.generated', () => ({
 }));
 
 vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
-    useSettingsQuery: () => [{ data: { settings: { seo: { titleAddOn: null } } } }],
+    useSettingsQuery: () => [{ data: { settings: { seo: { titleAddOn: null, organization: { name: null } } } } }],
 }));
 
 vi.mock('components/providers/DomainConfigProvider', () => ({

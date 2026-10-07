@@ -4,6 +4,8 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { useRouter } from 'next/router';
 import { MetaRobotsContent } from 'types/seo';
 import { getImageAlt } from 'utils/imageAltText';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { SEARCH_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
 import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { isNoindexMetaRobots } from 'utils/seo/isNoindexMetaRobots';
@@ -28,6 +30,8 @@ type UseSeoHookProps = {
  *   information of a paginated list is appended to whichever title wins
  * - description: SEO page → seo.metaDescription → plain text of defaultDescription (the HTML description of the
  *   entity, the perex of a blog article, ...) truncated to whole words
+ * - og:url: the canonical URL set in administration, otherwise the current URL without the filter, sort, page and
+ *   load-more parameters, so all variants of a listing are shared as the same page (unlike the canonical link)
  */
 export const useSeo = ({
     seo,
@@ -54,6 +58,11 @@ export const useSeo = ({
     const metaRobots = resolveMetaRobots(seoPage?.seo.metaRobots, seo?.metaRobots, defaultMetaRobots);
     const canonicalUrl =
         seoPage?.seo.canonicalUrl || seo?.canonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
+    const ogUrl =
+        seoPage?.seo.canonicalUrl ||
+        seo?.canonicalUrl ||
+        generateCanonicalUrl(router, url, [SEARCH_QUERY_PARAMETER_NAME]) ||
+        getStringWithoutTrailingSlash(url) + router.asPath;
 
     return {
         title: title ?? '',
@@ -62,6 +71,8 @@ export const useSeo = ({
         metaRobots,
         isNoindex: isNoindexMetaRobots(metaRobots),
         canonicalUrl,
+        ogUrl,
+        ogSiteName: settingsData?.settings?.seo.organization.name,
         ogTitle: seoPage?.ogTitle,
         ogDescription: seoPage?.ogDescription,
         ogImageUrl: seoPage?.ogImage?.url,
