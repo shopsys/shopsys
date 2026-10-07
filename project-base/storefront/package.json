@@ -96,7 +96,7 @@
         "graphql-markdown": "~7.3.0",
         "i18next-parser": "~9.4.0",
         "jsdom": "~29.1.1",
-        "knip": "^6.17.1",
+        "knip": "^6.32.2",
         "license-checker": "^25.0.1",
         "postcss": "8.5.15",
         "tailwindcss": "~4.3.1",
