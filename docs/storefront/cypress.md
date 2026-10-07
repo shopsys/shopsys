@@ -362,9 +362,11 @@ Keep `function` callbacks where Mocha's context is required, such as a `before()
 
 Below are some examples of custom commands. We mention only those, that should be used instead of the default cypress commands.
 
-- `waitForStableAndInteractiveDOM` (instead of `cy.waitForStableDOM`): Use this command to wait for the page to be stable and ready for interaction. It first checks that there are no skeletons visible, that the NProgress bar is also not visible (not in the DOM), and then it waits for stable DOM using `cy.waitForStableDOM`. Furthermore, it also triggers the `resize` event, as there were issues that this event was not triggered in certain scenarios and the app did not behave as expected.
+- `cy.waitForStableAndInteractiveDOM()`: Waits for hydration, dispatches a `resize` event in the application window, and checks that no deferred-render commits are pending and no skeletons, NProgress bar or loader elements remain in the DOM. It then uses the shared `waitForDomStability()` helper to observe a 500 ms interval without DOM mutations, with a 20-second deadline, and repeats the readiness checks. The observer disconnects on success, timeout or navigation; the removed `cy.waitForStableDOM()` command is no longer used.
 - `cy.visitAndWaitForStableAndInteractiveDOM` (instead of `cy.visit`): Use this command for visiting pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements. It also ensures there are no skeletons and that the NProgress loading bar is not in the DOM.
 - `cy.reloadAndWaitForStableAndInteractiveDOM` (instead of `cy.reload`): Use this command for reloading pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements. It also ensures there are no skeletons and that the NProgress loading bar is not in the DOM.
+
+These helpers do not guarantee that every API request or lazy import has finished. Keep scenario-specific assertions for the content and controls required by the next interaction.
 
 #### How to write a custom cypress command
 
@@ -428,63 +430,25 @@ The `takeSnapshotAndCompare` helper method does several things.
 6. Return all blacked-out elements back (uncover them)
 7. Reset pointer events of the previously blocked elements (point 3.)
 
-```ts
-export type Blackout = { tid: TIDs; zIndex?: number };
+The implementation lives in `project-base/storefront/cypress/support/index.ts`. Keep readiness and cleanup there rather than copying the helper into individual specs.
 
-type SnapshotAdditionalOptions = {
-    capture: 'viewport' | 'fullPage' | TIDs;
-    wait: number;
-    blackout: Blackout[];
-    removePointerEvents: (TIDs | string)[];
-};
+The helper waits for hydration, pending `useDeferredRender()` commits and loading indicators, retains page scrolling, and then prepares temporary screenshot styles. After the final layout changes it waits for fonts, relevant unmasked images and a quiet DOM before measuring blackout rectangles. Styles and masks are restored after capture and also from `afterEach` when a test fails.
 
-export const takeSnapshotAndCompare = (
-    testName: string | undefined,
-    snapshotName: string,
-    options: Partial<SnapshotAdditionalOptions> = {},
-    callbackBeforeBlackout?: () => void | undefined,
-) => {
-    const optionsWithDefaultValues = {
-        capture: options.capture ?? 'fullPage',
-        wait: options.wait ?? 1000,
-        blackout: options.blackout ?? [],
-        removePointerEvents: options.removePointerEvents ?? [],
-    };
-
-    if (!testName) {
-        throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
-    }
-
-    scrollPageBeforeScreenshot(optionsWithDefaultValues);
-    hideScrollbars();
-    callbackBeforeBlackout?.();
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
-    removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
-
-    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
-        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
-    } else {
-        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
-    }
-
-    removeBlackoutsAfterScreenshot();
-    resetPointerEventsAfterScreenshot();
-};
-```
+The `data-deferred-render-pending` body attribute counts pending deferred hook commits. It does **not** mean every network request, lazy import or third-party widget has completed. Keep explicit assertions for the content/state being captured; a quiet DOM alone cannot detect future asynchronous work.
 
 #### Sizes of screenshots (`capture` parameter)
 
-You can set up the snapshot to take a full-page screenshot, viewport screenshot, or a screenshot of an element with a specific TID. The most robust version is to test the full page, because then you know that the entire page is unchanged.
+Choose a full-page screenshot for page composition, a viewport screenshot for visible overlays/context, or an element TID for an isolated visual state. Full-page captures cover more layout but also include more unrelated sources of change. Important values still need explicit assertions.
 
 #### Give the application more time to prepare before the screenshot (`wait` parameter)
 
-By specifying the `wait` parameter, you tell the application how much time it has to prepare itself for the screenshot. If the screenshot is a full-page or a viewport screenshot, it uses this time to wait for a fraction of that time, scroll down, wait again, scroll back up, and wait for the last time. The specified time is equally split between those 5 actions. If it is a component screenshot, the time is only used to wait. This approach has proven to be the best for test stability and robustness.
+The existing `wait` parameter controls the retained scroll sequence: wait, scroll down, wait, scroll up, wait, each using one fifth of the duration. Element captures retain a single wait. This is not proof of readiness and increasing it is not a flakiness fix; the helper also checks observable readiness. Do not remove this sequence until deferred and lazy content has been verified in the actual browser.
 
 #### Hiding/covering parts of the application for the screenshot (`blackout` parameter)
 
 It is also possible to hide/cover parts of the UI with a blackout box (simple `div` element over the element with a specified TID). This is helpful if your UI contains element which change randomly or change with time (using timers). You can also specify the blacked-out element's `z-index` using the `zIndex` parameter, as you might need to render it above or below various other DOM elements.
 
-This mechanism works based on placing a absolutely positioned `div` above the target element, so it depends if the element needs additional offset, or not. For this, the `shouldNotOffset` is used. If you omit it, the blackout div will be offset by 15px to the right (scrollbar width). If you find out that your element does not need this offset (can happen for relatively placed elements, or for viewport screenshots in general), you can omit the offset by specifying `{ shouldNotOffset: true }`.
+Masks use the target rectangle and scroll coordinates of the application document, without a hard-coded scrollbar offset. Place image TIDs on fixed-size wrappers so image loading cannot change the masked area. Missing optional targets are skipped; assert required content separately. Only masks created for the current capture are removed during cleanup.
 
 #### Removing pointer-events (`ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS` config)
 
