@@ -2532,8 +2532,8 @@ export type TypeOrganizationSetting = {
   country: Maybe<Scalars['String']['output']>;
   /** Company description */
   description: Maybe<Scalars['String']['output']>;
-  /** Absolute organization logo URL */
-  logo: Maybe<Scalars['String']['output']>;
+  /** Organization logo */
+  logo: Maybe<TypeImage>;
   /** Company name */
   name: Maybe<Scalars['String']['output']>;
   /** Postcode */
