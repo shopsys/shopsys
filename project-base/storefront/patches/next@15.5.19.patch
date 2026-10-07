@@ -1,0 +1,14 @@
+diff --git a/dist/compiled/@next/font/dist/google/loader.js b/dist/compiled/@next/font/dist/google/loader.js
+index f8e585c..19892cf 100644
+--- a/dist/compiled/@next/font/dist/google/loader.js
++++ b/dist/compiled/@next/font/dist/google/loader.js
+@@ -119,7 +119,8 @@ const nextFontGoogleFontLoader = async ({ functionName, data, emitFontFile, isDe
+             if (fontFileBuffer == null) {
+                 (0, next_font_error_1.nextFontError)(`Failed to fetch \`${fontFamily}\` from Google Fonts.`);
+             }
+-            const ext = /\.(woff|woff2|eot|ttf|otf)$/.exec(googleFontFileUrl)[1];
++            // Google Fonts sometimes returns extensionless /l/font?kit= URLs serving woff2 (https://github.com/vercel/next.js/issues/99114)
++            const ext = /\.(woff|woff2|eot|ttf|otf)$/.exec(googleFontFileUrl)?.[1] ?? "woff2";
+             // Emit font file to .next/static/media
+             const selfHostedFileUrl = emitFontFile(fontFileBuffer, ext, preloadFontFile, !!adjustFontFallbackMetrics);
+             return {
