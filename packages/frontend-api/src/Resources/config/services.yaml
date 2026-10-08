@@ -251,6 +251,11 @@ services:
         arguments:
             $filesBatchLoader: '@first_file_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFieldsTypeListener:
+        arguments:
+            $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
+            $defaultFieldResolver: '@overblog_graphql.default_field_resolver'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
             $filesBatchLoader: '@files_batch_loader'

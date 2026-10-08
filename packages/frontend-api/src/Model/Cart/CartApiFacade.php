@@ -17,7 +17,11 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServiceApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidAdditionalServiceUserError;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidCartItemUserError;
@@ -39,6 +43,7 @@ class CartApiFacade
         protected readonly AdditionalServiceApiFacade $additionalServiceApiFacade,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly EntityManagerInterface $em,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
     ) {
     }
 
@@ -133,6 +138,44 @@ class CartApiFacade
         } catch (ProductNotFoundUserError|InvalidQuantityException) {
             throw new InvalidCartItemUserError(sprintf('Product with UUID "%s" is not available', $productUuid));
         }
+    }
+
+    public function addOrderItemsToCart(Order $order, Cart $cart): AddOrderItemsToCartResult
+    {
+        $orderProductItems = $order->getProductItems();
+        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
+        $domainId = $this->domain->getId();
+
+        $this->productVisibilityFacade->preloadProductVisibilitiesByProductIds(
+            array_map(
+                static fn (Product $product) => $product->getId(),
+                array_filter(array_map(static fn (OrderItem $orderItem) => $orderItem->getProduct(), $orderProductItems)),
+            ),
+            $pricingGroup,
+            $domainId,
+        );
+
+        $notAddedProducts = [];
+        $someProductWasRemovedFromEshop = false;
+
+        foreach ($orderProductItems as $orderItem) {
+            $product = $orderItem->getProduct();
+
+            // products that are deleted or not visible are not in Elasticsearch, so they cannot be reported as not added products
+            if ($product === null || !$this->productVisibilityFacade->getProductVisibility($product, $pricingGroup, $domainId)->isVisible()) {
+                $someProductWasRemovedFromEshop = true;
+
+                continue;
+            }
+
+            try {
+                $this->addProductByUuidToCart($product->getUuid(), $orderItem->getQuantity(), false, $cart);
+            } catch (InvalidCartItemUserError) {
+                $notAddedProducts[] = $product;
+            }
+        }
+
+        return new AddOrderItemsToCartResult($notAddedProducts, $someProductWasRemovedFromEshop);
     }
 
     public function removeItemByUuidFromCart(string $cartItemUuid, Cart $cart): Cart
