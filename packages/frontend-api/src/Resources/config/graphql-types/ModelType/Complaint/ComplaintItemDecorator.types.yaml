@@ -32,3 +32,4 @@ ComplaintItemDecorator:
             product:
                 type: "Product"
                 description: "Product of the order item"
+                resolve: '@=query("productByEntityQuery", value.getProduct())'

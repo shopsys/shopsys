@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServiceApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidAdditionalServiceUserError;
@@ -133,6 +134,33 @@ class CartApiFacade
         } catch (ProductNotFoundUserError|InvalidQuantityException) {
             throw new InvalidCartItemUserError(sprintf('Product with UUID "%s" is not available', $productUuid));
         }
+    }
+
+    /**
+     * @return string[] names of the order items that were not added, including those whose product is no longer visible
+     */
+    public function addOrderItemsToCart(Order $order, Cart $cart): array
+    {
+        $notAddedProductNames = [];
+
+        // products that are deleted or not visible are not in Elasticsearch, so they are reported by the name from the order
+        foreach ($order->getProductItems() as $orderItem) {
+            $product = $orderItem->getProduct();
+
+            if ($product === null) {
+                $notAddedProductNames[] = $orderItem->getName();
+
+                continue;
+            }
+
+            try {
+                $this->addProductByUuidToCart($product->getUuid(), $orderItem->getQuantity(), false, $cart);
+            } catch (InvalidCartItemUserError) {
+                $notAddedProductNames[] = $orderItem->getName();
+            }
+        }
+
+        return $notAddedProductNames;
     }
 
     public function removeItemByUuidFromCart(string $cartItemUuid, Cart $cart): Cart

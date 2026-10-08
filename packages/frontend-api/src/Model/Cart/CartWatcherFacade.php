@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class CartWatcherFacade
 {
@@ -45,6 +46,7 @@ class CartWatcherFacade
         protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
         protected readonly OrderInputFactory $orderInputFactory,
         protected readonly OrderInputPreloaderFacade $orderInputPreloaderFacade,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
     ) {
     }
 
@@ -73,13 +75,23 @@ class CartWatcherFacade
     protected function checkRemovedProductsItems(Cart $cart): void
     {
         foreach ($cart->getItems() as $cartItem) {
-            if (!$cartItem->hasProduct()) {
+            // a product that is not visible is not available in Elasticsearch, so it cannot be reported as a cart item
+            if (!$cartItem->hasProduct() || !$this->isProductVisible($cartItem)) {
                 $cart->removeItemById($cartItem->getId());
                 $this->em->remove($cartItem);
 
                 $this->cartWithModificationsResult->setCartHasRemovedProducts();
             }
         }
+    }
+
+    protected function isProductVisible(CartItem $cartItem): bool
+    {
+        return $this->productVisibilityFacade->getProductVisibility(
+            $cartItem->getProduct(),
+            $this->currentCustomerUser->getPricingGroup(),
+            $this->domain->getId(),
+        )->isVisible();
     }
 
     protected function checkModifiedPrices(Cart $cart): void

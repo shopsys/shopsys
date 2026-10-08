@@ -9,12 +9,14 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductEntityQuery;
 
 class OrderItemResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly DataLoaderInterface $orderItemRelatedItemsBatchLoader,
+        protected readonly ProductEntityQuery $productEntityQuery,
     ) {
     }
 
@@ -44,11 +46,11 @@ class OrderItemResolverMap extends ResolverMap
                 },
                 'product' => function (OrderItem $orderItem) {
                     if ($orderItem->isTypeProduct()) {
-                        return $orderItem->getProduct();
+                        return $this->productEntityQuery->productByEntityQuery($orderItem->getProduct());
                     }
 
                     if ($orderItem->isTypeProductGift()) {
-                        return $orderItem->getProductGift();
+                        return $this->productEntityQuery->productByEntityQuery($orderItem->getProductGift());
                     }
 
                     return null;

@@ -256,6 +256,10 @@ services:
         arguments:
             $filesBatchLoader: '@first_file_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductEntityQuery:
+        arguments:
+            $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
             $filesBatchLoader: '@files_batch_loader'

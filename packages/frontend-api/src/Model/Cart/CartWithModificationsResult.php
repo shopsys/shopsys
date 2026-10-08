@@ -73,7 +73,7 @@ class CartWithModificationsResult
      * @var array<string, array<int, string>>
      */
     protected array $multipleAddedProductModifications = [
-        'notAddedProducts' => [],
+        'notAddedProductNames' => [],
     ];
 
     protected ?PriceInterface $totalPrice = null;
@@ -440,12 +440,12 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param string[] $productNames
      */
-    public function addProductsNotAddedByMultipleAddition(array $products): void
+    public function addProductNamesNotAddedByMultipleAddition(array $productNames): void
     {
-        foreach ($products as $product) {
-            $this->multipleAddedProductModifications['notAddedProducts'][] = $product;
+        foreach ($productNames as $productName) {
+            $this->multipleAddedProductModifications['notAddedProductNames'][] = $productName;
         }
     }
 
