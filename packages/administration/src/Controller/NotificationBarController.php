@@ -73,7 +73,6 @@ class NotificationBarController extends AbstractCrudController
             ])
             ->add('text', [
                 'label' => t('Text'),
-                'sortable' => false,
                 'template' => '@ShopsysAdministration/content/notificationBar/grid/text.html.twig',
             ])
             ->add('validityFrom', [
