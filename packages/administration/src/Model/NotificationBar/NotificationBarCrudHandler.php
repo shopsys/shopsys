@@ -36,7 +36,7 @@ class NotificationBarCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): NotificationBarData
     {
         $notificationBarData = $this->notificationBarDataFactory->create();
         $notificationBarData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -59,7 +59,7 @@ class NotificationBarCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): NotificationBarData
     {
         Assert::isInstanceOf($entity, NotificationBar::class);
 
