@@ -36,7 +36,7 @@ class StoreCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): StoreData
     {
         return $this->storeDataFactory->createForDomain($this->adminDomainTabsFacade->getSelectedDomainId());
     }
@@ -56,7 +56,7 @@ class StoreCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): StoreData
     {
         Assert::isInstanceOf($entity, Store::class);
 
