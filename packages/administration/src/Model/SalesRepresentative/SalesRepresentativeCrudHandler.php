@@ -34,7 +34,7 @@ class SalesRepresentativeCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): SalesRepresentativeData
     {
         return $this->salesRepresentativeDataFactory->create();
     }
@@ -54,7 +54,7 @@ class SalesRepresentativeCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): SalesRepresentativeData
     {
         Assert::isInstanceOf($entity, SalesRepresentative::class);
 
