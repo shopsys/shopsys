@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProvider
 
 class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    protected const ROUTE_NAME = 'front_blogcategory_detail';
+    public const string ROUTE_NAME = 'front_blogcategory_detail';
 
     public function __construct(
         protected EntityManagerInterface $em,

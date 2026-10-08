@@ -23,6 +23,7 @@ class BlogCategoryResolverMap extends ResolverMap
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
+        protected readonly DataLoaderInterface $blogCategoryBreadcrumbBatchLoader,
     ) {
     }
 
@@ -37,6 +38,9 @@ class BlogCategoryResolverMap extends ResolverMap
                 },
                 'slug' => function (BlogCategory $blogCategory) {
                     return $this->blogCategorySlugBatchLoader->load($blogCategory->getId());
+                },
+                'breadcrumb' => function (BlogCategory $blogCategory) {
+                    return $this->blogCategoryBreadcrumbBatchLoader->load($blogCategory);
                 },
                 'link' => function (BlogCategory $blogCategory) {
                     return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain('front_blogcategory_detail', $blogCategory->getId());
