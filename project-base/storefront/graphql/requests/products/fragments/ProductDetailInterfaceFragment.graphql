@@ -75,6 +75,7 @@ fragment ProductDetailInterfaceFragment on Product {
     reviewsSummary {
         ...ProductReviewsSummaryFragment
     }
+    # Shared by the initial reviews section and ProductMetadata JSON-LD; keep both consumers in mind when changing pagination or ordering.
     reviews(first: 5, orderingMode: NEWEST) {
         ...ProductReviewConnectionFragment
     }

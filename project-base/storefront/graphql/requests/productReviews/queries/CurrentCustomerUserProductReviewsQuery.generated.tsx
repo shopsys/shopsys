@@ -20,7 +20,6 @@ export type TypeProductReviewStatusEnum =
   | 'REJECTED';
 
 export type TypeCurrentCustomerUserProductReviewsQueryVariables = Exact<{
-  productUuid?: string | null | undefined;
   first?: number | null | undefined;
   after?: string | null | undefined;
 }>;
@@ -34,12 +33,8 @@ export type TypeCurrentCustomerUserProductReviewsQuery = { currentCustomerUserPr
 
 
 export const CurrentCustomerUserProductReviewsQueryDocument = gql`
-    query CurrentCustomerUserProductReviewsQuery($productUuid: Uuid, $first: Int, $after: String) {
-  currentCustomerUserProductReviews(
-    productUuid: $productUuid
-    first: $first
-    after: $after
-  ) {
+    query CurrentCustomerUserProductReviewsQuery($first: Int, $after: String) {
+  currentCustomerUserProductReviews(first: $first, after: $after) {
     totalCount
     pageInfo {
       ...PageInfoFragment
