@@ -36,7 +36,7 @@ class AdvertCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): AdvertData
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -59,7 +59,7 @@ class AdvertCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): AdvertData
     {
         Assert::isInstanceOf($entity, Advert::class);
 
