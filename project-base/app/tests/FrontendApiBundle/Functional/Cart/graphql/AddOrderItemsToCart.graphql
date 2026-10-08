@@ -19,6 +19,7 @@ mutation AddOrderItemsToCart(
             }
         }
         modifications {
+            someProductWasRemovedFromEshop
             multipleAddedProductModifications {
                 notAddedProducts {
                     name

@@ -46,6 +46,7 @@ query GetCart(
             vatAmount
         }
         modifications {
+            someProductWasRemovedFromEshop
             itemModifications {
                 noLongerListableCartItems {
                     uuid
