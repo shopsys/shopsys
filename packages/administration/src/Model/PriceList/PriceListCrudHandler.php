@@ -39,7 +39,7 @@ class PriceListCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): PriceListData
     {
         $priceListData = $this->priceListDataFactory->create();
         $priceListData->domainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId(static::DOMAIN_FILTER_NAMESPACE) ?? Domain::FIRST_DOMAIN_ID;
@@ -62,7 +62,7 @@ class PriceListCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): PriceListData
     {
         Assert::isInstanceOf($entity, PriceList::class);
 
