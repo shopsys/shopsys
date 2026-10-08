@@ -69,15 +69,23 @@ $twoHoursAgo = (new DatePoint())->modify('-2 hours');
 
 ### In Tests
 
-Tests use `new DatePoint()` for time calculations:
+Tests use `new DatePoint()` for time calculations.
+To test time-dependent behavior, move the clock with `ClockSensitiveTrait` instead of adding setters to entities only for the tests.
+Both `new DatePoint()` and the injected `ClockInterface` service follow the mocked clock:
 
 ```php
 use Symfony\Component\Clock\DatePoint;
+use Symfony\Component\Clock\Test\ClockSensitiveTrait;
 
-// Set entity timestamp relative to current time
-$cart->setModifiedAt((new DatePoint())->modify('-131 days'));
+// In the test class
+use ClockSensitiveTrait;
 
-// For services with injected ClockInterface, mock it:
+// Freeze the current time, create the entity, and move the clock forward
+static::mockTime();
+$cart = $cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+static::mockTime('+131 days');
+
+// For services with ClockInterface created manually, mock it:
 $clock = $this->createMock(ClockInterface::class);
 $clock->method('now')->willReturn(new DatePoint());
 ```
