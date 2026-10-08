@@ -239,6 +239,20 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category[]>
+     */
+    public function getVisibleCategoriesInPathsFromRootOnDomainIndexedByCategoryId(
+        array $categories,
+        int $domainId,
+    ): array {
+        return $this->categoryRepository->getVisibleCategoriesInPathsFromRootOnDomainIndexedByCategoryId(
+            $categories,
+            $this->domain->getDomainConfigById($domainId),
+        );
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getAllVisibleChildrenByCategoryAndDomainId(Category $category, int $domainId): array
