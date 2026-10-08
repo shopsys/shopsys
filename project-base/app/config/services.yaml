@@ -94,12 +94,12 @@ services:
     App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         arguments:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
-            $categoriesBatchLoader: '@categories_batch_loader'
-            $flagsBatchLoader: '@flags_batch_loader'
-            $brandsBatchLoader: '@brands_batch_loader'
             $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
             $additionalServicesByIdsBatchLoader: '@additional_services_by_ids_batch_loader'
+            $categoriesBatchLoader: '@categories_batch_loader'
+            $flagsBatchLoader: '@flags_batch_loader'
+            $brandsBatchLoader: '@brands_batch_loader'
 
     App\Model\Cart\CartFacade:
         lazy: true
