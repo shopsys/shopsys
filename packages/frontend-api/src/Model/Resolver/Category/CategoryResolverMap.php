@@ -13,7 +13,6 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
@@ -24,9 +23,10 @@ class CategoryResolverMap extends ResolverMap
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly DataLoaderInterface $readyCategorySeoMixesBatchLoader,
         protected readonly DataLoaderInterface $categoryChildrenBatchLoader,
-        protected readonly CategoryFacade $categoryFacade,
         protected readonly DataLoaderInterface $categorySlugBatchLoader,
         protected readonly DataLoaderInterface $categorySeoSlugBatchLoader,
+        protected readonly DataLoaderInterface $categoryBreadcrumbBatchLoader,
+        protected readonly DataLoaderInterface $categoriesInPathFromRootBatchLoader,
     ) {
     }
 
@@ -54,7 +54,8 @@ class CategoryResolverMap extends ResolverMap
             'children' => $this->categoryChildrenBatchLoader->load($category),
             'parent' => $category->getParent() !== null && $category->getParent()->getParent() !== null ? $category->getParent() : null,
             'readyCategorySeoMixLinks' => $this->readyCategorySeoMixesBatchLoader->load($category->getId()),
-            'categoryHierarchy' => $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain($category, $this->domain->getId()),
+            'breadcrumb' => $this->categoryBreadcrumbBatchLoader->load($category),
+            'categoryHierarchy' => $this->categoriesInPathFromRootBatchLoader->load($category),
             'hreflangLinks' => $this->hreflangLinksFacade->getForCategory($category, $this->domain->getId()),
             'automatedFilters' => $category->getAutomatedFilters(),
             default => throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName)),
