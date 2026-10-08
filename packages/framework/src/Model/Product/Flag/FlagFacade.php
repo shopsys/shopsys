@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -26,11 +27,11 @@ class FlagFacade
 
     /**
      * @param int[] $flagIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag> visible flags translated to the locale of the domain, indexed and sorted by ID
      */
-    public function getByIds(array $flagIds): array
+    public function getByIds(array $flagIds, DomainConfig $domainConfig): array
     {
-        return $this->flagRepository->getByIds($flagIds);
+        return $this->flagRepository->getByIds($flagIds, $domainConfig);
     }
 
     public function getByUuid(string $uuid): Flag

@@ -9,13 +9,9 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServicesBatchLoadData;
@@ -27,9 +23,6 @@ use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 class ProductArrayFieldMapper
 {
     public function __construct(
-        protected readonly CategoryFacade $categoryFacade,
-        protected readonly FlagFacade $flagFacade,
-        protected readonly BrandFacade $brandFacade,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -42,6 +35,8 @@ class ProductArrayFieldMapper
         protected readonly DataLoaderInterface $additionalServicesByIdsBatchLoader,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
+        protected readonly DataLoaderInterface $flagsBatchLoader,
+        protected readonly DataLoaderInterface $brandsBatchLoader,
     ) {
     }
 
@@ -65,12 +60,19 @@ class ProductArrayFieldMapper
         return '/' . $data['slug'];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getCategories(array $data): array
+    public function getCatalogNumber(array $data): string
     {
-        return $this->categoryFacade->getByIds($data['categories']);
+        return $data['catnum'];
+    }
+
+    public function getPartNumber(array $data): ?string
+    {
+        return $data['partno'];
+    }
+
+    public function getCategoriesPromise(array $data): Promise
+    {
+        return $this->categoriesBatchLoader->load($data['categories']);
     }
 
     public function getMainCategoryPromise(array $data): Promise
@@ -79,12 +81,9 @@ class ProductArrayFieldMapper
             ->then(static fn (array $categories): ?Category => array_first($categories));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
-     */
-    public function getFlags(array $data): array
+    public function getFlagsPromise(array $data): Promise
     {
-        return $this->flagFacade->getByIds($data['flags']);
+        return $this->flagsBatchLoader->load($data['flags']);
     }
 
     public function getAvailability(array $data): ProductAvailabilityInfo
@@ -108,13 +107,11 @@ class ProductArrayFieldMapper
         return ['name' => $data['unit']];
     }
 
-    public function getBrand(array $data): ?Brand
+    public function getBrandPromise(array $data): ?Promise
     {
-        if ((int)$data['brand'] > 0) {
-            return $this->brandFacade->getById((int)$data['brand']);
-        }
+        $brandId = $data['brand'];
 
-        return null;
+        return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
     }
 
     public function isSellingDenied(array $data): bool

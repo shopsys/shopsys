@@ -238,6 +238,9 @@ services:
             $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
             $additionalServicesByIdsBatchLoader: '@additional_services_by_ids_batch_loader'
+            $categoriesBatchLoader: '@categories_batch_loader'
+            $flagsBatchLoader: '@flags_batch_loader'
+            $brandsBatchLoader: '@brands_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ParameterValueFilesQuery:
         arguments:
