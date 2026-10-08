@@ -8,6 +8,9 @@ overblog_dataloader:
         additionalServicesByProductIdBatchLoader:
             alias: "additional_services_by_product_id_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIds"
+        blogCategoryBreadcrumbBatchLoader:
+            alias: "blog_category_breadcrumb_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoryBreadcrumbBatchLoader:loadBreadcrumbByBlogCategories"
         blogCategorySlugBatchLoader:
             alias: "blog_category_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategorySlugs"
@@ -20,6 +23,12 @@ overblog_dataloader:
         categoriesBatchLoader:
             alias: "categories_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\CategoriesBatchLoader:loadByIds"
+        categoriesInPathFromRootBatchLoader:
+            alias: "categories_in_path_from_root_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\CategoriesInPathFromRootBatchLoader:loadByCategories"
+        categoryBreadcrumbBatchLoader:
+            alias: "category_breadcrumb_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\CategoryBreadcrumbBatchLoader:loadBreadcrumbByCategories"
         categoryChildrenBatchLoader:
             alias: "category_children_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoryChildrenBatchLoader:loadByCategories"
