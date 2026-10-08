@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Controller\Admin;
 
-use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository;
@@ -48,8 +46,9 @@ final class ProductListPriceCurrencyTest extends ApplicationTestCase
     public function testProductListPriceIsListedInCurrencyOfDomainUsingDefaultAdministrationCurrency(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
-        $this->currencyFacade->setDefaultCurrency($currencyCzk);
+        $this->currencyFacade->setDefaultCurrency(
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::SECOND_DOMAIN_ID),
+        );
         $expectedPriceCellText = $this->getFormattedManualInputPrice($product, Domain::SECOND_DOMAIN_ID);
         $firstDomainPriceCellText = $this->getFormattedManualInputPrice($product, Domain::FIRST_DOMAIN_ID);
 
