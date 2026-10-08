@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nette\Utils\Strings;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
@@ -179,6 +180,6 @@ class NotificationBar implements DomainSeparatedEntityInterface, Presentable
     #[Override]
     public function toHumanReadable(): string
     {
-        return sprintf('%s (#%d)', mb_strimwidth($this->getPlainText(), 0, static::HUMAN_READABLE_TEXT_MAX_LENGTH, '…'), $this->id);
+        return sprintf('%s (#%d)', Strings::truncate($this->getPlainText(), static::HUMAN_READABLE_TEXT_MAX_LENGTH), $this->id);
     }
 }
