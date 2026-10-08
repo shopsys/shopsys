@@ -1285,6 +1285,50 @@ jobs:
         with:
             review_base_url: https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
         secrets: inherit
+    split-branch-check:
+        name: Check split repositories
+        # Force-splits the PR branch into the split repositories and waits for their CI. Catches what passes in the
+        # monorepo but breaks in a standalone package (a dependency missing in its composer.json, PHPStan on the package
+        # alone, project-base against the dev-* packages). Advisory only - not part of the "Build successful" gate.
+        # Runs only for non-draft PRs from this repository labeled "split and check packages" (forks and dependabot do
+        # not get ACTIONS_GIT_PUSH_TOKEN); the label is evaluated when the pipeline starts, i.e. on the next push.
+        if: |
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.draft == false &&
+            contains(github.event.pull_request.labels.*.name, 'split and check packages') &&
+            github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' &&
+            github.actor != 'dependabot[bot]'
+        runs-on: ubuntu-22.04
+        # the scripts run from the PR head checkout
+        permissions:
+            contents: read
+        # the project-base build in the split repository alone takes tens of minutes
+        timeout-minutes: 120
+        env:
+            SPLIT_BRANCH: ${{ github.head_ref }}
+        steps:
+            -   name: GIT checkout branch - ${{ github.head_ref }}
+                uses: actions/checkout@v7
+                with:
+                    ref: refs/heads/${{ github.head_ref }}
+                    fetch-depth: 0
+                    persist-credentials: false
+            -   name: Install git-filter-repo
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y git-filter-repo
+            -   name: Force split branch ${{ github.head_ref }} into the split repositories
+                env:
+                    REMOTE_TEMPLATE: https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/
+                    SPLIT_HEADS_FILE: ${{ runner.temp }}/split-heads.txt
+                run: bash ./.github/monorepo/split-repositories.sh "${SPLIT_BRANCH}" "${REMOTE_TEMPLATE}" true
+            -   name: Wait for checks of the split repositories
+                env:
+                    SPLIT_HEADS_FILE: ${{ runner.temp }}/split-heads.txt
+                    BASE_COMMIT: ${{ github.event.pull_request.base.sha }}
+                    # the split repositories are public, reading their workflow runs needs no push token
+                    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: bash ./.github/monorepo/wait-for-split-checks.sh "${SPLIT_BRANCH}" "${SPLIT_HEADS_FILE}" 110
     build-successful:
         if: |
             always()
