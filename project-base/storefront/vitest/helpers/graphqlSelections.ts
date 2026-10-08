@@ -25,11 +25,13 @@ export const getSelectionAt = (document: DocumentNode, path: string[]): Selectio
     }
     let selectionSet: SelectionSetNode = operation.selectionSet;
     for (const name of path) {
-        const field = getFields(document, selectionSet).find((field) => field.name.value === name);
-        if (!field?.selectionSet) {
+        const selections = getFields(document, selectionSet)
+            .filter((field) => (field.alias?.value ?? field.name.value) === name)
+            .flatMap((field) => field.selectionSet?.selections ?? []);
+        if (selections.length === 0) {
             throw new Error(`Missing selection ${path.join('.')}`);
         }
-        selectionSet = field.selectionSet;
+        selectionSet = { kind: Kind.SELECTION_SET, selections };
     }
     return selectionSet;
 };
