@@ -36,7 +36,7 @@ class NavigationItemCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): NavigationItemData
     {
         $navigationItemData = $this->navigationItemDataFactory->createNew();
         $navigationItemData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -59,7 +59,7 @@ class NavigationItemCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): NavigationItemData
     {
         Assert::isInstanceOf($entity, NavigationItem::class);
 
