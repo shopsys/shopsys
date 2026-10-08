@@ -34,7 +34,7 @@ class ParameterGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): ParameterGroupData
     {
         return $this->parameterGroupDataFactory->create();
     }
@@ -54,7 +54,7 @@ class ParameterGroupCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): ParameterGroupData
     {
         Assert::isInstanceOf($entity, ParameterGroup::class);
 
