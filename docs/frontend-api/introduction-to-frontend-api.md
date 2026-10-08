@@ -253,21 +253,19 @@ You can read more info about `ResolveMap` in [documentation](https://github.com/
 
 #### ProductResolverMap
 
-Data for products can be obtained in two ways – from the Elasticsearch (for example, a single product and list of products), or from the database (for example, promoted products)
+Product types (`Product`, `RegularProduct`, `Variant`, and `MainVariant`) are always resolved from the product data stored in Elasticsearch.
+`ProductResolverMap` resolves their fields by `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper`, using one of the methods with the specific name:
 
-For this reason, it's necessary to know how to map fields based on the type of the result.
-When a client requests any Product related field, `ProductResolverMap` checks the type of data returned from the resolver and uses appropriate field mapper from the `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper` namespace:
+- `get<FieldName>` – field `sellingDenied` uses the method named `getSellingDenied()`
+- `is<FieldName>` – field `sellingDenied` uses the method named `isSellingDenied()`
+- `<fieldName>` – field `sellingDenied` uses the method named `sellingDenied()`
 
-- `ProductEntityFieldMapper` if resolver returns the entity `Product`
-- `ProductArrayFieldMapper` if resolver returns array of values
+Methods are searched in the order above, and a method with the `Promise` suffix (e.g. `getFlagsPromise()`) takes precedence over the method without it.
+If the corresponding method does not exist, the value is read from the Elasticsearch data under the key with the name of the field or with its snake_case variant (e.g. field `stockQuantity` is read from the key `stock_quantity`), so a field exported to Elasticsearch under such a key does not need any mapper method.
 
-Value for the field is resolved by one of the previously mentioned field mapper classes, with one of the methods with the specific name:
-
-- `get<FieldName>` – field `sellingDenied` use the method named `getSellingDenied()`
-- `is<FieldName>` – field `sellingDenied` use the method named `isSellingDenied()`
-- `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`
-
-Methods are searched in the order above and if the corresponding method does not exist, resolving falls back to the default (see `Overblog\GraphQLBundle\Resolver\FieldResolver` class).
+A resolver of another type can return a product entity, or a list of product entities, into a field of a product type (e.g. `OrderItem.product`).
+`Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFieldsTypeListener` replaces such entities with their Elasticsearch data loaded in batches by `products_visible_by_ids_batch_loader`.
+A product that is not visible for the current customer is therefore resolved as `null`, or omitted from the list.
 
 ### Overriding GraphQL Input Validation
 
