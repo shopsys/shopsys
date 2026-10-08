@@ -10,7 +10,6 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\ProductReview\Connection\ProductReviewConnection;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewElasticsearchRepository;
@@ -28,9 +27,9 @@ class ProductReviewsQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array<string, mixed> $product
+     * @param array<string, mixed> $product
      */
-    public function productReviewsByProductQuery(Product|array $product, Argument $argument): ?ProductReviewConnection
+    public function productReviewsByProductQuery(array $product, Argument $argument): ?ProductReviewConnection
     {
         if (!$this->productReviewApiFacade->areProductReviewsEnabledOnCurrentDomain()) {
             return null;
@@ -82,14 +81,10 @@ class ProductReviewsQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array<string, mixed> $product
+     * @param array<string, mixed> $product
      */
-    protected function getProductIdCarryingReviews(Product|array $product): int
+    protected function getProductIdCarryingReviews(array $product): int
     {
-        if ($product instanceof Product) {
-            return $product->isVariant() ? $product->getMainVariant()->getId() : $product->getId();
-        }
-
         if ($product[ProductExportFieldProvider::IS_VARIANT] === true
             && $product[ProductExportFieldProvider::MAIN_VARIANT_ID] !== null
         ) {

@@ -22,38 +22,6 @@ class AdditionalServicesBatchLoader
     }
 
     /**
-     * @param int[] $productIds
-     */
-    public function loadByProductIds(array $productIds): Promise
-    {
-        $additionalServicesIndexedByProductId = $this->additionalServiceFacade->getEnabledIndexedByProductIds(
-            $productIds,
-            $this->domain->getId(),
-        );
-
-        $productsIndexedById = $this->getProductsWithAdditionalServicesIndexedById($additionalServicesIndexedByProductId);
-
-        $additionalServiceQueryDtosOrderedByProductIds = [];
-
-        foreach ($productIds as $productId) {
-            $additionalServices = $additionalServicesIndexedByProductId[$productId] ?? [];
-
-            if ($additionalServices === [] || !array_key_exists($productId, $productsIndexedById)) {
-                $additionalServiceQueryDtosOrderedByProductIds[] = [];
-
-                continue;
-            }
-
-            $additionalServiceQueryDtosOrderedByProductIds[] = $this->additionalServiceQueryDtoFactory->createMultiple(
-                $additionalServices,
-                $productsIndexedById[$productId],
-            );
-        }
-
-        return $this->promiseAdapter->all($additionalServiceQueryDtosOrderedByProductIds);
-    }
-
-    /**
      * @param \Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServicesBatchLoadData[] $additionalServicesBatchLoadDataItems
      */
     public function loadByProductIdAndAdditionalServiceIds(array $additionalServicesBatchLoadDataItems): Promise
@@ -152,14 +120,5 @@ class AdditionalServicesBatchLoader
         }
 
         return $this->productFacade->getAllByIdsWithDomainsIndexedById($productIds);
-    }
-
-    /**
-     * @param array<int, \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[]> $additionalServicesIndexedByProductId
-     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product>
-     */
-    protected function getProductsWithAdditionalServicesIndexedById(array $additionalServicesIndexedByProductId): array
-    {
-        return $this->getProductsIndexedById(array_keys($additionalServicesIndexedByProductId));
     }
 }
