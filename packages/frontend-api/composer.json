@@ -47,6 +47,7 @@
         "symfony/polyfill-php86": "^1.37.0",
         "symfony/security-core": "^7.4",
         "symfony/security-http": "^7.4",
+        "symfony/serializer": "^7.4",
         "symfony/routing": "^7.4",
         "webonyx/graphql-php": "^15.29.1"
     },
