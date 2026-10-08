@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\ProductFeed\ZboziBundle\Model\Product\Elasticsearch\ZboziProductExportDataProvider;
 use Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryFacade;
 
 class ZboziCategoryQuery extends AbstractQuery
@@ -29,13 +28,5 @@ class ZboziCategoryQuery extends AbstractQuery
             $category->getId(),
             $this->domain->getLocale(),
         );
-    }
-
-    /**
-     * @param array<string, mixed> $productData
-     */
-    public function zboziCategoryByProductQuery(array $productData): ?string
-    {
-        return $productData[ZboziProductExportDataProvider::ZBOZI_CATEGORY] ?? null;
     }
 }

@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 use ArrayObject;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
-use Overblog\GraphQLBundle\Resolver\FieldResolver;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\MethodNotFoundException;
@@ -52,8 +51,9 @@ class ProductResolverMap extends ResolverMap
             self::RESOLVE_FIELD => function (array $value, ArgumentInterface $args, ArrayObject $context, ResolveInfo $info) {
                 try {
                     return $this->getObjectMethodForField($this->productArrayFieldMapper, $info->fieldName)($value);
-                } catch (MethodNotFoundException $exception) {
-                    return FieldResolver::valueFromObjectOrArray($value, $info->fieldName);
+                } catch (MethodNotFoundException) {
+                    // keys of the Elasticsearch data are usually the names of the fields in snake_case
+                    return $value[$info->fieldName] ?? $value[strtolower(preg_replace('/[A-Z]/', '_$0', $info->fieldName))] ?? null;
                 }
             },
         ];
