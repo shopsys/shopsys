@@ -1,0 +1,14 @@
+query GetOrderItemsWithProductQuery ($filter: OrderItemsFilterInput) {
+    orderItems(first: 10, filter: $filter) {
+        edges {
+            node {
+                name
+                catnum
+                product {
+                    uuid
+                    name
+                }
+            }
+        }
+    }
+}
