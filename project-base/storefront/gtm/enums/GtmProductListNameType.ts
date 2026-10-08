@@ -7,7 +7,7 @@ export enum GtmProductListNameType {
     product_detail_accessories = 'product detail accessories',
     product_detail_variants_table = 'product detail variant table',
     search_results = 'search results',
-    homepage_promo_products = 'homepage promo products',
+    homepage_recommended_products = 'Homepage - recommended products',
     cart = 'cart',
     product_comparison_page = 'product comparison page',
     product_detail = 'product detail',

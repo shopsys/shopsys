@@ -1,8 +1,10 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AdvertImage } from 'components/Blocks/Adverts/AdvertImage';
+import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import type { TypeAdvertsFragment_AdvertImage } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
 import { type ComponentProps, createElement } from 'react';
 import { describe, expect, test, vi } from 'vitest';
+import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
 
 vi.mock('components/Basic/Image/Image', () => ({
     Image: ({ fill, ...props }: ComponentProps<'img'> & { fill?: boolean }) => createElement('img', props),
@@ -57,6 +59,37 @@ describe('AdvertImage', () => {
         window.innerWidth = 1024;
         fireEvent(window, new Event('resize'));
         await waitFor(() => expect(image).toHaveAttribute('alt', advert.mainImage.name));
+    });
+
+    test.each([
+        'header',
+        'footer',
+        'cartPreview',
+        'productListSecondRow',
+    ])('pushes a promotion click to dataLayer when the %s advert opens in a new tab', (positionName) => {
+        const promotion = {
+            promotionId: advert.uuid,
+            promotionName: positionName,
+            creativeName: advert.name,
+            creativeSlot: positionName === 'cartPreview' ? 'cart' : undefined,
+        };
+        window.dataLayer = [];
+        render(
+            <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
+                <AdvertImage advert={{ ...advert, positionName, link: '/summer-sale/' }} promotion={promotion} />
+            </DomainConfigProvider>,
+        );
+
+        fireEvent.click(screen.getByRole('img', { name: 'Promotional offer' }));
+
+        expect(screen.getByRole('link')).toHaveAttribute('target', '_blank');
+        expect(window.dataLayer).toEqual([
+            {
+                event: 'ec.promotion_click',
+                ecommerce: { ...promotion, destinationURL: '/summer-sale/' },
+                _clear: true,
+            },
+        ]);
     });
 
     test('renders responsive sources as one semantic image', () => {
