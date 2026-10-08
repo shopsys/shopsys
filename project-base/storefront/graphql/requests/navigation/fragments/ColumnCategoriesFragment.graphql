@@ -9,8 +9,6 @@ fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
         mainImage {
             ...ImageFragment
         }
-        __typename
-        uuid
         children {
             __typename
             name

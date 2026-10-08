@@ -1,0 +1,17 @@
+fragment SalesRepresentativeFragment on SalesRepresentative {
+    __typename
+    email
+    firstName
+    image {
+        url
+        name
+    }
+    lastName
+    telephone
+    telephoneData {
+        prefix
+        countryCode
+        number
+    }
+    uuid
+}

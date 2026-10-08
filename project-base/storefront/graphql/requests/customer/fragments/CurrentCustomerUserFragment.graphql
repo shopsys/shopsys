@@ -6,8 +6,6 @@ fragment CurrentCustomerUserFragment on CurrentCustomerUser {
         companyTaxNumber
     }
     loginInfo {
-        __typename
-        externalId
-        loginType
+        ...LoginInfoFragment
     }
 }

@@ -36,20 +36,6 @@ fragment BaseCustomerUserFragment on BaseCustomerUser {
         ...CustomerUserRoleGroupFragment
     }
     salesRepresentative {
-        __typename
-        email
-        firstName
-        image {
-            url
-            name
-        }
-        lastName
-        telephone
-        telephoneData {
-            prefix
-            countryCode
-            number
-        }
-        uuid
+        ...SalesRepresentativeFragment
     }
 }

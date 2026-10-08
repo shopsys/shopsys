@@ -19,8 +19,6 @@ export const ColumnCategoriesFragment = gql`
     mainImage {
       ...ImageFragment
     }
-    __typename
-    uuid
     children {
       __typename
       name

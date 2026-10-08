@@ -1,0 +1,5 @@
+fragment LoginInfoFragment on LoginInfo {
+    __typename
+    externalId
+    loginType
+}
