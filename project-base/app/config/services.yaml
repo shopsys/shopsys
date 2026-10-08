@@ -101,16 +101,6 @@ services:
             $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
             $additionalServicesByIdsBatchLoader: '@additional_services_by_ids_batch_loader'
 
-    App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper:
-        arguments:
-            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
-            $productSlugBatchLoader: '@product_slug_batch_loader'
-            $categoriesBatchLoader: '@categories_batch_loader'
-            $brandsBatchLoader: '@brands_batch_loader'
-            $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
-            $productsVisibleCountByIdsBatchLoader: '@products_visible_count_by_ids_batch_loader'
-            $additionalServicesByProductIdBatchLoader: '@additional_services_by_product_id_batch_loader'
-
     App\Model\Cart\CartFacade:
         lazy: true
 
@@ -454,12 +444,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         alias: App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper:
-        alias: App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap:
-        alias: App\FrontendApi\Resolver\Products\ProductResolverMap
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator

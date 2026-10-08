@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\SpecialPrice;
 
-use App\DataFixtures\Demo\ProductDataFixture;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Resolver\Price\ProductPriceQuery;
 use Symfony\Component\Clock\DatePoint;
@@ -22,10 +20,7 @@ final class ProductPriceQueryTest extends TransactionFunctionalTestCase
 
     public function testProductUponInquiryReturnsHiddenPrice(): void
     {
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3', Product::class);
-        $priceInfo = $this->productPriceQuery->priceByProductQuery($product);
-
-        $this->assertSame($product->getProductType(), ProductTypeEnum::TYPE_INQUIRY, 'Product should be upon inquiry');
+        $priceInfo = $this->productPriceQuery->priceByProductQuery(['product_type' => ProductTypeEnum::TYPE_INQUIRY]);
 
         $this->assertInstanceOf(HiddenMoney::class, $priceInfo->priceWithoutVat, 'Price without VAT should be hidden for product upon inquiry');
         $this->assertInstanceOf(HiddenMoney::class, $priceInfo->priceWithVat, 'Price with VAT should be hidden for product upon inquiry');

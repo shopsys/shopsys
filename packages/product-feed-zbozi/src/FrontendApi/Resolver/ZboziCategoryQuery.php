@@ -7,7 +7,6 @@ namespace Shopsys\ProductFeed\ZboziBundle\FrontendApi\Resolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\Elasticsearch\ZboziProductExportDataProvider;
 use Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryFacade;
@@ -33,19 +32,10 @@ class ZboziCategoryQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array<string, mixed> $productOrProductData
+     * @param array<string, mixed> $productData
      */
-    public function zboziCategoryByProductQuery(Product|array $productOrProductData): ?string
+    public function zboziCategoryByProductQuery(array $productData): ?string
     {
-        if (is_array($productOrProductData)) {
-            return $productOrProductData[ZboziProductExportDataProvider::ZBOZI_CATEGORY] ?? null;
-        }
-
-        $fullNamesByProductId = $this->zboziCategoryFacade->getFullNamesByProductsIndexedByProductId(
-            [$productOrProductData],
-            $this->domain->getCurrentDomainConfig(),
-        );
-
-        return $fullNamesByProductId[$productOrProductData->getId()] ?? null;
+        return $productData[ZboziProductExportDataProvider::ZBOZI_CATEGORY] ?? null;
     }
 }

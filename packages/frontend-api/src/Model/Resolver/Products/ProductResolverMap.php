@@ -10,15 +10,12 @@ use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\FieldResolver;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\MethodNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper;
-use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper;
 
 class ProductResolverMap extends ResolverMap
 {
     public function __construct(
-        protected readonly ProductEntityFieldMapper $productEntityFieldMapper,
         protected readonly ProductArrayFieldMapper $productArrayFieldMapper,
     ) {
     }
@@ -28,15 +25,12 @@ class ProductResolverMap extends ResolverMap
     {
         return [
             'Product' => [
-                self::RESOLVE_TYPE => function ($data) {
-                    $isMainVariant = $data instanceof Product ? $data->isMainVariant() : $data['is_main_variant'];
-                    $isVariant = $data instanceof Product ? $data->isVariant() : $data['main_variant_id'] !== null;
-
-                    if ($isMainVariant) {
+                self::RESOLVE_TYPE => function (array $data) {
+                    if ($data['is_main_variant']) {
                         return 'MainVariant';
                     }
 
-                    if ($isVariant) {
+                    if ($data['main_variant_id'] !== null) {
                         return 'Variant';
                     }
 
@@ -55,11 +49,9 @@ class ProductResolverMap extends ResolverMap
     protected function mapProduct(): array
     {
         return [
-            self::RESOLVE_FIELD => function ($value, ArgumentInterface $args, ArrayObject $context, ResolveInfo $info) {
-                $mapper = $value instanceof Product ? $this->productEntityFieldMapper : $this->productArrayFieldMapper;
-
+            self::RESOLVE_FIELD => function (array $value, ArgumentInterface $args, ArrayObject $context, ResolveInfo $info) {
                 try {
-                    return $this->getObjectMethodForField($mapper, $info->fieldName)($value);
+                    return $this->getObjectMethodForField($this->productArrayFieldMapper, $info->fieldName)($value);
                 } catch (MethodNotFoundException $exception) {
                     return FieldResolver::valueFromObjectOrArray($value, $info->fieldName);
                 }
