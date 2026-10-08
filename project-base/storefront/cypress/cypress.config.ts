@@ -29,6 +29,7 @@ const getProjectPages = () => {
 };
 
 export default defineConfig({
+    defaultBrowser: 'chrome-for-testing',
     viewportWidth: 1600,
     viewportHeight: 720,
     defaultCommandTimeout: 20000,
@@ -63,13 +64,14 @@ export default defineConfig({
             });
 
             on('before:browser:launch', (browser, launchOptions) => {
-                if (browser.name === 'electron' && browser.isHeadless) {
-                    // The browser window must fit the viewport to avoid clipping screenshots.
-                    launchOptions.preferences.width = config.viewportWidth;
-                    launchOptions.preferences.height = config.viewportHeight;
-                }
-
                 if (browser.family === 'chromium' && browser.name !== 'electron') {
+                    if (browser.isHeadless) {
+                        // Keep screenshot dimensions independent of the runner's display.
+                        launchOptions.args.push(
+                            `--window-size=${config.viewportWidth},${config.viewportHeight}`,
+                            '--force-device-scale-factor=1',
+                        );
+                    }
                     launchOptions.args.push(
                         '--font-render-hinting=none',
                         '--disable-font-subpixel-positioning',
