@@ -268,7 +268,11 @@ parameters:
             path: packages/framework/src/Model/Cart/AddProductResult.php
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Cart::setModifiedAt\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Cart::getLastActivityAt\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Model/Cart/Cart.php
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Cart::setLastActivityAt\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Model/Cart/Cart.php
         -
             identifier: shipmonk.deadMethod
