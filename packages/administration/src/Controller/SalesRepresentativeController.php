@@ -66,7 +66,7 @@ class SalesRepresentativeController extends AbstractCrudController
     #[Override]
     protected function configureDatagrid(Datagrid $datagrid): void
     {
-        $presentationalLabelsIndexedBySalesRepresentativeId = null;
+        $labelsIndexedBySalesRepresentativeId = null;
         $customerUsersSummariesIndexedBySalesRepresentativeId = null;
 
         $datagrid
@@ -85,20 +85,20 @@ class SalesRepresentativeController extends AbstractCrudController
                 'property' => 'telephone',
                 'sortable' => false,
             ])
-            ->add('presentationalLabel', [
+            ->add('label', [
                 'visible' => false,
                 'virtual' => true,
-                'transform' => function (mixed $value, array $row, array $results) use (&$presentationalLabelsIndexedBySalesRepresentativeId): ?string {
-                    if ($presentationalLabelsIndexedBySalesRepresentativeId === null) {
-                        $presentationalLabelsIndexedBySalesRepresentativeId = [];
+                'transform' => function (mixed $value, array $row, array $results) use (&$labelsIndexedBySalesRepresentativeId): ?string {
+                    if ($labelsIndexedBySalesRepresentativeId === null) {
+                        $labelsIndexedBySalesRepresentativeId = [];
                         $salesRepresentatives = $this->salesRepresentativeFacade->getByIds(array_column($results, 'id'));
 
                         foreach ($salesRepresentatives as $salesRepresentative) {
-                            $presentationalLabelsIndexedBySalesRepresentativeId[$salesRepresentative->getId()] = $salesRepresentative->getPresentationalLabel();
+                            $labelsIndexedBySalesRepresentativeId[$salesRepresentative->getId()] = $salesRepresentative->toHumanReadable();
                         }
                     }
 
-                    return $presentationalLabelsIndexedBySalesRepresentativeId[$row['id']] ?? null;
+                    return $labelsIndexedBySalesRepresentativeId[$row['id']] ?? null;
                 },
             ])
             ->add('customerUsersSummary', [
@@ -138,7 +138,7 @@ class SalesRepresentativeController extends AbstractCrudController
 
     protected function getDeleteConfirmMessage(array $row): string
     {
-        $label = htmlspecialchars($row['presentationalLabel']);
+        $label = htmlspecialchars($row['label']);
         $customersCount = $row['customerUsersSummary']['count'];
         $customersEnumeration = implode('<br>', array_map(htmlspecialchars(...), $row['customerUsersSummary']['emails']));
 

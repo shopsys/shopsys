@@ -195,17 +195,9 @@ class SalesRepresentative implements Presentable
         return ($this->getFirstName() === null || $this->getFirstName() === '') && ($this->getLastName() === null || $this->getLastName() === '');
     }
 
-    /**
-     * @return string
-     */
-    public function getPresentationalLabel()
-    {
-        return $this->hasNoneOfNamesSet() ? (string)$this->getId() : $this->getFullName();
-    }
-
     #[Override]
     public function toHumanReadable(): string
     {
-        return $this->getPresentationalLabel();
+        return $this->hasNoneOfNamesSet() ? (string)$this->getId() : $this->getFullName();
     }
 }
