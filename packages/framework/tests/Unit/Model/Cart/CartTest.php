@@ -6,10 +6,10 @@ namespace Tests\FrameworkBundle\Unit\Model\Cart;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
@@ -37,10 +37,10 @@ class CartTest extends TestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Price::zero());
         $cart->addItem($cartItem1);
 
-        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
+        $cartItem2 = new CartItem($cart, $product2, 3, Price::zero());
         $cart->addItem($cartItem2);
 
         $this->assertSame(2, $cart->getItemsCount());
@@ -64,7 +64,7 @@ class CartTest extends TestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Price::zero());
         $cart->addItem($cartItem);
 
         $this->assertFalse($cart->isEmpty());
@@ -96,7 +96,7 @@ class CartTest extends TestCase
 
     private function createCartItemWithId(Cart $cart, Product $product, int $id): CartItem
     {
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Price::zero());
 
         $idReflectionProperty = new ReflectionProperty(CartItem::class, 'id');
         $idReflectionProperty->setValue($cartItem, $id);
@@ -132,9 +132,9 @@ class CartTest extends TestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Price::zero());
         $cart->addItem($cartItem1);
-        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
+        $cartItem2 = new CartItem($cart, $product2, 3, Price::zero());
         $cart->addItem($cartItem2);
 
         $cart->clean();

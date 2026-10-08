@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData;
@@ -15,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -95,7 +98,14 @@ class Cart
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
-    protected $transportWatchedPrice;
+    protected $transportWatchedPriceWithVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
+    protected $transportWatchedPriceWithoutVat;
 
     /**
      * @var string|null
@@ -117,7 +127,14 @@ class Cart
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
-    protected $paymentWatchedPrice;
+    protected $paymentWatchedPriceWithVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'money', precision: 20, scale: 6, nullable: true)]
+    protected $paymentWatchedPriceWithoutVat;
 
     /**
      * @var string|null
@@ -420,7 +437,7 @@ class Cart
     public function unsetCartTransport(): void
     {
         $this->transport = null;
-        $this->transportWatchedPrice = null;
+        $this->setTransportWatchedPrice(null);
         $this->pickupPlaceIdentifier = null;
         $this->setModifiedNow();
     }
@@ -428,7 +445,7 @@ class Cart
     public function editCartTransport(CartTransportData $cartTransportData): void
     {
         $this->transport = $cartTransportData->transport;
-        $this->transportWatchedPrice = $cartTransportData->watchedPrice;
+        $this->setTransportWatchedPrice($cartTransportData->watchedPrice);
         $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
         $this->setModifiedNow();
     }
@@ -436,7 +453,7 @@ class Cart
     public function editCartPayment(CartPaymentData $cartPaymentData): void
     {
         $this->payment = $cartPaymentData->payment;
-        $this->paymentWatchedPrice = $cartPaymentData->watchedPrice;
+        $this->setPaymentWatchedPrice($cartPaymentData->watchedPrice);
         $this->paymentGoPayBankSwift = $cartPaymentData->goPayBankSwift;
         $this->setModifiedNow();
     }
@@ -444,7 +461,7 @@ class Cart
     public function unsetCartPayment(): void
     {
         $this->payment = null;
-        $this->paymentWatchedPrice = null;
+        $this->setPaymentWatchedPrice(null);
         $this->paymentGoPayBankSwift = null;
         $this->setModifiedNow();
     }
@@ -457,12 +474,27 @@ class Cart
         return $this->transport;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getTransportWatchedPrice()
+    public function getTransportWatchedPrice(): ?Price
     {
-        return $this->transportWatchedPrice;
+        return $this->createWatchedPrice($this->transportWatchedPriceWithVat, $this->transportWatchedPriceWithoutVat);
+    }
+
+    public function isTransportWatchedPriceChanged(PriceInterface $currentPrice): bool
+    {
+        $transportWatchedPrice = $this->getTransportWatchedPrice();
+
+        return $transportWatchedPrice !== null && !$currentPrice->equals($transportWatchedPrice);
+    }
+
+    public function hasTransportWatchedPrice(): bool
+    {
+        return $this->transportWatchedPriceWithVat !== null;
+    }
+
+    public function setTransportWatchedPrice(?PriceInterface $transportWatchedPrice): void
+    {
+        $this->transportWatchedPriceWithVat = $transportWatchedPrice?->getPriceWithVat();
+        $this->transportWatchedPriceWithoutVat = $transportWatchedPrice?->getPriceWithoutVat();
     }
 
     /**
@@ -479,14 +511,6 @@ class Cart
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $transportWatchedPrice
-     */
-    public function setTransportWatchedPrice($transportWatchedPrice): void
-    {
-        $this->transportWatchedPrice = $transportWatchedPrice;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
     public function getPayment()
@@ -494,12 +518,27 @@ class Cart
         return $this->payment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getPaymentWatchedPrice()
+    public function getPaymentWatchedPrice(): ?Price
     {
-        return $this->paymentWatchedPrice;
+        return $this->createWatchedPrice($this->paymentWatchedPriceWithVat, $this->paymentWatchedPriceWithoutVat);
+    }
+
+    public function isPaymentWatchedPriceChanged(PriceInterface $currentPrice): bool
+    {
+        $paymentWatchedPrice = $this->getPaymentWatchedPrice();
+
+        return $paymentWatchedPrice !== null && !$currentPrice->equals($paymentWatchedPrice);
+    }
+
+    public function hasPaymentWatchedPrice(): bool
+    {
+        return $this->paymentWatchedPriceWithVat !== null;
+    }
+
+    public function setPaymentWatchedPrice(?PriceInterface $paymentWatchedPrice): void
+    {
+        $this->paymentWatchedPriceWithVat = $paymentWatchedPrice?->getPriceWithVat();
+        $this->paymentWatchedPriceWithoutVat = $paymentWatchedPrice?->getPriceWithoutVat();
     }
 
     /**
@@ -510,12 +549,13 @@ class Cart
         return $this->paymentGoPayBankSwift;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $paymentWatchedPrice
-     */
-    public function setPaymentWatchedPrice($paymentWatchedPrice): void
+    protected function createWatchedPrice(?Money $watchedPriceWithVat, ?Money $watchedPriceWithoutVat): ?Price
     {
-        $this->paymentWatchedPrice = $paymentWatchedPrice;
+        if ($watchedPriceWithVat === null || $watchedPriceWithoutVat === null) {
+            return null;
+        }
+
+        return new Price($watchedPriceWithoutVat, $watchedPriceWithVat);
     }
 
     public function getTotalWeight(): int

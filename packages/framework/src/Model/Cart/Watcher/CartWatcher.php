@@ -36,22 +36,25 @@ class CartWatcher
                 $cartItem->getProduct(),
             )->sellingProductPrice->getPrice();
 
-            if ($price->getPriceWithVat()->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
-                continue;
+            if ($cartItem->isWatchedPriceChanged($price)) {
+                $modifiedItems[] = $cartItem;
+                $cartItem->setWatchedPrice($price);
+            } elseif ($cartItem->getWatchedPrice() === null) {
+                $cartItem->setWatchedPrice($price);
             }
-
-            $modifiedItems[] = $cartItem;
-            $cartItem->setWatchedPrice($price->getPriceWithVat());
         }
 
-        $giftPrice = $this->giftPlanSettingFacade->getInputGiftPrice($this->domain->getId());
+        $domainId = $this->domain->getId();
 
         foreach ($cart->getProductGiftCartItems() as $cartItem) {
-            if ($giftPrice->equals($cartItem->getWatchedPrice() ?? Money::zero())) {
-                continue;
-            }
+            $giftPrice = $this->giftPlanSettingFacade->calculateBaseGiftPrice(
+                $domainId,
+                $cartItem->getProduct()->getVatForDomain($domainId),
+            );
 
-            $cartItem->setWatchedPrice($giftPrice);
+            if ($cartItem->isWatchedPriceChanged($giftPrice) || $cartItem->getWatchedPrice() === null) {
+                $cartItem->setWatchedPrice($giftPrice);
+            }
         }
 
         return $modifiedItems;

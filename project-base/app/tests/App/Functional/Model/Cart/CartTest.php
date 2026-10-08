@@ -12,6 +12,7 @@ use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -50,9 +51,9 @@ class CartTest extends TransactionFunctionalTestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
+        $cartItem1 = new CartItem($cart, $product1, 1, Price::zero());
         $cart->addItem($cartItem1);
-        $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
+        $cartItem2 = new CartItem($cart, $product2, 3, Price::zero());
         $cart->addItem($cartItem2);
 
         $this->em->persist($cart);
@@ -77,7 +78,7 @@ class CartTest extends TransactionFunctionalTestCase
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new CartItem($cart, $product, 1, Price::zero());
         $cart->addItem($cartItem);
 
         $cart->clean();

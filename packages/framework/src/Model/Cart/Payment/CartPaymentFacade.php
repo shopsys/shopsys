@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class CartPaymentFacade
 {
@@ -33,7 +33,7 @@ class CartPaymentFacade
         $this->updatePaymentInCart($cart, null, null);
     }
 
-    public function setPaymentWatchedPrice(Cart $cart, Money $paymentWatchedPrice): void
+    public function setPaymentWatchedPrice(Cart $cart, PriceInterface $paymentWatchedPrice): void
     {
         $cart->setPaymentWatchedPrice($paymentWatchedPrice);
         $this->entityManager->flush();

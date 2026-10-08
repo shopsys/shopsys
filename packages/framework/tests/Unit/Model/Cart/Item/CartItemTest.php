@@ -6,10 +6,10 @@ namespace Tests\FrameworkBundle\Unit\Model\Cart\Item;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
@@ -34,13 +34,13 @@ class CartItemTest extends TestCase
     {
         $this->expectException(InvalidQuantityException::class);
 
-        new CartItem($this->createCart(), $this->createProduct(), $quantity, Money::zero());
+        new CartItem($this->createCart(), $this->createProduct(), $quantity, Price::zero());
     }
 
     #[DataProvider('invalidQuantityProvider')]
     public function testInvalidQuantityIsRejectedOnChange(int $quantity): void
     {
-        $cartItem = new CartItem($this->createCart(), $this->createProduct(), 1, Money::zero());
+        $cartItem = new CartItem($this->createCart(), $this->createProduct(), 1, Price::zero());
 
         $this->expectException(InvalidQuantityException::class);
 
@@ -49,7 +49,7 @@ class CartItemTest extends TestCase
 
     public function testValidQuantityIsStored(): void
     {
-        $cartItem = new CartItem($this->createCart(), $this->createProduct(), 1, Money::zero());
+        $cartItem = new CartItem($this->createCart(), $this->createProduct(), 1, Price::zero());
         $cartItem->changeQuantity(5);
 
         $this->assertSame(5, $cartItem->getQuantity());

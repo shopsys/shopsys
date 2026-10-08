@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CartItemFactory
@@ -21,7 +21,7 @@ class CartItemFactory
         Cart $cart,
         Product $product,
         int $quantity,
-        ?Money $watchedPrice,
+        ?PriceInterface $watchedPrice,
         string $type,
     ): CartItem {
         $this->cartItemTypeEnum->validateCase($type);
