@@ -139,12 +139,17 @@ Rules that bite:
 
 - Never implement the bare `HandlerInterface` — it's only a marker for service discovery.
 - `getById()` and `create()` declare the **concrete entity** as their return type
-  (`getById(int $id): <Entity>`, see `ProductReviewEditHandler`), not the interface's `Presentable`.
+  (`getById(int $id): <Entity>`, see `ProductReviewEditHandler`), not the interface's `Presentable`,
+  and `createData()` / `createDataFromEntity()` declare the **concrete data class**
+  (`createData(): <Entity>Data`), not `object` — return types may narrow, only parameters may not.
   The entity has to implement `Shopsys\FrameworkBundle\Component\Utils\Presentable`
   (`toHumanReadable()`), otherwise the CRUD registry throws a `RuntimeException` the first time
   the controller is loaded. Let
   `getById()` throw the facade's not-found exception (they extend `NotFoundHttpException`, so
   the page is a 404).
+- `toHumanReadable()` is the entity's only label method: when the CRUD needs the label (confirm
+  messages, hidden grid fields), call it instead of keeping a parallel `getPresentationalLabel()`-style
+  getter alive; move the existing getter's logic into `toHumanReadable()` and remove the getter.
 - One handler per action; `CrudHandlerInterface` claims all actions, so it cannot be mixed
   with other handlers on the same controller. Replace a handler with
   `unregisterHandler()` + `registerHandler()`.
@@ -186,7 +191,9 @@ them and without a template they are joined with a space; prefer this over hidde
 fields), `template`, `transform`, `help`, `role` / `permission` (show the column only to
 administrators with the permission on the role; role defaults to the controller role,
 permission to `Permission::VIEW`; the data is not fetched for others), `class` (CSS class of the
-header and cells, e.g. `text-end`). Datagrid methods: `add` / `update` / `remove` / `reorder`,
+header and cells, e.g. `text-end`). Columns default to `sortable`; set `'sortable' => false` on
+rich-text/HTML columns (sorting them orders by markup) and on columns the legacy grid did not
+sort. Datagrid methods: `add` / `update` / `remove` / `reorder`,
 `setDefaultOrder`, `setPagination`, `enableDragAndDrop(field)`, `actions()` (row actions:
 `add` / `update` / `delete` / `reorder`).
 
