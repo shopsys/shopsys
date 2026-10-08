@@ -7,7 +7,9 @@ import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('next/head', () => ({ default: ({ children }: { children: ReactNode }) => <>{children}</> }));
 vi.mock('next/router', () => ({ useRouter: () => ({ asPath: '/product' }) }));
-vi.mock('components/providers/DomainConfigProvider', () => ({ useDomainConfig: () => ({ currencyCode: 'CZK' }) }));
+vi.mock('components/providers/DomainConfigProvider', () => ({
+    useDomainConfig: () => ({ currencyCode: 'CZK', url: 'https://example.com/' }),
+}));
 vi.mock('utils/i18n/useTranslationWrapper', () => ({ default: () => ({ t: (key: string) => key }) }));
 vi.mock('graphql/requests/productReviews/queries/ProductReviewsQuery.generated', () => ({
     useProductReviewsQuery: () => {
@@ -42,7 +44,10 @@ const reviews = {
 
 type MetadataProduct = Pick<
     TypeProductDetailFragment,
+    | '__typename'
     | 'fullName'
+    | 'isInquiryType'
+    | 'isSellingDenied'
     | 'images'
     | 'description'
     | 'catalogNumber'
@@ -55,7 +60,10 @@ type MetadataProduct = Pick<
 >;
 
 const metadataProduct: MetadataProduct = {
+    __typename: 'RegularProduct',
     fullName: 'Product',
+    isInquiryType: false,
+    isSellingDenied: false,
     images: [],
     description: 'Description',
     catalogNumber: '123',
