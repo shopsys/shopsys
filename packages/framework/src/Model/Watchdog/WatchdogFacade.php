@@ -100,9 +100,9 @@ class WatchdogFacade
         return $this->watchdogRepository->findNextWatchdogToSend();
     }
 
-    public function deleteByEmail(string $email): void
+    public function deleteByEmailAndDomainId(string $email, int $domainId): void
     {
-        $this->watchdogRepository->deleteByEmail($email);
+        $this->watchdogRepository->deleteByEmailAndDomainId($email, $domainId);
     }
 
     /**
