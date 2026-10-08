@@ -82,11 +82,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         return $data['catnum'];
     }
 
-    public function getBreadcrumb(array $data): array
-    {
-        return $data['breadcrumb'];
-    }
-
     public function getCategoriesPromise(array $data): Promise
     {
         return $this->categoriesBatchLoader->load($data['categories']);
@@ -102,10 +97,5 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         $brandId = $data['brand'];
 
         return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
-    }
-
-    public function isMainVariant(array $data): bool
-    {
-        return $data['is_main_variant'];
     }
 }
