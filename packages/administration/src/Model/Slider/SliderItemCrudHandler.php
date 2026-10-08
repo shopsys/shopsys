@@ -36,7 +36,7 @@ class SliderItemCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): SliderItemData
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
         $sliderItemData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -59,7 +59,7 @@ class SliderItemCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): SliderItemData
     {
         Assert::isInstanceOf($entity, SliderItem::class);
 
