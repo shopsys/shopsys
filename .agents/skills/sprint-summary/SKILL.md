@@ -1,6 +1,6 @@
 ---
 name: sprint-summary
-description: Generates a Czech sprint summary article from Jira sprint data, preferably via Jira MCP with CSV as a fallback, and can optionally prepare Playwright screenshots/videos as side attachments for relevant UX tasks.
+description: Generates a Czech sprint summary article from Jira sprint data (Jira MCP first, CSV fallback), publishes it to Confluence with embedded screenshots and MP4 clips, and records the clips with Playwright MCP (visible cursor, ffmpeg post-processing).
 ---
 
 # Sprint Summary
@@ -44,10 +44,11 @@ Then wait for user input.
 Primarily use Jira MCP. CSV export is a fallback only when Jira MCP is unavailable or does not provide the required data.
 
 When using Jira MCP:
-1. Find the requested sprint.
+1. Find the requested sprint. Do not rely on the saved filter 12564 (it points to an old sprint); query directly with `sprint = "SSP Sprint #<N>"` and page through all results (`nextPageToken`).
 2. Include only issues that were completed in that sprint.
-3. Load issue details, PR links, and comments.
+3. Load issue details, PR links, and comments. The Merge Request field is `customfield_10031`, the sprint field is `customfield_10020`.
 4. Use comments especially for tasks without PRs, research tasks, and unclear changes.
+5. If the user links the previous sprint article, read it first (an external `wiki/external/...` link is not fetchable by WebFetch; open it in the built-in browser and use `get_page_text`) and skip everything already described there.
 
 Only include tasks completed in the sprint. Do not include issues that were merely assigned to or present in the sprint but not completed there.
 
@@ -213,7 +214,7 @@ Additional rules:
 
 After the markdown is generated, check whether Playwright MCP/browser tools are available and whether the application is reachable.
 
-**Required:** when Playwright MCP is available, generate screenshots for UX-relevant tickets as part of the workflow (do not wait for a separate prompt). The default target URL is the production environment - https://cz.ssfwcc.prod.shopsys.cloud/. 
+**Required:** when Playwright MCP is available, generate screenshots for UX-relevant tickets as part of the workflow (do not wait for a separate prompt). The default target URL is the production environment - https://cz.ssfwcc.prod.shopsys.cloud/. If production demo data turn out to be non-standard (missing demo products, changed transports), switch to the Odin review environment of the current release branch (e.g. `https://cz.20-0.odin.shopsys.cloud`, SK domain `https://20-0.odin.shopsys.cloud/sk`, admin `https://20-0.odin.shopsys.cloud/admin/`).
 
 If yes, explicitly ask the user whether they want visual attachments for relevant tasks:
 - The user may name concrete Jira tickets
@@ -250,9 +251,55 @@ When assets are generated, update the markdown item only with a short textual re
 
 ```markdown
 - Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.png`
+- Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.mp4` (video 30 s: what the clip shows)
 ```
 
 This keeps the article easy to preview in IDEs and easy to copy to Confluence.
+
+#### Screenshots with Playwright MCP
+
+- `browser_take_screenshot` can save only inside the project (`.playwright-mcp/`) or the MCP `--output-dir`; save there and `mv` the file into the assets directory.
+- Test data may be created on the review environment when the user allows it (orders with the user's e-mail, cancelled GoPay payment, temporarily disabling a transport on a domain). Restore every temporary change afterwards and list all created records (order numbers, approved reviews) in the final report.
+- Scenarios that need an admin login: open the admin login page in the Playwright window and let the user log in; never type credentials. The admin session on Odin expires after a few minutes, so prepare the scenario (URLs, element names, script) before asking for the login and run everything immediately afterwards.
+- Login badge "Naposledy použito" can be shown without credentials by setting `localStorage['shopsys-platform-persist-store-2'].state.lastLoginType` to `web` or `google` and reloading.
+
+#### Video recording with Playwright MCP
+
+Prerequisites (one-time, needs a session restart):
+- Video recording works only with `@playwright/mcp@0.0.40` (newer versions dropped `--save-video`):
+  ```
+  claude mcp remove playwright
+  claude mcp add playwright -- npx -y @playwright/mcp@0.0.40 --save-video=1440x900 --output-dir /Users/<user>/Downloads/playwright-videos
+  ```
+- `ffmpeg` must be installed (`brew install ffmpeg`).
+
+Recording rules:
+- One tab per scenario. The recording starts when the tab is created and the file is written only when the tab is closed (`browser_tabs close` or `browser_close`). After closing look for the newest `*.webm` both in `--output-dir` and in `$TMPDIR/playwright-mcp-output/`.
+- The persistent profile records every open tab, including tabs the user opens in that window. Do not let the user browse in the Playwright window and delete all `*.webm` files once the clips are exported (recordings reach gigabytes).
+- In 0.0.40 `browser_click` requires a `ref`; drive the whole scenario from one `browser_evaluate` async function instead (sleep helper, `scrollIntoView`, `element.click()`, `dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}))`). A full navigation destroys the evaluate context; continue in a second evaluate.
+- The mouse cursor is not recorded. Before every click inject a fake cursor (SVG arrow, `position: fixed`, CSS transition ~0.7 s) and move it to the element center, wait ~1 s, show a short click ripple, then click. See the snippet in "Playbook: scripted scenario with visible cursor".
+- Pacing: wait 3-4 s after every action, keep the sticky header in mind when scrolling (`window.scrollTo({top: rowTop - 230})` instead of `scrollIntoView` so the clicked control stays visible), hold the final state 4-6 s, and avoid long static starts.
+- Return timing marks (`performance.now()`) from the evaluate for orientation, but trust only the frames of the converted MP4.
+
+Post-processing:
+- WebM timestamps are unreliable for seeking. Convert first to a constant frame rate MP4 and cut from that file:
+  ```
+  ffmpeg -i rec.webm -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2,fps=25" -c:v libx264 -crf 23 -pix_fmt yuv420p -an full.mp4
+  ffmpeg -i full.mp4 -ss 33.5 -to 63.5 -c:v libx264 -crf 23 -pix_fmt yuv420p -an -movflags +faststart SSP-XXXX-slug.mp4
+  ```
+- Remove dead segments with trim/concat instead of re-recording:
+  ```
+  ffmpeg -i in.mp4 -filter_complex "[0:v]trim=0:28.5,setpts=PTS-STARTPTS[a];[0:v]trim=41:48,setpts=PTS-STARTPTS[b];[a][b]concat=n=2:v=1:a=0[v]" -map "[v]" -c:v libx264 -crf 23 -pix_fmt yuv420p -an -movflags +faststart out.mp4
+  ```
+- Verify every clip with a contact sheet before publishing. Use exact frame indices (25 fps) rather than `fps=1/N` seeking, size the tile grid to the frame count, and give every sheet a new file name (the Read tool caches images by path):
+  ```
+  ffmpeg -i full.mp4 -vf "select='eq(n\,500)+eq(n\,850)+eq(n\,1100)',scale=440:-1,tile=3x1" -fps_mode vfr -frames:v 1 check.png
+  ```
+- Target 20-40 s per clip; the caption in Confluence/markdown must state the real duration and what the clip shows.
+
+Storefront selectors that proved stable:
+- Compare buttons on product lists: `button[aria-label^="Přidat do porovnání produkt "]`; comparison page `/porovnani-produktu`; reorder handle `button[aria-label^="Změnit pořadí produktu"]` reacts to ArrowLeft/ArrowRight keydown; remove button `button[aria-label^="Odstranit z porovnání produkt "]`; undo toast button text `Vrátit zpět` lives ~2 s; differences checkbox `#comparison-only-differences`.
+- Transport domain checkboxes in admin: `transport_form_basicInformation_enabled_{domainId}` (the header domain filter `admin_domains_form` is not the transport's domains).
 
 ### Step 8: Present Result
 
@@ -277,6 +324,12 @@ Statistics:
 Would you like to open the file in PhpStorm?
 ```
 
+When Confluence or visual attachments were involved, the final report must also list:
+- every Confluence page version you created and what changed in it
+- which attachments were uploaded and which placeholders still wait for a manual upload
+- test data created or changed on the review environment (order numbers, approved reviews, temporarily disabled transports and whether they were restored)
+- that the Playwright `*.webm` recordings were deleted after exporting the MP4 clips
+
 ### Step 9: Confluence Workflow
 
 Always create the Confluence article as a published page that is open to everyone in the space (`isPrivate: false`) when Confluence MCP is available.
@@ -285,13 +338,35 @@ Place the page under the same parent/folder as the previous sprint summary so it
 
 After creating the page, give the user its link and tell them it is already published and visible to everyone in the space, so they can review and edit it directly.
 
-If attachment upload is not available, insert short screenshot placeholders into the article and clearly tell the user which local files need to be uploaded manually.
-
 If Confluence MCP is unavailable, instruct the user to create the article manually in Confluence here:
 
 ```
 https://shopsys.atlassian.net/wiki/spaces/PRG/folder/2698510337?atlOrigin=eyJpIjoiMTIzN2EwNmQyYzMyNGFiY2I1OTU1YmVkMjk4YTk1MTciLCJwIjoiYyJ9
 ```
+
+#### Attachments and embedded media
+
+Confluence MCP cannot upload attachments, so:
+1. Insert placeholders first: `<div data-type="panel-info"><p>Zde nahrát screenshot <code>FILENAME</code></p></div>` (use "GIF"/"video" for other types).
+2. Upload the files through a browser that is logged in to Atlassian. The REST endpoint `POST /wiki/rest/api/content/{pageId}/child/attachment` rejects browser sessions with "XSRF check failed" even with `X-Atlassian-Token: no-check`; use the legacy form instead:
+   - Playwright: `browser_navigate` to `https://shopsys.atlassian.net/wiki/pages/viewpageattachments.action?pageId={pageId}`, `browser_click` on "Upload file", `browser_file_upload` with the local path, `browser_click` on "Attach". One file per round trip. The Playwright persistent profile keeps the Atlassian login between runs.
+   - Claude in Chrome: inject `<input type="file" id="claude-upload-input" multiple>`, use `file_upload` on its ref (max 10 MB per call), then POST each file from page JavaScript to `/wiki/pages/doattachfile.action?pageId={pageId}` with fields `atl_token` (read from the `viewpageattachments.action` HTML), `file_0`, `comment_0`, `confirm=Attach`. The `javascript_tool` is blocked for code containing query strings like `version=`/`status=historical`, so keep such requests to Playwright or the Atlassian MCP.
+3. Read the media ids: `GET /wiki/rest/api/content/{pageId}/child/attachment?limit=100&expand=extensions` -> `extensions.fileId`.
+4. Replace every placeholder with a media figure in the MCP HTML body (works for PNG, GIF and MP4):
+   ```html
+   <figure data-type="media-single" data-layout="center" data-width="760" data-width-type="pixel"><div data-type="media" data-media-type="file" data-id="{fileId}" data-collection="contentId-{pageId}" data-alt="{filename}" data-width="1440" data-height="900"></div><figcaption>30 s: what the clip shows</figcaption></figure>
+   ```
+   Use the real pixel dimensions (`sips -g pixelWidth -g pixelHeight`, `ffprobe`), narrow widths (e.g. 390) for mobile screenshots.
+5. Re-uploading a file with the same name creates a new attachment version; the page picks it up automatically (the media id in the body changes) and the page version does not change. Only the caption may need an update.
+
+If attachment upload is not possible, keep the placeholders and clearly tell the user which local files need to be uploaded manually.
+
+#### Safe page updates
+
+`updateConfluencePage` replaces the whole body, so it silently overwrites edits the user made in the editor meanwhile.
+- Before every update call `getConfluencePage` (the result is saved to a file when large; parse the JSON with Python), check the version number against the last version you wrote, and diff the body (strip `data-local-id="..."` attributes first). Apply your change on top of the current body, never on your own last copy.
+- If an overwrite already happened, restore the user's version via `https://shopsys.atlassian.net/wiki/pages/viewpreviousversions.action?pageId={pageId}` -> "Restore" (Playwright or Chrome), then reapply your change. A human-readable diff of two versions is at `.../wiki/pages/diffpagesbyversion.action?pageId={pageId}&selectedPageVersions=A&selectedPageVersions=B`.
+- Mention every page version you created in the final report so the user can tell their edits from yours.
 
 ### Step 10: Distribution Instructions
 
@@ -361,6 +436,50 @@ When processing Description field, remove or convert Jira-specific markup:
 - **Jira:** [SSP-2013](https://shopsys.atlassian.net/browse/SSP-2013) | **PR:** [#4327](https://github.com/shopsys/shopsys/pull/4327)
 - Při více otevřených záložkách se query na košík volá pouze jednou
 ```
+
+## Playbook: scripted scenario with visible cursor
+
+Run inside `browser_evaluate` (Playwright MCP 0.0.40). Adjust selectors and timings per scenario.
+
+```js
+async () => {
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+  const cursor = document.createElement('div');
+  cursor.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24"><path d="M4 2 L4 20 L8.5 15.5 L11.5 22 L14 21 L11 14.5 L17.5 14.5 Z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  cursor.style.cssText = 'position:fixed;left:700px;top:500px;z-index:2147483647;pointer-events:none;transition:left .7s ease,top .7s ease;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))';
+  document.body.appendChild(cursor);
+  const ripple = document.createElement('div');
+  ripple.style.cssText = 'position:fixed;width:34px;height:34px;border-radius:50%;border:3px solid #2563eb;z-index:2147483646;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.4);transition:opacity .35s,transform .35s';
+  document.body.appendChild(ripple);
+  const moveTo = async (el) => {
+    const r = el.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    cursor.style.left = (x - 3) + 'px'; cursor.style.top = (y - 2) + 'px';
+    await sleep(750);
+    el.dispatchEvent(new MouseEvent('mouseover', {bubbles: true}));
+    await sleep(1000);
+    return {x, y};
+  };
+  const clickWithCursor = async (el) => {
+    const {x, y} = await moveTo(el);
+    ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
+    ripple.style.opacity = '1'; ripple.style.transform = 'translate(-50%,-50%) scale(1)';
+    el.click();
+    await sleep(350);
+    ripple.style.opacity = '0'; ripple.style.transform = 'translate(-50%,-50%) scale(.4)';
+  };
+  await sleep(2500);
+  await clickWithCursor(document.querySelector('button[aria-label^="Odstranit z porovnání produkt 47"]'));
+  await sleep(700);
+  const undo = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Vrátit zpět');
+  if (undo) await clickWithCursor(undo);
+  await sleep(4000);
+  return 'done';
+}
+```
+
+Typing into inputs: use the native value setter plus `input`/`change` events so React/Stimulus controllers react:
+`Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, text); input.dispatchEvent(new Event('input', {bubbles: true}))`.
 
 ## Audience
 
