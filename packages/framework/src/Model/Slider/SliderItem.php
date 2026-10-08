@@ -227,27 +227,11 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     }
 
     /**
-     * @param \DateTimeImmutable|null $datetimeVisibleFrom
-     */
-    public function setDatetimeVisibleFrom($datetimeVisibleFrom): void
-    {
-        $this->datetimeVisibleFrom = $datetimeVisibleFrom;
-    }
-
-    /**
      * @return \DateTimeImmutable|null
      */
     public function getDatetimeVisibleTo()
     {
         return $this->datetimeVisibleTo;
-    }
-
-    /**
-     * @param \DateTimeImmutable|null $datetimeVisibleTo
-     */
-    public function setDatetimeVisibleTo($datetimeVisibleTo): void
-    {
-        $this->datetimeVisibleTo = $datetimeVisibleTo;
     }
 
     /**
