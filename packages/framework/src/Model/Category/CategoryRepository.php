@@ -439,6 +439,78 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category[]>
+     */
+    public function getVisibleCategoriesInPathsFromRootOnDomainIndexedByCategoryId(
+        array $categories,
+        int $domainId,
+        string $locale,
+    ): array {
+        if ($categories === []) {
+            return [];
+        }
+
+        $categoriesInPathsIndexedByCategoryId = [];
+
+        foreach ($categories as $category) {
+            $categoriesInPathsIndexedByCategoryId[$category->getId()] = [];
+        }
+
+        $categoryIdPairs = $this->getVisibleCategoryInPathIdAndCategoryIdPairsOnDomain(
+            array_keys($categoriesInPathsIndexedByCategoryId),
+            $domainId,
+        );
+
+        if ($categoryIdPairs === []) {
+            return $categoriesInPathsIndexedByCategoryId;
+        }
+
+        $categoriesInPathIndexedById = $this->getCategoriesWithTranslationIndexedById(
+            array_unique(array_column($categoryIdPairs, 'categoryInPathId')),
+            $locale,
+        );
+
+        foreach ($categoryIdPairs as $categoryIdPair) {
+            $categoriesInPathsIndexedByCategoryId[$categoryIdPair['categoryId']][] = $categoriesInPathIndexedById[$categoryIdPair['categoryInPathId']];
+        }
+
+        return $categoriesInPathsIndexedByCategoryId;
+    }
+
+    /**
+     * @param int[] $categoryIds
+     * @return array<int, array{categoryInPathId: int, categoryId: int}>
+     */
+    protected function getVisibleCategoryInPathIdAndCategoryIdPairsOnDomain(array $categoryIds, int $domainId): array
+    {
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->select('c.id AS categoryInPathId, tc.id AS categoryId')
+            ->from(Category::class, 'tc')
+            ->andWhere('tc.id IN (:categoryIds)')
+            ->andWhere('c.lft <= tc.lft')
+            ->andWhere('c.rgt >= tc.rgt')
+            ->setParameter('categoryIds', $categoryIds);
+
+        return $queryBuilder->getQuery()->getScalarResult();
+    }
+
+    /**
+     * @param int[] $categoryIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Category\Category>
+     */
+    protected function getCategoriesWithTranslationIndexedById(array $categoryIds, string $locale): array
+    {
+        $queryBuilder = $this->getAllQueryBuilder()
+            ->indexBy('c', 'c.id')
+            ->andWhere('c.id IN (:categoryIds)')
+            ->setParameter('categoryIds', $categoryIds);
+        $this->addTranslation($queryBuilder, $locale);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * @return string[]
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
