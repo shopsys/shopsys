@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+use Shopsys\FrameworkBundle\Model\Watchdog\Watchdog;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi;
@@ -386,8 +387,10 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     private function doTestSuccessfulCustomerUserRemoval(CustomerUser $userToDelete): void
     {
         $userToDeleteEmail = $userToDelete->getEmail();
-        $this->createWatchdog($userToDeleteEmail);
-        $this->createWatchdog(static::DEFAULT_USER_EMAIL);
+        $anotherDomainId = $this->getAnotherDomainId();
+        $this->createWatchdog($userToDeleteEmail, $this->domain->getId());
+        $this->createWatchdog($userToDeleteEmail, $anotherDomainId);
+        $this->createWatchdog(static::DEFAULT_USER_EMAIL, $this->domain->getId());
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/RemoveCustomerUserMutation.graphql', [
             'customerUserUuid' => $userToDelete->getUuid(),
@@ -395,20 +398,40 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertTrue($response['data']['RemoveCustomerUser'] ?? null);
 
-        $this->assertSame([], $this->watchdogFacade->getWatchdogsByEmail($userToDeleteEmail), 'Watchdogs of the removed customer user should be deleted');
+        $removedUserWatchdogDomainIds = $this->getWatchdogDomainIdsByEmail($userToDeleteEmail);
+        $this->assertNotContains($this->domain->getId(), $removedUserWatchdogDomainIds, 'Watchdogs of the removed customer user should be deleted');
+        $this->assertContains($anotherDomainId, $removedUserWatchdogDomainIds, 'Watchdogs with the same e-mail on another domain should be kept');
         $this->assertNotEmpty($this->watchdogFacade->getWatchdogsByEmail(static::DEFAULT_USER_EMAIL), 'Watchdogs of the current customer user should be kept');
 
         $this->expectException(CustomerUserNotFoundException::class);
         $this->customerUserFacade->getByUuid($userToDelete->getUuid());
     }
 
-    private function createWatchdog(string $email): void
+    private function createWatchdog(string $email, int $domainId): void
     {
-        $watchdogData = $this->watchdogDataFactory->createByDomainId($this->domain->getId());
+        $watchdogData = $this->watchdogDataFactory->createByDomainId($domainId);
         $watchdogData->email = $email;
         $watchdogData->product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $this->watchdogFacade->create($watchdogData);
+    }
+
+    /**
+     * @return int[]
+     */
+    private function getWatchdogDomainIdsByEmail(string $email): array
+    {
+        return array_map(
+            static fn (Watchdog $watchdog) => $watchdog->getDomainId(),
+            $this->watchdogFacade->getWatchdogsByEmail($email),
+        );
+    }
+
+    private function getAnotherDomainId(): int
+    {
+        $anotherDomainIds = array_values(array_diff($this->domain->getAllIds(), [$this->domain->getId()]));
+
+        return $anotherDomainIds[0];
     }
 
     private function getCustomerUserFromAnotherCompany(): CustomerUser

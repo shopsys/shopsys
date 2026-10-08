@@ -214,9 +214,10 @@ class CustomerUserMutation extends BaseTokenMutation
         $this->checkCustomerUserCanBeDeleted($customerUser, $currentUser);
 
         $customerUserEmail = $customerUser->getEmail();
+        $customerUserDomainId = $customerUser->getDomainId();
 
         $this->customerUserFacade->delete($customerUser->getId());
-        $this->watchdogFacade->deleteByEmail($customerUserEmail);
+        $this->watchdogFacade->deleteByEmailAndDomainId($customerUserEmail, $customerUserDomainId);
 
         return true;
     }

@@ -116,7 +116,7 @@ class WatchdogRepository
         return null;
     }
 
-    public function deleteByEmail(string $email): void
+    public function deleteByEmailAndDomainId(string $email, int $domainId): void
     {
         if ($this->transformStringHelper->emptyToNull($email) === null) {
             return;
@@ -125,7 +125,9 @@ class WatchdogRepository
         $this->em->createQueryBuilder()
             ->delete(Watchdog::class, 'w')
             ->where('w.email = :email')
+            ->andWhere('w.domainId = :domainId')
             ->setParameter('email', $email)
+            ->setParameter('domainId', $domainId)
             ->getQuery()->execute();
     }
 
