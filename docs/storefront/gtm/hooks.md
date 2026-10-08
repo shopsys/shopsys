@@ -23,7 +23,7 @@ It is triggered every time the page, therefore products change.
 
 ```ts
 export const useGtmSliderProductListViewEvent = (
-    products: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
+    products: TypeCompactProductFragment[] | undefined, // array of displayed products, if loaded and available
     gtmProuctListName: GtmProductListNameType, // name of the viewed paginated list
 ): void => {
     // function body not included in this code block

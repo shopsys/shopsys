@@ -1,10 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { CompactProductItemProps } from 'components/Blocks/Product/ProductsList/CompactProductListItem';
-import { ProductItemProps } from 'components/Blocks/Product/ProductsList/ProductListItem';
+import {
+    PREDEFINED_VISIBLE_ITEMS_CONFIGS,
+    ProductItemProps,
+} from 'components/Blocks/Product/ProductsList/ProductListItem';
 import {
     CompactProductsListContent,
     ProductsListContent,
 } from 'components/Blocks/Product/ProductsList/ProductsListContent';
+import { ProductsSliderProps } from 'components/Blocks/Product/ProductsSlider';
 import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
@@ -151,6 +155,8 @@ describe('product card data boundaries', () => {
         expect(screen.getByText('Add to cart')).toBeInTheDocument();
         expect(screen.getByText('List buttons')).toBeInTheDocument();
         expect(screen.getByText('Store availability')).toBeInTheDocument();
+        expect(screen.getByText('Store availability').parentElement).toHaveClass('row-start-6');
+        expect(screen.getByText('Add to cart').parentElement).toHaveClass('row-start-7');
         expect(mocks.cart).toHaveBeenCalled();
         expect(mocks.wishlist).toHaveBeenCalled();
         expect(mocks.comparison).toHaveBeenCalled();
@@ -167,6 +173,23 @@ describe('product card data boundaries', () => {
 
         expect(screen.getByRole('link')).toHaveAttribute('tabindex', '-1');
         expectTypeOf<TypeCompactProductFragment>().not.toExtend<ProductItemProps['product']>();
-        expectTypeOf<'addToCart'>().not.toExtend<keyof NonNullable<CompactProductItemProps['visibleItemsConfig']>>();
+    });
+
+    test('rejects purchase configuration passed through variables or full-card presets', () => {
+        const addToCartConfig = { price: true, addToCart: true };
+        const availabilityConfig = { price: true, storeAvailability: true };
+        const listButtonsConfig = { price: true, productListButtons: true };
+        const productItemProps = { visibleItemsConfig: addToCartConfig };
+
+        expectTypeOf(addToCartConfig).not.toExtend<NonNullable<CompactProductItemProps['visibleItemsConfig']>>();
+        expectTypeOf(availabilityConfig).not.toExtend<NonNullable<CompactProductItemProps['visibleItemsConfig']>>();
+        expectTypeOf(listButtonsConfig).not.toExtend<NonNullable<CompactProductItemProps['visibleItemsConfig']>>();
+        expectTypeOf(PREDEFINED_VISIBLE_ITEMS_CONFIGS.mediumItem).not.toExtend<
+            NonNullable<CompactProductItemProps['visibleItemsConfig']>
+        >();
+        expectTypeOf(productItemProps).not.toExtend<
+            NonNullable<Extract<ProductsSliderProps, { cardVariant: 'compact' }>['productItemProps']>
+        >();
+        expectTypeOf(productItemProps).toExtend<Partial<ProductItemProps>>();
     });
 });

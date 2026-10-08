@@ -35,10 +35,10 @@ Only edit `.graphql` source files in `graphql/requests`. Files with a `.generate
 Use a generated operation type for data that belongs to one operation and is passed through its local component tree. It keeps a component contract tied to exactly the fields the operation fetches:
 
 ```ts
-import type { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
+import type { TypeNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
 
-type SearchProductsContentProps = {
-    productsSearch: TypeSearchProductsQuery['productsSearch'];
+type NotificationBarsProps = {
+    notificationBars: TypeNotificationBars['notificationBars'];
 };
 ```
 
@@ -66,7 +66,7 @@ Write an unshared selection directly in its query, mutation or owning fragment w
 
 Use a fragment for an intentionally shared GraphQL selection. `CartFragment` is returned by queries and mutations; `ListedProductFragment` supplies the same product-card data in several contexts. Sharing can also occur between branches of one operation. Do not combine two selections merely because their fields happen to match today: they should represent a contract intended to evolve together.
 
-Fragments have a second useful role: providing named generated types for components and helpers. `ListedOrderFragment`, the navigation fragments and `TransportWithAvailablePaymentsFragment` serve this purpose even when they have only one direct GraphQL spread. Keep these contracts rather than replacing straightforward imports with handwritten aliases and nested `NonNullable` or `Extract` expressions. Count both GraphQL reuse and type consumers when assessing a fragment.
+Fragments have a second useful role: providing named generated types for components and helpers. `ListedOrderFragment` and the navigation fragments serve this purpose even when they have only one direct GraphQL spread. `TransportWithAvailablePaymentsFragment` provides both a named type and a shared selection. Keep these contracts rather than replacing straightforward imports with handwritten aliases and nested `NonNullable` or `Extract` expressions. Count both GraphQL reuse and type consumers when assessing a fragment, including consumers incorrectly typed with schema object types.
 
 A single-use fragment can also improve readability when a substantial, cohesive selection makes its parent easier to understand. For example, `CartModificationsFragment` groups cart-change messages and `TransportWithAvailablePaymentsAndStoresFragment` groups transport, payment and pickup data inside the large shared cart selection.
 
@@ -78,15 +78,19 @@ Preserve `__typename`, field aliases, arguments, directives and type conditions 
 
 ### Shared items, operation-specific lists
 
-Share a cohesive item contract without forcing every consumer to fetch the same surrounding list metadata. Autocomplete selects only `totalCount` and `edges` (with their `__typename` fields), while full search additionally needs filters, ordering and pagination. `SearchQuery` and `SearchProductsQuery` share these full-search requirements through `SearchResultsConnectionFragment`; autocomplete does not use it. Keep different requirements in their owning operations instead of adding optional fields to a handwritten response type.
+Share a cohesive item contract without forcing every consumer to fetch the same surrounding list metadata. Autocomplete selects only `totalCount` and `edges` (with their `__typename` fields), while full search additionally needs filters, ordering and pagination. `SearchQuery` and `SearchProductsQuery` share these full-search requirements through `SearchResultsConnectionFragment`; autocomplete does not use it. Components accepting results from either full-search operation use `TypeSearchResultsConnectionFragment`, while request execution and cache reads use the respective operation types. Keep different requirements in their owning operations instead of adding optional fields to a handwritten response type.
 
 Before splitting an item fragment, check all consumers, including analytics, cache updates and conditional UI. A field hidden by a compact card can still be required by its analytics event. Extract a smaller shared contract only when the consumers genuinely need different data and the saving justifies the additional component and type boundaries. Avoid both a universal fragment that accumulates unrelated requirements and tiny fragments for every group of fields.
 
-Removing a requested field can save more than response bytes when its resolver performs work lazily. Autocomplete no longer requests `productFilterOptions`, so the standard product connection does not invoke its filter-options closure. This does not eliminate product retrieval or result counting, and other search providers may compute facets as part of their search request. Measure before claiming a latency improvement.
+Omitting an unused field can save more than response bytes when its resolver performs work lazily. A request without `productFilterOptions` does not invoke the standard product connection's filter-options closure. This does not eliminate product retrieval or result counting, and other search providers may compute facets as part of their search request. Measure before claiming a latency improvement.
 
 ### Separate display, actions and page details
 
 `CompactProductFragment` is the shared display and analytics contract for autocomplete, favorites and last-visited cards. `ListedProductFragment` spreads it and adds the stock, unit and pickup fields used by full shopping cards. Shared display fields are maintained once. Both variants accept their generated fragment types; compact cards do not initialize cart or wishlist/comparison action hooks. Select the card with `cardVariant="compact"`, independently of the slider's layout `variant`. Compact configuration cannot enable purchase controls without the full data contract.
+
+Compact configuration explicitly forbids `addToCart`, `storeAvailability` and `productListButtons`, including when configuration is passed through a variable or preset. Use `cardVariant="full"` with `ListedProductFragment` data when a project needs these controls; do not bypass the type check with a cast.
+
+GTM events for compact cards use the fields selected by `CompactProductFragment`. When extending project analytics, include any required extra fields in this fragment as well as in the mapper, and verify events from autocomplete and favorites. A check such as `'stockQuantity' in product` can silently omit a custom analytics field when it is absent from the compact response, even if the mapper still compiles. Add only fields actually needed by those events, not the complete shopping-card selection.
 
 Reuse already-loaded data before introducing another request: product JSON-LD reads the initial five newest reviews from product detail; the review query remains available for pagination and sorting. Similarly, cart-change messages use a small named item contract while live cart items and cart mutation responses retain their complete state. A mutation that only invalidates a list can return identity, but that is not a general rule for all mutations.
 

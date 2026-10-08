@@ -155,9 +155,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}
                             product={product}
-                            productActionClassName="col-start-1 row-start-7 mt-2.5 w-full"
                             shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
-                            skeletonClassName="col-start-1 row-start-7 mt-2.5 w-full"
                         />
                     )
                 }

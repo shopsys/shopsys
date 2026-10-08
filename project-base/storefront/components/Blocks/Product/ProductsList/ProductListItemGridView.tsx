@@ -183,7 +183,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                     />
                 )}
 
-                {addToCart}
+                {addToCart && <div className="col-start-1 row-start-7 mt-2.5 w-full">{addToCart}</div>}
             </div>
         </li>
     );

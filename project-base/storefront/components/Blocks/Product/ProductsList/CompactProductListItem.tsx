@@ -22,7 +22,11 @@ export type CompactProductItemProps = Pick<
     visibleItemsConfig?: Pick<
         ProductVisibleItemsConfigType,
         'price' | 'flags' | 'discount' | 'priceFromWord' | 'reviews'
-    >;
+    > & {
+        addToCart?: never;
+        storeAvailability?: never;
+        productListButtons?: never;
+    };
     onClick?: (product: TypeCompactProductFragment, index: number) => void;
 };
 

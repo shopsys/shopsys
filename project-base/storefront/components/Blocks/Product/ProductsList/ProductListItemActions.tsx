@@ -50,9 +50,9 @@ type ProductListItemAddToCartProps = {
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
     product: TypeListedProductFragment;
-    productActionClassName: string;
+    productActionClassName?: string;
     shouldShowProductActionSkeleton: boolean;
-    skeletonClassName: string;
+    skeletonClassName?: string;
 };
 
 export const ProductListItemAddToCart: FC<ProductListItemAddToCartProps> = ({
