@@ -30,6 +30,9 @@ class DatabaseSearchingTest extends TestCase
             ['searchText' => 'foo%', 'querySearchStringQuery' => 'foo\%'],
             ['searchText' => 'fo?o%', 'querySearchStringQuery' => 'fo_o\%'],
             ['searchText' => '_foo', 'querySearchStringQuery' => '\_foo'],
+            ['searchText' => 'C:\temp', 'querySearchStringQuery' => 'C:\\\\temp'],
+            ['searchText' => 'foo\\', 'querySearchStringQuery' => 'foo\\\\'],
+            ['searchText' => 'foo\%', 'querySearchStringQuery' => 'foo\\\\\%'],
         ];
     }
 

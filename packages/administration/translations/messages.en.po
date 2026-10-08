@@ -1360,6 +1360,9 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
+msgid "Message text"
+msgstr ""
+
 msgid "Mixed"
 msgstr ""
 
@@ -2158,6 +2161,9 @@ msgstr ""
 msgid "Search by slug..."
 msgstr ""
 
+msgid "Search in transfer issue messages..."
+msgstr ""
+
 msgid "Search in transfers"
 msgstr ""
 
@@ -2504,6 +2510,9 @@ msgid "Tracking"
 msgstr ""
 
 msgid "Tracking saved."
+msgstr ""
+
+msgid "Transfer"
 msgstr ""
 
 msgid "Transfer issues"
