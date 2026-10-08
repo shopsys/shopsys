@@ -141,22 +141,22 @@ class CartRepository
             'DELETE FROM cart_items WHERE cart_id IN (
                 SELECT C.id
                 FROM carts C
-                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
+                WHERE C.last_activity_at <= :dateLimit AND customer_user_id IS NULL)',
             [
-                'timeLimit' => (new DatePoint())->modify('-' . $daysLimit . ' days'),
+                'dateLimit' => (new DatePoint())->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'dateLimit' => Types::DATE_IMMUTABLE,
             ]
         );
 
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
+            'DELETE FROM carts WHERE last_activity_at <= :dateLimit AND customer_user_id IS NULL',
             [
-                'timeLimit' => (new DatePoint())->modify('-' . $daysLimit . ' days'),
+                'dateLimit' => (new DatePoint())->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_MUTABLE,
+                'dateLimit' => Types::DATE_IMMUTABLE,
             ]
         );
     }
@@ -227,7 +227,6 @@ class CartFacade
         $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
         $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPriceWithVat());
         $cart->addItem($newCartItem);
-        $cart->setModifiedNow();
 
         $result = new AddProductResult($newCartItem, true, $quantity);
 

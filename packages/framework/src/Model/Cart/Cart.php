@@ -60,11 +60,14 @@ class Cart
     protected $items;
 
     /**
+     * Date of the last activity (read or modification) with the cart, stored without time
+     * so that the entity is written at most once a day instead of on every request
+     *
      * @var \DateTimeImmutable
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'datetime_immutable')]
-    protected $modifiedAt;
+    #[ORM\Column(type: 'date_immutable')]
+    protected $lastActivityAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
@@ -131,7 +134,7 @@ class Cart
         $this->cartIdentifier = $cartIdentifier;
         $this->customerUser = $customerUser;
         $this->items = new ArrayCollection();
-        $this->modifiedAt = new DatePoint();
+        $this->lastActivityAt = new DatePoint('today');
         $this->promoCodes = new ArrayCollection();
         $this->giftVouchers = new ArrayCollection();
     }
@@ -140,7 +143,7 @@ class Cart
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
-            $this->setModifiedNow();
+            $this->updateLastActivityDate();
         }
     }
 
@@ -152,7 +155,7 @@ class Cart
         foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
                 $this->items->removeElement($item);
-                $this->setModifiedNow();
+                $this->updateLastActivityDate();
 
                 return;
             }
@@ -302,17 +305,39 @@ class Cart
         return $this->cartIdentifier;
     }
 
-    public function setModifiedNow(): void
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getLastActivityAt()
     {
-        $this->modifiedAt = new DatePoint();
+        return $this->lastActivityAt;
     }
 
     /**
-     * @param \DateTimeImmutable $modifiedAt
+     * The date is replaced only when the day changes, because Doctrine compares DateTime objects by identity
+     * and a fresh instance would be flushed as a change even with the same value
+     *
+     * @return bool true when the stored date was moved to today
      */
-    public function setModifiedAt($modifiedAt): void
+    public function updateLastActivityDate(): bool
     {
-        $this->modifiedAt = $modifiedAt;
+        $today = new DatePoint('today');
+
+        if ($this->lastActivityAt->format('Y-m-d') === $today->format('Y-m-d')) {
+            return false;
+        }
+
+        $this->lastActivityAt = $today;
+
+        return true;
+    }
+
+    /**
+     * @param \DateTimeImmutable $lastActivityAt
+     */
+    public function setLastActivityAt($lastActivityAt): void
+    {
+        $this->lastActivityAt = $lastActivityAt;
     }
 
     /**
@@ -349,7 +374,7 @@ class Cart
     {
         if (!$this->promoCodes->contains($promoCode)) {
             $this->promoCodes->add($promoCode);
-            $this->setModifiedNow();
+            $this->updateLastActivityDate();
         }
     }
 
@@ -358,7 +383,7 @@ class Cart
         foreach ($this->promoCodes as $promoCode) {
             if ($promoCode->getId() === $promoCodeId) {
                 $this->promoCodes->removeElement($promoCode);
-                $this->setModifiedNow();
+                $this->updateLastActivityDate();
 
                 return;
             }
@@ -389,7 +414,7 @@ class Cart
     {
         if (!$this->giftVouchers->contains($giftVoucher)) {
             $this->giftVouchers->add($giftVoucher);
-            $this->setModifiedNow();
+            $this->updateLastActivityDate();
         }
     }
 
@@ -398,7 +423,7 @@ class Cart
         foreach ($this->giftVouchers as $giftVoucher) {
             if ($giftVoucher->getId() === $giftVoucherId) {
                 $this->giftVouchers->removeElement($giftVoucher);
-                $this->setModifiedNow();
+                $this->updateLastActivityDate();
 
                 return;
             }
@@ -422,7 +447,7 @@ class Cart
         $this->transport = null;
         $this->transportWatchedPrice = null;
         $this->pickupPlaceIdentifier = null;
-        $this->setModifiedNow();
+        $this->updateLastActivityDate();
     }
 
     public function editCartTransport(CartTransportData $cartTransportData): void
@@ -430,7 +455,7 @@ class Cart
         $this->transport = $cartTransportData->transport;
         $this->transportWatchedPrice = $cartTransportData->watchedPrice;
         $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
-        $this->setModifiedNow();
+        $this->updateLastActivityDate();
     }
 
     public function editCartPayment(CartPaymentData $cartPaymentData): void
@@ -438,7 +463,7 @@ class Cart
         $this->payment = $cartPaymentData->payment;
         $this->paymentWatchedPrice = $cartPaymentData->watchedPrice;
         $this->paymentGoPayBankSwift = $cartPaymentData->goPayBankSwift;
-        $this->setModifiedNow();
+        $this->updateLastActivityDate();
     }
 
     public function unsetCartPayment(): void
@@ -446,7 +471,7 @@ class Cart
         $this->payment = null;
         $this->paymentWatchedPrice = null;
         $this->paymentGoPayBankSwift = null;
-        $this->setModifiedNow();
+        $this->updateLastActivityDate();
     }
 
     /**
@@ -551,7 +576,7 @@ class Cart
     {
         $this->customerUser = $customerUser;
         $this->cartIdentifier = '';
-        $this->setModifiedNow();
+        $this->updateLastActivityDate();
     }
 
     /**

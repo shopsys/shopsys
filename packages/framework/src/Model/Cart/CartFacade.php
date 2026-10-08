@@ -62,6 +62,7 @@ class CartFacade
 
                 $productCartItem->changeQuantity($newQuantity);
                 $productCartItem->setAddedAtToNow();
+                $cart->updateLastActivityDate();
                 $result = new AddProductResult($productCartItem, false, $newQuantity, $notOnStockQuantity);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();
@@ -81,7 +82,6 @@ class CartFacade
 
         $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPrice()->getPriceWithVat(), CartItemTypeEnum::TYPE_PRODUCT);
         $cart->addItem($newCartItem);
-        $cart->setModifiedNow();
 
         $result = new AddProductResult($newCartItem, true, $quantity, $notOnStockQuantity);
 
@@ -104,24 +104,30 @@ class CartFacade
         $this->em->flush();
     }
 
+    /**
+     * Every read of the cart counts as activity, so that carts the customer keeps using are not deleted as old
+     */
     public function findCartByCustomerUserIdentifier(
         CustomerUserIdentifier $customerUserIdentifier,
     ): ?Cart {
-        return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+
+        if ($cart !== null && $cart->updateLastActivityDate()) {
+            $this->em->flush();
+        }
+
+        return $cart;
     }
 
     public function getCartByCustomerUserIdentifierCreateIfNotExists(
         CustomerUserIdentifier $customerUserIdentifier,
     ): Cart {
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+        $cart = $this->findCartByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart === null) {
             $cart = $this->cartFactory->create($customerUserIdentifier);
 
             $this->em->persist($cart);
-            $this->em->flush();
-        } else {
-            $cart->setModifiedNow();
             $this->em->flush();
         }
 
@@ -138,7 +144,7 @@ class CartFacade
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartIdentifier);
 
-        return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+        return $this->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
     public function removeItemFromExistingCartByUuid(string $cartItemUuid, Cart $cart): Cart
@@ -165,7 +171,7 @@ class CartFacade
 
         $cartItem->setAdditionalServices($additionalServices);
         $cartItem->setWatchedAdditionalServicePrices($this->calculateAdditionalServicesWatchedPrices($cartItem));
-        $cart->setModifiedNow();
+        $cart->updateLastActivityDate();
 
         $this->em->flush();
 
