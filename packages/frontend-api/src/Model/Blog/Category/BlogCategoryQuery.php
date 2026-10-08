@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Blog\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundUserError;
@@ -48,7 +49,7 @@ class BlogCategoryQuery extends AbstractQuery
         try {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
-                'front_blogcategory_detail',
+                BlogCategoryDetailFriendlyUrlDataProvider::ROUTE_NAME,
                 $urlSlug,
             );
 

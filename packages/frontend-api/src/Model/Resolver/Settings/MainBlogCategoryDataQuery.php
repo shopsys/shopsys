@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
@@ -35,7 +36,7 @@ class MainBlogCategoryDataQuery extends AbstractQuery
             $mainBlogCategoryId = $mainBlogCategory->getId();
             $mainBlogCategoryData->mainBlogCategoryName = $mainBlogCategory->getName($this->domain->getLocale());
             $mainBlogCategoryData->mainBlogCategoryUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(
-                'front_blogcategory_detail',
+                BlogCategoryDetailFriendlyUrlDataProvider::ROUTE_NAME,
                 $mainBlogCategoryId,
             );
             $mainBlogCategoryData->mainBlogCategoryMainImage = $this->imagesQuery->mainImageByEntityIdPromiseQuery(
