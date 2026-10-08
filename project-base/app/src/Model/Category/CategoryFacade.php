@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  * @method \App\Model\Category\Category create(\App\Model\Category\CategoryData $categoryData)
  * @method \App\Model\Category\Category edit(int $categoryId, \App\Model\Category\CategoryData $categoryData)
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+ * @method array<int, \App\Model\Category\Category[]> getVisibleCategoriesInPathsFromRootOnDomainIndexedByCategoryId(\App\Model\Category\Category[] $categories, int $domainId)
  */
 class CategoryFacade extends BaseCategoryFacade
 {
