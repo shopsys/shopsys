@@ -76,6 +76,22 @@ class FriendlyUrlSlugBatchLoader
      */
     protected function loadSlugs(array $entityIds, string $routeName): Promise
     {
+        $slugsByEntityId = $this->getSlugsIndexedByEntityId($entityIds, $routeName);
+        $slugs = [];
+
+        foreach ($entityIds as $entityId) {
+            $slugs[] = $slugsByEntityId[$entityId];
+        }
+
+        return $this->promiseAdapter->all($slugs);
+    }
+
+    /**
+     * @param int[] $entityIds
+     * @return array<int, string>
+     */
+    public function getSlugsIndexedByEntityId(array $entityIds, string $routeName): array
+    {
         $domainId = $this->domain->getId();
         $slugsByEntityId = [];
         $missingEntityIds = [];
@@ -85,7 +101,7 @@ class FriendlyUrlSlugBatchLoader
             $cachedSlug = $this->mainFriendlyUrlSlugCache->get($cacheKey, fn () => null);
 
             if ($cachedSlug !== null) {
-                $slugsByEntityId[$entityId] = $cachedSlug;
+                $slugsByEntityId[$entityId] = '/' . $cachedSlug;
             } else {
                 $missingEntityIds[] = $entityId;
             }
@@ -106,7 +122,7 @@ class FriendlyUrlSlugBatchLoader
                 }
 
                 $slug = $friendlyUrls[$entityId]->getSlug();
-                $slugsByEntityId[$entityId] = $slug;
+                $slugsByEntityId[$entityId] = '/' . $slug;
 
                 $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey($routeName, $domainId, $entityId);
                 $this->mainFriendlyUrlSlugCache->delete($cacheKey);
@@ -114,12 +130,6 @@ class FriendlyUrlSlugBatchLoader
             }
         }
 
-        $slugs = [];
-
-        foreach ($entityIds as $entityId) {
-            $slugs[] = '/' . $slugsByEntityId[$entityId];
-        }
-
-        return $this->promiseAdapter->all($slugs);
+        return $slugsByEntityId;
     }
 }
