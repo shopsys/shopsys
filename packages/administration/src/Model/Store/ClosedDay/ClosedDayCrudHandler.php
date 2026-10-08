@@ -36,7 +36,7 @@ class ClosedDayCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createData(): object
+    public function createData(): ClosedDayData
     {
         $closedDayData = $this->closedDayDataFactory->create();
         $closedDayData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -59,7 +59,7 @@ class ClosedDayCrudHandler implements CrudHandlerInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function createDataFromEntity(Presentable $entity): object
+    public function createDataFromEntity(Presentable $entity): ClosedDayData
     {
         Assert::isInstanceOf($entity, ClosedDay::class);
 
