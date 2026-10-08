@@ -74,14 +74,6 @@ class FriendlyUrlSlugBatchLoader
     /**
      * @param int[] $entityIds
      */
-    public function loadProductSlugs(array $entityIds): Promise
-    {
-        return $this->loadSlugs($entityIds, 'front_product_detail');
-    }
-
-    /**
-     * @param int[] $entityIds
-     */
     protected function loadSlugs(array $entityIds, string $routeName): Promise
     {
         $domainId = $this->domain->getId();
