@@ -8,6 +8,7 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\BooleanDataTypeFormatter;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\CollectionChangesFormatter;
+use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\DataTypeFormatterRegistry;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\DateTimeDataTypeFormatter;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\MoneyDataTypeFormatter;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter;
@@ -29,12 +30,16 @@ class ResolvedChangesFormatterTest extends TestCase
             ->method('formatDateTime')
             ->willReturnOnConsecutiveCalls('May 1, 2026, 10:00:00 AM', 'May 2, 2026, 11:00:00 AM');
 
-        $this->resolvedChangesFormatter = new ResolvedChangesFormatter(
-            new CollectionChangesFormatter(),
+        $dataTypeFormatterRegistry = new DataTypeFormatterRegistry([
             new ScalarDataTypeFormatter(),
             new MoneyDataTypeFormatter(),
             new DateTimeDataTypeFormatter($dateTimeFormatterExtension),
             new BooleanDataTypeFormatter(),
+        ]);
+
+        $this->resolvedChangesFormatter = new ResolvedChangesFormatter(
+            new CollectionChangesFormatter(),
+            $dataTypeFormatterRegistry,
         );
     }
 
