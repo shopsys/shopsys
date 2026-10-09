@@ -6,6 +6,7 @@ namespace App\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
 use Override;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -26,6 +27,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method void setTranslations(\App\Model\Transport\TransportData $transportData)
  */
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
 class Transport extends BaseTransport
