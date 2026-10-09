@@ -6,17 +6,26 @@ export default class CustomerRoleGroupForm {
         const $allRolesCheckbox = $container.find('[data-scope="all"] .js-roles-permission-checkbox');
         const $individualRolesCheckboxes = $container.find('[data-scope="individual"] .js-roles-permission-checkbox');
 
-        if ($allRolesCheckbox.length === 0) {
+        if ($allRolesCheckbox.length === 0 || $individualRolesCheckboxes.length === 0) {
             return;
         }
 
-        $allRolesCheckbox.on('change', function () {
-            if ($(this).is(':checked')) {
-                $individualRolesCheckboxes.prop('checked', false).prop('disabled', true);
-            } else {
-                $individualRolesCheckboxes.prop('disabled', false);
+        const syncIndividualRolesWithAllRoles = () => {
+            $individualRolesCheckboxes.prop('checked', $allRolesCheckbox.is(':checked'));
+        };
+
+        const uncheckAllRolesWhenIndividualRoleIsUnchecked = event => {
+            if (!$(event.target).is(':checked')) {
+                $allRolesCheckbox.prop('checked', false);
             }
-        });
+        };
+
+        $allRolesCheckbox.on('change', syncIndividualRolesWithAllRoles);
+        $individualRolesCheckboxes.on('change', uncheckAllRolesWhenIndividualRoleIsUnchecked);
+
+        if ($allRolesCheckbox.is(':checked')) {
+            syncIndividualRolesWithAllRoles();
+        }
     }
 
     static init($container) {

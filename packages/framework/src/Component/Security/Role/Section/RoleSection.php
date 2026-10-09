@@ -11,6 +11,7 @@ final readonly class RoleSection
         private string $translatableName,
         private int $priority = 0,
         private ?string $icon = null,
+        private ?string $description = null,
     ) {
     }
 
@@ -32,5 +33,10 @@ final readonly class RoleSection
     public function getIcon(): ?string
     {
         return $this->icon;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 }

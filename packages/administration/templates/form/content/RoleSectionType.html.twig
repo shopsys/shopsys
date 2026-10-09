@@ -10,6 +10,9 @@
                     {{ ux_icon(section.icon, {'class': 'me-1 icon'}) }}
                 {% endif %}
                 {{ section.name }}
+                {% if section.description %}
+                    {{ include('@ShopsysAdministration/partial/info_icon.html.twig', { message: section.description, additionalClasses: 'ms-1' }) }}
+                {% endif %}
 
                 <span class="ms-auto">
                     {% if not form.vars.disabled %}
