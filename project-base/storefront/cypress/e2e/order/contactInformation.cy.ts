@@ -14,10 +14,13 @@ import {
     clickAddNewAddressButton,
     fillAndSaveNewDeliveryAddressInPopup,
 } from './orderSupport';
+import { logoutFromHeader } from 'e2e/authentication/authenticationSupport';
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
+    checkAndHideSuccessToast,
     checkFormLineError,
+    checkIsUserLoggedOut,
     checkUrl,
     clickOnLabel,
     getSnapshotIndexingFunction,
@@ -25,6 +28,7 @@ import {
     loseFocus,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
+    translations,
 } from 'support';
 import { TIDs } from 'tids';
 
@@ -173,11 +177,15 @@ describe('Contact Information Page Tests', () => {
         fillAndSaveNewDeliveryAddressInPopup(staticData.deliveryAddress);
         checkSelectedDeliveryAddress(staticData.deliveryAddress);
 
-        cy.logout();
+        // Checkout has no account menu; use the storefront logout that also clears contact data.
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        logoutFromHeader();
+        checkAndHideSuccessToast(translations.toast.success.loggedOut);
+        checkIsUserLoggedOut();
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(staticData.transport.czechPost.uuid);
         cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
-        cy.reloadAndWaitForStableAndInteractiveDOM();
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(5), 'empty contact information form after logout', {
             blackout: [{ tid: TIDs.order_summary_cart_item_image }, { tid: TIDs.footer_copyright }],
         });
