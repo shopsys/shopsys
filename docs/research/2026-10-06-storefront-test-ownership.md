@@ -50,44 +50,44 @@ rg --no-heading -o 'takeSnapshotAndCompare\(' project-base/storefront/cypress/e2
 Vitest discovery matches the `test.include` setting in `project-base/storefront/vitest.config.mjs`.
 
 | Vitest directory | Test files |
-|---|---:|
-| components | 118 |
-| utils | 110 |
-| gtm | 14 |
-| urql | 3 |
-| biome | 1 |
-| cypress | 1 |
-| Total | 247 |
+| ---------------- | ---------: |
+| components       |        118 |
+| utils            |        110 |
+| gtm              |         14 |
+| urql             |          3 |
+| biome            |          1 |
+| cypress          |          1 |
+| Total            |        247 |
 
 The `vitest/cypress` file tests a console-formatting helper; it does not run Cypress.
 The earlier 248-file result included the now-stashed deferred hook test and is not
 a verification of the current tree.
 
 | Cypress `e2e/` directory | Specs | Static `it` declarations | Snapshot call sites |
-|---|---:|---:|---:|
-| authentication | 2 | 9 | 5 |
-| b2bComplaints | 1 | 5 | 3 |
-| b2bUser | 3 | 14 | 7 |
-| cart | 4 | 26 | 32 |
-| comparison | 1 | 6 | 4 |
-| customerUsers | 1 | 6 | 4 |
-| deliveryOptions | 1 | 3 | 2 |
-| filterAndSort | 2 | 9 | 5 |
-| freeShipping | 1 | 2 | 3 |
-| giftVouchers | 1 | 6 | 3 |
-| giftWithProduct | 1 | 2 | 6 |
-| graphql | 1 | 2 | 0 |
-| limitedUser | 1 | 7 | 3 |
-| matrix | 1 | 1 | 1 |
-| order | 4 | 31 | 38 |
-| productLists | 2 | 6 | 0 |
-| seoCategory | 1 | 3 | 1 |
-| ssr | 1 | 12 | 0 |
-| stores | 1 | 1 | 2 |
-| transportAndPayment | 3 | 18 | 22 |
-| visits | 4 | 22 | 5 |
-| watchdog | 1 | 1 | 0 |
-| Total | 38 | 192 | 146 |
+| ------------------------ | ----: | -----------------------: | ------------------: |
+| authentication           |     2 |                        9 |                   5 |
+| b2bComplaints            |     1 |                        5 |                   3 |
+| b2bUser                  |     3 |                       14 |                   7 |
+| cart                     |     4 |                       26 |                  32 |
+| comparison               |     1 |                        6 |                   4 |
+| customerUsers            |     1 |                        6 |                   4 |
+| deliveryOptions          |     1 |                        3 |                   2 |
+| filterAndSort            |     2 |                        9 |                   5 |
+| freeShipping             |     1 |                        2 |                   3 |
+| giftVouchers             |     1 |                        6 |                   3 |
+| giftWithProduct          |     1 |                        2 |                   6 |
+| graphql                  |     1 |                        2 |                   0 |
+| limitedUser              |     1 |                        7 |                   3 |
+| matrix                   |     1 |                        1 |                   1 |
+| order                    |     4 |                       31 |                  38 |
+| productLists             |     2 |                        6 |                   0 |
+| seoCategory              |     1 |                        3 |                   1 |
+| ssr                      |     1 |                       12 |                   0 |
+| stores                   |     1 |                        1 |                   2 |
+| transportAndPayment      |     3 |                       18 |                  22 |
+| visits                   |     4 |                       22 |                   5 |
+| watchdog                 |     1 |                        1 |                   0 |
+| Total                    |    38 |                      192 |                 146 |
 
 Separate from E2E: `cypress/smokeTests/smokeTests.cy.ts:261` generates route/page
 cases dynamically. Its runtime count cannot be inferred from these `it` counts.
@@ -99,20 +99,20 @@ does not establish whether references are current.
 Paths in this section are relative to `project-base/storefront/`. Line numbers refer
 to the audited working tree. Decisions below are a backlog, not implemented repairs.
 
-| Scenario | Current fast coverage | Current Cypress protection / gap | Proposed decision |
-|---|---|---|---|
-| Login | `vitest/utils/auth/useLogin.test.tsx:100` checks mutation consequences with mocked mutation/store/navigation. | `cypress/e2e/authentication/login.cy.ts:22` checks refresh-cookie protection; `:40` login/logout/refresh and persisted state. | Keep complementary layers; a hook callback does not replace a real session. |
-| Login popup | `vitest/components/Blocks/Popup/LoginPopup.test.tsx:72` checks dialog semantics/focus, while form, focus trap and keypress hook are mocked. | Existing login/cart flows exercise real entry points; the unit test does not prove full focus containment or login submission. | Keep DOM semantics in RTL; identify any browser-specific gap before adding another flow/capture. |
-| Cart quantity | `vitest/components/Spinbox/SpinboxDebounce.test.tsx:30` covers timed batching; `vitest/utils/cart/useAddToCart.test.ts:99` covers mocked mutation/GTM direction. | `cypress/e2e/cart/cartPage.cy.ts:83` checks real request quantities and dataLayer events. Fast/slow cases at `:49` and `:118` capture matching visual endpoints. | Keep real mutation/analytics connection; assess consolidation of repeated captures and timing permutations after explicit result assertions. |
-| Repeat order | No repeat-operation assertion found in current Vitest content search; order presentation/validation tests do exist. | Six flows in `cypress/e2e/order/orderRepeat.cy.ts:21` onward assert cart URL + screenshot, not returned product identity/quantities. Helpers in `orderSupport.ts:327` and `:337` perform actions. | First pilot: explicit cart results. Do not replace real transfer/merge integration with a mocked hook or drop the six cases blindly. |
-| Checkout fields | `vitest/components/Pages/Order/ContactInformationFormContent.test.tsx:45` tests delivery-section presence, with child blocks/form hooks mocked. | `cypress/e2e/order/contactInformation.cy.ts:120` really reloads; logged-in case `:127` promises refresh but never reloads before capture. | Correct the intended browser scenario and assert retained field values; do not call component visibility coverage persistence coverage. |
-| Order creation | Client validation/field tests are narrower than server order creation. | `cypress/e2e/order/createOrder.cy.ts:45` and `:82` use identical steps and the same registered email despite different labels. | Clarify intended inputs; either distinguish the scenarios or consolidate genuine duplication. |
-| Price/parameter filters | `vitest/components/Blocks/Product/Filter/FilterGroupPrice.test.tsx:179` checks callback; `vitest/utils/queryParams/useUpdateFilter.updateFilterPrices.test.ts:82` checks query mapping. | `categoryDetailFilterAndSort.cy.ts:22` checks loose URL substrings and input persistence, not matching products. `:112` conditionally weakens checks when input is missing. `parameterFilter.cy.ts:60` says multiple parameters but selects one. | Keep real UI → URL → results/reload connection, strengthen expected results, keep input/serialization permutations in Vitest. |
-| Grid/list mode | `vitest/components/Blocks/Product/ProductsList/ProductListViewModeToggle.test.tsx:46` checks state/interaction against mocked cookie store. | `cypress/e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts:174` checks real listing, cookie, capture and reload. | Complementary; accessible state is not proof of persisted browser layout. |
-| Comparison remove/undo | `vitest/utils/productLists/useComparison.test.tsx:69` and `:92` exercise error/notification/focus behavior with mocked underlying product-list hook. | `cypress/e2e/comparison/productComparison.cy.ts:113` reorders/removes/undoes/reloads and checks product order. | Keep the assembled persistence flow; keep callback/error permutations low. |
-| Account/B2B/dialogs | `OrderItemProducts.test.tsx:27` covers image mapping/truncation, not actual layout. | `cypress/e2e/customerUsers/customerUsers.cy.ts:55` exercises dialog/API save; `:181` and `:220` exercise roles. `deliveryOptions/deliveryOptionsPopup.cy.ts:33` combines assertions and a targeted popup capture. | Prefer representative integrated/visual states; server authorization belongs to backend tests. A hidden button is not proof of enforcement. |
-| Deferred content | `vitest/components/Layout/Header/Navigation/DeferredNavigation.test.tsx:22` mocks the deferred hook; tests check wrapper/lazy fallback. | Capture helper scrolls; real `utils/useDeferredRender.ts:38` schedules timers/transitions. | Wrapper test is not scheduler coverage. Assess a focused scheduler test separately; preserve actual browser readiness. |
-| SSR and smoke | Existing SSR helpers/hydration unit tests test narrower boundaries. | `cypress/e2e/ssr/serverSideRendering.cy.ts:63` checks actual cookie/SSR/hydration; other cases inspect HTTP HTML. Smoke route/UUID branches have different error collection. | Do not move production SSR/HTTP contracts into jsdom without an equivalent integration harness. Audit smoke branch consistency separately. |
+| Scenario                | Current fast coverage                                                                                                                                                                   | Current Cypress protection / gap                                                                                                                                                                                                                 | Proposed decision                                                                                                                            |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Login                   | `vitest/utils/auth/useLogin.test.tsx:100` checks mutation consequences with mocked mutation/store/navigation.                                                                           | `cypress/e2e/authentication/login.cy.ts:22` checks refresh-cookie protection; `:40` login/logout/refresh and persisted state.                                                                                                                    | Keep complementary layers; a hook callback does not replace a real session.                                                                  |
+| Login popup             | `vitest/components/Blocks/Popup/LoginPopup.test.tsx:72` checks dialog semantics/focus, while form, focus trap and keypress hook are mocked.                                             | Existing login/cart flows exercise real entry points; the unit test does not prove full focus containment or login submission.                                                                                                                   | Keep DOM semantics in RTL; identify any browser-specific gap before adding another flow/capture.                                             |
+| Cart quantity           | `vitest/components/Spinbox/SpinboxDebounce.test.tsx:30` covers timed batching; `vitest/utils/cart/useAddToCart.test.ts:99` covers mocked mutation/GTM direction.                        | `cypress/e2e/cart/cartPage.cy.ts:83` checks real request quantities and dataLayer events. Fast/slow cases at `:49` and `:118` capture matching visual endpoints.                                                                                 | Keep real mutation/analytics connection; assess consolidation of repeated captures and timing permutations after explicit result assertions. |
+| Repeat order            | No repeat-operation assertion found in current Vitest content search; order presentation/validation tests do exist.                                                                     | Six flows in `cypress/e2e/order/orderRepeat.cy.ts:21` onward assert cart URL + screenshot, not returned product identity/quantities. Helpers in `orderSupport.ts:327` and `:337` perform actions.                                                | First pilot: explicit cart results. Do not replace real transfer/merge integration with a mocked hook or drop the six cases blindly.         |
+| Checkout fields         | `vitest/components/Pages/Order/ContactInformationFormContent.test.tsx:45` tests delivery-section presence, with child blocks/form hooks mocked.                                         | `cypress/e2e/order/contactInformation.cy.ts:120` really reloads; logged-in case `:127` promises refresh but never reloads before capture.                                                                                                        | Correct the intended browser scenario and assert retained field values; do not call component visibility coverage persistence coverage.      |
+| Order creation          | Client validation/field tests are narrower than server order creation.                                                                                                                  | `cypress/e2e/order/createOrder.cy.ts:45` and `:82` use identical steps and the same registered email despite different labels.                                                                                                                   | Clarify intended inputs; either distinguish the scenarios or consolidate genuine duplication.                                                |
+| Price/parameter filters | `vitest/components/Blocks/Product/Filter/FilterGroupPrice.test.tsx:179` checks callback; `vitest/utils/queryParams/useUpdateFilter.updateFilterPrices.test.ts:82` checks query mapping. | `categoryDetailFilterAndSort.cy.ts:22` checks loose URL substrings and input persistence, not matching products. `:112` conditionally weakens checks when input is missing. `parameterFilter.cy.ts:60` says multiple parameters but selects one. | Keep real UI → URL → results/reload connection, strengthen expected results, keep input/serialization permutations in Vitest.                |
+| Grid/list mode          | `vitest/components/Blocks/Product/ProductsList/ProductListViewModeToggle.test.tsx:46` checks state/interaction against mocked cookie store.                                             | `cypress/e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts:174` checks real listing, cookie, capture and reload.                                                                                                                               | Complementary; accessible state is not proof of persisted browser layout.                                                                    |
+| Comparison remove/undo  | `vitest/utils/productLists/useComparison.test.tsx:69` and `:92` exercise error/notification/focus behavior with mocked underlying product-list hook.                                    | `cypress/e2e/comparison/productComparison.cy.ts:113` reorders/removes/undoes/reloads and checks product order.                                                                                                                                   | Keep the assembled persistence flow; keep callback/error permutations low.                                                                   |
+| Account/B2B/dialogs     | `OrderItemProducts.test.tsx:27` covers image mapping/truncation, not actual layout.                                                                                                     | `cypress/e2e/customerUsers/customerUsers.cy.ts:55` exercises dialog/API save; `:181` and `:220` exercise roles. `deliveryOptions/deliveryOptionsPopup.cy.ts:33` combines assertions and a targeted popup capture.                                | Prefer representative integrated/visual states; server authorization belongs to backend tests. A hidden button is not proof of enforcement.  |
+| Deferred content        | `vitest/components/Layout/Header/Navigation/DeferredNavigation.test.tsx:22` mocks the deferred hook; tests check wrapper/lazy fallback.                                                 | Capture helper scrolls; real `utils/useDeferredRender.ts:38` schedules timers/transitions.                                                                                                                                                       | Wrapper test is not scheduler coverage. Assess a focused scheduler test separately; preserve actual browser readiness.                       |
+| SSR and smoke           | Existing SSR helpers/hydration unit tests test narrower boundaries.                                                                                                                     | `cypress/e2e/ssr/serverSideRendering.cy.ts:63` checks actual cookie/SSR/hydration; other cases inspect HTTP HTML. Smoke route/UUID branches have different error collection.                                                                     | Do not move production SSR/HTTP contracts into jsdom without an equivalent integration harness. Audit smoke branch consistency separately.   |
 
 Additional consolidation candidate: `cypress/e2e/matrix/matrixTest.cy.ts:19` and
 `cypress/e2e/visits/simpleVisitsWithScreenshots.cy.ts:24` capture the same homepage
@@ -145,13 +145,13 @@ than reference-generation mode. The skill update path points to `.agents`, not
 
 ## Ordered follow-up and acceptance evidence
 
-| Stage | Work | Evidence required before advancing |
-|---|---|---|
-| 1 — ownership and inventory | This audit and canonical skill rules | Static inventory, scenario examples, links/commands checked; policy applied to representative development requests. Done for this batch, not an exhaustive assertion review. |
-| 2 — repeat-order pilot | Trace expected products/quantities for list/detail, empty/merge/overlap cases; add direct outcome assertions, choose visual states separately | Targeted lower-layer checks where relevant; user-run Cypress regression showing cart results. No blanket screenshot regeneration. |
-| 3 — cart/filter/checkout | Fix title/action/assertion mismatches; assess timing permutations and repeated visual endpoints | Each removed case/capture mapped to a retained risk and verified replacement; preserve real API/session/analytics checks. |
-| 4 — capture reliability and review | Separate interaction/full-capture readiness; validate fonts/data/blackout wrappers; design label → candidates → review → regression workflow | Repeated same-commit CI captures plus intentional small icon/text/shift/dimension changes. Review actual comparisons, not historical viewer metrics. |
-| 5 — CI speed | Measure build/install/data prep/spec/artifact time and imbalance before choosing cache/sharding changes | Comparable before/after timings and unchanged meaningful coverage. Record retries separately; no promised speedup without measurement. |
+| Stage                              | Work                                                                                                                                          | Evidence required before advancing                                                                                                                                           |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 — ownership and inventory        | This audit and canonical skill rules                                                                                                          | Static inventory, scenario examples, links/commands checked; policy applied to representative development requests. Done for this batch, not an exhaustive assertion review. |
+| 2 — repeat-order pilot             | Trace expected products/quantities for list/detail, empty/merge/overlap cases; add direct outcome assertions, choose visual states separately | Targeted lower-layer checks where relevant; user-run Cypress regression showing cart results. No blanket screenshot regeneration.                                            |
+| 3 — cart/filter/checkout           | Fix title/action/assertion mismatches; assess timing permutations and repeated visual endpoints                                               | Each removed case/capture mapped to a retained risk and verified replacement; preserve real API/session/analytics checks.                                                    |
+| 4 — capture reliability and review | Separate interaction/full-capture readiness; validate fonts/data/blackout wrappers; design label → candidates → review → regression workflow  | Repeated same-commit CI captures plus intentional small icon/text/shift/dimension changes. Review actual comparisons, not historical viewer metrics.                         |
+| 5 — CI speed                       | Measure build/install/data prep/spec/artifact time and imbalance before choosing cache/sharding changes                                       | Comparable before/after timings and unchanged meaningful coverage. Record retries separately; no promised speedup without measurement.                                       |
 
 Open decisions: exact visual states to retain, backend coverage of repeat-order merge,
 intended registered/unregistered order inputs, current flake frequency and reproduction,
