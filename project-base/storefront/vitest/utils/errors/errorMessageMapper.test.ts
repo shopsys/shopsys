@@ -193,7 +193,6 @@ describe('getErrorMessage', () => {
             ['personal-data-hash-invalid', 'Invalid hash.'],
             ['personal-data-request-type-invalid', 'Invalid request type.'],
             ['product-not-found', 'Product not found.'],
-            ['product-price-missing', 'Product price is missing.'],
             ['register-by-order-is-not-possible', 'It was not possible to create register new user from the order'],
             ['store-not-found', 'Store not found.'],
             ['too-many-code-application-attempts', 'Too many attempts to apply a code. Try again later.'],

@@ -546,7 +546,6 @@
     "Product moved to position {{ position }} of {{ count }}_other": "Product moved to position {{ position }} of {{ count }}",
     "Product name": "Product name",
     "Product not found.": "Product not found.",
-    "Product price is missing.": "Product price is missing.",
     "Product quantity was adjusted to available stock ({{ quantity }})": "Product quantity was adjusted to available stock ({{ quantity }})",
     "Product reviews are not available.": "Product reviews are not available.",
     "Product variant": "Product variant",
