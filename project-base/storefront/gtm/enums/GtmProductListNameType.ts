@@ -9,6 +9,7 @@ export enum GtmProductListNameType {
     search_results = 'search results',
     homepage_recommended_products = 'Homepage - recommended products',
     cart = 'cart',
+    repeat_order = 'repeat order',
     product_comparison_page = 'product comparison page',
     product_detail = 'product detail',
     product_detail_related_products = 'product detail related products',
