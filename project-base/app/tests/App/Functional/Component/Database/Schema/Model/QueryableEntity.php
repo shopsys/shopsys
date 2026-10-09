@@ -50,15 +50,9 @@ final class QueryableEntity
 
     #[AsMcpColumn]
     #[ORM\Embedded(class: QueryableEmbeddable::class, columnPrefix: 'embedded_')]
-    private QueryableEmbeddable $embedded;
+    private ?QueryableEmbeddable $embedded = null;
 
     #[AsMcpColumn(exposed: false)]
     #[ORM\Embedded(class: QueryableEmbeddable::class, columnPrefix: 'hidden_embedded_')]
-    private QueryableEmbeddable $hiddenEmbedded;
-
-    public function __construct()
-    {
-        $this->embedded = new QueryableEmbeddable();
-        $this->hiddenEmbedded = new QueryableEmbeddable();
-    }
+    private ?QueryableEmbeddable $hiddenEmbedded = null;
 }
