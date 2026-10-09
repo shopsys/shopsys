@@ -11,6 +11,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -28,6 +29,7 @@ use SortDirection;
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation> getTranslations()
  */
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'payments')]
 #[ORM\Entity]
 #[EntityImage]

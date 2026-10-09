@@ -4,3 +4,16 @@
 
 {% block pre_title %}{{ 'Editing payment'|trans }}{% endblock %}
 {% block h1 %}{{ payment.name }}{% endblock %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'History'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            {{ component('Admin:EntityLogTimeline', { entity: payment }) }}
+        </div>
+    </div>
+{% endblock %}
