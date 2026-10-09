@@ -509,12 +509,20 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[] $administratorRoles
      */
-    public function addRoles(array $administratorRoles): void
+    public function setRoles($administratorRoles): void
     {
         $this->setRolesChangedNow();
 
-        foreach ($administratorRoles as $role) {
-            $this->roles->add($role);
+        foreach ($this->roles->toArray() as $currentRole) {
+            if (!in_array($currentRole, $administratorRoles, true)) {
+                $this->roles->removeElement($currentRole);
+            }
+        }
+
+        foreach ($administratorRoles as $administratorRole) {
+            if (!$this->roles->contains($administratorRole)) {
+                $this->roles->add($administratorRole);
+            }
         }
     }
 
