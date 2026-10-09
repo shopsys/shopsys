@@ -67,7 +67,7 @@ class OrderInputPreloaderFacadeTest extends TestCase
     {
         $domainConfigStub = $this->createStub(DomainConfig::class);
         $domainConfigStub->method('getId')->willReturn(1);
-        $orderInput = new OrderInputFactory()->create($domainConfigStub);
+        $orderInput = new OrderInputFactory($this->createStub(OrderInputPreloaderFacade::class))->create($domainConfigStub);
 
         foreach ($productIds as $productId) {
             $productStub = $this->createStub(Product::class);
