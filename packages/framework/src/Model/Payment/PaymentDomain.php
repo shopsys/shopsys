@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'payment_domains')]
 #[ORM\UniqueConstraint(name: 'payment_domain', columns: ['payment_id', 'domain_id'])]
 #[ORM\Entity]
@@ -29,6 +33,7 @@ class PaymentDomain
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'domains')]
     protected $payment;
@@ -124,9 +129,23 @@ class PaymentDomain
     /**
      * @return int
      */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
     public function getDomainId()
     {
         return $this->domainId;
+    }
+
+    #[EntityLogIdentify]
+    public function getDomainIdentifier(): string
+    {
+        return (string)$this->domainId;
     }
 
     /**
