@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
@@ -23,6 +26,7 @@ use Symfony\Component\Clock\DatePoint;
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation> getTranslations()
  */
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'images')]
 #[ORM\Index(columns: ['entity_name', 'entity_id', 'type'])]
 #[ORM\Entity]
@@ -52,6 +56,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
      * @var string
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 100)]
     protected $entityName;
 
@@ -59,6 +64,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
      * @var int
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'integer')]
     protected $entityId;
 
@@ -222,6 +228,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         return $this->position;
     }
 
+    #[EntityLogIdentify]
     public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
