@@ -18,7 +18,7 @@ export type TypeOrderItemTypeEnum =
   | 'rounding'
   | 'transport';
 
-export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, number: string, creationDate: string, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, isAwaitingPayment: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', quantity: number, product:
+export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, number: string, creationDate: string, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, isAwaitingPayment: boolean, status: string, note: string | null, productItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, quantity: number, product:
       | { __typename: 'MainVariant', fullName: string, name: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, link: string, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
       | { __typename: 'RegularProduct', fullName: string, name: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, link: string, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
       | { __typename: 'Variant', fullName: string, name: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, isCurrentlyOutOfStock: boolean, link: string, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
