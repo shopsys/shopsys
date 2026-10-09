@@ -29,3 +29,10 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ App\\Kernel::configureRoutesAdministration$#'
             path: src/Kernel.php
+        # test entity read only through its Doctrine metadata, the constructor keeps the embeddables written;
+        # unmatched in the monorepo, where dynamic "new $className()" calls in the analysed packages mark every constructor as used
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Tests\\App\\Functional\\Component\\Database\\Schema\\Model\\QueryableEntity::__construct$#'
+            path: tests/App/Functional/Component/Database/Schema/Model/QueryableEntity.php
+            reportUnmatched: false
