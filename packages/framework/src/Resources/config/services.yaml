@@ -919,8 +919,14 @@ services:
         arguments:
             - '@doctrine.dbal.default_connection'
             - '@doctrine.orm.default_configuration'
+            - '@doctrine.orm.entity_logging.event_manager'
         class: Doctrine\ORM\EntityManager
         public: true
+
+    # own event manager, the listeners of the application must not process the flush of entity logs
+    # (e.g. Gedmo sortable would apply its pending position changes twice)
+    doctrine.orm.entity_logging.event_manager:
+        class: Doctrine\Common\EventManager
 
     doctrine.orm.entity_manager.abstract:
         public: true
