@@ -794,6 +794,14 @@ jobs:
                     path: ./snapshots
                     pattern: cypress-snapshots-*
                     merge-multiple: true
+            -   name: Set up Node for snapshot comparison
+                uses: actions/setup-node@v7
+                with:
+                    node-version: '24.14.0'
+                    package-manager-cache: false
+            -   name: Install locked snapshot comparison dependencies without Cypress binary
+                working-directory: project-base/storefront/cypress
+                run: npm ci --ignore-scripts --no-audit --no-fund
             -   name: Prepare PNG-only snapshot commit
                 run: |
                     set -euo pipefail
@@ -804,8 +812,22 @@ jobs:
                     while IFS= read -r -d '' SNAPSHOT; do
                         RELATIVE_PATH="${SNAPSHOT#snapshots/}"
                         TARGET="project-base/storefront/cypress/snapshots/${RELATIVE_PATH}"
+                        if [ -f "$TARGET" ]; then
+                            # Preserve the original bytes for antialiasing-only changes; no color or area tolerance.
+                            if node project-base/storefront/cypress/node_modules/pixelmatch/bin/pixelmatch "$TARGET" "$SNAPSHOT" '' 0 false; then
+                                echo "Keeping reference: $RELATIVE_PATH"
+                                continue
+                            else
+                                COMPARISON_STATUS=$?
+                                case "$COMPARISON_STATUS" in
+                                    65|66) ;; # Different dimensions or at least one non-antialiased pixel.
+                                    *) echo "::error::Snapshot comparison failed for $RELATIVE_PATH"; exit "$COMPARISON_STATUS" ;;
+                                esac
+                            fi
+                        fi
                         mkdir -p "$(dirname "$TARGET")"
                         cp -- "$SNAPSHOT" "$TARGET"
+                        echo "Updating reference: $RELATIVE_PATH"
                     done < <(find snapshots/e2e -type f -name '*.png' -print0)
                     git add -- 'project-base/storefront/cypress/snapshots/e2e/**/*.png'
                     if ! git diff --cached --quiet; then
