@@ -114,7 +114,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
-    protected $deliveryDaysOfWeek;
+    protected $deliveryDaysOfWeek {
+        set {
+            sort($value);
+            $this->deliveryDaysOfWeek = $value;
+        }
+    }
 
     /**
      * @var bool
