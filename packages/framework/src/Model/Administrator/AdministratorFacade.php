@@ -43,9 +43,9 @@ class AdministratorFacade
         $administrator = $this->administratorRepository->getById($administratorId);
         $administrator->edit($administratorData);
 
-        $this->em->flush();
-
         $this->administratorRoleFacade->refreshAdministratorRoles($administrator, $administratorData->roles);
+
+        $this->em->flush();
 
         return $administrator;
     }

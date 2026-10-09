@@ -9,6 +9,9 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -17,6 +20,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[AsMcpInheritedColumn(fieldName: 'id')]
 #[AsMcpInheritedColumn(fieldName: 'locale')]
+#[LoggableChild]
 #[ORM\Table(name: 'payment_translations')]
 #[ORM\Entity]
 class PaymentTranslation extends AbstractTranslation
@@ -25,6 +29,7 @@ class PaymentTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[Prezent\Translatable(targetEntity: Payment::class)]
     #[Override]
     protected $translatable;
@@ -60,6 +65,13 @@ class PaymentTranslation extends AbstractTranslation
         set {
             $this->instructions = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
         }
+    }
+
+    #[EntityLogIdentify]
+    #[Override]
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 
     /**

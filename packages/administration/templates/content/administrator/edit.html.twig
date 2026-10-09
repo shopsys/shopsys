@@ -51,4 +51,13 @@
             </div>
         </div>
     {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'History'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            {{ component('Admin:EntityLogTimeline', { entity: administrator }) }}
+        </div>
+    </div>
 {% endblock %}

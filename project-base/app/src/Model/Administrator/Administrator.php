@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Administrator;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator as BaseAdministrator;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -14,6 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method void setData(\App\Model\Administrator\AdministratorData $administratorData)
  */
 #[AsMcpTable]
+#[Loggable(Loggable::STRATEGY_EXCLUDE_ALL)]
 #[ORM\Table(name: 'administrators')]
 #[ORM\Index(columns: ['username'])]
 #[ORM\Entity]

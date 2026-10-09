@@ -6,11 +6,15 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'billing_addresses')]
 #[ORM\Entity]
 class BillingAddress
@@ -28,6 +32,7 @@ class BillingAddress
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'billingAddresses')]
     protected $customer;
@@ -238,5 +243,15 @@ class BillingAddress
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    #[EntityLogIdentify]
+    public function getEntityLogIdentifier(): string
+    {
+        if ($this->companyCustomer) {
+            return (string)$this->companyName;
+        }
+
+        return implode(', ', array_filter([$this->street, $this->city]));
     }
 }

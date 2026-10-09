@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress as BaseDeliveryAddress;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -14,6 +15,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method __construct(\App\Model\Customer\DeliveryAddressData $deliveryAddressData)
  */
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'delivery_addresses')]
 #[ORM\Entity]
 class DeliveryAddress extends BaseDeliveryAddress

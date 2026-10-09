@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -73,6 +74,7 @@ class Vat implements DomainSeparatedEntityInterface
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getName()
     {
         return $this->name;

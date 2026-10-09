@@ -4,16 +4,28 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 
-class ScalarDataTypeFormatter extends AbstractChangeSetFormatter
+use Override;
+
+/**
+ * Fallback for all data types without a dedicated formatter (strings, numbers, related entities, arrays)
+ */
+class ScalarDataTypeFormatter implements DataTypeFormatterInterface
 {
-    /**
-     * @param array{oldReadableValue: mixed, newReadableValue: mixed, oldValue: mixed, newValue: mixed} $changes
-     */
-    public function formatChanges(array $changes): string
+    #[Override]
+    public function supports(string $dataType): bool
     {
-        return $this->formatFromToChanges(
-            $changes['oldReadableValue'] ?: t('empty value'),
-            $changes['newReadableValue'] ?: t('empty value'),
-        );
+        return true;
+    }
+
+    #[Override]
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
+    #[Override]
+    public function formatValue(mixed $readableValue, mixed $value): string
+    {
+        return (string)($readableValue ?: t('empty value'));
     }
 }

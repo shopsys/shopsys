@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'transport_domains')]
 #[ORM\UniqueConstraint(name: 'transport_domain', columns: ['transport_id', 'domain_id'])]
 #[ORM\Entity]
@@ -28,6 +32,7 @@ class TransportDomain
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Transport::class, inversedBy: 'domains')]
     protected $transport;
@@ -65,9 +70,23 @@ class TransportDomain
     /**
      * @return int
      */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
     public function getDomainId()
     {
         return $this->domainId;
+    }
+
+    #[EntityLogIdentify]
+    public function getDomainIdentifier(): string
+    {
+        return (string)$this->domainId;
     }
 
     public function setEnabled(bool $enabled): void

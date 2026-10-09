@@ -11,6 +11,9 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Log;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
@@ -26,6 +29,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AsMcpTable]
+#[Loggable(Loggable::STRATEGY_EXCLUDE_ALL)]
 #[ORM\Table(name: 'administrators')]
 #[ORM\Index(columns: ['username'])]
 #[ORM\Entity]
@@ -54,6 +58,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string
      */
     #[AsMcpColumn]
+    #[Log]
     #[ORM\Column(type: 'string', length: 100, unique: true)]
     protected $username;
 
@@ -61,6 +66,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string
      */
     #[AsMcpColumn]
+    #[Log]
     #[ORM\Column(type: 'string', length: 100)]
     protected $realName;
 
@@ -87,6 +93,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string
      */
     #[AsMcpColumn]
+    #[Log]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     protected $email;
 
@@ -106,6 +113,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole>
      */
+    #[Log]
     #[ORM\OneToMany(targetEntity: AdministratorRole::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
     protected $roles;
 
@@ -134,6 +142,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string|null
      */
     #[AsMcpColumn]
+    #[Log]
     #[ORM\Column(type: 'string', length: 32, nullable: true)]
     protected $twoFactorAuthenticationType;
 
@@ -155,6 +164,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
      */
     #[AsMcpColumn]
+    #[Log]
     #[ORM\JoinColumn(name: 'role_group_id', referencedColumnName: 'id', nullable: true)]
     #[ORM\ManyToOne(targetEntity: AdministratorRoleGroup::class)]
     protected $roleGroup;
@@ -163,6 +173,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var int[]|null
      */
     #[AsMcpColumn]
+    #[Log]
     #[ORM\Column(type: 'simple_array', nullable: true)]
     protected $displayOnlyDomainIds;
 
@@ -251,6 +262,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getRealName()
     {
         return $this->realName;
@@ -509,12 +521,20 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[] $administratorRoles
      */
-    public function addRoles(array $administratorRoles): void
+    public function setRoles($administratorRoles): void
     {
         $this->setRolesChangedNow();
 
-        foreach ($administratorRoles as $role) {
-            $this->roles->add($role);
+        foreach ($this->roles->toArray() as $currentRole) {
+            if (!in_array($currentRole, $administratorRoles, true)) {
+                $this->roles->removeElement($currentRole);
+            }
+        }
+
+        foreach ($administratorRoles as $administratorRole) {
+            if (!$this->roles->contains($administratorRole)) {
+                $this->roles->add($administratorRole);
+            }
         }
     }
 

@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Withdrawal;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -12,6 +16,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use Symfony\Component\Clock\DatePoint;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'withdrawal_requests')]
 #[ORM\Entity]
 class WithdrawalRequest
@@ -29,6 +34,7 @@ class WithdrawalRequest
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(name: 'order_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[ORM\OneToOne(targetEntity: Order::class)]
     protected $order;
@@ -58,6 +64,7 @@ class WithdrawalRequest
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $telephonePrefixCountryCode;
 
@@ -104,6 +111,7 @@ class WithdrawalRequest
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 64, unique: true, nullable: true)]
     protected $confirmationHash;
 
@@ -152,6 +160,12 @@ class WithdrawalRequest
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    #[EntityLogIdentify]
+    public function getFullName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
     }
 
     /**

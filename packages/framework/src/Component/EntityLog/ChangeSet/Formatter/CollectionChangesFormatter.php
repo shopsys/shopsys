@@ -15,7 +15,7 @@ class CollectionChangesFormatter extends AbstractChangeSetFormatter
         $this->formatInsertedItems($changes['insertedItems'], $formattedCollectionChanges);
         $this->formatDeletedItems($changes['deletedItems'], $formattedCollectionChanges);
 
-        return implode(',<br> ', $formattedCollectionChanges);
+        return $this->formatIndentedList($formattedCollectionChanges);
     }
 
     /**

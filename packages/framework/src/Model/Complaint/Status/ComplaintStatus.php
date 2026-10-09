@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -91,6 +92,7 @@ class ComplaintStatus extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
+    #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     public function getName($locale = null)
     {
         return $this->translation($locale)->getName();

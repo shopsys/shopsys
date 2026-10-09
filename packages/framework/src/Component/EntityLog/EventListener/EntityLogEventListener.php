@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogNoteRegistry;
+use Shopsys\FrameworkBundle\Component\EntityLog\ParentResolver\EntityLogParentResolver;
 use Symfony\Contracts\Service\ResetInterface;
 use Throwable;
 
@@ -36,6 +37,7 @@ class EntityLogEventListener implements ResetInterface
         protected readonly ChangeSetResolver $changeSetResolver,
         protected readonly EntityLogFacade $entityLogFacade,
         protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
+        protected readonly EntityLogParentResolver $entityLogParentResolver,
     ) {
     }
 
@@ -88,7 +90,18 @@ class EntityLogEventListener implements ResetInterface
         }
 
         try {
-            $this->registerLog($entity, $loggableSetup, $action);
+            $parentEntityWithoutAssociation = null;
+
+            if ($loggableSetup->getParentPropertyName() === null && $this->entityLogParentResolver->supports($entity)) {
+                $parentEntityWithoutAssociation = $this->entityLogParentResolver->resolveParent($entity);
+
+                // a child of an entity that is not logged is not logged either (e.g. images of products)
+                if ($parentEntityWithoutAssociation === null || !$this->loggableEntityConfigFactory->getLoggableSetupByEntity($parentEntityWithoutAssociation)->isLoggable()) {
+                    return;
+                }
+            }
+
+            $this->registerLog($entity, $loggableSetup, $action, $parentEntityWithoutAssociation);
         } catch (Throwable $exception) {
             $this->monolog->error($exception->getMessage());
         }
@@ -98,6 +111,7 @@ class EntityLogEventListener implements ResetInterface
         object $entity,
         LoggableEntityConfig $loggableSetup,
         string $action,
+        ?object $parentEntityWithoutAssociation = null,
     ): void {
         $resolvedChangeSet = [];
 
@@ -109,7 +123,7 @@ class EntityLogEventListener implements ResetInterface
             }
         }
 
-        $this->logs[] = $this->entityLogFacade->createEntityLog($entity, $loggableSetup, $action, $resolvedChangeSet);
+        $this->logs[] = $this->entityLogFacade->createEntityLog($entity, $loggableSetup, $action, $resolvedChangeSet, $parentEntityWithoutAssociation);
     }
 
     protected function resolveUpdateChangeSet(object $entity): array

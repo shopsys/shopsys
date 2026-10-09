@@ -91,9 +91,14 @@ class ChangeSetResolver
     public function resolveChangesOnCollectionForEntity(array $scheduledCollections, object $entity): array
     {
         $resolvedChangedCollections = [];
+        $entityLoggableSetup = $this->loggableEntityConfigFactory->getLoggableSetupByEntity($entity);
 
         foreach ($scheduledCollections as $scheduledCollection) {
             if ($scheduledCollection->getOwner() !== $entity) {
+                continue;
+            }
+
+            if (!$entityLoggableSetup->isPropertyLoggable($scheduledCollection->getMapping()['fieldName'])) {
                 continue;
             }
 

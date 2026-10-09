@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -128,6 +129,7 @@ class GoPayPaymentMethod implements DomainSeparatedEntityInterface
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getName()
     {
         return $this->name;
