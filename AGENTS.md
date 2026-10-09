@@ -38,7 +38,8 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 > ships its own `AGENTS.md`, `CLAUDE.md`, and `.agents/skills` to downstream projects (the split publishes
 > the `project-base/` subfolder as the standalone `shopsys/project-base` repo). Those are the **canonical,
 > project-perspective** copies of the shared skills (codebase-locator/analyzer/pattern-finder,
-> research-codebase, create-plan, implement-plan, test-writing, shopsys-architecture, shopsys-commands).
+> research-codebase, create-plan, implement-plan, test-writing, backend-tests, storefront-tests,
+> shopsys-architecture, shopsys-commands).
 > They say package-first does _not_ apply and treat packages as read-only `vendor/shopsys/` — the opposite
 > of the rules here. During monorepo development, follow **this** root file; the same-named skills in
 > `.agents/skills/` are thin stubs that read the project-base canonical and apply one shared delta,
@@ -49,6 +50,7 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 - **Package-first** (above): new business logic → `/packages/`; only config and rare extensions → `/project-base/`.
 - **Commands run in Docker**: PHP/Composer/Phing and storefront/pnpm run **inside containers**; git/`make`/system commands on the **host**. **Never start or stop containers yourself** — if they aren't running, ask the user. → `.agents/skills/shopsys-commands/SKILL.md`
 - **After GraphQL changes, run `make generate-schema`** to sync backend and storefront (CI fails if they drift).
+- **Test coverage decision**: for every implementation change, follow `.agents/skills/test-writing/SKILL.md` to name the changed behavior, inspect existing coverage and choose which tests to add, extend or reuse, or why none are needed. For storefront changes apply the scenario ownership rules in `storefront-tests`; include actual verification and remaining gaps in the handoff. Use test-first for reproducible bugs and well-defined logic when practical; this does not authorize running Cypress or preflight.
 - **Coding conventions** — reuse-first (DRY/KISS), comments explain _why_, docblocks for non-obvious types, and per-folder visibility/typing:
     - `project-base/` and `utils/`: `final`, `private`, typehints & return types everywhere.
     - `packages/`: `protected` (not `private`), no typehints/return types in entities & data objects, no `final` (except FormType, which requires it) — because these are extended in project-base.
@@ -69,9 +71,11 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 - **Commands** (build, DB, tests, checks, schema, Mutagen) → `.agents/skills/shopsys-commands/SKILL.md`
 - **Coding conventions & docblocks** → `.agents/skills/coding-conventions/SKILL.md`
 - **Find where code lives / how it works / example patterns** → `.agents/skills/codebase-locator`, `codebase-analyzer`, `codebase-pattern-finder`
-- **Deep research · plan · implement · tests** → `.agents/skills/research-codebase`, `create-plan`, `implement-plan`, `test-writing`
+- **Deep research · plan · implement** → `.agents/skills/research-codebase`, `create-plan`, `implement-plan`
+- **Tests** — choose by product domain via `.agents/skills/test-writing/SKILL.md`: backend **including administration and Jest** → `.agents/skills/backend-tests/SKILL.md`; Next.js storefront **Vitest and Cypress routing** → `.agents/skills/storefront-tests/SKILL.md`. Cypress-specific work always uses `cypress-tests`; do not apply the Cypress toolkit to Vitest, Jest or PHPUnit.
 - **Reading project-authored skills in the monorepo** (package-first + path remap) → `.agents/skills/monorepo-vs-project/SKILL.md`
 - **Admin CRUD controller for an entity** (controller, handler, datagrid, form, actions, extensions) → `.agents/skills/create-crud-controller/SKILL.md`
 - **Commit rules & interactive grouped commits** → `.agents/skills/commit-conventions/SKILL.md`, `.agents/skills/commit/SKILL.md`
 - **Upgrade notes**: when asked to generate them, use `/generate-upgrade-notes` instead of analyzing commits by hand.
+- **Cypress**: always use the project `cypress-tests` skill. Supplement it with the official `cypress-docs` skill for documentation, `cypress-explain` for read-only audits, and `cypress-author` for test changes. Verify guidance against the installed Cypress and plugin versions. Project conventions and the user's approval workflow take precedence; never start Cypress yourself. Source revision and license: `.agents/CYPRESS_AI_TOOLKIT.md`.
 - **More** — the list above isn't exhaustive; browse `.agents/skills/` for the full set.

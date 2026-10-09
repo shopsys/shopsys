@@ -1,7 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { TypeLoginTypeEnum } from 'graphql/types';
-import { useHandleActionsAfterLogin, useLogin } from 'utils/auth/useLogin';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { useSessionStore } from 'store/useSessionStore';
+import { useHandleActionsAfterLogin, useLogin, useLoginAfterPasswordRecovery } from 'utils/auth/useLogin';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 const {
     dispatchBroadcastChannelMock,
@@ -50,6 +51,30 @@ vi.mock('utils/auth/authNotificationStorage', () => ({
 vi.mock('utils/useBroadcastChannel', () => ({
     dispatchBroadcastChannel: dispatchBroadcastChannelMock,
 }));
+
+const initialSessionState = useSessionStore.getState();
+
+afterEach(() => {
+    act(() => useSessionStore.setState(initialSessionState, true));
+});
+
+test.each([
+    ['login', useHandleActionsAfterLogin],
+    ['password recovery', useLoginAfterPasswordRecovery],
+] as const)('keeps the cart unavailable before clearing its guest identity after %s', (_flow, useLoginHandler) => {
+    const { result } = renderHook(() => useLoginHandler());
+    let wasCartStaleWhenIdentityWasCleared: boolean | undefined;
+    persistStoreState.updateCartUuid.mockImplementationOnce(() => {
+        wasCartStaleWhenIdentityWasCleared = useSessionStore.getState().isCartStale;
+    });
+
+    act(() => {
+        result.current(false, undefined);
+    });
+
+    expect(wasCartStaleWhenIdentityWasCleared).toBe(true);
+    expect(useSessionStore.getState().isCartStale).toBe(true);
+});
 
 describe('useHandleActionsAfterLogin', () => {
     beforeEach(() => {
@@ -117,5 +142,6 @@ describe('useLogin', () => {
         });
 
         expect(persistStoreState.updateLastLoginType).not.toHaveBeenCalled();
+        expect(useSessionStore.getState().isCartStale).toBe(false);
     });
 });

@@ -5,25 +5,25 @@
     "private": true,
     "scripts": {
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
-        "open-base": "cypress open --env visualRegressionType=base",
-        "open-regression": "cypress open --env visualRegressionType=regression",
-        "base": "cypress run --env visualRegressionType=base",
-        "regression": "cypress run --env visualRegressionType=regression",
-        "specific-base": "cypress run --env visualRegressionType=base --spec",
-        "specific-regression": "cypress run --env visualRegressionType=regression --spec",
+        "open-base": "cypress open --expose visualRegressionType=base",
+        "open-regression": "cypress open --expose visualRegressionType=regression",
+        "base": "cypress run --expose visualRegressionType=base",
+        "regression": "cypress run --expose visualRegressionType=regression",
+        "specific-base": "cypress run --expose visualRegressionType=base --spec",
+        "specific-regression": "cypress run --expose visualRegressionType=regression --spec",
         "selected-regression": "./runSelectedTests.js visualRegressionType=regression",
         "selected-base": "./runSelectedTests.js visualRegressionType=base",
         "generate-snapshots-table": "./generateSnapshotsInfoTable.js",
         "smoke": "cypress run --spec ./smokeTests/smokeTests.cy.ts"
     },
     "devDependencies": {
-        "cypress": "^14.5.3",
-        "cypress-real-events": "^1.14.0",
-        "cypress-visual-regression": "^5.3.0",
-        "cypress-wait-for-stable-dom": "^0.1.0",
-        "glob": "^12.0.0",
-        "inquirer": "^13.3.0",
-        "typescript": "^5.1.6",
-        "uuid": "^9.0.1"
+        "cypress": "16.1.1",
+        "cypress-real-events": "1.15.1",
+        "cypress-visual-regression": "6.0.1",
+        "glob": "^13.0.6",
+        "inquirer": "^14.2.3",
+        "pixelmatch": "7.2.0",
+        "typescript": "~5.9.3",
+        "uuid": "^14.0.2"
     }
 }

@@ -29,6 +29,7 @@ const getProjectPages = () => {
 };
 
 export default defineConfig({
+    defaultBrowser: 'chrome-for-testing',
     viewportWidth: 1600,
     viewportHeight: 720,
     defaultCommandTimeout: 20000,
@@ -36,7 +37,7 @@ export default defineConfig({
     video: true,
     videosFolder: 'videos',
     trashAssetsBeforeRuns: true,
-    env: {
+    expose: {
         TEST_LOCALE: process.env.TEST_LOCALE,
         B2B_DOMAIN_ID: process.env.B2B_DOMAIN_ID || '',
         B2B_BASE_URL: process.env.B2B_BASE_URL || '',
@@ -63,13 +64,15 @@ export default defineConfig({
             });
 
             on('before:browser:launch', (browser, launchOptions) => {
-                if (browser.name === 'electron' && browser.isHeadless) {
-                    // The browser window must fit the viewport to avoid clipping screenshots.
-                    launchOptions.preferences.width = config.viewportWidth;
-                    launchOptions.preferences.height = config.viewportHeight;
-                }
-
                 if (browser.family === 'chromium' && browser.name !== 'electron') {
+                    if (browser.isHeadless) {
+                        // Leave room for browser/runner chrome around the 1600x720 application viewport.
+                        // Matching the outer window to the viewport clips captures and introduces scrollbars.
+                        launchOptions.args.push(
+                            '--window-size=1920,1080',
+                            '--force-device-scale-factor=1',
+                        );
+                    }
                     launchOptions.args.push(
                         '--font-render-hinting=none',
                         '--disable-font-subpixel-positioning',
@@ -165,7 +168,7 @@ export default defineConfig({
                 }
             }
 
-            config.env.projectPages = getProjectPages();
+            config.expose.projectPages = getProjectPages();
 
             return config;
         },

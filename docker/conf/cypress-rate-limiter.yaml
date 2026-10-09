@@ -1,0 +1,8 @@
+# Cypress scenarios and retries share an IP; they verify codes, not request throttling.
+# This override is mounted only by the GitHub Actions Cypress compose configuration.
+# The isolated CI backend runs in Symfony prod mode; when@test or when@dev would not apply.
+# Isolation is provided by the CI-only mount, not the Symfony environment. Never mount this file in a live deployment.
+framework:
+    rate_limiter:
+        apply_code_to_cart:
+            policy: no_limit

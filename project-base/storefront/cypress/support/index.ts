@@ -1,9 +1,10 @@
-/// <reference types="cypress-wait-for-stable-dom" />
 import './api';
+import { waitForDomStability } from './domStability';
+import { createScreenshotBlackouts, hideScrollbarsBeforeAppLoad, prepareScreenshotStyles } from './screenshotStyles';
+import { createSnapshotIndexer } from './snapshotIndexing';
 import { loadAllTranslations, t, type TranslationsType } from './translations';
 import 'cypress-real-events';
 import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command';
-import { registerCommand } from 'cypress-wait-for-stable-dom';
 import {
     B2B_PERSIST_STORE_NAME,
     b2bDomain,
@@ -27,7 +28,16 @@ before(() => {
 // Export for explicit usage if needed
 export { loadAllTranslations, t };
 
-registerCommand({ pollInterval: 500, timeout: 5000 });
+let restoreScreenshotStyles: (() => void) | undefined;
+
+Cypress.on('window:before:load', (win) => {
+    hideScrollbarsBeforeAppLoad(win.document);
+});
+
+afterEach(() => {
+    restoreScreenshotStyles?.();
+    restoreScreenshotStyles = undefined;
+});
 
 export enum SNAPSHOT_GROUP {
     MATRIX = 0,
@@ -54,7 +64,7 @@ const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
     TIDs.simple_header_contact,
     TIDs.header_cart,
 ];
-const SKIP_SNAPHOTS = Cypress.env('skipSnapshots');
+const SKIP_SNAPHOTS = Cypress.expose('skipSnapshots');
 
 Cypress.Commands.add(
     'getByTID',
@@ -89,30 +99,30 @@ Cypress.Commands.add('storeCartUuidInLocalStorage', (cartUuid: string) => {
     });
 });
 
-Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
-    cy.waitForStableDOM();
-    cy.window().then((win) => {
-        win.dispatchEvent(new Event('resize'));
-    });
-    cy.get('.custom-loading-skeleton').should('not.exist');
-    cy.get('#nprogress').should('not.exist');
-    cy.getByTID([TIDs.loader]).should('not.exist');
-    cy.waitForHydration();
+const checkInteractiveDom = ($body: JQuery<HTMLElement>) => {
+    expect($body).not.to.have.attr('data-deferred-render-pending');
+    expect($body.find('.custom-loading-skeleton, #nprogress')).to.have.length(0);
+    expect($body.find(`[data-tid="${TIDs.loader}"]`)).to.have.length(0);
+};
 
-    return cy.waitForStableDOM();
+Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
+    cy.waitForHydration();
+    cy.window().then((win) => {
+        win.dispatchEvent(new win.Event('resize'));
+    });
+    cy.get('body').should(checkInteractiveDom);
+    cy.document().then({ timeout: 20000 }, (doc) => waitForDomStability(doc));
+
+    return cy.get<HTMLElement>('body').should(checkInteractiveDom);
 });
 
 Cypress.Commands.add('visitAndWaitForStableAndInteractiveDOM', (url: string) => {
     cy.visit(url);
-    cy.waitForStableAndInteractiveDOM();
-
     return cy.waitForStableAndInteractiveDOM();
 });
 
 Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
     cy.reload();
-    cy.waitForStableAndInteractiveDOM();
-
     return cy.waitForStableAndInteractiveDOM();
 });
 
@@ -125,8 +135,6 @@ Cypress.Commands.add(
                 win.localStorage.setItem(B2B_PERSIST_STORE_NAME, JSON.stringify(DEFAULT_PERSIST_STORE_STATE));
             },
         });
-        cy.waitForStableAndInteractiveDOM();
-
         return cy.waitForStableAndInteractiveDOM();
     },
 );
@@ -150,7 +158,7 @@ Cypress.on('uncaught:exception', (err) => {
 
 addCompareSnapshotCommand({
     capture: 'fullPage',
-    errorThreshold: Cypress.env('visualRegressionErrorThreshold'),
+    errorThreshold: Cypress.expose('visualRegressionErrorThreshold'),
 });
 
 export const initializePersistStoreInLocalStorageToDefaultValues = () => {
@@ -295,19 +303,39 @@ export const takeSnapshotAndCompare = (
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
 
-    cy.document().its('fonts.status').should('equal', 'loaded');
+    cy.waitForStableAndInteractiveDOM();
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
-    hideScrollbars();
-    disableStickyPositioningBeforeScreenshot(optionsWithDefaultValues.capture, optionsWithDefaultValues.preserveFixed);
+    cy.document().then((doc) => {
+        restoreScreenshotStyles = prepareScreenshotStyles(doc, {
+            captureSelector:
+                optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport'
+                    ? undefined
+                    : `[data-tid="${optionsWithDefaultValues.capture}"]`,
+            preserveFixedSelectors: optionsWithDefaultValues.preserveFixed.map((tid) => `[data-tid="${tid}"]`),
+            disablePointerEventsSelectors: [
+                ...ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS,
+                ...optionsWithDefaultValues.removePointerEvents,
+            ].map((selector) =>
+                Object.values(TIDs).includes(selector as TIDs) ? `[data-tid="${selector}"]` : selector,
+            ),
+        });
+    });
     callbackBeforeBlackout?.();
-    disableAnimationsBeforeScreenshot();
     loseFocus();
     changeExpectedDeliveryDateSummariesToStaticDemodata();
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
-    removePointerEventsBeforeScreenshot([
-        ...ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS,
-        ...optionsWithDefaultValues.removePointerEvents,
-    ]);
+    waitForScreenshotReady(optionsWithDefaultValues);
+    // Masks must be measured only after the final layout has settled.
+    cy.document().then((doc) => {
+        const restoreStyles = restoreScreenshotStyles;
+        const removeMasks = createScreenshotBlackouts(
+            doc,
+            optionsWithDefaultValues.blackout.map(({ tid, zIndex }) => ({ selector: `[data-tid="${tid}"]`, zIndex })),
+        );
+        restoreScreenshotStyles = () => {
+            removeMasks();
+            restoreStyles?.();
+        };
+    });
 
     const snapshotNameFormatted = getSnapshotNameFormatted(testName, snapshotName);
 
@@ -317,10 +345,43 @@ export const takeSnapshotAndCompare = (
         cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(snapshotNameFormatted);
     }
 
-    restoreStickyPositioningAfterScreenshot();
-    removeBlackoutsAfterScreenshot();
-    resetPointerEventsAfterScreenshot();
-    resetAnimationsAfterScreenshot();
+    cy.then(() => {
+        restoreScreenshotStyles?.();
+        restoreScreenshotStyles = undefined;
+    });
+};
+
+const waitForScreenshotReady = (options: SnapshotAdditionalOptions) => {
+    cy.window().then((win) => win.dispatchEvent(new win.Event('resize')));
+    cy.get('body').should(checkInteractiveDom);
+    cy.document().then((doc) => doc.fonts.ready);
+    cy.document().its('fonts.status').should('equal', 'loaded');
+    const maskedSelectors = options.blackout.map(({ tid }) => `[data-tid="${tid}"]`).join(', ');
+    const getCaptureTarget = () =>
+        options.capture === 'fullPage' || options.capture === 'viewport' ? cy.get('body') : cy.getByTID([options.capture]);
+    const checkImages = ($target: JQuery<HTMLElement>) => {
+        $target[0].querySelectorAll('img').forEach((image) => {
+            const rect = image.getBoundingClientRect();
+            const view = image.ownerDocument.defaultView!;
+            if (
+                options.capture === 'viewport' &&
+                (rect.bottom <= 0 || rect.top >= view.innerHeight || rect.right <= 0 || rect.left >= view.innerWidth)
+            ) {
+                return;
+            }
+            if (Cypress.dom.isVisible(image) && !(maskedSelectors && image.closest(maskedSelectors))) {
+                expect(image.complete, `image loaded: ${image.currentSrc || image.src}`).to.equal(true);
+                expect(image.naturalWidth, `image has intrinsic width: ${image.currentSrc || image.src}`).to.be.greaterThan(
+                    0,
+                );
+            }
+        });
+    };
+    getCaptureTarget().should(checkImages);
+    cy.document().then({ timeout: 20000 }, (doc) => waitForDomStability(doc));
+    cy.get('body').should(checkInteractiveDom);
+    cy.document().its('fonts.status').should('equal', 'loaded');
+    getCaptureTarget().should(checkImages);
 };
 
 const getSnapshotNameFormatted = (testName: string, snapshotName: string) => `${testName} ${snapshotName}`;
@@ -337,176 +398,11 @@ const scrollPageBeforeScreenshot = (optionsWithDefaultValues: SnapshotAdditional
     }
 };
 
-const hideScrollbars = () => {
-    cy.document().then((doc) => {
-        const style = doc.createElement('style');
-        style.setAttribute('id', 'hide-scrollbars');
-        doc.head.appendChild(style);
-
-        style.innerHTML = `::-webkit-scrollbar { display: none; } * { scrollbar-width: none !important; }`;
-    });
-};
-
-const disableStickyPositioningBeforeScreenshot = (
-    capture: 'viewport' | 'fullPage' | TIDs,
-    preserveFixed: TIDs[] = [],
-) => {
-    cy.document().then((doc) => {
-        const captureEl =
-            capture !== 'viewport' && capture !== 'fullPage' ? doc.querySelector(`[data-tid=${capture}]`) : null;
-
-        const preservedEls = preserveFixed
-            .map((tid) => doc.querySelector(`[data-tid=${tid}]`))
-            .filter(Boolean) as Element[];
-
-        doc.querySelectorAll('*').forEach((el) => {
-            const htmlEl = el as HTMLElement;
-            const position = window.getComputedStyle(htmlEl).getPropertyValue('position');
-
-            if (position === 'sticky') {
-                htmlEl.setAttribute('data-original-position', position);
-                htmlEl.style.setProperty('position', 'static', 'important');
-            }
-
-            if (position === 'fixed') {
-                // Skip hiding the capture target and its ancestors
-                if (captureEl && (htmlEl === captureEl || htmlEl.contains(captureEl))) {
-                    return;
-                }
-                // Skip hiding preserved fixed elements, their ancestors, and their siblings
-                if (
-                    preservedEls.some(
-                        (preserved) =>
-                            htmlEl === preserved ||
-                            htmlEl.contains(preserved) ||
-                            (preserved.parentElement && preserved.parentElement === htmlEl.parentElement),
-                    )
-                ) {
-                    return;
-                }
-                htmlEl.setAttribute('data-original-position', position);
-                htmlEl.style.setProperty('display', 'none', 'important');
-            }
-        });
-    });
-};
-
-const restoreStickyPositioningAfterScreenshot = () => {
-    cy.document().then((doc) => {
-        const modifiedElements = doc.querySelectorAll('[data-original-position]');
-
-        modifiedElements.forEach((el) => {
-            const htmlEl = el as HTMLElement;
-            const originalPosition = htmlEl.getAttribute('data-original-position');
-
-            if (originalPosition === 'fixed') {
-                htmlEl.style.removeProperty('display');
-            } else {
-                htmlEl.style.removeProperty('position');
-            }
-
-            htmlEl.removeAttribute('data-original-position');
-        });
-    });
-};
-
-const blackoutBeforeScreenshot = (blackout: Blackout[]) => {
-    for (const blackoutElement of blackout) {
-        cy.get('body').then(($body) => {
-            const matchedElements = $body.find(`[data-tid=${blackoutElement.tid}]`);
-
-            if (!matchedElements.length) {
-                return;
-            }
-
-            matchedElements.each((_, element) => {
-                const rect = element.getBoundingClientRect();
-
-                const coverDiv = document.createElement('div');
-                coverDiv.classList.add('blackout');
-                coverDiv.style.position = 'absolute';
-                coverDiv.style.width = `${rect.width}px`;
-                coverDiv.style.height = `${rect.height}px`;
-                coverDiv.style.top = `${rect.top + window.scrollY}px`;
-                coverDiv.style.left = `${rect.left + window.scrollX}px`;
-                coverDiv.style.backgroundColor = 'black';
-                coverDiv.style.zIndex = blackoutElement.zIndex ? blackoutElement.zIndex.toString() : '10000';
-
-                $body.append(coverDiv);
-            });
-        });
-    }
-};
-
 const changeExpectedDeliveryDateSummariesToStaticDemodata = () => {
     cy.get('body').then(($body) => {
         $body.find(`[data-tid="${TIDs.expected_delivery_date_summary}"]`).each((_, summaryElement) => {
             Cypress.$(summaryElement).children().last().text(staticData.expectedDeliveryDate);
         });
-    });
-};
-
-const removeBlackoutsAfterScreenshot = () => {
-    cy.get('body').then(($body) => {
-        if ($body.find('.blackout').length) {
-            $body.find('.blackout').each(function () {
-                this.remove();
-            });
-        }
-    });
-};
-
-const removePointerEventsBeforeScreenshot = (removePointerEvents: (TIDs | string)[]) => {
-    cy.document().then((doc) => {
-        const style = doc.createElement('style');
-        style.setAttribute('id', 'disable-pointer-events');
-        doc.head.appendChild(style);
-
-        const selectors = removePointerEvents.map((selector) => {
-            if (Object.values(TIDs).includes(selector as TIDs)) {
-                return `[data-tid='${selector}']`;
-            }
-            return selector;
-        });
-
-        const selectorString = selectors.join(', ');
-
-        style.innerHTML = `${selectorString} { pointer-events: none !important; }`;
-    });
-};
-
-const disableAnimationsBeforeScreenshot = () => {
-    cy.document().then((doc) => {
-        const style = doc.createElement('style');
-        style.setAttribute('id', 'disable-animations');
-        style.innerHTML = `
-            *, *::before, *::after {
-                transition: none !important;
-                animation: none !important;
-                caret-color: transparent !important;
-                -webkit-font-smoothing: antialiased !important;
-                -moz-osx-font-smoothing: grayscale !important;
-            }
-        `;
-        doc.head.appendChild(style);
-    });
-};
-
-const resetAnimationsAfterScreenshot = () => {
-    cy.document().then((doc) => {
-        const style = doc.getElementById('disable-animations');
-        if (style) {
-            doc.head.removeChild(style);
-        }
-    });
-};
-
-const resetPointerEventsAfterScreenshot = () => {
-    cy.document().then((doc) => {
-        const style = doc.getElementById('disable-pointer-events');
-        if (style) {
-            doc.head.removeChild(style);
-        }
     });
 };
 
@@ -575,28 +471,11 @@ export const checkCanGoToNextOrderStep = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).should('be.visible').and('not.be.disabled');
 };
 
-export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) => {
-    let snapshotCounter = 0;
-    let counterAtTestStart = 0;
-    let lastTestTitle = '';
-    let lastRetryAttempt = 0;
-
-    return () => {
-        const currentTest = Cypress.currentTest?.title ?? '';
-        const currentRetry = Cypress.currentRetry;
-
-        if (currentTest !== lastTestTitle) {
-            lastTestTitle = currentTest;
-            counterAtTestStart = snapshotCounter;
-            lastRetryAttempt = 0;
-        } else if (currentRetry > lastRetryAttempt) {
-            snapshotCounter = counterAtTestStart;
-            lastRetryAttempt = currentRetry;
-        }
-
-        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotCounter++}`;
-    };
-};
+export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) =>
+    createSnapshotIndexer(snapshotGroupIndex, snapshotSubgroupIndex, () => ({
+        title: Cypress.currentTest?.title ?? '',
+        retry: Cypress.currentRetry,
+    }));
 
 export const checktHeadlineText = (translationKey: string) => {
     return cy.wrap(null).then(() => {

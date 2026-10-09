@@ -346,36 +346,17 @@ describe('<Domain Specific Functionality> tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should do something', function () {
-        ...
-    });
-});
-```
-
-### Using the `function` keyword for `it()` blocks
-
-In order to be able to use the `this` keyword inside `it()` blocks and thus access the title of the test, you must use the `function` keyword instead of arrow syntax. So, you should do this:
-
-```ts
-describe('Some tests', () => {
-    it('should do something', function () {
-        ...
-        takeSnapshotAndCompare(this.test?.title, ...)
-    });
-});
-```
-
-But not this:
-
-```ts
-describe('Some tests', () => {
     it('should do something', () => {
         ...
-        // 'this' is not available in arrow functions
-        takeSnapshotAndCompare(this.test?.title, ...)
     });
 });
 ```
+
+### Using arrow functions for `it()` blocks
+
+Use arrow functions for `it()` blocks. Snapshot names are generated with `getSnapshotIndexingFunction()` and do not require access to `this.test?.title`.
+
+Keep `function` callbacks where Mocha's context is required, such as a `before()` hook calling `this.skip()`. Arrow functions cannot access that context.
 
 ### Custom cypress commands
 
@@ -404,30 +385,36 @@ Another thing is that you should modify `cypress.d.ts`, where you should put typ
 
 Another important part of our cypress tests is visual regression. This allows us to take a screenshot of the application at any point and compare it with a base screenshot every time the tests are run. This way you make sure that the app looks the same, and that your changes did not break it visually.
 
-For this purpose, the `takeSnapshotAndCompare` helper method can be used. You can use it multiple times in each test, just remember to provide the screenshot name, which will be used to store the snapshot under `/snapshots`.
+For this purpose, the `takeSnapshotAndCompare` helper method can be used. Initialize `getSnapshotIndexingFunction()` with the snapshot group and a subgroup index unique within that group. Pass an explicit, stable index for each capture and a descriptive label; together they form the snapshot filename under `/snapshots`. Keep existing indices when removing other captures.
 
 ```ts
-it('should do something', function () {
+import { getSnapshotIndexingFunction, SNAPSHOT_GROUP, takeSnapshotAndCompare } from 'support';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
+
+it('should do something', () => {
     ...
     // do something
     ...
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+    takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'screenshot name suffix');
     ...
     // do something else
     ...
-    takeSnapshotAndCompare(this.test?.title, 'another screenshot name suffix');
+    takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'another screenshot name suffix');
 });
 ```
 
-Remember this can be leveraged to make sure that an action does not change the UI by comparing to the same screenshot.
+To verify that an action does not change the UI, reuse the same snapshot ID and label for both captures:
 
 ```ts
-it('should do something', function () {
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+it('should do something', () => {
+    const snapshotId = getSnapshotFullIndexAsString(2);
+    takeSnapshotAndCompare(snapshotId, 'screenshot name suffix');
     ...
     // do something that should not change the UI
     ...
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+    takeSnapshotAndCompare(snapshotId, 'screenshot name suffix');
 });
 ```
 
@@ -441,63 +428,25 @@ The `takeSnapshotAndCompare` helper method does several things.
 6. Return all blacked-out elements back (uncover them)
 7. Reset pointer events of the previously blocked elements (point 3.)
 
-```ts
-export type Blackout = { tid: TIDs; zIndex?: number };
+The implementation lives in `project-base/storefront/cypress/support/index.ts`. Keep readiness and cleanup there rather than copying the helper into individual specs.
 
-type SnapshotAdditionalOptions = {
-    capture: 'viewport' | 'fullPage' | TIDs;
-    wait: number;
-    blackout: Blackout[];
-    removePointerEvents: (TIDs | string)[];
-};
+The helper waits for hydration, pending `useDeferredRender()` commits and loading indicators, retains page scrolling, and then prepares temporary screenshot styles. After the final layout changes it waits for fonts, relevant unmasked images and a quiet DOM before measuring blackout rectangles. Styles and masks are restored after capture and also from `afterEach` when a test fails.
 
-export const takeSnapshotAndCompare = (
-    testName: string | undefined,
-    snapshotName: string,
-    options: Partial<SnapshotAdditionalOptions> = {},
-    callbackBeforeBlackout?: () => void | undefined,
-) => {
-    const optionsWithDefaultValues = {
-        capture: options.capture ?? 'fullPage',
-        wait: options.wait ?? 1000,
-        blackout: options.blackout ?? [],
-        removePointerEvents: options.removePointerEvents ?? [],
-    };
-
-    if (!testName) {
-        throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
-    }
-
-    scrollPageBeforeScreenshot(optionsWithDefaultValues);
-    hideScrollbars();
-    callbackBeforeBlackout?.();
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
-    removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
-
-    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
-        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
-    } else {
-        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
-    }
-
-    removeBlackoutsAfterScreenshot();
-    resetPointerEventsAfterScreenshot();
-};
-```
+The `data-deferred-render-pending` body attribute counts pending deferred hook commits. It does **not** mean every network request, lazy import or third-party widget has completed. Keep explicit assertions for the content/state being captured; a quiet DOM alone cannot detect future asynchronous work.
 
 #### Sizes of screenshots (`capture` parameter)
 
-You can set up the snapshot to take a full-page screenshot, viewport screenshot, or a screenshot of an element with a specific TID. The most robust version is to test the full page, because then you know that the entire page is unchanged.
+Choose a full-page screenshot for page composition, a viewport screenshot for visible overlays/context, or an element TID for an isolated visual state. Full-page captures cover more layout but also include more unrelated sources of change. Important values still need explicit assertions.
 
 #### Give the application more time to prepare before the screenshot (`wait` parameter)
 
-By specifying the `wait` parameter, you tell the application how much time it has to prepare itself for the screenshot. If the screenshot is a full-page or a viewport screenshot, it uses this time to wait for a fraction of that time, scroll down, wait again, scroll back up, and wait for the last time. The specified time is equally split between those 5 actions. If it is a component screenshot, the time is only used to wait. This approach has proven to be the best for test stability and robustness.
+The existing `wait` parameter controls the retained scroll sequence: wait, scroll down, wait, scroll up, wait, each using one fifth of the duration. Element captures retain a single wait. This is not proof of readiness and increasing it is not a flakiness fix; the helper also checks observable readiness. Do not remove this sequence until deferred and lazy content has been verified in the actual browser.
 
 #### Hiding/covering parts of the application for the screenshot (`blackout` parameter)
 
 It is also possible to hide/cover parts of the UI with a blackout box (simple `div` element over the element with a specified TID). This is helpful if your UI contains element which change randomly or change with time (using timers). You can also specify the blacked-out element's `z-index` using the `zIndex` parameter, as you might need to render it above or below various other DOM elements.
 
-This mechanism works based on placing a absolutely positioned `div` above the target element, so it depends if the element needs additional offset, or not. For this, the `shouldNotOffset` is used. If you omit it, the blackout div will be offset by 15px to the right (scrollbar width). If you find out that your element does not need this offset (can happen for relatively placed elements, or for viewport screenshots in general), you can omit the offset by specifying `{ shouldNotOffset: true }`.
+Masks use the target rectangle and scroll coordinates of the application document, without a hard-coded scrollbar offset. Place image TIDs on fixed-size wrappers so image loading cannot change the masked area. Missing optional targets are skipped; assert required content separately. Only masks created for the current capture are removed during cleanup.
 
 #### Removing pointer-events (`ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS` config)
 

@@ -77,6 +77,7 @@ export enum TIDs {
     pages_productdetail_variant_ = 'pages_productdetail_variant_',
     blocks_product_addtocartpopup_product_name = 'blocks_product_addtocartpopup_product_name',
     add_to_cart_popup_image = 'add_to_cart_popup_image',
+    add_to_cart_popup_quantity = 'add_to_cart_popup_quantity',
     popup_go_to_cart_button = 'popup_go_to_cart_button',
     additional_services = 'additional_services',
     additional_services_checkbox_ = 'additional_services_checkbox_',
@@ -127,6 +128,7 @@ export enum TIDs {
     reset_payment_button = 'reset_payment_button',
     contact_information_form = 'contact_information_form',
     transport_and_payment_list_item_image = 'transport_and_payment_list_item_image',
+    transport_and_payment_price = 'transport_and_payment_price',
     expected_delivery_date_message = 'expected_delivery_date_message',
     expected_delivery_date_summary = 'expected_delivery_date_summary',
     pages_orderconfirmation = 'pages_orderconfirmation',
@@ -137,6 +139,7 @@ export enum TIDs {
     // Order Detail & History
     order_detail_number_heading = 'order_detail_number_heading',
     order_detail_number = 'order_detail_number',
+    order_detail_delivery_address = 'order_detail_delivery_address',
     order_detail_creation_date = 'order_detail_creation_date',
     order_detail_transport = 'order_detail_transport',
     order_detail_payment = 'order_detail_payment',
@@ -202,6 +205,7 @@ export enum TIDs {
 
     // Delivery Address
     blocks_addresslist_addresscard_ = 'blocks_addresslist_addresscard_',
+    blocks_addresslist = 'blocks_addresslist',
     blocks_addresslist_add_address_button = 'blocks_addresslist_add_address_button',
     delivery_address_form_submit_button = 'delivery_address_form_submit_button',
 

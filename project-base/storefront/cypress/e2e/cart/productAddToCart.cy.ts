@@ -3,6 +3,7 @@ import {
     addProductToCartFromPromotedProductsOnHomepage,
     addToCartOnProductDetailPage,
     addVariantToCartFromMainVariantDetail,
+    checkCartContents,
     searchProductByNameWithAutocomplete,
 } from './cartSupport';
 import { staticData, url } from 'fixtures/demodata';
@@ -23,38 +24,52 @@ import { TIDs } from 'tids';
 const SUBGROUP_INDEX = 3;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
 
+const checkAddedProduct = (product: { uuid: string; catnum: string; name: string; fullName?: string }) => {
+    const fullName = product.fullName ?? product.name;
+    cy.wait('@addToCartMutation')
+        .its('response.body.data.AddToCart.cart.items')
+        .should('have.length', 1)
+        .its('0')
+        .should('include', { quantity: 1 })
+        .its('product')
+        .should('include', { uuid: product.uuid, catalogNumber: product.catnum, fullName });
+    cy.getByTID([TIDs.layout_popup]).should('be.visible').and('contain.text', product.catnum);
+    cy.getByTID([TIDs.layout_popup, TIDs.blocks_product_addtocartpopup_product_name])
+        .should('be.visible')
+        .and('have.text', fullName);
+    cy.getByTID([TIDs.layout_popup, TIDs.add_to_cart_popup_quantity])
+        .should('be.visible')
+        .and('have.text', '1');
+};
+
 describe('Product Add To Cart Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
+        // Observe before the rapid-action helper's req.continue() ends request propagation.
+        cy.intercept({ method: 'POST', url: '/graphql/AddToCartMutation', middleware: true }, (request) => {
+            request.alias = 'addToCartMutation';
+        });
     });
 
-    it('[Brand Page Add] should add product to cart from brand page', function () {
+    it('[Brand Page Add] should add product to cart from brand page', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverview);
 
         goToPageThroughSimpleNavigation(22);
         addProductToCartFromProductList(staticData.products.helloKitty.catnum);
-        checkPopupIsVisible();
+        checkAddedProduct(staticData.products.helloKitty);
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
-            capture: 'viewport',
-            preserveFixed: [TIDs.layout_popup],
-            blackout: [
-                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
-                { tid: TIDs.product_list_item_image, zIndex: 5 },
-            ],
-        });
         checkPopupIsVisible(true);
     });
 
-    it('[Product Detail Add] should add product to cart from product detail', function () {
+    it('[Product Detail Add] should add product to cart from product detail', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         addToCartOnProductDetailPage();
-        checkPopupIsVisible();
+        checkAddedProduct(staticData.products.helloKitty);
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'add to cart popup', {
             capture: 'viewport',
             preserveFixed: [TIDs.layout_popup],
             blackout: [
@@ -67,7 +82,7 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Product Detail Add - Rapid Enter] should send only one AddToCart request while button is processing', function () {
+    it('[Product Detail Add - Rapid Enter] should send only one AddToCart request while button is processing', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -82,10 +97,11 @@ describe('Product Add To Cart Tests', () => {
             'AddToCartMutation',
         );
 
+        checkAddedProduct(staticData.products.helloKitty);
         checkPopupIsVisible(true);
     });
 
-    it('[Cart Page Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', function () {
+    it('[Cart Page Remove - Rapid Click] should send only one RemoveFromCart request when clicking rapidly', () => {
         cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 2).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
@@ -108,16 +124,17 @@ describe('Product Add To Cart Tests', () => {
             1,
             'RemoveFromCartMutation',
         );
+        checkCartContents([{ product: staticData.products.philips32PFL4308, quantity: 1 }]);
     });
 
-    it('[Category Page Add] should add product to cart from category page', function () {
+    it('[Category Page Add] should add product to cart from category page', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         addProductToCartFromProductList(staticData.products.helloKitty.catnum);
-        checkPopupIsVisible();
+        checkAddedProduct(staticData.products.helloKitty);
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(2), 'add to cart popup', {
             capture: 'viewport',
             preserveFixed: [TIDs.layout_popup],
             blackout: [
@@ -128,14 +145,14 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Product Variant Add] should add variant product to cart from product detail', function () {
+    it('[Product Variant Add] should add variant product to cart from product detail', () => {
         visitEntityByUuid('product', staticData.products.televisionPhilipsM.uuid);
 
         addVariantToCartFromMainVariantDetail(staticData.products.philips100.catnum);
-        checkPopupIsVisible();
+        checkAddedProduct(staticData.products.philips100);
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(3), 'add to cart popup', {
             capture: 'viewport',
             preserveFixed: [TIDs.layout_popup],
             blackout: [{ tid: TIDs.product_detail_main_image, zIndex: 5 }],
@@ -143,26 +160,17 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('[Promoted Products Add] should add product to cart from promoted products on homepage', function () {
+    it('[Promoted Products Add] should add product to cart from promoted products on homepage', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         addProductToCartFromPromotedProductsOnHomepage(staticData.products.helloKitty.catnum);
-        checkPopupIsVisible();
+        checkAddedProduct(staticData.products.helloKitty);
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
-            capture: 'viewport',
-            preserveFixed: [TIDs.layout_popup],
-            blackout: [
-                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
-                { tid: TIDs.banners_slider, zIndex: 9999 },
-                { tid: TIDs.simple_navigation_image, zIndex: 9999 },
-            ],
-        });
         checkPopupIsVisible(true);
     });
 
-    it('[Search Page Add] should add product to cart from search results page', function () {
+    it('[Search Page Add] should add product to cart from search results page', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         searchProductByNameWithAutocomplete(staticData.products.helloKitty.name);
@@ -170,27 +178,20 @@ describe('Product Add To Cart Tests', () => {
         cy.waitForStableAndInteractiveDOM();
 
         addProductToCartFromProductList(staticData.products.helloKitty.catnum);
-        checkPopupIsVisible();
+        checkAddedProduct(staticData.products.helloKitty);
         loseFocus();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
-            capture: 'viewport',
-            preserveFixed: [TIDs.layout_popup],
-            blackout: [
-                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
-                { tid: TIDs.product_list_item_image, zIndex: 5 },
-            ],
-        });
         checkPopupIsVisible(true);
     });
 
-    it('[Product Card Quantity Adjust] should switch between add to cart button and quantity spinbox', function () {
+    it('[Product Card Quantity Adjust] should switch between add to cart button and quantity spinbox', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         cy.getByTID([[TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum]]).within(() => {
             cy.getByTID([TIDs.blocks_product_addtocart]).should('be.visible').click();
         });
 
+        checkAddedProduct(staticData.products.helloKitty);
         checkPopupIsVisible(true);
         cy.waitForStableAndInteractiveDOM();
 
@@ -200,7 +201,7 @@ describe('Product Add To Cart Tests', () => {
         });
 
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(),
+            getSnapshotFullIndexAsString(6),
             'product card quantity spinbox',
             {
                 blackout: [

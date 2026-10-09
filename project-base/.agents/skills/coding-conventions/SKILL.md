@@ -112,7 +112,7 @@ public function transform(mixed $value): array { /* ... */ }
 ## Test-code rules
 
 - In functional and GraphQL test cases, inject services with the `@inject` annotation — **not** `$this->getContainer()->get(...)`.
-- See `.agents/skills/test-writing/SKILL.md` for the full testing guide.
+- Use `.agents/skills/test-writing/SKILL.md` to select the domain guide: `backend-tests` for PHP and admin Jest, `storefront-tests` for Vitest and Cypress routing.
 
 ## Entity property hooks
 

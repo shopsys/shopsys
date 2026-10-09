@@ -7,6 +7,22 @@ description: 'Write, fix, and review Cypress acceptance tests for Shopsys storef
 
 You are an expert Cypress test writer for the Shopsys Platform storefront. Follow these conventions EXACTLY when writing, reviewing, or fixing tests.
 
+## Choose coverage before writing a spec
+
+Apply `.agents/skills/test-writing/SKILL.md` and the scenario ownership rules reached
+through `.agents/skills/storefront-tests/SKILL.md` before adding or removing coverage.
+Those skills own the cross-layer decision; this skill owns Cypress implementation.
+Name the real integration/browser risk and reuse an existing flow when it covers it.
+A screenshot needs its own visual purpose; important outcomes also need explicit assertions.
+
+Historical specs and the examples below are not permission to bypass these rules:
+
+- Wait for an expected observable state or the relevant request, not an arbitrary delay. Preserve scrolling/readiness required by the custom deferred system; replace an existing wait only after establishing what it protects.
+- Do not add `force: true` to hide a covered, disabled or unready control. Use an established forced interaction only when the component intentionally hides its native control, and verify the resulting state.
+- Do not conditionally skip a required assertion because the expected element was not found. Establish optional states from controlled setup; missing required content must fail.
+- Check the outcome promised by the title. A URL change, successful request or screenshot alone does not verify product identity, quantities, persistence or filtering results.
+- Do not resolve unexplained flakiness by raising retries/tolerances, skipping tests or updating baselines. Diagnose the missing readiness/data contract and report anything unverified.
+
 ## Project Structure
 
 ```
@@ -54,22 +70,37 @@ project-base/storefront/cypress/
 ## Running Tests
 
 ```bash
-# GUI mode (auto-reloads .cy.ts files)
-make open-acceptance-tests-base
+# Manual GUI regression mode (auto-reloads .cy.ts files)
+make open-acceptance-tests-regression
 
 # Headless specific test
-make run-specific-test-base SPEC=e2e/path/to/test.cy.ts
+make run-specific-test-regression SPEC=e2e/path/to/test.cy.ts
 
-# All base tests headless
-make run-acceptance-tests-base
+# All regression tests headless
+make run-acceptance-tests-regression
 
 # Specific group
-make selected-acceptance-tests-base  # Interactive group selection
+make selected-acceptance-tests-regression  # Interactive group selection
 ```
 
 When storefront `.tsx` files change (adding TIDs), the make command automatically rebuilds.
 
+These are commands for the user, not agent execution. The `base` variants generate
+references rather than validating them; keep monorepo reference generation on CI.
+
 **Reference site** for inspecting page structure: `https://19-0.odin.shopsys.cloud/`
+
+### CI reference regeneration
+
+- On same-repository PRs, manually adding `regenerate screenshots` starts a new Docker build and cancels the previous run for that PR. Other label events do not restart it. This restarts the full pipeline, not only Cypress.
+- The run uses the labels captured in its triggering event, so removing the label cannot change the mode halfway through the matrix. Failed regeneration leaves the label in place; remove and re-add it to retry after diagnosing the failure.
+- All regeneration groups must pass before publication. The publishing job checks that the PR is still open, its head and base are unchanged, and the request label remains. It commits only generated PNG references, removes the label, and pushes without rewriting history using the existing CI push token.
+- Before replacing an existing reference, the publishing job uses the locked Pixelmatch CLI with color threshold `0` and `includeAA: false`. Zero detected differences preserve the original PNG bytes; new images, changed dimensions and any detected differing pixel are included. Comparison errors stop publication. This excludes detected antialiasing only, not an allowed percentage of the image; never reuse the regression threshold `0.005` as an update filter. This protects Git diffs, not rendering determinism, and still requires human review of visual changes.
+- Snapshot publication refuses `master`, `main` and version-like head branches matching `[0-9]*.[0-9]*` before removing the request label or pushing; use a topic branch for regeneration.
+- The publishing job grants `GITHUB_TOKEN` `pull-requests: write` to remove the request label from the PR. Keep this permission scoped to that job; Git pushes still use the existing CI push token.
+- The snapshot commit triggers ordinary CI. When references are unchanged, ordinary regression runs in the current build instead. Successful regeneration alone is not a substitute for regression checks or human visual approval.
+- If a concurrent push wins after the final check, publication fails safely; after checking the latest branch, re-add the label if it was already removed. There is no background queue or automatic retry controller.
+- Review the snapshot commit against its parent in Git history and relate the changes to code/demo data; reverting commits is unnecessary. Do not approve unexplained visual differences by regeneration. Fork PRs retain their artifact-only regeneration flow without bot publication.
 
 ## CRITICAL RULE: Search Existing Interaction Patterns First
 
@@ -137,7 +168,7 @@ cy.get('h1')
 cy.getByTID([TIDs.page_title]).should('contain.text', linkText);
 cy.getByTID([TIDs.popup_confirm_button]).click();
 
-// TID + find for native HTML elements (checkboxes, inputs)
+// TID + find for native controls; force only for the intentionally hidden custom checkbox input
 cy.getByTID([TIDs.filter_panel]).find('input[type="checkbox"]').first().check({ force: true });
 cy.getByTID([TIDs.filter_price_input_min]).find('input').clear().type('200').blur();
 
@@ -147,12 +178,10 @@ cy.getByTID([TIDs.store_list]).find('[aria-expanded="false"]').first().click();
 // Form fields by ID (acceptable — form libraries generate IDs)
 cy.get('#customer-change-profile-form-street').should('not.be.disabled');
 
-// Conditional existence check (when element may not exist)
-cy.get('body').then(($body) => {
-    if ($body.find(`[data-tid="${TIDs.clear_all_filters_button}"]`).length > 0) {
-        cy.getByTID([TIDs.clear_all_filters_button]).first().click({ force: true });
-    }
-});
+// Reset a filter applied by this scenario; missing required controls must fail
+cy.getByTID([TIDs.selected_filters]).should('be.visible');
+cy.getByTID([TIDs.clear_all_filters_button]).filter(':visible').first().click();
+cy.getByTID([TIDs.selected_filters]).should('not.exist');
 ```
 
 ## Adding New TIDs
@@ -210,7 +239,7 @@ describe('Feature Tests (SSP-XXXX)', () => {
         cy.getByTID([TIDs.some_element]).should('be.visible').click();
         cy.waitForStableAndInteractiveDOM();
 
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'snapshot name', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'snapshot name', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -309,13 +338,27 @@ Each test category needs a unique value in `support/index.ts`. Always check the 
 const SUBGROUP_INDEX = 0; // unique per .cy.ts file in the group
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.MY_GROUP, SUBGROUP_INDEX);
 
-// Each call returns: "groupIndex-subgroupIndex-counter"
-// e.g.: "13-0-0", "13-0-1", "13-0-2"
+// Prefer explicit, stable IDs for new specs and specs undergoing capture consolidation.
+takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'empty state');
+takeSnapshotAndCompare(getSnapshotFullIndexAsString(3), 'filled state');
 ```
+
+Keep existing snapshot indices and labels when removing neighboring captures; gaps are intentional.
+Use explicit IDs consistently throughout a converted spec, with a unique ID per capture.
+Do not mix explicit and automatic IDs in one spec. The no-argument form remains supported
+for untouched legacy specs, but its sequential IDs depend on the preceding executed tests.
+New captures in an explicit-ID spec get a new unused index; do not backfill removed IDs.
+
+Different entry points or persistence paths do not each need a screenshot of the same state.
+Before removing a capture, identify its retained visual owner and preserve explicit assertions
+for the original flow. Keep distinct layout/overlay/form states and required deferred readiness.
+Remove only the corresponding obsolete PNGs, preserve retained reference names, and regenerate
+the lookup table. This does not authorize baseline regeneration or automatic acceptance of diffs.
 
 ### Blackout rules
 
-- `blackoutBeforeScreenshot` uses `cy.getByTID([tid]).each(...)` — **FAILS with timeout if TID doesn't exist on page**
+- Screenshot blackouts skip missing TIDs; assert required content before the screenshot.
+- Place image blackout TIDs on fixed-size wrappers, not the intrinsic dimensions of an `<img>`.
 - Only blackout TIDs present on the page being screenshotted
 - Common blackouts for ALL pages: `footer_social_links`, `footer_payment_images`, `footer_copyright`
 - Dynamic images: `product_list_item_image`, `comparison_product_image`, `stores_map`, `store_opening_status`, `category_bestseller_image`
@@ -375,6 +418,23 @@ page, on pickup places, and in the product-detail delivery options popup. Before
 each `TIDs.expected_delivery_date_message` element with `staticData.expectedDeliveryDateMessage`, or with
 `staticData.expectedPersonalPickupDateMessage` when the element's real text starts with the translated
 "Personal pickup" prefix (the delivery vs. pickup wording is deterministic, so snapshots keep it truthful).
+
+## Shared interaction and screenshot readiness
+
+`waitForStableAndInteractiveDOM()` waits for hydration, pending `useDeferredRender()` commits,
+loading indicators and one quiet DOM interval. Visit/reload helpers call it once. The shared
+observer has a deadline and disconnects on success, timeout or navigation; do not reintroduce
+`cypress-wait-for-stable-dom` or duplicate blanket waits.
+
+`data-deferred-render-pending` tracks deferred hook commits, not all lazy imports or API requests.
+Keep scenario-specific assertions for required content and real interaction readiness.
+`takeSnapshotAndCompare()` additionally retains page scrolling, prepares temporary styles,
+waits for fonts and relevant unmasked images, then settles the DOM before measuring masks.
+It restores temporary styles/masks after capture and on failure. Scrollbars are hidden once
+per document in `window:before:load`, before the application measures scroll-lock compensation;
+do not toggle scrollbar visibility around individual captures or rely on a preceding screenshot.
+Do not disable deferred rendering,
+change its scheduling, or increase fixed waits to hide a failure. Keep image TIDs on fixed wrappers.
 
 ## Transport and payment readiness
 
@@ -450,7 +510,7 @@ cy.waitForStableAndInteractiveDOM();
 | `goToPageThroughSimpleNavigation(index)`                                  | Click pagination page by index                                       |
 | `checkCanGoToNextOrderStep()`                                             | Assert order next button is visible and not disabled                 |
 | `takeSnapshotAndCompare(name, label, options?, callbackBeforeBlackout?)`  | Take visual regression snapshot                                      |
-| `getSnapshotIndexingFunction(group, subgroup)`                            | Returns counter function for snapshot naming                         |
+| `getSnapshotIndexingFunction(group, subgroup)`                            | Returns snapshot ID function; pass an explicit stable index, or omit for legacy counting |
 | `checktHeadlineText(translationKey)`                                      | Check h1 text matches translation (with fallback)                    |
 | `checkFormLineError(errorText?)`                                          | Assert form_line_error exists with optional translated text          |
 | `checkNumberOfApiRequestsTriggeredByActions(actions, count, requestName)` | Intercept and count GraphQL requests                                 |
@@ -460,7 +520,7 @@ cy.waitForStableAndInteractiveDOM();
 ### Products
 
 ```typescript
-staticData.products.helloKitty; // { uuid, name, catnum: '9177759' }
+staticData.products.helloKitty; // { uuid, name, fullName, catnum: '9177759' }
 staticData.products.philips32PFL4308; // { uuid, catnum: '9176508' }
 staticData.products.televisionPhilipsM; // { uuid } — main variant with 6 sellable variants (incl. philips100)
 staticData.products.a4techMouse; // { uuid, catnum: '5960453', name }
@@ -470,6 +530,9 @@ staticData.products.delonghi; // { uuid, catnum: '9771339', name } — has gift 
 staticData.products.giftTicket100czk; // { uuid, catnum: '9176544MS', name } — gift product
 staticData.products.electronicGiftVoucher1000; // { uuid, catnum: 'VOUCHER1000', name } — electronic gift voucher product (voucher-only carts skip transport)
 ```
+
+Use `fullName ?? name` for exact displayed/API product-name assertions; `name` remains
+the base name used by search scenarios. The Hello Kitty fixture includes a prefix and suffix.
 
 ### Categories
 
@@ -742,30 +805,23 @@ visitEntityByUuid('product', staticData.products.a4techMouse.uuid);
 
 ### Filter interaction
 
-```typescript
-// Check checkbox filter
-cy.getByTID([TIDs.filter_panel]).find('input[type="checkbox"]').first().check({ force: true });
-cy.wait(1500);
-cy.waitForStableAndInteractiveDOM();
-
-// Price filter
-cy.getByTID([TIDs.filter_price_input_min]).find('input').should('be.visible').clear().type('200').blur();
-
-// Clear all filters (conditionally)
-cy.get('body').then(($body) => {
-    if ($body.find(`[data-tid="${TIDs.clear_all_filters_button}"]`).length > 0) {
-        cy.getByTID([TIDs.clear_all_filters_button]).first().click({ force: true });
-    }
-});
-```
+Start from known category/filter data. Select a specific parameter or price range,
+wait for the relevant state/request, and assert the expected selected values and
+matching results. For clear-filter tests, first assert the active filter and clear
+control exist, then clear and assert the reset state; do not skip the action conditionally.
+Use the project's readiness helper in addition to the scenario-specific assertions.
 
 ### Sort interaction
 
 ```typescript
-cy.getByTID([[TIDs.blocks_sortingbar_option_, 0]]).click({ force: true });
-cy.wait(1500);
+cy.getByTID([[TIDs.blocks_sortingbar_option_, 'PRICE_ASC']]).filter(':visible').click();
 cy.waitForStableAndInteractiveDOM();
 ```
+
+Select the intended named sort option (for example `PRICE_ASC`) rather than an
+arbitrary index, and assert the resulting sort state and product ordering. A filter
+remaining in the URL alone does not prove sorting. Use the visible control without
+forcing the action unless the component-specific exception above applies.
 
 ### Product count assertion
 
@@ -796,11 +852,11 @@ cy.getByTID([TIDs.fixed_header, TIDs.my_account_link]).click({ scrollBehavior: f
 Do not dynamically choose between the main and fixed headers. Regular feature tests should use the main header after
 scrolling to the top. Test fixed-header behavior separately and scope all selectors under `TIDs.fixed_header`.
 
-### Disable retries for flaky-prone tests
+### Retry configuration is not a flakiness fix
 
-```typescript
-describe('Feature', { retries: { runMode: 0 } }, () => { ... });
-```
+Inspect the configured retries when diagnosing failures, but fix the underlying
+state/timing dependency. A pass after retry is not evidence of deterministic behavior;
+changing retry counts requires an explained purpose, not just a green run.
 
 ## Naming Conventions
 
@@ -885,9 +941,9 @@ order/createOrder.cy.ts, contactInformation.cy.ts, orderRepeat.cy.ts
 4. **Add missing TIDs** to `tids.ts` + React components (use `data-tid` for HTML elements, `tid` prop for Button/LinkButton)
 5. **Create or extend a support file** for reusable helpers (co-locate as `featureNameSupport.ts`)
 6. **Write test** using `cy.getByTID()` consistently, `initializePersistStoreInLocalStorageToDefaultValues()` in beforeEach
-7. **Add SNAPSHOT_GROUP** if new category (unique number in support/index.ts enum)
-8. **Run test** with `make run-specific-test-base SPEC=e2e/path/to/test.cy.ts`
-9. **Fix errors** and re-run until passing
+7. **Add SNAPSHOT_GROUP** only when adding justified visual coverage in a new snapshot category (unique number in support/index.ts enum); functional-only scenarios need no snapshot infrastructure
+8. **Provide manual verification** with `make run-specific-test-regression SPEC=e2e/path/to/test.cy.ts`; do not start Cypress yourself. References are generated and reviewed on CI, not locally.
+9. **Verify tooling** with `docker compose exec -T storefront sh -lc 'cd cypress && npm run typecheck'` when the container is already running.
 
 ## Real-World Example: Complete Test + Support File
 
@@ -908,7 +964,9 @@ export const checkComparisonIsEmpty = () => {
 };
 
 export const addProductToComparisonFromListing = (catnum: string) => {
-    cy.getByTID([[TIDs.blocks_product_list_listeditem_, catnum], TIDs.product_compare_button]).click({ force: true });
+    cy.getByTID([[TIDs.blocks_product_list_listeditem_, catnum], TIDs.product_compare_button])
+        .should('be.visible')
+        .click();
 };
 
 export const checkComparisonPopupVisible = () => {
@@ -933,7 +991,9 @@ export const removeAllFromComparison = () => {
 };
 
 export const removeProductFromComparison = (catnum: string) => {
-    cy.getByTID([[TIDs.comparison_product_, catnum], TIDs.comparison_remove_product_button]).click({ force: true });
+    cy.getByTID([[TIDs.comparison_product_, catnum], TIDs.comparison_remove_product_button])
+        .should('be.visible')
+        .click();
     cy.waitForStableAndInteractiveDOM();
     checkAndHideSuccessToast();
 };
@@ -980,7 +1040,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
     it('[Empty Comparison] should show empty comparison page', () => {
         visitComparisonPage();
         checkComparisonIsEmpty();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty comparison', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'empty comparison', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -996,7 +1056,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
         goToComparisonFromPopup();
         checkUrl(url.productComparison);
         checkComparisonProductCount(1);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'one product from listing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'one product from listing', {
             blackout: [
                 { tid: TIDs.comparison_product_image },
                 { tid: TIDs.footer_social_links },
@@ -1033,23 +1093,28 @@ Use this table to quickly find which test generates a specific snapshot (e.g., s
 **Regenerate** the table after adding/removing/renaming snapshots:
 
 ```bash
-make generate-snapshots-info-table
+docker compose exec -T storefront sh -lc 'cd cypress && npm run generate-snapshots-table'
 ```
 
 ## Cypress Config Highlights
 
+- **Versions**: Cypress 16.1.1, cypress-visual-regression 6.0.1 and cypress-real-events 1.15.1; Node 24.14.0 in CI. Public configuration uses `expose` / `Cypress.expose()` and CLI `--expose`; use `cy.env()` for secrets, never expose them.
+- **Browser**: `defaultBrowser: 'chrome-for-testing'` applies to regression, regeneration and smoke commands. The shared Cypress Dockerfile pins Chrome for Testing 155.0.8059.39 using the official `cypress/factory` image pinned by version and digest. Rebuild that image after browser changes; do not fall back to Electron or an automatically updated local Chrome. Browser updates require reviewed CI-generated baselines, not automatic acceptance of differences. Native local runs need Chrome for Testing installed and discoverable; their pixels are not interchangeable with CI references.
+- **CLI tooling**: glob 13, inquirer 14 and uuid 14. The Cypress TypeScript compiler stays aligned with storefront at 5.9.3; do not assume a test-library update also authorizes an application-wide compiler migration.
 - **Viewport**: 1600x720 (covers the five-column product grid at the 1560px `xxl` breakpoint)
-- **Headless Electron window**: Matches the configured viewport in `before:browser:launch` so screenshots are not clipped to the default 1280px window width.
+- **Headless Chromium window**: 1920x1080 in `before:browser:launch`, with device scale factor 1; the application viewport stays 1600x720. The outer window must leave room for browser/runner chrome. Do not equate window size with viewport size: that produced clipped 1600x633 viewport snapshots and visible runner scrollbars. Verify the actual PNG dimensions and popup content after browser changes; do not accept smaller captures by regeneration.
 - **Default command timeout**: 20s
 - **Video**: enabled
-- **Visual regression error threshold**: 0.005 (0.5%)
+- **Visual regression error threshold**: 0.005 (0.5%); a passing comparison does not prove that the reference is current. Verify important values with explicit assertions.
+- **Deferred rendering**: preserve page-capture scrolling; the storefront intentionally delays rendering for web vitals. Hydration or a quiet DOM alone does not prove that all deferred content is ready.
 - **Retries in runMode**: 2 (configurable per test with `{ retries: { runMode: 0 } }`)
 - **Test groups**: Controlled by `GROUP` env var for CI (e.g., `GROUP=authentication`, `GROUP=b2b`)
+- **Promo-code rate limit**: The GitHub Actions Cypress compose file mounts `docker/conf/cypress-rate-limiter.yaml` only into its PHP test container. Like `when@test`, it disables only the apply-code quota because scenarios/retries share an IP; production limits remain unchanged. Verify throttling separately, not through cart-flow timing or longer waits.
 - **Translation loading**: Auto-loads `.po` files from `/app/app-translations/`, falls back to English
 
 ## Keeping This Skill Up-to-Date
 
-**IMPORTANT**: When you make changes to the Cypress test infrastructure, you MUST also update this skill file (`.claude/skills/cypress-tests/SKILL.md`) to stay in sync. Specifically:
+**IMPORTANT**: When you make changes to the Cypress test infrastructure, update this skill file (`.agents/skills/cypress-tests/SKILL.md`) where its guidance is affected. Cross-layer ownership stays in the canonical `storefront-tests` skill. Specifically:
 
 - **New SNAPSHOT_GROUP value** → Update the `SNAPSHOT_GROUP values` enum listing in this file
 - **New custom command** → Add it to the Custom Commands Reference tables
@@ -1058,4 +1123,4 @@ make generate-snapshots-info-table
 - **New test category/directory** → Add to the Existing Test Categories table
 - **New translation key category** → Update the `translations` object categories list
 - **Changed test workflow or conventions** → Update relevant sections
-- **Snapshot changes** → Run `make generate-snapshots-info-table` to regenerate the lookup table
+- **Snapshot naming/call-site changes** → Regenerate the lookup table using the command above; this does not run Cypress or regenerate PNG references

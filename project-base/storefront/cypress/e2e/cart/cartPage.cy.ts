@@ -1,5 +1,6 @@
 import {
     applyCodeOnCartPage,
+    checkCartContents,
     checkCartItemSpinboxDecreaseButtonIsEnabled,
     checkCartItemSpinboxIncreaseButtonIsEnabled,
     clickOnPromoCodeButton,
@@ -10,10 +11,17 @@ import {
     removeProductFromCartPage,
     removePromoCodeOnCartPage,
 } from './cartSupport';
-import { checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
+import {
+    checkFreeTransportBannerShowsFree,
+    checkFreeTransportBannerShowsRemaining,
+} from 'e2e/freeShipping/freeShippingSupport';
+import { checkEmptyCartTextIsVisible, checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import {
     changeExpectedDeliveryDateMessagesToStaticDemodata,
     changeSelectionOfTransportByName,
+    checkSelectedTransport,
+    checkTransportPrice,
+    waitForTransportAndPaymentToBeInteractive,
 } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import {
@@ -46,7 +54,7 @@ describe('Cart Page Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
     });
 
-    it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
+    it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', () => {
         cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
 
         increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
@@ -56,7 +64,11 @@ describe('Cart Page Tests', () => {
         loseFocus();
 
         cy.wait('@addToCartMutation');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after increase', {
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 6 },
+            { product: staticData.products.philips32PFL4308, quantity: 1 },
+        ]);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'after increase', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -70,14 +82,10 @@ describe('Cart Page Tests', () => {
         loseFocus();
 
         cy.wait('@addToCartMutation');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after decrease', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 4 },
+            { product: staticData.products.philips32PFL4308, quantity: 1 },
+        ]);
     });
 
     it('[Immediate Quantity Reversal] should submit both cart changes and send matching GTM events', () => {
@@ -103,6 +111,10 @@ describe('Cart Page Tests', () => {
             });
         });
 
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 2 },
+            { product: staticData.products.philips32PFL4308, quantity: 1 },
+        ]);
         cy.window().should((window) => {
             const cartChangeEvents = (window as DataLayerWindow).dataLayer
                 ?.filter(({ event }) => event === 'ec.add_to_cart' || event === 'ec.remove_from_cart')
@@ -115,7 +127,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
+    it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', () => {
         cy.intercept('POST', '/graphql/AddToCartMutation').as('addToCartMutation');
 
         increaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
@@ -135,14 +147,10 @@ describe('Cart Page Tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after increase', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 6 },
+            { product: staticData.products.philips32PFL4308, quantity: 1 },
+        ]);
 
         decreaseCartItemQuantityWithSpinbox(staticData.products.helloKitty.catnum);
         cy.wait('@addToCartMutation');
@@ -153,31 +161,22 @@ describe('Cart Page Tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(300);
 
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after decrease', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([
+            { product: staticData.products.helloKitty, quantity: 4 },
+            { product: staticData.products.philips32PFL4308, quantity: 1 },
+        ]);
     });
 
-    it('[Remove Products] should remove products from cart', function () {
+    it('[Remove Products] should remove products from cart', () => {
         removeProductFromCartPage(staticData.products.philips32PFL4308.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first removal', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        checkCartContents([{ product: staticData.products.helloKitty, quantity: 2 }]);
 
         removeProductFromCartPage(staticData.products.helloKitty.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty cart after second removal', {
+        checkEmptyCartTextIsVisible();
+        cy.getByTID([TIDs.pages_cart_list_item_name]).should('not.exist');
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(5), 'empty cart after second removal', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_payment_images },
@@ -186,7 +185,7 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Quantity Spinbox Decrease] min spinbox button should stay clickable for removing the cart item', function () {
+    it('[Quantity Spinbox Decrease] min spinbox button should stay clickable for removing the cart item', () => {
         checkCartItemSpinboxDecreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
         cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
@@ -197,7 +196,7 @@ describe('Cart Page Tests', () => {
         checkCartItemSpinboxDecreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
     });
 
-    it('[Quantity Spinbox Increase] max spinbox button should be always clickable', function () {
+    it('[Quantity Spinbox Increase] max spinbox button should be always clickable', () => {
         checkCartItemSpinboxIncreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
         cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.philips32PFL4308.catnum], TIDs.spinbox_input])
             .clear()
@@ -208,11 +207,12 @@ describe('Cart Page Tests', () => {
         checkCartItemSpinboxIncreaseButtonIsEnabled(staticData.products.philips32PFL4308.catnum);
     });
 
-    it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
+    it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', () => {
         clickOnPromoCodeButton();
         applyCodeOnCartPage('test');
         checkAndHideSuccessToast(translations.toast.success.codeAdded);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after applying first promocode', {
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', 'test');
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(6), 'cart page after applying first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -226,7 +226,7 @@ describe('Cart Page Tests', () => {
         checkTransportSelectionIsVisible();
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(),
+            getSnapshotFullIndexAsString(7),
             'transport and payment page after applying first promocode',
             {
                 blackout: [
@@ -241,7 +241,8 @@ describe('Cart Page Tests', () => {
         checkUrl(url.cart);
         removePromoCodeOnCartPage();
         checkAndHideSuccessToast(translations.toast.success.codeRemoved);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after removing first promocode', {
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('not.exist');
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(8), 'cart page after removing first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -251,8 +252,9 @@ describe('Cart Page Tests', () => {
         });
 
         applyCodeOnCartPage('test-product2');
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', 'test-product2');
         checkAndHideSuccessToast(translations.toast.success.codeAdded);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after removing second promocode', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(9), 'cart page after removing second promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -262,23 +264,18 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', function () {
+    it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', () => {
         clickOnPromoCodeButton();
 
         applyCodeOnCartPage('test');
         checkAndHideSuccessToast(translations.toast.success.codeAdded);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after applying promocode', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_payment_images },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', 'test');
 
         removeProductFromCartPage(staticData.products.helloKitty.catnum);
         checkAndHideInfoToast(translations.toast.info.promoCodeNotApplicable.replace('{{ promoCode }}', 'test'));
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing product that allows promocode', {
+        cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('not.exist');
+        checkCartContents([{ product: staticData.products.philips32PFL4308, quantity: 1 }]);
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(11), 'after removing product that allows promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -288,15 +285,21 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', function () {
-        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 10);
+    it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', () => {
+        // Philips only allows personal pickup, so it cannot be part of a PPL pricing scenario.
+        removeProductFromCartPage(staticData.products.philips32PFL4308.catnum);
+        checkCartContents([{ product: staticData.products.helloKitty, quantity: 2 }]);
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 13);
         cy.reloadAndWaitForStableAndInteractiveDOM();
+        checkCartContents([{ product: staticData.products.helloKitty, quantity: 15 }]);
+        checkFreeTransportBannerShowsFree();
 
         clickOnPromoCodeButton();
         applyCodeOnCartPage('test');
         checkAndHideSuccessToast(translations.toast.success.codeAdded);
+        checkFreeTransportBannerShowsRemaining();
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(),
+            getSnapshotFullIndexAsString(12),
             'cart page with non-free transport after applying promocode',
             {
                 blackout: [
@@ -310,8 +313,11 @@ describe('Cart Page Tests', () => {
 
         goToNextOrderStep();
         changeSelectionOfTransportByName(translations.transport.ppl, translations.transportGroup.deliveryToAddress);
+        waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.ppl.uuid);
+        checkTransportPrice(staticData.transport.ppl.uuid, 'paid');
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(),
+            getSnapshotFullIndexAsString(13),
             'transport and payment page with non-free options after applying promocode',
             {
                 blackout: [

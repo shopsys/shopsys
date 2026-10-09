@@ -73,6 +73,7 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
 
     const priceElement = price && isPriceVisible(price.priceWithVat) && (
         <div
+            data-tid={TIDs.transport_and_payment_price}
             className={twJoin(
                 'ml-auto font-secondary font-semibold text-sm text-text-default',
                 isPriceNextToDeliveryDateOnSmallScreen &&
