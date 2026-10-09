@@ -817,6 +817,12 @@ jobs:
                     PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
                 run: |
                     set -euo pipefail
+                    case "$HEAD_REF" in
+                        master|main|[0-9]*.[0-9]*)
+                            echo "::error::Refusing to push regenerated snapshots to ${HEAD_REF}."
+                            exit 1
+                            ;;
+                    esac
                     PR=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")
                     if ! jq -e --arg head "$HEAD_SHA" --arg base "$BASE_SHA" --arg repo "$GITHUB_REPOSITORY" \
                         '.state == "open" and .head.sha == $head and .base.sha == $base and .head.repo.full_name == $repo
