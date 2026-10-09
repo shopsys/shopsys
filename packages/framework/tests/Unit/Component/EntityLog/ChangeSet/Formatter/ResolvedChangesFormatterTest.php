@@ -77,10 +77,10 @@ class ResolvedChangesFormatterTest extends TestCase
         ]);
 
         $this->assertSame(
-            'Attribute <code>name</code> was changed from <code>Personal collection</code> to <code>Packeta</code>'
-            . '<br>Attribute <code>totalPriceWithVat</code> was changed from <code>29.55</code> to <code>21.31</code>'
-            . '<br>Attribute <code>createdAt</code> was changed from <code>May 1, 2026, 10:00:00 AM</code> to <code>May 2, 2026, 11:00:00 AM</code>'
-            . '<br>Attribute <code>paid</code> was changed from <code>No</code> to <code>Yes</code>',
+            '<div>Attribute <code>name</code> was changed from <code>Personal collection</code> to <code>Packeta</code></div>'
+            . '<div>Attribute <code>totalPriceWithVat</code> was changed from <code>29.55</code> to <code>21.31</code></div>'
+            . '<div>Attribute <code>createdAt</code> was changed from <code>May 1, 2026, 10:00:00 AM</code> to <code>May 2, 2026, 11:00:00 AM</code></div>'
+            . '<div>Attribute <code>paid</code> was changed from <code>No</code> to <code>Yes</code></div>',
             $formattedChanges,
         );
     }
@@ -106,7 +106,10 @@ class ResolvedChangesFormatterTest extends TestCase
         ]);
 
         $this->assertSame(
-            'Collection <code>items</code> was changed:<br> Created <code>OrderItem</code>: <code>GoPay - Payment By Card</code>,<br> Removed <code>OrderItem</code>: <code>Personal collection</code>',
+            '<div>Collection <code>items</code> was changed:<br> <ul class="list-unstyled ps-3 mb-0">'
+            . '<li>Created <code>OrderItem</code>: <code>GoPay - Payment By Card</code></li>'
+            . '<li>Removed <code>OrderItem</code>: <code>Personal collection</code></li>'
+            . '</ul></div>',
             $formattedChanges,
         );
     }
@@ -124,7 +127,7 @@ class ResolvedChangesFormatterTest extends TestCase
         ]);
 
         $this->assertSame(
-            'Attribute <code>&lt;attribute&gt;</code> was changed from <code>&lt;old &amp; &quot;value&quot;&gt;</code> to <code>&lt;new &amp; &quot;value&quot;&gt;</code>',
+            '<div>Attribute <code>&lt;attribute&gt;</code> was changed from <code>&lt;old &amp; &quot;value&quot;&gt;</code> to <code>&lt;new &amp; &quot;value&quot;&gt;</code></div>',
             $formattedChanges,
         );
     }
@@ -147,7 +150,7 @@ class ResolvedChangesFormatterTest extends TestCase
         ]);
 
         $this->assertSame(
-            'Attribute <code>note</code> was changed z %oldValue% na %newValue%',
+            '<div>Attribute <code>note</code> was changed z %oldValue% na %newValue%</div>',
             $formattedChanges,
         );
     }
