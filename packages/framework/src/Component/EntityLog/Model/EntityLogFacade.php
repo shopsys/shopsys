@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig;
 use Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Exception\NotLoggableException;
@@ -19,6 +20,7 @@ class EntityLogFacade
         protected readonly EntityLogDataFactory $entityLogDataFactory,
         protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
         protected readonly EntityLogNoteRegistry $entityLogNoteRegistry,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -49,9 +51,11 @@ class EntityLogFacade
     ): EntityLog {
         $userIdentifier = $this->detectionFacade->getUserIdentifier();
         $source = $this->detectionFacade->getEntityLogSource();
-        $parentEntityFunctionName = $loggableEntityConfig->getParentEntityFunctionName();
+        $parentPropertyName = $loggableEntityConfig->getParentPropertyName();
         $parentEntityIdentityFunctionName = $loggableEntityConfig->getParentEntityIdentityFunctionName();
-        $parentEntity = $parentEntityFunctionName ? call_user_func([$entity, $parentEntityFunctionName]) : null;
+        $parentEntity = $parentPropertyName !== null
+            ? $this->em->getClassMetadata($entity::class)->getFieldValue($entity, $parentPropertyName)
+            : null;
 
         $entityLogData = $this->entityLogDataFactory->create();
         $entityLogData->action = $action;
