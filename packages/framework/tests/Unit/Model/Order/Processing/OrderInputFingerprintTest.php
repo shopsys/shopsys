@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -58,7 +59,7 @@ class OrderInputFingerprintTest extends TestCase
         $domainConfigStub = $this->createStub(DomainConfig::class);
         $domainConfigStub->method('getId')->willReturn(1);
 
-        $orderInput = new OrderInputFactory()->create($domainConfigStub);
+        $orderInput = new OrderInputFactory($this->createStub(OrderInputPreloaderFacade::class))->create($domainConfigStub);
         $orderInput->addProduct($this->createEntityStub(Product::class, 1), 2);
         $orderInput->setTransport($this->createEntityStub(Transport::class, 10));
         $orderInput->setPayment($this->createEntityStub(Payment::class, 30));
