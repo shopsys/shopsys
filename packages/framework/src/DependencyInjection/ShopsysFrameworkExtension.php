@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\DataTypeFormatterInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
@@ -69,6 +70,9 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(DataTypeResolverInterface::class)
             ->addTag('shopsys.data_type_resolver');
+
+        $container->registerForAutoconfiguration(DataTypeFormatterInterface::class)
+            ->addTag('shopsys.entity_log_data_type_formatter');
 
         $container->registerForAutoconfiguration(AbstractTransportTypeEnum::class)
             ->addTag('shopsys.transport_type_enum');

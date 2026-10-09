@@ -8,10 +8,7 @@ class ResolvedChangesFormatter extends AbstractChangeSetFormatter
 {
     public function __construct(
         protected readonly CollectionChangesFormatter $collectionChangesFormatter,
-        protected readonly ScalarDataTypeFormatter $scalarDataTypeFormatter,
-        protected readonly MoneyDataTypeFormatter $moneyDataTypeFormatter,
-        protected readonly DateTimeDataTypeFormatter $dateTimeDataTypeFormatter,
-        protected readonly BooleanDataTypeFormatter $booleanDataTypeFormatter,
+        protected readonly DataTypeFormatterRegistry $dataTypeFormatterRegistry,
     ) {
     }
 
@@ -20,63 +17,31 @@ class ResolvedChangesFormatter extends AbstractChangeSetFormatter
         $formattedChanges = [];
 
         foreach ($changeSet as $attribute => $changes) {
-            if ($changes['dataType'] === 'Collection') {
-                $formattedChanges[] = t(
-                    'Collection %collectionAttribute% was changed:<br> %changes%',
-                    [
-                        '%collectionAttribute%' => $this->formatCode($attribute),
-                        '%changes%' => $this->collectionChangesFormatter->formatChanges($changes),
-                    ],
-                );
-
-                continue;
-            }
-
-            if (in_array($changes['dataType'], ['DateTimeImmutable', 'DateTime', 'DatePoint'], true)) {
-                $formattedChanges[] = t(
-                    'Attribute %attribute% was changed %changes%',
-                    [
-                        '%attribute%' => $this->formatCode($attribute),
-                        '%changes%' => $this->dateTimeDataTypeFormatter->formatChanges($changes),
-                    ],
-                );
-
-                continue;
-            }
-
-            if ($changes['dataType'] === 'Money') {
-                $formattedChanges[] = t(
-                    'Attribute %attribute% was changed %changes%',
-                    [
-                        '%attribute%' => $this->formatCode($attribute),
-                        '%changes%' => $this->moneyDataTypeFormatter->formatChanges($changes),
-                    ],
-                );
-
-                continue;
-            }
-
-            if ($changes['dataType'] === 'boolean') {
-                $formattedChanges[] = t(
-                    'Attribute %attribute% was changed %changes%',
-                    [
-                        '%attribute%' => $this->formatCode($attribute),
-                        '%changes%' => $this->booleanDataTypeFormatter->formatChanges($changes),
-                    ],
-                );
-
-                continue;
-            }
-
-            $formattedChanges[] = t(
-                'Attribute %attribute% was changed %changes%',
-                [
+            $formattedChanges[] = match ($changes['dataType']) {
+                'Collection' => t('Collection %collectionAttribute% was changed:<br> %changes%', [
+                    '%collectionAttribute%' => $this->formatCode($attribute),
+                    '%changes%' => $this->collectionChangesFormatter->formatChanges($changes),
+                ]),
+                default => t('Attribute %attribute% was changed %changes%', [
                     '%attribute%' => $this->formatCode($attribute),
-                    '%changes%' => $this->scalarDataTypeFormatter->formatChanges($changes),
-                ],
-            );
+                    '%changes%' => $this->formatAttributeChanges($changes),
+                ]),
+            };
         }
 
         return implode('<br>', $formattedChanges);
+    }
+
+    /**
+     * @param array{dataType: string, oldReadableValue: mixed, newReadableValue: mixed, oldValue: mixed, newValue: mixed} $changes
+     */
+    protected function formatAttributeChanges(array $changes): string
+    {
+        $dataTypeFormatter = $this->dataTypeFormatterRegistry->getDataTypeFormatter($changes['dataType']);
+
+        return $this->formatFromToChanges(
+            $dataTypeFormatter->formatValue($changes['oldReadableValue'], $changes['oldValue']),
+            $dataTypeFormatter->formatValue($changes['newReadableValue'], $changes['newValue']),
+        );
     }
 }
