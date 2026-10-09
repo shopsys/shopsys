@@ -71,7 +71,6 @@ const orderItem = {
     },
     product: {
         uuid: productUuid,
-        catalogNumber: 'CAT-1',
         slug: '/product',
         isVisible: true,
         mainImage: null,
@@ -122,7 +121,7 @@ describe('OrderDetailOrderItem', () => {
     });
 
     test.each([
-        ['the product catalog number has changed', { ...orderItem.product!, catalogNumber: 'CAT-NEW' }],
+        ['the product exists', orderItem.product],
         ['the product has been deleted', null],
     ])('keeps the purchased gift voucher available when %s', (_, product) => {
         render(
