@@ -7,6 +7,7 @@ import {
 import { TypeLoginTypeEnum } from 'graphql/types';
 import type { LastLoginType } from 'store/slices/createUserSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
 import { storeAuthNotification } from 'utils/auth/authNotificationStorage';
@@ -45,6 +46,7 @@ export const useLogin = () => {
 };
 
 export const useHandleActionsAfterLogin = () => {
+    const setCartStale = useSessionStore((store) => store.setCartStale);
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateLastLoginType = usePersistStore((store) => store.updateLastLoginType);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -56,6 +58,8 @@ export const useHandleActionsAfterLogin = () => {
         rewriteUrl: string | undefined,
         lastLoginType?: LastLoginType,
     ) => {
+        // Clearing the guest identity must not look like an empty cart before the auth reload completes.
+        setCartStale(true);
         updateCartUuid(null);
         updateProductListUuids({});
         clearOrderConfirmationContext();
@@ -75,12 +79,14 @@ export const useHandleActionsAfterLogin = () => {
 };
 
 export const useLoginAfterPasswordRecovery = () => {
+    const setCartStale = useSessionStore((store) => store.setCartStale);
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
     const domainConfig = useDomainConfig();
 
     const handleActionsAfterPasswordRecovery = (showCartMergeInfo: boolean) => {
+        setCartStale(true);
         updateCartUuid(null);
         updateProductListUuids({});
         clearOrderConfirmationContext();
