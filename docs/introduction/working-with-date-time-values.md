@@ -75,7 +75,7 @@ Tests use `new DatePoint()` for time calculations:
 use Symfony\Component\Clock\DatePoint;
 
 // Set entity timestamp relative to current time
-$cart->setModifiedAt((new DatePoint())->modify('-131 days'));
+$cart->setLastActivityAt((new DatePoint())->modify('-131 days'));
 
 // For services with injected ClockInterface, mock it:
 $clock = $this->createMock(ClockInterface::class);

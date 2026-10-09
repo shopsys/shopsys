@@ -38,7 +38,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->cartFacade;
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 131 days'));
+        $cart->setLastActivityAt((new DatePoint())->modify('- 131 days'));
 
         $this->em->flush();
 
@@ -53,7 +53,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->cartFacade;
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 129 days'));
+        $cart->setLastActivityAt((new DatePoint())->modify('- 129 days'));
 
         $this->em->flush();
 
@@ -68,7 +68,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->cartFacade;
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 131 days'));
+        $cart->setLastActivityAt((new DatePoint())->modify('- 131 days'));
 
         $this->em->flush();
 
@@ -83,7 +83,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
         $cartFacade = $this->cartFacade;
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 129 days'));
+        $cart->setLastActivityAt((new DatePoint())->modify('- 129 days'));
 
         $this->em->flush();
 

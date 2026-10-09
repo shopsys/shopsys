@@ -88,7 +88,7 @@ class MergeCartFacade
             $currentCart->applyPromoCode($promoCode);
         }
 
-        $currentCart->setModifiedNow();
+        $currentCart->updateLastActivityDate();
 
         $this->entityManager->flush();
 

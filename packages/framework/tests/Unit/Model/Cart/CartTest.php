@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Clock\DatePoint;
 use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 class CartTest extends TestCase
@@ -140,5 +141,23 @@ class CartTest extends TestCase
         $cart->clean();
 
         $this->assertTrue($cart->isEmpty());
+    }
+
+    public function testUpdateLastActivityDateKeepsDateWithinSameDay(): void
+    {
+        $cart = new Cart('randomString', null);
+        $lastActivityAt = $cart->getLastActivityAt();
+
+        $this->assertFalse($cart->updateLastActivityDate());
+        $this->assertSame($lastActivityAt, $cart->getLastActivityAt());
+    }
+
+    public function testUpdateLastActivityDateMovesOlderDateToToday(): void
+    {
+        $cart = new Cart('randomString', null);
+        $cart->setLastActivityAt(new DatePoint('yesterday'));
+
+        $this->assertTrue($cart->updateLastActivityDate());
+        $this->assertSame((new DatePoint('today'))->format('Y-m-d'), $cart->getLastActivityAt()->format('Y-m-d'));
     }
 }
