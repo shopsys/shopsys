@@ -1,4 +1,3 @@
-import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
@@ -20,7 +19,7 @@ export const AutocompleteSearchCategoriesResult: FC<AutocompleteSearchCategories
 }) => {
     const { t } = useTranslation();
 
-    const mappedCategoriesSearchResults = mapConnectionEdges<TypeSimpleCategoryFragment>(categoriesSearch.edges);
+    const mappedCategoriesSearchResults = mapConnectionEdges(categoriesSearch.edges);
 
     if (!mappedCategoriesSearchResults?.length) {
         return null;

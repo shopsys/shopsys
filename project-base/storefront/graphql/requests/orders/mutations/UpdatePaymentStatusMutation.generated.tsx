@@ -6,7 +6,6 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { UpdatePaymentStatusFragment } from '../fragments/UpdatePaymentStatusFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Represents the status of the order confirmation page content. */
@@ -27,10 +26,23 @@ export type TypeUpdatePaymentStatusMutation = { UpdatePaymentStatus: { __typenam
 export const UpdatePaymentStatusMutationDocument = gql`
     mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderUrlHash: String) {
   UpdatePaymentStatus(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
-    ...UpdatePaymentStatusFragment
+    __typename
+    isPaid
+    orderNumber
+    paymentName
+    paymentTransactionsCount
+    hasPaymentInProcess
+    isAwaitingPayment
+    lastExternalPaymentUrl
+    lastPaymentStatus
+    confirmationPageContent {
+      __typename
+      content
+      status
+    }
   }
 }
-    ${UpdatePaymentStatusFragment}`;
+    `;
 
 export function useUpdatePaymentStatusMutation() {
   return Urql.useMutation<TypeUpdatePaymentStatusMutation, TypeUpdatePaymentStatusMutationVariables>(UpdatePaymentStatusMutationDocument);

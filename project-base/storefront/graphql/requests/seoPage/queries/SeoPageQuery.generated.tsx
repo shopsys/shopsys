@@ -6,7 +6,9 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { SeoPageFragment } from '../fragments/SeoPageFragment.generated';
+import { SeoAttributesFragment } from '../../seo/fragments/SeoAttributesFragment.generated';
+import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
+import { HreflangLinksFragment } from '../../hreflangLinks/fragments/HreflangLinksFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSeoPageQueryVariables = Exact<{
@@ -20,10 +22,23 @@ export type TypeSeoPageQuery = { seoPage: { __typename: 'SeoPage', ogTitle: stri
 export const SeoPageQueryDocument = gql`
     query SeoPageQuery($pageSlug: String!) @redisCache(ttl: 3600) {
   seoPage(pageSlug: $pageSlug) {
-    ...SeoPageFragment
+    __typename
+    seo {
+      ...SeoAttributesFragment
+    }
+    ogTitle
+    ogDescription
+    ogImage {
+      ...ImageFragment
+    }
+    hreflangLinks {
+      ...HreflangLinksFragment
+    }
   }
 }
-    ${SeoPageFragment}`;
+    ${SeoAttributesFragment}
+${ImageFragment}
+${HreflangLinksFragment}`;
 
 export function useSeoPageQuery(options: Omit<Urql.UseQueryArgs<TypeSeoPageQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeSeoPageQuery, TypeSeoPageQueryVariables>({ query: SeoPageQueryDocument, ...options });

@@ -66,7 +66,14 @@ fragment OrderDetailFragment on Order {
     }
     deliveredAt
     withdrawalRequest {
-        ...OrderWithdrawalRequestFragment
+        __typename
+        email
+        firstName
+        lastName
+        telephone
+        note
+        requestedAt
+        confirmed
     }
     canRequestWithdrawal
     isWithdrawalBlockedByPurchasedGiftVoucher

@@ -2,6 +2,17 @@ fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
     __typename
     columnNumber
     categories {
-        ...ColumnCategoryFragment
+        __typename
+        uuid
+        name
+        slug
+        mainImage {
+            ...ImageFragment
+        }
+        children {
+            __typename
+            name
+            slug
+        }
     }
 }

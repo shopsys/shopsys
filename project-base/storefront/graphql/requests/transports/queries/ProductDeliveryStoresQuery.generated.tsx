@@ -6,7 +6,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ProductDeliveryStoreConnectionFragment } from '../../stores/fragments/ProductDeliveryStoreConnectionFragment.generated';
+import { ListedStoreFragment } from '../../stores/fragments/ListedStoreFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCoordinates = {
@@ -35,7 +35,7 @@ export type TypeProductDeliveryStoresQueryVariables = Exact<{
 }>;
 
 
-export type TypeProductDeliveryStoresQuery = { productDeliveryStores: { __typename: 'ProductDeliveryStoreConnection', searchCoordinates: { latitude: number, longitude: number } | null, pageInfo: { hasNextPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'ProductDeliveryStoreEdge', node: { __typename: 'ProductDeliveryStore', expectedDeliveryDate: string | null, store: { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ date: string, dayOfWeek: number, openingHoursRanges: Array<{ openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null } } | null } | null> | null } };
+export type TypeProductDeliveryStoresQuery = { productDeliveryStores: { __typename: 'ProductDeliveryStoreConnection', searchCoordinates: { latitude: number, longitude: number } | null, pageInfo: { hasNextPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'ProductDeliveryStoreEdge', node: { __typename: 'ProductDeliveryStore', expectedDeliveryDate: string | null, store: { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ date: string, dayOfWeek: number, openingHoursRanges: Array<{ openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string } } } | null } | null> | null } };
 
 
 export const ProductDeliveryStoresQueryDocument = gql`
@@ -48,10 +48,28 @@ export const ProductDeliveryStoresQueryDocument = gql`
     first: $first
     after: $after
   ) {
-    ...ProductDeliveryStoreConnectionFragment
+    __typename
+    searchCoordinates {
+      latitude
+      longitude
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      __typename
+      node {
+        __typename
+        store {
+          ...ListedStoreFragment
+        }
+        expectedDeliveryDate
+      }
+    }
   }
 }
-    ${ProductDeliveryStoreConnectionFragment}`;
+    ${ListedStoreFragment}`;
 
 export function useProductDeliveryStoresQuery(options: Omit<Urql.UseQueryArgs<TypeProductDeliveryStoresQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeProductDeliveryStoresQuery, TypeProductDeliveryStoresQueryVariables>({ query: ProductDeliveryStoresQueryDocument, ...options });

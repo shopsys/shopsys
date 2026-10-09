@@ -1,6 +1,5 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
-import { TypeComplaintListItemFragment } from 'graphql/requests/complaints/fragments/ComplaintListItemFragment.generated';
 import { useComplaintsQuery } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
 import { TypeComplaintFilterInput } from 'graphql/types';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -28,7 +27,7 @@ export const useComplaintsData = (
         requestPolicy: 'cache-and-network',
     });
 
-    const mappedComplaints = mapConnectionEdges<TypeComplaintListItemFragment>(complaintsData?.complaints.edges);
+    const mappedComplaints = mapConnectionEdges(complaintsData?.complaints.edges);
     const complaintsTotalCount = complaintsData?.complaints.totalCount;
     const complaintStatusCounts = (complaintsData?.complaintStatusCounts ?? []).map(({ status, count }) => ({
         statusCode: status.code,

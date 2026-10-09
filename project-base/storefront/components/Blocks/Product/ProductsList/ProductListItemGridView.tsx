@@ -1,18 +1,16 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ProductListReviewsSummaryLink } from 'components/Blocks/ProductReviews/ProductListReviewsSummaryLink';
 import { TIDs } from 'cypress/tids';
-import { type Ref, useRef } from 'react';
+import type { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
+import { type ReactNode, type Ref, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import type { ProductItemProps } from './ProductListItem';
-import type { ProductListItemLayoutProps } from './ProductListItemActions';
-import { ProductListItemAddToCart, ProductListItemButtons } from './ProductListItemActions';
 import { ProductListItemGalleryControls } from './ProductListItemGalleryControls';
 import {
     getProductListItemImageSize,
@@ -21,33 +19,42 @@ import {
 } from './ProductListItemImage';
 import { useProductListItemLinkDescription } from './useProductListItemLinkDescription';
 
-type ProductListItemGridViewProps = ProductListItemLayoutProps &
-    Pick<ProductItemProps, 'imageCount' | 'isWithImageGallery' | 'size' | 'textSize' | 'textSizePrice'> & {
-        forwardedRef: Ref<HTMLLIElement>;
-    };
+type ProductListItemGridViewProps = Pick<
+    ProductItemProps,
+    | 'imageCount'
+    | 'isWithImageGallery'
+    | 'size'
+    | 'textSize'
+    | 'textSizePrice'
+    | 'allowKeyboardFocus'
+    | 'className'
+    | 'highlightBadgeText'
+> & {
+    product: TypeCompactProductFragment;
+    visibleItemsConfig: NonNullable<ProductItemProps['visibleItemsConfig']>;
+    onProductClick: () => void;
+    forwardedRef: Ref<HTMLLIElement>;
+    productListButtons?: ReactNode;
+    availability?: ReactNode;
+    addToCart?: ReactNode;
+};
 
 export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
     allowKeyboardFocus,
     className,
-    currentCart,
     forwardedRef,
-    gtmMessageOrigin,
-    gtmProductListName,
     highlightBadgeText,
     imageCount,
-    isProductInComparison,
-    isProductInWishlist,
     isWithImageGallery = false,
-    listIndex,
     onProductClick,
     product,
-    shouldShowProductActionSkeleton,
     size = 'large',
     textSize = 'sm',
     textSizePrice = 'lg',
-    toggleProductInComparison,
-    toggleProductInWishlist,
     visibleItemsConfig,
+    productListButtons,
+    availability,
+    addToCart,
 }) => {
     const { t } = useTranslation();
     const productListItemImageRef = useRef<ProductListItemImageHandle>(null);
@@ -67,10 +74,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                 className,
             )}
         >
-            {(highlightBadgeText ||
-                visibleItemsConfig.productListButtons ||
-                visibleItemsConfig.flags ||
-                visibleItemsConfig.discount) && (
+            {(highlightBadgeText || productListButtons || visibleItemsConfig.flags || visibleItemsConfig.discount) && (
                 <div className="relative z-above grid grid-cols-[minmax(0,1fr)_auto] items-start gap-1">
                     <div className="relative min-w-0">
                         <div className="absolute inset-x-0 top-0 flex flex-col items-start gap-1">
@@ -89,17 +93,8 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                         </div>
                     </div>
 
-                    {visibleItemsConfig.productListButtons && (
-                        <div className="col-start-2 -mt-2 -mr-2 flex shrink-0 items-center">
-                            <ProductListItemButtons
-                                allowKeyboardFocus={allowKeyboardFocus}
-                                isProductInComparison={isProductInComparison}
-                                isProductInWishlist={isProductInWishlist}
-                                productName={product.fullName}
-                                toggleProductInComparison={toggleProductInComparison}
-                                toggleProductInWishlist={toggleProductInWishlist}
-                            />
-                        </div>
+                    {productListButtons && (
+                        <div className="col-start-2 -mt-2 -mr-2 flex shrink-0 items-center">{productListButtons}</div>
                     )}
                 </div>
             )}
@@ -160,15 +155,13 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                         />
                     )}
 
-                    {visibleItemsConfig.storeAvailability && !product.isSellingDenied && (
-                        <ProductAvailability
+                    {availability && (
+                        <div
                             id={availabilityDescriptionId}
-                            availability={product.availability}
-                            availableStoresCount={product.availableStoresCount}
-                            isPersonalPickupOnly={product.isPersonalPickupOnly}
                             className="row-start-6 mt-2.5 min-h-10 xs:min-h-15 sm:min-h-10"
-                            isInquiryType={product.isInquiryType}
-                        />
+                        >
+                            {availability}
+                        </div>
                     )}
                 </ExtendedNextLink>
 
@@ -190,19 +183,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                     />
                 )}
 
-                {visibleItemsConfig.addToCart && (
-                    <ProductListItemAddToCart
-                        allowKeyboardFocus={allowKeyboardFocus}
-                        currentCart={currentCart}
-                        gtmMessageOrigin={gtmMessageOrigin}
-                        gtmProductListName={gtmProductListName}
-                        listIndex={listIndex}
-                        product={product}
-                        productActionClassName="col-start-1 row-start-7 mt-2.5 w-full"
-                        shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
-                        skeletonClassName="col-start-1 row-start-7 mt-2.5 w-full"
-                    />
-                )}
+                {addToCart && <div className="col-start-1 row-start-7 mt-2.5 w-full">{addToCart}</div>}
             </div>
         </li>
     );

@@ -3,10 +3,6 @@ fragment AdvertsFragment on Advert {
     uuid
     name
     positionName
-    type
-    categories {
-        ...SimpleCategoryFragment
-    }
     ... on AdvertCode {
         code
     }

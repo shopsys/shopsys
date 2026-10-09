@@ -8,7 +8,4 @@ fragment ProductGiftFragment on Product {
     images{
         ...ImageFragment
     }
-    giftPrice{
-        ...ProductPriceFragment
-    }
 }

@@ -1,8 +1,0 @@
-fragment ProductFilterOptionsFlagsFragment on FlagFilterOption {
-    __typename
-    count
-    flag {
-        ...SimpleFlagFragment
-    }
-    isSelected
-}

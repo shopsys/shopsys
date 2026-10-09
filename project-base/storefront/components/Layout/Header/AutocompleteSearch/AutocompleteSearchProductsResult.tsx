@@ -1,7 +1,5 @@
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
 import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeSimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
@@ -24,15 +22,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
 }) => {
     const { t } = useTranslation();
 
-    const mappedProductSearchResults = mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges);
-
-    const onProductDetailRedirectHandler = (product: TypeListedProductFragment | TypeSimpleProductFragment) => {
-        onGtmAutocompleteResultClickEventHandler(
-            autocompleteSearchQueryValue,
-            GtmSectionType.product,
-            product.fullName,
-        );
-    };
+    const mappedProductSearchResults = mapConnectionEdges(productsSearch.edges);
 
     if (!mappedProductSearchResults?.length) {
         return null;
@@ -46,6 +36,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
             </SearchResultSectionTitle>
 
             <ProductsSlider
+                cardVariant="compact"
                 ariaAnchorName="product-slider-autocomplete"
                 gtmProductListName={GtmProductListNameType.autocomplete_search_results}
                 isWithArrows={false}
@@ -58,7 +49,11 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
                     textSizePrice: 'base',
                     visibleItemsConfig: { price: true, priceFromWord: true },
                     onClick: (product) => {
-                        onProductDetailRedirectHandler(product);
+                        onGtmAutocompleteResultClickEventHandler(
+                            autocompleteSearchQueryValue,
+                            GtmSectionType.product,
+                            product.fullName,
+                        );
                         onClosePopupCallback();
                     },
                 }}

@@ -19,9 +19,9 @@ import {
     useOrderDetailQuery,
 } from 'graphql/requests/orders/queries/OrderDetailQuery.generated';
 import {
-    CurrentCustomerUserProductReviewsQueryDocument,
-    TypeCurrentCustomerUserProductReviewsQueryVariables,
-} from 'graphql/requests/productReviews/queries/CurrentCustomerUserProductReviewsQuery.generated';
+    CurrentCustomerUserReviewedProductUuidsQueryDocument,
+    TypeCurrentCustomerUserReviewedProductUuidsQueryVariables,
+} from 'graphql/requests/productReviews/queries/CurrentCustomerUserReviewedProductUuidsQuery.generated';
 import {
     SettingsQueryDocument,
     TypeSettingsQuery,
@@ -117,7 +117,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             }
 
             return initServerSideProps<
-                TypeCurrentCustomerUserProductReviewsQueryVariables | TypeOrderAvailablePaymentsQueryVariables
+                TypeCurrentCustomerUserReviewedProductUuidsQueryVariables | TypeOrderAvailablePaymentsQueryVariables
             >({
                 currentCustomerUserPrefetchMode: 'full',
                 authenticationConfig: {
@@ -136,7 +136,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                           ...(areProductReviewsEnabled
                               ? [
                                     {
-                                        query: CurrentCustomerUserProductReviewsQueryDocument,
+                                        query: CurrentCustomerUserReviewedProductUuidsQueryDocument,
                                         variables: { first: CURRENT_CUSTOMER_USER_REVIEWS_LIMIT },
                                     },
                                 ]

@@ -5,7 +5,7 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleArticleSiteFragment } from '../articles/fragments/SimpleArticleSiteFragment.generated';
-import { SimpleBlogArticleFragment } from '../blogArticles/fragments/SimpleBlogArticleFragment.generated';
+import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 export type TypeSimpleArticleInterfaceFragment_ArticleSite = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
 
 export type TypeSimpleArticleInterfaceFragment_BlogArticle = { __typename: 'BlogArticle', name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null };
@@ -19,7 +19,14 @@ export const SimpleArticleInterfaceFragment = gql`
     fragment SimpleArticleInterfaceFragment on ArticleInterface {
   __typename
   ...SimpleArticleSiteFragment
-  ...SimpleBlogArticleFragment
+  ... on BlogArticle {
+    __typename
+    name
+    slug
+    mainImage {
+      ...ImageFragment
+    }
+  }
 }
     ${SimpleArticleSiteFragment}
-${SimpleBlogArticleFragment}`;
+${ImageFragment}`;

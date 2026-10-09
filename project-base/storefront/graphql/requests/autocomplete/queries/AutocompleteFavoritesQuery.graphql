@@ -1,7 +1,7 @@
 query AutocompleteFavoritesQuery {
   autocompleteFavorites {
     products {
-      ...ListedProductFragment
+      ...CompactProductFragment
     }
     categories {
       ...SimpleCategoryFragment

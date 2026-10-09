@@ -29,7 +29,7 @@ fragment CategoryDetailFragment on Category {
         name
     }
     children {
-        ...CategoryPreviewFragment
+        ...ListedCategoryFragment
     }
     products(orderingMode: $orderingMode, filter: $filter) {
         ...ListedProductConnectionPreviewFragment

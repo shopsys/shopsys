@@ -12,7 +12,16 @@ query AutocompleteSearchQuery(
             userIdentifier: $userIdentifier
         }
     ) {
-        ...SimpleArticleInterfaceFragment
+        __typename
+        ... on ArticleSite {
+            uuid
+            name
+            slug
+        }
+        ... on BlogArticle {
+            name
+            slug
+        }
     }
     brandSearch(
         searchInput: {
@@ -31,7 +40,14 @@ query AutocompleteSearchQuery(
         }
         first: $maxCategoryCount
     ) {
-        ...SimpleCategoryConnectionFragment
+        __typename
+        totalCount
+        edges {
+            __typename
+            node {
+                ...SimpleCategoryFragment
+            }
+        }
     }
     productsSearch: productsSearch(
         searchInput: {
@@ -41,12 +57,13 @@ query AutocompleteSearchQuery(
         }
         first: $maxProductCount
     ) {
-        orderingMode
-        defaultOrderingMode
+        __typename
         totalCount
-        productFilterOptions {
-            ...ProductFilterOptionsFragment
+        edges {
+            __typename
+            node {
+                ...CompactProductFragment
+            }
         }
-        ...ListedProductConnectionFragment
     }
 }

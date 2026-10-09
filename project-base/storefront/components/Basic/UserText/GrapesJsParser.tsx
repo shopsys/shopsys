@@ -12,6 +12,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = ({ text, visibleSliderIte
     const catnums = parseCatnums(text);
     const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
         variables: { catnums },
+        pause: catnums.length === 0,
     });
 
     const dividedParts = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);

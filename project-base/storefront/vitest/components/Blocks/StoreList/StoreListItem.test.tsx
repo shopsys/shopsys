@@ -67,7 +67,6 @@ const store: StoreOrPacketeryPoint = {
         name: 'Czechia',
         code: 'CZ',
     },
-    mainImage: null,
     openingHours: {
         status: TypeStoreOpeningStatusEnum.OpenSoon,
         dayOfWeek: 1,
