@@ -1,5 +1,7 @@
 fragment OrderItemFragment on OrderItem {
     __typename
+    uuid
+    name
     quantity
     product {
         fullName
