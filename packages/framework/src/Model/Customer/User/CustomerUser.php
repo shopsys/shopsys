@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -24,6 +28,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'customer_users')]
 #[ORM\Index(columns: ['email'])]
 #[ORM\UniqueConstraint(name: 'email_domain', columns: ['email', 'domain_id'])]
@@ -43,6 +48,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Customer::class)]
     protected $customer;
@@ -76,6 +82,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
@@ -118,6 +125,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
@@ -125,6 +133,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @var \DateTimeImmutable|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 
@@ -139,6 +148,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $telephonePrefixCountryCode;
 
@@ -171,6 +181,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain>
      */
+    #[ExcludeLog]
     #[ORM\OneToMany(targetEntity: CustomerUserRefreshTokenChain::class, mappedBy: 'customerUser', cascade: ['persist'])]
     protected $refreshTokenChain;
 
@@ -186,6 +197,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      * @var \DateTimeImmutable|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $lastSecurityChange;
 
@@ -344,6 +356,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getCustomerUserFullName()
     {
         return $this->lastName . ' ' . $this->firstName;

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -180,6 +181,7 @@ class SalesRepresentative
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getFullName()
     {
         return $this->firstName . ' ' . $this->lastName;
