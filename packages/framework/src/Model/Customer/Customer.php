@@ -8,10 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'customers')]
 #[ORM\Entity]
 class Customer implements DomainSeparatedEntityInterface
@@ -86,6 +89,15 @@ class Customer implements DomainSeparatedEntityInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * A customer of an individual has no name, the name of the person is in the records of its users
+     */
+    #[EntityLogIdentify]
+    public function getEntityLogIdentifier(): string
+    {
+        return $this->isCompanyCustomer() ? (string)$this->getBillingAddress()->getCompanyName() : (string)$this->id;
     }
 
     public function getBillingAddress(): BillingAddress
