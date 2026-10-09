@@ -578,7 +578,6 @@
     "Product moved to position {{ position }} of {{ count }}_other": "Produkt presunutý na pozíciu {{ position }} z {{ count }}",
     "Product name": "Názov produktu",
     "Product not found.": "Produkt nebol nájdený.",
-    "Product price is missing.": "Cena produktu nie je vyplnená.",
     "Product quantity was adjusted to available stock ({{ quantity }})": "Množstvo produktu bolo upravené na dostupný stav ({{ quantity }})",
     "Product reviews are not available.": "Recenzie produktov nie sú dostupné.",
     "Product variant": "Variant produktu",
