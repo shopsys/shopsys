@@ -97,6 +97,32 @@ jobs:
                 uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
+                    # Include the PR head parent of GitHub's tested merge commit for the mode summary.
+                    fetch-depth: 2
+            -   name: Describe Cypress screenshot mode
+                env:
+                    REGENERATE_SCREENSHOTS: ${{ contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') }}
+                    REFERENCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+                run: |
+                    {
+                        if [ "$REGENERATE_SCREENSHOTS" = 'true' ]; then
+                            printf '## Cypress: generate screenshot references\n\n'
+                            printf 'The `regenerate screenshots` label requests new references. See **Generate screenshot references (label only)** for the result.\n\n'
+                            printf 'A published snapshot commit starts a separate verification run after the label is removed. If references are unchanged, regression checks run in this workflow instead.\n'
+                        else
+                            COMMIT_SUBJECT=$(git show -s --format=%s "$REFERENCE_COMMIT")
+                            if [ "$COMMIT_SUBJECT" = 'regenerated Cypress snapshots' ]; then
+                                printf '## Cypress: verify regenerated screenshot references\n\n'
+                                printf 'This run compares the application with the new references saved in the snapshot commit below.\n\n'
+                            else
+                                printf '## Cypress: verify committed screenshot references\n\n'
+                                printf 'This run compares the application with its committed references; it does not replace them.\n\n'
+                            fi
+                            printf 'Reference commit: [%s](%s/%s/commit/%s).\n\n' "$REFERENCE_COMMIT" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$REFERENCE_COMMIT"
+                            printf 'The regeneration, preparation and publication jobs are intentionally skipped because this event has no `regenerate screenshots` label. This does not undo or invalidate an earlier regeneration.\n\n'
+                            printf 'Check **Run Cypress tests (...)** for verification results; this summary describes the mode, not a successful test result.\n'
+                        fi
+                    } >> "$GITHUB_STEP_SUMMARY"
             -   name: Extract variables to output
                 id: variables
                 env:
@@ -340,6 +366,15 @@ jobs:
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
         runs-on: ubuntu-22.04
         steps:
+            -   name: Checkout snapshot publication checks
+                uses: actions/checkout@v7
+                with:
+                    ref: ${{ github.ref }}
+                    persist-credentials: false
+                    sparse-checkout-cone-mode: false
+                    sparse-checkout: |
+                        /.github/tests/cypress-snapshot-publication.test.cjs
+                        /.github/workflows/docker-build.yaml
             -   name: Download docker-compose.yml from artifacts
                 uses: actions/download-artifact@v8
                 with:
@@ -350,6 +385,13 @@ jobs:
                 run: |
                     docker compose exec -T php-fpm touch ./project-base/app/DEVELOPMENT
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev npm-install-dependencies standards
+            -   name: Check snapshot publication safeguards
+                run: |
+                    # .github is excluded from the PHP image; copy only the test and the workflow it validates.
+                    docker compose exec -T php-fpm mkdir -p .github/tests .github/workflows
+                    docker compose cp .github/tests/cypress-snapshot-publication.test.cjs php-fpm:/var/www/html/.github/tests/cypress-snapshot-publication.test.cjs
+                    docker compose cp .github/workflows/docker-build.yaml php-fpm:/var/www/html/.github/workflows/docker-build.yaml
+                    docker compose exec -T php-fpm node --test .github/tests/cypress-snapshot-publication.test.cjs
             -   name: Check GraphQl schema
                 run: docker compose exec -T php-fpm project-base/app/check-schema.sh
     standards-storefront:
@@ -631,6 +673,7 @@ jobs:
                 uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
+                    persist-credentials: false
             -   name: Download docker-compose.cypress.yml from artifacts
                 uses: actions/download-artifact@v8
                 with:
@@ -692,7 +735,7 @@ jobs:
                 if: ${{ failure() }}
                 run: docker compose logs cypress
     tests-storefront-acceptance-regenerate:
-        name: Reg. Cypress tests
+        name: Generate screenshot references (label only)
         needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
             (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
@@ -716,6 +759,7 @@ jobs:
                 uses: actions/checkout@v7
                 with:
                     ref: ${{ github.sha }}
+                    persist-credentials: false
             -   name: Download docker-compose.cypress.yml from artifacts
                 uses: actions/download-artifact@v8
                 with:
@@ -764,8 +808,8 @@ jobs:
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
-    push-regenerated-snapshots:
-        name: Push regenerated snapshots
+    prepare-regenerated-snapshots:
+        name: Prepare regenerated snapshots
         needs: [tests-storefront-acceptance-regenerate]
         if: |
             (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
@@ -773,14 +817,11 @@ jobs:
             github.event.pull_request.head.repo.full_name == github.repository &&
             needs.tests-storefront-acceptance-regenerate.result == 'success'
         runs-on: ubuntu-22.04
+        timeout-minutes: 15
         permissions:
             contents: read
-            pull-requests: write
-        env:
-            PR_NUMBER: ${{ github.event.pull_request.number }}
-            HEAD_REF: ${{ github.head_ref }}
-            HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-            BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        outputs:
+            artifact_id: ${{ steps.prepared-snapshots.outputs.artifact-id }}
         steps:
             -   name: Checkout the original PR head
                 uses: actions/checkout@v7
@@ -793,7 +834,15 @@ jobs:
                     path: ./snapshots
                     pattern: cypress-snapshots-*
                     merge-multiple: true
-            -   name: Prepare PNG-only snapshot commit
+            -   name: Set up Node for snapshot comparison
+                uses: actions/setup-node@v7
+                with:
+                    node-version: '24.14.0'
+                    package-manager-cache: false
+            -   name: Install locked snapshot comparison dependencies without Cypress binary
+                working-directory: project-base/storefront/cypress
+                run: npm ci --ignore-scripts --no-audit --no-fund
+            -   name: Filter regenerated PNG references
                 run: |
                     set -euo pipefail
                     if [ ! -d snapshots/e2e ] || [ -z "$(find snapshots/e2e -type f -name '*.png' -print -quit)" ]; then
@@ -803,6 +852,83 @@ jobs:
                     while IFS= read -r -d '' SNAPSHOT; do
                         RELATIVE_PATH="${SNAPSHOT#snapshots/}"
                         TARGET="project-base/storefront/cypress/snapshots/${RELATIVE_PATH}"
+                        if [ -f "$TARGET" ]; then
+                            # Preserve the original bytes for antialiasing-only changes; no color or area tolerance.
+                            # Avoid the V8 compiler shutdown deadlock: https://github.com/nodejs/node/issues/64274
+                            echo "Comparing reference: $RELATIVE_PATH"
+                            if timeout --kill-after=5s 60s node --no-maglev --no-concurrent-sparkplug project-base/storefront/cypress/node_modules/pixelmatch/bin/pixelmatch "$TARGET" "$SNAPSHOT" '' 0 false; then
+                                cp -- "$TARGET" "$SNAPSHOT"
+                                echo "Keeping reference: $RELATIVE_PATH"
+                                continue
+                            else
+                                COMPARISON_STATUS=$?
+                                case "$COMPARISON_STATUS" in
+                                    65|66) ;; # Different dimensions or at least one non-antialiased pixel.
+                                    *) echo "::error::Snapshot comparison failed for $RELATIVE_PATH (exit $COMPARISON_STATUS)"; exit "$COMPARISON_STATUS" ;;
+                                esac
+                            fi
+                        fi
+                        echo "Updating reference: $RELATIVE_PATH"
+                    done < <(find snapshots/e2e -type f -name '*.png' -print0)
+            -   name: Upload prepared snapshot data
+                id: prepared-snapshots
+                uses: actions/upload-artifact@v7
+                with:
+                    name: prepared-cypress-snapshots
+                    path: ./snapshots
+                    if-no-files-found: error
+                    overwrite: true
+    push-regenerated-snapshots:
+        name: Push regenerated snapshots
+        needs: [prepare-regenerated-snapshots]
+        if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
+            always() && !failure() && !cancelled() &&
+            github.event.pull_request.head.repo.full_name == github.repository &&
+            needs.prepare-regenerated-snapshots.result == 'success'
+        runs-on: ubuntu-22.04
+        timeout-minutes: 10
+        permissions:
+            contents: read
+            pull-requests: write
+        env:
+            PR_NUMBER: ${{ github.event.pull_request.number }}
+            HEAD_REF: ${{ github.head_ref }}
+            HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+            BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        steps:
+            # Never run PR dependencies here: this fresh runner receives the push token later.
+            -   name: Checkout the original PR head
+                uses: actions/checkout@v7
+                with:
+                    ref: ${{ github.event.pull_request.head.sha }}
+                    persist-credentials: false
+            -   name: Download prepared snapshot data
+                uses: actions/download-artifact@v8
+                with:
+                    artifact-ids: ${{ needs.prepare-regenerated-snapshots.outputs.artifact_id }}
+                    path: ./snapshots
+                    merge-multiple: true
+            -   name: Prepare PNG-only snapshot commit
+                run: |
+                    set -euo pipefail
+                    if [ ! -d snapshots/e2e ] || [ -z "$(find snapshots/e2e -type f -name '*.png' -print -quit)" ]; then
+                        echo '::error::Snapshot artifacts contain no PNG references.'
+                        exit 1
+                    fi
+                    if [ -n "$(find snapshots -mindepth 1 ! -type d ! -type f -print -quit)" ] ||
+                        [ -n "$(find snapshots -type f ! -path 'snapshots/e2e/*.png' -print -quit)" ]; then
+                        echo '::error::Prepared artifacts must contain only regular PNG references under e2e.'
+                        exit 1
+                    fi
+                    while IFS= read -r -d '' SNAPSHOT; do
+                        RELATIVE_PATH="${SNAPSHOT#snapshots/}"
+                        TARGET="$PWD/project-base/storefront/cypress/snapshots/${RELATIVE_PATH}"
+                        # A PR-controlled symlink must not redirect artifact writes into executable files or Git config.
+                        if [ "$(realpath -m "$TARGET")" != "$TARGET" ]; then
+                            echo "::error::Refusing a symlink destination: $RELATIVE_PATH"
+                            exit 1
+                        fi
                         mkdir -p "$(dirname "$TARGET")"
                         cp -- "$SNAPSHOT" "$TARGET"
                     done < <(find snapshots/e2e -type f -name '*.png' -print0)
