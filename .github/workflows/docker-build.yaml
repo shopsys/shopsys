@@ -775,8 +775,7 @@ jobs:
         runs-on: ubuntu-22.04
         permissions:
             contents: read
-            pull-requests: read
-            issues: write
+            pull-requests: write
         env:
             PR_NUMBER: ${{ github.event.pull_request.number }}
             HEAD_REF: ${{ github.head_ref }}
