@@ -50,30 +50,14 @@ fragment OrderDetailItemFragment on OrderItem {
             name
         }
         uuid
-        catalogNumber
         slug
         isVisible
         isSellingDenied
         isInquiryType
         productType
         isCurrentlyOutOfStock
-        promotionBuyQuantity
-        promotionFreeQuantity
-        categories {
-            name
-        }
         mainImage {
             ...ImageFragment
-        }
-        price {
-            ...ProductPriceFragment
-        }
-        giftPrice {
-            ...ProductPriceFragment
-        }
-        availability {
-            name
-            status
         }
     }
     transport {
