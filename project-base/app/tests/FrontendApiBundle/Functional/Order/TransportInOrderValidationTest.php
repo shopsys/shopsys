@@ -102,7 +102,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testDeletedPickupPlaceUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_SECOND, $this->domain->getId(), Store::class);
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPersonal, $store->getUuid());
         $this->storeFacade->delete($store->getId());

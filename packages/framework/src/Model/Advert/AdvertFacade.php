@@ -27,6 +27,15 @@ class AdvertFacade
         return $this->advertRepository->getById($advertId);
     }
 
+    /**
+     * @param int[] $advertIds
+     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
+     */
+    public function getByIds(array $advertIds): array
+    {
+        return $this->advertRepository->getByIds($advertIds);
+    }
+
     public function create(AdvertData $advertData): Advert
     {
         $advert = $this->advertFactory->create($advertData);

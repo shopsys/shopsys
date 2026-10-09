@@ -1,0 +1,4 @@
+<a href="{{ url('admin_crud_store_edit', { id: row.id }) }}">{{ value }}</a>
+{% if row.isDefault %}
+    <span class="badge badge-pill bg-secondary-lt">{{ 'default'|trans }}</span>
+{% endif %}

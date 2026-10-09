@@ -1,0 +1,8 @@
+{% set statusMap = {
+    '0': { 'class': 'green', 'label': 'Active'|trans },
+    '1': { 'class': 'purple', 'label': 'Future'|trans },
+    '-1': { 'class': 'red', 'label': 'Expired'|trans }
+} %}
+<span class="status status-{{ statusMap[value].class }}">
+    {{ statusMap[value].label }}
+</span>

@@ -44,7 +44,7 @@ final class ParameterGroupFormType extends AbstractType
                 ],
             ])
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_parametergroup_list',
+                'back_route' => 'admin_crud_parameter_group_list',
                 'entity' => $options['parameterGroup'],
             ]);
     }

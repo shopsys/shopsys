@@ -6,12 +6,14 @@ namespace Tests\App\Functional\Model\Customer;
 
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
+use App\DataFixtures\Demo\SalesRepresentativeDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class UserFacadeTest extends TransactionFunctionalTestCase
@@ -97,5 +99,22 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $this->expectException(DuplicateEmailException::class);
 
         $this->customerUserFacade->create($customerUserUpdateData);
+    }
+
+    public function testCustomerUserEmailsSummaryCountsAllCustomerUsersAndLimitsEmailsInEmailOrder(): void
+    {
+        $salesRepresentative = $this->getReference(SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_2, SalesRepresentative::class);
+
+        foreach (['no-reply.9@shopsys.com', 'no-reply.3@shopsys.com', 'no-reply.5@shopsys.com'] as $email) {
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, Domain::FIRST_DOMAIN_ID);
+            $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+            $customerUserUpdateData->customerUserData->salesRepresentative = $salesRepresentative;
+            $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
+        }
+
+        $this->assertSame(
+            [$salesRepresentative->getId() => ['count' => 3, 'emails' => ['no-reply.3@shopsys.com', 'no-reply.5@shopsys.com']]],
+            $this->customerUserFacade->getCustomerUserEmailsSummaryIndexedBySalesRepresentativeId([$salesRepresentative->getId()], 2),
+        );
     }
 }

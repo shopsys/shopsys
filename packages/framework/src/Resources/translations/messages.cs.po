@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
-msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
-msgstr "%count% položka z CSV souboru byla úspěšně importována.|%count% položky z CSV souboru byly úspěšně importovány.|%count% položek z CSV souboru bylo úspěšně importováno."
-
 msgid "%name% agrees with privacy policy."
 msgstr "%name% souhlasí se zpracováním osobních údajů."
 
@@ -102,9 +99,6 @@ msgstr "<a href=\"%url%\">Neexistují žádné sklady, musíte nějaký vytvoři
 
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek správa osobních údajů pro doménu %domainName%.</a>"
-
-msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
-msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspěšně upravena"
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
@@ -207,18 +201,6 @@ msgstr "Administrátoři"
 
 msgid "Administrators overview"
 msgstr "Přehled administrátorů"
-
-msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
-msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> byla vytvořena"
-
-msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
-msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> byla upravena"
-
-msgid "Advertising <strong>{{ name }}</strong> deleted"
-msgstr "Reklama <strong>{{ name }}</strong> byla smazána"
-
-msgid "Advertising system"
-msgstr "Reklamní systém"
 
 msgid "All roles"
 msgstr "Všechny role"
@@ -420,9 +402,6 @@ msgstr "Bankovní převod"
 
 msgid "Bank transfer not completed"
 msgstr "Bankovní platba nebyla potvrzena"
-
-msgid "Banners"
-msgstr "Bannery"
 
 msgid "Basic"
 msgstr "Základní"
@@ -1150,9 +1129,6 @@ msgstr "Opravdu si přejete trvale odstranit cenovou skupinu \"%name%\"? Nikde n
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit sazbu \"%name%\"? Nikde není použita."
 
-msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
-msgstr "Opravdu si přejete trvale odstranit obchodního zástupce \"%label%\"? Nikde není použit."
-
 msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav reklamace \"%name%\"? Nikde není použitý."
 
@@ -1167,9 +1143,6 @@ msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
 
 msgid "Do you really want to remove this administrator?"
 msgstr "Opravdu chcete odstranit tohoto administrátora?"
-
-msgid "Do you really want to remove this advert?"
-msgstr "Opravdu chcete odstranit tuto reklamu?"
 
 msgid "Do you really want to remove this article?"
 msgstr "Opravdu chcete odstranit tento článek?"
@@ -1198,32 +1171,14 @@ msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL mů
 msgid "Do you really want to remove this gift plan?"
 msgstr "Opravdu chcete tento dárkový plán odstranit?"
 
-msgid "Do you really want to remove this holiday / internal day?"
-msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
-
 msgid "Do you really want to remove this language constant translation?"
 msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
-
-msgid "Do you really want to remove this navigation item?"
-msgstr "Opravdu si přejete odstranit tuto položku navigace?"
-
-msgid "Do you really want to remove this notification bar?"
-msgstr "Opravdu chcete odebrat tuto notifikační lištu?"
-
-msgid "Do you really want to remove this page?"
-msgstr "Opravdu chcete odstranit tuto stránku?"
-
-msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
-msgstr "Opravdu chcete odstranit tuto skupinu parametrů? Odstraněním této skupiny parametrů zrušíte přiřazení všech parametrů k související skupině. Tento krok je nevratný!"
 
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and parameters of the extended SEO category where the parameter is assigned. This step is irreversible!"
 msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u produktů parametrů rozšířených SEO kategorií, do kterých je parametr přiřazen. Tento krok je nevratný!"
 
 msgid "Do you really want to remove this payment?"
 msgstr "Opravdu chcete odstranit tuto platbu?"
-
-msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
-msgstr "Opravdu chcete odstranit tento ceník? Speciální ceny pro produkty v tomto ceníku budou odstraněny."
 
 msgid "Do you really want to remove this product?"
 msgstr "Opravdu chcete odstranit toto zboží?"
@@ -1233,9 +1188,6 @@ msgstr "Opravdu chcete odstranit tento slevový kupón?"
 
 msgid "Do you really want to remove this shipping?"
 msgstr "Opravdu chcete odstranit tuto dopravu?"
-
-msgid "Do you really want to remove this store? This step is irreversible!"
-msgstr "Opravdu si přejete odstranit tuto prodejnu? Tento krok nelze vzít zpět!"
 
 msgid "Do you really want to remove this subscriber?"
 msgstr "Opravdu chcete odstranit tohoto příjemnce newsletteru?"
@@ -1282,9 +1234,6 @@ msgstr "Duplicitní reversal transakce"
 msgid "Duration (mm:ss)"
 msgstr "Trvání (mm:ss)"
 
-msgid "E-mail"
-msgstr "E-mail"
-
 msgid "E-mail addresses whitelist"
 msgstr "Whitelist e-mailových adres"
 
@@ -1318,9 +1267,6 @@ msgstr "EAN"
 msgid "Edit"
 msgstr "Upravit"
 
-msgid "Edit store"
-msgstr "Upravit prodejnu"
-
 msgid "Editing SEO page"
 msgstr "Editace SEO stránky"
 
@@ -1335,12 +1281,6 @@ msgstr "Editace skupiny práv pro administrátora"
 
 msgid "Editing administrator role group - %name%"
 msgstr "Editace skupiny práv pro administrátora - %name%"
-
-msgid "Editing advertising"
-msgstr "Editace reklamy"
-
-msgid "Editing advertising - %name%"
-msgstr "Editace reklamy - %name%"
 
 msgid "Editing article"
 msgstr "Editace článku"
@@ -1429,26 +1369,11 @@ msgstr "Editace dárkového poukazu"
 msgid "Editing gift voucher - %code%"
 msgstr "Editace dárkového poukazu - %code%"
 
-msgid "Editing holiday / internal day - {{ name }}"
-msgstr "Editace svátku / interního dne - {{ name }}"
-
-msgid "Editing item"
-msgstr "Editace položky"
-
-msgid "Editing notification bar"
-msgstr "Editace notifikační lišty"
-
 msgid "Editing order"
 msgstr "Editace objednávky"
 
-msgid "Editing page"
-msgstr "Editace stránky"
-
 msgid "Editing parameter"
 msgstr "Editace parametru"
-
-msgid "Editing parameter group"
-msgstr "Editace skupiny paramtrů"
 
 msgid "Editing parameter value of type color"
 msgstr "Editace hodnoty parametru typu barva"
@@ -1462,12 +1387,6 @@ msgstr "Editace platby"
 msgid "Editing payment - %name%"
 msgstr "Editace platby - %name%"
 
-msgid "Editing price list"
-msgstr "Editace ceníku"
-
-msgid "Editing price list - %name%"
-msgstr "Editace ceníku - %name%"
-
 msgid "Editing product"
 msgstr "Editace zboží"
 
@@ -1480,20 +1399,11 @@ msgstr "Editace slevového kupónu"
 msgid "Editing promo code - %code%"
 msgstr "Editace slevového kupónu - %code%"
 
-msgid "Editing sales representative"
-msgstr "Editace obchodního zástupce"
-
-msgid "Editing sales representative - %label%"
-msgstr "Editace obchodního zástupce - %label%"
-
 msgid "Editing shipping"
 msgstr "Editace dopravy"
 
 msgid "Editing shipping - %name%"
 msgstr "Editace dopravy - %name%"
-
-msgid "Editing slider page - %name%"
-msgstr "Editace stránky slideru - %name%"
 
 msgid "Editing warehouse - %name%"
 msgstr "Editace skladu - %name%"
@@ -1572,9 +1482,6 @@ msgstr "Při nahrávání souboru došlo k chybě: %message%"
 
 msgid "Error occurred, try again please."
 msgstr "Nastala chyba, zkuste to, prosím, znovu."
-
-msgid "Error while importing CSV file."
-msgstr "Při importu CSV souboru došlo k chybě."
 
 msgid "Exchange"
 msgstr "Výměna"
@@ -1930,21 +1837,6 @@ msgstr "Skrýt zboží"
 msgid "Hiding product"
 msgstr "Skrývání zboží"
 
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
-
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
-
-msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
-msgstr "Svátek / interní <strong>{{ name }}</strong> byl smazán"
-
-msgid "Holiday / internal day detail"
-msgstr "Detail svátku / interního dne"
-
-msgid "Holidays and internal days"
-msgstr "Svátky a interní dny"
-
 msgid "Holidays import"
 msgstr "Import svátků"
 
@@ -2290,18 +2182,6 @@ msgstr "Názvy pro srovnávače zboží u zvolených služeb se exportují do cu
 msgid "Namespace"
 msgstr "Jmenný prostor"
 
-msgid "Navigation"
-msgstr "Navigace"
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr "Byla vytvořena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
-msgstr "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Navigation item <strong>{{ name }}</strong> has been removed"
-msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
-
 msgid "Navigation item type"
 msgstr "Typ položky navigace"
 
@@ -2320,9 +2200,6 @@ msgstr "Nový administrátor"
 msgid "New administrator role group"
 msgstr "Nová skupina práv pro administrátora"
 
-msgid "New advertising"
-msgstr "Nová reklama"
-
 msgid "New article"
 msgstr "Nový článek"
 
@@ -2337,9 +2214,6 @@ msgstr "Nová značka"
 
 msgid "New category"
 msgstr "Nová kategorie"
-
-msgid "New closed day"
-msgstr "Nový svátek / interní den"
 
 msgid "New country"
 msgstr "Nový stát"
@@ -2362,20 +2236,8 @@ msgstr "Nový dárkový plán"
 msgid "New gift voucher"
 msgstr "Nový dárkový poukaz"
 
-msgid "New item"
-msgstr "Nová položka"
-
-msgid "New notification bar"
-msgstr "Nová notifikační lišta"
-
-msgid "New page"
-msgstr "Nová stránka"
-
 msgid "New parameter"
 msgstr "Nový parametr"
-
-msgid "New parameter group"
-msgstr "Nová skupina parametrů"
 
 msgid "New password settings URL address"
 msgstr "URL adresa pro nastavení nového hesla"
@@ -2383,26 +2245,14 @@ msgstr "URL adresa pro nastavení nového hesla"
 msgid "New payment"
 msgstr "Nová platba"
 
-msgid "New price list"
-msgstr "Nový ceník"
-
-msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
-msgstr "Byl vytvořen nový ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>."
-
 msgid "New product"
 msgstr "Nové zboží"
 
 msgid "New promo code"
 msgstr "Nový slevový kupón"
 
-msgid "New sales representative"
-msgstr "Nový obchodní zástupce"
-
 msgid "New shipping"
 msgstr "Nová doprava"
-
-msgid "New store"
-msgstr "Nová prodejna"
 
 msgid "New warehouse"
 msgstr "Nový sklad"
@@ -2445,15 +2295,6 @@ msgstr "Poznámka"
 
 msgid "Nothing to choose from."
 msgstr "Není z čeho vybírat."
-
-msgid "Notification bar"
-msgstr "Notifikační lišta"
-
-msgid "Notification bar has been successfuly created"
-msgstr "Notifikační lišta byla úspěšně vytvořena"
-
-msgid "Notification bar has been successfuly deleted"
-msgstr "Notifikační lišta byla úspěšně smazána"
 
 msgid "Number of delivery days for out of stock products in XML feeds"
 msgstr "Počet dní k doručení neskladových položek pro XML feedy"
@@ -2593,9 +2434,6 @@ msgstr "Sledování zásilky"
 msgid "Packetery"
 msgstr "Zásilkovna"
 
-msgid "Page <strong>{{ name }}</strong> deleted"
-msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
-
 msgid "Page name"
 msgstr "Název stránky"
 
@@ -2616,12 +2454,6 @@ msgstr "Parametr <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl uprav
 
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr "Parametr <strong>{{ name }}</strong> byl smazán"
-
-msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr "Skupina parametrů <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
-
-msgid "Parameter groups"
-msgstr "Skupiny parametrů"
 
 msgid "Parameter type"
 msgstr "Typ parametru"
@@ -2851,26 +2683,8 @@ msgstr "Cena s DPH"
 msgid "Price including VAT rounding"
 msgstr "Zaokrouhlení ceny s DPH"
 
-msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Byl vytvořen ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Byl upraven ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
-msgstr "Ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl nahrazen."
-
-msgid "Price list <strong>{{ name }}</strong> deleted"
-msgstr "Byl smazán ceník <strong>{{ name }}</strong>"
-
-msgid "Price list name"
-msgstr "Název ceníku"
-
 msgid "Price list overview"
 msgstr "Přehled ceníků"
-
-msgid "Price lists"
-msgstr "Ceníky"
 
 msgid "Prices"
 msgstr "Ceny"
@@ -3214,18 +3028,6 @@ msgstr "Nastavení prodeje s/bez DPH"
 msgid "Sales representative"
 msgstr "Obchodní zástupce"
 
-msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
-msgstr "Obchodní zástupce <strong><a href=\"{{ url }}\">{{ label }}</a></strong> byl vytvořen"
-
-msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was edited"
-msgstr "Obchodní zástupce <strong><a href=\"{{ url }}\">{{ label }}</a></strong> byl upraven"
-
-msgid "Sales representative <strong>{{ label }}</strong> deleted."
-msgstr "Obchodní zástupce <strong>{{ label }}</strong> byl smazán."
-
-msgid "Sales representatives"
-msgstr "Obchodní zástupci"
-
 msgid "Sample customer name"
 msgstr "Ukázkové jméno zákazníka"
 
@@ -3298,9 +3100,6 @@ msgstr "Zvolený administrátor neexistuje."
 msgid "Selected administrator role group doesn't exist."
 msgstr "Vybraná skupina práv pro administrátora neexistuje."
 
-msgid "Selected advertisement doesn't exist."
-msgstr "Zvolená reklama neexistuje."
-
 msgid "Selected article doesn't exist."
 msgstr "Zvolený článek neexistuje."
 
@@ -3337,29 +3136,14 @@ msgstr "Zvolený příznak neexistuje."
 msgid "Selected gift plan doesn't exist."
 msgstr "Vybraný dárkový plán neexistuje."
 
-msgid "Selected holiday / internal day doesn't exist."
-msgstr "Vybraný svátek / interní den neexistuje."
-
-msgid "Selected navigation item does not exist."
-msgstr "Zvolená položka navigace neexistuje."
-
-msgid "Selected notification bar does not exist"
-msgstr "Vybraná notifikační lišta neexistuje"
-
 msgid "Selected order status doesn't exist."
 msgstr "Zvolený stav objednávek neexistuje"
-
-msgid "Selected page doesn't exist."
-msgstr "Zvolená stránka neexistuje."
 
 msgid "Selected parameter doesn't exist."
 msgstr "Zvolený parametr neexistuje."
 
 msgid "Selected payment doesn't exist."
 msgstr "Zvolená platba neexistuje."
-
-msgid "Selected price list does not exist."
-msgstr "Zvolený ceník neexistuje."
 
 msgid "Selected pricing group doesn't exist."
 msgstr "Zvolená cenová skupina neexistuje."
@@ -3372,9 +3156,6 @@ msgstr "Zvolený slevový kupón neexistuje."
 
 msgid "Selected replacement pricing group must be a different pricing group from the same domain."
 msgstr "Zvolená náhradní cenová skupina musí být jiná cenová skupina ze stejné domény."
-
-msgid "Selected sales representative doesn't exist."
-msgstr "Zvolený obchodní zástupce neexistuje."
 
 msgid "Selected shipping doesn't exist."
 msgstr "Zvolená doprava neexistuje."
@@ -3502,17 +3283,8 @@ msgstr "Stránka"
 msgid "Size"
 msgstr "Velikost"
 
-msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Byla vytvořena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Byla upravena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
 msgid "Slug"
 msgstr "Slug"
-
-msgid "Some items cannot be imported due to errors:"
-msgstr "Některé položky nebyly naimportovány kvůli chybám:"
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
@@ -3564,21 +3336,6 @@ msgstr "Skladovost"
 
 msgid "Store"
 msgstr "Prodejna"
-
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Prodejna <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
-
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr "Prodejna <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
-
-msgid "Store <strong>{{ name }}</strong> was deleted"
-msgstr "Prodejna <strong>{{ name }}</strong> byla odstraněna"
-
-msgid "Store <strong>{{ name }}</strong> was set as default."
-msgstr "Prodejna <strong>{{ name }}</strong> byla nastavena jako výchozí."
-
-msgid "Store does not exist"
-msgstr "Prodejna neexistuje"
 
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache s dotazy na FE byla smazána."
@@ -3643,9 +3400,6 @@ msgstr "Obchodní podmínky"
 msgid "Test email sent to %email%."
 msgstr "Testovací email odeslán na adresu %email%."
 
-msgid "Text"
-msgstr "Text"
-
 msgid "Text review"
 msgstr "Textová recenze"
 
@@ -3672,9 +3426,6 @@ msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 
 msgid "The pickup dates are driven by the weekly opening hours of the <a href=\"%storesUrl%\" target=\"_blank\">stores</a> and by the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day."
 msgstr "Termíny vyzvednutí se řídí týdenní otevírací dobou <a href=\"%storesUrl%\" target=\"_blank\">prodejen</a> a správou <a href=\"%closedDaysUrl%\" target=\"_blank\">Svátky a interní dny</a> — prodejna vyjmutá ze zavřeného dne vydává objednávky i v tento den."
-
-msgid "The selected country is not valid."
-msgstr "Zvolená země není platná."
 
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
 msgstr "Vybraná hodnota se vždy použije tak, jak je. \"Výchozí (nenastaveno)\" nechá rozhodnutí na storefrontu, který uplatní svá pravidla pro tuto stránku, např. noindex pro filtrované výpisy, košík nebo objednávku."
@@ -4201,9 +3952,6 @@ msgstr "bez DPH"
 msgid "without positioning"
 msgstr "bez umístění"
 
-msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
-msgstr "{1} Byl naimportován <strong>%count%</strong> svátek.|[2,4] Byly naimportovány <strong>%count%</strong> svátky.|[5,Inf] Bylo naimportováno <strong>%count%</strong> svátků."
-
 msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
 msgstr "{1} Existuje jeden parametr typu slider, který nemá vyplněné své číselné hodnoty.|[2,4] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty.|[5,Inf] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty."
 
@@ -4212,6 +3960,3 @@ msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Př
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"
-
-msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
-msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"

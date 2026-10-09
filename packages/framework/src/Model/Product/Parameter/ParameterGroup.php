@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -21,7 +22,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[AsMcpTable]
 #[ORM\Table(name: 'parameter_groups')]
 #[ORM\Entity]
-class ParameterGroup extends AbstractTranslatableEntity implements OrderableEntityInterface
+class ParameterGroup extends AbstractTranslatableEntity implements OrderableEntityInterface, Presentable
 {
     /**
      * @var int
@@ -121,5 +122,11 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
     public function getPosition()
     {
         return $this->position;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName() ?? (string)$this->getId();
     }
 }
