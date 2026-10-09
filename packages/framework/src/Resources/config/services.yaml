@@ -279,6 +279,9 @@ services:
             - { name: doctrine.event_listener, event: preRemove, priority: 1 }
             - { name: doctrine.event_listener, event: postFlush, priority: 1 }
 
+    Shopsys\FrameworkBundle\Component\EntityLog\ParentResolver\EntityLogParentResolver:
+        arguments: [!tagged_iterator shopsys.entity_log_parent_resolver]
+
     Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
         arguments:
             $environmentFileDirectory: '%kernel.project_dir%'

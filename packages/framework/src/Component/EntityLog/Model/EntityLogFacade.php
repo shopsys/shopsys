@@ -48,6 +48,7 @@ class EntityLogFacade
         LoggableEntityConfig $loggableEntityConfig,
         string $action,
         array $changes = [],
+        ?object $parentEntityWithoutAssociation = null,
     ): EntityLog {
         $userIdentifier = $this->detectionFacade->getUserIdentifier();
         $source = $this->detectionFacade->getEntityLogSource();
@@ -70,6 +71,12 @@ class EntityLogFacade
             ?
             call_user_func([$parentEntity, $parentEntityIdentityFunctionName])
             : null;
+
+        if ($parentEntityWithoutAssociation !== null) {
+            $entityLogData->parentEntityName = $this->getEntityNameByEntity($parentEntityWithoutAssociation);
+            $entityLogData->parentEntityId = $this->getEntityIdentifierByEntityAndLoggableSetup($parentEntityWithoutAssociation);
+        }
+
         $entityLogData->note = $this->entityLogNoteRegistry->findNote($entity);
 
         return $this->entityLogFactory->create($entityLogData);
