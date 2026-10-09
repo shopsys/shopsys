@@ -125,6 +125,12 @@ class OrderStatus extends AbstractTranslatableEntity
 }
 ```
 
+## Children without an association to the parent
+
+Some entities reference their parent without a Doctrine association, e.g. `Image` holds only the name of the entity and its ID.
+Such an entity can be marked by `LoggableChild` without the `LoggableParentProperty` attribute, and its parent is found by a service implementing `EntityLogParentResolverInterface` (see `ImageEntityLogParentResolver`).
+The child is logged only when its parent is logged, so images of products are not logged until products are.
+
 ## Recording why a change was made
 
 The change set says what changed, but not why it changed.
