@@ -28,18 +28,23 @@ export const checkSelectedPayment = (expectedUuid: string | null) => {
 };
 
 export const checkTransportPrice = (transportUuid: string, expected: 'free' | 'paid') => {
-    cy.getByTID([TIDs.pages_order_transport]).find(`label[for="${transportUuid}"]`).within(() => {
-        if (expected === 'free') {
-            t('Free').then((free) => {
-                cy.getByTID([TIDs.transport_and_payment_price]).should('have.text', free);
-            });
-        } else {
-            cy.getByTID([TIDs.transport_and_payment_price])
-                .should('be.visible')
-                .invoke('text')
-                .should('match', /[1-9]/);
-        }
-    });
+    cy.getByTID([TIDs.pages_order_transport])
+        .find(`label[for="${transportUuid}"]`)
+        // The outgoing transport list remains mounted during the selection animation.
+        .should('have.length', 1)
+        .and('be.visible')
+        .within(() => {
+            if (expected === 'free') {
+                t('Free').then((free) => {
+                    cy.getByTID([TIDs.transport_and_payment_price]).should('have.text', free);
+                });
+            } else {
+                cy.getByTID([TIDs.transport_and_payment_price])
+                    .should('be.visible')
+                    .invoke('text')
+                    .should('match', /[1-9]/);
+            }
+        });
 };
 
 export const openTransportGroupByName = (transportGroupName: string) => {
