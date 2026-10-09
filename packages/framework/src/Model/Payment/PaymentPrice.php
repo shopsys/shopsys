@@ -11,15 +11,24 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
 #[ORM\Table(name: 'payment_prices')]
+#[ORM\UniqueConstraint(name: 'unique_payment_price_on_domain', columns: ['payment_id', 'domain_id'])]
 #[ORM\Entity]
 class PaymentPrice
 {
+    /**
+     * @var int
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    protected $id;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     #[AsMcpColumn]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'prices')]
     protected $payment;
 
@@ -34,7 +43,6 @@ class PaymentPrice
      * @var int
      */
     #[AsMcpColumn]
-    #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     protected $domainId;
 
@@ -43,6 +51,14 @@ class PaymentPrice
         $this->payment = $payment;
         $this->price = $price;
         $this->domainId = $domainId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
