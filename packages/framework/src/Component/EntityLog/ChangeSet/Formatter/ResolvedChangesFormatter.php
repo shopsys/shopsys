@@ -29,7 +29,8 @@ class ResolvedChangesFormatter extends AbstractChangeSetFormatter
             };
         }
 
-        return implode('<br>', $formattedChanges);
+        // a block per change, a line break after a nested list would render an empty line
+        return implode('', array_map(static fn (string $formattedChange) => sprintf('<div>%s</div>', $formattedChange), $formattedChanges));
     }
 
     /**
