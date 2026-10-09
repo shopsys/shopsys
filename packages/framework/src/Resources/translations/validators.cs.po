@@ -655,6 +655,9 @@ msgstr "Slevový kupón \"%promoCode%\" už není platný."
 msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
 msgstr "Slevový kupón \"%promoCode%\" není možné uplatnit pro výši nákupu Vašeho košíku."
 
+msgid "Promo code \"%promoCode%\" is not needed, electronic gift vouchers in cart are delivered by email for free."
+msgstr "Slevový kupón \"%promoCode%\" není potřeba, elektronické dárkové poukazy v košíku jsou doručovány e-mailem zdarma."
+
 msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
 msgstr "Slevový kupón \"%promoCode%\" není platný pro žádný produkt v košíku."
 

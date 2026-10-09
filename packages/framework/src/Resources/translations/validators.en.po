@@ -655,6 +655,9 @@ msgstr ""
 msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
 msgstr ""
 
+msgid "Promo code \"%promoCode%\" is not needed, electronic gift vouchers in cart are delivered by email for free."
+msgstr ""
+
 msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
 msgstr ""
 

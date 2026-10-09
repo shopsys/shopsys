@@ -286,6 +286,9 @@ msgstr ""
 msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
 msgstr ""
 
+msgid "The promo code is not needed, electronic gift vouchers in your cart are delivered by email for free."
+msgstr ""
+
 msgid "The promo code is not valid or it has been already used. Check it, please."
 msgstr ""
 

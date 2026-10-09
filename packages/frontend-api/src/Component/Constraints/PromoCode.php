@@ -22,6 +22,7 @@ class PromoCode extends Constraint
     public const ALREADY_APPLIED_PROMO_CODE_ERROR = 'bde9e59e-6881-460e-8501-7f5e9a57a266';
     public const LIMIT_NOT_REACHED_ERROR = '3f94ee5e-b496-441b-9744-d8b6375000e6';
     public const ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR = 'e0b0e8b0-93cd-4f0e-9c34-2b1a52c8c9d4';
+    public const FREE_TRANSPORT_AND_PAYMENT_NOT_NEEDED_ERROR = '828f7ad4-0cde-48c0-ae34-a41affddd60a';
 
     /**
      * @var array<string, string>
@@ -36,6 +37,7 @@ class PromoCode extends Constraint
         self::ALREADY_APPLIED_PROMO_CODE_ERROR => 'ALREADY_APPLIED_PROMO_CODE_ERROR',
         self::LIMIT_NOT_REACHED_ERROR => 'LIMIT_NOT_REACHED_ERROR',
         self::ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR => 'ONLY_SINGLE_PROMO_CODE_ALLOWED_ERROR',
+        self::FREE_TRANSPORT_AND_PAYMENT_NOT_NEEDED_ERROR => 'FREE_TRANSPORT_AND_PAYMENT_NOT_NEEDED_ERROR',
     ];
 
     /**
@@ -54,6 +56,7 @@ class PromoCode extends Constraint
         public string $alreadyAppliedPromoCodeMessage = 'Promo code is already applied in the current cart.',
         public string $limitNotReachedMessage = 'The promo code can only be used for a higher total price.',
         public string $onlySinglePromoCodeAllowedMessage = 'Only one promo code can be applied in the cart.',
+        public string $freeTransportAndPaymentNotNeededMessage = 'The promo code is not needed, electronic gift vouchers in your cart are delivered by email for free.',
         ?array $groups = null,
         mixed $payload = null,
     ) {

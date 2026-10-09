@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\FreeTransportAndPaymentPromoCodeNotNeededException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
@@ -214,14 +215,8 @@ class CurrentPromoCodeFacade
      */
     public function validatePromoCode(PromoCode $promoCode, PriceInterface $totalProductPrice, array $products): array
     {
-        $products = array_values(array_filter(
-            $products,
-            static fn (Product $product) => !$product->isGiftVoucher(),
-        ));
-
-        if ($products === []) {
-            throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
-        }
+        $applicableProducts = $this->getProductsApplicableForPromoCode($promoCode, $products);
+        $this->validateApplicableProducts($promoCode, $products, $applicableProducts);
 
         if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
             throw new AvailableForRegisteredCustomerUserOnly($promoCode->getCode());
@@ -231,13 +226,52 @@ class CurrentPromoCodeFacade
         $this->validatePricingGroup($promoCode);
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainingUses($promoCode);
-        $allowedProductIdsByProducts = $this->validatePromoCodeByProductsInCart($promoCode, $products);
-        $allowedProductIdsByFlags = $this->validatePromoCodeByFlags($promoCode, $products);
+        $allowedProductIdsByProducts = $this->validatePromoCodeByProductsInCart($promoCode, $applicableProducts);
+        $allowedProductIdsByFlags = $this->validatePromoCodeByFlags($promoCode, $applicableProducts);
 
         if ($promoCode->isFreeTransportAndPaymentType() === false) {
             $this->validateLimit($promoCode, $totalProductPrice);
         }
 
         return array_intersect($allowedProductIdsByProducts, $allowedProductIdsByFlags);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    protected function getProductsApplicableForPromoCode(PromoCode $promoCode, array $products): array
+    {
+        if ($promoCode->isFreeTransportAndPaymentType()) {
+            return array_values(array_filter(
+                $products,
+                static fn (Product $product) => !$product->isElectronicGiftVoucher(),
+            ));
+        }
+
+        return array_values(array_filter(
+            $products,
+            static fn (Product $product) => !$product->isGiftVoucher(),
+        ));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $applicableProducts
+     */
+    protected function validateApplicableProducts(
+        PromoCode $promoCode,
+        array $products,
+        array $applicableProducts,
+    ): void {
+        if ($applicableProducts !== []) {
+            return;
+        }
+
+        if ($promoCode->isFreeTransportAndPaymentType() && $products !== []) {
+            throw new FreeTransportAndPaymentPromoCodeNotNeededException($promoCode);
+        }
+
+        throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
     }
 }
