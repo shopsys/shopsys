@@ -14,6 +14,25 @@ const { changePaymentMock, domainMock, loggedInMock, paymentEventMock, routerMoc
         successMock: vi.fn(),
     }));
 
+vi.mock('config/staticRewritePaths', () => ({
+    STATIC_REWRITE_PATHS: {
+        'https://test1.example.com/': {
+            '/customer/order-detail': '/customer/order-detail',
+            '/order-confirmation': '/order-confirmation',
+            '/order-detail/:urlHash': '/order-detail/:urlHash',
+        },
+        'https://test2.example.com/': {
+            '/customer/order-detail': '/zakaznik/detail-objednavky',
+            '/order-confirmation': '/potvrzeni-objednavky',
+            '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
+        },
+        'https://test3.example.com/': {
+            '/customer/order-detail': '/zakaznik/detail-objednavky',
+            '/order-confirmation': '/potvrdenie-objednavky',
+            '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
+        },
+    },
+}));
 vi.mock('components/providers/DomainConfigProvider', () => ({ useDomainConfig: domainMock }));
 vi.mock('graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated', () => ({
     useChangePaymentInOrderMutation: () => [{ fetching: false }, changePaymentMock],
