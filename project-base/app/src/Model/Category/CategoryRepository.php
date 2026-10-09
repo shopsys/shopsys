@@ -31,6 +31,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method string[] getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, string|null $locale = null)
  * @method array<int, \App\Model\Category\Category> getCategoriesByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
+ * @method array<int, \App\Model\Category\Category[]> getVisibleCategoriesInPathsFromRootOnDomainIndexedByCategoryId(\App\Model\Category\Category[] $categories, int $domainId, string $locale)
+ * @method array<int, \App\Model\Category\Category> getCategoriesWithTranslationIndexedById(int[] $categoryIds, string $locale)
  */
 class CategoryRepository extends BaseCategoryRepository
 {

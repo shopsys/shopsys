@@ -41,12 +41,17 @@ services:
     Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryResolverMap:
         arguments:
             $blogCategorySlugBatchLoader: '@blog_category_slug_batch_loader'
+            $blogCategoryBreadcrumbBatchLoader: '@blog_category_breadcrumb_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
     Shopsys\FrontendApiBundle\Model\Cart\ApplyCodeToCartRateLimiter:
         arguments:
             $applyCodeToCartLimiter: '@limiter.apply_code_to_cart'
+
+    Shopsys\FrontendApiBundle\Model\Category\CategoryBreadcrumbBatchLoader:
+        arguments:
+            $categoriesInPathFromRootBatchLoader: '@categories_in_path_from_root_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Category\ReadyCategorySeoMixBatchLoader:
         arguments:
@@ -132,6 +137,8 @@ services:
             $categoryChildrenBatchLoader: '@category_children_batch_loader'
             $categorySlugBatchLoader: '@category_slug_batch_loader'
             $categorySeoSlugBatchLoader: '@category_seo_slug_batch_loader'
+            $categoryBreadcrumbBatchLoader: '@category_breadcrumb_batch_loader'
+            $categoriesInPathFromRootBatchLoader: '@categories_in_path_from_root_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 

@@ -242,6 +242,80 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]>
+     */
+    public function getVisibleBlogCategoriesInPathsFromRootOnDomainIndexedByBlogCategoryId(
+        array $blogCategories,
+        int $domainId,
+        string $locale,
+    ): array {
+        if ($blogCategories === []) {
+            return [];
+        }
+
+        $blogCategoriesInPathsIndexedByBlogCategoryId = [];
+
+        foreach ($blogCategories as $blogCategory) {
+            $blogCategoriesInPathsIndexedByBlogCategoryId[$blogCategory->getId()] = [];
+        }
+
+        $blogCategoryIdPairs = $this->getVisibleBlogCategoryInPathIdAndBlogCategoryIdPairsOnDomain(
+            array_keys($blogCategoriesInPathsIndexedByBlogCategoryId),
+            $domainId,
+        );
+
+        if ($blogCategoryIdPairs === []) {
+            return $blogCategoriesInPathsIndexedByBlogCategoryId;
+        }
+
+        $blogCategoriesInPathIndexedById = $this->getBlogCategoriesWithTranslationIndexedById(
+            array_unique(array_column($blogCategoryIdPairs, 'blogCategoryInPathId')),
+            $locale,
+        );
+
+        foreach ($blogCategoryIdPairs as $blogCategoryIdPair) {
+            $blogCategoriesInPathsIndexedByBlogCategoryId[$blogCategoryIdPair['blogCategoryId']][] = $blogCategoriesInPathIndexedById[$blogCategoryIdPair['blogCategoryInPathId']];
+        }
+
+        return $blogCategoriesInPathsIndexedByBlogCategoryId;
+    }
+
+    /**
+     * @param int[] $blogCategoryIds
+     * @return array<int, array{blogCategoryInPathId: int, blogCategoryId: int}>
+     */
+    protected function getVisibleBlogCategoryInPathIdAndBlogCategoryIdPairsOnDomain(
+        array $blogCategoryIds,
+        int $domainId,
+    ): array {
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->select('bc.id AS blogCategoryInPathId, tbc.id AS blogCategoryId')
+            ->from(BlogCategory::class, 'tbc')
+            ->andWhere('tbc.id IN (:blogCategoryIds)')
+            ->andWhere('bc.lft <= tbc.lft')
+            ->andWhere('bc.rgt >= tbc.rgt')
+            ->setParameter('blogCategoryIds', $blogCategoryIds);
+
+        return $queryBuilder->getQuery()->getScalarResult();
+    }
+
+    /**
+     * @param int[] $blogCategoryIds
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
+     */
+    protected function getBlogCategoriesWithTranslationIndexedById(array $blogCategoryIds, string $locale): array
+    {
+        $queryBuilder = $this->getAllQueryBuilder()
+            ->indexBy('bc', 'bc.id')
+            ->andWhere('bc.id IN (:blogCategoryIds)')
+            ->setParameter('blogCategoryIds', $blogCategoryIds);
+        $this->addTranslation($queryBuilder, $locale);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getAllByLocale(string $locale): array
