@@ -5,17 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment\GoPay;
 
 use App\DataFixtures\Demo\GoPayDataFixture;
-use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GoPayQueryTest extends GraphQlTestCase
 {
-    /**
-     * @inject
-     */
-    private DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
-
     public function testGoPaySwiftsQuery(): void
     {
         $currencyCode = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID)->getCode();

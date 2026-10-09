@@ -21,30 +21,22 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
     return (
         <CustomerRecordRowInfo title={t('Products')}>
             <div className="flex flex-wrap gap-3">
-                {items.slice(0, 4).map((item) => {
-                    const product = item.product;
-
-                    if (!product) {
-                        return null;
-                    }
-
-                    return (
-                        <CustomerRecordProductImage
-                            key={product.link}
-                            image={product.mainImage?.url}
-                            imageAlt={generateProductImageAlt(
-                                product.fullName ?? product.name,
-                                product.mainCategory?.name,
-                                product.mainImage?.name,
-                            )}
-                            isVisible={product.isVisible}
-                            link={product.link}
-                            quantity={item.quantity}
-                            tid={TIDs.order_list_product_image}
-                            tooltipLabel={product.name}
-                        />
-                    );
-                })}
+                {items.slice(0, 4).map((item) => (
+                    <CustomerRecordProductImage
+                        key={item.uuid}
+                        image={item.product?.mainImage?.url}
+                        imageAlt={generateProductImageAlt(
+                            item.product?.fullName ?? item.name,
+                            item.product?.mainCategory?.name,
+                            item.product?.mainImage?.name,
+                        )}
+                        isVisible={item.product?.isVisible}
+                        link={item.product?.link}
+                        quantity={item.quantity}
+                        tid={TIDs.order_list_product_image}
+                        tooltipLabel={item.name}
+                    />
+                ))}
 
                 {items.length > 4 && (
                     <ExtendedNextLink

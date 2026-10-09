@@ -8,7 +8,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\ArgumentFactory;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewApiFacade;
 use Shopsys\FrontendApiBundle\Model\ProductReview\ProductReviewElasticsearchRepository;
@@ -35,7 +34,7 @@ final class ProductReviewsByProductQueryTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testReviewsAreReadFromTheMainVariantDocumentForProductArrayAndEntity(): void
+    public function testReviewsAreReadFromTheMainVariantDocument(): void
     {
         $facade = $this->createStub(ProductReviewApiFacade::class);
         $facade->method('areProductReviewsEnabledOnCurrentDomain')->willReturn(true);
@@ -49,21 +48,12 @@ final class ProductReviewsByProductQueryTest extends TestCase
         );
         $query = new ProductReviewsQuery($this->createStub(CurrentCustomerUser::class), $facade, $repository);
         $query->autowirePageSizeValidator(new PageSizeValidator());
-        $mainVariant = $this->createStub(Product::class);
-        $mainVariant->method('getId')->willReturn(1);
-        $mainVariant->method('isVariant')->willReturn(false);
-        $variant = $this->createStub(Product::class);
-        $variant->method('getId')->willReturn(2);
-        $variant->method('isVariant')->willReturn(true);
-        $variant->method('getMainVariant')->willReturn($mainVariant);
         $argument = (new ArgumentFactory(Argument::class))->create(['first' => 5]);
         $this->assertInstanceOf(Argument::class, $argument);
 
         $productsCarryingReviewsOnDocumentOne = [
             ['id' => 1, 'is_variant' => false, 'main_variant_id' => null],
             ['id' => 2, 'is_variant' => true, 'main_variant_id' => 1],
-            $mainVariant,
-            $variant,
         ];
 
         foreach ($productsCarryingReviewsOnDocumentOne as $productData) {

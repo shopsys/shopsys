@@ -9,8 +9,23 @@ vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
 }));
 
 vi.mock('components/Pages/Customer/CustomerRecordElements', () => ({
-    CustomerRecordProductImage: ({ image, imageAlt }: { image?: string; imageAlt: string }) => (
-        <span data-image={image ?? 'fallback'} data-testid="product-image">
+    CustomerRecordProductImage: ({
+        image,
+        imageAlt,
+        link,
+        tooltipLabel,
+    }: {
+        image?: string;
+        imageAlt: string;
+        link?: string;
+        tooltipLabel?: string;
+    }) => (
+        <span
+            data-image={image ?? 'fallback'}
+            data-link={link ?? 'none'}
+            data-testid="product-image"
+            data-tooltip={tooltipLabel}
+        >
             {imageAlt}
         </span>
     ),
@@ -27,6 +42,8 @@ describe('OrderItemProducts', () => {
     test('shows the fallback image for a product without a main image', () => {
         const item = {
             __typename: 'OrderItem',
+            uuid: 'order-item-uuid',
+            name: 'Product without image',
             quantity: 1,
             product: {
                 __typename: 'MainVariant',
@@ -51,6 +68,30 @@ describe('OrderItemProducts', () => {
         expect(screen.getByTestId('product-image')).toHaveTextContent('Product without image');
     });
 
+    test('shows an item whose product is no longer available by the name of the item, without a link', () => {
+        const item = {
+            __typename: 'OrderItem',
+            uuid: 'order-item-uuid',
+            name: 'Hidden product',
+            quantity: 1,
+            product: null,
+        } as TypeOrderItemFragment;
+
+        render(
+            <OrderItemProducts
+                items={[item]}
+                orderLink={{ pathname: '/customer/orders', query: { orderNumber: '123' } }}
+            />,
+        );
+
+        const productImage = screen.getByTestId('product-image');
+
+        expect(productImage).toHaveAttribute('data-image', 'fallback');
+        expect(productImage).toHaveAttribute('data-link', 'none');
+        expect(productImage).toHaveAttribute('data-tooltip', 'Hidden product');
+        expect(productImage).toHaveTextContent('Hidden product');
+    });
+
     test('wraps product previews in a row and links to remaining products', () => {
         const orderLink = {
             pathname: '/customer/order/[orderNumber]',
@@ -61,6 +102,8 @@ describe('OrderItemProducts', () => {
             const productNumber = index + 1;
 
             return {
+                uuid: `order-item-${productNumber}`,
+                name: `Product ${productNumber}`,
                 product: {
                     isVisible: true,
                     link: `/product-${productNumber}`,

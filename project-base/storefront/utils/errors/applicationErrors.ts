@@ -25,7 +25,6 @@ const ApplicationErrors = {
     'order-item-product-mismatch': 'flash-message',
     'order-item-reviews-not-allowed': 'flash-message',
     'product-not-found': 'flash-message',
-    'product-price-missing': 'flash-message',
     'product-review-variant-required': 'flash-message',
     'product-reviews-disabled': 'flash-message',
     'register-by-order-is-not-possible': 'flash-message',

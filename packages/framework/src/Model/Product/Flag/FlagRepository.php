@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
@@ -47,11 +48,21 @@ class FlagRepository
 
     /**
      * @param int[] $flagIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag> visible flags translated to the locale of the domain, indexed and sorted by ID
      */
-    public function getByIds(array $flagIds): array
+    public function getByIds(array $flagIds, DomainConfig $domainConfig): array
     {
-        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => SortDirection::Ascending]);
+        return $this->em->createQueryBuilder()
+            ->select('f, ft')
+            ->from(Flag::class, 'f')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->where('f.id IN (:flagIds)')
+            ->andWhere('f.visible = true')
+            ->indexBy('f', 'f.id')
+            ->orderBy('f.id', SortDirection::Ascending)
+            ->setParameter('flagIds', $flagIds)
+            ->setParameter('locale', $domainConfig->getLocale())
+            ->getQuery()->getResult();
     }
 
     public function getByUuid(string $uuid): Flag

@@ -1,0 +1,13 @@
+query GetComplaintItemsWithProductQuery ($complaintNumber: String!) {
+    complaint(
+        number: $complaintNumber
+    ) {
+        items {
+            productName
+            catnum
+            product {
+                uuid
+            }
+        }
+    }
+}

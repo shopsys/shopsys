@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use Elasticsearch\Client as ElasticsearchClient;
 use Override;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessageHandler;
@@ -67,6 +71,21 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      * @inject
      */
     protected ProductIndexBackupFacade $productIndexBackupFacade;
+
+    /**
+     * @inject
+     */
+    protected ElasticsearchClient $elasticsearchClient;
+
+    /**
+     * @inject
+     */
+    protected IndexDefinitionLoader $indexDefinitionLoader;
+
+    /**
+     * @inject
+     */
+    protected DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
 
     /**
      * @inject
@@ -251,6 +270,21 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
             $productRecalculationMessageHandler($message);
         }
+
+        $this->refreshProductIndexes();
+    }
+
+    /**
+     * The exported products are visible to the Elasticsearch searches only after the indexes are refreshed
+     */
+    protected function refreshProductIndexes(): void
+    {
+        $productIndexAliases = array_map(
+            fn (int $domainId) => $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId)->getIndexAlias(),
+            $this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds(),
+        );
+
+        $this->elasticsearchClient->indices()->refresh(['index' => implode(',', $productIndexAliases)]);
     }
 
     /**

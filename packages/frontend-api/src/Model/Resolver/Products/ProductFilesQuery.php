@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Component\Files\FileBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -21,23 +20,13 @@ class ProductFilesQuery extends AbstractQuery
     }
 
     public function filesByProductPromiseQuery(
-        Product|array $data,
-        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
-    ): Promise {
-        $productId = $data instanceof Product ? $data->getId() : $data['id'];
-
-        return $this->resolveByEntityIdPromise($productId, static::PRODUCT_ENTITY_NAME, $type);
-    }
-
-    protected function resolveByEntityIdPromise(
-        int $entityId,
-        string $entityName,
+        array $data,
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): Promise {
         return $this->filesBatchLoader->load(
             new FileBatchLoadData(
-                $entityId,
-                $entityName,
+                $data['id'],
+                static::PRODUCT_ENTITY_NAME,
                 $type,
             ),
         );

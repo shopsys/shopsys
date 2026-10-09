@@ -3,7 +3,7 @@ import { OrderDetailOrderItem } from 'components/Pages/Customer/OrderDetail/Orde
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import { ReactNode } from 'react';
-import { describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
     ExtendedNextLink: ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>,
@@ -13,8 +13,10 @@ vi.mock('components/Basic/Image/Image', () => ({
     Image: ({ alt }: { alt: string }) => <span aria-label={alt} role="img" />,
 }));
 
+const authorization = vi.hoisted(() => ({ canCreateComplaint: false }));
+
 vi.mock('components/providers/AuthorizationProvider', () => ({
-    useAuthorization: () => ({ canCreateComplaint: false }),
+    useAuthorization: () => authorization,
 }));
 
 vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
@@ -69,7 +71,6 @@ const orderItem = {
     },
     product: {
         uuid: productUuid,
-        catalogNumber: 'CAT-1',
         slug: '/product',
         isVisible: true,
         mainImage: null,
@@ -77,6 +78,10 @@ const orderItem = {
 } as TypeOrderDetailItemFragment;
 
 describe('OrderDetailOrderItem', () => {
+    afterEach(() => {
+        authorization.canCreateComplaint = false;
+    });
+
     test('shows an explanation instead of a review link for an already reviewed product', () => {
         render(
             <OrderDetailOrderItem
@@ -116,7 +121,7 @@ describe('OrderDetailOrderItem', () => {
     });
 
     test.each([
-        ['the product catalog number has changed', { ...orderItem.product!, catalogNumber: 'CAT-NEW' }],
+        ['the product exists', orderItem.product],
         ['the product has been deleted', null],
     ])('keeps the purchased gift voucher available when %s', (_, product) => {
         render(
@@ -141,5 +146,33 @@ describe('OrderDetailOrderItem', () => {
         );
         expect(screen.getByRole('button', { name: 'Select code: CAT-1' })).toHaveTextContent('CAT-1');
         expect(screen.queryByRole('link', { name: 'Voucher 2' })).not.toBeInTheDocument();
+    });
+
+    test.each([
+        ['offers a complaint for an item whose product is no longer available', [], true],
+        [
+            'does not offer a complaint for a gift voucher whose product is no longer available',
+            [{ productCatnum: 'CAT-1', pdfUrl: '/purchased-voucher.pdf' }],
+            false,
+        ],
+    ])('%s', (_, purchasedGiftVouchers, isComplaintOffered) => {
+        authorization.canCreateComplaint = true;
+
+        render(
+            <OrderDetailOrderItem
+                isOrderFromRegisteredCustomer
+                orderItem={{ ...orderItem, product: null }}
+                orderUrlHash="order-url-hash"
+                orderUuid="order-uuid"
+                productReviewsAllowed
+                purchasedGiftVouchers={purchasedGiftVouchers}
+                isReviewAvailabilityLoading={false}
+                reviewedProductUuids={new Set()}
+            />,
+        );
+
+        expect(screen.queryByRole('button', { name: 'Create complaint for product {{ productName }}' }) !== null).toBe(
+            isComplaintOffered,
+        );
     });
 });

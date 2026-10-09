@@ -7,6 +7,12 @@ ProductDecorator:
             uuid:
                 type: "Uuid!"
                 description: "UUID"
+            catalogNumber:
+                type: "String!"
+                description: "Product catalog number"
+            partNumber:
+                type: "String"
+                description: "Product part number"
             name:
                 type: "String"
                 description: "Localized product name (domain dependent)"

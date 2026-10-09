@@ -63,6 +63,32 @@ class CartWatcher
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
+    public function getNotVisibleItems(Cart $cart, CurrentCustomerUser $currentCustomerUser): array
+    {
+        $notVisibleItems = [];
+
+        foreach ($cart->getItems() as $item) {
+            if (!$item->hasProduct()) {
+                continue;
+            }
+
+            $productVisibility = $this->productVisibilityFacade->getProductVisibility(
+                $item->getProduct(),
+                $currentCustomerUser->getPricingGroup(),
+                $this->domain->getId(),
+            );
+
+            if (!$productVisibility->isVisible()) {
+                $notVisibleItems[] = $item;
+            }
+        }
+
+        return $notVisibleItems;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     */
     public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser): array
     {
         $notListableItems = [];

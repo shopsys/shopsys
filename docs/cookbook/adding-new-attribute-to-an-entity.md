@@ -279,7 +279,7 @@ Product:
                 description: 'External ID of the product'
 ```
 
-The corresponding product data are then fetched automatically from the `Product` entity or from the elasticsearch index.
+The value of the field is then read automatically from the elasticsearch index, from the key with the name of the field (or with its snake_case variant), so export it as described in the next section.
 For more information about the API, refer to [the frontend-api docs](../frontend-api/introduction-to-frontend-api.md).
 
 ## Export data to elasticsearch index

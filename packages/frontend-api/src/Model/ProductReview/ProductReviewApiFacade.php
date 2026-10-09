@@ -13,9 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\ProductReview\Elasticsearch\ProductReviewDocumentMapper;
 use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImage;
 use Shopsys\FrameworkBundle\Model\ProductReview\Image\ProductReviewImageDataFactory;
@@ -36,7 +34,6 @@ class ProductReviewApiFacade
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly Domain $domain,
         protected readonly OrderItemApiFacade $orderItemApiFacade,
-        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ProductFacade $productFacade,
         protected readonly ProductReviewDataFactory $productReviewDataFactory,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
@@ -86,24 +83,6 @@ class ProductReviewApiFacade
     {
         if ($productArray[ProductExportFieldProvider::IS_VARIANT] === true) {
             return null;
-        }
-
-        return $productArray[ProductExportFieldProvider::REVIEW_SUMMARY];
-    }
-
-    /**
-     * @return array{average_rating: float|null, total_count: int, rating_counts: array<int, array{rating: int, count: int}>}|null
-     */
-    public function getReviewSummaryForProduct(Product $product): ?array
-    {
-        if ($product->isVariant()) {
-            return null;
-        }
-
-        try {
-            $productArray = $this->productElasticsearchProvider->getVisibleProductArrayById($product->getId());
-        } catch (ProductNotFoundException) {
-            return $this->productReviewDocumentMapper->mapSummary([]);
         }
 
         return $productArray[ProductExportFieldProvider::REVIEW_SUMMARY];

@@ -11,7 +11,6 @@ use Shopsys\FrontendApiBundle\Model\Cart\AddToCartResult;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
-use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidCartItemUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 
@@ -120,22 +119,14 @@ class CartMutation extends AbstractMutation
             $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         }
 
-        $notAddedProducts = [];
-
-        foreach ($order->getProductItems() as $orderItem) {
-            if ($orderItem->getProduct() === null) {
-                continue;
-            }
-
-            try {
-                $this->cartApiFacade->addProductByUuidToCart($orderItem->getProduct()->getUuid(), $orderItem->getQuantity(), false, $cart);
-            } catch (InvalidCartItemUserError) {
-                $notAddedProducts[] = $orderItem->getProduct();
-            }
-        }
+        $addOrderItemsToCartResult = $this->cartApiFacade->addOrderItemsToCart($order, $cart);
 
         $cartWithModificationsResult = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
-        $cartWithModificationsResult->addProductsNotAddedByMultipleAddition($notAddedProducts);
+        $cartWithModificationsResult->addProductsNotAddedByMultipleAddition($addOrderItemsToCartResult->getNotAddedProducts());
+
+        if ($addOrderItemsToCartResult->isSomeProductRemovedFromEshop()) {
+            $cartWithModificationsResult->setCartHasRemovedProducts();
+        }
 
         return $cartWithModificationsResult;
     }

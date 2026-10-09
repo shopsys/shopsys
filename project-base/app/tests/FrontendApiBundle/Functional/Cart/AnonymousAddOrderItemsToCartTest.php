@@ -192,13 +192,12 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $this->assertActualCartContent($cartUuid, $expectedItems);
     }
 
-    public function testNotAvailableOrderItemIsSkippedWhileAdding(): void
+    public function testHiddenOrderItemIsSkippedWhileAdding(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
 
         $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
         $this->hideProduct($productInOrder);
-        $productInOrderRefreshed = $this->productFacade->getById($productInOrder->getId());
 
         $locale = $this->getLocaleForFirstDomain();
         $expectedItems = [
@@ -230,13 +229,60 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
 
         $this->assertActualCartContent($data['uuid'], $expectedItems);
 
+        $this->assertSame([], $data['modifications']['multipleAddedProductModifications']['notAddedProducts']);
+        $this->assertTrue($data['modifications']['someProductWasRemovedFromEshop']);
+    }
+
+    public function testDeletedOrderItemIsSkippedWhileAdding(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
+
+        $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
+        $this->productFacade->delete($productInOrder->getId());
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+                'shouldMerge' => false,
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
+
+        $this->assertCount(2, $data['items']);
+        $this->assertSame([], $data['modifications']['multipleAddedProductModifications']['notAddedProducts']);
+        $this->assertTrue($data['modifications']['someProductWasRemovedFromEshop']);
+    }
+
+    public function testSellingDeniedOrderItemIsReportedAsNotAdded(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
+
+        $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
+        $productData = $this->productDataFactory->createFromProduct($productInOrder);
+        $productData->sellingDenied = true;
+        $this->productFacade->edit($productInOrder->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+                'shouldMerge' => false,
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
+
         $expectedNotAddedProducts = [
             [
-                'name' => $productInOrderRefreshed->getName($locale),
+                'name' => $productInOrder->getName($this->getLocaleForFirstDomain()),
             ],
         ];
 
         $this->assertSame($expectedNotAddedProducts, $data['modifications']['multipleAddedProductModifications']['notAddedProducts']);
+        $this->assertFalse($data['modifications']['someProductWasRemovedFromEshop']);
     }
 
     public function testOrderItemsAreAddedFromCustomersOrder(): void

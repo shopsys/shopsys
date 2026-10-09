@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -18,13 +17,11 @@ class ProductImagesCountQuery extends AbstractQuery
     {
     }
 
-    public function imagesCountByProductPromiseQuery(Product|array $data, ?string $type): Promise
+    public function imagesCountByProductPromiseQuery(array $data, ?string $type): Promise
     {
-        $productId = $data instanceof Product ? $data->getId() : $data['id'];
-
         return $this->imagesCountBatchLoader->load(
             new ImageBatchLoadData(
-                $productId,
+                $data['id'],
                 static::PRODUCT_ENTITY_NAME,
                 $type,
             ),

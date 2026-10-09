@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\ImageSitemap;
 
-use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -23,11 +22,6 @@ class ImageSitemapTest extends ApplicationTestCase
      * @inject
      */
     private ParameterBagInterface $parameterBag;
-
-    /**
-     * @inject
-     */
-    private DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
 
     /**
      * @inject
