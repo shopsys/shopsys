@@ -69,6 +69,13 @@ export const AuthNotificationLoader = () => {
             return 'empty';
         }
 
+        // Only registration finishes with client-side navigation; other auth flows still need a new document.
+        const isRegistrationNotification =
+            authNotification === 'registration' || authNotification === 'registration-with-cart-modifications';
+        if (!isRegistrationNotification && !hasAuthNotificationFromPreviousDocument(domainConfig.domainId)) {
+            return 'pending';
+        }
+
         if (
             typeof authNotification === 'string' &&
             !isCustomerUserFetching &&
