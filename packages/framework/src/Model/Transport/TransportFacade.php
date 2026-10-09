@@ -136,18 +136,26 @@ class TransportFacade
      */
     protected function updateTransportPrices(Transport $transport, array $inputPricesDataIndexedByDomainId): void
     {
-        $this->deleteAllPricesByTransport($transport);
+        // a price is identified by its domain and weight limit, so an unchanged price is not deleted and created again
+        $currentPricesByKey = [];
+
+        foreach ($transport->getPrices() as $transportPrice) {
+            $currentPricesByKey[$transportPrice->getDomainId() . '-' . $transportPrice->getMaxWeight()] = $transportPrice;
+        }
 
         $prices = [];
 
         foreach ($inputPricesDataIndexedByDomainId as $domainId => $pricesData) {
-            foreach ($pricesData->pricesWithLimits as $pricesWithLimitData) {
-                $prices[] = $this->transportPriceFactory->create($transport, $pricesWithLimitData->price, $domainId, $pricesWithLimitData->maxWeight);
+            foreach ($pricesData->pricesWithLimits as $priceWithLimitData) {
+                $key = $domainId . '-' . $priceWithLimitData->maxWeight;
+                $transportPrice = $currentPricesByKey[$key] ?? $this->transportPriceFactory->create($transport, $priceWithLimitData->price, $domainId, $priceWithLimitData->maxWeight);
+                $transportPrice->setPrice($priceWithLimitData->price);
+                $prices[] = $transportPrice;
             }
         }
 
+        // prices left out are removed from the collection and deleted as orphans
         $transport->setPrices($prices);
-        $this->em->flush();
     }
 
     /**
@@ -299,12 +307,5 @@ class TransportFacade
         );
 
         return $this->transportVisibilityCalculation->filterTransportsUsableForProduct($transports, $product);
-    }
-
-    protected function deleteAllPricesByTransport(Transport $transport): void
-    {
-        $this->transportRepository->deleteAllPricesByTransport($transport);
-        $transport->setPrices([]);
-        $this->em->flush();
     }
 }
