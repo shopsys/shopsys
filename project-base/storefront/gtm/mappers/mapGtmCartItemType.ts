@@ -16,6 +16,8 @@ export const mapGtmCartItemType = (
     };
 
     if (cartItem.type === TypeCartItemTypeEnum.ProductGift) {
+        mappedCartItem.id = `gift-${cartItem.product.id}`;
+        mappedCartItem.sku = `gift-${cartItem.product.catalogNumber}`;
         mappedCartItem.productType = 'gift';
         mappedCartItem.priceWithoutVat = getGtmPriceBasedOnVisibility(cartItem.product.giftPrice.priceWithoutVat);
         mappedCartItem.priceWithVat = getGtmPriceBasedOnVisibility(cartItem.product.giftPrice.priceWithVat);

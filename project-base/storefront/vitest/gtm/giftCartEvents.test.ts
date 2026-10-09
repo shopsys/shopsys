@@ -11,7 +11,9 @@ import { DomainConfigType } from 'utils/domain/domainConfig';
 import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('gtm/utils/gtmSafePushEvent', () => ({ gtmSafePushEvent: vi.fn() }));
-vi.mock('gtm/utils/getGtmMappedCart', () => ({ getGtmMappedCart: () => null }));
+vi.mock('utils/staticUrls/getInternationalizedStaticUrls', () => ({
+    getInternationalizedStaticUrls: () => ['/abandoned-cart/cart'],
+}));
 
 const createCartItem = (uuid: string, quantity: number, type = TypeCartItemTypeEnum.Product): TypeCartItemFragment =>
     ({
@@ -21,7 +23,8 @@ const createCartItem = (uuid: string, quantity: number, type = TypeCartItemTypeE
         additionalServices: [],
         product: {
             __typename: 'RegularProduct',
-            id: type === TypeCartItemTypeEnum.ProductGift ? 2 : 1,
+            id: 1,
+            catalogNumber: 'SKU-1',
             slug: '/product',
             flags: [],
             availability: { status: TypeAvailabilityStatusEnum.InStock },
@@ -37,7 +40,12 @@ const sendChange = (previousItems: TypeCartItemFragment[], updatedItems: TypeCar
         true,
         { addProductResult: { addedQuantity: product.quantity } } as TypeAddToCartMutation['AddToCart'],
         product,
-        { items: updatedItems, promoCodes: [], uuid: 'cart' } as unknown as TypeCartFragment,
+        {
+            items: updatedItems,
+            promoCodes: [],
+            uuid: 'cart',
+            totalItemsPrice: { priceWithoutVat: '110', priceWithVat: '133.1' },
+        } as unknown as TypeCartFragment,
         { url: 'https://example.com', currencyCode: 'EUR' } as DomainConfigType,
         undefined,
         GtmProductListNameType.product_detail,
@@ -70,8 +78,20 @@ describe('gift cart events', () => {
                     valueWithoutVat: 110,
                     valueWithVat: 133.1,
                     products: [
-                        expect.objectContaining({ id: 1, productType: 'product', quantity: 1 }),
-                        expect.objectContaining({ id: 2, productType: 'gift', quantity: 1, priceWithVat: 12.1 }),
+                        expect.objectContaining({ id: 1, sku: 'SKU-1', productType: 'product', quantity: 1 }),
+                        expect.objectContaining({
+                            id: 'gift-1',
+                            sku: 'gift-SKU-1',
+                            productType: 'gift',
+                            quantity: 1,
+                            priceWithVat: 12.1,
+                        }),
+                    ],
+                }),
+                cart: expect.objectContaining({
+                    products: [
+                        expect.objectContaining({ id: 1, sku: 'SKU-1', quantity: after }),
+                        expect.objectContaining({ id: 'gift-1', sku: 'gift-SKU-1', quantity: after }),
                     ],
                 }),
             }),
@@ -105,7 +125,7 @@ describe('gift cart events', () => {
                 ecommerce: expect.objectContaining({
                     products: [
                         expect.objectContaining({ id: 1, quantity: 1 }),
-                        expect.objectContaining({ id: 2, productType: 'gift', quantity: 1 }),
+                        expect.objectContaining({ id: 'gift-1', sku: 'gift-SKU-1', productType: 'gift', quantity: 1 }),
                     ],
                 }),
             }),
@@ -136,7 +156,9 @@ describe('gift cart events', () => {
                 ecommerce: expect.objectContaining({
                     valueWithoutVat: totalWithoutVat,
                     valueWithVat: totalWithVat,
-                    products: [expect.objectContaining({ productType: 'gift', quantity: 2 })],
+                    products: [
+                        expect.objectContaining({ id: 'gift-1', sku: 'gift-SKU-1', productType: 'gift', quantity: 2 }),
+                    ],
                 }),
             }),
         );
