@@ -123,7 +123,7 @@ final class TransportFormType extends AbstractType
                     return $transportGroup->getName() ?? t('Name has not been entered in your current language') . ' (ID: ' . $transportGroup->getId() . ')';
                 },
                 'choice_value' => 'id',
-                'placeholder' => t('-- Choose transport group --'),
+                'placeholder' => '-- Choose transport group --',
                 'label' => 'Transport group',
             ]);
 
