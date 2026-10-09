@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
 
 /**
- * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender)
  * @method \App\Model\Product\Product|null findById(int $id)
- * @method \Doctrine\ORM\QueryBuilder getListableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
- * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
- * @method \Doctrine\ORM\QueryBuilder getSellableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Doctrine\ORM\QueryBuilder getOfferedInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method void filterByCategory(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Category\Category $category, int $domainId)
- * @method void filterByBrand(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product getById(int $id)
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method array<int, \App\Model\Product\Product> getAllByIdsWithDomainsIndexedById(int[] $ids)
@@ -33,18 +26,4 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  */
 class ProductRepository extends BaseProductRepository
 {
-    public function getSellableBySearchTextQueryBuilder(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        string $locale,
-        ?string $searchText,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
-
-        $this->addTranslation($queryBuilder, $locale);
-
-        $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
-
-        return $queryBuilder;
-    }
 }

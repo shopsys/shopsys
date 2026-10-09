@@ -316,12 +316,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory:
         alias: App\Model\Product\Brand\BrandDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository:
-        alias: App\Model\Product\Filter\FlagFilterChoiceRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository:
-        alias: App\Model\Product\Filter\PriceRangeRepository
-
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory:
         alias: App\Model\Product\Filter\ProductFilterDataFactory
 
