@@ -1325,8 +1325,10 @@ jobs:
         # monorepo but breaks in a standalone package (a dependency missing in its composer.json, PHPStan on the package
         # alone, project-base against the dev-* packages). Advisory only - not part of the "Build successful" gate.
         # Runs only for non-draft PRs from this repository labeled "split and check packages" (forks and dependabot do
-        # not get ACTIONS_GIT_PUSH_TOKEN); the label is evaluated when the pipeline starts, i.e. on the next push.
+        # not get ACTIONS_GIT_PUSH_TOKEN). Labels are evaluated when an eligible pipeline starts; unrelated label
+        # events must not trigger cross-repository writes.
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             github.event_name == 'pull_request' &&
             github.event.pull_request.draft == false &&
             contains(github.event.pull_request.labels.*.name, 'split and check packages') &&
