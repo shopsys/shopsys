@@ -125,6 +125,34 @@ class OrderStatus extends AbstractTranslatableEntity
 }
 ```
 
+## Translations and per-domain entities
+
+Translations and per-domain entities (like `TransportDomain`) are logged as children of their parent, the same way as `OrderItem`.
+Mark them by `LoggableChild` and their back-reference by `LoggableParentProperty` (the property is read directly, no getter is needed):
+
+```php
+#[LoggableChild]
+class TransportTranslation extends AbstractTranslation
+{
+    #[LoggableParentProperty]
+    #[Prezent\Translatable(targetEntity: Transport::class)]
+    protected $translatable;
+
+    #[EntityLogIdentify]
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+}
+```
+
+Name the records by the locale or the domain using the `EntityLogIdentify` attribute, otherwise the history shows only their IDs.
+
+!!! danger
+
+    The child has to have the `getId()` method, otherwise it is silently not logged.
+    The extended translation in the App namespace needs the `LoggableChild` attribute as well.
+
 ## Children without an association to the parent
 
 Some entities reference their parent without a Doctrine association, e.g. `Image` holds only the name of the entity and its ID.
