@@ -1,4 +1,5 @@
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeCartItemEvent } from 'gtm/factories/getGtmChangeCartItemEvent';
@@ -28,8 +29,12 @@ export const onGtmRemoveFromCartEventHandler = (
         0,
     );
 
-    const eventValueWithoutVat = getGtmPriceBasedOnVisibility(removedCartItem.product.price.priceWithoutVat);
-    const eventValueWithVat = getGtmPriceBasedOnVisibility(removedCartItem.product.price.priceWithVat);
+    const price =
+        removedCartItem.type === TypeCartItemTypeEnum.ProductGift
+            ? removedCartItem.product.giftPrice
+            : removedCartItem.product.price;
+    const eventValueWithoutVat = getGtmPriceBasedOnVisibility(price.priceWithoutVat);
+    const eventValueWithVat = getGtmPriceBasedOnVisibility(price.priceWithVat);
     const eventValueWithoutVatMultipliedByQuantity =
         eventValueWithoutVat === null
             ? eventValueWithoutVat

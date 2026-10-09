@@ -1,3 +1,4 @@
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
 import { TypeAddOrderItemsToCartInput } from 'graphql/types';
@@ -6,6 +7,7 @@ import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { SkeletonEnum } from 'types/skeletons';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 import { useCurrentCart } from './useCurrentCart';
@@ -21,6 +23,8 @@ export const useAddOrderItemsToCart = () => {
     const { cart } = useCurrentCart();
     const router = useRouter();
     const domainConfig = useDomainConfig();
+    const isUserLoggedIn = useIsUserLoggedIn();
+    const { canSeePrices } = useAuthorization();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -29,6 +33,7 @@ export const useAddOrderItemsToCart = () => {
     const storeCurrentFocus = useSessionStore((store) => store.storeCurrentFocus);
 
     const handleAddingItemsToCart = async (input: TypeAddOrderItemsToCartInput) => {
+        const previousCartItems = input.shouldMerge ? (cart?.items ?? []) : [];
         const addOrderItemsToCartResponse = await addOrderItemsToCart({ input });
 
         if (addOrderItemsToCartResponse.error) {
@@ -41,6 +46,10 @@ export const useAddOrderItemsToCart = () => {
         dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
 
         if (newCart) {
+            import('gtm/handlers/onGtmRepeatOrderEventHandler').then(({ onGtmRepeatOrderEventHandler }) => {
+                onGtmRepeatOrderEventHandler(previousCartItems, newCart, domainConfig, isUserLoggedIn, !canSeePrices);
+            });
+
             const notAddedProducts = newCart.modifications.multipleAddedProductModifications.notAddedProducts;
             const addedAllProducts = notAddedProducts.length === 0;
             if (addedAllProducts) {
