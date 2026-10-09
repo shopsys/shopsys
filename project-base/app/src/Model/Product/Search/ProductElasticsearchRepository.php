@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
@@ -14,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository 
  * @method \Shopsys\FrameworkBundle\Model\Product\Search\ProductsResult getSortedProductsResultByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  * @method int getProductsCountByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  * @method array getProductsByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
- * @method __construct(\Elasticsearch\Client $client, \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache)
+ * @method __construct(\Elasticsearch\Client $client, \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory)
  */
 class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 {
@@ -25,19 +24,5 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     public function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
-    }
-
-    #[Override]
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, ?string $searchText): void
-    {
-        $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
-
-        if (count($productIds) > 0) {
-            $productQueryBuilder->andWhere('p.id IN (:productIds)')
-                ->orWhere('p.mainVariant IN (:productIds)')
-                ->setParameter('productIds', $productIds);
-        } else {
-            $productQueryBuilder->andWhere('TRUE = FALSE');
-        }
     }
 }

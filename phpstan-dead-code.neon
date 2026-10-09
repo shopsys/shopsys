@@ -371,19 +371,6 @@ parameters:
             path: packages/framework/src/Model/Pricing/Group/PricingGroupEvent.php
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Filter\\BrandFilterChoiceRepository::getBrandFilterChoicesInCategory\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Model/Product/Filter/BrandFilterChoiceRepository.php
-        # calls bind to the project-base override
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory$#'
-            path: packages/framework/src/Model/Product/Filter/FlagFilterChoiceRepository.php
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ App\\Model\\Product\\Filter\\FlagFilterChoiceRepository::getFlagFilterChoicesInCategory\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: project-base/app/src/Model/Product/Filter/FlagFilterChoiceRepository.php
-        -
-            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Product\\Parameter\\ParameterFacade::getParameterValueByUuid$#'
             path: packages/framework/src/Model/Product/Parameter/ParameterFacade.php
         -

@@ -1,0 +1,30 @@
+query FlagsProductsFilterOptions {
+    flags {
+        uuid
+        products {
+            productFilterOptions {
+                ...FlagProductFilterOptions
+            }
+        }
+    }
+}
+
+fragment FlagProductFilterOptions on ProductFilterOptions {
+    minimalPrice
+    maximalPrice
+    inStock
+    flags {
+        flag {
+            name
+        }
+        count
+        isAbsolute
+    }
+    brands {
+        brand {
+            name
+        }
+        count
+        isAbsolute
+    }
+}

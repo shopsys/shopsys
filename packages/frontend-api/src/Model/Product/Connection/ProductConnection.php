@@ -29,7 +29,7 @@ class ProductConnection extends Connection
         $this->totalCount = $totalCount;
     }
 
-    public function getProductFilterOptions(): ProductFilterOptions
+    public function getProductFilterOptions(): ProductFilterOptions|Promise
     {
         return ($this->productFilterOptionsClosure)();
     }
