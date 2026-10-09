@@ -24,7 +24,7 @@ class AdditionalServiceApiFacade
      */
     public function getAdditionalServiceQueryDtosForCartItem(CartItem $cartItem): array
     {
-        if (!$cartItem->hasProduct()) {
+        if (!$cartItem->hasProduct() || $cartItem->getAdditionalServices() === []) {
             return [];
         }
 
