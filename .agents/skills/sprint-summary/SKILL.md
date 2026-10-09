@@ -247,11 +247,11 @@ If the user wants visuals:
 7. Use video/GIF only for interaction-heavy changes where a screenshot is insufficient
 8. If a scenario cannot be reproduced, skip the asset and report that clearly
 
-When assets are generated, update the markdown item only with a short textual reference, not an embedded image. Use this format:
+When assets are generated, update the markdown item only with a short textual reference, not an embedded image. Every screenshot and video gets a Czech caption (what the asset shows, one short sentence); the same caption is used later in Confluence. Use this format:
 
 ```markdown
-- Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.png`
-- Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.mp4` (video 30 s: what the clip shows)
+- Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.png` (Výběr variant podle parametrů na detailu produktu)
+- Příloha: `sprint-summary-assets/SSP-3891-variant-parameters.mp4` (video 30 s: Přepínání variant a aktualizace ceny)
 ```
 
 This keeps the article easy to preview in IDEs and easy to copy to Confluence.
@@ -277,7 +277,8 @@ Recording rules:
 - One tab per scenario. The recording starts when the tab is created and the file is written only when the tab is closed (`browser_tabs close` or `browser_close`). After closing look for the newest `*.webm` both in `--output-dir` and in `$TMPDIR/playwright-mcp-output/`.
 - The persistent profile records every open tab, including tabs the user opens in that window. Do not let the user browse in the Playwright window and delete all `*.webm` files once the clips are exported (recordings reach gigabytes).
 - In 0.0.40 `browser_click` requires a `ref`; drive the whole scenario from one `browser_evaluate` async function instead (sleep helper, `scrollIntoView`, `element.click()`, `dispatchEvent(new KeyboardEvent('keydown', {key: 'ArrowRight', bubbles: true}))`). A full navigation destroys the evaluate context; continue in a second evaluate.
-- The mouse cursor is not recorded. Before every click inject a fake cursor (SVG arrow, `position: fixed`, CSS transition ~0.7 s) and move it to the element center, wait ~1 s, show a short click ripple, then click. See the snippet in "Playbook: scripted scenario with visible cursor".
+- The mouse cursor is not recorded, but every video must show one - viewers follow the cursor to see what is happening. Inject a fake cursor (SVG arrow, `position: fixed`, CSS transition ~0.7 s) at the start of every scenario so it is visible from the first frame until the end of the clip. Before every click move it to the element center, wait ~1 s, show a short click ripple, then click. Move it to the target element also before typing, key presses (e.g. reorder via ArrowLeft/ArrowRight) and hovers. See the snippet in "Playbook: scripted scenario with visible cursor".
+- A full navigation removes the injected cursor. Store its last position (e.g. in `sessionStorage`) and re-inject it at that position as the first step of the next evaluate, so the cursor never disappears or jumps between pages.
 - Pacing: wait 3-4 s after every action, keep the sticky header in mind when scrolling (`window.scrollTo({top: rowTop - 230})` instead of `scrollIntoView` so the clicked control stays visible), hold the final state 4-6 s, and avoid long static starts.
 - Return timing marks (`performance.now()`) from the evaluate for orientation, but trust only the frames of the converted MP4.
 
@@ -291,11 +292,11 @@ Post-processing:
   ```
   ffmpeg -i in.mp4 -filter_complex "[0:v]trim=0:28.5,setpts=PTS-STARTPTS[a];[0:v]trim=41:48,setpts=PTS-STARTPTS[b];[a][b]concat=n=2:v=1:a=0[v]" -map "[v]" -c:v libx264 -crf 23 -pix_fmt yuv420p -an -movflags +faststart out.mp4
   ```
-- Verify every clip with a contact sheet before publishing. Use exact frame indices (25 fps) rather than `fps=1/N` seeking, size the tile grid to the frame count, and give every sheet a new file name (the Read tool caches images by path):
+- Verify every clip with a contact sheet before publishing (including that the cursor is visible in every frame). Use exact frame indices (25 fps) rather than `fps=1/N` seeking, size the tile grid to the frame count, and give every sheet a new file name (the Read tool caches images by path):
   ```
   ffmpeg -i full.mp4 -vf "select='eq(n\,500)+eq(n\,850)+eq(n\,1100)',scale=440:-1,tile=3x1" -fps_mode vfr -frames:v 1 check.png
   ```
-- Target 20-40 s per clip; the caption in Confluence/markdown must state the real duration and what the clip shows.
+- Target 20-40 s per clip; the markdown reference must state the real duration and the caption what the clip shows.
 
 Storefront selectors that proved stable:
 - Compare buttons on product lists: `button[aria-label^="Přidat do porovnání produkt "]`; comparison page `/porovnani-produktu`; reorder handle `button[aria-label^="Změnit pořadí produktu"]` reacts to ArrowLeft/ArrowRight keydown; remove button `button[aria-label^="Odstranit z porovnání produkt "]`; undo toast button text `Vrátit zpět` lives ~2 s; differences checkbox `#comparison-only-differences`.
@@ -327,6 +328,7 @@ Would you like to open the file in PhpStorm?
 When Confluence or visual attachments were involved, the final report must also list:
 - every Confluence page version you created and what changed in it
 - which attachments were uploaded and which placeholders still wait for a manual upload
+- for every screenshot or video the user inserts manually (pending placeholders, extra media added later): instruct them to add the caption (list the Czech caption for each file) and turn on the border in the Confluence editor (select the image/video -> "Border" in the toolbar); videos recorded manually must show the mouse cursor (enable "show cursor" / click highlighting in the screen recorder)
 - test data created or changed on the review environment (order numbers, approved reviews, temporarily disabled transports and whether they were restored)
 - that the Playwright `*.webm` recordings were deleted after exporting the MP4 clips
 
@@ -352,19 +354,25 @@ Confluence MCP cannot upload attachments, so:
    - Playwright: `browser_navigate` to `https://shopsys.atlassian.net/wiki/pages/viewpageattachments.action?pageId={pageId}`, `browser_click` on "Upload file", `browser_file_upload` with the local path, `browser_click` on "Attach". One file per round trip. The Playwright persistent profile keeps the Atlassian login between runs.
    - Claude in Chrome: inject `<input type="file" id="claude-upload-input" multiple>`, use `file_upload` on its ref (max 10 MB per call), then POST each file from page JavaScript to `/wiki/pages/doattachfile.action?pageId={pageId}` with fields `atl_token` (read from the `viewpageattachments.action` HTML), `file_0`, `comment_0`, `confirm=Attach`. The `javascript_tool` is blocked for code containing query strings like `version=`/`status=historical`, so keep such requests to Playwright or the Atlassian MCP.
 3. Read the media ids: `GET /wiki/rest/api/content/{pageId}/child/attachment?limit=100&expand=extensions` -> `extensions.fileId`.
-4. Replace every placeholder with a media figure in the MCP HTML body (works for PNG, GIF and MP4):
-   ```html
-   <figure data-type="media-single" data-layout="center" data-width="760" data-width-type="pixel"><div data-type="media" data-media-type="file" data-id="{fileId}" data-collection="contentId-{pageId}" data-alt="{filename}" data-width="1440" data-height="900"></div><figcaption>30 s: what the clip shows</figcaption></figure>
+4. Replace every placeholder with a bordered, captioned media node (works for PNG, GIF and MP4). The border is an ADF mark that the HTML format does not carry, so do this step in ADF: load the page with `getConfluencePage` `contentFormat: "adf"`, replace each placeholder panel with the node below, and write it back with `updateConfluencePage` `contentFormat: "adf"`:
+   ```json
+   {"type": "mediaSingle", "attrs": {"layout": "center", "width": 760, "widthType": "pixel"}, "content": [
+     {"type": "media", "attrs": {"type": "file", "id": "{fileId}", "collection": "contentId-{pageId}", "alt": "{filename}", "width": 1440, "height": 900},
+      "marks": [{"type": "border", "attrs": {"size": 2, "color": "#091e4224"}}]},
+     {"type": "caption", "content": [{"type": "text", "text": "Výběr variant podle parametrů na detailu produktu"}]}
+   ]}
    ```
-   Use the real pixel dimensions (`sips -g pixelWidth -g pixelHeight`, `ffprobe`), narrow widths (e.g. 390) for mobile screenshots.
+   - Every screenshot and video must have both the border mark and a caption; the caption is the Czech description from the markdown reference (what the asset shows, without the file name).
+   - Use the real pixel dimensions (`sips -g pixelWidth -g pixelHeight`, `ffprobe`), narrow widths (e.g. 390) for mobile screenshots.
 5. Re-uploading a file with the same name creates a new attachment version; the page picks it up automatically (the media id in the body changes) and the page version does not change. Only the caption may need an update.
 
-If attachment upload is not possible, keep the placeholders and clearly tell the user which local files need to be uploaded manually.
+If attachment upload is not possible, keep the placeholders and clearly tell the user which local files need to be uploaded manually, together with the caption for each file and a reminder to turn on the border.
 
 #### Safe page updates
 
 `updateConfluencePage` replaces the whole body, so it silently overwrites edits the user made in the editor meanwhile.
-- Before every update call `getConfluencePage` (the result is saved to a file when large; parse the JSON with Python), check the version number against the last version you wrote, and diff the body (strip `data-local-id="..."` attributes first). Apply your change on top of the current body, never on your own last copy.
+- Before every update call `getConfluencePage` (the result is saved to a file when large; parse the JSON with Python), check the version number against the last version you wrote, and diff the body (strip `data-local-id="..."` attributes / `localId` first). Apply your change on top of the current body, never on your own last copy.
+- Once the page contains media, read and write it only in ADF (`contentFormat: "adf"`). An HTML round trip drops the `border` marks of all images and videos (including borders the user added in the editor).
 - If an overwrite already happened, restore the user's version via `https://shopsys.atlassian.net/wiki/pages/viewpreviousversions.action?pageId={pageId}` -> "Restore" (Playwright or Chrome), then reapply your change. A human-readable diff of two versions is at `.../wiki/pages/diffpagesbyversion.action?pageId={pageId}&selectedPageVersions=A&selectedPageVersions=B`.
 - Mention every page version you created in the final report so the user can tell their edits from yours.
 
@@ -373,6 +381,7 @@ If attachment upload is not possible, keep the placeholders and clearly tell the
 Once the article is ready, always instruct the user with the following steps:
 
 1. Verify the article contents (and optionally have a colleague review it).
+   When adding or replacing screenshots and videos manually, give each one a caption describing what it shows and turn on its border (select the media -> "Border" in the toolbar), so all media in the article look the same. When recording videos manually, keep the mouse cursor visible (enable "show cursor" and ideally click highlighting in the screen recorder).
 2. Once satisfied with the contents, create a public link for the Confluence page.
 3. Send that public link to the marketing department so they distribute the summary by e-mail to the subscribers.
 
@@ -422,7 +431,7 @@ When processing Description field, remove or convert Jira-specific markup:
 #### Formulář se neskryje po odeslání
 - **Jira:** [SSP-3674](https://shopsys.atlassian.net/browse/SSP-3674) | **PR:** [#4303](https://github.com/shopsys/shopsys/pull/4303)
 - Po odeslání se nyní skryje/vyčistí formulář na kontaktní stránce a stránkách osobních údajů
-- Příloha: `sprint-summary-assets/SSP-3674-contact-form-state.png`
+- Příloha: `sprint-summary-assets/SSP-3674-contact-form-state.png` (Vyčištěný kontaktní formulář po odeslání)
 
 #### Admin: Chyba ve vyhledávání rozšířeného filtru
 - **Jira:** [SSP-3748](https://shopsys.atlassian.net/browse/SSP-3748) | **PR:** [#4334](https://github.com/shopsys/shopsys/pull/4334)
