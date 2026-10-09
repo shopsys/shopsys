@@ -96,7 +96,7 @@ class LoggableEntityConfigFactory
             $targetEntityNamespaceParts = explode('\\', $targetEntity);
             $targetEntityObjectName = array_pop($targetEntityNamespaceParts);
 
-            $loggableSetup->setParentEntityName($targetEntityObjectName);
+            $loggableSetup->setParentEntityName($targetEntityObjectName, $reflectionProperty->getName());
 
             $referencedColumnName = (property_exists($associationMapping, 'joinColumns') && count($associationMapping->joinColumns) > 0)
                 ? $associationMapping->joinColumns[0]->referencedColumnName
