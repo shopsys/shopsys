@@ -12,6 +12,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -27,6 +28,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation> getTranslations()
  */
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
 #[EntityImage]
