@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
-use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 use Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
@@ -175,42 +175,71 @@ class ParameterFacade
     }
 
     /**
-     * @param int[][] $parameterValueIdsIndexedByParameterId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
+     * @param array<int|string, array<int, int[]>> $parameterValueIdsByParameterIdIndexedByKey
+     * @return array<int|string, \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]> indexed by the same keys
      */
-    public function getParameterFilterChoicesByIds(array $parameterValueIdsIndexedByParameterId, string $locale): array
-    {
-        $parameterValueIds = array_reduce($parameterValueIdsIndexedByParameterId, 'array_merge', []);
-        $allParameters = $this->parameterRepository->getVisibleParametersByIds(
-            array_keys($parameterValueIdsIndexedByParameterId),
-            $locale,
-        );
-        $allParameterValues = $this->parameterRepository->getParameterValuesByIds($parameterValueIds);
+    public function getParameterFilterChoicesByIdsIndexedByKey(
+        array $parameterValueIdsByParameterIdIndexedByKey,
+        string $locale,
+    ): array {
+        $allParameterIds = [];
+        $allParameterValueIds = [];
 
-        $parameterFilterChoices = [];
+        foreach ($parameterValueIdsByParameterIdIndexedByKey as $parameterValueIdsByParameterId) {
+            foreach ($parameterValueIdsByParameterId as $parameterId => $parameterValueIds) {
+                $allParameterIds[$parameterId] = $parameterId;
 
-        foreach ($allParameters as $parameter) {
-            $valueIdsForParameter = $parameterValueIdsIndexedByParameterId[$parameter->getId()];
-            $parameterValues = array_intersect_key($allParameterValues, array_flip($valueIdsForParameter));
-
-            $parameterFilterChoices[] = new ParameterFilterChoice(
-                $parameter,
-                $this->parameterSortingHelper->sortParameterValuesAlphabetically($parameterValues, $locale),
-            );
+                foreach ($parameterValueIds as $parameterValueId) {
+                    $allParameterValueIds[$parameterValueId] = $parameterValueId;
+                }
+            }
         }
 
-        return $parameterFilterChoices;
+        $allParameters = $allParameterIds === [] ? [] : $this->parameterRepository->getVisibleParametersByIds(array_values($allParameterIds), $locale);
+        $allParameterValuesIndexedById = $allParameterValueIds === [] ? [] : $this->parameterRepository->getParameterValuesByIds(array_values($allParameterValueIds));
+
+        $parameterFilterChoicesIndexedByKey = [];
+
+        foreach ($parameterValueIdsByParameterIdIndexedByKey as $key => $parameterValueIdsByParameterId) {
+            $parameterFilterChoicesIndexedByKey[$key] = [];
+
+            foreach ($allParameters as $parameter) {
+                if (!array_key_exists($parameter->getId(), $parameterValueIdsByParameterId)) {
+                    continue;
+                }
+
+                $parameterValues = array_intersect_key(
+                    $allParameterValuesIndexedById,
+                    array_flip($parameterValueIdsByParameterId[$parameter->getId()]),
+                );
+
+                $parameterFilterChoicesIndexedByKey[$key][] = new ParameterFilterChoice(
+                    $parameter,
+                    $this->parameterSortingHelper->sortParameterValuesAlphabetically($parameterValues, $locale),
+                );
+            }
+        }
+
+        return $parameterFilterChoicesIndexedByKey;
     }
 
     /**
-     * @return int[]
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
+     * @return array<int, int[]> parameter ids sorted by position, indexed by category id
      */
-    public function getParametersIdsSortedByPositionFilteredByCategory(Category $category): array
+    public function getParameterIdsSortedByPositionIndexedByCategoryId(array $categories): array
     {
-        return array_map(
-            static fn ($categoryParameter) => $categoryParameter->getParameter()->getId(),
-            $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category),
-        );
+        $parameterIdsIndexedByCategoryId = [];
+        $categoryParametersIndexedByCategoryId = $this->categoryParameterRepository->getCategoryParametersSortedByPositionIndexedByCategoryId($categories);
+
+        foreach ($categoryParametersIndexedByCategoryId as $categoryId => $categoryParameters) {
+            $parameterIdsIndexedByCategoryId[$categoryId] = array_map(
+                static fn (CategoryParameter $categoryParameter): int => $categoryParameter->getParameter()->getId(),
+                $categoryParameters,
+            );
+        }
+
+        return $parameterIdsIndexedByCategoryId;
     }
 
     public function editParameterValue(int $parameterValueId, ParameterValueData $parameterValueData): ParameterValue

@@ -78,10 +78,11 @@ class CategoryParameterFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]> indexed by category id
      */
-    public function getParametersCollapsedByCategory(Category $category): array
+    public function getParametersCollapsedIndexedByCategoryId(array $categories): array
     {
-        return $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
+        return $this->categoryParameterRepository->getParametersCollapsedIndexedByCategoryId($categories);
     }
 }

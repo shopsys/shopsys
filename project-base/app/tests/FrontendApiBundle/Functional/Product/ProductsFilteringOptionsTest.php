@@ -758,6 +758,83 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         yield [false, 'filter' => ['brands' => ['738ead90-3108-433d-ad6e-1ea23f68a13d']]];
     }
 
+    public function testFilterOptionsOfMultipleBrandsInOneResponseMatchSingleBrandResponses(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/BrandsProductsFilterOptions.graphql');
+        $brandsData = $this->getResponseDataForGraphQlType($response, 'brands');
+        $productFilterOptionsIndexedByBrandUuid = array_column(
+            array_map(static fn (array $brandData): array => ['uuid' => $brandData['uuid'], 'productFilterOptions' => $brandData['products']['productFilterOptions']], $brandsData),
+            'productFilterOptions',
+            'uuid',
+        );
+
+        foreach ([BrandDataFixture::BRAND_CANON, BrandDataFixture::BRAND_SENCOR] as $brandReferenceName) {
+            $brand = $this->getReference($brandReferenceName, Brand::class);
+            $singleBrandResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/BrandProductsFilterOptions.graphql', [
+                'brandUuid' => $brand->getUuid(),
+            ]);
+            $singleBrandData = $this->getResponseDataForGraphQlType($singleBrandResponse, 'brand');
+
+            $this->assertNotEmpty($singleBrandData['products']['productFilterOptions']['flags'], 'Brand ' . $brandReferenceName . ' should offer flag filter options');
+            $this->assertSame(
+                $singleBrandData['products']['productFilterOptions'],
+                $productFilterOptionsIndexedByBrandUuid[$brand->getUuid()],
+                'Filter options of brand ' . $brandReferenceName . ' loaded in a batch differ from the single brand response',
+            );
+        }
+    }
+
+    public function testFilterOptionsOfMultipleFlagsInOneResponseMatchSingleFlagResponses(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/FlagsProductsFilterOptions.graphql');
+        $flagsData = $this->getResponseDataForGraphQlType($response, 'flags');
+        $productFilterOptionsIndexedByFlagUuid = array_column(
+            array_map(static fn (array $flagData): array => ['uuid' => $flagData['uuid'], 'productFilterOptions' => $flagData['products']['productFilterOptions']], $flagsData),
+            'productFilterOptions',
+            'uuid',
+        );
+
+        foreach ([FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_NEW] as $flagReferenceName) {
+            $flag = $this->getReference($flagReferenceName, Flag::class);
+            $singleFlagResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/FlagProductsFilterOptions.graphql', [
+                'flagUuid' => $flag->getUuid(),
+            ]);
+            $singleFlagData = $this->getResponseDataForGraphQlType($singleFlagResponse, 'flag');
+
+            $this->assertNotEmpty($singleFlagData['products']['productFilterOptions']['brands'], 'Flag ' . $flagReferenceName . ' should offer brand filter options');
+            $this->assertSame(
+                $singleFlagData['products']['productFilterOptions'],
+                $productFilterOptionsIndexedByFlagUuid[$flag->getUuid()],
+                'Filter options of flag ' . $flagReferenceName . ' loaded in a batch differ from the single flag response',
+            );
+        }
+    }
+
+    public function testFilterOptionsOfMultipleCategoriesInOneResponseMatchSingleCategoryResponses(): void
+    {
+        $electronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
+        $books = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoriesProductsFilterOptions.graphql', [
+            'electronicsUuid' => $electronics->getUuid(),
+            'booksUuid' => $books->getUuid(),
+        ]);
+
+        foreach (['electronics' => $electronics, 'books' => $books] as $alias => $category) {
+            $singleCategoryResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
+                'categoryUuid' => $category->getUuid(),
+            ]);
+            $singleCategoryData = $this->getResponseDataForGraphQlType($singleCategoryResponse, 'category');
+
+            $this->assertNotEmpty($singleCategoryData['products']['productFilterOptions']['parameters'], 'Category ' . $alias . ' should offer parameter filter options');
+            $this->assertSame(
+                $singleCategoryData['products']['productFilterOptions'],
+                $this->getResponseDataForGraphQlType($response, $alias)['products']['productFilterOptions'],
+                'Filter options of category ' . $alias . ' loaded in a batch differ from the single category response',
+            );
+        }
+    }
+
     private function getRedColorExpectedFile(): array
     {
         $redColorParameterValue = $this->getReference(ParameterColorValueDataFixture::PARAMETER_VALUE_RED_REFERENCE_PREFIX . $this->firstDomainLocale, ParameterValue::class);

@@ -59,6 +59,9 @@ overblog_dataloader:
         orderItemRelatedItemsBatchLoader:
             alias: "order_item_related_items_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Order\\OrderItemRelatedItemsBatchLoader:loadByOrderItems"
+        productFilterOptionsBatchLoader:
+            alias: "product_filter_options_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\Filter\\ProductFilterOptionsBatchLoader:loadByBatchLoadData"
         productGiftsByMainProductIdsBatchLoader:
             alias: "product_gifts_by_main_product_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadProductGiftsByMainProductIds"

@@ -4,84 +4,80 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
-use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\MultipleSearchFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 
 class ProductFilterElasticFacade
 {
     public function __construct(
-        protected readonly Client $client,
+        protected readonly MultipleSearchFacade $multipleSearchFacade,
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly ProductFilterConfigIdsDataFactory $productFilterConfigIdsDataFactory,
     ) {
     }
 
-    public function getProductFilterDataInCategory(
-        Category $category,
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterBatchLoadData[] $batchLoadDataIndexedByKey
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData[] indexed by the same keys as the batch load data
+     */
+    public function getProductFilterConfigIdsDataByBatchLoadData(
+        array $batchLoadDataIndexedByKey,
         PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        $filterQuery = $this->filterQueryFactory->createVisibleForCategory($category)
-            ->filterOnlySellable();
+    ): array {
+        $aggregationQueriesIndexedByKey = [];
 
-        $aggregationQuery = $filterQuery
-            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
-        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
+        foreach ($batchLoadDataIndexedByKey as $key => $batchLoadData) {
+            $aggregationQueriesIndexedByKey[$key] = $this->createAggregationQuery($batchLoadData, $pricingGroup);
+        }
 
-        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
+        $responsesIndexedByKey = $this->multipleSearchFacade->searchIndexedByKey($aggregationQueriesIndexedByKey);
+        $productFilterConfigIdsDataIndexedByKey = [];
+
+        foreach ($responsesIndexedByKey as $key => $response) {
+            $productFilterConfigIdsDataIndexedByKey[$key] = $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult(
+                $response['aggregations'],
+            );
+        }
+
+        return $productFilterConfigIdsDataIndexedByKey;
     }
 
-    public function getProductFilterDataForSearch(
-        string $searchText,
+    /**
+     * @return array{index: string, body: array<string, mixed>}
+     */
+    protected function createAggregationQuery(
+        ProductFilterBatchLoadData $batchLoadData,
         PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        $aggregationQuery = $this->filterQueryFactory->createVisible()
-            ->filterOnlySellable()
-            ->search($searchText)
-            ->getAggregationQueryForProductFilterConfigWithoutParameters($pricingGroup->getId());
-        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
+    ): array {
+        $entity = $batchLoadData->getEntity();
+        $pricingGroupId = $pricingGroup->getId();
 
-        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
+        return match (true) {
+            $entity instanceof Category => $this->filterQueryFactory->createVisibleForCategory($entity)
+                ->filterOnlySellable()
+                ->getAggregationQueryForProductFilterConfig($pricingGroupId),
+            $entity instanceof Brand => $this->createVisibleSellableFilterQuery()
+                ->filterByBrands([$entity->getId()])
+                ->getAggregationQueryForProductFilterConfigWithoutParameters($pricingGroupId),
+            $entity instanceof Flag => $this->createVisibleSellableFilterQuery()
+                ->filterByFlags([$entity->getId()])
+                ->getAggregationQueryForProductFilterConfigWithoutParameters($pricingGroupId),
+            $batchLoadData->getSearchText() !== '' => $this->createVisibleSellableFilterQuery()
+                ->search($batchLoadData->getSearchText())
+                ->getAggregationQueryForProductFilterConfigWithoutParameters($pricingGroupId),
+            default => $this->createVisibleSellableFilterQuery()
+                ->getAggregationQueryForProductFilterConfigWithoutParameters($pricingGroupId),
+        };
     }
 
-    public function getProductFilterDataInBrand(
-        int $brandId,
-        PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        $filterQuery = $this->filterQueryFactory->createVisible()
-            ->filterOnlySellable()
-            ->filterByBrands([$brandId]);
-
-        $aggregationQuery = $filterQuery
-            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
-        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
-
-        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
-    }
-
-    public function getProductFilterDataInFlag(
-        int $flagId,
-        PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        $filterQuery = $this->filterQueryFactory->createVisible()
-            ->filterOnlySellable()
-            ->filterByFlags([$flagId]);
-
-        $aggregationQuery = $filterQuery
-            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
-        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
-
-        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
-    }
-
-    public function getProductFilterDataForAll(PricingGroup $pricingGroup): ProductFilterConfigIdsData
+    protected function createVisibleSellableFilterQuery(): FilterQuery
     {
-        $aggregationQuery = $this->filterQueryFactory->createVisible()
-            ->filterOnlySellable()
-            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
-        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
-
-        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
+        return $this->filterQueryFactory->createVisible()
+            ->filterOnlySellable();
     }
 }
