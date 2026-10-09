@@ -66,9 +66,10 @@ export default defineConfig({
             on('before:browser:launch', (browser, launchOptions) => {
                 if (browser.family === 'chromium' && browser.name !== 'electron') {
                     if (browser.isHeadless) {
-                        // Keep screenshot dimensions independent of the runner's display.
+                        // Leave room for browser/runner chrome around the 1600x720 application viewport.
+                        // Matching the outer window to the viewport clips captures and introduces scrollbars.
                         launchOptions.args.push(
-                            `--window-size=${config.viewportWidth},${config.viewportHeight}`,
+                            '--window-size=1920,1080',
                             '--force-device-scale-factor=1',
                         );
                     }
