@@ -22,24 +22,23 @@ class AdministratorRoleFacade
      */
     public function refreshAdministratorRoles(Administrator $administrator, array $roles): void
     {
-        $roles = $this->addAdminRoleIfMissing($administrator, $roles);
+        // roles of an administrator with a role group are given by the group
+        $roles = $administrator->getRoleGroup() === null ? $this->addAdminRoleIfMissing($administrator, $roles) : [];
 
-        $this->removeAllByAdministrator($administrator);
+        // existing roles are kept, removed roles are deleted as orphans, so an unchanged role is not deleted and created again
+        $currentRolesByName = [];
 
-        if ($administrator->getRoleGroup() !== null) {
-            $administrator->setRolesChangedNow();
-            $this->em->flush();
-
-            return;
+        foreach ($administrator->getAdministratorRoles() as $administratorRole) {
+            $currentRolesByName[$administratorRole->getRole()] = $administratorRole;
         }
 
         $newRoles = [];
 
-        foreach ($roles as $role) {
-            $newRoles[] = $this->createNewRole($administrator, $role);
+        foreach (array_unique($roles) as $role) {
+            $newRoles[] = $currentRolesByName[$role] ?? $this->createNewRole($administrator, $role);
         }
-        $administrator->addRoles($newRoles);
 
+        $administrator->setRoles($newRoles);
         $this->em->flush();
     }
 
@@ -60,16 +59,6 @@ class AdministratorRoleFacade
         }
 
         return $roles;
-    }
-
-    protected function removeAllByAdministrator(Administrator $administrator): void
-    {
-        $oldAdministratorRoles = $administrator->getAdministratorRoles();
-
-        foreach ($oldAdministratorRoles as $oldAdministratorRole) {
-            $this->em->remove($oldAdministratorRole);
-        }
-        $this->em->flush();
     }
 
     protected function createNewRole(Administrator $administrator, string $role): AdministratorRole
