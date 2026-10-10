@@ -2050,11 +2050,11 @@ msgstr "SEO"
 msgid "SEO & Marketing Tools"
 msgstr "SEO a marketingové nástroje"
 
-msgid "SEO attributes"
-msgstr "SEO atributy"
+msgid "SEO and Open Graph"
+msgstr "SEO a Open Graph"
 
-msgid "SEO attributes settings"
-msgstr "Nastavení SEO atributů"
+msgid "SEO and Open Graph settings"
+msgstr "Nastavení SEO a Open Graph"
 
 msgid "SEO page"
 msgstr "SEO stránka"
@@ -2062,8 +2062,8 @@ msgstr "SEO stránka"
 msgid "SEO pages"
 msgstr "SEO stránky"
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity."
-msgstr "SEO stránky se používají jen pro statické stránky storefrontu (např. košík, vyhledávání nebo zákaznická sekce). Pokud chcete nastavit SEO konkrétní entity, např. článku, použijte SEO nastavení v administraci dané entity."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
+msgstr "SEO stránky se používají jen pro statické stránky storefrontu (např. košík, vyhledávání nebo zákaznická sekce). Pokud chcete nastavit SEO konkrétní entity, např. článku, použijte SEO nastavení v administraci dané entity. SEO stránky také určují titulek, popis a obrázek zobrazené při sdílení stránky na sociálních sítích. Bez Open Graph obrázku se použije logo firmy z <a href=\"%seoSettingsUrl%\">nastavení SEO a Open Graph</a>."
 
 msgid "Sale including/excluding VAT"
 msgstr "Prodej s/bez DPH"

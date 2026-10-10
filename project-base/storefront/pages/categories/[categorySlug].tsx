@@ -44,7 +44,6 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
-    const firstImageUrl = categoryData?.images[0]?.url;
 
     if (!categoryData && !isFetchingVisible) {
         return <Error404Content />;
@@ -59,7 +58,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 defaultDescription={categoryData?.description}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
-                ogImageUrlDefault={firstImageUrl}
+                ogImage={categoryData?.images[0]}
                 paginationTotalCount={categoryData?.products.totalCount}
                 seo={categoryData?.seo}
                 defaultTitle={categoryData?.name}

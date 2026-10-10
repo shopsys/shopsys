@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import Head from 'next/head';
@@ -6,7 +7,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { MetaRobotsContent, OgTypeEnum } from 'types/seo';
 import { logMessage } from 'utils/errors/logMessage';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 import { getDocumentTitle } from 'utils/seo/getDocumentTitle';
 import { useSeo } from 'utils/seo/useSeo';
@@ -21,7 +21,7 @@ type SeoMetaProps = {
     paginationTotalCount?: number;
     paginationPageSize?: number;
     ogType?: OgTypeEnum | undefined;
-    ogImageUrlDefault?: string | undefined;
+    ogImage?: TypeImageFragment | null;
 };
 
 export const SeoMeta: FC<SeoMetaProps> = ({
@@ -34,10 +34,9 @@ export const SeoMeta: FC<SeoMetaProps> = ({
     paginationTotalCount,
     paginationPageSize,
     ogType = OgTypeEnum.Website,
-    ogImageUrlDefault,
+    ogImage,
     children,
 }) => {
-    const { t } = useTranslation();
     const [areMissingRequiredTagsReported, setAreMissingRequiredTagsReported] = useState(false);
 
     const {
@@ -46,11 +45,13 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         description,
         ogTitle: ogTitleFromProps,
         ogDescription: ogDescriptionFromProps,
-        ogImageUrl: ogImageUrlFromProps,
+        ogImageUrl,
         ogImageAlt,
         metaRobots,
         isNoindex,
         canonicalUrl,
+        ogUrl,
+        ogSiteName,
         hreflangLinks: hreflangLinksSeoPage,
     } = useSeo({
         seo,
@@ -60,10 +61,11 @@ export const SeoMeta: FC<SeoMetaProps> = ({
         canonicalQueryParams,
         paginationTotalCount,
         paginationPageSize,
+        ogImage,
     });
 
     const currentUri = useRouter().asPath;
-    const { url } = useDomainConfig();
+    const { url, defaultLocale } = useDomainConfig();
     const currentUrlWithDomain = url.substring(0, url.length - 1) + currentUri;
 
     const hreflangLinks = hreflangLinksSeoPage || defaultHreflangLinks;
@@ -82,7 +84,9 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
     const ogTitle = ogTitleFromProps ?? title;
     const ogDescription = ogDescriptionFromProps ?? description;
-    const ogImageUrl = ogImageUrlFromProps ?? ogImageUrlDefault;
+    // Open Graph expects the ll_TT format, so the most likely country of the domain language is added (e.g. cs → cs_CZ)
+    const { language, region } = new Intl.Locale(defaultLocale).maximize();
+    const ogLocale = region ? `${language}_${region}` : language;
 
     return (
         <Head>
@@ -105,16 +109,17 @@ export const SeoMeta: FC<SeoMetaProps> = ({
             )}
 
             <meta content={ogType} property="og:type" />
-            <meta content={t('metatagSiteName')} property="og:site_name" />
-            <meta content={currentUrlWithDomain} property="og:url" />
+            {ogSiteName && <meta content={ogSiteName} property="og:site_name" />}
+            <meta content={ogLocale} property="og:locale" />
+            <meta content={ogUrl} property="og:url" />
             {ogTitle && <meta content={ogTitle} property="og:title" />}
             {ogDescription && <meta content={ogDescription} property="og:description" />}
             {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
             {ogImageUrl && ogImageAlt && <meta content={ogImageAlt} property="og:image:alt" />}
 
-            <meta content="summary_large_image" name="twitter:card" />
-            <meta content={url} name="twitter:domain" />
-            <meta content={currentUrlWithDomain} name="twitter:url" />
+            <meta content={ogImageUrl ? 'summary_large_image' : 'summary'} name="twitter:card" />
+            <meta content={new URL(url).hostname} name="twitter:domain" />
+            <meta content={ogUrl} name="twitter:url" />
             {ogTitle && <meta content={ogTitle} name="twitter:title" />}
             {ogDescription && <meta content={ogDescription} name="twitter:description" />}
             {ogImageUrl && <meta content={ogImageUrl} name="twitter:image" />}

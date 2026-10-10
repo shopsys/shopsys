@@ -8530,10 +8530,10 @@ Company description
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="organizationsetting.logo">logo</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#image">Image</a></td>
 <td>
 
-Absolute organization logo URL
+Organization logo
 
 </td>
 </tr>

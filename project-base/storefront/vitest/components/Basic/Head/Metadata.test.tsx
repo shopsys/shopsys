@@ -49,7 +49,7 @@ vi.mock('graphql/requests/settings/queries/SettingsQuery.generated', () => ({
                             city: 'Prague',
                             postcode: '11000',
                             country: 'CZ',
-                            logo: 'https://shop.example/logo.png',
+                            logo: { __typename: 'Image', name: 'Logo', url: 'https://shop.example/logo.png' },
                             socialNetworkUrls: ['https://social.example/company'],
                         },
                     },

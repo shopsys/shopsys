@@ -3193,8 +3193,11 @@ msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola 
 msgid "SEO Page <strong>{{ name }}</strong> removed"
 msgstr "SEO stránka <strong>{{ name }}</strong> odstránená"
 
-msgid "SEO attributes settings modified"
-msgstr "Nastavenia SEO atribútov upravené"
+msgid "SEO and Open Graph"
+msgstr "SEO a Open Graph"
+
+msgid "SEO and Open Graph settings modified"
+msgstr "Nastavenia SEO a Open Graph boli upravené"
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
 msgstr "SEO kombinácia kategórie s ID {{ ReadyCategorySeoMixId }} bola odstránená"
@@ -3688,6 +3691,9 @@ msgstr "Skladové množstvá sú nastavené pre varianty produktu osobne."
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Pri uklade dšla chyba. Objednávka nie je uložená."
 
+msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, articles, brands and stores) use their own image, page title and meta description."
+msgstr "Tieto údaje sa zverejňujú ako štruktúrované dáta na každej stránke storefrontu a dopĺňajú aj Open Graph (og) tagy, ktoré čítajú sociálne siete pri zdieľaní stránky. Názov firmy je názvom webu (og:site_name) pri každej zdieľanej stránke. Logo sa použije ako obrázok na zdieľanie (og:image) len vtedy, keď stránka nemá vlastný obrázok, napr. úvodná stránka bez Open Graph obrázka v jej <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO stránke</a>, stránky príznakov alebo produkty a kategórie bez obrázkov.<br>Statické stránky (úvodná stránka, košík, vyhľadávanie…) preberajú názov, popis a obrázok na zdieľanie zo svojej SEO stránky; entity (napr. produkty, kategórie, články, značky a obchody) používajú vlastný obrázok, nadpis stránky a meta popis."
+
 msgid "Third column categories"
 msgstr "Kategórie tretieho stĺpca"
 
@@ -3723,6 +3729,9 @@ msgstr "Štvrtok"
 
 msgid "TikTok URL"
 msgstr "TikTok URL"
+
+msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO and Open Graph</a> is used."
+msgstr "Názov, popis a obrázok zobrazené pri zdieľaní tejto stránky na sociálnych sieťach. Ak je Open Graph názov alebo popis prázdny, použije sa nadpis stránky alebo meta popis. Bez Open Graph obrázka sa použije logo firmy z <a href=\"%seoSettingsUrl%\" target=\"_blank\">nastavenia SEO a Open Graph</a>."
 
 msgid "To display the QR code to the customer, insert the <code>%placeholder%</code> placeholder into the payment instructions."
 msgstr "Aby sa zákazníkovi zobrazil QR kód, vložte do pokynov k platbe premennú <code>%placeholder%</code>."
