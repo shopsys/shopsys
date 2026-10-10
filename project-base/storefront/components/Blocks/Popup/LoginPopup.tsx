@@ -13,7 +13,7 @@ export const LoginPopup: FC<LoginFormProps> = ({
     const title = t('Log in and continue with order');
 
     return (
-        <Popup className="w-full max-w-md" contentClassName="overflow-y-auto" isTitleHidden title={title}>
+        <Popup size="small" contentClassName="overflow-y-auto" isTitleHidden title={title}>
             <VerticalStack gap="xs">
                 <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-background-most">
                     <UserIcon aria-hidden="true" className="size-7" focusable="false" />

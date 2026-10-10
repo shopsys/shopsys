@@ -23,12 +23,7 @@ export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ descri
     };
 
     return (
-        <Popup
-            ariaDescription={description}
-            className="w-[calc(100vw-40px)] max-w-120"
-            role="alertdialog"
-            title={t('Remove all products?')}
-        >
+        <Popup size="small" ariaDescription={description} role="alertdialog" title={t('Remove all products?')}>
             <div className="flex flex-col gap-6">
                 <p>{description}</p>
 

@@ -97,7 +97,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     </span>
                 )}
 
-                <span className="flex w-full min-w-0 justify-between">
+                <span className="flex w-full min-w-0 justify-between gap-2">
                     <span
                         className={twMergeCustom(
                             'w-full min-w-0',

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSourceFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use SortDirection;
 
 class FlagGridFactory implements GridFactoryInterface
 {
@@ -31,6 +32,7 @@ class FlagGridFactory implements GridFactoryInterface
             ->select('f, ft')
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = $this->queryBuilderWithRowManipulatorDataSourceFactory->create(
             $queryBuilder,
@@ -39,7 +41,7 @@ class FlagGridFactory implements GridFactoryInterface
         );
 
         $grid = $this->gridFactory->create('flagList', $dataSource, $roleConstant);
-        $grid->setDefaultOrder('name');
+        $grid->enableDragAndDrop(Flag::class);
 
         $grid->addColumn('name', 'ft.name', t('Name'), true);
         $grid->addColumn('rgbColor', 'f.rgbColor', t('Color'), true);

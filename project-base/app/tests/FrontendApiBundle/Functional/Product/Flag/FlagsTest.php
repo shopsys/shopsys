@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class FlagsTest extends GraphQlTestCase
@@ -13,10 +12,18 @@ class FlagsTest extends GraphQlTestCase
     /**
      * @inject
      */
-    private ArraySorterHelper $arraySorterHelper;
+    private FlagFacade $flagFacade;
 
     public function testFlags(): void
     {
+        $flags = array_reverse($this->flagFacade->getAll());
+
+        foreach ($flags as $position => $flag) {
+            $flag->setPosition($position);
+        }
+
+        $this->em->flush();
+
         $query = '
             query {
                 flags {
@@ -25,37 +32,12 @@ class FlagsTest extends GraphQlTestCase
             }
         ';
 
-        $flags = [
-            [
-                'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+        $flags = array_map(
+            fn ($flag) => [
+                'name' => $flag->getName($this->getFirstDomainLocale()),
             ],
-            [
-                'name' => t('Made in CZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Made in SK', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('New', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Price hit', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Product gift', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-        ];
-
-        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $flags, $this->getLocaleForFirstDomain());
+            $flags,
+        );
 
         $arrayExpected = [
             'data' => [

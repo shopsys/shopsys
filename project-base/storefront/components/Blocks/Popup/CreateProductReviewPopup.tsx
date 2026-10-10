@@ -103,7 +103,6 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
 
     return (
         <Popup
-            className="w-11/12 lg:w-1/2"
             contentClassName="overflow-y-auto"
             title={t('Write a review')}
             ariaDescription={t('Rate the product with 1 to 5 stars and optionally describe your experience.', {
