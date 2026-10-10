@@ -1,4 +1,4 @@
-const withSentryConfig = require('@sentry/nextjs').withSentryConfig;
+const { withSentryConfig } = require('@sentry/nextjs/config');
 const nextTranslate = require('next-translate-plugin');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
@@ -73,7 +73,7 @@ const nextConfig = {
 };
 
 /**
- * @type {import('@sentry/nextjs/build/types/config/types').SentryBuildOptions}
+ * @type {import('@sentry/nextjs/config').SentryBuildOptions}
  */
 const sentryConfig = {
     org: process.env.SENTRY_ORG,
@@ -84,15 +84,15 @@ const sentryConfig = {
     telemetry: false,
     release: {
         name: process.env.SENTRY_RELEASE,
+        create: process.env.APP_ENV !== 'development',
+        finalize: process.env.APP_ENV !== 'development',
     },
-    unstable_sentryWebpackPluginOptions: {
-        disable: process.env.APP_ENV === 'development',
-        errorHandler: (err) => {
-            // biome-ignore lint/suspicious/noConsole: Sentry build integration intentionally reports plugin issues to the terminal.
-            console.warn(`Sentry CLI Plugin: ${err.message}`);
-        },
+    errorHandler: (err) => {
+        // biome-ignore lint/suspicious/noConsole: Sentry build integration intentionally reports plugin issues to the terminal.
+        console.warn(`Sentry CLI Plugin: ${err.message}`);
     },
     sourcemaps: {
+        disable: process.env.APP_ENV === 'development',
         deleteSourcemapsAfterUpload: true,
     },
 
@@ -102,7 +102,6 @@ const sentryConfig = {
         // Keep Sentry annotations from revealing the spam protection field to bots.
         ignoredComponents: ['HoneyPotInput'],
     },
-    disableLogger: true,
     bundleSizeOptimizations: {
         excludeDebugStatements: true,
         excludeTracing: process.env.APP_ENV === 'development',
