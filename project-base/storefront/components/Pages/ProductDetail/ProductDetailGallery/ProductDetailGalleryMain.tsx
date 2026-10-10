@@ -1,13 +1,13 @@
 import { Image } from 'components/Basic/Image/Image';
 import { MediaCarouselNavigationButton } from 'components/Basic/MediaCarousel/MediaCarouselNavigationButton';
 import { MediaCarouselPagination } from 'components/Basic/MediaCarousel/MediaCarouselPagination';
+import { MediaCarouselPositionCounter } from 'components/Basic/MediaCarousel/MediaCarouselPositionCounter';
 import { MediaCarouselTrack, MediaCarouselTrackHandle } from 'components/Basic/MediaCarousel/MediaCarouselTrack';
 import { getYouTubeThumbnailUrl } from 'components/Basic/YouTubeThumbnail/YouTubeThumbnail';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { generateProductImageAlt } from 'utils/productAltText';
 
@@ -88,12 +88,6 @@ export const ProductDetailGalleryMain: FC<ProductDetailGalleryMainProps> = ({
         selectGalleryItem(selectedIndex < lastItemIndex ? selectedIndex + 1 : 0);
     };
 
-    const selectedItemPositionLabel = t('{{ slideName }}, slide {{ current }} of {{ total }}', {
-        slideName: productName,
-        current: selectedIndex + 1,
-        total: galleryItems.length,
-    });
-
     return (
         <div
             className="flex w-full min-w-0 flex-col items-center gap-4"
@@ -154,18 +148,13 @@ export const ProductDetailGalleryMain: FC<ProductDetailGalleryMainProps> = ({
                             onClick={selectNextItem}
                         />
 
-                        <span
-                            aria-label={selectedItemPositionLabel}
-                            aria-live="polite"
-                            className={twJoin(
-                                'absolute top-0 right-0 z-above rounded-full bg-background-dark/40 px-2 py-1 text-text-inverted text-xs backdrop-blur-xs transition-opacity duration-200 motion-reduce:transition-none',
-                                isPositionCounterVisible ? 'opacity-100' : 'opacity-0',
-                            )}
-                        >
-                            <span aria-hidden="true">
-                                {selectedIndex + 1} / {galleryItems.length}
-                            </span>
-                        </span>
+                        <MediaCarouselPositionCounter
+                            className="absolute top-0 right-0 z-above"
+                            isVisible={isPositionCounterVisible}
+                            itemCount={galleryItems.length}
+                            selectedIndex={selectedIndex}
+                            slideName={productName}
+                        />
                     </>
                 )}
 

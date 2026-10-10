@@ -57,6 +57,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
         updatePortalContent(
             <DynamicModalGallery
                 galleryName={generateProductImageAlt(productName, categoryName)}
+                galleryTitle={productName}
                 initialIndex={initialIndex}
                 items={galleryItems}
                 onCloseModal={closePortalContent}
