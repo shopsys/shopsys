@@ -1,5 +1,7 @@
 # Component deferring
 
+[TOC]
+
 To improve certain metrics (such as TBT), improve user experience, and make the Storefront application feel faster, we have implemented a custom deferring logic. This mechanism allows developers to delay rendering of certain parts of the application so that the initial render and hydration tasks are shorter. In essence, this mechanism is based on strategically setting timeouts and only rendering the desired content once the timesout finishes. In the meantime, the developer can provide a placeholder (component with a partial content and structure) or a skeleton (purely visual component used to show that something is loading).
 
 In order to understand this mechanism and be able to work with it, read this documentation thoroughly. Only then will you be able to work with deferring efficiently.

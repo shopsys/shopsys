@@ -1,5 +1,7 @@
 # Handlers
 
+[TOC]
+
 Handlers enable Create, Read, Update, and Delete operations for your entities. They act as a bridge between your CRUD controllers and your business logic (typically facades).
 
 !!! note

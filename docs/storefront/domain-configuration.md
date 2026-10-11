@@ -1,5 +1,7 @@
 # Domain Configuration & Locale-in-Path Functionality
 
+[TOC]
+
 ## Overview
 
 The Shopsys storefront supports multi-domain configurations with flexible locale handling. Each domain can serve content for a specific locale, and domains can optionally include the locale in their URL path (e.g., `/sk/`). This documentation explains how domain configuration works, how cookies are isolated between domains, and how to work with locale-in-path domains.
