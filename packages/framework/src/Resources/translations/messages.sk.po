@@ -175,8 +175,8 @@ msgstr "URL detailu adminského dopytu"
 msgid "Administration localization was changed to \"%locale%\""
 msgstr "Lokalizácia administrácie bola zmenená na \"%locale%\""
 
-msgid "Administrator \"%administrator_name%\" now has superadmin permissions."
-msgstr "Administrátor \"%administrator_name%\" teraz má oprávnenia super administrátora."
+msgid "Administrator \"{{ name }}\" now has superadmin permissions."
+msgstr "Administrátor \"{{ name }}\" teraz má oprávnenia super administrátora."
 
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
 msgstr "Administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bol vytvorený. Odkaz na nastavenie hesla bol poslaný na jeho email."
