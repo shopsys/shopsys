@@ -511,11 +511,11 @@ class AdministratorController extends AdminBaseController
 
         $this->administratorFacade->edit($id, $administratorData);
 
-        $this->addSuccessFlash(
-            t(
-                'Administrator "%administrator_name%" now has superadmin permissions.',
-                ['%administrator_name%' => $administrator->getRealName()],
-            ),
+        $this->addSuccessFlashTwig(
+            t('Administrator "{{ name }}" now has superadmin permissions.'),
+            [
+                'name' => $administrator->getRealName(),
+            ],
         );
 
         return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
