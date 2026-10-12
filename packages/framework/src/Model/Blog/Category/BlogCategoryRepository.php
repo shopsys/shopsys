@@ -247,6 +247,39 @@ class BlogCategoryRepository extends NestedTreeRepository
         return $blogCategoryDomainsIndexedByBlogCategoryId;
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @param int[] $domainIds
+     * @return array<int, int[]>
+     */
+    public function getVisibleDomainIdsByBlogCategoriesAndDomainIdsIndexedByBlogCategoryId(
+        array $blogCategories,
+        array $domainIds,
+    ): array {
+        if ($blogCategories === [] || $domainIds === []) {
+            return [];
+        }
+
+        $blogCategoryIdAndDomainIdPairs = $this->em->createQueryBuilder()
+            ->select('IDENTITY(bcd.blogCategory) AS blogCategoryId, bcd.domainId')
+            ->from(BlogCategoryDomain::class, 'bcd')
+            ->andWhere('bcd.blogCategory IN (:blogCategories)')
+            ->andWhere('bcd.domainId IN (:domainIds)')
+            ->andWhere('bcd.visible = TRUE')
+            ->setParameter('blogCategories', $blogCategories)
+            ->setParameter('domainIds', $domainIds)
+            ->getQuery()
+            ->getScalarResult();
+
+        $visibleDomainIdsIndexedByBlogCategoryId = [];
+
+        foreach ($blogCategoryIdAndDomainIdPairs as $blogCategoryIdAndDomainIdPair) {
+            $visibleDomainIdsIndexedByBlogCategoryId[(int)$blogCategoryIdAndDomainIdPair['blogCategoryId']][] = (int)$blogCategoryIdAndDomainIdPair['domainId'];
+        }
+
+        return $visibleDomainIdsIndexedByBlogCategoryId;
+    }
+
     public function findBlogArticleMainBlogCategoryOnDomain(BlogArticle $blogArticle, int $domainId): ?BlogCategory
     {
         $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
