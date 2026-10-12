@@ -38,6 +38,12 @@ services:
     Shopsys\FrontendApiBundle\Controller\SocialNetworkController:
         tags: [ 'controller.service_arguments' ]
 
+    Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticleResolverMap:
+        arguments:
+            $blogCategoriesVisibleBatchLoader: '@blog_categories_visible_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
     Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticlesQuery:
         arguments:
             $blogArticlesByBlogCategoryBatchLoader: '@blog_articles_by_blog_category_batch_loader'

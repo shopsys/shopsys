@@ -43,6 +43,24 @@ class BlogCategoriesBatchLoader
     }
 
     /**
+     * @param int[] $blogCategoryIds
+     */
+    public function loadVisibleByIds(array $blogCategoryIds): Promise
+    {
+        $visibleBlogCategoriesIndexedById = $this->blogCategoryFacade->getVisibleByIdsIndexedById(
+            $this->domain->getId(),
+            $blogCategoryIds,
+        );
+        $visibleBlogCategories = [];
+
+        foreach ($blogCategoryIds as $blogCategoryId) {
+            $visibleBlogCategories[] = $visibleBlogCategoriesIndexedById[$blogCategoryId] ?? null;
+        }
+
+        return $this->promiseAdapter->all($visibleBlogCategories);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
      */
     public function loadChildrenByBlogCategories(array $blogCategories): Promise
