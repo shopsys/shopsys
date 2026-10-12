@@ -5,6 +5,12 @@ overblog_dataloader:
         additionalServicesByIdsBatchLoader:
             alias: "additional_services_by_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIdAndAdditionalServiceIds"
+        blogArticlesByBlogCategoryBatchLoader:
+            alias: "blog_articles_by_blog_category_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Article\\BlogArticlesBatchLoader:loadByBlogCategoriesBatchLoadData"
+        blogArticlesTotalCountByBlogCategoryBatchLoader:
+            alias: "blog_articles_total_count_by_blog_category_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Article\\BlogArticlesBatchLoader:loadTotalCountByBlogCategories"
         blogCategoriesBatchLoader:
             alias: "blog_categories_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadByIds"
