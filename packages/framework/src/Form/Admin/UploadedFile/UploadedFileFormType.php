@@ -56,6 +56,7 @@ final class UploadedFileFormType extends AbstractType
             'back_route' => 'admin_uploadedfile_list',
             'entity' => $options['uploaded_file'],
             'save_label' => $isNew ? t('Upload') : null,
+            'apply' => !$isNew,
         ]);
 
         $builder->add('files', BasicFileUploadType::class, [

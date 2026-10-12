@@ -141,7 +141,7 @@ class StockController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_stock_list');
+            return $this->redirectAfterSave($form, 'admin_stock_list', 'admin_stock_edit', ['id' => $stock->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -178,7 +178,7 @@ class StockController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_stock_list');
+            return $this->redirectAfterSave($form, 'admin_stock_list', 'admin_stock_edit', ['id' => $stock->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

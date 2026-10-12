@@ -88,7 +88,7 @@ class ProductController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_product_list');
+            return $this->redirectAfterSave($form, 'admin_product_list', 'admin_product_edit', ['id' => $product->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -136,7 +136,7 @@ class ProductController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_product_list', ['id' => $product->getId()]);
+            return $this->redirectAfterSave($form, 'admin_product_list', 'admin_product_edit', ['id' => $product->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

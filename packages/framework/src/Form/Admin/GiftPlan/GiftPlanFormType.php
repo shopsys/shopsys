@@ -94,6 +94,7 @@ final class GiftPlanFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_giftplan_list',
                 'entity' => $options['giftPlan'],
+                'apply' => true,
             ]);
     }
 

@@ -62,7 +62,7 @@ class CustomerUserRoleGroupController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_superadmin_customer_user_role_group_list');
+            return $this->redirectAfterSave($form, 'admin_superadmin_customer_user_role_group_list', 'admin_superadmin_customer_user_role_group_edit', ['id' => $customerUserRoleGroup->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -96,7 +96,7 @@ class CustomerUserRoleGroupController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_superadmin_customer_user_role_group_list');
+            return $this->redirectAfterSave($form, 'admin_superadmin_customer_user_role_group_list', 'admin_superadmin_customer_user_role_group_edit', ['id' => $customerUserRoleGroup->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

@@ -66,7 +66,7 @@ class BrandController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_brand_list');
+            return $this->redirectAfterSave($form, 'admin_brand_list', 'admin_brand_edit', ['id' => $brand->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -131,7 +131,7 @@ class BrandController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_brand_list');
+            return $this->redirectAfterSave($form, 'admin_brand_list', 'admin_brand_edit', ['id' => $brand->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

@@ -95,6 +95,7 @@ final class MailTemplateFormType extends AbstractType
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_mail_template',
             'entity' => $options['entity'],
+            'apply' => true,
         ]);
     }
 

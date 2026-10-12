@@ -84,7 +84,7 @@ class UploadedFileController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_uploadedfile_list');
+            return $this->redirectAfterSave($form, 'admin_uploadedfile_list', 'admin_uploadedfile_edit', ['id' => $uploadedFile->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

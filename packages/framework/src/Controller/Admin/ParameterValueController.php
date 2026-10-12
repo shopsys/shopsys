@@ -96,7 +96,7 @@ class ParameterValueController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_parametervalue_list');
+            return $this->redirectAfterSave($form, 'admin_parametervalue_list', 'admin_parametervalue_edit', ['id' => $parameterValue->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

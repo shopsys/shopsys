@@ -115,7 +115,7 @@ class DomainController extends AdminBaseController
                     );
                 }
 
-                return $this->redirectToRoute('admin_domain_list');
+                return $this->redirectAfterSave($form, 'admin_domain_list', 'admin_domain_edit', ['id' => $domain->getId()]);
             } catch (FileIsNotSupportedImageException $ex) {
                 $this->addErrorFlash(t('File type not supported.'));
             } catch (MoveToFolderFailedException $ex) {

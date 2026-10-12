@@ -52,7 +52,8 @@ final class LanguageConstantFormType extends AbstractType
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_languageconstant_list',
-                'save_label' => t('Save changes'),
+                'entity' => $languageConstantData,
+                'apply' => true,
             ]);
     }
 

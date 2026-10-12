@@ -85,7 +85,7 @@ class GiftVoucherController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_giftvoucher_list');
+            return $this->redirectAfterSave($form, 'admin_giftvoucher_list', 'admin_giftvoucher_edit', ['id' => $giftVoucher->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -122,7 +122,7 @@ class GiftVoucherController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_giftvoucher_list');
+            return $this->redirectAfterSave($form, 'admin_giftvoucher_list', 'admin_giftvoucher_edit', ['id' => $giftVoucher->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

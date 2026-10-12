@@ -110,6 +110,7 @@ final class StockFormType extends AbstractType
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_stock_list',
             'entity' => $options['stock'],
+            'apply' => true,
         ]);
     }
 
@@ -125,6 +126,7 @@ final class StockFormType extends AbstractType
             ->setDefaults([
                 'data_class' => StockData::class,
                 'is_first_stock' => false,
+                'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
                     new Constraints\Callback(callback: [$this, 'validateDefaultRequiresEnabled']),
                 ],
