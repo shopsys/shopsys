@@ -189,6 +189,20 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]>
+     */
+    public function getAllVisibleChildrenByBlogCategoriesAndDomainIdIndexedByParentId(
+        array $blogCategories,
+        int $domainId,
+    ): array {
+        return $this->blogCategoryRepository->getAllVisibleChildrenByBlogCategoriesAndDomainIdIndexedByParentId(
+            $blogCategories,
+            $domainId,
+        );
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
     public function getTranslatedAllWithoutBranch(BlogCategory $blogCategory, string $locale): array
