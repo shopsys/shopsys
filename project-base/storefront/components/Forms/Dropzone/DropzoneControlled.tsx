@@ -162,9 +162,10 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
     const legendText =
         legend ??
         t(
-            'Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum files count is {{ maxFilesCount }}.',
+            'Please attach JPG or PNG images of the claimed goods with a maximum file size of {{ max }}. Maximum total file size is {{ maxTotal }}. Maximum files count is {{ maxFilesCount }}.',
             {
                 max: formatBytes(VALIDATION_CONSTANTS.fileMaxSize),
+                maxTotal: formatBytes(VALIDATION_CONSTANTS.totalFilesMaxSize),
                 maxFilesCount: VALIDATION_CONSTANTS.maxFilesCount,
             },
         );
@@ -191,6 +192,12 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                                 {value.map((file: File, index: number) => (
                                     <li key={`${file.name}-${index}`} className="flex flex-col items-center gap-1">
                                         <FilePreview file={file} />
+                                        <div className="flex w-20 flex-col text-center text-xs">
+                                            <span className="truncate" title={file.name}>
+                                                {file.name}
+                                            </span>
+                                            <span className="text-text-less">{formatBytes(file.size)}</span>
+                                        </div>
 
                                         <IconButton
                                             Icon={TrashCanIcon}
