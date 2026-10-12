@@ -24,6 +24,7 @@ class BlogCategoryResolverMap extends ResolverMap
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryBreadcrumbBatchLoader,
+        protected readonly DataLoaderInterface $blogCategoryChildrenBatchLoader,
     ) {
     }
 
@@ -46,10 +47,7 @@ class BlogCategoryResolverMap extends ResolverMap
                     return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain('front_blogcategory_detail', $blogCategory->getId());
                 },
                 'children' => function (BlogCategory $blogCategory) {
-                    return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
-                        $blogCategory,
-                        $this->domain->getId(),
-                    );
+                    return $this->blogCategoryChildrenBatchLoader->load($blogCategory);
                 },
                 'blogCategoriesTree' => function () {
                     return $this->blogCategoryFacade->getAllVisibleChildrenWithRootByDomainId(
