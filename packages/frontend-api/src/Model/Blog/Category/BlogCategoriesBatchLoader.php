@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 
 class BlogCategoriesBatchLoader
@@ -58,5 +59,28 @@ class BlogCategoriesBatchLoader
         }
 
         return $this->promiseAdapter->all($childrenByBlogCategory);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     */
+    public function loadSeoAttributesByBlogCategories(array $blogCategories): Promise
+    {
+        $domainId = $this->domain->getId();
+        $blogCategoryDomainsIndexedByBlogCategoryId = $this->blogCategoryFacade->getBlogCategoryDomainsByBlogCategoriesAndDomainIdIndexedByBlogCategoryId(
+            $blogCategories,
+            $domainId,
+        );
+        $seoAttributes = [];
+
+        foreach ($blogCategories as $blogCategory) {
+            if (!isset($blogCategoryDomainsIndexedByBlogCategoryId[$blogCategory->getId()])) {
+                throw new BlogCategoryDomainNotFoundException($blogCategory->getId(), $domainId);
+            }
+
+            $seoAttributes[] = $blogCategoryDomainsIndexedByBlogCategoryId[$blogCategory->getId()]->getSeoAttributes();
+        }
+
+        return $this->promiseAdapter->all($seoAttributes);
     }
 }

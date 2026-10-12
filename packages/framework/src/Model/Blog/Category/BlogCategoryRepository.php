@@ -216,6 +216,37 @@ class BlogCategoryRepository extends NestedTreeRepository
         return $childrenIndexedByParentId;
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain>
+     */
+    public function getBlogCategoryDomainsByBlogCategoriesAndDomainIdIndexedByBlogCategoryId(
+        array $blogCategories,
+        int $domainId,
+    ): array {
+        if ($blogCategories === []) {
+            return [];
+        }
+
+        $blogCategoryDomains = $this->em->createQueryBuilder()
+            ->select('bcd')
+            ->from(BlogCategoryDomain::class, 'bcd')
+            ->andWhere('bcd.blogCategory IN (:blogCategories)')
+            ->andWhere('bcd.domainId = :domainId')
+            ->setParameter('blogCategories', $blogCategories)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->getResult();
+
+        $blogCategoryDomainsIndexedByBlogCategoryId = [];
+
+        foreach ($blogCategoryDomains as $blogCategoryDomain) {
+            $blogCategoryDomainsIndexedByBlogCategoryId[$blogCategoryDomain->getBlogCategory()->getId()] = $blogCategoryDomain;
+        }
+
+        return $blogCategoryDomainsIndexedByBlogCategoryId;
+    }
+
     public function findBlogArticleMainBlogCategoryOnDomain(BlogArticle $blogArticle, int $domainId): ?BlogCategory
     {
         $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)

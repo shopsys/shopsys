@@ -62,6 +62,14 @@ class BlogCategoryDomain
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
+     */
+    public function getBlogCategory()
+    {
+        return $this->blogCategory;
+    }
+
+    /**
      * @return int
      */
     public function getDomainId()
