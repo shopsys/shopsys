@@ -302,6 +302,21 @@ data:
                 return 469; # send to @storefront
             }
 
+            # crawlers (e.g. Facebook for og:image) check robots.txt of the CDN host before downloading images from it,
+            # the CDN serves only static files, so everything is allowed there
+            location = /robots.txt {
+                default_type text/plain;
+
+                if ($http_cdn_vshosting_real_ip != '') {
+                    return 200 "User-agent: *\nAllow: /\n";
+                }
+                if ($http_cdn_vshosting_real_ip_img != '') {
+                    return 200 "User-agent: *\nAllow: /\n";
+                }
+
+                return 469; # send to @storefront
+            }
+
             # disallow access to dynamic content from CDN
             location ~ / {
                 if ($http_cdn_vshosting_real_ip != '') {
