@@ -42,6 +42,7 @@ services:
         arguments:
             $blogCategorySlugBatchLoader: '@blog_category_slug_batch_loader'
             $blogCategoryBreadcrumbBatchLoader: '@blog_category_breadcrumb_batch_loader'
+            $blogCategoryChildrenBatchLoader: '@blog_category_children_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
