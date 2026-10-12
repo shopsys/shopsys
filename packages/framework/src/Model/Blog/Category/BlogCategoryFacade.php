@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
@@ -20,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\RootLevelBlogCategoryA
 
 class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 {
+    protected const string VISIBLE_CHILDREN_WITH_ROOT_CACHE_NAMESPACE = 'visibleBlogCategoriesChildrenWithRootByDomainId';
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly BlogCategoryRepository $blogCategoryRepository,
@@ -32,6 +35,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
         protected readonly BlogArticleFacade $blogArticleFacade,
         protected readonly Domain $domain,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -61,7 +65,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
         $this->em->flush();
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+        $this->invalidateBlogCategoriesCache();
 
         return $blogCategory;
     }
@@ -86,7 +90,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
         $this->scheduleArticlesToExportByCategory($blogCategory);
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+        $this->invalidateBlogCategoriesCache();
 
         if ($blogCategory->isMainPage()) {
             $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
@@ -109,7 +113,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
         $this->scheduleArticlesToExportByCategory($blogCategory);
         $this->em->flush();
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+        $this->invalidateBlogCategoriesCache();
     }
 
     /**
@@ -200,7 +204,11 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
      */
     public function getAllVisibleChildrenWithRootByDomainId(int $domainId): array
     {
-        return $this->blogCategoryRepository->getAllVisibleChildrenWithRootByDomainId($domainId);
+        return $this->inMemoryCache->getOrSaveValue(
+            static::VISIBLE_CHILDREN_WITH_ROOT_CACHE_NAMESPACE,
+            fn (): array => $this->blogCategoryRepository->getAllVisibleChildrenWithRootByDomainId($domainId),
+            $domainId,
+        );
     }
 
     /**
@@ -272,6 +280,12 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
         return $this->blogCategoryRepository->getVisibleByIds($domainId, $blogCategoryIds);
     }
 
+    protected function invalidateBlogCategoriesCache(): void
+    {
+        $this->inMemoryCache->deleteAllItemsInNamespace(static::VISIBLE_CHILDREN_WITH_ROOT_CACHE_NAMESPACE);
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+    }
+
     protected function scheduleArticlesToExportByCategory(BlogCategory $blogCategory): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -320,7 +334,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
             $this->blogArticleExportQueueFacade->addIdsBatch($allIds, $domainId);
         }
 
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+        $this->invalidateBlogCategoriesCache();
     }
 
     public function findVisibleMainBlogCategoryOnCurrentDomain(): ?BlogCategory
