@@ -64,8 +64,8 @@ final class ActionBarType extends AbstractTypeExtension
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // Check if we should disable save button based on permissions
-        if ($builder->has('save')) {
+        // Check if we should disable save buttons based on permissions
+        if ($builder->has('save') || $builder->has('apply')) {
             $formConfig = $builder->getFormConfig();
             $formAction = $formConfig->getAction();
             $formMethod = $formConfig->getMethod();
@@ -73,6 +73,7 @@ final class ActionBarType extends AbstractTypeExtension
 
             if ($submitRouteName !== null && !$this->routeAccessChecker->hasAccess($submitRouteName, $formMethod)) {
                 $builder->remove('save');
+                $builder->remove('apply');
             }
         }
     }

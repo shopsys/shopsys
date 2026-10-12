@@ -32,18 +32,24 @@ final class ActionBarType extends AbstractType
                 'back_url',
                 'back_label',
                 'save_label',
+                'apply',
+                'apply_label',
                 'entity',
             ])
             ->setAllowedTypes('back_route', ['string', 'null'])
             ->setAllowedTypes('back_url', ['string', 'null'])
             ->setAllowedTypes('back_label', ['string'])
             ->setAllowedTypes('save_label', ['string', 'null'])
+            ->setAllowedTypes('apply', ['bool'])
+            ->setAllowedTypes('apply_label', ['string', 'null'])
             ->setAllowedTypes('entity', ['object', 'null'])
             ->setDefaults([
                 'back_route' => null,
                 'back_url' => null,
                 'back_label' => t('Back to overview'),
                 'save_label' => null,
+                'apply' => false,
+                'apply_label' => null,
                 'entity' => null,
                 'mapped' => false,
             ]);
@@ -74,6 +80,8 @@ final class ActionBarType extends AbstractType
             $backLink = null;
         }
 
+        $isEdit = $options['entity'] !== null;
+
         if ($backLink !== null) {
             $builder->add('back_link', LinkType::class, [
                 'link' => $backLink,
@@ -81,8 +89,20 @@ final class ActionBarType extends AbstractType
             ]);
         }
 
+        if ($options['apply']) {
+            $builder->add('apply', SubmitType::class, [
+                'label' => $options['apply_label'] ?? ($isEdit ? t('Save') : t('Create')),
+                'attr' => ['class' => 'btn btn-outline-primary'],
+            ]);
+            $builder->add('save', SubmitType::class, [
+                'label' => $options['save_label'] ?? ($isEdit ? t('Save and close') : t('Create and close')),
+            ]);
+
+            return;
+        }
+
         $builder->add('save', SubmitType::class, [
-            'label' => $options['save_label'] ?? ($options['entity'] !== null ? t('Save changes') : t('Create')),
+            'label' => $options['save_label'] ?? ($isEdit ? t('Save changes') : t('Create')),
         ]);
     }
 }
