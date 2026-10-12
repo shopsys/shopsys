@@ -3244,6 +3244,9 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "Save and close"
+msgstr ""
+
 msgid "Save changes"
 msgstr ""
 

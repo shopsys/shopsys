@@ -89,20 +89,26 @@ final class ActionBarType extends AbstractType
             ]);
         }
 
-        if ($options['apply']) {
+        $isApplyEnabled = $options['apply'];
+
+        if ($isApplyEnabled) {
             $builder->add('apply', SubmitType::class, [
                 'label' => $options['apply_label'] ?? ($isEdit ? t('Save') : t('Create')),
                 'attr' => ['class' => 'btn btn-outline-primary'],
             ]);
-            $builder->add('save', SubmitType::class, [
-                'label' => $options['save_label'] ?? ($isEdit ? t('Save and close') : t('Create and close')),
-            ]);
-
-            return;
         }
 
         $builder->add('save', SubmitType::class, [
-            'label' => $options['save_label'] ?? ($isEdit ? t('Save changes') : t('Create')),
+            'label' => $options['save_label'] ?? $this->getDefaultSaveLabel($isEdit, $isApplyEnabled),
         ]);
+    }
+
+    private function getDefaultSaveLabel(bool $isEdit, bool $isApplyEnabled): string
+    {
+        if ($isApplyEnabled) {
+            return $isEdit ? t('Save and close') : t('Create and close');
+        }
+
+        return $isEdit ? t('Save changes') : t('Create');
     }
 }
