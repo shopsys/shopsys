@@ -26,6 +26,7 @@ class BlogCategoryResolverMap extends ResolverMap
         protected readonly DataLoaderInterface $blogCategoryBreadcrumbBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryChildrenBatchLoader,
         protected readonly DataLoaderInterface $blogCategoriesBatchLoader,
+        protected readonly DataLoaderInterface $blogCategorySeoAttributesBatchLoader,
     ) {
     }
 
@@ -34,7 +35,9 @@ class BlogCategoryResolverMap extends ResolverMap
     {
         return [
             'BlogCategory' => [
-                'seo' => fn (BlogCategory $blogCategory) => $blogCategory->getSeoAttributes($this->domain->getId()),
+                'seo' => function (BlogCategory $blogCategory) {
+                    return $this->blogCategorySeoAttributesBatchLoader->load($blogCategory);
+                },
                 'parent' => function (BlogCategory $blogCategory) {
                     $parent = $blogCategory->getParent();
 
