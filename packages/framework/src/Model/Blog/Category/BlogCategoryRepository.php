@@ -183,21 +183,6 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
-     */
-    public function getAllVisibleChildrenByBlogCategoryAndDomainId(BlogCategory $blogCategory, int $domainId): array
-    {
-        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-            ->andWhere('bc.parent = :blogCategory')
-            ->setParameter('blogCategory', $blogCategory);
-
-        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-        $this->addTranslation($queryBuilder, $locale);
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
      * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]>
      */
