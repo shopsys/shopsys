@@ -22,7 +22,7 @@ class BlogCategoryResolverMap extends ResolverMap
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
-        protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
+        protected readonly DataLoaderInterface $blogCategoryMainFriendlyUrlSlugBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryBreadcrumbBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryChildrenBatchLoader,
         protected readonly DataLoaderInterface $blogCategoriesBatchLoader,
@@ -48,13 +48,20 @@ class BlogCategoryResolverMap extends ResolverMap
                     return $this->blogCategoriesBatchLoader->load($parent->getId());
                 },
                 'slug' => function (BlogCategory $blogCategory) {
-                    return $this->blogCategorySlugBatchLoader->load($blogCategory->getId());
+                    return $this->blogCategoryMainFriendlyUrlSlugBatchLoader
+                        ->load($blogCategory->getId())
+                        ->then(fn (string $mainFriendlyUrlSlug): string => '/' . $mainFriendlyUrlSlug);
                 },
                 'breadcrumb' => function (BlogCategory $blogCategory) {
                     return $this->blogCategoryBreadcrumbBatchLoader->load($blogCategory);
                 },
                 'link' => function (BlogCategory $blogCategory) {
-                    return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain('front_blogcategory_detail', $blogCategory->getId());
+                    return $this->blogCategoryMainFriendlyUrlSlugBatchLoader
+                        ->load($blogCategory->getId())
+                        ->then(fn (string $mainFriendlyUrlSlug): string => $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug(
+                            $this->domain->getId(),
+                            $mainFriendlyUrlSlug,
+                        ));
                 },
                 'children' => function (BlogCategory $blogCategory) {
                     return $this->blogCategoryChildrenBatchLoader->load($blogCategory);

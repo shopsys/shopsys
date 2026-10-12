@@ -14,6 +14,9 @@ overblog_dataloader:
         blogCategoryChildrenBatchLoader:
             alias: "blog_category_children_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadChildrenByBlogCategories"
+        blogCategoryMainFriendlyUrlSlugBatchLoader:
+            alias: "blog_category_main_friendly_url_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategoryMainFriendlyUrlSlugs"
         blogCategorySeoAttributesBatchLoader:
             alias: "blog_category_seo_attributes_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadSeoAttributesByBlogCategories"
