@@ -33,15 +33,6 @@ class BlogArticleElasticsearchFacade
         return $this->blogArticleElasticsearchRepository->getAllBlogArticlesTotalCount($onlyVisibleOnHomepage);
     }
 
-    public function getByBlogCategory(
-        BlogCategory $blogCategory,
-        int $offset,
-        int $limit,
-        bool $onlyVisibleOnHomepage = false,
-    ): array {
-        return $this->blogArticleElasticsearchRepository->getByBlogCategory($blogCategory, $offset, $limit, $onlyVisibleOnHomepage);
-    }
-
     public function getByBlogCategoryTotalCount(BlogCategory $blogCategory, bool $onlyVisibleOnHomepage = false): int
     {
         return $this->blogArticleElasticsearchRepository->getByBlogCategoryTotalCount($blogCategory, $onlyVisibleOnHomepage);

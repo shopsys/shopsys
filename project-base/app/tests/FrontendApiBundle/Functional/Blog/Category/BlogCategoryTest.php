@@ -20,6 +20,8 @@ class BlogCategoryTest extends GraphQlTestCase
 
     private const string BLOG_CATEGORY_ARTICLES_QUERY_PATH = __DIR__ . '/graphql/BlogCategoryArticlesQuery.graphql';
 
+    private const int FIRST_DEMO_BLOG_SUBCATEGORY_PUBLISHED_ARTICLES_COUNT = 4;
+
     private BlogCategory $blogCategory;
 
     /**
@@ -81,17 +83,14 @@ class BlogCategoryTest extends GraphQlTestCase
             'onlyHomepageArticles' => $onlyHomepageArticles,
         ]);
 
-        $locale = $this->getFirstDomainLocale();
+        $blogArticles = $this->getResponseDataForGraphQlType($response, 'blogCategory')['blogArticles'];
 
         $this->assertSame([
-            'blogArticles' => [
-                'edges' => [
-                    ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                    ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Headphones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                    ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => t('Laptop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
-                ],
-            ],
-        ], $this->getResponseDataForGraphQlType($response, 'blogCategory'));
+            $this->getExpectedTvArticleEdge(),
+            $this->getExpectedHowToChooseArticleEdge('Headphones'),
+            $this->getExpectedHowToChooseArticleEdge('Laptop'),
+        ], $blogArticles['edges']);
+        $this->assertSame(self::FIRST_DEMO_BLOG_SUBCATEGORY_PUBLISHED_ARTICLES_COUNT, $blogArticles['totalCount']);
     }
 
     public static function getBlogCategoryArticlesDataProvider(): iterable
@@ -99,6 +98,75 @@ class BlogCategoryTest extends GraphQlTestCase
         yield 'all articles' => ['onlyHomepageArticles' => false];
 
         yield 'homepage articles only' => ['onlyHomepageArticles' => true];
+    }
+
+    public function testGetBlogCategoryArticlesForwardPagination(): void
+    {
+        $firstPageResponse = $this->getResponseContentForGql(self::BLOG_CATEGORY_ARTICLES_QUERY_PATH, [
+            'uuid' => $this->blogCategory->getUuid(),
+            'first' => 2,
+        ]);
+        $firstPage = $this->getResponseDataForGraphQlType($firstPageResponse, 'blogCategory')['blogArticles'];
+
+        $this->assertSame(self::FIRST_DEMO_BLOG_SUBCATEGORY_PUBLISHED_ARTICLES_COUNT, $firstPage['totalCount']);
+        $this->assertTrue($firstPage['pageInfo']['hasNextPage']);
+        $this->assertFalse($firstPage['pageInfo']['hasPreviousPage']);
+        $this->assertSame([
+            $this->getExpectedTvArticleEdge(),
+            $this->getExpectedHowToChooseArticleEdge('Headphones'),
+        ], $firstPage['edges']);
+
+        $secondPageResponse = $this->getResponseContentForGql(self::BLOG_CATEGORY_ARTICLES_QUERY_PATH, [
+            'uuid' => $this->blogCategory->getUuid(),
+            'first' => 2,
+            'after' => $firstPage['pageInfo']['endCursor'],
+        ]);
+        $secondPage = $this->getResponseDataForGraphQlType($secondPageResponse, 'blogCategory')['blogArticles'];
+
+        $this->assertSame(self::FIRST_DEMO_BLOG_SUBCATEGORY_PUBLISHED_ARTICLES_COUNT, $secondPage['totalCount']);
+        $this->assertFalse($secondPage['pageInfo']['hasNextPage']);
+        $this->assertSame([
+            $this->getExpectedHowToChooseArticleEdge('Laptop'),
+            $this->getExpectedHowToChooseArticleEdge('Coffee machine'),
+        ], $secondPage['edges']);
+    }
+
+    public function testGetBlogCategoryArticlesBackwardPaginationReturnsLastArticles(): void
+    {
+        $response = $this->getResponseContentForGql(self::BLOG_CATEGORY_ARTICLES_QUERY_PATH, [
+            'uuid' => $this->blogCategory->getUuid(),
+            'last' => 2,
+        ]);
+        $lastPage = $this->getResponseDataForGraphQlType($response, 'blogCategory')['blogArticles'];
+
+        $this->assertSame(self::FIRST_DEMO_BLOG_SUBCATEGORY_PUBLISHED_ARTICLES_COUNT, $lastPage['totalCount']);
+        $this->assertFalse($lastPage['pageInfo']['hasNextPage']);
+        $this->assertTrue($lastPage['pageInfo']['hasPreviousPage']);
+        $this->assertSame([
+            $this->getExpectedHowToChooseArticleEdge('Laptop'),
+            $this->getExpectedHowToChooseArticleEdge('Coffee machine'),
+        ], $lastPage['edges']);
+    }
+
+    /**
+     * @return array{node: array{name: string}}
+     */
+    private function getExpectedTvArticleEdge(): array
+    {
+        $locale = $this->getFirstDomainLocale();
+
+        return ['node' => ['name' => t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]];
+    }
+
+    /**
+     * @return array{node: array{name: string}}
+     */
+    private function getExpectedHowToChooseArticleEdge(string $topic): array
+    {
+        $locale = $this->getFirstDomainLocale();
+        $translatedTopic = t($topic, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        return ['node' => ['name' => t('%topic%: how to choose', ['%topic%' => $translatedTopic], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]];
     }
 
     public function testGetBlogCategoryReturnsErrorWithWrongUuid(): void
@@ -221,6 +289,7 @@ class BlogCategoryTest extends GraphQlTestCase
                     ],
                 ],
             ],
+            'articlesTotalCount' => self::FIRST_DEMO_BLOG_SUBCATEGORY_PUBLISHED_ARTICLES_COUNT,
         ];
     }
 }

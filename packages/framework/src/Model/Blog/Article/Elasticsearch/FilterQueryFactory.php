@@ -8,6 +8,7 @@ use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleStatusEnum;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
 /**
@@ -45,6 +46,18 @@ class FilterQueryFactory
         ?int $limit = null,
     ): FilterQuery {
         return $this->create($offset, $limit)->filterByCategory($blogCategory);
+    }
+
+    public function createPublishedByBlogCategory(
+        BlogCategory $blogCategory,
+        ?int $offset = null,
+        ?int $limit = null,
+        bool $onlyVisibleOnHomepage = false,
+    ): FilterQuery {
+        return $this->createFilteredByBlogCategory($blogCategory, $offset, $limit)
+            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
+            ->filterByPublishDateUpToNow()
+            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
     }
 
     public function createFilteredBySlug(string $urlSlug): FilterQuery

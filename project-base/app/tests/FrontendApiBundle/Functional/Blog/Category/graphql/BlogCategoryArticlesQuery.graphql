@@ -1,6 +1,12 @@
-query BlogCategoryArticlesQuery($uuid: Uuid!, $first: Int!, $onlyHomepageArticles: Boolean = false) {
+query BlogCategoryArticlesQuery($uuid: Uuid!, $first: Int, $after: String, $last: Int, $onlyHomepageArticles: Boolean = false) {
     blogCategory(uuid: $uuid) {
-        blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
+        blogArticles(first: $first, after: $after, last: $last, onlyHomepageArticles: $onlyHomepageArticles) {
+            totalCount
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+                endCursor
+            }
             edges {
                 node {
                     name
