@@ -8,6 +8,9 @@ overblog_dataloader:
         additionalServicesByProductIdBatchLoader:
             alias: "additional_services_by_product_id_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIds"
+        blogCategoriesBatchLoader:
+            alias: "blog_categories_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadByIds"
         blogCategoryBreadcrumbBatchLoader:
             alias: "blog_category_breadcrumb_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoryBreadcrumbBatchLoader:loadBreadcrumbByBlogCategories"
