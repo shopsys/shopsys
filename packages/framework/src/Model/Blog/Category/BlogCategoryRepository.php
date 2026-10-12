@@ -388,13 +388,21 @@ class BlogCategoryRepository extends NestedTreeRepository
      */
     public function getBlogCategoriesWithTranslationIndexedById(array $blogCategoryIds, string $locale): array
     {
-        $queryBuilder = $this->getByIdsQueryBuilder($blogCategoryIds)
+        $queryBuilder = $this->getByIdsQueryBuilder($blogCategoryIds);
+        $this->addLeftJoinedTranslationIndexedById($queryBuilder, $locale);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    protected function addLeftJoinedTranslationIndexedById(
+        QueryBuilder $blogCategoriesQueryBuilder,
+        string $locale,
+    ): void {
+        $blogCategoriesQueryBuilder
             ->indexBy('bc', 'bc.id')
             ->addSelect('bct')
             ->leftJoin('bc.translations', 'bct', Join::WITH, 'bct.locale = :locale')
             ->setParameter('locale', $locale);
-
-        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -444,15 +452,16 @@ class BlogCategoryRepository extends NestedTreeRepository
 
     /**
      * @param int[] $blogCategoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      */
-    public function getVisibleByIds(int $domainId, array $blogCategoryIds): array
+    public function getVisibleByIdsIndexedById(int $domainId, array $blogCategoryIds): array
     {
-        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->andWhere('bc.id IN (:blogCategoryIds)')
-            ->setParameter('blogCategoryIds', $blogCategoryIds)
-            ->getQuery()
-            ->getResult();
+            ->setParameter('blogCategoryIds', $blogCategoryIds);
+        $this->addLeftJoinedTranslationIndexedById($queryBuilder, $this->domain->getDomainConfigById($domainId)->getLocale());
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function findVisibleMainBlogCategoryOnDomain(int $domainId): ?BlogCategory

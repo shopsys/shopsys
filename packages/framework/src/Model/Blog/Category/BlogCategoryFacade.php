@@ -288,11 +288,11 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
     /**
      * @param int[] $blogCategoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      */
-    public function getVisibleByIds(int $domainId, array $blogCategoryIds): array
+    public function getVisibleByIdsIndexedById(int $domainId, array $blogCategoryIds): array
     {
-        return $this->blogCategoryRepository->getVisibleByIds($domainId, $blogCategoryIds);
+        return $this->blogCategoryRepository->getVisibleByIdsIndexedById($domainId, $blogCategoryIds);
     }
 
     protected function invalidateBlogCategoriesCache(): void
