@@ -17,6 +17,9 @@ overblog_dataloader:
         blogCategoriesBatchLoader:
             alias: "blog_categories_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadByIds"
+        blogCategoriesVisibleBatchLoader:
+            alias: "blog_categories_visible_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadVisibleByIds"
         blogCategoryBreadcrumbBatchLoader:
             alias: "blog_category_breadcrumb_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoryBreadcrumbBatchLoader:loadBreadcrumbByBlogCategories"
