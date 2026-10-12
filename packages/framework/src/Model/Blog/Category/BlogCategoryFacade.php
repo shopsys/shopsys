@@ -191,6 +191,21 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @param int[] $domainIds
+     * @return array<int, int[]>
+     */
+    public function getVisibleDomainIdsByBlogCategoriesAndDomainIdsIndexedByBlogCategoryId(
+        array $blogCategories,
+        array $domainIds,
+    ): array {
+        return $this->blogCategoryRepository->getVisibleDomainIdsByBlogCategoriesAndDomainIdsIndexedByBlogCategoryId(
+            $blogCategories,
+            $domainIds,
+        );
+    }
+
+    /**
      * @param int[] $blogCategoryIds
      * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      */
