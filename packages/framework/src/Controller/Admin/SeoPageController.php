@@ -76,7 +76,7 @@ class SeoPageController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_seopage_list');
+            return $this->redirectAfterSave($form, 'admin_seopage_list', 'admin_seopage_edit', ['id' => $seoPage->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -113,7 +113,7 @@ class SeoPageController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_seopage_list');
+            return $this->redirectAfterSave($form, 'admin_seopage_list', 'admin_seopage_edit', ['id' => $seoPage->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

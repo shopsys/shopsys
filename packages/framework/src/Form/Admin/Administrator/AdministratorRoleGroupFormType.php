@@ -39,6 +39,7 @@ final class AdministratorRoleGroupFormType extends AbstractType
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_administratorrolegroup_list',
             'entity' => $options['administrator_role_group'],
+            'apply' => true,
         ]);
     }
 

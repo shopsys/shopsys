@@ -98,6 +98,7 @@ final class GiftVoucherFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_giftvoucher_list',
                 'entity' => $giftVoucher,
+                'apply' => true,
             ]);
     }
 

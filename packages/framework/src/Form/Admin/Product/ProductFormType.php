@@ -151,6 +151,7 @@ final class ProductFormType extends AbstractType
         $actionBarOptions = [
             'back_route' => 'admin_product_list',
             'entity' => $product,
+            'apply' => true,
         ];
 
         if ($product !== null) {

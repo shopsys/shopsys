@@ -65,7 +65,7 @@ class TransportController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_transportandpayment_list');
+            return $this->redirectAfterSave($form, 'admin_transportandpayment_list', 'admin_transport_edit', ['id' => $transport->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -110,7 +110,7 @@ class TransportController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_transportandpayment_list');
+            return $this->redirectAfterSave($form, 'admin_transportandpayment_list', 'admin_transport_edit', ['id' => $transport->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

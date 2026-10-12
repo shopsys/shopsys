@@ -88,7 +88,12 @@ class BestsellingProductController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_bestsellingproduct_list');
+            return $this->redirectAfterSave(
+                $form,
+                'admin_bestsellingproduct_list',
+                'admin_bestsellingproduct_detail',
+                ['domainId' => $domainId, 'categoryId' => $category->getId()],
+            );
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

@@ -92,7 +92,7 @@ class CustomerController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_customer_list');
+            return $this->redirectAfterSave($form, 'admin_customer_list', 'admin_customer_edit', ['id' => $customerUser->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -259,7 +259,7 @@ class CustomerController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_customer_list');
+            return $this->redirectAfterSave($form, 'admin_customer_list', 'admin_customer_edit', ['id' => $customerUser->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

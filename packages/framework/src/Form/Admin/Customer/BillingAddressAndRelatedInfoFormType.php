@@ -41,6 +41,7 @@ final class BillingAddressAndRelatedInfoFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_customer_list',
                 'entity' => $options['customer'],
+                'apply' => true,
             ]);
     }
 

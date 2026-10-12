@@ -298,7 +298,7 @@ class CategorySeoController extends AdminBaseController
             );
 
             try {
-                $this->readyCategorySeoMixFacade->createOrEdit(
+                $readyCategorySeoMix = $this->readyCategorySeoMixFacade->createOrEdit(
                     $selectedCategorySeoMixCombination,
                     $readyCategorySeoMixData,
                     $readyCategorySeoMixData->urls,
@@ -309,7 +309,12 @@ class CategorySeoController extends AdminBaseController
                     ['url' => $selfUrl],
                 );
 
-                return $this->redirectToRoute('admin_categoryseo_list');
+                return $this->redirectAfterSave(
+                    $readyCategorySeoCombinationFormType,
+                    'admin_categoryseo_list',
+                    'admin_categoryseo_readycombination_edit',
+                    ['id' => $readyCategorySeoMix->getId()],
+                );
             } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException) {
                 $this->eventDispatcher->dispatch(new SilencedExceptionEvent());
                 $this->addErrorFlash(t('Fill URL only for selected domain'));

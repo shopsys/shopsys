@@ -54,7 +54,7 @@ class BillingAddressController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_customer_list');
+            return $this->redirectAfterSave($form, 'admin_customer_list', 'admin_billing_address_edit', ['id' => $billingAddress->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

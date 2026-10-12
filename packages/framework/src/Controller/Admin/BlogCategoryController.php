@@ -65,7 +65,7 @@ class BlogCategoryController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_blogcategory_list');
+            return $this->redirectAfterSave($form, 'admin_blogcategory_list', 'admin_blogcategory_edit', ['id' => $blogCategory->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -103,7 +103,7 @@ class BlogCategoryController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_blogcategory_list');
+            return $this->redirectAfterSave($form, 'admin_blogcategory_list', 'admin_blogcategory_edit', ['id' => $blogCategory->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

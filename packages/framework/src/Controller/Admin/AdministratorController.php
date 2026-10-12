@@ -144,7 +144,7 @@ class AdministratorController extends AdminBaseController
 
             $redirectRouteName = $this->accessChecker->canView(AdminRoleConstant::ROLE_ADMINISTRATOR) ? 'admin_administrator_list' : 'admin_default_dashboard';
 
-            return $this->redirectToRoute($redirectRouteName);
+            return $this->redirectAfterSave($form, $redirectRouteName, 'admin_administrator_edit', ['id' => $administrator->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -219,7 +219,7 @@ class AdministratorController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_administrator_list');
+            return $this->redirectAfterSave($form, 'admin_administrator_list', 'admin_administrator_edit', ['id' => $administrator->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

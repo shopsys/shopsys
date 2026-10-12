@@ -152,6 +152,7 @@ final class AdministratorFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_administrator_list',
                 'entity' => $adminToEdit,
+                'apply' => true,
             ]);
 
         if ($options['scenario'] !== self::SCENARIO_EDIT || !$this->canWorkWithRoles($adminToEdit) || !$this->getCurrentAdministrator()->isSuperadmin()) {
