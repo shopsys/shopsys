@@ -28,5 +28,6 @@ query BlogCategoryQuery($uuid: Uuid, $urlSlug: String) {
                 name
             }
         }
+        articlesTotalCount
     }
 }

@@ -8,7 +8,6 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -18,13 +17,13 @@ class BlogCategoryResolverMap extends ResolverMap
     public function __construct(
         protected readonly Domain $domain,
         protected readonly BlogCategoryFacade $blogCategoryFacade,
-        protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryBreadcrumbBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryChildrenBatchLoader,
         protected readonly DataLoaderInterface $blogCategoriesBatchLoader,
         protected readonly DataLoaderInterface $blogCategorySeoAttributesBatchLoader,
+        protected readonly DataLoaderInterface $blogArticlesTotalCountByBlogCategoryBatchLoader,
     ) {
     }
 
@@ -65,7 +64,7 @@ class BlogCategoryResolverMap extends ResolverMap
                     );
                 },
                 'articlesTotalCount' => function (BlogCategory $blogCategory) {
-                    return $this->blogArticleElasticsearchFacade->getByBlogCategoryTotalCount($blogCategory);
+                    return $this->blogArticlesTotalCountByBlogCategoryBatchLoader->load($blogCategory);
                 },
                 'hreflangLinks' => function (BlogCategory $blogCategory) {
                     return $this->hreflangLinksFacade->getForBlogCategory($blogCategory, $this->domain->getId());

@@ -29,8 +29,20 @@ abstract class AbstractElasticsearchDataFetcher
 
     public function getAllResults(AbstractFilterQuery $filterQuery): array
     {
-        $result = $this->client->search($filterQuery->getQuery());
+        return $this->extractHits($this->client->search($filterQuery->getQuery()));
+    }
 
+    public function getTotalCount(AbstractFilterQuery $filterQuery): int
+    {
+        return $this->extractTotalCount($this->client->search($filterQuery->getQuery()));
+    }
+
+    /**
+     * @param array<string, mixed> $result
+     * @return array<int, array<string, mixed>>
+     */
+    public function extractHits(array $result): array
+    {
         return array_map(function ($value) {
             $data = $value['_source'];
             $data['id'] = (int)$value['_id'];
@@ -39,10 +51,11 @@ abstract class AbstractElasticsearchDataFetcher
         }, $result['hits']['hits']);
     }
 
-    public function getTotalCount(AbstractFilterQuery $filterQuery): int
+    /**
+     * @param array<string, mixed> $result
+     */
+    public function extractTotalCount(array $result): int
     {
-        $result = $this->client->search($filterQuery->getQuery());
-
         return (int)$result['hits']['total']['value'];
     }
 }
