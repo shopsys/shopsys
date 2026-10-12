@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 
 class BlogCategoriesBatchLoader
 {
@@ -16,6 +17,28 @@ class BlogCategoriesBatchLoader
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly Domain $domain,
     ) {
+    }
+
+    /**
+     * @param int[] $blogCategoryIds
+     */
+    public function loadByIds(array $blogCategoryIds): Promise
+    {
+        $blogCategoriesIndexedById = $this->blogCategoryFacade->getBlogCategoriesWithTranslationIndexedById(
+            $blogCategoryIds,
+            $this->domain->getLocale(),
+        );
+        $blogCategories = [];
+
+        foreach ($blogCategoryIds as $blogCategoryId) {
+            if (!isset($blogCategoriesIndexedById[$blogCategoryId])) {
+                throw new BlogCategoryNotFoundException('BlogCategory with ID ' . $blogCategoryId . ' not found.');
+            }
+
+            $blogCategories[] = $blogCategoriesIndexedById[$blogCategoryId];
+        }
+
+        return $this->promiseAdapter->all($blogCategories);
     }
 
     /**
