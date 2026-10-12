@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Form\Admin\Type;
 
+use InvalidArgumentException;
 use Override;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FormTypesBundle\ActionBarType as BaseActionBarType;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -22,6 +25,7 @@ final class ActionBarType extends AbstractTypeExtension
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
         private readonly RequestStack $requestStack,
         private readonly RouterInterface $router,
+        private readonly CrudRouteProvider $crudRouteProvider,
     ) {
     }
 
@@ -45,7 +49,8 @@ final class ActionBarType extends AbstractTypeExtension
             ->setAllowedTypes('entity_name', ['string', 'null'])
             ->setAllowedTypes('entity_identifier', ['string', 'null'])
             ->setDefault('entity_name', null)
-            ->setDefault('entity_identifier', null);
+            ->setDefault('entity_identifier', null)
+            ->setDefault('apply', $this->isCrudCreateOrEditActionWithEditPage(...));
     }
 
     /**
@@ -111,6 +116,39 @@ final class ActionBarType extends AbstractTypeExtension
             // If no route matches, fall back to current route
             // This handles cases where form action might be a query string or fragment
             return $request?->attributes->get('_route');
+        }
+    }
+
+    /**
+     * Returns true when the main request is handled by the create or edit action of a CRUD controller
+     * that has an edit page the "apply" button can lead to
+     */
+    private function isCrudCreateOrEditActionWithEditPage(): bool
+    {
+        $attributes = $this->requestStack->getMainRequest()?->attributes;
+
+        if ($attributes?->get(CrudRouteProvider::IS_CRUD_CONTROLLER) !== true) {
+            return false;
+        }
+
+        $crudAction = $attributes->get(CrudRouteProvider::CRUD_ACTION);
+
+        if ($crudAction === ActionType::EDIT->value) {
+            return true;
+        }
+
+        if ($crudAction !== ActionType::CREATE->value) {
+            return false;
+        }
+
+        $crudControllerClass = explode('::', (string)$attributes->get('_controller'))[0];
+
+        try {
+            $this->crudRouteProvider->getRouteItem($crudControllerClass, ActionType::EDIT);
+
+            return true;
+        } catch (InvalidArgumentException) {
+            return false;
         }
     }
 }
