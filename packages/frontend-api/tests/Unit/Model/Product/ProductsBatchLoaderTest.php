@@ -11,10 +11,20 @@ use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade;
+use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchProvider;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 
 class ProductsBatchLoaderTest extends TestCase
 {
@@ -179,13 +189,114 @@ class ProductsBatchLoaderTest extends TestCase
         $this->assertSame([[], [], [], []], $result);
     }
 
-    private function createLoader(): ProductsBatchLoader
+    public function testFilterDataOfAllEntitiesAreNormalizedInOneBatchBeforeProductsAreLoaded(): void
     {
+        $firstBrand = $this->createStub(Brand::class);
+        $secondBrand = $this->createStub(Brand::class);
+        $firstFilterData = new ProductFilterData();
+        $secondFilterData = new ProductFilterData();
+        $firstBatchLoadData = new ProductBatchLoadByEntityData('first', $firstBrand, 10, 0, 'priority', $firstFilterData);
+        $secondBatchLoadData = new ProductBatchLoadByEntityData('second', $secondBrand, 10, 0, 'priority', $secondFilterData);
+        $batchLoadData = [$firstBatchLoadData, $secondBatchLoadData];
+
+        $this->giftPlanFacade->expects($this->never())->method('findActiveGiftProductIdsByMainProductIds');
+
+        $productFilterFacade = $this->createMock(ProductFilterFacade::class);
+        $productFilterFacade->expects($this->once())
+            ->method('normalizeProductFilterDataByBatchLoadData')
+            ->with($this->callback(function (array $productFilterBatchLoadData) use ($firstBrand, $secondBrand, $firstFilterData, $secondFilterData): bool {
+                $this->assertCount(2, $productFilterBatchLoadData);
+                $this->assertContainsOnlyInstancesOf(ProductFilterDataBatchLoadData::class, $productFilterBatchLoadData);
+                $this->assertSame($firstBrand, $productFilterBatchLoadData[0]->getEntity());
+                $this->assertSame($firstFilterData, $productFilterBatchLoadData[0]->getProductFilterData());
+                $this->assertSame($secondBrand, $productFilterBatchLoadData[1]->getEntity());
+                $this->assertSame($secondFilterData, $productFilterBatchLoadData[1]->getProductFilterData());
+
+                return true;
+            }));
+
+        $this->productElasticsearchBatchProvider->expects($this->once())
+            ->method('getBatchedByEntities')
+            ->with($batchLoadData)
+            ->willReturn([
+                ProductElasticsearchBatchRepository::PRODUCTS_KEY => [
+                    'first' => [['id' => 1]],
+                    'second' => [['id' => 2]],
+                ],
+                ProductElasticsearchBatchRepository::TOTALS_KEY => [
+                    'first' => 1,
+                    'second' => 1,
+                ],
+            ]);
+
+        $loader = $this->createLoader($productFilterFacade);
+
+        $this->assertSame([[['id' => 1]], [['id' => 2]]], $this->resolvePromise($loader->loadByEntities($batchLoadData)));
+        $this->assertSame(1, ProductsBatchLoader::getTotalByBatchLoadDataId('second'));
+    }
+
+    public function testListingFlagAndReadyCategorySeoMixAreAddedToFilterDataAfterNormalization(): void
+    {
+        $flag = $this->createStub(Flag::class);
+        $readyCategorySeoMix = $this->createStub(ReadyCategorySeoMix::class);
+        $flagFilterData = new ProductFilterData();
+        $categoryFilterData = new ProductFilterData();
+        $brandFilterData = new ProductFilterData();
+        $batchLoadData = [
+            new ProductBatchLoadByEntityData('flag', $flag, 10, 0, 'priority', $flagFilterData),
+            new ProductBatchLoadByEntityData('category', $this->createStub(Category::class), 10, 0, 'priority', $categoryFilterData, '', $readyCategorySeoMix),
+            new ProductBatchLoadByEntityData('brand', $this->createStub(Brand::class), 10, 0, 'priority', $brandFilterData),
+        ];
+        $isNormalized = false;
+
+        $this->giftPlanFacade->expects($this->never())->method('findActiveGiftProductIdsByMainProductIds');
+
+        $productFilterFacade = $this->createMock(ProductFilterFacade::class);
+        $productFilterFacade->expects($this->once())
+            ->method('normalizeProductFilterDataByBatchLoadData')
+            ->willReturnCallback(function () use (&$isNormalized): void {
+                $isNormalized = true;
+            });
+        $productFilterFacade->expects($this->once())
+            ->method('addListingFlagToProductFilterData')
+            ->with($flag, $flagFilterData)
+            ->willReturnCallback(function () use (&$isNormalized): void {
+                $this->assertTrue($isNormalized);
+            });
+
+        $productFilterDataFactory = $this->createMock(ProductFilterDataFactory::class);
+        $productFilterDataFactory->expects($this->once())
+            ->method('updateProductFilterDataFromReadyCategorySeoMix')
+            ->with($readyCategorySeoMix, $categoryFilterData)
+            ->willReturnCallback(function () use (&$isNormalized): void {
+                $this->assertTrue($isNormalized);
+            });
+
+        $this->productElasticsearchBatchProvider->expects($this->once())
+            ->method('getBatchedByEntities')
+            ->with($batchLoadData)
+            ->willReturn([
+                ProductElasticsearchBatchRepository::PRODUCTS_KEY => ['flag' => [], 'category' => [], 'brand' => []],
+                ProductElasticsearchBatchRepository::TOTALS_KEY => ['flag' => 0, 'category' => 0, 'brand' => 0],
+            ]);
+
+        $loader = $this->createLoader($productFilterFacade, $productFilterDataFactory);
+
+        $this->assertSame([[], [], []], $this->resolvePromise($loader->loadByEntities($batchLoadData)));
+    }
+
+    private function createLoader(
+        ?ProductFilterFacade $productFilterFacade = null,
+        ?ProductFilterDataFactory $productFilterDataFactory = null,
+    ): ProductsBatchLoader {
         return new ProductsBatchLoader(
             $this->promiseAdapter,
             $this->productElasticsearchBatchProvider,
             $this->domainStub,
             $this->giftPlanFacade,
+            $productFilterFacade ?? $this->createStub(ProductFilterFacade::class),
+            $productFilterDataFactory ?? $this->createStub(ProductFilterDataFactory::class),
+            new ProductFilterDataBatchLoadDataFactory(),
         );
     }
 

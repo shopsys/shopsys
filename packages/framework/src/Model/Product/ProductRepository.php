@@ -11,15 +11,12 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductRepository
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
         protected readonly QueryBuilderExtender $queryBuilderExtender,
     ) {
     }
@@ -111,39 +108,6 @@ class ProductRepository
         $queryBuilder->setParameter('domainId', $domainId);
     }
 
-    public function getListableInCategoryQueryBuilder(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        Category $category,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
-        $this->filterByCategory($queryBuilder, $category, $domainId);
-
-        return $queryBuilder;
-    }
-
-    public function getListableForBrandQueryBuilder(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        Brand $brand,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
-        $this->filterByBrand($queryBuilder, $brand);
-
-        return $queryBuilder;
-    }
-
-    public function getSellableInCategoryQueryBuilder(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        Category $category,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
-        $this->filterByCategory($queryBuilder, $category, $domainId);
-
-        return $queryBuilder;
-    }
-
     public function getOfferedInCategoryQueryBuilder(
         int $domainId,
         PricingGroup $pricingGroup,
@@ -151,21 +115,6 @@ class ProductRepository
     ): QueryBuilder {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
-
-        return $queryBuilder;
-    }
-
-    public function getListableBySearchTextQueryBuilder(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        string $locale,
-        ?string $searchText,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
-
-        $this->addTranslation($queryBuilder, $locale);
-
-        $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
 
         return $queryBuilder;
     }
@@ -180,12 +129,6 @@ class ProductRepository
         );
         $queryBuilder->setParameter('category', $category);
         $queryBuilder->setParameter('domainId', $domainId);
-    }
-
-    protected function filterByBrand(QueryBuilder $queryBuilder, Brand $brand): void
-    {
-        $queryBuilder->andWhere('p.brand = :brand');
-        $queryBuilder->setParameter('brand', $brand);
     }
 
     public function getById(int $id): Product

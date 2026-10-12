@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
@@ -53,10 +54,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
-                $category,
-                $filterData,
-            );
+            $countData = $this->getProductFilterCountData(new ProductFilterDataBatchLoadData($category, '', $filterData));
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
         }
     }
@@ -87,13 +85,33 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
-                $searchText,
-                $filterData,
-            );
+            $countData = $this->getProductFilterCountData(new ProductFilterDataBatchLoadData(null, $searchText, $filterData));
 
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
         }
+    }
+
+    public function testCategoryAndSearchCountDataAreLoadedInOneBatch(): void
+    {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
+        [$category, $categoryFilterData, $expectedCategoryCountData] = $this->categoryFlagBrandAndParametersTestCase();
+        [$searchText, $searchFilterData, $expectedSearchCountData] = $this->searchPriceStockFlagBrandsTestCase();
+
+        $countDataIndexedByKey = $this->productOnCurrentDomainFacade->getProductFilterCountDataByBatchLoadData([
+            'category' => new ProductFilterDataBatchLoadData($category, '', $categoryFilterData),
+            'search' => new ProductFilterDataBatchLoadData(null, $searchText, $searchFilterData),
+        ]);
+
+        $this->assertSame(['category', 'search'], array_keys($countDataIndexedByKey));
+        $this->assertEquals($expectedCategoryCountData, $this->removeEmptyParameters($countDataIndexedByKey['category']));
+        $this->assertEquals($expectedSearchCountData, $this->removeEmptyParameters($countDataIndexedByKey['search']));
+    }
+
+    private function getProductFilterCountData(
+        ProductFilterDataBatchLoadData $batchLoadData,
+    ): ProductFilterCountData {
+        return array_first($this->productOnCurrentDomainFacade->getProductFilterCountDataByBatchLoadData([$batchLoadData]));
     }
 
     /**

@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
-use Elasticsearch\Client;
-use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\MultipleSearchFacade;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
-use Shopsys\FrontendApiBundle\Component\Elasticsearch\MultipleSearchQueryFactory;
 
 class ProductElasticsearchBatchRepository
 {
@@ -17,8 +15,7 @@ class ProductElasticsearchBatchRepository
     public const TOTALS_KEY = 'totals';
 
     public function __construct(
-        protected readonly MultipleSearchQueryFactory $multipleSearchQueryFactory,
-        protected readonly Client $client,
+        protected readonly MultipleSearchFacade $multipleSearchFacade,
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
     ) {
     }
@@ -28,16 +25,17 @@ class ProductElasticsearchBatchRepository
      */
     public function getBatchedProductsAndTotalsByFilterQueries(array $filterQueries): array
     {
-        $mSearchQuery = $this->multipleSearchQueryFactory->create(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $filterQueries);
-        $result = $this->client->msearch($mSearchQuery->getQuery());
+        $responsesIndexedByKey = $this->multipleSearchFacade->searchIndexedByKey(array_map(
+            static fn (FilterQuery $filterQuery): array => $filterQuery->getQuery(),
+            $filterQueries,
+        ));
 
-        $keys = array_keys($filterQueries);
         $products = [];
         $totals = [];
 
-        foreach ($result['responses'] as $index => $response) {
-            $products[$keys[$index]] = $this->productElasticsearchRepository->extractHits($response);
-            $totals[$keys[$index]] = $this->productElasticsearchRepository->extractTotalCount($response);
+        foreach ($responsesIndexedByKey as $key => $response) {
+            $products[$key] = $this->productElasticsearchRepository->extractHits($response);
+            $totals[$key] = $this->productElasticsearchRepository->extractTotalCount($response);
         }
 
         return [

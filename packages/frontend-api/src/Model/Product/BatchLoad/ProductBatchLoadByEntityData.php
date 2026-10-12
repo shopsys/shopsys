@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductBatchLoadByEntityData
@@ -16,6 +17,7 @@ class ProductBatchLoadByEntityData
         protected readonly string $orderingModeId,
         protected readonly ProductFilterData $productFilterData,
         protected readonly string $search = '',
+        protected readonly ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ) {
     }
 
@@ -57,5 +59,10 @@ class ProductBatchLoadByEntityData
     public function getSearch(): string
     {
         return $this->search;
+    }
+
+    public function getReadyCategorySeoMix(): ?ReadyCategorySeoMix
+    {
+        return $this->readyCategorySeoMix;
     }
 }

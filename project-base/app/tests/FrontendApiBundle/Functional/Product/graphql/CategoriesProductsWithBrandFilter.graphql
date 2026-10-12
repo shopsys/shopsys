@@ -1,0 +1,22 @@
+query CategoriesProductsWithBrandFilter($electronicsUuid: Uuid!, $booksUuid: Uuid!, $brandUuid: Uuid!) {
+    electronics: category(uuid: $electronicsUuid) {
+        products {
+            totalCount
+        }
+    }
+    electronicsFiltered: category(uuid: $electronicsUuid) {
+        products(filter: { brands: [$brandUuid] }) {
+            totalCount
+        }
+    }
+    books: category(uuid: $booksUuid) {
+        products {
+            totalCount
+        }
+    }
+    booksFiltered: category(uuid: $booksUuid) {
+        products(filter: { brands: [$brandUuid] }) {
+            totalCount
+        }
+    }
+}
