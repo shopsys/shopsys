@@ -11,11 +11,13 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Symfony\Component\Clock\DatePoint;
+use Symfony\Component\Clock\Test\ClockSensitiveTrait;
 use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 class CartTest extends TestCase
 {
+    use ClockSensitiveTrait;
+
     public function testGetItemsCountZero(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
@@ -145,8 +147,11 @@ class CartTest extends TestCase
 
     public function testUpdateLastActivityDateKeepsDateWithinSameDay(): void
     {
+        static::mockTime('2026-10-12 08:00:00');
         $cart = new Cart('randomString', null);
         $lastActivityAt = $cart->getLastActivityAt();
+
+        static::mockTime('+10 hours');
 
         $this->assertFalse($cart->updateLastActivityDate());
         $this->assertSame($lastActivityAt, $cart->getLastActivityAt());
@@ -154,10 +159,12 @@ class CartTest extends TestCase
 
     public function testUpdateLastActivityDateMovesOlderDateToToday(): void
     {
+        static::mockTime('2026-10-12 08:00:00');
         $cart = new Cart('randomString', null);
-        $cart->setLastActivityAt(new DatePoint('yesterday'));
+
+        static::mockTime('+1 day');
 
         $this->assertTrue($cart->updateLastActivityDate());
-        $this->assertSame((new DatePoint('today'))->format('Y-m-d'), $cart->getLastActivityAt()->format('Y-m-d'));
+        $this->assertSame('2026-10-13', $cart->getLastActivityAt()->format('Y-m-d'));
     }
 }

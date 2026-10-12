@@ -350,14 +350,6 @@ class Cart
     }
 
     /**
-     * @param \DateTimeImmutable $lastActivityAt
-     */
-    public function setLastActivityAt($lastActivityAt): void
-    {
-        $this->lastActivityAt = $lastActivityAt;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function getCustomerUser()

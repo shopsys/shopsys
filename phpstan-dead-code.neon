@@ -272,10 +272,6 @@ parameters:
             path: packages/framework/src/Model/Cart/Cart.php
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Cart::setLastActivityAt\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Model/Cart/Cart.php
-        -
-            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Model\\Cart\\Exception\\InvalidQuantityException::getInvalidValue$#'
             path: packages/framework/src/Model/Cart/Exception/InvalidQuantityException.php
         -
