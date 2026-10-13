@@ -1,7 +1,7 @@
 import { parse } from 'graphql';
 import { CombinedError, Operation } from 'urql';
 import { getErrorExchange } from 'urql/errorExchange';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { fromValue, toPromise } from 'wonka';
 
 const {
@@ -10,12 +10,21 @@ const {
     removeAccessTokenFromCookiesMock,
     removeTokensFromCookiesMock,
     showErrorMessageMock,
+    errorDebugging,
 } = vi.hoisted(() => ({
     clearAuthCookiesMock: vi.fn().mockResolvedValue(undefined),
     logExceptionMock: vi.fn(),
     removeAccessTokenFromCookiesMock: vi.fn(),
     removeTokensFromCookiesMock: vi.fn(),
     showErrorMessageMock: vi.fn(),
+    errorDebugging: { enabled: false },
+}));
+
+vi.mock('utils/errors/isWithErrorDebugging', () => ({
+    get isWithErrorDebugging() {
+        return errorDebugging.enabled;
+    },
+    isWithToastAndConsoleErrorDebugging: false,
 }));
 
 vi.mock('utils/auth/authMutationFetcher', () => ({
@@ -36,6 +45,10 @@ vi.mock('utils/toasts/showErrorMessage', () => ({
 }));
 
 describe('getErrorExchange', () => {
+    beforeEach(() => {
+        errorDebugging.enabled = false;
+    });
+
     test('should clear auth cookies for graphql auth errors returned with HTTP 200', async () => {
         const domainConfig = {
             url: 'http://example.com',
@@ -160,5 +173,75 @@ describe('getErrorExchange', () => {
             'cart',
             { errorType: 'too-many-code-application-attempts' },
         );
+    });
+
+    test.each([
+        { kind: 'query' as const, debugging: false, location: 'handleErrorMessagesForUsers' },
+        { kind: 'query' as const, debugging: true, location: 'handleErrorMessagesForDevelopment' },
+        { kind: 'mutation' as const, debugging: false, location: 'handleErrorMessagesForMutation.TestMutation' },
+    ])('preserves GraphQL exceptions for $kind with debugging=$debugging', async ({ kind, debugging, location }) => {
+        errorDebugging.enabled = debugging;
+        const operation = {
+            key: 1,
+            kind,
+            query: parse(kind === 'query' ? 'query TestQuery { __typename }' : 'mutation TestMutation { __typename }'),
+            variables: {},
+            context: {},
+        } as Operation;
+        const error = new CombinedError({
+            graphQLErrors: [
+                {
+                    message: 'Privacy policy article is not configured.',
+                    path: ['settings', 'privacyPolicyArticleUrl'],
+                    extensions: { userCode: 'article-not-found-privacy-policy', code: 404 },
+                },
+            ],
+        });
+        const exchange = getErrorExchange(
+            ((value: string) => value) as never,
+            { url: 'http://example.com' } as never,
+        )({ forward: () => fromValue({ operation, error } as never) } as never);
+
+        await toPromise(exchange(fromValue(operation)));
+
+        expect(logExceptionMock.mock.calls[0][0]).toBe(error);
+        expect(logExceptionMock).toHaveBeenCalledWith(
+            error,
+            expect.objectContaining({
+                location: `getErrorExchange.${location}`,
+            }),
+        );
+        expect(JSON.parse(logExceptionMock.mock.calls[0][1].graphQLErrors)).toEqual([
+            {
+                message: 'Privacy policy article is not configured.',
+                path: ['settings', 'privacyPolicyArticleUrl'],
+                extensions: { userCode: 'article-not-found-privacy-policy', code: 404 },
+            },
+        ]);
+    });
+
+    test('preserves the network error details when a mutation fails', async () => {
+        const networkError = new TypeError('Failed to fetch');
+        const error = new CombinedError({ networkError });
+        const operation = {
+            key: 1,
+            kind: 'mutation',
+            query: parse('mutation AddToCartMutation { __typename }'),
+            variables: {},
+            context: {},
+        } as Operation;
+        const exchange = getErrorExchange(
+            ((value: string) => value) as never,
+            { url: 'http://example.com' } as never,
+        )({ forward: () => fromValue({ operation, error } as never) } as never);
+
+        await toPromise(exchange(fromValue(operation)));
+
+        expect(logExceptionMock.mock.calls[0][0]).toBe(error);
+        expect(logExceptionMock).toHaveBeenCalledWith(error, {
+            graphQLErrors: '[]',
+            networkError,
+            location: 'getErrorExchange.handleErrorMessagesForMutation.AddToCartMutation',
+        });
     });
 });

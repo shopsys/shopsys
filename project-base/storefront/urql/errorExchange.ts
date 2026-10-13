@@ -127,9 +127,10 @@ const handleErrorMessagesForDevelopment = (error: CombinedError, t: Translate) =
     }
 
     if (!parsedErrors.applicationError || !isNoLogError(parsedErrors.applicationError.type)) {
-        logException({
-            message: error.message,
-            originalError: JSON.stringify(error),
+        logException(error, {
+            // Preserve nested paths and extensions beyond Sentry's default normalization depth.
+            graphQLErrors: JSON.stringify(error.graphQLErrors),
+            networkError: error.networkError,
             location: 'getErrorExchange.handleErrorMessagesForDevelopment',
         });
     }
@@ -156,9 +157,9 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate, oper
     const config = MUTATION_ERROR_CONFIG[mutationName];
 
     if (!isNoLogError(parsedErrors.applicationError?.type ?? '')) {
-        logException({
-            message: error.message,
-            originalError: JSON.stringify(error),
+        logException(error, {
+            graphQLErrors: JSON.stringify(error.graphQLErrors),
+            networkError: error.networkError,
             location: `getErrorExchange.handleErrorMessagesForMutation.${mutationName}`,
         });
     }
@@ -254,10 +255,10 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
                 break;
 
             case 'silent-log':
-                logException({
-                    message: error.message,
+                logException(error, {
                     parsedApplicationError: parsedErrors.applicationError,
-                    originalError: JSON.stringify(error),
+                    graphQLErrors: JSON.stringify(error.graphQLErrors),
+                    networkError: error.networkError,
                     location: 'getErrorExchange.handleErrorMessagesForUsers',
                 });
                 break;
