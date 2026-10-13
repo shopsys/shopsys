@@ -14,6 +14,7 @@ assert_split_branch_variable
 assert_remote_template_variable
 
 assert_split_branch_is_not_protected
+assert_split_branch_is_not_alpha
 
 echo -e "${BLUE}Removing branch '$SPLIT_BRANCH'...${NC}"
 

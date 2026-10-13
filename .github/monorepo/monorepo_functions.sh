@@ -68,8 +68,16 @@ assert_remote_template_variable() {
 }
 
 assert_split_branch_is_not_protected() {
-    if [[ "$SPLIT_BRANCH" == "master" || "$SPLIT_BRANCH" == "main" || "$SPLIT_BRANCH" == "alpha" || "$SPLIT_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
-        echo -e "${RED}You cannot work with master, main, alpha or version-like branch!${NC}"
+    if [[ "$SPLIT_BRANCH" == "master" || "$SPLIT_BRANCH" == "main" || "$SPLIT_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
+        echo -e "${RED}You cannot work with master, main or version-like branch!${NC}"
+        exit 1
+    fi
+}
+
+# "alpha" is rebuilt regularly, so it has to be force split (see monorepo-split-alpha.yaml), but its split branches must never be removed
+assert_split_branch_is_not_alpha() {
+    if [[ "$SPLIT_BRANCH" == "alpha" ]]; then
+        echo -e "${RED}You cannot remove the alpha branch!${NC}"
         exit 1
     fi
 }
