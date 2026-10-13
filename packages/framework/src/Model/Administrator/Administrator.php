@@ -228,6 +228,11 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->email = $administratorData->email;
         $this->realName = $administratorData->realName;
         $this->username = $administratorData->username;
+
+        if ($this->roleGroup !== $administratorData->roleGroup) {
+            $this->setRolesChangedNow();
+        }
+
         $this->roleGroup = $administratorData->roleGroup;
         $this->displayOnlyDomainIds = $administratorData->displayOnlyDomainIds;
     }
@@ -530,18 +535,24 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      */
     public function setRoles($administratorRoles): void
     {
-        $this->setRolesChangedNow();
+        $rolesChanged = false;
 
         foreach ($this->roles->toArray() as $currentRole) {
             if (!in_array($currentRole, $administratorRoles, true)) {
                 $this->roles->removeElement($currentRole);
+                $rolesChanged = true;
             }
         }
 
         foreach ($administratorRoles as $administratorRole) {
             if (!$this->roles->contains($administratorRole)) {
                 $this->roles->add($administratorRole);
+                $rolesChanged = true;
             }
+        }
+
+        if ($rolesChanged) {
+            $this->setRolesChangedNow();
         }
     }
 
