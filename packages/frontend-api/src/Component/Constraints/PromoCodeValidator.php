@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\FreeTransportAndPaymentPromoCodeNotNeededException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\LimitNotReachedException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
@@ -77,6 +78,8 @@ class PromoCodeValidator extends ConstraintValidator
             $this->addViolationWithCodeToContext($constraint->forRegisteredCustomerUsersOnlyMessage, PromoCode::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR);
         } catch (NotAvailableForCustomerUserPricingGroup $exception) {
             $this->addViolationWithCodeToContext($constraint->notAvailableForCustomerUserPricingGroupMessage, PromoCode::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR);
+        } catch (FreeTransportAndPaymentPromoCodeNotNeededException $exception) {
+            $this->addViolationWithCodeToContext($constraint->freeTransportAndPaymentNotNeededMessage, PromoCode::FREE_TRANSPORT_AND_PAYMENT_NOT_NEEDED_ERROR);
         }
 
         if ($cart->isPromoCodeApplied($promoCodeCode)) {

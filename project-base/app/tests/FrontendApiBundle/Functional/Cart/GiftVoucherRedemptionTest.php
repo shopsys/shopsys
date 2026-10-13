@@ -9,8 +9,11 @@ use App\DataFixtures\Demo\GiftVoucherDataFixture;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
+use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use DateTimeImmutable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher;
@@ -18,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherDataFactory;
 use Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucherFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrontendApiBundle\Component\Constraints\GiftVoucher as GiftVoucherConstraint;
 use Shopsys\FrontendApiBundle\Component\Constraints\PromoCode as PromoCodeConstraint;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -137,31 +142,62 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
         );
     }
 
-    public function testPromoCodeIsNotApplicableToCartWithOnlyGiftVoucherProducts(): void
-    {
-        $voucherProduct = $this->getReference(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000, Product::class);
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
-            'cartUuid' => null,
-            'productUuid' => $voucherProduct->getUuid(),
-            'quantity' => 1,
-        ]);
-        $voucherOnlyCartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
-
+    #[DataProvider('getGiftVoucherProductReferenceNamesDataProvider')]
+    public function testDiscountPromoCodeIsNotApplicableToCartWithOnlyGiftVoucherProducts(
+        string $giftVoucherProductReferenceName,
+    ): void {
+        $giftVoucherOnlyCartUuid = $this->createCartWithProduct($giftVoucherProductReferenceName);
         $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
-            'cartUuid' => $voucherOnlyCartUuid,
+
+        $this->assertApplyPromoCodeValidationError(
+            $giftVoucherOnlyCartUuid,
+            $promoCode->getCode(),
+            PromoCodeConstraint::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR,
+        );
+    }
+
+    /**
+     * @return iterable<array{string}>
+     */
+    public static function getGiftVoucherProductReferenceNamesDataProvider(): iterable
+    {
+        yield 'electronic gift voucher' => [ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000];
+
+        yield 'printed gift voucher' => [ProductDataFixture::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000];
+    }
+
+    public function testFreeTransportAndPaymentPromoCodeIsNotNeededForCartWithOnlyElectronicGiftVoucherProducts(): void
+    {
+        $electronicGiftVoucherOnlyCartUuid = $this->createCartWithProduct(ProductDataFixture::PRODUCT_ELECTRONIC_GIFT_VOUCHER_VARIANT_1000);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::PROMO_CODE_FOR_FREE_TRANSPORT_PAYMENT, 1, PromoCode::class);
+
+        $this->assertApplyPromoCodeValidationError(
+            $electronicGiftVoucherOnlyCartUuid,
+            $promoCode->getCode(),
+            PromoCodeConstraint::FREE_TRANSPORT_AND_PAYMENT_NOT_NEEDED_ERROR,
+        );
+    }
+
+    public function testFreeTransportAndPaymentPromoCodeMakesTransportOfPrintedGiftVoucherFree(): void
+    {
+        $printedGiftVoucherOnlyCartUuid = $this->createCartWithProduct(ProductDataFixture::PRODUCT_PRINTED_GIFT_VOUCHER_STANDALONE_1000);
+        $this->changeTransportInCartToCzechPost($printedGiftVoucherOnlyCartUuid);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::PROMO_CODE_FOR_FREE_TRANSPORT_PAYMENT, 1, PromoCode::class);
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId(), Vat::class);
+        self::assertTrue(
+            Money::create($this->getRemainingAmountForFreeTransport($printedGiftVoucherOnlyCartUuid))->isPositive(),
+            'Printed gift voucher must not reach the free transport limit for this test to be meaningful.',
+        );
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ApplyPromoCodeToCart.graphql', [
+            'cartUuid' => $printedGiftVoucherOnlyCartUuid,
             'promoCode' => $promoCode->getCode(),
         ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyCodeToCart');
 
-        self::assertArrayHasKey('errors', $response);
-
-        $violations = $this->getErrorsExtensionValidationFromResponse($response);
-
-        self::assertArrayHasKey('input.promoCode', $violations);
-        self::assertEquals(
-            PromoCodeConstraint::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR,
-            $violations['input.promoCode'][0]['code'],
-        );
+        self::assertSame($promoCode->getCode(), $data['promoCodes'][0]['code']);
+        self::assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero), $data['transport']['price']);
+        self::assertSame($this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('0'), $data['remainingAmountForFreeTransport']);
     }
 
     public function testPromoCodeDiscountIsNotAppliedToGiftVoucherProducts(): void
@@ -231,6 +267,54 @@ final class GiftVoucherRedemptionTest extends GraphQlTestCase
         self::assertTrue(
             Money::create($data['totalPrice']['priceWithVat'])->equals(Money::create($data['remainingAmountToPay'])),
         );
+    }
+
+    private function assertApplyPromoCodeValidationError(
+        string $cartUuid,
+        string $promoCodeCode,
+        string $expectedErrorCode,
+    ): void {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'cartUuid' => $cartUuid,
+            'promoCode' => $promoCodeCode,
+        ]);
+
+        self::assertArrayHasKey('errors', $response);
+
+        $violations = $this->getErrorsExtensionValidationFromResponse($response);
+
+        self::assertArrayHasKey('input.promoCode', $violations);
+        self::assertEquals($expectedErrorCode, $violations['input.promoCode'][0]['code']);
+    }
+
+    private function createCartWithProduct(string $productReferenceName): string
+    {
+        $product = $this->getReference($productReferenceName, Product::class);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => null,
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        return $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
+    }
+
+    private function getRemainingAmountForFreeTransport(string $cartUuid): string
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemainingAmountForFreeTransportQuery.graphql', [
+            'cartUuid' => $cartUuid,
+        ]);
+
+        return $this->getResponseDataForGraphQlType($response, 'cart')['remainingAmountForFreeTransport'];
+    }
+
+    private function changeTransportInCartToCzechPost(string $cartUuid): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'transportUuid' => $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class)->getUuid(),
+        ]);
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'ChangeTransportInCart');
     }
 
     private function assertApplyCodeValidationError(string $enteredCode, string $expectedErrorCode): void
