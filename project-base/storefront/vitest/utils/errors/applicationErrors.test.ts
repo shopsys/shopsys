@@ -37,11 +37,11 @@ describe('isFlashMessageError', () => {
 
     test('should return false for no-flash-message codes', () => {
         expect(isFlashMessageError('category-not-found')).toBe(false);
-        expect(isFlashMessageError('blog-category-not-found')).toBe(false);
         expect(isFlashMessageError('article-not-found')).toBe(false);
     });
 
     test('should return false for no-log codes', () => {
+        expect(isFlashMessageError('blog-category-not-found')).toBe(false);
         expect(isFlashMessageError('no-result-found-for-slug')).toBe(false);
         expect(isFlashMessageError('expired-token')).toBe(false);
         expect(isFlashMessageError('invalid-token')).toBe(false);
@@ -63,7 +63,6 @@ describe('isNoFlashMessageError', () => {
         'article-not-found-terms-and-conditions',
         'article-not-found-user-consent-policy',
         'blog-article-not-found',
-        'blog-category-not-found',
         'brand-not-found',
         'cart-item-invalid',
         'cart-unavailable',
@@ -106,6 +105,7 @@ describe('isNoFlashMessageError', () => {
     });
 
     test('should return false for no-log codes', () => {
+        expect(isNoFlashMessageError('blog-category-not-found')).toBe(false);
         expect(isNoFlashMessageError('expired-token')).toBe(false);
         expect(isNoFlashMessageError('no-result-found-for-slug')).toBe(false);
         expect(isNoFlashMessageError('invalid-token')).toBe(false);
@@ -119,6 +119,7 @@ describe('isNoFlashMessageError', () => {
 
 describe('isNoLogError', () => {
     test.each([
+        'blog-category-not-found',
         'COMPARISON-product-already-in-list',
         'COMPARISON-product-not-in-list',
         'expired-token',
@@ -141,7 +142,6 @@ describe('isNoLogError', () => {
 
     test('should return false for no-flash-message codes', () => {
         expect(isNoLogError('category-not-found')).toBe(false);
-        expect(isNoLogError('blog-category-not-found')).toBe(false);
     });
 
     test('should return false for unknown codes', () => {
@@ -189,7 +189,6 @@ describe('error code classification coverage', () => {
             'article-not-found-terms-and-conditions',
             'article-not-found-user-consent-policy',
             'blog-article-not-found',
-            'blog-category-not-found',
             'brand-not-found',
             'cart-item-invalid',
             'cart-unavailable',
@@ -222,6 +221,7 @@ describe('error code classification coverage', () => {
             'unable-to-generate-breadcrumb-items',
             'WISHLIST-product-list-not-found',
             // No-log codes
+            'blog-category-not-found',
             'COMPARISON-product-already-in-list',
             'COMPARISON-product-not-in-list',
             'expired-token',
