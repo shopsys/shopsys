@@ -68,10 +68,11 @@ export function useErrorHandler<TFormValues extends FieldValues = FieldValues>(
                         break;
 
                     case 'silent-log':
-                        logException({
-                            message: error.message,
+                        logException(error, {
                             parsedApplicationError: parsed.applicationError,
-                            originalError: JSON.stringify(error),
+                            // Preserve nested paths and extensions beyond Sentry's default normalization depth.
+                            graphQLErrors: JSON.stringify(error.graphQLErrors),
+                            networkError: error.networkError,
                             location: 'useErrorHandler',
                         });
                         break;
