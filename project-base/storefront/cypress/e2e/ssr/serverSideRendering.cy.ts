@@ -124,7 +124,14 @@ describe('Server-side rendering tests', () => {
 
             return requestSsrPage(slug).then((response) => {
                 expect(response.status).to.eq(200);
-                assertSsrResponse(response.body, [data.catalogNumber, /<title[^>]*>.+<\/title>/]);
+                assertSsrResponse(response.body, [
+                    data.catalogNumber,
+                    /<title[^>]*>.+<\/title>/,
+                    /<meta[^>]*content="website"[^>]*property="og:type"/,
+                    /<meta[^>]*content="[^"]+"[^>]*property="og:site_name"/,
+                    /<meta[^>]*content="[^"]+\?preset=og"[^>]*property="og:image"/,
+                    /<meta[^>]*content="summary_large_image"[^>]*name="twitter:card"/,
+                ]);
                 assertIndexablePage(response.body);
             });
         });
@@ -143,7 +150,11 @@ describe('Server-side rendering tests', () => {
             .then((slug) => requestSsrPage(slug))
             .then((response) => {
                 expect(response.status).to.eq(200);
-                assertSsrResponse(response.body, [/<title[^>]*>.+<\/title>/, /<h1/]);
+                assertSsrResponse(response.body, [
+                    /<title[^>]*>.+<\/title>/,
+                    /<h1/,
+                    /<meta[^>]*content="article"[^>]*property="og:type"/,
+                ]);
             });
     });
 

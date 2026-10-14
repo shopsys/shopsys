@@ -3,6 +3,7 @@ import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
@@ -58,7 +59,7 @@ export type CommonLayoutProps = {
     isFetchingData?: boolean;
     pageTypeOverride?: PageType;
     ogType?: OgTypeEnum | undefined;
-    ogImageUrlDefault?: string | undefined;
+    ogImage?: TypeImageFragment | null;
     bottomContent?: ReactNode;
 };
 
@@ -77,7 +78,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     isFetchingData,
     pageTypeOverride,
     ogType,
-    ogImageUrlDefault,
+    ogImage,
     bottomContent,
 }) => {
     const { t } = useTranslation();
@@ -131,7 +132,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 defaultHreflangLinks={hreflangLinks}
                 defaultMetaRobots={defaultMetaRobots}
                 defaultTitle={defaultTitle}
-                ogImageUrlDefault={ogImageUrlDefault}
+                ogImage={ogImage}
                 ogType={ogType}
                 paginationPageSize={paginationPageSize}
                 paginationTotalCount={paginationTotalCount}

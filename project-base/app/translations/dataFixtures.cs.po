@@ -1957,6 +1957,12 @@ msgstr "Kontroluje rozměry, kompatibilitu, záruční podmínky a možnosti dop
 msgid "Shopsys Platform"
 msgstr "Shopsys Platform"
 
+msgid "Shopsys Platform is an e-commerce platform for growing online stores. This demo shop presents its features on a catalog of electronics, books, toys and more."
+msgstr "Shopsys Platform je e-commerce platforma pro rostoucí internetové obchody. Tento demo obchod představuje její funkce na katalogu elektroniky, knih, hraček a dalších produktů."
+
+msgid "Shopsys logo"
+msgstr "Logo Shopsys"
+
 msgid "Shopsys team collaborating in an office"
 msgstr "Tým Shopsys spolupracující v kanceláři"
 

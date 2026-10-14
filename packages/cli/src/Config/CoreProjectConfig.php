@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\Cli\Config;
 
-use LogicException;
-
 final class CoreProjectConfig
 {
     /**
@@ -107,16 +105,6 @@ final class CoreProjectConfig
         }
 
         return $data;
-    }
-
-    /**
-     * @template T of \Shopsys\Cli\Config\ConfigSectionInterface
-     * @param class-string<T> $sectionClass
-     * @return T
-     */
-    public function getConfigSection(string $sectionClass): ConfigSectionInterface
-    {
-        return $this->sections[$sectionClass] ?? throw new LogicException(sprintf('Unknown section class: %s', $sectionClass));
     }
 
     public function addConfigSection(ConfigSectionInterface $section): void

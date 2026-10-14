@@ -1,0 +1,16 @@
+query SeoOrganizationQuery {
+    settings {
+        seo {
+            organization {
+                name
+                companyTaxNumber
+                city
+                logo {
+                    url
+                    name
+                }
+                socialNetworkUrls
+            }
+        }
+    }
+}

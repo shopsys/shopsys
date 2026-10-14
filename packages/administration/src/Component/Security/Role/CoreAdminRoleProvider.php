@@ -175,7 +175,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
     protected function getSeoAndMarketingToolsRoles(): array
     {
         return [
-            new Role(AdminRoleConstant::ROLE_SEO, t('SEO'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_SEO, t('SEO and Open Graph'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_SEO_PAGES, t('SEO pages'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_ROBOTS, t('Robots.txt settings'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_HREFLANG, t('Alternate language settings'), [Permission::EDIT]),

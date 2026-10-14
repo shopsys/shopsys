@@ -50,7 +50,7 @@ class SeoController extends AdminBaseController
 
             $this->organizationFacade->edit($domainId, $seoSettingData['organization']);
 
-            $this->addSuccessFlash(t('SEO attributes settings modified'));
+            $this->addSuccessFlash(t('SEO and Open Graph settings modified'));
 
             return $this->redirectToRoute('admin_seo_index');
         }

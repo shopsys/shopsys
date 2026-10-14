@@ -26,6 +26,7 @@ $stripImageMetadata = true;
 $imagePath = $_SERVER['DOCUMENT_URI'] ?? '';
 $IMAGE_URL = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $imagePath;
 
+// the original image is served as-is here, so the "og" preset does not guarantee the 1200x630 px box nor JPG/PNG
 if ($CDN_RESIZE_DISABLE === true) {
     header('Location: ' . $IMAGE_URL);
     exit();
@@ -34,13 +35,25 @@ if ($CDN_RESIZE_DISABLE === true) {
 $allowedImageSizes = [16, 24, 32, 48, 64, 96, 128, 256, 384, 480, 768, 1024, 1440, 1920];
 sort($allowedImageSizes);
 
-$allowedResizeTypes = ['fit', 'fill', 'auto', 'crop'];
-$requestedResize = $_GET['resize'] ?? 'fit';
-$resize = in_array($requestedResize, $allowedResizeTypes, true) ? $requestedResize : 'fit';
-$width = findExactOrClosestLargerOrLargestImageSize(isset($_GET['width']) ? max(0, (int)$_GET['width']) : 0, $allowedImageSizes);
-$height = findExactOrClosestLargerOrLargestImageSize(isset($_GET['height']) ? max(0, (int)$_GET['height']) : 0, $allowedImageSizes);
 $gravity = 'no';
 $enlarge = 0;
+
+if (($_GET['preset'] ?? null) === 'og') {
+    // the sharing image (og:image) is shrunk into the 1200x630 px box recommended by Facebook, keeping its format;
+    // the client Accept header is not forwarded, as imgproxy (IMGPROXY_ENFORCE_WEBP) or the CDN would switch to WebP
+    $resize = 'fit';
+    $width = 1200;
+    $height = 630;
+    $acceptHeader = 'image/png,image/jpeg';
+} else {
+    $allowedResizeTypes = ['fit', 'fill', 'auto', 'crop'];
+    $requestedResize = $_GET['resize'] ?? 'fit';
+    $resize = in_array($requestedResize, $allowedResizeTypes, true) ? $requestedResize : 'fit';
+    $width = findExactOrClosestLargerOrLargestImageSize(isset($_GET['width']) ? max(0, (int)$_GET['width']) : 0, $allowedImageSizes);
+    $height = findExactOrClosestLargerOrLargestImageSize(isset($_GET['height']) ? max(0, (int)$_GET['height']) : 0, $allowedImageSizes);
+    // crawlers do not have to send any Accept header
+    $acceptHeader = $_SERVER['HTTP_ACCEPT'] ?? '*/*';
+}
 
 if ($width === 0 && $height === 0) {
     header('Location: ' . $IMAGE_URL);
@@ -84,7 +97,7 @@ if ($CDN_DOMAIN === '' || $CDN_API_KEY === '' || $CDN_API_SALT === '') {
 }
 
 try {
-    getImageFromUrl($imageUrl);
+    getImageFromUrl($imageUrl, $acceptHeader);
 } catch (Throwable $throwable) {
     renderError(
         'HTTP/1.0 502 Bad Gateway',
@@ -92,7 +105,7 @@ try {
     );
 }
 
-function getImageFromUrl(string $url): void
+function getImageFromUrl(string $url, string $acceptHeader): void
 {
     $ch = curl_init($url);
     curl_setopt_array($ch, [
@@ -103,7 +116,7 @@ function getImageFromUrl(string $url): void
         CURLOPT_MAXREDIRS => 5,
         CURLOPT_USERAGENT => 'ImageProxy/1.0',
         CURLOPT_HTTPHEADER => [
-            'Accept: ' . $_SERVER['HTTP_ACCEPT'],
+            'Accept: ' . $acceptHeader,
         ],
     ]);
     $image = curl_exec($ch);

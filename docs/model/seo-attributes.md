@@ -46,9 +46,9 @@ Projects that need to change the fields do it once in a form type extension of `
 
 Static storefront pages (homepage, cart, search, customer section, ...) have no entity, their SEO attributes are stored in `SeoPage` (_Settings > SEO > SEO pages_).
 The slug of a SEO page has to match the storefront route (`config/routes.ts` in the storefront), the homepage is the SEO page with the slug `/`.
-SEO pages additionally carry the Open Graph title, description and image, and have no H1: the heading of a static page is given by the storefront (the `with_h1` option of `SeoGroupType` hides the field).
+SEO pages additionally carry the Open Graph title, description and image (JPG or PNG, at least 200×200 px, 1200×630 px recommended), and have no H1: the heading of a static page is given by the storefront (the `with_h1` option of `SeoGroupType` hides the field).
 
-The title add-on appended to every page title stays in _Settings > SEO_.
+The title add-on appended to every page title stays in _Settings > SEO > SEO and Open Graph_.
 
 #### Adding a static page
 
@@ -62,6 +62,7 @@ The attributes are then applied through `CommonLayout`.
 ## Frontend API
 
 Every GraphQL type with SEO attributes implements the `Seo` interface and exposes `seo: SeoAttributes!` (`title`, `metaDescription`, `h1`, `metaRobots`, `canonicalUrl`) exactly as set in the administration — the API does not apply any fallbacks, that is the responsibility of the storefront. `SeoPage` has no heading, its `h1` is always `null`.
+The organization details used by the storefront for Open Graph are available in `settings.seo.organization` (`name`, `logo` with its `url` and `name`, ...).
 The resolvers of entities return the `SeoAttributes` embeddable itself, the resolvers reading Elasticsearch build [`SeoAttributesQueryDto`]({{github.link}}/packages/frontend-api/src/Model/Seo/SeoAttributesQueryDto.php) with [`SeoAttributesQueryDtoFactory`]({{github.link}}/packages/frontend-api/src/Model/Seo/SeoAttributesQueryDtoFactory.php):
 
 ```php
@@ -80,6 +81,20 @@ The API returns the attributes exactly as set in the administration, all the fal
 - Canonical URL is the one of the SEO page, then of the entity, then the generated self-canonical (`generateCanonicalUrl()`, which keeps only the whitelisted query parameters). On a `noindex` page neither canonical nor hreflang links (including `x-default`) are rendered, as the combination would send contradictory signals to the crawlers.
 
 The helpers live in `utils/seo/` of the storefront.
+
+### Open Graph
+
+The Open Graph and Twitter tags are resolved by `useSeo()` and rendered by `SeoMeta`, in the order SEO page → displayed entity → organization details (_Settings > SEO > SEO and Open Graph_, Organization).
+
+- `og:title` and `og:description` are the Open Graph title and description of the SEO page, otherwise the resolved `<title>` (without the title add-on) and meta description.
+- `og:image` is the Open Graph image of the SEO page, then the image the page passes to `CommonLayout` as the `ogImage` prop (the main or first image of a product, category, brand, store, article, blog article or blog category), and finally the organization logo. A source that is not JPG or PNG (e.g. GIF, SVG or WebP) is skipped and the next one is used, when none is usable, no `og:image` is rendered. The URL gets the `?preset=og` query parameter, so the image resizer serves it shrunk to fit into 1200×630 px (see [Image component](../storefront/image-component.md#open-graph-preset)).
+- `og:image:alt` is the name of the image (the `name` of the organization logo for the logo), then the Open Graph title of the SEO page, then the title.
+- `og:site_name` is the organization name of the domain, the tag is omitted when the name is empty.
+- `og:url` (and `twitter:url`) is the canonical URL set in the administration (SEO page, then entity), otherwise the current URL with only the search query parameter (`q`) kept, so all filter, sort and pagination variants of a listing are shared as one page.
+- `og:locale` is the locale of the domain in the `ll_TT` format, completed with the most likely country of the language (e.g. `cs_CZ`, `en_US`, `sl_SI`).
+- `twitter:card` is `summary_large_image` when there is an image, `summary` otherwise.
+
+The homepage and the other static pages pass no `ogImage`, so without an image in their SEO page they share the organization logo.
 
 ## Sitemap
 

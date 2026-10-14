@@ -1,9 +1,12 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeSeoAttributesFragment } from 'graphql/requests/seo/fragments/SeoAttributesFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { useRouter } from 'next/router';
 import { MetaRobotsContent } from 'types/seo';
 import { getImageAlt } from 'utils/imageAltText';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { SEARCH_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'utils/seo/generateCanonicalUrl';
 import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { isNoindexMetaRobots } from 'utils/seo/isNoindexMetaRobots';
@@ -19,6 +22,7 @@ type UseSeoHookProps = {
     canonicalQueryParams?: CanonicalQueryParameters;
     paginationTotalCount?: number;
     paginationPageSize?: number;
+    ogImage?: TypeImageFragment | null;
 };
 
 /**
@@ -28,6 +32,10 @@ type UseSeoHookProps = {
  *   information of a paginated list is appended to whichever title wins
  * - description: SEO page → seo.metaDescription → plain text of defaultDescription (the HTML description of the
  *   entity, the perex of a blog article, ...) truncated to whole words
+ * - og:url: the canonical URL set in administration, otherwise the current URL without the filter, sort, page and
+ *   load-more parameters, so all variants of a listing are shared as the same page (unlike the canonical link)
+ * - og:image: SEO page → ogImage (the image of the entity) → organization logo, resized by the "og" preset of
+ *   the image resizer; the ALT is the name of the image → og:title → title
  */
 export const useSeo = ({
     seo,
@@ -37,6 +45,7 @@ export const useSeo = ({
     canonicalQueryParams,
     paginationTotalCount,
     paginationPageSize,
+    ogImage,
 }: UseSeoHookProps) => {
     const { url } = useDomainConfig();
     const router = useRouter();
@@ -45,6 +54,7 @@ export const useSeo = ({
     const seoPage = useSeoPage();
 
     const titleSuffix = settingsData?.settings?.seo.titleAddOn;
+    const organization = settingsData?.settings?.seo.organization;
     const title = useHeadingWithPagination(
         seoPage?.seo.title || seo?.title || seo?.h1 || defaultTitle,
         paginationTotalCount,
@@ -54,6 +64,16 @@ export const useSeo = ({
     const metaRobots = resolveMetaRobots(seoPage?.seo.metaRobots, seo?.metaRobots, defaultMetaRobots);
     const canonicalUrl =
         seoPage?.seo.canonicalUrl || seo?.canonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
+    const ogUrl =
+        seoPage?.seo.canonicalUrl ||
+        seo?.canonicalUrl ||
+        generateCanonicalUrl(router, url, [SEARCH_QUERY_PARAMETER_NAME]) ||
+        getStringWithoutTrailingSlash(url) + router.asPath;
+    // only these formats are processed by the image resizer, social networks do not support SVG anyway
+    const ogImageSource = [seoPage?.ogImage, ogImage, organization?.logo].find(
+        (image) => image && /\.(jpe?g|png)$/.test(image.url),
+    );
+    const ogImageUrl = ogImageSource ? `${ogImageSource.url}?preset=og` : undefined;
 
     return {
         title: title ?? '',
@@ -62,11 +82,13 @@ export const useSeo = ({
         metaRobots,
         isNoindex: isNoindexMetaRobots(metaRobots),
         canonicalUrl,
+        ogUrl,
+        ogSiteName: organization?.name,
         ogTitle: seoPage?.ogTitle,
         ogDescription: seoPage?.ogDescription,
-        ogImageUrl: seoPage?.ogImage?.url,
-        ogImageAlt: seoPage?.ogImage?.url
-            ? getImageAlt(seoPage.ogImage.name, getImageAlt(seoPage.ogTitle, title ?? ''))
+        ogImageUrl,
+        ogImageAlt: ogImageUrl
+            ? getImageAlt(ogImageSource?.name, getImageAlt(seoPage?.ogTitle, title ?? ''))
             : undefined,
         hreflangLinks: seoPage?.hreflangLinks,
     };
