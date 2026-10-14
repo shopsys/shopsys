@@ -45,7 +45,7 @@ final class DomainFormType extends AbstractType
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_domain_list',
-                'save_label' => t('Save changes'),
+                'entity' => $options['domain'],
                 'apply' => true,
             ]);
     }
