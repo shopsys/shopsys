@@ -258,8 +258,9 @@ class DefaultController extends AdminBaseController
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
-        $this->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId]),
+        $this->addSuccessFlashTwig(
+            t('Cron "{{ name }}" was scheduled'),
+            ['name' => $this->getCronReadableName($serviceId)],
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
@@ -270,8 +271,9 @@ class DefaultController extends AdminBaseController
     public function cronDisableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
-        $this->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was disabled', ['%serviceId%' => $serviceId]),
+        $this->addSuccessFlashTwig(
+            t('Cron "{{ name }}" was disabled'),
+            ['name' => $this->getCronReadableName($serviceId)],
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
@@ -282,11 +284,17 @@ class DefaultController extends AdminBaseController
     public function cronEnableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
-        $this->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was enabled', ['%serviceId%' => $serviceId]),
+        $this->addSuccessFlashTwig(
+            t('Cron "{{ name }}" was enabled'),
+            ['name' => $this->getCronReadableName($serviceId)],
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
+    }
+
+    protected function getCronReadableName(string $serviceId): string
+    {
+        return $this->cronConfig->getCronModuleConfigByServiceId($serviceId)->getReadableName() ?? $serviceId;
     }
 
     #[Route(path: '/cron/detail/{serviceId}')]
