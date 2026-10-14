@@ -78,7 +78,7 @@ final class CrudRouteProvider
                             $actionType,
                         );
 
-                        $cacheKey = $registryItem->controllerClass . '::' . $actionType->value;
+                        $cacheKey = $this->getCacheKey($registryItem->controllerClass, $actionType);
                         $routeItems[$cacheKey] = $routeItem;
                     }
                 }
@@ -92,12 +92,19 @@ final class CrudRouteProvider
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
      */
+    public function hasRouteItem(string $controllerClass, ActionType $pageType): bool
+    {
+        $cacheKey = $this->getCacheKey($controllerClass, $pageType);
+
+        return isset($this->getAll()[$cacheKey]);
+    }
+
+    /**
+     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
+     */
     public function getRouteItem(string $controllerClass, ActionType $pageType): CrudRouteItem
     {
-        $cacheKey = $controllerClass . '::' . $pageType->value;
-        $allRouteItems = $this->getAll();
-
-        if (!isset($allRouteItems[$cacheKey])) {
+        if (!$this->hasRouteItem($controllerClass, $pageType)) {
             throw new InvalidArgumentException(sprintf(
                 'Route item for controller "%s" and action "%s" not found.',
                 $controllerClass,
@@ -105,7 +112,14 @@ final class CrudRouteProvider
             ));
         }
 
-        return $allRouteItems[$cacheKey];
+        $cacheKey = $this->getCacheKey($controllerClass, $pageType);
+
+        return $this->getAll()[$cacheKey];
+    }
+
+    private function getCacheKey(string $controllerClass, ActionType $pageType): string
+    {
+        return $controllerClass . '::' . $pageType->value;
     }
 
     private function createRouteItem(

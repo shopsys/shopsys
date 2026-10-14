@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Form\Admin\Type;
 
-use InvalidArgumentException;
 use Override;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
@@ -144,12 +143,6 @@ final class ActionBarType extends AbstractTypeExtension
 
         $crudControllerClass = explode('::', (string)$attributes->get('_controller'))[0];
 
-        try {
-            $this->crudRouteProvider->getRouteItem($crudControllerClass, ActionType::EDIT);
-
-            return true;
-        } catch (InvalidArgumentException) {
-            return false;
-        }
+        return $this->crudRouteProvider->hasRouteItem($crudControllerClass, ActionType::EDIT);
     }
 }
