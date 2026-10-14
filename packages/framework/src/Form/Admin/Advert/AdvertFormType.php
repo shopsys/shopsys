@@ -139,6 +139,14 @@ final class AdvertFormType extends AbstractType
             ),
         ];
 
+        $existingImageConstraints = [
+            new Constraints\When(
+                expression: 'value.imagesToDelete != []',
+                constraints: $imageConstraints,
+                groups: [self::VALIDATION_GROUP_TYPE_IMAGE],
+            ),
+        ];
+
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
@@ -151,7 +159,7 @@ final class AdvertFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
-                'constraints' => ($options['web_image_exists'] ? [] : $imageConstraints),
+                'constraints' => ($options['web_image_exists'] ? $existingImageConstraints : $imageConstraints),
                 'label' => 'Upload new image',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -169,7 +177,7 @@ final class AdvertFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
-                'constraints' => ($options['mobile_image_exists'] ? [] : $imageConstraints),
+                'constraints' => ($options['mobile_image_exists'] ? $existingImageConstraints : $imageConstraints),
                 'label' => 'Upload image for mobile devices',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
