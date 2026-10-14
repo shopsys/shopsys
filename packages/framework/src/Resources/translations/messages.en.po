@@ -814,6 +814,15 @@ msgstr ""
 msgid "Creation date"
 msgstr ""
 
+msgid "Cron \"{{ name }}\" was disabled"
+msgstr ""
+
+msgid "Cron \"{{ name }}\" was enabled"
+msgstr ""
+
+msgid "Cron \"{{ name }}\" was scheduled"
+msgstr ""
+
 msgid "Cron detail"
 msgstr ""
 
@@ -824,15 +833,6 @@ msgid "Cron overview (%instanceName%)"
 msgstr ""
 
 msgid "Cron runs"
-msgstr ""
-
-msgid "Cron with serviceID `%serviceId%` was disabled"
-msgstr ""
-
-msgid "Cron with serviceID `%serviceId%` was enabled"
-msgstr ""
-
-msgid "Cron with serviceID `%serviceId%` was scheduled"
 msgstr ""
 
 msgid "Currencies and rounding"

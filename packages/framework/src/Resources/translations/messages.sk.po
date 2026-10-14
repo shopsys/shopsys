@@ -814,6 +814,15 @@ msgstr "Vytvorenie záznamu vyžaduje, aby boli povolené všetky domény, preto
 msgid "Creation date"
 msgstr "Dátum vytvorenia"
 
+msgid "Cron \"{{ name }}\" was disabled"
+msgstr "Cron \"{{ name }}\" bol zakázaný"
+
+msgid "Cron \"{{ name }}\" was enabled"
+msgstr "Cron \"{{ name }}\" bol povolený"
+
+msgid "Cron \"{{ name }}\" was scheduled"
+msgstr "Cron \"{{ name }}\" bol naplánovaný"
+
 msgid "Cron detail"
 msgstr "Detail cronu"
 
@@ -825,15 +834,6 @@ msgstr "Prehľad cronu (%instanceName%)"
 
 msgid "Cron runs"
 msgstr "Spustenia cronov"
-
-msgid "Cron with serviceID `%serviceId%` was disabled"
-msgstr "Cron so serviceID `%serviceId%` bol zakázaný"
-
-msgid "Cron with serviceID `%serviceId%` was enabled"
-msgstr "Cron so serviceID `%serviceId%` bol povolený"
-
-msgid "Cron with serviceID `%serviceId%` was scheduled"
-msgstr "Cron so serviceID `%serviceId%` bol naplánovaný"
 
 msgid "Currencies and rounding"
 msgstr "Meny a zaokrúhľovanie"
