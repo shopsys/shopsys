@@ -13,7 +13,7 @@ export const DeleteDeliveryAddressPopup: FC<DeleteDeliveryAddressPopupProps> = (
 
     return (
         <Popup
-            className="vl:w-auto w-11/12 lg:w-4/5"
+            size="small"
             contentClassName="overflow-y-auto"
             title={t('Do you really want to delete this delivery address?')}
         >

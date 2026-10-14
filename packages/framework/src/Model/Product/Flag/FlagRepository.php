@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
@@ -19,7 +18,6 @@ class FlagRepository
 {
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly OrderByCollationHelper $orderByCollationHelper,
         protected readonly FlagDependenciesDataFactory $flagDependenciesDataFactory,
     ) {
     }
@@ -51,7 +49,7 @@ class FlagRepository
      */
     public function getByIds(array $flagIds): array
     {
-        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => SortDirection::Ascending]);
+        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['position' => SortDirection::Ascending]);
     }
 
     public function getByUuid(string $uuid): Flag
@@ -70,7 +68,7 @@ class FlagRepository
      */
     public function getAll(): array
     {
-        return $this->getFlagRepository()->findBy([], ['id' => SortDirection::Ascending]);
+        return $this->getFlagRepository()->findBy([], ['position' => SortDirection::Ascending]);
     }
 
     /**
@@ -79,7 +77,7 @@ class FlagRepository
      */
     public function getByUuids(array $uuids): array
     {
-        return $this->getFlagRepository()->findBy(['uuid' => $uuids]);
+        return $this->getFlagRepository()->findBy(['uuid' => $uuids], ['position' => SortDirection::Ascending]);
     }
 
     /**
@@ -92,7 +90,7 @@ class FlagRepository
             ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id IN (:flagsIds)')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), SortDirection::Ascending)
+            ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('flagsIds', $flagsIds)
             ->setParameter('locale', $locale);
 
@@ -151,7 +149,7 @@ class FlagRepository
         $flagsQueryBuilder = $this->getVisibleQueryBuilder()
             ->addSelect('f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), SortDirection::Ascending)
+            ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('locale', $locale);
 
         return $flagsQueryBuilder->getQuery()->getResult();

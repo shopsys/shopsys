@@ -79,12 +79,14 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
             data-tid={TIDs.comparison_product_ + product.catalogNumber}
             data-comparison-product={columnIndex}
         >
-            <div className="col-start-1 row-start-1 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-1">
-                <ProductFlags
-                    flags={product.flags}
-                    percentageDiscount={product.price.percentageDiscount}
-                    variant="gridHeader"
-                />
+            <div className="relative z-above col-start-1 row-start-1 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-1">
+                <div className="relative min-h-11 min-w-0">
+                    <ProductFlags
+                        flags={product.flags}
+                        percentageDiscount={product.price.percentageDiscount}
+                        variant="comparison"
+                    />
+                </div>
                 <div className="col-start-2 -mt-2 -mr-2 flex items-center gap-1">
                     {canReorder && (
                         <IconButton
@@ -150,7 +152,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 onClick={handleProductClick}
             >
                 <div
-                    className="relative row-start-1 flex h-24 min-h-0 items-center justify-center md:h-28"
+                    className="relative row-start-1 flex h-36 min-h-0 items-center justify-center"
                     data-tid={TIDs.comparison_product_image}
                 >
                     <Image

@@ -150,7 +150,8 @@ export const DeliveryOptionsPopup: FC<DeliveryOptionsPopupProps> = ({ products, 
 
     return (
         <Popup
-            className="h-[min(880px,95dvh)] max-h-[95dvh] w-11/12 max-w-6xl"
+            size="large"
+            className="h-[min(880px,95dvh)] max-h-[95dvh]"
             contentClassName="flex min-h-0 flex-1 flex-col overflow-hidden"
             title={t('Delivery options')}
         >

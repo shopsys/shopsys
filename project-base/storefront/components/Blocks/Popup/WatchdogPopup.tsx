@@ -67,7 +67,8 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
 
     return (
         <Popup
-            className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5"
+            size="small"
+            className="overflow-x-auto"
             title={t('Watchdog')}
             ariaDescription={t(
                 'This product is on watchdog. Please fill in your email below to be notified when the product becomes available.',
