@@ -33,8 +33,9 @@ final class BestsellingProductFormType extends AbstractType
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_bestsellingproduct_list',
-                'save_label' => t('Save'),
                 'apply' => true,
+                'apply_label' => t('Save'),
+                'save_label' => t('Save and close'),
             ]);
 
         for ($i = 0; $i < BestsellingProductFacade::MAX_RESULTS_ADMIN; $i++) {
