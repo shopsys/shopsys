@@ -62,10 +62,9 @@ export const formatDisplayDate = (date: Date, lang: string): string =>
     ).format(date);
 
 export const getDatePickerFormatters = (t: ReturnType<typeof useTranslation>['t']) => ({
-    formatCaption: (month: Date): string =>
-        `${t(datePickerMonthTranslationKeys[month.getMonth()])} ${month.getFullYear()}`,
+    formatCaption: (month: Date): string => `${getDatePickerMonths(t)[month.getMonth()]} ${month.getFullYear()}`,
     formatDay: (date: Date): string => String(date.getDate()),
-    formatWeekdayName: (weekday: Date): string => t(datePickerWeekdayShortTranslationKeys[weekday.getDay()]),
+    formatWeekdayName: (weekday: Date): string => getDatePickerShortWeekdays(t)[weekday.getDay()],
 });
 
 export const getDatePickerLabels = (t: ReturnType<typeof useTranslation>['t'], lang: string) => ({
@@ -73,35 +72,44 @@ export const getDatePickerLabels = (t: ReturnType<typeof useTranslation>['t'], l
         t('Choose {{ date }}', {
             date: formatDisplayDate(date, lang),
         }),
-    labelGrid: (date: Date): string => `${t(datePickerMonthTranslationKeys[date.getMonth()])} ${date.getFullYear()}`,
+    labelGrid: (date: Date): string => `${getDatePickerMonths(t)[date.getMonth()]} ${date.getFullYear()}`,
     labelNext: (): string => t('Next month'),
     labelPrevious: (): string => t('Previous month'),
-    labelWeekday: (date: Date): string => t(datePickerWeekdayTranslationKeys[date.getDay()]),
+    labelWeekday: (date: Date): string => getDatePickerWeekdays(t)[date.getDay()],
 });
 
-const datePickerMonthTranslationKeys = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-] as const;
+// Literal translation calls keep calendar labels discoverable by i18next-parser.
+const getDatePickerMonths = (t: ReturnType<typeof useTranslation>['t']) => [
+    t('January'),
+    t('February'),
+    t('March'),
+    t('April'),
+    t('May'),
+    t('June'),
+    t('July'),
+    t('August'),
+    t('September'),
+    t('October'),
+    t('November'),
+    t('December'),
+];
 
-const datePickerWeekdayTranslationKeys = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-] as const;
+const getDatePickerWeekdays = (t: ReturnType<typeof useTranslation>['t']) => [
+    t('Sunday'),
+    t('Monday'),
+    t('Tuesday'),
+    t('Wednesday'),
+    t('Thursday'),
+    t('Friday'),
+    t('Saturday'),
+];
 
-const datePickerWeekdayShortTranslationKeys = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as const;
+const getDatePickerShortWeekdays = (t: ReturnType<typeof useTranslation>['t']) => [
+    t('Su'),
+    t('Mo'),
+    t('Tu'),
+    t('We'),
+    t('Th'),
+    t('Fr'),
+    t('Sa'),
+];
