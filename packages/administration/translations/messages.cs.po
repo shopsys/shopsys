@@ -2044,9 +2044,6 @@ msgstr "Role"
 msgid "Running"
 msgstr "Probíhá"
 
-msgid "SEO"
-msgstr "SEO"
-
 msgid "SEO & Marketing Tools"
 msgstr "SEO a marketingové nástroje"
 
