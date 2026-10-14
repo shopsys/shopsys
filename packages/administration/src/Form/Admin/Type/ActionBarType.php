@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
@@ -50,7 +51,7 @@ final class ActionBarType extends AbstractTypeExtension
             ->setAllowedTypes('entity_identifier', ['string', 'null'])
             ->setDefault('entity_name', null)
             ->setDefault('entity_identifier', null)
-            ->setDefault('apply', $this->isCrudCreateOrEditActionWithEditPage(...));
+            ->setDefault('apply', fn (Options $options): bool => $this->isCrudCreateOrEditActionWithEditPage());
     }
 
     /**

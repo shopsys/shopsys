@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FormTypesBundle;
 
-use Closure;
 use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\LogicException;
@@ -41,7 +40,7 @@ final class ActionBarType extends AbstractType
             ->setAllowedTypes('back_url', ['string', 'null'])
             ->setAllowedTypes('back_label', ['string'])
             ->setAllowedTypes('save_label', ['string', 'null'])
-            ->setAllowedTypes('apply', ['bool', Closure::class])
+            ->setAllowedTypes('apply', ['bool'])
             ->setAllowedTypes('apply_label', ['string', 'null'])
             ->setAllowedTypes('entity', ['object', 'null'])
             ->setDefaults([
@@ -90,23 +89,26 @@ final class ActionBarType extends AbstractType
             ]);
         }
 
-        $applyOption = $options['apply'];
-        $isApplyEnabled = $applyOption instanceof Closure ? ($applyOption)() : $applyOption;
+        $isApplyEnabled = $options['apply'];
 
         if ($isApplyEnabled) {
             $builder->add('apply', SubmitType::class, [
                 'label' => $options['apply_label'] ?? ($isEdit ? t('Save') : t('Create')),
                 'attr' => ['class' => 'btn btn-outline-primary'],
             ]);
-            $builder->add('save', SubmitType::class, [
-                'label' => $options['save_label'] ?? ($isEdit ? t('Save and close') : t('Create and close')),
-            ]);
-
-            return;
         }
 
         $builder->add('save', SubmitType::class, [
-            'label' => $options['save_label'] ?? ($isEdit ? t('Save changes') : t('Create')),
+            'label' => $options['save_label'] ?? $this->getDefaultSaveLabel($isEdit, $isApplyEnabled),
         ]);
+    }
+
+    private function getDefaultSaveLabel(bool $isEdit, bool $isApplyEnabled): string
+    {
+        if ($isApplyEnabled) {
+            return $isEdit ? t('Save and close') : t('Create and close');
+        }
+
+        return $isEdit ? t('Save changes') : t('Create');
     }
 }
