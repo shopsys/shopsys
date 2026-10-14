@@ -220,6 +220,9 @@ msgstr "Reklama <strong>{{ name }}</strong> zmazaná"
 msgid "Advertising system"
 msgstr "Reklamáčný systém"
 
+msgid "All feeds successfully scheduled."
+msgstr "Všetky feedy boli úspešne naplánované."
+
 msgid "All roles"
 msgstr "Všetky role"
 

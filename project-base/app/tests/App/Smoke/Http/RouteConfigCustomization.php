@@ -97,6 +97,9 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_feed_schedule', function (RouteConfig $config): void {
                 $config->skipRoute('Do not schedule XML feed by test.');
             })
+            ->customizeByRouteName('admin_feed_scheduleall', function (RouteConfig $config): void {
+                $config->skipRoute('Do not schedule XML feeds by test.');
+            })
             ->customizeByRouteName('admin_logout', function (RouteConfig $config): void {
                 $config->skipRoute('There is different security configuration in TEST environment.');
             })

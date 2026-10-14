@@ -2113,6 +2113,9 @@ msgstr ""
 msgid "Schedule"
 msgstr ""
 
+msgid "Schedule all feeds"
+msgstr ""
+
 msgid "Scheduled"
 msgstr ""
 
