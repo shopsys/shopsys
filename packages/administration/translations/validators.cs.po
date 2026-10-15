@@ -13,6 +13,9 @@ msgstr "Částka refundace musí být větší než nula."
 msgid "Refunded amount cannot be negative."
 msgstr "Refundovaná částka nemůže být záporná."
 
+msgid "The content has {{ count }} invalid block(s), fix them in the editor"
+msgstr "Obsah obsahuje neplatné bloky (počet: {{ count }}), opravte je v editoru"
+
 msgid "You can refund only %refundableAmount%."
 msgstr "Můžete refundovat pouze %refundableAmount%."
 

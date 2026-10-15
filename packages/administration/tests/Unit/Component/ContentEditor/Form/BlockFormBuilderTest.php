@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductsIdsToProductsTransformer;
 use Shopsys\FrameworkBundle\Model\Media\MediaFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -194,12 +195,12 @@ class BlockFormBuilderTest extends TypeTestCase
     #[Override]
     protected function getExtensions(): array
     {
-        $productsIdsToProductsTransformer = $this->createStub(ProductsIdsToProductsTransformer::class);
+        $productRepository = $this->createStub(ProductRepository::class);
         $types = [
             new WysiwygType(new SanitizedHtmlTransformer(ContentEditorTestFactory::createSanitizer())),
             new MediaType($this->createStub(MediaFacade::class)),
-            new ProductsType($productsIdsToProductsTransformer),
-            new ProductIdsType($productsIdsToProductsTransformer),
+            new ProductsType($this->createStub(ProductsIdsToProductsTransformer::class)),
+            new ProductIdsType($productRepository),
         ];
 
         return [new PreloadedExtension($types, []), new ValidatorExtension(Validation::createValidator())];

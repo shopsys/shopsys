@@ -13,6 +13,9 @@ msgstr ""
 msgid "Refunded amount cannot be negative."
 msgstr ""
 
+msgid "The content has {{ count }} invalid block(s), fix them in the editor"
+msgstr ""
+
 msgid "You can refund only %refundableAmount%."
 msgstr ""
 

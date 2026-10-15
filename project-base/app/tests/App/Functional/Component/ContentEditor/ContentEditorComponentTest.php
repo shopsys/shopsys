@@ -57,6 +57,22 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-columns"]'));
     }
 
+    public function testErrorsOfInvalidBlocksAreShownOnlyWhenTheContentWasRefused(): void
+    {
+        $blocks = [
+            $this->createTextBlock(self::TEXT_ID_1, '<p>One</p>'),
+            ['id' => self::TABLE_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']],
+        ];
+
+        $editing = $this->renderEditorOnPage($blocks, false);
+        $this->assertStringNotContainsString('Enter a YouTube or Vimeo video URL.', $editing->text());
+        $this->assertCount(0, $editing->filter('[data-content-editor-has-errors]'));
+
+        $refused = $this->renderEditorOnPage($blocks, true);
+        $this->assertStringContainsString('Enter a YouTube or Vimeo video URL.', $refused->text());
+        $this->assertCount(1, $refused->filter('[data-content-editor-has-errors]'));
+    }
+
     public function testNormalizedDocumentJsonHasDocumentShape(): void
     {
         $component = $this->createEditor([$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')]);
@@ -99,6 +115,30 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $wrapper);
         $this->assertSame('editor_content[blocks][0][data][productIds]', $wrapper->attr('data-product-ids-sync-model-value'));
         $this->assertCount(0, $crawler->filter('[data-model*="productIds"]'));
+    }
+
+    public function testProductsFieldRendersSelectedProducts(): void
+    {
+        $component = $this->createEditor([
+            ['id' => self::TEXT_ID_1, 'type' => 'products', 'data' => ['productIds' => [1]]],
+        ]);
+
+        $crawler = $component->render()->crawler();
+
+        $this->assertCount(1, $crawler->filter('[data-controller="product-ids-sync"]'));
+        $this->assertGreaterThan(0, $crawler->filter('[data-controller="product-ids-sync"] input[type="hidden"]')->count());
+    }
+
+    public function testProductsFieldDropsProductsThatNoLongerExist(): void
+    {
+        $component = $this->createEditor([
+            ['id' => self::TEXT_ID_1, 'type' => 'products', 'data' => ['productIds' => [1, 999999999]]],
+        ]);
+
+        $inputs = $component->render()->crawler()->filter('[data-controller="product-ids-sync"] input[type="hidden"]');
+
+        $values = $inputs->each(static fn (Crawler $input): string => (string)$input->attr('value'));
+        $this->assertSame(['1'], $values);
     }
 
     public function testEditorWidgetRendersOneMediaPickerWithInstanceIdAndImageField(): void
@@ -346,6 +386,23 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
             'profile' => 'web',
             'targetInputId' => 'content',
         ], $client);
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $blocks
+     */
+    private function renderEditorOnPage(array $blocks, bool $validated): Crawler
+    {
+        $html = self::getContainer()->get('twig')->createTemplate("{{ component('Admin:ContentEditor', props) }}")->render([
+            'props' => [
+                'documentJson' => json_encode(['version' => 1, 'profile' => 'web', 'blocks' => $blocks], JSON_THROW_ON_ERROR),
+                'profile' => 'web',
+                'targetInputId' => 'content',
+                'validated' => $validated,
+            ],
+        ]);
+
+        return new Crawler($html);
     }
 
     /**

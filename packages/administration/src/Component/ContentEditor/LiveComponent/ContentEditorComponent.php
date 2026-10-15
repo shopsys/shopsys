@@ -24,6 +24,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
 use Webmozart\Assert\Assert;
 
 /**
@@ -72,6 +73,15 @@ final class ContentEditorComponent
     public array $variables = [];
 
     #[LiveProp]
+    public ?int $domainId = null;
+
+    /**
+     * The content was submitted and refused, so the errors of the blocks are shown right away
+     */
+    #[LiveProp]
+    public bool $validated = false;
+
+    #[LiveProp]
     public string $targetInputId = '';
 
     #[LiveProp]
@@ -89,6 +99,21 @@ final class ContentEditorComponent
         private readonly ContentDocumentNormalizer $contentDocumentNormalizer,
         private readonly FormFactoryInterface $formFactory,
     ) {
+    }
+
+    /**
+     * The errors are shown only in the first render after the refusal, they would disturb the editing of the blocks afterwards
+     */
+    #[PostMount(priority: -10)]
+    public function showErrorsOfRefusedContent(): void
+    {
+        if (!$this->validated) {
+            return;
+        }
+
+        $this->validated = false;
+        $this->resetForm(true);
+        $this->getForm()->submit($this->formValues);
     }
 
     #[LiveAction]
