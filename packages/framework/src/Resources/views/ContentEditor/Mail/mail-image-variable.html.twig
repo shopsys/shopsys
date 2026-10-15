@@ -1,0 +1,10 @@
+{# the variable is replaced with the address of the image when the mail is sent #}
+{% if data.variable %}
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center" style="padding:0 0 10px 0;">
+                <img src="{{ data.variable }}" alt="{{ data.alt }}" border="0" style="max-width:100%; height:auto; border:0; vertical-align:top;">
+            </td>
+        </tr>
+    </table>
+{% endif %}

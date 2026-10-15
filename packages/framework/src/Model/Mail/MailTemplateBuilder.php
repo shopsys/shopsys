@@ -176,6 +176,10 @@ class MailTemplateBuilder
                             width: 100% !important;
                             display: block !important;
                         }
+                        .mail-column {
+                            display: block;
+                            width: 100% !important;
+                        }
                     }
                 </style>
                 <!--[if mso]>

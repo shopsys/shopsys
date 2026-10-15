@@ -12,12 +12,12 @@ use Override;
 class WysiwygField extends TextField
 {
     /**
-     * @var array<int, array{label: string, placeholder: string, isRequired: bool}>
+     * @var array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}>
      */
     protected array $variables = [];
 
     /**
-     * @param array<int, array{label: string, placeholder: string, isRequired: bool}> $variables placeholders offered in the editor (mail)
+     * @param array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}> $variables placeholders offered in the editor (mail)
      */
     public function variables(array $variables): static
     {

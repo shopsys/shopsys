@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractColumnsBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\AbstractColumnsBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsHalvesBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsThirdsBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsThirdTwoThirdsBlock;
@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsTwoThirdsTh
 class ColumnsBlocksTest extends AbstractWebBlockTestCase
 {
     /**
-     * @return iterable<string, array{block: \Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\AbstractColumnsBlock, expectedType: string, expectedLayout: string, expectedSlotCount: int}>
+     * @return iterable<string, array{block: \Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractColumnsBlock, expectedType: string, expectedLayout: string, expectedSlotCount: int}>
      */
     public static function getColumnsBlocksData(): iterable
     {

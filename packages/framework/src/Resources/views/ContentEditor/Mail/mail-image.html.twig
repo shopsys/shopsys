@@ -1,0 +1,10 @@
+{% if data.url %}
+    {% set image %}<img src="{{ data.url }}" alt="{{ data.alt }}"{% if data.width %} width="{{ data.width }}"{% endif %} border="0" style="max-width:100%; height:auto; border:0; vertical-align:top;">{% endset %}
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="{{ data.position }}" style="padding:0 0 10px 0;">
+                {% if data.link %}<a href="{{ data.link }}" target="_blank" rel="noopener">{{ image }}</a>{% else %}{{ image }}{% endif %}
+            </td>
+        </tr>
+    </table>
+{% endif %}

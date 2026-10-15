@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web;
+namespace Shopsys\FrameworkBundle\Component\ContentEditor\Block;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContainerContentBlockInterface;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 
 /**
  * The layout is given by the type of the block, so there is nothing to edit and the number of slots never changes

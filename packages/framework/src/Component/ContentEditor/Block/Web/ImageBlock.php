@@ -63,7 +63,7 @@ class ImageBlock extends AbstractContentBlock
         $media = $this->findMedia($data['mediaId'] ?? null);
 
         if ($media !== null) {
-            $data['url'] = $this->mediaFacade->getImageUrl($this->domain->getDomainConfigById($context->domainId), $media);
+            $data['url'] = $this->getMediaUrl($media, $context);
             $data['width'] = $media->getWidth();
             $data['height'] = $media->getHeight();
 
@@ -81,6 +81,11 @@ class ImageBlock extends AbstractContentBlock
         }
 
         return $data;
+    }
+
+    protected function getMediaUrl(Media $media, ExportContext $context): string
+    {
+        return $this->mediaFacade->getImageUrl($this->domain->getDomainConfigById($context->domainId), $media);
     }
 
     protected function findMedia(mixed $mediaId): ?Media

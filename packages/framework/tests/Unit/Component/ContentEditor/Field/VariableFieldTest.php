@@ -15,13 +15,28 @@ class VariableFieldTest extends TestCase
      */
     public static function getNormalizeValueData(): iterable
     {
-        yield 'allowed placeholder is kept' => [
+        yield 'placeholder is kept' => [
             'value' => '{product_image}',
             'expectedResult' => '{product_image}',
         ];
 
-        yield 'unknown placeholder becomes null' => [
-            'value' => '{other}',
+        yield 'placeholder with a digit is kept' => [
+            'value' => '{image_2}',
+            'expectedResult' => '{image_2}',
+        ];
+
+        yield 'text without braces becomes null' => [
+            'value' => 'product_image',
+            'expectedResult' => null,
+        ];
+
+        yield 'placeholder with a text around becomes null' => [
+            'value' => 'x{product_image}',
+            'expectedResult' => null,
+        ];
+
+        yield 'not a string becomes null' => [
+            'value' => 5,
             'expectedResult' => null,
         ];
     }
@@ -29,7 +44,7 @@ class VariableFieldTest extends TestCase
     #[DataProvider('getNormalizeValueData')]
     public function testNormalizeValue(mixed $value, mixed $expectedResult): void
     {
-        $field = VariableField::create('src', ['{product_image}']);
+        $field = VariableField::create('src');
 
         $this->assertSame($expectedResult, $field->normalizeValue($value));
     }

@@ -1171,6 +1171,9 @@ msgstr ""
 msgid "Display products with special prices only"
 msgstr ""
 
+msgid "Divider"
+msgstr ""
+
 msgid "Do you really want to %action% %count% product?"
 msgstr ""
 
@@ -1952,6 +1955,9 @@ msgid "If you allow negative stock, it is possible to order more items than are 
 msgstr ""
 
 msgid "Image"
+msgstr ""
+
+msgid "Image from variable"
 msgstr ""
 
 msgid "Image with link"
@@ -3827,6 +3833,9 @@ msgid "Valid until"
 msgstr ""
 
 msgid "Value"
+msgstr ""
+
+msgid "Variable"
 msgstr ""
 
 msgid "Variable symbol"

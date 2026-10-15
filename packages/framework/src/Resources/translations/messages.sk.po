@@ -1171,6 +1171,9 @@ msgstr "Zobraziť len produkty na sklade"
 msgid "Display products with special prices only"
 msgstr "Zobraziť len produkty so špeciálnymi cenami"
 
+msgid "Divider"
+msgstr "Oddeľovač"
+
 msgid "Do you really want to %action% %count% product?"
 msgstr "Naozaj chcete %action% %count% produkt?"
 
@@ -1953,6 +1956,9 @@ msgstr "Ak povolíte záporný stav skladu, je možné objednať viac položiek,
 
 msgid "Image"
 msgstr "Obrázok"
+
+msgid "Image from variable"
+msgstr "Obrázok z premennej"
 
 msgid "Image with link"
 msgstr "Obrázok s odkazom"
@@ -3828,6 +3834,9 @@ msgstr "Platnosť do"
 
 msgid "Value"
 msgstr "Hodnota"
+
+msgid "Variable"
+msgstr "Premenná"
 
 msgid "Variable symbol"
 msgstr "Variabilný symbol"
