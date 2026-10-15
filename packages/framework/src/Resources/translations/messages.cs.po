@@ -2755,9 +2755,6 @@ msgstr "Zadejte prosím důvod zamítnutí fotografie"
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
 
-msgid "Please replace this text with your own content."
-msgstr "Prosím nahraďte tento text vlastním obsahem."
-
 msgid "Please select at least one domain."
 msgstr "Vyberte prosím alespoň jednu doménu."
 

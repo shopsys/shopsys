@@ -304,27 +304,6 @@ class ProductController extends AdminBaseController
         return new JsonResponse($productByCatnum !== null);
     }
 
-    /**
-     * This route is used by GrapesJS to load Names of products
-     */
-    #[Route(path: '/product/names-by-catnums', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
-    #[RequireRole(SystemRole::ADMIN)]
-    public function productNamesByCatnumsAction(Request $request): JsonResponse
-    {
-        $catnums = $request->request->all('catnums');
-
-        $response = [];
-        $products = $this->productFacade->findAllByCatnums($catnums);
-
-        foreach ($products as $product) {
-            if ($product->getCatnum() !== null) {
-                $response[$product->getCatnum()] = $product->getFullName();
-            }
-        }
-
-        return new JsonResponse($response);
-    }
-
     protected function productCanBeCreated(): bool
     {
         return $this->unitFacade->isAtLeastOneUnitCreated()

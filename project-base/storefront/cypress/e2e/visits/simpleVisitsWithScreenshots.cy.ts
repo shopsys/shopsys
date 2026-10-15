@@ -66,9 +66,9 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Blog Detail] should visit blog article detail with screenshot', () => {
-        visitEntityByUuid('blogArticle', staticData.blogArticle.grapesJs.uuid);
+        visitEntityByUuid('blogArticle', staticData.blogArticle.withProductHero.uuid);
         changeBlogArticleDynamicPartsToStaticDemodata();
-        cy.getByTID([TIDs.grapesjs_product_hero])
+        cy.getByTID([TIDs.article_product_hero])
             .should('be.visible')
             .and('have.attr', 'data-product-catnum', staticData.products.philips32PFL4308.catnum);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'blog article detail', {
@@ -85,7 +85,7 @@ describe('Simple page visit tests with screenshots', () => {
         visitEntityByUuid('article', staticData.article.forPress.uuid);
         changeArticleDynamicPartsToStaticDemodata();
         markArticleMapIframeForBlackout();
-        cy.getByTID([TIDs.grapesjs_product_hero]).should('be.visible');
+        cy.getByTID([TIDs.article_product_hero]).should('be.visible');
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'article detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },

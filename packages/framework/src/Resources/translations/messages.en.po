@@ -2755,9 +2755,6 @@ msgstr ""
 msgid "Please fill all default values before creating a product"
 msgstr ""
 
-msgid "Please replace this text with your own content."
-msgstr ""
-
 msgid "Please select at least one domain."
 msgstr ""
 

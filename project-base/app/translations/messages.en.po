@@ -4,28 +4,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Close"
-msgstr ""
-
 msgid "File not found in main filesystem. Please try again later."
-msgstr ""
-
-msgid "Insert variable"
-msgstr ""
-
-msgid "Insert your text here"
-msgstr ""
-
-msgid "Mandatory variables"
-msgstr ""
-
-msgid "No products are set. Please add some in the component settings."
-msgstr ""
-
-msgid "Optional variables"
-msgstr ""
-
-msgid "Save"
 msgstr ""
 
 msgid "TOP"
@@ -44,7 +23,4 @@ msgid "from most expensive"
 msgstr ""
 
 msgid "from the cheapest"
-msgstr ""
-
-msgid "unknown catalog number (product will not be displayed)"
 msgstr ""

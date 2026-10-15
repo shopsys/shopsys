@@ -55,10 +55,8 @@ export default class Search {
                     !['checkbox', 'radio', 'range', 'button', 'file', 'reset', 'submit', 'color'].includes(
                         activeElement.type,
                     );
-                const isGrapesJsOverlayOpen = $('.gjs-frame').length > 0;
 
                 if (
-                    isGrapesJsOverlayOpen ||
                     activeElement.isContentEditable ||
                     ((isInput || tagName === 'TEXTAREA' || tagName === 'SELECT') && !document.activeElement.readOnly)
                 ) {

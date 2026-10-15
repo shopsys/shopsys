@@ -41,6 +41,8 @@ trait MailTemplateMigrationTrait
     /**
      * Wraps a mail template body into the format required by GrapesJs, matching the historical
      * output of the demo data fixture (multi-line outer wrapper, inner content whitespace-collapsed).
+     * Kept only for the already shipped migrations: the content editor stores mail templates in the `content` column
+     * and converts the GrapesJs HTML written here by its post-deploy migration task.
      */
     protected function wrapMailTemplateBodyForGrapesJs(string $body): string
     {

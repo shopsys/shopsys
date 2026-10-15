@@ -142,16 +142,6 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\AbstractUploadedFile\\AbstractUploadedFileLocator::getRelativeUploadedFileFilepath\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Component/AbstractUploadedFile/AbstractUploadedFileLocator.php
-        # content editor: removed in phase 10
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\GrapesJs\\GrapesJsParser::parse\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/GrapesJs/GrapesJsParser.php
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\GrapesJs\\EnsureCorrectGrapesJsFormatHelper::ensureStringIsInCorrectGrapesJsFormat$#'
-            path: packages/framework/src/Component/GrapesJs/EnsureCorrectGrapesJsFormatHelper.php
-        # content editor: caller arrives in phase 4 (BlockFormBuilder form type mapping)
         -
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Cron\\CronModuleRun::getCronModule$#'

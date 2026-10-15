@@ -1,5 +1,4 @@
-// rel="noopener" is added to links with target="_blank" whenever the content is saved through CKEditor,
-// both the classic editor and the one embedded in GrapesJS
+// rel="noopener" is added to links with target="_blank" whenever the content is saved through CKEditor
 import { addRelNoopenerWhenTargetIsBlank } from '../../common/utils/addRelNoopenerWhenTargetIsBlank';
 import Register from '../../common/utils/Register';
 

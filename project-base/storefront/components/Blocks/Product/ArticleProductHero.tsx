@@ -63,7 +63,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                 product.__typename === 'MainVariant' && 'grid-rows-[repeat(8,auto)] md:grid-rows-[repeat(7,auto)]',
             )}
             data-product-catnum={product.catalogNumber}
-            data-tid={TIDs.grapesjs_product_hero}
+            data-tid={TIDs.article_product_hero}
         >
             <ExtendedNextLink
                 preventRedirectOnTextSelection

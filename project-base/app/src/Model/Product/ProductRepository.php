@@ -20,9 +20,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $offset, int $limit)
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
- * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
- * @method \App\Model\Product\Product[] findAllByCatnums(string[] $catnums)
  * @method array<int, bool> getCalculatedSellingDeniedPerDomainIds(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  */
 class ProductRepository extends BaseProductRepository
 {

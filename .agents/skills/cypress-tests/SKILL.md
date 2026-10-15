@@ -661,7 +661,7 @@ staticData.order.number; // '1234567890'
 staticData.order.numberHeading; // 'Order number 1234567890'
 staticData.order.creationDate; // '10/26/1999 10:10 AM'
 staticData.blogArticle.publicationDate; // '10/26/1999'
-staticData.blogArticle.grapesJs.uuid;
+staticData.blogArticle.withProductHero.uuid;
 staticData.article.creationDate; // '10/26/1999'
 staticData.article.forPress.uuid;
 ```

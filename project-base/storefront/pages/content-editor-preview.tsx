@@ -54,7 +54,7 @@ const Index: FC = () => {
             <NotificationBars />
 
             <header>
-                <Webline className="relative" wrapperClassName="gjs-template-header-bg">
+                <Webline className="relative" wrapperClassName="bg-background-brand">
                     <div className="flex flex-wrap items-center gap-x-1 gap-y-3 py-3 lg:gap-x-7 lg:pt-6 lg:pb-5">
                         <Logo />
 
@@ -75,15 +75,15 @@ const Index: FC = () => {
 
             <main className="mb-10">
                 <VerticalStack gap="sm">
-                    <Webline className="gjs-template-article-webline" width="vl">
+                    <Webline className="vl:mx-auto vl:max-w-210" width="vl">
                         <h1>Blog or Article title</h1>
                     </Webline>
 
-                    <Webline className="gjs-template-article-webline" width="vl">
+                    <Webline className="vl:mx-auto vl:max-w-210" width="vl">
                         <ArticleDate date={new Date().toISOString()} />
                     </Webline>
 
-                    <Webline className="gjs-template-article-webline" width="vl">
+                    <Webline className="vl:mx-auto vl:max-w-210" width="vl">
                         <ContentRenderer
                             areProductsFetching={areProductsFetching}
                             document={document}

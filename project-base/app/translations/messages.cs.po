@@ -4,29 +4,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "Close"
-msgstr "Zavřít"
-
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím znovu později."
-
-msgid "Insert variable"
-msgstr "Vložit proměnnou"
-
-msgid "Insert your text here"
-msgstr "Zde vložte text"
-
-msgid "Mandatory variables"
-msgstr "Povinné proměnné"
-
-msgid "No products are set. Please add some in the component settings."
-msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
-
-msgid "Optional variables"
-msgstr "Volitelné proměnné"
-
-msgid "Save"
-msgstr "Uložit"
 
 msgid "TOP"
 msgstr "TOP"
@@ -45,6 +24,3 @@ msgstr "od nejdražšího"
 
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
-
-msgid "unknown catalog number (product will not be displayed)"
-msgstr "neznámé katalogové číslo (produkt se nezobrazí)"

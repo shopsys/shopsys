@@ -4,7 +4,6 @@
 @import './base.css';
 @import './utilities.css';
 @import './custom.css';
-@import './grapesjs.css';
 
 @layer components {
     .user-text {
@@ -127,11 +126,7 @@
         }
 
         iframe {
-            @apply my-6 max-w-full lg:my-8;
-        }
-
-        iframe:not(.gjs-iframe) {
-            @apply my-6 aspect-video w-full lg:my-8;
+            @apply my-6 aspect-video w-full max-w-full lg:my-8;
         }
 
         iframe[src=''] {
@@ -146,10 +141,6 @@
 
         video {
             @apply my-8 w-full lg:my-10;
-        }
-
-        .gjs-table-custom {
-            @apply my-8 max-w-full overflow-x-auto lg:my-10;
         }
 
         table {
@@ -184,139 +175,6 @@
                 td {
                     @apply border-table-bg-default border text-left;
                 }
-            }
-        }
-
-        .row {
-            @apply my-8 flex w-full flex-col gap-5 lg:my-10 lg:flex-row lg:gap-10;
-
-            .column {
-                @apply flex flex-1 flex-col;
-
-                h2:first-child,
-                h3:first-child,
-                h4:first-child,
-                h5:first-child,
-                h6:first-child {
-                    @apply mt-0;
-                }
-
-                * > *:last-child {
-                    @apply mb-0;
-                }
-
-                &:empty {
-                    @apply min-h-7 bg-emerald-100;
-                }
-            }
-
-            img {
-                @apply my-0! max-w-fit;
-            }
-        }
-
-        .image-position-left,
-        .button-link-position-left {
-            @apply ml-0;
-        }
-
-        .image-position-center,
-        .button-link-position-center {
-            @apply mx-auto!;
-        }
-
-        .image-position-right,
-        .button-link-position-right {
-            @apply ml-auto!;
-        }
-
-        .gjs-text-with-image {
-            @apply my-8 flex w-full flex-col items-center justify-between gap-5 lg:my-10 lg:flex-row lg:gap-10;
-
-            & > * {
-                @apply lg:w-1/2 lg:max-w-1/2;
-            }
-
-            &.gjs-text-with-image-float-left {
-                & img {
-                    @apply lg:order-1;
-                }
-
-                & .text {
-                    @apply lg:order-2;
-                }
-            }
-
-            &.gjs-text-with-image-float-right {
-                & img {
-                    @apply lg:order-2;
-                }
-
-                & .text {
-                    @apply lg:order-1;
-                }
-            }
-
-            img {
-                @apply m-0;
-            }
-
-            h2:first-child,
-            h3:first-child,
-            h4:first-child,
-            h5:first-child,
-            h6:first-child {
-                @apply mt-0;
-            }
-
-            * > *:last-child {
-                @apply mb-0;
-            }
-        }
-
-        .grid {
-            @apply my-8 grid grid-cols-1 items-center gap-5 lg:my-10 lg:grid-cols-12 lg:gap-10;
-
-            .grid__item {
-                &.grid__item--1 {
-                    @apply col-span-1 lg:col-span-12;
-                }
-
-                &.grid__item--1-2 {
-                    @apply col-span-1 lg:col-span-6;
-                }
-
-                &.grid__item--1-3 {
-                    @apply col-span-1 lg:col-span-4;
-                }
-
-                &.grid__item--2-3 {
-                    @apply col-span-1 lg:col-span-8;
-                }
-
-                h2:first-child,
-                h3:first-child,
-                h4:first-child,
-                h5:first-child,
-                h6:first-child {
-                    @apply mt-0;
-                }
-
-                & > *:last-child {
-                    @apply mb-0;
-                }
-            }
-
-            img {
-                @apply m-0;
-            }
-        }
-
-        .gjs-link-block {
-            @apply my-8 block lg:my-10;
-
-            &:empty {
-                @apply min-h-52 w-full bg-emerald-100;
             }
         }
     }

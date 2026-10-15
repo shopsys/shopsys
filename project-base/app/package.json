@@ -50,15 +50,8 @@
         "@shopsys/administration": "file:vendor/shopsys/administration/assets",
         "@shopsys/mcp": "file:vendor/shopsys/mcp/assets",
         "@shopsys/framework": "file:vendor/shopsys/framework/assets",
-        "@yaireo/tagify": "^4.25.1",
         "bazinga-translator": "^8.0.0",
-        "buffer": "^6.0.3",
-        "grapesjs": "^0.22.16",
-        "grapesjs-plugin-ckeditor": "^1.0.1",
-        "grapesjs-preset-newsletter": "^1.0.2",
-        "grapesjs-preset-webpage": "^1.0.3",
         "intl-messageformat": "^11.2.5",
-        "juice": "^11.0.0",
         "sortablejs": "^1.15.6"
     },
     "jest": {

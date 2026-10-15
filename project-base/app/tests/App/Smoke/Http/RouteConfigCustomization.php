@@ -448,11 +448,6 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')
                     ->setParameter('key', 'Cart');
             })
-            ->customizeByRouteName('admin_product_productnamesbycatnums', function (RouteConfig $config): void {
-                $config->changeDefaultRequestDataSet('Use catnums instead of ID')
-                    ->setParameter('catnums', '9177759,7700768,9146508')
-                    ->setExpectedStatusCode(200);
-            })
             ->customizeByRouteName('admin_localization_selectlocale', function (RouteConfig $config): void {
                 /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
                 $domain = $this->container->get(Domain::class);

@@ -336,20 +336,6 @@ class ProductRepository
     }
 
     /**
-     * @param string[] $catnums
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function findAllByCatnums(array $catnums): array
-    {
-        $queryBuilder = $this->getProductRepository()
-            ->createQueryBuilder('p', 'p.catnum')
-            ->andWhere('p.catnum IN (:catnum)')
-            ->setParameter('catnum', $catnums);
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
      * @return array<int, bool>
      */
     public function getCalculatedSellingDeniedPerDomainIds(Product $product): array

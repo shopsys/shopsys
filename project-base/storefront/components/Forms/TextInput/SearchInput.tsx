@@ -90,7 +90,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             <IconButton
                 Icon={SearchIcon}
                 ariaLabel={ariaLabelForSearchButton}
-                className="gjs-template-header-search-button absolute top-1/2 left-1 -translate-y-1/2"
+                className="absolute top-1/2 left-1 -translate-y-1/2"
                 shape="rounded"
                 title={t('Search')}
                 type="submit"

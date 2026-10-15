@@ -138,7 +138,7 @@ export const staticData = {
     },
     blogArticle: {
         publicationDate: '10/26/1999',
-        grapesJs: {
+        withProductHero: {
             uuid: 'cf500b03-d2e4-5549-b3af-cefed894c1b4',
         },
     },

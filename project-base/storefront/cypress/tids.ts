@@ -70,7 +70,7 @@ export enum TIDs {
     product_detail_sticky_addtocart_button = 'product_detail_sticky_addtocart_button',
     product_list = 'product_list',
     product_list_item_image = 'product_list_item_image',
-    grapesjs_product_hero = 'grapesjs_product_hero',
+    article_product_hero = 'article_product_hero',
     content_block_text = 'content_block_text',
     content_block_heading = 'content_block_heading',
     content_block_image = 'content_block_image',
