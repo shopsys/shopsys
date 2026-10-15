@@ -52,7 +52,13 @@ const getFreshClientTranslates = async (
 
 const useSyncServerNamespacesToCache = (
     pageProps: CachedI18nPageProps,
-    { setCachedLang, setCachedNamespaces, setCachedNamespacesLang, setCachedTranslationVersion }: CachedI18nState,
+    {
+        cachedNamespacesLang,
+        setCachedLang,
+        setCachedNamespaces,
+        setCachedNamespacesLang,
+        setCachedTranslationVersion,
+    }: CachedI18nState,
 ) => {
     useEffect(() => {
         if (pageProps.__lang) {
@@ -65,9 +71,11 @@ const useSyncServerNamespacesToCache = (
                 ...pageProps.__namespaces,
             }));
             setCachedNamespacesLang(pageProps.__lang);
-            setCachedTranslationVersion(pageProps.__translationVersion);
+            if (pageProps.__translationVersion !== undefined || pageProps.__lang !== cachedNamespacesLang) {
+                setCachedTranslationVersion(pageProps.__translationVersion);
+            }
         }
-    }, [pageProps.__lang, pageProps.__namespaces, pageProps.__translationVersion]);
+    }, [pageProps.__lang, pageProps.__namespaces, pageProps.__translationVersion, cachedNamespacesLang]);
 };
 
 const useRefreshClientNamespaces = (
@@ -117,7 +125,9 @@ const useRefreshClientNamespaces = (
                         ...loadedNamespaces,
                     }));
                     setCachedNamespacesLang(locale);
-                    setCachedTranslationVersion(pageProps.__translationVersion);
+                    if (pageProps.__translationVersion !== undefined || shouldRefreshLocale) {
+                        setCachedTranslationVersion(pageProps.__translationVersion);
+                    }
                 }
             } catch (error) {
                 if (!isCancelled) {

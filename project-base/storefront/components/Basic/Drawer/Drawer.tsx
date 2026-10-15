@@ -1,6 +1,6 @@
 import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
-import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/Portal';
+import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/portalConstants';
 import { AnimatePresence, m } from 'framer-motion';
 import { AriaRole, ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';

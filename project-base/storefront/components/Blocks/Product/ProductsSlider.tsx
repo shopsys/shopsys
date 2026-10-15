@@ -15,29 +15,10 @@ import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
-
-export const VISIBLE_SLIDER_ITEMS = 6;
-export const VISIBLE_SLIDER_ITEMS_BASKET_POPUP = 4;
-export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 9;
-export const VISIBLE_SLIDER_ITEMS_ARTICLE = 3;
-export const VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE = 5;
+import { VISIBLE_SLIDER_ITEMS } from './productsSliderConstants';
+import { getProductsSliderTwClass } from './productsSliderUtils';
 
 export type ProductsSliderVariant = 'default' | 'article' | 'lastVisited' | 'autocomplete' | 'basketPopup';
-
-export const getProductsSliderTwClass = (variant: ProductsSliderVariant) => {
-    switch (variant) {
-        case 'default':
-            return 'auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%] xxl:auto-cols-[16.6667%]';
-        case 'article':
-            return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%]';
-        case 'lastVisited':
-            return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%] xxl:auto-cols-[11.1111%]';
-        case 'autocomplete':
-            return 'auto-cols-[140px] sm:auto-cols-[32%] md:auto-cols-[24%] lg:auto-cols-[20%]';
-        case 'basketPopup':
-            return 'auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%]';
-    }
-};
 
 type CurrentVisibleSliderItemsParams = {
     visibleSliderItems: number;

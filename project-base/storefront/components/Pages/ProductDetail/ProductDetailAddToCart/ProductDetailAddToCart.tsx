@@ -3,9 +3,9 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices/AdditionalServices';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
-import { showWatchdogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { SkeletonModuleProductDetailAddToCart } from 'components/Blocks/Skeleton/SkeletonModuleProductDetailAddToCart';
-import { Button, getButtonIconClassName } from 'components/Forms/Button/Button';
+import { Button } from 'components/Forms/Button/Button';
+import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -17,6 +17,7 @@ import { useAddToCartHandler } from 'utils/cart/useAddToCartHandler';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { showWatchdogButton } from 'utils/product/showWatchdogButton';
 
 export type ProductDetailAddToCartProps = {
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';

@@ -1,4 +1,4 @@
-import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
+import { CollapsibleDescription } from 'components/Blocks/CollapsibleDescription/CollapsibleDescription';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
@@ -9,7 +9,6 @@ import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
-import { getImageAlt } from 'utils/imageAltText';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
@@ -28,13 +27,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
 
     return (
         <VerticalStack gap="md">
-            <CollapsibleDescriptionWithImage
-                currentPage={currentPage}
-                description={brand.description}
-                heading={heading}
-                imageName={getImageAlt(brand.mainImage?.name, brand.name)}
-                imageUrl={brand.mainImage?.url}
-            />
+            <CollapsibleDescription currentPage={currentPage} description={brand.description} heading={heading} />
 
             <FilteredProductsWrapper>
                 <DeferredFilterPanel
