@@ -22,7 +22,10 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderab
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use SortDirection;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -67,6 +70,8 @@ final class Datagrid
         private readonly AdapterInterface $adapter,
         private readonly GridFactory $gridFactory,
         private readonly AccessCheckerInterface $accessChecker,
+        private readonly AdministratorGridFacade $administratorGridFacade,
+        private readonly Security $security,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
@@ -309,6 +314,7 @@ final class Datagrid
             $grid->enableDragAndDrop($this->dragAndDropEntityClass, $this->defaultOrder['field']);
         } elseif ($this->options['pagination'] === true) {
             $grid->enablePaging();
+            $this->restoreAndRememberGridLimitOfCurrentAdministrator($grid);
         }
 
         if ($this->dragAndDropEntityClass === null && $this->defaultOrder !== null) {
@@ -364,6 +370,17 @@ final class Datagrid
             $field->getRole() ?? $this->options['roleConstant'],
             $field->getPermission() ?? Permission::VIEW,
         );
+    }
+
+    private function restoreAndRememberGridLimitOfCurrentAdministrator(Grid $grid): void
+    {
+        $currentAdministrator = $this->security->getUser();
+
+        if (!$currentAdministrator instanceof Administrator) {
+            return;
+        }
+
+        $this->administratorGridFacade->restoreAndRememberGridLimit($currentAdministrator, $grid);
     }
 
     private function configureDefaultCrudActions(): void

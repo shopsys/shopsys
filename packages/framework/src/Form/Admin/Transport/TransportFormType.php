@@ -168,7 +168,7 @@ final class TransportFormType extends AbstractType
                     'data-transport-delivery-schedule-target' => 'carrierSchedule',
                 ],
                 'data' => t('Public holidays and e-shop internal days are managed in the <a href="%closedDaysUrl%" target="_blank">Holidays and internal days</a> administration; the carrier\'s own days off are not taken into account.', [
-                    '%closedDaysUrl%' => $this->administrationRouter->generate('admin_closedday_list'),
+                    '%closedDaysUrl%' => $this->administrationRouter->generate('admin_crud_closed_day_list'),
                 ]),
             ])
             ->add('pickupDeliveryDaysInfo', MessageType::class, [
@@ -177,8 +177,8 @@ final class TransportFormType extends AbstractType
                     'data-transport-delivery-schedule-target' => 'pickupScheduleInfo',
                 ],
                 'data' => t('The pickup dates are driven by the weekly opening hours of the <a href="%storesUrl%" target="_blank">stores</a> and by the <a href="%closedDaysUrl%" target="_blank">Holidays and internal days</a> — a store excluded from a closed day hands the orders over even on that day.', [
-                    '%storesUrl%' => $this->administrationRouter->generate('admin_store_list'),
-                    '%closedDaysUrl%' => $this->administrationRouter->generate('admin_closedday_list'),
+                    '%storesUrl%' => $this->administrationRouter->generate('admin_crud_store_list'),
+                    '%closedDaysUrl%' => $this->administrationRouter->generate('admin_crud_closed_day_list'),
                 ]),
             ]);
 

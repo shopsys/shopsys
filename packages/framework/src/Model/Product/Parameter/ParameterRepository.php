@@ -650,17 +650,6 @@ class ParameterRepository
             ->getResult();
     }
 
-    public function getOrderedParameterGroupsQueryBuilder(string $locale): QueryBuilder
-    {
-        return $this->em->createQueryBuilder()
-            ->select('pg, pgt')
-            ->from(ParameterGroup::class, 'pg')
-            ->join('pg.translations', 'pgt')
-            ->where('pgt.locale = :locale')
-            ->setParameter('locale', $locale)
-            ->orderBy('pg.position', SortDirection::Ascending);
-    }
-
     public function existsParameterGroupByName(
         string $name,
         string $locale,

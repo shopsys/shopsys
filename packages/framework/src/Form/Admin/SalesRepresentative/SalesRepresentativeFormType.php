@@ -108,7 +108,7 @@ final class SalesRepresentativeFormType extends AbstractType
             ->add($builderPersonalDataGroup)
             ->add($builderImageGroup)
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_salesrepresentative_list',
+                'back_route' => 'admin_crud_sales_representative_list',
                 'entity' => $options['salesRepresentative'],
             ]);
     }

@@ -58,6 +58,14 @@ Package code follows `.agents/skills/coding-conventions/SKILL.md`, which inverts
 - **Translations**: `php phing translations-dump` (php-fpm container, `.agents/skills/shopsys-commands/SKILL.md`) writes the new `t()` keys and the auto-generated entity names into `packages/*/translations/*.po` — those `.po` changes are part of the package and belong in the commit (commit message conventions in `.agents/skills/commit-conventions/SKILL.md`).
 - **Upgrade notes** (`upgrade-notes/_template.md`, `/generate-upgrade-notes`) whenever a project has to react: a new CRUD controller that replaces a legacy `packages/framework/src/Controller/Admin/*Controller.php` (list the removed routes, templates and menu items; keep the old `AdminRoleConstant` role via `#[ForRole]` so administrator permissions survive), a new `ROLE_CRUD_*` role, or any signature change in the CRUD component. Note the `{pullRequestId}` placeholder is backfilled by `/adhoc-pr`.
 
+## Converting a legacy framework admin controller
+
+Follow the migration steps in `docs/administration/crud-controller/getting-started/creating-a-new-crud-controller.md`; when the replaced controller is a framework one (`packages/framework/src/Controller/Admin/*Controller.php`), step 6 additionally means:
+
+- delete its `@ShopsysAdministration/content/<name>/{list,listGrid,new,edit,detail}.html.twig` templates and its `LIST_/NEW_/EDIT_*` items and constants in `SideMenuBuilder` — the CRUD controller registers its own menu item under the list route name
+- update the old route names everywhere in `packages/` and `project-base/` (form `back_route`, templates, `RouteConfigCustomization`)
+- list the renamed routes and the removed classes, templates and `SideMenuBuilder` constants in the upgrade notes
+
 ## Tests
 
 - Unit tests for CRUD-component code go to `packages/administration/tests/Unit/…` and run with `--configuration packages/administration/phpunit.xml` (`.agents/skills/test-writing/SKILL.md`).
