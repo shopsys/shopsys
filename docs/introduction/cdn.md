@@ -18,9 +18,11 @@ The variable can be configured in the `.env` file or better in the webserver set
 
 ## Content in the WYSIWYG editor
 
-If the CDN is configured, URL of all images inserted into the WYSIWYG editor will be automatically replaced by the CDN URL on save (thanks to the `WysiwygCdnDataTransformer`).
+If the CDN is configured, URL of all images inserted into the CKEditor WYSIWYG fields will be automatically replaced by the CDN URL on save (thanks to the `WysiwygCdnDataTransformer`).
 
 If you enable the CDN on the already running project, you should ensure, that your existing content is updated accordingly.
+
+Images of the [content editor](../administration/content-editor.md) come from the media library and are not part of the text. They are entity images, so their URLs are built by the `Image` pipeline like the URLs of other images and nothing else has to be done for them.
 
 ## Testing CDN locally
 

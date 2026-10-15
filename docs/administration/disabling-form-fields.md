@@ -34,5 +34,5 @@ These form types render their own controls in a custom template and ignore `disa
 Disabling them still protects the data — submitted values are discarded by Symfony — but the administration keeps showing controls that do nothing:
 
 - collections with hand-rolled add/remove buttons: `OrderItemsType`, `ComplaintItemsType`, `PriceListProductsPickerType`
-- pickers, editors and lists with their own controls: `UrlListType`, `SinglePickerType`, `InlineSinglePickerType`, `FriendlyUrlType`, `CKEditorType`, `GrapesJsType`, `GrapesJsMailType`
+- pickers, editors and lists with their own controls: `UrlListType`, `SinglePickerType`, `InlineSinglePickerType`, `FriendlyUrlType`, `CKEditorType`, `ContentEditorType`
 - `SortableValuesType` — the select is disabled, but the drag handle and the remove action of the already selected values are not

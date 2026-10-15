@@ -7,5 +7,6 @@ arrange:
     - admin-rights.md
     - disabling-form-fields.md
     - collections-with-add-and-remove-buttons.md
+    - content-editor.md
     - icons.md
     - javascript-utilities.md

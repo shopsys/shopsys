@@ -8,5 +8,6 @@
     - [Grid Data Sources](internal-grid/grid-data-sources.md)
 - [Admin rights](./admin-rights.md)
 - [Disabling form fields](./disabling-form-fields.md)
+- [Content Editor](./content-editor.md)
 - [Icons](./icons.md)
 - [JavaScript Utilities](./javascript-utilities.md)

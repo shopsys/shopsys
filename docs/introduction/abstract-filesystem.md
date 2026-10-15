@@ -14,7 +14,8 @@ We use abstract filesystem - [Flysystem](https://github.com/thephpleague/flysyst
 In Shopsys Platform we currently use [Flysystem](https://github.com/thephpleague/flysystem) to store:
 
 - uploaded files and images
-- uploaded files and images via WYSIWYG
+- uploaded files and images via WYSIWYG (CKEditor fields)
+- images of the content editor (media library), which follow the same `Image` pipeline as the images of other entities
 - generated feeds
 - generated sitemaps
 
@@ -26,7 +27,7 @@ If you want to change the adapter used for Filesystem you must implement factory
 
 #### How to change storage adapter for WYSIWYG
 
-WYSIWYG configuration is stored in `config/packages/fm_elfinder.yaml` file in `fm_elfinder\instances\default\connector\roots` section.
+WYSIWYG configuration of the CKEditor fields is stored in `config/packages/fm_elfinder.yaml` file in `fm_elfinder\instances\default\connector\roots` section.
 For more information how to set up Flysystem with WYSIWYG visit [FMElfinderBundle Documentation](https://github.com/helios-ag/FMElfinderBundle/blob/9.2/docs/flysystem.md).
 
 #### Create Nginx proxy to load files from different storage
