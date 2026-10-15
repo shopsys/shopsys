@@ -3,15 +3,67 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
     minimalPrice
     maximalPrice
     brands {
-        ...ProductFilterOptionsBrandsFragment
+        __typename
+        count
+        brand {
+            __typename
+            uuid
+            name
+        }
     }
     inStock
     flags {
-        ...ProductFilterOptionsFlagsFragment
+        __typename
+        count
+        flag {
+            ...SimpleFlagFragment
+        }
+        isSelected
     }
     parameters {
-        ...ProductFilterOptionsParametersCheckboxFragment
-        ...ProductFilterOptionsParametersColorFragment
-        ...ProductFilterOptionsParametersSliderFragment
+        ... on ParameterCheckboxFilterOption {
+            name
+            uuid
+            __typename
+            values {
+                __typename
+                uuid
+                text
+                count
+                isSelected
+            }
+            isCollapsed
+        }
+        ... on ParameterColorFilterOption {
+            name
+            uuid
+            __typename
+            values {
+                __typename
+                uuid
+                text
+                count
+                rgbHex
+                isSelected
+                colorIcon {
+                    url
+                }
+            }
+            isCollapsed
+        }
+        ... on ParameterSliderFilterOption {
+            name
+            uuid
+            __typename
+            minimalValue
+            maximalValue
+            unit {
+                __typename
+                name
+            }
+            isCollapsed
+            selectedValue
+            isSelectable
+        }
     }
 }

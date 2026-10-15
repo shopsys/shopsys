@@ -59,10 +59,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
     const selectedStore = isControlledSelection ? (selectedStoreUuid ?? null) : internalSelectedStoreUuid;
     const shouldAllowStoreSelection = onSelectStoreCallback !== undefined;
 
-    const mappedStores = useMemo(
-        () => (stores === null ? null : mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges || [])),
-        [stores],
-    );
+    const mappedStores = useMemo(() => (stores === null ? null : mapConnectionEdges(stores.edges || [])), [stores]);
     const displayedStores = useMemo(() => {
         if (mappedStores === null || mappedStores === undefined || priorityStore === null) {
             return mappedStores;

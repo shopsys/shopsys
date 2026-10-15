@@ -6,7 +6,6 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { OrderWithdrawalInstructionsFragment } from '../fragments/OrderWithdrawalInstructionsFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeOrderWithdrawalInstructionsQueryVariables = Exact<{
@@ -20,10 +19,11 @@ export type TypeOrderWithdrawalInstructionsQuery = { order: { __typename: 'Order
 export const OrderWithdrawalInstructionsQueryDocument = gql`
     query OrderWithdrawalInstructionsQuery($urlHash: String!) {
   order(urlHash: $urlHash) {
-    ...OrderWithdrawalInstructionsFragment
+    __typename
+    withdrawalInstructions
   }
 }
-    ${OrderWithdrawalInstructionsFragment}`;
+    `;
 
 export function useOrderWithdrawalInstructionsQuery(options: Omit<Urql.UseQueryArgs<TypeOrderWithdrawalInstructionsQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeOrderWithdrawalInstructionsQuery, TypeOrderWithdrawalInstructionsQueryVariables>({ query: OrderWithdrawalInstructionsQueryDocument, ...options });

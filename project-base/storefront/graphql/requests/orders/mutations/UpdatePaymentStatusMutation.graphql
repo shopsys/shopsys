@@ -1,5 +1,18 @@
 mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderUrlHash: String) {
     UpdatePaymentStatus(orderUuid: $orderUuid, orderUrlHash: $orderUrlHash) {
-        ...UpdatePaymentStatusFragment
+        __typename
+        isPaid
+        orderNumber
+        paymentName
+        paymentTransactionsCount
+        hasPaymentInProcess
+        isAwaitingPayment
+        lastExternalPaymentUrl
+        lastPaymentStatus
+        confirmationPageContent {
+            __typename
+            content
+            status
+        }
     }
 }

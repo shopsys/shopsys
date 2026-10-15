@@ -7,7 +7,6 @@ import gql from 'graphql-tag';
 import { OrderDetailItemFragment } from './OrderDetailItemFragment.generated';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { AppliedGiftVoucherFragment } from '../../cart/fragments/AppliedGiftVoucherFragment.generated';
-import { OrderWithdrawalRequestFragment } from './OrderWithdrawalRequestFragment.generated';
 /** Product Availability statuses */
 export type TypeAvailabilityStatusEnum =
   /** Product availability status for electronically delivered products */
@@ -67,7 +66,7 @@ export type TypeTransportTypeEnum =
   | 'packetery'
   | 'personal_pickup';
 
-export type TypeOrderDetailFragment = { __typename: 'Order', uuid: string, number: string, creationDate: string, expectedDeliveryDate: string | null, status: string, statusType: Types.TypeOrderStatusEnum, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, isDeliveryAddressDifferentFromBilling: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, remainingAmountToPay: string, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, isAwaitingPayment: boolean, paymentTransactionsCount: number, lastExternalPaymentUrl: string | null, paymentStatus: string | null, deliveredAt: string | null, canRequestWithdrawal: boolean, isWithdrawalBlockedByPurchasedGiftVoucher: boolean, withdrawalDeadline: string | null, productReviewsAllowed: boolean, reviewedProductUuids: Array<string>, items: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, deliveryDaysExtension: number | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string, customerUser:
+export type TypeOrderDetailFragment = { __typename: 'Order', uuid: string, number: string, creationDate: string, expectedDeliveryDate: string | null, status: string, statusType: Types.TypeOrderStatusEnum, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, isDeliveryAddressDifferentFromBilling: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, remainingAmountToPay: string, isPaid: boolean, hasExternalPayment: boolean, hasPaymentInProcess: boolean, isAwaitingPayment: boolean, paymentTransactionsCount: number, lastExternalPaymentUrl: string | null, paymentStatus: string | null, deliveredAt: string | null, canRequestWithdrawal: boolean, isWithdrawalBlockedByPurchasedGiftVoucher: boolean, withdrawalDeadline: string | null, productReviewsAllowed: boolean, reviewedProductUuids: Array<string>, items: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, relatedItems: Array<{ __typename: 'OrderItem', deliveryDaysExtension: number | null, uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string, customerUser:
         | { uuid: string }
         | { uuid: string }
         | { uuid: string }
@@ -152,7 +151,14 @@ export const OrderDetailFragment = gql`
   }
   deliveredAt
   withdrawalRequest {
-    ...OrderWithdrawalRequestFragment
+    __typename
+    email
+    firstName
+    lastName
+    telephone
+    note
+    requestedAt
+    confirmed
   }
   canRequestWithdrawal
   isWithdrawalBlockedByPurchasedGiftVoucher
@@ -165,5 +171,4 @@ export const OrderDetailFragment = gql`
 }
     ${OrderDetailItemFragment}
 ${PriceFragment}
-${AppliedGiftVoucherFragment}
-${OrderWithdrawalRequestFragment}`;
+${AppliedGiftVoucherFragment}`;

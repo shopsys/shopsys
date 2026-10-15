@@ -1,10 +1,10 @@
 import { AdditionalServiceSummaryLine } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
-import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
+import { TypeOrderItemAdditionalServiceFragment } from 'graphql/requests/orders/fragments/OrderItemAdditionalServiceFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
-type OrderItemRelatedItem = Omit<TypeOrderDetailItemFragment['relatedItems'][number], 'deliveryDaysExtension'> & {
+type OrderItemRelatedItem = TypeOrderItemAdditionalServiceFragment & {
     deliveryDaysExtension?: number | null;
 };
 

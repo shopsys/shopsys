@@ -5,13 +5,13 @@ import { ReviewStars } from 'components/Blocks/ProductReviews/ReviewStars';
 import { PRODUCT_DETAIL_SECTIONS_IDS } from 'components/Pages/ProductDetail/ProductDetailSections/ProductDetailSections';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeCompactProductFragment } from 'graphql/requests/products/fragments/CompactProductFragment.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductListReviewsSummaryLinkProps = {
-    product: TypeListedProductFragment;
+    product: TypeCompactProductFragment;
     allowKeyboardFocus?: boolean;
     isReviewCountWrappedOnMobile?: boolean;
     linkType?: ExtendedNextLinkProps['type'];

@@ -1,17 +1,13 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TypeProductReviewFragment } from 'graphql/requests/productReviews/fragments/ProductReviewFragment.generated';
-import { useProductReviewsQuery } from 'graphql/requests/productReviews/queries/ProductReviewsQuery.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum, TypeProductReviewOrderingModeEnum } from 'graphql/types';
+import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
-
-export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
 
 type ProductMetadataProps = {
     product: TypeProductDetailFragment | TypeMainVariantDetailFragment;
@@ -24,19 +20,8 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
 
     const reviewsSummary = product.reviewsSummary;
     const hasReviews = !!reviewsSummary && reviewsSummary.totalCount > 0;
-    const [{ data: productReviewsData }] = useProductReviewsQuery({
-        variables: {
-            productUuid: product.uuid,
-            orderingMode: TypeProductReviewOrderingModeEnum.Newest,
-            first: STRUCTURED_DATA_REVIEWS_COUNT,
-            after: null,
-        },
-        pause: !hasReviews,
-    });
 
-    const reviews = (
-        mapConnectionEdges<TypeProductReviewFragment>(productReviewsData?.product?.reviews?.edges ?? undefined) ?? []
-    ).map((productReview) => ({
+    const reviews = (mapConnectionEdges(product.reviews?.edges) ?? []).map((productReview) => ({
         '@type': 'Review',
         author: {
             '@type': 'Person',

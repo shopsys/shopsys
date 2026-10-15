@@ -1,9 +1,0 @@
-fragment NavigationSubCategoriesLinkFragment on Category {
-    __typename
-    uuid
-    children {
-        __typename
-        name
-        slug
-    }
-}

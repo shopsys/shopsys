@@ -1,5 +1,5 @@
 mutation CreateComplaint($input: ComplaintInput!) {
     CreateComplaint(input: $input) {
-        ...CreateComplaintFragment
+        uuid
     }
 }

@@ -4,7 +4,6 @@ import { OrdersFilter } from 'components/Pages/Customer/Orders/OrdersFilter';
 import { OrderStatusCount } from 'components/Pages/Customer/Orders/OrdersStatusTabs';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
-import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import { useOrdersQuery } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { useRouter } from 'next/router';
 import { type RefObject } from 'react';
@@ -39,7 +38,7 @@ export const OrdersPageContent: FC<OrdersPageContentProps> = ({ paginationScroll
         },
         requestPolicy: 'cache-and-network',
     });
-    const mappedOrders = mapConnectionEdges<TypeListedOrderFragment>(ordersData?.orders?.edges);
+    const mappedOrders = mapConnectionEdges(ordersData?.orders?.edges);
     const orderStatusCounts: OrderStatusCount[] = (ordersData?.orderStatusCounts ?? []).map(({ status, count }) => ({
         statusCode: status.code,
         label: status.name,

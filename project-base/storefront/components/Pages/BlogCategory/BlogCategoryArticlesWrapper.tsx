@@ -3,7 +3,6 @@ import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonMo
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -27,7 +26,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     const { blogCategoryArticles, areBlogCategoryArticlesFetching, hasNextPage, isLoadingMoreBlogCategoryArticles } =
         useBlogCategoryArticlesData(BlogCategoryArticlesDocument, uuid, blogCategoryTotalCount);
 
-    const mappedArticles = mapConnectionEdges<TypeListedBlogArticleFragment>(blogCategoryArticles);
+    const mappedArticles = mapConnectionEdges(blogCategoryArticles);
 
     const articlesContent = mappedArticles?.length ? (
         <BlogArticlesList

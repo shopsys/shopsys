@@ -21,7 +21,7 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
 
     const productItemStyleProps = {
         size: 'small' as const,
-        visibleItemsConfig: { price: false, addToCart: false, flags: false, discount: false, storeAvailability: false },
+        visibleItemsConfig: { price: false, flags: false, discount: false },
         textSize: 'xs' as const,
     };
 
@@ -29,6 +29,7 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
         <>
             {lastVisitedProducts && !areProductsFetching ? (
                 <ProductsSlider
+                    cardVariant="compact"
                     ariaAnchorName="product-slider-last-visited"
                     gtmProductListName={GtmProductListNameType.last_visited_products}
                     productItemProps={productItemStyleProps}
