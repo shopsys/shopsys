@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Author\BlogArticleAuthor;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
+use Shopsys\FrameworkBundle\Model\Media\Media;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\Seo\Organization;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
@@ -75,6 +76,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     ];
 
     private const int FIRST_ORGANIZATION_IMAGE_ID = 810;
+    private const int FIRST_MEDIA_IMAGE_ID = 813;
 
     public function __construct(
         FilesystemOperator $filesystem,
@@ -133,6 +135,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processBlogArticleAuthorImages();
         $this->processSalesRepresentativeImages();
         $this->processOrganizationImages();
+        $this->processMediaImages();
 
         $this->syncDatabaseSequences(['images.id']);
     }
@@ -649,6 +652,21 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
+    private function processMediaImages(): void
+    {
+        for ($number = 1; $number <= MediaDataFixture::MEDIA_COUNT; $number++) {
+            $media = $this->getReference(MediaDataFixture::MEDIA_PREFIX . $number, Media::class);
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $media->getTitle();
+            }
+
+            $this->saveImageIntoDb($media->getId(), 'media', self::FIRST_MEDIA_IMAGE_ID + $number - 1, $names);
+        }
+    }
+
     private function processBlogCategoryImages(): void
     {
         $blogCategoryImagesData = [
@@ -746,6 +764,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             BlogArticleDataFixture::class,
             BrandDataFixture::class,
             CategoryDataFixture::class,
+            MediaDataFixture::class,
             OrganizationDataFixture::class,
             PaymentDataFixture::class,
             ReadyCategorySeoDataFixture::class,
