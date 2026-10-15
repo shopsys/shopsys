@@ -26,7 +26,10 @@ class ProductListAdminRepository
     ) {
     }
 
-    public function getProductListQueryBuilder(int $pricingGroupId): QueryBuilder
+    /**
+     * @param int|null $pricingGroupId no prices are listed when null
+     */
+    public function getProductListQueryBuilder(?int $pricingGroupId): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();
 
