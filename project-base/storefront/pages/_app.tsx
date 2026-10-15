@@ -28,12 +28,10 @@ type AppProps = {
 } & Omit<NextAppProps, 'pageProps'>;
 
 process.on('unhandledRejection', (reason: unknown) =>
-    logException({ reason, location: '_app.tsx:unhandledRejection' }),
+    logException(reason, { location: '_app.tsx:unhandledRejection' }),
 );
 process.on('uncaughtException', (error: Error, origin: unknown) =>
-    logException({
-        message: error.message,
-        originalError: JSON.stringify(error),
+    logException(error, {
         origin,
         location: '_app.tsx:uncaughtException',
     }),

@@ -41,8 +41,7 @@ ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageP
     }
 
     if (statusCode !== 404) {
-        logException({
-            message: errorMessage ?? 'Unknown error',
+        logException(context.err ?? new Error('Unknown error'), {
             statusCode,
             location: 'ErrorPage.getInitialProps',
         });
@@ -81,8 +80,7 @@ ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageP
             };
         } catch (e) {
             // getDomainConfig failed (e.g., unknown domain) - fall back to minimal rendering
-            logException({
-                message: e instanceof Error ? e.message : String(e),
+            logException(e, {
                 statusCode,
                 location: 'ErrorPage.getInitialProps.getDomainConfig',
             });

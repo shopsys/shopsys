@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { CombinedError } from 'urql';
+import { logException } from 'utils/errors/logException';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -15,9 +16,41 @@ vi.mock('utils/toasts/showErrorMessage', () => ({
     showErrorMessage: vi.fn(),
 }));
 
+vi.mock('utils/errors/logException', () => ({ logException: vi.fn() }));
+
 describe('useErrorHandler', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+    });
+
+    test('preserves the original exception and GraphQL details for silently logged errors', () => {
+        const { result } = renderHook(() => useErrorHandler());
+        const error = new CombinedError({
+            graphQLErrors: [
+                {
+                    message: 'Article not found.',
+                    path: ['article'],
+                    extensions: { userCode: 'article-not-found', code: 404 },
+                },
+            ],
+        });
+
+        result.current(error);
+
+        expect(vi.mocked(logException).mock.calls[0][0]).toBe(error);
+        expect(logException).toHaveBeenCalledWith(error, {
+            graphQLErrors: expect.any(String),
+            networkError: undefined,
+            parsedApplicationError: { type: 'article-not-found', message: 'Article not found.' },
+            location: 'useErrorHandler',
+        });
+        expect(JSON.parse(vi.mocked(logException).mock.calls[0][1]?.graphQLErrors as string)).toEqual([
+            {
+                message: 'Article not found.',
+                path: ['article'],
+                extensions: { userCode: 'article-not-found', code: 404 },
+            },
+        ]);
     });
 
     test('keeps validation toast message even when customMessage is set', () => {
