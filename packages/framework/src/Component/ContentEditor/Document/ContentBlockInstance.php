@@ -19,22 +19,6 @@ class ContentBlockInstance
     }
 
     /**
-     * @param array<string, mixed> $data
-     */
-    public function withData(array $data): static
-    {
-        return new static($this->id, $this->type, $data, $this->children);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[][]|null $children
-     */
-    public function withChildren(?array $children): static
-    {
-        return new static($this->id, $this->type, $this->data, $children);
-    }
-
-    /**
      * @return array<string, mixed>
      */
     public function toArray(): array

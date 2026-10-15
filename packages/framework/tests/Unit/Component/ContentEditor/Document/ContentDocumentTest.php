@@ -28,17 +28,4 @@ class ContentDocumentTest extends TestCase
         $this->assertFalse($result->isEmpty());
         $this->assertSame([$block], $result->blocks);
     }
-
-    public function testBlockInstanceWithersReturnModifiedCopies(): void
-    {
-        $block = new ContentBlockInstance('a', 'columns', ['layout' => 'x']);
-
-        $withData = $block->withData(['layout' => 'y']);
-        $withChildren = $block->withChildren([[]]);
-
-        $this->assertSame(['layout' => 'x'], $block->data);
-        $this->assertSame(['layout' => 'y'], $withData->data);
-        $this->assertNull($block->children);
-        $this->assertSame([[]], $withChildren->children);
-    }
 }
