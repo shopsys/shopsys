@@ -15,30 +15,28 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitiz
 
 class ContentDocumentNormalizer
 {
-    private NormalizationReport $lastReport;
+    protected NormalizationReport $report;
 
     public function __construct(
-        private readonly ContentBlockRegistry $contentBlockRegistry,
-        private readonly ContentHtmlSanitizer $contentHtmlSanitizer,
-        private readonly ContentProfileEnum $contentProfileEnum,
+        protected readonly ContentBlockRegistry $contentBlockRegistry,
+        protected readonly ContentHtmlSanitizer $contentHtmlSanitizer,
+        protected readonly ContentProfileEnum $contentProfileEnum,
     ) {
-        $this->lastReport = new NormalizationReport();
     }
 
     /**
      * @param string[]|null $allowedTypes
+     * @param \Shopsys\FrameworkBundle\Component\ContentEditor\Document\NormalizationReport|null $report filled with what was dropped or flattened, for a caller that reports it
      */
-    public function normalize(ContentDocument $document, ?array $allowedTypes = null): ContentDocument
-    {
+    public function normalize(
+        ContentDocument $document,
+        ?array $allowedTypes = null,
+        ?NormalizationReport $report = null,
+    ): ContentDocument {
         $this->contentProfileEnum->validateCase($document->profile);
-        $this->lastReport = new NormalizationReport();
+        $this->report = $report ?? new NormalizationReport();
 
         return $document->withBlocks($this->normalizeBlocks($document->blocks, $document->profile, $allowedTypes, false));
-    }
-
-    public function getLastReport(): NormalizationReport
-    {
-        return $this->lastReport;
     }
 
     /**
@@ -46,13 +44,13 @@ class ContentDocumentNormalizer
      * @param string[]|null $allowedTypes
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function normalizeBlocks(array $blocks, string $profile, ?array $allowedTypes, bool $insideSlot): array
+    protected function normalizeBlocks(array $blocks, string $profile, ?array $allowedTypes, bool $insideSlot): array
     {
         $normalizedBlocks = [];
 
         foreach ($blocks as $block) {
             if (!$this->isBlockAllowed($block->type, $profile, $allowedTypes)) {
-                $this->lastReport->addDroppedBlockType($block->type);
+                $this->report->addDroppedBlockType($block->type);
 
                 continue;
             }
@@ -60,7 +58,7 @@ class ContentDocumentNormalizer
             $definition = $this->contentBlockRegistry->get($block->type);
 
             if ($insideSlot && $definition instanceof ContainerContentBlockInterface) {
-                $this->lastReport->addFlattenedContainerType($block->type);
+                $this->report->addFlattenedContainerType($block->type);
 
                 foreach ($block->children ?? [] as $slot) {
                     array_push($normalizedBlocks, ...$this->normalizeBlocks($slot, $profile, $allowedTypes, true));
@@ -78,7 +76,7 @@ class ContentDocumentNormalizer
     /**
      * @param string[]|null $allowedTypes
      */
-    private function isBlockAllowed(string $type, string $profile, ?array $allowedTypes): bool
+    protected function isBlockAllowed(string $type, string $profile, ?array $allowedTypes): bool
     {
         return $this->contentBlockRegistry->has($type)
             && in_array($profile, $this->contentBlockRegistry->get($type)->getProfiles(), true)
@@ -88,7 +86,7 @@ class ContentDocumentNormalizer
     /**
      * @param string[]|null $allowedTypes
      */
-    private function normalizeBlock(
+    protected function normalizeBlock(
         ContentBlockInstance $block,
         ContentBlockInterface $definition,
         string $profile,
@@ -110,7 +108,7 @@ class ContentDocumentNormalizer
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
-    private function normalizeData(array $data, ContentBlockInterface $definition): array
+    protected function normalizeData(array $data, ContentBlockInterface $definition): array
     {
         $normalizedData = [];
         $hasMediaField = false;
@@ -139,13 +137,30 @@ class ContentDocumentNormalizer
      * @param string[]|null $allowedTypes
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[][]
      */
-    private function normalizeSlots(array $slots, int $slotCount, string $profile, ?array $allowedTypes): array
+    protected function normalizeSlots(array $slots, int $slotCount, string $profile, ?array $allowedTypes): array
     {
         $normalizedSlots = array_map(
             fn (array $slot): array => $this->normalizeBlocks($slot, $profile, $allowedTypes, true),
             array_values($slots),
         );
 
-        return SlotFitter::fit($normalizedSlots, $slotCount);
+        return $this->fitSlots($normalizedSlots, $slotCount);
+    }
+
+    /**
+     * Keeps the first slots, appends the blocks of the extra slots to the last kept one and adds the missing slots empty
+     *
+     * @param \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[][] $slots
+     * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[][]
+     */
+    protected function fitSlots(array $slots, int $slotCount): array
+    {
+        $fittedSlots = array_slice($slots, 0, $slotCount);
+
+        foreach (array_slice($slots, $slotCount) as $extraSlot) {
+            $fittedSlots[$slotCount - 1] = [...$fittedSlots[$slotCount - 1], ...$extraSlot];
+        }
+
+        return array_pad($fittedSlots, $slotCount, []);
     }
 }

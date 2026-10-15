@@ -124,7 +124,7 @@ services:
             - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
 
     Shopsys\FrameworkBundle\Component\ContentEditor\:
-        exclude: '../../Component/ContentEditor/{Document/ContentDocument.php,Document/ContentBlockInstance.php,Document/NormalizationReport.php,Document/SlotFitter.php,Document/Exception,Block/Attribute,Block/ExportContext.php,Block/Web/VideoInfo.php,Migration/ConversionResult.php,Validation/ContentDocumentNotEmpty.php,Validation/ContentDocumentContainsVariable.php,Field}'
+        exclude: '../../Component/ContentEditor/{Document/ContentDocument.php,Document/ContentBlockInstance.php,Document/NormalizationReport.php,Document/Exception,Block/Attribute,Block/Web/VideoInfo.php,Migration/ConversionResult.php,Validation/ContentDocumentNotEmpty.php,Validation/ContentDocumentContainsVariable.php,Field}'
         resource: '../../Component/ContentEditor/**/*.php'
 
     Shopsys\FrameworkBundle\Component\ContentEditor\Migration\LegacyImageImporter:

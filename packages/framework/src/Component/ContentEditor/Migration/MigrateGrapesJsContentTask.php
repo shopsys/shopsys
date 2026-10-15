@@ -11,6 +11,7 @@ use Override;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\NormalizationReport;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -34,23 +35,23 @@ use Throwable;
  */
 class MigrateGrapesJsContentTask implements PostDeployTaskInterface
 {
-    private const int BATCH_SIZE = 50;
+    protected const int BATCH_SIZE = 50;
 
     /**
      * @var string[][]
      */
-    private array $noteRows = [];
+    protected array $noteRows = [];
 
     public function __construct(
-        private readonly Connection $connection,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly GrapesJsHtmlConverter $grapesJsHtmlConverter,
-        private readonly ContentDocumentNormalizer $contentDocumentNormalizer,
-        private readonly Domain $domain,
-        private readonly IndexRegistry $indexRegistry,
-        private readonly IndexDefinitionLoader $indexDefinitionLoader,
-        private readonly IndexFacade $indexFacade,
-        private readonly LoggerInterface $logger,
+        protected readonly Connection $connection,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly GrapesJsHtmlConverter $grapesJsHtmlConverter,
+        protected readonly ContentDocumentNormalizer $contentDocumentNormalizer,
+        protected readonly Domain $domain,
+        protected readonly IndexRegistry $indexRegistry,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly IndexFacade $indexFacade,
+        protected readonly LoggerInterface $logger,
     ) {
     }
 
@@ -89,7 +90,7 @@ class MigrateGrapesJsContentTask implements PostDeployTaskInterface
         ));
     }
 
-    private function migrateTable(
+    protected function migrateTable(
         SymfonyStyle $style,
         string $entityName,
         string $table,
@@ -146,11 +147,11 @@ class MigrateGrapesJsContentTask implements PostDeployTaskInterface
      * @param array<string, mixed> $row
      * @return string[] notes about what was lost
      */
-    private function migrateRow(string $table, array $row, string $profile): array
+    protected function migrateRow(string $table, array $row, string $profile): array
     {
         $result = $this->grapesJsHtmlConverter->convert($row['html'], $profile);
-        $document = $this->contentDocumentNormalizer->normalize($result->document);
-        $report = $this->contentDocumentNormalizer->getLastReport();
+        $report = new NormalizationReport();
+        $document = $this->contentDocumentNormalizer->normalize($result->document, null, $report);
 
         $this->connection->executeStatement(
             sprintf('UPDATE %s SET content = CAST(:content AS jsonb) WHERE id = :id AND content IS NULL', $table),
@@ -171,7 +172,7 @@ class MigrateGrapesJsContentTask implements PostDeployTaskInterface
     }
 
     // the stored content is already correct, so a failed export only needs a repeated export and must not fail the task
-    private function exportToElasticsearch(SymfonyStyle $style, string $indexName): void
+    protected function exportToElasticsearch(SymfonyStyle $style, string $indexName): void
     {
         try {
             foreach ($this->domain->getAll() as $domainConfig) {

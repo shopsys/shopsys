@@ -10,6 +10,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\NormalizationReport;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Enum\InvalidEnumCaseException;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\ContentEditorTestFactory;
@@ -41,20 +42,22 @@ class ContentDocumentNormalizerTest extends TestCase
     {
         $document = $this->createDocument([new ContentBlockInstance(self::UUID, 'unknown', [])]);
 
-        $result = $this->normalizer->normalize($document);
+        $report = new NormalizationReport();
+        $result = $this->normalizer->normalize($document, null, $report);
 
         $this->assertTrue($result->isEmpty());
-        $this->assertSame(['unknown'], $this->normalizer->getLastReport()->getDroppedBlockTypes());
+        $this->assertSame(['unknown'], $report->getDroppedBlockTypes());
     }
 
     public function testBlockNotSupportingDocumentProfileIsDroppedAndReported(): void
     {
         $document = $this->createDocument([new ContentBlockInstance(self::UUID, 'mail-text', [])]);
 
-        $result = $this->normalizer->normalize($document);
+        $report = new NormalizationReport();
+        $result = $this->normalizer->normalize($document, null, $report);
 
         $this->assertTrue($result->isEmpty());
-        $this->assertSame(['mail-text'], $this->normalizer->getLastReport()->getDroppedBlockTypes());
+        $this->assertSame(['mail-text'], $report->getDroppedBlockTypes());
     }
 
     public function testMissingOrInvalidIdIsGeneratedAndValidIdKept(): void
@@ -153,12 +156,13 @@ class ContentDocumentNormalizerTest extends TestCase
             new ContentBlockInstance(self::UUID, 'columns', ['layout' => '1/2-1/2'], [[$nestedColumns], []]),
         ]);
 
-        $result = $this->normalizer->normalize($document);
+        $report = new NormalizationReport();
+        $result = $this->normalizer->normalize($document, null, $report);
 
         $slot = $result->blocks[0]->children[0];
         $this->assertCount(1, $slot);
         $this->assertSame('text', $slot[0]->type);
-        $this->assertSame(['columns'], $this->normalizer->getLastReport()->getFlattenedContainerTypes());
+        $this->assertSame(['columns'], $report->getFlattenedContainerTypes());
     }
 
     public function testAllowedTypesRestrictBlocksAtAnyLevel(): void
@@ -168,11 +172,12 @@ class ContentDocumentNormalizerTest extends TestCase
             new ContentBlockInstance(self::UUID, 'columns', ['layout' => '1/2-1/2'], [[new ContentBlockInstance(self::UUID, 'image', [])], []]),
         ]);
 
-        $result = $this->normalizer->normalize($document, ['columns']);
+        $report = new NormalizationReport();
+        $result = $this->normalizer->normalize($document, ['columns'], $report);
 
         $this->assertCount(1, $result->blocks);
         $this->assertSame([[], []], $result->blocks[0]->children);
-        $this->assertSame(['image', 'image'], $this->normalizer->getLastReport()->getDroppedBlockTypes());
+        $this->assertSame(['image', 'image'], $report->getDroppedBlockTypes());
     }
 
     public function testInputDocumentIsNotModified(): void
