@@ -94,6 +94,9 @@ msgstr "Predmet e-mailu nemôže byť dlhší ako {{ limit }} znakov"
 msgid "Email {{ email }} is already registered"
 msgstr "E-mail {{ email }} je už zaregistrovaný"
 
+msgid "Enter an http(s), mailto, tel or relative URL."
+msgstr "Zadajte URL začínajúcu http(s), mailto, tel alebo relatívnou cestou"
+
 msgid "Enter date in DD.MM.YYYY format"
 msgstr "Zadajte dátum vo formáte DD.MM.YYYY"
 

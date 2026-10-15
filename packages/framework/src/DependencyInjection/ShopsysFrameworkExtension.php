@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\DependencyInjection;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\DataTypeFormatterInterface;
@@ -104,6 +106,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
         $this->setAdminContextPathPrefixes($config['admin_context_additional_path_prefixes'], $container);
         $this->setPostDeployTasksConfig($config['post_deploy']['tasks'], $container);
         $this->setProductReviewEnabledChecker($config['product']['reviews']['enabled_domain_ids'], $container);
+        $this->setContentEditorConfig($config['content_editor'], $container);
     }
 
     protected function configureVarDumperTwigExtension(ContainerBuilder $container): void
@@ -125,6 +128,21 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
                 'Shopsys\FrameworkBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
+
+        $container->prependExtensionConfig('framework', [
+            'html_sanitizer' => [
+                'sanitizers' => [
+                    'content_editor' => [
+                        'allow_safe_elements' => false,
+                        'allow_elements' => ContentHtmlSanitizer::ALLOWED_ELEMENTS,
+                        'block_elements' => ContentHtmlSanitizer::BLOCKED_ELEMENTS,
+                        'allow_relative_links' => true,
+                        // the default of 20000 bytes silently truncates longer input
+                        'max_input_length' => -1,
+                    ],
+                ],
             ],
         ]);
 
@@ -180,6 +198,18 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     {
         $container->getDefinition(ProductReviewEnabledChecker::class)
             ->setArgument('$enabledDomainIds', $enabledDomainIds);
+    }
+
+    /**
+     * @param array{disabled_types: string[], sanitizer: string, embed_hosts: string[]} $contentEditorConfig
+     */
+    protected function setContentEditorConfig(array $contentEditorConfig, ContainerBuilder $container): void
+    {
+        $container->getDefinition(ContentBlockRegistry::class)
+            ->setArgument('$disabledTypes', $contentEditorConfig['disabled_types']);
+        $container->getDefinition(ContentHtmlSanitizer::class)
+            ->setArgument('$htmlSanitizer', new Reference('html_sanitizer.sanitizer.' . $contentEditorConfig['sanitizer']));
+        $container->setParameter('shopsys.content_editor.embed_hosts', $contentEditorConfig['embed_hosts']);
     }
 
     /**

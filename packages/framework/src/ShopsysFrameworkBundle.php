@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\AddConstraintValidatorsPass;
@@ -20,6 +21,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConf
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterRoleProviderCompilerPass;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Symfony\Component\Config\Resource\DirectoryResource;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -49,6 +51,9 @@ class ShopsysFrameworkBundle extends Bundle
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
         $container->registerForAutoconfiguration(ProductExportDataProviderInterface::class)->addTag('shopsys.product_export_data_provider');
+        $container->registerAttributeForAutoconfiguration(ContentBlock::class, static function (ChildDefinition $definition): void {
+            $definition->addTag('shopsys.content_editor.block');
+        });
 
         $environment = $container->getParameter('kernel.environment');
 

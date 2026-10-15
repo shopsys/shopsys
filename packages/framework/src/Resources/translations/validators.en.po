@@ -94,6 +94,9 @@ msgstr ""
 msgid "Email {{ email }} is already registered"
 msgstr ""
 
+msgid "Enter an http(s), mailto, tel or relative URL."
+msgstr ""
+
 msgid "Enter date in DD.MM.YYYY format"
 msgstr ""
 

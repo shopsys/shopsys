@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $this->addProductSection($rootNode);
         $this->addAdminContextSection($rootNode);
         $this->addPostDeploySection($rootNode);
+        $this->addContentEditorSection($rootNode);
 
         return $treeBuilder;
     }
@@ -117,6 +118,38 @@ class Configuration implements ConfigurationInterface
                                     return $tasks;
                                 })
                             ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    protected function addContentEditorSection(ArrayNodeDefinition $rootNode): void
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('content_editor')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('disabled_types')
+                            ->scalarPrototype()->end()
+                            ->defaultValue([])
+                        ->end()
+                        ->scalarNode('sanitizer')
+                            ->cannotBeEmpty()
+                            ->defaultValue('content_editor')
+                        ->end()
+                        ->arrayNode('embed_hosts')
+                            ->scalarPrototype()->end()
+                            ->defaultValue([
+                                'www.youtube.com',
+                                'youtube.com',
+                                'www.youtube-nocookie.com',
+                                'player.vimeo.com',
+                                'vimeo.com',
+                                'www.google.com',
+                                'maps.google.com',
+                            ])
                         ->end()
                     ->end()
                 ->end()
