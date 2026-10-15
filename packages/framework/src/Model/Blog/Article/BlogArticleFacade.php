@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -32,6 +33,7 @@ class BlogArticleFacade
         protected readonly TransitionNameByTargetPlaceResolver $transitionNameByTargetPlaceResolver,
         protected readonly WorkflowInterface $blogArticlePublishingStateMachine,
         protected readonly Domain $domain,
+        protected readonly ContentDocumentNormalizer $contentDocumentNormalizer,
     ) {
     }
 
@@ -42,6 +44,8 @@ class BlogArticleFacade
 
     public function create(BlogArticleData $blogArticleData): BlogArticle
     {
+        $this->normalizeContents($blogArticleData);
+
         $blogArticle = $this->blogArticleFactory->create($blogArticleData);
 
         $blogArticle->setCategories($this->blogArticleBlogCategoryDomainFactory, $blogArticleData->blogCategoriesByDomainId);
@@ -67,6 +71,7 @@ class BlogArticleFacade
     public function edit(int $blogArticleId, BlogArticleData $blogArticleData): BlogArticle
     {
         $blogArticle = $this->blogArticleRepository->getById($blogArticleId);
+        $this->normalizeContents($blogArticleData);
         $blogArticle->edit($blogArticleData, $this->blogArticleBlogCategoryDomainFactory);
 
         try {
@@ -90,6 +95,15 @@ class BlogArticleFacade
         $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticle->getId());
 
         return $blogArticle;
+    }
+
+    protected function normalizeContents(BlogArticleData $blogArticleData): void
+    {
+        foreach ($blogArticleData->contents as $locale => $content) {
+            if ($content !== null) {
+                $blogArticleData->contents[$locale] = $this->contentDocumentNormalizer->normalize($content);
+            }
+        }
     }
 
     protected function applyStatusTransitions(

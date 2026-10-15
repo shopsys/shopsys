@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Article;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
@@ -36,13 +38,14 @@ class ArticleTest extends TestCase
             $publishedAt = $article->getPublishDate();
 
             $clock->sleep(3600);
-            $data->text = 'Updated content';
+            $data->content = new ContentDocument(1, 'web', [new ContentBlockInstance('a', 'text', ['html' => '<p>Updated content</p>'])]);
             $article->edit($data);
 
             $this->assertSame($createdAt, $article->getCreatedAt());
             $this->assertSame($publishedAt, $article->getPublishDate());
             $this->assertEquals($clock->now(), $article->getModifiedAt());
             $this->assertNotEquals($createdAt, $article->getPublishDate());
+            $this->assertSame($data->content->toArray(), $article->getContentArray());
         } finally {
             Clock::set($previousClock);
         }
@@ -62,8 +65,8 @@ class ArticleTest extends TestCase
             $this->createStub(UrlListDataFactory::class),
             $this->createStub(Domain::class),
             $this->createStub(ImageUploadDataFactory::class),
-            $this->createStub(EnsureCorrectGrapesJsFormatHelper::class),
             new SeoAttributesDataFactory(),
+            new ContentDocumentFactory(),
         );
 
         return $factory->create(1);

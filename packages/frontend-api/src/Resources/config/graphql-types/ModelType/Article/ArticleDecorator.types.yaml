@@ -12,9 +12,9 @@ ArticleDecorator:
             name:
                 type: "String!"
                 description: "Name of article"
-            text:
-                type: "String"
-                description: "Text of article"
+            content:
+                type: "JSON"
+                description: "Structured content of the article (content editor document)"
             seo:
                 type: "SeoAttributes!"
                 description: "SEO attributes of the article page"

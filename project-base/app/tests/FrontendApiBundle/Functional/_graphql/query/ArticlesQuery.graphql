@@ -12,7 +12,7 @@ query ArticlesQuery(
                     uuid
                     name
                     placement
-                    text
+                    content
                     seo {
                         title
                         metaDescription

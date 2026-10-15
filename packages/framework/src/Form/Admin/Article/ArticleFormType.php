@@ -7,12 +7,13 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Article;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Validation\ContentDocumentNotEmpty;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
-use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
@@ -32,6 +33,9 @@ final class ArticleFormType extends AbstractType
 {
     private const string VALIDATION_GROUP_TYPE_SITE = 'typeSite';
     private const string VALIDATION_GROUP_TYPE_LINK = 'typeLink';
+
+    // The framework must not depend on the administration bundle, so the type is referenced by name only.
+    private const string CONTENT_EDITOR_TYPE = 'Shopsys\AdministrationBundle\Form\Admin\Type\ContentEditorType';
 
     public function __construct(
         private readonly Domain $domain,
@@ -118,13 +122,13 @@ final class ArticleFormType extends AbstractType
                 'multiple' => false,
                 'label' => 'Type',
             ]);
-        $this->addArticleContentFields($builderArticleData);
+        $this->addArticleContentFields($builderArticleData, $article?->getDomainId() ?? $domainId);
         $this->addArticleDateFields($builderArticleData);
 
         return $builderArticleData;
     }
 
-    private function addArticleContentFields(FormBuilderInterface $builderArticleData): void
+    private function addArticleContentFields(FormBuilderInterface $builderArticleData, int $domainId): void
     {
         $builderArticleData
             ->add('url', UrlType::class, [
@@ -141,14 +145,12 @@ final class ArticleFormType extends AbstractType
                     'data-js-article-type-content' => 'link',
                 ],
             ])
-            ->add('text', GrapesJsType::class, [
+            ->add('content', self::CONTENT_EDITOR_TYPE, [
+                'profile' => ContentProfileEnum::WEB,
+                'domain_id' => $domainId,
                 'required' => true,
-                'allow_products' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(
-                        message: 'Please enter article content',
-                        groups: [self::VALIDATION_GROUP_TYPE_SITE],
-                    ),
+                    new ContentDocumentNotEmpty(groups: [self::VALIDATION_GROUP_TYPE_SITE]),
                 ],
                 'label' => 'Content',
                 'row_attr' => [

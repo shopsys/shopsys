@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
-use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentTextExtractor;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
@@ -16,7 +20,10 @@ class ArticleExportRepository
         protected readonly ArticleRepository $articleRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
-        protected readonly GrapesJsParser $grapesJsParser,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
+        protected readonly ContentDocumentTextExtractor $contentDocumentTextExtractor,
+        protected readonly ContentDocumentExporter $contentDocumentExporter,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -58,10 +65,13 @@ class ArticleExportRepository
     {
         $domainId = $article->getDomainId();
         $articleId = $article->getId();
+        $document = $this->contentDocumentFactory->createFromArray($article->getContentArray() ?? []);
+        $exportContext = new ExportContext($domainId, $this->domain->getDomainConfigById($domainId)->getLocale());
 
         $extractedArticle = [
             'name' => $article->getName(),
-            'text' => $this->grapesJsParser->parse($article->getText()),
+            'text' => $this->contentDocumentTextExtractor->extractText($document),
+            'content' => $this->contentDocumentExporter->export($document, $exportContext),
             'url' => $article->getUrl(),
             'uuid' => $article->getUuid(),
             'placement' => $article->getPlacement(),

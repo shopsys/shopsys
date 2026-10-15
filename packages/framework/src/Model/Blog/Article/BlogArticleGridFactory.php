@@ -33,7 +33,7 @@ class BlogArticleGridFactory
                 ->addSelect('MAX(bad.publishDate) AS domainPublishDate')
                 ->addSelect('MIN(CASE WHEN bad.visible = true THEN 1 ELSE 0 END) AS domainVisible')
                 ->join('ba.domains', 'bad')
-                ->groupBy('ba.id, bat.name, bat.description, bat.perex, bat.id, ba.createdAt');
+                ->groupBy('ba.id, bat.name, bat.content, bat.perex, bat.id, ba.createdAt');
         }
 
         $dataSource = $this->queryBuilderDataSourceFactory->create($queryBuilder, 'ba.id');

@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Article\Elasticsearch;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentTextExtractor;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -17,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportRepository;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData;
+use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\ContentEditorTestFactory;
 
 class ArticleExportRepositoryTest extends TestCase
 {
@@ -58,6 +65,35 @@ class ArticleExportRepositoryTest extends TestCase
         $this->assertSame(self::ARTICLE_BREADCRUMB, $extractedArticle['breadcrumb']);
     }
 
+    public function testExtractedArticleHasPlainTextAndExportedContent(): void
+    {
+        $friendlyUrlFacadeStub = $this->createStub(FriendlyUrlFacade::class);
+        $friendlyUrlFacadeStub->method('getMainFriendlyUrl')->willReturn(
+            new FriendlyUrl('front_article_detail', self::ARTICLE_ID, Domain::FIRST_DOMAIN_ID, self::ARTICLE_SLUG),
+        );
+        $document = new ContentDocument(1, 'web', [
+            new ContentBlockInstance('a', 'text', ['html' => '<p>Hello <strong>world</strong></p>']),
+        ]);
+
+        $extractedArticle = $this->createArticleExportRepository($friendlyUrlFacadeStub)
+            ->extractArticle($this->createArticle(Article::TYPE_SITE, $document));
+
+        $this->assertSame('Hello world', $extractedArticle['text']);
+        $this->assertSame($document->toArray(), $extractedArticle['content']);
+    }
+
+    public function testExtractedArticleWithoutContentHasEmptyDocument(): void
+    {
+        $friendlyUrlFacadeStub = $this->createStub(FriendlyUrlFacade::class);
+        $friendlyUrlFacadeStub->method('getMainFriendlyUrl')->willThrowException(new FriendlyUrlNotFoundException());
+
+        $extractedArticle = $this->createArticleExportRepository($friendlyUrlFacadeStub)
+            ->extractArticle($this->createArticle(Article::TYPE_LINK));
+
+        $this->assertSame('', $extractedArticle['text']);
+        $this->assertSame(['version' => 1, 'profile' => 'web', 'blocks' => []], $extractedArticle['content']);
+    }
+
     private function createArticleExportRepository(FriendlyUrlFacade $friendlyUrlFacade): ArticleExportRepository
     {
         /** @var \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade|\PHPUnit\Framework\MockObject\Stub $breadcrumbFacadeStub */
@@ -67,21 +103,32 @@ class ArticleExportRepositoryTest extends TestCase
         /** @var \Shopsys\FrameworkBundle\Model\Article\ArticleRepository|\PHPUnit\Framework\MockObject\Stub $articleRepositoryStub */
         $articleRepositoryStub = $this->createStub(ArticleRepository::class);
 
+        $domainStub = $this->createStub(Domain::class);
+        $domainStub->method('getDomainConfigById')->willReturn(
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'https://example.com', 'example', 'en', new DateTimeZone('UTC'), 'https://example.com'),
+        );
+
+        $registry = ContentEditorTestFactory::createRegistry();
+
         return new ArticleExportRepository(
             $articleRepositoryStub,
             $friendlyUrlFacade,
             $breadcrumbFacadeStub,
-            new GrapesJsParser(),
+            new ContentDocumentFactory(),
+            new ContentDocumentTextExtractor($registry),
+            new ContentDocumentExporter($registry),
+            $domainStub,
         );
     }
 
-    private function createArticle(string $type): Article
+    private function createArticle(string $type, ?ContentDocument $content = null): Article
     {
         $articleData = new ArticleData();
         $articleData->domainId = Domain::FIRST_DOMAIN_ID;
         $articleData->name = 'Article';
         $articleData->placement = Article::PLACEMENT_FOOTER_1;
         $articleData->type = $type;
+        $articleData->content = $content;
         $articleData->seo = new SeoAttributesData();
 
         if ($type === Article::TYPE_LINK) {

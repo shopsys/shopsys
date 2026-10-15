@@ -2,7 +2,7 @@ query BlogArticleQuery($uuid: Uuid, $urlSlug: String) {
     blogArticle(uuid: $uuid, urlSlug: $urlSlug) {
         name
         uuid
-        text
+        content
         createdAt
         visibleOnHomepage
         publishDate

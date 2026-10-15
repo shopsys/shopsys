@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
@@ -57,6 +58,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         private readonly BlogVisibilityFacade $blogVisibilityFacade,
         private readonly BlogCategoryDataFactory $blogCategoryDataFactory,
         private readonly BlogArticleContentFactory $blogArticleContentFactory,
+        private readonly ContentDocumentFactory $contentDocumentFactory,
     ) {
     }
 
@@ -478,10 +480,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $articleTitle = $this->blogArticleContentFactory->createTitle($articleGroup, $index, $locale);
             $articleTitlesByLocale[$locale] = $articleTitle;
             $blogArticleData->names[$locale] = $articleTitle;
-            $blogArticleData->descriptions[$locale] = $this->blogArticleContentFactory->createDescription(
-                $articleTitle,
-                $articleGroup,
-                $locale,
+            $blogArticleData->contents[$locale] = $this->contentDocumentFactory->createFromArray(
+                $this->blogArticleContentFactory->createContent($articleTitle, $articleGroup, $locale),
             );
             $blogArticleData->perexes[$locale] = t('Clear advice and practical tips for %articleTitle%.', ['%articleTitle%' => $articleTitle], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
@@ -564,8 +564,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $articleTitle = t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->names[$locale] = $articleTitle;
-            $blogArticleData->descriptions[$locale] = $this->blogArticleContentFactory->createMainArticleDescription(
-                $firstDomainUrl,
+            $blogArticleData->contents[$locale] = $this->contentDocumentFactory->createFromArray(
+                $this->blogArticleContentFactory->createMainArticleContent($firstDomainUrl),
             );
             $blogArticleData->perexes[$locale] = t('A practical guide to screen size, picture quality, connectivity, and the features worth considering before buying a new television.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
+use App\DataFixtures\Demo\ArticleDataFixture;
+use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -33,6 +36,36 @@ class GetArticleTest extends GraphQlTestCase
             $this->assertArrayHasKey('external', $responseData);
             $this->assertSame($expectedArticleData['external'], $responseData['external']);
         }
+    }
+
+    public function testGetArticleReturnsExportedContent(): void
+    {
+        $uuid = Uuid::uuid5(ArticleDataFixture::UUID_NAMESPACE, 'For press' . Domain::FIRST_DOMAIN_ID)->toString();
+
+        $response = $this->getResponseContentForQuery('
+            {
+                article (uuid:"' . $uuid . '") {
+                    ... on ArticleSite {
+                        content
+                    }
+                }
+            }
+        ');
+        $content = $this->getResponseDataForGraphQlType($response, 'article')['content'];
+
+        $this->assertSame(1, $content['version']);
+        $this->assertSame('web', $content['profile']);
+
+        $blocks = $content['blocks'];
+        $this->assertSame(['text', 'products', 'text', 'products'], array_slice(array_column($blocks, 'type'), 0, 4));
+        $this->assertSame(['9177759', '5964035'], $blocks[1]['data']['catnums']);
+
+        $columnsBlock = $blocks[5];
+        $this->assertSame('columns', $columnsBlock['type']);
+
+        $imageBlock = $columnsBlock['children'][0][0];
+        $this->assertSame('image', $imageBlock['type']);
+        $this->assertNotEmpty($imageBlock['data']['url']);
     }
 
     public function testGetArticleReturnsError(): void

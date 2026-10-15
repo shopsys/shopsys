@@ -166,7 +166,6 @@ interface ArticleInterface {
   name: String!
   seo: SeoAttributes!
   slug: String!
-  text: String
   uuid: Uuid!
 }
 
@@ -202,6 +201,8 @@ enum ArticlePlacementTypeEnum {
 type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & ArticleInterface & Seo {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
+  "Structured content of the article (content editor document)"
+  content: JSON
   "Date and time of the article creation"
   createdAt: DateTime!
   "If the the article should be open in a new tab"
@@ -220,8 +221,6 @@ type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & Articl
   seo: SeoAttributes!
   "Article URL slug"
   slug: String!
-  "Text of article"
-  text: String
   "UUID"
   uuid: Uuid!
 }
@@ -306,6 +305,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang & Se
   blogCategories: [BlogCategory!]!
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
+  "Structured content of the blog article (content editor document)"
+  content: JSON
   "Date and time of the blog article creation"
   createdAt: DateTime!
   "Alternate links for hreflang meta tags"
@@ -334,8 +335,6 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang & Se
   slug: String!
   "The blog article status (draft, preview, published)"
   status: String!
-  "The blog article text"
-  text: String
   "The blog article UUID"
   uuid: Uuid!
   "Indicates whether the blog article is displayed on homepage"
@@ -1326,6 +1325,9 @@ type Image {
   "URL address of the image"
   url: String!
 }
+
+"Arbitrary JSON value, output only"
+scalar JSON
 
 "Represents an internal link"
 type Link {

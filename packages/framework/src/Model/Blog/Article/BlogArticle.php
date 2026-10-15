@@ -254,8 +254,8 @@ class BlogArticle extends AbstractTranslatableEntity
             $this->translation($locale)->setName($name);
         }
 
-        foreach ($blogArticleData->descriptions as $locale => $name) {
-            $this->translation($locale)->setDescription($name);
+        foreach ($blogArticleData->contents as $locale => $content) {
+            $this->translation($locale)->setContentArray($content?->toArray());
         }
 
         foreach ($blogArticleData->perexes as $locale => $name) {
@@ -280,25 +280,25 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getDescription(?string $locale = null)
+    public function getContentArray(?string $locale = null)
     {
-        return $this->translation($locale)->getDescription();
+        return $this->translation($locale)->getContentArray();
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, array|null>
      */
-    public function getDescriptions()
+    public function getContentArrays()
     {
-        $descriptionsByLocale = [];
+        $contentArraysByLocale = [];
 
         foreach ($this->translations as $translation) {
-            $descriptionsByLocale[$translation->getLocale()] = $translation->getDescription();
+            $contentArraysByLocale[$translation->getLocale()] = $translation->getContentArray();
         }
 
-        return $descriptionsByLocale;
+        return $contentArraysByLocale;
     }
 
     #[Override]

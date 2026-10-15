@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -21,6 +22,7 @@ class ArticleFacade
         protected readonly ArticleFactory $articleFactory,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
         protected readonly ArticleExportMessageDispatcher $articleExportMessageDispatcher,
+        protected readonly ContentDocumentNormalizer $contentDocumentNormalizer,
     ) {
     }
 
@@ -48,6 +50,8 @@ class ArticleFacade
 
     public function create(ArticleData $articleData): Article
     {
+        $this->normalizeContent($articleData);
+
         $article = $this->articleFactory->create($articleData);
 
         $this->em->persist($article);
@@ -75,6 +79,7 @@ class ArticleFacade
     {
         $article = $this->articleRepository->getById($articleId);
 
+        $this->normalizeContent($articleData);
         $article->edit($articleData);
 
         if (!$article->isLinkType()) {
@@ -160,5 +165,12 @@ class ArticleFacade
     public function getAllIdsByDomainId(int $domainId): array
     {
         return $this->articleRepository->getAllIdsByDomainId($domainId);
+    }
+
+    protected function normalizeContent(ArticleData $articleData): void
+    {
+        if ($articleData->content !== null) {
+            $articleData->content = $this->contentDocumentNormalizer->normalize($articleData->content);
+        }
     }
 }

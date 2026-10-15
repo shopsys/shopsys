@@ -21,9 +21,9 @@ BlogArticleDecorator:
             name:
                 type: "String!"
                 description: "The blog article title"
-            text:
-                type: "String"
-                description: "The blog article text"
+            content:
+                type: "JSON"
+                description: "Structured content of the blog article (content editor document)"
             createdAt:
                 type: "DateTime!"
                 description: "Date and time of the blog article creation"

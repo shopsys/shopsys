@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
@@ -38,15 +39,23 @@ class BlogArticleTranslation extends AbstractTranslation
     }
 
     /**
-     * @var string|null
+     * Content editor document, see \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument::toArray()
+     *
+     * @var array|null
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $description {
-        set {
-            $this->description = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::getTrimmedStringOrNullOnEmpty($value);
-        }
-    }
+    #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
+    protected $content;
+
+    /**
+     * HTML written by GrapesJS before the content editor, it is read only by the migration task converting it
+     * to the content and is dropped in the next release. Application code must never write it.
+     *
+     * @var string|null
+     */
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Column(name: 'legacy_grapesjs_description', type: Types::TEXT, nullable: true)]
+    protected $legacyGrapesJsDescription;
 
     /**
      * @var string|null
@@ -76,19 +85,19 @@ class BlogArticleTranslation extends AbstractTranslation
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getDescription()
+    public function getContentArray()
     {
-        return $this->description;
+        return $this->content;
     }
 
     /**
-     * @param string|null $description
+     * @param array|null $content
      */
-    public function setDescription($description): void
+    public function setContentArray($content): void
     {
-        $this->description = $description;
+        $this->content = $content;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
@@ -77,11 +78,23 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     protected $name;
 
     /**
-     * @var string|null
+     * Content editor document, see \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument::toArray()
+     *
+     * @var array|null
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected $text;
+    #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
+    protected $content;
+
+    /**
+     * HTML written by GrapesJS before the content editor, it is read only by the migration task converting it
+     * to the content and is dropped in the next release. Application code must never write it.
+     *
+     * @var string|null
+     */
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Column(name: 'legacy_grapesjs_text', type: Types::TEXT, nullable: true)]
+    protected $legacyGrapesJsText;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributes
@@ -166,7 +179,7 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
         $this->publishDate = $articleData->publishDate;
         $this->modifiedAt = new DatePoint();
         $this->name = $articleData->name;
-        $this->text = $articleData->text;
+        $this->content = $articleData->content?->toArray();
         $this->seo->edit($articleData->seo);
         $this->placement = $articleData->placement;
         $this->hidden = $articleData->hidden;
@@ -210,11 +223,11 @@ class Article implements OrderableEntityInterface, DomainSeparatedEntityInterfac
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getText()
+    public function getContentArray()
     {
-        return $this->text;
+        return $this->content;
     }
 
     /**

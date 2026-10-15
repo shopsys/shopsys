@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -16,8 +17,8 @@ class ArticleDataFactory
         protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
-        protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
         protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
     ) {
     }
 
@@ -46,10 +47,7 @@ class ArticleDataFactory
     {
         $articleData->image = $this->imageUploadDataFactory->createFromEntityAndType($article);
         $articleData->name = $article->getName();
-        $articleData->text = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat(
-            $article->getText(),
-            $this->domain->getDomainConfigById($article->getDomainId())->getLocale(),
-        );
+        $articleData->content = $this->contentDocumentFactory->createFromArray($article->getContentArray() ?? []);
         $articleData->seo = $this->seoAttributesDataFactory->createFromSeoAttributes($article->getSeoAttributes());
         $articleData->domainId = $article->getDomainId();
         $articleData->placement = $article->getPlacement();
@@ -66,6 +64,7 @@ class ArticleDataFactory
     protected function fillNew(ArticleData $articleData, int $domainId): void
     {
         $articleData->image = $this->imageUploadDataFactory->create();
+        $articleData->content = $this->contentDocumentFactory->createEmpty(ContentProfileEnum::WEB);
         $articleData->domainId = $domainId;
         $articleData->seo = $this->seoAttributesDataFactory->create();
         $articleData->urls = $this->urlListDataFactory->create();

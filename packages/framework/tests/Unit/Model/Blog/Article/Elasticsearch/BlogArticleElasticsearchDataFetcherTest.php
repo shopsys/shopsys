@@ -78,6 +78,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         return [
             'name' => '',
             'text' => null,
+            'content' => null,
             'url' => '',
             'uuid' => '',
             'createdAt' => '1970-01-01 00:00:00',

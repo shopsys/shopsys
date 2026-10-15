@@ -14,9 +14,9 @@ class ArticleData
     public $name;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument|null
      */
-    public $text;
+    public $content;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoAttributesData

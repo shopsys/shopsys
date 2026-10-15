@@ -16,6 +16,11 @@ final class BlogArticleContentFactory
     public const string ARTICLE_GROUP_CARE = 'care';
     public const string ARTICLE_GROUP_TECHNOLOGY = 'technology';
 
+    public function __construct(
+        private readonly ContentDocumentBuilder $contentDocumentBuilder,
+    ) {
+    }
+
     public function createTitle(string $articleGroup, int $index, string $locale): string
     {
         return match ($articleGroup) {
@@ -116,7 +121,10 @@ final class BlogArticleContentFactory
         };
     }
 
-    public function createDescription(string $articleTitle, string $articleGroup, string $locale): string
+    /**
+     * @return array{version: int, profile: string, blocks: array<int, array<string, mixed>>}
+     */
+    public function createContent(string $articleTitle, string $articleGroup, string $locale): array
     {
         $translatedContent = $this->getTranslatedContent($articleGroup, $locale);
         $parameters = ['%articleTitle%' => $articleTitle];
@@ -129,24 +137,19 @@ final class BlogArticleContentFactory
         $productsHeading = t('Products worth comparing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $productsParagraph = t('Use the related products as a starting point and compare the parameters that matter for your situation.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
-        return str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-            <div class="gjs-text-ckeditor">
-                <p>{$intro}</p>
-                <h2>{$firstHeading}</h2>
-                <p>{$firstParagraph}</p>
-                <h2>{$secondHeading}</h2>
-                <p>{$secondParagraph}</p>
-                <h2>{$productsHeading}</h2>
-                <p>{$productsParagraph}</p>
-            </div>
-            <div class="gjs-products" data-products="9177759,5965879P,9184449,PHILIPS-M,7700768">
-                <div class="gjs-product" data-product="9177759"></div>
-                <div class="gjs-product" data-product="5965879P"></div>
-                <div class="gjs-product" data-product="9184449"></div>
-                <div class="gjs-product" data-product="PHILIPS-M"></div>
-                <div class="gjs-product" data-product="7700768"></div>
-            </div>
-        EOT));
+        return $this->contentDocumentBuilder->create()
+            ->text(sprintf(
+                '<p>%s</p><h2>%s</h2><p>%s</p><h2>%s</h2><p>%s</p><h2>%s</h2><p>%s</p>',
+                $intro,
+                $firstHeading,
+                $firstParagraph,
+                $secondHeading,
+                $secondParagraph,
+                $productsHeading,
+                $productsParagraph,
+            ))
+            ->products(['9177759', '5965879P', '9184449', 'PHILIPS-M', '7700768'])
+            ->build();
     }
 
     /**
@@ -195,85 +198,40 @@ final class BlogArticleContentFactory
         };
     }
 
-    public function createMainArticleDescription(string $firstDomainUrl): string
+    /**
+     * @return array{version: int, profile: string, blocks: array<int, array<string, mixed>>}
+     */
+    public function createMainArticleContent(string $firstDomainUrl): array
     {
-        $description = $this->createMainArticleGuide($firstDomainUrl) . $this->createMainArticleProducts();
-
-        return str_replace(['    ', PHP_EOL], '', trim($description));
+        return $this->contentDocumentBuilder->create()
+            ->text($this->createMainArticleGuide($firstDomainUrl))
+            ->text('<h2>A practical choice for smaller rooms</h2><p>A compact 32-inch television is a good fit for a bedroom, kitchen, or smaller living room. It provides a comfortable picture without dominating the space and still offers the connections needed for common accessories.</p>')
+            ->products(['9176508'])
+            ->text('<h2>Compare popular TV sizes</h2><p>Compare compact, mid-size, and larger televisions side by side. Besides the diagonal size, check the stand dimensions, resolution, available connections, and whether the television fits the way you watch films, television, and games.</p>')
+            ->products(['9177759', '9176508', '5965879P'])
+            ->build();
     }
 
     private function createMainArticleGuide(string $firstDomainUrl): string
     {
         return <<<EOT
-            <div class="gjs-text-ckeditor">
-                <p>
-                    The right television should fit your room, viewing distance, and the content you watch most often. Dina started by noting where the TV would stand, how bright the room was, and which devices she wanted to connect.
-                </p>
-
-                <ul>
-                    <li>Measure the distance between the sofa and the screen.</li>
-                    <li>Check how much daylight reaches the room.</li>
-                    <li>Count the game consoles, sound systems, and other HDMI devices you use.</li>
-                </ul>
-
-                <h2>Start with screen size and viewing distance</h2>
-                <p>
-                    A larger screen is not always better. At a distance of around 1.5 metres, a 32-inch television is comfortable for everyday viewing. For a sofa 2 to 2.5 metres away, look at 43- to 50-inch models. A 55-inch screen or larger works best when you can sit at least 2.5 metres away and want a more cinematic experience.
-                </p>
-
-                <h3>Leave space around the television</h3>
-                <p>
-                    Remember to include the stand, cables, and ventilation in your measurements. If the television will be mounted on a wall, place the centre of the screen close to eye level when seated.
-                </p>
-
-                <h2>Choose picture quality for your favourite content</h2>
-                <p>
-                    Full HD remains a practical choice for smaller screens and regular television broadcasts. For larger screens, films, modern game consoles, and streaming services, <strong>4K resolution</strong> provides noticeably finer detail. HDR support improves contrast and preserves detail in both bright highlights and dark scenes.
-                </p>
-
-                <h3>Pay attention to brightness and reflections</h3>
-                <p>
-                    A brighter panel and an effective anti-reflective surface are useful in a sunny living room. In a darker room, black levels and consistent backlighting have a greater effect on perceived image quality.
-                </p>
-
-                <h2>Check connections and everyday features</h2>
-                <p>
-                    Choose a model with enough HDMI inputs for your set-top box, console, and soundbar. Wi-Fi, Bluetooth, and built-in streaming applications make everyday use easier. Gamers should also check input lag, refresh rate, and support for modern HDMI gaming features.
-                </p>
-
-                <p>
-                    <strong>TIP:</strong> <a href="{$firstDomainUrl}" id="ieevs4" tabindex="0">Browse all televisions and compare their parameters</a> before making the final choice.
-                </p>
-            </div>
-        EOT;
-    }
-
-    private function createMainArticleProducts(): string
-    {
-        return <<<'EOT'
-            <div class="gjs-text-ckeditor">
-                <h2>A practical choice for smaller rooms</h2>
-                <p>
-                    A compact 32-inch television is a good fit for a bedroom, kitchen, or smaller living room. It provides a comfortable picture without dominating the space and still offers the connections needed for common accessories.
-                </p>
-            </div>
-
-            <div class="gjs-products" data-products="9176508">
-                <div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div>
-            </div>
-
-            <div class="gjs-text-ckeditor">
-                <h2>Compare popular TV sizes</h2>
-                <p>
-                    Compare compact, mid-size, and larger televisions side by side. Besides the diagonal size, check the stand dimensions, resolution, available connections, and whether the television fits the way you watch films, television, and games.
-                </p>
-            </div>
-
-            <div class="gjs-products" data-products="9177759,9176508,5965879P">
-                <div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div>
-                <div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div>
-                <div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div>
-            </div>
+            <p>The right television should fit your room, viewing distance, and the content you watch most often. Dina started by noting where the TV would stand, how bright the room was, and which devices she wanted to connect.</p>
+            <ul>
+                <li>Measure the distance between the sofa and the screen.</li>
+                <li>Check how much daylight reaches the room.</li>
+                <li>Count the game consoles, sound systems, and other HDMI devices you use.</li>
+            </ul>
+            <h2>Start with screen size and viewing distance</h2>
+            <p>A larger screen is not always better. At a distance of around 1.5 metres, a 32-inch television is comfortable for everyday viewing. For a sofa 2 to 2.5 metres away, look at 43- to 50-inch models. A 55-inch screen or larger works best when you can sit at least 2.5 metres away and want a more cinematic experience.</p>
+            <h3>Leave space around the television</h3>
+            <p>Remember to include the stand, cables, and ventilation in your measurements. If the television will be mounted on a wall, place the centre of the screen close to eye level when seated.</p>
+            <h2>Choose picture quality for your favourite content</h2>
+            <p>Full HD remains a practical choice for smaller screens and regular television broadcasts. For larger screens, films, modern game consoles, and streaming services, <strong>4K resolution</strong> provides noticeably finer detail. HDR support improves contrast and preserves detail in both bright highlights and dark scenes.</p>
+            <h3>Pay attention to brightness and reflections</h3>
+            <p>A brighter panel and an effective anti-reflective surface are useful in a sunny living room. In a darker room, black levels and consistent backlighting have a greater effect on perceived image quality.</p>
+            <h2>Check connections and everyday features</h2>
+            <p>Choose a model with enough HDMI inputs for your set-top box, console, and soundbar. Wi-Fi, Bluetooth, and built-in streaming applications make everyday use easier. Gamers should also check input lag, refresh rate, and support for modern HDMI gaming features.</p>
+            <p><strong>TIP:</strong> <a href="{$firstDomainUrl}">Browse all televisions and compare their parameters</a> before making the final choice.</p>
         EOT;
     }
 }

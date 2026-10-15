@@ -50,6 +50,8 @@ services:
 
     App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter: ~
 
+    App\DataFixtures\Demo\DemoDataFactory\ContentDocumentBuilder: ~
+
     App\DataFixtures\Demo\ImageDataFixture:
         arguments:
             $dataFixturesResourcesDirectory: '%shopsys.data_fixtures.resources_dir%'

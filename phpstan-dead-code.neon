@@ -41,9 +41,6 @@ parameters:
             path: packages/framework/src/Component/ContentEditor/Document/ContentBlockInstance.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Document/ContentDocument.php
-        -
-            identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ContentEditor/Document/NormalizationReport.php
         -
             identifier: shipmonk.deadMethod
@@ -159,26 +156,11 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentNormalizer::getLastReport\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentNormalizer.php
-        # content editor: caller arrives in phase 6 (Elasticsearch export of article text)
+        # content editor: removed in phase 10
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentTextExtractor::extractText\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentTextExtractor.php
-        # content editor: caller arrives in phase 6 (ContentDocumentExporter)
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\Web\\ImageBlock::export\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Block/Web/ImageBlock.php
-        # content editor: caller arrives in phase 6 (ContentDocumentExporter)
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\Web\\ProductsBlock::export\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Block/Web/ProductsBlock.php
-        # content editor: caller arrives in phase 6 (ContentDocumentExporter)
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\Web\\VideoBlock::export\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Block/Web/VideoBlock.php
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\GrapesJs\\GrapesJsParser::parse\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/GrapesJs/GrapesJsParser.php
         # content editor: caller arrives in phase 4 (BlockFormBuilder form type mapping)
         -
             identifier: shipmonk.deadMethod

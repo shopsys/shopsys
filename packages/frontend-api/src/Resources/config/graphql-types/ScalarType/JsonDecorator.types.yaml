@@ -1,0 +1,7 @@
+JsonDecorator:
+    type: custom-scalar
+    config:
+        description: "Arbitrary JSON value, output only"
+        serialize: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\JsonScalarType", "serialize"]
+        parseValue: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\JsonScalarType", "parseValue"]
+        parseLiteral: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\JsonScalarType", "parseLiteral"]

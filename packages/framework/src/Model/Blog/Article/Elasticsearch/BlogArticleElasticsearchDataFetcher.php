@@ -17,6 +17,7 @@ class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetch
 
         $result['name'] = $data['name'] ?? '';
         $result['text'] = $data['text'] ?? null;
+        $result['content'] = $data['content'] ?? null;
         $result['url'] = $data['url'] ?? '';
         $result['uuid'] = $data['uuid'] ?? '';
         $result['createdAt'] = $data['createdAt'] ?? '1970-01-01 00:00:00';

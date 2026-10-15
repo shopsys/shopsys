@@ -154,6 +154,10 @@
                 "analyzer": "edge_ngram_without_diacritic_html",
                 "search_analyzer": "full_without_diacritic_html"
             },
+            "content": {
+                "type": "object",
+                "enabled": false
+            },
             "url": {
                 "type": "text"
             },

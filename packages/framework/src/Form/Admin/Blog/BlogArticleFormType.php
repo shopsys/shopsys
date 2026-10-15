@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -17,7 +18,6 @@ use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\FormTypeLayout;
-use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\InlineLabeledFieldType;
@@ -34,6 +34,9 @@ use Symfony\Component\Validator\Constraints;
 
 final class BlogArticleFormType extends AbstractType
 {
+    // The framework must not depend on the administration bundle, so the type is referenced by name only.
+    private const string CONTENT_EDITOR_TYPE = 'Shopsys\AdministrationBundle\Form\Admin\Type\ContentEditorType';
+
     public function __construct(
         protected readonly Domain $domain,
         protected readonly BlogArticleStatusEnum $blogArticleStatusEnum,
@@ -193,11 +196,11 @@ final class BlogArticleFormType extends AbstractType
         ]);
 
         $builderDescriptionGroup
-            ->add('descriptions', LocalizedType::class, [
+            ->add('contents', LocalizedType::class, [
                 'layout' => FormTypeLayout::LAYOUT_BLOCK,
-                'entry_type' => GrapesJsType::class,
+                'entry_type' => self::CONTENT_EDITOR_TYPE,
                 'entry_options' => [
-                    'allow_products' => true,
+                    'profile' => ContentProfileEnum::WEB,
                 ],
                 'label' => 'Description',
                 'required' => false,

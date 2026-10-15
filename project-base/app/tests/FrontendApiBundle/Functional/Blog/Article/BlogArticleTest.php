@@ -6,8 +6,10 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Override;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
@@ -38,7 +40,12 @@ class BlogArticleTest extends GraphQlTestCase
     /**
      * @inject
      */
-    protected GrapesJsParser $grapesJsParser;
+    protected ContentDocumentFactory $contentDocumentFactory;
+
+    /**
+     * @inject
+     */
+    protected ContentDocumentExporter $contentDocumentExporter;
 
     #[Override]
     protected function setUp(): void
@@ -174,7 +181,10 @@ class BlogArticleTest extends GraphQlTestCase
         $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 
-        $description = $this->grapesJsParser->parse($this->blogArticle->getDescription($locale));
+        $content = $this->contentDocumentExporter->export(
+            $this->contentDocumentFactory->createFromArray($this->blogArticle->getContentArray($locale) ?? []),
+            new ExportContext(Domain::FIRST_DOMAIN_ID, $locale),
+        );
         $seoAttributes = $this->blogArticle->getSeoAttributes(Domain::FIRST_DOMAIN_ID);
         $articleTitle = t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $firstBlogSubcategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class);
@@ -183,7 +193,7 @@ class BlogArticleTest extends GraphQlTestCase
         return [
             'name' => $articleTitle,
             'uuid' => $this->blogArticle->getUuid(),
-            'text' => $description,
+            'content' => $content,
             'createdAt' => $this->blogArticle->getCreatedAt()->format(DATE_ATOM),
             'visibleOnHomepage' => true,
             'publishDate' => $this->blogArticle->getPublishDate(Domain::FIRST_DOMAIN_ID)->format(DATE_ATOM),

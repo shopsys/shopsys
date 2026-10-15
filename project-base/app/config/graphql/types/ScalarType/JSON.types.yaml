@@ -1,0 +1,4 @@
+JSON:
+    type: custom-scalar
+    inherits:
+        - 'JsonDecorator'

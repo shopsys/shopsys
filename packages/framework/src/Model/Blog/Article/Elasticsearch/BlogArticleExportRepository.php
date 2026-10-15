@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentTextExtractor;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -22,7 +25,9 @@ class BlogArticleExportRepository
         protected readonly BlogArticleRepository $blogArticleRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
-        protected readonly GrapesJsParser $grapesJsParser,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
+        protected readonly ContentDocumentTextExtractor $contentDocumentTextExtractor,
+        protected readonly ContentDocumentExporter $contentDocumentExporter,
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
@@ -85,10 +90,12 @@ class BlogArticleExportRepository
         }
 
         $blogArticleAuthor = $blogArticle->getBlogArticleAuthor();
+        $document = $this->contentDocumentFactory->createFromArray($blogArticle->getContentArray($locale) ?? []);
 
         return [
             'name' => $blogArticle->getName($locale),
-            'text' => $this->grapesJsParser->parse($blogArticle->getDescription($locale)),
+            'text' => $this->contentDocumentTextExtractor->extractText($document),
+            'content' => $this->contentDocumentExporter->export($document, new ExportContext($domainId, $locale)),
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'modifiedAt' => $blogArticle->getModifiedAt()?->format('Y-m-d H:i:s'),

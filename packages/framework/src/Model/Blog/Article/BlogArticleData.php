@@ -24,9 +24,9 @@ class BlogArticleData
     public $seo;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument[]|null[]
      */
-    public $descriptions;
+    public $contents;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
@@ -88,7 +88,7 @@ class BlogArticleData
         $this->names = [];
         $this->blogCategoriesByDomainId = [];
         $this->seo = [];
-        $this->descriptions = [];
+        $this->contents = [];
         $this->categories = [];
         $this->enabled = [];
         $this->urls = [];

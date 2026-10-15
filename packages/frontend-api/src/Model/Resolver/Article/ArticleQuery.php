@@ -36,7 +36,7 @@ class ArticleQuery extends AbstractQuery
             throw new ArticleNotFoundUserError($articleNotFoundException->getMessage());
         }
 
-        return $this->sanitizeDraggableAttribute($articleData);
+        return $articleData;
     }
 
     public function termsAndConditionsArticleUrlQuery(): string

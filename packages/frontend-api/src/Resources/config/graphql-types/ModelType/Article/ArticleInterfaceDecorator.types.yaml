@@ -10,8 +10,6 @@ ArticleInterfaceDecorator:
                 type: "String!"
             slug:
                 type: "String!"
-            text:
-                type: "String"
             seo:
                 type: "SeoAttributes!"
             breadcrumb:

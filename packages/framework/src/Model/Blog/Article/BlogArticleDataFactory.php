@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -16,8 +17,8 @@ class BlogArticleDataFactory
         protected readonly UrlListDataFactory $urlListDataFactory,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
-        protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
         protected readonly SeoAttributesDataFactory $seoAttributesDataFactory,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
     ) {
     }
 
@@ -51,7 +52,7 @@ class BlogArticleDataFactory
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = null;
-            $blogArticleData->descriptions[$locale] = null;
+            $blogArticleData->contents[$locale] = $this->contentDocumentFactory->createEmpty(ContentProfileEnum::WEB);
             $blogArticleData->perexes[$locale] = null;
         }
     }
@@ -60,8 +61,8 @@ class BlogArticleDataFactory
     {
         $blogArticleData->names = $blogArticle->getNames();
 
-        foreach ($blogArticle->getDescriptions() as $locale => $description) {
-            $blogArticleData->descriptions[$locale] = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat($description, $locale);
+        foreach ($blogArticle->getContentArrays() as $locale => $contentArray) {
+            $blogArticleData->contents[$locale] = $this->contentDocumentFactory->createFromArray($contentArray ?? []);
         }
 
         $blogArticleData->perexes = $blogArticle->getPerexes();
