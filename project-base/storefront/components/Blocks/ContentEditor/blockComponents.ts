@@ -1,5 +1,6 @@
 import { ButtonLinkBlock } from 'components/Blocks/ContentEditor/blocks/ButtonLinkBlock';
 import { ColumnsBlock } from 'components/Blocks/ContentEditor/blocks/ColumnsBlock';
+import { HeadingBlock } from 'components/Blocks/ContentEditor/blocks/HeadingBlock';
 import { IframeBlock } from 'components/Blocks/ContentEditor/blocks/IframeBlock';
 import { ImageBlock } from 'components/Blocks/ContentEditor/blocks/ImageBlock';
 import { MapBlock } from 'components/Blocks/ContentEditor/blocks/MapBlock';
@@ -13,6 +14,7 @@ import { BlockProps } from 'components/Blocks/ContentEditor/ContentRenderer';
 // every block component has its own data type, hence `any`
 export const blockComponents: Record<string, FC<BlockProps<any>>> = {
     text: TextBlock,
+    heading: HeadingBlock,
     image: ImageBlock,
     'button-link': ButtonLinkBlock,
     table: TableBlock,

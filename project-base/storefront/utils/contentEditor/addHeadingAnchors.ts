@@ -1,6 +1,10 @@
 import { ArticleHeading } from 'types/articleHeading';
 import { TypeContentBlock, TypeContentDocument } from 'types/contentEditor';
-import { ARTICLE_INTRODUCTION_ANCHOR_ID, getArticleHtmlHeadingAnchors } from 'utils/articleHeadingAnchors';
+import {
+    ARTICLE_INTRODUCTION_ANCHOR_ID,
+    createHeadingId,
+    getArticleHtmlHeadingAnchors,
+} from 'utils/articleHeadingAnchors';
 
 type DocumentWithHeadingAnchors = {
     document: TypeContentDocument | null;
@@ -19,6 +23,18 @@ export const addHeadingAnchors = (document: TypeContentDocument | null): Documen
                 headings.push(...result.headings);
 
                 return { ...block, data: { ...block.data, html: result.htmlWithHeadingAnchors } };
+            }
+
+            // only h2 headings are in the table of contents, like in the text blocks
+            if (block.type === 'heading' && block.data.level === 'h2' && typeof block.data.text === 'string') {
+                const title = block.data.text.trim();
+
+                if (title !== '') {
+                    const id = createHeadingId(title, usedHeadingIds);
+                    headings.push({ id, title });
+
+                    return { ...block, data: { ...block.data, anchorId: id } };
+                }
             }
 
             return block.children ? { ...block, children: block.children.map(addAnchors) } : block;

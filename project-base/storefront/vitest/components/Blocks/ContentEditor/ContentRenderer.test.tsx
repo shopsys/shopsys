@@ -102,6 +102,17 @@ describe('ContentRenderer', () => {
         );
     });
 
+    test('renders a heading block as the chosen tag inside the user text typography', () => {
+        const { container } = renderBlocks([
+            block('heading', { text: 'Title', level: 'h3', anchorId: 'title' }),
+            block('heading', { text: 'Other', level: 'h2' }),
+        ]);
+
+        expect(container.querySelector('section.user-text > h3#title')).toHaveTextContent('Title');
+        expect(container.querySelector('section.user-text > h2:not([id])')).toHaveTextContent('Other');
+        expect(container.querySelectorAll(`[data-tid="${TIDs.content_block_heading}"]`)).toHaveLength(2);
+    });
+
     test('renders nothing for an unknown block type', () => {
         const { container } = renderBlocks([block('does-not-exist', {})]);
 

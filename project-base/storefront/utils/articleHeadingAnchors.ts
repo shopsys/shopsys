@@ -42,7 +42,7 @@ const getPlainHeadingTitle = (headingHtml: string): string =>
             .trim(),
     );
 
-const createHeadingId = (headingTitle: string, existingIds: Set<string>): string => {
+export const createHeadingId = (headingTitle: string, existingIds: Set<string>): string => {
     const normalizedTitle = headingTitle
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')

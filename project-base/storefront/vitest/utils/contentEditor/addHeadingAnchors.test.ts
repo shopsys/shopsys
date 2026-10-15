@@ -37,4 +37,23 @@ describe('addHeadingAnchors', () => {
         expect(result.document?.blocks[1]).toBe(document.blocks[1]);
         expect(document.blocks[0].data.html).toBe('<h2>Intro</h2><p>x</p>');
     });
+
+    test('adds an anchor to h2 heading blocks and shares the ids with text blocks', () => {
+        const heading = (text: string, level: string) => ({ id: text + level, type: 'heading', data: { text, level } });
+        const document: TypeContentDocument = {
+            version: 1,
+            profile: 'web',
+            blocks: [text('<h2>Intro</h2>'), heading('Intro', 'h2'), heading('Detail', 'h3'), heading(' ', 'h2')],
+        };
+
+        const result = addHeadingAnchors(document);
+
+        expect(result.headings).toEqual([
+            { id: 'intro', title: 'Intro' },
+            { id: 'intro-2', title: 'Intro' },
+        ]);
+        expect(result.document?.blocks[1].data).toEqual({ text: 'Intro', level: 'h2', anchorId: 'intro-2' });
+        expect(result.document?.blocks[2]).toBe(document.blocks[2]);
+        expect(result.document?.blocks[3]).toBe(document.blocks[3]);
+    });
 });

@@ -1882,6 +1882,9 @@ msgstr "HTML kód"
 msgid "Has X+Y promotion"
 msgstr "Má akciu X+Y zdarma"
 
+msgid "Heading"
+msgstr "Nadpis"
+
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
 
@@ -2103,6 +2106,9 @@ msgstr "Právne podmienky"
 
 msgid "Legal conditions settings modified."
 msgstr "Nastavenia právnych podmienok upravené."
+
+msgid "Level"
+msgstr "Úroveň"
 
 msgid "Line:"
 msgstr "Riadok:"

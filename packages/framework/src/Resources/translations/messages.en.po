@@ -1882,6 +1882,9 @@ msgstr ""
 msgid "Has X+Y promotion"
 msgstr ""
 
+msgid "Heading"
+msgstr ""
+
 msgid "Heading (H1)"
 msgstr ""
 
@@ -2102,6 +2105,9 @@ msgid "Legal conditions"
 msgstr ""
 
 msgid "Legal conditions settings modified."
+msgstr ""
+
+msgid "Level"
 msgstr ""
 
 msgid "Line:"
