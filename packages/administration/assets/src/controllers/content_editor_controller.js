@@ -1,11 +1,9 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
 import Translator from 'bazinga-translator';
-import throttle from '../js/contentEditor/throttle';
 import ConfirmWindow from '../js/utils/confirmWindow';
 
 const STORAGE_KEY_PREFIX = 'content-editor:';
-const PREVIEW_THROTTLE_MS = 300;
 
 /*
  * The root of the ContentEditorComponent (templates/content_editor/editor.html.twig):
@@ -18,7 +16,6 @@ export default class extends Controller {
 
     connect() {
         this.confirmedRemoveButton = null;
-        this.postDocumentToPreview = throttle(() => this.postDocument(), PREVIEW_THROTTLE_MS);
         this.onRender = () => this.sync();
         this.onClickCapture = event => this.confirmRemove(event);
         // the preview page tells that it is listening, it has nothing to show until it gets the document
@@ -52,7 +49,6 @@ export default class extends Controller {
     }
 
     disconnect() {
-        this.postDocumentToPreview.cancel();
         this.liveComponent?.off('render:finished', this.onRender);
         this.element.removeEventListener('click', this.onClickCapture, true);
         window.removeEventListener('message', this.onMessage);
@@ -88,7 +84,7 @@ export default class extends Controller {
 
     sync() {
         this.restoreCollapsed();
-        this.postDocumentToPreview();
+        this.postDocument();
     }
 
     postDocument() {
