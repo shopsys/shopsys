@@ -1,8 +1,23 @@
+{% macro toggleButton(buttonClass, tid) %}
+    <button type="button"
+            class="{{ buttonClass }} content-editor-toggle"
+            title="{{ 'Collapse or expand'|trans }}"
+            aria-label="{{ 'Collapse or expand'|trans }}"
+            data-content-editor-toggle
+            data-tid="{{ tid }}">{{ ux_icon('chevron-down') }}</button>
+{% endmacro %}
+
 {# blockForm: form of the block, path: path of the block, isFirst and isLast: position of the block in its list #}
 {% set blockValues = blockForm.vars.value %}
 {% set definition = this.blockDefinition(blockValues.type) %}
 {% set isContainer = blockForm['children'] is defined %}
 {% set toolbarButtonClass = 'btn btn-ghost-secondary btn-icon btn-sm' %}
+{% set toolbarButtons = [
+    {action: 'moveUp', icon: 'chevron-up', label: 'Move up'|trans, tid: 'move-up', disabled: isFirst},
+    {action: 'moveDown', icon: 'chevron-down', label: 'Move down'|trans, tid: 'move-down', disabled: isLast},
+    {action: 'duplicateBlock', icon: 'duplicate', label: 'Duplicate'|trans, tid: 'duplicate'},
+    {action: 'removeBlock', icon: 'trash', label: 'Remove'|trans, tid: 'remove', attributes: {'data-content-editor-remove': ''}},
+] %}
 
 {# the narrow pane has no room for the labels beside the inputs #}
 {% form_theme blockForm.data '@ShopsysAdministration/form/vertical.html.twig' %}
@@ -24,55 +39,20 @@
         <span class="fw-bold flex-shrink-0">{{ definition.label|trans }}</span>
         <span class="text-secondary text-truncate flex-fill" data-tid="content-editor-block-summary">{{ this.blockSummary(blockValues) }}</span>
         <div class="content-editor-toolbar">
-            {{ component('Admin:LiveActionButton', {
-                action: 'moveUp',
-                label: '',
-                icon: 'chevron-up',
-                buttonClass: toolbarButtonClass,
-                liveParams: {path: path},
-                disabled: isFirst,
-                title: 'Move up'|trans,
-                'aria-label': 'Move up'|trans,
-                'data-tid': 'content-editor-block-move-up',
-            }) }}
-            {{ component('Admin:LiveActionButton', {
-                action: 'moveDown',
-                label: '',
-                icon: 'chevron-down',
-                buttonClass: toolbarButtonClass,
-                liveParams: {path: path},
-                disabled: isLast,
-                title: 'Move down'|trans,
-                'aria-label': 'Move down'|trans,
-                'data-tid': 'content-editor-block-move-down',
-            }) }}
-            {{ component('Admin:LiveActionButton', {
-                action: 'duplicateBlock',
-                label: '',
-                icon: 'duplicate',
-                buttonClass: toolbarButtonClass,
-                liveParams: {path: path},
-                title: 'Duplicate'|trans,
-                'aria-label': 'Duplicate'|trans,
-                'data-tid': 'content-editor-block-duplicate',
-            }) }}
-            {{ component('Admin:LiveActionButton', {
-                action: 'removeBlock',
-                label: '',
-                icon: 'trash',
-                buttonClass: toolbarButtonClass,
-                liveParams: {path: path},
-                title: 'Remove'|trans,
-                'aria-label': 'Remove'|trans,
-                'data-content-editor-remove': '',
-                'data-tid': 'content-editor-block-remove',
-            }) }}
-            <button type="button"
-                    class="{{ toolbarButtonClass }} content-editor-toggle"
-                    title="{{ 'Collapse or expand'|trans }}"
-                    aria-label="{{ 'Collapse or expand'|trans }}"
-                    data-content-editor-toggle
-                    data-tid="content-editor-block-toggle">{{ ux_icon('chevron-down') }}</button>
+            {% for button in toolbarButtons %}
+                {{ component('Admin:LiveActionButton', {
+                    action: button.action,
+                    label: '',
+                    icon: button.icon,
+                    buttonClass: toolbarButtonClass,
+                    liveParams: {path: path},
+                    disabled: button.disabled ?? false,
+                    title: button.label,
+                    'aria-label': button.label,
+                    'data-tid': 'content-editor-block-' ~ button.tid,
+                }|merge(button.attributes ?? {})) }}
+            {% endfor %}
+            {{ _self.toggleButton(toolbarButtonClass, 'content-editor-block-toggle') }}
         </div>
     </div>
 
@@ -91,12 +71,7 @@
                 >
                     <div class="content-editor-header" data-action="click->content-editor#toggle">
                         <span class="fw-bold">{{ 'Column %number%'|trans({'%number%': loop.index}) }}</span>
-                        <button type="button"
-                                class="{{ toolbarButtonClass }} content-editor-toggle"
-                                title="{{ 'Collapse or expand'|trans }}"
-                                aria-label="{{ 'Collapse or expand'|trans }}"
-                                data-content-editor-toggle
-                                data-tid="content-editor-slot-toggle">{{ ux_icon('chevron-down') }}</button>
+                        {{ _self.toggleButton(toolbarButtonClass, 'content-editor-slot-toggle') }}
                     </div>
                     <div data-content-editor-body>
                         {% include '@ShopsysAdministration/content_editor/block_list.html.twig' with {
