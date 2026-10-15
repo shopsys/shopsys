@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory as BaseMailTempla
 /**
  * @method \App\Model\Mail\MailTemplateData create()
  * @method \App\Model\Mail\MailTemplateData createFromMailTemplate(\App\Model\Mail\MailTemplate $mailTemplate)
- * @method __construct(\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory)
+ * @method __construct(\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory, \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory $contentDocumentFactory)
  * @method void fillFromMailTemplate(\App\Model\Mail\MailTemplateData $mailTemplateData, \App\Model\Mail\MailTemplate $mailTemplate)
  */
 class MailTemplateDataFactory extends BaseMailTemplateDataFactory

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
@@ -61,10 +62,29 @@ class MailTemplate implements DomainSeparatedEntityInterface
     protected $subject;
 
     /**
-     * @var string|null
+     * Content editor document, see \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument::toArray()
+     *
+     * @var array|null
      */
     #[AsMcpColumn]
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
+    protected $content;
+
+    /**
+     * HTML written by GrapesJS before the content editor, it is read only by the migration task converting it
+     * to the content and is dropped in the next release. Application code must never write it.
+     *
+     * @var string|null
+     */
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Column(name: 'legacy_grapesjs_body', type: Types::TEXT, nullable: true)]
+    protected $legacyGrapesJsBody;
+
+    /**
+     * Rendered HTML of the content, set by the facade for sending the mail and never persisted
+     *
+     * @var string|null
+     */
     protected $body;
 
     /**
@@ -105,7 +125,7 @@ class MailTemplate implements DomainSeparatedEntityInterface
     {
         $this->bccEmail = $mailTemplateData->bccEmail;
         $this->subject = $mailTemplateData->subject;
-        $this->body = $mailTemplateData->body;
+        $this->content = $mailTemplateData->content?->toArray();
         $this->sendMail = $mailTemplateData->sendMail;
         $this->orderStatus = $mailTemplateData->orderStatus;
         $this->complaintStatus = $mailTemplateData->complaintStatus;
@@ -153,7 +173,15 @@ class MailTemplate implements DomainSeparatedEntityInterface
     }
 
     /**
-     * @return string
+     * @return array|null
+     */
+    public function getContentArray()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @return string|null
      */
     public function getBody()
     {

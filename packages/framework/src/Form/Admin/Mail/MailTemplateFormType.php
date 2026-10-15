@@ -6,15 +6,16 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
-use Shopsys\FrameworkBundle\Form\Admin\GrapesJsMailType;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Validation\ContentDocumentContainsVariable;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Validation\ContentDocumentNotEmpty;
 use Shopsys\FrameworkBundle\Form\Constraints\Contains;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\FileUploadType;
-use Shopsys\FrameworkBundle\Form\Transformers\EmptyWysiwygTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData;
-use Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -27,6 +28,16 @@ use Symfony\Component\Validator\Constraints;
 final class MailTemplateFormType extends AbstractType
 {
     public const string VALIDATION_GROUP_SEND_MAIL = 'sendMail';
+
+    private const string IMAGE_VARIABLE_BLOCK_TYPE = 'mail-image-variable';
+
+    // The framework must not depend on the administration bundle, so the type is referenced by name only.
+    private const string CONTENT_EDITOR_TYPE = 'Shopsys\AdministrationBundle\Form\Admin\Type\ContentEditorType';
+
+    public function __construct(
+        private readonly ContentBlockRegistry $contentBlockRegistry,
+    ) {
+    }
 
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -54,22 +65,18 @@ final class MailTemplateFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add(
-                $builder
-                    ->create('body', GrapesJsMailType::class, [
-                        'label' => 'Content',
-                        'required' => true,
-                        'body_variables' => $options['body_variables'],
-                        'constraints' => $this->getBodyConstraints($options),
-                        'custom_plugins' => [
-                            $mailTemplate->getName() === WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME ? 'mail-custom-image-with-variable' : null,
-                        ],
-                        'label_attr' => [
-                            'class' => 'js-conditional-field',
-                        ],
-                    ])
-                    ->addModelTransformer(new EmptyWysiwygTransformer()),
-            )
+            ->add('content', self::CONTENT_EDITOR_TYPE, [
+                'label' => 'Content',
+                'required' => false,
+                'profile' => ContentProfileEnum::MAIL,
+                'variables' => $options['body_variables'],
+                'domain_id' => $mailTemplate->getDomainId(),
+                'allowed_types' => $this->getAllowedBlockTypes($options['body_variables']),
+                'constraints' => $this->getContentConstraints($options),
+                'label_attr' => [
+                    'class' => 'js-conditional-field',
+                ],
+            ])
             ->add('attachments', FileUploadType::class, [
                 'label' => 'Upload attachment',
                 'required' => false,
@@ -129,24 +136,41 @@ final class MailTemplateFormType extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getBodyConstraints(array $options): array
+    private function getContentConstraints(array $options): array
     {
-        $bodyConstraints = [];
+        $contentConstraints = [];
 
-        $bodyConstraints[] = new Constraints\NotBlank(
+        $contentConstraints[] = new ContentDocumentNotEmpty(
             message: 'Please enter email content',
             groups: [static::VALIDATION_GROUP_SEND_MAIL],
         );
 
         foreach ($options['required_body_variables'] as $variableName) {
-            $bodyConstraints[] = new Contains(
-                needle: $variableName,
-                message: 'Variable {{ needle }} is required',
+            $contentConstraints[] = new ContentDocumentContainsVariable(
+                variable: $variableName,
                 groups: [static::VALIDATION_GROUP_SEND_MAIL],
             );
         }
 
-        return $bodyConstraints;
+        return $contentConstraints;
+    }
+
+    /**
+     * The block with an image from a variable is useful only in templates having such a variable (e.g. the product image of the watchdog)
+     *
+     * @param array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}> $bodyVariables
+     * @return string[]|null
+     */
+    private function getAllowedBlockTypes(array $bodyVariables): ?array
+    {
+        if (in_array(true, array_column($bodyVariables, 'isImage'), true)) {
+            return null;
+        }
+
+        return array_values(array_diff(
+            array_keys($this->contentBlockRegistry->getForProfile(ContentProfileEnum::MAIL)),
+            [self::IMAGE_VARIABLE_BLOCK_TYPE],
+        ));
     }
 
     #[Override]

@@ -22,9 +22,9 @@ class MailTemplateData
     public $subject;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument|null
      */
-    public $body;
+    public $content;
 
     /**
      * @var bool

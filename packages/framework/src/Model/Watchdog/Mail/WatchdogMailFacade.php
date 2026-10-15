@@ -23,7 +23,7 @@ class WatchdogMailFacade
 
     public function sendMail(Watchdog $watchdog): void
     {
-        $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME, $watchdog->getDomainId());
+        $mailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(WatchdogMail::WATCHDOG_MAIL_TEMPLATE_NAME, $watchdog->getDomainId());
         $messageData = $this->watchdogMail->createMessage($mailTemplate, $watchdog);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
 

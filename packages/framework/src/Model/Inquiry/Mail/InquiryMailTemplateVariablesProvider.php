@@ -72,6 +72,7 @@ class InquiryMailTemplateVariablesProvider
             InquiryMail::VARIABLE_PRODUCT_IMAGE,
             t('Product image URL'),
             MailTemplateVariables::CONTEXT_BODY,
+            isImage: true,
         );
 
         if ($mailTemplateType === InquiryMail::ADMIN_MAIL_TEMPLATE_NAME) {

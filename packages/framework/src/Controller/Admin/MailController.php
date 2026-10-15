@@ -81,6 +81,7 @@ class MailController extends AdminBaseController
                 'body_variables' => $this->transformBodyVariables(
                     $mailTemplateVariables->getLabeledVariables(),
                     $mailTemplateVariables->getRequiredBodyVariables(),
+                    $mailTemplateVariables->getImageVariables(),
                 ),
             ],
         );
@@ -124,9 +125,10 @@ class MailController extends AdminBaseController
     /**
      * @param string[] $variables
      * @param string[] $requiredVariables
-     * @return array<int, array<string, bool|int|string>>
+     * @param string[] $imageVariables
+     * @return array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}>
      */
-    protected function transformBodyVariables(array $variables, array $requiredVariables): array
+    protected function transformBodyVariables(array $variables, array $requiredVariables, array $imageVariables): array
     {
         $transformedVariables = [];
 
@@ -135,6 +137,7 @@ class MailController extends AdminBaseController
                 'label' => $label,
                 'placeholder' => $placeholder,
                 'isRequired' => in_array($placeholder, $requiredVariables, true),
+                'isImage' => in_array($placeholder, $imageVariables, true),
             ];
         }
 

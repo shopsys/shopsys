@@ -34,7 +34,7 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
             throw new InvalidArgumentException(sprintf('The "%s::%s" method supports only instances of "%s" class, but "%s" instance given.', __CLASS__, __METHOD__, Administrator::class, get_class($administrator)));
         }
 
-        $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
+        $mailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(
             TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE,
             $this->domain->getFirstDomainIdMatchingAdminSelectedLocale($administrator),
         );

@@ -35,6 +35,7 @@ class WatchdogMailTemplateVariablesProvider
             WatchdogMail::VARIABLE_PRODUCT_IMAGE,
             t('Product image URL'),
             MailTemplateVariables::CONTEXT_BODY,
+            isImage: true,
         );
 
         return $mailTemplateVariables;

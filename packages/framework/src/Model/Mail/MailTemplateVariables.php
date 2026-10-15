@@ -62,6 +62,11 @@ class MailTemplateVariables
      */
     protected array $requiredSubjectVariables = [];
 
+    /**
+     * @var string[]
+     */
+    protected array $imageVariables = [];
+
     public function __construct(protected string $readableName, protected readonly ?string $type = null)
     {
     }
@@ -78,6 +83,7 @@ class MailTemplateVariables
     /**
      * @param int $context one of CONTEXT_* constants
      * @param int $required one of REQUIRED_* constants
+     * @param bool $isImage whether the variable is replaced with an address of an image, so the editor offers it as a source of an image
      * @return $this
      */
     public function addVariable(
@@ -85,6 +91,7 @@ class MailTemplateVariables
         string $label,
         int $context = self::CONTEXT_BOTH,
         int $required = self::REQUIRED_NOWHERE,
+        bool $isImage = false,
     ): self {
         if (array_key_exists($variable, $this->variables)) {
             throw new InvalidMailTemplateVariablesConfigurationException(
@@ -95,6 +102,10 @@ class MailTemplateVariables
         $this->variables[$variable] = $label;
         $this->addVariableToSections($variable, $context);
         $this->addVariableToRequiredSections($variable, $context, $required);
+
+        if ($isImage) {
+            $this->imageVariables[] = $variable;
+        }
 
         return $this;
     }
@@ -209,5 +220,13 @@ class MailTemplateVariables
     public function getLabeledVariables(): array
     {
         return $this->variables;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getImageVariables(): array
+    {
+        return $this->imageVariables;
     }
 }

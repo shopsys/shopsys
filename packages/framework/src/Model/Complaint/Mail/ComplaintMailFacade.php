@@ -36,7 +36,7 @@ class ComplaintMailFacade
     {
         $templateName = $this->complaintMail->getMailTemplateNameByStatus($complaintStatus);
 
-        return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);
+        return $this->mailTemplateFacade->getTemplateWithRenderedContent($templateName, $domainId);
     }
 
     public function sendMailTemplate(

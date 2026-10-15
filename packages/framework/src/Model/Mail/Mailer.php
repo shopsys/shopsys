@@ -44,7 +44,6 @@ class Mailer
             $messageData->body,
             $messageData->variablesReplacementsForBody,
         );
-        $body = $this->replaceVariableImagesPaths($body);
         $subject = $this->replaceVariables(
             $messageData->subject,
             $messageData->variablesReplacementsForSubject,
@@ -124,13 +123,5 @@ class Mailer
         }
 
         return strtr($string, $resolvedReplacements);
-    }
-
-    protected function replaceVariableImagesPaths(string $body): string
-    {
-        $pattern = '/<img\s+([^>]*?)src="([^"]*)"(\s+[^>]*?)path="([^"]*?)"(.*?)>/i';
-        $replacement = '<img $1src="$4"$3$5>';
-
-        return preg_replace($pattern, $replacement, $body);
     }
 }

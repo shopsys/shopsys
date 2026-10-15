@@ -71,7 +71,7 @@ class MailTemplateRepository
             ->select('COUNT(mt)')
             ->from(MailTemplate::class, 'mt')
             ->where('mt.sendMail = TRUE')
-            ->andWhere('mt.body IS NULL OR mt.subject IS NULL')
+            ->andWhere('mt.content IS NULL OR mt.subject IS NULL')
             ->getQuery()
             ->getSingleScalarResult();
 

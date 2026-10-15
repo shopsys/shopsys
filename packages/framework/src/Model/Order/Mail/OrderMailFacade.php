@@ -39,7 +39,7 @@ class OrderMailFacade
     ): MailTemplate {
         $templateName = ExtendedClassNameResolver::resolve(OrderMail::class)::getMailTemplateNameByStatus($orderStatus);
 
-        return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);
+        return $this->mailTemplateFacade->getTemplateWithRenderedContent($templateName, $domainId);
     }
 
     public function sendMailTemplate(MailTemplate $mailTemplate, Order $order, ?string $forceSendTo = null): void

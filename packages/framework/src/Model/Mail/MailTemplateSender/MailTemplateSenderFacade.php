@@ -28,7 +28,7 @@ class MailTemplateSenderFacade
     public function sendMail(MailTemplate $mailTemplate, string $mailTo, ?int $entityId): void
     {
         $this->getTemplateSender($mailTemplate)->sendTemplate(
-            $this->mailTemplateFacade->getTemplateWrappedWithGrapesBody($mailTemplate),
+            $this->mailTemplateFacade->withRenderedContent($mailTemplate),
             $mailTo,
             $entityId,
         );

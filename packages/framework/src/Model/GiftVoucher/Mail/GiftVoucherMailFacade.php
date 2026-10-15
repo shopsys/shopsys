@@ -37,7 +37,7 @@ class GiftVoucherMailFacade
             return;
         }
 
-        $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
+        $mailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(
             GiftVoucherMail::GIFT_VOUCHER_MAIL_TEMPLATE_NAME,
             $order->getDomainId(),
         );

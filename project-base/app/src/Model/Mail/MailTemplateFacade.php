@@ -14,10 +14,11 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade as BaseMailTemplateFac
  * @method \App\Model\Mail\MailTemplate edit(int $id, \App\Model\Mail\MailTemplateData $mailTemplateData)
  * @property \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
  * @property \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory, \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider, \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder)
- * @method \App\Model\Mail\MailTemplate getWrappedWithGrapesJsBody(string $templateName, int $domainId)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory, \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider, \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder, \Shopsys\FrameworkBundle\Component\ContentEditor\Mail\MailContentRenderer $mailContentRenderer, \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory $contentDocumentFactory, \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer $contentDocumentNormalizer)
+ * @method \App\Model\Mail\MailTemplate getTemplateWithRenderedContent(string $templateName, int $domainId)
  * @method void createMailTemplateForAllDomains(string $name, \App\Model\Order\Status\OrderStatus|null $orderStatus = null, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null $complaintStatus = null)
- * @method \App\Model\Mail\MailTemplate getTemplateWrappedWithGrapesBody(\App\Model\Mail\MailTemplate $mailTemplate)
+ * @method \App\Model\Mail\MailTemplate withRenderedContent(\App\Model\Mail\MailTemplate $mailTemplate)
+ * @method void normalizeContent(\App\Model\Mail\MailTemplateData $mailTemplateData)
  */
 class MailTemplateFacade extends BaseMailTemplateFacade
 {

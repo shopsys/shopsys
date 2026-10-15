@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 
 class MailTemplateDataFactory
 {
     public function __construct(
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
-        protected readonly Domain $domain,
-        protected readonly EnsureCorrectGrapesJsFormatHelper $ensureCorrectGrapesJsFormatHelper,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
     ) {
     }
 
@@ -44,9 +43,8 @@ class MailTemplateDataFactory
         $mailTemplateData->name = $mailTemplate->getName();
         $mailTemplateData->bccEmail = $mailTemplate->getBccEmail();
         $mailTemplateData->subject = $mailTemplate->getSubject();
-        $mailTemplateData->body = $this->ensureCorrectGrapesJsFormatHelper->ensureStringIsInCorrectGrapesJsFormat(
-            $mailTemplate->getBody(),
-            $this->domain->getDomainConfigById($mailTemplate->getDomainId())->getLocale(),
+        $mailTemplateData->content = $this->contentDocumentFactory->createFromArray(
+            $mailTemplate->getContentArray() ?? ['profile' => ContentProfileEnum::MAIL],
         );
         $mailTemplateData->sendMail = $mailTemplate->isSendMail();
         $mailTemplateData->orderStatus = $mailTemplate->getOrderStatus();

@@ -22,7 +22,7 @@ class WithdrawalConfirmationMailFacade
 
     public function sendMail(WithdrawalRequest $withdrawalRequest): void
     {
-        $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
+        $mailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(
             WithdrawalConfirmationMail::ORDER_WITHDRAWAL_CONFIRMATION_NAME,
             $withdrawalRequest->getOrder()->getDomainId(),
         );

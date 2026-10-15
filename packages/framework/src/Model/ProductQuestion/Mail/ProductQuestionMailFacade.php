@@ -23,10 +23,10 @@ class ProductQuestionMailFacade
 
     public function sendMail(ProductQuestionData $productQuestionData): void
     {
-        $adminMailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(ProductQuestionMail::ADMIN_MAIL_TEMPLATE_NAME, $productQuestionData->domainId);
+        $adminMailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(ProductQuestionMail::ADMIN_MAIL_TEMPLATE_NAME, $productQuestionData->domainId);
         $this->sendMailTemplate($adminMailTemplate, $productQuestionData);
 
-        $customerMailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(ProductQuestionMail::CUSTOMER_MAIL_TEMPLATE_NAME, $productQuestionData->domainId);
+        $customerMailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(ProductQuestionMail::CUSTOMER_MAIL_TEMPLATE_NAME, $productQuestionData->domainId);
         $this->sendMailTemplate($customerMailTemplate, $productQuestionData);
     }
 

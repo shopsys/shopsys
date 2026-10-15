@@ -25,7 +25,7 @@ class ResetPasswordMailFacade
     {
         $domainId = $this->domain->getFirstDomainIdMatchingAdminSelectedLocale($administrator);
 
-        $mailTemplate = $this->mailTemplateFacade->getWrappedWithGrapesJsBody(
+        $mailTemplate = $this->mailTemplateFacade->getTemplateWithRenderedContent(
             ResetPasswordMail::MAIL_TEMPLATE_NAME,
             $domainId,
         );

@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Mail\MailContentRenderer;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
@@ -22,14 +26,17 @@ class MailTemplateFacade
         protected readonly MailTemplateDataFactory $mailTemplateDataFactory,
         protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider,
         protected readonly MailTemplateBuilder $mailTemplateBuilder,
+        protected readonly MailContentRenderer $mailContentRenderer,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
+        protected readonly ContentDocumentNormalizer $contentDocumentNormalizer,
     ) {
     }
 
-    public function getWrappedWithGrapesJsBody(string $templateName, int $domainId): MailTemplate
+    public function getTemplateWithRenderedContent(string $templateName, int $domainId): MailTemplate
     {
         $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
 
-        return $this->getTemplateWrappedWithGrapesBody($mailTemplate);
+        return $this->withRenderedContent($mailTemplate);
     }
 
     public function getById(int $id): MailTemplate
@@ -40,6 +47,8 @@ class MailTemplateFacade
     public function edit(int $id, MailTemplateData $mailTemplateData): MailTemplate
     {
         $mailTemplate = $this->getById($id);
+
+        $this->normalizeContent($mailTemplateData);
         $mailTemplate->edit($mailTemplateData);
 
         $this->uploadedFileFacade->manageFiles($mailTemplate, $mailTemplateData->attachments);
@@ -75,11 +84,26 @@ class MailTemplateFacade
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
     }
 
-    public function getTemplateWrappedWithGrapesBody(MailTemplate $mailTemplate): MailTemplate
+    public function withRenderedContent(MailTemplate $mailTemplate): MailTemplate
     {
-        $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($mailTemplate->getDomainId(), $mailTemplate->getBody()));
+        $domainId = $mailTemplate->getDomainId();
+        $document = $this->contentDocumentFactory->createFromArray(
+            $mailTemplate->getContentArray() ?? ['profile' => ContentProfileEnum::MAIL],
+        );
+
+        $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent(
+            $domainId,
+            $this->mailContentRenderer->render($document, $domainId),
+        ));
         $this->em->detach($mailTemplate); // detach from entity manager to avoid accidental persisting the changes to the database
 
         return $mailTemplate;
+    }
+
+    protected function normalizeContent(MailTemplateData $mailTemplateData): void
+    {
+        if ($mailTemplateData->content !== null) {
+            $mailTemplateData->content = $this->contentDocumentNormalizer->normalize($mailTemplateData->content);
+        }
     }
 }

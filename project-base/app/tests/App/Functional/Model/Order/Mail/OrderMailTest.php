@@ -6,12 +6,15 @@ namespace Tests\App\Functional\Model\Order\Mail;
 
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateDataFactory;
+use App\Model\Mail\MailTemplateFacade;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
 use Closure;
 use DateTimeImmutable;
 use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
@@ -46,6 +49,16 @@ class OrderMailTest extends TransactionFunctionalTestCase
      */
     private DateTimeFormatterExtension $dateTimeFormatterExtension;
 
+    /**
+     * @inject
+     */
+    private ContentDocumentFactory $contentDocumentFactory;
+
+    /**
+     * @inject
+     */
+    private MailTemplateFacade $mailTemplateFacade;
+
     public function testGetMailTemplateNameByStatus(): void
     {
         $orderStatus1 = $this->getMockBuilder(OrderStatus::class)
@@ -78,13 +91,14 @@ class OrderMailTest extends TransactionFunctionalTestCase
 
         $order = $this->getReference('order_1', Order::class);
 
-        $mailTemplate = $this->createMailTemplate('body');
+        $mailTemplate = $this->createMailTemplate('<p>body</p>');
 
         $messageData = $orderMail->createMessage($mailTemplate, $order);
 
         $this->assertInstanceOf(MessageData::class, $messageData);
         $this->assertSame($mailTemplate->getSubject(), $messageData->subject);
         $this->assertSame($mailTemplate->getBody(), $messageData->body);
+        $this->assertStringContainsString('<p>body</p>', $messageData->body);
 
         $expectedDeliveryDateReplacement = $messageData
             ->variablesReplacementsForBody[OrderMail::VARIABLE_EXPECTED_DELIVERY_DATE];
@@ -164,12 +178,17 @@ class OrderMailTest extends TransactionFunctionalTestCase
         );
     }
 
-    private function createMailTemplate(string $body): MailTemplate
+    private function createMailTemplate(string $html): MailTemplate
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->subject = 'subject';
-        $mailTemplateData->body = $body;
+        $mailTemplateData->content = $this->contentDocumentFactory->createFromArray([
+            'profile' => ContentProfileEnum::MAIL,
+            'blocks' => [['id' => 'text-1', 'type' => 'mail-text', 'data' => ['html' => $html]]],
+        ]);
 
-        return new MailTemplate('templateName', Domain::FIRST_DOMAIN_ID, $mailTemplateData);
+        return $this->mailTemplateFacade->withRenderedContent(
+            new MailTemplate('templateName', Domain::FIRST_DOMAIN_ID, $mailTemplateData),
+        );
     }
 }
