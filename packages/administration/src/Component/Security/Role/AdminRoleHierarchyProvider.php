@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Security\Role;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
+use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Security\Role\Hierarchy\AbstractRoleHierarchyProvider;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Component\Security\Role\Role;
@@ -40,10 +41,11 @@ final class AdminRoleHierarchyProvider extends AbstractRoleHierarchyProvider
     {
         $regularRoles = $this->getRegularRoles();
 
-        return array_merge(
+        return array_merge_recursive(
             $this->buildSystemRoleHierarchy(),
             $this->buildAggregateRoleHierarchy($regularRoles),
             $this->buildPermissionHierarchy($regularRoles),
+            $this->buildContentEditorMediaHierarchy(),
         );
     }
 
@@ -88,6 +90,26 @@ final class AdminRoleHierarchyProvider extends AbstractRoleHierarchyProvider
         return [
             SystemRole::SUPER_ADMIN => [SystemRole::ADMIN, SystemRole::ALL],
         ];
+    }
+
+    /**
+     * The media picker of the content editor lists and uploads images, so whoever edits the content needs the media rights
+     *
+     * @return array<string, string[]>
+     */
+    private function buildContentEditorMediaHierarchy(): array
+    {
+        $mediaIdentifiers = [
+            RoleIdentifierHelper::getIdentifierWithPermission(AdminRoleConstant::ROLE_MEDIA, Permission::VIEW),
+            RoleIdentifierHelper::getIdentifierWithPermission(AdminRoleConstant::ROLE_MEDIA, Permission::CREATE),
+        ];
+        $hierarchy = [];
+
+        foreach ([AdminRoleConstant::ROLE_ARTICLE, AdminRoleConstant::ROLE_BLOG_ARTICLE, AdminRoleConstant::ROLE_MAIL_TEMPLATE] as $roleConstant) {
+            $hierarchy[RoleIdentifierHelper::getIdentifierWithPermission($roleConstant, Permission::EDIT)] = $mediaIdentifiers;
+        }
+
+        return $hierarchy;
     }
 
     /**
