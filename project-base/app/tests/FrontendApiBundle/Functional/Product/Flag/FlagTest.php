@@ -6,7 +6,12 @@ namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDetailFriendlyUrlDataProvider;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -16,6 +21,21 @@ class FlagTest extends GraphQlTestCase
      * @inject
      */
     private UrlGeneratorInterface $urlGenerator;
+
+    /**
+     * @inject
+     */
+    private FlagFacade $flagFacade;
+
+    /**
+     * @inject
+     */
+    private FlagDataFactory $flagDataFactory;
+
+    /**
+     * @inject
+     */
+    private FriendlyUrlFacade $friendlyUrlFacade;
 
     public function testFlagByUuid(): void
     {
@@ -133,5 +153,24 @@ class FlagTest extends GraphQlTestCase
 
         $this->assertSame($productsWithNodes, $responseData['products']['edges']);
         $this->assertSame($expectedCategories, $responseData['categories']);
+    }
+
+    public function testHiddenFlagIsNotFoundByUrlSlug(): void
+    {
+        $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_MADEIN_DE, Flag::class);
+        $flagData = $this->flagDataFactory->createFromFlag($flag);
+        $flagData->visible = false;
+        $this->flagFacade->edit($flag->getId(), $flagData);
+
+        $urlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
+            Domain::FIRST_DOMAIN_ID,
+            FlagDetailFriendlyUrlDataProvider::ROUTE_NAME,
+            $flag->getId(),
+        );
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/FlagByUrlSlugQuery.graphql', [
+            'urlSlug' => $urlSlug,
+        ]);
+
+        $this->assertUserError($response, 'flag-not-found');
     }
 }
