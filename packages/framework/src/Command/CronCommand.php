@@ -33,6 +33,7 @@ class CronCommand extends Command
     protected const string OPTION_LIST = 'list';
     protected const string OPTION_INSTANCE_NAME = 'instance-name';
     protected const string OPTION_RUN_ALL_SERIALLY = 'run-all-serially';
+    protected const string OPTION_SCHEDULED_ONLY = 'scheduled-only';
 
     public function __construct(
         protected readonly CronFacade $cronFacade,
@@ -71,6 +72,12 @@ class CronCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Run all cron jobs serially (this is not safe to run in production environment)',
+            )
+            ->addOption(
+                self::OPTION_SCHEDULED_ONLY,
+                null,
+                InputOption::VALUE_NONE,
+                'Run only modules that are already scheduled (e.g. manually from administration) in all instances, without scheduling modules by time',
             );
     }
 
@@ -81,6 +88,7 @@ class CronCommand extends Command
         $optionInstanceName = $input->getOption(self::OPTION_INSTANCE_NAME);
         $optionRunAllSerially = $input->getOption(self::OPTION_RUN_ALL_SERIALLY);
         $optionModule = $input->getOption(self::OPTION_MODULE);
+        $optionScheduledOnly = $input->getOption(self::OPTION_SCHEDULED_ONLY);
 
         if ($optionList === true) {
             $this->listAllCronModulesSortedByServiceId($input, $output, $this->cronFacade);
@@ -96,6 +104,12 @@ class CronCommand extends Command
 
         if ($optionRunAllSerially === true) {
             $this->runAllModulesSerially($output);
+
+            return Command::SUCCESS;
+        }
+
+        if ($optionScheduledOnly === true) {
+            $this->runScheduledModulesInAllInstances($output);
 
             return Command::SUCCESS;
         }
@@ -217,6 +231,29 @@ class CronCommand extends Command
             $this->getProcessOutputCallback($output),
             $output->isDecorated(),
         );
+    }
+
+    protected function runScheduledModulesInAllInstances(OutputInterface $output): void
+    {
+        foreach ($this->cronFacade->getInstanceNames() as $instanceName) {
+            try {
+                $mutex = $this->acquireInstanceMutex($instanceName);
+            } catch (CronIsLockedException $e) {
+                $output->writeln(sprintf('Instance "%s": %s', $instanceName, $e->getMessage()));
+
+                continue;
+            }
+
+            try {
+                $this->cronFacade->runScheduledModulesForInstance(
+                    $instanceName,
+                    $this->getProcessOutputCallback($output),
+                    $output->isDecorated(),
+                );
+            } finally {
+                $mutex->releaseLock();
+            }
+        }
     }
 
     protected function runAllModulesSerially(OutputInterface $output): void

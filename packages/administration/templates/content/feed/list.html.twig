@@ -5,6 +5,15 @@
 {% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
 {% block h1 %}{{ 'XML Feeds'|trans }}{% endblock %}
 
+{% block btn %}
+    {% if can_edit(constant('Shopsys\\FrameworkBundle\\Component\\Security\\Role\\AdminRoleConstant::ROLE_FEED')) %}
+        <a href="{{ protectedUrl('admin_feed_scheduleall') }}" class="btn">
+            {{ ux_icon('schedule') }}
+            {{ 'Schedule all feeds'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
+
 {% block main_content %}
     {{ gridView.render() }}
 {% endblock %}

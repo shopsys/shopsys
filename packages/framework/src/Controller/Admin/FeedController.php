@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -58,6 +59,18 @@ class FeedController extends AdminBaseController
                 ],
             );
         }
+
+        return $this->redirectToRoute('admin_feed_list');
+    }
+
+    #[Route(path: '/feed/schedule-all')]
+    #[CanEdit]
+    #[CsrfProtection]
+    public function scheduleAllAction(): RedirectResponse
+    {
+        $this->feedFacade->scheduleAllFeeds();
+
+        $this->addSuccessFlash(t('All feeds successfully scheduled.'));
 
         return $this->redirectToRoute('admin_feed_list');
     }

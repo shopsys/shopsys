@@ -2113,6 +2113,9 @@ msgstr "Naskenujte QR kód"
 msgid "Schedule"
 msgstr "Naplánovat"
 
+msgid "Schedule all feeds"
+msgstr "Naplánovat všechny feedy"
+
 msgid "Scheduled"
 msgstr "Naplánován"
 
