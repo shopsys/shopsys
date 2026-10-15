@@ -71,6 +71,9 @@ overblog_dataloader:
         firstImageBatchLoader:
             alias: "first_image_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\FirstImageBatchLoader:loadByBatchData"
+        flagHreflangLinksBatchLoader:
+            alias: "flag_hreflang_links_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Flag\\FlagHreflangLinksBatchLoader:loadByFlags"
         flagSlugBatchLoader:
             alias: "flag_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadFlagSlugs"

@@ -128,11 +128,34 @@ class HreflangLinksFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     * Main friendly URL slugs of all the flags are loaded by a single query per domain
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[][] hreflang links of each flag, in the order of the flags
      */
-    public function getForFlag(Flag $flag, int $currentDomainId, bool $absoluteUrl = true): array
+    public function getForFlags(array $flags, int $currentDomainId, bool $absoluteUrl = true): array
     {
-        return $this->doGetHrefLinks($flag, $currentDomainId, static::ROUTE_FLAG_DETAIL, $absoluteUrl);
+        $flagIds = array_map(static fn (Flag $flag): int => $flag->getId(), $flags);
+        $hreflangLinksIndexedByFlagId = array_fill_keys($flagIds, []);
+
+        foreach ($this->getRelevantDomainIds($currentDomainId) as $domainId) {
+            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+            $slugsIndexedByFlagId = $this->friendlyUrlFacade->getMainFriendlyUrlSlugsIndexedByEntityId(
+                $domainId,
+                static::ROUTE_FLAG_DETAIL,
+                $flagIds,
+            );
+
+            foreach ($slugsIndexedByFlagId as $flagId => $slug) {
+                $href = $absoluteUrl === true ? $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($domainId, $slug) : $slug;
+                $hreflangLinksIndexedByFlagId[$flagId][] = new HreflangLink($locale, $href, $domainId);
+            }
+        }
+
+        return array_map(
+            static fn (Flag $flag): array => $hreflangLinksIndexedByFlagId[$flag->getId()],
+            $flags,
+        );
     }
 
     /**
@@ -147,7 +170,7 @@ class HreflangLinksFacade
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     protected function doGetHrefLinks(
-        BlogArticle|Brand|Category|Product|SeoPage|Flag $entity,
+        BlogArticle|Brand|Category|Product|SeoPage $entity,
         int $currentDomainId,
         string $routeName,
         bool $absoluteUrl,

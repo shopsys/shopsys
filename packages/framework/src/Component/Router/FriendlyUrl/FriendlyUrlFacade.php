@@ -152,7 +152,14 @@ class FriendlyUrlFacade
 
     public function getAbsoluteUrlByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): string
     {
-        $mainFriendlyUrlSlug = $this->getMainFriendlyUrlSlug($domainId, $routeName, $entityId);
+        return $this->getAbsoluteUrlByMainFriendlyUrlSlug(
+            $domainId,
+            $this->getMainFriendlyUrlSlug($domainId, $routeName, $entityId),
+        );
+    }
+
+    public function getAbsoluteUrlByMainFriendlyUrlSlug(int $domainId, string $mainFriendlyUrlSlug): string
+    {
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 
         if ($mainFriendlyUrlSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG) {
