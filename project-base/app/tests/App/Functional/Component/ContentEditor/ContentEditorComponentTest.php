@@ -97,7 +97,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         ], true);
         $this->client->catchExceptions(true);
 
-        $component->call('openPicker', ['slotPath' => '', 'index' => 1]);
+        $component->call('moveDown', ['path' => '0']);
 
         $crawler = $component->render()->crawler();
         $this->assertStringContainsString('Enter a YouTube or Vimeo video URL.', $crawler->text());
@@ -133,7 +133,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     public function testFinishWithEmptyRequiredFieldShowsErrorAndDoesNotAnnounceTheDocument(): void
     {
         $component = $this->createEditor([]);
-        $component->call('addBlock', ['type' => 'video']);
+        $component->call('addBlock', ['type' => 'video', 'slotPath' => '', 'index' => 0]);
         // the Live Component test helper lets exceptions through, the browser gets the rendered editor instead
         $this->client->catchExceptions(true);
 
@@ -285,8 +285,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
             $this->createTextBlock(self::TEXT_ID_2, '<p>Two</p>'),
         ]);
 
-        $component->call('openPicker', ['slotPath' => '', 'index' => 1]);
-        $component->call('addBlock', ['type' => 'image']);
+        $component->call('addBlock', ['type' => 'image', 'slotPath' => '', 'index' => 1]);
 
         $blocks = $this->getDocument($component)['blocks'];
         $this->assertSame(['text', 'image', 'text'], array_column($blocks, 'type'));
@@ -300,8 +299,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     {
         $component = $this->createEditor([]);
 
-        $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
-        $component->call('addBlock', ['type' => $type]);
+        $component->call('addBlock', ['type' => $type, 'slotPath' => '', 'index' => 0]);
 
         $block = $this->getDocument($component)['blocks'][0];
         $this->assertSame($type, $block['type']);
@@ -340,30 +338,34 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertCount(0, $crawler->filter('[data-tid^="content-editor-layout"]'));
     }
 
-    public function testBlockIsAddedInsideSlotAndContainersAreNotOfferedThere(): void
+    public function testBlockIsAddedInsideSlot(): void
     {
         $component = $this->createEditor([$this->createColumnsBlock('columns-1-1', [[], []])]);
 
-        $component->call('openPicker', ['slotPath' => '0/1', 'index' => 0]);
-        $crawler = $component->render()->crawler();
-        $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-text"]'));
-        $this->assertCount(0, $crawler->filter('[data-tid^="content-editor-picker-tile-columns-"]'));
-
-        $component->call('addBlock', ['type' => 'text']);
+        $component->call('addBlock', ['type' => 'text', 'slotPath' => '0/1', 'index' => 0]);
 
         $children = $this->getDocument($component)['blocks'][0]['children'];
         $this->assertSame([], $children[0]);
         $this->assertSame(['text'], array_column($children[1], 'type'));
     }
 
+    public function testPickerMarksContainersSoThatTheyCanBeHiddenInSlots(): void
+    {
+        $crawler = $this->createEditor([])->render()->crawler();
+
+        $containerTiles = $crawler->filter('[data-tid^="content-editor-picker-tile-columns-"]');
+        $this->assertGreaterThan(0, $containerTiles->count());
+        $this->assertCount($containerTiles->count(), $crawler->filter('[data-tid^="content-editor-picker-tile-columns-"][data-container]'));
+        $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-text"]:not([data-container])'));
+    }
+
     public function testContainerCannotBeAddedInsideSlot(): void
     {
         $component = $this->createEditor([$this->createColumnsBlock('columns-1-1', [[], []])]);
-        $component->call('openPicker', ['slotPath' => '0/0', 'index' => 0]);
 
         $this->expectException(InvalidArgumentException::class);
 
-        $component->call('addBlock', ['type' => 'columns-1-1']);
+        $component->call('addBlock', ['type' => 'columns-1-1', 'slotPath' => '0/0', 'index' => 0]);
     }
 
     public function testBlockMovesUpAndDownAndStaysAtBoundaries(): void
@@ -400,8 +402,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     {
         $component = $this->createEditor([]);
 
-        $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
-        $component->call('addBlock', ['type' => 'heading']);
+        $component->call('addBlock', ['type' => 'heading', 'slotPath' => '', 'index' => 0]);
 
         $blocks = $this->getDocument($component)['blocks'];
         $this->assertSame('heading', $blocks[0]['type']);

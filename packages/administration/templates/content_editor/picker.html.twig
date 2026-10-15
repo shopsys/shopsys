@@ -2,8 +2,8 @@
 
 <div class="modal modal-blur fade"
      tabindex="-1"
-     data-controller="form-modal block-picker-filter"
-     data-form-modal-open-value="{{ this.pickerOpen ? '1' : '0' }}"
+     data-live-ignore
+     data-block-picker-filter-target="modal"
      data-tid="content-editor-picker">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -11,9 +11,7 @@
                 <h5 class="modal-title">{{ 'Add block'|trans }}</h5>
                 <button type="button"
                         class="btn-close"
-                        data-form-modal-target="closeTrigger"
-                        data-action="live#action"
-                        data-live-action-param="closePicker"
+                        data-bs-dismiss="modal"
                         aria-label="{{ 'Close'|trans }}"
                         data-tid="content-editor-picker-close"
                 ></button>
@@ -34,9 +32,10 @@
                                 <button type="button"
                                         class="btn content-editor-picker-tile"
                                         data-block-picker-filter-target="tile"
-                                        data-action="live#action:prevent"
-                                        data-live-action-param="addBlock"
-                                        data-live-type-param="{{ type }}"
+                                        data-action="block-picker-filter#add"
+                                        data-type="{{ type }}"
+                                        {# containers have slots, the picker hides them when it is opened for a slot #}
+                                        {{ block.slotCount is defined ? 'data-container' }}
                                         data-tid="content-editor-picker-tile-{{ type }}">
                                     {% if block.icon %}
                                         {{ ux_icon(block.icon, {height: 32, width: 32}) }}

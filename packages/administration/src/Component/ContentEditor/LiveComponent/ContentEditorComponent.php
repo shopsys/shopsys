@@ -97,15 +97,6 @@ final class ContentEditorComponent
     #[LiveProp]
     public int $discardCount = 0;
 
-    #[LiveProp]
-    public bool $pickerOpen = false;
-
-    #[LiveProp]
-    public string $pickerSlotPath = '';
-
-    #[LiveProp]
-    public int $pickerIndex = 0;
-
     public function __construct(
         private readonly ContentBlockRegistry $contentBlockRegistry,
         private readonly ContentDocumentFactory $contentDocumentFactory,
@@ -161,31 +152,13 @@ final class ContentEditorComponent
 
     #[LiveAction]
     #[RequireRole(SystemRole::ADMIN)]
-    public function openPicker(#[LiveArg] string $slotPath, #[LiveArg] int $index): void
+    public function addBlock(#[LiveArg] string $type, #[LiveArg] string $slotPath, #[LiveArg] int $index): void
     {
-        $this->pickerSlotPath = $slotPath;
-        $this->pickerIndex = $index;
-        $this->pickerOpen = true;
-    }
-
-    #[LiveAction]
-    #[RequireRole(SystemRole::ADMIN)]
-    public function closePicker(): void
-    {
-        $this->pickerOpen = false;
-    }
-
-    #[LiveAction]
-    #[RequireRole(SystemRole::ADMIN)]
-    public function addBlock(#[LiveArg] string $type): void
-    {
-        $offeredBlocks = $this->getOfferedBlocks();
+        $offeredBlocks = $this->getOfferedBlocks($slotPath === '');
         Assert::keyExists($offeredBlocks, $type, 'Block "%s" cannot be added here');
 
-        $blocks = &$this->getBlockList($this->pickerSlotPath);
-        array_splice($blocks, $this->pickerIndex, 0, [$this->createBlockValues($offeredBlocks[$type])]);
-
-        $this->closePicker();
+        $blocks = &$this->getBlockList($slotPath);
+        array_splice($blocks, $index, 0, [$this->createBlockValues($offeredBlocks[$type])]);
     }
 
     #[LiveAction]
@@ -261,13 +234,15 @@ final class ContentEditorComponent
     }
 
     /**
+     * All blocks of the profile, the picker hides the containers when it is opened for a slot
+     *
      * @return array<string, array<string, \Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface>> offered blocks by type, indexed by category
      */
     public function getPickerBlocksByCategory(): array
     {
         $blocksByCategory = [];
 
-        foreach ($this->getOfferedBlocks() as $type => $block) {
+        foreach ($this->getOfferedBlocks(true) as $type => $block) {
             $blocksByCategory[$block->getCategory()][$type] = $block;
         }
 
@@ -358,10 +333,8 @@ final class ContentEditorComponent
     /**
      * @return array<string, \Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface>
      */
-    private function getOfferedBlocks(): array
+    private function getOfferedBlocks(bool $containersAllowed): array
     {
-        $containersAllowed = $this->pickerSlotPath === '';
-
         return $this->contentBlockRegistry->getForProfile($this->profile, $this->allowedTypes, $containersAllowed);
     }
 

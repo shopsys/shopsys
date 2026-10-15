@@ -2,11 +2,12 @@
 {% if blocks|length == 0 and slotPath == '' %}
     <div class="content-editor-empty">
         {{ component('Admin:LiveActionButton', {
-            action: 'openPicker',
+            'data-action': 'block-picker-filter#open',
             label: 'Add the first block'|trans,
             icon: 'plus',
             buttonClass: 'btn btn-outline-primary btn-lg',
-            liveParams: {'slot-path': slotPath, index: 0},
+            'data-slot-path': slotPath,
+            'data-index': 0,
             'data-tid': 'content-editor-add-first-block',
         }) }}
     </div>
@@ -16,11 +17,12 @@
             {% if not loop.first %}
                 <div class="content-editor-divider">
                     {{ component('Admin:LiveActionButton', {
-                        action: 'openPicker',
+                        'data-action': 'block-picker-filter#open',
                         label: '',
                         icon: 'plus',
                         buttonClass: 'btn btn-icon btn-sm btn-outline-primary',
-                        liveParams: {'slot-path': slotPath, index: loop.index0},
+                        'data-slot-path': slotPath,
+                        'data-index': loop.index0,
                         title: 'Add block'|trans,
                         'aria-label': 'Add block'|trans,
                         'data-tid': 'content-editor-insert-block',
@@ -37,11 +39,12 @@
 
         <div class="content-editor-add">
             {{ component('Admin:LiveActionButton', {
-                action: 'openPicker',
+                'data-action': 'block-picker-filter#open',
                 label: 'Add block'|trans,
                 icon: 'plus',
                 buttonClass: 'btn btn-outline-primary btn-sm',
-                liveParams: {'slot-path': slotPath, index: blocks|length},
+                'data-slot-path': slotPath,
+                'data-index': blocks|length,
                 'data-tid': 'content-editor-add-block',
             }) }}
         </div>
