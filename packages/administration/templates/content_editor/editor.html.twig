@@ -1,26 +1,31 @@
 {% set documentJson = this.normalizedDocumentJson %}
 <div {{ attributes.defaults({
+    'class': 'modal-content',
     'data-controller': 'content-editor',
-    'data-content-editor-target-input-id-value': this.targetInputId,
     'data-content-editor-document-value': documentJson,
     'data-tid': 'content-editor',
 }) }}>
-    <div class="row g-3">
-        <div class="col-lg-7">
-            {% include '@ShopsysAdministration/content_editor/block_list.html.twig' with {blocks: form.blocks, slotPath: ''} %}
-        </div>
-        <div class="col-lg-5">
-            <div class="card" data-tid="content-editor-preview">
+    <div class="modal-header">
+        <h5 class="modal-title">{{ this.label }}</h5>
+        {{ component('Admin:LiveActionButton', {
+            action: 'finish',
+            label: 'Done'|trans,
+            'data-tid': 'content-editor-done',
+        }) }}
+    </div>
+    <div class="modal-body p-0 content-editor-panes">
+        <div class="content-editor-preview-pane" data-tid="content-editor-preview">
+            <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">{{ 'Preview'|trans }}</h3>
                 </div>
                 <div class="card-body text-secondary">
                     {{ 'Preview is not available yet'|trans }}
-                    {% if app.debug %}
-                        <pre class="small mt-3 mb-0 text-wrap" data-tid="content-editor-json">{{ documentJson }}</pre>
-                    {% endif %}
                 </div>
             </div>
+        </div>
+        <div class="content-editor-blocks-pane">
+            {% include '@ShopsysAdministration/content_editor/block_list.html.twig' with {blocks: form.blocks, slotPath: ''} %}
         </div>
     </div>
 

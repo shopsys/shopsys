@@ -412,6 +412,9 @@ msgstr ""
 msgid "Color parameter values"
 msgstr ""
 
+msgid "Column %number%"
+msgstr ""
+
 msgid "Company"
 msgstr ""
 
@@ -817,6 +820,9 @@ msgstr ""
 msgid "Domain filter"
 msgstr ""
 
+msgid "Done"
+msgstr ""
+
 msgid "Download"
 msgstr ""
 
@@ -866,6 +872,9 @@ msgid "Edit administrator"
 msgstr ""
 
 msgid "Edit billing details"
+msgstr ""
+
+msgid "Edit content"
 msgstr ""
 
 msgid "Edit delivery address"
@@ -1092,6 +1101,9 @@ msgstr ""
 
 msgid "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 msgstr "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
+
+msgid "Filter blocks…"
+msgstr ""
 
 msgid "First name"
 msgstr ""

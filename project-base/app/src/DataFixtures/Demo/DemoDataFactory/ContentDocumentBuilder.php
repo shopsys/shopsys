@@ -15,6 +15,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  */
 final class ContentDocumentBuilder
 {
+    private const array COLUMNS_TYPES_BY_LAYOUT = [
+        '1/2-1/2' => 'columns-1-1',
+        '1/3-2/3' => 'columns-1-2',
+        '2/3-1/3' => 'columns-2-1',
+        '1/3-1/3-1/3' => 'columns-1-1-1',
+    ];
+
     /**
      * @var array<int, array<string, mixed>>
      */
@@ -64,7 +71,7 @@ final class ContentDocumentBuilder
     }
 
     /**
-     * @param string $layout e.g. "1/3-2/3"
+     * @param string $layout one of the keys of COLUMNS_TYPES_BY_LAYOUT, e.g. "1/3-2/3"
      * @param self[][] $slots builders of the blocks of each column
      */
     public function columns(string $layout, array $slots): self
@@ -77,8 +84,8 @@ final class ContentDocumentBuilder
 
         $this->blocks[] = [
             'id' => Uuid::uuid4()->toString(),
-            'type' => 'columns',
-            'data' => ['layout' => $layout],
+            'type' => self::COLUMNS_TYPES_BY_LAYOUT[$layout],
+            'data' => [],
             'children' => $children,
         ];
 

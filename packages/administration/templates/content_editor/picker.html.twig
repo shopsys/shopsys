@@ -4,7 +4,7 @@
 
 <div class="modal modal-blur fade"
      tabindex="-1"
-     data-controller="form-modal"
+     data-controller="form-modal block-picker-filter"
      data-form-modal-open-value="{{ this.pickerOpen ? '1' : '0' }}"
      data-form-modal-open-event-value="{{ openedEvent }}"
      data-form-modal-close-event-value="{{ closedEvent }}"
@@ -23,22 +23,32 @@
                 ></button>
             </div>
             <div class="modal-body">
+                <input type="search"
+                       class="form-control mb-3"
+                       placeholder="{{ 'Filter blocks…'|trans }}"
+                       aria-label="{{ 'Filter blocks…'|trans }}"
+                       data-block-picker-filter-target="input"
+                       data-action="input->block-picker-filter#filter keydown.enter->block-picker-filter#chooseFirst"
+                       data-tid="content-editor-picker-filter">
                 {% for category, blocks in this.pickerBlocksByCategory %}
-                    <div class="subheader mb-2">{{ categoryLabels[category] ?? category }}</div>
-                    <div class="content-editor-picker-grid mb-3" data-tid="content-editor-picker-category-{{ category }}">
-                        {% for type, block in blocks %}
-                            <button type="button"
-                                    class="btn content-editor-picker-tile"
-                                    data-action="live#action:prevent"
-                                    data-live-action-param="addBlock"
-                                    data-live-type-param="{{ type }}"
-                                    data-tid="content-editor-picker-tile-{{ type }}">
-                                {% if block.icon %}
-                                    {{ ux_icon(block.icon, {height: 32, width: 32}) }}
-                                {% endif %}
-                                <span>{{ block.label|trans }}</span>
-                            </button>
-                        {% endfor %}
+                    <div data-block-picker-filter-target="group">
+                        <div class="subheader mb-2">{{ categoryLabels[category] ?? category }}</div>
+                        <div class="content-editor-picker-grid mb-3" data-tid="content-editor-picker-category-{{ category }}">
+                            {% for type, block in blocks %}
+                                <button type="button"
+                                        class="btn content-editor-picker-tile"
+                                        data-block-picker-filter-target="tile"
+                                        data-action="live#action:prevent"
+                                        data-live-action-param="addBlock"
+                                        data-live-type-param="{{ type }}"
+                                        data-tid="content-editor-picker-tile-{{ type }}">
+                                    {% if block.icon %}
+                                        {{ ux_icon(block.icon, {height: 32, width: 32}) }}
+                                    {% endif %}
+                                    <span>{{ block.label|trans }}</span>
+                                </button>
+                            {% endfor %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>

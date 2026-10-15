@@ -412,6 +412,9 @@ msgstr "Sbalit nebo rozbalit"
 msgid "Color parameter values"
 msgstr "Hodnota parametru typu barva"
 
+msgid "Column %number%"
+msgstr "Sloupec %number%"
+
 msgid "Company"
 msgstr "Firma"
 
@@ -817,6 +820,9 @@ msgstr "Doména"
 msgid "Domain filter"
 msgstr "Filtr domén"
 
+msgid "Done"
+msgstr "Hotovo"
+
 msgid "Download"
 msgstr "Stáhnout"
 
@@ -867,6 +873,9 @@ msgstr "Úprava administrátora"
 
 msgid "Edit billing details"
 msgstr "Upravit fakturační údaje"
+
+msgid "Edit content"
+msgstr "Upravit obsah"
 
 msgid "Edit delivery address"
 msgstr "Upravit dodací adresu"
@@ -1092,6 +1101,9 @@ msgstr "Soubory"
 
 msgid "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 msgstr "Vyplňte údaje o odstoupení a uložte tento formulář, čímž změníte stav objednávky na Odstoupeno od smlouvy. Zavřením okna zůstane zachován aktuální stav."
+
+msgid "Filter blocks…"
+msgstr "Filtrovat bloky…"
 
 msgid "First name"
 msgstr "Jméno"

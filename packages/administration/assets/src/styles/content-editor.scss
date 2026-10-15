@@ -11,22 +11,74 @@
     border-radius: var(--tblr-border-radius);
 }
 
-.content-editor-card {
-    margin-bottom: 0;
+.content-editor-panes {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
-    &.content-editor-card-collapsed {
-        > .card-body {
-            display: none;
-        }
-
-        .content-editor-toggle .icon {
-            transform: rotate(-90deg);
-        }
+    @include media-breakpoint-up(lg) {
+        flex-direction: row;
     }
 }
 
-.content-editor-card-header {
+.content-editor-preview-pane,
+.content-editor-blocks-pane {
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+// below lg the panes are stacked, the preview takes only what it needs
+.content-editor-preview-pane {
+    flex: 0 0 auto;
+    max-height: 40%;
+    background: var(--tblr-bg-surface-secondary);
+
+    @include media-breakpoint-up(lg) {
+        flex: 2 1 0;
+        max-height: none;
+    }
+}
+
+.content-editor-blocks-pane {
+    flex: 1 1 0;
+    min-height: 0;
+    border-top: 1px solid var(--tblr-border-color);
+
+    @include media-breakpoint-up(lg) {
+        border-top: 0;
+        border-left: 1px solid var(--tblr-border-color);
+    }
+}
+
+.content-editor-card {
+    margin-bottom: 0;
+}
+
+.content-editor-header {
     cursor: pointer;
+}
+
+.content-editor-slot {
+    margin-top: 1rem;
+    padding: 0.5rem 0.75rem 0.75rem;
+    border: 1px dashed var(--tblr-border-color);
+    border-radius: var(--tblr-border-radius);
+
+    > .content-editor-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.content-editor-collapsed {
+    > [data-content-editor-body] {
+        display: none;
+    }
+
+    > .content-editor-header .content-editor-toggle .icon {
+        transform: rotate(-90deg);
+    }
 }
 
 // a gap between the cards that shows the insert button only when the pointer is over it
@@ -51,38 +103,6 @@
     display: flex;
     justify-content: center;
     margin-top: 0.5rem;
-}
-
-.content-editor-slots {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr;
-    margin-top: 1rem;
-
-    @include media-breakpoint-up(lg) {
-        &[data-layout='1/2-1/2'] {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        &[data-layout='1/3-2/3'] {
-            grid-template-columns: 1fr 2fr;
-        }
-
-        &[data-layout='2/3-1/3'] {
-            grid-template-columns: 2fr 1fr;
-        }
-
-        &[data-layout='1/3-1/3-1/3'] {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-    }
-}
-
-.content-editor-slot {
-    min-width: 0;
-    padding: 0.75rem;
-    border: 1px dashed var(--tblr-border-color);
-    border-radius: var(--tblr-border-radius);
 }
 
 .content-editor-picker-grid {

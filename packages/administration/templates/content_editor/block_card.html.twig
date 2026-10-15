@@ -8,12 +8,13 @@
 <div class="card content-editor-card"
      id="content-editor-card-{{ path|replace({'/': '-'}) }}-{{ blockValues.id }}"
      data-content-editor-card
-     data-content-editor-block-id="{{ blockValues.id }}"
+     data-content-editor-collapsible
+     data-content-editor-key="{{ blockValues.id }}"
      data-content-editor-empty="{{ this.blockEmpty(blockValues) ? '1' : '0' }}"
      {% if not blockForm.vars.valid %}data-content-editor-has-errors{% endif %}
      data-tid="content-editor-block"
 >
-    <div class="card-header content-editor-card-header" data-action="click->content-editor#toggle">
+    <div class="card-header content-editor-header" data-action="click->content-editor#toggle">
         {% if definition.icon %}
             <span class="me-2">{{ ux_icon(definition.icon) }}</span>
         {% endif %}
@@ -73,41 +74,35 @@
     </div>
 
     <div class="card-body" data-content-editor-body>
-        {% if isContainer and blockForm.data.layout is defined %}
-            <div class="mb-3">
-                <label class="form-label">{{ 'Layout'|trans }}</label>
-                <div class="btn-group" role="group" data-tid="content-editor-layout">
-                    {% for choice in blockForm.data.layout.vars.choices %}
-                        {{ component('Admin:LiveActionButton', {
-                            action: 'changeLayout',
-                            label: choice.label|replace({'-': ' + '}),
-                            buttonClass: 'btn btn-sm ' ~ (blockForm.data.layout.vars.value == choice.value ? 'btn-primary' : 'btn-outline-secondary'),
-                            liveParams: {path: path, layout: choice.value},
-                            'data-tid': 'content-editor-layout-' ~ choice.value,
-                        }) }}
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-
-        {# the layout of a container is changed with the buttons above, because the slots have to follow it #}
         {% for field in blockForm.data %}
-            {% if not (isContainer and field.vars.name == 'layout') %}
-                {{ form_row(field) }}
-            {% endif %}
+            {{ form_row(field) }}
         {% endfor %}
 
         {% if isContainer %}
-            <div class="content-editor-slots" data-layout="{{ blockForm.data.layout.vars.value|default('') }}">
-                {% for slotForm in blockForm['children'] %}
-                    <div class="content-editor-slot" data-tid="content-editor-slot">
+            {% for slotForm in blockForm['children'] %}
+                <div class="content-editor-slot"
+                     data-content-editor-collapsible
+                     data-content-editor-key="{{ blockValues.id }}:slot:{{ loop.index0 }}"
+                     {% if not slotForm.vars.valid %}data-content-editor-has-errors{% endif %}
+                     data-tid="content-editor-slot"
+                >
+                    <div class="content-editor-header" data-action="click->content-editor#toggle">
+                        <span class="fw-bold">{{ 'Column %number%'|trans({'%number%': loop.index}) }}</span>
+                        <button type="button"
+                                class="{{ toolbarButtonClass }} content-editor-toggle"
+                                title="{{ 'Collapse or expand'|trans }}"
+                                aria-label="{{ 'Collapse or expand'|trans }}"
+                                data-content-editor-toggle
+                                data-tid="content-editor-slot-toggle">{{ ux_icon('chevron-down') }}</button>
+                    </div>
+                    <div data-content-editor-body>
                         {% include '@ShopsysAdministration/content_editor/block_list.html.twig' with {
                             blocks: slotForm,
                             slotPath: path ~ '/' ~ loop.index0,
                         } %}
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         {% endif %}
     </div>
 </div>

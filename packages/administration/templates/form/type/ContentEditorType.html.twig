@@ -1,15 +1,37 @@
 {% block content_editor_widget %}
-    <div data-content-editor-widget>
+    <div data-content-editor-widget
+         data-controller="content-editor-overlay"
+         data-content-editor-overlay-target-input-id-value="{{ id }}"
+         data-content-editor-overlay-open-on-connect-value="{{ validated ? 'true' : 'false' }}">
         {{ form_widget(form) }}
-        {{ component('Admin:ContentEditor', {
-            documentJson: value,
-            profile: profile,
-            allowedTypes: allowed_types,
-            variables: variables,
-            domainId: domain_id,
-            validated: validated,
-            targetInputId: id,
-        }) }}
-        {{ component('Admin:ContentEditor:MediaPicker', {instanceId: id}) }}
+        <button type="button"
+                class="btn btn-primary"
+                data-action="content-editor-overlay#open"
+                data-tid="content-editor-open">
+            {{ ux_icon('pencil') }}
+            {{ 'Edit content'|trans }}
+        </button>
+
+        {# the media picker is inside of the overlay too, the modal keeps the focus inside of itself so a picker outside could not be typed into #}
+        <div class="modal fade"
+             tabindex="-1"
+             data-bs-backdrop="static"
+             data-bs-keyboard="false"
+             data-content-editor-overlay-target="modal"
+             data-tid="content-editor-overlay">
+            <div class="modal-dialog modal-fullscreen">
+                {{ component('Admin:ContentEditor', {
+                    documentJson: value,
+                    profile: profile,
+                    allowedTypes: allowed_types,
+                    variables: variables,
+                    domainId: domain_id,
+                    isValidated: validated,
+                    label: label|trans({}, translation_domain),
+                    targetInputId: id,
+                }) }}
+            </div>
+            {{ component('Admin:ContentEditor:MediaPicker', {instanceId: id}) }}
+        </div>
     </div>
 {% endblock %}

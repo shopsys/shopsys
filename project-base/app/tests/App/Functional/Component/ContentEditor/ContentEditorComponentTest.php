@@ -38,6 +38,8 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
      */
     private RequestStack $requestStack;
 
+    private KernelBrowser $client;
+
     /**
      * @inject
      */
@@ -54,7 +56,19 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-category-content"]'));
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-category-layout"]'));
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-text"]'));
-        $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-columns"]'));
+        $this->assertCount(4, $crawler->filter('[data-tid^="content-editor-picker-tile-columns-"]'));
+    }
+
+    public function testPickerHasFilterInputAndGroupsAndTilesToFilter(): void
+    {
+        $crawler = $this->createEditor([])->render()->crawler();
+
+        $this->assertCount(1, $crawler->filter('[data-controller~="block-picker-filter"] input[data-tid="content-editor-picker-filter"]'));
+        $this->assertCount(2, $crawler->filter('[data-block-picker-filter-target="group"]'));
+        $this->assertCount(
+            $crawler->filter('[data-tid^="content-editor-picker-tile-"]')->count(),
+            $crawler->filter('[data-block-picker-filter-target="tile"]'),
+        );
     }
 
     public function testErrorsOfInvalidBlocksAreShownOnlyWhenTheContentWasRefused(): void
@@ -71,6 +85,61 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $refused = $this->renderEditorOnPage($blocks, true);
         $this->assertStringContainsString('Enter a YouTube or Vimeo video URL.', $refused->text());
         $this->assertCount(1, $refused->filter('[data-content-editor-has-errors]'));
+    }
+
+    public function testRefusedContentKeepsShowingErrorsInTheFollowingRenders(): void
+    {
+        $component = $this->createEditor([
+            ['id' => self::TABLE_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']],
+        ], true);
+        $this->client->catchExceptions(true);
+
+        $component->call('openPicker', ['slotPath' => '', 'index' => 1]);
+
+        $crawler = $component->render()->crawler();
+        $this->assertStringContainsString('Enter a YouTube or Vimeo video URL.', $crawler->text());
+        $this->assertCount(1, $crawler->filter('[data-content-editor-has-errors]'));
+    }
+
+    public function testFinishWithInvalidBlocksShowsErrorsAndDoesNotAnnounceTheDocument(): void
+    {
+        $component = $this->createEditor([
+            $this->createTextBlock(self::TEXT_ID_1, '<p>One</p>'),
+            $this->createColumnsBlock('columns-1-1', [
+                [],
+                [['id' => self::TABLE_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']]],
+            ]),
+        ]);
+        // the Live Component test helper lets exceptions through, the browser gets the rendered editor instead
+        $this->client->catchExceptions(true);
+
+        $response = $component->call('finish')->response();
+
+        $crawler = new Crawler($response->getContent());
+        $this->assertStringContainsString('Enter a YouTube or Vimeo video URL.', $crawler->text());
+        // text block, columns block, its first column, its second column, the video block in it
+        $this->assertSame(
+            [false, true, false, true, true],
+            $crawler->filter('[data-tid="content-editor-block"], [data-tid="content-editor-slot"]')->each(
+                static fn (Crawler $element): bool => $element->attr('data-content-editor-has-errors') !== null,
+            ),
+        );
+        $this->assertSame([], $this->getBrowserEvents($response->getContent()));
+    }
+
+    public function testFinishWithValidBlocksAnnouncesTheNormalizedDocument(): void
+    {
+        $component = $this->createEditor([$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')]);
+
+        $response = $component->call('finish')->response();
+
+        $events = $this->getBrowserEvents($response->getContent());
+        $this->assertSame(['content-editor:done:content'], array_column($events, 'event'));
+        $document = json_decode($events[0]['payload']['document'], true, 512, JSON_THROW_ON_ERROR);
+        $this->assertSame(
+            [['id' => self::TEXT_ID_1, 'type' => 'text', 'data' => ['html' => '<p>One</p>']]],
+            $document['blocks'],
+        );
     }
 
     public function testNormalizedDocumentJsonHasDocumentShape(): void
@@ -153,6 +222,14 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('[data-content-editor-widget]'));
         $this->assertCount(1, $crawler->filter('[data-content-editor-widget] [data-live-name-value="Admin:ContentEditor:MediaPicker"]'));
+        $this->assertCount(1, $crawler->filter('[data-content-editor-widget] button[data-tid="content-editor-open"]'));
+        $overlay = $crawler->filter('.modal[data-tid="content-editor-overlay"][data-bs-backdrop="static"][data-bs-keyboard="false"]');
+        $this->assertCount(1, $overlay);
+        $this->assertCount(1, $overlay->filter('.modal-dialog.modal-fullscreen [data-live-name-value="Admin:ContentEditor"]'));
+        $this->assertCount(1, $overlay->filter('[data-tid="content-editor-done"]'));
+        $this->assertCount(1, $overlay->filter('[data-tid="content-editor-picker-filter"]'));
+        $this->assertCount(1, $overlay->filter('[data-live-name-value="Admin:ContentEditor:MediaPicker"]'));
+        $this->assertSame('false', $crawler->filter('[data-controller="content-editor-overlay"]')->attr('data-content-editor-overlay-open-on-connect-value'));
         $this->assertStringContainsString('content-editor:media-picker:opened:article_form_content', $html);
         // a closed picker does not query the library
         $this->assertCount(0, $crawler->filter('[data-tid="media-picker-empty"], [data-tid^="media-picker-item-"]'));
@@ -180,21 +257,53 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $component = $this->createEditor([]);
 
         $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
-        $component->call('addBlock', ['type' => 'columns']);
+        $component->call('addBlock', ['type' => 'columns-1-1']);
 
         $block = $this->getDocument($component)['blocks'][0];
-        $this->assertSame('columns', $block['type']);
+        $this->assertSame('columns-1-1', $block['type']);
         $this->assertSame([[], []], $block['children']);
+    }
+
+    public function testAddedThreeColumnsHaveThreeEmptySlots(): void
+    {
+        $component = $this->createEditor([]);
+
+        $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
+        $component->call('addBlock', ['type' => 'columns-1-1-1']);
+
+        $this->assertSame([[], [], []], $this->getDocument($component)['blocks'][0]['children']);
+    }
+
+    public function testColumnsRenderTheirSlotsAsCollapsibleSectionsWithOwnBlockLists(): void
+    {
+        $component = $this->createEditor([$this->createColumnsBlock('columns-1-2', [
+            [$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')],
+            [],
+        ])]);
+
+        $crawler = $component->render()->crawler();
+
+        $slots = $crawler->filter('[data-tid="content-editor-slot"]');
+        $this->assertCount(2, $slots);
+        $this->assertSame(
+            [self::COLUMNS_ID . ':slot:0', self::COLUMNS_ID . ':slot:1'],
+            $slots->each(static fn (Crawler $slot): ?string => $slot->attr('data-content-editor-key')),
+        );
+        $this->assertStringContainsString('Column 1', $slots->eq(0)->text());
+        $this->assertStringContainsString('Column 2', $slots->eq(1)->text());
+        $this->assertCount(1, $slots->eq(0)->filter('[data-tid="content-editor-block"]'));
+        $this->assertCount(1, $slots->eq(1)->filter('[data-tid="content-editor-add-block"]'));
+        $this->assertCount(0, $crawler->filter('[data-tid^="content-editor-layout"]'));
     }
 
     public function testBlockIsAddedInsideSlotAndContainersAreNotOfferedThere(): void
     {
-        $component = $this->createEditor([$this->createColumnsBlock('1/2-1/2', [[], []])]);
+        $component = $this->createEditor([$this->createColumnsBlock('columns-1-1', [[], []])]);
 
         $component->call('openPicker', ['slotPath' => '0/1', 'index' => 0]);
         $crawler = $component->render()->crawler();
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-text"]'));
-        $this->assertCount(0, $crawler->filter('[data-tid="content-editor-picker-tile-columns"]'));
+        $this->assertCount(0, $crawler->filter('[data-tid^="content-editor-picker-tile-columns-"]'));
 
         $component->call('addBlock', ['type' => 'text']);
 
@@ -205,12 +314,12 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
     public function testContainerCannotBeAddedInsideSlot(): void
     {
-        $component = $this->createEditor([$this->createColumnsBlock('1/2-1/2', [[], []])]);
+        $component = $this->createEditor([$this->createColumnsBlock('columns-1-1', [[], []])]);
         $component->call('openPicker', ['slotPath' => '0/0', 'index' => 0]);
 
         $this->expectException(InvalidArgumentException::class);
 
-        $component->call('addBlock', ['type' => 'columns']);
+        $component->call('addBlock', ['type' => 'columns-1-1']);
     }
 
     public function testBlockMovesUpAndDownAndStaysAtBoundaries(): void
@@ -232,7 +341,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
     public function testBlockMovesInsideSlot(): void
     {
-        $component = $this->createEditor([$this->createColumnsBlock('1/2-1/2', [
+        $component = $this->createEditor([$this->createColumnsBlock('columns-1-1', [
             [$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>'), $this->createTextBlock(self::TEXT_ID_2, '<p>Two</p>')],
             [],
         ])]);
@@ -278,7 +387,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
     public function testDuplicatedContainerGetsNewIdsForItsChildren(): void
     {
-        $component = $this->createEditor([$this->createColumnsBlock('1/2-1/2', [
+        $component = $this->createEditor([$this->createColumnsBlock('columns-1-1', [
             [$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')],
             [],
         ])]);
@@ -290,38 +399,6 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertNotSame(self::COLUMNS_ID, $copy['id']);
         $this->assertSame('<p>One</p>', $copy['children'][0][0]['data']['html']);
         $this->assertNotSame(self::TEXT_ID_1, $copy['children'][0][0]['id']);
-    }
-
-    public function testChangingLayoutToFewerColumnsMergesTheLastSlots(): void
-    {
-        $component = $this->createEditor([$this->createColumnsBlock('1/3-1/3-1/3', [
-            [$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')],
-            [$this->createTextBlock(self::TEXT_ID_2, '<p>Two</p>')],
-            [$this->createTextBlock(self::TEXT_ID_3, '<p>Three</p>')],
-        ])]);
-
-        $component->call('changeLayout', ['path' => '0', 'layout' => '1/2-1/2']);
-
-        $block = $this->getDocument($component)['blocks'][0];
-        $this->assertSame('1/2-1/2', $block['data']['layout']);
-        $this->assertCount(2, $block['children']);
-        $this->assertSame([self::TEXT_ID_1], array_column($block['children'][0], 'id'));
-        $this->assertSame([self::TEXT_ID_2, self::TEXT_ID_3], array_column($block['children'][1], 'id'));
-    }
-
-    public function testChangingLayoutToMoreColumnsAddsEmptySlots(): void
-    {
-        $component = $this->createEditor([$this->createColumnsBlock('1/2-1/2', [
-            [$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')],
-            [],
-        ])]);
-
-        $component->call('changeLayout', ['path' => '0', 'layout' => '1/3-1/3-1/3']);
-
-        $children = $this->getDocument($component)['blocks'][0]['children'];
-        $this->assertCount(3, $children);
-        $this->assertSame([self::TEXT_ID_1], array_column($children[0], 'id'));
-        $this->assertSame([], $children[2]);
     }
 
     public function testTableCellsFollowChangedNumberOfRows(): void
@@ -364,7 +441,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     /**
      * @param array<int, array<string, mixed>> $blocks
      */
-    private function createEditor(array $blocks): TestLiveComponent
+    private function createEditor(array $blocks, bool $validated = false): TestLiveComponent
     {
         // the project test client sends JSON by default, the Live Component expects a form post
         $client = new KernelBrowser(self::$kernel, [
@@ -376,6 +453,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
         // a rebooted kernel would drop the transaction of the test
         $client->disableReboot();
+        $this->client = $client;
 
         $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
         $this->administratorActivityFacade->create($administrator, self::ADMIN_IP_ADDRESS);
@@ -385,6 +463,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
             'documentJson' => json_encode(['version' => 1, 'profile' => 'web', 'blocks' => $blocks], JSON_THROW_ON_ERROR),
             'profile' => 'web',
             'targetInputId' => 'content',
+            'isValidated' => $validated,
         ], $client);
     }
 
@@ -398,11 +477,21 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
                 'documentJson' => json_encode(['version' => 1, 'profile' => 'web', 'blocks' => $blocks], JSON_THROW_ON_ERROR),
                 'profile' => 'web',
                 'targetInputId' => 'content',
-                'validated' => $validated,
+                'isValidated' => $validated,
             ],
         ]);
 
         return new Crawler($html);
+    }
+
+    /**
+     * @return array<int, array{event: string, payload: array<string, mixed>}>
+     */
+    private function getBrowserEvents(string $html): array
+    {
+        $events = (new Crawler($html))->filter('[data-live-name-value="Admin:ContentEditor"]')->attr('data-live-events-to-dispatch-value');
+
+        return $events === null ? [] : json_decode($events, true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -447,8 +536,8 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
      * @param array<int, array<int, array<string, mixed>>> $children
      * @return array<string, mixed>
      */
-    private function createColumnsBlock(string $layout, array $children): array
+    private function createColumnsBlock(string $type, array $children): array
     {
-        return ['id' => self::COLUMNS_ID, 'type' => 'columns', 'data' => ['layout' => $layout], 'children' => $children];
+        return ['id' => self::COLUMNS_ID, 'type' => $type, 'data' => [], 'children' => $children];
     }
 }

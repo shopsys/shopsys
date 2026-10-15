@@ -11,12 +11,12 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Document\SlotFitter;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -49,6 +49,7 @@ final class ContentEditorComponent
 
     public const string COMPONENT_NAME = 'Admin:ContentEditor';
 
+    public const string DONE_BROWSER_EVENT_PREFIX = 'content-editor:done:';
     public const string PICKER_OPENED_BROWSER_EVENT_PREFIX = 'content-editor:picker:opened:';
     public const string PICKER_CLOSED_BROWSER_EVENT_PREFIX = 'content-editor:picker:closed:';
 
@@ -75,11 +76,8 @@ final class ContentEditorComponent
     #[LiveProp]
     public ?int $domainId = null;
 
-    /**
-     * The content was submitted and refused, so the errors of the blocks are shown right away
-     */
     #[LiveProp]
-    public bool $validated = false;
+    public string $label = '';
 
     #[LiveProp]
     public string $targetInputId = '';
@@ -102,18 +100,36 @@ final class ContentEditorComponent
     }
 
     /**
-     * The errors are shown only in the first render after the refusal, they would disturb the editing of the blocks afterwards
+     * The content was refused by the form of the edited entity, so the errors of the blocks are shown right away
+     * (isValidated is passed in by the widget) and kept up to date by the following renders
      */
     #[PostMount(priority: -10)]
     public function showErrorsOfRefusedContent(): void
     {
-        if (!$this->validated) {
+        if (!$this->isValidated) {
             return;
         }
 
-        $this->validated = false;
-        $this->resetForm(true);
-        $this->getForm()->submit($this->formValues);
+        try {
+            $this->submitForm();
+        } catch (UnprocessableEntityHttpException) {
+            // the errors are rendered with the form, the page itself is rendered normally
+        }
+    }
+
+    /**
+     * The editor is closed only with a valid content, otherwise the errors are shown and the response is 422
+     */
+    #[LiveAction]
+    #[RequireRole(SystemRole::ADMIN)]
+    public function finish(): void
+    {
+        $this->submitForm();
+
+        $this->dispatchBrowserEvent(
+            self::DONE_BROWSER_EVENT_PREFIX . $this->targetInputId,
+            ['document' => $this->getNormalizedDocumentJson()],
+        );
     }
 
     #[LiveAction]
@@ -181,23 +197,6 @@ final class ContentEditorComponent
         Assert::keyExists($blocks, $index, 'Block "%s" does not exist');
 
         array_splice($blocks, $index + 1, 0, [$this->copyWithNewIds($blocks[$index])]);
-    }
-
-    #[LiveAction]
-    #[RequireRole(SystemRole::ADMIN)]
-    public function changeLayout(#[LiveArg] string $path, #[LiveArg] string $layout): void
-    {
-        [$slotPath, $index] = $this->splitPath($path);
-        $blocks = &$this->getBlockList($slotPath);
-        Assert::keyExists($blocks, $index, 'Block "%s" does not exist');
-        $container = $this->contentBlockRegistry->get($blocks[$index]['type']);
-        Assert::isInstanceOf($container, ContainerContentBlockInterface::class);
-
-        $blocks[$index]['data']['layout'] = $layout;
-        $blocks[$index]['children'] = SlotFitter::fit(
-            $blocks[$index]['children'] ?? [],
-            $container->getSlotCount($blocks[$index]['data']),
-        );
     }
 
     public function getNormalizedDocumentJson(): string

@@ -1,19 +1,18 @@
 import { Controller } from '@hotwired/stimulus';
 import Translator from 'bazinga-translator';
-import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
 import ConfirmWindow from '../js/utils/confirmWindow';
 
 const STORAGE_KEY_PREFIX = 'content-editor:';
 
 /*
  * The root of the ContentEditorComponent (templates/content_editor/editor.html.twig):
- * hands the document over to the form of the edited entity and keeps the browser-only state of the cards.
+ * announces the document to the preview and keeps the browser-only state of the collapsible cards and columns.
+ * The document reaches the form of the edited entity only when the editor is done, see content_editor_overlay_controller.js.
  */
 export default class extends Controller {
-    static values = { targetInputId: String, document: String };
+    static values = { document: String };
 
     connect() {
-        this.initialDocument = this.documentValue;
         this.confirmedRemoveButton = null;
         this.onRender = () => this.sync();
         this.onClickCapture = event => this.confirmRemove(event);
@@ -28,7 +27,7 @@ export default class extends Controller {
         this.element.removeEventListener('click', this.onClickCapture, true);
     }
 
-    // the whole header toggles the card, except for its toolbar buttons
+    // the whole header toggles the card or the column, except for its toolbar buttons
     toggle(event) {
         const button = event.target.closest('button');
 
@@ -36,46 +35,32 @@ export default class extends Controller {
             return;
         }
 
-        const card = event.target.closest('[data-content-editor-card]');
+        const collapsible = event.target.closest('[data-content-editor-collapsible]');
 
-        if (card.hasAttribute('data-content-editor-has-errors')) {
+        if (collapsible.hasAttribute('data-content-editor-has-errors')) {
             return;
         }
 
-        card.classList.toggle('content-editor-card-collapsed');
+        collapsible.classList.toggle('content-editor-collapsed');
         this.storeCollapsed(
-            card.dataset.contentEditorBlockId,
-            card.classList.contains('content-editor-card-collapsed'),
+            collapsible.dataset.contentEditorKey,
+            collapsible.classList.contains('content-editor-collapsed'),
         );
     }
 
     sync() {
-        this.restoreCollapsedCards();
-        this.publishDocument();
-    }
-
-    publishDocument() {
-        const input = document.getElementById(this.targetInputIdValue);
-
-        if (input) {
-            input.value = this.documentValue;
-        }
-
-        if (this.documentValue !== this.initialDocument) {
-            FormChangeInfo.showInfo();
-        }
-
+        this.restoreCollapsed();
         window.dispatchEvent(new CustomEvent('content-editor:document-changed', { detail: this.documentValue }));
     }
 
-    // a render resets the cards to their server state, which is expanded
-    restoreCollapsedCards() {
-        this.element.querySelectorAll('[data-content-editor-card]').forEach(card => {
+    // a render resets the cards and columns to their server state, which is expanded
+    restoreCollapsed() {
+        this.element.querySelectorAll('[data-content-editor-collapsible]').forEach(collapsible => {
             const collapsed =
-                !card.hasAttribute('data-content-editor-has-errors') &&
-                this.isCollapsed(card.dataset.contentEditorBlockId);
+                !collapsible.hasAttribute('data-content-editor-has-errors') &&
+                this.isCollapsed(collapsible.dataset.contentEditorKey);
 
-            card.classList.toggle('content-editor-card-collapsed', collapsed);
+            collapsible.classList.toggle('content-editor-collapsed', collapsed);
         });
     }
 
@@ -105,20 +90,20 @@ export default class extends Controller {
         });
     }
 
-    isCollapsed(blockId) {
+    isCollapsed(key) {
         try {
-            return window.localStorage.getItem(STORAGE_KEY_PREFIX + blockId) === '1';
+            return window.localStorage.getItem(STORAGE_KEY_PREFIX + key) === '1';
         } catch {
             return false;
         }
     }
 
-    storeCollapsed(blockId, collapsed) {
+    storeCollapsed(key, collapsed) {
         try {
             if (collapsed) {
-                window.localStorage.setItem(STORAGE_KEY_PREFIX + blockId, '1');
+                window.localStorage.setItem(STORAGE_KEY_PREFIX + key, '1');
             } else {
-                window.localStorage.removeItem(STORAGE_KEY_PREFIX + blockId);
+                window.localStorage.removeItem(STORAGE_KEY_PREFIX + key);
             }
         } catch {
             // the state is only a convenience, it is not remembered without storage

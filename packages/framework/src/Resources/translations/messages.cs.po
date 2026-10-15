@@ -2092,9 +2092,6 @@ msgstr "Poslední aktualizace"
 msgid "Latitude"
 msgstr "Zeměpisná šířka"
 
-msgid "Layout"
-msgstr "Rozložení"
-
 msgid "Legal conditions"
 msgstr "Právní podmínky"
 
@@ -2268,6 +2265,9 @@ msgstr "Názvy pro srovnávače zboží u zvolených služeb se exportují do cu
 
 msgid "Namespace"
 msgstr "Jmenný prostor"
+
+msgid "Narrow and wide column"
+msgstr "Úzký a široký sloupec"
 
 msgid "Navigation item type"
 msgstr "Typ položky navigace"
@@ -3589,6 +3589,9 @@ msgstr "Tento sklad je výchozí alespoň na jedné doméně. Nelze jej smazat."
 msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to chcete poslat?"
 
+msgid "Three columns"
+msgstr "Tři sloupce"
+
 msgid "Thursday"
 msgstr "Čtvrtek"
 
@@ -3663,6 +3666,9 @@ msgstr "Typ dopravy"
 
 msgid "Tuesday"
 msgstr "Úterý"
+
+msgid "Two columns"
+msgstr "Dva sloupce"
 
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"
@@ -3912,6 +3918,9 @@ msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
+
+msgid "Wide and narrow column"
+msgstr "Široký a úzký sloupec"
 
 msgid "Withdrawal Request"
 msgstr "Žádost o odstoupení od smlouvy"

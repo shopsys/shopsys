@@ -61,7 +61,8 @@ class GetArticleTest extends GraphQlTestCase
         $this->assertSame(['9177759', '5964035'], $blocks[1]['data']['catnums']);
 
         $columnsBlock = $blocks[5];
-        $this->assertSame('columns', $columnsBlock['type']);
+        $this->assertSame('columns-1-2', $columnsBlock['type']);
+        $this->assertSame('1/3-2/3', $columnsBlock['data']['layout']);
 
         $imageBlock = $columnsBlock['children'][0][0];
         $this->assertSame('image', $imageBlock['type']);

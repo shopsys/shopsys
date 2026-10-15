@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Block based content editor. The form value is a ContentDocument, which is carried to the server as JSON
- * in a hidden input kept up to date by the ContentEditorComponent rendered next to it.
+ * in a hidden input. The editor itself is a full-screen overlay opened by a button, the input is filled when it is done.
  *
  * Options:
  * - profile: kind of the content, see ContentProfileEnum
