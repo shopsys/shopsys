@@ -16,7 +16,7 @@ class MultipleSearchQueryFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
+     * @param array<\Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery|\Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery> $filterQueries
      */
     public function create(string $indexName, array $filterQueries): MultipleSearchQuery
     {

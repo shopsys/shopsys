@@ -80,28 +80,12 @@ class BlogArticleElasticsearchRepository
         }
     }
 
-    public function getByBlogCategory(
-        BlogCategory $blogCategory,
-        int $offset,
-        int $limit,
-        bool $onlyVisibleOnHomepage = false,
-    ): array {
-        $filterQuery = $this->filterQueryFactory
-            ->createFilteredByBlogCategory($blogCategory, $offset, $limit)
-            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
-            ->filterByPublishDateUpToNow()
-            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
-
-        return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
-    }
-
     public function getByBlogCategoryTotalCount(BlogCategory $blogCategory, bool $onlyVisibleOnHomepage = false): int
     {
-        $filterQuery = $this->filterQueryFactory
-            ->createFilteredByBlogCategory($blogCategory)
-            ->filterByStatus(BlogArticleStatusEnum::STATUS_PUBLISHED)
-            ->filterByPublishDateUpToNow()
-            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
+        $filterQuery = $this->filterQueryFactory->createPublishedByBlogCategory(
+            $blogCategory,
+            onlyVisibleOnHomepage: $onlyVisibleOnHomepage,
+        );
 
         return $this->blogArticleElasticsearchDataFetcher->getTotalCount($filterQuery);
     }

@@ -102,7 +102,15 @@ class FriendlyUrlSlugBatchLoader
      */
     public function getSlugsIndexedByEntityId(array $entityIds, string $routeName): array
     {
-        $domainId = $this->domain->getId();
+        return $this->getSlugsIndexedByEntityIdOnDomain($entityIds, $routeName, $this->domain->getId());
+    }
+
+    /**
+     * @param int[] $entityIds
+     * @return array<int, string>
+     */
+    public function getSlugsIndexedByEntityIdOnDomain(array $entityIds, string $routeName, int $domainId): array
+    {
         $slugsByEntityId = [];
         $missingEntityIds = [];
 
