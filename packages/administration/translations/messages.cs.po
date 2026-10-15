@@ -169,6 +169,9 @@ msgstr "Použitelné proměnné pro obsah"
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
 
+msgid "Apply"
+msgstr "Použít"
+
 msgid "Approve review"
 msgstr "Schválit recenzi"
 
@@ -289,6 +292,9 @@ msgstr "Rubrika blogu je viditelná na všech doménách"
 msgid "Blog category is visible on some domains"
 msgstr "Rubrika blogu je viditelná na některých doménách"
 
+msgid "Bold"
+msgstr "Tučně"
+
 msgid "Brand"
 msgstr "Značka"
 
@@ -303,6 +309,9 @@ msgstr "Hromadné vytvoření slevových kupónů"
 
 msgid "Bulk edit"
 msgstr "Hromadné úpravy"
+
+msgid "Bullet list"
+msgstr "Odrážkový seznam"
 
 msgid "But at other addresses we have a lot for you..."
 msgstr "Ale na jiných adresách toho pro Vás máme spousty..."
@@ -366,6 +375,9 @@ msgstr "Vymazat cache s graphql dotazy na FE"
 
 msgid "Clear"
 msgstr "Vymazat"
+
+msgid "Clear formatting"
+msgstr "Vymazat formátování"
 
 msgid "Clear history"
 msgstr "Vymazat historii"
@@ -1141,6 +1153,18 @@ msgstr "GoPay API vrátilo chybu - přejděte do administrace GoPay, vyhledejte 
 msgid "Granted"
 msgstr "Uděleno"
 
+msgid "HTML source"
+msgstr "Zdrojový kód HTML"
+
+msgid "Heading 2"
+msgstr "Nadpis 2"
+
+msgid "Heading 3"
+msgstr "Nadpis 3"
+
+msgid "Heading 4"
+msgstr "Nadpis 4"
+
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
 
@@ -1164,6 +1188,9 @@ msgstr "Svátky a interní dny"
 
 msgid "Holidays import"
 msgstr "Import svátků"
+
+msgid "Horizontal line"
+msgstr "Vodorovná čára"
 
 msgid "IP address"
 msgstr "IP adresa"
@@ -1216,6 +1243,9 @@ msgstr "Přehled poptávek"
 msgid "Inquiry by"
 msgstr "Poptávka od"
 
+msgid "Insert variable"
+msgstr "Vložit proměnnou"
+
 msgid "Internal ID"
 msgstr "Interní ID"
 
@@ -1230,6 +1260,9 @@ msgstr "Na konkrétní záložce domény není možné upravovat pořadí a zano
 
 msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol &lt;different&gt; and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
 msgstr "Lze použít při vytváření odkazu takto: myší označíte text, ze kterého chcete vytvořit odkaz, a klepnete na tlačítko Odkaz (vpravo nahoře, ikonka propojených sponek). Ve vyskakovacím menu vyberete protokol &lt;jiný&gt; a do políčka URL vložíte text \"%orderDetailUrlConstant%\" (včetně složených závorek)."
+
+msgid "Italic"
+msgstr "Kurzíva"
 
 msgid "Item name"
 msgstr "Název položky"
@@ -1272,6 +1305,12 @@ msgstr "Odkaz"
 
 msgid "Link [abbreviation]"
 msgstr "O"
+
+msgid "Link address"
+msgstr "Adresa odkazu"
+
+msgid "Link title"
+msgstr "Titulek odkazu"
 
 msgid "Link to the overview of brands"
 msgstr "Odkaz na přehled značek"
@@ -1618,6 +1657,9 @@ msgstr "Notifikační lišty"
 msgid "Number of selected products is not limited, however only %limit% will be displayed on frontend."
 msgstr "Počet vybraných produktů není omezen, ale na frontendu jich bude zobrazeno maximálně %limit%."
 
+msgid "Numbered list"
+msgstr "Číslovaný seznam"
+
 msgid "Ok"
 msgstr "Ok"
 
@@ -1912,6 +1954,9 @@ msgstr "Rychlé vyhledávání v produktech"
 msgid "Quick search"
 msgstr "Rychlé hledání"
 
+msgid "Quote"
+msgstr "Citace"
+
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou odstranit s nahrazením za novou."
 
@@ -1956,6 +2001,9 @@ msgstr "Zamítnuto"
 
 msgid "Remove"
 msgstr "Odebrat"
+
+msgid "Remove link"
+msgstr "Odebrat odkaz"
 
 msgid "Remove rule"
 msgstr "Odebrat pravidlo"
@@ -2314,6 +2362,9 @@ msgstr "Prodejny"
 msgid "Street"
 msgstr "Ulice"
 
+msgid "Strikethrough"
+msgstr "Přeškrtnuté"
+
 msgid "String contains leading/trailing spaces represented by &middot; sign"
 msgstr "Řetězec obsahuje úvodní/koncové mezery (reprezentované znakem &middot;)"
 
@@ -2548,6 +2599,9 @@ msgstr "Po uložení bude url smazána"
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
 
+msgid "Underline"
+msgstr "Podtržené"
+
 msgid "Undo delete"
 msgstr "Zrušit smazání"
 
@@ -2571,6 +2625,9 @@ msgstr "Je uložena neznámá telefonní předvolba \"%prefix%\". Ověřte ji pr
 
 msgid "Unlimited"
 msgstr "Neomezeně"
+
+msgid "Unlink"
+msgstr "Zrušit odkaz"
 
 msgid "Unpaid"
 msgstr "Nezaplaceno"

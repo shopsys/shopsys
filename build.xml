@@ -326,6 +326,10 @@
             <arg value="run"/>
             <arg value="tests:unit"/>
         </exec>
+        <exec executable="${path.npm.executable}" dir="${path.administration}/assets" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="tests:unit"/>
+        </exec>
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="tests:unit"/>

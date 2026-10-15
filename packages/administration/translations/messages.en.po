@@ -169,6 +169,9 @@ msgstr ""
 msgid "Applicable variables for Subject"
 msgstr ""
 
+msgid "Apply"
+msgstr ""
+
 msgid "Approve review"
 msgstr ""
 
@@ -289,6 +292,9 @@ msgstr ""
 msgid "Blog category is visible on some domains"
 msgstr ""
 
+msgid "Bold"
+msgstr ""
+
 msgid "Brand"
 msgstr ""
 
@@ -302,6 +308,9 @@ msgid "Bulk creation of promo codes"
 msgstr ""
 
 msgid "Bulk edit"
+msgstr ""
+
+msgid "Bullet list"
 msgstr ""
 
 msgid "But at other addresses we have a lot for you..."
@@ -365,6 +374,9 @@ msgid "Clean Storefront Query Cache"
 msgstr ""
 
 msgid "Clear"
+msgstr ""
+
+msgid "Clear formatting"
 msgstr ""
 
 msgid "Clear history"
@@ -1141,6 +1153,18 @@ msgstr ""
 msgid "Granted"
 msgstr ""
 
+msgid "HTML source"
+msgstr ""
+
+msgid "Heading 2"
+msgstr ""
+
+msgid "Heading 3"
+msgstr ""
+
+msgid "Heading 4"
+msgstr ""
+
 msgid "Heureka - Verified by Customer"
 msgstr ""
 
@@ -1163,6 +1187,9 @@ msgid "Holidays and internal days"
 msgstr ""
 
 msgid "Holidays import"
+msgstr ""
+
+msgid "Horizontal line"
 msgstr ""
 
 msgid "IP address"
@@ -1216,6 +1243,9 @@ msgstr ""
 msgid "Inquiry by"
 msgstr ""
 
+msgid "Insert variable"
+msgstr ""
+
 msgid "Internal ID"
 msgstr ""
 
@@ -1229,6 +1259,9 @@ msgid "It is not possible to update order and indentation of blog categories on 
 msgstr ""
 
 msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol &lt;different&gt; and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
+msgstr ""
+
+msgid "Italic"
 msgstr ""
 
 msgid "Item name"
@@ -1272,6 +1305,12 @@ msgstr ""
 
 msgid "Link [abbreviation]"
 msgstr "L"
+
+msgid "Link address"
+msgstr ""
+
+msgid "Link title"
+msgstr ""
 
 msgid "Link to the overview of brands"
 msgstr ""
@@ -1618,6 +1657,9 @@ msgstr ""
 msgid "Number of selected products is not limited, however only %limit% will be displayed on frontend."
 msgstr ""
 
+msgid "Numbered list"
+msgstr ""
+
 msgid "Ok"
 msgstr ""
 
@@ -1912,6 +1954,9 @@ msgstr ""
 msgid "Quick search"
 msgstr ""
 
+msgid "Quote"
+msgstr ""
+
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr ""
 
@@ -1955,6 +2000,9 @@ msgid "Rejected"
 msgstr ""
 
 msgid "Remove"
+msgstr ""
+
+msgid "Remove link"
 msgstr ""
 
 msgid "Remove rule"
@@ -2314,6 +2362,9 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
+msgid "Strikethrough"
+msgstr ""
+
 msgid "String contains leading/trailing spaces represented by &middot; sign"
 msgstr ""
 
@@ -2548,6 +2599,9 @@ msgstr ""
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr ""
 
+msgid "Underline"
+msgstr ""
+
 msgid "Undo delete"
 msgstr ""
 
@@ -2570,6 +2624,9 @@ msgid "Unknown phone prefix \"%prefix%\" is stored. Please verify it."
 msgstr ""
 
 msgid "Unlimited"
+msgstr ""
+
+msgid "Unlink"
 msgstr ""
 
 msgid "Unpaid"

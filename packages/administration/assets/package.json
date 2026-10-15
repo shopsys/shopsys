@@ -6,13 +6,17 @@
     "author": "Shopsys",
     "repository": "https://github.com/shopsys/shopsys",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "standards-check": "biome check .",
-        "standards-fix": "biome check --fix --unsafe ."
+        "standards-fix": "biome check --fix --unsafe .",
+        "tests": "npm run tests:unit",
+        "tests:unit": "jest src"
     },
     "dependencies": {
         "@melloware/coloris": "^0.25.0",
         "@tabler/core": "1.7.4",
+        "@tiptap/core": "^3.32.0",
+        "@tiptap/pm": "^3.32.0",
+        "@tiptap/starter-kit": "^3.32.0",
         "bazinga-translator": "^8.0.0",
         "chart.js": "^4.5.1",
         "imask": "^7.6.1",
@@ -22,6 +26,13 @@
         "tom-select": "^2.4.3"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.6.2"
+        "@babel/preset-env": "^7.14.4",
+        "@biomejs/biome": "^2.6.2",
+        "babel-jest": "^30.4.1",
+        "jest": "^30.4.2",
+        "jest-environment-jsdom": "^30.4.1"
+    },
+    "jest": {
+        "testEnvironment": "jsdom"
     }
 }

@@ -1,0 +1,29 @@
+.wysiwyg-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.wysiwyg-link-panel {
+    min-width: 18rem;
+}
+
+.wysiwyg-editor .ProseMirror {
+    min-height: 12rem;
+    padding: 0.5rem 0.75rem;
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+.wysiwyg-editor:focus-within {
+    border-color: var(--tblr-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--tblr-primary-rgb), 0.25);
+}
+
+.wysiwyg-source {
+    min-height: 12rem;
+    font-family: var(--tblr-font-monospace);
+}
