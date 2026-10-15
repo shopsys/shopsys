@@ -290,6 +290,54 @@ class FriendlyUrlFacade
     }
 
     /**
+     * Slugs missing in the cache are loaded by a single query
+     *
+     * @param int[] $entityIds
+     * @return array<int, string>
+     */
+    public function getMainFriendlyUrlSlugsIndexedByEntityId(int $domainId, string $routeName, array $entityIds): array
+    {
+        $slugsIndexedByEntityId = [];
+        $missingEntityIds = [];
+
+        foreach ($entityIds as $entityId) {
+            $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey($routeName, $domainId, $entityId);
+            $cachedSlug = $this->mainFriendlyUrlSlugCache->get($cacheKey, fn () => null);
+
+            if ($cachedSlug !== null) {
+                $slugsIndexedByEntityId[$entityId] = $cachedSlug;
+            } else {
+                $missingEntityIds[] = $entityId;
+            }
+        }
+
+        if ($missingEntityIds === []) {
+            return $slugsIndexedByEntityId;
+        }
+
+        $friendlyUrlsIndexedByEntityId = $this->friendlyUrlRepository->getMainFriendlyUrlsByEntitiesIndexedByEntityId(
+            $missingEntityIds,
+            $routeName,
+            $domainId,
+        );
+
+        foreach ($missingEntityIds as $entityId) {
+            if (!isset($friendlyUrlsIndexedByEntityId[$entityId])) {
+                throw new FriendlyUrlNotFoundException(sprintf('Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".', $routeName, $domainId, $entityId));
+            }
+
+            $slug = $friendlyUrlsIndexedByEntityId[$entityId]->getSlug();
+            $slugsIndexedByEntityId[$entityId] = $slug;
+
+            $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey($routeName, $domainId, $entityId);
+            $this->mainFriendlyUrlSlugCache->delete($cacheKey);
+            $this->mainFriendlyUrlSlugCache->get($cacheKey, fn () => $slug);
+        }
+
+        return $slugsIndexedByEntityId;
+    }
+
+    /**
      * @return string[]
      */
     public function getAllSlugsByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): array
