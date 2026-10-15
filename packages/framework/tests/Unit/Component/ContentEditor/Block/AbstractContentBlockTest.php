@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\DummyColumnsBlock;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\DummyImageBlock;
@@ -31,7 +30,7 @@ class AbstractContentBlockTest extends TestCase
         $this->assertNull($block->getIcon());
         $this->assertSame(AbstractContentBlock::CATEGORY_CONTENT, $block->getCategory());
         $this->assertSame(['mediaId' => null, 'alt' => '', 'position' => 'center'], $block->getDefaultData());
-        $this->assertSame(['alt' => 'x'], $block->export(['alt' => 'x'], new ExportContext(1, 'en')));
+        $this->assertSame(['alt' => 'x'], $block->export(['alt' => 'x'], 1));
     }
 
     public function testExtractTextJoinsTextFieldValues(): void

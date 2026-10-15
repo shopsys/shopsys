@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Override;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -183,7 +182,7 @@ class BlogArticleTest extends GraphQlTestCase
 
         $content = $this->contentDocumentExporter->export(
             $this->contentDocumentFactory->createFromArray($this->blogArticle->getContentArray($locale) ?? []),
-            new ExportContext(Domain::FIRST_DOMAIN_ID, $locale),
+            Domain::FIRST_DOMAIN_ID,
         );
         $seoAttributes = $this->blogArticle->getSeoAttributes(Domain::FIRST_DOMAIN_ID);
         $articleTitle = t('How to choose the right TV for your living room', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

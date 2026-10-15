@@ -129,7 +129,6 @@ class MailContentRendererTest extends TestCase
         $mediaFacade->method('getImageUrl')->willReturn('https://example.com/cat.jpg?width=600');
 
         $domainConfig = $this->createStub(DomainConfig::class);
-        $domainConfig->method('getLocale')->willReturn('en');
         $domain = $this->createStub(Domain::class);
         $domain->method('getDomainConfigById')->willReturn($domainConfig);
 
@@ -141,7 +140,7 @@ class MailContentRendererTest extends TestCase
         $loader = new FilesystemLoader();
         $loader->addPath(__DIR__ . '/../../../../../src/Resources/views', 'ShopsysFramework');
 
-        $this->renderer = new MailContentRenderer($registry, $domain, new Environment($loader));
+        $this->renderer = new MailContentRenderer($registry, new Environment($loader));
     }
 
     /**

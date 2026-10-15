@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentTextExtractor;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
@@ -95,7 +94,7 @@ class BlogArticleExportRepository
         return [
             'name' => $blogArticle->getName($locale),
             'text' => $this->contentDocumentTextExtractor->extractText($document),
-            'content' => $this->contentDocumentExporter->export($document, new ExportContext($domainId, $locale)),
+            'content' => $this->contentDocumentExporter->export($document, $domainId),
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'modifiedAt' => $blogArticle->getModifiedAt()?->format('Y-m-d H:i:s'),

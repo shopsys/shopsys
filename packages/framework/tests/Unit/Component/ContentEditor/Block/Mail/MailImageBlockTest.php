@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Mail;
 
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailImageBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -41,7 +40,7 @@ class MailImageBlockTest extends AbstractWebBlockTestCase
         $mediaFacade->method('getById')->willReturn($media);
         $mediaFacade->expects($this->once())->method('getImageUrl')->with($this->anything(), $media, 600)->willReturn('https://example.com/image.jpg?width=600');
 
-        $result = $this->createBlock($mediaFacade)->export(['mediaId' => 12], new ExportContext(1, 'en'));
+        $result = $this->createBlock($mediaFacade)->export(['mediaId' => 12], 1);
 
         $this->assertSame(['mediaId' => 12, 'url' => 'https://example.com/image.jpg?width=600', 'width' => 600], $result);
     }
@@ -54,7 +53,7 @@ class MailImageBlockTest extends AbstractWebBlockTestCase
         $mediaFacade->method('getById')->willReturn($media);
         $mediaFacade->method('getImageUrl')->willReturn('https://example.com/image.jpg');
 
-        $result = $this->createBlock($mediaFacade)->export(['mediaId' => 12], new ExportContext(1, 'en'));
+        $result = $this->createBlock($mediaFacade)->export(['mediaId' => 12], 1);
 
         $this->assertSame(300, $result['width']);
     }

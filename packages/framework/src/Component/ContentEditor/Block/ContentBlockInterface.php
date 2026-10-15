@@ -35,7 +35,7 @@ interface ContentBlockInterface
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
-    public function export(array $data, ExportContext $context): array;
+    public function export(array $data, int $domainId): array;
 
     /**
      * @param array<string, mixed> $data

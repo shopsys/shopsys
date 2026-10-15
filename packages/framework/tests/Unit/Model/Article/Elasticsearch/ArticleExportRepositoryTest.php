@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Article\Elasticsearch;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
@@ -13,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentTextExtractor;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
@@ -103,11 +101,6 @@ class ArticleExportRepositoryTest extends TestCase
         /** @var \Shopsys\FrameworkBundle\Model\Article\ArticleRepository|\PHPUnit\Framework\MockObject\Stub $articleRepositoryStub */
         $articleRepositoryStub = $this->createStub(ArticleRepository::class);
 
-        $domainStub = $this->createStub(Domain::class);
-        $domainStub->method('getDomainConfigById')->willReturn(
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'https://example.com', 'example', 'en', new DateTimeZone('UTC'), 'https://example.com'),
-        );
-
         $registry = ContentEditorTestFactory::createRegistry();
 
         return new ArticleExportRepository(
@@ -117,7 +110,6 @@ class ArticleExportRepositoryTest extends TestCase
             new ContentDocumentFactory(),
             new ContentDocumentTextExtractor($registry),
             new ContentDocumentExporter($registry),
-            $domainStub,
         );
     }
 

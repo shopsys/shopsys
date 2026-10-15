@@ -8,7 +8,6 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
@@ -25,9 +24,9 @@ class ContentDocumentExporterTest extends TestCase
     {
         $imageBlock = new #[ContentBlock(type: 'image')] class() extends DummyImageBlock {
             #[Override]
-            public function export(array $data, ExportContext $context): array
+            public function export(array $data, int $domainId): array
             {
-                $data['url'] = sprintf('https://example.com/%d/%s/%s.jpg', $context->domainId, $context->locale, $data['mediaId']);
+                $data['url'] = sprintf('https://example.com/%d/%s.jpg', $domainId, $data['mediaId']);
 
                 return $data;
             }
@@ -48,7 +47,7 @@ class ContentDocumentExporterTest extends TestCase
             ]),
         ]);
 
-        $exported = $this->exporter->export($document, new ExportContext(2, 'cs'));
+        $exported = $this->exporter->export($document, 2);
 
         $this->assertSame([
             'version' => 1,
@@ -60,7 +59,7 @@ class ContentDocumentExporterTest extends TestCase
                     'type' => 'columns',
                     'data' => ['layout' => '1/2-1/2'],
                     'children' => [
-                        [['id' => 'c', 'type' => 'image', 'data' => ['mediaId' => 7, 'alt' => '', 'url' => 'https://example.com/2/cs/7.jpg']]],
+                        [['id' => 'c', 'type' => 'image', 'data' => ['mediaId' => 7, 'alt' => '', 'url' => 'https://example.com/2/7.jpg']]],
                         [],
                     ],
                 ],
@@ -75,14 +74,14 @@ class ContentDocumentExporterTest extends TestCase
             new ContentBlockInstance('b', 'text', ['html' => 'y']),
         ]);
 
-        $exported = $this->exporter->export($document, new ExportContext(1, 'en'));
+        $exported = $this->exporter->export($document, 1);
 
         $this->assertSame(['b'], array_column($exported['blocks'], 'id'));
     }
 
     public function testEmptyDocumentIsExportedWithoutBlocks(): void
     {
-        $exported = $this->exporter->export(new ContentDocument(1, 'mail', []), new ExportContext(1, 'en'));
+        $exported = $this->exporter->export(new ContentDocument(1, 'mail', []), 1);
 
         $this->assertSame(['version' => 1, 'profile' => 'mail', 'blocks' => []], $exported);
     }

@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ProductsField;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Component\Validator\Constraints\Count;
@@ -46,7 +45,7 @@ class ProductsBlock extends AbstractContentBlock
 
     // products without a catalog number cannot be addressed by the storefront, so they are dropped like deleted ones
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function export(array $data, int $domainId): array
     {
         $productIds = $data['productIds'] ?? [];
         $catnumsByProductId = [];

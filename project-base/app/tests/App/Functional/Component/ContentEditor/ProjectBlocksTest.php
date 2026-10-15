@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\ContentEditor;
 
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
@@ -71,7 +70,7 @@ final class ProjectBlocksTest extends TransactionFunctionalTestCase
         $this->assertSame('faq', $normalizedDocument->blocks[0]->type);
         $this->assertArrayNotHasKey('unknown', $normalizedDocument->blocks[0]->data);
 
-        $exportedDocument = $this->contentDocumentExporter->export($normalizedDocument, new ExportContext(Domain::FIRST_DOMAIN_ID, 'en'));
+        $exportedDocument = $this->contentDocumentExporter->export($normalizedDocument, Domain::FIRST_DOMAIN_ID);
 
         $this->assertSame('faq', $exportedDocument['blocks'][0]['type']);
         $this->assertSame('How long is the warranty?', $exportedDocument['blocks'][0]['data']['question']);

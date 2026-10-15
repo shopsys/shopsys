@@ -9,7 +9,6 @@ use Shopsys\AdministrationBundle\Component\ContentEditor\Form\ContentDocumentTyp
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContainerContentBlockInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
@@ -238,7 +237,7 @@ final class ContentEditorComponent
         $domainConfig = $this->resolveExportDomainConfig();
         $exportedDocument = $this->contentDocumentExporter->export(
             $this->getNormalizedDocument(),
-            new ExportContext($domainConfig->getId(), $domainConfig->getLocale()),
+            $domainConfig->getId(),
         );
 
         return json_encode($exportedDocument, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

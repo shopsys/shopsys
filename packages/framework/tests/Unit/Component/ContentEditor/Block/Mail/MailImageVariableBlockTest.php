@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Mail;
 
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailImageVariableBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web\AbstractWebBlockTestCase;
@@ -26,6 +25,6 @@ class MailImageVariableBlockTest extends AbstractWebBlockTestCase
     {
         $data = ['variable' => '{product_image}', 'alt' => '{product_name}'];
 
-        $this->assertSame($data, (new MailImageVariableBlock())->export($data, new ExportContext(1, 'en')));
+        $this->assertSame($data, (new MailImageVariableBlock())->export($data, 1));
     }
 }

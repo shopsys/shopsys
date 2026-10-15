@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ImageBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\UrlField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
@@ -20,9 +19,9 @@ class MailImageBlock extends ImageBlock
     protected const int MAX_WIDTH = 600;
 
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function export(array $data, int $domainId): array
     {
-        $data = parent::export($data, $context);
+        $data = parent::export($data, $domainId);
 
         if (isset($data['width'])) {
             // the height is left to the renderer, so the image keeps its proportions

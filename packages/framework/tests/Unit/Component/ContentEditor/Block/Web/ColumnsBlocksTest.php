@@ -7,7 +7,6 @@ namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractColumnsBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsHalvesBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsThirdsBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsThirdTwoThirdsBlock;
@@ -73,7 +72,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
         int $expectedSlotCount,
         string $expectedIcon,
     ): void {
-        $this->assertSame(['layout' => $expectedLayout], $block->export([], new ExportContext(1, 'en')));
+        $this->assertSame(['layout' => $expectedLayout], $block->export([], 1));
     }
 
     #[DataProvider('getColumnsBlocksData')]

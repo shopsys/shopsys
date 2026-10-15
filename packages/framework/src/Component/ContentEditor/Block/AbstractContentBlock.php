@@ -53,7 +53,7 @@ abstract class AbstractContentBlock implements ContentBlockInterface
     }
 
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function export(array $data, int $domainId): array
     {
         return $data;
     }

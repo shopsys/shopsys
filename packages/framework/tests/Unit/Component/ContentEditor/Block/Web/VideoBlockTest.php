@@ -6,7 +6,6 @@ namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web;
 
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\VideoBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\VideoUrlParser;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\ContentEditorTestFactory;
@@ -59,7 +58,7 @@ class VideoBlockTest extends AbstractWebBlockTestCase
 
     public function testExportAddsVideoInfo(): void
     {
-        $result = $this->block->export(['url' => 'https://youtu.be/dQw4w9WgXcQ'], new ExportContext(1, 'en'));
+        $result = $this->block->export(['url' => 'https://youtu.be/dQw4w9WgXcQ'], 1);
 
         $this->assertSame([
             'url' => 'https://youtu.be/dQw4w9WgXcQ',
@@ -71,7 +70,7 @@ class VideoBlockTest extends AbstractWebBlockTestCase
 
     public function testExportOfUnknownUrlKeepsDataAndAddsNulls(): void
     {
-        $result = $this->block->export(['url' => 'https://example.com/video'], new ExportContext(1, 'en'));
+        $result = $this->block->export(['url' => 'https://example.com/video'], 1);
 
         $this->assertSame([
             'url' => 'https://example.com/video',

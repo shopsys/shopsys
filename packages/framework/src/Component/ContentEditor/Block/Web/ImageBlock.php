@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ChoiceField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\MediaField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TextField;
@@ -60,12 +59,12 @@ class ImageBlock extends AbstractContentBlock
     }
 
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function export(array $data, int $domainId): array
     {
         $media = $this->findMedia($data['mediaId'] ?? null);
 
         if ($media !== null) {
-            $data['url'] = $this->getMediaUrl($media, $context);
+            $data['url'] = $this->getMediaUrl($media, $domainId);
             $data['width'] = $media->getWidth();
             $data['height'] = $media->getHeight();
 
@@ -85,9 +84,9 @@ class ImageBlock extends AbstractContentBlock
         return $data;
     }
 
-    protected function getMediaUrl(Media $media, ExportContext $context): string
+    protected function getMediaUrl(Media $media, int $domainId): string
     {
-        return $this->mediaFacade->getImageUrl($this->domain->getDomainConfigById($context->domainId), $media, static::MAX_WIDTH);
+        return $this->mediaFacade->getImageUrl($this->domain->getDomainConfigById($domainId), $media, static::MAX_WIDTH);
     }
 
     protected function createLinkField(): UrlField

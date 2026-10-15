@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web;
 
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ImageBlock;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -42,7 +41,7 @@ class ImageBlockTest extends AbstractWebBlockTestCase
         $result = $this->createBlock($mediaFacade)->export([
             'mediaId' => self::MEDIA_ID,
             'url' => '/legacy.png',
-        ], new ExportContext(1, 'en'));
+        ], 1);
 
         $this->assertSame(
             [
@@ -60,7 +59,7 @@ class ImageBlockTest extends AbstractWebBlockTestCase
         $result = $this->createBlock($this->createStub(MediaFacade::class))->export([
             'mediaId' => null,
             'url' => '/legacy.png',
-        ], new ExportContext(1, 'en'));
+        ], 1);
 
         $this->assertSame([
             'mediaId' => null,
@@ -77,7 +76,7 @@ class ImageBlockTest extends AbstractWebBlockTestCase
         $result = $this->createBlock($mediaFacade)->export([
             'mediaId' => self::MEDIA_ID,
             'url' => '/legacy.png',
-        ], new ExportContext(1, 'en'));
+        ], 1);
 
         $this->assertSame('/legacy.png', $result['url']);
         $this->assertTrue($result['legacy']);
@@ -85,7 +84,7 @@ class ImageBlockTest extends AbstractWebBlockTestCase
 
     public function testExportWithoutMediaAndUrlHasNullUrl(): void
     {
-        $result = $this->createBlock($this->createStub(MediaFacade::class))->export(['mediaId' => null], new ExportContext(1, 'en'));
+        $result = $this->createBlock($this->createStub(MediaFacade::class))->export(['mediaId' => null], 1);
 
         $this->assertSame(['mediaId' => null, 'url' => null], $result);
     }

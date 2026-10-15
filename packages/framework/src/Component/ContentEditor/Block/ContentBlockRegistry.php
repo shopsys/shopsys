@@ -13,7 +13,7 @@ class ContentBlockRegistry
     /**
      * @var array<string, \Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface>|null
      */
-    private ?array $blocksByType = null;
+    protected ?array $blocksByType = null;
 
     /**
      * @param iterable<\Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface> $blocks
@@ -21,8 +21,8 @@ class ContentBlockRegistry
      */
     public function __construct(
         #[AutowireIterator('shopsys.content_editor.block')]
-        private readonly iterable $blocks,
-        private readonly array $disabledTypes,
+        protected readonly iterable $blocks,
+        protected readonly array $disabledTypes,
     ) {
     }
 
@@ -76,7 +76,7 @@ class ContentBlockRegistry
     /**
      * @return array<string, \Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface>
      */
-    private function buildBlocksByType(): array
+    protected function buildBlocksByType(): array
     {
         $blocksByType = [];
 

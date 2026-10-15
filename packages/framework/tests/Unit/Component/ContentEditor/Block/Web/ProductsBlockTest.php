@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web;
 
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ProductsBlock;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -30,7 +29,7 @@ class ProductsBlockTest extends AbstractWebBlockTestCase
         ]);
         $block = new ProductsBlock($productRepository);
 
-        $result = $block->export(['productIds' => [2, 3, 4, 1]], new ExportContext(1, 'en'));
+        $result = $block->export(['productIds' => [2, 3, 4, 1]], 1);
 
         $this->assertSame(['B', 'A'], $result['catnums']);
         $this->assertSame([2, 3, 4, 1], $result['productIds']);

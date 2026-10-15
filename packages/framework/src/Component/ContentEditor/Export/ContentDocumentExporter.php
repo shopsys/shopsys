@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ContentEditor\Export;
 
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 
@@ -15,19 +14,19 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 class ContentDocumentExporter
 {
     public function __construct(
-        private readonly ContentBlockRegistry $contentBlockRegistry,
+        protected readonly ContentBlockRegistry $contentBlockRegistry,
     ) {
     }
 
     /**
      * @return array{version: int, profile: string, blocks: array<int, array<string, mixed>>}
      */
-    public function export(ContentDocument $document, ExportContext $context): array
+    public function export(ContentDocument $document, int $domainId): array
     {
         return [
             'version' => $document->version,
             'profile' => $document->profile,
-            'blocks' => $this->exportBlocks($document->blocks, $context),
+            'blocks' => $this->exportBlocks($document->blocks, $domainId),
         ];
     }
 
@@ -35,14 +34,14 @@ class ContentDocumentExporter
      * @param \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[] $blocks
      * @return array<int, array<string, mixed>>
      */
-    private function exportBlocks(array $blocks, ExportContext $context): array
+    protected function exportBlocks(array $blocks, int $domainId): array
     {
         $exportedBlocks = [];
 
         foreach ($blocks as $block) {
             // a type disabled after the content was saved is skipped
             if ($this->contentBlockRegistry->has($block->type)) {
-                $exportedBlocks[] = $this->exportBlock($block, $context);
+                $exportedBlocks[] = $this->exportBlock($block, $domainId);
             }
         }
 
@@ -52,17 +51,17 @@ class ContentDocumentExporter
     /**
      * @return array<string, mixed>
      */
-    private function exportBlock(ContentBlockInstance $block, ExportContext $context): array
+    protected function exportBlock(ContentBlockInstance $block, int $domainId): array
     {
         $exportedBlock = [
             'id' => $block->id,
             'type' => $block->type,
-            'data' => $this->contentBlockRegistry->get($block->type)->export($block->data, $context),
+            'data' => $this->contentBlockRegistry->get($block->type)->export($block->data, $domainId),
         ];
 
         if ($block->children !== null) {
             $exportedBlock['children'] = array_map(
-                fn (array $slot): array => $this->exportBlocks($slot, $context),
+                fn (array $slot): array => $this->exportBlocks($slot, $domainId),
                 $block->children,
             );
         }

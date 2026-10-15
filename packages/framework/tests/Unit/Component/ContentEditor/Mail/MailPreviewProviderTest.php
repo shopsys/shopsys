@@ -11,8 +11,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstanc
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Mail\MailContentRenderer;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Mail\MailPreviewProvider;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder;
 use Twig\Environment;
@@ -26,11 +24,9 @@ class MailPreviewProviderTest extends TestCase
         $translator->method('trans')->willReturnArgument(0);
         Translator::injectSelf($translator);
 
-        $domain = $this->createStub(Domain::class);
-        $domain->method('getDomainConfigById')->willReturn($this->createStub(DomainConfig::class));
         $loader = new FilesystemLoader();
         $loader->addPath(__DIR__ . '/../../../../../src/Resources/views', 'ShopsysFramework');
-        $renderer = new MailContentRenderer(new ContentBlockRegistry([new MailTextBlock()], []), $domain, new Environment($loader));
+        $renderer = new MailContentRenderer(new ContentBlockRegistry([new MailTextBlock()], []), new Environment($loader));
 
         $mailTemplateBuilder = $this->createStub(MailTemplateBuilder::class);
         $mailTemplateBuilder->method('getMailTemplateWithContent')->willReturnCallback(

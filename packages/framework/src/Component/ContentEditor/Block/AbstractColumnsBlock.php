@@ -35,7 +35,7 @@ abstract class AbstractColumnsBlock extends AbstractContentBlock implements Cont
     }
 
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function export(array $data, int $domainId): array
     {
         return $data + ['layout' => static::LAYOUT];
     }

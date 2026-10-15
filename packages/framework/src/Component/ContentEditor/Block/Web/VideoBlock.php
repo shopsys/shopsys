@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\UrlField;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -46,7 +45,7 @@ class VideoBlock extends AbstractContentBlock
     }
 
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function export(array $data, int $domainId): array
     {
         $url = $data['url'] ?? null;
         $video = is_string($url) ? $this->videoUrlParser->parse($url) : null;
