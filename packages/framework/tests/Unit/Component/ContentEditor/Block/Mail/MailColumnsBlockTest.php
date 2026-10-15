@@ -22,5 +22,6 @@ class MailColumnsBlockTest extends AbstractWebBlockTestCase
         $this->assertSame(['layout' => '1/2-1/2'], $block->export([], new ExportContext(1, 'en')));
         $this->assertSame([], $block->getFields());
         $this->assertSame(AbstractContentBlock::CATEGORY_LAYOUT, $block->getCategory());
+        $this->assertSame('tabler:columns-2', $block->getIcon());
     }
 }

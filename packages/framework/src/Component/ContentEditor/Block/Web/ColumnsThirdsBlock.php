@@ -14,6 +14,12 @@ class ColumnsThirdsBlock extends AbstractColumnsBlock
     protected const string LAYOUT = '1/3-1/3-1/3';
 
     #[Override]
+    public function getIcon(): string
+    {
+        return 'tabler:columns-3';
+    }
+
+    #[Override]
     public function getLabel(): string
     {
         return t('Three columns');

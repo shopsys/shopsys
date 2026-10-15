@@ -14,6 +14,12 @@ class ColumnsThirdTwoThirdsBlock extends AbstractColumnsBlock
     protected const string LAYOUT = '1/3-2/3';
 
     #[Override]
+    public function getIcon(): string
+    {
+        return 'tabler:layout-sidebar';
+    }
+
+    #[Override]
     public function getLabel(): string
     {
         return t('Narrow and wide column');

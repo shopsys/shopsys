@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ColumnsTwoThirdsTh
 class ColumnsBlocksTest extends AbstractWebBlockTestCase
 {
     /**
-     * @return iterable<string, array{block: \Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractColumnsBlock, expectedType: string, expectedLayout: string, expectedSlotCount: int}>
+     * @return iterable<string, array{block: \Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractColumnsBlock, expectedType: string, expectedLayout: string, expectedSlotCount: int, expectedIcon: string}>
      */
     public static function getColumnsBlocksData(): iterable
     {
@@ -25,6 +25,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
             'expectedType' => 'columns-1-1',
             'expectedLayout' => '1/2-1/2',
             'expectedSlotCount' => 2,
+            'expectedIcon' => 'tabler:columns-2',
         ];
 
         yield 'third and two thirds' => [
@@ -32,6 +33,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
             'expectedType' => 'columns-1-2',
             'expectedLayout' => '1/3-2/3',
             'expectedSlotCount' => 2,
+            'expectedIcon' => 'tabler:layout-sidebar',
         ];
 
         yield 'two thirds and third' => [
@@ -39,6 +41,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
             'expectedType' => 'columns-2-1',
             'expectedLayout' => '2/3-1/3',
             'expectedSlotCount' => 2,
+            'expectedIcon' => 'tabler:layout-sidebar-right',
         ];
 
         yield 'thirds' => [
@@ -46,6 +49,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
             'expectedType' => 'columns-1-1-1',
             'expectedLayout' => '1/3-1/3-1/3',
             'expectedSlotCount' => 3,
+            'expectedIcon' => 'tabler:columns-3',
         ];
     }
 
@@ -55,6 +59,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
         string $expectedType,
         string $expectedLayout,
         int $expectedSlotCount,
+        string $expectedIcon,
     ): void {
         $this->assertSame($expectedType, $block->getType());
         $this->assertSame($expectedSlotCount, $block->getSlotCount([]));
@@ -66,6 +71,7 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
         string $expectedType,
         string $expectedLayout,
         int $expectedSlotCount,
+        string $expectedIcon,
     ): void {
         $this->assertSame(['layout' => $expectedLayout], $block->export([], new ExportContext(1, 'en')));
     }
@@ -76,10 +82,21 @@ class ColumnsBlocksTest extends AbstractWebBlockTestCase
         string $expectedType,
         string $expectedLayout,
         int $expectedSlotCount,
+        string $expectedIcon,
     ): void {
         $this->assertSame([], $block->getFields());
         $this->assertSame([], $block->getDefaultData());
         $this->assertSame(AbstractContentBlock::CATEGORY_LAYOUT, $block->getCategory());
-        $this->assertSame('tabler:columns', $block->getIcon());
+    }
+
+    #[DataProvider('getColumnsBlocksData')]
+    public function testIconShowsTheLayout(
+        AbstractColumnsBlock $block,
+        string $expectedType,
+        string $expectedLayout,
+        int $expectedSlotCount,
+        string $expectedIcon,
+    ): void {
+        $this->assertSame($expectedIcon, $block->getIcon());
     }
 }

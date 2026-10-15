@@ -17,12 +17,6 @@ abstract class AbstractColumnsBlock extends AbstractContentBlock implements Cont
     protected const string LAYOUT = '';
 
     #[Override]
-    public function getIcon(): string
-    {
-        return 'tabler:columns';
-    }
-
-    #[Override]
     public function getCategory(): string
     {
         return static::CATEGORY_LAYOUT;

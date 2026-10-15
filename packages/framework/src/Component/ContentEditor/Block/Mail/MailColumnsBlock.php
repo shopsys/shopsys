@@ -15,6 +15,12 @@ class MailColumnsBlock extends AbstractColumnsBlock
     protected const string LAYOUT = '1/2-1/2';
 
     #[Override]
+    public function getIcon(): string
+    {
+        return 'tabler:columns-2';
+    }
+
+    #[Override]
     public function getLabel(): string
     {
         return t('Two columns');
