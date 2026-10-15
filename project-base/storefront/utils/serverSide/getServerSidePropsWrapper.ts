@@ -22,7 +22,9 @@ export const getServerSidePropsWrapper =
         measureServerTiming(context.res, 'gssp', async () => {
             const domainConfig = getDomainConfig(context);
             const cookiesStoreState = getCookiesStoreState(domainConfig, context);
-            const redisClient = await measureServerTiming(context.res, 'redis_client', getRedisClient);
+            const redisClient = await measureServerTiming(context.res, 'redis_client', () =>
+                getRedisClient(context.res),
+            );
 
             // next-translate/getT reads the config from globalThis; appWithI18n used to register it implicitly.
             registerI18nConfig();

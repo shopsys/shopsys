@@ -1,3 +1,5 @@
+import { IncomingMessage, ServerResponse } from 'http';
+import { Socket } from 'net';
 import { createClient } from 'redis';
 import { logException } from 'utils/errors/logException';
 import { getRedisClient } from 'utils/redis/redisClient';
@@ -18,6 +20,7 @@ describe('shared Redis connection', () => {
     };
 
     beforeEach(() => {
+        vi.stubEnv('SERVER_TIMING', '0');
         vi.stubGlobal('window', undefined);
         vi.stubGlobal('__shopsysRedis', undefined);
         now = 10000;
@@ -42,6 +45,7 @@ describe('shared Redis connection', () => {
 
     afterEach(() => {
         vi.unstubAllGlobals();
+        vi.unstubAllEnvs();
     });
 
     const connectInBackground = async () => {
@@ -51,7 +55,7 @@ describe('shared Redis connection', () => {
         await vi.waitFor(async () => expect(await getRedisClient()).toBe(client));
     };
 
-    test('concurrent requests continue without cache while a single connection starts', async () => {
+    test('concurrent requests fall back after the shared initial wait expires', async () => {
         const results = await Promise.all(Array.from({ length: 10 }, () => getRedisClient()));
 
         expect(results).toEqual(Array(10).fill(undefined));
@@ -59,6 +63,48 @@ describe('shared Redis connection', () => {
         expect(createClient).toHaveBeenCalledTimes(1);
         finishConnecting();
         await vi.waitFor(async () => expect(await getRedisClient()).toBe(client));
+    });
+
+    test('concurrent requests use a connection that becomes ready during the initial wait', async () => {
+        const requests = Promise.all(Array.from({ length: 10 }, () => getRedisClient()));
+        await vi.waitFor(() => expect(client.connect).toHaveBeenCalledTimes(1));
+        finishConnecting();
+
+        expect(await requests).toEqual(Array(10).fill(client));
+        expect(createClient).toHaveBeenCalledTimes(1);
+    });
+
+    test('limits the shared initial wait to 100 ms without cancelling the connection', async () => {
+        vi.useFakeTimers();
+        try {
+            const completed = vi.fn();
+            const request = getRedisClient().then(completed);
+            await vi.advanceTimersByTimeAsync(99);
+            expect(completed).not.toHaveBeenCalled();
+
+            await vi.advanceTimersByTimeAsync(1);
+            await request;
+            expect(completed).toHaveBeenCalledWith(undefined);
+
+            finishConnecting();
+            await vi.advanceTimersByTimeAsync(0);
+            expect(await getRedisClient()).toBe(client);
+            expect(createClient).toHaveBeenCalledTimes(1);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    test('later requests do not wait again for an initial connection that already timed out', async () => {
+        await getRedisClient();
+        vi.useFakeTimers();
+        try {
+            expect(await getRedisClient()).toBeUndefined();
+            expect(vi.getTimerCount()).toBe(0);
+            finishConnecting();
+        } finally {
+            vi.useRealTimers();
+        }
     });
 
     test('reuses the ready connection across requests and module reloads', async () => {
@@ -71,7 +117,7 @@ describe('shared Redis connection', () => {
         expect(client.connect).toHaveBeenCalledTimes(1);
     });
 
-    test('retries a failed initial connection after a cooldown, without blocking requests', async () => {
+    test('retries a failed initial connection after a cooldown with a bounded wait', async () => {
         const error = new Error('Redis unavailable');
         await getRedisClient();
         await vi.waitFor(() => expect(client.connect).toHaveBeenCalledTimes(1));
@@ -113,6 +159,73 @@ describe('shared Redis connection', () => {
         await vi.waitFor(() => expect(client.connect).toHaveBeenCalledTimes(2));
         finishConnecting();
         await vi.waitFor(async () => expect(await getRedisClient()).toBe(client));
+    });
+
+    test('reports shared connection phases on each response without repeating the connection', async () => {
+        vi.stubEnv('SERVER_TIMING', '1');
+        const firstResponse = new ServerResponse(new IncomingMessage(new Socket()));
+        const secondResponse = new ServerResponse(new IncomingMessage(new Socket()));
+        firstResponse.setHeader('Server-Timing', 'upstream;dur=2');
+
+        const requests = Promise.all([getRedisClient(firstResponse), getRedisClient(secondResponse)]);
+        await vi.waitFor(() => expect(client.connect).toHaveBeenCalledOnce());
+        finishConnecting();
+        expect(await requests).toEqual([client, client]);
+
+        const phases = secondResponse.getHeader('Server-Timing');
+        expect(phases).toMatch(
+            /^redis_initial_import;dur=\d+\.\d, redis_initial_create;dur=\d+\.\d, redis_initial_connect;dur=\d+\.\d$/,
+        );
+        expect(firstResponse.getHeader('Server-Timing')).toBe(`upstream;dur=2, ${phases}`);
+        const warmResponse = new ServerResponse(new IncomingMessage(new Socket()));
+        expect(await getRedisClient(warmResponse)).toBe(client);
+        expect(warmResponse.getHeader('Server-Timing')).toBe(phases);
+        expect(createClient).toHaveBeenCalledOnce();
+
+        vi.stubEnv('SERVER_TIMING', '0');
+        const disabledResponse = new ServerResponse(new IncomingMessage(new Socket()));
+        expect(await getRedisClient(disabledResponse)).toBe(client);
+        expect(disabledResponse.getHeader('Server-Timing')).toBeUndefined();
+    });
+
+    test('reports the actual timeout delay and preserves connection timings completed in the background', async () => {
+        vi.stubEnv('SERVER_TIMING', '1');
+        vi.useFakeTimers();
+        let elapsed = 0;
+        vi.spyOn(performance, 'now').mockImplementation(() => elapsed);
+        const firstResponse = new ServerResponse(new IncomingMessage(new Socket()));
+        try {
+            const request = getRedisClient(firstResponse);
+            await vi.advanceTimersByTimeAsync(0);
+            elapsed = 737;
+            await vi.advanceTimersByTimeAsync(100);
+            expect(await request).toBeUndefined();
+            const firstHeader = firstResponse.getHeader('Server-Timing');
+            expect(firstHeader).toContain('redis_initial_timeout;dur=737.0');
+            expect(firstHeader).not.toContain('redis_initial_connect');
+
+            elapsed = 900;
+            finishConnecting();
+            await vi.advanceTimersByTimeAsync(0);
+            const nextResponse = new ServerResponse(new IncomingMessage(new Socket()));
+            expect(await getRedisClient(nextResponse)).toBe(client);
+            expect(nextResponse.getHeader('Server-Timing')).toContain('redis_initial_connect;dur=900.0');
+            expect(nextResponse.getHeader('Server-Timing')).toContain('redis_initial_timeout;dur=737.0');
+            expect(firstResponse.getHeader('Server-Timing')).toBe(firstHeader);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    test('does not emit connection timings when diagnostics are disabled', async () => {
+        const response = new ServerResponse(new IncomingMessage(new Socket()));
+
+        const request = getRedisClient(response);
+        await vi.waitFor(() => expect(client.connect).toHaveBeenCalledOnce());
+        finishConnecting();
+
+        expect(await request).toBe(client);
+        expect(response.getHeader('Server-Timing')).toBeUndefined();
     });
 
     test('disables offline queuing and bounds automatic reconnects after the initial connection', async () => {
