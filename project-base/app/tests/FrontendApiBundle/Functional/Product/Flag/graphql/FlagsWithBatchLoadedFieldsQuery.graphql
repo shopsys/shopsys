@@ -1,0 +1,15 @@
+query FlagsWithBatchLoadedFieldsQuery {
+    flags {
+        name
+        slug
+        seo {
+            title
+            metaDescription
+            h1
+        }
+        hreflangLinks {
+            hreflang
+            href
+        }
+    }
+}
