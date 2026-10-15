@@ -8,6 +8,8 @@ A project adds, replaces or removes blocks of the [content editor](../administra
 
 There are no extension classes, hooks or configuration objects.
 
+A step-by-step guide is in the cookbook [Adding a Content Editor Block](../cookbook/adding-a-content-editor-block.md), `project-base` ships `FaqBlock` (web) and `MailPromoBlock` (mail) as working examples.
+
 ## Adding a block
 
 A block is a class extending `AbstractContentBlock` and marked with the `#[ContentBlock]` attribute. Every class with the attribute is tagged `shopsys.content_editor.block` and picked up by `ContentBlockRegistry`, so no manual tagging is needed.
@@ -56,6 +58,7 @@ declare(strict_types=1);
 namespace App\ContentEditor\Block;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ChoiceField;
@@ -80,14 +83,14 @@ final class HeadingBlock extends AbstractContentBlock
     public function getFields(): array
     {
         return [
-            TextField::create('text')->label(t('Heading'))->required(),
-            ChoiceField::create('level', ['h2', 'h3', 'h4'])->label(t('Level'))->default('h2'),
+            ExtendedClassNameResolver::resolve(TextField::class)::create('text')->label(t('Heading'))->required(),
+            ExtendedClassNameResolver::resolve(ChoiceField::class)::create('level', ['h2', 'h3', 'h4'])->label(t('Level'))->default('h2'),
         ];
     }
 }
 ```
 
-The built-in blocks create fields through `ExtendedClassNameResolver::resolve(TextField::class)::create(...)`, so a project can replace a field class the usual way. In project code the direct call is enough.
+Fields are created through `ExtendedClassNameResolver::resolve(TextField::class)::create(...)` (the coding standards fixer rewrites a direct `TextField::create()` to it), so a project can replace a field class the usual way.
 
 The storefront component of the block, `components/Blocks/ContentEditor/blocks/HeadingBlock.tsx`:
 
@@ -112,7 +115,7 @@ export const HeadingBlock: FC<BlockProps<HeadingBlockData>> = ({ block }) => {
 A field describes one value of a block: its name, label, default, constraints and the form type that edits it. The fields are created with `create('name')` and configured fluently:
 
 ```php
-UrlField::create('url')->label(t('Link'))->help(t('Absolute or relative address'))->required()
+ExtendedClassNameResolver::resolve(UrlField::class)::create('url')->label(t('Link'))->help(t('Absolute or relative address'))->required()
 ```
 
 | Field           | Value                                     | Form type         | Notes                                                      |

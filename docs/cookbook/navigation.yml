@@ -17,4 +17,5 @@ arrange:
     - adding-a-new-email-template.md
     - create-asynchronous-notifier.md
     - adding-a-new-order-item-type.md
+    - adding-a-content-editor-block.md
     - protecting-a-storefront-form-against-spam.md
