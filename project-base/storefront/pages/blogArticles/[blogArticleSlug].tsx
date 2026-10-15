@@ -12,12 +12,14 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { TypeContentDocument } from 'types/contentEditor';
 import { OgTypeEnum } from 'types/seo';
 import { createClient } from 'urql/createClient';
+import { collectProductCatnums } from 'utils/contentEditor/collectProductCatnums';
+import { getTextBlocksHtml } from 'utils/contentEditor/getTextBlocksHtml';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
-import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -45,17 +47,17 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const isFuturePublishDate =
         !!blogArticleData?.blogArticle?.publishDate && new Date(blogArticleData.blogArticle.publishDate) > new Date();
     const shouldNoIndex = isDraft || isPreview || isFuturePublishDate;
-    const metaDescription = getMetaDescription(
-        blogArticleData?.blogArticle?.seo.metaDescription,
-        blogArticleData?.blogArticle?.perex || blogArticleData?.blogArticle?.text,
-    );
+    const descriptionHtml =
+        blogArticleData?.blogArticle?.perex ||
+        getTextBlocksHtml((blogArticleData?.blogArticle?.content ?? null) as TypeContentDocument | null);
+    const metaDescription = getMetaDescription(blogArticleData?.blogArticle?.seo.metaDescription, descriptionHtml);
 
     return (
         <CommonLayout
             breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
             breadcrumbsType="blogCategory"
             canonicalQueryParams={[]}
-            defaultDescription={blogArticleData?.blogArticle?.perex || blogArticleData?.blogArticle?.text}
+            defaultDescription={descriptionHtml}
             defaultMetaRobots={shouldNoIndex ? 'noindex, nofollow' : undefined}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={isBlogArticleFetching}
@@ -128,9 +130,11 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 return serverSideErrorResponse;
             }
 
-            const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
-            if (parsedCatnums.length > 0) {
-                await client.query(ProductsByCatnumsDocument, { catnums: parsedCatnums }).toPromise();
+            const catnums = collectProductCatnums(
+                (blogArticleResponse.data?.blogArticle?.content ?? null) as TypeContentDocument | null,
+            );
+            if (catnums.length > 0) {
+                await client.query(ProductsByCatnumsDocument, { catnums }).toPromise();
             }
 
             return buildServerSideProps({

@@ -70,4 +70,5 @@ export const defaultTestConfig: PublicRuntimeConfig = {
     sentryRelease: '',
     sentryFeedbackEnable: false,
     sentryReplaysEnable: false,
+    contentEditorPreviewOrigins: [],
 };

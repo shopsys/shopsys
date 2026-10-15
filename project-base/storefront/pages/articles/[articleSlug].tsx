@@ -13,12 +13,14 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { TypeContentDocument } from 'types/contentEditor';
 import { OgTypeEnum } from 'types/seo';
 import { createClient } from 'urql/createClient';
+import { collectProductCatnums } from 'utils/contentEditor/collectProductCatnums';
+import { getTextBlocksHtml } from 'utils/contentEditor/getTextBlocksHtml';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
-import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { getMetaDescription } from 'utils/seo/getMetaDescription';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { buildServerSideProps, prefetchLayoutQueries } from 'utils/serverSide/initServerSideProps';
@@ -47,13 +49,14 @@ const ArticleDetailPage: NextPage = () => {
         return <Error404Content />;
     }
 
-    const metaDescription = getMetaDescription(article?.seo.metaDescription, article?.text);
+    const textBlocksHtml = getTextBlocksHtml((article?.content ?? null) as TypeContentDocument | null);
+    const metaDescription = getMetaDescription(article?.seo.metaDescription, textBlocksHtml);
 
     return (
         <CommonLayout
             breadcrumbs={article?.breadcrumb}
             canonicalQueryParams={[]}
-            defaultDescription={article?.text}
+            defaultDescription={textBlocksHtml}
             isFetchingData={isArticleDetailFetching}
             ogImage={article?.mainImage}
             ogType={OgTypeEnum.Article}
@@ -112,9 +115,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const article =
                 articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
 
-            const parsedCatnums = parseCatnums(article?.text ?? '');
-            if (parsedCatnums.length > 0) {
-                await client.query(ProductsByCatnumsDocument, { catnums: parsedCatnums }).toPromise();
+            const catnums = collectProductCatnums((article?.content ?? null) as TypeContentDocument | null);
+            if (catnums.length > 0) {
+                await client.query(ProductsByCatnumsDocument, { catnums }).toPromise();
             }
 
             return buildServerSideProps({

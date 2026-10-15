@@ -12,7 +12,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
         ...BreadcrumbFragment
     }
     perex
-    text
+    content
     modifiedAt
     publishDate
     status

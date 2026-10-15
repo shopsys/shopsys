@@ -1,44 +1,23 @@
+import { BlockProps } from 'components/Blocks/ContentEditor/ContentRenderer';
 import { ArticleProductHero } from 'components/Blocks/Product/ArticleProductHero';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/productsSliderConstants';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
-import { TypeProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
+import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { ProductsBlockData } from 'types/contentEditor';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
-import { parseCatnums } from 'utils/parsing/grapesJsParser';
 import { twMergeCustom } from 'utils/twMerge';
 
-type GrapesJsProps = {
-    rawProductPart: string;
-    allFetchedProducts?: TypeProductsByCatnums | undefined;
-    areProductsFetching: boolean;
-    visibleSliderItems: number;
-};
-
-export const GrapesJsProducts: FC<GrapesJsProps> = ({
-    rawProductPart,
-    allFetchedProducts,
+export const ProductsBlock: FC<BlockProps<ProductsBlockData>> = ({
+    block,
+    products: fetchedProducts,
     areProductsFetching,
-    visibleSliderItems,
 }) => {
-    const products = [];
-
-    const productCatnums = parseCatnums(rawProductPart);
-
-    for (const productCatnum of productCatnums) {
-        const matchingProduct = allFetchedProducts?.productsByCatnums.find(
-            (blogArticleProduct) => blogArticleProduct.catalogNumber === productCatnum,
-        );
-
-        if (matchingProduct) {
-            products.push(matchingProduct);
-        }
-    }
-
     if (areProductsFetching) {
         return (
-            <div className="flex">
+            <div className="flex" data-tid={TIDs.content_block_products}>
                 {createEmptyArray(4).map((_, index) => (
                     <SkeletonModuleProductListItem key={index} />
                 ))}
@@ -46,27 +25,35 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
         );
     }
 
-    if (!products.length) {
+    // the order of the catnums is the order chosen by the administrator
+    const products = block.data.catnums.flatMap((catnum) =>
+        fetchedProducts.filter((product) => product.catalogNumber === catnum),
+    );
+
+    if (products.length === 0) {
         return null;
     }
 
     if (products.length === 1) {
         return (
-            <section className="my-8">
+            <section className="my-8" data-tid={TIDs.content_block_products}>
                 <ArticleProductHero product={products[0]} />
             </section>
         );
     }
 
     return (
-        <section className={twMergeCustom('my-8', products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-10' : '')}>
+        <section
+            className={twMergeCustom('my-8', products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-10' : '')}
+            data-tid={TIDs.content_block_products}
+        >
             <ProductsSlider
-                ariaAnchorName="product-slider-grapesjs"
+                ariaAnchorName="product-slider-content-editor"
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.other}
                 products={products}
                 variant="article"
-                visibleSliderItems={visibleSliderItems}
+                visibleSliderItems={VISIBLE_SLIDER_ITEMS_ARTICLE}
             />
         </section>
     );

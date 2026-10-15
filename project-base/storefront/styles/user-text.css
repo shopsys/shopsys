@@ -152,12 +152,6 @@
             @apply my-8 max-w-full overflow-x-auto lg:my-10;
         }
 
-        .gjs-button-link {
-            @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-lg border-2 text-center leading-4.5 font-semibold no-underline outline-hidden transition-all hover:no-underline;
-            @apply border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default! [&>div]:text-button-primary-text-default! px-3 py-1.75;
-            @apply hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered;
-        }
-
         table {
             @apply w-full;
 

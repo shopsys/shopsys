@@ -4,7 +4,7 @@ fragment ArticleDetailFragment on ArticleSite {
     slug
     placement
     articleName: name
-    text
+    content
     mainImage {
         ...ImageFragment
     }

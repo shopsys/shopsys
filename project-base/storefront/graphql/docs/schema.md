@@ -216,6 +216,7 @@
     * [FileUpload](#fileupload)
     * [Float](#float)
     * [Int](#int)
+    * [JSON](#json)
     * [Money](#money)
     * [Password](#password)
     * [String](#string)
@@ -2767,6 +2768,15 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="articlesite.content">content</strong></td>
+<td valign="top"><a href="#json">JSON</a></td>
+<td>
+
+Structured content of the article (content editor document)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="articlesite.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
@@ -2849,15 +2859,6 @@ SEO attributes of the article page
 <td>
 
 Article URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="articlesite.text">text</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Text of article
 
 </td>
 </tr>
@@ -2988,6 +2989,15 @@ The list of the blog article visible categories
 <td>
 
 Hierarchy of the current element in relation to the structure
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="blogarticle.content">content</strong></td>
+<td valign="top"><a href="#json">JSON</a></td>
+<td>
+
+Structured content of the blog article (content editor document)
 
 </td>
 </tr>
@@ -3124,15 +3134,6 @@ The blog article URL slug
 <td>
 
 The blog article status (draft, preview, published)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="blogarticle.text">text</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article text
 
 </td>
 </tr>
@@ -16579,6 +16580,10 @@ The `Float` scalar type represents signed double-precision fractional values as 
 
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 
+### JSON
+
+Arbitrary JSON value, output only
+
 ### Money
 
 ### Password
@@ -16691,11 +16696,6 @@ Represents entity that is considered to be an article on the eshop
 <tr>
 <td colspan="2" valign="top"><strong id="articleinterface.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="articleinterface.text">text</strong></td>
-<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>

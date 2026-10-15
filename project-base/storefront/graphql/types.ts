@@ -11,6 +11,8 @@ export type Scalars = {
   DateTime: { input: string; output: string; }
   /** Represents and encapsulates a file upload */
   FileUpload: { input: File; output: File; }
+  /** Arbitrary JSON value, output only */
+  JSON: { input: unknown; output: unknown; }
   Money: { input: string; output: string; }
   /** Represents and encapsulates a string for password */
   Password: { input: string; output: string; }
@@ -211,7 +213,6 @@ export type TypeArticleInterface = {
   name: Scalars['String']['output'];
   seo: TypeSeoAttributes;
   slug: Scalars['String']['output'];
-  text: Maybe<Scalars['String']['output']>;
   uuid: Scalars['Uuid']['output'];
 };
 
@@ -249,6 +250,8 @@ export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlo
   __typename?: 'ArticleSite';
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
+  /** Structured content of the article (content editor document) */
+  content: Maybe<Scalars['JSON']['output']>;
   /** Date and time of the article creation */
   createdAt: Scalars['DateTime']['output'];
   /** If the the article should be open in a new tab */
@@ -267,8 +270,6 @@ export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlo
   seo: TypeSeoAttributes;
   /** Article URL slug */
   slug: Scalars['String']['output'];
-  /** Text of article */
-  text: Maybe<Scalars['String']['output']>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -361,6 +362,8 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   blogCategories: Array<TypeBlogCategory>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
+  /** Structured content of the blog article (content editor document) */
+  content: Maybe<Scalars['JSON']['output']>;
   /** Date and time of the blog article creation */
   createdAt: Scalars['DateTime']['output'];
   /** Alternate links for hreflang meta tags */
@@ -389,8 +392,6 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   slug: Scalars['String']['output'];
   /** The blog article status (draft, preview, published) */
   status: Scalars['String']['output'];
-  /** The blog article text */
-  text: Maybe<Scalars['String']['output']>;
   /** The blog article UUID */
   uuid: Scalars['Uuid']['output'];
   /** Indicates whether the blog article is displayed on homepage */

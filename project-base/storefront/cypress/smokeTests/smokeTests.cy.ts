@@ -96,7 +96,7 @@ context('Smoke tests', () => {
                 checktHeadlineText('Write to us');
             },
         },
-        ['/grapesjs-template']: {
+        ['/content-editor-preview']: {
             skip: false,
             test: () => {
                 checktHeadlineText('Blog or Article title');

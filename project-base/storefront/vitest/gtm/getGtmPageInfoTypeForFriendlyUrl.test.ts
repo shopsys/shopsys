@@ -15,7 +15,7 @@ const articleDetail = {
     slug: '/test-article',
     placement: 'footer',
     articleName: 'Test article',
-    text: null,
+    content: null,
     breadcrumb: [],
     createdAt: '2026-04-30T10:00:00+02:00',
     seo: {
@@ -50,7 +50,7 @@ const blogArticleDetail = {
     perex: null,
     slug: '/test-blog-article',
     link: '/blog/test-blog-article',
-    text: null,
+    content: null,
     publishDate: '2026-04-30T10:00:00+02:00',
     status: 'published',
     seo: {

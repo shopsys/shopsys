@@ -32,6 +32,7 @@ export type PublicRuntimeConfig = {
     readonly sentryRelease: string;
     readonly sentryFeedbackEnable: boolean;
     readonly sentryReplaysEnable: boolean;
+    readonly contentEditorPreviewOrigins: readonly string[];
 };
 
 type ServerRuntimeConfig = {

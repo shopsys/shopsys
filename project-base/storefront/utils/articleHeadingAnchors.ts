@@ -63,8 +63,11 @@ const createHeadingId = (headingTitle: string, existingIds: Set<string>): string
     return headingId;
 };
 
-export const getArticleHtmlHeadingAnchors = (htmlString: string): ArticleHtmlHeadingAnchors => {
-    const usedHeadingIds = new Set<string>([ARTICLE_INTRODUCTION_ANCHOR_ID]);
+// pass the same set for every part of one article so the heading ids stay unique across the parts
+export const getArticleHtmlHeadingAnchors = (
+    htmlString: string,
+    usedHeadingIds = new Set<string>([ARTICLE_INTRODUCTION_ANCHOR_ID]),
+): ArticleHtmlHeadingAnchors => {
     const headings: ArticleHeading[] = [];
 
     const htmlWithHeadingAnchors = htmlString.replace(HEADING_REGEX, (heading, attributes: string, content: string) => {

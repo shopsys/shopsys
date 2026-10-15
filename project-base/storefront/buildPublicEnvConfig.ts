@@ -33,6 +33,10 @@ export function buildPublicConfig(): PublicRuntimeConfig {
         shouldUseDefer: process.env.SHOULD_USE_DEFER === '1',
         userSnapApiKey: process.env.USERSNAP_PROJECT_API_KEY ?? '',
         userSnapEnabledDefaultValue: process.env.USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1',
+        contentEditorPreviewOrigins: (process.env.CONTENT_EDITOR_PREVIEW_ORIGINS ?? '')
+            .split(',')
+            .map((origin) => origin.trim())
+            .filter(Boolean),
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1 ?? '',

@@ -80,7 +80,7 @@ const getRobotsTxtContent = (
         '/product-comparison',
         '/order/contact-information',
         '/order/transport-and-payment',
-        '/grapesjs-template',
+        '/content-editor-preview',
         '/_feedback',
         '/styleguide',
         { url: '/order-detail/:urlHash', param: '*' },
