@@ -25,6 +25,8 @@ class ImageBlock extends AbstractContentBlock
     public const string POSITION_CENTER = 'center';
     public const string POSITION_RIGHT = 'right';
 
+    protected const ?int MAX_WIDTH = null;
+
     public function __construct(
         protected readonly MediaFacade $mediaFacade,
         protected readonly Domain $domain,
@@ -53,7 +55,7 @@ class ImageBlock extends AbstractContentBlock
             ExtendedClassNameResolver::resolve(ChoiceField::class)::create('position', [static::POSITION_LEFT, static::POSITION_CENTER, static::POSITION_RIGHT])
                 ->label(t('Position'))
                 ->default(static::POSITION_CENTER),
-            ExtendedClassNameResolver::resolve(UrlField::class)::create('link')->label(t('Link')),
+            $this->createLinkField(),
         ];
     }
 
@@ -85,7 +87,12 @@ class ImageBlock extends AbstractContentBlock
 
     protected function getMediaUrl(Media $media, ExportContext $context): string
     {
-        return $this->mediaFacade->getImageUrl($this->domain->getDomainConfigById($context->domainId), $media);
+        return $this->mediaFacade->getImageUrl($this->domain->getDomainConfigById($context->domainId), $media, static::MAX_WIDTH);
+    }
+
+    protected function createLinkField(): UrlField
+    {
+        return ExtendedClassNameResolver::resolve(UrlField::class)::create('link')->label(t('Link'));
     }
 
     protected function findMedia(mixed $mediaId): ?Media
