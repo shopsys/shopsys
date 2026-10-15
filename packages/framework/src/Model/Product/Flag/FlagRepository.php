@@ -93,7 +93,7 @@ class FlagRepository
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
     {
         $flagsQueryBuilder = $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
-            ->where('f.id IN (:flagsIds)')
+            ->andWhere('f.id IN (:flagsIds)')
             ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('flagsIds', $flagsIds);
 
@@ -138,7 +138,7 @@ class FlagRepository
     public function getVisibleFlagById(int $flagId, string $locale): Flag
     {
         $flagsQueryBuilder = $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
-            ->where('f.id = :flagId')
+            ->andWhere('f.id = :flagId')
             ->setParameter('flagId', $flagId);
 
         $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
