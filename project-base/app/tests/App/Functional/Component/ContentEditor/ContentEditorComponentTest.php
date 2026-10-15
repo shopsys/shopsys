@@ -156,7 +156,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $response = $component->call('finish')->response();
 
         $events = $this->getBrowserEvents($response->getContent());
-        $this->assertSame(['content-editor:done:content'], array_column($events, 'event'));
+        $this->assertSame([ContentEditorComponent::DONE_BROWSER_EVENT], array_column($events, 'event'));
         $document = json_decode($events[0]['payload']['document'], true, 512, JSON_THROW_ON_ERROR);
         $this->assertSame(
             [['id' => self::TEXT_ID_1, 'type' => 'text', 'data' => ['html' => '<p>One</p>']]],
@@ -291,7 +291,6 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $overlay->filter('[data-tid="content-editor-picker-filter"]'));
         $this->assertCount(1, $overlay->filter('[data-live-name-value="Admin:ContentEditor:MediaPicker"]'));
         $this->assertSame('false', $crawler->filter('[data-controller="content-editor-overlay"]')->attr('data-content-editor-overlay-open-on-connect-value'));
-        $this->assertStringContainsString('content-editor:media-picker:opened:article_form_content', $html);
         // a closed picker does not query the library
         $this->assertCount(0, $crawler->filter('[data-tid="media-picker-empty"], [data-tid^="media-picker-item-"]'));
     }

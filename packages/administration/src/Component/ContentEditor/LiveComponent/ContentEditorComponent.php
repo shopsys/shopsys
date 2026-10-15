@@ -55,9 +55,7 @@ final class ContentEditorComponent
 
     public const string COMPONENT_NAME = 'Admin:ContentEditor';
 
-    public const string DONE_BROWSER_EVENT_PREFIX = 'content-editor:done:';
-    public const string PICKER_OPENED_BROWSER_EVENT_PREFIX = 'content-editor:picker:opened:';
-    public const string PICKER_CLOSED_BROWSER_EVENT_PREFIX = 'content-editor:picker:closed:';
+    public const string DONE_BROWSER_EVENT = 'content-editor:done';
 
     private const int SUMMARY_LENGTH = 60;
 
@@ -147,10 +145,7 @@ final class ContentEditorComponent
     {
         $this->submitForm();
 
-        $this->dispatchBrowserEvent(
-            self::DONE_BROWSER_EVENT_PREFIX . $this->targetInputId,
-            ['document' => $this->getNormalizedDocumentJson()],
-        );
+        $this->dispatchBrowserEvent(self::DONE_BROWSER_EVENT, ['document' => $this->getNormalizedDocumentJson()]);
     }
 
     /**
@@ -172,7 +167,6 @@ final class ContentEditorComponent
         $this->pickerSlotPath = $slotPath;
         $this->pickerIndex = $index;
         $this->pickerOpen = true;
-        $this->dispatchBrowserEvent(self::PICKER_OPENED_BROWSER_EVENT_PREFIX . $this->targetInputId);
     }
 
     #[LiveAction]
@@ -180,7 +174,6 @@ final class ContentEditorComponent
     public function closePicker(): void
     {
         $this->pickerOpen = false;
-        $this->dispatchBrowserEvent(self::PICKER_CLOSED_BROWSER_EVENT_PREFIX . $this->targetInputId);
     }
 
     #[LiveAction]

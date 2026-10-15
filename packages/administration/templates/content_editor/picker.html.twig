@@ -1,13 +1,9 @@
-{% set openedEvent = constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\ContentEditorComponent::PICKER_OPENED_BROWSER_EVENT_PREFIX') ~ this.targetInputId %}
-{% set closedEvent = constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\ContentEditorComponent::PICKER_CLOSED_BROWSER_EVENT_PREFIX') ~ this.targetInputId %}
 {% set categoryLabels = {content: 'Content'|trans, layout: 'Layout'|trans} %}
 
 <div class="modal modal-blur fade"
      tabindex="-1"
      data-controller="form-modal block-picker-filter"
      data-form-modal-open-value="{{ this.pickerOpen ? '1' : '0' }}"
-     data-form-modal-open-event-value="{{ openedEvent }}"
-     data-form-modal-close-event-value="{{ closedEvent }}"
      data-tid="content-editor-picker">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">

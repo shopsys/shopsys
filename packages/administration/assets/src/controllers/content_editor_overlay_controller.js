@@ -18,10 +18,9 @@ export default class extends Controller {
     connect() {
         this.input = document.getElementById(this.targetInputIdValue);
         this.loadedDocument = this.input.value;
-        this.doneEvent = `content-editor:done:${this.targetInputIdValue}`;
         this.onDone = event => this.applyDocument(event.detail.document);
 
-        window.addEventListener(this.doneEvent, this.onDone);
+        this.element.addEventListener('content-editor:done', this.onDone);
 
         // the entity was refused, the editor shows what is wrong with the content
         if (this.openOnConnectValue) {
@@ -30,7 +29,7 @@ export default class extends Controller {
     }
 
     disconnect() {
-        window.removeEventListener(this.doneEvent, this.onDone);
+        this.element.removeEventListener('content-editor:done', this.onDone);
     }
 
     open() {
