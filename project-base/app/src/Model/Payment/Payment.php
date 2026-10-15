@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
@@ -22,6 +23,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method void setData(\App\Model\Payment\PaymentData $paymentData)
  */
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'payments')]
 #[ORM\Entity]
 class Payment extends BasePayment

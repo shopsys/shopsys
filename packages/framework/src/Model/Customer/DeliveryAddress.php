@@ -6,12 +6,17 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'delivery_addresses')]
 #[ORM\Entity]
 class DeliveryAddress
@@ -29,6 +34,7 @@ class DeliveryAddress
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
     #[AsMcpColumn]
+    #[LoggableParentProperty]
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'deliveryAddresses')]
     protected $customer;
@@ -86,6 +92,7 @@ class DeliveryAddress
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     protected $telephonePrefixCountryCode;
 
@@ -253,5 +260,11 @@ class DeliveryAddress
     public function getFullAddress(): string
     {
         return $this->street . ', ' . $this->city . ', ' . $this->postcode;
+    }
+
+    #[EntityLogIdentify]
+    public function getEntityLogIdentifier(): string
+    {
+        return implode(', ', array_filter([$this->street, $this->city]));
     }
 }

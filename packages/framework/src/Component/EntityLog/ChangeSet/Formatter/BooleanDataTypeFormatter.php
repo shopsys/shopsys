@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 
-class BooleanDataTypeFormatter extends AbstractChangeSetFormatter
+use Override;
+
+class BooleanDataTypeFormatter implements DataTypeFormatterInterface
 {
-    /**
-     * @param array{oldReadableValue: bool, newReadableValue: bool, oldValue: bool, newValue: bool} $changes
-     */
-    public function formatChanges(array $changes): string
+    #[Override]
+    public function supports(string $dataType): bool
     {
-        return $this->formatFromToChanges(
-            $changes['oldValue'] ? t('Yes') : t('No'),
-            $changes['newValue'] ? t('Yes') : t('No'),
-        );
+        return $dataType === 'boolean';
+    }
+
+    #[Override]
+    public function getPriority(): int
+    {
+        return 1;
+    }
+
+    #[Override]
+    public function formatValue(mixed $readableValue, mixed $value): string
+    {
+        return $value ? t('Yes') : t('No');
     }
 }

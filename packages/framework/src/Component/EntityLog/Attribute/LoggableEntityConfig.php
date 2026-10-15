@@ -16,7 +16,7 @@ class LoggableEntityConfig
         protected ?string $entityReadableNameFunctionName = null,
         protected bool $isLocalized = false,
         protected ?string $parentEntityName = null,
-        protected ?string $parentEntityFunctionName = null,
+        protected ?string $parentPropertyName = null,
         protected ?string $parentEntityIdentityFunctionName = null,
     ) {
     }
@@ -71,15 +71,18 @@ class LoggableEntityConfig
         return $this->parentEntityName;
     }
 
-    public function setParentEntityName(string $parentEntityName): void
+    /**
+     * @param string $parentPropertyName property of the child holding the parent, it is read directly, so the child does not need its getter
+     */
+    public function setParentEntityName(string $parentEntityName, string $parentPropertyName): void
     {
         $this->parentEntityName = $parentEntityName;
-        $this->parentEntityFunctionName = sprintf('get%s', ucfirst($parentEntityName));
+        $this->parentPropertyName = $parentPropertyName;
     }
 
-    public function getParentEntityFunctionName(): ?string
+    public function getParentPropertyName(): ?string
     {
-        return $this->parentEntityFunctionName;
+        return $this->parentPropertyName;
     }
 
     public function getParentEntityIdentityFunctionName(): ?string
