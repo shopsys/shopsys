@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
@@ -35,6 +36,11 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderFacade $orderFacade;
 
     public function testCreateComplaint(): void
     {
@@ -386,6 +392,24 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         );
 
         $this->assertUserError($response, 'invalid-access');
+    }
+
+    public function testCreateComplaintFromDeletedOrderIsNotAllowed(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+
+        $this->orderFacade->deleteById($order->getId());
+
+        $response = $this->createComplaint(
+            $order,
+            1,
+            $order->getProductItems()[0],
+            2,
+            $order->getProductItems()[1],
+            $this->complaintResolutionEnum::FIX,
+        );
+
+        $this->assertUserError($response, 'order-not-found');
     }
 
     private function assertComplaintItem(

@@ -78,7 +78,10 @@ class OrderRepository
 
     public function getByUuid(string $uuid): Order
     {
-        $order = $this->getOrderRepository()->findOneBy(['uuid' => $uuid]);
+        $order = $this->createOrderQueryBuilder()
+            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
 
         if ($order === null) {
             throw new OrderNotFoundException('Order with UUID "' . $uuid . '" not found.');
