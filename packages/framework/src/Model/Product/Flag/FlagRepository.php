@@ -147,7 +147,7 @@ class FlagRepository
     public function getAllVisibleFlags(string $locale): array
     {
         $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('f')
+            ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('locale', $locale);
