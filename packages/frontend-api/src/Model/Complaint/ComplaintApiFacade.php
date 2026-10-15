@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
@@ -22,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
+use Shopsys\FrontendApiBundle\Model\Complaint\Exception\ElectronicGiftVoucherNotComplainableUserError;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\InvalidQuantityUserError;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\MissingComplaintItemsUserError;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\OrderItemNotFoundUserError;
@@ -122,10 +124,16 @@ class ComplaintApiFacade
         }
 
         if ($order === null) {
-            return $this->createComplaintItemsWithoutOrder($complaintItemsInputData);
+            $complaintItemsData = $this->createComplaintItemsWithoutOrder($complaintItemsInputData);
+        } else {
+            $complaintItemsData = $this->createComplaintItemsWithOrder($complaintItemsInputData, $order);
         }
 
-        return $this->createComplaintItemsWithOrder($complaintItemsInputData, $order);
+        foreach ($complaintItemsData as $complaintItemData) {
+            $this->validateComplaintItemData($complaintItemData);
+        }
+
+        return $complaintItemsData;
     }
 
     protected function validateComplaintItem(OrderItem $orderItem, Order $order, array $complaintItemInputData): void
@@ -136,6 +144,13 @@ class ComplaintApiFacade
 
         if ($complaintItemInputData['quantity'] > $orderItem->getQuantity()) {
             throw new InvalidQuantityUserError('Complaint item quantity is higher than order item quantity');
+        }
+    }
+
+    protected function validateComplaintItemData(ComplaintItemData $complaintItemData): void
+    {
+        if ($complaintItemData->product?->isElectronicGiftVoucher() === true) {
+            throw new ElectronicGiftVoucherNotComplainableUserError('Complaint cannot be created for an electronic gift voucher');
         }
     }
 

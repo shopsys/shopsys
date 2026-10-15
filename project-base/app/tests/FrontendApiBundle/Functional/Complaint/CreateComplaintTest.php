@@ -388,6 +388,87 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $this->assertUserError($response, 'invalid-access');
     }
 
+    public function testCreateComplaintForElectronicGiftVoucherIsNotAllowed(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GIFT_VOUCHER_PRODUCTS, Order::class);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'orderUuid' => $order->getUuid(),
+                    'email' => self::COMPLAINT_EMAIL,
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'orderItemUuid' => $order->getProductItems()[0]->getUuid(),
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'Jiří',
+                        'lastName' => 'Ševčík',
+                        'street' => 'První 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
+                        'country' => 'CZ',
+                    ],
+                    'resolution' => $this->complaintResolutionEnum::FIX,
+                ],
+            ],
+            [
+                1 => __DIR__ . '/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $this->assertUserError($response, 'electronic-gift-voucher-not-complainable');
+    }
+
+    public function testCreateComplaintWithoutOrderForElectronicGiftVoucherIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'manualDocumentNumber' => 'Whatever132',
+                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'email' => self::COMPLAINT_EMAIL,
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'manualComplaintItemName' => 'Gift voucher',
+                            'manualComplaintItemCatnum' => ProductDataFixture::PRODUCT_CATNUM_ELECTRONIC_GIFT_VOUCHER_STANDALONE_300,
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'Jiří',
+                        'lastName' => 'Ševčík',
+                        'street' => 'První 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => new PhoneData('CZ', '+420', '123456789'),
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+            [
+                1 => __DIR__ . '/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $this->assertUserError($response, 'electronic-gift-voucher-not-complainable');
+    }
+
     private function assertComplaintItem(
         array $expectedComplaintItem,
         int $quantity,
