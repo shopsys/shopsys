@@ -166,6 +166,7 @@ final class CategoryFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_category_list',
                 'entity' => $options['category'],
+                'apply' => true,
             ]);
 
         $this->pluginCrudExtensionFacade->extendForm($builder, 'category', 'pluginData');

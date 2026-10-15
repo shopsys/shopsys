@@ -74,7 +74,7 @@ class ArticleController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_article_list');
+            return $this->redirectAfterSave($form, 'admin_article_list', 'admin_article_edit', ['id' => $article->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -135,7 +135,7 @@ class ArticleController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_article_list');
+            return $this->redirectAfterSave($form, 'admin_article_list', 'admin_article_edit', ['id' => $article->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

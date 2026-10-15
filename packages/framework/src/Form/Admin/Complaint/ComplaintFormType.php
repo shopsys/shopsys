@@ -64,6 +64,7 @@ final class ComplaintFormType extends AbstractType
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_complaint_list',
             'entity' => $options['complaint'],
+            'apply' => true,
         ]);
     }
 

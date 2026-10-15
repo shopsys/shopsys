@@ -47,6 +47,7 @@ final class SeoPageFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_seopage_list',
                 'entity' => $options['seoPage'],
+                'apply' => true,
             ]);
     }
 

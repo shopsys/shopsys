@@ -69,7 +69,7 @@ class CategoryController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_category_list');
+            return $this->redirectAfterSave($form, 'admin_category_list', 'admin_category_edit', ['id' => $category->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -109,7 +109,7 @@ class CategoryController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_category_list');
+            return $this->redirectAfterSave($form, 'admin_category_list', 'admin_category_edit', ['id' => $category->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

@@ -105,7 +105,7 @@ class ComplaintController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_complaint_list');
+            return $this->redirectAfterSave($form, 'admin_complaint_list', 'admin_complaint_edit', ['id' => $complaint->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

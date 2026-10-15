@@ -96,7 +96,7 @@ class BlogArticleController extends AdminBaseController
                         ],
                     );
 
-                return $this->redirectToRoute('admin_blogarticle_list');
+                return $this->redirectAfterSave($form, 'admin_blogarticle_list', 'admin_blogarticle_edit', ['id' => $blogArticle->getId()]);
             } catch (BlogArticleStatusTransitionException $e) {
                 $this->addErrorFlash($e->getMessage());
             }
@@ -139,7 +139,7 @@ class BlogArticleController extends AdminBaseController
                         ],
                     );
 
-                return $this->redirectToRoute('admin_blogarticle_list');
+                return $this->redirectAfterSave($form, 'admin_blogarticle_list', 'admin_blogarticle_edit', ['id' => $blogArticle->getId()]);
             } catch (BlogArticleStatusTransitionException $e) {
                 $this->addErrorFlash($e->getMessage());
             }

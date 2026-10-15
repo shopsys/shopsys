@@ -113,7 +113,7 @@ class PromoCodeController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_promocode_list');
+            return $this->redirectAfterSave($form, 'admin_promocode_list', 'admin_promocode_edit', ['id' => $promoCode->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -149,7 +149,7 @@ class PromoCodeController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_promocode_list');
+            return $this->redirectAfterSave($form, 'admin_promocode_list', 'admin_promocode_edit', ['id' => $promoCode->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

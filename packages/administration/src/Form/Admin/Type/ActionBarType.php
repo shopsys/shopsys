@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Form\Admin\Type;
 
 use Override;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FormTypesBundle\ActionBarType as BaseActionBarType;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -12,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
@@ -22,6 +25,7 @@ final class ActionBarType extends AbstractTypeExtension
         private readonly RouteAccessCheckerInterface $routeAccessChecker,
         private readonly RequestStack $requestStack,
         private readonly RouterInterface $router,
+        private readonly CrudRouteProvider $crudRouteProvider,
     ) {
     }
 
@@ -45,7 +49,8 @@ final class ActionBarType extends AbstractTypeExtension
             ->setAllowedTypes('entity_name', ['string', 'null'])
             ->setAllowedTypes('entity_identifier', ['string', 'null'])
             ->setDefault('entity_name', null)
-            ->setDefault('entity_identifier', null);
+            ->setDefault('entity_identifier', null)
+            ->setDefault('apply', fn (Options $options): bool => $this->isCrudCreateOrEditActionWithEditPage());
     }
 
     /**
@@ -64,8 +69,8 @@ final class ActionBarType extends AbstractTypeExtension
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // Check if we should disable save button based on permissions
-        if ($builder->has('save')) {
+        // Check if we should disable save buttons based on permissions
+        if ($builder->has('save') || $builder->has('apply')) {
             $formConfig = $builder->getFormConfig();
             $formAction = $formConfig->getAction();
             $formMethod = $formConfig->getMethod();
@@ -73,6 +78,7 @@ final class ActionBarType extends AbstractTypeExtension
 
             if ($submitRouteName !== null && !$this->routeAccessChecker->hasAccess($submitRouteName, $formMethod)) {
                 $builder->remove('save');
+                $builder->remove('apply');
             }
         }
     }
@@ -111,5 +117,32 @@ final class ActionBarType extends AbstractTypeExtension
             // This handles cases where form action might be a query string or fragment
             return $request?->attributes->get('_route');
         }
+    }
+
+    /**
+     * Returns true when the main request is handled by the create or edit action of a CRUD controller
+     * that has an edit page the "apply" button can lead to
+     */
+    private function isCrudCreateOrEditActionWithEditPage(): bool
+    {
+        $attributes = $this->requestStack->getMainRequest()?->attributes;
+
+        if ($attributes?->get(CrudRouteProvider::IS_CRUD_CONTROLLER) !== true) {
+            return false;
+        }
+
+        $crudAction = $attributes->get(CrudRouteProvider::CRUD_ACTION);
+
+        if ($crudAction === ActionType::EDIT->value) {
+            return true;
+        }
+
+        if ($crudAction !== ActionType::CREATE->value) {
+            return false;
+        }
+
+        $crudControllerClass = explode('::', (string)$attributes->get('_controller'))[0];
+
+        return $this->crudRouteProvider->hasRouteItem($crudControllerClass, ActionType::EDIT);
     }
 }

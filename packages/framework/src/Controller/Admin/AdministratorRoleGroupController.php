@@ -80,7 +80,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                     ],
                 );
 
-                return $this->redirectToRoute('admin_administratorrolegroup_list');
+                return $this->redirectAfterSave($form, 'admin_administratorrolegroup_list', 'admin_administratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]);
             } catch (DuplicateNameException $ex) {
                 $this->addErrorFlashTwig(
                     t('Role group name <strong>{{ name }}</strong> is already used'),
@@ -125,7 +125,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                     ],
                 );
 
-                return $this->redirectToRoute('admin_administratorrolegroup_list');
+                return $this->redirectAfterSave($form, 'admin_administratorrolegroup_list', 'admin_administratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]);
             } catch (DuplicateNameException $ex) {
                 $this->addErrorFlashTwig(
                     t('Role group name <strong>{{ name }}</strong> is already used'),

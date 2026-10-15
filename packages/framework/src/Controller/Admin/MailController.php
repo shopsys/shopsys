@@ -97,7 +97,7 @@ class MailController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_mail_template');
+            return $this->redirectAfterSave($form, 'admin_mail_template', 'admin_mail_edit', ['id' => $mailTemplate->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

@@ -97,6 +97,7 @@ final class CountryFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_country_list',
                 'entity' => $options['country'],
+                'apply' => true,
             ]);
     }
 

@@ -66,6 +66,7 @@ final class FlagFormType extends AbstractType
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_flag_list',
             'entity' => $options['flag'],
+            'apply' => true,
         ]);
     }
 

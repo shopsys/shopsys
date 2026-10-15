@@ -76,6 +76,7 @@ final class PromoCodeFormType extends AbstractType
         $actionBar = $builder->create('actionBar', ActionBarType::class, [
             'back_route' => 'admin_promocode_list',
             'entity' => $this->promoCode,
+            'apply' => !$options['mass_generate'],
         ]);
 
         if ($options['mass_generate']) {

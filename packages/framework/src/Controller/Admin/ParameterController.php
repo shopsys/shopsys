@@ -73,7 +73,7 @@ class ParameterController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_parameter_list');
+            return $this->redirectAfterSave($form, 'admin_parameter_list', 'admin_parameter_edit', ['id' => $parameter->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -113,7 +113,7 @@ class ParameterController extends AdminBaseController
                 return $this->redirectToRoute('admin_parametervalues_edit', ['id' => $parameter->getId()]);
             }
 
-            return $this->redirectToRoute('admin_parameter_list');
+            return $this->redirectAfterSave($form, 'admin_parameter_list', 'admin_parameter_edit', ['id' => $parameter->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
