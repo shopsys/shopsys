@@ -1,5 +1,6 @@
 import { ButtonLinkBlock } from 'components/Blocks/ContentEditor/blocks/ButtonLinkBlock';
 import { ColumnsBlock } from 'components/Blocks/ContentEditor/blocks/ColumnsBlock';
+import { FaqBlock } from 'components/Blocks/ContentEditor/blocks/FaqBlock';
 import { HeadingBlock } from 'components/Blocks/ContentEditor/blocks/HeadingBlock';
 import { IframeBlock } from 'components/Blocks/ContentEditor/blocks/IframeBlock';
 import { ImageBlock } from 'components/Blocks/ContentEditor/blocks/ImageBlock';
@@ -24,4 +25,5 @@ export const blockComponents: Record<string, FC<BlockProps<any>>> = {
     'columns-1-2': ColumnsBlock,
     'columns-2-1': ColumnsBlock,
     'columns-1-1-1': ColumnsBlock,
+    faq: FaqBlock,
 };

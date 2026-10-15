@@ -4,13 +4,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Answer"
+msgstr ""
+
+msgid "FAQ item"
+msgstr ""
+
 msgid "File not found in main filesystem. Please try again later."
+msgstr ""
+
+msgid "Headline"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "Promo"
+msgstr ""
+
+msgid "Question"
 msgstr ""
 
 msgid "TOP"
 msgstr ""
 
 msgid "Terms-and-conditions.html"
+msgstr ""
+
+msgid "Text"
 msgstr ""
 
 msgid "Unsupported file type"

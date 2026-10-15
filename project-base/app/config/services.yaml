@@ -39,6 +39,9 @@ services:
 
     App\Component\Setting\Setting: ~
 
+    App\ContentEditor\Block\:
+        resource: '../src/ContentEditor/Block/'
+
     App\Controller\:
         public: true
         resource: '../src/Controller/'

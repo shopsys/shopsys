@@ -1012,6 +1012,9 @@ msgstr "Pro média"
 msgid "Frequently Asked Questions FAQ"
 msgstr "Nejčastější dotazy FAQ"
 
+msgid "Frequently asked questions"
+msgstr "Často kladené otázky"
+
 msgid "From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story."
 msgstr "Od pohodového filmového večera po zachycení víkendových zážitků – správná technika zpříjemní každodenní chvíle. Prohlédněte si náš výběr televizorů a příslušenství pro svůj další článek."
 
@@ -1179,6 +1182,9 @@ msgstr "Hadice VP-9310"
 
 msgid "How Dina chooses reliable electronics"
 msgstr "Jak Dina vybírá spolehlivou elektroniku"
+
+msgid "How quickly do you answer press enquiries?"
+msgstr "Jak rychle odpovídáte na dotazy médií?"
 
 msgid "How the technology works"
 msgstr "Jak technologie funguje"
@@ -2487,6 +2493,9 @@ msgstr "Zaměřujeme se na srozumitelné informace o produktech, jednoduchou obj
 
 msgid "We publish reviews after checking that they comply with our review guidelines. Reviews from customers whose purchase we can confirm are marked as verified purchases."
 msgstr ""
+
+msgid "We reply to press enquiries within one working day. For urgent requests, mention your deadline in the subject of the e-mail."
+msgstr "Na dotazy médií odpovídáme do jednoho pracovního dne. U naléhavých požadavků uveďte termín v předmětu e-mailu."
 
 msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."
 msgstr "Vítáme zvídavé lidi, které baví zlepšovat online nakupování a řešit praktické potřeby zákazníků."

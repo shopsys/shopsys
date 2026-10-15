@@ -15,6 +15,8 @@ export type BlockPosition = 'left' | 'center' | 'right';
 
 export type TextBlockData = { html: string };
 
+export type FaqBlockData = { question: string; answer: string };
+
 // anchorId is not part of the document, addHeadingAnchors adds it to the headings of the table of contents
 export type HeadingBlockData = { text: string; level: 'h2' | 'h3' | 'h4'; anchorId?: string };
 

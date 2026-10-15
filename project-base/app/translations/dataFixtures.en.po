@@ -1012,6 +1012,9 @@ msgstr ""
 msgid "Frequently Asked Questions FAQ"
 msgstr ""
 
+msgid "Frequently asked questions"
+msgstr ""
+
 msgid "From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story."
 msgstr "From a cosy film night to capturing a weekend away, the right technology makes everyday moments more enjoyable. Explore our selection of televisions and accessories for your next story."
 
@@ -1179,6 +1182,9 @@ msgstr ""
 
 msgid "How Dina chooses reliable electronics"
 msgstr "How Dina chooses reliable electronics"
+
+msgid "How quickly do you answer press enquiries?"
+msgstr ""
 
 msgid "How the technology works"
 msgstr "How the technology works"
@@ -2486,6 +2492,9 @@ msgid "We focus on clear product information, straightforward ordering, and help
 msgstr "We focus on clear product information, straightforward ordering, and helpful customer care from selection to delivery."
 
 msgid "We publish reviews after checking that they comply with our review guidelines. Reviews from customers whose purchase we can confirm are marked as verified purchases."
+msgstr ""
+
+msgid "We reply to press enquiries within one working day. For urgent requests, mention your deadline in the subject of the e-mail."
 msgstr ""
 
 msgid "We welcome curious people who enjoy improving online shopping and solving practical customer problems."

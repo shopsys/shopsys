@@ -62,6 +62,11 @@ final class ContentDocumentBuilder
         return $this->addBlock('button-link', ['text' => $text, 'url' => $url]);
     }
 
+    public function faq(string $question, string $answerHtml): self
+    {
+        return $this->addBlock('faq', ['question' => $question, 'answer' => $answerHtml]);
+    }
+
     /**
      * @param string[] $catnums
      */

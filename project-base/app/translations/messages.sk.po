@@ -4,14 +4,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
+msgid "Answer"
+msgstr "Odpoveď"
+
+msgid "FAQ item"
+msgstr "Položka FAQ"
+
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Súbor nebol nájdený v hlavnom súborovom systéme. Prosím, skúste to neskôr."
+
+msgid "Headline"
+msgstr "Nadpis"
+
+msgid "Link"
+msgstr "Odkaz"
+
+msgid "Promo"
+msgstr "Akcia"
+
+msgid "Question"
+msgstr "Otázka"
 
 msgid "TOP"
 msgstr "TOP"
 
 msgid "Terms-and-conditions.html"
 msgstr "Obchodne-podmienky.html"
+
+msgid "Text"
+msgstr "Text"
 
 msgid "Unsupported file type"
 msgstr "Nepodporovaný typ súboru"

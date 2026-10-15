@@ -25,3 +25,6 @@ shopsys_framework:
     product:
         reviews:
             enabled_domain_ids: [1, 2]
+# remove blocks of the content editor by their type
+# content_editor:
+#     disabled_types: [map]

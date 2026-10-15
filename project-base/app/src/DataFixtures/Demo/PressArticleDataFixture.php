@@ -88,6 +88,9 @@ final class PressArticleDataFixture extends AbstractReferenceFixture implements 
         $videoText = t('Looking for footage to accompany your story? Contact our press team to discuss product demonstrations and video materials for your publication.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $storesText = t('Meet our team and see the products up close. Please arrange interviews, photography, and filming in advance with our press contact so we can prepare for your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $imagesText = t('Bring your story to life with photographs of electronics in everyday settings. For publication-ready files and image credits, contact our press team and let us know which pictures you would like to use.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $faqHeading = t('Frequently asked questions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $faqQuestion = t('How quickly do you answer press enquiries?', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $faqAnswer = t('We reply to press enquiries within one working day. For urgent requests, mention your deadline in the subject of the e-mail.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $mediaId = $this->getReference(MediaDataFixture::MEDIA_PREFIX . '1', Media::class)->getId();
         $secondMediaId = $this->getReference(MediaDataFixture::MEDIA_PREFIX . '2', Media::class)->getId();
@@ -125,6 +128,8 @@ final class PressArticleDataFixture extends AbstractReferenceFixture implements 
             ->map('https://maps.google.com/maps?&z=1&t=q&output=embed')
             ->text("<h2>{$imagesHeading}</h2><p>{$imagesText}</p>")
             ->image($secondMediaId, $downloadableImageAlt)
+            ->text("<h2>{$faqHeading}</h2>")
+            ->faq($faqQuestion, "<p>{$faqAnswer}</p>")
             ->buttonLink($moreProducts, '/')
             ->build();
     }

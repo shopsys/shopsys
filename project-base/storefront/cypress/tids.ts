@@ -80,6 +80,7 @@ export enum TIDs {
     content_block_iframe = 'content_block_iframe',
     content_block_products = 'content_block_products',
     content_block_columns = 'content_block_columns',
+    content_block_faq = 'content_block_faq',
     content_editor_preview_ready = 'content_editor_preview_ready',
     product_gallery_image = 'product_gallery_image',
     product_gallery_video = 'product_gallery_video',
