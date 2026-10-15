@@ -11,12 +11,6 @@ Product:
             id:
                 type: "Int!"
                 description: "Product id"
-            catalogNumber:
-                type: "String!"
-                description: "Product catalog number"
-            partNumber:
-                type: "String"
-                description: "Product part number"
             ean:
                 type: "String"
                 description: "EAN"

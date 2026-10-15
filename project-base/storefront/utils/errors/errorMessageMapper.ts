@@ -26,7 +26,6 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'order-item-product-mismatch': t('The order item does not match the reviewed product.'),
         'order-item-reviews-not-allowed': t('The order cannot be reviewed yet.'),
         'product-not-found': t('Product not found.'),
-        'product-price-missing': t('Product price is missing.'),
         'product-review-variant-required': t('Please select a specific product variant to review.'),
         'product-reviews-disabled': t('Product reviews are not available.'),
         'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),

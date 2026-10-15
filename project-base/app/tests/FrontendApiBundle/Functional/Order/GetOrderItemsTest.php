@@ -9,6 +9,8 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -32,6 +34,16 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
+
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
+
+    /**
+     * @inject
+     */
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @param array<int|\Tests\FrontendApiBundle\Test\ReferenceDataAccessor> $expectedOrderItemsIds
@@ -69,6 +81,34 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
         $this->assertProductExistsInOrderItems($product, true);
         $this->createWithdrawalRequest();
         $this->assertProductExistsInOrderItems($product, false);
+    }
+
+    public function testOrderItemWithHiddenProductHasNoProduct(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+        $hiddenProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 9, Product::class);
+
+        $productData = $this->productDataFactory->createFromProduct($hiddenProduct);
+        $productData->hidden = true;
+        $this->productFacade->edit($hiddenProduct->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderItemsWithProductQuery.graphql', [
+            'filter' => ['orderUuid' => $order->getUuid(), 'type' => OrderItemTypeEnum::TYPE_PRODUCT],
+        ]);
+        $orderItems = array_column($this->getResponseDataForGraphQlType($response, 'orderItems')['edges'], 'node');
+        $orderItemsByCatnum = array_column($orderItems, null, 'catnum');
+
+        $hiddenProductOrderItem = $orderItemsByCatnum[$hiddenProduct->getCatnum()];
+        $this->assertNull($hiddenProductOrderItem['product']);
+        $this->assertSame($hiddenProduct->getName($this->getLocaleForFirstDomain()), $hiddenProductOrderItem['name']);
+
+        unset($orderItemsByCatnum[$hiddenProduct->getCatnum()]);
+        $this->assertNotEmpty($orderItemsByCatnum);
+
+        foreach ($orderItemsByCatnum as $orderItem) {
+            $this->assertNotNull($orderItem['product']);
+        }
     }
 
     public static function getOrderItemsDataProvider(): iterable

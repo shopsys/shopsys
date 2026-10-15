@@ -166,6 +166,25 @@ class CartModificationsResultTest extends GraphQlTestCase
         self::assertEmpty($itemModifications['cartItemsWithModifiedPrice']);
     }
 
+    public function testHiddenCartItemIsRemovedAndReportedAsRemovedProduct(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(2);
+
+        $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
+        $productData->hidden = true;
+        $this->productFacade->edit($this->testingProduct->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'cart');
+
+        self::assertSame([], $data['items']);
+        self::assertSame([], $data['modifications']['itemModifications']['noLongerListableCartItems']);
+        self::assertTrue($data['modifications']['someProductWasRemovedFromEshop']);
+    }
+
     public function testCartItemWithModifiedPriceIsReported(): void
     {
         $productQuantity = 2;

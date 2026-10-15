@@ -31,7 +31,17 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
             <div className="relative">
                 <ul className={twJoin('flex max-h-125 flex-col gap-2 overflow-y-auto', items.length > 3 && 'pb-10')}>
                     {items.map((item) => {
-                        if (item.type === TypeOrderItemTypeEnum.Product && item.product) {
+                        // prices of the order, not the current prices of the product, which can also be no longer available
+                        const orderedUnitPrice = {
+                            ...item.unitPrice,
+                            __typename: 'ProductPrice' as const,
+                            isPriceFrom: false,
+                            nextPriceChange: null,
+                            percentageDiscount: null,
+                            basicPrice: item.unitPrice,
+                        };
+
+                        if (item.type === TypeOrderItemTypeEnum.Product) {
                             return (
                                 <OrderItemProductCard
                                     key={item.uuid}
@@ -40,25 +50,25 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                                         formatPrice,
                                     )}
                                     areAdditionalServicePricesHighlighted={false}
-                                    categoryName={item.product.mainCategory?.name}
+                                    categoryName={item.product?.mainCategory?.name}
                                     freeQuantity={null}
                                     fullName={item.name}
-                                    mainImage={item.product.mainImage}
-                                    price={item.product.price}
+                                    mainImage={item.product?.mainImage}
+                                    price={orderedUnitPrice}
                                     quantity={item.quantity}
                                     unit={item.unit}
                                 />
                             );
                         }
 
-                        if (item.type === TypeOrderItemTypeEnum.ProductGift && item.product) {
+                        if (item.type === TypeOrderItemTypeEnum.ProductGift) {
                             return (
                                 <OrderItemGiftCard
                                     key={item.uuid}
-                                    categoryName={item.product.mainCategory?.name}
+                                    categoryName={item.product?.mainCategory?.name}
                                     fullName={item.name}
-                                    mainImage={item.product.mainImage}
-                                    price={item.product.giftPrice}
+                                    mainImage={item.product?.mainImage}
+                                    price={orderedUnitPrice}
                                     quantity={item.quantity}
                                     unit={item.unit}
                                 />

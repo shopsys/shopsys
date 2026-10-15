@@ -148,48 +148,44 @@ public function editAction(Request $request, int $id): Response
 - DataFactory populates the form data object from the entity
 - Standard Symfony form handling with a named scenario
 
-### Pattern: GraphQL ResolverMap with inheritance
-**Found in**: `app/src/FrontendApi/Resolver/Products/ProductResolverMap.php:21` (extends the framework base ResolverMap in `vendor/shopsys/frontend-api/src/…`)
-**Used for**: GraphQL field resolution with project customizations
+### Pattern: GraphQL ResolverMap
+**Found in**: `app/src/FrontendApi/Resolver/SliderItem/SliderItemResolverMap.php:12`
+**Used for**: GraphQL field resolution in the project
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Products;
+namespace App\FrontendApi\Resolver\SliderItem;
 
-/**
- * @property \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper
- */
-class ProductResolverMap extends BaseProductResolverMap
+use App\Component\FriendlyUrl\FriendlyUrlRouteEnum;
+use App\Model\Slider\SliderItem;
+use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
+
+final class SliderItemResolverMap extends ResolverMap
 {
-    /**
-     * @return array<string, callable>
-     */
     #[Override]
-    protected function mapProduct(): array
+    protected function map(): array
     {
         return [
-            self::RESOLVE_FIELD => function ($value, ArgumentInterface $args, ArrayObject $context, ResolveInfo $info) {
-                /** @var \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper|\App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper $mapper */
-                $mapper = $value instanceof Product ? $this->productEntityFieldMapper : $this->productArrayFieldMapper;
+            'SliderItem' => [
+                'routeName' => static function (SliderItem $sliderItem) {
+                    $routeName = $sliderItem->getRouteName();
 
-                try {
-                    return $this->getObjectMethodForField($mapper, $info->fieldName)($value);
-                } catch (MethodNotFoundException $exception) {
-                    return FieldResolver::valueFromObjectOrArray($value, $info->fieldName);
-                }
-            },
+                    return $routeName !== null ? FriendlyUrlRouteEnum::tryFrom($routeName) : null;
+                },
+            ],
         ];
     }
 }
 ```
 
 **Key aspects**:
-- Project ResolverMap extends the framework base and overrides one map with `#[Override]`
-- Chooses an entity- vs array-based field mapper depending on the resolved value
-- Falls back to generic field resolution on `MethodNotFoundException`
+- ResolverMap maps a GraphQL type name to resolvers of its fields
+- Resolver map classes are tagged automatically by the `*Map` resource definition in `config/services.yaml`
+- Fields of product types are resolved from Elasticsearch data by `ProductArrayFieldMapper` of frontend-api, a field exported under the key with its name (or its snake_case variant) needs no resolver
 
 ### Pattern: React functional component
 **Found in**: `storefront/components/Pages/Cart/CartSummary.tsx`

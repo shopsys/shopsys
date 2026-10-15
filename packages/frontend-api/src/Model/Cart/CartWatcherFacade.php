@@ -80,6 +80,14 @@ class CartWatcherFacade
                 $this->cartWithModificationsResult->setCartHasRemovedProducts();
             }
         }
+
+        // a product that is not visible is not available in Elasticsearch, so it cannot be reported as a cart item
+        foreach ($this->cartWatcher->getNotVisibleItems($cart, $this->currentCustomerUser) as $cartItem) {
+            $cart->removeItemById($cartItem->getId());
+            $this->em->remove($cartItem);
+
+            $this->cartWithModificationsResult->setCartHasRemovedProducts();
+        }
     }
 
     protected function checkModifiedPrices(Cart $cart): void

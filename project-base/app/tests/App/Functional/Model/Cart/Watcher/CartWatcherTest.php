@@ -125,6 +125,48 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $notListableItems);
     }
 
+    public function testGetNotVisibleItemsReturnsOnlyItemsWithNotVisibleProduct(): void
+    {
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
+
+        $visibleProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $notVisibleProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2', Product::class);
+
+        $visibleProductCartItemStub = $this->createStub(CartItem::class);
+        $visibleProductCartItemStub->method('hasProduct')->willReturn(true);
+        $visibleProductCartItemStub->method('getProduct')->willReturn($visibleProduct);
+        $notVisibleProductCartItemStub = $this->createStub(CartItem::class);
+        $notVisibleProductCartItemStub->method('hasProduct')->willReturn(true);
+        $notVisibleProductCartItemStub->method('getProduct')->willReturn($notVisibleProduct);
+        $cartItemWithoutProductStub = $this->createStub(CartItem::class);
+        $cartItemWithoutProductStub->method('hasProduct')->willReturn(false);
+
+        $productVisibilityFacadeStub = $this->createStub(ProductVisibilityFacade::class);
+        $productVisibilityFacadeStub
+            ->method('getProductVisibility')
+            ->willReturnCallback(function (Product $product) use ($notVisibleProduct): ProductVisibility {
+                $productVisibilityStub = $this->createStub(ProductVisibility::class);
+                $productVisibilityStub->method('isVisible')->willReturn($product !== $notVisibleProduct);
+
+                return $productVisibilityStub;
+            });
+
+        $cartWatcher = new CartWatcher(
+            $this->productPriceCalculationForCustomerUser,
+            $productVisibilityFacadeStub,
+            $this->domain,
+            $this->giftPlanSettingFacade,
+        );
+
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
+        $cart->addItem($visibleProductCartItemStub);
+        $cart->addItem($notVisibleProductCartItemStub);
+        $cart->addItem($cartItemWithoutProductStub);
+
+        $notVisibleItems = $cartWatcher->getNotVisibleItems($cart, $this->createCustomerUserStub());
+        $this->assertSame([$notVisibleProductCartItemStub], $notVisibleItems);
+    }
+
     public function createCartItemStub(Product $product): CartItem
     {
         $cartItemStub = $this->createStub(CartItem::class);

@@ -9,13 +9,9 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityInfo;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\AdditionalService\AdditionalServicesBatchLoadData;
@@ -27,9 +23,6 @@ use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
 class ProductArrayFieldMapper
 {
     public function __construct(
-        protected readonly CategoryFacade $categoryFacade,
-        protected readonly FlagFacade $flagFacade,
-        protected readonly BrandFacade $brandFacade,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly CurrentCustomerUser $currentCustomerUser,
@@ -42,6 +35,8 @@ class ProductArrayFieldMapper
         protected readonly DataLoaderInterface $additionalServicesByIdsBatchLoader,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
+        protected readonly DataLoaderInterface $flagsBatchLoader,
+        protected readonly DataLoaderInterface $brandsBatchLoader,
     ) {
     }
 
@@ -55,11 +50,6 @@ class ProductArrayFieldMapper
         );
     }
 
-    public function getShortDescription(array $data): ?string
-    {
-        return $data['short_description'];
-    }
-
     public function getLink(array $data): string
     {
         return $this->domain->getUrl() . '/' . $data['slug'];
@@ -70,12 +60,19 @@ class ProductArrayFieldMapper
         return '/' . $data['slug'];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getCategories(array $data): array
+    public function getCatalogNumber(array $data): string
     {
-        return $this->categoryFacade->getByIds($data['categories']);
+        return $data['catnum'];
+    }
+
+    public function getPartNumber(array $data): ?string
+    {
+        return $data['partno'];
+    }
+
+    public function getCategoriesPromise(array $data): Promise
+    {
+        return $this->categoriesBatchLoader->load($data['categories']);
     }
 
     public function getMainCategoryPromise(array $data): Promise
@@ -84,12 +81,9 @@ class ProductArrayFieldMapper
             ->then(static fn (array $categories): ?Category => array_first($categories));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
-     */
-    public function getFlags(array $data): array
+    public function getFlagsPromise(array $data): Promise
     {
-        return $this->flagFacade->getByIds($data['flags']);
+        return $this->flagsBatchLoader->load($data['flags']);
     }
 
     public function getAvailability(array $data): ProductAvailabilityInfo
@@ -113,23 +107,11 @@ class ProductArrayFieldMapper
         return ['name' => $data['unit']];
     }
 
-    public function getStockQuantity(array $data): ?int
+    public function getBrandPromise(array $data): ?Promise
     {
-        return $data['stock_quantity'];
-    }
+        $brandId = $data['brand'];
 
-    public function isAllowedNegativeStock(array $data): bool
-    {
-        return $data['is_allowed_negative_stock'];
-    }
-
-    public function getBrand(array $data): ?Brand
-    {
-        if ((int)$data['brand'] > 0) {
-            return $this->brandFacade->getById((int)$data['brand']);
-        }
-
-        return null;
+        return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
     }
 
     public function isSellingDenied(array $data): bool
@@ -144,11 +126,11 @@ class ProductArrayFieldMapper
 
     public function isCurrentlyOutOfStock(array $data): bool
     {
-        if ($this->isAllowedNegativeStock($data)) {
+        if ($data['is_allowed_negative_stock']) {
             return false;
         }
 
-        return ($this->getStockQuantity($data) ?? 0) <= 0;
+        return ($data['stock_quantity'] ?? 0) <= 0;
     }
 
     /**
@@ -184,11 +166,6 @@ class ProductArrayFieldMapper
         return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
     }
 
-    public function getDescription(array $data): ?string
-    {
-        return $data['description'];
-    }
-
     public function getParameters(array $data): array
     {
         return $this->parameterWithValuesFactory->createParametersArrayFromProductArray($data);
@@ -203,11 +180,6 @@ class ProductArrayFieldMapper
             $data['seo_meta_robots'],
             $data['seo_canonical_url'],
         );
-    }
-
-    public function getOrderingPriority(array $data): int
-    {
-        return $data['ordering_priority'];
     }
 
     public function getVariants(array $data): Promise
@@ -249,21 +221,6 @@ class ProductArrayFieldMapper
         return $data['product_type'] === ProductTypeEnum::TYPE_INQUIRY;
     }
 
-    public function getProductType(array $data): string
-    {
-        return $data['product_type'];
-    }
-
-    public function getNamePrefix(array $data): ?string
-    {
-        return $data['name_prefix'];
-    }
-
-    public function getNameSuffix(array $data): ?string
-    {
-        return $data['name_suffix'];
-    }
-
     public function getFullname(array $data): string
     {
         return trim(
@@ -273,21 +230,6 @@ class ProductArrayFieldMapper
             . ' '
             . $data['name_suffix'],
         );
-    }
-
-    public function getAvailableStoresCount(array $data): ?int
-    {
-        return $data['available_stores_count'];
-    }
-
-    public function getProductVideos(array $data): array
-    {
-        return $data['product_videos'];
-    }
-
-    public function getVatPercent(array $data): string
-    {
-        return $data['vat_percent'];
     }
 
     public function getPromotionBuyQuantity(array $data): ?int

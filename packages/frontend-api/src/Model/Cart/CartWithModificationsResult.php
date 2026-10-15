@@ -70,7 +70,7 @@ class CartWithModificationsResult
     ];
 
     /**
-     * @var array<string, array<int, string>>
+     * @var array<string, array<int, \Shopsys\FrameworkBundle\Model\Product\Product>>
      */
     protected array $multipleAddedProductModifications = [
         'notAddedProducts' => [],
