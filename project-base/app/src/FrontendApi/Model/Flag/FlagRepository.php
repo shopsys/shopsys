@@ -22,9 +22,10 @@ class FlagRepository
     public function getFlagsByIds(array $flagsIds, DomainConfig $domainConfig): array
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
-            ->select('f, ft')
+            ->select('f, ft, fd')
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->leftJoin('f.domains', 'fd')
             ->where('f.id IN (:flagsIds)')
             ->andWhere('f.visible = true')
             ->indexBy('f', 'f.id')
