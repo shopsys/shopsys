@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Twig\Environment;
 
 // Each block type has its own template "@ShopsysFramework/ContentEditor/Mail/<type>.html.twig", a project overrides or adds one in templates/bundles/ShopsysFrameworkBundle/ContentEditor/Mail/.
-final class MailContentRenderer
+class MailContentRenderer
 {
     public function __construct(
         private readonly ContentBlockRegistry $contentBlockRegistry,

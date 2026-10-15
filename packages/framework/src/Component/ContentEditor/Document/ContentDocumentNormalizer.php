@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Field\WysiwygField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
 
-final class ContentDocumentNormalizer
+class ContentDocumentNormalizer
 {
     private NormalizationReport $lastReport;
 

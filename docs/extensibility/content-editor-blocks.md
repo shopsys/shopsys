@@ -266,8 +266,8 @@ Validation of a single value belongs to the field (`required()`, `constraints()`
 
 ## Which classes are final
 
-The classes that form the engine are `final`: `ContentBlockRegistry`, `ContentDocumentNormalizer`, `SlotFitter`, `ContentDocumentExporter`, `MailContentRenderer`, `GrapesJsHtmlConverter`, `MigrateGrapesJsContentTask` and the `ContentBlock` attribute in the framework; `ContentEditorType`, `ContentEditorComponent`, `BlockFormBuilder`, `ContentDocumentType`, `ContentBlockFormType`, `MediaPickerComponent`, `MediaType`, `WysiwygType` and `ProductIdsType` in the administration.
+Nothing of the editor in the framework is `final`: the engine classes (`ContentBlockRegistry`, `ContentDocumentNormalizer`, `ContentDocumentExporter`, `MailContentRenderer`, ...) are replaced or extended the same way as any other framework service. Prefer the extension points above, because the guarantees of the editor depend on these classes: the registry keeps one block per type, the normalizer sanitizes HTML and fits blocks into slots, the exporter and the renderer skip blocks of types that no longer exist.
 
-They are `final` because the guarantees of the editor depend on them: the registry resolves priorities and reports conflicts, the normalizer sanitizes HTML and fits blocks into slots, the exporter and the renderer skip blocks of types that no longer exist. Overriding any of them would silently break these guarantees for every block, so extend the editor through the points above instead. Form types are `final` by the rule of the repository and the Live Components carry the whole flow of the editor.
+In the administration bundle the form types and the Live Components (`ContentEditorType`, `WysiwygType`, `MediaType`, `ProductIdsType`, `ContentEditorComponent`, `MediaPickerComponent`, ...) are `final`, as the whole bundle is written that way.
 
-Blocks and fields are intentionally not `final`, so you can extend a built-in one. Your own project classes are `final` as everywhere in `project-base`.
+Your own project classes are `final` as everywhere in `project-base`.

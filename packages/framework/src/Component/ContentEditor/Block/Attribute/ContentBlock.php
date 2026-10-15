@@ -8,7 +8,7 @@ use Attribute;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 
 #[Attribute(Attribute::TARGET_CLASS)]
-final class ContentBlock
+class ContentBlock
 {
     /**
      * @param string[] $profiles

@@ -32,7 +32,7 @@ use Throwable;
  *   ALTER TABLE blog_article_translations DROP COLUMN legacy_grapesjs_description;
  *   ALTER TABLE mail_templates DROP COLUMN legacy_grapesjs_body;
  */
-final class MigrateGrapesJsContentTask implements PostDeployTaskInterface
+class MigrateGrapesJsContentTask implements PostDeployTaskInterface
 {
     private const int BATCH_SIZE = 50;
 

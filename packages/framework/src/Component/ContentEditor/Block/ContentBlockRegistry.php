@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Document\Exception\ContentBl
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\Exception\UnknownContentBlockTypeException;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
-final class ContentBlockRegistry
+class ContentBlockRegistry
 {
     /**
      * @var array<string, \Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface>|null

@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  * docs/plans/cms-block-editor.md (section J). Only what is dropped or cannot be converted is reported in the notes,
  * stripped inline styles are not.
  */
-final class GrapesJsHtmlConverter
+class GrapesJsHtmlConverter
 {
     private const array BLOCK_TYPES = [
         ContentProfileEnum::WEB => [

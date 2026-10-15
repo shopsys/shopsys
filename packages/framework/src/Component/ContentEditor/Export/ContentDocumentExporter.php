@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 /**
  * Converts a document to the storefront-facing variant, which is never written back to the database
  */
-final class ContentDocumentExporter
+class ContentDocumentExporter
 {
     public function __construct(
         private readonly ContentBlockRegistry $contentBlockRegistry,
