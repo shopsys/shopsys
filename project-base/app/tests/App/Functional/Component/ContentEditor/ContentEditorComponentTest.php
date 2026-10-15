@@ -127,6 +127,20 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertSame([], $this->getBrowserEvents($response->getContent()));
     }
 
+    public function testFinishWithEmptyRequiredFieldShowsErrorAndDoesNotAnnounceTheDocument(): void
+    {
+        $component = $this->createEditor([]);
+        $component->call('addBlock', ['type' => 'video']);
+        // the Live Component test helper lets exceptions through, the browser gets the rendered editor instead
+        $this->client->catchExceptions(true);
+
+        $response = $component->call('finish')->response();
+
+        $crawler = new Crawler($response->getContent());
+        $this->assertStringContainsString('This value should not be blank.', $crawler->text());
+        $this->assertSame([], $this->getBrowserEvents($response->getContent()));
+    }
+
     public function testFinishWithValidBlocksAnnouncesTheNormalizedDocument(): void
     {
         $component = $this->createEditor([$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')]);

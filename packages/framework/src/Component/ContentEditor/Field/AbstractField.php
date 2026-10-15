@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ContentEditor\Field;
 
 use Override;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @phpstan-consistent-constructor
@@ -99,6 +100,10 @@ abstract class AbstractField implements FieldInterface
     #[Override]
     public function getConstraints(): array
     {
+        if ($this->required) {
+            return [new NotBlank(), ...$this->constraints];
+        }
+
         return $this->constraints;
     }
 

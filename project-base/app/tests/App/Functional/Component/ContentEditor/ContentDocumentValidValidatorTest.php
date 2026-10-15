@@ -36,6 +36,19 @@ class ContentDocumentValidValidatorTest extends TransactionFunctionalTestCase
         $this->assertSame('The content has 1 invalid block(s), fix them in the editor', $violations[0]->getMessage());
     }
 
+    public function testDocumentWithEmptyRequiredFieldHasOneViolation(): void
+    {
+        $document = $this->contentDocumentFactory->createFromArray([
+            'blocks' => [
+                ['type' => 'video', 'data' => ['url' => '']],
+            ],
+        ]);
+
+        $violations = $this->validator->validate($document, new ContentDocumentValid());
+
+        $this->assertCount(1, $violations);
+    }
+
     public function testValidDocumentHasNoViolation(): void
     {
         $document = $this->contentDocumentFactory->createFromArray([
