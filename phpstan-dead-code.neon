@@ -47,6 +47,9 @@ parameters:
             path: packages/framework/src/Component/ContentEditor/Document/ContentDocument.php
         -
             identifier: shipmonk.deadMethod
+            path: packages/framework/src/Component/ContentEditor/Document/NormalizationReport.php
+        -
+            identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ContentEditor/Field/AbstractField.php
         -
             identifier: shipmonk.deadMethod
@@ -203,6 +206,21 @@ parameters:
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentFactory::createFromJson\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentFactory.php
+        # content editor: caller arrives in phase 4 (form data transformer and Live Component)
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentNormalizer::normalize\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentNormalizer.php
+        # content editor: caller arrives in phase 9 (logging of dropped blocks during GrapesJS migration)
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentNormalizer::getLastReport\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentNormalizer.php
+        # content editor: caller arrives in phase 6 (Elasticsearch export of article text)
+        -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentTextExtractor::extractText\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentTextExtractor.php
         -
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Cron\\CronModuleRun::getCronModule$#'
