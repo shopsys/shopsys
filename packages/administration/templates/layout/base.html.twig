@@ -22,6 +22,8 @@
             global = {
                 locale: '{{ app.request.locale }}'
             };
+            // CKEditor would otherwise attach itself to every contenteditable element, e.g. the Tiptap editors
+            CKEDITOR.disableAutoInline = true;
         </script>
 
         {% if usersnapApiKey is defined and usersnapApiKey is not empty %}
