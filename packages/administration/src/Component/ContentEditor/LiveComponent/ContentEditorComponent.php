@@ -94,6 +94,12 @@ final class ContentEditorComponent
     #[LiveProp]
     public string $targetInputId = '';
 
+    /**
+     * Part of the id of the cards, so after a discard they are rendered anew (the rich text editors ignore the renders)
+     */
+    #[LiveProp]
+    public int $discardCount = 0;
+
     #[LiveProp]
     public bool $pickerOpen = false;
 
@@ -145,6 +151,18 @@ final class ContentEditorComponent
             self::DONE_BROWSER_EVENT_PREFIX . $this->targetInputId,
             ['document' => $this->getNormalizedDocumentJson()],
         );
+    }
+
+    /**
+     * The editor was closed without finishing, so it goes back to the document the edited entity holds
+     */
+    #[LiveAction]
+    #[RequireRole(SystemRole::ADMIN)]
+    public function discard(#[LiveArg] string $documentJson): void
+    {
+        $this->documentJson = $documentJson;
+        $this->discardCount++;
+        $this->resetForm();
     }
 
     #[LiveAction]

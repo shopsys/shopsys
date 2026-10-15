@@ -2860,6 +2860,9 @@ msgstr "Nemôžete vybrať produkt, ktorý je hlavnou variantou"
 msgid "You cannot choose product that is variant"
 msgstr "Nemôžete vybrať produkt, ktorý je variantou"
 
+msgid "You have unsaved changes in the content, discard them?"
+msgstr "Máte v obsahu neuložené zmeny, zahodiť ich?"
+
 msgid "You have unsaved changes. Do you really want to close the editor without saving?"
 msgstr "Máte neuložené zmeny. Naozaj chcete zavrieť editor bez uloženia?"
 

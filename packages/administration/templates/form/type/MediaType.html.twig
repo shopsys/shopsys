@@ -1,6 +1,6 @@
 {% block media_widget %}
     {% set previewUrl = media ? imageUrl(media) : legacy_url %}
-    <div class="d-flex align-items-center gap-3" data-controller="media-field" data-tid="media-field">
+    <div class="d-flex align-items-center gap-4 mb-3" data-controller="media-field" data-tid="media-field">
         <img class="rounded border object-fit-contain {{ previewUrl ? '' : 'd-none' }}"
              style="width: 10rem; height: 6rem;"
              alt=""

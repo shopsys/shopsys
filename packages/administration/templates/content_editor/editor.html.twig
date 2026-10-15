@@ -7,12 +7,18 @@
 }) }}>
     <div class="modal-header">
         <h5 class="modal-title">{{ this.label }}</h5>
-        {{ component('Admin:LiveActionButton', {
-            action: 'finish',
-            label: 'Done'|trans,
-            buttonClass: 'btn btn-primary ms-auto',
-            'data-tid': 'content-editor-done',
-        }) }}
+        <div class="ms-auto d-flex gap-2">
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    data-action="content-editor-overlay#close"
+                    data-tid="content-editor-close">{{ 'Close'|trans }}</button>
+            {{ component('Admin:LiveActionButton', {
+                action: 'finish',
+                label: 'Done'|trans,
+                buttonClass: 'btn btn-primary',
+                'data-tid': 'content-editor-done',
+            }) }}
+        </div>
     </div>
     <div class="modal-body p-0 content-editor-panes">
         <div class="content-editor-preview-pane" data-tid="content-editor-preview">

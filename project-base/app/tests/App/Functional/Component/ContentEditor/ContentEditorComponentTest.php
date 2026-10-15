@@ -227,10 +227,10 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
         $crawler = $component->render()->crawler();
 
-        $this->assertCount(1, $crawler->filter('textarea[data-model="norender|editor_content[blocks][0][data][html]"]'));
+        $this->assertCount(1, $crawler->filter('textarea[data-model="debounce(500)|editor_content[blocks][0][data][html]"]'));
         $this->assertCount(1, $crawler->filter('input[data-model="debounce(300)|editor_content[blocks][1][data][rows]"]'));
         $this->assertCount(1, $crawler->filter('select[data-model="debounce(300)|editor_content[blocks][1][data][variant]"]'));
-        $this->assertCount(1, $crawler->filter('textarea[data-model="norender|editor_content[blocks][1][data][cells][0][0]"]'));
+        $this->assertCount(1, $crawler->filter('textarea[data-model="debounce(500)|editor_content[blocks][1][data][cells][0][0]"]'));
         $this->assertCount(0, $crawler->filter('form'));
     }
 
@@ -412,6 +412,50 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
         $children = $this->getDocument($component)['blocks'][0]['children'];
         $this->assertSame([self::TEXT_ID_2, self::TEXT_ID_1], array_column($children[0], 'id'));
+    }
+
+    public function testHeadingBlockIsAddedWithDefaultLevelAndRendersItsFields(): void
+    {
+        $component = $this->createEditor([]);
+
+        $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
+        $component->call('addBlock', ['type' => 'heading']);
+
+        $blocks = $this->getDocument($component)['blocks'];
+        $this->assertSame('heading', $blocks[0]['type']);
+        $this->assertSame(['text' => '', 'level' => 'h2'], $blocks[0]['data']);
+
+        $crawler = $component->render()->crawler();
+        $this->assertCount(1, $crawler->filter('input[data-model="debounce(300)|editor_content[blocks][0][data][text]"]'));
+        $this->assertCount(1, $crawler->filter('select[data-model="debounce(300)|editor_content[blocks][0][data][level]"]'));
+        $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-heading"]'));
+    }
+
+    public function testDiscardResetsTheEditorToTheGivenDocument(): void
+    {
+        $originalDocument = json_encode(
+            ['version' => 1, 'profile' => 'web', 'blocks' => $this->createThreeTextBlocks()],
+            JSON_THROW_ON_ERROR,
+        );
+        $component = $this->createEditor($this->createThreeTextBlocks());
+        $originalExport = $this->getDocument($component);
+        $component->call('removeBlock', ['path' => '0']);
+        $component->call('moveDown', ['path' => '0']);
+        $this->assertNotSame($originalExport, $this->getDocument($component));
+
+        $component->call('discard', ['documentJson' => $originalDocument]);
+
+        $this->assertSame([self::TEXT_ID_1, self::TEXT_ID_2, self::TEXT_ID_3], $this->getBlockIds($component));
+        $this->assertSame($originalExport, $this->getDocument($component));
+        $this->assertCount(3, $component->render()->crawler()->filter('[data-tid="content-editor-block"]'));
+    }
+
+    public function testEditorHasCloseButtonNextToDone(): void
+    {
+        $crawler = $this->createEditor([])->render()->crawler();
+
+        $this->assertCount(1, $crawler->filter('.modal-header button[data-tid="content-editor-close"][data-action="content-editor-overlay#close"]'));
+        $this->assertCount(1, $crawler->filter('.modal-header [data-tid="content-editor-done"]'));
     }
 
     public function testBlockIsRemoved(): void

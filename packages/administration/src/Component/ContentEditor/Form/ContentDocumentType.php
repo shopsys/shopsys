@@ -21,8 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class ContentDocumentType extends AbstractType
 {
     private const string DEBOUNCED_MODEL_MODIFIER = 'debounce(300)';
-    // the editor keeps its value in the textarea, so changes are stored without re-rendering which would disturb the editor
-    private const string SILENT_MODEL_MODIFIER = 'norender';
+    // typing is slower than in an input, the rich text editor itself is ignored by the render (data-live-ignore), only the preview follows
+    private const string WYSIWYG_MODEL_MODIFIER = 'debounce(500)';
 
     #[Override]
     public function configureOptions(OptionsResolver $resolver): void
@@ -68,7 +68,7 @@ final class ContentDocumentType extends AbstractType
             }
 
             $modifier = in_array('wysiwyg', $child->vars['block_prefixes'], true)
-                ? self::SILENT_MODEL_MODIFIER
+                ? self::WYSIWYG_MODEL_MODIFIER
                 : self::DEBOUNCED_MODEL_MODIFIER;
             $child->vars['attr']['data-model'] = $modifier . '|' . $child->vars['full_name'];
         }

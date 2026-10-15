@@ -55,7 +55,33 @@
 }
 
 .content-editor-header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
     cursor: pointer;
+}
+
+// the buttons keep their size and never wrap, the summary in the header is the one that gets truncated
+.content-editor-toolbar {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+    margin-left: auto;
+
+    .btn {
+        flex: 0 0 auto;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+    }
+}
+
+// the narrow pane shows the labels above the inputs, so they are smaller than in the forms of the sections
+.content-editor-card .form-label {
+    font-size: 0.8125rem;
 }
 
 .content-editor-slot {
@@ -65,9 +91,7 @@
     border-radius: var(--tblr-border-radius);
 
     > .content-editor-header {
-        display: flex;
         justify-content: space-between;
-        align-items: center;
     }
 }
 
@@ -81,20 +105,22 @@
     }
 }
 
-// a gap between the cards that shows the insert button only when the pointer is over it
+// a gap between the cards with the insert button, subtle until the pointer is over it
 .content-editor-divider {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1.5rem;
+    height: 2rem;
 
     .btn {
-        opacity: 0;
+        opacity: 0.5;
         transition: opacity 0.15s;
     }
 
-    &:hover .btn,
-    .btn:focus {
+    // the Live Component disables the button while its action runs, which must not make it fade
+    .btn:hover,
+    .btn:focus,
+    .btn:disabled {
         opacity: 1;
     }
 }
@@ -117,6 +143,28 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 0.5rem;
+    // .btn does not wrap the text
+    white-space: normal;
+    text-align: center;
+}
+
+// The block and media pickers are modals inside of the full-screen overlay. Their backdrop is a child of <body>
+// with a lower z-index than the overlay, and raising it would cover the picker too (it is in the stacking context of the overlay).
+// So the picker dims what is below it itself.
+.content-editor-overlay .modal {
+    background: rgba(var(--tblr-dark-rgb), 0.5);
+}
+
+// Modals opened by scripts (the confirmation, the product picker) are appended to <body>, after the overlay.
+// The modal is above the overlay (both have z-index 1055, but it is later in the DOM) only with a higher z-index,
+// and so must be the backdrops that follow the first one (the one of the overlay), so that they dim the overlay.
+// Only while such a modal exists, otherwise the backdrop of the picker inside of the overlay would cover it.
+body:has(> .modal) > .modal-backdrop ~ .modal-backdrop {
+    z-index: 1060;
+}
+
+body > .modal {
+    z-index: 1065;
 }
 
 // the width of the preview is switched between the desktop (whole pane) and the mobile one by the controller

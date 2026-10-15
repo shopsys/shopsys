@@ -93,7 +93,9 @@ export default class extends Controller {
         this.writeTextarea(this.sourceTarget.value);
     }
 
+    // the source and the editor are given each other's height, so the form below does not jump when switching
     showSource() {
+        this.sourceTarget.style.height = `${this.editorTarget.offsetHeight}px`;
         this.sourceTarget.value = this.editor.getHTML();
         this.sourceTarget.classList.remove('d-none');
         this.editorTarget.classList.add('d-none');
@@ -102,6 +104,7 @@ export default class extends Controller {
     }
 
     hideSource() {
+        this.editorTarget.style.minHeight = `${this.sourceTarget.offsetHeight}px`;
         this.editor.commands.setContent(this.sourceTarget.value);
         this.syncTextarea();
         this.sourceTarget.classList.add('d-none');

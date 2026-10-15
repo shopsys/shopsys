@@ -4,9 +4,12 @@
 {% set isContainer = blockForm['children'] is defined %}
 {% set toolbarButtonClass = 'btn btn-ghost-secondary btn-icon btn-sm' %}
 
-{# the id contains the position, so a block that changed it is rendered anew and its rich text editors are initialized from the new state #}
+{# the narrow pane has no room for the labels beside the inputs #}
+{% form_theme blockForm.data '@ShopsysAdministration/form/vertical.html.twig' %}
+
+{# the id contains the position and the number of discards, so a block that changed it is rendered anew and its rich text editors are initialized from the new state #}
 <div class="card content-editor-card"
-     id="content-editor-card-{{ path|replace({'/': '-'}) }}-{{ blockValues.id }}"
+     id="content-editor-card-{{ path|replace({'/': '-'}) }}-{{ blockValues.id }}-{{ this.discardCount }}"
      data-content-editor-card
      data-content-editor-collapsible
      data-content-editor-key="{{ blockValues.id }}"
@@ -16,11 +19,11 @@
 >
     <div class="card-header content-editor-header" data-action="click->content-editor#toggle">
         {% if definition.icon %}
-            <span class="me-2">{{ ux_icon(definition.icon) }}</span>
+            <span class="flex-shrink-0">{{ ux_icon(definition.icon) }}</span>
         {% endif %}
-        <span class="fw-bold me-2">{{ definition.label|trans }}</span>
+        <span class="fw-bold flex-shrink-0">{{ definition.label|trans }}</span>
         <span class="text-secondary text-truncate flex-fill" data-tid="content-editor-block-summary">{{ this.blockSummary(blockValues) }}</span>
-        <div class="btn-list flex-nowrap ms-2">
+        <div class="content-editor-toolbar">
             {{ component('Admin:LiveActionButton', {
                 action: 'moveUp',
                 label: '',
