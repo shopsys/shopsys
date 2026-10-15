@@ -18,6 +18,8 @@
         <div class="content-editor-preview-pane" data-tid="content-editor-preview">
             {% if this.profile == 'web' %}
                 {% include '@ShopsysAdministration/content_editor/preview_web.html.twig' %}
+            {% elseif this.profile == 'mail' %}
+                {% include '@ShopsysAdministration/content_editor/preview_mail.html.twig' %}
             {% else %}
                 <div class="card">
                     <div class="card-header">

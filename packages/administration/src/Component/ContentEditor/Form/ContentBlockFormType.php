@@ -57,7 +57,7 @@ final class ContentBlockFormType extends AbstractType
     /**
      * The block may be at another position than when the form was built, so its fields are built again for the submitted type
      *
-     * @param array<int, array{label: string, placeholder: string, isRequired: bool}> $variables
+     * @param array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}> $variables
      */
     private function onPreSubmit(FormEvent $event, array $variables): void
     {
@@ -73,7 +73,7 @@ final class ContentBlockFormType extends AbstractType
     }
 
     /**
-     * @param array<int, array{label: string, placeholder: string, isRequired: bool}> $variables
+     * @param array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}> $variables
      */
     private function resetBlockFields(FormInterface $form, mixed $type, array $variables): void
     {

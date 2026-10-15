@@ -1,0 +1,9 @@
+{# unlike the web preview, nothing here is ignored by the live component, so the content of the frame is replaced on every render #}
+<div class="d-flex flex-column h-100">
+    <div class="content-editor-preview-frame">
+        <iframe srcdoc="{{ this.mailPreviewHtml|e('html_attr') }}"
+                class="w-100 h-100 border-0"
+                title="{{ 'Preview of the content'|trans }}"
+                data-tid="content-editor-preview-frame"></iframe>
+    </div>
+</div>

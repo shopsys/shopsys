@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint;
 class ContentDocumentValid extends Constraint
 {
     /**
-     * @param array<int, array{label: string, placeholder: string, isRequired: bool}> $variables placeholders of the editor, see ContentEditorType
+     * @param array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}> $variables placeholders of the editor, see ContentEditorType
      * @param string[]|null $groups
      */
     #[HasNamedArguments]

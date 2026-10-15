@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Options:
  * - profile: kind of the content, see ContentProfileEnum
  * - allowed_types: types of blocks the editor offers, null for all blocks of the profile
- * - variables: placeholders offered in the rich text editors (mail), each with "label", "placeholder" and "isRequired"
+ * - variables: placeholders offered in the rich text editors (mail), each with "label", "placeholder", "isRequired" and "isImage"
  * - domain_id: domain the content is shown on, null when it is not known in advance
  */
 final class ContentEditorType extends AbstractType

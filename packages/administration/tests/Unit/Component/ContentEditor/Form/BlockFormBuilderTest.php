@@ -144,11 +144,23 @@ class BlockFormBuilderTest extends TypeTestCase
 
     public function testVariablesOfEditorReplaceVariablesOfWysiwygField(): void
     {
-        $variables = [['label' => 'Order number', 'placeholder' => '{order_number}', 'isRequired' => true]];
+        $variables = [['label' => 'Order number', 'placeholder' => '{order_number}', 'isRequired' => true, 'isImage' => false]];
 
         $form = $this->blockFormBuilder->createDataForm($this->createBlock(), $variables);
 
         $this->assertSame($variables, $form->get('wysiwyg')->getConfig()->getOption('variables'));
+    }
+
+    public function testImageVariablesOfEditorAreChoicesOfVariableField(): void
+    {
+        $variables = [
+            ['label' => 'Order number', 'placeholder' => '{order_number}', 'isRequired' => true, 'isImage' => false],
+            ['label' => 'Product image URL', 'placeholder' => '{product_image}', 'isRequired' => false, 'isImage' => true],
+        ];
+
+        $form = $this->blockFormBuilder->createDataForm($this->createBlock(), $variables);
+
+        $this->assertSame(['Product image URL' => '{product_image}'], $form->get('variable')->getConfig()->getOption('choices'));
     }
 
     public function testCustomFormTypeOfBlockReplacesGeneratedForm(): void

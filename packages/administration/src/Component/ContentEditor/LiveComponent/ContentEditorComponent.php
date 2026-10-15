@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Mail\MailPreviewProvider;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -73,7 +74,7 @@ final class ContentEditorComponent
     public ?array $allowedTypes = null;
 
     /**
-     * @var array<int, array{label: string, placeholder: string, isRequired: bool}>
+     * @var array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}>
      */
     #[LiveProp]
     public array $variables = [];
@@ -107,6 +108,7 @@ final class ContentEditorComponent
         private readonly ContentDocumentFactory $contentDocumentFactory,
         private readonly ContentDocumentNormalizer $contentDocumentNormalizer,
         private readonly ContentDocumentExporter $contentDocumentExporter,
+        private readonly MailPreviewProvider $mailPreviewProvider,
         private readonly Domain $domain,
         private readonly FormFactoryInterface $formFactory,
     ) {
@@ -229,6 +231,18 @@ final class ContentEditorComponent
         );
 
         return json_encode($exportedDocument, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * The whole mail as it is sent, with the labels of the variables in place of their values, shown in the preview
+     */
+    public function getMailPreviewHtml(): string
+    {
+        return $this->mailPreviewProvider->getPreviewHtml(
+            $this->getNormalizedDocument(),
+            $this->resolveExportDomainConfig()->getId(),
+            $this->variables,
+        );
     }
 
     public function getBlockDefinition(string $type): ContentBlockInterface
