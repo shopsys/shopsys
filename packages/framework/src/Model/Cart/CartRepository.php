@@ -60,22 +60,22 @@ class CartRepository
             'DELETE FROM cart_items WHERE cart_id IN (
                 SELECT C.id
                 FROM carts C
-                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
+                WHERE C.last_activity_at <= :dateLimit AND customer_user_id IS NULL)',
             [
-                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
+                'dateLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_IMMUTABLE,
+                'dateLimit' => Types::DATE_IMMUTABLE,
             ],
         );
 
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
+            'DELETE FROM carts WHERE last_activity_at <= :dateLimit AND customer_user_id IS NULL',
             [
-                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
+                'dateLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_IMMUTABLE,
+                'dateLimit' => Types::DATE_IMMUTABLE,
             ],
         );
     }
@@ -86,22 +86,22 @@ class CartRepository
             'DELETE FROM cart_items WHERE cart_id IN (
                 SELECT C.id
                 FROM carts C
-                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NOT NULL)',
+                WHERE C.last_activity_at <= :dateLimit AND customer_user_id IS NOT NULL)',
             [
-                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
+                'dateLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_IMMUTABLE,
+                'dateLimit' => Types::DATE_IMMUTABLE,
             ],
         );
 
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NOT NULL',
+            'DELETE FROM carts WHERE last_activity_at <= :dateLimit AND customer_user_id IS NOT NULL',
             [
-                'timeLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
+                'dateLimit' => $this->clock->now()->modify('-' . $daysLimit . ' days'),
             ],
             [
-                'timeLimit' => Types::DATETIME_IMMUTABLE,
+                'dateLimit' => Types::DATE_IMMUTABLE,
             ],
         );
     }
