@@ -82,10 +82,6 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
-    Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlSlugBatchLoader:
-        arguments:
-            $mainFriendlyUrlSlugCache: '@main_friendly_url_slug_cache'
-
     Shopsys\FrontendApiBundle\Model\GraphqlConfigurator:
         arguments:
             $maxQueryComplexity: '%overblog_graphql.query_max_complexity%'
