@@ -11,9 +11,16 @@ use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowing;
+use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
+use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -37,6 +44,10 @@ final class Datagrid
     private ArrayCollection $fields;
 
     private DatagridRowActions $actions;
+
+    private FilterCollection $filters;
+
+    private ?DatagridNarrowing $narrowing = null;
 
     private string $identificationName = 'id';
 
@@ -67,13 +78,46 @@ final class Datagrid
         private readonly AdapterInterface $adapter,
         private readonly GridFactory $gridFactory,
         private readonly AccessCheckerInterface $accessChecker,
+        private readonly DatagridNarrowingResolver $narrowingResolver,
+        private readonly DatagridRequestState $requestState,
+        private readonly ?DomainControlScope $domainControlScope,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
         $this->actions = new DatagridRowActions();
+        $this->filters = new FilterCollection();
         $this->options = $this->resolveOptions($options);
 
         $this->configureDefaultCrudActions();
+    }
+
+    /**
+     * The domains the datagrid works with, null when it has no domain control. Known already while the datagrid
+     * is configured, so it can decide about the fields.
+     */
+    public function getDomainControlScope(): ?DomainControlScope
+    {
+        return $this->domainControlScope;
+    }
+
+    /**
+     * What narrows the records on behalf of the administrator — the domain control, the quick search and the filter
+     * panel. Resolved from the fields and the filters on the first call (`createView()` makes one), so ask once
+     * the datagrid is configured; a later change of the fields or the filters does not change it.
+     *
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
+     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     */
+    public function getNarrowing(): DatagridNarrowing
+    {
+        return $this->narrowing ??= $this->narrowingResolver->resolve(
+            $this->adapter,
+            $this->getAccessibleFields(),
+            $this->getAccessibleFilters(),
+            $this->requestState,
+            $this->domainControlScope,
+        );
     }
 
     /**
@@ -214,7 +258,9 @@ final class Datagrid
      *       property?: string|string[]|null,
      *       role?: string|null,
      *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
-     *       class?: string|null
+     *       class?: string|null,
+     *       searchable?: bool,
+     *       filterable?: bool
      *   } $options
      * @phpstan-param FieldOptions $options
      */
@@ -243,7 +289,9 @@ final class Datagrid
      *      property?: string|string[]|null,
      *      role?: string|null,
      *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
-     *      class?: string|null
+     *      class?: string|null,
+     *      searchable?: bool,
+     *      filterable?: bool
      *  } $options
      * @phpstan-param FieldOptions $options
      */
@@ -280,6 +328,20 @@ final class Datagrid
     }
 
     /**
+     * The filters the administrator composes rules from, declared explicitly —
+     * `$datagrid->filters()->add(TextFilter::new('name'))`.
+     *
+     * A field declared `'filterable' => true` gets a filter picked by the kind of value its path leads to; a filter
+     * declared here under the name of that field (see `FieldDescriptor::getFilterName()`) replaces the picked one.
+     * The filters are offered in the alphabetical order of their labels. Declare them while configuring the datagrid,
+     * they are adapted to the adapter once the narrowing is resolved (see `getNarrowing()`).
+     */
+    public function filters(): FilterCollection
+    {
+        return $this->filters;
+    }
+
+    /**
      * Class for managing row actions in datagrid
      */
     public function actions(): DatagridRowActions
@@ -289,10 +351,16 @@ final class Datagrid
 
     public function createView(): GridView
     {
-        // fields the administrator is not allowed to see are neither fetched nor displayed
-        $accessibleFields = array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
+        $this->addDomainFieldIfWorthDisplaying();
 
-        $datasource = $this->adapter->getDatasource($this->identificationName, $accessibleFields);
+        // fields the administrator is not allowed to see are neither fetched nor displayed
+        $accessibleFields = $this->getAccessibleFields();
+
+        $datasource = $this->adapter->getDatasource(new DatasourceRequest(
+            $this->identificationName,
+            $accessibleFields,
+            $this->getNarrowing()->condition,
+        ));
         $grid = $this->gridFactory->create($this->options['name'], $datasource, $this->options['roleConstant']);
 
         $visibleFields = array_filter($accessibleFields, static fn (FieldDescriptor $field) => $field->isVisible());
@@ -364,6 +432,75 @@ final class Datagrid
             $field->getRole() ?? $this->options['roleConstant'],
             $field->getPermission() ?? Permission::VIEW,
         );
+    }
+
+    /**
+     * The fields the current administrator is allowed to see — only those are fetched, displayed and narrowed by,
+     * so that neither the quick search nor a filter can tell what a field hidden from the administrator holds.
+     *
+     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[]
+     */
+    private function getAccessibleFields(): array
+    {
+        return array_values(array_filter($this->fields->getValues(), $this->isAccessible(...)));
+    }
+
+    /**
+     * The declared filters the current administrator is allowed to use — a filter declared under the name of a field
+     * hidden from the administrator, or over one of its properties, would tell what the field holds.
+     */
+    private function getAccessibleFilters(): FilterCollection
+    {
+        $hiddenFilterNames = [];
+        $hiddenPaths = [];
+
+        foreach ($this->fields as $field) {
+            if ($this->isAccessible($field) === false) {
+                $hiddenFilterNames[] = $field->getFilterName();
+                array_push($hiddenPaths, ...$field->getProperties());
+            }
+        }
+
+        $accessibleFilters = new FilterCollection();
+
+        foreach ($this->filters as $filter) {
+            if (in_array($filter->getName(), $hiddenFilterNames, true) === false && in_array($filter->getPath(), $hiddenPaths, true) === false) {
+                $accessibleFilters->add($filter);
+            }
+        }
+
+        return $accessibleFilters;
+    }
+
+    /**
+     * Displays the domain of every record when the domain control works with several domains.
+     *
+     * Displaying the domain and limiting the records to the domains of the control are independent —
+     * the limit is a part of every request the datagrid sends to its adapter, so hiding or removing the
+     * field never widens the listed records. Adding the field manually takes precedence. A record related
+     * to several domains (the path leads through a collection) has no single domain to display.
+     */
+    private function addDomainFieldIfWorthDisplaying(): void
+    {
+        $domainControlScope = $this->getDomainControlScope();
+
+        if ($domainControlScope === null || $domainControlScope->isDomainWorthDisplaying() === false) {
+            return;
+        }
+
+        if ($this->fields->containsKey($domainControlScope->domainIdPath) || $this->leadsThroughCollection($domainControlScope->domainIdPath)) {
+            return;
+        }
+
+        $this->add($domainControlScope->domainIdPath, [
+            'label' => t('Domain'),
+            'template' => '@ShopsysAdministration/datagrid/cell/domain_icon.html.twig',
+        ]);
+    }
+
+    private function leadsThroughCollection(string $path): bool
+    {
+        return $this->adapter instanceof PathDescribingAdapterInterface && $this->adapter->describePath($path)->isToMany();
     }
 
     private function configureDefaultCrudActions(): void

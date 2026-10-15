@@ -9,10 +9,23 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 - `crudDefinition` (optional, `Shopsys\AdministrationBundle\Component\Crud\Definition`) - Crud Definition provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
 - `pagination` (optional, bool) - Enable or disable pagination. Default is `true`
 
+## Factory Parameters
+
+What the datagrid reads from its surroundings is not an option; `DatagridFactory::create()` derives it unless it is given by the optional parameters that follow the options:
+
+```php
+$datagrid = $datagridFactory->create($adapter, $options, $requestState, $domainControlScope);
+```
+
+- `requestState` (optional, `Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState`) - What the request says about the datagrid, the query of its quick search and filter forms. It is read from the main request by `DatagridRequestState::fromRequest($request, $gridId)`, or `DatagridRequestState::outsideRequest($gridId)` is used when there is no request (a command) - then no form is built. Pass it to build a datagrid in a test.
+- `domainControlScope` (optional, `Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope`) - The domains the datagrid works with and the way the administrator picks among them. For a datagrid of a Crud Controller it is resolved from `crudDefinition` automatically, so pass it only for a standalone datagrid. When it is set and has a path to the domain (`domainId` of an entity implementing `DomainSeparatedEntityInterface`, or the `domainIdPath` of its configuration), the datagrid is limited to the domains of the scope and displays the domain of every record when the domain filter offers several domains. See [List domain control](../crud-controller/reference/crud-controller.md#list-domain-control)
+
+Everything the administrator narrows the records by — the domain control, the quick search and the filters declared by `filters()` — is resolved for the request into the `DatagridNarrowing` returned by `Datagrid::getNarrowing()`. A fixed scope of the records belongs to the query of the adapter (`configureQuery()` of a Crud Controller). See [Narrowing the records](./narrowing.md).
+
 
 ## Methods Configuration
 
-You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
+You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features. The records are narrowed through the adapter, see [Narrowing the records](./narrowing.md).
 All methods are chainable, so you can call them one after another.
 
 ```php
