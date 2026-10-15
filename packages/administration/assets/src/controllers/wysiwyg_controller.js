@@ -129,7 +129,7 @@ export default class extends Controller {
             const command = TOOLBAR_COMMANDS[button.dataset.wysiwygCommandParam];
 
             if (command) {
-                button.classList.toggle('active', command.isActive(editor));
+                button.classList.toggle('active', command.isActive?.(editor) ?? false);
             }
         }
     }

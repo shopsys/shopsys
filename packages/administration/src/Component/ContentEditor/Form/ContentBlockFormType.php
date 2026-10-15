@@ -46,22 +46,13 @@ final class ContentBlockFormType extends AbstractType
             ->add('id', HiddenType::class)
             ->add('type', HiddenType::class);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
+        // the block may be at another position than when the form was built, so its fields are built again for the submitted type
+        $resetFields = function (FormEvent $event) use ($options): void {
             $this->resetBlockFields($event->getForm(), $event->getData()['type'] ?? null, $options['variables']);
-        });
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options): void {
-            $this->onPreSubmit($event, $options['variables']);
-        });
-    }
+        };
 
-    /**
-     * The block may be at another position than when the form was built, so its fields are built again for the submitted type
-     *
-     * @param array<int, array{label: string, placeholder: string, isRequired: bool, isImage: bool}> $variables
-     */
-    private function onPreSubmit(FormEvent $event, array $variables): void
-    {
-        $this->resetBlockFields($event->getForm(), $event->getData()['type'] ?? null, $variables);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $resetFields);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $resetFields);
     }
 
     /**
