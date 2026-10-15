@@ -58,26 +58,26 @@ describe('ProductDetailSectionNavigation', () => {
         vi.restoreAllMocks();
     });
 
-    test.each([
-        false,
-        true,
-    ])('hides a single navigation item while preserving the sticky action (desktop: %s)', async (desktop) => {
-        isDesktop = desktop;
+    test.each([false, true])(
+        'hides a single navigation item while preserving the sticky action (desktop: %s)',
+        async (desktop) => {
+            isDesktop = desktop;
 
-        render(
-            <ProductDetailSectionNavigation
-                activeSection={null}
-                product={{} as TypeProductDetailFragment}
-                sections={[{ id: 'reviews', label: 'Reviews' }]}
-                stickyActionBoundaryRef={createRef<HTMLDivElement>()}
-                onSectionClick={vi.fn()}
-            />,
-        );
+            render(
+                <ProductDetailSectionNavigation
+                    activeSection={null}
+                    product={{} as TypeProductDetailFragment}
+                    sections={[{ id: 'reviews', label: 'Reviews' }]}
+                    stickyActionBoundaryRef={createRef<HTMLDivElement>()}
+                    onSectionClick={vi.fn()}
+                />,
+            );
 
-        expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
-        expect(screen.queryByRole('button', { name: 'Reviews' })).not.toBeInTheDocument();
-        await waitFor(() => expect(screen.getByTestId('sticky-action')).toHaveAttribute('data-visible', 'true'));
-    });
+            expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+            expect(screen.queryByRole('button', { name: 'Reviews' })).not.toBeInTheDocument();
+            await waitFor(() => expect(screen.getByTestId('sticky-action')).toHaveAttribute('data-visible', 'true'));
+        },
+    );
 
     test('allows navigation between multiple sections', () => {
         const onSectionClick = vi.fn();

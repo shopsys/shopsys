@@ -1,11 +1,14 @@
 import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
+import { useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useKeypress } from 'utils/useKeyPress';
 import { type SortOptionsLabels } from './SortingBar';
 import { SortingBarOptions } from './SortingBarOptions';
 
@@ -29,7 +32,15 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
     onSortMenuToggle,
 }) => {
     const { t } = useTranslation();
+    const sortButtonRef = useRef<HTMLButtonElement | null>(null);
     const selectedSortOptionLabel = sortOptionsLabels[selectedSortOption] || t('Sort');
+
+    useKeypress('Escape', () => {
+        if (isSortMenuOpen) {
+            onSortMenuClose();
+            sortButtonRef.current?.focus();
+        }
+    });
 
     return (
         <>
@@ -49,18 +60,27 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                         currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
                     })}
                     className={twJoin(
-                        'w-full justify-start',
+                        'w-full justify-between',
                         isSortMenuOpen &&
                             'bg-button-secondary-bg-active text-button-secondary-text-active outline-button-secondary-border-active',
                     )}
+                    size="large"
                     title={t('Sort')}
-                    onClick={onSortMenuToggle}
+                    onClick={(event) => {
+                        sortButtonRef.current = event.currentTarget;
+                        onSortMenuToggle();
+                    }}
                 >
-                    <SortIcon aria-hidden="true" className="size-5 shrink-0" />
+                    <span className="flex min-w-0 items-center gap-2">
+                        <SortIcon aria-hidden="true" className="size-5 shrink-0" />
 
-                    <span className="line-clamp-1 overflow-hidden text-left leading-tight">
-                        {selectedSortOptionLabel}
+                        <span className="truncate text-left">{selectedSortOptionLabel}</span>
                     </span>
+
+                    <ArrowIcon
+                        aria-hidden
+                        className={twJoin('size-5 shrink-0 transition-transform', isSortMenuOpen && 'rotate-180')}
+                    />
                 </Button>
 
                 <div
@@ -68,7 +88,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     id="sort-dropdown"
                     role="menu"
                     className={twJoin(
-                        'absolute top-full left-0 mt-2 w-full flex-col divide-y divide-border-less rounded-xl bg-background-default px-5 py-0 shadow-[0_12px_32px_rgba(0,0,0,0.24)]',
+                        'absolute top-full left-0 mt-2 w-full flex-col divide-y divide-border-less overflow-hidden rounded-md border border-border-less bg-background-default shadow-lg',
                         isSortMenuOpen ? 'flex' : 'hidden',
                     )}
                 >
