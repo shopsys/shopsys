@@ -3463,6 +3463,9 @@ msgstr "Prodejna"
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache s dotazy na FE byla smazána."
 
+msgid "Style"
+msgstr "Styl"
+
 msgid "Stores"
 msgstr "Prodejny"
 

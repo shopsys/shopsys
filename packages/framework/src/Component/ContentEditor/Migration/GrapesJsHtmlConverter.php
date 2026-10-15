@@ -8,6 +8,7 @@ use Dom\Element;
 use Dom\HTMLDocument;
 use Dom\Node;
 use Dom\Text;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailButtonBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ButtonLinkBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\IframeBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ImageBlock;
@@ -316,12 +317,14 @@ final class GrapesJsHtmlConverter
             'text' => $text,
             'url' => (string)$link->getAttribute('href'),
             'position' => $this->getPosition($link, 'button-link-position-', 'data-link-position', ButtonLinkBlock::POSITION_CENTER),
-            'color' => $this->getButtonColor($link),
         ];
 
         if ($this->context->profile === ContentProfileEnum::WEB) {
             $data['openInNewTab'] = $link->getAttribute('target') === '_blank';
+            $data['variant'] = ButtonLinkBlock::VARIANT_PRIMARY;
         }
+        } else {
+            $data['color'] = $this->getButtonColor($link);
 
         return [$this->createBlock($this->getBlockType('button'), $data)];
     }
@@ -334,7 +337,7 @@ final class GrapesJsHtmlConverter
             return $matches[1];
         }
 
-        return ButtonLinkBlock::DEFAULT_COLOR;
+        return MailButtonBlock::DEFAULT_COLOR;
     }
 
     private function getPosition(Element $element, string $classPrefix, string $attribute, string $default): string

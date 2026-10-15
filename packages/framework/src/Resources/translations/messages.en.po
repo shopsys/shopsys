@@ -3463,6 +3463,9 @@ msgstr ""
 msgid "Storefront queries cache has been cleaned."
 msgstr ""
 
+msgid "Style"
+msgstr ""
+
 msgid "Stores"
 msgstr ""
 

@@ -216,22 +216,21 @@ class GrapesJsHtmlConverterTest extends TestCase
         $this->assertSame('left', $result->document->blocks[0]->data['position']);
     }
 
-    public function testButtonKeepsTextUrlTargetPositionAndColor(): void
+    public function testButtonKeepsTextUrlTargetAndPositionAndGetsPrimaryVariant(): void
     {
         $result = $this->convert('<a class="gjs-button-link button-link-position-right" href="/go" target="_blank" style="background-color:#112233;border-color:#112233"><div class="gjs-text-ckeditor text"> Go  now </div></a>');
 
         $this->assertSame(
-            ['text' => 'Go now', 'url' => '/go', 'position' => 'right', 'color' => '#112233', 'openInNewTab' => true],
+            ['text' => 'Go now', 'url' => '/go', 'position' => 'right', 'variant' => 'primary', 'openInNewTab' => true],
             $result->document->blocks[0]->data,
         );
         $this->assertSame('button-link', $result->document->blocks[0]->type);
     }
 
-    public function testButtonWithoutColorGetsDefault(): void
+    public function testButtonWithoutTargetIsNotOpenedInNewTab(): void
     {
         $result = $this->convert('<a class="gjs-button-link" href="/go">Go</a>');
 
-        $this->assertSame('#00C8B7', $result->document->blocks[0]->data['color']);
         $this->assertFalse($result->document->blocks[0]->data['openInNewTab']);
     }
 

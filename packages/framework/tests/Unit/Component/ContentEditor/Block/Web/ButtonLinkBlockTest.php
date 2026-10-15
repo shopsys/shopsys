@@ -17,10 +17,18 @@ class ButtonLinkBlockTest extends AbstractWebBlockTestCase
                 'url' => null,
                 'openInNewTab' => false,
                 'position' => 'center',
-                'color' => '#00C8B7',
+                'variant' => 'primary',
             ],
             (new ButtonLinkBlock())->getDefaultData(),
         );
+    }
+
+    public function testUnknownVariantFallsBackToPrimary(): void
+    {
+        $variantField = ContentEditorTestFactory::getField(new ButtonLinkBlock(), 'variant');
+
+        $this->assertSame('tertiary', $variantField->normalizeValue('tertiary'));
+        $this->assertSame('primary', $variantField->normalizeValue('red'));
     }
 
     public function testTextAndUrlAreRequired(): void

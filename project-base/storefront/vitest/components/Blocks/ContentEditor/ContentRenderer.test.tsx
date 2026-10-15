@@ -68,7 +68,7 @@ describe('ContentRenderer', () => {
                     url: '/buy',
                     openInNewTab: true,
                     position: 'left',
-                    color: '#00C8B7',
+                    variant: 'secondary',
                 }),
                 block('table', { rows: 1, columns: 2, variant: 'secondary', cells: [['<b>a</b>', 'b']] }),
                 block('video', {

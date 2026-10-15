@@ -3463,6 +3463,9 @@ msgstr "Obchod"
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache dopytov storefront bola vymotáná."
 
+msgid "Style"
+msgstr "Štýl"
+
 msgid "Stores"
 msgstr "Obchody"
 

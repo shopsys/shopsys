@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\CheckboxField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ChoiceField;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ColorField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TextField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\UrlField;
 
@@ -21,7 +20,9 @@ class ButtonLinkBlock extends AbstractContentBlock
     public const string POSITION_CENTER = 'center';
     public const string POSITION_RIGHT = 'right';
 
-    public const string DEFAULT_COLOR = '#00C8B7';
+    public const string VARIANT_PRIMARY = 'primary';
+    public const string VARIANT_SECONDARY = 'secondary';
+    public const string VARIANT_TERTIARY = 'tertiary';
 
     #[Override]
     public function getLabel(): string
@@ -45,7 +46,9 @@ class ButtonLinkBlock extends AbstractContentBlock
             ExtendedClassNameResolver::resolve(ChoiceField::class)::create('position', [static::POSITION_LEFT, static::POSITION_CENTER, static::POSITION_RIGHT])
                 ->label(t('Position'))
                 ->default(static::POSITION_CENTER),
-            ExtendedClassNameResolver::resolve(ColorField::class)::create('color')->label(t('Color'))->default(static::DEFAULT_COLOR),
+            ExtendedClassNameResolver::resolve(ChoiceField::class)::create('variant', [static::VARIANT_PRIMARY, static::VARIANT_SECONDARY, static::VARIANT_TERTIARY])
+                ->label(t('Style'))
+                ->default(static::VARIANT_PRIMARY),
         ];
     }
 }

@@ -33,7 +33,7 @@ export type ButtonLinkBlockData = {
     url: string;
     openInNewTab: boolean;
     position: BlockPosition;
-    color: string;
+    variant: 'primary' | 'secondary' | 'tertiary';
 };
 
 export type TableBlockData = {
