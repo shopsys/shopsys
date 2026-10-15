@@ -26,28 +26,30 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  */
 final class GrapesJsHtmlConverter
 {
-    private const array WEB_BLOCK_TYPES = [
-        'text' => 'text',
-        'image' => 'image',
-        'button' => 'button-link',
+    private const array BLOCK_TYPES = [
+        ContentProfileEnum::WEB => [
+            'text' => 'text',
+            'image' => 'image',
+            'button' => 'button-link',
+        ],
+        ContentProfileEnum::MAIL => [
+            'text' => 'mail-text',
+            'image' => 'mail-image',
+            'button' => 'mail-button',
+        ],
     ];
 
-    private const array MAIL_BLOCK_TYPES = [
-        'text' => 'mail-text',
-        'image' => 'mail-image',
-        'button' => 'mail-button',
+    private const array BLOCK_SELECTORS = [
+        ContentProfileEnum::WEB => '.gjs-text-ckeditor, .gjs-products, .row, .gjs-text-with-image, .gjs-table-custom, iframe',
+        ContentProfileEnum::MAIL => '.gjs-text-ckeditor, table',
     ];
-
-    private const string WEB_BLOCK_SELECTOR = '.gjs-text-ckeditor, .gjs-products, .row, .gjs-text-with-image, .gjs-table-custom, iframe';
-
-    private const string MAIL_BLOCK_SELECTOR = '.gjs-text-ckeditor, table';
 
     // converted or removed by the sanitizer without a loss
     private const array PLAIN_ELEMENTS = ['h1', 'div'];
 
     private const string BLOCK_ELEMENTS_PATTERN = '~^<(p|h[1-6]|ul|ol|blockquote|hr|div|table)\b~i';
 
-    private ConversionContext $context;
+    private string $profile;
 
     /**
      * @var string[]
@@ -63,15 +65,15 @@ final class GrapesJsHtmlConverter
     ) {
     }
 
-    public function convert(string $html, ConversionContext $context): ConversionResult
+    public function convert(string $html, string $profile): ConversionResult
     {
-        $this->context = $context;
+        $this->profile = $profile;
         $this->notes = [];
 
         $document = HTMLDocument::createFromString('<body>' . $html, LIBXML_NOERROR, 'UTF-8');
         $blocks = $this->convertChildren($document->body);
 
-        return new ConversionResult($this->contentDocumentFactory->createEmpty($context->profile)->withBlocks($blocks), $this->notes);
+        return new ConversionResult($this->contentDocumentFactory->createEmpty($profile)->withBlocks($blocks), $this->notes);
     }
 
     /**
@@ -132,17 +134,17 @@ final class GrapesJsHtmlConverter
             return $this->convertLink($element);
         }
 
-        return $this->context->profile === ContentProfileEnum::MAIL ? $this->convertMailTable($element) : $this->convertWebElement($element);
+        return $this->profile === ContentProfileEnum::MAIL ? $this->convertMailTable($element) : $this->convertWebElement($element);
     }
 
     private function isBlockElement(Element $element): bool
     {
-        return $element->matches($this->getBlockSelector()) || $this->isMappableElement($element);
+        return $element->matches(self::BLOCK_SELECTORS[$this->profile]) || $this->isMappableElement($element);
     }
 
     private function containsBlockElement(Element $element): bool
     {
-        if ($element->querySelector($this->getBlockSelector()) !== null) {
+        if ($element->querySelector(self::BLOCK_SELECTORS[$this->profile]) !== null) {
             return true;
         }
 
@@ -153,11 +155,6 @@ final class GrapesJsHtmlConverter
         }
 
         return false;
-    }
-
-    private function getBlockSelector(): string
-    {
-        return $this->context->profile === ContentProfileEnum::MAIL ? self::MAIL_BLOCK_SELECTOR : self::WEB_BLOCK_SELECTOR;
     }
 
     private function noteUnsupportedElement(Element $element): void
@@ -220,7 +217,7 @@ final class GrapesJsHtmlConverter
     {
         $html = preg_replace('~<(/?)h1\b~i', '<$1h2', trim($html));
 
-        if ($this->context->profile === ContentProfileEnum::MAIL) {
+        if ($this->profile === ContentProfileEnum::MAIL) {
             $html = $this->convertLineBreaksToParagraphs($html);
         }
 
@@ -230,7 +227,7 @@ final class GrapesJsHtmlConverter
             return [];
         }
 
-        return [$this->createBlock($this->getBlockType('text'), ['html' => $sanitizedHtml])];
+        return [$this->createBlock(self::BLOCK_TYPES[$this->profile]['text'], ['html' => $sanitizedHtml])];
     }
 
     // mails written in GrapesJS separate paragraphs by two line breaks
@@ -258,7 +255,7 @@ final class GrapesJsHtmlConverter
         $variable = $image->getAttribute('path') ?? $source;
         $alt = (string)$image->getAttribute('alt');
 
-        if ($this->context->profile === ContentProfileEnum::MAIL && str_starts_with($variable, '{')) {
+        if ($this->profile === ContentProfileEnum::MAIL && str_starts_with($variable, '{')) {
             return [$this->createBlock('mail-image-variable', ['variable' => $variable, 'alt' => $alt])];
         }
 
@@ -280,7 +277,7 @@ final class GrapesJsHtmlConverter
             return [];
         }
 
-        return [$this->createBlock($this->getBlockType('image'), $data)];
+        return [$this->createBlock(self::BLOCK_TYPES[$this->profile]['image'], $data)];
     }
 
     /**
@@ -320,14 +317,14 @@ final class GrapesJsHtmlConverter
             'position' => $this->getPosition($link, 'button-link-position-', 'data-link-position', ButtonLinkBlock::POSITION_CENTER),
         ];
 
-        if ($this->context->profile === ContentProfileEnum::WEB) {
+        if ($this->profile === ContentProfileEnum::WEB) {
             $data['variant'] = ButtonLinkBlock::VARIANT_PRIMARY;
             $data['openInNewTab'] = $link->getAttribute('target') === '_blank';
         } else {
             $data['color'] = $this->getButtonColor($link);
         }
 
-        return [$this->createBlock($this->getBlockType('button'), $data)];
+        return [$this->createBlock(self::BLOCK_TYPES[$this->profile]['button'], $data)];
     }
 
     private function getButtonColor(Element $link): string
@@ -496,11 +493,6 @@ final class GrapesJsHtmlConverter
     private function createBlock(string $type, array $data, ?array $children = null): ContentBlockInstance
     {
         return new ContentBlockInstance('', $type, $data, $children);
-    }
-
-    private function getBlockType(string $kind): string
-    {
-        return $this->context->profile === ContentProfileEnum::MAIL ? self::MAIL_BLOCK_TYPES[$kind] : self::WEB_BLOCK_TYPES[$kind];
     }
 
     private function addNote(string $note): void

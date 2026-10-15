@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\VideoUrlParser;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\ConversionContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\ConversionResult;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\GrapesJsHtmlConverter;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\LegacyImageImporter;
@@ -423,7 +422,7 @@ class GrapesJsHtmlConverterTest extends TestCase
             new ContentDocumentFactory(),
         );
 
-        return $converter->convert($html, new ConversionContext($profile, 1, 'en'));
+        return $converter->convert($html, $profile);
     }
 
     /**

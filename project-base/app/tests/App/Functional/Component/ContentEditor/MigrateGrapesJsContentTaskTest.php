@@ -6,12 +6,18 @@ namespace Tests\App\Functional\Component\ContentEditor;
 
 use Doctrine\DBAL\Connection;
 use Psr\Log\NullLogger;
+use RuntimeException;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\VideoUrlParser;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\GrapesJsHtmlConverter;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\LegacyImageImporter;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\MigrateGrapesJsContentTask;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -33,6 +39,16 @@ class MigrateGrapesJsContentTaskTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ContentDocumentNormalizer $contentDocumentNormalizer;
+
+    /**
+     * @inject
+     */
+    private ProductRepository $productRepository;
+
+    /**
+     * @inject
+     */
+    private ContentHtmlSanitizer $contentHtmlSanitizer;
 
     /**
      * @inject
@@ -89,23 +105,34 @@ class MigrateGrapesJsContentTaskTest extends TransactionFunctionalTestCase
     public function testRowThatCannotBeConvertedIsSkippedAndDoesNotStopTheTask(): void
     {
         $blogTranslationId = $this->findId('blog_article_translations', 1);
-        $this->setLegacyContent('blog_article_translations', 'legacy_grapesjs_description', $blogTranslationId, '<div class="gjs-text-ckeditor">Text</div>');
-        // the locale of the row has no domain, so its conversion fails
-        $this->connection->executeStatement("UPDATE blog_article_translations SET locale = 'xx' WHERE id = :id", ['id' => $blogTranslationId]);
+        $contentDirName = $this->getContainer()->getParameter('shopsys.content_dir_name');
+        $this->setLegacyContent('blog_article_translations', 'legacy_grapesjs_description', $blogTranslationId, '<img class="web-custom-image" src="/' . $contentDirName . '/wysiwyg/test-image.jpg">');
+
+        $legacyImageImporter = $this->createStub(LegacyImageImporter::class);
+        $legacyImageImporter->method('import')->willThrowException(new RuntimeException('Import failed'));
+        $grapesJsHtmlConverter = new GrapesJsHtmlConverter(
+            $this->productRepository,
+            $legacyImageImporter,
+            $this->contentHtmlSanitizer,
+            new VideoUrlParser(),
+            new ContentDocumentFactory(),
+        );
 
         $output = new BufferedOutput();
-        $this->createTask($this->createStub(IndexFacade::class))->run(new SymfonyStyle(new ArrayInput([]), $output));
+        $this->createTask($this->createStub(IndexFacade::class), $grapesJsHtmlConverter)->run(new SymfonyStyle(new ArrayInput([]), $output));
 
         $this->assertNull($this->connection->fetchOne('SELECT content FROM blog_article_translations WHERE id = :id', ['id' => $blogTranslationId]));
-        $this->assertStringContainsString('There is no domain with the locale "xx".', $output->fetch());
+        $this->assertStringContainsString('Import failed', $output->fetch());
     }
 
-    private function createTask(IndexFacade $indexFacade): MigrateGrapesJsContentTask
-    {
+    private function createTask(
+        IndexFacade $indexFacade,
+        ?GrapesJsHtmlConverter $grapesJsHtmlConverter = null,
+    ): MigrateGrapesJsContentTask {
         return new MigrateGrapesJsContentTask(
             $this->connection,
             $this->em,
-            $this->grapesJsHtmlConverter,
+            $grapesJsHtmlConverter ?? $this->grapesJsHtmlConverter,
             $this->contentDocumentNormalizer,
             $this->domain,
             $this->indexRegistry,

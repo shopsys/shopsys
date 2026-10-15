@@ -9,7 +9,6 @@ use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
@@ -61,13 +60,13 @@ final class MigrateGrapesJsContentTask implements PostDeployTaskInterface
         $this->noteRows = [];
 
         $style->section('Articles');
-        $articleCount = $this->migrateTable($style, 'article', 'articles', 'legacy_grapesjs_text', ContentProfileEnum::WEB, 'domain_id', 'NULL');
+        $articleCount = $this->migrateTable($style, 'article', 'articles', 'legacy_grapesjs_text', ContentProfileEnum::WEB);
 
         $style->section('Blog articles');
-        $blogArticleCount = $this->migrateTable($style, 'blog article translation', 'blog_article_translations', 'legacy_grapesjs_description', ContentProfileEnum::WEB, 'NULL', 'locale');
+        $blogArticleCount = $this->migrateTable($style, 'blog article translation', 'blog_article_translations', 'legacy_grapesjs_description', ContentProfileEnum::WEB);
 
         $style->section('Mail templates');
-        $mailTemplateCount = $this->migrateTable($style, 'mail template', 'mail_templates', 'legacy_grapesjs_body', ContentProfileEnum::MAIL, 'domain_id', 'NULL');
+        $mailTemplateCount = $this->migrateTable($style, 'mail template', 'mail_templates', 'legacy_grapesjs_body', ContentProfileEnum::MAIL);
 
         if ($articleCount > 0) {
             $this->exportToElasticsearch($style, ExtendedClassNameResolver::resolve(ArticleIndex::class)::getName());
@@ -96,8 +95,6 @@ final class MigrateGrapesJsContentTask implements PostDeployTaskInterface
         string $table,
         string $legacyColumn,
         string $profile,
-        string $domainIdColumn,
-        string $localeColumn,
     ): int {
         $lastId = 0;
         $convertedCount = 0;
@@ -106,10 +103,8 @@ final class MigrateGrapesJsContentTask implements PostDeployTaskInterface
             // a row that fails stays without content, so the batches are walked by id instead of repeating the query
             $rows = $this->connection->fetchAllAssociative(
                 sprintf(
-                    'SELECT id, %s AS html, %s AS domain_id, %s AS locale FROM %s WHERE id > :lastId AND content IS NULL AND %s IS NOT NULL ORDER BY id LIMIT :limit',
+                    'SELECT id, %s AS html FROM %s WHERE id > :lastId AND content IS NULL AND %s IS NOT NULL ORDER BY id LIMIT :limit',
                     $legacyColumn,
-                    $domainIdColumn,
-                    $localeColumn,
                     $table,
                     $legacyColumn,
                 ),
@@ -153,10 +148,7 @@ final class MigrateGrapesJsContentTask implements PostDeployTaskInterface
      */
     private function migrateRow(string $table, array $row, string $profile): array
     {
-        $domainId = $row['domain_id'] !== null ? (int)$row['domain_id'] : $this->findDomainIdByLocale($row['locale']);
-        $locale = $row['locale'] ?? $this->domain->getDomainConfigById($domainId)->getLocale();
-
-        $result = $this->grapesJsHtmlConverter->convert($row['html'], new ConversionContext($profile, $domainId, $locale));
+        $result = $this->grapesJsHtmlConverter->convert($row['html'], $profile);
         $document = $this->contentDocumentNormalizer->normalize($result->document);
         $report = $this->contentDocumentNormalizer->getLastReport();
 
@@ -176,17 +168,6 @@ final class MigrateGrapesJsContentTask implements PostDeployTaskInterface
         }
 
         return $notes;
-    }
-
-    private function findDomainIdByLocale(string $locale): int
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($domainConfig->getLocale() === $locale) {
-                return $domainConfig->getId();
-            }
-        }
-
-        throw new RuntimeException(sprintf('There is no domain with the locale "%s".', $locale));
     }
 
     // the stored content is already correct, so a failed export only needs a repeated export and must not fail the task
