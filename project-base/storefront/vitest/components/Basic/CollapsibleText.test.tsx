@@ -39,12 +39,32 @@ describe('CollapsibleText', () => {
         expect(textWrapper).not.toHaveClass('max-w-2xl');
     });
 
-    test('retries scrolling to the top when closing is interrupted', () => {
+    test('collapses in place when the description starts below the sticky header', () => {
+        const scrollTo = vi.fn();
+        vi.stubGlobal('scrollY', 100);
+        vi.stubGlobal('scrollTo', scrollTo);
+        const { container } = render(<CollapsibleText text="Description" />);
+        const text = container.querySelector('.user-text') as HTMLElement;
+        text.style.scrollMarginTop = '80px';
+        vi.spyOn(text, 'getBoundingClientRect').mockReturnValue({ top: 100 } as DOMRect);
+        const button = screen.getByRole('button');
+
+        fireEvent.click(button);
+        fireEvent.click(button);
+
+        expect(scrollTo).not.toHaveBeenCalled();
+        expect(button).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    test('retries scrolling to the description when closing is interrupted', () => {
         const scrollTo = vi.fn();
         vi.stubGlobal('scrollY', 410);
         vi.stubGlobal('scrollTo', scrollTo);
 
-        render(<CollapsibleText text="Description" />);
+        const { container } = render(<CollapsibleText text="Description" />);
+        const text = container.querySelector('.user-text') as HTMLElement;
+        text.style.scrollMarginTop = '80px';
+        vi.spyOn(text, 'getBoundingClientRect').mockReturnValue({ top: -100 } as DOMRect);
 
         const button = screen.getByRole('button');
         fireEvent.click(button);
@@ -52,9 +72,10 @@ describe('CollapsibleText', () => {
         fireEvent.click(button);
 
         expect(scrollTo).toHaveBeenCalledTimes(2);
+        expect(scrollTo).toHaveBeenLastCalledWith({ top: 230, behavior: 'smooth' });
         expect(button).toHaveAttribute('aria-expanded', 'true');
 
-        vi.stubGlobal('scrollY', 0);
+        vi.stubGlobal('scrollY', 230);
         fireEvent.scroll(window);
 
         expect(button).toHaveAttribute('aria-expanded', 'false');

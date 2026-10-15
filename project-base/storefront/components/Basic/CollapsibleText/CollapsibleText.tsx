@@ -15,7 +15,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, textClassName 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [shouldShowButton, setShouldShowButton] = useState(false);
     const [collapsedHeight, setCollapsedHeight] = useState<number | null>(null);
-    const [isScrollingToTop, setIsScrollingToTop] = useState(false);
+    const [collapseScrollTarget, setCollapseScrollTarget] = useState<number | null>(null);
     const textRef = useRef<HTMLDivElement>(null);
     const hasInteractedRef = useRef(false);
     const shouldReduceMotion = useReducedMotion();
@@ -41,33 +41,46 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, textClassName 
     }, [text]);
 
     useEffect(() => {
-        if (!isScrollingToTop) {
+        if (collapseScrollTarget === null) {
             return undefined;
         }
 
-        const collapseAtTop = () => {
-            if (window.scrollY <= 1) {
-                setIsScrollingToTop(false);
+        const collapseAtTarget = () => {
+            if (window.scrollY <= collapseScrollTarget + 1) {
+                setCollapseScrollTarget(null);
                 setShowFullDescription(false);
             }
         };
 
-        window.addEventListener('scroll', collapseAtTop, { passive: true });
-        collapseAtTop();
+        window.addEventListener('scroll', collapseAtTarget, { passive: true });
+        collapseAtTarget();
 
-        return () => window.removeEventListener('scroll', collapseAtTop);
-    }, [isScrollingToTop]);
+        return () => window.removeEventListener('scroll', collapseAtTarget);
+    }, [collapseScrollTarget]);
 
     const handleButtonClick = () => {
         hasInteractedRef.current = true;
 
         if (showFullDescription) {
-            setIsScrollingToTop(true);
-            window.scrollTo({ top: 0, behavior: shouldReduceMotion ? 'instant' : 'smooth' });
+            const textElement = textRef.current;
+            const textTop = textElement?.getBoundingClientRect().top ?? 0;
+            const scrollMargin = textElement
+                ? Number.parseFloat(getComputedStyle(textElement).scrollMarginTop) || 0
+                : 0;
 
-            if (window.scrollY <= 1) {
+            if (textTop >= scrollMargin) {
                 setShowFullDescription(false);
-                setIsScrollingToTop(false);
+                setCollapseScrollTarget(null);
+                return;
+            }
+
+            const target = Math.max(0, window.scrollY + textTop - scrollMargin);
+            setCollapseScrollTarget(target);
+            window.scrollTo({ top: target, behavior: shouldReduceMotion ? 'instant' : 'smooth' });
+
+            if (window.scrollY <= target + 1) {
+                setShowFullDescription(false);
+                setCollapseScrollTarget(null);
             }
         } else {
             setShowFullDescription(true);
@@ -90,7 +103,10 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, textClassName 
             >
                 <div
                     dangerouslySetInnerHTML={{ __html: text }}
-                    className={twJoin('user-text', !hasInteractedRef.current && 'max-h-[4lh] overflow-hidden')}
+                    className={twJoin(
+                        'user-text scroll-mt-fixed-header',
+                        !hasInteractedRef.current && 'max-h-[4lh] overflow-hidden',
+                    )}
                     ref={textRef}
                 />
             </m.div>
