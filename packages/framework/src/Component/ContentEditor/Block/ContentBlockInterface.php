@@ -30,11 +30,6 @@ interface ContentBlockInterface
     public function getDefaultData(): array;
 
     /**
-     * Custom form type replacing the form generated from the fields, null for the generated one
-     */
-    public function getFormType(): ?string;
-
-    /**
      * Converts stored data to the storefront-facing variant, which is never written back to the database
      *
      * @param array<string, mixed> $data

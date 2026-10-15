@@ -53,12 +53,6 @@ abstract class AbstractContentBlock implements ContentBlockInterface
     }
 
     #[Override]
-    public function getFormType(): ?string
-    {
-        return null;
-    }
-
-    #[Override]
     public function export(array $data, ExportContext $context): array
     {
         return $data;

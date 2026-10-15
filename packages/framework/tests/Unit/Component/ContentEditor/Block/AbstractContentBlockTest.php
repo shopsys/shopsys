@@ -29,7 +29,6 @@ class AbstractContentBlockTest extends TestCase
         $block = new DummyImageBlock();
 
         $this->assertNull($block->getIcon());
-        $this->assertNull($block->getFormType());
         $this->assertSame(AbstractContentBlock::CATEGORY_CONTENT, $block->getCategory());
         $this->assertSame(['mediaId' => null, 'alt' => '', 'position' => 'center'], $block->getDefaultData());
         $this->assertSame(['alt' => 'x'], $block->export(['alt' => 'x'], new ExportContext(1, 'en')));

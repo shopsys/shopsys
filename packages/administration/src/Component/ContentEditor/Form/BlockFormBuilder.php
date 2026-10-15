@@ -24,15 +24,6 @@ final class BlockFormBuilder
      */
     public function createDataForm(ContentBlockInterface $block, array $variables): FormInterface
     {
-        $customFormType = $block->getFormType();
-
-        if ($customFormType !== null) {
-            return $this->formFactory->createNamed('data', $customFormType, null, [
-                'label' => false,
-                'auto_initialize' => false,
-            ]);
-        }
-
         $builder = $this->formFactory->createNamedBuilder('data', FormType::class, null, [
             'label' => false,
             'auto_initialize' => false,

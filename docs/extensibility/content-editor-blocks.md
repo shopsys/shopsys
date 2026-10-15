@@ -40,7 +40,6 @@ The block implements these methods (`AbstractContentBlock` gives defaults for th
 | `getFields()`      | Fields of the block, the form of the block is generated from them                             |
 | `export()`         | Converts stored data to what the storefront receives, returns the data unchanged by default   |
 | `extractText()`    | Text of the block for the search and variable checks, joins the text of the fields by default |
-| `getFormType()`    | Form type that replaces the generated form, `null` (default) keeps the generated one          |
 | `getDefaultData()` | Data of a new block, built from the defaults of the fields by default                         |
 
 Icons are Tabler icons in the form `tabler:name`, rendered by `ux_icon()`. A new icon has to be locked, see [Icons](../administration/icons.md). After adding labels run `php phing translations-dump`.
@@ -120,7 +119,6 @@ ExtendedClassNameResolver::resolve(UrlField::class)::create('url')->label(t('Lin
 | Field           | Value                                     | Form type         | Notes                                                      |
 | --------------- | ----------------------------------------- | ----------------- | ---------------------------------------------------------- |
 | `TextField`     | string                                    | `TextType`        |                                                            |
-| `TextareaField` | string                                    | `TextareaType`    |                                                            |
 | `WysiwygField`  | sanitized HTML                            | `WysiwygType`     | `variables([...])` offers placeholders                     |
 | `NumberField`   | int or float                              | `IntegerType`     |                                                            |
 | `CheckboxField` | bool                                      | `CheckboxType`    |                                                            |
@@ -146,7 +144,7 @@ To edit a value with your own widget, extend `AbstractField` (or implement `Fiel
 - `normalizeValue()` - coerces any stored or submitted value to the shape of the field, falling back to the default
 - `extractText()` - text of the value for the search, an empty string by default
 
-Use the field in `getFields()` of a block. A block that needs a form unrelated to fields returns a form type from `getFormType()`, the editor then renders it in place of the generated form.
+Use the field in `getFields()` of a block.
 
 ## Replacing a built-in block
 

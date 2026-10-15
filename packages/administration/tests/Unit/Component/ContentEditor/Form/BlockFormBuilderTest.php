@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ColorField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\MediaField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\NumberField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ProductsField;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TextareaField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TextField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\UrlField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\VariableField;
@@ -32,9 +31,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
@@ -57,10 +54,6 @@ class BlockFormBuilderTest extends TypeTestCase
             'formType' => TextType::class,
         ];
 
-        yield 'textarea' => [
-            'fieldName' => 'textarea',
-            'formType' => TextareaType::class,
-        ];
 
         yield 'wysiwyg' => [
             'fieldName' => 'wysiwyg',
@@ -156,33 +149,6 @@ class BlockFormBuilderTest extends TypeTestCase
         $this->assertSame(['Product image URL' => '{product_image}'], $form->get('variable')->getConfig()->getOption('choices'));
     }
 
-    public function testCustomFormTypeOfBlockReplacesGeneratedForm(): void
-    {
-        $block = new class() extends AbstractContentBlock {
-            #[Override]
-            public function getLabel(): string
-            {
-                return 'Custom';
-            }
-
-            #[Override]
-            public function getFields(): array
-            {
-                return [TextField::create('text')];
-            }
-
-            #[Override]
-            public function getFormType(): string
-            {
-                return FormType::class;
-            }
-        };
-
-        $form = $this->blockFormBuilder->createDataForm($block, []);
-
-        $this->assertFalse($form->has('text'));
-    }
-
     #[Override]
     protected function setUp(): void
     {
@@ -225,7 +191,6 @@ class BlockFormBuilderTest extends TypeTestCase
             {
                 return [
                     TextField::create('text'),
-                    TextareaField::create('textarea'),
                     WysiwygField::create('wysiwyg'),
                     UrlField::create('url'),
                     NumberField::create('number'),
