@@ -762,6 +762,28 @@ deploy:alpha:
         -   RUNNING_WEBSERVER_PHP_FPM_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l app=webserver-php-fpm -o=jsonpath='{.items[0].metadata.name}')
         -   kubectl exec ${RUNNING_WEBSERVER_PHP_FPM_POD} --namespace=${PROJECT_NAME} -- php ./bin/console dbal:run-sql "UPDATE setting_values SET value='Db4tLxuck2' WHERE name='feedHash'"
 
+diagnose:alpha-php-preload:
+    image:
+        name: shopsys/kubernetes-buildpack:2.0
+    stage: service
+    tags:
+        - deploy
+    needs: []
+    resource_group: deploy_alpha
+    timeout: 5 minutes
+    allow_failure: true
+    before_script: []
+    rules:
+        -   if: '$MIRROR_ONLY == "true" || $CI_PIPELINE_SOURCE == "schedule"'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH == "alpha" || $CI_COMMIT_BRANCH =~ /^alpha-.*$/'
+            when: manual
+    environment:
+        name: devel-alpha
+        action: verify
+    script:
+        - bash ./gitlab/scripts/diagnose-alpha-php-preload.sh
+
 test:gatling:
     stage: test
     image:
