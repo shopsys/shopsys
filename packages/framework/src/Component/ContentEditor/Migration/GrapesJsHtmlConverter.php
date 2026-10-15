@@ -26,7 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  */
 class GrapesJsHtmlConverter
 {
-    private const array BLOCK_TYPES = [
+    protected const array BLOCK_TYPES = [
         ContentProfileEnum::WEB => [
             'text' => 'text',
             'image' => 'image',
@@ -39,29 +39,29 @@ class GrapesJsHtmlConverter
         ],
     ];
 
-    private const array BLOCK_SELECTORS = [
+    protected const array BLOCK_SELECTORS = [
         ContentProfileEnum::WEB => '.gjs-text-ckeditor, .gjs-products, .row, .gjs-text-with-image, .gjs-table-custom, iframe',
         ContentProfileEnum::MAIL => '.gjs-text-ckeditor, table',
     ];
 
     // converted or removed by the sanitizer without a loss
-    private const array PLAIN_ELEMENTS = ['h1', 'div'];
+    protected const array PLAIN_ELEMENTS = ['h1', 'div'];
 
-    private const string BLOCK_ELEMENTS_PATTERN = '~^<(p|h[1-6]|ul|ol|blockquote|hr|div|table)\b~i';
+    protected const string BLOCK_ELEMENTS_PATTERN = '~^<(p|h[1-6]|ul|ol|blockquote|hr|div|table)\b~i';
 
-    private string $profile;
+    protected string $profile;
 
     /**
      * @var string[]
      */
-    private array $notes = [];
+    protected array $notes = [];
 
     public function __construct(
-        private readonly ProductRepository $productRepository,
-        private readonly LegacyImageImporter $legacyImageImporter,
-        private readonly ContentHtmlSanitizer $contentHtmlSanitizer,
-        private readonly VideoUrlParser $videoUrlParser,
-        private readonly ContentDocumentFactory $contentDocumentFactory,
+        protected readonly ProductRepository $productRepository,
+        protected readonly LegacyImageImporter $legacyImageImporter,
+        protected readonly ContentHtmlSanitizer $contentHtmlSanitizer,
+        protected readonly VideoUrlParser $videoUrlParser,
+        protected readonly ContentDocumentFactory $contentDocumentFactory,
     ) {
     }
 
@@ -84,7 +84,7 @@ class GrapesJsHtmlConverter
      *
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertChildren(Node $parent): array
+    protected function convertChildren(Node $parent): array
     {
         $blocks = [];
         $html = '';
@@ -120,7 +120,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertElement(Element $element): array
+    protected function convertElement(Element $element): array
     {
         if ($element->classList->contains('gjs-text-ckeditor')) {
             return $this->convertChildren($element);
@@ -137,12 +137,12 @@ class GrapesJsHtmlConverter
         return $this->profile === ContentProfileEnum::MAIL ? $this->convertMailTable($element) : $this->convertWebElement($element);
     }
 
-    private function isBlockElement(Element $element): bool
+    protected function isBlockElement(Element $element): bool
     {
         return $element->matches(self::BLOCK_SELECTORS[$this->profile]) || $this->isMappableElement($element);
     }
 
-    private function containsBlockElement(Element $element): bool
+    protected function containsBlockElement(Element $element): bool
     {
         if ($element->querySelector(self::BLOCK_SELECTORS[$this->profile]) !== null) {
             return true;
@@ -157,7 +157,7 @@ class GrapesJsHtmlConverter
         return false;
     }
 
-    private function noteUnsupportedElement(Element $element): void
+    protected function noteUnsupportedElement(Element $element): void
     {
         if (!array_key_exists($element->localName, ContentHtmlSanitizer::ALLOWED_ELEMENTS) && !in_array($element->localName, self::PLAIN_ELEMENTS, true)) {
             $this->addNote(sprintf('<%s> is not supported, only its text was kept', $this->describe($element)));
@@ -167,7 +167,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertWebElement(Element $element): array
+    protected function convertWebElement(Element $element): array
     {
         if ($element->classList->contains('gjs-products')) {
             return $this->convertProducts($element);
@@ -194,18 +194,18 @@ class GrapesJsHtmlConverter
         return $this->convertUnknown($element);
     }
 
-    private function isMappableElement(Element $element): bool
+    protected function isMappableElement(Element $element): bool
     {
         return $element->localName === 'img' || $this->isButton($element) || $this->isLinkedImage($element);
     }
 
-    private function isButton(Element $element): bool
+    protected function isButton(Element $element): bool
     {
         return $element->localName === 'a'
             && ($element->getAttribute('data-gjs-type') === 'button-link' || $element->classList->contains('gjs-button-link'));
     }
 
-    private function isLinkedImage(Element $element): bool
+    protected function isLinkedImage(Element $element): bool
     {
         return $element->localName === 'a' && $element->querySelector('img') !== null && !$this->isButton($element);
     }
@@ -213,7 +213,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function createTextBlocks(string $html): array
+    protected function createTextBlocks(string $html): array
     {
         $html = preg_replace('~<(/?)h1\b~i', '<$1h2', trim($html));
 
@@ -231,7 +231,7 @@ class GrapesJsHtmlConverter
     }
 
     // mails written in GrapesJS separate paragraphs by two line breaks
-    private function convertLineBreaksToParagraphs(string $html): string
+    protected function convertLineBreaksToParagraphs(string $html): string
     {
         $paragraphs = [];
 
@@ -249,7 +249,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertImage(Element $image, ?Element $link): array
+    protected function convertImage(Element $image, ?Element $link): array
     {
         $source = trim((string)$image->getAttribute('src'));
         $variable = $image->getAttribute('path') ?? $source;
@@ -283,7 +283,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertLink(Element $link): array
+    protected function convertLink(Element $link): array
     {
         if ($this->isButton($link)) {
             return $this->convertButton($link);
@@ -301,7 +301,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertButton(Element $link): array
+    protected function convertButton(Element $link): array
     {
         $text = trim(preg_replace('~\s+~', ' ', $link->textContent ?? '') ?? '');
 
@@ -327,7 +327,7 @@ class GrapesJsHtmlConverter
         return [$this->createBlock(self::BLOCK_TYPES[$this->profile]['button'], $data)];
     }
 
-    private function getButtonColor(Element $link): string
+    protected function getButtonColor(Element $link): string
     {
         $matches = [];
 
@@ -338,7 +338,7 @@ class GrapesJsHtmlConverter
         return MailButtonBlock::DEFAULT_COLOR;
     }
 
-    private function getPosition(Element $element, string $classPrefix, string $attribute, string $default): string
+    protected function getPosition(Element $element, string $classPrefix, string $attribute, string $default): string
     {
         foreach ([ImageBlock::POSITION_LEFT, ImageBlock::POSITION_CENTER, ImageBlock::POSITION_RIGHT] as $position) {
             if ($element->classList->contains($classPrefix . $position)) {
@@ -352,7 +352,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertProducts(Element $element): array
+    protected function convertProducts(Element $element): array
     {
         $catnums = array_filter(array_map('trim', explode(',', (string)$element->getAttribute('data-products'))));
         $productIds = $this->productRepository->getProductIdsByCatnums(array_values($catnums));
@@ -373,7 +373,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertRow(Element $row): array
+    protected function convertRow(Element $row): array
     {
         $slots = [];
 
@@ -397,7 +397,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertTextWithImage(Element $element): array
+    protected function convertTextWithImage(Element $element): array
     {
         $image = $element->querySelector('img');
         $text = $element->querySelector('.gjs-text-ckeditor');
@@ -419,7 +419,7 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertIframe(Element $iframe): array
+    protected function convertIframe(Element $iframe): array
     {
         $url = trim((string)$iframe->getAttribute('src'));
 
@@ -450,7 +450,7 @@ class GrapesJsHtmlConverter
      *
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertMailTable(Element $table): array
+    protected function convertMailTable(Element $table): array
     {
         $rows = $table->querySelectorAll('tr');
         $cells = $rows->length === 1 ? $rows->item(0)->children : [];
@@ -474,14 +474,14 @@ class GrapesJsHtmlConverter
     /**
      * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
      */
-    private function convertUnknown(Element $element): array
+    protected function convertUnknown(Element $element): array
     {
         $this->addNote(sprintf('<%s> has an unexpected structure and was kept as a text', $this->describe($element)));
 
         return $this->createTextBlocks($element->outerHTML);
     }
 
-    private function describe(Element $element): string
+    protected function describe(Element $element): string
     {
         return $element->localName . ($element->className !== '' ? '.' . $element->className : '');
     }
@@ -490,12 +490,12 @@ class GrapesJsHtmlConverter
      * @param array<string, mixed> $data
      * @param \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[][]|null $children
      */
-    private function createBlock(string $type, array $data, ?array $children = null): ContentBlockInstance
+    protected function createBlock(string $type, array $data, ?array $children = null): ContentBlockInstance
     {
         return new ContentBlockInstance('', $type, $data, $children);
     }
 
-    private function addNote(string $note): void
+    protected function addNote(string $note): void
     {
         $this->notes[] = $note;
     }
