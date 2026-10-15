@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Component\ContentEditor;
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use App\Model\Administrator\Administrator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
 use Shopsys\AdministrationBundle\Component\ContentEditor\LiveComponent\ContentEditorComponent;
 use Shopsys\AdministrationBundle\Form\Admin\Type\ContentEditorType;
@@ -65,12 +66,6 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-category-layout"]'));
         $this->assertCount(1, $crawler->filter('[data-tid="content-editor-picker-tile-text"]'));
         $this->assertCount(4, $crawler->filter('[data-tid^="content-editor-picker-tile-columns-"]'));
-    }
-
-    public function testPickerHasFilterInputAndGroupsAndTilesToFilter(): void
-    {
-        $crawler = $this->createEditor([])->render()->crawler();
-
         $this->assertCount(1, $crawler->filter('[data-controller~="block-picker-filter"] input[data-tid="content-editor-picker-filter"]'));
         $this->assertCount(2, $crawler->filter('[data-block-picker-filter-target="group"]'));
         $this->assertCount(
@@ -158,18 +153,6 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $events = $this->getBrowserEvents($response->getContent());
         $this->assertSame([ContentEditorComponent::DONE_BROWSER_EVENT], array_column($events, 'event'));
         $document = json_decode($events[0]['payload']['document'], true, 512, JSON_THROW_ON_ERROR);
-        $this->assertSame(
-            [['id' => self::TEXT_ID_1, 'type' => 'text', 'data' => ['html' => '<p>One</p>']]],
-            $document['blocks'],
-        );
-    }
-
-    public function testNormalizedDocumentJsonHasDocumentShape(): void
-    {
-        $component = $this->createEditor([$this->createTextBlock(self::TEXT_ID_1, '<p>One</p>')]);
-
-        $document = $this->getDocument($component);
-
         $this->assertSame(1, $document['version']);
         $this->assertSame('web', $document['profile']);
         $this->assertSame(
@@ -312,26 +295,27 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertArrayNotHasKey('children', $blocks[1]);
     }
 
-    public function testAddedContainerHasEmptySlotsForItsLayout(): void
+    #[DataProvider('containerTypeProvider')]
+    public function testAddedContainerHasEmptySlotsForItsLayout(string $type, int $slotCount): void
     {
         $component = $this->createEditor([]);
 
         $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
-        $component->call('addBlock', ['type' => 'columns-1-1']);
+        $component->call('addBlock', ['type' => $type]);
 
         $block = $this->getDocument($component)['blocks'][0];
-        $this->assertSame('columns-1-1', $block['type']);
-        $this->assertSame([[], []], $block['children']);
+        $this->assertSame($type, $block['type']);
+        $this->assertSame(array_fill(0, $slotCount, []), $block['children']);
     }
 
-    public function testAddedThreeColumnsHaveThreeEmptySlots(): void
+    /**
+     * @return iterable<string, array{string, int}>
+     */
+    public static function containerTypeProvider(): iterable
     {
-        $component = $this->createEditor([]);
+        yield 'two columns' => ['columns-1-1', 2];
 
-        $component->call('openPicker', ['slotPath' => '', 'index' => 0]);
-        $component->call('addBlock', ['type' => 'columns-1-1-1']);
-
-        $this->assertSame([[], [], []], $this->getDocument($component)['blocks'][0]['children']);
+        yield 'three columns' => ['columns-1-1-1', 3];
     }
 
     public function testColumnsRenderTheirSlotsAsCollapsibleSectionsWithOwnBlockLists(): void
