@@ -267,6 +267,7 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): QueryBuilder {
         $queryBuilder = $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
+            ->andWhere('o.deleted = FALSE')
             ->andWhere('o.customerUser = :customerUser')
             ->setParameter(':customerUser', $customerUser);
 
@@ -328,6 +329,7 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): QueryBuilder {
         $queryBuilder = $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
+            ->andWhere('o.deleted = FALSE')
             ->andWhere('o.customer = :customer')
             ->setParameter(':customer', $customer);
 
