@@ -7,12 +7,14 @@ namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Document;
 use Override;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\Enum\InvalidEnumCaseException;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\ContentEditorTestFactory;
+use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\DummyNormalizedBlock;
 
 class ContentDocumentNormalizerTest extends TestCase
 {
@@ -117,6 +119,20 @@ class ContentDocumentNormalizerTest extends TestCase
 
         $this->assertSame('/legacy.png', $result->blocks[0]->data['url']);
         $this->assertArrayNotHasKey('url', $result->blocks[1]->data);
+    }
+
+    public function testBlockNormalizesDataAfterFieldsAreNormalized(): void
+    {
+        $normalizer = new ContentDocumentNormalizer(
+            new ContentBlockRegistry([new DummyNormalizedBlock()], []),
+            ContentEditorTestFactory::createSanitizer(),
+            new ContentProfileEnum(),
+        );
+        $document = $this->createDocument([new ContentBlockInstance(self::UUID, 'normalized', ['text' => 'abc', 'unknown' => 1])]);
+
+        $result = $normalizer->normalize($document);
+
+        $this->assertSame(['text' => 'abc', 'textLength' => 3], $result->blocks[0]->data);
     }
 
     public function testNonContainerBlockLosesChildren(): void

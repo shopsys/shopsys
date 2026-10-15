@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ContentEditor\Field;
 
 use Override;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class NumberField extends AbstractField
 {
     #[Override]
     public function getFormType(): string
     {
-        return NumberType::class;
+        return IntegerType::class;
     }
 
     #[Override]

@@ -65,6 +65,12 @@ abstract class AbstractContentBlock implements ContentBlockInterface
     }
 
     #[Override]
+    public function normalizeData(array $data): array
+    {
+        return $data;
+    }
+
+    #[Override]
     public function export(array $data, ExportContext $context): array
     {
         return $data;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Block\Web;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\TableBlock;
 use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\ContentEditorTestFactory;
 
@@ -56,7 +55,7 @@ class TableBlockTest extends AbstractWebBlockTestCase
     /**
      * @return iterable<string, array{data: array<string, mixed>, expectedCells: string[][]}>
      */
-    public static function getExportData(): iterable
+    public static function getNormalizeData(): iterable
     {
         yield 'matching grid is kept' => [
             'data' => ['rows' => 2, 'columns' => 2, 'cells' => [['a', 'b'], ['c', 'd']]],
@@ -83,10 +82,10 @@ class TableBlockTest extends AbstractWebBlockTestCase
      * @param array<string, mixed> $data
      * @param string[][] $expectedCells
      */
-    #[DataProvider('getExportData')]
-    public function testExportFitsCellsToRowsAndColumns(array $data, array $expectedCells): void
+    #[DataProvider('getNormalizeData')]
+    public function testNormalizeDataFitsCellsToRowsAndColumns(array $data, array $expectedCells): void
     {
-        $result = (new TableBlock())->export($data, new ExportContext(1, 'en'));
+        $result = (new TableBlock())->normalizeData($data);
 
         $this->assertSame($expectedCells, $result['cells']);
         $this->assertSame(count($expectedCells), $result['rows']);

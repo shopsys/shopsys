@@ -37,6 +37,14 @@ interface ContentBlockInterface
     public function getFormType(): ?string;
 
     /**
+     * Makes values of different fields consistent with each other, e.g. fits a grid to its size, after each field is normalized on its own
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public function normalizeData(array $data): array;
+
+    /**
      * Converts stored data to the storefront-facing variant, which is never written back to the database
      *
      * @param array<string, mixed> $data

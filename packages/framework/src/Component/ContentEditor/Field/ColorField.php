@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ContentEditor\Field;
 
 use Override;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Shopsys\FrameworkBundle\Form\ColorPickerType;
 
 class ColorField extends AbstractField
 {
@@ -14,7 +14,7 @@ class ColorField extends AbstractField
     #[Override]
     public function getFormType(): string
     {
-        return ColorType::class;
+        return ColorPickerType::class;
     }
 
     #[Override]

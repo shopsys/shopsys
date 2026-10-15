@@ -5,17 +5,23 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ContentEditor\Field;
 
 use Override;
-use Shopsys\FrameworkBundle\Form\ProductsType;
 
 class ProductsField extends AbstractField
 {
     #[Override]
     protected mixed $default = [];
 
+    // The framework must not depend on the administration bundle, so the type is referenced by name only.
     #[Override]
     public function getFormType(): string
     {
-        return ProductsType::class;
+        return 'Shopsys\AdministrationBundle\Form\Admin\Type\ProductIdsType';
+    }
+
+    #[Override]
+    public function getFormOptions(): array
+    {
+        return parent::getFormOptions() + ['sortable' => true, 'renders_in_own_card' => false];
     }
 
     /**

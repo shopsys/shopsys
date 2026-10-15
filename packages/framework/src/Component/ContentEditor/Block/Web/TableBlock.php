@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Attribute\ContentBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ChoiceField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\NumberField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TableCellsField;
@@ -58,9 +57,9 @@ class TableBlock extends AbstractContentBlock
         ];
     }
 
-    // the cells field cannot know the table size, so the storefront gets a grid of exactly rows x columns here
+    // the cells field cannot know the table size, so the block fits the grid to exactly rows x columns
     #[Override]
-    public function export(array $data, ExportContext $context): array
+    public function normalizeData(array $data): array
     {
         $rows = max(1, min(static::MAX_ROWS, (int)($data['rows'] ?? static::DEFAULT_ROWS)));
         $columns = max(1, min(static::MAX_COLUMNS, (int)($data['columns'] ?? static::DEFAULT_COLUMNS)));

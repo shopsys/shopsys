@@ -228,11 +228,6 @@ parameters:
         # content editor: caller arrives in phase 6 (ContentDocumentExporter)
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\Web\\TableBlock::export\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Block/Web/TableBlock.php
-        # content editor: caller arrives in phase 6 (ContentDocumentExporter)
-        -
-            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\Web\\VideoBlock::export\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Component/ContentEditor/Block/Web/VideoBlock.php
         # content editor: caller arrives in phase 4 (BlockFormBuilder form type mapping)

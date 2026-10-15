@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TableCellsField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\WysiwygField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
-use Webmozart\Assert\Assert;
 
 final class ContentDocumentNormalizer
 {
@@ -137,7 +136,7 @@ final class ContentDocumentNormalizer
             $normalizedData['url'] = $data['url'];
         }
 
-        return $normalizedData;
+        return $definition->normalizeData($normalizedData);
     }
 
     /**
@@ -162,18 +161,11 @@ final class ContentDocumentNormalizer
      */
     private function normalizeSlots(array $slots, int $slotCount, string $profile, ?array $allowedTypes): array
     {
-        Assert::positiveInteger($slotCount);
-
         $normalizedSlots = array_map(
             fn (array $slot): array => $this->normalizeBlocks($slot, $profile, $allowedTypes, true),
             array_values($slots),
         );
-        $keptSlots = array_slice($normalizedSlots, 0, $slotCount);
 
-        foreach (array_slice($normalizedSlots, $slotCount) as $extraSlot) {
-            $keptSlots[$slotCount - 1] = [...$keptSlots[$slotCount - 1], ...$extraSlot];
-        }
-
-        return array_pad($keptSlots, $slotCount, []);
+        return SlotFitter::fit($normalizedSlots, $slotCount);
     }
 }
