@@ -49,6 +49,8 @@ services:
         arguments:
             $clientConfigs: '%env(json:GOPAY_CONFIG)%'
 
+    Tests\FrontendApiBundle\Test\CustomerUserRoleGroupTestHelper: ~
+
     Tests\FrontendApiBundle\Test\GiftVoucherProductNameTestHelper: ~
 
     test.client:

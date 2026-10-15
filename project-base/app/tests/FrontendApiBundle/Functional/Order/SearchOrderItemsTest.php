@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\CustomerUserDataFixture;
+use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Symfony\Component\Clock\DatePoint;
+use Tests\FrontendApiBundle\Test\CustomerUserRoleGroupTestHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 use Tests\FrontendApiBundle\Test\SearchInputTestUtils;
@@ -33,6 +39,16 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderFacade $orderFacade;
+
+    /**
+     * @inject
+     */
+    private CustomerUserRoleGroupTestHelper $customerUserRoleGroupTestHelper;
 
     /**
      * @param int[] $expectedOrderItemsIds
@@ -62,6 +78,23 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         $this->assertProductExistsInOrderItems($product, true);
         $this->createWithdrawalRequest();
         $this->assertProductExistsInOrderItems($product, false);
+    }
+
+    public function testSearchOrderItemsExcludesItemsFromDeletedOrders(): void
+    {
+        $this->assertItemsOfDeletedOrderAreExcluded();
+    }
+
+    public function testSearchOrderItemsWithoutCompanyOrdersViewExcludesItemsFromDeletedOrders(): void
+    {
+        $this->logout();
+        $this->customerUserRoleGroupTestHelper->assignRoleGroup(
+            $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 1, CustomerUser::class),
+            $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class),
+        );
+        $this->login();
+
+        $this->assertItemsOfDeletedOrderAreExcluded();
     }
 
     public static function getOrderItemsDataProvider(): iterable
@@ -139,10 +172,33 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         ];
     }
 
+    private function assertItemsOfDeletedOrderAreExcluded(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 5, Order::class);
+
+        $responseDataBeforeDeletion = $this->getOrderItemsSearchResponseData();
+        $this->assertProductItemExistsInOrderItemsResponseData($product, $responseDataBeforeDeletion, true);
+
+        $this->orderFacade->deleteById($order->getId());
+
+        $responseDataAfterDeletion = $this->getOrderItemsSearchResponseData();
+        $this->assertProductItemExistsInOrderItemsResponseData($product, $responseDataAfterDeletion, false);
+        $this->assertSame(
+            $responseDataBeforeDeletion['totalCount'] - count($order->getItems()),
+            $responseDataAfterDeletion['totalCount'],
+        );
+    }
+
     private function assertProductExistsInOrderItems(Product $product, bool $shouldExist): void
     {
+        $this->assertProductItemExistsInOrderItemsResponseData($product, $this->getOrderItemsSearchResponseData(), $shouldExist);
+    }
+
+    private function getOrderItemsSearchResponseData(): array
+    {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SearchOrderItemsQuery.graphql', SearchInputTestUtils::createSearchInputQueryVariables(''));
-        $responseData = $this->getResponseDataForGraphQlType($response, 'orderItemsSearch');
-        $this->assertProductItemExistsInOrderItemsResponseData($product, $responseData, $shouldExist);
+
+        return $this->getResponseDataForGraphQlType($response, 'orderItemsSearch');
     }
 }

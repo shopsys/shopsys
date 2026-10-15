@@ -81,8 +81,7 @@ class OrderItemApiFacade
 
     protected function createProductOrderItemOnDomainQueryBuilder(int $domainId): QueryBuilder
     {
-        return $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
-            ->andWhere('o.deleted = FALSE')
+        return $this->createOrderItemExcludingDeletedOrdersAndOrdersWithWithdrawalQueryBuilder()
             ->andWhere('o.domainId = :domainId')
             ->andWhere('oi.type = :productItemType')
             ->setParameter('domainId', $domainId)
@@ -120,6 +119,12 @@ class OrderItemApiFacade
                SELECT 1 FROM ' . WithdrawalRequest::class . ' wr
                WHERE wr.order = o AND wr.confirmed = TRUE
             )');
+    }
+
+    protected function createOrderItemExcludingDeletedOrdersAndOrdersWithWithdrawalQueryBuilder(): QueryBuilder
+    {
+        return $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
+            ->andWhere('o.deleted = FALSE');
     }
 
     /**
@@ -266,7 +271,7 @@ class OrderItemApiFacade
         CustomerUser $customerUser,
         OrderItemsFilter $filter,
     ): QueryBuilder {
-        $queryBuilder = $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
+        $queryBuilder = $this->createOrderItemExcludingDeletedOrdersAndOrdersWithWithdrawalQueryBuilder()
             ->andWhere('o.customerUser = :customerUser')
             ->setParameter(':customerUser', $customerUser);
 
@@ -327,7 +332,7 @@ class OrderItemApiFacade
         Customer $customer,
         OrderItemsFilter $filter,
     ): QueryBuilder {
-        $queryBuilder = $this->createOrderItemExcludingOrdersWithWithdrawalQueryBuilder()
+        $queryBuilder = $this->createOrderItemExcludingDeletedOrdersAndOrdersWithWithdrawalQueryBuilder()
             ->andWhere('o.customer = :customer')
             ->setParameter(':customer', $customer);
 
