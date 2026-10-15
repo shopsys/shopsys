@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer;
 
 use Shopsys\FrameworkBundle\Component\Html\HtmlContentProcessor;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 
 class ContentHtmlSanitizer
@@ -53,6 +54,7 @@ class ContentHtmlSanitizer
     ];
 
     public function __construct(
+        #[Autowire(service: 'html_sanitizer.sanitizer.content_editor')]
         protected readonly HtmlSanitizerInterface $htmlSanitizer,
         protected readonly HtmlContentProcessor $htmlContentProcessor,
     ) {

@@ -208,14 +208,12 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     }
 
     /**
-     * @param array{disabled_types: string[], sanitizer: string, embed_hosts: string[]} $contentEditorConfig
+     * @param array{disabled_types: string[], embed_hosts: string[]} $contentEditorConfig
      */
     protected function setContentEditorConfig(array $contentEditorConfig, ContainerBuilder $container): void
     {
         $container->getDefinition(ContentBlockRegistry::class)
             ->setArgument('$disabledTypes', $contentEditorConfig['disabled_types']);
-        $container->getDefinition(ContentHtmlSanitizer::class)
-            ->setArgument('$htmlSanitizer', new Reference('html_sanitizer.sanitizer.' . $contentEditorConfig['sanitizer']));
         $container->getDefinition(IframeBlock::class)
             ->setArgument('$embedHosts', $contentEditorConfig['embed_hosts']);
     }

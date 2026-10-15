@@ -104,23 +104,16 @@ Every rich text is sanitized on the server by `ContentHtmlSanitizer`, regardless
 - `rel="noopener"` is added to links with `target="_blank"`
 - `max_input_length` is `-1`, otherwise Symfony silently truncates the input at 20000 bytes
 
-The sanitizer is the Symfony HTML sanitizer `content_editor`, which the bundle prepends to `framework.html_sanitizer.sanitizers`. The key `shopsys_framework.content_editor.sanitizer` only names the sanitizer the editor uses (default `content_editor`). To change the allowed markup, redefine `content_editor` in `config/packages/framework.yaml`, or define a sanitizer under another name and select it:
+The sanitizer is the Symfony HTML sanitizer `content_editor`, which the bundle prepends to `framework.html_sanitizer.sanitizers`. To change the allowed markup, configure it in `config/packages/framework.yaml`, your configuration is merged over the one of the bundle:
 
 ```yaml
 framework:
     html_sanitizer:
         sanitizers:
-            my_content_editor:
-                allow_safe_elements: false
+            content_editor:
                 allow_elements:
-                    p: []
-                    a: ['href', 'title', 'target', 'rel']
-                allow_relative_links: true
-                max_input_length: -1
-
-shopsys_framework:
-    content_editor:
-        sanitizer: my_content_editor
+                    sub: []
+                    sup: []
 ```
 
 The toolbar does not change with the sanitizer. An element the toolbar cannot produce also needs an extension in the Tiptap editor (`packages/administration/assets/src/js/wysiwyg/extensions.js`), otherwise Tiptap drops it when the content is loaded.
@@ -134,12 +127,10 @@ shopsys_framework:
     content_editor:
         disabled_types: [map]
         embed_hosts: [www.youtube.com, player.vimeo.com]
-        sanitizer: content_editor
 ```
 
 - `disabled_types` - types of blocks that are not registered; they disappear from the picker and are skipped when stored content is rendered or exported (default: none)
 - `embed_hosts` - hosts the `iframe` block accepts (default: YouTube, Vimeo and Google Maps hosts); the list replaces the default one
-- `sanitizer` - name of the sanitizer, see above
 
 ## Preview in the storefront
 
