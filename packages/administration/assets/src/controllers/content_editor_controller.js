@@ -88,9 +88,6 @@ export default class extends Controller {
 
     sync() {
         this.restoreCollapsed();
-        window.dispatchEvent(
-            new CustomEvent('content-editor:document-changed', { detail: this.exportedDocumentValue }),
-        );
         this.postDocumentToPreview();
     }
 
