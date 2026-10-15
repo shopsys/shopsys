@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\ContentEditor;
 
-use App\DataFixtures\Demo\MediaDataFixture;
 use Shopsys\AdministrationBundle\Component\ContentEditor\LiveComponent\MediaPickerComponent;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Model\Media\Media;
 use Shopsys\FrameworkBundle\Model\Media\MediaDataFactory;
 use Shopsys\FrameworkBundle\Model\Media\MediaFacade;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -49,7 +47,11 @@ class MediaPickerComponentTest extends TransactionFunctionalTestCase
 
     public function testSelectDispatchesSelectedEventAndClosesPicker(): void
     {
-        $media = $this->getReference(MediaDataFixture::MEDIA_PREFIX . '1', Media::class);
+        // the image files of the demo media may be deleted by other tests (the smoke test of the delete route), so the test creates its own
+        $mediaData = $this->mediaDataFactory->create();
+        $mediaData->title = 'Selected image';
+        $mediaData->image->uploadedFiles[] = $this->uploadImage(40, 30);
+        $media = $this->mediaFacade->create($mediaData);
         $component = $this->createComponent();
         $component->openPicker('content_image');
         $this->liveResponder->reset();
@@ -64,10 +66,10 @@ class MediaPickerComponentTest extends TransactionFunctionalTestCase
             $this->getDispatchedBrowserEventNames(),
         );
 
-        $payload = $events[1]['payload'];
+        $payload = $events[0]['payload'];
         $this->assertSame('content_image', $payload['targetInputId']);
         $this->assertSame($media->getId(), $payload['mediaId']);
-        $this->assertSame('Demo image 1', $payload['title']);
+        $this->assertSame('Selected image', $payload['title']);
         $this->assertStringContainsString('/images/media/', $payload['url']);
     }
 
@@ -80,10 +82,10 @@ class MediaPickerComponentTest extends TransactionFunctionalTestCase
         $component->createFromTemporaryFile($this->uploadImage(40, 30), 'Uploaded in picker');
 
         $events = $this->liveResponder->getBrowserEventsToDispatch();
-        $payload = $events[1]['payload'];
+        $payload = $events[0]['payload'];
         $media = $this->mediaFacade->getById($payload['mediaId']);
 
-        $this->assertSame(MediaPickerComponent::MEDIA_SELECTED_BROWSER_EVENT, $events[1]['event']);
+        $this->assertSame(MediaPickerComponent::MEDIA_SELECTED_BROWSER_EVENT, $events[0]['event']);
         $this->assertSame('Uploaded in picker', $media->getTitle());
         $this->assertSame(40, $media->getWidth());
         $this->assertSame(30, $media->getHeight());
