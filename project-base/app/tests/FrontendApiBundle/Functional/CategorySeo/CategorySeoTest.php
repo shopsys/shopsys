@@ -13,8 +13,13 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -42,6 +47,26 @@ class CategorySeoTest extends GraphQlTestCase
      * @inject
      */
     private ArraySorterHelper $arraySorterHelper;
+
+    /**
+     * @inject
+     */
+    private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade;
+
+    /**
+     * @inject
+     */
+    private ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory;
+
+    /**
+     * @inject
+     */
+    private SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory;
+
+    /**
+     * @inject
+     */
+    private UrlListDataFactory $urlListDataFactory;
 
     public function testGetReadyCategorySeoMixData(): void
     {
@@ -209,6 +234,25 @@ class CategorySeoTest extends GraphQlTestCase
         $this->assertSame($arrayExpected, $data['products']);
     }
 
+    public function testReadyCategorySeoMixWithFlagMissingInCategoryListsNoProducts(): void
+    {
+        $readyCategorySeoMix = $this->createReadyCategorySeoMixForMobilePhonesInSale();
+        $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $readyCategorySeoMix->getCategory()->getId()]);
+        $readyCategorySeoMixSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
+
+        $categoryResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoWithFilters.graphql', [
+            'urlSlug' => $categorySlug,
+        ]);
+        $categoryData = $this->getResponseDataForGraphQlType($categoryResponse, 'category');
+        $this->assertGreaterThan(0, $categoryData['products']['totalCount']);
+
+        $readyCategorySeoMixResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoWithFilters.graphql', [
+            'urlSlug' => $readyCategorySeoMixSlug,
+        ]);
+        $readyCategorySeoMixData = $this->getResponseDataForGraphQlType($readyCategorySeoMixResponse, 'category');
+        $this->assertSame(0, $readyCategorySeoMixData['products']['totalCount']);
+    }
+
     public function testReadyCategorySeoMixReturnsSelectedFilterOptions(): void
     {
         $data = $this->getDataForCategorySeoMixPcNewWithUsb();
@@ -275,6 +319,28 @@ class CategorySeoTest extends GraphQlTestCase
 
         $this->assertNull($data['originalCategorySlug']);
         $this->assertSame($categoryPcSlug, $data['slug']);
+    }
+
+    private function createReadyCategorySeoMixForMobilePhonesInSale(): ReadyCategorySeoMix
+    {
+        $categoryMobilePhones = $this->getReference(CategoryDataFixture::CATEGORY_PHONES, Category::class);
+        $flagSale = $this->getReference(FlagDataFixture::FLAG_PRODUCT_SALE, Flag::class);
+        $selectedCategorySeoMixCombination = $this->selectedCategorySeoMixCombinationFactory->createFromArray([
+            'domainId' => Domain::FIRST_DOMAIN_ID,
+            'categoryId' => $categoryMobilePhones->getId(),
+            'flagId' => $flagSale->getId(),
+            'ordering' => ProductListOrderingConfig::ORDER_BY_PRIORITY,
+            'parameterValueIdsByParameterIds' => [],
+        ]);
+
+        $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData($selectedCategorySeoMixCombination);
+        $this->readyCategorySeoMixDataFactory->fillValuesFromSelectedCategorySeoMixCombination($readyCategorySeoMixData, $selectedCategorySeoMixCombination);
+        $readyCategorySeoMixData->seo->h1 = 'Mobile phones in sale';
+
+        $urlListData = $this->urlListDataFactory->create();
+        $urlListData->newUrls = ['mobile-phones-in-sale'];
+
+        return $this->readyCategorySeoMixFacade->createOrEdit($selectedCategorySeoMixCombination, $readyCategorySeoMixData, $urlListData);
     }
 
     private function assertSelectedFlags(array $flags): void

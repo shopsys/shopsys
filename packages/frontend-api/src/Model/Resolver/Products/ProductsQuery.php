@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
@@ -38,7 +37,6 @@ class ProductsQuery extends AbstractQuery
         protected readonly ProductListFacade $productListFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
-        protected readonly ProductFilterDataFactory $productFilterDataFactory,
         protected readonly DataLoaderInterface $productsByEntitiesBatchLoader,
         protected readonly BrandQuery $brandQuery,
         protected readonly CategoryQuery $categoryQuery,
@@ -52,10 +50,7 @@ class ProductsQuery extends AbstractQuery
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
-            $argument,
-            $brand,
-        );
+        $productFilterData = $this->productFilterFacade->getProductFilterData($argument);
         $batchLoadDataId = Uuid::uuid4()->toString();
 
         return $this->productConnectionFactory->createConnectionPromiseForBrand(
@@ -102,27 +97,16 @@ class ProductsQuery extends AbstractQuery
         Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
     ): Promise {
         $this->pageSizeValidator->checkMaxPageSize($argument);
+        $productFilterData = $this->productFilterFacade->getProductFilterData($argument);
 
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
             $readyCategorySeoMix = null;
-            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-                $argument,
-                $category,
-            );
             $orderingMode = $this->productOrderingModeProvider->getOrderingModeFromArgument($argument);
             $defaultOrderingMode = $this->productOrderingModeProvider->getDefaultOrderingMode($argument);
         } else {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
             $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
-
-            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-                $argument,
-                $category,
-            );
-
-            $this->productFilterDataFactory->updateProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix, $productFilterData);
-
             $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
             $defaultOrderingMode = $orderingMode;
         }
@@ -143,7 +127,7 @@ class ProductsQuery extends AbstractQuery
 
         return $this->productConnectionFactory->createConnectionPromiseForCategory(
             $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode, $batchLoadDataId) {
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode, $batchLoadDataId, $readyCategorySeoMix) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $batchLoadDataId,
@@ -153,6 +137,7 @@ class ProductsQuery extends AbstractQuery
                         $orderingMode,
                         $productFilterData,
                         $argument['search'] ?? '',
+                        $readyCategorySeoMix,
                     ),
                 );
             },
@@ -171,12 +156,7 @@ class ProductsQuery extends AbstractQuery
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
-            $argument,
-            $flag,
-        );
-
-        $productFilterData->flags[] = $flag;
+        $productFilterData = $this->productFilterFacade->getProductFilterData($argument);
         $batchLoadDataId = Uuid::uuid4()->toString();
 
         return $this->productConnectionFactory->createConnectionPromiseForFlag(

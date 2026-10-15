@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
-use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
-use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
@@ -18,18 +15,10 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 
 class ProductFilterOptionsFactory
 {
-    public function __construct(
-        protected readonly ModuleFacade $moduleFacade,
-        protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
-        protected readonly CategoryParameterFacade $categoryParameterFacade,
-    ) {
-    }
-
-    protected function createProductFilterOptionsInstance(): ProductFilterOptions
+    public function createProductFilterOptionsInstance(): ProductFilterOptions
     {
         return new ProductFilterOptions();
     }
@@ -99,55 +88,18 @@ class ProductFilterOptionsFactory
         return $productFilterOptions;
     }
 
-    public function createProductFilterOptionsForAll(
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $collapsedParameters
+     */
+    public function createProductFilterOptionsByBatchLoadData(
+        ProductFilterOptionsBatchLoadData $batchLoadData,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData,
-        string $searchText = '',
+        ProductFilterCountData $productFilterCountData,
+        array $collapsedParameters,
     ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        if ($searchText !== '') {
-            $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForSearch(
-                $searchText,
-                $productFilterData,
-            );
-        } else {
-            $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForAll(
-                $productFilterData,
-            );
-        }
-
-        $productFilterOptions = $this->createProductFilterOptions(
-            $productFilterConfig,
-            $productFilterCountData,
-            $productFilterData,
-        );
-        $this->fillBrands(
-            $productFilterOptions,
-            $productFilterConfig,
-            $productFilterCountData,
-            $productFilterData,
-        );
-
-        return $productFilterOptions;
-    }
-
-    public function createProductFilterOptionsForCategory(
-        Category $category,
-        ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData,
-        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
-    ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataInCategory(
-            $category,
-            $productFilterData,
-        );
+        $entity = $batchLoadData->getEntity();
+        $productFilterData = $batchLoadData->getProductFilterData();
+        $readyCategorySeoMix = $batchLoadData->getReadyCategorySeoMix();
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
@@ -155,34 +107,38 @@ class ProductFilterOptionsFactory
             $productFilterData,
             $readyCategorySeoMix,
         );
-        $this->fillBrands(
-            $productFilterOptions,
-            $productFilterConfig,
-            $productFilterCountData,
-            $productFilterData,
-        );
-        $this->fillParametersForCategory(
-            $productFilterOptions,
-            $productFilterConfig,
-            $productFilterCountData,
-            $productFilterData,
-            $category,
-            $readyCategorySeoMix,
-        );
+
+        if ($entity instanceof Brand) {
+            return $productFilterOptions;
+        }
+
+        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+
+        if ($entity instanceof Category) {
+            $this->fillParametersForCategory(
+                $productFilterOptions,
+                $productFilterConfig,
+                $productFilterCountData,
+                $productFilterData,
+                $collapsedParameters,
+                $readyCategorySeoMix,
+            );
+        }
 
         return $productFilterOptions;
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $collapsedParameters
+     */
     protected function fillParametersForCategory(
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
-        Category $category,
+        array $collapsedParameters,
         ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): void {
-        $collapsedParameters = $this->categoryParameterFacade->getParametersCollapsedByCategory($category);
-
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
             $parameter = $parameterFilterChoice->getParameter();
             $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
@@ -263,27 +219,6 @@ class ProductFilterOptionsFactory
         }
 
         return null;
-    }
-
-    public function createProductFilterOptionsForBrand(
-        Brand $brand,
-        ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData,
-    ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForBrand(
-            $brand->getId(),
-            $productFilterData,
-        );
-
-        return $this->createProductFilterOptions(
-            $productFilterConfig,
-            $productFilterCountData,
-            $productFilterData,
-        );
     }
 
     protected function fillFlags(
@@ -401,29 +336,5 @@ class ProductFilterOptionsFactory
         }
 
         return $productFilterCountData->countByParameterIdAndValueId[$parameter->getId()][$parameterValue->getId()] ?? 0;
-    }
-
-    public function createProductFilterOptionsForFlag(
-        Flag $flag,
-        ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData,
-    ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForFlag(
-            $flag->getId(),
-            $productFilterData,
-        );
-
-        $productFilterOptions = $this->createProductFilterOptions(
-            $productFilterConfig,
-            $productFilterCountData,
-            $productFilterData,
-        );
-        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
-
-        return $productFilterOptions;
     }
 }

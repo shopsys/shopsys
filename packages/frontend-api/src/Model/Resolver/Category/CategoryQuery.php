@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFo
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
@@ -40,6 +41,7 @@ class CategoryQuery extends AbstractQuery
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly TransformStringHelper $transformStringHelper,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
+        protected readonly ProductFilterDataBatchLoadDataFactory $productFilterDataBatchLoadDataFactory,
     ) {
     }
 
@@ -59,10 +61,10 @@ class CategoryQuery extends AbstractQuery
     {
         $argument['filter'] = $argument['productFilter'];
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
-            $argument,
-            $flag,
-        );
+        $productFilterData = $this->productFilterFacade->getProductFilterData($argument);
+        $this->productFilterFacade->normalizeProductFilterDataByBatchLoadData([
+            $this->productFilterDataBatchLoadDataFactory->create($flag, '', $productFilterData),
+        ]);
 
         $productFilterData->flags = [$flag];
 

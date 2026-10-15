@@ -7,7 +7,14 @@ namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
+use Webmozart\Assert\Assert;
 
 class ProductsBatchLoader
 {
@@ -21,6 +28,9 @@ class ProductsBatchLoader
         protected readonly ProductElasticsearchBatchProvider $productElasticsearchBatchProvider,
         protected readonly Domain $domain,
         protected readonly GiftPlanFacade $giftPlanFacade,
+        protected readonly ProductFilterFacade $productFilterFacade,
+        protected readonly ProductFilterDataFactory $productFilterDataFactory,
+        protected readonly ProductFilterDataBatchLoadDataFactory $productFilterDataBatchLoadDataFactory,
     ) {
     }
 
@@ -86,6 +96,12 @@ class ProductsBatchLoader
      */
     public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
     {
+        $this->productFilterFacade->normalizeProductFilterDataByBatchLoadData(
+            $this->createProductFilterDataBatchLoadData($productBatchLoadByEntitiesData),
+        );
+        $this->addListingFlagsToProductFilterData($productBatchLoadByEntitiesData);
+        $this->addReadyCategorySeoMixesToProductFilterData($productBatchLoadByEntitiesData);
+
         $batchedByEntities = $this->productElasticsearchBatchProvider->getBatchedByEntities($productBatchLoadByEntitiesData);
         self::$totalsIndexedByBatchLoadDataId = $batchedByEntities[ProductElasticsearchBatchRepository::TOTALS_KEY];
 
@@ -96,6 +112,56 @@ class ProductsBatchLoader
         }
 
         return $this->promiseAdapter->all($result);
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadData[]
+     */
+    protected function createProductFilterDataBatchLoadData(array $productBatchLoadByEntitiesData): array
+    {
+        $productFilterDataBatchLoadData = [];
+
+        foreach ($productBatchLoadByEntitiesData as $key => $productBatchLoadByEntityData) {
+            $entity = $productBatchLoadByEntityData->getEntity();
+            Assert::isInstanceOfAny($entity, [Category::class, Brand::class, Flag::class]);
+
+            $productFilterDataBatchLoadData[$key] = $this->productFilterDataBatchLoadDataFactory->create(
+                $entity,
+                '',
+                $productBatchLoadByEntityData->getProductFilterData(),
+            );
+        }
+
+        return $productFilterDataBatchLoadData;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     */
+    protected function addListingFlagsToProductFilterData(array $productBatchLoadByEntitiesData): void
+    {
+        foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
+            $entity = $productBatchLoadByEntityData->getEntity();
+
+            if ($entity instanceof Flag) {
+                $this->productFilterFacade->addListingFlagToProductFilterData($entity, $productBatchLoadByEntityData->getProductFilterData());
+            }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     */
+    protected function addReadyCategorySeoMixesToProductFilterData(array $productBatchLoadByEntitiesData): void
+    {
+        foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
+            $readyCategorySeoMix = $productBatchLoadByEntityData->getReadyCategorySeoMix();
+
+            if ($readyCategorySeoMix !== null) {
+                $this->productFilterDataFactory->updateProductFilterDataFromReadyCategorySeoMix($readyCategorySeoMix, $productBatchLoadByEntityData->getProductFilterData());
+            }
+        }
     }
 
     protected function sortByOriginalArray(array $arrayForSorting, array $originalArray): array

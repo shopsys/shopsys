@@ -10,9 +10,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterBatchLoadData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterBatchLoadDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
@@ -29,63 +32,85 @@ class ProductFilterFacade
         protected readonly ProductFilterDataFactory $productFilterDataFactory,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly ProductFilterBatchLoadDataFactory $productFilterBatchLoadDataFactory,
     ) {
     }
 
     public function getProductFilterConfigForAll(): ProductFilterConfig
     {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () {
-                return $this->productFilterConfigFactory->createForAll(
-                    $this->domain->getId(),
-                    $this->domain->getLocale(),
-                );
-            },
-            'all',
-        );
+        return array_first($this->getProductFilterConfigsByBatchLoadData([$this->productFilterBatchLoadDataFactory->create(null, '')]));
     }
 
-    public function getProductFilterConfigForBrand(Brand $brand): ProductFilterConfig
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterBatchLoadData[] $batchLoadDataIndexedByKey
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig[] indexed by the same keys as the batch load data
+     */
+    public function getProductFilterConfigsByBatchLoadData(array $batchLoadDataIndexedByKey): array
     {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($brand) {
-                return $this->productFilterConfigFactory->createForBrand(
-                    $this->domain->getId(),
-                    $this->domain->getLocale(),
-                    $brand,
+        $cacheKeyPartsIndexedByKey = [];
+        $cacheKeyPartsIndexedByCacheKey = [];
+        $batchLoadDataToCreateIndexedByCacheKey = [];
+
+        foreach ($batchLoadDataIndexedByKey as $key => $batchLoadData) {
+            $cacheKeyParts = $this->getProductFilterConfigCacheKeyParts($batchLoadData);
+            $cacheKeyPartsIndexedByKey[$key] = $cacheKeyParts;
+
+            if ($this->inMemoryCache->hasItem(static::PRODUCT_FILTER_CACHE_NAMESPACE, ...$cacheKeyParts)) {
+                continue;
+            }
+
+            $cacheKey = $this->inMemoryCache->getKey(...$cacheKeyParts);
+            $cacheKeyPartsIndexedByCacheKey[$cacheKey] = $cacheKeyParts;
+            $batchLoadDataToCreateIndexedByCacheKey[$cacheKey] = $batchLoadData;
+        }
+
+        if ($batchLoadDataToCreateIndexedByCacheKey !== []) {
+            $createdProductFilterConfigsIndexedByCacheKey = $this->productFilterConfigFactory->createByBatchLoadData(
+                $batchLoadDataToCreateIndexedByCacheKey,
+                $this->domain->getLocale(),
+            );
+
+            foreach ($createdProductFilterConfigsIndexedByCacheKey as $cacheKey => $productFilterConfig) {
+                $this->inMemoryCache->save(
+                    static::PRODUCT_FILTER_CACHE_NAMESPACE,
+                    $productFilterConfig,
+                    ...$cacheKeyPartsIndexedByCacheKey[$cacheKey],
                 );
-            },
-            'brand',
-            $brand->getId(),
-        );
+            }
+        }
+
+        $productFilterConfigsIndexedByKey = [];
+
+        foreach ($cacheKeyPartsIndexedByKey as $key => $cacheKeyParts) {
+            $productFilterConfigsIndexedByKey[$key] = $this->inMemoryCache->getItem(static::PRODUCT_FILTER_CACHE_NAMESPACE, ...$cacheKeyParts);
+        }
+
+        return $productFilterConfigsIndexedByKey;
     }
 
-    public function getProductFilterConfigForCategory(Category $category): ProductFilterConfig
+    /**
+     * @return array<int, string|int>
+     */
+    protected function getProductFilterConfigCacheKeyParts(ProductFilterBatchLoadData $batchLoadData): array
     {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($category) {
-                return $this->productFilterConfigFactory->createForCategory(
-                    $this->domain->getLocale(),
-                    $category,
-                );
-            },
-            'category',
-            $category->getId(),
-        );
+        $entity = $batchLoadData->getEntity();
+
+        return match (true) {
+            $entity instanceof Category => ['category', $entity->getId()],
+            $entity instanceof Brand => ['brand', $entity->getId()],
+            $entity instanceof Flag => ['flag', $entity->getId()],
+            $batchLoadData->getSearchText() !== '' => ['search', $batchLoadData->getSearchText()],
+            default => ['all'],
+        };
     }
 
-    protected function getValidatedProductFilterData(
-        Argument $argument,
-        ProductFilterConfig $productFilterConfig,
-    ): ProductFilterData {
-        $productFilterData = $this->productFilterDataMapper->mapFrontendApiFilterToProductFilterData(
-            $argument['filter'],
-        );
+    public function getProductFilterData(Argument $argument): ProductFilterData
+    {
+        if ($argument['filter'] === null) {
+            return $this->productFilterDataFactory->create();
+        }
 
-        $this->productFilterNormalizer->removeExcessiveFilters($productFilterData, $productFilterConfig);
+        $productFilterData = $this->productFilterDataMapper->mapFrontendApiFilterToProductFilterData($argument['filter']);
 
         if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
             if ($productFilterData->maximalPrice !== null || $productFilterData->minimalPrice !== null) {
@@ -96,81 +121,50 @@ class ProductFilterFacade
         return $productFilterData;
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataBatchLoadData[] $batchLoadDataIndexedByKey
+     */
+    public function normalizeProductFilterDataByBatchLoadData(array $batchLoadDataIndexedByKey): void
+    {
+        $batchLoadDataToNormalizeIndexedByKey = array_filter(
+            $batchLoadDataIndexedByKey,
+            fn (ProductFilterDataBatchLoadData $batchLoadData): bool => $this->hasFiltersToNormalize($batchLoadData->getProductFilterData()),
+        );
+
+        if ($batchLoadDataToNormalizeIndexedByKey === []) {
+            return;
+        }
+
+        $productFilterConfigsIndexedByKey = $this->getProductFilterConfigsByBatchLoadData($batchLoadDataIndexedByKey);
+
+        foreach ($batchLoadDataToNormalizeIndexedByKey as $key => $batchLoadData) {
+            $this->productFilterNormalizer->removeExcessiveFilters(
+                $batchLoadData->getProductFilterData(),
+                $productFilterConfigsIndexedByKey[$key],
+            );
+        }
+    }
+
+    protected function hasFiltersToNormalize(ProductFilterData $productFilterData): bool
+    {
+        return $productFilterData->flags !== [] || $productFilterData->brands !== [] || $productFilterData->parameters !== [];
+    }
+
+    public function addListingFlagToProductFilterData(Flag $flag, ProductFilterData $productFilterData): void
+    {
+        if (!in_array($flag, $productFilterData->flags, true)) {
+            $productFilterData->flags[] = $flag;
+        }
+    }
+
     public function getValidatedProductFilterDataForAll(Argument $argument): ProductFilterData
     {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
+        $productFilterData = $this->getProductFilterData($argument);
+
+        if ($this->hasFiltersToNormalize($productFilterData)) {
+            $this->productFilterNormalizer->removeExcessiveFilters($productFilterData, $this->getProductFilterConfigForAll());
         }
 
-        $productFilterConfig = $this->getProductFilterConfigForAll();
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForCategory($category);
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForBrand($brand);
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    public function getProductFilterConfigForSearch(string $searchText): ProductFilterConfig
-    {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($searchText) {
-                return $this->productFilterConfigFactory->createForSearch(
-                    $this->domain->getId(),
-                    $this->domain->getLocale(),
-                    $searchText,
-                );
-            },
-            'search',
-            $searchText,
-        );
-    }
-
-    public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForFlag($flag);
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    public function getProductFilterConfigForFlag(Flag $flag): ProductFilterConfig
-    {
-        $locale = $this->domain->getLocale();
-
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($flag, $locale) {
-                return $this->productFilterConfigFactory->createForFlag(
-                    $flag,
-                    $locale,
-                );
-            },
-            'flag',
-            $locale,
-            $flag->getId(),
-        );
+        return $productFilterData;
     }
 }

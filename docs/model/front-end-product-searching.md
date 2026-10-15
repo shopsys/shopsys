@@ -23,8 +23,8 @@ If you want to improve searching, you can learn more in [Elasticsearch analysis]
 
 ## Change searching behavior
 
-Searching is performed with `ProductElasticsearchRepository` class, more specifically its method `getProductIdsBySearchText()`.
-This method gets product IDs from Elasticsearch with a query that is represented by `Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery` object.
+Searching is performed directly in Elasticsearch with a query that is represented by `Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery` object,
+the searched products are read from the search result (see `FilterQueryFactory::createListableProductsBySearchTextWithPriceAndStockFilter()` and `ProductElasticsearchBatchProvider`).
 
 The searched fields and their priority are defined directly in the `FilterQuery::search()` method,
 so to change the search behavior is enough to extend the `FilterQuery` class and use your implementation in `services.yaml` file
