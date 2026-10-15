@@ -6,8 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Breadcrumb;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException;
-use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsUserError;
 
@@ -31,19 +29,5 @@ class BreadcrumbQuery extends AbstractQuery
         } catch (UnableToGenerateBreadcrumbItemsException) {
             throw new UnableToGenerateBreadcrumbItemsUserError(sprintf('Unable to generate breadcrumb items for route "%s" with ID %d.', $routeName, $id));
         }
-    }
-
-    /**
-     * @return array[]
-     */
-    public function categoryBreadcrumbQuery(Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix): array
-    {
-        if ($categoryOrReadyCategorySeoMix instanceof Category) {
-            $categoryId = $categoryOrReadyCategorySeoMix->getId();
-        } else {
-            $categoryId = $categoryOrReadyCategorySeoMix->getCategory()->getId();
-        }
-
-        return $this->breadcrumbQuery($categoryId, 'front_product_list');
     }
 }
