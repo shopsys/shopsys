@@ -53,9 +53,11 @@ class ImageApiRepository
         $queryBuilder->setParameter('type', $type ?? '');
 
         $imagesByEntityId = array_fill_keys($entityIds, null);
+        $images = $queryBuilder->getResult();
+        $this->preloadTranslations($images);
 
         /** @var \Shopsys\FrameworkBundle\Component\Image\Image $image */
-        foreach ($queryBuilder->getResult() as $image) {
+        foreach ($images as $image) {
             $imagesByEntityId[$image->getEntityId()] = $image;
         }
 
@@ -71,6 +73,8 @@ class ImageApiRepository
         $imagesByEntityId = array_fill_keys($entityIds, []);
         $queryBuilder = $this->entityManager->getRepository(Image::class)
             ->createQueryBuilder('i')
+            ->addSelect('it')
+            ->leftJoin('i.translations', 'it')
             ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('i.entityId IN (:entities)')->setParameter('entities', $entityIds)
             ->addOrderBy('i.position', SortDirection::Ascending)
@@ -116,6 +120,25 @@ class ImageApiRepository
         }
 
         return $imagesCountsByEntityId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
+     */
+    protected function preloadTranslations(array $images): void
+    {
+        if ($images === []) {
+            return;
+        }
+
+        $this->entityManager->createQueryBuilder()
+            ->select('i, it')
+            ->from(Image::class, 'i')
+            ->leftJoin('i.translations', 'it')
+            ->where('i IN (:images)')
+            ->setParameter('images', $images)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

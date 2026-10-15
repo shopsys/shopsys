@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -44,13 +43,13 @@ class CartWatcherFacade
         protected readonly AdditionalServiceFacade $additionalServiceFacade,
         protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
         protected readonly OrderInputFactory $orderInputFactory,
-        protected readonly OrderInputPreloaderFacade $orderInputPreloaderFacade,
     ) {
     }
 
     public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
     {
-        $this->orderInputPreloaderFacade->preload($this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig()));
+        // creating the order input batch-loads the data of the products in the cart, which avoids the N+1 problem when the cart is checked
+        $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
         $this->cartWithModificationsResult = $this->cartWithModificationsResultFactory->create($cart);
 
         $this->checkRemovedProductsItems($cart);
