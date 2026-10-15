@@ -3,7 +3,7 @@
 A project adds, replaces or removes blocks of the [content editor](../administration/content-editor.md) without touching the packages. A block is one class on the backend, one React component on the storefront (web profile) or one Twig template (mail profile).
 
 - **add** a block: create a class with `#[ContentBlock(type: ...)]`
-- **replace** a built-in block: create a class with the same `type` and a higher `priority`
+- **replace** a built-in block: extend its class and register yours in place of the built-in service
 - **remove** a block: list its type in `shopsys_framework.content_editor.disabled_types`
 
 There are no extension classes, hooks or configuration objects.
@@ -23,13 +23,12 @@ A block is a class extending `AbstractContentBlock` and marked with the `#[Conte
         resource: '../src/ContentEditor/Block/'
     ```
 
-The attribute has three arguments:
+The attribute has two arguments:
 
 | Argument   | Default | Description                                                                             |
 | ---------- | ------- | --------------------------------------------------------------------------------------- |
 | `type`     | -       | Identifier stored in the document, e.g. `heading`; never change it once content exists  |
 | `profiles` | `web`   | Profiles the block is offered in: `ContentProfileEnum::WEB`, `ContentProfileEnum::MAIL` |
-| `priority` | `0`     | The block with the highest priority wins when more blocks share a `type`                |
 
 The block implements these methods (`AbstractContentBlock` gives defaults for the rest):
 
@@ -151,10 +150,10 @@ Use the field in `getFields()` of a block. A block that needs a form unrelated t
 
 ## Replacing a built-in block
 
-Create a class with the type of the block and a higher `priority`. Extending the built-in class keeps everything you do not change. The attribute is not inherited, so repeat it with all arguments, including `profiles` for a mail block:
+Extend the built-in class, so everything you do not change is kept, and register your class in place of the built-in service, the same way other framework services are replaced. The attribute is not inherited, so repeat it with all arguments, including `profiles` for a mail block:
 
 ```php
-#[ContentBlock(type: 'text', priority: 10)]
+#[ContentBlock(type: 'text')]
 final class TextBlock extends \Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\TextBlock
 {
     #[Override]
@@ -165,7 +164,13 @@ final class TextBlock extends \Shopsys\FrameworkBundle\Component\ContentEditor\B
 }
 ```
 
-Two blocks with the same `type` and the same `priority` throw `ContentBlockTypeConflictException` when the registry is built.
+```yaml
+# config/services.yaml
+Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\TextBlock:
+    alias: App\ContentEditor\Block\TextBlock
+```
+
+Without the alias both classes are registered and `ContentBlockTypeConflictException` is thrown when the registry is built, because a `type` has to have exactly one block.
 
 ## Removing a block
 

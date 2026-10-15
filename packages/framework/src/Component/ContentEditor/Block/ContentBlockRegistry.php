@@ -78,26 +78,20 @@ final class ContentBlockRegistry
      */
     private function buildBlocksByType(): array
     {
-        $candidatesByType = [];
-
-        foreach ($this->blocks as $block) {
-            if (!in_array($block->getType(), $this->disabledTypes, true)) {
-                $candidatesByType[$block->getType()][] = $block;
-            }
-        }
-
         $blocksByType = [];
 
-        foreach ($candidatesByType as $type => $candidates) {
-            usort($candidates, static fn (ContentBlockInterface $a, ContentBlockInterface $b): int => $b->getPriority() <=> $a->getPriority());
-            $winner = $candidates[0];
-            $runnerUp = $candidates[1] ?? null;
+        foreach ($this->blocks as $block) {
+            $type = $block->getType();
 
-            if ($runnerUp !== null && $runnerUp->getPriority() === $winner->getPriority()) {
-                throw new ContentBlockTypeConflictException((string)$type, $winner->getPriority(), $winner::class, $runnerUp::class);
+            if (in_array($type, $this->disabledTypes, true)) {
+                continue;
             }
 
-            $blocksByType[$type] = $winner;
+            if (isset($blocksByType[$type])) {
+                throw new ContentBlockTypeConflictException($type, $blocksByType[$type]::class, $block::class);
+            }
+
+            $blocksByType[$type] = $block;
         }
 
         return $blocksByType;

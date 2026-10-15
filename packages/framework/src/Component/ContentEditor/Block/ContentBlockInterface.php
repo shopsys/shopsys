@@ -13,8 +13,6 @@ interface ContentBlockInterface
      */
     public function getProfiles(): array;
 
-    public function getPriority(): int;
-
     public function getLabel(): string;
 
     public function getIcon(): ?string;

@@ -16,13 +16,12 @@ use Tests\FrameworkBundle\Unit\Component\ContentEditor\Fixtures\DummyTextBlock;
 
 class AbstractContentBlockTest extends TestCase
 {
-    public function testTypeProfilesAndPriorityAreReadFromAttribute(): void
+    public function testTypeAndProfilesAreReadFromAttribute(): void
     {
         $block = new DummyColumnsBlock();
 
         $this->assertSame('columns', $block->getType());
         $this->assertSame([ContentProfileEnum::WEB, ContentProfileEnum::MAIL], $block->getProfiles());
-        $this->assertSame(0, $block->getPriority());
     }
 
     public function testDefaults(): void

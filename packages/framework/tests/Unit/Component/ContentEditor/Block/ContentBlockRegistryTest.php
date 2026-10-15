@@ -37,19 +37,7 @@ class ContentBlockRegistryTest extends TestCase
         $registry->get('text');
     }
 
-    public function testHigherPriorityBlockWinsRegardlessOfOrder(): void
-    {
-        $override = new #[ContentBlock(type: 'text', priority: 10)] class extends DummyTextBlock {
-        };
-
-        $registry = new ContentBlockRegistry([$override, new DummyTextBlock()], []);
-        $reversedRegistry = new ContentBlockRegistry([new DummyTextBlock(), $override], []);
-
-        $this->assertSame($override, $registry->get('text'));
-        $this->assertSame($override, $reversedRegistry->get('text'));
-    }
-
-    public function testEqualPriorityForSameTypeThrows(): void
+    public function testSameTypeTwiceThrows(): void
     {
         $registry = new ContentBlockRegistry([new DummyTextBlock(), new #[ContentBlock(type: 'text')] class extends DummyTextBlock {
         }], []);
@@ -57,20 +45,6 @@ class ContentBlockRegistryTest extends TestCase
         $this->expectException(ContentBlockTypeConflictException::class);
 
         $registry->getAll();
-    }
-
-    public function testEqualPriorityBelowHigherPriorityWinnerDoesNotConflict(): void
-    {
-        $winner = new #[ContentBlock(type: 'text', priority: 5)] class extends DummyTextBlock {
-        };
-        $registry = new ContentBlockRegistry([
-            new DummyTextBlock(),
-            new #[ContentBlock(type: 'text')] class extends DummyTextBlock {
-            },
-            $winner,
-        ], []);
-
-        $this->assertSame($winner, $registry->get('text'));
     }
 
     public function testDisabledTypesAreNotRegistered(): void

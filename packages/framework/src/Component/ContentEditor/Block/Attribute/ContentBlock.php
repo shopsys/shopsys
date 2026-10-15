@@ -16,7 +16,6 @@ final class ContentBlock
     public function __construct(
         public string $type,
         public array $profiles = [ContentProfileEnum::WEB],
-        public int $priority = 0,
     ) {
     }
 }

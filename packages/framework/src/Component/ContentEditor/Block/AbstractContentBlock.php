@@ -29,12 +29,6 @@ abstract class AbstractContentBlock implements ContentBlockInterface
     }
 
     #[Override]
-    public function getPriority(): int
-    {
-        return $this->getContentBlockAttribute()->priority;
-    }
-
-    #[Override]
     public function getIcon(): ?string
     {
         return null;

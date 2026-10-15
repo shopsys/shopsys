@@ -8,14 +8,13 @@ use Exception;
 
 class ContentBlockTypeConflictException extends Exception
 {
-    public function __construct(string $type, int $priority, string $firstClass, string $secondClass)
+    public function __construct(string $type, string $firstClass, string $secondClass)
     {
         parent::__construct(sprintf(
-            'Content block type "%s" is provided by "%s" and "%s" with the same priority %d, raise the priority of the one that should win',
+            'Content block type "%s" is provided by both "%s" and "%s", a block replacing another one has to be registered instead of it, not next to it',
             $type,
             $firstClass,
             $secondClass,
-            $priority,
         ));
     }
 }
