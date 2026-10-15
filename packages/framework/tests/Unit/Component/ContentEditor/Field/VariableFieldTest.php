@@ -25,6 +25,11 @@ class VariableFieldTest extends TestCase
             'expectedResult' => '{image_2}',
         ];
 
+        yield 'placeholder in camel case is kept' => [
+            'value' => '{productImageUrl}',
+            'expectedResult' => '{productImageUrl}',
+        ];
+
         yield 'text without braces becomes null' => [
             'value' => 'product_image',
             'expectedResult' => null,

@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\IframeBlock;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Migration\MigrateGrapesJsContentTask;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
@@ -159,6 +160,11 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
                         'run' => PostDeployTaskRunEnum::ONE_TIME,
                         'priority' => 110,
                         'service' => WebalizeUploadedFileNamesTask::class,
+                    ],
+                    'migrate_grapesjs_content' => [
+                        'run' => PostDeployTaskRunEnum::ONE_TIME,
+                        'priority' => 120,
+                        'service' => MigrateGrapesJsContentTask::class,
                     ],
                 ],
             ],

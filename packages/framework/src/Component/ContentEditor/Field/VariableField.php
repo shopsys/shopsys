@@ -12,7 +12,7 @@ use Override;
  */
 class VariableField extends ChoiceField
 {
-    public const string PLACEHOLDER_PATTERN = '~^\{[a-z0-9_]+\}$~';
+    public const string PLACEHOLDER_PATTERN = '~^\{[a-z0-9_]+\}$~i';
 
     #[Override]
     public function normalizeValue(mixed $value): mixed

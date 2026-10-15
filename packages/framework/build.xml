@@ -135,7 +135,7 @@
 
     <target name="build-deploy-part-3-non-blocking" depends="run-post-deploy-tasks" description="Third part of application build for production. Non-blocking tasks that run after maintenance page is turned off."/>
 
-    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-recreate,elasticsearch-export,run-post-deploy-tasks,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
@@ -427,7 +427,7 @@
         </exec>
     </target>
 
-    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,elasticsearch-index-recreate,elasticsearch-export,warmup" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
+    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,elasticsearch-index-recreate,elasticsearch-export,run-post-deploy-tasks,warmup" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
 
     <target name="diff-files" description="Finds changed files (against origin/master) and saves them into properties." hidden="true">
         <exec executable="${path.git.executable}" outputProperty="git.status.output" returnProperty="git.status.returnCode">
@@ -1047,7 +1047,7 @@
         </exec>
     </target>
 
-    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
+    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-run-post-deploy-tasks" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
     <target name="test-db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures into test DB." hidden="true">
          <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1219,6 +1219,15 @@
             <arg value="shopsys:plugin-data-fixtures:load"/>
             <arg value="--no-debug"/>
             <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="test-run-post-deploy-tasks" description="Runs post-deploy tasks in test environment." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="--env=test"/>
+            <arg value="deploy:post-deploy:run-tasks"/>
+            <arg value="-vv"/>
         </exec>
     </target>
 
