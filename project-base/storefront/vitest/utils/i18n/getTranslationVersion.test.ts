@@ -3,13 +3,19 @@ import type { AppRedisClient } from 'utils/redis/redisClient';
 import { describe, expect, test, vi } from 'vitest';
 
 describe('translation version with optional Redis', () => {
-    test('uses the default version before Redis is ready', async () => {
+    test('returns an unknown version before Redis is ready', async () => {
         const get = vi.fn();
         const client = { isReady: false, get } as unknown as AppRedisClient;
 
-        expect(await getTranslationVersion(undefined)).toBe('0');
-        expect(await getTranslationVersion(client)).toBe('0');
+        expect(await getTranslationVersion(undefined)).toBeUndefined();
+        expect(await getTranslationVersion(client)).toBeUndefined();
         expect(get).not.toHaveBeenCalled();
+    });
+
+    test('returns an unknown version while deployment has removed the version key', async () => {
+        const client = { isReady: true, get: vi.fn().mockResolvedValue(null) } as unknown as AppRedisClient;
+
+        expect(await getTranslationVersion(client)).toBeUndefined();
     });
 
     test('reads the current version from a ready connection', async () => {
@@ -24,6 +30,6 @@ describe('translation version with optional Redis', () => {
         const get = vi.fn().mockRejectedValue(new Error('Connection lost'));
         const client = { isReady: true, get } as unknown as AppRedisClient;
 
-        expect(await getTranslationVersion(client)).toBe('0');
+        expect(await getTranslationVersion(client)).toBeUndefined();
     });
 });

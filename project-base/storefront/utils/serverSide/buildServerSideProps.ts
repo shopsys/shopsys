@@ -101,9 +101,10 @@ export const buildServerSideProps = async ({
           })
         : { __lang: domainConfig.defaultLocale };
 
+    const translationVersion = await getTranslationVersion(redisClient);
     const translationMetadata = {
         __namespaceNames: I18N_NAMESPACES,
-        __translationVersion: await getTranslationVersion(redisClient),
+        ...(translationVersion !== undefined && { __translationVersion: translationVersion }),
     };
 
     const serializedTranslationProps = {

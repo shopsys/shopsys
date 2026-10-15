@@ -66,6 +66,72 @@ describe('CachedI18nProvider', () => {
         expect(global.fetch).not.toHaveBeenCalled();
     });
 
+    test.each([
+        false,
+        true,
+    ])('keeps a known version across unavailable Redis (server namespaces: %s)', (withNamespaces) => {
+        const namespaces = { common: { Save: 'Save' } };
+        const props = { __lang: 'en', __namespaceNames: ['common'] };
+        const { container, rerender } = render(
+            <CachedI18nProvider pageProps={{ ...props, __namespaces: namespaces, __translationVersion: '42' }}>
+                Content
+            </CachedI18nProvider>,
+        );
+
+        rerender(
+            <CachedI18nProvider pageProps={{ ...props, ...(withNamespaces && { __namespaces: namespaces }) }}>
+                Content
+            </CachedI18nProvider>,
+        );
+        rerender(<CachedI18nProvider pageProps={{ ...props, __translationVersion: '42' }}>Content</CachedI18nProvider>);
+
+        expect(global.fetch).not.toHaveBeenCalled();
+        expect(getRenderedNamespaces(container)).toEqual(namespaces);
+    });
+
+    test('refreshes an initially unknown version once a real version is available', async () => {
+        vi.mocked(global.fetch).mockResolvedValue({ status: 200, json: async () => ({ Save: 'Fresh' }) } as Response);
+        const props = { __lang: 'en', __namespaceNames: ['common'] };
+        const { container, rerender } = render(
+            <CachedI18nProvider pageProps={{ ...props, __namespaces: { common: { Save: 'Old' } } }}>
+                Content
+            </CachedI18nProvider>,
+        );
+        expect(global.fetch).not.toHaveBeenCalled();
+
+        rerender(<CachedI18nProvider pageProps={{ ...props, __translationVersion: '42' }}>Content</CachedI18nProvider>);
+
+        await waitFor(() => expect(getRenderedNamespaces(container)).toEqual({ common: { Save: 'Fresh' } }));
+        expect(global.fetch).toHaveBeenCalledTimes(2);
+        expect(global.fetch).toHaveBeenCalledWith('/locales/en/common.json?v=42');
+    });
+
+    test('loads a changed locale and missing namespaces even without a version', async () => {
+        vi.mocked(global.fetch).mockResolvedValue({ status: 200, json: async () => ({ Save: 'Uložiť' }) } as Response);
+        const { container, rerender } = render(
+            <CachedI18nProvider
+                pageProps={{ __lang: 'en', __namespaces: { common: { Save: 'Save' } }, __translationVersion: '42' }}
+            >
+                Content
+            </CachedI18nProvider>,
+        );
+
+        rerender(
+            <CachedI18nProvider pageProps={{ __lang: 'sk', __namespaceNames: ['common', 'accessibility'] }}>
+                Content
+            </CachedI18nProvider>,
+        );
+
+        await waitFor(() =>
+            expect(getRenderedNamespaces(container)).toEqual({
+                common: { Save: 'Uložiť' },
+                accessibility: { Save: 'Uložiť' },
+            }),
+        );
+        expect(global.fetch).toHaveBeenCalledTimes(4);
+        expect(global.fetch).toHaveBeenCalledWith('/locales/sk/accessibility.json');
+    });
+
     test('refreshes cached namespaces when translation version changes', async () => {
         vi.mocked(global.fetch)
             .mockResolvedValueOnce({ status: 200, json: vi.fn().mockResolvedValue({ Save: 'Save fresh' }) } as any)

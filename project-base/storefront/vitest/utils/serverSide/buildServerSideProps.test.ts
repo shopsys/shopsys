@@ -416,6 +416,20 @@ describe('buildServerSideProps', () => {
             expect(mockGetTranslationVersion).toHaveBeenCalledWith(redisClient);
         });
 
+        test('omits an unknown translation version from serializable page props', async () => {
+            mockGetTranslationVersion.mockResolvedValueOnce(undefined);
+
+            const result = await buildServerSideProps({
+                layoutResult: createLayoutResult(),
+                client: createMockClient(undefined, undefined),
+                ssrExchange: createMockSsrExchange(),
+                context: createMockContext('/cart', { 'x-nextjs-data': '1' }),
+                domainConfig,
+            });
+
+            expect((result as any).props).not.toHaveProperty('__translationVersion');
+        });
+
         test('omits translations and skips namespace loading on Next data requests', async () => {
             mockLoadNamespaces.mockResolvedValue({
                 __lang: 'en',
