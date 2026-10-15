@@ -4,7 +4,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeArticleDetailFragment } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
-import { TypeContentDocument } from 'types/contentEditor';
+import { toContentDocument } from 'utils/contentEditor/toContentDocument';
 import { useDocumentProducts } from 'utils/contentEditor/useDocumentProducts';
 
 type ArticleDetailContentProps = {
@@ -12,7 +12,7 @@ type ArticleDetailContentProps = {
 };
 
 export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article }) => {
-    const content = article.content as TypeContentDocument | null;
+    const content = toContentDocument(article.content);
     const { products, areProductsFetching } = useDocumentProducts(content);
 
     return (

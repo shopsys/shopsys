@@ -12,11 +12,11 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { TypeContentDocument } from 'types/contentEditor';
 import { OgTypeEnum } from 'types/seo';
 import { createClient } from 'urql/createClient';
 import { collectProductCatnums } from 'utils/contentEditor/collectProductCatnums';
 import { getTextBlocksHtml } from 'utils/contentEditor/getTextBlocksHtml';
+import { toContentDocument } from 'utils/contentEditor/toContentDocument';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
@@ -49,7 +49,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const shouldNoIndex = isDraft || isPreview || isFuturePublishDate;
     const descriptionHtml =
         blogArticleData?.blogArticle?.perex ||
-        getTextBlocksHtml((blogArticleData?.blogArticle?.content ?? null) as TypeContentDocument | null);
+        getTextBlocksHtml(toContentDocument(blogArticleData?.blogArticle?.content));
     const metaDescription = getMetaDescription(blogArticleData?.blogArticle?.seo.metaDescription, descriptionHtml);
 
     return (
@@ -130,9 +130,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 return serverSideErrorResponse;
             }
 
-            const catnums = collectProductCatnums(
-                (blogArticleResponse.data?.blogArticle?.content ?? null) as TypeContentDocument | null,
-            );
+            const catnums = collectProductCatnums(toContentDocument(blogArticleResponse.data?.blogArticle?.content));
             if (catnums.length > 0) {
                 await client.query(ProductsByCatnumsDocument, { catnums }).toPromise();
             }

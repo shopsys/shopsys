@@ -10,9 +10,9 @@ import { BlogArticleAuthorBox } from 'components/Pages/BlogArticle/BlogArticleAu
 import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useMemo } from 'react';
-import { TypeContentDocument } from 'types/contentEditor';
 import { ARTICLE_INTRODUCTION_ANCHOR_ID } from 'utils/articleHeadingAnchors';
 import { addHeadingAnchors } from 'utils/contentEditor/addHeadingAnchors';
+import { toContentDocument } from 'utils/contentEditor/toContentDocument';
 import { useDocumentProducts } from 'utils/contentEditor/useDocumentProducts';
 import { getImageAlt } from 'utils/imageAltText';
 
@@ -22,7 +22,7 @@ type BlogArticleDetailContentProps = {
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {
     const { document, headings } = useMemo(
-        () => addHeadingAnchors(blogArticle.content as TypeContentDocument | null),
+        () => addHeadingAnchors(toContentDocument(blogArticle.content)),
         [blogArticle.content],
     );
     const { products, areProductsFetching } = useDocumentProducts(document);

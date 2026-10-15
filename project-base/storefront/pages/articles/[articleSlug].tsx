@@ -13,11 +13,11 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { TypeContentDocument } from 'types/contentEditor';
 import { OgTypeEnum } from 'types/seo';
 import { createClient } from 'urql/createClient';
 import { collectProductCatnums } from 'utils/contentEditor/collectProductCatnums';
 import { getTextBlocksHtml } from 'utils/contentEditor/getTextBlocksHtml';
+import { toContentDocument } from 'utils/contentEditor/toContentDocument';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
@@ -49,7 +49,7 @@ const ArticleDetailPage: NextPage = () => {
         return <Error404Content />;
     }
 
-    const textBlocksHtml = getTextBlocksHtml((article?.content ?? null) as TypeContentDocument | null);
+    const textBlocksHtml = getTextBlocksHtml(toContentDocument(article?.content));
     const metaDescription = getMetaDescription(article?.seo.metaDescription, textBlocksHtml);
 
     return (
@@ -115,7 +115,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const article =
                 articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
 
-            const catnums = collectProductCatnums((article?.content ?? null) as TypeContentDocument | null);
+            const catnums = collectProductCatnums(toContentDocument(article?.content));
             if (catnums.length > 0) {
                 await client.query(ProductsByCatnumsDocument, { catnums }).toPromise();
             }
