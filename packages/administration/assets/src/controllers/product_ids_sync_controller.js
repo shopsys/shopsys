@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
+import Register from 'framework/common/utils/Register';
+import $ from 'jquery';
 import collectProductIds from '../js/contentEditor/collectProductIds';
 
 const DEBOUNCE_MS = 100;
@@ -12,6 +14,9 @@ export default class extends Controller {
     static values = { model: String };
 
     connect() {
+        // the picker is a legacy jQuery component, so a widget inserted after page load must be initialised here
+        new Register().registerNewContent($(this.element));
+
         this.lastIds = JSON.stringify(collectProductIds(this.element));
         this.timeout = null;
         this.observer = new MutationObserver(() => this.scheduleSync());

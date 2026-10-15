@@ -135,8 +135,14 @@ export default class ProductsPicker {
 
     static init($container) {
         $container.filterAllNodes('.js-products-picker').each(function () {
-            // eslint-disable-next-line no-new
-            new ProductsPicker($(this));
+            const $picker = $(this);
+
+            // the same container can be registered repeatedly (page load, Live Component re-render); bind handlers only once
+            if ($picker.data('productsPicker')) {
+                return;
+            }
+
+            $picker.data('productsPicker', new ProductsPicker($picker));
         });
     }
 }
