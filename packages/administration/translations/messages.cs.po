@@ -61,6 +61,9 @@ msgstr "Přidat"
 msgid "Add URL"
 msgstr "Přidat URL"
 
+msgid "Add block"
+msgstr "Přidat blok"
+
 msgid "Add country"
 msgstr "Přidat stát"
 
@@ -78,6 +81,9 @@ msgstr "Přidat zboží"
 
 msgid "Add requirement"
 msgstr "Přidat podmínku"
+
+msgid "Add the first block"
+msgstr "Přidat první blok"
 
 msgid "Additional service"
 msgstr "Doplňková služba"
@@ -400,6 +406,9 @@ msgstr "Kód"
 msgid "Code can't be modified because it is used for pairing with existing orders."
 msgstr "Kód nemůže být upraven, protože je spárovaný s existujícím objednávkami."
 
+msgid "Collapse or expand"
+msgstr "Sbalit nebo rozbalit"
+
 msgid "Color parameter values"
 msgstr "Hodnota parametru typu barva"
 
@@ -453,6 +462,9 @@ msgstr "Kontaktní formulář"
 
 msgid "Contact form settings"
 msgstr "Nastavení kontaktní stránky"
+
+msgid "Content"
+msgstr "Obsah"
 
 msgid "Content Management"
 msgstr "Správa obsahu"
@@ -822,6 +834,9 @@ msgstr "Zde přetáhněte svůj soubor"
 
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
+
+msgid "Duplicate"
+msgstr "Duplikovat"
 
 msgid "Duration (seconds)"
 msgstr "Trvání (sekundy)"
@@ -1291,6 +1306,9 @@ msgstr "Poslední akce"
 msgid "Last name"
 msgstr "Příjmení"
 
+msgid "Layout"
+msgstr "Rozložení"
+
 msgid "Last update"
 msgstr "Poslední aktualizace"
 
@@ -1407,6 +1425,12 @@ msgstr "Pondělí"
 
 msgid "Move"
 msgstr "Přesunout"
+
+msgid "Move down"
+msgstr "Posunout dolů"
+
+msgid "Move up"
+msgstr "Posunout nahoru"
 
 msgid "My account"
 msgstr "Můj účet"
@@ -1842,6 +1866,9 @@ msgstr "PSČ"
 
 msgid "Preview"
 msgstr "Náhled"
+
+msgid "Preview is not available yet"
+msgstr "Náhled zatím není k dispozici"
 
 msgid "Price including VAT"
 msgstr "Cena s DPH"
@@ -2457,6 +2484,9 @@ msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
 
 msgid "This SEO page cannot be deleted."
 msgstr "Tato SEO stránka nemůže být smazána."
+
+msgid "This block has content. Do you really want to remove it?"
+msgstr "Tento blok obsahuje data. Opravdu ho chcete odstranit?"
 
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u objednávky"

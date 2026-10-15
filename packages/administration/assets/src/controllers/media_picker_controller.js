@@ -11,6 +11,9 @@ export default class extends Controller {
     static targets = ['fileInput', 'uploadButton', 'error'];
     static values = { uploadUrl: String, errorMessage: String };
 
+    // Enter in the search must not submit the form of the edited entity, the search is applied while typing
+    ignore() {}
+
     chooseFile() {
         this.fileInputTarget.click();
     }

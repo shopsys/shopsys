@@ -53,6 +53,12 @@ final class MediaPickerComponent
     #[LiveProp]
     public ?string $targetInputId = null;
 
+    /**
+     * Distinguishes the pickers of several editors on one page, so one does not open the modal of another
+     */
+    #[LiveProp]
+    public string $instanceId = '';
+
     private ?PaginationResult $paginationResult = null;
 
     public function __construct(
@@ -68,7 +74,7 @@ final class MediaPickerComponent
     {
         $this->targetInputId = $targetInputId;
         $this->open = true;
-        $this->dispatchBrowserEvent(self::OPENED_BROWSER_EVENT);
+        $this->dispatchBrowserEvent($this->getOpenedBrowserEvent());
     }
 
     #[LiveAction]
@@ -76,7 +82,7 @@ final class MediaPickerComponent
     public function close(): void
     {
         $this->open = false;
-        $this->dispatchBrowserEvent(self::CLOSED_BROWSER_EVENT);
+        $this->dispatchBrowserEvent($this->getClosedBrowserEvent());
     }
 
     #[LiveAction]
@@ -109,6 +115,16 @@ final class MediaPickerComponent
         $this->page = 1;
     }
 
+    public function getOpenedBrowserEvent(): string
+    {
+        return self::OPENED_BROWSER_EVENT . ':' . $this->instanceId;
+    }
+
+    public function getClosedBrowserEvent(): string
+    {
+        return self::CLOSED_BROWSER_EVENT . ':' . $this->instanceId;
+    }
+
     public function getPaginationResult(): PaginationResult
     {
         $this->paginationResult ??= $this->mediaFacade->getPaginatedByTitle($this->search, $this->page, self::PAGE_SIZE);
@@ -119,7 +135,7 @@ final class MediaPickerComponent
     private function selectMedia(Media $media): void
     {
         $this->open = false;
-        $this->dispatchBrowserEvent(self::CLOSED_BROWSER_EVENT);
+        $this->dispatchBrowserEvent($this->getClosedBrowserEvent());
         $this->dispatchBrowserEvent(self::MEDIA_SELECTED_BROWSER_EVENT, [
             'targetInputId' => $this->targetInputId,
             'mediaId' => $media->getId(),

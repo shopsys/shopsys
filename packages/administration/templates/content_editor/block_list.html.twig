@@ -1,0 +1,49 @@
+{# blocks: list of the block forms, slotPath: "" for the document, "<block>/<slot>" for the slot of a container #}
+{% if blocks|length == 0 and slotPath == '' %}
+    <div class="content-editor-empty">
+        {{ component('Admin:LiveActionButton', {
+            action: 'openPicker',
+            label: 'Add the first block'|trans,
+            icon: 'plus',
+            buttonClass: 'btn btn-outline-primary btn-lg',
+            liveParams: {'slot-path': slotPath, index: 0},
+            'data-tid': 'content-editor-add-first-block',
+        }) }}
+    </div>
+{% else %}
+    <div class="content-editor-list" data-tid="content-editor-block-list">
+        {% for blockForm in blocks %}
+            {% if not loop.first %}
+                <div class="content-editor-divider">
+                    {{ component('Admin:LiveActionButton', {
+                        action: 'openPicker',
+                        label: '',
+                        icon: 'plus',
+                        buttonClass: 'btn btn-icon btn-sm btn-outline-primary',
+                        liveParams: {'slot-path': slotPath, index: loop.index0},
+                        title: 'Add block'|trans,
+                        'aria-label': 'Add block'|trans,
+                        'data-tid': 'content-editor-insert-block',
+                    }) }}
+                </div>
+            {% endif %}
+            {% include '@ShopsysAdministration/content_editor/block_card.html.twig' with {
+                blockForm: blockForm,
+                path: (slotPath ~ '/' ~ loop.index0)|trim('/', 'left'),
+                isFirst: loop.first,
+                isLast: loop.last,
+            } %}
+        {% endfor %}
+
+        <div class="content-editor-add">
+            {{ component('Admin:LiveActionButton', {
+                action: 'openPicker',
+                label: 'Add block'|trans,
+                icon: 'plus',
+                buttonClass: 'btn btn-outline-primary btn-sm',
+                liveParams: {'slot-path': slotPath, index: blocks|length},
+                'data-tid': 'content-editor-add-block',
+            }) }}
+        </div>
+    </div>
+{% endif %}

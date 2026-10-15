@@ -1,11 +1,10 @@
-{% set pagination = this.paginationResult %}
 <div {{ attributes }}>
     <div class="modal modal-blur fade"
          tabindex="-1"
          data-controller="form-modal"
          data-form-modal-open-value="{{ this.open ? '1' : '0' }}"
-         data-form-modal-open-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\MediaPickerComponent::OPENED_BROWSER_EVENT') }}"
-         data-form-modal-close-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\MediaPickerComponent::CLOSED_BROWSER_EVENT') }}"
+         data-form-modal-open-event-value="{{ this.openedBrowserEvent }}"
+         data-form-modal-close-event-value="{{ this.closedBrowserEvent }}"
          data-tid="media-picker-modal">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -29,6 +28,7 @@
                                class="form-control"
                                value="{{ this.search }}"
                                data-model="debounce(300)|search"
+                               data-action="keydown.enter->media-picker#ignore:prevent"
                                placeholder="{{ 'Search by title'|trans }}"
                                data-tid="media-picker-search">
                         <input type="file"
@@ -49,6 +49,10 @@
 
                     <div class="alert alert-danger d-none" data-media-picker-target="error" data-tid="media-picker-error"></div>
 
+                    {% if not this.open %}
+                        {# the library is queried only once the picker is opened #}
+                    {% else %}
+                    {% set pagination = this.paginationResult %}
                     {% if pagination.results is empty %}
                         <div class="text-secondary text-center py-5" data-tid="media-picker-empty">{{ 'No images found'|trans }}</div>
                     {% else %}
@@ -97,6 +101,7 @@
                                 </div>
                             </div>
                         {% endif %}
+                    {% endif %}
                     {% endif %}
                 </div>
             </div>

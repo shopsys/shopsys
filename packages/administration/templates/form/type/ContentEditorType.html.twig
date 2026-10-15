@@ -1,0 +1,13 @@
+{% block content_editor_widget %}
+    <div data-content-editor-widget>
+        {{ form_widget(form) }}
+        {{ component('Admin:ContentEditor', {
+            documentJson: value,
+            profile: profile,
+            allowedTypes: allowed_types,
+            variables: variables,
+            targetInputId: id,
+        }) }}
+        {{ component('Admin:ContentEditor:MediaPicker', {instanceId: id}) }}
+    </div>
+{% endblock %}

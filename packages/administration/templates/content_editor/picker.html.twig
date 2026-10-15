@@ -1,0 +1,47 @@
+{% set openedEvent = constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\ContentEditorComponent::PICKER_OPENED_BROWSER_EVENT_PREFIX') ~ this.targetInputId %}
+{% set closedEvent = constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\ContentEditorComponent::PICKER_CLOSED_BROWSER_EVENT_PREFIX') ~ this.targetInputId %}
+{% set categoryLabels = {content: 'Content'|trans, layout: 'Layout'|trans} %}
+
+<div class="modal modal-blur fade"
+     tabindex="-1"
+     data-controller="form-modal"
+     data-form-modal-open-value="{{ this.pickerOpen ? '1' : '0' }}"
+     data-form-modal-open-event-value="{{ openedEvent }}"
+     data-form-modal-close-event-value="{{ closedEvent }}"
+     data-tid="content-editor-picker">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'Add block'|trans }}</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-form-modal-target="closeTrigger"
+                        data-action="live#action"
+                        data-live-action-param="closePicker"
+                        aria-label="{{ 'Close'|trans }}"
+                        data-tid="content-editor-picker-close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                {% for category, blocks in this.pickerBlocksByCategory %}
+                    <div class="subheader mb-2">{{ categoryLabels[category] ?? category }}</div>
+                    <div class="content-editor-picker-grid mb-3" data-tid="content-editor-picker-category-{{ category }}">
+                        {% for type, block in blocks %}
+                            <button type="button"
+                                    class="btn content-editor-picker-tile"
+                                    data-action="live#action:prevent"
+                                    data-live-action-param="addBlock"
+                                    data-live-type-param="{{ type }}"
+                                    data-tid="content-editor-picker-tile-{{ type }}">
+                                {% if block.icon %}
+                                    {{ ux_icon(block.icon, {height: 32, width: 32}) }}
+                                {% endif %}
+                                <span>{{ block.label|trans }}</span>
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

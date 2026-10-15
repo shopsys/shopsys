@@ -20,7 +20,11 @@ export default class extends Controller {
     }
 
     async choose() {
-        const pickerElement = document.querySelector('[data-live-name-value="Admin:ContentEditor:MediaPicker"]');
+        // the picker of the editor the field is in, a field outside of an editor uses the first picker of the page
+        const pickerSelector = '[data-live-name-value="Admin:ContentEditor:MediaPicker"]';
+        const pickerElement =
+            this.element.closest('[data-content-editor-widget]')?.querySelector(pickerSelector) ??
+            document.querySelector(pickerSelector);
         const picker = await getComponent(pickerElement);
 
         picker.emitSelf('content-editor:media-picker:open', { targetInputId: this.inputTarget.id });

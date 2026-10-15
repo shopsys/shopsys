@@ -61,6 +61,9 @@ msgstr "Pridať"
 msgid "Add URL"
 msgstr "Pridať URL"
 
+msgid "Add block"
+msgstr "Pridať blok"
+
 msgid "Add country"
 msgstr "Pridať krajinu"
 
@@ -78,6 +81,9 @@ msgstr "Pridať produkt"
 
 msgid "Add requirement"
 msgstr "Pridať požiadavku"
+
+msgid "Add the first block"
+msgstr "Pridať prvý blok"
 
 msgid "Additional service"
 msgstr "Doplnková služba"
@@ -400,6 +406,9 @@ msgstr "Kód"
 msgid "Code can't be modified because it is used for pairing with existing orders."
 msgstr "Kód nemôže byť upravený, pretože je spárovaný s existujúcim objednávkami."
 
+msgid "Collapse or expand"
+msgstr "Zbaliť alebo rozbaliť"
+
 msgid "Color parameter values"
 msgstr "Hodnoty farebných parametrov"
 
@@ -453,6 +462,9 @@ msgstr "Kontaktný formulár"
 
 msgid "Contact form settings"
 msgstr "Nastavenia kontaktného formulára"
+
+msgid "Content"
+msgstr "Obsah"
 
 msgid "Content Management"
 msgstr "Správa obsahu"
@@ -822,6 +834,9 @@ msgstr "Pretiahnite sem váš súbor"
 
 msgid "Drag your files here"
 msgstr "Pretiahnite sem vaše súbory"
+
+msgid "Duplicate"
+msgstr "Duplikovať"
 
 msgid "Duration (seconds)"
 msgstr "Trvánie (sekundy)"
@@ -1291,6 +1306,9 @@ msgstr "Posledná akcia"
 msgid "Last name"
 msgstr "Priezvisko"
 
+msgid "Layout"
+msgstr "Rozloženie"
+
 msgid "Last update"
 msgstr "Posledná aktualizácia"
 
@@ -1407,6 +1425,12 @@ msgstr "Pondelok"
 
 msgid "Move"
 msgstr "Presunúť"
+
+msgid "Move down"
+msgstr "Posunúť nadol"
+
+msgid "Move up"
+msgstr "Posunúť nahor"
 
 msgid "My account"
 msgstr "Môj účet"
@@ -1842,6 +1866,9 @@ msgstr "PSČ"
 
 msgid "Preview"
 msgstr "Náhľad"
+
+msgid "Preview is not available yet"
+msgstr "Náhľad zatiaľ nie je k dispozícii"
 
 msgid "Price including VAT"
 msgstr "Cena vrátane DPH"
@@ -2457,6 +2484,9 @@ msgstr "Na tejto doméne zatiaľ neexistuje žiadny sklad."
 
 msgid "This SEO page cannot be deleted."
 msgstr "Táto SEO stránka nemôže byť odstránená."
+
+msgid "This block has content. Do you really want to remove it?"
+msgstr "Tento blok obsahuje údaje. Naozaj ho chcete odstrániť?"
 
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Táto mena nemôže byť odstránená, je nastavená ako predvolená alebo je uložená s objednávkou."

@@ -1,0 +1,15 @@
+{% block table_cells_widget %}
+    <div class="table-responsive">
+        <table class="table table-bordered mb-0" data-tid="table-cells">
+            <tbody>
+                {% for row in form %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ form_widget(cell) }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

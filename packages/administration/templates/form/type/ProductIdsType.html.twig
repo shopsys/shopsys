@@ -1,0 +1,9 @@
+{% block product_ids_widget %}
+    {# the picker is managed by JS, so the component leaves it alone and the controller tells it the chosen products #}
+    <div data-controller="product-ids-sync"
+         data-live-ignore
+         data-product-ids-sync-model-value="{{ full_name }}"
+         data-tid="product-ids">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}

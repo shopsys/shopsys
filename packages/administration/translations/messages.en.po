@@ -61,6 +61,9 @@ msgstr ""
 msgid "Add URL"
 msgstr ""
 
+msgid "Add block"
+msgstr ""
+
 msgid "Add country"
 msgstr ""
 
@@ -77,6 +80,9 @@ msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
+msgstr ""
+
+msgid "Add the first block"
 msgstr ""
 
 msgid "Additional service"
@@ -400,6 +406,9 @@ msgstr ""
 msgid "Code can't be modified because it is used for pairing with existing orders."
 msgstr ""
 
+msgid "Collapse or expand"
+msgstr ""
+
 msgid "Color parameter values"
 msgstr ""
 
@@ -452,6 +461,9 @@ msgid "Contact form"
 msgstr ""
 
 msgid "Contact form settings"
+msgstr ""
+
+msgid "Content"
 msgstr ""
 
 msgid "Content Management"
@@ -821,6 +833,9 @@ msgid "Drag your file here"
 msgstr ""
 
 msgid "Drag your files here"
+msgstr ""
+
+msgid "Duplicate"
 msgstr ""
 
 msgid "Duration (seconds)"
@@ -1291,6 +1306,9 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
+msgid "Layout"
+msgstr ""
+
 msgid "Last update"
 msgstr ""
 
@@ -1406,6 +1424,12 @@ msgid "Monday"
 msgstr ""
 
 msgid "Move"
+msgstr ""
+
+msgid "Move down"
+msgstr ""
+
+msgid "Move up"
 msgstr ""
 
 msgid "My account"
@@ -1841,6 +1865,9 @@ msgid "Postcode"
 msgstr ""
 
 msgid "Preview"
+msgstr ""
+
+msgid "Preview is not available yet"
 msgstr ""
 
 msgid "Price including VAT"
@@ -2456,6 +2483,9 @@ msgid "There is no warehouse on this domain yet."
 msgstr ""
 
 msgid "This SEO page cannot be deleted."
+msgstr ""
+
+msgid "This block has content. Do you really want to remove it?"
 msgstr ""
 
 msgid "This currency can't be deleted, it is set as default or is saved with order."

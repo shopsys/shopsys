@@ -38,9 +38,6 @@ parameters:
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Block/ContentBlockInterface.php
-        -
-            identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ContentEditor/Document/ContentBlockInstance.php
         -
             identifier: shipmonk.deadMethod
@@ -50,40 +47,7 @@ parameters:
             path: packages/framework/src/Component/ContentEditor/Document/NormalizationReport.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/CheckboxField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/ChoiceField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/ColorField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/FieldInterface.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/MediaField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/NumberField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/ProductsField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/TextField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/TextareaField.php
-        -
-            identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/ContentEditor/Field/UrlField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/VariableField.php
-        -
-            identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/ContentEditor/Field/WysiwygField.php
         -
             identifier: shipmonk.deadConstant
             path: packages/framework/src/Component/ContentEditor/Profile/ContentProfileEnum.php
@@ -193,21 +157,6 @@ parameters:
         # content editor: caller arrives in phase 4 (block picker of the editor UI)
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\ContentBlockRegistry::getForProfile\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Block/ContentBlockRegistry.php
-        # content editor: caller arrives in phase 4 (form data transformer)
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentFactory::createFromJson\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentFactory.php
-        # content editor: caller arrives in phase 4 (form data transformer and Live Component)
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentNormalizer::normalize\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
-            path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentNormalizer.php
-        # content editor: caller arrives in phase 9 (logging of dropped blocks during GrapesJS migration)
-        -
-            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Document\\ContentDocumentNormalizer::getLastReport\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Component/ContentEditor/Document/ContentDocumentNormalizer.php
         # content editor: caller arrives in phase 6 (Elasticsearch export of article text)
@@ -231,10 +180,6 @@ parameters:
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Block\\Web\\VideoBlock::export\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/framework/src/Component/ContentEditor/Block/Web/VideoBlock.php
         # content editor: caller arrives in phase 4 (BlockFormBuilder form type mapping)
-        -
-            identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\ContentEditor\\Field\\TableCellsField::getFormType$#'
-            path: packages/framework/src/Component/ContentEditor/Field/TableCellsField.php
         -
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\FrameworkBundle\\Component\\Cron\\CronModuleRun::getCronModule$#'

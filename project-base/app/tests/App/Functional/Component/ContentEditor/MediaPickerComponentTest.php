@@ -45,7 +45,7 @@ class MediaPickerComponentTest extends TransactionFunctionalTestCase
         $this->assertTrue($component->open);
         $this->assertSame('content_image', $component->targetInputId);
         $this->assertSame(
-            [MediaPickerComponent::OPENED_BROWSER_EVENT],
+            [$component->getOpenedBrowserEvent()],
             $this->getDispatchedBrowserEventNames(),
         );
     }
@@ -63,7 +63,7 @@ class MediaPickerComponentTest extends TransactionFunctionalTestCase
 
         $events = $this->liveResponder->getBrowserEventsToDispatch();
         $this->assertSame(
-            [MediaPickerComponent::CLOSED_BROWSER_EVENT, MediaPickerComponent::MEDIA_SELECTED_BROWSER_EVENT],
+            [$component->getClosedBrowserEvent(), MediaPickerComponent::MEDIA_SELECTED_BROWSER_EVENT],
             $this->getDispatchedBrowserEventNames(),
         );
 
