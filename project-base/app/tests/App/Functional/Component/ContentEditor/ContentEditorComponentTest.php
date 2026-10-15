@@ -7,9 +7,12 @@ namespace Tests\App\Functional\Component\ContentEditor;
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use App\Model\Administrator\Administrator;
 use InvalidArgumentException;
+use ReflectionMethod;
 use Shopsys\AdministrationBundle\Component\ContentEditor\LiveComponent\ContentEditorComponent;
 use Shopsys\AdministrationBundle\Form\Admin\Type\ContentEditorType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -44,6 +47,11 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
      * @inject
      */
     private AdministratorActivityFacade $administratorActivityFacade;
+
+    /**
+     * @inject
+     */
+    private ProductFacade $productFacade;
 
     public function testEmptyDocumentShowsFirstBlockTileAndPickerWithAllGroups(): void
     {
@@ -168,6 +176,46 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
             [['id' => self::TEXT_ID_1, 'type' => 'text', 'data' => ['html' => '<p>One</p>']]],
             $document['blocks'],
         );
+    }
+
+    public function testExportedDocumentContainsStorefrontFacingData(): void
+    {
+        $component = $this->createEditor([
+            ['id' => self::TEXT_ID_1, 'type' => 'products', 'data' => ['productIds' => [1]]],
+            $this->createColumnsBlock('columns-1-2', [[$this->createTextBlock(self::TEXT_ID_2, '<p>One</p>')], []]),
+            ['id' => self::TEXT_ID_3, 'type' => 'video', 'data' => ['url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ']],
+        ]);
+
+        $blocks = $this->getDocument($component)['blocks'];
+
+        $this->assertSame([$this->productFacade->getById(1)->getCatnum()], $blocks[0]['data']['catnums']);
+        $this->assertSame('1/3-2/3', $blocks[1]['data']['layout']);
+        $this->assertSame('<p>One</p>', $blocks[1]['children'][0][0]['data']['html']);
+        $this->assertSame('youtube', $blocks[2]['data']['provider']);
+        $this->assertSame('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', $blocks[2]['data']['embedUrl']);
+    }
+
+    public function testPreviewIsExportedForTheGivenDomainOrTheOneWithTheGivenLocale(): void
+    {
+        $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $secondDomainConfig = $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID);
+        $this->assertNotSame($firstDomainConfig->getLocale(), $secondDomainConfig->getLocale());
+
+        $this->assertSame(Domain::SECOND_DOMAIN_ID, $this->resolveExportDomainId(['domainId' => Domain::SECOND_DOMAIN_ID]));
+        $this->assertSame(Domain::SECOND_DOMAIN_ID, $this->resolveExportDomainId(['locale' => $secondDomainConfig->getLocale()]));
+        $this->assertSame(Domain::FIRST_DOMAIN_ID, $this->resolveExportDomainId(['locale' => 'xx']));
+        $this->assertSame(Domain::FIRST_DOMAIN_ID, $this->resolveExportDomainId([]));
+    }
+
+    public function testWebProfileRendersPreviewFrameWithDeviceToggle(): void
+    {
+        $crawler = $this->createEditor([])->render()->crawler();
+
+        $frame = $crawler->filter('[data-tid="content-editor-preview"] iframe[data-content-editor-target="previewFrame"]');
+        $this->assertCount(1, $frame);
+        $this->assertSame('/content-editor-preview', $frame->attr('src'));
+        $this->assertCount(1, $crawler->filter('[data-tid="content-editor-preview-desktop"][data-content-editor-width-param="100%"]'));
+        $this->assertCount(1, $crawler->filter('[data-tid="content-editor-preview-mobile"][data-content-editor-width-param="390px"]'));
     }
 
     public function testBlockFieldsAreBoundToLiveModel(): void
@@ -454,8 +502,9 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
 
     /**
      * @param array<int, array<string, mixed>> $blocks
+     * @param array<string, mixed> $props
      */
-    private function createEditor(array $blocks, bool $validated = false): TestLiveComponent
+    private function createEditor(array $blocks, bool $validated = false, array $props = []): TestLiveComponent
     {
         // the project test client sends JSON by default, the Live Component expects a form post
         $client = new KernelBrowser(self::$kernel, [
@@ -478,6 +527,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
             'profile' => 'web',
             'targetInputId' => 'content',
             'isValidated' => $validated,
+            ...$props,
         ], $client);
     }
 
@@ -513,9 +563,20 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
      */
     private function getDocument(TestLiveComponent $component): array
     {
-        $json = $component->render()->crawler()->filter('[data-content-editor-document-value]')->attr('data-content-editor-document-value');
+        $json = $component->render()->crawler()->filter('[data-content-editor-exported-document-value]')->attr('data-content-editor-exported-document-value');
 
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @param array<string, mixed> $props
+     */
+    private function resolveExportDomainId(array $props): int
+    {
+        $component = $this->createEditor([], false, $props)->component();
+
+        // private on purpose, the preview export is its only user
+        return (new ReflectionMethod($component, 'resolveExportDomainConfig'))->invoke($component)->getId();
     }
 
     /**

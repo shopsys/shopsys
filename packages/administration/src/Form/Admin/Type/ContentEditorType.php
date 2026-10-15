@@ -74,6 +74,8 @@ final class ContentEditorType extends AbstractType
         $view->vars['allowed_types'] = $options['allowed_types'];
         $view->vars['variables'] = $options['variables'];
         $view->vars['domain_id'] = $options['domain_id'];
+        // set by LocalizedType, tells which language of a localized content is edited
+        $view->vars['locale'] = $view->vars['attr']['data-locale'] ?? null;
         // after a failed submit the editor shows what is wrong with the blocks
         $view->vars['validated'] = $form->isSubmitted() && !$form->isValid();
     }

@@ -1,8 +1,8 @@
-{% set documentJson = this.normalizedDocumentJson %}
+{% set exportedDocumentJson = this.exportedDocumentJson %}
 <div {{ attributes.defaults({
     'class': 'modal-content',
     'data-controller': 'content-editor',
-    'data-content-editor-document-value': documentJson,
+    'data-content-editor-exported-document-value': exportedDocumentJson,
     'data-tid': 'content-editor',
 }) }}>
     <div class="modal-header">
@@ -16,14 +16,18 @@
     </div>
     <div class="modal-body p-0 content-editor-panes">
         <div class="content-editor-preview-pane" data-tid="content-editor-preview">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">{{ 'Preview'|trans }}</h3>
+            {% if this.profile == 'web' %}
+                {% include '@ShopsysAdministration/content_editor/preview_web.html.twig' %}
+            {% else %}
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ 'Preview'|trans }}</h3>
+                    </div>
+                    <div class="card-body text-secondary">
+                        {{ 'Preview is not available yet'|trans }}
+                    </div>
                 </div>
-                <div class="card-body text-secondary">
-                    {{ 'Preview is not available yet'|trans }}
-                </div>
-            </div>
+            {% endif %}
         </div>
         <div class="content-editor-blocks-pane">
             {% include '@ShopsysAdministration/content_editor/block_list.html.twig' with {blocks: form.blocks, slotPath: ''} %}

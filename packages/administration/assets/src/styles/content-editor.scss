@@ -118,3 +118,13 @@
     gap: 0.5rem;
     padding: 1rem 0.5rem;
 }
+
+// the width of the preview is switched between the desktop (whole pane) and the mobile one by the controller
+.content-editor-preview-frame {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 20rem;
+    margin: 0 auto;
+    background: var(--tblr-bg-surface);
+    border: 1px solid var(--tblr-border-color);
+}

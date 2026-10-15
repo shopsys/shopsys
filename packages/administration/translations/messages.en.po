@@ -736,6 +736,9 @@ msgstr ""
 msgid "Deselect all permissions in section"
 msgstr ""
 
+msgid "Desktop"
+msgstr ""
+
 msgid "Detail"
 msgstr ""
 
@@ -1429,6 +1432,9 @@ msgstr ""
 msgid "Mixed"
 msgstr ""
 
+msgid "Mobile"
+msgstr ""
+
 msgid "Modifications"
 msgstr ""
 
@@ -1879,7 +1885,16 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
+msgid "Preview in the width of a desktop"
+msgstr ""
+
+msgid "Preview in the width of a mobile phone"
+msgstr ""
+
 msgid "Preview is not available yet"
+msgstr ""
+
+msgid "Preview of the content"
 msgstr ""
 
 msgid "Price including VAT"

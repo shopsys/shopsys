@@ -736,6 +736,9 @@ msgstr "Zrušit výběr všech oprávnění pro tuto roli"
 msgid "Deselect all permissions in section"
 msgstr "Zrušit výběr všech oprávnění v sekci"
 
+msgid "Desktop"
+msgstr "Počítač"
+
 msgid "Detail"
 msgstr "Detail"
 
@@ -1429,6 +1432,9 @@ msgstr "Text zprávy"
 msgid "Mixed"
 msgstr "Různé"
 
+msgid "Mobile"
+msgstr "Mobil"
+
 msgid "Modifications"
 msgstr "Úpravy"
 
@@ -1879,8 +1885,17 @@ msgstr "PSČ"
 msgid "Preview"
 msgstr "Náhled"
 
+msgid "Preview in the width of a desktop"
+msgstr "Náhled v šířce počítače"
+
+msgid "Preview in the width of a mobile phone"
+msgstr "Náhled v šířce mobilního telefonu"
+
 msgid "Preview is not available yet"
 msgstr "Náhled zatím není k dispozici"
+
+msgid "Preview of the content"
+msgstr "Náhled obsahu"
 
 msgid "Price including VAT"
 msgstr "Cena s DPH"

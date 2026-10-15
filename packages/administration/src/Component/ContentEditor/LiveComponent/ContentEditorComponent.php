@@ -9,9 +9,14 @@ use Shopsys\AdministrationBundle\Component\ContentEditor\Form\ContentDocumentTyp
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContainerContentBlockInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ExportContext;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentNormalizer;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Export\ContentDocumentExporter;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -76,6 +81,12 @@ final class ContentEditorComponent
     #[LiveProp]
     public ?int $domainId = null;
 
+    /**
+     * Locale of the edited content, used to pick the domain when $domainId is not known
+     */
+    #[LiveProp]
+    public ?string $locale = null;
+
     #[LiveProp]
     public string $label = '';
 
@@ -95,6 +106,8 @@ final class ContentEditorComponent
         private readonly ContentBlockRegistry $contentBlockRegistry,
         private readonly ContentDocumentFactory $contentDocumentFactory,
         private readonly ContentDocumentNormalizer $contentDocumentNormalizer,
+        private readonly ContentDocumentExporter $contentDocumentExporter,
+        private readonly Domain $domain,
         private readonly FormFactoryInterface $formFactory,
     ) {
     }
@@ -201,12 +214,21 @@ final class ContentEditorComponent
 
     public function getNormalizedDocumentJson(): string
     {
-        $document = $this->contentDocumentFactory->createFromArray([
-            'profile' => $this->profile,
-            'blocks' => $this->getForm()->getData()['blocks'] ?? [],
-        ]);
+        return $this->getNormalizedDocument()->toJson();
+    }
 
-        return $this->contentDocumentNormalizer->normalize($document, $this->allowedTypes)->toJson();
+    /**
+     * The document as the storefront receives it (media urls, product catnums, video embeds), shown in the preview
+     */
+    public function getExportedDocumentJson(): string
+    {
+        $domainConfig = $this->resolveExportDomainConfig();
+        $exportedDocument = $this->contentDocumentExporter->export(
+            $this->getNormalizedDocument(),
+            new ExportContext($domainConfig->getId(), $domainConfig->getLocale()),
+        );
+
+        return json_encode($exportedDocument, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function getBlockDefinition(string $type): ContentBlockInterface
@@ -277,6 +299,36 @@ final class ContentEditorComponent
             ['blocks' => $normalizedDocument->toArray()['blocks']],
             ['variables' => $this->variables],
         );
+    }
+
+    private function getNormalizedDocument(): ContentDocument
+    {
+        $document = $this->contentDocumentFactory->createFromArray([
+            'profile' => $this->profile,
+            'blocks' => $this->getForm()->getData()['blocks'] ?? [],
+        ]);
+
+        return $this->contentDocumentNormalizer->normalize($document, $this->allowedTypes);
+    }
+
+    /**
+     * The domain the content is exported for: the given one, else the first one with the given locale, else the first one
+     */
+    private function resolveExportDomainConfig(): DomainConfig
+    {
+        if ($this->domainId !== null) {
+            return $this->domain->getDomainConfigById($this->domainId);
+        }
+
+        $domainConfigs = array_values($this->domain->getAll());
+
+        foreach ($domainConfigs as $domainConfig) {
+            if ($domainConfig->getLocale() === $this->locale) {
+                return $domainConfig;
+            }
+        }
+
+        return $domainConfigs[0];
     }
 
     /**

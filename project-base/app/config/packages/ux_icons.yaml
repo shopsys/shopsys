@@ -29,6 +29,8 @@ ux_icons:
         crown: 'tabler:crown'
         delete: 'tabler:x'
         delete-thin: 'tabler:x'
+        device-desktop: 'tabler:device-desktop'
+        device-mobile: 'tabler:device-mobile'
         document-copy: 'tabler:clipboard-text-filled'
         dots: 'tabler:dots'
         double-arrow: 'tabler:chevrons-left'

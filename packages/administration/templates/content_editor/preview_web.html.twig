@@ -1,0 +1,30 @@
+{# the iframe and its width are managed by the browser, a render of the editor must not touch them #}
+<div class="d-flex flex-column h-100" data-live-ignore>
+    <div class="btn-group mb-2 align-self-center" role="group">
+        <button type="button"
+                class="btn btn-sm btn-outline-primary active"
+                data-action="content-editor#setPreviewWidth"
+                data-content-editor-width-param="100%"
+                data-tid="content-editor-preview-desktop"
+                title="{{ 'Preview in the width of a desktop'|trans }}">
+            {{ ux_icon('device-desktop') }}
+            {{ 'Desktop'|trans }}
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                data-action="content-editor#setPreviewWidth"
+                data-content-editor-width-param="390px"
+                data-tid="content-editor-preview-mobile"
+                title="{{ 'Preview in the width of a mobile phone'|trans }}">
+            {{ ux_icon('device-mobile') }}
+            {{ 'Mobile'|trans }}
+        </button>
+    </div>
+    <div class="content-editor-preview-frame" data-content-editor-target="previewFrameWrapper">
+        <iframe src="/content-editor-preview"
+                class="w-100 h-100 border-0"
+                title="{{ 'Preview of the content'|trans }}"
+                data-content-editor-target="previewFrame"
+                data-tid="content-editor-preview-frame"></iframe>
+    </div>
+</div>
