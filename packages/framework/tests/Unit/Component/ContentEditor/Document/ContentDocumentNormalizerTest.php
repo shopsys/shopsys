@@ -95,6 +95,17 @@ class ContentDocumentNormalizerTest extends TestCase
         $this->assertSame('<p>Hi</p>', $result->blocks[0]->data['html']);
     }
 
+    public function testTableCellsAreSanitized(): void
+    {
+        $document = $this->createDocument([
+            new ContentBlockInstance(self::UUID, 'table', ['cells' => [['<p onclick="x()">A</p>', '<script>x</script>B'], ['C']]]),
+        ]);
+
+        $result = $this->normalizer->normalize($document);
+
+        $this->assertSame([['<p>A</p>', 'B'], ['C']], $result->blocks[0]->data['cells']);
+    }
+
     public function testUrlKeyIsKeptOnlyOnBlocksWithMediaField(): void
     {
         $document = $this->createDocument([

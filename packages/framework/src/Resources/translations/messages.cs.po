@@ -271,6 +271,9 @@ msgstr "Nastavení alternativních jazyků"
 msgid "Alternate language settings modified"
 msgstr "Nastavení alternativních jazyků upraveno"
 
+msgid "Alternative text"
+msgstr "Alternativní text"
+
 msgid "An email with 6 digit code was sent to your email address."
 msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu."
 
@@ -550,6 +553,12 @@ msgstr "Hromadná úprava byla provedena"
 msgid "Bulk promo code generation"
 msgstr "Hromadné generování kupónu"
 
+msgid "Button"
+msgstr "Tlačítko"
+
+msgid "Button text"
+msgstr "Text tlačítka"
+
 msgid "Buy quantity"
 msgstr "Kupované množství"
 
@@ -622,6 +631,9 @@ msgstr "Název kategorie"
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
 
+msgid "Cells"
+msgstr "Buňky"
+
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr "Změnou domény ztratíte neuložené změny. Chcete pokračovat?"
 
@@ -687,6 +699,9 @@ msgstr "Barva"
 
 msgid "Color pattern icon"
 msgstr "Ikona barevného vzoru"
+
+msgid "Columns"
+msgstr "Sloupce"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
@@ -1486,6 +1501,9 @@ msgstr "Šablony e-mailů"
 msgid "Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent."
 msgstr "Whitelist e-mailových adres je povolený na některých doménách. Budou odeslány pouze odpovídající e-maily."
 
+msgid "Embedded content"
+msgstr "Vložený obsah"
+
 msgid "Enable two-factor authentication"
 msgstr "Povolit dvoufaktorové ověřování"
 
@@ -1849,6 +1867,9 @@ msgstr "GoPay"
 msgid "GoPay payment method"
 msgstr "Platební metoda GoPay"
 
+msgid "Google Maps embed link"
+msgstr "Odkaz pro vložení Google Maps"
+
 msgid "Group"
 msgstr "Skupina"
 
@@ -1860,6 +1881,9 @@ msgstr "Má akci X+Y"
 
 msgid "Heading (H1)"
 msgstr "Nadpis (H1)"
+
+msgid "Height (px)"
+msgstr "Výška (px)"
 
 msgid "Heureka"
 msgstr "Heureka"
@@ -2068,6 +2092,9 @@ msgstr "Poslední aktualizace"
 msgid "Latitude"
 msgstr "Zeměpisná šířka"
 
+msgid "Layout"
+msgstr "Rozložení"
+
 msgid "Legal conditions"
 msgstr "Právní podmínky"
 
@@ -2143,8 +2170,14 @@ msgstr "Spravovat všechny zákazníky pod firmou uživatele (včetně správy v
 msgid "Manage company data (e.g., billing address)"
 msgstr "Spravovat údaje o firmě (např. fakturační adresu)"
 
+msgid "Map"
+msgstr "Mapa"
+
 msgid "Map coordinates in decimal format"
 msgstr "Mapové souřadnice v číselném formátu"
+
+msgid "Map embed URL"
+msgstr "URL pro vložení mapy"
 
 msgid "Max duration"
 msgstr "Max. trvání"
@@ -2380,6 +2413,9 @@ msgstr "Stejná doména nemůže být použita ve dvou skupinách"
 msgid "Only 100 characters will be exported to the Google feed custom label, so not all chosen services may appear in it."
 msgstr "Do custom labelu v google feedu se vyexportuje jen 100 znaků, nemusí se v něm tedy projevit všechny zvolené služby."
 
+msgid "Only addresses of allowed hosts can be embedded"
+msgstr "Vložit lze jen adresy povolených hostitelů"
+
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
 
@@ -2397,6 +2433,9 @@ msgstr "Open Graph popis"
 
 msgid "Open Graph title"
 msgstr "Open Graph titulek"
+
+msgid "Open in new tab"
+msgstr "Otevřít v novém okně"
 
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
@@ -2718,6 +2757,9 @@ msgstr "Vyberte prosím alespoň jednu doménu."
 
 msgid "Please wait until all files are uploaded and try again."
 msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to znovu."
+
+msgid "Position"
+msgstr "Pozice"
 
 msgid "Postcode"
 msgstr "PSČ"
@@ -3054,6 +3096,9 @@ msgstr "Počet desetinných míst pro zaokrouhlování ceny bez DPH a částky D
 
 msgid "Rounding type"
 msgstr "Typ zaokrouhlení"
+
+msgid "Rows"
+msgstr "Řádky"
 
 msgid "SEO"
 msgstr "SEO"
@@ -3448,6 +3493,9 @@ msgstr "Podporované formáty: /url-adresa, url-adresa, https://example.com/url-
 msgid "System data"
 msgstr "Systémové údaje"
 
+msgid "Table"
+msgstr "Tabulka"
+
 msgid "Tax identification number"
 msgstr "DIČ"
 
@@ -3778,6 +3826,9 @@ msgstr "Hodnota"
 msgid "Variable symbol"
 msgstr "Variabilní symbol"
 
+msgid "Variant"
+msgstr "Varianta"
+
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr "Varianta <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> byla úspěšně vytvořena."
 
@@ -3786,6 +3837,12 @@ msgstr "Alias varianty"
 
 msgid "Variants"
 msgstr "Varianty"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Video URL"
+msgstr "URL videa"
 
 msgid "Videos"
 msgstr "Videa"
@@ -3927,6 +3984,9 @@ msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
 msgid "You have unsaved changes, save them first, please."
 msgstr "Máte neuložené změny. Nejdříve je prosím uložte."
+
+msgid "YouTube or Vimeo link"
+msgstr "Odkaz na YouTube nebo Vimeo"
 
 msgid "Youtube ID"
 msgstr "Youtube ID"

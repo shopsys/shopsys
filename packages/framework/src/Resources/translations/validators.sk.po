@@ -94,6 +94,12 @@ msgstr "Predmet e-mailu nemôže byť dlhší ako {{ limit }} znakov"
 msgid "Email {{ email }} is already registered"
 msgstr "E-mail {{ email }} je už zaregistrovaný"
 
+msgid "Enter a Google Maps embed URL."
+msgstr "Zadajte URL na vloženie Google Maps."
+
+msgid "Enter a YouTube or Vimeo video URL."
+msgstr "Zadajte URL videa z YouTube alebo Vimeo."
+
 msgid "Enter an http(s), mailto, tel or relative URL."
 msgstr "Zadajte URL začínajúcu http(s), mailto, tel alebo relatívnou cestou"
 
@@ -720,6 +726,9 @@ msgstr "E-mail je už zaregistrovaný na danej doméne."
 
 msgid "This field must be empty"
 msgstr "Toto pole musí byť prázdne"
+
+msgid "This host is not allowed for embedding."
+msgstr "Tento hostiteľ nie je na vloženie povolený."
 
 msgid "This value is not a valid email address."
 msgstr "Táto hodnota nie je platná e-mailová adresa."

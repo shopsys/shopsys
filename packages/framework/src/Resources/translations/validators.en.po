@@ -94,6 +94,12 @@ msgstr ""
 msgid "Email {{ email }} is already registered"
 msgstr ""
 
+msgid "Enter a Google Maps embed URL."
+msgstr ""
+
+msgid "Enter a YouTube or Vimeo video URL."
+msgstr ""
+
 msgid "Enter an http(s), mailto, tel or relative URL."
 msgstr ""
 
@@ -719,6 +725,9 @@ msgid "The email is already registered on given domain."
 msgstr ""
 
 msgid "This field must be empty"
+msgstr ""
+
+msgid "This host is not allowed for embedding."
 msgstr ""
 
 msgid "This value is not a valid email address."

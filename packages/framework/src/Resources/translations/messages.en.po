@@ -271,6 +271,9 @@ msgstr ""
 msgid "Alternate language settings modified"
 msgstr ""
 
+msgid "Alternative text"
+msgstr ""
+
 msgid "An email with 6 digit code was sent to your email address."
 msgstr ""
 
@@ -550,6 +553,12 @@ msgstr ""
 msgid "Bulk promo code generation"
 msgstr ""
 
+msgid "Button"
+msgstr ""
+
+msgid "Button text"
+msgstr ""
+
 msgid "Buy quantity"
 msgstr ""
 
@@ -622,6 +631,9 @@ msgstr ""
 msgid "Category with prefilled filters"
 msgstr ""
 
+msgid "Cells"
+msgstr ""
+
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr ""
 
@@ -686,6 +698,9 @@ msgid "Color"
 msgstr ""
 
 msgid "Color pattern icon"
+msgstr ""
+
+msgid "Columns"
 msgstr ""
 
 msgid "Combination of parameters and their values"
@@ -1486,6 +1501,9 @@ msgstr ""
 msgid "Email whitelist is enabled on some domains. Only emails matching the whitelist will be sent."
 msgstr ""
 
+msgid "Embedded content"
+msgstr ""
+
 msgid "Enable two-factor authentication"
 msgstr ""
 
@@ -1849,6 +1867,9 @@ msgstr ""
 msgid "GoPay payment method"
 msgstr ""
 
+msgid "Google Maps embed link"
+msgstr ""
+
 msgid "Group"
 msgstr ""
 
@@ -1859,6 +1880,9 @@ msgid "Has X+Y promotion"
 msgstr ""
 
 msgid "Heading (H1)"
+msgstr ""
+
+msgid "Height (px)"
 msgstr ""
 
 msgid "Heureka"
@@ -2068,6 +2092,9 @@ msgstr ""
 msgid "Latitude"
 msgstr ""
 
+msgid "Layout"
+msgstr ""
+
 msgid "Legal conditions"
 msgstr ""
 
@@ -2143,7 +2170,13 @@ msgstr ""
 msgid "Manage company data (e.g., billing address)"
 msgstr ""
 
+msgid "Map"
+msgstr ""
+
 msgid "Map coordinates in decimal format"
+msgstr ""
+
+msgid "Map embed URL"
 msgstr ""
 
 msgid "Max duration"
@@ -2380,6 +2413,9 @@ msgstr ""
 msgid "Only 100 characters will be exported to the Google feed custom label, so not all chosen services may appear in it."
 msgstr ""
 
+msgid "Only addresses of allowed hosts can be embedded"
+msgstr ""
+
 msgid "Only checked products"
 msgstr ""
 
@@ -2396,6 +2432,9 @@ msgid "Open Graph description"
 msgstr ""
 
 msgid "Open Graph title"
+msgstr ""
+
+msgid "Open in new tab"
 msgstr ""
 
 msgid "Open in new window"
@@ -2717,6 +2756,9 @@ msgid "Please select at least one domain."
 msgstr ""
 
 msgid "Please wait until all files are uploaded and try again."
+msgstr ""
+
+msgid "Position"
 msgstr ""
 
 msgid "Postcode"
@@ -3053,6 +3095,9 @@ msgid "Rounding places of price without VAT and VAT amount"
 msgstr ""
 
 msgid "Rounding type"
+msgstr ""
+
+msgid "Rows"
 msgstr ""
 
 msgid "SEO"
@@ -3448,6 +3493,9 @@ msgstr ""
 msgid "System data"
 msgstr ""
 
+msgid "Table"
+msgstr ""
+
 msgid "Tax identification number"
 msgstr ""
 
@@ -3778,6 +3826,9 @@ msgstr ""
 msgid "Variable symbol"
 msgstr ""
 
+msgid "Variant"
+msgstr ""
+
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr ""
 
@@ -3785,6 +3836,12 @@ msgid "Variant alias"
 msgstr ""
 
 msgid "Variants"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Video URL"
 msgstr ""
 
 msgid "Videos"
@@ -3926,6 +3983,9 @@ msgid "You have to set redirect code for redirect."
 msgstr ""
 
 msgid "You have unsaved changes, save them first, please."
+msgstr ""
+
+msgid "YouTube or Vimeo link"
 msgstr ""
 
 msgid "Youtube ID"

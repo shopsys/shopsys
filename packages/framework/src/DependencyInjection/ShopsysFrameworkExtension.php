@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\DependencyInjection;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\IframeBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
@@ -209,7 +210,8 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
             ->setArgument('$disabledTypes', $contentEditorConfig['disabled_types']);
         $container->getDefinition(ContentHtmlSanitizer::class)
             ->setArgument('$htmlSanitizer', new Reference('html_sanitizer.sanitizer.' . $contentEditorConfig['sanitizer']));
-        $container->setParameter('shopsys.content_editor.embed_hosts', $contentEditorConfig['embed_hosts']);
+        $container->getDefinition(IframeBlock::class)
+            ->setArgument('$embedHosts', $contentEditorConfig['embed_hosts']);
     }
 
     /**

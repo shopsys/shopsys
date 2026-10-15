@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContainerContentBlockI
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockInterface;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\MediaField;
+use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TableCellsField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\WysiwygField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Profile\ContentProfileEnum;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Sanitizer\ContentHtmlSanitizer;
@@ -123,6 +124,10 @@ final class ContentDocumentNormalizer
                 $value = $this->contentHtmlSanitizer->sanitize($value);
             }
 
+            if ($field instanceof TableCellsField && is_array($value)) {
+                $value = $this->sanitizeCells($value);
+            }
+
             $normalizedData[$field->getName()] = $value;
             $hasMediaField = $hasMediaField || $field instanceof MediaField;
         }
@@ -133,6 +138,21 @@ final class ContentDocumentNormalizer
         }
 
         return $normalizedData;
+    }
+
+    /**
+     * @param string[][] $rows
+     * @return string[][]
+     */
+    private function sanitizeCells(array $rows): array
+    {
+        foreach ($rows as $rowIndex => $row) {
+            foreach ($row as $columnIndex => $cell) {
+                $rows[$rowIndex][$columnIndex] = $this->contentHtmlSanitizer->sanitize($cell);
+            }
+        }
+
+        return $rows;
     }
 
     /**
