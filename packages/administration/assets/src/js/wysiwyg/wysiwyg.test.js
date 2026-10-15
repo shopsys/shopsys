@@ -20,6 +20,14 @@ describe('HTML round trip', () => {
         expect(createEditor(html).getHTML()).toBe(html);
     });
 
+    test('table keeps rows, header cells and cell content', () => {
+        const html = createEditor(
+            '<table><tbody><tr><th>head</th></tr><tr><td>cell</td></tr></tbody></table>',
+        ).getHTML();
+
+        expect(html).toContain('<tr><th><p>head</p></th></tr><tr><td><p>cell</p></td></tr>');
+    });
+
     test('markup without an extension is dropped', () => {
         const editor = createEditor(
             '<p>a</p><script>alert(1)</script><img src="x.png"><h1>b</h1><pre><code>c</code></pre>',
@@ -75,6 +83,25 @@ describe('variables', () => {
 });
 
 describe('toolbar commands', () => {
+    test('table is inserted with a header row and edited by rows and columns', () => {
+        const editor = createEditor('<p>text</p>');
+        const count = selector => editor.view.dom.querySelectorAll(selector).length;
+
+        TOOLBAR_COMMANDS.insertTable.run(editor);
+        expect([count('table'), count('tr'), count('th'), count('td')]).toEqual([1, 3, 3, 6]);
+
+        TOOLBAR_COMMANDS.addRow.run(editor);
+        TOOLBAR_COMMANDS.addColumn.run(editor);
+        expect([count('tr'), count('th, td')]).toEqual([4, 16]);
+
+        TOOLBAR_COMMANDS.deleteRow.run(editor);
+        TOOLBAR_COMMANDS.deleteColumn.run(editor);
+        expect([count('tr'), count('th, td')]).toEqual([3, 9]);
+
+        TOOLBAR_COMMANDS.deleteTable.run(editor);
+        expect(count('table')).toBe(0);
+    });
+
     test('bold toggles and reports its active state', () => {
         const editor = createEditor('<p>text</p>');
 

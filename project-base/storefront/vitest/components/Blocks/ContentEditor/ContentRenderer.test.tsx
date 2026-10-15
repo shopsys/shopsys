@@ -70,7 +70,6 @@ describe('ContentRenderer', () => {
                     position: 'left',
                     variant: 'secondary',
                 }),
-                block('table', { rows: 1, columns: 2, variant: 'secondary', cells: [['<b>a</b>', 'b']] }),
                 block('video', {
                     provider: 'youtube',
                     videoId: 'x',
@@ -90,7 +89,7 @@ describe('ContentRenderer', () => {
         expect(screen.getAllByText('Hello')).toHaveLength(1);
         expect(screen.getByTestId('media-image')).toHaveAttribute('alt', 'An image');
         expect(screen.getByText('Buy')).toHaveAttribute('target', '_blank');
-        expect(container.querySelector('table.secondary b')).toHaveTextContent('a');
+        expect(screen.getByText('Buy')).toHaveAttribute('rel', 'noopener');
         expect(container.querySelector('iframe[src="https://www.youtube-nocookie.com/embed/x"]')).toBeInTheDocument();
         expect(container.querySelector('iframe[src^="https://www.google.com/maps/embed"]')).toBeInTheDocument();
         expect(container.querySelector('iframe[height="300"]')).toBeInTheDocument();

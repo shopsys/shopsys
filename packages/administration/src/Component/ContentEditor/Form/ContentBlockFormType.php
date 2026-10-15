@@ -61,15 +61,7 @@ final class ContentBlockFormType extends AbstractType
      */
     private function onPreSubmit(FormEvent $event, array $variables): void
     {
-        $submittedBlock = $event->getData();
-        $type = $submittedBlock['type'] ?? null;
-
-        if (is_string($type) && $this->contentBlockRegistry->has($type) && is_array($submittedBlock['data'] ?? null)) {
-            $submittedBlock['data'] = $this->contentBlockRegistry->get($type)->normalizeData($submittedBlock['data']);
-            $event->setData($submittedBlock);
-        }
-
-        $this->resetBlockFields($event->getForm(), $type, $variables);
+        $this->resetBlockFields($event->getForm(), $event->getData()['type'] ?? null, $variables);
     }
 
     /**

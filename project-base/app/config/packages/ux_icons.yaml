@@ -101,6 +101,7 @@ ux_icons:
         square-off: 'tabler:square-off'
         strikethrough: 'tabler:strikethrough'
         support: 'tabler:headset'
+        table: 'tabler:table'
         tag: 'tabler:tag-filled'
         toc: 'tabler:menu-4'
         trash: 'tabler:trash-x-filled'

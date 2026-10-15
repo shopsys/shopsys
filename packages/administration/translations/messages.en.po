@@ -64,6 +64,9 @@ msgstr ""
 msgid "Add block"
 msgstr ""
 
+msgid "Add column"
+msgstr ""
+
 msgid "Add country"
 msgstr ""
 
@@ -80,6 +83,9 @@ msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
+msgstr ""
+
+msgid "Add row"
 msgstr ""
 
 msgid "Add the first block"
@@ -709,7 +715,16 @@ msgstr ""
 msgid "Delete and set"
 msgstr ""
 
+msgid "Delete column"
+msgstr ""
+
 msgid "Delete file"
+msgstr ""
+
+msgid "Delete row"
+msgstr ""
+
+msgid "Delete table"
 msgstr ""
 
 msgid "Delivered"
@@ -1271,6 +1286,9 @@ msgid "Inquiries overview"
 msgstr ""
 
 msgid "Inquiry by"
+msgstr ""
+
+msgid "Insert table"
 msgstr ""
 
 msgid "Insert variable"
@@ -2453,6 +2471,9 @@ msgid "System Tools"
 msgstr ""
 
 msgid "Tab content could not be loaded."
+msgstr ""
+
+msgid "Table"
 msgstr ""
 
 msgid "Table of Contents"

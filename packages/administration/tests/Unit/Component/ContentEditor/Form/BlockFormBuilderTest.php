@@ -9,7 +9,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\AdministrationBundle\Component\ContentEditor\Form\BlockFormBuilder;
 use Shopsys\AdministrationBundle\Form\Admin\Type\MediaType;
 use Shopsys\AdministrationBundle\Form\Admin\Type\ProductIdsType;
-use Shopsys\AdministrationBundle\Form\Admin\Type\TableCellsType;
 use Shopsys\AdministrationBundle\Form\Admin\Type\Transformer\SanitizedHtmlTransformer;
 use Shopsys\AdministrationBundle\Form\Admin\Type\WysiwygType;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\AbstractContentBlock;
@@ -19,7 +18,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ColorField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\MediaField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\NumberField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\ProductsField;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TableCellsField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TextareaField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\TextField;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Field\UrlField;
@@ -107,11 +105,6 @@ class BlockFormBuilderTest extends TypeTestCase
         yield 'variable' => [
             'fieldName' => 'variable',
             'formType' => ChoiceType::class,
-        ];
-
-        yield 'table cells' => [
-            'fieldName' => 'cells',
-            'formType' => TableCellsType::class,
         ];
     }
 
@@ -242,7 +235,6 @@ class BlockFormBuilderTest extends TypeTestCase
                     ProductsField::create('products')->label('Products label')->required(),
                     MediaField::create('media'),
                     VariableField::create('variable', ['{a}']),
-                    TableCellsField::create('cells'),
                 ];
             }
         };

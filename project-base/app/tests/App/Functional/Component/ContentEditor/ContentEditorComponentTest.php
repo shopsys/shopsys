@@ -34,7 +34,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     private const string TEXT_ID_2 = '22222222-2222-4222-8222-222222222222';
     private const string TEXT_ID_3 = '33333333-3333-4333-8333-333333333333';
     private const string COLUMNS_ID = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc';
-    private const string TABLE_ID = 'dddddddd-dddd-4ddd-8ddd-dddddddddddd';
+    private const string VIDEO_ID = 'dddddddd-dddd-4ddd-8ddd-dddddddddddd';
 
     /**
      * @inject
@@ -83,7 +83,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     {
         $blocks = [
             $this->createTextBlock(self::TEXT_ID_1, '<p>One</p>'),
-            ['id' => self::TABLE_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']],
+            ['id' => self::VIDEO_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']],
         ];
 
         $editing = $this->renderEditorOnPage($blocks, false);
@@ -98,7 +98,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     public function testRefusedContentKeepsShowingErrorsInTheFollowingRenders(): void
     {
         $component = $this->createEditor([
-            ['id' => self::TABLE_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']],
+            ['id' => self::VIDEO_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']],
         ], true);
         $this->client->catchExceptions(true);
 
@@ -115,7 +115,7 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
             $this->createTextBlock(self::TEXT_ID_1, '<p>One</p>'),
             $this->createColumnsBlock('columns-1-1', [
                 [],
-                [['id' => self::TABLE_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']]],
+                [['id' => self::VIDEO_ID, 'type' => 'video', 'data' => ['url' => 'https://example.com/not-a-video']]],
             ]),
         ]);
         // the Live Component test helper lets exceptions through, the browser gets the rendered editor instead
@@ -222,15 +222,14 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
     {
         $component = $this->createEditor([
             $this->createTextBlock(self::TEXT_ID_1, '<p>One</p>'),
-            ['id' => self::TABLE_ID, 'type' => 'table', 'data' => ['rows' => 1, 'columns' => 1, 'variant' => 'default', 'cells' => [['']]]],
+            ['id' => self::TEXT_ID_2, 'type' => 'button-link', 'data' => ['text' => 'Go', 'url' => '/', 'variant' => 'primary']],
         ]);
 
         $crawler = $component->render()->crawler();
 
         $this->assertCount(1, $crawler->filter('textarea[data-model="debounce(500)|editor_content[blocks][0][data][html]"]'));
-        $this->assertCount(1, $crawler->filter('input[data-model="debounce(300)|editor_content[blocks][1][data][rows]"]'));
+        $this->assertCount(1, $crawler->filter('input[data-model="debounce(300)|editor_content[blocks][1][data][text]"]'));
         $this->assertCount(1, $crawler->filter('select[data-model="debounce(300)|editor_content[blocks][1][data][variant]"]'));
-        $this->assertCount(1, $crawler->filter('textarea[data-model="debounce(500)|editor_content[blocks][1][data][cells][0][0]"]'));
         $this->assertCount(0, $crawler->filter('form'));
     }
 
@@ -505,20 +504,6 @@ class ContentEditorComponentTest extends TransactionFunctionalTestCase
         $this->assertNotSame(self::COLUMNS_ID, $copy['id']);
         $this->assertSame('<p>One</p>', $copy['children'][0][0]['data']['html']);
         $this->assertNotSame(self::TEXT_ID_1, $copy['children'][0][0]['id']);
-    }
-
-    public function testTableCellsFollowChangedNumberOfRows(): void
-    {
-        $component = $this->createEditor([
-            ['id' => self::TABLE_ID, 'type' => 'table', 'data' => ['rows' => 2, 'columns' => 2, 'variant' => 'default', 'cells' => [['a', 'b'], ['c', 'd']]]],
-        ]);
-
-        $component->set('editor_content.blocks.0.data.rows', '3');
-
-        $data = $this->getDocument($component)['blocks'][0]['data'];
-        $this->assertSame(3, $data['rows']);
-        $this->assertSame([['a', 'b'], ['c', 'd'], ['', '']], $data['cells']);
-        $this->assertCount(3, $component->render()->crawler()->filter('table[data-tid="table-cells"] tr'));
     }
 
     public function testBlockSummaryAndEmptinessAreExposedPerBlock(): void

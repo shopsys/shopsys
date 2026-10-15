@@ -15,6 +15,7 @@
         "@melloware/coloris": "^0.25.0",
         "@tabler/core": "1.7.4",
         "@tiptap/core": "^3.32.0",
+        "@tiptap/extension-table": "^3.32.0",
         "@tiptap/pm": "^3.32.0",
         "@tiptap/starter-kit": "^3.32.0",
         "bazinga-translator": "^8.0.0",

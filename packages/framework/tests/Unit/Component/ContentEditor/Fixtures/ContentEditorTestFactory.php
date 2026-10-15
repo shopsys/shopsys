@@ -19,7 +19,7 @@ class ContentEditorTestFactory
     public static function createRegistry(): ContentBlockRegistry
     {
         return new ContentBlockRegistry(
-            [new DummyTextBlock(), new DummyImageBlock(), new DummyMailTextBlock(), new DummyColumnsBlock(), new DummyTableBlock()],
+            [new DummyTextBlock(), new DummyImageBlock(), new DummyMailTextBlock(), new DummyColumnsBlock()],
             [],
         );
     }

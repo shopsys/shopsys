@@ -5,7 +5,6 @@ import { IframeBlock } from 'components/Blocks/ContentEditor/blocks/IframeBlock'
 import { ImageBlock } from 'components/Blocks/ContentEditor/blocks/ImageBlock';
 import { MapBlock } from 'components/Blocks/ContentEditor/blocks/MapBlock';
 import { ProductsBlock } from 'components/Blocks/ContentEditor/blocks/ProductsBlock';
-import { TableBlock } from 'components/Blocks/ContentEditor/blocks/TableBlock';
 import { TextBlock } from 'components/Blocks/ContentEditor/blocks/TextBlock';
 import { VideoBlock } from 'components/Blocks/ContentEditor/blocks/VideoBlock';
 import { BlockProps } from 'components/Blocks/ContentEditor/ContentRenderer';
@@ -17,7 +16,6 @@ export const blockComponents: Record<string, FC<BlockProps<any>>> = {
     heading: HeadingBlock,
     image: ImageBlock,
     'button-link': ButtonLinkBlock,
-    table: TableBlock,
     video: VideoBlock,
     map: MapBlock,
     iframe: IframeBlock,

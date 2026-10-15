@@ -162,6 +162,11 @@
             td,
             th {
                 @apply p-2.5 text-md leading-6;
+
+                /* the content editor wraps every cell content in a paragraph */
+                & > *:last-child {
+                    @apply mb-0;
+                }
             }
 
             th {

@@ -631,9 +631,6 @@ msgstr "Název kategorie"
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
 
-msgid "Cells"
-msgstr "Buňky"
-
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr "Změnou domény ztratíte neuložené změny. Chcete pokračovat?"
 
@@ -699,9 +696,6 @@ msgstr "Barva"
 
 msgid "Color pattern icon"
 msgstr "Ikona barevného vzoru"
-
-msgid "Columns"
-msgstr "Sloupce"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
@@ -3109,9 +3103,6 @@ msgstr "Počet desetinných míst pro zaokrouhlování ceny bez DPH a částky D
 msgid "Rounding type"
 msgstr "Typ zaokrouhlení"
 
-msgid "Rows"
-msgstr "Řádky"
-
 msgid "SEO"
 msgstr "SEO"
 
@@ -3463,9 +3454,6 @@ msgstr "Prodejna"
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache s dotazy na FE byla smazána."
 
-msgid "Style"
-msgstr "Styl"
-
 msgid "Stores"
 msgstr "Prodejny"
 
@@ -3474,6 +3462,9 @@ msgstr "Ulice"
 
 msgid "Street and house number"
 msgstr "Ulice a číslo domu"
+
+msgid "Style"
+msgstr "Styl"
 
 msgid "Subcategories"
 msgstr "Podkategorie"
@@ -3507,9 +3498,6 @@ msgstr "Podporované formáty: /url-adresa, url-adresa, https://example.com/url-
 
 msgid "System data"
 msgstr "Systémové údaje"
-
-msgid "Table"
-msgstr "Tabulka"
 
 msgid "Tax identification number"
 msgstr "DIČ"
@@ -3849,9 +3837,6 @@ msgstr "Proměnná"
 
 msgid "Variable symbol"
 msgstr "Variabilní symbol"
-
-msgid "Variant"
-msgstr "Varianta"
 
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr "Varianta <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> byla úspěšně vytvořena."

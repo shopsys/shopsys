@@ -75,6 +75,11 @@ class ContentHtmlSanitizerTest extends TestCase
             'expectedResult' => '<a href="/contact">x</a>',
         ];
 
+        yield 'table is kept without attributes' => [
+            'html' => '<table class="a" style="min-width: 25px;"><colgroup><col style="min-width: 25px;"></colgroup><tbody><tr><th colspan="2">H</th><td onclick="x()">C</td></tr></tbody></table>',
+            'expectedResult' => '<table><tbody><tr><th>H</th><td>C</td></tr></tbody></table>',
+        ];
+
         yield 'span keeps only class' => [
             'html' => '<span class="lead" id="a">x</span>',
             'expectedResult' => '<span class="lead">x</span>',

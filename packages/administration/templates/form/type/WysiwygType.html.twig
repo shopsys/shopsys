@@ -18,6 +18,14 @@
             horizontalRule: {icon: 'horizontal-line', title: 'Horizontal line'|trans},
         },
     ] %}
+    {% set tableCommands = {
+        insertTable: 'Insert table'|trans,
+        addRow: 'Add row'|trans,
+        deleteRow: 'Delete row'|trans,
+        addColumn: 'Add column'|trans,
+        deleteColumn: 'Delete column'|trans,
+        deleteTable: 'Delete table'|trans,
+    } %}
 
     <div data-controller="wysiwyg" data-live-ignore data-tid="wysiwyg">
         <div class="wysiwyg-toolbar">
@@ -87,6 +95,24 @@
                         data-action="wysiwyg#removeLink"
                         data-wysiwyg-target="button"
                         data-tid="wysiwyg-unlink">{{ ux_icon('unlink') }}</button>
+            </div>
+            <div class="btn-group btn-group-sm">
+                <button type="button"
+                        class="btn dropdown-toggle"
+                        title="{{ 'Table'|trans }}"
+                        aria-label="{{ 'Table'|trans }}"
+                        data-bs-toggle="dropdown"
+                        data-wysiwyg-target="button"
+                        data-tid="wysiwyg-table">{{ ux_icon('table') }}</button>
+                <div class="dropdown-menu">
+                    {% for command, label in tableCommands %}
+                        <button type="button"
+                                class="dropdown-item"
+                                data-action="wysiwyg#command"
+                                data-wysiwyg-command-param="{{ command }}"
+                                data-tid="wysiwyg-{{ command }}">{{ label }}</button>
+                    {% endfor %}
+                </div>
             </div>
             <div class="btn-group btn-group-sm">
                 <button type="button"

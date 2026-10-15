@@ -64,6 +64,9 @@ msgstr "Pridať URL"
 msgid "Add block"
 msgstr "Pridať blok"
 
+msgid "Add column"
+msgstr "Pridať stĺpec"
+
 msgid "Add country"
 msgstr "Pridať krajinu"
 
@@ -81,6 +84,9 @@ msgstr "Pridať produkt"
 
 msgid "Add requirement"
 msgstr "Pridať požiadavku"
+
+msgid "Add row"
+msgstr "Pridať riadok"
 
 msgid "Add the first block"
 msgstr "Pridať prvý blok"
@@ -709,8 +715,17 @@ msgstr "Odstrániť"
 msgid "Delete and set"
 msgstr "Odstrániť a nastaviť"
 
+msgid "Delete column"
+msgstr "Zmazať stĺpec"
+
 msgid "Delete file"
 msgstr "Odstrániť súbor"
+
+msgid "Delete row"
+msgstr "Zmazať riadok"
+
+msgid "Delete table"
+msgstr "Zmazať tabuľku"
 
 msgid "Delivered"
 msgstr "Doručené"
@@ -1272,6 +1287,9 @@ msgstr "Prehľad dopytov"
 
 msgid "Inquiry by"
 msgstr "Dopyt od"
+
+msgid "Insert table"
+msgstr "Vložiť tabuľku"
 
 msgid "Insert variable"
 msgstr "Vložiť premennú"
@@ -2454,6 +2472,9 @@ msgstr "Systémové nástroje"
 
 msgid "Tab content could not be loaded."
 msgstr "Obsah záložky sa nepodarilo načítať."
+
+msgid "Table"
+msgstr "Tabuľka"
 
 msgid "Table of Contents"
 msgstr "Obsah"

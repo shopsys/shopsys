@@ -75,7 +75,6 @@ export enum TIDs {
     content_block_heading = 'content_block_heading',
     content_block_image = 'content_block_image',
     content_block_button_link = 'content_block_button_link',
-    content_block_table = 'content_block_table',
     content_block_video = 'content_block_video',
     content_block_map = 'content_block_map',
     content_block_iframe = 'content_block_iframe',

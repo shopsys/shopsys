@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailButtonBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ButtonLinkBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\IframeBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\ImageBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\TableBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Web\VideoUrlParser;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentFactory;
@@ -185,8 +184,10 @@ final class GrapesJsHtmlConverter
             return $this->convertTextWithImage($element);
         }
 
-        if ($element->classList->contains('gjs-table-custom')) {
-            return $this->convertTable($element);
+        $table = $element->classList->contains('gjs-table-custom') ? $element->querySelector('table') : null;
+
+        if ($table !== null) {
+            return $this->createTextBlocks($table->outerHTML);
         }
 
         if ($element->localName === 'iframe') {
@@ -320,11 +321,11 @@ final class GrapesJsHtmlConverter
         ];
 
         if ($this->context->profile === ContentProfileEnum::WEB) {
-            $data['openInNewTab'] = $link->getAttribute('target') === '_blank';
             $data['variant'] = ButtonLinkBlock::VARIANT_PRIMARY;
-        }
+            $data['openInNewTab'] = $link->getAttribute('target') === '_blank';
         } else {
             $data['color'] = $this->getButtonColor($link);
+        }
 
         return [$this->createBlock($this->getBlockType('button'), $data)];
     }
@@ -416,36 +417,6 @@ final class GrapesJsHtmlConverter
         }
 
         return [$this->createBlock('columns-1-2', [], [$imageBlocks, $textBlocks])];
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance[]
-     */
-    private function convertTable(Element $element): array
-    {
-        $table = $element->querySelector('table');
-        $cells = [];
-
-        foreach ($table?->querySelectorAll('tr') ?? [] as $tableRow) {
-            $cells[] = array_map(static fn (Element $cell): string => $cell->innerHTML, iterator_to_array($tableRow->children, false));
-        }
-
-        $columns = $cells === [] ? 0 : max(array_map('count', $cells));
-
-        if ($columns === 0) {
-            return $this->convertUnknown($element);
-        }
-
-        if (count($cells) > TableBlock::MAX_ROWS || $columns > TableBlock::MAX_COLUMNS) {
-            $this->addNote(sprintf('table %dx%d was cut to the maximal size %dx%d', count($cells), $columns, TableBlock::MAX_ROWS, TableBlock::MAX_COLUMNS));
-        }
-
-        return [$this->createBlock('table', [
-            'rows' => count($cells),
-            'columns' => $columns,
-            'variant' => $table->classList->contains('secondary') ? TableBlock::VARIANT_SECONDARY : TableBlock::VARIANT_DEFAULT,
-            'cells' => $cells,
-        ])];
     }
 
     /**

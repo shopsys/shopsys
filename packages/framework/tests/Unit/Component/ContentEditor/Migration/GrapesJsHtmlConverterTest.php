@@ -234,22 +234,15 @@ class GrapesJsHtmlConverterTest extends TestCase
         $this->assertFalse($result->document->blocks[0]->data['openInNewTab']);
     }
 
-    public function testTableKeepsVariantAndCells(): void
+    public function testTableBecomesTextBlockWithSanitizedTable(): void
     {
-        $result = $this->convert('<div class="gjs-table-custom"><table class="secondary"><tbody><tr><td><div class="gjs-text-ckeditor text">A</div></td><td>B</td></tr><tr><td>C</td><td>D</td></tr></tbody></table></div>');
+        $result = $this->convert('<div class="gjs-table-custom"><table class="secondary"><tbody><tr><td><div class="gjs-text-ckeditor text">A</div></td><td>B</td></tr></tbody></table></div>');
 
-        $this->assertSame('table', $result->document->blocks[0]->type);
+        $this->assertSame('text', $result->document->blocks[0]->type);
         $this->assertSame(
-            ['rows' => 2, 'columns' => 2, 'variant' => 'secondary', 'cells' => [['<div class="gjs-text-ckeditor text">A</div>', 'B'], ['C', 'D']]],
+            ['html' => '<table><tbody><tr><td>A</td><td>B</td></tr></tbody></table>'],
             $result->document->blocks[0]->data,
         );
-    }
-
-    public function testTableLargerThanTheBlockAllowsAddsNote(): void
-    {
-        $result = $this->convert('<div class="gjs-table-custom"><table>' . str_repeat('<tr><td>A</td></tr>', 21) . '</table></div>');
-
-        $this->assertSame(['table 21x1 was cut to the maximal size 20x8'], $result->notes);
     }
 
     /**

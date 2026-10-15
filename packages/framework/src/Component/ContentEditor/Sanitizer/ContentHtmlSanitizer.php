@@ -32,6 +32,12 @@ class ContentHtmlSanitizer
         'a' => ['href', 'title', 'target', 'rel'],
         'blockquote' => [],
         'hr' => [],
+        'table' => [],
+        'thead' => [],
+        'tbody' => [],
+        'tr' => [],
+        'td' => [],
+        'th' => [],
         'span' => ['class'],
     ];
 
@@ -42,7 +48,7 @@ class ContentHtmlSanitizer
      */
     public const array BLOCKED_ELEMENTS = [
         'div', 'section', 'article', 'header', 'footer', 'main', 'aside', 'nav', 'figure', 'figcaption',
-        'table', 'thead', 'tbody', 'tfoot', 'tr', 'td', 'th', 'caption', 'center', 'font', 'small', 'big',
+        'tfoot', 'caption', 'center', 'font', 'small', 'big',
         'pre', 'code', 'sub', 'sup', 'mark', 'cite', 'q', 'abbr', 'dl', 'dt', 'dd', 'address', 'h1', 'h5', 'h6', 'label',
     ];
 

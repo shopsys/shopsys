@@ -29,6 +29,30 @@ export const TOOLBAR_COMMANDS = {
         run: editor => editor.chain().focus().setHorizontalRule().run(),
         isActive: () => false,
     },
+    insertTable: {
+        run: editor => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
+        isActive: () => false,
+    },
+    addRow: {
+        run: editor => editor.chain().focus().addRowAfter().run(),
+        isActive: () => false,
+    },
+    deleteRow: {
+        run: editor => editor.chain().focus().deleteRow().run(),
+        isActive: () => false,
+    },
+    addColumn: {
+        run: editor => editor.chain().focus().addColumnAfter().run(),
+        isActive: () => false,
+    },
+    deleteColumn: {
+        run: editor => editor.chain().focus().deleteColumn().run(),
+        isActive: () => false,
+    },
+    deleteTable: {
+        run: editor => editor.chain().focus().deleteTable().run(),
+        isActive: () => false,
+    },
     clearFormatting: {
         run: editor => editor.chain().focus().unsetAllMarks().clearNodes().run(),
         isActive: () => false,

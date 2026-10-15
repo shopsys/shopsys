@@ -36,13 +36,6 @@ export type ButtonLinkBlockData = {
     variant: 'primary' | 'secondary' | 'tertiary';
 };
 
-export type TableBlockData = {
-    rows: number;
-    columns: number;
-    variant: 'default' | 'secondary';
-    cells: string[][];
-};
-
 export type VideoBlockData = {
     provider: string | null;
     videoId: string | null;

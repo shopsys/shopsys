@@ -1,3 +1,4 @@
+import { TableKit } from '@tiptap/extension-table';
 import StarterKit from '@tiptap/starter-kit';
 
 export const HEADING_LEVELS = [2, 3, 4];
@@ -19,5 +20,6 @@ export function createExtensions() {
                 HTMLAttributes: { target: null, rel: null, class: null },
             },
         }),
+        TableKit.configure({ table: { resizable: false } }),
     ];
 }

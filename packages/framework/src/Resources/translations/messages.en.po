@@ -631,9 +631,6 @@ msgstr ""
 msgid "Category with prefilled filters"
 msgstr ""
 
-msgid "Cells"
-msgstr ""
-
 msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr ""
 
@@ -698,9 +695,6 @@ msgid "Color"
 msgstr ""
 
 msgid "Color pattern icon"
-msgstr ""
-
-msgid "Columns"
 msgstr ""
 
 msgid "Combination of parameters and their values"
@@ -3109,9 +3103,6 @@ msgstr ""
 msgid "Rounding type"
 msgstr ""
 
-msgid "Rows"
-msgstr ""
-
 msgid "SEO"
 msgstr ""
 
@@ -3463,9 +3454,6 @@ msgstr ""
 msgid "Storefront queries cache has been cleaned."
 msgstr ""
 
-msgid "Style"
-msgstr ""
-
 msgid "Stores"
 msgstr ""
 
@@ -3473,6 +3461,9 @@ msgid "Street"
 msgstr ""
 
 msgid "Street and house number"
+msgstr ""
+
+msgid "Style"
 msgstr ""
 
 msgid "Subcategories"
@@ -3506,9 +3497,6 @@ msgid "Supported formats: /url-address, url-address, https://example.com/url-add
 msgstr ""
 
 msgid "System data"
-msgstr ""
-
-msgid "Table"
 msgstr ""
 
 msgid "Tax identification number"
@@ -3848,9 +3836,6 @@ msgid "Variable"
 msgstr ""
 
 msgid "Variable symbol"
-msgstr ""
-
-msgid "Variant"
 msgstr ""
 
 msgid "Variant <strong><a href=\"{{ url }}\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
