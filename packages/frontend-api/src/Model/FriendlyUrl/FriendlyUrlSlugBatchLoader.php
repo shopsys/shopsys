@@ -9,6 +9,7 @@ use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as FrameworkFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDetailFriendlyUrlDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductListFriendlyUrlDataProvider;
 
 class FriendlyUrlSlugBatchLoader
@@ -41,7 +42,7 @@ class FriendlyUrlSlugBatchLoader
      */
     public function loadFlagSlugs(array $entityIds): Promise
     {
-        return $this->loadSlugs($entityIds, 'front_flag_detail');
+        return $this->loadSlugs($entityIds, FlagDetailFriendlyUrlDataProvider::ROUTE_NAME);
     }
 
     /**
