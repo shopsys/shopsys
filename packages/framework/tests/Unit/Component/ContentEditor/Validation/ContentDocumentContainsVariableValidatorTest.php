@@ -5,14 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\ContentEditor\Validation;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\ContentBlockRegistry;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailButtonBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailColumnsBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailImageVariableBlock;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Block\Mail\MailTextBlock;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentBlockInstance;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocument;
-use Shopsys\FrameworkBundle\Component\ContentEditor\Document\ContentDocumentTextExtractor;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Validation\ContentDocumentContainsVariable;
 use Shopsys\FrameworkBundle\Component\ContentEditor\Validation\ContentDocumentContainsVariableValidator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -85,12 +79,7 @@ class ContentDocumentContainsVariableValidatorTest extends ConstraintValidatorTe
         $translator->method('trans')->willReturnArgument(0);
         Translator::injectSelf($translator);
 
-        $registry = new ContentBlockRegistry(
-            [new MailTextBlock(), new MailButtonBlock(), new MailColumnsBlock(), new MailImageVariableBlock()],
-            [],
-        );
-
-        return new ContentDocumentContainsVariableValidator($registry, new ContentDocumentTextExtractor($registry));
+        return new ContentDocumentContainsVariableValidator();
     }
 
     /**
