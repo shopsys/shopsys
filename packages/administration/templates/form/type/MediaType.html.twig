@@ -1,0 +1,27 @@
+{% block media_widget %}
+    {% set previewUrl = media ? imageUrl(media) : legacy_url %}
+    <div class="d-flex align-items-center gap-3" data-controller="media-field" data-tid="media-field">
+        <img class="rounded border object-fit-contain {{ previewUrl ? '' : 'd-none' }}"
+             style="width: 10rem; height: 6rem;"
+             alt=""
+             {% if previewUrl %}src="{{ media ? previewUrl ~ '?width=240' : previewUrl }}"{% endif %}
+             data-media-field-target="preview">
+        <div>
+            <div class="fw-bold" data-media-field-target="title">{{ media ? media.title : '' }}</div>
+            {% if legacy_url and not media %}
+                <div class="text-warning small" data-tid="media-field-legacy-hint">
+                    {{ 'This image was not imported to the media library, replace it with an image from the library.'|trans }}
+                </div>
+            {% endif %}
+            <div class="btn-list mt-2">
+                <button type="button" class="btn btn-sm btn-primary" data-action="media-field#choose" data-tid="media-field-choose">
+                    {{ 'Choose'|trans }}
+                </button>
+                <button type="button" class="btn btn-sm" data-action="media-field#remove" data-media-field-target="removeButton" data-tid="media-field-remove">
+                    {{ 'Remove'|trans }}
+                </button>
+            </div>
+        </div>
+        {{ form_widget(form, {attr: {'data-media-field-target': 'input'}}) }}
+    </div>
+{% endblock %}

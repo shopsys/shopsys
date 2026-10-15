@@ -3547,6 +3547,9 @@ msgstr "Štvrtok"
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
+msgid "Title"
+msgstr "Názov"
+
 msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO and Open Graph</a> is used."
 msgstr "Názov, popis a obrázok zobrazené pri zdieľaní tejto stránky na sociálnych sieťach. Ak je Open Graph názov alebo popis prázdny, použije sa nadpis stránky alebo meta popis. Bez Open Graph obrázka sa použije logo firmy z <a href=\"%seoSettingsUrl%\" target=\"_blank\">nastavenia SEO a Open Graph</a>."
 

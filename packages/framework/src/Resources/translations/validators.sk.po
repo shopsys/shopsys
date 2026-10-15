@@ -535,6 +535,9 @@ msgstr "Prosím, zadajte celé číslo."
 msgid "Please enter time"
 msgstr "Prosím, zadajte čas"
 
+msgid "Please enter title"
+msgstr "Zadajte prosím názov"
+
 msgid "Please enter total price with VAT"
 msgstr "Prosím, zadajte celkovú cenu s DPH"
 
@@ -720,6 +723,9 @@ msgstr "Toto pole musí byť prázdne"
 
 msgid "This value is not a valid email address."
 msgstr "Táto hodnota nie je platná e-mailová adresa."
+
+msgid "Title cannot be longer than {{ limit }} characters"
+msgstr "Názov nesmie byť dlhší ako {{ limit }} znakov"
 
 msgid "Transport group name cannot be longer than {{ limit }} characters"
 msgstr "Názov skupiny dopravy nemôže byť dlhší ako {{ limit }} znakov"

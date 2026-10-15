@@ -119,9 +119,6 @@ parameters:
             path: packages/framework/src/Component/Money/HiddenMoney.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/Paginator/PaginationResult.php
-        -
-            identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/Security/AccessControl/AccessChecker.php
         -
             identifier: shipmonk.deadMethod

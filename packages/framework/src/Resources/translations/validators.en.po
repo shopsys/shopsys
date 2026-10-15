@@ -535,6 +535,9 @@ msgstr ""
 msgid "Please enter time"
 msgstr ""
 
+msgid "Please enter title"
+msgstr ""
+
 msgid "Please enter total price with VAT"
 msgstr ""
 
@@ -719,6 +722,9 @@ msgid "This field must be empty"
 msgstr ""
 
 msgid "This value is not a valid email address."
+msgstr ""
+
+msgid "Title cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Transport group name cannot be longer than {{ limit }} characters"

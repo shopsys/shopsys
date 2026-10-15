@@ -610,6 +610,9 @@ msgstr "Vytvořit variantu"
 msgid "Created"
 msgstr "Vytvořena"
 
+msgid "Created at"
+msgstr "Vytvořeno dne"
+
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
@@ -1339,6 +1342,12 @@ msgstr "Měrné jednotky"
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
 
+msgid "Media"
+msgstr "Média"
+
+msgid "Medias"
+msgstr ""
+
 msgid "Medium"
 msgstr "Střední"
 
@@ -1524,6 +1533,9 @@ msgstr "Nebyl nalezen žádný dárkový plán. Musíte prvně nějaký vytvoři
 
 msgid "No gift vouchers found."
 msgstr "Nebyly nalezeny žádné dárkové poukazy."
+
+msgid "No images found"
+msgstr "Nebyly nalezeny žádné obrázky"
 
 msgid "No images have been uploaded for this review."
 msgstr "Pro tuto recenzi nebyly nahrány žádné obrázky."
@@ -2116,6 +2128,9 @@ msgstr "Vyhledat dle názvu sekce…"
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
 
+msgid "Search by title"
+msgstr "Hledat podle názvu"
+
 msgid "Search in transfer issue messages..."
 msgstr "Hledat v textech problémů v přenosech..."
 
@@ -2256,6 +2271,9 @@ msgstr "Stránka"
 
 msgid "Site [abbreviation]"
 msgstr "S"
+
+msgid "Size (px)"
+msgstr "Rozměry (px)"
 
 msgid "Slider item"
 msgstr "Banner"
@@ -2398,6 +2416,9 @@ msgstr "Tento příznak nelze smazat, protože se používá v definici"
 msgid "This flag cannot be deleted."
 msgstr "Tento příznak nelze smazat."
 
+msgid "This image was not imported to the media library, replace it with an image from the library."
+msgstr "Tento obrázek nebyl naimportován do knihovny médií, nahraďte ho obrázkem z knihovny."
+
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
@@ -2430,6 +2451,9 @@ msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to 
 
 msgid "Thursday"
 msgstr "Čtvrtek"
+
+msgid "Title"
+msgstr "Název"
 
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr "Aby bylo možné tuto hodnotu smazat, je třeba nastavit novou, která se použije místo ní. Bohužel není za co nahrazovat, před smazáním musíte nejdřív vytvořit novou."
@@ -2527,6 +2551,9 @@ msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_t
 msgid "Undo delete"
 msgstr "Zrušit smazání"
 
+msgid "Unexpected error occurred, file was not uploaded."
+msgstr "Došlo k neočekávané chybě, soubor nebyl nahrán."
+
 msgid "Unit"
 msgstr "Jednotka"
 
@@ -2565,6 +2592,9 @@ msgstr "Nepoužívané hezké URL"
 
 msgid "Upload files"
 msgstr "Nahrát soubory"
+
+msgid "Upload new image"
+msgstr "Nahrát nový obrázek"
 
 msgid "Upon inquiry"
 msgstr "Na poptávku"

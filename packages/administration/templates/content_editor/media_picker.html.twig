@@ -1,0 +1,105 @@
+{% set pagination = this.paginationResult %}
+<div {{ attributes }}>
+    <div class="modal modal-blur fade"
+         tabindex="-1"
+         data-controller="form-modal"
+         data-form-modal-open-value="{{ this.open ? '1' : '0' }}"
+         data-form-modal-open-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\MediaPickerComponent::OPENED_BROWSER_EVENT') }}"
+         data-form-modal-close-event-value="{{ constant('Shopsys\\AdministrationBundle\\Component\\ContentEditor\\LiveComponent\\MediaPickerComponent::CLOSED_BROWSER_EVENT') }}"
+         data-tid="media-picker-modal">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'Media'|trans }}</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-form-modal-target="closeTrigger"
+                            data-action="live#action"
+                            data-live-action-param="close"
+                            aria-label="{{ 'Close'|trans }}"
+                            data-tid="media-picker-close"
+                    ></button>
+                </div>
+                <div class="modal-body"
+                     data-controller="media-picker"
+                     data-media-picker-upload-url-value="{{ path('admin_fileupload_upload') }}"
+                     data-media-picker-error-message-value="{{ 'Unexpected error occurred, file was not uploaded.'|trans }}">
+                    <div class="d-flex gap-2 mb-3">
+                        <input type="search"
+                               class="form-control"
+                               value="{{ this.search }}"
+                               data-model="debounce(300)|search"
+                               placeholder="{{ 'Search by title'|trans }}"
+                               data-tid="media-picker-search">
+                        <input type="file"
+                               class="d-none"
+                               accept=".jpg,.jpeg,.png,.gif"
+                               data-media-picker-target="fileInput"
+                               data-action="media-picker#upload"
+                               data-tid="media-picker-file-input">
+                        <button type="button"
+                                class="btn btn-primary text-nowrap"
+                                data-action="media-picker#chooseFile"
+                                data-media-picker-target="uploadButton"
+                                data-tid="media-picker-upload">
+                            {{ ux_icon('upload') }}
+                            {{ 'Upload new image'|trans }}
+                        </button>
+                    </div>
+
+                    <div class="alert alert-danger d-none" data-media-picker-target="error" data-tid="media-picker-error"></div>
+
+                    {% if pagination.results is empty %}
+                        <div class="text-secondary text-center py-5" data-tid="media-picker-empty">{{ 'No images found'|trans }}</div>
+                    {% else %}
+                        <div class="row row-cards">
+                            {% for media in pagination.results %}
+                                <div class="col-6 col-md-3 col-lg-2">
+                                    <a class="card card-link card-link-pop h-100"
+                                       role="button"
+                                       data-action="live#action"
+                                       data-live-action-param="select"
+                                       data-live-media-id-param="{{ media.id }}"
+                                       data-tid="media-picker-item-{{ media.id }}">
+                                        <div class="ratio ratio-4x3 bg-light">
+                                            {{ image(media, { width: 240, class: 'object-fit-contain w-100 h-100' }) }}
+                                        </div>
+                                        <div class="card-body p-2 small text-truncate" title="{{ media.title }}">{{ media.title }}</div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        {% if pagination.pageCount > 1 %}
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="text-secondary small">
+                                    {{ pagination.fromItem }} - {{ pagination.toItem }} {{ 'from'|trans }} {{ pagination.totalCount }}
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button"
+                                            class="btn btn-icon"
+                                            {% if pagination.firstPage %}disabled{% endif %}
+                                            data-action="live#action"
+                                            data-live-action-param="goToPage"
+                                            data-live-page-param="{{ pagination.page - 1 }}"
+                                            data-tid="media-picker-previous-page">
+                                        {{ ux_icon('chevron-left') }}
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-icon"
+                                            {% if pagination.lastPage %}disabled{% endif %}
+                                            data-action="live#action"
+                                            data-live-action-param="goToPage"
+                                            data-live-page-param="{{ pagination.page + 1 }}"
+                                            data-tid="media-picker-next-page">
+                                        {{ ux_icon('chevron-right') }}
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

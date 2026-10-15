@@ -3547,6 +3547,9 @@ msgstr ""
 msgid "TikTok URL"
 msgstr ""
 
+msgid "Title"
+msgstr ""
+
 msgid "Title, description and image shown when this page is shared on social networks. If the Open Graph title or description is empty, the page title or meta description is used. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\" target=\"_blank\">SEO and Open Graph</a> is used."
 msgstr ""
 

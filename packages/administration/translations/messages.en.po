@@ -610,6 +610,9 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+msgid "Created at"
+msgstr ""
+
 msgid "Created on"
 msgstr ""
 
@@ -1339,6 +1342,12 @@ msgstr ""
 msgid "Measurement units overview"
 msgstr ""
 
+msgid "Media"
+msgstr ""
+
+msgid "Medias"
+msgstr ""
+
 msgid "Medium"
 msgstr ""
 
@@ -1523,6 +1532,9 @@ msgid "No gift plan found. You have to create some first."
 msgstr ""
 
 msgid "No gift vouchers found."
+msgstr ""
+
+msgid "No images found"
 msgstr ""
 
 msgid "No images have been uploaded for this review."
@@ -2116,6 +2128,9 @@ msgstr ""
 msgid "Search by slug..."
 msgstr ""
 
+msgid "Search by title"
+msgstr ""
+
 msgid "Search in transfer issue messages..."
 msgstr ""
 
@@ -2256,6 +2271,9 @@ msgstr ""
 
 msgid "Site [abbreviation]"
 msgstr "S"
+
+msgid "Size (px)"
+msgstr ""
 
 msgid "Slider item"
 msgstr ""
@@ -2398,6 +2416,9 @@ msgstr ""
 msgid "This flag cannot be deleted."
 msgstr ""
 
+msgid "This image was not imported to the media library, replace it with an image from the library."
+msgstr ""
+
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 
@@ -2429,6 +2450,9 @@ msgid "This will send an email to customer user for resetting password. Do you r
 msgstr ""
 
 msgid "Thursday"
+msgstr ""
+
+msgid "Title"
 msgstr ""
 
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
@@ -2527,6 +2551,9 @@ msgstr ""
 msgid "Undo delete"
 msgstr ""
 
+msgid "Unexpected error occurred, file was not uploaded."
+msgstr ""
+
 msgid "Unit"
 msgstr ""
 
@@ -2564,6 +2591,9 @@ msgid "Unused friendly URLs"
 msgstr ""
 
 msgid "Upload files"
+msgstr ""
+
+msgid "Upload new image"
 msgstr ""
 
 msgid "Upon inquiry"

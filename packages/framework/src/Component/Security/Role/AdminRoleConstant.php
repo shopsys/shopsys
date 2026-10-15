@@ -40,6 +40,7 @@ class AdminRoleConstant
     public const string ROLE_BLOG_ARTICLE_AUTHOR = 'ROLE_BLOG_ARTICLE_AUTHOR';
     public const string ROLE_NAVIGATION = 'ROLE_NAVIGATION';
     public const string ROLE_NOTIFICATION_BAR = 'ROLE_NOTIFICATION_BAR';
+    public const string ROLE_MEDIA = 'ROLE_MEDIA';
     public const string ROLE_PRICING_GROUP = 'ROLE_PRICING_GROUP';
     public const string ROLE_VAT = 'ROLE_VAT';
     public const string ROLE_DOMAIN = 'ROLE_DOMAIN';
