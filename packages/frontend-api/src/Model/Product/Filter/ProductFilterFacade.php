@@ -38,7 +38,6 @@ class ProductFilterFacade
             static::PRODUCT_FILTER_CACHE_NAMESPACE,
             function () {
                 return $this->productFilterConfigFactory->createForAll(
-                    $this->domain->getId(),
                     $this->domain->getLocale(),
                 );
             },
@@ -52,7 +51,6 @@ class ProductFilterFacade
             static::PRODUCT_FILTER_CACHE_NAMESPACE,
             function () use ($brand) {
                 return $this->productFilterConfigFactory->createForBrand(
-                    $this->domain->getId(),
                     $this->domain->getLocale(),
                     $brand,
                 );
@@ -135,7 +133,6 @@ class ProductFilterFacade
             static::PRODUCT_FILTER_CACHE_NAMESPACE,
             function () use ($searchText) {
                 return $this->productFilterConfigFactory->createForSearch(
-                    $this->domain->getId(),
                     $this->domain->getLocale(),
                     $searchText,
                 );
