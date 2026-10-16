@@ -329,9 +329,10 @@ class CustomerController extends AdminBaseController
         try {
             $fullName = $customerUser->getCustomerUserFullName();
             $customerUserEmail = $customerUser->getEmail();
+            $customerUserDomainId = $customerUser->getDomainId();
 
             $this->customerUserFacade->delete($id);
-            $this->watchdogFacade->deleteByEmail($customerUserEmail);
+            $this->watchdogFacade->deleteByEmailAndDomainId($customerUserEmail, $customerUserDomainId);
 
             $this->addSuccessFlashTwig(
                 t('Customer <strong>{{ name }}</strong> deleted'),
