@@ -15,10 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 class ProductFilterConfigFactory
 {
     public function __construct(
-        protected readonly FlagFilterChoiceRepository $flagFilterChoiceRepository,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly BrandFilterChoiceRepository $brandFilterChoiceRepository,
-        protected readonly PriceRangeRepository $priceRangeRepository,
         protected readonly ProductFilterElasticFacade $productFilterElasticFacade,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly FlagFacade $flagFacade,
@@ -62,44 +59,38 @@ class ProductFilterConfigFactory
         );
     }
 
-    public function createForSearch(int $domainId, string $locale, ?string $searchText): ProductFilterConfig
+    public function createForSearch(string $locale, string $searchText): ProductFilterConfig
     {
-        $parameterFilterChoices = [];
-        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
-        $flagFilterChoices = $this->flagFilterChoiceRepository
-            ->getFlagFilterChoicesForSearch($domainId, $pricingGroup, $locale, $searchText);
-        $brandFilterChoices = $this->brandFilterChoiceRepository
-            ->getBrandFilterChoicesForSearch($domainId, $pricingGroup, $locale, $searchText);
-        $priceRange = $this->priceRangeRepository->getPriceRangeForSearch(
-            $domainId,
-            $pricingGroup,
-            $locale,
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
             $searchText,
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
-        return $this->create($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
+        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
     }
 
-    public function createForBrand(int $domainId, string $locale, Brand $brand): ProductFilterConfig
+    public function createForBrand(string $locale, Brand $brand): ProductFilterConfig
     {
-        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
-        $flagFilterChoices = $this->flagFilterChoiceRepository
-            ->getFlagFilterChoicesForBrand($domainId, $pricingGroup, $locale, $brand);
-        $priceRange = $this->priceRangeRepository->getPriceRangeForBrand($domainId, $pricingGroup, $brand);
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
+            $brand->getId(),
+            $this->currentCustomerUser->getPricingGroup(),
+        );
 
-        return $this->create([], $flagFilterChoices, [], $priceRange);
+        return $this->create(
+            [],
+            $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
+            [],
+            $productFilterConfigIdsData->getPriceRange(),
+        );
     }
 
-    public function createForAll(int $domainId, string $locale): ProductFilterConfig
+    public function createForAll(string $locale): ProductFilterConfig
     {
-        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
-        $flagFilterChoices = $this->flagFilterChoiceRepository
-            ->getFlagFilterChoicesForAll($domainId, $pricingGroup, $locale);
-        $priceRange = $this->priceRangeRepository->getPriceRangeForAll($domainId, $pricingGroup);
-        $brandFilterChoices = $this->brandFilterChoiceRepository
-            ->getBrandFilterChoicesForAll($domainId, $pricingGroup);
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForAll(
+            $this->currentCustomerUser->getPricingGroup(),
+        );
 
-        return $this->create([], $flagFilterChoices, $brandFilterChoices, $priceRange);
+        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
     }
 
     /**
@@ -135,7 +126,14 @@ class ProductFilterConfigFactory
             $this->currentCustomerUser->getPricingGroup(),
         );
 
-        return new ProductFilterConfig(
+        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
+    }
+
+    protected function createWithFlagAndBrandChoices(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+        string $locale,
+    ): ProductFilterConfig {
+        return $this->create(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),

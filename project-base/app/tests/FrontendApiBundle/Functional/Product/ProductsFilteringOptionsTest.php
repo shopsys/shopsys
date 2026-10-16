@@ -703,6 +703,74 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $this->assertNull($data['productFilterOptions']['parameters']);
     }
 
+    public function testGetProductFilterOptionsForSencorBrand(): void
+    {
+        $brand = $this->getReference(BrandDataFixture::BRAND_SENCOR, Brand::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/BrandProductsFilterOptions.graphql', [
+            'brandUuid' => $brand->getUuid(),
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'brand');
+
+        $this->assertSame($this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('3499'), $data['products']['productFilterOptions']['minimalPrice']);
+        $this->assertSame($this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('7258.79'), $data['products']['productFilterOptions']['maximalPrice']);
+        $this->assertSame(3, $data['products']['productFilterOptions']['inStock']);
+        $this->assertSame([
+            [
+                'count' => 2,
+                'flag' => [
+                    'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                ],
+            ],
+        ], $data['products']['productFilterOptions']['flags']);
+        $this->assertNull($data['products']['productFilterOptions']['brands']);
+        $this->assertNull($data['products']['productFilterOptions']['parameters']);
+    }
+
+    public function testGetProductFilterOptionsForAllProducts(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductsFilterOptions.graphql');
+        $data = $this->getResponseDataForGraphQlType($response, 'products');
+        $locale = $this->getFirstDomainLocale();
+
+        $this->assertSame($this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('2.42'), $data['productFilterOptions']['minimalPrice']);
+        $this->assertSame($this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('169989.03'), $data['productFilterOptions']['maximalPrice']);
+        $this->assertSame(122, $data['productFilterOptions']['inStock']);
+        $this->assertSame([
+            ['count' => 2, 'flag' => ['name' => t('Product gift', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+            ['count' => 2, 'flag' => ['name' => t('Sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+            ['count' => 15, 'flag' => ['name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+            ['count' => 16, 'flag' => ['name' => t('New', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+            ['count' => 12, 'flag' => ['name' => t('Made in CZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+            ['count' => 1, 'flag' => ['name' => t('Made in DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+            ['count' => 1, 'flag' => ['name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale)]],
+        ], $data['productFilterOptions']['flags']);
+        $this->assertSame([
+            ['count' => 1, 'brand' => ['name' => 'A4tech']],
+            ['count' => 1, 'brand' => ['name' => 'Apple']],
+            ['count' => 10, 'brand' => ['name' => 'Canon']],
+            ['count' => 1, 'brand' => ['name' => 'Defender']],
+            ['count' => 1, 'brand' => ['name' => 'DeLonghi']],
+            ['count' => 1, 'brand' => ['name' => 'Dlink']],
+            ['count' => 4, 'brand' => ['name' => 'Genius']],
+            ['count' => 2, 'brand' => ['name' => 'HP']],
+            ['count' => 1, 'brand' => ['name' => 'HTC']],
+            ['count' => 4, 'brand' => ['name' => 'Hyundai']],
+            ['count' => 1, 'brand' => ['name' => 'JURA']],
+            ['count' => 6, 'brand' => ['name' => 'LG']],
+            ['count' => 1, 'brand' => ['name' => 'Logitech']],
+            ['count' => 3, 'brand' => ['name' => 'Nikon']],
+            ['count' => 2, 'brand' => ['name' => 'Olympus']],
+            ['count' => 1, 'brand' => ['name' => 'Orava']],
+            ['count' => 2, 'brand' => ['name' => 'Philips']],
+            ['count' => 8, 'brand' => ['name' => 'Samsung']],
+            ['count' => 3, 'brand' => ['name' => 'Sencor']],
+            ['count' => 2, 'brand' => ['name' => 'SONY']],
+            ['count' => 2, 'brand' => ['name' => 'Verbatim']],
+        ], $data['productFilterOptions']['brands']);
+        $this->assertNull($data['productFilterOptions']['parameters']);
+    }
+
     public function testSliderParameterFilterOptions(): void
     {
         $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
