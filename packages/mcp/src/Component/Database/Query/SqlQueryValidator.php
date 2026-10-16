@@ -179,12 +179,14 @@ class SqlQueryValidator
      * @param array<string, mixed> $selectStatement
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $outerRelationsIndexedByAliases
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $inheritedCteRelationsIndexedByNames CTEs visible from enclosing queries, passed separately from the outer relations, so that a CTE that is only defined (not referenced in FROM) cannot satisfy an unqualified column reference
      */
     protected function validateSelectStatement(
         array $selectStatement,
         array $allowedColumnsSetIndexedByTableNames,
         bool $requireLimit = false,
         array $outerRelationsIndexedByAliases = [],
+        array $inheritedCteRelationsIndexedByNames = [],
     ): ?string {
         $cteRelationsIndexedByNames = [];
         $validationErrorMessage = $this->validateSelectStatementGuards(
@@ -209,8 +211,20 @@ class SqlQueryValidator
 
         $visibleCteRelationsIndexedByNames = array_merge(
             $this->getCteRelationsIndexedByNames($outerRelationsIndexedByAliases),
+            $inheritedCteRelationsIndexedByNames,
             $cteRelationsIndexedByNames,
         );
+
+        if ($this->isSetOperation($selectStatement)) {
+            return $this->validateSetOperation(
+                $selectStatement,
+                $allowedColumnsSetIndexedByTableNames,
+                $outerRelationsIndexedByAliases,
+                $visibleCteRelationsIndexedByNames,
+                $outputColumnNamesSet,
+            );
+        }
+
         $relationsIndexedByAliases = $outerRelationsIndexedByAliases;
         $validationErrorMessage = $this->collectRelationsFromFromClause(
             $selectStatement['fromClause'] ?? [],
@@ -229,6 +243,74 @@ class SqlQueryValidator
             $allowedColumnsSetIndexedByTableNames,
             $outputColumnNamesSet,
         );
+    }
+
+    /**
+     * Each branch of UNION / INTERSECT / EXCEPT is validated as a standalone select, the set operation itself
+     * only carries clauses applied to the combined result (ORDER BY, LIMIT, OFFSET, locking).
+     *
+     * @param array<string, mixed> $selectStatement
+     * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $outerRelationsIndexedByAliases
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
+     * @param array<string, bool>|null $outputColumnNamesSet
+     */
+    protected function validateSetOperation(
+        array $selectStatement,
+        array $allowedColumnsSetIndexedByTableNames,
+        array $outerRelationsIndexedByAliases,
+        array $visibleCteRelationsIndexedByNames,
+        ?array $outputColumnNamesSet,
+    ): ?string {
+        foreach (['larg', 'rarg'] as $branchKey) {
+            $branchSelectStatement = $this->getSetOperationBranch($selectStatement, $branchKey);
+
+            if ($branchSelectStatement === null) {
+                return self::ERROR_ONLY_SELECT_SUPPORTED;
+            }
+
+            $validationErrorMessage = $this->validateSelectStatement(
+                $branchSelectStatement,
+                $allowedColumnsSetIndexedByTableNames,
+                false,
+                $outerRelationsIndexedByAliases,
+                $visibleCteRelationsIndexedByNames,
+            );
+
+            if ($validationErrorMessage !== null) {
+                return $validationErrorMessage;
+            }
+        }
+
+        unset($selectStatement['larg'], $selectStatement['rarg']);
+
+        return $this->validateSelectStatementNodes(
+            $selectStatement,
+            $outerRelationsIndexedByAliases,
+            $allowedColumnsSetIndexedByTableNames,
+            $outputColumnNamesSet,
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $selectStatement
+     */
+    protected function isSetOperation(array $selectStatement): bool
+    {
+        return ($selectStatement['op'] ?? 'SETOP_NONE') !== 'SETOP_NONE'
+            || array_key_exists('larg', $selectStatement)
+            || array_key_exists('rarg', $selectStatement);
+    }
+
+    /**
+     * @param array<string, mixed> $selectStatement
+     * @return array<string, mixed>|null
+     */
+    protected function getSetOperationBranch(array $selectStatement, string $branchKey): ?array
+    {
+        $branch = $selectStatement[$branchKey] ?? null;
+
+        return is_array($branch) && $branch !== [] && !array_is_list($branch) ? $branch : null;
     }
 
     /**
@@ -1068,6 +1150,13 @@ class SqlQueryValidator
     {
         if ($overrideColumnNamesSet !== null) {
             return $overrideColumnNamesSet;
+        }
+
+        if ($this->isSetOperation($selectStatement)) {
+            // PostgreSQL names the output columns of a set operation after its leftmost branch
+            $leftBranchSelectStatement = $this->getSetOperationBranch($selectStatement, 'larg');
+
+            return $leftBranchSelectStatement !== null ? $this->getOutputColumnsSet($leftBranchSelectStatement) : null;
         }
 
         $columnNamesSet = [];
