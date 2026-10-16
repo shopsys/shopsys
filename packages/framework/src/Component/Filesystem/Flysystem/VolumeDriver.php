@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Filesystem\Flysystem;
 use Barryvdh\elFinderFlysystemDriver\Driver;
 use elFinder;
 use Override;
+use Shopsys\FrameworkBundle\Component\Filesystem\PathInsideDirectoryChecker;
 
 class VolumeDriver extends Driver
 {
@@ -40,6 +41,25 @@ class VolumeDriver extends Driver
     }
 
     /**
+     * The hash is only an unsigned base64 of a path, so it is fully controlled by the client.
+     * Paths outside of the volume root are refused here, before any command (read, list, upload, rename, copy, remove...) can work with them.
+     *
+     * @param string $hash
+     * @return false|string
+     */
+    #[Override]
+    protected function decode($hash)
+    {
+        $path = parent::decode($hash);
+
+        if (!PathInsideDirectoryChecker::isInside($path, $this->root)) {
+            return false;
+        }
+
+        return $path;
+    }
+
+    /**
      * @param string $hash
      * @return false|string
      */
@@ -50,18 +70,8 @@ class VolumeDriver extends Driver
         $stat = $this->stat($thumbnailPath);
 
         if (isset($stat['tmb'])) {
+            // when the thumbnail cannot be created, false is returned and the client shows the icon of the file type
             $res = (string)$stat['tmb'] === '1' ? $this->createTmb($thumbnailPath, $stat) : $stat['tmb'];
-
-            if (!$res) {
-                [$type] = explode('/', $stat['mime']);
-                $fallback = $this->options['resourcePath'] . DIRECTORY_SEPARATOR . strtolower($type) . '.png';
-
-                if (is_file($fallback)) {
-                    $res = $this->tmbname($stat);
-                    $this->fs->delete($fallback);
-                    $this->fs->write($fallback, $this->createThumbnailPath($res));
-                }
-            }
 
             // tmb garbage collection
             if ($res && $this->options['tmbGcMaxlifeHour'] && $this->options['tmbGcPercentage'] > 0) {

@@ -549,6 +549,8 @@ services:
         arguments:
             - '%shopsys.uploaded_file_dir%'
 
+    Shopsys\FrameworkBundle\Component\Security\AccessControl\FileManagerAccessChecker: ~
+
     Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
 
     Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
@@ -956,6 +958,14 @@ services:
     main_filesystem:
         class: League\Flysystem\FilesystemOperator
         factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
+        # public service is necessary for ElFinderBundle
+        public: true
+
+    wysiwyg_filesystem:
+        class: Shopsys\FrameworkBundle\Component\Filesystem\DirectoryRestrictedFilesystem
+        arguments:
+            $filesystem: '@main_filesystem'
+            $allowedDirectory: 'web/%shopsys.filemanager_upload_web_dir%'
         # public service is necessary for ElFinderBundle
         public: true
 
