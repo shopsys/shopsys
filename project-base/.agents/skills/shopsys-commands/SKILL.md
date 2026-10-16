@@ -142,9 +142,34 @@ generates references, it does not validate them. For the monorepo, keep referenc
 generation in CI and follow `cypress-tests` for the review/regression workflow.
 
 ```bash
-make run-acceptance-tests-base     # base Cypress acceptance suite
-make open-acceptance-tests-base    # open Cypress GUI for debugging
+make help-tests                  # primary commands, advanced regeneration and options
+make run-acceptance-tests-regression # all acceptance scenarios with visual comparison
+make open-acceptance-tests-regression # Cypress GUI with visual comparison
+make run-smoke-tests              # basic page health, not full acceptance coverage
+
+# Optional functional-only regression runs; screenshots are enabled by default
+make run-acceptance-tests-regression SKIP_SNAPSHOTS=1
+make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts SKIP_SNAPSHOTS=1
+make open-acceptance-tests-regression SKIP_SNAPSHOTS=1
 ```
+
+`SKIP_SNAPSHOTS=1` is supported by all regression Makefile targets, including
+interactive selection. The Makefile passes it into the Cypress container; setting
+it only on the host for a direct Docker command does not pass it through automatically.
+Omit it (or use `0`) for normal screenshot checks. The functional-only mode skips
+visual capture/comparison and screenshot-only helper preparation, but keeps functional
+assertions and automatic failure screenshots. It never updates references and cannot
+be combined with `base` regeneration. Test failures still fail Make after cleanup.
+All local acceptance commands build the Cypress image and prepare the test environment.
+Cleanup attempts to restore development mode on setup/test failure or interruption,
+including smoke runs. The preparation/cleanup helpers can also be called as explicit
+Make targets; complete manual preparation with `make cypress-cleanup`.
+
+The monorepo GitHub CI pins screenshots enabled. The project GitLab template defaults
+to `SKIP_SNAPSHOTS: "0"`; projects can opt in to functional-only regression with a CI
+variable set to `1`. GitLab's manual regeneration job always keeps screenshots enabled.
+The advanced `*-base` Make targets remain compatible but replace PNG references;
+they are not a separate test suite. Do not use them for ordinary verification.
 
 For layer selection, see `.agents/skills/test-writing/SKILL.md`; use `backend-tests`
 for PHP and admin Jest, or `storefront-tests` for Vitest and Cypress routing.

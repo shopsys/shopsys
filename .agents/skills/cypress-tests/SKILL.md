@@ -81,12 +81,35 @@ make run-acceptance-tests-regression
 
 # Specific group
 make selected-acceptance-tests-regression  # Interactive group selection
+
+# Functional-only run (also supported by selected, specific and GUI regression targets)
+make run-acceptance-tests-regression SKIP_SNAPSHOTS=1
+make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts SKIP_SNAPSHOTS=1
 ```
 
-When storefront `.tsx` files change (adding TIDs), the make command automatically rebuilds.
+Use `make help-tests` for the primary commands and advanced reference-generation modes.
+All local acceptance commands build the Cypress image before changing the environment,
+then prepare test data and recreate the test storefront. A shared exit/signal handler
+attempts every cleanup step after setup/test failure or interruption and preserves failure.
+`prepare-data-for-acceptance-tests`, `cypress-prepare` and `cypress-cleanup` also work
+as explicit targets; manual setup requires explicit cleanup.
 
 These are commands for the user, not agent execution. The `base` variants generate
 references rather than validating them; keep monorepo reference generation on CI.
+
+`SKIP_SNAPSHOTS` defaults to `0`. Both Makefiles pass it explicitly to the Cypress
+container; `1` enables the existing `skipSnapshots` helper shortcut. It skips visual
+capture/comparison and the helper's screenshot-only preparation, not the scenario's
+functional assertions. Automatic screenshots on test failure remain enabled. Invalid
+values and skipping snapshots in `base` mode are rejected. A functional-only green
+run is not visual approval. The Makefile returns a failure after cleanup when Cypress
+fails (including interactive selection and smoke). GitHub CI explicitly pins
+`SKIP_SNAPSHOTS=0` for regression and regeneration. The project GitLab template defaults
+to `0` and forwards an optional pipeline variable only to regression; its manual
+regeneration job always uses `0`. The shared container entrypoint validates modes
+before dependency installation; a typo must never fall back to reference generation.
+Targeted non-browser coverage lives in `vitest/cypress/snapshotMode.test.ts` and
+`vitest/cypress/entrypoint.test.ts`; the latter uses a stub npm command, not Cypress.
 
 **Reference site** for inspecting page structure: `https://19-0.odin.shopsys.cloud/`
 

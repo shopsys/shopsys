@@ -3,6 +3,7 @@ import { configureVisualRegression } from 'cypress-visual-regression';
 import * as fs from 'fs';
 import { globSync } from 'glob';
 import * as path from 'path';
+import { getSkipSnapshots, validateSnapshotMode } from './snapshotMode';
 
 const getProjectPages = () => {
     const files = globSync('**/*.tsx', {
@@ -41,7 +42,7 @@ export default defineConfig({
         TEST_LOCALE: process.env.TEST_LOCALE,
         B2B_DOMAIN_ID: process.env.B2B_DOMAIN_ID || '',
         B2B_BASE_URL: process.env.B2B_BASE_URL || '',
-        skipSnapshots: false,
+        skipSnapshots: getSkipSnapshots(process.env.SKIP_SNAPSHOTS),
         visualRegressionErrorThreshold: 0.005,
         visualRegressionFailSilently: false,
         visualRegressionBaseDirectory: 'snapshots',
@@ -49,6 +50,11 @@ export default defineConfig({
     },
     e2e: {
         setupNodeEvents(on, config) {
+            validateSnapshotMode(config.expose.skipSnapshots, config.expose.visualRegressionType);
+            if (config.expose.skipSnapshots) {
+                console.log('Visual snapshot checks disabled; functional checks remain enabled.');
+            }
+
             configureVisualRegression(on);
 
             // Delete videos of passing specs so CI failure artifacts stay under upload limits.

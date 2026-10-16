@@ -493,23 +493,47 @@ docker compose run --rm -e TYPE=regression -e COMMAND=run -e TEST_LOCALE=cs cypr
 
 ### How to run tests using the CLI (`cypress run`)?
 
-There are six commands provided for you:
+Use `make help-tests` for a summary. The primary commands are:
 
-- `run-acceptance-tests-base`: This command runs the tests and allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
-- `run-acceptance-tests-regression`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
-- `selected-acceptance-tests-base`: This is the same as `run-acceptance-tests-base`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
-- `selected-acceptance-tests-regression`: This is the same as `run-acceptance-tests-regression`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
-- `run-specific-test-regression`: This is the same as `run-acceptance-tests-regression`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select a test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+- `make run-acceptance-tests-regression`: run all acceptance scenarios and compare screenshots against committed references.
+- `make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts`: run all scenarios in one spec file, with screenshot comparison.
+- `make open-acceptance-tests-regression`: open the GUI for debugging (display setup is described below).
+- `make run-smoke-tests`: check basic page health. This is not a replacement for complete user-flow tests.
+
+Visual failures produce difference images in `storefront/cypress/snapshotDiffs/`. A regression run does not replace reference PNGs.
+
+All these commands build the Cypress image before changing the local environment, prepare test data and recreate the test storefront. They attempt to restore the development environment after setup or test failure, and on handled interruption. Failed headless runs return a nonzero status even if cleanup succeeds; a cleanup failure also fails the command. A forced kill or Docker failure can still require manual recovery with `make cypress-cleanup`.
+
+#### Advanced commands and compatibility
+
+`selected-acceptance-tests-regression` still offers interactive spec selection. The existing `run-acceptance-tests-base`, `run-specific-test-base SPEC=…`, `selected-acceptance-tests-base` and `open-acceptance-tests-base` commands remain available, but are separated from the primary help.
+
+**Base means reference generation, not a different test suite. These commands replace reference PNGs.** For the Shopsys monorepo, generate references on GitHub with the `regenerate screenshots` PR label. Projects using the GitLab template have the manual `regenerate-storefront-screenshots` job. Review generated references before accepting them.
+
+### Running functional checks without visual snapshots
+
+For development with frequent UI changes, add `SKIP_SNAPSHOTS=1` to any regression Makefile command:
 
 ```bash
-make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
+make run-acceptance-tests-regression SKIP_SNAPSHOTS=1
+make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts SKIP_SNAPSHOTS=1
+make selected-acceptance-tests-regression SKIP_SNAPSHOTS=1
+make open-acceptance-tests-regression SKIP_SNAPSHOTS=1
 ```
 
-- `run-specific-test-base`: This is the same as `run-acceptance-tests-base`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+Both the project and monorepo Makefiles pass this value into the Cypress container. The default is `0`: omit the parameter or use `SKIP_SNAPSHOTS=0` to restore visual checks.
 
-```bash
-make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
-```
+This mode skips `takeSnapshotAndCompare()`, including its screenshot-only preparation and callback. The surrounding scenario and functional assertions still run; functional failures still fail the headless command after environment cleanup. Automatic screenshots on failure remain enabled. No reference PNGs are generated or replaced, and combining this mode with a `base` regeneration command is rejected.
+
+A passing functional-only run does not verify appearance. Application builds, data preparation and functional test steps still run, so this does not skip the entire test environment setup.
+
+### Snapshot mode in CI
+
+- **Monorepo GitHub Actions:** both regression and regeneration explicitly use `SKIP_SNAPSHOTS=0`. The optional local setting does not disable visual CI checks.
+- **Project GitLab:** the pipeline variable `SKIP_SNAPSHOTS` defaults to `"0"`. Set it to `"1"` for functional-only regression runs during development. The manual regeneration service pins `0`, even when the pipeline variable is `1`.
+- **Other CI integrations:** explicitly pass `-e TYPE=regression -e COMMAND=run -e TEST_LOCALE=en -e SKIP_SNAPSHOTS=0` to `docker compose run --rm … cypress` for normal verification, or `SKIP_SNAPSHOTS=1` for functional-only runs. A host environment variable alone is not forwarded into a container unless the Compose configuration or CLI passes it.
+
+The shared container entrypoint rejects unknown modes and refuses reference generation with snapshots disabled before installing dependencies or running tests. GitHub's label trigger and GitLab's manual regeneration remain separate provider-specific workflows.
 
 ### How to run tests using the cypress interactive GUI (`cypress open`) on Mac?
 
