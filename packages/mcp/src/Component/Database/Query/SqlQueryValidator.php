@@ -20,6 +20,7 @@ class SqlQueryValidator
     public const string ERROR_UNKNOWN_RELATION_ALIAS = 'The SQL query references an unknown table or relation alias.';
     public const string ERROR_DISALLOWED_CAST_TARGET = 'The SQL query uses a cast target that is not allowed.';
     public const string ERROR_RECURSIVE_CTE_NOT_SUPPORTED = 'Recursive common table expressions are not supported.';
+    public const string ERROR_CTE_NAMES_COLLIDE = 'The SQL query defines common table expressions whose names are equal when letter case is ignored.';
     public const string ERROR_LIMIT_REQUIRED_FORMAT = 'The SQL query must include a top-level LIMIT <= %d.';
 
     protected const string NODE_TAG_A_STAR = 'A_Star';
@@ -343,7 +344,21 @@ class SqlQueryValidator
         array $allowedColumnsSetIndexedByTableNames,
         array &$cteRelationsIndexedByNames,
     ): ?string {
-        foreach ($this->getCteDefinitions($selectStatement) as $cteName => $cteDefinition) {
+        $cteDefinitions = $this->getCteDefinitions($selectStatement);
+
+        if ($cteDefinitions === null) {
+            return self::ERROR_ONLY_SELECT_SUPPORTED;
+        }
+
+        // PostgreSQL treats quoted "A" and a as two different CTEs, such queries are confusing, so they are rejected upfront with a clear message
+        $lowercasedCteNames = array_map(static fn (array $cteDefinition): string => strtolower($cteDefinition['name']), $cteDefinitions);
+
+        if (count($lowercasedCteNames) !== count(array_unique($lowercasedCteNames))) {
+            return self::ERROR_CTE_NAMES_COLLIDE;
+        }
+
+        foreach ($cteDefinitions as $cteDefinition) {
+            $cteName = $cteDefinition['name'];
             $cteQuery = $cteDefinition['query'];
 
             if ($this->getWrappedNodeTag($cteQuery) !== self::NODE_TAG_SELECT_STMT) {
@@ -726,8 +741,8 @@ class SqlQueryValidator
         array $cteRelationsIndexedByNames,
         array $allowedColumnsSetIndexedByTableNames,
     ): ?string {
-        $tableName = strtolower((string)($rangeVar['relname'] ?? ''));
-        $schemaName = strtolower((string)($rangeVar['schemaname'] ?? ''));
+        $tableName = (string)($rangeVar['relname'] ?? '');
+        $schemaName = (string)($rangeVar['schemaname'] ?? '');
 
         if ($tableName === '') {
             return self::ERROR_TABLE_NOT_EXPOSED;
@@ -895,7 +910,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $stringValue = strtolower((string)($field[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $stringValue = (string)($field[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($stringValue === '') {
                 return null;
@@ -1005,7 +1020,7 @@ class SqlQueryValidator
                 return self::ERROR_COLUMN_NOT_EXPOSED;
             }
 
-            $columnName = strtolower((string)($usingClauseNode[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $columnName = (string)($usingClauseNode[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if (
                 $columnName === ''
@@ -1060,10 +1075,12 @@ class SqlQueryValidator
     }
 
     /**
+     * CTE definitions are returned as a list, so that no definition is lost when two of them share a name.
+     *
      * @param array<string, mixed> $selectStatement
-     * @return array<string, array{query: array<string, mixed>, columnNamesSet: array<string, bool>|null}>
+     * @return list<array{name: string, query: array<string, mixed>, columnNamesSet: array<string, bool>|null}>|null
      */
-    protected function getCteDefinitions(array $selectStatement): array
+    protected function getCteDefinitions(array $selectStatement): ?array
     {
         $cteDefinitions = [];
 
@@ -1073,17 +1090,18 @@ class SqlQueryValidator
 
         foreach ($cteNodes as $cteNode) {
             if (!is_array($cteNode) || $this->getWrappedNodeTag($cteNode) !== self::NODE_TAG_COMMON_TABLE_EXPR) {
-                continue;
+                return null;
             }
 
-            $cteName = strtolower((string)($cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['ctename'] ?? ''));
+            $cteName = (string)($cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['ctename'] ?? '');
             $cteQuery = $cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['ctequery'] ?? null;
 
             if ($cteName === '' || !is_array($cteQuery)) {
-                continue;
+                return null;
             }
 
-            $cteDefinitions[$cteName] = [
+            $cteDefinitions[] = [
+                'name' => $cteName,
                 'query' => $cteQuery,
                 'columnNamesSet' => $this->getAliasColumnNamesSet($cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['aliascolnames'] ?? null),
             ];
@@ -1198,7 +1216,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $columnName = strtolower((string)($aliasColumnNameNode[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $columnName = (string)($aliasColumnNameNode[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($columnName === '') {
                 return null;
@@ -1264,7 +1282,7 @@ class SqlQueryValidator
      */
     protected function getOutputColumnName(array $resTarget): ?string
     {
-        $aliasName = strtolower((string)($resTarget['name'] ?? ''));
+        $aliasName = (string)($resTarget['name'] ?? '');
 
         if ($aliasName !== '') {
             return $aliasName;
@@ -1326,7 +1344,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $functionNamePart = strtolower((string)($namePart[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $functionNamePart = (string)($namePart[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($functionNamePart === '') {
                 return null;
@@ -1354,7 +1372,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $typeNamePart = strtolower((string)($namePart[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $typeNamePart = (string)($namePart[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($typeNamePart === '') {
                 return null;
@@ -1372,7 +1390,7 @@ class SqlQueryValidator
             return null;
         }
 
-        $aliasName = strtolower((string)($aliasNode['aliasname'] ?? $aliasNode['Alias']['aliasname'] ?? ''));
+        $aliasName = (string)($aliasNode['aliasname'] ?? $aliasNode['Alias']['aliasname'] ?? '');
 
         return $aliasName !== '' ? $aliasName : null;
     }
