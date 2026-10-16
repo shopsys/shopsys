@@ -48,6 +48,21 @@ const REQUEST_WITHOUT_DIRECTIVE = {
     signal: {},
 } as unknown as RequestInit;
 
+const PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN = {
+    headers: {
+        accept: 'application/graphql-response+json, application/graphql+json, application/json, text/event-stream, multipart/mixed',
+        originalhost: '127.0.0.1:8000',
+        'x-forwarded-proto': 'off',
+        'content-type': 'application/json',
+        'x-domain-id': '1',
+        'x-auth-token':
+            'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJwcmljaW5nR3JvdXBJZCI6NCwicm9sZXMiOlsiUk9MRV9BUElfQUxMIl19.fake',
+    },
+    method: 'POST',
+    body: '{"operationName":"PromotedProductsQuery","query":"query PromotedProductsQuery @redisCachePerPricingGroup(ttl: 3600) {\\n foobar\\n}"}',
+    signal: {},
+} as unknown as RequestInit;
+
 const STORES_QUERY_REQUEST_WITH_DIRECTIVE = {
     ...REQUEST_WITH_DIRECTIVE,
     body: JSON.stringify({
@@ -259,6 +274,110 @@ describe('fetcher test', () => {
         const responseBodyFromRedis = await (await testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE)).json();
 
         expect(responseBodyFromRedis).toStrictEqual({ data: TEST_RESPONSE_BODY });
+    });
+
+    test.each([
+        'Bearer x',
+        'Bearer header.payload',
+        'Bearer header.payload.signature.extra',
+        'Bearer e30.e30.',
+        'Bearer invalid.e30.signature',
+        'Bearer e30.invalid.signature',
+        'Bearer e30.bnVsbA.signature',
+        'Bearer e30.W10.signature',
+        'Bearer W10.e30.signature',
+        'Bearer e30.e30.invalid!signature',
+    ])('rejects malformed credentials locally without accessing pricing caches: %s', async (authToken) => {
+        const headers = new Headers(PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN.headers);
+        headers.set('X-Auth-Token', authToken);
+        mockRedisClientGet.mockReturnValue(JSON.stringify({ priceWithVat: '15.000000' }));
+
+        const response = await fetcher(mockRedisClient)(TEST_URL, {
+            ...PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN,
+            headers,
+        });
+
+        expect(mockFetch).not.toHaveBeenCalled();
+        expect(response.status).toBe(200);
+        expect(response.headers.get('content-type')).toContain('application/json');
+        expect(await response.json()).toEqual({
+            errors: [{ message: 'Token is not valid.', extensions: { userCode: 'invalid-token' } }],
+        });
+        expect(mockRedisClient.get).not.toHaveBeenCalled();
+        expect(mockRedisClient.set).not.toHaveBeenCalled();
+    });
+
+    test.each([
+        ['forged JWT', new Headers(PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN.headers).get('x-auth-token')!],
+        [
+            'forged JWT with future expiry',
+            `Bearer eyJhbGciOiJSUzI1NiJ9.${Buffer.from(
+                JSON.stringify({ exp: 4102444800, pricingGroupId: 4, roles: ['ROLE_API_ALL'] }),
+            ).toString('base64url')}.fake`,
+        ],
+    ])('returns backend rejection instead of cached VIP data for a %s', async (_scenario, authToken) => {
+        const headers = new Headers(PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN.headers);
+        headers.set('X-Auth-Token', authToken);
+        const request = { ...PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN, headers };
+        const backendError = { errors: [{ message: 'Invalid token', extensions: { userCode: 'invalid-token' } }] };
+        mockRedisClientGet.mockReturnValue(JSON.stringify({ priceWithVat: '15.000000' }));
+        mockFetch.mockResolvedValue(new Response(JSON.stringify(backendError)));
+
+        const testFetcher = fetcher(mockRedisClient);
+        const response = await testFetcher(TEST_URL, request);
+
+        expect(await response.json()).toEqual(backendError);
+        expect(mockRedisClient.get).not.toBeCalled();
+        expect(mockRedisClient.set).not.toBeCalled();
+        expect(mockFetch).toHaveBeenCalledExactlyOnceWith(TEST_URL, {
+            ...request,
+            body: (request.body as string).replace('@redisCachePerPricingGroup(ttl: 3600)', ''),
+        });
+    });
+
+    test('revalidates an authenticated request after the backend previously accepted the same token', async () => {
+        const headers = new Headers(PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN.headers);
+        headers.set('X-Auth-Token', 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJleHAiOjQxMDI0NDQ4MDB9.signature');
+        const request = { ...PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN, headers };
+        const vipData = { data: { priceWithVat: '15.000000' } };
+        const backendError = { errors: [{ message: 'Token expired', extensions: { userCode: 'expired-token' } }] };
+        mockRedisClientGet.mockReturnValue(JSON.stringify({ priceWithVat: '139.960000' }));
+        mockFetch
+            .mockResolvedValueOnce(new Response(JSON.stringify(vipData)))
+            .mockResolvedValueOnce(new Response(JSON.stringify(backendError)));
+
+        const testFetcher = fetcher(mockRedisClient);
+        const acceptedResponse = await testFetcher(TEST_URL, request);
+        const expiredResponse = await testFetcher(TEST_URL, request);
+
+        expect(await acceptedResponse.json()).toEqual(vipData);
+        expect(await expiredResponse.json()).toEqual(backendError);
+        expect(mockFetch).toHaveBeenCalledTimes(2);
+        expect(mockRedisClient.get).not.toBeCalled();
+        expect(mockRedisClient.set).not.toBeCalled();
+    });
+
+    test.each(['1', '2'])('keeps anonymous pricing responses cached on domain %s', async (domainId) => {
+        vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
+        const headers = new Headers(PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN.headers);
+        headers.delete('X-Auth-Token');
+        headers.set('X-Domain-Id', domainId);
+        const request = { ...PER_PRICING_GROUP_REQUEST_WITH_FORGED_TOKEN, headers };
+        mockRedisClientGet.mockReturnValueOnce(null).mockReturnValueOnce(JSON.stringify(TEST_RESPONSE_BODY));
+
+        const testFetcher = fetcher(mockRedisClient);
+        const uncachedResponse = await testFetcher(TEST_URL, request);
+        const cachedResponse = await testFetcher(TEST_URL, request);
+
+        expect(await uncachedResponse.json()).toEqual({ data: TEST_RESPONSE_BODY });
+        expect(await cachedResponse.json()).toEqual({ data: TEST_RESPONSE_BODY });
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(mockRedisClient.get).toHaveBeenCalledTimes(2);
+        expect(mockRedisClient.set).toHaveBeenCalledExactlyOnceWith(
+            expect.stringContaining(`TEST_PREFIX:fe:queryCache:PromotedProductsQuery:127.0.0.1:8000:${domainId}:pg0_`),
+            JSON.stringify(TEST_RESPONSE_BODY),
+            { EX: 3600 },
+        );
     });
 
     describe('URL directive cleaning', () => {
