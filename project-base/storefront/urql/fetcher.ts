@@ -1,4 +1,5 @@
 import { captureException } from '@sentry/nextjs';
+import { jwtDecode } from 'jwt-decode';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { DOMAIN_ID_HEADER } from 'urql/createClient';
 import { isClient } from 'utils/isClient';
@@ -23,26 +24,28 @@ const observeSettingsResponseForDefaultPricingGroup = (domainId: string | null, 
     }
 };
 
-const getAuthBucketFromHeaders = async (headers: Headers, domainId: string | null): Promise<string> => {
-    const authToken = headers.get('X-Auth-Token')?.replace(/^Bearer\s+/i, '');
+const getAnonymousBucket = async (domainId: string | null): Promise<string> => {
     const defaultPricingGroupId = (domainId && defaultPricingGroupByDomain.get(domainId)) ?? 0;
-    let pricingGroupId: number | string = defaultPricingGroupId;
-    let roles: string[] = [];
 
-    if (authToken) {
-        try {
-            const [, payloadSegment] = authToken.split('.');
-            const payload = JSON.parse(Buffer.from(payloadSegment, 'base64url').toString('utf8'));
-            pricingGroupId = payload?.pricingGroupId ?? defaultPricingGroupId;
-            roles = payload?.roles ?? [];
-        } catch {
-            // Malformed token — keep defaults.
-        }
+    const rolesHash = await getHash('');
+
+    return `pg${defaultPricingGroupId}_r${rolesHash}`;
+};
+
+const isMalformedAccessToken = (authToken: string): boolean => {
+    if (!/^Bearer [A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(authToken)) {
+        return true;
     }
 
-    const rolesHash = await getHash([...roles].sort().join(','));
+    try {
+        const token = authToken.slice('Bearer '.length);
+        const header = jwtDecode<unknown>(token, { header: true });
+        const payload = jwtDecode<unknown>(token);
 
-    return `pg${pricingGroupId}_r${rolesHash}`;
+        return [header, payload].some((value) => typeof value !== 'object' || value === null || Array.isArray(value));
+    } catch {
+        return true;
+    }
 };
 
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
@@ -183,7 +186,26 @@ export const fetcher =
             const host = headers.get('OriginalHost');
             const domainId = headers.get(DOMAIN_ID_HEADER);
             const isPerPricingGroup = init.body.match(PER_PRICING_GROUP_CACHE_REGEXP) !== null;
-            const authBucket = isPerPricingGroup ? `${await getAuthBucketFromHeaders(headers, domainId)}:` : '';
+            const authToken = headers.get('X-Auth-Token');
+
+            // Cache only anonymous pricing responses: the backend must validate each authenticated request,
+            // including token expiry and invalidation after customer security changes.
+            if (isPerPricingGroup && authToken) {
+                // Reject malformed credentials locally while preserving the auth exchange's refresh/cleanup flow.
+                // Decodable claims are never trusted to authorize access or select a cache bucket.
+                if (isMalformedAccessToken(authToken)) {
+                    return Response.json({
+                        errors: [{ message: 'Token is not valid.', extensions: { userCode: 'invalid-token' } }],
+                    });
+                }
+
+                return fetch(createCleanedInput(input), {
+                    ...init,
+                    body,
+                });
+            }
+
+            const authBucket = isPerPricingGroup ? `${await getAnonymousBucket(domainId)}:` : '';
             const queryName = getQueryName(init.body);
 
             if (queryName === undefined || (queryName === 'StoresQuery' && hasSetStoreFilterVariables(init.body))) {
