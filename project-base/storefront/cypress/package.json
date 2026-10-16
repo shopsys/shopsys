@@ -13,7 +13,6 @@
         "specific-regression": "cypress run --expose visualRegressionType=regression --spec",
         "selected-regression": "./runSelectedTests.js visualRegressionType=regression",
         "selected-base": "./runSelectedTests.js visualRegressionType=base",
-        "generate-snapshots-table": "./generateSnapshotsInfoTable.js",
         "smoke": "cypress run --spec ./smokeTests/smokeTests.cy.ts"
     },
     "devDependencies": {

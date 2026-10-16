@@ -24,7 +24,7 @@ help: ## Displays list of available commands
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
 	open-acceptance-tests-base open-acceptance-tests-regression run-smoke-tests \
-	generate-snapshots-info-table prepare-data-for-acceptance-tests cypress-prepare cypress-cleanup \
+	prepare-data-for-acceptance-tests cypress-prepare cypress-cleanup \
 	check-licenses environment-prod environment-dev
 
 # ------------------------------------------------------------------------------
@@ -244,18 +244,6 @@ run-smoke-tests: ## Runs smoke tests (Cypress)
 	@echo "▶️ Running smoke tests..."
 	-docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
 	@echo "✅ Smoke tests finished."
-	$(call cypress-cleanup)
-
-# ------------------------------------------------------------------------------
-# 📸 Snapshots & Utilities
-# ------------------------------------------------------------------------------
-
-generate-snapshots-info-table: ## Generates overview table of Cypress snapshots
-	$(call prepare-data-for-acceptance-tests)
-	$(call cypress-prepare)
-	@echo "▶️ Generating snapshots info table..."
-	-docker compose exec storefront-cypress npm run generate-snapshots-table --prefix cypress || true
-	@echo "✅ Snapshots info table generation finished."
 	$(call cypress-cleanup)
 
 # ------------------------------------------------------------------------------
