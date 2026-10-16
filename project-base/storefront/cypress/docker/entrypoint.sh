@@ -20,9 +20,6 @@ if [ -n "$SPEC" ]; then
         echo "🔍 Running npm run specific-base $SPEC"
         npm run specific-base "$SPEC"
     fi
-elif [ "$COMMAND" = "generate" ]; then
-    echo "📊 Generating snapshots lookup table"
-    npm run generate-snapshots-table
 elif [ "$COMMAND" = "smoke" ]; then
     echo "💨 Running smoke tests"
     npm run smoke

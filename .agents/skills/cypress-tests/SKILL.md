@@ -358,8 +358,8 @@ New captures in an explicit-ID spec get a new unused index; do not backfill remo
 Different entry points or persistence paths do not each need a screenshot of the same state.
 Before removing a capture, identify its retained visual owner and preserve explicit assertions
 for the original flow. Keep distinct layout/overlay/form states and required deferred readiness.
-Remove only the corresponding obsolete PNGs, preserve retained reference names, and regenerate
-the lookup table. This does not authorize baseline regeneration or automatic acceptance of diffs.
+Remove only the corresponding obsolete PNGs and preserve retained reference names.
+This does not authorize baseline regeneration or automatic acceptance of diffs.
 
 ### Blackout rules
 
@@ -1089,19 +1089,6 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
 });
 ```
 
-## Snapshot Lookup Table
-
-A complete lookup table mapping snapshot IDs to test names and source files is maintained in:
-`project-base/storefront/cypress/snapshots-info-table.md`
-
-Use this table to quickly find which test generates a specific snapshot (e.g., snapshot `13-0-0` → stores test).
-
-**Regenerate** the table after adding/removing/renaming snapshots:
-
-```bash
-docker compose exec -T storefront sh -lc 'cd cypress && npm run generate-snapshots-table'
-```
-
 ## Cypress Config Highlights
 
 - **Versions**: Cypress 16.1.1, cypress-visual-regression 6.0.1 and cypress-real-events 1.15.1; Node 24.14.0 in CI. Public configuration uses `expose` / `Cypress.expose()` and CLI `--expose`; use `cy.env()` for secrets, never expose them.
@@ -1129,4 +1116,3 @@ docker compose exec -T storefront sh -lc 'cd cypress && npm run generate-snapsho
 - **New test category/directory** → Add to the Existing Test Categories table
 - **New translation key category** → Update the `translations` object categories list
 - **Changed test workflow or conventions** → Update relevant sections
-- **Snapshot naming/call-site changes** → Regenerate the lookup table using the command above; this does not run Cypress or regenerate PNG references
