@@ -637,7 +637,7 @@ jobs:
                     fi
                     ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress smoke tests
-                run: docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress;
+                run: docker compose run --rm -e COMMAND=smoke -e TEST_LOCALE=en cypress
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm

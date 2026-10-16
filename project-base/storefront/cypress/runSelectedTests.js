@@ -50,6 +50,7 @@ promptFn(prompt).then((answers) => {
 
     child.on('close', (code) => {
         if (code !== 0) {
+            process.exitCode = code ?? 1;
             console.error(`Process exited with code ${code}`);
         } else {
             console.log('Process completed successfully.');
