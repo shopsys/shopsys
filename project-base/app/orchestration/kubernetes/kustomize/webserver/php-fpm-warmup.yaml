@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: webserver-php-fpm
+spec:
+    template:
+        spec:
+            containers:
+                -   name: php-fpm
+                    # Keep the image entrypoint, but prepare Symfony's preload file before FPM starts.
+                    args:
+                        - sh
+                        - -ec
+                        - |
+                            /var/www/html/phing -S warmup
+                            exec php-fpm
+                    lifecycle:
+                        postStart: null
+                    # nginx's health endpoint does not check whether PHP-FPM is listening.
+                    readinessProbe:
+                        exec:
+                            command: ["nc", "-z", "-w", "1", "127.0.0.1", "9000"]
+                        periodSeconds: 5
+                        timeoutSeconds: 2

@@ -10,8 +10,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { serializeJsonForScriptTag } from 'utils/serialization/serializeJsonForScriptTag';
-
-export const STRUCTURED_DATA_REVIEWS_COUNT = 5;
+import { STRUCTURED_DATA_REVIEWS_COUNT } from './productMetadataConstants';
 
 type ProductMetadataProps = {
     product: TypeProductDetailFragment | TypeMainVariantDetailFragment;

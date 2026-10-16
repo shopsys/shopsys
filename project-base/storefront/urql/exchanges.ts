@@ -7,9 +7,11 @@ import { getAuthExchangeOptions } from 'urql/authExchange';
 import { cache } from 'urql/cache/cacheExchange';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isClient } from 'utils/isClient';
+import { isServerTimingEnabled } from 'utils/serverSide/serverTiming';
 import { dedupExchange } from './dedupExchange';
 import { getErrorExchange } from './errorExchange';
 import { operationNameExchange } from './operationNameExchange';
+import { getServerTimingExchange } from './serverTimingExchange';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,
@@ -19,6 +21,7 @@ export const getUrqlExchanges = (
 ): ClientOptions['exchanges'] => [
     devtoolsExchange,
     dedupExchange,
+    ...(!isClient && context?.res && isServerTimingEnabled() ? [getServerTimingExchange(context.res)] : []),
     // Graphcache runs only on the client. On the server, parallel query execution causes
     // normalization collisions when multiple queries return the same entity type (e.g. Category),
     // resulting in empty data and false 404s. Server-side readQuery() uses the SSRExchange instead

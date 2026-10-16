@@ -20,7 +20,6 @@ vi.mock('components/Blocks/Product/ProductsSlider', () => ({
             data-variant={variant}
         />
     ),
-    VISIBLE_SLIDER_ITEMS_ARTICLE: 3,
 }));
 
 vi.mock('components/Blocks/Product/ArticleProductHero', () => ({

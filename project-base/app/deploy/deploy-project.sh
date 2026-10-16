@@ -84,6 +84,7 @@ function deploy() {
     )
 
     declare -A STOREFRONT_ENVIRONMENT_VARIABLES=(
+        ["SERVER_TIMING"]=${SERVER_TIMING:-0}
         ["GTM_ID"]=${GTM_ID}
         ["SENTRY_ENVIRONMENT"]=${CI_ENVIRONMENT_SLUG}
         ["SENTRY_RELEASE"]=${CI_COMMIT_SHORT_SHA}

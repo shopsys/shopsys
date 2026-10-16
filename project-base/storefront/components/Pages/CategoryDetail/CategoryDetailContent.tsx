@@ -1,4 +1,4 @@
-import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDescriptionWithImage/CollapsibleDescriptionWithImage';
+import { CollapsibleDescription } from 'components/Blocks/CollapsibleDescription/CollapsibleDescription';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
@@ -14,7 +14,6 @@ import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyE
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { getImageAlt } from 'utils/imageAltText';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useHeadingWithPagination } from 'utils/seo/useHeadingWithPagination';
 import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
@@ -44,14 +43,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
     return (
         <VerticalStack gap="md">
-            <CollapsibleDescriptionWithImage
-                currentPage={currentPage}
-                description={category.description}
-                imageName={getImageAlt(category.images[0]?.name, category.name)}
-                imageUrl={category.images[0]?.url}
-                heading={heading}
-                textClassName="max-w-5xl"
-            />
+            <CollapsibleDescription currentPage={currentPage} description={category.description} heading={heading} />
 
             <SimpleNavigation
                 isWithoutSlider

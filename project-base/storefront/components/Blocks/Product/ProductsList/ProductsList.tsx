@@ -7,13 +7,13 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useCookiesStore } from 'store/useCookiesStore';
-import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { ProductItemProps, ProductListViewModeType } from './ProductListItem';
 import { ProductsListContent } from './ProductsListContent';
+import { productListTwClass, productListViewModeListTwClass } from './productsListConstants';
 
 type ProductsListProps = {
     products: TypeListedProductFragment[] | undefined;
@@ -24,17 +24,6 @@ type ProductsListProps = {
     category?: TypeCategoryDetailFragment;
     productItemProps?: Partial<ProductItemProps>;
 };
-
-export const productListTwClass = twJoin(
-    'relative grid gap-2.5 sm:gap-x-5 sm:gap-y-6',
-    'grid-cols-1',
-    'xs:grid-cols-2',
-    'lg:grid-cols-3',
-    'xl:grid-cols-4',
-    'xxl:grid-cols-5',
-);
-
-export const productListViewModeListTwClass = 'relative grid grid-cols-1 gap-2';
 
 const getProductListTwClass = (productListViewMode: ProductListViewModeType) =>
     productListViewMode === 'list' ? productListViewModeListTwClass : productListTwClass;
