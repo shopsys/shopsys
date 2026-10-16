@@ -13,14 +13,16 @@ on:
             - synchronize
             - reopened
             - ready_for_review
+            - labeled
     workflow_dispatch:
 concurrency:
-    group: ${{ github.ref }}
+    # Unrelated label events must neither run the build nor cancel its current run.
+    group: ${{ github.event.action == 'labeled' && github.event.label.name != 'regenerate screenshots' && format('ignored-label-{0}', github.run_id) || github.ref }}
     cancel-in-progress: true
 name: Docker build
 jobs:
     check-upgrade-notes:
-        if: github.event_name == 'pull_request'
+        if: (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') && (github.event_name == 'pull_request')
         name: Check upgrade notes reference PR number
         runs-on: ubuntu-22.04
         steps:
@@ -77,6 +79,7 @@ jobs:
 
                     exit ${STATUS}
     variables:
+        if: (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots')
         name: Prepare variables and artifacts
         runs-on: ubuntu-22.04
         outputs:
@@ -94,6 +97,32 @@ jobs:
                 uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
+                    # Include the PR head parent of GitHub's tested merge commit for the mode summary.
+                    fetch-depth: 2
+            -   name: Describe Cypress screenshot mode
+                env:
+                    REGENERATE_SCREENSHOTS: ${{ contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') }}
+                    REFERENCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+                run: |
+                    {
+                        if [ "$REGENERATE_SCREENSHOTS" = 'true' ]; then
+                            printf '## Cypress: generate screenshot references\n\n'
+                            printf 'The `regenerate screenshots` label requests new references. See **Generate screenshot references (label only)** for the result.\n\n'
+                            printf 'A published snapshot commit starts a separate verification run after the label is removed. If references are unchanged, regression checks run in this workflow instead.\n'
+                        else
+                            COMMIT_SUBJECT=$(git show -s --format=%s "$REFERENCE_COMMIT")
+                            if [ "$COMMIT_SUBJECT" = 'regenerated Cypress snapshots' ]; then
+                                printf '## Cypress: verify regenerated screenshot references\n\n'
+                                printf 'This run compares the application with the new references saved in the snapshot commit below.\n\n'
+                            else
+                                printf '## Cypress: verify committed screenshot references\n\n'
+                                printf 'This run compares the application with its committed references; it does not replace them.\n\n'
+                            fi
+                            printf 'Reference commit: [%s](%s/%s/commit/%s).\n\n' "$REFERENCE_COMMIT" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$REFERENCE_COMMIT"
+                            printf 'The regeneration, preparation and publication jobs are intentionally skipped because this event has no `regenerate screenshots` label. This does not undo or invalidate an earlier regeneration.\n\n'
+                            printf 'Check **Run Cypress tests (...)** for verification results; this summary describes the mode, not a successful test result.\n'
+                        fi
+                    } >> "$GITHUB_STEP_SUMMARY"
             -   name: Extract variables to output
                 id: variables
                 env:
@@ -200,6 +229,7 @@ jobs:
                     path: ./.github/rabbitmq-vhost.sh
     build-php-fpm-image:
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
@@ -233,6 +263,7 @@ jobs:
                     docker image push "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}"
     build-storefront-image:
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
@@ -266,6 +297,7 @@ jobs:
                     docker image push ${{ needs.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}
     build-storefront-ci-image:
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
@@ -294,6 +326,7 @@ jobs:
                     docker image push ${{ needs.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}
     build-elasticsearch-image:
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
@@ -324,6 +357,7 @@ jobs:
         name: Check standards
         needs: build-php-fpm-image
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -332,6 +366,15 @@ jobs:
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
         runs-on: ubuntu-22.04
         steps:
+            -   name: Checkout snapshot publication checks
+                uses: actions/checkout@v7
+                with:
+                    ref: ${{ github.ref }}
+                    persist-credentials: false
+                    sparse-checkout-cone-mode: false
+                    sparse-checkout: |
+                        /.github/tests/cypress-snapshot-publication.test.cjs
+                        /.github/workflows/docker-build.yaml
             -   name: Download docker-compose.yml from artifacts
                 uses: actions/download-artifact@v8
                 with:
@@ -342,12 +385,20 @@ jobs:
                 run: |
                     docker compose exec -T php-fpm touch ./project-base/app/DEVELOPMENT
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev npm-install-dependencies standards
+            -   name: Check snapshot publication safeguards
+                run: |
+                    # .github is excluded from the PHP image; copy only the test and the workflow it validates.
+                    docker compose exec -T php-fpm mkdir -p .github/tests .github/workflows
+                    docker compose cp .github/tests/cypress-snapshot-publication.test.cjs php-fpm:/var/www/html/.github/tests/cypress-snapshot-publication.test.cjs
+                    docker compose cp .github/workflows/docker-build.yaml php-fpm:/var/www/html/.github/workflows/docker-build.yaml
+                    docker compose exec -T php-fpm node --test .github/tests/cypress-snapshot-publication.test.cjs
             -   name: Check GraphQl schema
                 run: docker compose exec -T php-fpm project-base/app/check-schema.sh
     standards-storefront:
         name: Check Storefront standards
         needs: [build-php-fpm-image, build-storefront-ci-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -415,6 +466,7 @@ jobs:
         name: Run unit tests of Storefront
         needs: [build-storefront-ci-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -442,6 +494,7 @@ jobs:
         name: Run unit, functional and smoke tests
         needs: [build-php-fpm-image, build-elasticsearch-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -476,6 +529,7 @@ jobs:
         name: Run unit, functional and smoke tests with first domain in Czech and with CZK currency
         needs: [build-php-fpm-image, build-elasticsearch-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -518,6 +572,7 @@ jobs:
         name: Check demo data with load_demo_data false for domains 2 and 3
         needs: [build-php-fpm-image, build-elasticsearch-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -552,6 +607,7 @@ jobs:
         name: Run Cypress smoke tests
         needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -581,7 +637,7 @@ jobs:
                     fi
                     ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress smoke tests
-                run: docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress;
+                run: docker compose run --rm -e COMMAND=smoke -e TEST_LOCALE=en cypress
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -596,8 +652,9 @@ jobs:
                 run: docker compose logs cypress
     tests-storefront-acceptance:
         name: Run Cypress tests
-        needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
+        needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image, tests-storefront-acceptance-regenerate, push-regenerated-snapshots]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -611,33 +668,17 @@ jobs:
             fail-fast: false
             matrix:
                 group: [ authentication, b2b, cart, comparison, complaints, customerUsers, filterAndSort, freeShipping, limitedUser, order, seoCategory, ssr, stores, transportAndPayment, visits, others ]
-        env:
-            GH_TOKEN: ${{ github.token }}
         steps:
-            -   name: Check pull request labels
-                run: |
-                    if [ -n "${{ github.event.pull_request.number }}" ]; then
-                        PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                        if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                            echo "SHOULD_RUN_TESTS=false" >> $GITHUB_ENV
-                        else
-                            echo "SHOULD_RUN_TESTS=true" >> $GITHUB_ENV
-                        fi
-                    else
-                        echo "SHOULD_RUN_TESTS=true" >> $GITHUB_ENV
-                    fi
             -   name: GIT checkout branch - ${{ github.ref }}
-                if: env.SHOULD_RUN_TESTS == 'true'
                 uses: actions/checkout@v7
                 with:
                     ref: ${{ github.ref }}
+                    persist-credentials: false
             -   name: Download docker-compose.cypress.yml from artifacts
-                if: env.SHOULD_RUN_TESTS == 'true'
                 uses: actions/download-artifact@v8
                 with:
                     name: docker-compose-cypress
             -   name: Build application
-                if: env.SHOULD_RUN_TESTS == 'true'
                 env:
                     COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
@@ -657,7 +698,6 @@ jobs:
                     fi
                     ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress tests for ${{ matrix.group }}
-                if: env.SHOULD_RUN_TESTS == 'true'
                 run: docker compose run cypress
                 env:
                     GROUP: ${{ matrix.group }}
@@ -695,10 +735,13 @@ jobs:
                 if: ${{ failure() }}
                 run: docker compose logs cypress
     tests-storefront-acceptance-regenerate:
-        name: Reg. Cypress tests
+        name: Generate screenshot references (label only)
         needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
+            github.event_name == 'pull_request' &&
+            contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
@@ -711,36 +754,17 @@ jobs:
             fail-fast: false
             matrix:
                 group: [ authentication, b2b, cart, comparison, complaints, customerUsers, filterAndSort, freeShipping, limitedUser, order, seoCategory, ssr, stores, transportAndPayment, visits, others ]
-        env:
-            GH_TOKEN: ${{ github.token }}
-        outputs:
-            SHOULD_RUN_TESTS_REGENERATE: ${{ steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE }}
         steps:
-            -   name: Check pull request labels
-                id: check-label-tests-regenerate
-                run: |
-                    if [ -n "${{ github.event.pull_request.number }}" ]; then
-                        PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                        if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                            echo "SHOULD_RUN_TESTS_REGENERATE=false" >> $GITHUB_OUTPUT
-                        else
-                            echo "SHOULD_RUN_TESTS_REGENERATE=true" >> $GITHUB_OUTPUT
-                        fi
-                    else
-                        echo "SHOULD_RUN_TESTS_REGENERATE=false" >> $GITHUB_OUTPUT
-                    fi
-            -   name: GIT checkout branch - ${{ github.head_ref }}
-                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
+            -   name: Checkout the tested merge commit
                 uses: actions/checkout@v7
                 with:
-                    ref: ${{ github.head_ref }}
+                    ref: ${{ github.sha }}
+                    persist-credentials: false
             -   name: Download docker-compose.cypress.yml from artifacts
-                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 uses: actions/download-artifact@v8
                 with:
                     name: docker-compose-cypress
             -   name: Build application
-                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 env:
                     COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
                 run: |
@@ -760,7 +784,6 @@ jobs:
                     fi
                     ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run regenerate Cypress tests for ${{ matrix.group }}
-                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
                     docker compose run cypress-regenerate
                 env:
@@ -769,7 +792,6 @@ jobs:
                     B2B_DOMAIN_ID: 2
                     B2B_BASE_URL: http://127.0.0.2:8000
             -   name: Upload generated snapshots for ${{ matrix.group }}
-                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 uses: actions/upload-artifact@v7
                 with:
                     name: cypress-snapshots-${{ matrix.group }}
@@ -786,59 +808,169 @@ jobs:
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
-    push-regenerated-snapshots:
-        name: Push regenerated snapshots
+    prepare-regenerated-snapshots:
+        name: Prepare regenerated snapshots
         needs: [tests-storefront-acceptance-regenerate]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
-            needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
+            github.event.pull_request.head.repo.full_name == github.repository &&
+            needs.tests-storefront-acceptance-regenerate.result == 'success'
         runs-on: ubuntu-22.04
+        timeout-minutes: 15
+        permissions:
+            contents: read
+        outputs:
+            artifact_id: ${{ steps.prepared-snapshots.outputs.artifact-id }}
         steps:
-            -   name: GIT checkout branch - ${{ github.head_ref }}
+            -   name: Checkout the original PR head
                 uses: actions/checkout@v7
                 with:
-                    ref: ${{ github.head_ref }}
+                    ref: ${{ github.event.pull_request.head.sha }}
+                    persist-credentials: false
             -   name: Download all snapshot artifacts
                 uses: actions/download-artifact@v8
                 with:
                     path: ./snapshots
                     pattern: cypress-snapshots-*
                     merge-multiple: true
-            -   name: Commit and push all snapshots
+            -   name: Set up Node for snapshot comparison
+                uses: actions/setup-node@v7
+                with:
+                    node-version: '24.14.0'
+                    package-manager-cache: false
+            -   name: Install locked snapshot comparison dependencies without Cypress binary
+                working-directory: project-base/storefront/cypress
+                run: npm ci --ignore-scripts --no-audit --no-fund
+            -   name: Filter regenerated PNG references
                 run: |
-                    git config --global user.name 'ShopsysBot'
-                    git config --global user.email 'shopsysbot@users.noreply.github.com'
-                    cp -rf snapshots/* project-base/storefront/cypress/snapshots/
-                    git add project-base/storefront/cypress/snapshots/e2e
-                    if ! git diff --cached --quiet; then
-                        git commit -m "regenerate all screenshots"
-                        git push origin ${{ github.head_ref }} --force-with-lease
-                    else
-                        echo "No changes to commit."
+                    set -euo pipefail
+                    if [ ! -d snapshots/e2e ] || [ -z "$(find snapshots/e2e -type f -name '*.png' -print -quit)" ]; then
+                        echo '::error::Snapshot artifacts contain no PNG references.'
+                        exit 1
                     fi
-    tests-storefront-acceptance-regenerate-remove-label:
-        name: Remove "regenerate screenshots" label
-        needs: [tests-storefront-acceptance-regenerate, push-regenerated-snapshots]
+                    while IFS= read -r -d '' SNAPSHOT; do
+                        RELATIVE_PATH="${SNAPSHOT#snapshots/}"
+                        TARGET="project-base/storefront/cypress/snapshots/${RELATIVE_PATH}"
+                        if [ -f "$TARGET" ]; then
+                            # Preserve the original bytes for antialiasing-only changes; no color or area tolerance.
+                            # Avoid the V8 compiler shutdown deadlock: https://github.com/nodejs/node/issues/64274
+                            echo "Comparing reference: $RELATIVE_PATH"
+                            if timeout --kill-after=5s 60s node --no-maglev --no-concurrent-sparkplug project-base/storefront/cypress/node_modules/pixelmatch/bin/pixelmatch "$TARGET" "$SNAPSHOT" '' 0 false; then
+                                cp -- "$TARGET" "$SNAPSHOT"
+                                echo "Keeping reference: $RELATIVE_PATH"
+                                continue
+                            else
+                                COMPARISON_STATUS=$?
+                                case "$COMPARISON_STATUS" in
+                                    65|66) ;; # Different dimensions or at least one non-antialiased pixel.
+                                    *) echo "::error::Snapshot comparison failed for $RELATIVE_PATH (exit $COMPARISON_STATUS)"; exit "$COMPARISON_STATUS" ;;
+                                esac
+                            fi
+                        fi
+                        echo "Updating reference: $RELATIVE_PATH"
+                    done < <(find snapshots/e2e -type f -name '*.png' -print0)
+            -   name: Upload prepared snapshot data
+                id: prepared-snapshots
+                uses: actions/upload-artifact@v7
+                with:
+                    name: prepared-cypress-snapshots
+                    path: ./snapshots
+                    if-no-files-found: error
+                    overwrite: true
+    push-regenerated-snapshots:
+        name: Push regenerated snapshots
+        needs: [prepare-regenerated-snapshots]
         if: |
-            always() &&
-            !failure() &&
-            !cancelled()
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
+            always() && !failure() && !cancelled() &&
+            github.event.pull_request.head.repo.full_name == github.repository &&
+            needs.prepare-regenerated-snapshots.result == 'success'
         runs-on: ubuntu-22.04
+        timeout-minutes: 10
+        permissions:
+            contents: read
+            pull-requests: write
         env:
-            GH_TOKEN: ${{ github.token }}
+            PR_NUMBER: ${{ github.event.pull_request.number }}
+            HEAD_REF: ${{ github.head_ref }}
+            HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+            BASE_SHA: ${{ github.event.pull_request.base.sha }}
         steps:
-            -   name: Remove "regenerate screenshots" label
-                if: needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
+            # Never run PR dependencies here: this fresh runner receives the push token later.
+            -   name: Checkout the original PR head
+                uses: actions/checkout@v7
+                with:
+                    ref: ${{ github.event.pull_request.head.sha }}
+                    persist-credentials: false
+            -   name: Download prepared snapshot data
+                uses: actions/download-artifact@v8
+                with:
+                    artifact-ids: ${{ needs.prepare-regenerated-snapshots.outputs.artifact_id }}
+                    path: ./snapshots
+                    merge-multiple: true
+            -   name: Prepare PNG-only snapshot commit
                 run: |
-                    gh api \
-                        --method DELETE \
-                        -H "Accept: application/vnd.github+json" \
-                        -H "X-GitHub-Api-Version: 2022-11-28" \
-                        /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/regenerate%20screenshots
+                    set -euo pipefail
+                    if [ ! -d snapshots/e2e ] || [ -z "$(find snapshots/e2e -type f -name '*.png' -print -quit)" ]; then
+                        echo '::error::Snapshot artifacts contain no PNG references.'
+                        exit 1
+                    fi
+                    if [ -n "$(find snapshots -mindepth 1 ! -type d ! -type f -print -quit)" ] ||
+                        [ -n "$(find snapshots -type f ! -path 'snapshots/e2e/*.png' -print -quit)" ]; then
+                        echo '::error::Prepared artifacts must contain only regular PNG references under e2e.'
+                        exit 1
+                    fi
+                    while IFS= read -r -d '' SNAPSHOT; do
+                        RELATIVE_PATH="${SNAPSHOT#snapshots/}"
+                        TARGET="$PWD/project-base/storefront/cypress/snapshots/${RELATIVE_PATH}"
+                        # A PR-controlled symlink must not redirect artifact writes into executable files or Git config.
+                        if [ "$(realpath -m "$TARGET")" != "$TARGET" ]; then
+                            echo "::error::Refusing a symlink destination: $RELATIVE_PATH"
+                            exit 1
+                        fi
+                        mkdir -p "$(dirname "$TARGET")"
+                        cp -- "$SNAPSHOT" "$TARGET"
+                    done < <(find snapshots/e2e -type f -name '*.png' -print0)
+                    git add -- 'project-base/storefront/cypress/snapshots/e2e/**/*.png'
+                    if ! git diff --cached --quiet; then
+                        git -c core.hooksPath=/dev/null -c user.name=ShopsysBot -c user.email=shopsysbot@users.noreply.github.com commit -m "regenerated Cypress snapshots"
+                    fi
+            -   name: Close the regeneration request and push without rewriting history
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
+                run: |
+                    set -euo pipefail
+                    case "$HEAD_REF" in
+                        master|main|[0-9]*.[0-9]*)
+                            echo "::error::Refusing to push regenerated snapshots to ${HEAD_REF}."
+                            exit 1
+                            ;;
+                    esac
+                    PR=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")
+                    if ! jq -e --arg head "$HEAD_SHA" --arg base "$BASE_SHA" --arg repo "$GITHUB_REPOSITORY" \
+                        '.state == "open" and .head.sha == $head and .base.sha == $base and .head.repo.full_name == $repo
+                        and any(.labels[]; .name == "regenerate screenshots")' <<< "$PR" > /dev/null; then
+                        echo '::error::PR changed or regeneration was withdrawn; snapshots will not be pushed.'
+                        exit 1
+                    fi
+                    if [ "$(git rev-parse HEAD)" != "$HEAD_SHA" ] && [ -z "$PUSH_TOKEN" ]; then
+                        echo '::error::ACTIONS_GIT_PUSH_TOKEN is required to trigger normal CI after the snapshot commit.'
+                        exit 1
+                    fi
+                    # Remove the request before pushing so the next PR event runs regression, not regeneration.
+                    gh api --method DELETE "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/labels/regenerate%20screenshots"
+                    if [ "$(git rev-parse HEAD)" != "$HEAD_SHA" ]; then
+                        git -c core.hooksPath=/dev/null -c credential.helper= -c credential.helper='!f() { echo username=x-access-token; echo "password=${PUSH_TOKEN}"; }; f' push "https://github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${HEAD_REF}"
+                    else
+                        echo 'No snapshot changes; normal regression checks will continue in this run.' >> "$GITHUB_STEP_SUMMARY"
+                    fi
     translations-dump-check:
         name: Check all translations and icons are dumped
         needs: build-php-fpm-image
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -895,6 +1027,7 @@ jobs:
         name: Check that all console commands that are not used during installation are passing
         needs: build-php-fpm-image
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -934,6 +1067,7 @@ jobs:
         name: Check licenses of dependencies in Composer and NPM (php-fpm & storefront)
         needs: [build-php-fpm-image, build-storefront-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
@@ -965,6 +1099,7 @@ jobs:
                 run: make check-licenses
     build-fork-docker-images:
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' &&
             github.ref_protected != true
         name: Build application and run standards checks and tests
@@ -1111,9 +1246,10 @@ jobs:
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     ./.github/scripts/run-build-demo-dev-quick-with-retry.sh
             -   name: Run Cypress tests
+                env:
+                    REGENERATE_SCREENSHOTS: ${{ contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') }}
                 run: |
-                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                    if [ "$REGENERATE_SCREENSHOTS" == "true" ]; then
                         docker compose run -e TEST_LOCALE=en cypress-regenerate
                     else
                         docker compose run -e TEST_LOCALE=en cypress
@@ -1152,6 +1288,7 @@ jobs:
         name: Review
         needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always() && !failure() && !cancelled() &&
             github.actor != 'dependabot[bot]' &&
             github.event.pull_request.draft != true &&
@@ -1268,6 +1405,7 @@ jobs:
         needs: [variables, review]
         # Advisory only - deliberately not part of the "Build successful" gate.
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             !cancelled() &&
             github.event_name == 'pull_request' &&
             github.event.pull_request.draft == false &&
@@ -1287,8 +1425,10 @@ jobs:
         # monorepo but breaks in a standalone package (a dependency missing in its composer.json, PHPStan on the package
         # alone, project-base against the dev-* packages). Advisory only - not part of the "Build successful" gate.
         # Runs only for non-draft PRs from this repository labeled "split and check packages" (forks and dependabot do
-        # not get ACTIONS_GIT_PUSH_TOKEN); the label is evaluated when the pipeline starts, i.e. on the next push.
+        # not get ACTIONS_GIT_PUSH_TOKEN). Labels are evaluated when an eligible pipeline starts; unrelated label
+        # events must not trigger cross-repository writes.
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             github.event_name == 'pull_request' &&
             github.event.pull_request.draft == false &&
             contains(github.event.pull_request.labels.*.name, 'split and check packages') &&
@@ -1327,8 +1467,10 @@ jobs:
                 run: bash ./.github/monorepo/wait-for-split-checks.sh "${SPLIT_BRANCH}" "${SPLIT_HEADS_FILE}" 110
     build-successful:
         if: |
+            (github.event.action != 'labeled' || github.event.label.name == 'regenerate screenshots') &&
             always()
-        name: Build successful
+        # A skipped unrelated-label run must not publish the required successful check.
+        name: ${{ github.event.action == 'labeled' && github.event.label.name != 'regenerate screenshots' && 'Ignored unrelated label' || 'Build successful' }}
         needs: [standards, tests-unit-functional-smoke, tests-unit-functional-smoke-first-czech-domain, check-demo-data-limited-domains, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-smoke, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, push-regenerated-snapshots, unit-test-storefront, check-upgrade-notes]
         runs-on: ubuntu-22.04
         env:
@@ -1344,8 +1486,6 @@ jobs:
             TESTS_STOREFRONT_SMOKE_RESULT: ${{ needs.tests-storefront-smoke.result }}
             TESTS_STOREFRONT_ACCEPTANCE_RESULT: ${{ needs.tests-storefront-acceptance.result }}
             UNIT_TESTS_STOREFRONT_RESULT: ${{ needs.unit-test-storefront.result }}
-            TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT: ${{ needs.tests-storefront-acceptance-regenerate.result }}
-            REGENERATION_STARTED: ${{ needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE || 'false' }}
             CHECK_UPGRADE_NOTES_RESULT: ${{ needs.check-upgrade-notes.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -1354,5 +1494,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} ${CHECK_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_CZECH_RESULT} ${CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_SMOKE_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${CHECK_UPGRADE_NOTES_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"

@@ -40,6 +40,37 @@ export const clearPostcodeInThirdStep = () => {
     cy.get('#contact-information-form-postcode').clear();
 };
 
+type ContactFormValues = {
+    email: string;
+    telephone: string;
+    firstName: string;
+    lastName: string;
+    street: string;
+    city: string;
+    postcode: string;
+    note: string;
+};
+
+export const checkContactInformationInThirdStep = (expected: ContactFormValues) => {
+    Object.entries(expected).forEach(([field, value]) => {
+        cy.get(`#contact-information-form-${field}`).should('have.value', value);
+    });
+};
+
+export const checkDeliveryContactInThirdStep = (expected: { firstName: string; lastName: string; phone: string }) => {
+    cy.get('#contact-information-form-deliveryFirstName').should('have.value', expected.firstName);
+    cy.get('#contact-information-form-deliveryLastName').should('have.value', expected.lastName);
+    cy.get('#contact-information-form-deliveryTelephone').should('have.value', expected.phone);
+};
+
+export const checkDeliveryAddressInThirdStep = (expected: typeof staticData.deliveryAddress) => {
+    checkDeliveryContactInThirdStep(expected);
+    cy.get('#contact-information-form-deliveryCompanyName').should('have.value', expected.company);
+    cy.get('#contact-information-form-deliveryStreet').should('have.value', expected.street);
+    cy.get('#contact-information-form-deliveryCity').should('have.value', expected.city);
+    cy.get('#contact-information-form-deliveryPostcode').should('have.value', expected.postCode);
+};
+
 export const fillBillingAdressInThirdStep = (street: string, city: string, postCode: string) => {
     cy.get('#contact-information-form-street')
         .should('have.attr', 'placeholder', translations.placeholder.street)
@@ -140,6 +171,50 @@ export const clickOnSendOrderButton = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).should('be.visible').and('not.be.disabled').click();
 };
 
+export const sendOrderAndCheckConfirmation = () => {
+    cy.intercept('POST', '/graphql/CreateOrderMutation').as('submittedOrder');
+    clickOnSendOrderButton();
+    cy.wait('@submittedOrder').then(({ response }) => {
+        expect(response?.statusCode).to.equal(200);
+        expect(response?.body.errors, 'order creation errors').to.be.undefined;
+        const result = response!.body.data.CreateOrder;
+        expect(result.orderCreated).to.equal(true);
+        expect(result.order.number).to.be.a('string').and.not.be.empty;
+        cy.wrap(result.order.number).as('createdOrderNumber');
+        cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).should('contain.text', result.order.number);
+    });
+};
+
+export const checkCreatedOrderInDetail = () => {
+    cy.get<string>('@createdOrderNumber').then((number) => {
+        cy.getByTID([TIDs.order_detail_number]).should('have.text', number);
+    });
+};
+
+export const checkOrderDeliveryContact = (expected: { firstName: string; lastName: string; phone: string }) => {
+    cy.getByTID([TIDs.order_detail_delivery_address])
+        .should('contain.text', `${expected.firstName} ${expected.lastName}`)
+        .and(($address) => {
+            expect($address.text().replace(/\s/g, '')).to.contain(getPhoneValueWithPrefix(expected.phone));
+        });
+};
+
+export const checkOrderDeliveryAddress = (expected: {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    company: string;
+    street: string;
+    city: string;
+    postCode: string;
+}) => {
+    checkOrderDeliveryContact(expected);
+    cy.getByTID([TIDs.order_detail_delivery_address])
+        .should('contain.text', expected.company)
+        .and('contain.text', expected.street)
+        .and('contain.text', `${expected.city}, ${expected.postCode}`);
+};
+
 export const mouseOverUserMenuButton = () => {
     getHeaderElementByTID(TIDs.my_account_link).should('be.visible').realMouseMove(0, 10);
     cy.wait(1000);
@@ -202,14 +277,19 @@ export const fillBillingInfoForDeliveryAddressTests = () => {
 };
 
 export const checkThatContactInformationWasRemovedFromLocalStorage = () => {
-    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
-    if (!currentAppStoreAsString) {
-        throw new Error(
-            'Could not load app store from local storage. This is an issue with tests, not with the application.',
-        );
-    }
+    cy.window().should((window) => {
+        const storedState = window.localStorage.getItem(PERSIST_STORE_NAME);
+        expect(storedState, 'persisted storefront state').to.be.a('string');
+        const { contactInformation } = JSON.parse(storedState!).state;
+        const expected = JSON.parse(JSON.stringify(DEFAULT_PERSIST_STORE_STATE.state.contactInformation));
 
-    expect(currentAppStoreAsString).to.equal(JSON.stringify(DEFAULT_PERSIST_STORE_STATE));
+        // Reloading the empty form initializes its default phone prefix, not customer data.
+        expect(contactInformation).to.deep.equal({
+            ...expected,
+            telephonePrefix: '+420',
+            telephonePrefixCountryCode: 'CZ',
+        });
+    });
 };
 
 export const checkTransportSelectionIsNotVisible = () => {
@@ -344,8 +424,23 @@ export const repeatOrderFromOrderDetail = (withMerge?: boolean) => {
     }
 };
 
-export const selectDeliveryAddressCard = (addressIndex: number = 0) => {
-    cy.get(`[data-tid^="${TIDs.blocks_addresslist_addresscard_}"]`).eq(addressIndex).click();
+const getDeliveryAddressCard = (address: { firstName: string; lastName: string }) => {
+    return cy.getByTID([TIDs.blocks_addresslist]).contains('[role="button"]', `${address.firstName} ${address.lastName}`);
+};
+
+export const selectDeliveryAddressCard = (address: { firstName: string; lastName: string }) => {
+    getDeliveryAddressCard(address).click();
+};
+
+export const checkSelectedDeliveryAddress = (address: { firstName: string; lastName: string; street: string }) => {
+    cy.get('#contact-information-form-isDeliveryAddressDifferentFromBilling').should('be.checked');
+    cy.getByTID([TIDs.blocks_addresslist]).find('[aria-pressed="true"]').should('have.length', 1);
+    // The selected default can come from the account without being copied to localStorage.
+    getDeliveryAddressCard(address).should(($card) => {
+        expect($card).to.be.visible;
+        expect($card).to.contain.text(address.street);
+        expect($card).to.have.attr('aria-pressed', 'true');
+    });
 };
 
 export const clickAddNewAddressButton = () => {

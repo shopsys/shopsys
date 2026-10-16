@@ -57,6 +57,9 @@ services:
             - storefront-acceptance-tests
         network_mode: "host"
         environment:
+            - TYPE=regression
+            - COMMAND=run
+            - SKIP_SNAPSHOTS=${SKIP_SNAPSHOTS:-0}
             - GROUP=${GROUP}
             - TEST_LOCALE=${TEST_LOCALE:-en}
             - B2B_DOMAIN_ID=${B2B_DOMAIN_ID:-2}
@@ -80,6 +83,7 @@ services:
         environment:
             - TYPE=base
             - COMMAND=run
+            - SKIP_SNAPSHOTS=0
             - GROUP=${GROUP}
             - TEST_LOCALE=${TEST_LOCALE:-en}
             - B2B_DOMAIN_ID=${B2B_DOMAIN_ID:-2}

@@ -346,44 +346,27 @@ describe('<Domain Specific Functionality> tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should do something', function () {
-        ...
-    });
-});
-```
-
-### Using the `function` keyword for `it()` blocks
-
-In order to be able to use the `this` keyword inside `it()` blocks and thus access the title of the test, you must use the `function` keyword instead of arrow syntax. So, you should do this:
-
-```ts
-describe('Some tests', () => {
-    it('should do something', function () {
-        ...
-        takeSnapshotAndCompare(this.test?.title, ...)
-    });
-});
-```
-
-But not this:
-
-```ts
-describe('Some tests', () => {
     it('should do something', () => {
         ...
-        // 'this' is not available in arrow functions
-        takeSnapshotAndCompare(this.test?.title, ...)
     });
 });
 ```
+
+### Using arrow functions for `it()` blocks
+
+Use arrow functions for `it()` blocks. Snapshot names are generated with `getSnapshotIndexingFunction()` and do not require access to `this.test?.title`.
+
+Keep `function` callbacks where Mocha's context is required, such as a `before()` hook calling `this.skip()`. Arrow functions cannot access that context.
 
 ### Custom cypress commands
 
 Below are some examples of custom commands. We mention only those, that should be used instead of the default cypress commands.
 
-- `waitForStableAndInteractiveDOM` (instead of `cy.waitForStableDOM`): Use this command to wait for the page to be stable and ready for interaction. It first checks that there are no skeletons visible, that the NProgress bar is also not visible (not in the DOM), and then it waits for stable DOM using `cy.waitForStableDOM`. Furthermore, it also triggers the `resize` event, as there were issues that this event was not triggered in certain scenarios and the app did not behave as expected.
+- `cy.waitForStableAndInteractiveDOM()`: Waits for hydration, dispatches a `resize` event in the application window, and checks that no deferred-render commits are pending and no skeletons, NProgress bar or loader elements remain in the DOM. It then uses the shared `waitForDomStability()` helper to observe a 500 ms interval without DOM mutations, with a 20-second deadline, and repeats the readiness checks. The observer disconnects on success, timeout or navigation; the removed `cy.waitForStableDOM()` command is no longer used.
 - `cy.visitAndWaitForStableAndInteractiveDOM` (instead of `cy.visit`): Use this command for visiting pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements. It also ensures there are no skeletons and that the NProgress loading bar is not in the DOM.
 - `cy.reloadAndWaitForStableAndInteractiveDOM` (instead of `cy.reload`): Use this command for reloading pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements. It also ensures there are no skeletons and that the NProgress loading bar is not in the DOM.
+
+These helpers do not guarantee that every API request or lazy import has finished. Keep scenario-specific assertions for the content and controls required by the next interaction.
 
 #### How to write a custom cypress command
 
@@ -404,30 +387,36 @@ Another thing is that you should modify `cypress.d.ts`, where you should put typ
 
 Another important part of our cypress tests is visual regression. This allows us to take a screenshot of the application at any point and compare it with a base screenshot every time the tests are run. This way you make sure that the app looks the same, and that your changes did not break it visually.
 
-For this purpose, the `takeSnapshotAndCompare` helper method can be used. You can use it multiple times in each test, just remember to provide the screenshot name, which will be used to store the snapshot under `/snapshots`.
+For this purpose, the `takeSnapshotAndCompare` helper method can be used. Initialize `getSnapshotIndexingFunction()` with the snapshot group and a subgroup index unique within that group. Pass an explicit, stable index for each capture and a descriptive label; together they form the snapshot filename under `/snapshots`. Keep existing indices when removing other captures.
 
 ```ts
-it('should do something', function () {
+import { getSnapshotIndexingFunction, SNAPSHOT_GROUP, takeSnapshotAndCompare } from 'support';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
+
+it('should do something', () => {
     ...
     // do something
     ...
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+    takeSnapshotAndCompare(getSnapshotFullIndexAsString(0), 'screenshot name suffix');
     ...
     // do something else
     ...
-    takeSnapshotAndCompare(this.test?.title, 'another screenshot name suffix');
+    takeSnapshotAndCompare(getSnapshotFullIndexAsString(1), 'another screenshot name suffix');
 });
 ```
 
-Remember this can be leveraged to make sure that an action does not change the UI by comparing to the same screenshot.
+To verify that an action does not change the UI, reuse the same snapshot ID and label for both captures:
 
 ```ts
-it('should do something', function () {
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+it('should do something', () => {
+    const snapshotId = getSnapshotFullIndexAsString(2);
+    takeSnapshotAndCompare(snapshotId, 'screenshot name suffix');
     ...
     // do something that should not change the UI
     ...
-    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
+    takeSnapshotAndCompare(snapshotId, 'screenshot name suffix');
 });
 ```
 
@@ -441,63 +430,25 @@ The `takeSnapshotAndCompare` helper method does several things.
 6. Return all blacked-out elements back (uncover them)
 7. Reset pointer events of the previously blocked elements (point 3.)
 
-```ts
-export type Blackout = { tid: TIDs; zIndex?: number };
+The implementation lives in `project-base/storefront/cypress/support/index.ts`. Keep readiness and cleanup there rather than copying the helper into individual specs.
 
-type SnapshotAdditionalOptions = {
-    capture: 'viewport' | 'fullPage' | TIDs;
-    wait: number;
-    blackout: Blackout[];
-    removePointerEvents: (TIDs | string)[];
-};
+The helper waits for hydration, pending `useDeferredRender()` commits and loading indicators, retains page scrolling, and then prepares temporary screenshot styles. After the final layout changes it waits for fonts, relevant unmasked images and a quiet DOM before measuring blackout rectangles. Styles and masks are restored after capture and also from `afterEach` when a test fails.
 
-export const takeSnapshotAndCompare = (
-    testName: string | undefined,
-    snapshotName: string,
-    options: Partial<SnapshotAdditionalOptions> = {},
-    callbackBeforeBlackout?: () => void | undefined,
-) => {
-    const optionsWithDefaultValues = {
-        capture: options.capture ?? 'fullPage',
-        wait: options.wait ?? 1000,
-        blackout: options.blackout ?? [],
-        removePointerEvents: options.removePointerEvents ?? [],
-    };
-
-    if (!testName) {
-        throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
-    }
-
-    scrollPageBeforeScreenshot(optionsWithDefaultValues);
-    hideScrollbars();
-    callbackBeforeBlackout?.();
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
-    removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
-
-    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
-        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
-    } else {
-        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
-    }
-
-    removeBlackoutsAfterScreenshot();
-    resetPointerEventsAfterScreenshot();
-};
-```
+The `data-deferred-render-pending` body attribute counts pending deferred hook commits. It does **not** mean every network request, lazy import or third-party widget has completed. Keep explicit assertions for the content/state being captured; a quiet DOM alone cannot detect future asynchronous work.
 
 #### Sizes of screenshots (`capture` parameter)
 
-You can set up the snapshot to take a full-page screenshot, viewport screenshot, or a screenshot of an element with a specific TID. The most robust version is to test the full page, because then you know that the entire page is unchanged.
+Choose a full-page screenshot for page composition, a viewport screenshot for visible overlays/context, or an element TID for an isolated visual state. Full-page captures cover more layout but also include more unrelated sources of change. Important values still need explicit assertions.
 
 #### Give the application more time to prepare before the screenshot (`wait` parameter)
 
-By specifying the `wait` parameter, you tell the application how much time it has to prepare itself for the screenshot. If the screenshot is a full-page or a viewport screenshot, it uses this time to wait for a fraction of that time, scroll down, wait again, scroll back up, and wait for the last time. The specified time is equally split between those 5 actions. If it is a component screenshot, the time is only used to wait. This approach has proven to be the best for test stability and robustness.
+The existing `wait` parameter controls the retained scroll sequence: wait, scroll down, wait, scroll up, wait, each using one fifth of the duration. Element captures retain a single wait. This is not proof of readiness and increasing it is not a flakiness fix; the helper also checks observable readiness. Do not remove this sequence until deferred and lazy content has been verified in the actual browser.
 
 #### Hiding/covering parts of the application for the screenshot (`blackout` parameter)
 
 It is also possible to hide/cover parts of the UI with a blackout box (simple `div` element over the element with a specified TID). This is helpful if your UI contains element which change randomly or change with time (using timers). You can also specify the blacked-out element's `z-index` using the `zIndex` parameter, as you might need to render it above or below various other DOM elements.
 
-This mechanism works based on placing a absolutely positioned `div` above the target element, so it depends if the element needs additional offset, or not. For this, the `shouldNotOffset` is used. If you omit it, the blackout div will be offset by 15px to the right (scrollbar width). If you find out that your element does not need this offset (can happen for relatively placed elements, or for viewport screenshots in general), you can omit the offset by specifying `{ shouldNotOffset: true }`.
+Masks use the target rectangle and scroll coordinates of the application document, without a hard-coded scrollbar offset. Place image TIDs on fixed-size wrappers so image loading cannot change the masked area. Missing optional targets are skipped; assert required content separately. Only masks created for the current capture are removed during cleanup.
 
 #### Removing pointer-events (`ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS` config)
 
@@ -542,23 +493,47 @@ docker compose run --rm -e TYPE=regression -e COMMAND=run -e TEST_LOCALE=cs cypr
 
 ### How to run tests using the CLI (`cypress run`)?
 
-There are six commands provided for you:
+Use `make help-tests` for a summary. The primary commands are:
 
-- `run-acceptance-tests-base`: This command runs the tests and allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
-- `run-acceptance-tests-regression`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
-- `selected-acceptance-tests-base`: This is the same as `run-acceptance-tests-base`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
-- `selected-acceptance-tests-regression`: This is the same as `run-acceptance-tests-regression`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
-- `run-specific-test-regression`: This is the same as `run-acceptance-tests-regression`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select a test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+- `make run-acceptance-tests-regression`: run all acceptance scenarios and compare screenshots against committed references.
+- `make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts`: run all scenarios in one spec file, with screenshot comparison.
+- `make open-acceptance-tests-regression`: open the GUI for debugging (display setup is described below).
+- `make run-smoke-tests`: check basic page health. This is not a replacement for complete user-flow tests.
+
+Visual failures produce difference images in `storefront/cypress/snapshotDiffs/`. A regression run does not replace reference PNGs.
+
+All these commands build the Cypress image before changing the local environment, prepare test data and recreate the test storefront. They attempt to restore the development environment after setup or test failure, and on handled interruption. Failed headless runs return a nonzero status even if cleanup succeeds; a cleanup failure also fails the command. A forced kill or Docker failure can still require manual recovery with `make cypress-cleanup`.
+
+#### Advanced commands and compatibility
+
+`selected-acceptance-tests-regression` still offers interactive spec selection. The existing `run-acceptance-tests-base`, `run-specific-test-base SPEC=…`, `selected-acceptance-tests-base` and `open-acceptance-tests-base` commands remain available, but are separated from the primary help.
+
+**Base means reference generation, not a different test suite. These commands replace reference PNGs.** For the Shopsys monorepo, generate references on GitHub with the `regenerate screenshots` PR label. Projects using the GitLab template have the manual `regenerate-storefront-screenshots` job. Review generated references before accepting them.
+
+### Running functional checks without visual snapshots
+
+For development with frequent UI changes, add `SKIP_SNAPSHOTS=1` to any regression Makefile command:
 
 ```bash
-make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
+make run-acceptance-tests-regression SKIP_SNAPSHOTS=1
+make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts SKIP_SNAPSHOTS=1
+make selected-acceptance-tests-regression SKIP_SNAPSHOTS=1
+make open-acceptance-tests-regression SKIP_SNAPSHOTS=1
 ```
 
-- `run-specific-test-base`: This is the same as `run-acceptance-tests-base`, but you can provide specific file upfront to test just one test suit without waiting for a prompt to select test. This command is especially usefull when implementing new test suit (to debug quickly) or for LLMs as they are bad with interactive scripts. Usage:
+Both the project and monorepo Makefiles pass this value into the Cypress container. The default is `0`: omit the parameter or use `SKIP_SNAPSHOTS=0` to restore visual checks.
 
-```bash
-make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts
-```
+This mode skips `takeSnapshotAndCompare()`, including its screenshot-only preparation and callback. The surrounding scenario and functional assertions still run; functional failures still fail the headless command after environment cleanup. Automatic screenshots on failure remain enabled. No reference PNGs are generated or replaced, and combining this mode with a `base` regeneration command is rejected.
+
+A passing functional-only run does not verify appearance. Application builds, data preparation and functional test steps still run, so this does not skip the entire test environment setup.
+
+### Snapshot mode in CI
+
+- **Monorepo GitHub Actions:** both regression and regeneration explicitly use `SKIP_SNAPSHOTS=0`. The optional local setting does not disable visual CI checks.
+- **Project GitLab:** the pipeline variable `SKIP_SNAPSHOTS` defaults to `"0"`. Set it to `"1"` for functional-only regression runs during development. The manual regeneration service pins `0`, even when the pipeline variable is `1`.
+- **Other CI integrations:** explicitly pass `-e TYPE=regression -e COMMAND=run -e TEST_LOCALE=en -e SKIP_SNAPSHOTS=0` to `docker compose run --rm … cypress` for normal verification, or `SKIP_SNAPSHOTS=1` for functional-only runs. A host environment variable alone is not forwarded into a container unless the Compose configuration or CLI passes it.
+
+The shared container entrypoint rejects unknown modes and refuses reference generation with snapshots disabled before installing dependencies or running tests. GitHub's label trigger and GitLab's manual regeneration remain separate provider-specific workflows.
 
 ### How to run tests using the cypress interactive GUI (`cypress open`) on Mac?
 

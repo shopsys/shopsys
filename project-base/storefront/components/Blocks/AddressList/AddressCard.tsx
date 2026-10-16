@@ -52,6 +52,7 @@ export const AddressCard: FC<AddressCardProps> = ({
     return (
         /* biome-ignore lint/a11y/useSemanticElements: The selectable card can also contain nested action buttons, so the wrapper cannot always be a button element. */
         <div
+            aria-pressed={orderSelectionMode ? !!orderSelectedAddress : undefined}
             data-tid={`${TIDs.blocks_addresslist_addresscard_}${addressIndex}`}
             role="button"
             tabIndex={0}
