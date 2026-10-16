@@ -3,6 +3,7 @@
 # ------------------------------------------------------------------------------
 
 TEST_LOCALE ?= en
+SKIP_SNAPSHOTS ?= 0
 B2B_DOMAIN_ID ?=
 B2B_BASE_URL ?=
 
@@ -19,7 +20,7 @@ help: ## Displays list of available commands
 # Phony targets - declaration of targets that are not files
 # ------------------------------------------------------------------------------
 
-.PHONY: help mutagen-up mutagen-up-build mutagen-up-build-no-cache mutagen-stop mutagen-down generate-schema generate-schema-native check-fix markdown-fix php-checks php-lock-icons php-translations \
+.PHONY: help help-tests mutagen-up mutagen-up-build mutagen-up-build-no-cache mutagen-stop mutagen-down generate-schema generate-schema-native check-fix markdown-fix php-checks php-lock-icons php-translations \
 	storefront-checks storefront-translations translations-dump check-schema run-acceptance-tests-base \
 	run-acceptance-tests-regression selected-acceptance-tests-base selected-acceptance-tests-regression \
 	run-specific-test-regression run-specific-test-base \
@@ -139,48 +140,32 @@ check-schema: ## Checks if generated GraphQL schema is correct
 # ------------------------------------------------------------------------------
 
 define prepare-data-for-acceptance-tests
-	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
+	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change && \
 	docker compose exec php-fpm php phing test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
 endef
 
 define cypress-prepare
-	docker compose stop storefront
+	docker compose stop storefront && \
 	docker compose up -d --wait storefront-cypress --force-recreate
 endef
 
+# Attempt every restoration step, even when an earlier one fails.
 define cypress-cleanup
-	docker compose stop storefront-cypress
-	docker compose rm -f storefront-cypress
-	docker compose up -d storefront
-	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+	cleanup_status=0; \
+	docker compose stop storefront-cypress || cleanup_status=$$?; \
+	docker compose rm -f storefront-cypress || cleanup_status=$$?; \
+	docker compose exec php-fpm php phing -D change.environment=dev environment-change || cleanup_status=$$?; \
+	docker compose up -d storefront || cleanup_status=$$?; \
+	test "$$cleanup_status" -eq 0
 endef
 
-define run_acceptance_tests
-	$(call prepare-data-for-acceptance-tests)
-	$(call cypress-prepare)
-	@echo "▶️ Running acceptance tests of type $(1)..."
-	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
-	@echo "✅ Acceptance tests of type $(1) finished."
-	$(call cypress-cleanup)
-endef
-
-define selected_acceptance_tests
-	$(call prepare-data-for-acceptance-tests)
-	$(call cypress-prepare)
-	@echo "▶️ Running selected acceptance tests of type $(1)..."
-	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
-	@echo "✅ Selected acceptance tests of type $(1) finished."
-	$(call cypress-cleanup)
-endef
-
-define run_specific_acceptance_test
-	$(call prepare-data-for-acceptance-tests)
-	$(call cypress-prepare)
-	@echo "▶️ Running specific acceptance test: $(2) of type $(1)..."
-	docker compose build cypress
-	-docker compose run --rm -e TYPE=$(1) -e SPEC=$(2) -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
-	@echo "✅ Specific acceptance test $(2) of type $(1) finished."
-	$(call cypress-cleanup)
+define validate_cypress_snapshot_mode
+	@case "$(SKIP_SNAPSHOTS):$(1)" in \
+		0:*) ;; \
+		1:regression) echo "⚠️ Visual snapshot checks disabled; functional checks remain enabled." ;; \
+		1:*) echo "❌ SKIP_SNAPSHOTS=1 cannot be used to generate screenshot references."; exit 1 ;; \
+		*) echo "❌ SKIP_SNAPSHOTS must be 0 or 1."; exit 1 ;; \
+	esac
 endef
 
 IS_WSL := $(shell uname -r | grep -i microsoft)
@@ -192,58 +177,94 @@ else
     get_ip = $(shell awk '/nameserver / {print $$2; exit}' /etc/resolv.conf)
 endif
 
-define open_acceptance_tests
-	$(call prepare-data-for-acceptance-tests)
-	$(call cypress-prepare)
-	@if [ "$(IS_WSL)" = "" ]; then \
-		xhost + $(get_ip); \
-	fi
-	@echo "▶️ Opening acceptance tests of type $(1)..."
-	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
-	@echo "✅ Acceptance tests of type $(1) finished."
-	$(call cypress-cleanup)
+# Build before changing the environment; restore it on setup/test failure or interruption.
+# $(1) = regression|base, $(2) = run|selected|open|smoke, $(3) = optional spec.
+define run_acceptance_tests
+	$(call validate_cypress_snapshot_mode,$(1))
+	@set -eu; \
+	docker compose build cypress; \
+	cleanup() { \
+		result=$$?; \
+		trap - 0 INT TERM; \
+		$(call cypress-cleanup) || { [ "$$result" -ne 0 ] || result=1; }; \
+		exit "$$result"; \
+	}; \
+	trap cleanup 0; \
+	trap 'exit 130' INT; \
+	trap 'exit 143' TERM; \
+	$(call prepare-data-for-acceptance-tests) || exit $$?; \
+	$(call cypress-prepare) || exit $$?; \
+	$(if $(filter open,$(2)),if [ "$(IS_WSL)" = "" ]; then xhost + "$(get_ip)"; fi;) \
+	docker compose run --rm -e TYPE=$(1) -e COMMAND=$(2) -e SPEC="$(3)" \
+		$(if $(filter open,$(2)),-e DISPLAY=$(get_ip):0) \
+		-e SKIP_SNAPSHOTS=$(SKIP_SNAPSHOTS) -e TEST_LOCALE=$(TEST_LOCALE) \
+		-e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress
 endef
 
-# Cypress Acceptance Tests
+help-tests: ## Explains Cypress modes, parameters and reference generation
+	@printf '%s\n' \
+		'Cypress: commands prepare test data and restore the development environment.' \
+		'  make run-acceptance-tests-regression        Run all scenarios and compare screenshots' \
+		'  make run-specific-test-regression SPEC=... Run one spec and compare screenshots' \
+		'  make open-acceptance-tests-regression       Open GUI for debugging' \
+		'  make run-smoke-tests                       Check basic page health, not complete user flows' \
+		'' \
+		'Options: SKIP_SNAPSHOTS=1 skips visual checks; default 0 keeps them enabled.' \
+		'         TEST_LOCALE=en selects translations; B2B_DOMAIN_ID and B2B_BASE_URL configure B2B.' \
+		'SKIP_SNAPSHOTS does not skip builds, data setup or functional assertions.' \
+		'' \
+		'Advanced: selected-acceptance-tests-regression selects specs interactively.' \
+		'          *-base variants REPLACE reference PNGs; they are not another test suite.' \
+		'Monorepo references: use the regenerate screenshots PR label on GitHub.' \
+		'Project GitLab references: use the manual regenerate-storefront-screenshots job.' \
+		'Never combine reference generation with SKIP_SNAPSHOTS=1.' \
+		'' \
+		'Helpers: prepare-data-for-acceptance-tests, cypress-prepare, cypress-cleanup.' \
+		'Helpers change the local environment; finish manual preparation with cypress-cleanup.'
 
-run-acceptance-tests-base: ## Runs the base set of acceptance tests (headless)
-	$(call run_acceptance_tests,base)
+run-acceptance-tests-regression: ## Runs all Cypress scenarios and compares reference screenshots
+	$(call run_acceptance_tests,regression,run)
 
-run-acceptance-tests-regression: ## Runs the regression (project-specific) set of acceptance tests (headless)
-	$(call run_acceptance_tests,regression)
-
-selected-acceptance-tests-base: ## Runs selected base acceptance tests (interactive selection, headless)
-	$(call selected_acceptance_tests,base)
-
-selected-acceptance-tests-regression: ## Runs selected regression acceptance tests (interactive selection, headless)
-	$(call selected_acceptance_tests,regression)
-
-run-specific-test-regression: ## Runs a specific regression acceptance test (interactive selection, headless)
+run-specific-test-regression: ## Runs one Cypress spec; requires SPEC=e2e/path/file.cy.ts
 	@if [ -z "$(SPEC)" ]; then \
-		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-regression SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
+		echo "❌ SPEC is required: make run-specific-test-regression SPEC=e2e/cart/cartLogin.cy.ts"; \
 		exit 1; \
 	fi
-	$(call run_specific_acceptance_test,regression,$(SPEC))
+	$(call run_acceptance_tests,regression,run,$(SPEC))
 
-run-specific-test-base: ## Runs a specific base acceptance test (interactive selection, headless)
+open-acceptance-tests-regression: ## Opens Cypress GUI with reference comparison enabled
+	$(call run_acceptance_tests,regression,open)
+
+run-smoke-tests: ## Checks basic page health; does not replace full acceptance scenarios
+	$(call run_acceptance_tests,regression,smoke)
+
+# Advanced commands remain compatible; see help-tests.
+selected-acceptance-tests-regression:
+	$(call run_acceptance_tests,regression,selected)
+
+run-acceptance-tests-base:
+	$(call run_acceptance_tests,base,run)
+
+selected-acceptance-tests-base:
+	$(call run_acceptance_tests,base,selected)
+
+run-specific-test-base:
 	@if [ -z "$(SPEC)" ]; then \
-		echo "❌ Error: SPEC parameter is required. Usage: make run-specific-test-base SPEC=e2e/filterAndSort/categoryDetailFilterAndSort.cy.ts"; \
+		echo "❌ SPEC is required: make run-specific-test-base SPEC=e2e/cart/cartLogin.cy.ts"; \
 		exit 1; \
 	fi
-	$(call run_specific_acceptance_test,base,$(SPEC))
+	$(call run_acceptance_tests,base,run,$(SPEC))
 
-open-acceptance-tests-base: ## Opens the Cypress GUI for debugging base acceptance tests
-	$(call open_acceptance_tests,base)
+open-acceptance-tests-base:
+	$(call run_acceptance_tests,base,open)
 
-open-acceptance-tests-regression: ## Opens the Cypress GUI for debugging regression acceptance tests
-	$(call open_acceptance_tests,regression)
-
-run-smoke-tests: ## Runs smoke tests (Cypress)
+prepare-data-for-acceptance-tests:
 	$(call prepare-data-for-acceptance-tests)
+
+cypress-prepare:
 	$(call cypress-prepare)
-	@echo "▶️ Running smoke tests..."
-	-docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=$(TEST_LOCALE) -e B2B_DOMAIN_ID=$(B2B_DOMAIN_ID) -e B2B_BASE_URL=$(B2B_BASE_URL) cypress || true
-	@echo "✅ Smoke tests finished."
+
+cypress-cleanup:
 	$(call cypress-cleanup)
 
 # ------------------------------------------------------------------------------
