@@ -45,6 +45,7 @@ services:
             DATABASE_NAME: "${BRANCH_NAME_ESCAPED}"
             ELASTIC_SEARCH_INDEX_PREFIX: "${BRANCH_NAME_ESCAPED}"
             REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
+            REDIS_HOST: review-redis
             FORCE_ELASTIC_LIMITS: true
             GOPAY_CONFIG: "${GOPAY_CONFIG_VALUE}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
@@ -91,6 +92,7 @@ services:
             DATABASE_NAME: "${BRANCH_NAME_ESCAPED}"
             ELASTIC_SEARCH_INDEX_PREFIX: "${BRANCH_NAME_ESCAPED}"
             REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
+            REDIS_HOST: review-redis
             FORCE_ELASTIC_LIMITS: true
             GOPAY_CONFIG: "${GOPAY_CONFIG_VALUE}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
@@ -125,6 +127,7 @@ services:
         image: storefront-image
         environment:
             REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
+            REDIS_HOST: review-redis
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY_VALUE}"
             GTM_ID: "${GTM_ID_VALUE}"
@@ -145,6 +148,19 @@ services:
         environment:
             IMGPROXY_AUTO_WEBP: true
             IMGPROXY_ENFORCE_WEBP: true
+
+    review-redis:
+        restart: always
+        image: redis:7.4-alpine
+        command: redis-server --save ""
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+        deploy:
+            resources:
+                limits:
+                    memory: 256M
 
 volumes:
     web-volume:
