@@ -20,6 +20,8 @@ class SqlQueryValidator
     public const string ERROR_UNKNOWN_RELATION_ALIAS = 'The SQL query references an unknown table or relation alias.';
     public const string ERROR_DISALLOWED_CAST_TARGET = 'The SQL query uses a cast target that is not allowed.';
     public const string ERROR_RECURSIVE_CTE_NOT_SUPPORTED = 'Recursive common table expressions are not supported.';
+    public const string ERROR_CTE_NAMES_COLLIDE = 'The SQL query defines common table expressions whose names are equal when letter case is ignored.';
+    public const string ERROR_GROUP_BY_OUTPUT_COLUMN_NOT_SUPPORTED = 'GROUP BY cannot reference output column aliases. Repeat the grouped expression instead.';
     public const string ERROR_LIMIT_REQUIRED_FORMAT = 'The SQL query must include a top-level LIMIT <= %d.';
 
     protected const string NODE_TAG_A_STAR = 'A_Star';
@@ -39,6 +41,7 @@ class SqlQueryValidator
     protected const string NODE_TAG_RANGE_VAR = 'RangeVar';
     protected const string NODE_TAG_RES_TARGET = 'ResTarget';
     protected const string NODE_TAG_SELECT_STMT = 'SelectStmt';
+    protected const string NODE_TAG_SORT_BY = 'SortBy';
     protected const string NODE_TAG_SQL_VALUE_FUNCTION = 'SQLValueFunction';
     protected const string NODE_TAG_STRING = 'String';
     protected const string NODE_TAG_TYPE_CAST = 'TypeCast';
@@ -178,13 +181,15 @@ class SqlQueryValidator
     /**
      * @param array<string, mixed> $selectStatement
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $outerRelationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $outerRelationsIndexedByAliases
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $inheritedCteRelationsIndexedByNames CTEs visible from enclosing queries, passed separately from the outer relations, so that a CTE that is only defined (not referenced in FROM) cannot satisfy an unqualified column reference
      */
     protected function validateSelectStatement(
         array $selectStatement,
         array $allowedColumnsSetIndexedByTableNames,
         bool $requireLimit = false,
         array $outerRelationsIndexedByAliases = [],
+        array $inheritedCteRelationsIndexedByNames = [],
     ): ?string {
         $cteRelationsIndexedByNames = [];
         $validationErrorMessage = $this->validateSelectStatementGuards(
@@ -201,20 +206,32 @@ class SqlQueryValidator
             $selectStatement,
             $allowedColumnsSetIndexedByTableNames,
             $cteRelationsIndexedByNames,
+            $inheritedCteRelationsIndexedByNames,
         );
 
         if ($validationErrorMessage !== null) {
             return $validationErrorMessage;
         }
 
-        $visibleCteRelationsIndexedByNames = array_merge(
-            $this->getCteRelationsIndexedByNames($outerRelationsIndexedByAliases),
+        $visibleCteRelationsIndexedByNames = array_replace(
+            $inheritedCteRelationsIndexedByNames,
             $cteRelationsIndexedByNames,
         );
-        $relationsIndexedByAliases = $outerRelationsIndexedByAliases;
+
+        if ($this->isSetOperation($selectStatement)) {
+            return $this->validateSetOperation(
+                $selectStatement,
+                $allowedColumnsSetIndexedByTableNames,
+                $outerRelationsIndexedByAliases,
+                $visibleCteRelationsIndexedByNames,
+                $outputColumnNamesSet,
+            );
+        }
+
+        $scopeRelationsIndexedByAliases = [];
         $validationErrorMessage = $this->collectRelationsFromFromClause(
             $selectStatement['fromClause'] ?? [],
-            $relationsIndexedByAliases,
+            $scopeRelationsIndexedByAliases,
             $visibleCteRelationsIndexedByNames,
             $allowedColumnsSetIndexedByTableNames,
         );
@@ -223,12 +240,103 @@ class SqlQueryValidator
             return $validationErrorMessage;
         }
 
+        $scopeLevel = $this->getNextScopeLevel($outerRelationsIndexedByAliases);
+
+        foreach (array_keys($scopeRelationsIndexedByAliases) as $aliasName) {
+            $scopeRelationsIndexedByAliases[$aliasName]['scopeLevel'] = $scopeLevel;
+        }
+
         return $this->validateSelectStatementNodes(
             $selectStatement,
-            $relationsIndexedByAliases,
+            array_replace($outerRelationsIndexedByAliases, $scopeRelationsIndexedByAliases),
             $allowedColumnsSetIndexedByTableNames,
             $outputColumnNamesSet,
+            $visibleCteRelationsIndexedByNames,
         );
+    }
+
+    /**
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $outerRelationsIndexedByAliases
+     */
+    protected function getNextScopeLevel(array $outerRelationsIndexedByAliases): int
+    {
+        if ($outerRelationsIndexedByAliases === []) {
+            return 0;
+        }
+
+        return max(array_map(
+            static fn (array $relation): int => $relation['scopeLevel'] ?? 0,
+            $outerRelationsIndexedByAliases,
+        )) + 1;
+    }
+
+    /**
+     * Each branch of UNION / INTERSECT / EXCEPT is validated as a standalone select, the set operation itself
+     * only carries clauses applied to the combined result (ORDER BY, LIMIT, OFFSET, locking).
+     *
+     * @param array<string, mixed> $selectStatement
+     * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $outerRelationsIndexedByAliases
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
+     * @param array<string, bool>|null $outputColumnNamesSet
+     */
+    protected function validateSetOperation(
+        array $selectStatement,
+        array $allowedColumnsSetIndexedByTableNames,
+        array $outerRelationsIndexedByAliases,
+        array $visibleCteRelationsIndexedByNames,
+        ?array $outputColumnNamesSet,
+    ): ?string {
+        foreach (['larg', 'rarg'] as $branchKey) {
+            $branchSelectStatement = $this->getSetOperationBranch($selectStatement, $branchKey);
+
+            if ($branchSelectStatement === null) {
+                return self::ERROR_ONLY_SELECT_SUPPORTED;
+            }
+
+            $validationErrorMessage = $this->validateSelectStatement(
+                $branchSelectStatement,
+                $allowedColumnsSetIndexedByTableNames,
+                false,
+                $outerRelationsIndexedByAliases,
+                $visibleCteRelationsIndexedByNames,
+            );
+
+            if ($validationErrorMessage !== null) {
+                return $validationErrorMessage;
+            }
+        }
+
+        unset($selectStatement['larg'], $selectStatement['rarg']);
+
+        return $this->validateSelectStatementNodes(
+            $selectStatement,
+            $outerRelationsIndexedByAliases,
+            $allowedColumnsSetIndexedByTableNames,
+            $outputColumnNamesSet,
+            $visibleCteRelationsIndexedByNames,
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $selectStatement
+     */
+    protected function isSetOperation(array $selectStatement): bool
+    {
+        return ($selectStatement['op'] ?? 'SETOP_NONE') !== 'SETOP_NONE'
+            || array_key_exists('larg', $selectStatement)
+            || array_key_exists('rarg', $selectStatement);
+    }
+
+    /**
+     * @param array<string, mixed> $selectStatement
+     * @return array<string, mixed>|null
+     */
+    protected function getSetOperationBranch(array $selectStatement, string $branchKey): ?array
+    {
+        $branch = $selectStatement[$branchKey] ?? null;
+
+        return is_array($branch) && $branch !== [] && !array_is_list($branch) ? $branch : null;
     }
 
     /**
@@ -255,13 +363,29 @@ class SqlQueryValidator
      * @param array<string, mixed> $selectStatement
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $cteRelationsIndexedByNames
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $inheritedCteRelationsIndexedByNames
      */
     protected function validateCteDefinitions(
         array $selectStatement,
         array $allowedColumnsSetIndexedByTableNames,
         array &$cteRelationsIndexedByNames,
+        array $inheritedCteRelationsIndexedByNames,
     ): ?string {
-        foreach ($this->getCteDefinitions($selectStatement) as $cteName => $cteDefinition) {
+        $cteDefinitions = $this->getCteDefinitions($selectStatement);
+
+        if ($cteDefinitions === null) {
+            return self::ERROR_ONLY_SELECT_SUPPORTED;
+        }
+
+        // PostgreSQL treats quoted "A" and a as two different CTEs, such queries are confusing, so they are rejected upfront with a clear message
+        $lowercasedCteNames = array_map(static fn (array $cteDefinition): string => strtolower($cteDefinition['name']), $cteDefinitions);
+
+        if (count($lowercasedCteNames) !== count(array_unique($lowercasedCteNames))) {
+            return self::ERROR_CTE_NAMES_COLLIDE;
+        }
+
+        foreach ($cteDefinitions as $cteDefinition) {
+            $cteName = $cteDefinition['name'];
             $cteQuery = $cteDefinition['query'];
 
             if ($this->getWrappedNodeTag($cteQuery) !== self::NODE_TAG_SELECT_STMT) {
@@ -272,7 +396,8 @@ class SqlQueryValidator
                 $cteQuery[self::NODE_TAG_SELECT_STMT],
                 $allowedColumnsSetIndexedByTableNames,
                 false,
-                $cteRelationsIndexedByNames,
+                [],
+                array_replace($inheritedCteRelationsIndexedByNames, $cteRelationsIndexedByNames),
             );
 
             if ($validationErrorMessage !== null) {
@@ -290,7 +415,7 @@ class SqlQueryValidator
 
     /**
      * @param array<mixed> $fromClause
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
@@ -318,31 +443,28 @@ class SqlQueryValidator
 
     /**
      * @param array<string, mixed> $selectStatement
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      * @param array<string, bool>|null $outputColumnNamesSet
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
      */
     protected function validateSelectStatementNodes(
         array $selectStatement,
         array $relationsIndexedByAliases,
         array $allowedColumnsSetIndexedByTableNames,
         ?array $outputColumnNamesSet,
+        array $visibleCteRelationsIndexedByNames,
     ): ?string {
         foreach ($selectStatement as $key => $value) {
             if ($key === 'withClause') {
                 continue;
             }
 
-            $allowedOutputColumnNamesSet = in_array($key, ['groupClause', 'sortClause'], true)
-                ? $outputColumnNamesSet
-                : null;
-
-            $validationErrorMessage = $this->validateNode(
-                $value,
-                $relationsIndexedByAliases,
-                $allowedColumnsSetIndexedByTableNames,
-                $allowedOutputColumnNamesSet,
-            );
+            $validationErrorMessage = match ($key) {
+                'sortClause' => $this->validateSortClause($value, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $outputColumnNamesSet, $visibleCteRelationsIndexedByNames),
+                'groupClause' => $this->validateGroupClause($value, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $outputColumnNamesSet, $visibleCteRelationsIndexedByNames),
+                default => $this->validateNode($value, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $visibleCteRelationsIndexedByNames),
+            };
 
             if ($validationErrorMessage !== null) {
                 return $validationErrorMessage;
@@ -353,15 +475,102 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * PostgreSQL resolves an ORDER BY item that is a bare single name to an output column first, so such an item
+     * refers to an already validated output column. Inside an expression a name is resolved against input columns.
+     *
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      * @param array<string, bool>|null $outputColumnNamesSet
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
+     */
+    protected function validateSortClause(
+        mixed $sortClause,
+        array $relationsIndexedByAliases,
+        array $allowedColumnsSetIndexedByTableNames,
+        ?array $outputColumnNamesSet,
+        array $visibleCteRelationsIndexedByNames,
+    ): ?string {
+        if (!is_array($sortClause) || !array_is_list($sortClause)) {
+            return $this->validateNode($sortClause, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $visibleCteRelationsIndexedByNames);
+        }
+
+        foreach ($sortClause as $sortByNode) {
+            $sortedNode = is_array($sortByNode) ? ($sortByNode[self::NODE_TAG_SORT_BY]['node'] ?? null) : null;
+
+            if ($this->isOutputColumnReference($sortedNode, $outputColumnNamesSet)) {
+                continue;
+            }
+
+            $validationErrorMessage = $this->validateNode($sortByNode, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $visibleCteRelationsIndexedByNames);
+
+            if ($validationErrorMessage !== null) {
+                return $validationErrorMessage;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * PostgreSQL resolves a bare name in GROUP BY to an input column first and falls back to an output column only when
+     * no input column of that name exists. The validator cannot tell a hidden input column from a nonexistent one,
+     * so output names are deliberately not accepted here, the dedicated error message tells the client how to rewrite the query.
+     *
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
+     * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
+     * @param array<string, bool>|null $outputColumnNamesSet
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
+     */
+    protected function validateGroupClause(
+        mixed $groupClause,
+        array $relationsIndexedByAliases,
+        array $allowedColumnsSetIndexedByTableNames,
+        ?array $outputColumnNamesSet,
+        array $visibleCteRelationsIndexedByNames,
+    ): ?string {
+        if (!is_array($groupClause) || !array_is_list($groupClause)) {
+            return $this->validateNode($groupClause, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $visibleCteRelationsIndexedByNames);
+        }
+
+        foreach ($groupClause as $groupedNode) {
+            $validationErrorMessage = $this->validateNode($groupedNode, $relationsIndexedByAliases, $allowedColumnsSetIndexedByTableNames, $visibleCteRelationsIndexedByNames);
+
+            if ($validationErrorMessage !== null) {
+                return $this->isOutputColumnReference($groupedNode, $outputColumnNamesSet)
+                    ? self::ERROR_GROUP_BY_OUTPUT_COLUMN_NOT_SUPPORTED
+                    : $validationErrorMessage;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<string, bool>|null $outputColumnNamesSet
+     */
+    protected function isOutputColumnReference(mixed $node, ?array $outputColumnNamesSet): bool
+    {
+        if (!is_array($node) || $this->getWrappedNodeTag($node) !== self::NODE_TAG_COLUMN_REF) {
+            return false;
+        }
+
+        $columnReferenceParts = $this->getColumnReferenceParts($node[self::NODE_TAG_COLUMN_REF]);
+
+        return $columnReferenceParts !== null
+            && count($columnReferenceParts) === 1
+            && array_key_exists($columnReferenceParts[0], $outputColumnNamesSet ?? []);
+    }
+
+    /**
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
+     * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
      */
     protected function validateNode(
         mixed $node,
         array $relationsIndexedByAliases,
         array $allowedColumnsSetIndexedByTableNames,
-        ?array $outputColumnNamesSet = null,
+        array $visibleCteRelationsIndexedByNames,
     ): ?string {
         if (!is_array($node)) {
             return null;
@@ -372,7 +581,7 @@ class SqlQueryValidator
                 $node,
                 $relationsIndexedByAliases,
                 $allowedColumnsSetIndexedByTableNames,
-                $outputColumnNamesSet,
+                $visibleCteRelationsIndexedByNames,
             );
         }
 
@@ -384,7 +593,7 @@ class SqlQueryValidator
                 $node[$wrappedNodeTag],
                 $relationsIndexedByAliases,
                 $allowedColumnsSetIndexedByTableNames,
-                $outputColumnNamesSet,
+                $visibleCteRelationsIndexedByNames,
             );
         }
 
@@ -392,28 +601,28 @@ class SqlQueryValidator
             $node,
             $relationsIndexedByAliases,
             $allowedColumnsSetIndexedByTableNames,
-            $outputColumnNamesSet,
+            $visibleCteRelationsIndexedByNames,
         );
     }
 
     /**
      * @param array<int|string, mixed> $childNodes
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
-     * @param array<string, bool>|null $outputColumnNamesSet
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
      */
     protected function validateChildNodes(
         array $childNodes,
         array $relationsIndexedByAliases,
         array $allowedColumnsSetIndexedByTableNames,
-        ?array $outputColumnNamesSet = null,
+        array $visibleCteRelationsIndexedByNames,
     ): ?string {
         foreach ($childNodes as $childNode) {
             $validationErrorMessage = $this->validateNode(
                 $childNode,
                 $relationsIndexedByAliases,
                 $allowedColumnsSetIndexedByTableNames,
-                $outputColumnNamesSet,
+                $visibleCteRelationsIndexedByNames,
             );
 
             if ($validationErrorMessage !== null) {
@@ -425,23 +634,23 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
-     * @param array<string, bool>|null $outputColumnNamesSet
+     * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $visibleCteRelationsIndexedByNames
      */
     protected function validateWrappedNode(
         string $wrappedNodeTag,
         mixed $wrappedNode,
         array $relationsIndexedByAliases,
         array $allowedColumnsSetIndexedByTableNames,
-        ?array $outputColumnNamesSet = null,
+        array $visibleCteRelationsIndexedByNames,
     ): ?string {
         if (in_array($wrappedNodeTag, self::UNSUPPORTED_NODE_TAGS, true)) {
             return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
 
         if ($wrappedNodeTag === self::NODE_TAG_SELECT_STMT) {
-            return $this->validateSelectStatement($wrappedNode, $allowedColumnsSetIndexedByTableNames, false, $relationsIndexedByAliases);
+            return $this->validateSelectStatement($wrappedNode, $allowedColumnsSetIndexedByTableNames, false, $relationsIndexedByAliases, $visibleCteRelationsIndexedByNames);
         }
 
         if ($wrappedNodeTag === self::NODE_TAG_COLUMN_REF) {
@@ -449,7 +658,6 @@ class SqlQueryValidator
                 $wrappedNode,
                 $relationsIndexedByAliases,
                 $allowedColumnsSetIndexedByTableNames,
-                $outputColumnNamesSet,
             );
         }
 
@@ -474,12 +682,12 @@ class SqlQueryValidator
             $wrappedNode,
             $relationsIndexedByAliases,
             $allowedColumnsSetIndexedByTableNames,
-            $outputColumnNamesSet,
+            $visibleCteRelationsIndexedByNames,
         );
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $cteRelationsIndexedByNames
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
@@ -490,7 +698,7 @@ class SqlQueryValidator
         array $allowedColumnsSetIndexedByTableNames,
     ): ?string {
         if (!is_array($fromNode)) {
-            return null;
+            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
 
         $wrappedNodeTag = $this->getWrappedNodeTag($fromNode);
@@ -513,12 +721,9 @@ class SqlQueryValidator
             );
         }
 
-        if (in_array($wrappedNodeTag, [self::NODE_TAG_RANGE_FUNCTION, self::NODE_TAG_RANGE_TABLE_FUNC], true)) {
-            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
-        }
-
+        // deny by default: any other FROM item (functions, TABLESAMPLE, JSON_TABLE, ...) would hide its relation from the checks
         if ($wrappedNodeTag !== self::NODE_TAG_RANGE_VAR) {
-            return null;
+            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
 
         return $this->collectRelationsFromRangeVar(
@@ -531,7 +736,7 @@ class SqlQueryValidator
 
     /**
      * @param array<string, mixed> $joinExpr
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $cteRelationsIndexedByNames
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
@@ -580,7 +785,7 @@ class SqlQueryValidator
             return $validationErrorMessage;
         }
 
-        $relationsIndexedByAliases = array_merge(
+        $relationsIndexedByAliases = array_replace(
             $relationsIndexedByAliases,
             $leftRelationsIndexedByAliases,
             $rightRelationsIndexedByAliases,
@@ -591,7 +796,7 @@ class SqlQueryValidator
 
     /**
      * @param array<string, mixed> $rangeSubselect
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $cteRelationsIndexedByNames
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
@@ -611,6 +816,7 @@ class SqlQueryValidator
             $subquery[self::NODE_TAG_SELECT_STMT],
             $allowedColumnsSetIndexedByTableNames,
             false,
+            [],
             $cteRelationsIndexedByNames,
         );
 
@@ -634,7 +840,7 @@ class SqlQueryValidator
 
     /**
      * @param array<string, mixed> $rangeVar
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}> $cteRelationsIndexedByNames
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
@@ -644,8 +850,8 @@ class SqlQueryValidator
         array $cteRelationsIndexedByNames,
         array $allowedColumnsSetIndexedByTableNames,
     ): ?string {
-        $tableName = strtolower((string)($rangeVar['relname'] ?? ''));
-        $schemaName = strtolower((string)($rangeVar['schemaname'] ?? ''));
+        $tableName = (string)($rangeVar['relname'] ?? '');
+        $schemaName = (string)($rangeVar['schemaname'] ?? '');
 
         if ($tableName === '') {
             return self::ERROR_TABLE_NOT_EXPOSED;
@@ -673,7 +879,7 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      */
     protected function storeTableRelation(
         array &$relationsIndexedByAliases,
@@ -686,15 +892,13 @@ class SqlQueryValidator
 
     /**
      * @param array<string, mixed> $columnReference
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
-     * @param array<string, bool>|null $outputColumnNamesSet
      */
     protected function validateColumnReference(
         array $columnReference,
         array $relationsIndexedByAliases,
         array $allowedColumnsSetIndexedByTableNames,
-        ?array $outputColumnNamesSet = null,
     ): ?string {
         $columnReferenceParts = $this->getColumnReferenceParts($columnReference);
 
@@ -707,11 +911,10 @@ class SqlQueryValidator
         }
 
         return match (count($columnReferenceParts)) {
-            1 => $this->validateUnqualifiedColumnReference(
+            1 => $this->resolveUnqualifiedColumnReferenceError(
                 $columnReferenceParts[0],
                 $relationsIndexedByAliases,
                 $allowedColumnsSetIndexedByTableNames,
-                $outputColumnNamesSet,
             ),
             2 => $this->validateQualifiedColumnReference(
                 $columnReferenceParts[0],
@@ -725,29 +928,7 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
-     * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
-     * @param array<string, bool>|null $outputColumnNamesSet
-     */
-    protected function validateUnqualifiedColumnReference(
-        string $columnName,
-        array $relationsIndexedByAliases,
-        array $allowedColumnsSetIndexedByTableNames,
-        ?array $outputColumnNamesSet,
-    ): ?string {
-        if (array_key_exists($columnName, $outputColumnNamesSet ?? [])) {
-            return null;
-        }
-
-        return $this->resolveUnqualifiedColumnReferenceError(
-            $columnName,
-            $relationsIndexedByAliases,
-            $allowedColumnsSetIndexedByTableNames,
-        );
-    }
-
-    /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
     protected function validateQualifiedColumnReference(
@@ -813,7 +994,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $stringValue = strtolower((string)($field[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $stringValue = (string)($field[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($stringValue === '') {
                 return null;
@@ -885,7 +1066,7 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      */
     protected function isAllowedDerivedColumnReference(
         string $relationName,
@@ -900,8 +1081,8 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $leftRelationsIndexedByAliases
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $rightRelationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $leftRelationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $rightRelationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
     protected function validateJoinUsingClause(
@@ -923,7 +1104,7 @@ class SqlQueryValidator
                 return self::ERROR_COLUMN_NOT_EXPOSED;
             }
 
-            $columnName = strtolower((string)($usingClauseNode[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $columnName = (string)($usingClauseNode[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if (
                 $columnName === ''
@@ -938,7 +1119,7 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
     protected function relationSetContainsAllowedColumn(
@@ -969,7 +1150,7 @@ class SqlQueryValidator
 
             $checkedRelations[$relation['type'] . ':' . $relationName] = true;
 
-            if ($this->isAllowedDerivedColumnReference($relationName, $columnName, $relationsIndexedByAliases)) {
+            if ($this->isAllowedDerivedColumnReference((string)$relationName, $columnName, $relationsIndexedByAliases)) {
                 return true;
             }
         }
@@ -978,10 +1159,12 @@ class SqlQueryValidator
     }
 
     /**
+     * CTE definitions are returned as a list, so that no definition is lost when two of them share a name.
+     *
      * @param array<string, mixed> $selectStatement
-     * @return array<string, array{query: array<string, mixed>, columnNamesSet: array<string, bool>|null}>
+     * @return list<array{name: string, query: array<string, mixed>, columnNamesSet: array<string, bool>|null}>|null
      */
-    protected function getCteDefinitions(array $selectStatement): array
+    protected function getCteDefinitions(array $selectStatement): ?array
     {
         $cteDefinitions = [];
 
@@ -991,45 +1174,24 @@ class SqlQueryValidator
 
         foreach ($cteNodes as $cteNode) {
             if (!is_array($cteNode) || $this->getWrappedNodeTag($cteNode) !== self::NODE_TAG_COMMON_TABLE_EXPR) {
-                continue;
+                return null;
             }
 
-            $cteName = strtolower((string)($cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['ctename'] ?? ''));
+            $cteName = (string)($cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['ctename'] ?? '');
             $cteQuery = $cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['ctequery'] ?? null;
 
             if ($cteName === '' || !is_array($cteQuery)) {
-                continue;
+                return null;
             }
 
-            $cteDefinitions[$cteName] = [
+            $cteDefinitions[] = [
+                'name' => $cteName,
                 'query' => $cteQuery,
                 'columnNamesSet' => $this->getAliasColumnNamesSet($cteNode[self::NODE_TAG_COMMON_TABLE_EXPR]['aliascolnames'] ?? null),
             ];
         }
 
         return $cteDefinitions;
-    }
-
-    /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
-     * @return array<string, array{type: 'cte', columnNamesSet: array<string, bool>|null}>
-     */
-    protected function getCteRelationsIndexedByNames(array $relationsIndexedByAliases): array
-    {
-        $cteRelationsIndexedByNames = [];
-
-        foreach ($relationsIndexedByAliases as $relationName => $relation) {
-            if ($relation['type'] !== 'cte') {
-                continue;
-            }
-
-            $cteRelationsIndexedByNames[$relationName] = [
-                'type' => 'cte',
-                'columnNamesSet' => $relation['columnNamesSet'] ?? null,
-            ];
-        }
-
-        return $cteRelationsIndexedByNames;
     }
 
     protected function isRecursiveWithClause(mixed $withClause): bool
@@ -1068,6 +1230,13 @@ class SqlQueryValidator
     {
         if ($overrideColumnNamesSet !== null) {
             return $overrideColumnNamesSet;
+        }
+
+        if ($this->isSetOperation($selectStatement)) {
+            // PostgreSQL names the output columns of a set operation after its leftmost branch
+            $leftBranchSelectStatement = $this->getSetOperationBranch($selectStatement, 'larg');
+
+            return $leftBranchSelectStatement !== null ? $this->getOutputColumnsSet($leftBranchSelectStatement) : null;
         }
 
         $columnNamesSet = [];
@@ -1109,7 +1278,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $columnName = strtolower((string)($aliasColumnNameNode[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $columnName = (string)($aliasColumnNameNode[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($columnName === '') {
                 return null;
@@ -1122,7 +1291,12 @@ class SqlQueryValidator
     }
 
     /**
-     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null}> $relationsIndexedByAliases
+     * PostgreSQL binds an unqualified column to a relation of the innermost query level that has a column of that name
+     * and continues to outer levels only when there is none. A table may have a hidden column of that name that the
+     * validator does not know about, so a level containing a table (or a relation with unknown columns) without
+     * a matching exposed column stops the lookup instead of letting an outer relation satisfy the name.
+     *
+     * @param array<string, array{type: 'table'|'cte'|'derived', tableName?: string, columnNamesSet?: array<string, bool>|null, scopeLevel?: int}> $relationsIndexedByAliases
      * @param array<string, array<string, bool>> $allowedColumnsSetIndexedByTableNames
      */
     protected function resolveUnqualifiedColumnReferenceError(
@@ -1130,41 +1304,43 @@ class SqlQueryValidator
         array $relationsIndexedByAliases,
         array $allowedColumnsSetIndexedByTableNames,
     ): ?string {
-        $matchingRelationCount = 0;
-        $checkedRelations = [];
+        $relationNamesIndexedByScopeLevels = [];
 
         foreach ($relationsIndexedByAliases as $relationName => $relation) {
-            if ($relation['type'] === 'table' && isset($relation['tableName'])) {
-                if (isset($checkedRelations['table:' . $relation['tableName']])) {
-                    continue;
-                }
-
-                $checkedRelations['table:' . $relation['tableName']] = true;
-
-                if ($this->isAllowedTableColumnReference($relation['tableName'], $columnName, $allowedColumnsSetIndexedByTableNames)) {
-                    $matchingRelationCount++;
-                }
-
-                continue;
-            }
-
-            if (isset($checkedRelations[$relation['type'] . ':' . $relationName])) {
-                continue;
-            }
-
-            $checkedRelations[$relation['type'] . ':' . $relationName] = true;
-
-            if ($this->isAllowedDerivedColumnReference($relationName, $columnName, $relationsIndexedByAliases)) {
-                $matchingRelationCount++;
-            }
+            $relationNamesIndexedByScopeLevels[$relation['scopeLevel'] ?? 0][] = (string)$relationName;
         }
 
-        if ($matchingRelationCount === 1) {
-            return null;
-        }
+        krsort($relationNamesIndexedByScopeLevels);
 
-        if ($matchingRelationCount > 1) {
-            return self::ERROR_AMBIGUOUS_UNQUALIFIED_COLUMN;
+        foreach ($relationNamesIndexedByScopeLevels as $relationNames) {
+            $matchingRelationCount = 0;
+            $mayHaveUnknownColumn = false;
+
+            foreach ($relationNames as $relationName) {
+                $relation = $relationsIndexedByAliases[$relationName];
+
+                if ($relation['type'] === 'table' && isset($relation['tableName'])) {
+                    $isMatching = $this->isAllowedTableColumnReference($relation['tableName'], $columnName, $allowedColumnsSetIndexedByTableNames);
+                    $mayHaveUnknownColumn = $mayHaveUnknownColumn || !$isMatching;
+                } else {
+                    $isMatching = $this->isAllowedDerivedColumnReference($relationName, $columnName, $relationsIndexedByAliases);
+                    $mayHaveUnknownColumn = $mayHaveUnknownColumn || ($relation['columnNamesSet'] ?? null) === null;
+                }
+
+                $matchingRelationCount += $isMatching ? 1 : 0;
+            }
+
+            if ($matchingRelationCount === 1) {
+                return null;
+            }
+
+            if ($matchingRelationCount > 1) {
+                return self::ERROR_AMBIGUOUS_UNQUALIFIED_COLUMN;
+            }
+
+            if ($mayHaveUnknownColumn) {
+                return self::ERROR_COLUMN_NOT_EXPOSED;
+            }
         }
 
         return self::ERROR_COLUMN_NOT_EXPOSED;
@@ -1175,7 +1351,7 @@ class SqlQueryValidator
      */
     protected function getOutputColumnName(array $resTarget): ?string
     {
-        $aliasName = strtolower((string)($resTarget['name'] ?? ''));
+        $aliasName = (string)($resTarget['name'] ?? '');
 
         if ($aliasName !== '') {
             return $aliasName;
@@ -1237,7 +1413,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $functionNamePart = strtolower((string)($namePart[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $functionNamePart = (string)($namePart[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($functionNamePart === '') {
                 return null;
@@ -1265,7 +1441,7 @@ class SqlQueryValidator
                 return null;
             }
 
-            $typeNamePart = strtolower((string)($namePart[self::NODE_TAG_STRING]['sval'] ?? ''));
+            $typeNamePart = (string)($namePart[self::NODE_TAG_STRING]['sval'] ?? '');
 
             if ($typeNamePart === '') {
                 return null;
@@ -1283,7 +1459,7 @@ class SqlQueryValidator
             return null;
         }
 
-        $aliasName = strtolower((string)($aliasNode['aliasname'] ?? $aliasNode['Alias']['aliasname'] ?? ''));
+        $aliasName = (string)($aliasNode['aliasname'] ?? $aliasNode['Alias']['aliasname'] ?? '');
 
         return $aliasName !== '' ? $aliasName : null;
     }
