@@ -299,6 +299,21 @@ class SqlQueryValidatorBasicQueriesDataProvider
             'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
         ];
 
+        yield 'tablesample on exposed table is rejected' => [
+            'sql' => 'SELECT id FROM products TABLESAMPLE SYSTEM (100) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+        ];
+
+        yield 'tablesample does not hide non public schema table' => [
+            'sql' => 'SELECT count(*) FROM pg_catalog.pg_class TABLESAMPLE SYSTEM (100) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+        ];
+
+        yield 'tablesample does not hide table from unqualified column lookup' => [
+            'sql' => 'SELECT (SELECT password FROM administrators TABLESAMPLE SYSTEM (100) LIMIT 1) AS x FROM (SELECT 1 AS password) d LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+        ];
+
         yield 'non exposed table is rejected' => [
             'sql' => 'SELECT id FROM administrator_mcp_tokens LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,

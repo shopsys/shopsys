@@ -698,7 +698,7 @@ class SqlQueryValidator
         array $allowedColumnsSetIndexedByTableNames,
     ): ?string {
         if (!is_array($fromNode)) {
-            return null;
+            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
 
         $wrappedNodeTag = $this->getWrappedNodeTag($fromNode);
@@ -721,12 +721,9 @@ class SqlQueryValidator
             );
         }
 
-        if (in_array($wrappedNodeTag, [self::NODE_TAG_RANGE_FUNCTION, self::NODE_TAG_RANGE_TABLE_FUNC], true)) {
-            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
-        }
-
+        // deny by default: any other FROM item (functions, TABLESAMPLE, JSON_TABLE, ...) would hide its relation from the checks
         if ($wrappedNodeTag !== self::NODE_TAG_RANGE_VAR) {
-            return null;
+            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
 
         return $this->collectRelationsFromRangeVar(
