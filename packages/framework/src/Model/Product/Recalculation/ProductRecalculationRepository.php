@@ -52,4 +52,17 @@ class ProductRecalculationRepository
 
         return array_unique([...$ids, ...$inputProductIds]);
     }
+
+    /**
+     * @param int[] $productIds
+     */
+    public function hasDeletedProducts(array $productIds): bool
+    {
+        $existingProductCount = $this->em
+            ->createQuery('SELECT COUNT(p.id) FROM ' . Product::class . ' p WHERE p.id IN (:productIds)')
+            ->setParameter('productIds', $productIds)
+            ->getSingleScalarResult();
+
+        return (int)$existingProductCount < count(array_unique($productIds));
+    }
 }

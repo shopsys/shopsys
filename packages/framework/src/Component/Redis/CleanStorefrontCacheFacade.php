@@ -19,6 +19,7 @@ class CleanStorefrontCacheFacade
     public const string NOTIFICATION_BARS_QUERY_KEY_PART = 'NotificationBars';
     public const string ADVERTS_QUERY_KEY_PART = 'AdvertsQuery';
     public const string PROMOTED_PRODUCTS_QUERY_KEY_PART = 'PromotedProductsQuery';
+    public const string PROMOTED_PRODUCTS_CACHE_VERSION_KEY = 'queryCacheVersion:PromotedProductsQuery';
     public const string BRANDS_QUERY_KEY_PART = 'BrandsQuery';
     public const string SEO_PAGE_QUERY_KEY_PART = 'SeoPageQuery';
     public const string STORES_QUERY_KEY_PART = 'StoresQuery';
@@ -48,6 +49,11 @@ class CleanStorefrontCacheFacade
 
     public function cleanStorefrontGraphqlQueryCache(string $queryKey = ''): void
     {
+        if ($queryKey === '' || $queryKey === self::PROMOTED_PRODUCTS_QUERY_KEY_PART) {
+            // In-flight requests may still write responses after the old cache entries are removed.
+            $this->storefrontGraphqlQueryClient->incr(self::PROMOTED_PRODUCTS_CACHE_VERSION_KEY);
+        }
+
         $keyPattern = 'queryCache:' . $queryKey . '*';
         $this->cleanStorefrontCacheByKeyPattern($keyPattern);
     }

@@ -11,13 +11,17 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 
 class ProductRecalculationFacade
 {
@@ -37,6 +41,9 @@ class ProductRecalculationFacade
         protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
         protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
         protected readonly PromotionFlagFacade $promotionFlagFacade,
+        protected readonly IndexRepository $indexRepository,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly TopProductRepository $topProductRepository,
     ) {
     }
 
@@ -99,32 +106,66 @@ class ProductRecalculationFacade
         }
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
+        $promotedProductsDomainIds = $this->getPromotedProductsCacheDomainIds($productIds, $exportScopes);
 
         foreach ($this->domain->getAllIds() as $domainId) {
+            $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId);
             $productIdsExistingInElastic = $this->productElasticsearchProvider->getOnlyExistingProductsIds($productIds, $domainId);
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName()),
-                $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId),
+                $indexDefinition,
                 $productIdsExistingInElastic,
                 $fields,
             );
 
-            if (!$shouldRecalculateVisibility) {
-                continue;
+            if ($shouldRecalculateVisibility) {
+                $productIdsNotExistingInElastic = array_diff($productIds, $productIdsExistingInElastic);
+
+                if (count($productIdsNotExistingInElastic) > 0) {
+                    $this->indexFacade->exportIds(
+                        $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName()),
+                        $indexDefinition,
+                        $productIdsNotExistingInElastic,
+                    );
+                }
             }
 
-            $productIdsNotExistingInElastic = array_diff($productIds, $productIdsExistingInElastic);
-
-            if (count($productIdsNotExistingInElastic) === 0) {
-                continue;
+            if (in_array($domainId, $promotedProductsDomainIds, true)) {
+                // Cache misses must already see the exported product state in search results.
+                $this->indexRepository->refreshIndex($indexDefinition->getIndexAlias());
             }
-
-            $this->indexFacade->exportIds(
-                $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName()),
-                $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId),
-                $productIdsNotExistingInElastic,
-            );
         }
+
+        if ($promotedProductsDomainIds !== []) {
+            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::PROMOTED_PRODUCTS_QUERY_KEY_PART);
+        }
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param string[] $exportScopes
+     * @return int[]
+     */
+    protected function getPromotedProductsCacheDomainIds(array $productIds, array $exportScopes): array
+    {
+        if (
+            $productIds === [] ||
+            !($this->productExportScopeConfigFacade->shouldRecalculateVisibility($exportScopes) ||
+                $this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes) ||
+                in_array(ProductExportScopeConfig::SCOPE_TOP_PRODUCT, $exportScopes, true))
+        ) {
+            return [];
+        }
+
+        if (
+            in_array(ProductExportScopeConfig::SCOPE_TOP_PRODUCT, $exportScopes, true) ||
+            $this->productRecalculationRepository->hasDeletedProducts($productIds)
+        ) {
+            // Removed products no longer retain their promotion domains, including when a failed export is retried.
+            return $this->domain->getAllIds();
+        }
+
+        return $this->topProductRepository->getDomainIdsForProductIds($productIds);
     }
 
     /**
