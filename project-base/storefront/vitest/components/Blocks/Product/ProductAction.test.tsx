@@ -305,11 +305,22 @@ describe('ProductAction', () => {
             expect(screen.queryByTestId('add-to-cart')).not.toBeInTheDocument();
         });
 
-        test('offers the watchdog next to the message that a selling denied product cannot be purchased', () => {
-            renderProductAction(sellingDeniedProduct, props);
+        test.each([
+            TypeAvailabilityStatusEnum.InStock,
+            TypeAvailabilityStatusEnum.OutOfStock,
+            TypeAvailabilityStatusEnum.ExpectedRestock,
+        ])('offers only the discontinued message for a selling denied product with availability %s', (status) => {
+            renderProductAction(
+                createProduct({
+                    isSellingDenied: true,
+                    availability: { ...inStockProduct.availability, status },
+                }),
+                props,
+            );
 
-            expect(getWatchdogButtons()).toHaveLength(1);
+            expect(getWatchdogButtons()).toHaveLength(0);
             expect(screen.getByText('This item can no longer be purchased')).toBeInTheDocument();
+            expect(screen.queryByTestId('add-to-cart')).not.toBeInTheDocument();
         });
 
         test('offers a single watchdog button for a product out of stock', () => {
