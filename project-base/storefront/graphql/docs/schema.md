@@ -9917,7 +9917,7 @@ Parameter filter options
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Total count of products in the list
+Count of products in the list that are visible on the current domain
 
 </td>
 </tr>
