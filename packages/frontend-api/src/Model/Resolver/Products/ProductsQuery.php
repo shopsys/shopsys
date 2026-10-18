@@ -93,6 +93,12 @@ class ProductsQuery extends AbstractQuery
         return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 
+    public function productsCountByProductListQuery(ProductList $productList): Promise
+    {
+        return $this->productsByProductListQuery($productList)
+            ->then(static fn (array $products): int => count($products));
+    }
+
     /**
      * @param string[] $catnums
      */

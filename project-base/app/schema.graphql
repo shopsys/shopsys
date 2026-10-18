@@ -2543,7 +2543,7 @@ type ProductFilterOptions {
 }
 
 type ProductList {
-  "Total count of products in the list"
+  "Count of products in the list that are visible on the current domain"
   itemsCount: Int!
   "An array of the products in the list"
   products: [Product!]!
