@@ -122,4 +122,11 @@ trait OrderItemsTestTrait
 
         $this->withdrawalRequestFacade->createOnly($order, $withRequestData);
     }
+
+    private function deleteOrder(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 5, Order::class);
+
+        $this->orderFacade->deleteById($order->getId());
+    }
 }

@@ -12,6 +12,7 @@ use App\Model\Product\Product;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
@@ -32,6 +33,11 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private WithdrawalRequestDataFactory $withdrawalRequestDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderFacade $orderFacade;
 
     /**
      * @param array<int|\Tests\FrontendApiBundle\Test\ReferenceDataAccessor> $expectedOrderItemsIds
@@ -68,6 +74,15 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
 
         $this->assertProductExistsInOrderItems($product, true);
         $this->createWithdrawalRequest();
+        $this->assertProductExistsInOrderItems($product, false);
+    }
+
+    public function testGetOrderItemsExcludesItemsFromDeletedOrders(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
+
+        $this->assertProductExistsInOrderItems($product, true);
+        $this->deleteOrder();
         $this->assertProductExistsInOrderItems($product, false);
     }
 
