@@ -164,6 +164,15 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('removeFromCartMutation', args, validator)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+            RestoreCartGift:
+                type: Cart!
+                description: "Restore a manually removed gift that is still available for the cart"
+                args:
+                    input:
+                        type: RestoreCartGiftInput!
+                        validation: cascade
+                resolve: "@=mutation('restoreCartGiftMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             SetCartItemAdditionalServices:
                 type: Cart!
                 description: "Set the chosen additional services of a cart item"

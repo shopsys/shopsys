@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
@@ -35,6 +36,11 @@ class GiftCartFacade
 
         foreach ($cartItemSetupList as $giftCartItemSetup) {
             $giftProduct = $giftCartItemSetup->getGiftProduct();
+
+            if ($cart->isProductGiftRemoved($giftProduct)) {
+                continue;
+            }
+
             $giftQuantity = $giftCartItemSetup->getQuantity();
 
             $giftCartItems = array_filter($cart->getProductGiftCartItems(), fn (CartItem $cartItem) => $cartItem->getProduct()->getId() === $giftProduct->getId());
@@ -86,6 +92,50 @@ class GiftCartFacade
         return $giftsSetup;
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[]
+     */
+    public function getRemovedGiftCartItemSetups(Cart $cart, int $domainId): array
+    {
+        $removedGiftCartItemSetups = [];
+
+        foreach ($this->getGiftCartItemSetupListByCart($cart, $domainId) as $giftCartItemSetup) {
+            $giftProduct = $giftCartItemSetup->getGiftProduct();
+
+            if (!$cart->isProductGiftRemoved($giftProduct)) {
+                continue;
+            }
+
+            $quantity = $giftCartItemSetup->getQuantity();
+
+            if (!$giftProduct->isAllowedNegativeStock()) {
+                $quantity -= $this->productAvailabilityFacade->getNotOnStockQuantity($giftProduct, $domainId, $quantity) ?? 0;
+            }
+
+            $removedGiftCartItemSetups[] = new GiftCartItemSetup($giftProduct, $quantity);
+        }
+
+        return $removedGiftCartItemSetups;
+    }
+
+    public function restoreProductGiftToCart(Cart $cart, string $giftProductUuid, int $domainId): void
+    {
+        foreach ($this->getRemovedGiftCartItemSetups($cart, $domainId) as $giftCartItemSetup) {
+            $giftProduct = $giftCartItemSetup->getGiftProduct();
+
+            if ($giftProduct->getUuid() !== $giftProductUuid) {
+                continue;
+            }
+
+            $cart->restoreProductGift($giftProduct);
+            $this->refreshProductGiftsInCart($cart, $domainId);
+
+            return;
+        }
+
+        throw new InvalidCartItemException('The removed gift is not available for this cart.');
+    }
+
     public function isGiftProductSellable(
         Product $product,
         PricingGroup $pricingGroup,
@@ -126,7 +176,7 @@ class GiftCartFacade
         foreach ($cart->getProductGiftCartItems() as $item) {
             $giftCartItemSetup = $giftCartItemSetups[$item->getProduct()->getId()] ?? null;
 
-            if ($giftCartItemSetup === null) {
+            if ($giftCartItemSetup === null || $cart->isProductGiftRemoved($item->getProduct())) {
                 $invalidItems[] = $item;
 
                 continue;

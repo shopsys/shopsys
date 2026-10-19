@@ -1,0 +1,17 @@
+mutation ($cartUuid: Uuid, $productUuid: Uuid!, $quantity: Int!, $isAbsoluteQuantity: Boolean) {
+    AddToCart(input: {cartUuid: $cartUuid, productUuid: $productUuid, quantity: $quantity, isAbsoluteQuantity: $isAbsoluteQuantity}) {
+        cart {
+        uuid
+        items {
+            uuid
+            type
+            quantity
+            product { uuid }
+        }
+        removedGifts {
+            quantity
+            product { uuid }
+        }
+        }
+    }
+}

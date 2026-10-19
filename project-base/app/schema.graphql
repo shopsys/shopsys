@@ -468,6 +468,8 @@ type Cart {
   remainingAmountToPay: Money!
   "Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step"
   remainingItemsAmountToPay: Money!
+  "Manually removed gifts that are still available for this cart and can be restored"
+  removedGifts: [RemovedCartGift!]!
   "Rounding amount if payment has rounding allowed"
   roundingPrice: Price
   "Selected pickup place identifier if provided"
@@ -1556,6 +1558,8 @@ type Mutation {
   RequestPasswordRecovery(email: String!): String!
   "Request access to personal data"
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
+  "Restore a manually removed gift that is still available for the cart"
+  RestoreCartGift(input: RestoreCartGiftInput!): Cart!
   "Set the chosen additional services of a cart item"
   SetCartItemAdditionalServices(input: SetCartItemAdditionalServicesInput!): Cart!
   "Set default delivery address by Uuid"
@@ -3213,11 +3217,26 @@ input RemoveCustomerUserDataInput {
   customerUserUuid: Uuid!
 }
 
+"A manually removed gift that can be restored to the cart"
+type RemovedCartGift {
+  "Gift product to restore"
+  product: Product!
+  "Current gift quantity that will be restored"
+  quantity: Int!
+}
+
 input RemoveFromCartInput {
   "Cart item UUID"
   cartItemUuid: Uuid!
   "Cart identifier, new cart will be created if not provided and customer is not logged in"
   cartUuid: Uuid = null
+}
+
+input RestoreCartGiftInput {
+  "Cart identifier, new cart will be created if not provided and customer is not logged in"
+  cartUuid: Uuid = null
+  "UUID of the removed gift product to restore"
+  giftProductUuid: Uuid!
 }
 
 "Represents sales representative"

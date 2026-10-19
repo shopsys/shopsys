@@ -34,6 +34,10 @@ import {
     TypeRemoveFromCartMutationVariables,
 } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
 import {
+    TypeRestoreCartGiftMutation,
+    TypeRestoreCartGiftMutationVariables,
+} from 'graphql/requests/cart/mutations/RestoreCartGiftMutation.generated';
+import {
     TypeSetCartItemAdditionalServicesMutation,
     TypeSetCartItemAdditionalServicesMutationVariables,
 } from 'graphql/requests/cart/mutations/SetCartItemAdditionalServicesMutation.generated';
@@ -170,6 +174,9 @@ export const cacheUpdates: UpdatesConfig = {
         },
         RemoveFromCart(result: TypeRemoveFromCartMutation, _args: TypeRemoveFromCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.RemoveFromCart, result.RemoveFromCart.uuid);
+        },
+        RestoreCartGift(result: TypeRestoreCartGiftMutation, _args: TypeRestoreCartGiftMutationVariables, cache) {
+            manuallyUpdateCartQuery(cache, result.RestoreCartGift, result.RestoreCartGift.uuid);
         },
         SetCartItemAdditionalServices(
             result: TypeSetCartItemAdditionalServicesMutation,

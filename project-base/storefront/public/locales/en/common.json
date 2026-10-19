@@ -278,6 +278,7 @@
     "Full error details": "Full error details",
     "GdprAgreementCheckbox": "I agree with <lnk1>processing of privacy policy</lnk1>.",
     "Gift": "Gift",
+    "Gift for: {{ products }}": "Gift for: {{ products }}",
     "Gift voucher": "Gift voucher",
     "Gift voucher was added to the order.": "Gift voucher was added to the order.",
     "Gift voucher was removed from the order.": "Gift voucher was removed from the order.",

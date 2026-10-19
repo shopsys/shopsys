@@ -27,6 +27,7 @@ export const cache = cacheExchange({
         Brand: keyUuid,
         BrandFilterOption: keyNull,
         Cart: keyUuid,
+        RemovedCartGift: keyNull,
         CartItem: keyUuid,
         CartGiftVoucherModificationsResult: keyNull,
         CartItemModificationsResult: keyNull,
