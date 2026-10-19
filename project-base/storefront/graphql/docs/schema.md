@@ -8121,6 +8121,15 @@ Order items related to this order item (e.g. additional services of a product it
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="orderitem.remainingcomplaintquantity">remainingComplaintQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity still available for complaint after subtracting quantities claimed by complaints that are unresolved or resolved by money return
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="orderitem.totalprice">totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>

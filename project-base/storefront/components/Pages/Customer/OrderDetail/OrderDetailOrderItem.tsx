@@ -58,6 +58,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     const isProductGift = orderItem.type === TypeOrderItemTypeEnum.ProductGift;
     const showComplaintButton =
         canCreateComplaint &&
+        orderItem.remainingComplaintQuantity > 0 &&
         isUserLoggedIn &&
         isOrderFromRegisteredCustomer &&
         orderItem.order.withdrawalRequest === null &&

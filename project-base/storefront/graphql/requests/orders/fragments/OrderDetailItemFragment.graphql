@@ -11,6 +11,7 @@ fragment OrderDetailItemFragment on OrderItem {
     }
     vatRate
     quantity
+    remainingComplaintQuantity
     unit
     type
     catnum
