@@ -12,11 +12,13 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Symfony\Component\Clock\DatePoint;
+use Symfony\Component\Clock\Test\ClockSensitiveTrait;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 {
+    use ClockSensitiveTrait;
+
     /**
      * @inject
      */
@@ -34,13 +36,12 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     public function testOldUnregisteredCustomerCartGetsDeleted(): void
     {
+        static::mockTime();
         $customerUserIdentifier = $this->getCustomerUserIdentifierForUnregisteredCustomer();
         $cartFacade = $this->cartFacade;
-        $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
+        $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 131 days'));
-
-        $this->em->flush();
+        static::mockTime('+131 days');
 
         $cartFacade->deleteOldCarts();
 
@@ -49,13 +50,12 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     public function testUnregisteredCustomerCartDoesNotGetDeleted(): void
     {
+        static::mockTime();
         $customerUserIdentifier = $this->getCustomerUserIdentifierForUnregisteredCustomer();
         $cartFacade = $this->cartFacade;
-        $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
+        $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 129 days'));
-
-        $this->em->flush();
+        static::mockTime('+129 days');
 
         $cartFacade->deleteOldCarts();
 
@@ -64,13 +64,12 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     public function testOldRegisteredCustomerCartGetsDeleted(): void
     {
+        static::mockTime();
         $customerUserIdentifier = $this->getCustomerUserIdentifierForRegisteredCustomer();
         $cartFacade = $this->cartFacade;
-        $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
+        $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 131 days'));
-
-        $this->em->flush();
+        static::mockTime('+131 days');
 
         $cartFacade->deleteOldCarts();
 
@@ -79,13 +78,12 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     public function testRegisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem(): void
     {
+        static::mockTime();
         $customerUserIdentifier = $this->getCustomerUserIdentifierForRegisteredCustomer();
         $cartFacade = $this->cartFacade;
-        $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
+        $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt((new DatePoint())->modify('- 129 days'));
-
-        $this->em->flush();
+        static::mockTime('+129 days');
 
         $cartFacade->deleteOldCarts();
 
