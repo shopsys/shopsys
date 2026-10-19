@@ -16,6 +16,17 @@ stages:
             when: never
         -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
 
+.only-default-tests: &only-default-tests
+    rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH =~ /^alpha(-.*)?$/'
+            when: never
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
+
 variables:
     TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}
     STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}-storefront
@@ -63,7 +74,7 @@ build-storefront:
 
 test:standards-with-graphql-schema-check:
     stage: test
-    <<: *only-default
+    <<: *only-default-tests
     tags:
         - tests
     needs:
@@ -124,7 +135,7 @@ test:storefront-standards-with-codegen-with-tests-with-licenses-check:
 tests:functional-with-licenses-check:
     image: docker:latest
     stage: test
-    <<: *only-default
+    <<: *only-default-tests
     tags:
         - tests
     needs:
@@ -150,7 +161,7 @@ tests:functional-with-licenses-check:
 test:storefront-acceptance:
     image: docker:latest
     stage: test
-    <<: *only-default
+    <<: *only-default-tests
     tags:
         - tests
     #    parallel:
@@ -196,7 +207,7 @@ test:storefront-acceptance:
 test:cypress-smoke:
     image: tmaier/docker-compose:latest
     stage: test
-    <<: *only-default
+    <<: *only-default-tests
     tags:
         - tests
     artifacts:
