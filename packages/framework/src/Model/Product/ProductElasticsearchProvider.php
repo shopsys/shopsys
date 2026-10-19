@@ -74,6 +74,17 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
+     */
+    public function hasPromotedProduct(array $productIds, int $domainId): bool
+    {
+        $filterQuery = $this->filterQueryFactory->createOnlyExistingProductIdsFilterQuery($productIds, $domainId)
+            ->filterOnlyPromoted();
+
+        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery) > 0;
+    }
+
+    /**
+     * @param int[] $productIds
      * @return int[]
      */
     public function getOnlyExistingProductsIds(array $productIds, int $domainId): array
