@@ -53,6 +53,7 @@ class ProductSourceEqualityTest extends GraphQlTestCase
     public function getAllProductFields(): string
     {
         return '
+            uuid
             name
             slug
             shortDescription

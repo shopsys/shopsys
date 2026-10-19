@@ -1,0 +1,10 @@
+RestoreCartGiftInputDecorator:
+    type: input-object
+    decorator: true
+    inherits:
+        - 'CartInput'
+    config:
+        fields:
+            giftProductUuid:
+                type: "Uuid!"
+                description: "UUID of the removed gift product to restore"

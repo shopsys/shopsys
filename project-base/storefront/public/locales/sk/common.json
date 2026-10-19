@@ -300,6 +300,7 @@
     "Full error details": "Celý popis chyby",
     "GdprAgreementCheckbox": "Súhlasím so <lnk1>spracovaním osobných údajov</lnk1>.",
     "Gift": "Darček",
+    "Gift for: {{ products }}": "Darček k produktom: {{ products }}",
     "Gift voucher": "Darčekový poukaz",
     "Gift voucher was added to the order.": "Darčekový poukaz bol pridaný do objednávky.",
     "Gift voucher was removed from the order.": "Darčekový poukaz bol odobraný z objednávky.",

@@ -89,6 +89,13 @@ class Cart
     protected $giftVouchers;
 
     /**
+     * @var int[]
+     */
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Column(type: 'json')]
+    protected $removedGiftProductIds;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
     #[AsMcpColumn]
@@ -154,6 +161,7 @@ class Cart
         $this->lastActivityAt = new DatePoint('today');
         $this->promoCodes = new ArrayCollection();
         $this->giftVouchers = new ArrayCollection();
+        $this->removedGiftProductIds = [];
     }
 
     public function addItem(CartItem $item): void
@@ -180,6 +188,59 @@ class Cart
         $message = 'Cart item with ID = ' . $itemId . ' is not in cart for remove.';
 
         throw new InvalidCartItemException($message);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    public function markProductGiftRemoved($product): void
+    {
+        if (!$this->isProductGiftRemoved($product)) {
+            $this->removedGiftProductIds[] = $product->getId();
+            $this->updateLastActivityDate();
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isProductGiftRemoved($product)
+    {
+        return in_array($product->getId(), $this->removedGiftProductIds, true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRemovedProductGifts()
+    {
+        return count($this->removedGiftProductIds) > 0;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    public function restoreProductGift($product): void
+    {
+        $this->removedGiftProductIds = array_values(array_diff($this->removedGiftProductIds, [$product->getId()]));
+        $this->updateLastActivityDate();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    public function mergeRemovedProductGifts($cart): void
+    {
+        $this->removedGiftProductIds = array_values(array_unique([...$this->removedGiftProductIds, ...$cart->removedGiftProductIds]));
+    }
+
+    /**
+     * @param int[] $giftProductIds
+     */
+    public function retainRemovedProductGiftIds($giftProductIds): void
+    {
+        $this->removedGiftProductIds = array_values(array_intersect($this->removedGiftProductIds, $giftProductIds));
     }
 
     public function clean(): void
