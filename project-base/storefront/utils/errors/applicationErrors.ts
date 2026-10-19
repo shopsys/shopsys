@@ -54,7 +54,6 @@ const ApplicationErrors = {
     'article-not-found-terms-and-conditions': 'no-flash-message',
     'article-not-found-user-consent-policy': 'no-flash-message',
     'blog-article-not-found': 'no-flash-message',
-    'blog-category-not-found': 'no-flash-message',
     'brand-not-found': 'no-flash-message',
     'cart-item-invalid': 'no-flash-message',
     'cart-unavailable': 'no-flash-message',
@@ -88,6 +87,7 @@ const ApplicationErrors = {
     'WISHLIST-product-list-not-found': 'no-flash-message',
 
     // No-log codes (expected errors, handled by specific code)
+    'blog-category-not-found': 'no-log',
     'COMPARISON-product-already-in-list': 'no-log',
     'COMPARISON-product-not-in-list': 'no-log',
     'expired-token': 'no-log',
