@@ -595,6 +595,11 @@
                         "index": false,
                         "doc_values": false
                     },
+                    "product_id": {
+                        "type": "integer",
+                        "index": false,
+                        "doc_values": false
+                    },
                     "product_uuid": {
                         "type": "keyword",
                         "index": false,
