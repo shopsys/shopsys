@@ -181,7 +181,7 @@ describe('getErrorMessage', () => {
             ['complaint-not-found', 'Complaint not found.'],
             ['handling-with-logged-customer-comparison', 'Product not found.'],
             ['invalid-credentials', 'Invalid credentials.'],
-            ['invalid-quantity', 'Complaint item quantity exceeds the order item quantity.'],
+            ['invalid-quantity', 'Complaint item quantity exceeds the remaining quantity available for complaint.'],
             ['invalid-refresh-token', 'Invalid refresh token.'],
             ['max-allowed-limit', 'Max allowed limit reached.'],
             ['max-transaction-count-reached', 'Max transaction count reached.'],

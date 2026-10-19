@@ -31,6 +31,7 @@ export const useComplaintForm = (
     defaultDeliveryAddressChecked: string,
     defaultEmail: string,
     isCreationWithoutOrder: boolean,
+    remainingComplaintQuantity?: number,
 ): [UseFormReturn<ComplaintFormType>, ComplaintFormType | undefined] => {
     const { t } = useTranslation();
 
@@ -38,7 +39,12 @@ export const useComplaintForm = (
         Yup.object().shape<Record<keyof ComplaintFormType, any>>({
             quantity: Yup.string()
                 .matches(/^[1-9][0-9]*$/, t('Please enter quantity'))
-                .required(t('Please enter quantity')),
+                .required(t('Please enter quantity'))
+                .test(
+                    'remainingComplaintQuantity',
+                    t('Complaint item quantity exceeds the remaining quantity available for complaint.'),
+                    (value) => remainingComplaintQuantity === undefined || Number(value) <= remainingComplaintQuantity,
+                ),
             description: Yup.string().required(t('Please enter description')),
             files: validateImageFile(t),
             deliveryAddressUuid: Yup.string().nullable(),

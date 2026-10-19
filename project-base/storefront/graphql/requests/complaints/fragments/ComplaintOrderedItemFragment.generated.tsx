@@ -28,7 +28,7 @@ export type TypeProductTypeEnum =
   /** Gift voucher delivered printed as a regular product */
   | 'PRINTED_GIFT_VOUCHER';
 
-export type TypeComplaintOrderedItemFragment = { uuid: string, name: string, quantity: number, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string }, product:
+export type TypeComplaintOrderedItemFragment = { uuid: string, name: string, quantity: number, remainingComplaintQuantity: number, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, order: { uuid: string, number: string, creationDate: string }, product:
     | { fullName: string, isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
     | { fullName: string, isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
     | { fullName: string, isVisible: boolean, slug: string, productType: Types.TypeProductTypeEnum, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
@@ -39,6 +39,7 @@ export const ComplaintOrderedItemFragment = gql`
   uuid
   name
   quantity
+  remainingComplaintQuantity
   unit
   totalPrice {
     priceWithVat
