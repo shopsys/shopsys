@@ -29,11 +29,7 @@ export type TypeCartModificationsFragment = { __typename: 'CartModificationsResu
         | { __typename: 'MainVariant', uuid: string, fullName: string }
         | { __typename: 'RegularProduct', uuid: string, fullName: string }
         | { __typename: 'Variant', uuid: string, fullName: string }
-       }> }, transportModifications: { __typename: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean, personalPickupStoreUnavailable: boolean }, paymentModifications: { __typename: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean }, promoCodeModifications: { __typename: 'CartPromoCodeModificationsResult', noLongerApplicablePromoCode: Array<string> }, giftVoucherModifications: { __typename: 'CartGiftVoucherModificationsResult', noLongerApplicableGiftVouchers: Array<string> }, multipleAddedProductModifications: { notAddedProducts: Array<
-      | { fullName: string }
-      | { fullName: string }
-      | { fullName: string }
-    > } };
+       }> }, transportModifications: { __typename: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean, personalPickupStoreUnavailable: boolean }, paymentModifications: { __typename: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean }, promoCodeModifications: { __typename: 'CartPromoCodeModificationsResult', noLongerApplicablePromoCode: Array<string> }, giftVoucherModifications: { __typename: 'CartGiftVoucherModificationsResult', noLongerApplicableGiftVouchers: Array<string> }, multipleAddedProductModifications: { notAddedProductNames: Array<string> } };
 
 export const CartModificationsFragment = gql`
     fragment CartModificationsFragment on CartModificationsResult {
@@ -55,9 +51,7 @@ export const CartModificationsFragment = gql`
   }
   someProductWasRemovedFromEshop
   multipleAddedProductModifications {
-    notAddedProducts {
-      fullName
-    }
+    notAddedProductNames
   }
 }
     ${CartItemModificationsFragment}

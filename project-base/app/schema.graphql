@@ -538,7 +538,8 @@ type CartModificationsResult {
 }
 
 type CartMultipleAddedProductModificationsResult {
-  notAddedProducts: [Product!]!
+  "Names of all order items that could not be added to the cart, including the items whose product is no longer available"
+  notAddedProductNames: [String!]!
 }
 
 type CartPaymentModificationsResult {

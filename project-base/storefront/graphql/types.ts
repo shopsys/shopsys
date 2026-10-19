@@ -660,7 +660,8 @@ export type TypeCartModificationsResult = {
 
 export type TypeCartMultipleAddedProductModificationsResult = {
   __typename?: 'CartMultipleAddedProductModificationsResult';
-  notAddedProducts: Array<TypeProduct>;
+  /** Names of all order items that could not be added to the cart, including the items whose product is no longer available */
+  notAddedProductNames: Array<Scalars['String']['output']>;
 };
 
 export type TypeCartPaymentModificationsResult = {

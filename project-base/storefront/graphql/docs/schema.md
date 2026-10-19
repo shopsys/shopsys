@@ -4081,9 +4081,13 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="cartmultipleaddedproductmodificationsresult.notaddedproducts">notAddedProducts</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td></td>
+<td colspan="2" valign="top"><strong id="cartmultipleaddedproductmodificationsresult.notaddedproductnames">notAddedProductNames</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td>
+
+Names of all order items that could not be added to the cart, including the items whose product is no longer available
+
+</td>
 </tr>
 </tbody>
 </table>
