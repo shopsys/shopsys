@@ -17,6 +17,7 @@ class OrderItemResolverMap extends ResolverMap
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly DataLoaderInterface $orderItemRelatedItemsBatchLoader,
         protected readonly ProductEntityQuery $productEntityQuery,
+        protected readonly DataLoaderInterface $orderItemRemainingComplaintQuantityBatchLoader,
     ) {
     }
 
@@ -25,6 +26,9 @@ class OrderItemResolverMap extends ResolverMap
     {
         return [
             'OrderItem' => [
+                'remainingComplaintQuantity' => function (OrderItem $orderItem) {
+                    return $this->orderItemRemainingComplaintQuantityBatchLoader->load($orderItem);
+                },
                 'totalPrice' => function (OrderItem $orderItem) {
                     return $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
                 },

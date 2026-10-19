@@ -11,4 +11,12 @@ class ComplaintStatusTypeEnum extends AbstractEnum
     public const string STATUS_TYPE_NEW = 'new';
     public const string STATUS_TYPE_RESOLVED = 'resolved';
     public const string STATUS_TYPE_IN_PROGRESS = 'in_progress';
+
+    /**
+     * @return string[]
+     */
+    public function getStatusTypesReleasingClaimedQuantity(): array
+    {
+        return [self::STATUS_TYPE_RESOLVED];
+    }
 }
