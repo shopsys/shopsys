@@ -14,7 +14,7 @@ export const UspList: FC = () => {
     return (
         <Webline
             className={twMergeCustom([
-                'hide-scrollbar grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain',
+                'hide-scrollbar grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overflow-y-hidden overscroll-x-contain',
                 'auto-cols-[60%] sm:auto-cols-[37%] md:auto-cols-[26%] lg:auto-cols-[20%]',
                 'vl:flex vl:justify-around',
             ])}
