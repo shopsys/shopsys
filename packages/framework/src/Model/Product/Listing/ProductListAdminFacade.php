@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class ProductListAdminFacade
@@ -14,20 +14,17 @@ class ProductListAdminFacade
     public function __construct(
         protected readonly ProductListAdminRepository $productListAdminRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
     public function getProductListQueryBuilder(): QueryBuilder
     {
-        /**
-         * temporary solution -
-         * when product price type calculation is set to manual, price for first domain is shown in admin product list
-         */
-        $defaultPricingGroupId = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
-            Domain::FIRST_DOMAIN_ID,
-        )->getId();
+        $pricingGroup = $this->pricingGroupSettingFacade->findDefaultPricingGroupByCurrency(
+            $this->currencyFacade->getDefaultCurrency(),
+        );
 
-        return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);
+        return $this->productListAdminRepository->getProductListQueryBuilder($pricingGroup?->getId());
     }
 
     public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
