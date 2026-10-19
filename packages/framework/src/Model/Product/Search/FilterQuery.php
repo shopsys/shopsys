@@ -1104,7 +1104,10 @@ class FilterQuery
         $query = $this->getQuery();
         $query['body']['aggs'] = [
             'by_categories' => [
-                'terms' => ['field' => 'categories'],
+                'terms' => [
+                    'field' => 'categories',
+                    'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
+                ],
             ],
         ];
 

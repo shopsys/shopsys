@@ -297,6 +297,17 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $this->assertIdsWithFilter($filter, [19, 27, 28, 54, 69, 117]);
     }
 
+    public function testAggregationForProductCountInCategoriesReturnsAllCategories(): void
+    {
+        $result = $this->elasticsearchClient->search(
+            $this->createFilter()->setLimit(0)->getAggregationQueryForProductCountInCategories(),
+        );
+        $categoriesAggregation = $result['aggregations']['by_categories'];
+
+        $this->assertSame(0, $categoriesAggregation['sum_other_doc_count'], 'No category should be left out of the aggregation');
+        $this->assertCount(11, $categoriesAggregation['buckets']);
+    }
+
     /**
      * @param int[] $ids
      */
