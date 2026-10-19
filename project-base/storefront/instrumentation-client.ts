@@ -3,6 +3,7 @@ import { SENTRY_APPLICATION_KEY } from 'sentryApplicationKey';
 import * as Sentry from '@sentry/nextjs';
 import { sentryDataCollection } from 'utils/sentry/dataCollection';
 import { getTracePropagationTargetsFromPublicGraphqlEndpoints as getPublicGraphqlTracePropagationTargets } from 'utils/sentry/tracePropagationTargets';
+import { sentryUrlPrivacyIntegration } from 'utils/sentry/urlPrivacy';
 
 const dsn = getPublicConfigProperty('sentryDsn');
 const environment = getPublicConfigProperty('sentryEnvironment');
@@ -23,6 +24,7 @@ if (isSentryEnabled) {
         tracesSampleRate: 0.1,
         denyUrls: [/^https?:\/\/([a-z0-9-]+\.)*(smartsupp\.com|smartsuppchat\.com|smartsuppcdn\.com)\//],
         integrations: [
+            sentryUrlPrivacyIntegration(),
             Sentry.browserTracingIntegration(),
             Sentry.thirdPartyErrorFilterIntegration({
                 filterKeys: [SENTRY_APPLICATION_KEY],

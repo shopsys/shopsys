@@ -9,7 +9,7 @@ export const sentryDataCollection = {
         response: { deny: ['forwarded', '-ip', 'remote-', 'via', '-user'] },
     },
     httpBodies: [],
-    // Password reset URLs contain credentials that Sentry's built-in sensitive-key filter does not recognize.
+    // This covers SDK-filtered fields only. urlPrivacy also scrubs outgoing events and Replay recordings.
     urlQueryParams: { deny: ['hash', 'email', 'forwarded', '-ip', 'remote-', 'via', '-user'] },
     genAI: { inputs: false, outputs: false },
     databaseQueryData: false,
