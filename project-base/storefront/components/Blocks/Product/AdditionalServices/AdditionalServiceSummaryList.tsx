@@ -1,3 +1,4 @@
+import { WrenchIcon } from 'components/Basic/Icon/WrenchIcon';
 import { Image } from 'components/Basic/Image/Image';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -37,7 +38,12 @@ export const AdditionalServiceSummaryList: FC<AdditionalServiceSummaryListProps>
 
     return (
         <div className={twMergeCustom('flex flex-col gap-2', className)}>
-            {showHeading && <span className="font-semibold text-sm">{t('Additional services')}</span>}
+            {showHeading && (
+                <span className="flex items-center gap-2 font-secondary font-semibold text-sm text-text-less">
+                    <WrenchIcon aria-hidden="true" className="size-4 shrink-0 text-text-less" />
+                    {t('Additional services')}
+                </span>
+            )}
 
             <ul className="flex flex-col gap-2">
                 {services.map((service) => {
