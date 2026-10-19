@@ -23,6 +23,15 @@ class ClosedDayFacade
     }
 
     /**
+     * @param int[] $closedDayIds
+     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
+     */
+    public function getByIdsWithEagerLoadedExcludedStores(array $closedDayIds): array
+    {
+        return $this->closedDayRepository->getByIdsWithEagerLoadedExcludedStores($closedDayIds);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
     public function getFollowingWeekClosedDaysNotExcludedForStore(Store $store): array

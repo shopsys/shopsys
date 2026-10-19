@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Store;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Store\Exception\DefaultStoreCannotBeDeletedException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory;
@@ -85,6 +85,11 @@ class StoreFacade
     public function delete(int $storeId): void
     {
         $store = $this->getById($storeId);
+
+        if ($store->isDefault()) {
+            throw new DefaultStoreCannotBeDeletedException($store);
+        }
+
         $this->em->remove($store);
         $this->em->flush();
 
@@ -136,11 +141,6 @@ class StoreFacade
     public function getByIdAndDomainId(int $id, int $domainId): Store
     {
         return $this->storeRepository->getByIdAndDomainId($id, $domainId);
-    }
-
-    public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
-    {
-        return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);
     }
 
     /**

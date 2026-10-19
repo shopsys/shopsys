@@ -103,7 +103,7 @@ final class NavigationItemFormType extends AbstractType
             }
         });
         $builder->add('actionBar', ActionBarType::class, [
-            'back_route' => 'admin_navigation_list',
+            'back_route' => 'admin_crud_navigation_list',
             'entity' => $options['navigationItem'],
         ]);
     }
