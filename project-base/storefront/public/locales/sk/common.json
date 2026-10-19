@@ -19,7 +19,7 @@
     "{{ distance }} km away": "vzdialené {{ distance }} km",
     "{{ distance }} km from you": "{{ distance }} km od vás",
     "{{ productName }} was removed from comparison.": "Produkt {{ productName }} bol odstránený z porovnania.",
-    "{{ slideName }}, slide {{ current }} of {{ total }}": "{{ slideName }}, snímek {{ current }} zo {{ total }}",
+    "{{ slideName }}, slide {{ current }} of {{ total }}": "{{ slideName }}, snímka {{ current }} zo {{ total }}",
     "+ {{ count }} additional services_one": "+ {{ count }} doplnková služba",
     "+ {{ count }} additional services_few": "+ {{ count }} doplnkové služby",
     "+ {{ count }} additional services_many": "+ {{ count }} doplnkových služieb",
