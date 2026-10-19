@@ -1,5 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
+import { sentryDataCollection } from 'utils/sentry/dataCollection';
 import { getTracePropagationTargetsFromInternalEndpoint } from 'utils/sentry/tracePropagationTargets';
+import { sentryUrlPrivacyIntegration } from 'utils/sentry/urlPrivacy';
 
 export function register() {
     const sentryDsn = process.env.SENTRY_DSN?.trim();
@@ -11,6 +13,8 @@ export function register() {
     const tracePropagationTargets = getTracePropagationTargetsFromInternalEndpoint(process.env.INTERNAL_ENDPOINT);
     const sentryConfig = {
         dsn: sentryDsn,
+        dataCollection: sentryDataCollection,
+        integrations: [sentryUrlPrivacyIntegration()],
         environment: process.env.SENTRY_ENVIRONMENT,
         release: process.env.SENTRY_RELEASE,
         tracesSampleRate: 0.1,
