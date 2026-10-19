@@ -56,6 +56,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         defaultDeliveryAddressChecked,
         user?.email || '',
         isCreationWithoutOrder,
+        orderItem?.remainingComplaintQuantity,
     );
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
