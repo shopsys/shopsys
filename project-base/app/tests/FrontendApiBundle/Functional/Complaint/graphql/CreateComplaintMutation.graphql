@@ -11,6 +11,7 @@ mutation CreateComplaint($input: ComplaintInput!) {
             }
             orderItem {
                 name
+                remainingComplaintQuantity
             }
             product {
                 uuid

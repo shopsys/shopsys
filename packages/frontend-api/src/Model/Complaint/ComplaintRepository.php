@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use SortDirection;
@@ -17,6 +20,8 @@ class ComplaintRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly ComplaintStatusTypeEnum $complaintStatusTypeEnum,
+        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -154,6 +159,29 @@ class ComplaintRepository
             ->andWhere('c.customer = :customer')->setParameter('customer', $customer)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItems
+     * @return array<int, int>
+     */
+    public function getClaimedQuantitiesIndexedByOrderItemId(array $orderItems): array
+    {
+        $claimedQuantities = $this->em->createQueryBuilder()
+            ->select('IDENTITY(ci.orderItem) AS orderItemId, SUM(ci.quantity) AS quantity')
+            ->from(ComplaintItem::class, 'ci')
+            ->join('ci.complaint', 'c')
+            ->join('c.status', 'cs')
+            ->where('ci.orderItem IN (:orderItems)')
+            ->andWhere('cs.statusType NOT IN (:statusTypesReleasingClaimedQuantity) OR c.resolution IN (:resolutionsKeepingClaimedQuantity)')
+            ->setParameter('orderItems', $orderItems)
+            ->setParameter('statusTypesReleasingClaimedQuantity', $this->complaintStatusTypeEnum->getStatusTypesReleasingClaimedQuantity())
+            ->setParameter('resolutionsKeepingClaimedQuantity', $this->complaintResolutionEnum->getResolutionsKeepingClaimedQuantity())
+            ->groupBy('ci.orderItem')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_map(intval(...), array_column($claimedQuantities, 'quantity', 'orderItemId'));
     }
 
     protected function createQueryBuilder(): QueryBuilder

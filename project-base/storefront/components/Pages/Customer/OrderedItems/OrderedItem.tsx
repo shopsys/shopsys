@@ -45,7 +45,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
 
     return (
         <div className="flex flex-col gap-5 rounded-md bg-background-more p-4 vl:p-6">
-            <div className="flex vl:flex-row flex-col vl:items-start vl:justify-between gap-4">
+            <div className="flex vl:flex-row flex-col vl:items-start gap-4">
                 <Image
                     priority
                     alt={generateProductImageAlt(
@@ -106,17 +106,19 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         )}
                     </div>
                 </div>
-                <div className="flex items-center gap-2 md:ml-auto">
-                    <Button
-                        aria-haspopup="dialog"
-                        className="w-full md:w-auto"
-                        size="small"
-                        variant="secondary"
-                        onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
-                    >
-                        {t('Create complaint')}
-                    </Button>
-                </div>
+                {orderedItem.remainingComplaintQuantity > 0 && (
+                    <div className="flex items-center gap-2 md:ml-auto">
+                        <Button
+                            aria-haspopup="dialog"
+                            className="w-full md:w-auto"
+                            size="small"
+                            variant="secondary"
+                            onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
+                        >
+                            {t('Create complaint')}
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );
