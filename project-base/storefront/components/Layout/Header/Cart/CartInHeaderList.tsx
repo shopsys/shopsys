@@ -5,6 +5,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { groupCartItemsWithGifts } from 'utils/cart/groupCartItemsWithGifts';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -69,6 +70,8 @@ export const CartInHeaderList: FC<CartInHeaderListProps> = ({ hideFocusTrap, isD
         return <p className="text-center">{t('Your cart is currently empty.')}</p>;
     }
 
+    const productRows = groupCartItemsWithGifts(cart.items, []);
+
     return (
         <div className={twJoin(isDrawer && 'flex min-h-0 flex-1 flex-col')} ref={contentRef}>
             {isRemovingFromCart && <LoaderWithOverlay className="w-16" overlayClassName="rounded-xl" />}
@@ -81,10 +84,11 @@ export const CartInHeaderList: FC<CartInHeaderListProps> = ({ hideFocusTrap, isD
                 )}
             >
                 <ul className="relative m-0 flex list-none flex-col p-0">
-                    {cart.items.map((cartItem, listIndex) => (
+                    {productRows.map(({ cartItem, listIndex, gifts }) => (
                         <CartInHeaderListItem
                             key={cartItem.uuid}
                             cartItem={cartItem}
+                            gifts={gifts}
                             isRemovingFromCart={isRemovingFromCart}
                             listIndex={listIndex}
                             onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
