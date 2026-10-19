@@ -1,9 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
+import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices/AdditionalServices';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
-import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { Popup } from 'components/Layout/Popup/Popup';
@@ -12,13 +12,14 @@ import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.generated';
-import { TypeRecommendationType } from 'graphql/types';
+import { TypeCartItemTypeEnum, TypeRecommendationType } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useSessionStore } from 'store/useSessionStore';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { isPriceVisible } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -37,6 +38,25 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
             productUuid: product.uuid,
             gtmProductListName: GtmProductListNameType.cart,
         });
+
+    const { cart } = useCurrentCart();
+    const addedGifts =
+        cart?.items
+            .filter(
+                (item) =>
+                    item.type === TypeCartItemTypeEnum.ProductGift &&
+                    product.gifts.some((gift) => gift.uuid === item.product.uuid),
+            )
+            .map((cartItem) => ({
+                cartItem,
+                relatedProductNames: cart.items
+                    .filter(
+                        (item) =>
+                            item.type === TypeCartItemTypeEnum.Product &&
+                            item.product.gifts.some((gift) => gift.uuid === cartItem.product.uuid),
+                    )
+                    .map((item) => item.product.fullName),
+            })) ?? [];
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
@@ -134,9 +154,35 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
                         </div>
                     </div>
 
+                    {addedGifts.length > 0 && (
+                        <ul className="mt-4 flex flex-col gap-4 border-border-less border-t pt-4 vl:pl-22.5">
+                            {addedGifts.map(({ cartItem: gift, relatedProductNames }) => (
+                                <OrderItemGiftCard
+                                    key={gift.uuid}
+                                    isNested
+                                    isWide
+                                    fullName={gift.product.fullName}
+                                    categoryName={gift.product.mainCategory?.name}
+                                    mainImage={gift.product.mainImage}
+                                    quantity={gift.quantity}
+                                    unit={gift.product.unit.name}
+                                    unitPrice={gift.product.giftPrice.priceWithVat}
+                                    totalPrice={
+                                        isPriceVisible(gift.product.giftPrice.priceWithVat)
+                                            ? String(
+                                                  mapPriceForCalculations(gift.product.giftPrice.priceWithVat) *
+                                                      gift.quantity,
+                                              )
+                                            : '***'
+                                    }
+                                    relatedProductNames={relatedProductNames}
+                                />
+                            ))}
+                        </ul>
+                    )}
                     <AdditionalServices
                         additionalServices={product.additionalServices}
-                        className="mt-2 w-full vl:max-w-lg vl:pl-24"
+                        className="mt-2 w-full vl:max-w-lg vl:pl-22.5"
                         isDisabled={isSettingAdditionalServices}
                         quantity={cartItemQuantity}
                         selectedServiceUuids={selectedServiceUuids}
@@ -146,8 +192,6 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
                         onToggleService={onToggleService}
                     />
                 </section>
-
-                <ProductGift gifts={product.gifts} />
 
                 <div className="vl:static sticky bottom-0 z-10 order-last vl:order-0 -mx-5 vl:mx-0 flex items-center justify-between gap-4 bg-background-default px-5 vl:px-0 vl:py-0 pt-3 pb-5 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] vl:shadow-none">
                     <Button

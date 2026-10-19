@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
+import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
@@ -10,6 +10,7 @@ import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { MouseEventHandler, useState } from 'react';
+import { CartProductGift } from 'utils/cart/groupCartItemsWithGifts';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapCartItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
@@ -19,6 +20,7 @@ import { generateProductImageAlt } from 'utils/productAltText';
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;
     listIndex: number;
+    gifts?: CartProductGift[];
     onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
     isRemovingFromCart: boolean;
 };
@@ -27,6 +29,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     cartItem,
     cartItem: { product, uuid, quantity, type },
     listIndex,
+    gifts = [],
     onRemoveFromCart,
     isRemovingFromCart,
 }) => {
@@ -61,6 +64,37 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
         </button>
     ) : null;
 
+    const renderGift = (gift: TypeCartItemFragment, relatedProductNames?: string[], isNested = false) => (
+        <OrderItemGiftCard
+            key={gift.uuid}
+            isQuantityInPriceRow
+            isNested={isNested}
+            className={
+                isNested
+                    ? undefined
+                    : 'rounded-none border-border-less border-b bg-transparent px-0 py-4 first:pt-0 last:border-b-0'
+            }
+            fullName={gift.product.fullName}
+            categoryName={gift.product.mainCategory?.name}
+            mainImage={gift.product.mainImage}
+            imageTid={TIDs.header_cart_list_item_image}
+            quantity={gift.quantity}
+            relatedProductNames={relatedProductNames}
+            tid={TIDs.header_cart_list_item_ + gift.product.catalogNumber}
+            unit={gift.product.unit.name}
+            unitPrice={gift.product.giftPrice.priceWithVat}
+            totalPrice={
+                isPriceVisible(gift.product.giftPrice.priceWithVat)
+                    ? String(mapPriceForCalculations(gift.product.giftPrice.priceWithVat) * gift.quantity)
+                    : '***'
+            }
+        />
+    );
+
+    if (isProductGift) {
+        return renderGift(cartItem);
+    }
+
     return (
         <li
             key={uuid}
@@ -68,8 +102,6 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
             className="relative flex h-auto w-full flex-col items-center gap-x-6 gap-y-2 border-border-less border-b py-4 first:pt-0 last:border-b-0"
         >
             <div className="relative flex min-h-20 w-full flex-row items-center gap-x-6">
-                {isProductGift && <GiftBadge />}
-
                 {hasProductDetailLink ? (
                     <div className="flex min-w-0 flex-1 flex-col items-start gap-1">
                         <ExtendedNextLink
@@ -188,13 +220,20 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                         {formatPrice(productLinePrice)}
                     </div>
                 )}
-
-                {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
-                    <div className="wrap-break-word w-28 text-right font-bold font-secondary text-price-default">
-                        {formatPrice(mapPriceForCalculations(product.giftPrice.priceWithVat) * quantity)}
-                    </div>
-                )}
             </div>
+            {gifts.length > 0 && (
+                <ul className="mt-3 flex w-full flex-col gap-4 border-border-less border-t pt-3">
+                    {gifts.map(
+                        (gift) =>
+                            gift.state === 'added' &&
+                            renderGift(
+                                gift.cartItem,
+                                gift.relatedProducts.map((product) => product.fullName),
+                                true,
+                            ),
+                    )}
+                </ul>
+            )}
         </li>
     );
 };
