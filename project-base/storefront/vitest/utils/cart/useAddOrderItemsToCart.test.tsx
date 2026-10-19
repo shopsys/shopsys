@@ -62,13 +62,13 @@ const createItem = (uuid: string, quantity: number, type = TypeCartItemTypeEnum.
         },
     }) as unknown as TypeCartItemFragment;
 
-const createCart = (items: TypeCartItemFragment[], notAddedProducts: { fullName: string }[] = []): TypeCartFragment =>
+const createCart = (items: TypeCartItemFragment[], notAddedProductNames: string[] = []): TypeCartFragment =>
     ({
         uuid: 'cart',
         items,
         promoCodes: [],
         totalItemsPrice: { priceWithoutVat: '220', priceWithVat: '266.2' },
-        modifications: { multipleAddedProductModifications: { notAddedProducts } },
+        modifications: { multipleAddedProductModifications: { notAddedProductNames } },
     }) as unknown as TypeCartFragment;
 
 type MergePopupProps = {
@@ -250,7 +250,7 @@ describe('repeat order GTM event', () => {
     test('reports only available items when part of the order cannot be added', async () => {
         mocks.mutate.mockResolvedValue({
             data: {
-                AddOrderItemsToCart: createCart([createItem('product', 1)], [{ fullName: 'Unavailable product' }]),
+                AddOrderItemsToCart: createCart([createItem('product', 1)], ['Unavailable product']),
             },
         });
 
@@ -312,7 +312,7 @@ describe('repeat order GTM event', () => {
 
     test('does not send an empty event when no order item can be added', async () => {
         mocks.mutate.mockResolvedValue({
-            data: { AddOrderItemsToCart: createCart([], [{ fullName: 'Unavailable product' }]) },
+            data: { AddOrderItemsToCart: createCart([], ['Unavailable product']) },
         });
 
         await repeatOrder();
@@ -323,7 +323,7 @@ describe('repeat order GTM event', () => {
     test('reports removal even when no replacement product can be added', async () => {
         mocks.cart = createCart([createItem('product', 2)]);
         mocks.mutate.mockResolvedValue({
-            data: { AddOrderItemsToCart: createCart([], [{ fullName: 'Unavailable product' }]) },
+            data: { AddOrderItemsToCart: createCart([], ['Unavailable product']) },
         });
 
         await repeatOrder(false);

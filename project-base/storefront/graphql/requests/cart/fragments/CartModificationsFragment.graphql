@@ -17,8 +17,6 @@ fragment CartModificationsFragment on CartModificationsResult {
     }
     someProductWasRemovedFromEshop
     multipleAddedProductModifications {
-        notAddedProducts {
-            fullName
-        }
+        notAddedProductNames
     }
 }
