@@ -1,5 +1,7 @@
 # Adding a New Elasticsearch Index
 
+[TOC]
+
 In this cookbook, we will add a new Elasticsearch index for categories, implement basic functions for data export, implement a cron module, and support for partial export.
 
 ## New Elasticsearch mapping

@@ -1,5 +1,7 @@
 # Role-Based Access Control (RBAC)
 
+[TOC]
+
 Shopsys Platform implements a comprehensive role-based access control (RBAC) system that provides unified security across both the Administration interface and Frontend API. This system ensures that users can only access the functionality and data appropriate to their assigned roles.
 
 ## Overview
