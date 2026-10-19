@@ -18,16 +18,27 @@ const inStockAvailability = {
 } as TypeAvailability;
 
 describe('ProductAvailability', () => {
-    test('shows shipping readiness together with the store count in the default display', () => {
+    test.each([
+        'default',
+        'inline',
+    ] as const)('shows shipping readiness and store count in %s display', (displayMode) => {
         render(
-            <ProductAvailability availability={inStockAvailability} availableStoresCount={1} isInquiryType={false} />,
+            <ProductAvailability
+                availability={inStockAvailability}
+                availableStoresCount={1}
+                displayMode={displayMode}
+                isInquiryType={false}
+            />,
         );
 
         expect(screen.getByText('In stock')).toBeInTheDocument();
         expect(screen.getByText('Ready to ship · 1 store')).toBeInTheDocument();
     });
 
-    test('does not show shipping readiness for an out-of-stock product', () => {
+    test.each([
+        'default',
+        'inline',
+    ] as const)('does not show shipping readiness out of stock in %s display', (displayMode) => {
         render(
             <ProductAvailability
                 availability={{
@@ -35,6 +46,7 @@ describe('ProductAvailability', () => {
                     status: TypeAvailabilityStatusEnum.OutOfStock,
                 }}
                 availableStoresCount={null}
+                displayMode={displayMode}
                 isInquiryType={false}
             />,
         );

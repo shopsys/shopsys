@@ -76,6 +76,11 @@ class CartWithModificationsResult
         'notAddedProductNames' => [],
     ];
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[]
+     */
+    protected array $removedGifts = [];
+
     protected ?PriceInterface $totalPrice = null;
 
     protected Money $giftVoucherProductItemsPriceWithVat;
@@ -103,6 +108,22 @@ class CartWithModificationsResult
 
     public function __construct(protected Cart $cart)
     {
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[]
+     */
+    public function getRemovedGifts(): array
+    {
+        return $this->removedGifts;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[] $removedGifts
+     */
+    public function setRemovedGifts(array $removedGifts): void
+    {
+        $this->removedGifts = $removedGifts;
     }
 
     public function getUuid(): ?string
