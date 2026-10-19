@@ -139,6 +139,7 @@ describe('Contact Information Page Tests', () => {
 
             cy.get('#contact-information-form-telephone').clear();
             fillCustomerInformationInThirdStep(staticData.customer1.phone, ' changed', ' changed');
+            cy.get('#contact-information-form-telephone').should('have.value', staticData.customer1.phone);
             clearPostcodeInThirdStep();
             fillBillingAdressInThirdStep(' changed 123', ' changed', '29292');
             fillInNoteInThirdStep(staticData.orderNote);
