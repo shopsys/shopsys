@@ -1,4 +1,5 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { SkeletonModuleProductDetailAddToCart } from 'components/Blocks/Skeleton/SkeletonModuleProductDetailAddToCart';
 import { ProductDetailAddToCartProps } from 'components/Pages/ProductDetail/ProductDetailAddToCart/ProductDetailAddToCart';
 import dynamic from 'next/dynamic';
 import { twMergeCustom } from 'utils/twMerge';
@@ -8,7 +9,7 @@ const ProductDetailAddToCart = dynamic(
     () => import('./ProductDetailAddToCart').then((component) => component.ProductDetailAddToCart),
     {
         ssr: false,
-        loading: () => <Skeleton className="w-full" />,
+        loading: () => <Skeleton className="min-h-[inherit] w-full" />,
     },
 );
 
@@ -19,7 +20,7 @@ type DeferredProductDetailAddToCartProps = ProductDetailAddToCartProps & {
 export const DeferredProductDetailAddToCart: FC<DeferredProductDetailAddToCartProps> = ({
     buttonSize = 'xlarge',
     className,
-    isInPurchaseActionsRow = false,
+    isFullWidth = false,
     ...props
 }) => {
     const shouldRender = useDeferredRender('add_to_cart');
@@ -30,19 +31,15 @@ export const DeferredProductDetailAddToCart: FC<DeferredProductDetailAddToCartPr
                 'flex w-full',
                 buttonSize !== 'xlarge' && 'min-h-9',
                 buttonSize === 'large' && 'sm:min-h-10',
-                buttonSize === 'xlarge' && 'min-h-10 sm:min-h-14',
-                isInPurchaseActionsRow && 'contents',
+                buttonSize === 'xlarge' && 'min-h-14',
+                !isFullWidth && 'sm:max-w-60',
                 className,
             )}
         >
             {shouldRender ? (
-                <ProductDetailAddToCart
-                    {...props}
-                    buttonSize={buttonSize}
-                    isInPurchaseActionsRow={isInPurchaseActionsRow}
-                />
+                <ProductDetailAddToCart {...props} buttonSize={buttonSize} isFullWidth={isFullWidth} />
             ) : (
-                <Skeleton className="w-full sm:max-w-60" />
+                <SkeletonModuleProductDetailAddToCart isFullWidth={isFullWidth} size={buttonSize} />
             )}
         </div>
     );

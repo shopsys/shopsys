@@ -69,7 +69,7 @@ describe('ProductDetailAddToCart', () => {
     });
 
     test('includes product context in the add-to-cart accessible name', () => {
-        render(<ProductDetailAddToCart product={product} shouldDisplayAdditionalServices={false} />);
+        render(<ProductDetailAddToCart product={product} />);
 
         expect(
             screen.getByRole('button', {
@@ -82,7 +82,7 @@ describe('ProductDetailAddToCart', () => {
         testState.cartItem = { uuid: 'cart-item-uuid' };
         testState.isAddToCartFlowPending = true;
 
-        render(<ProductDetailAddToCart product={product} shouldDisplayAdditionalServices={false} />);
+        render(<ProductDetailAddToCart product={product} />);
 
         expect(screen.getByRole('button', { name: /Add to cart A4tech mouse/ })).toBeInTheDocument();
         expect(screen.queryByText('Quantity controls')).not.toBeInTheDocument();

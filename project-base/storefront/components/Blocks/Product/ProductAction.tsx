@@ -92,7 +92,13 @@ export const ProductAction: FC<ProductActionProps> = ({
     return (
         <>
             {isWatchdogButtonVisible && (
-                <WatchDogButton className="w-full" listIndex={listIndex} product={product} size={buttonSize} />
+                <WatchDogButton
+                    className="w-full"
+                    label={t('Notify me')}
+                    listIndex={listIndex}
+                    product={product}
+                    size={buttonSize}
+                />
             )}
 
             {purchaseAction === 'sellingDenied' && (
