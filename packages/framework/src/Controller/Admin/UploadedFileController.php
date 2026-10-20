@@ -122,17 +122,19 @@ class UploadedFileController extends AdminBaseController
 
             $uploadedFiles = $this->uploadedFileFacade->create($uploadedFileFormData);
 
-            $this->addSuccessFlashTwig(sprintf('%s<br /><br />%s', t('Files uploaded:'), implode(
-                '<br />',
-                array_map(
-                    fn (UploadedFile $uploadedFile) => sprintf(
-                        '<a href="%s">%s</a>',
-                        $this->generateUrl('admin_uploadedfile_edit', ['id' => $uploadedFile->getId()]),
-                        $uploadedFile->getNameWithExtension(),
+            $this->addSuccessFlashTwig(
+                '{{ filesUploadedLabel }}<br /><br />{% for uploadedFileLink in uploadedFileLinks %}<a href="{{ uploadedFileLink.url }}">{{ uploadedFileLink.name }}</a>{% if not loop.last %}<br />{% endif %}{% endfor %}',
+                [
+                    'filesUploadedLabel' => t('Files uploaded:'),
+                    'uploadedFileLinks' => array_map(
+                        fn (UploadedFile $uploadedFile): array => [
+                            'url' => $this->generateUrl('admin_uploadedfile_edit', ['id' => $uploadedFile->getId()]),
+                            'name' => $uploadedFile->getNameWithExtension(),
+                        ],
+                        $uploadedFiles,
                     ),
-                    $uploadedFiles,
-                ),
-            )));
+                ],
+            );
 
             return $this->redirectToRoute('admin_uploadedfile_list');
         }

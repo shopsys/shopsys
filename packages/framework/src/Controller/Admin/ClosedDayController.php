@@ -139,12 +139,10 @@ class ClosedDayController extends AdminBaseController
             $this->closedDayFacade->deleteById($id);
 
             $this->addSuccessFlashTwig(
-                t(
-                    'Holiday / internal day <strong>{{ name }}</strong> deleted',
-                    [
-                        '{{ name }}' => $closedDayName,
-                    ],
-                ),
+                t('Holiday / internal day <strong>{{ name }}</strong> deleted'),
+                [
+                    'name' => $closedDayName,
+                ],
             );
         } catch (ClosedDayNotFoundException) {
             $this->addErrorFlash(t('Selected holiday / internal day doesn\'t exist.'));

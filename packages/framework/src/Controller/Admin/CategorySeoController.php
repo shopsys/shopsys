@@ -363,13 +363,13 @@ class CategorySeoController extends AdminBaseController
         try {
             $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($id);
             $this->readyCategorySeoMixFacade->delete($readyCategorySeoMix);
-            $this->addSuccessFlashTwig(
+            $this->addSuccessFlash(
                 t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
                 ]),
             );
         } catch (ReadyCategorySeoMixNotFoundException) {
-            $this->addSuccessFlashTwig(
+            $this->addSuccessFlash(
                 t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
                 ]),
