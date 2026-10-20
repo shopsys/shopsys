@@ -201,7 +201,7 @@ class PriceListController extends AbstractCrudController
                 $this->addErrorFlash(t('Error while importing CSV file.'));
 
                 foreach ($importResult->getErrors() as $error) {
-                    $this->addErrorFlash(htmlspecialchars($error, ENT_QUOTES));
+                    $this->addErrorFlash($error);
                 }
 
                 return $this->render('@ShopsysAdministration/content/priceList/import.html.twig', [
@@ -215,28 +215,28 @@ class PriceListController extends AbstractCrudController
             ));
 
             if ($data['selectPriceList'] === null) {
-                $this->addSuccessFlash(t(
-                    'New price list <strong><a href="{{ url }}">{{ name }}</a></strong> was created.',
+                $this->addSuccessFlashTwig(
+                    t('New price list <strong><a href="{{ url }}">{{ name }}</a></strong> was created.'),
                     [
-                        '{{ name }}' => htmlspecialchars($importResult->getPriceListName(), ENT_QUOTES),
-                        '{{ url }}' => $this->generateUrl('admin_crud_price_list_edit', ['id' => $importResult->getPriceListId()]),
+                        'name' => $importResult->getPriceListName(),
+                        'url' => $this->generateUrl('admin_crud_price_list_edit', ['id' => $importResult->getPriceListId()]),
                     ],
-                ));
+                );
             } else {
-                $this->addSuccessFlash(t(
-                    'Price list <strong><a href="{{ url }}">{{ name }}</a></strong> was replaced.',
+                $this->addSuccessFlashTwig(
+                    t('Price list <strong><a href="{{ url }}">{{ name }}</a></strong> was replaced.'),
                     [
-                        '{{ name }}' => htmlspecialchars($importResult->getPriceListName(), ENT_QUOTES),
-                        '{{ url }}' => $this->generateUrl('admin_crud_price_list_edit', ['id' => $importResult->getPriceListId()]),
+                        'name' => $importResult->getPriceListName(),
+                        'url' => $this->generateUrl('admin_crud_price_list_edit', ['id' => $importResult->getPriceListId()]),
                     ],
-                ));
+                );
             }
 
             if ($importResult->hasWarnings()) {
                 $this->addWarningFlash(t('Some items cannot be imported due to errors:'));
 
                 foreach ($importResult->getWarnings() as $warning) {
-                    $this->addWarningFlash(htmlspecialchars($warning, ENT_QUOTES));
+                    $this->addWarningFlash($warning);
                 }
             }
 
