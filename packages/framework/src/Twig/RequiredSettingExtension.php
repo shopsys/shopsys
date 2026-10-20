@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\Runtime\EscaperRuntime;
 use Twig\TwigFunction;
 
 class RequiredSettingExtension extends AbstractExtension
@@ -110,7 +111,7 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">Shipping or payment is not set for domain %domainName%.</a>',
                 [
                     '%url%' => $this->generateUrlWithSelectedDomainTab('admin_transportandpayment_list', $domainId),
-                    '%domainName%' => $domainConfig->getName(),
+                    '%domainName%' => $this->escape($domainConfig->getName()),
                 ],
             );
         }
@@ -155,7 +156,7 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">Domain "%domainName%" has no default warehouse.</a>',
                 [
                     '%url%' => $this->router->generate('admin_stock_list'),
-                    '%domainName%' => $domainConfig->getName(),
+                    '%domainName%' => $this->escape($domainConfig->getName()),
                 ],
             );
         }
@@ -172,8 +173,8 @@ class RequiredSettingExtension extends AbstractExtension
                 'Warehouse <a href="%url%">%stockName%</a> is set as default on domain "%domainName%" but is not enabled there.',
                 [
                     '%url%' => $this->router->generate('admin_stock_edit', ['id' => $row['stockId']]),
-                    '%stockName%' => $row['stockName'],
-                    '%domainName%' => $domainConfig->getName(),
+                    '%stockName%' => $this->escape($row['stockName']),
+                    '%domainName%' => $this->escape($domainConfig->getName()),
                 ],
             );
         }
@@ -202,7 +203,7 @@ class RequiredSettingExtension extends AbstractExtension
                 '<a href="%url%">Phone prefixes are not configured for domain %domainName%.</a>',
                 [
                     '%url%' => $this->generateUrlWithSelectedDomainTab('admin_phoneprefix_settings', $domainId),
-                    '%domainName%' => $domainConfig->getName(),
+                    '%domainName%' => $this->escape($domainConfig->getName()),
                 ],
             );
         }
@@ -218,7 +219,7 @@ class RequiredSettingExtension extends AbstractExtension
                     '<a href="%url%">Term and conditions article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_termsandconditions', $domainId),
-                        '%domainName%' => $domainConfig->getName(),
+                        '%domainName%' => $this->escape($domainConfig->getName()),
                     ],
                 );
             }
@@ -228,7 +229,7 @@ class RequiredSettingExtension extends AbstractExtension
                     '<a href="%url%">Privacy policy article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_privacypolicy', $domainId),
-                        '%domainName%' => $domainConfig->getName(),
+                        '%domainName%' => $this->escape($domainConfig->getName()),
                     ],
                 );
             }
@@ -238,7 +239,7 @@ class RequiredSettingExtension extends AbstractExtension
                     '<a href="%url%">User consent policy article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_userconsentpolicy_setting', $domainId),
-                        '%domainName%' => $domainConfig->getName(),
+                        '%domainName%' => $this->escape($domainConfig->getName()),
                     ],
                 );
             }
@@ -250,7 +251,7 @@ class RequiredSettingExtension extends AbstractExtension
                     '<a href="%url%">Product review policy article for domain %domainName% is not set.</a>',
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('shopsys_administration_productreviewpolicy_setting', $domainId),
-                        '%domainName%' => $domainConfig->getName(),
+                        '%domainName%' => $this->escape($domainConfig->getName()),
                     ],
                 );
             }
@@ -290,12 +291,17 @@ class RequiredSettingExtension extends AbstractExtension
             $message .= sprintf(
                 '<li><a href="%s">%s</a></li>',
                 $this->router->generate('admin_parametervalues_edit', ['id' => $parameter->getId()]),
-                $parameter->getName(),
+                $this->escape((string)$parameter->getName()),
             );
         }
         $message .= '</ul>';
 
         $this->requiredSettingsMessages[] = $message;
+    }
+
+    protected function escape(string $value): string
+    {
+        return $this->twig->getRuntime(EscaperRuntime::class)->escape($value);
     }
 
     protected function checkPublicHolidaysAreSet(): void
