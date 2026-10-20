@@ -397,6 +397,9 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
+msgid "Clear history"
+msgstr ""
+
 msgid "Close"
 msgstr ""
 
@@ -1358,6 +1361,9 @@ msgid "Measurement units overview"
 msgstr ""
 
 msgid "Medium"
+msgstr ""
+
+msgid "Message history"
 msgstr ""
 
 msgid "Message text"

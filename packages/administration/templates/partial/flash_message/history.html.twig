@@ -1,0 +1,39 @@
+<div class="nav-item dropdown me-2" data-controller="flash-message-history">
+    <a class="nav-link disabled"
+       data-bs-toggle="dropdown"
+       data-flash-message-history-target="toggle"
+       href="#"
+       role="button"
+       aria-expanded="false"
+       aria-disabled="true"
+       title="{{ 'Message history'|trans }}"
+    >
+        <span class="nav-link-icon me-0">{{ ux_icon('bell') }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
+        <div class="card" style="width: 24rem; max-width: 90vw;">
+            <div class="card-header">
+                <h3 class="card-title">{{ 'Message history'|trans }}</h3>
+                <div class="card-actions btn-actions">
+                    <button type="button" class="btn btn-sm btn-ghost-secondary" data-action="flash-message-history#clear">
+                        {{ 'Clear history'|trans }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body scroll-y p-0" style="max-height: 50vh">
+                <div class="list-group list-group-flush" data-flash-message-history-target="list"></div>
+            </div>
+        </div>
+    </div>
+
+    <template data-flash-message-history-target="itemTemplate">
+        <div class="list-group-item">
+            <div class="row g-2 align-items-baseline">
+                <div class="col-auto"><span class="status-dot d-block" data-history-status></span></div>
+                <div class="col text-break lh-sm" data-history-message></div>
+                <div class="col-auto text-secondary small" data-history-time></div>
+            </div>
+        </div>
+    </template>
+</div>
