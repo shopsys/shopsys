@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
 /**
@@ -17,12 +16,4 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository 
  */
 class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 {
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function extractTotalCount(array $result): int
-    {
-        return (int)$result['hits']['total']['value'];
-    }
 }
