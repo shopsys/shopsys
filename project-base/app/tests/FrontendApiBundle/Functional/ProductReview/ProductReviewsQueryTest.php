@@ -48,6 +48,10 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
             'rejectedImagesCount' => 0,
             'productUuid' => $product->getUuid(),
             'productName' => $product->getName($this->getFirstDomainLocale()),
+            'product' => [
+                'uuid' => $product->getUuid(),
+                'fullName' => $product->getFullName($this->getFirstDomainLocale()),
+            ],
         ], $data['edges'][0]['node']);
     }
 
@@ -93,6 +97,10 @@ final class ProductReviewsQueryTest extends GraphQlTestCase
         $reviewOfVariant = $dataForMainVariant['edges'][0]['node'];
         $this->assertSame($variant->getUuid(), $reviewOfVariant['productUuid']);
         $this->assertSame($variant->getName($this->getFirstDomainLocale()), $reviewOfVariant['productName']);
+        $this->assertSame([
+            'uuid' => $variant->getUuid(),
+            'fullName' => $variant->getFullName($this->getFirstDomainLocale()),
+        ], $reviewOfVariant['product']);
         $this->assertNull($reviewOfVariant['reviewerName'], 'The review is published anonymously, so it must not carry any name.');
     }
 

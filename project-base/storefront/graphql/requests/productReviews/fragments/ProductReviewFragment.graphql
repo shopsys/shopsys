@@ -2,6 +2,9 @@ fragment ProductReviewFragment on ProductReview {
     __typename
     uuid
     productName
+    product {
+        fullName
+    }
     reviewerName
     rating
     text

@@ -21,6 +21,7 @@ const createReviewEdge = (index: number) => ({
         __typename: 'ProductReview' as const,
         uuid: `review-${index}`,
         productName: 'Product',
+        product: null,
         reviewerName: `Reviewer ${index}`,
         rating: 5,
         text: `Review ${index}`,
