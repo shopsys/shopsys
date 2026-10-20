@@ -149,7 +149,7 @@ const expectedRestockProduct = createProduct({
 
 const sellingDeniedProduct = createProduct({ isSellingDenied: true });
 
-const getWatchdogButtons = () => screen.queryAllByRole('button', { name: /Open watchdog popup/ });
+const getWatchdogButtons = () => screen.queryAllByRole('button', { name: /^Notify me:/ });
 
 describe('ProductAction', () => {
     beforeEach(() => {
@@ -286,7 +286,10 @@ describe('ProductAction', () => {
 
             expect(getWatchdogButtons()).toHaveLength(1);
             expect(screen.getByTestId('add-to-cart')).toHaveAttribute('data-variant', 'secondary');
-            expect(screen.getAllByRole('button')[0]).toHaveAccessibleName(/Open watchdog popup/);
+            expect(screen.getAllByRole('button')[0]).toHaveAccessibleName(
+                `Notify me: ${expectedRestockProduct.fullName}`,
+            );
+            expect(screen.getAllByRole('button')[0]).toHaveTextContent(/^Notify me$/);
         });
 
         test('offers no watchdog button for an inquiry type variant', () => {
