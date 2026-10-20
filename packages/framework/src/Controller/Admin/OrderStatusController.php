@@ -94,7 +94,6 @@ class OrderStatusController extends AdminBaseController
                     'Because status "%name%"  is used with other orders also, you have to choose a new status which will replace '
                     . 'the existing one. Which status you want to set to these orders? When changing this, there won\'t be emails '
                     . 'sent to customers.',
-                    ['%name%' => $orderStatus->getName()],
                 );
 
                 return $this->confirmDeleteResponseFactory->createSetNewAndDeleteResponse(
@@ -102,17 +101,16 @@ class OrderStatusController extends AdminBaseController
                     'admin_orderstatus_delete',
                     $id,
                     $this->orderStatusFacade->getAllExceptId($id),
+                    ['%name%' => $orderStatus->getName()],
                 );
             }
-            $message = t(
-                'Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $orderStatus->getName()],
-            );
+            $message = t('Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.');
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_orderstatus_delete',
                 $id,
+                ['%name%' => $orderStatus->getName()],
             );
         } catch (OrderStatusNotFoundException $ex) {
             return new Response(t('Selected order status doesn\'t exist.'));
