@@ -57,7 +57,6 @@ class VatController extends AdminBaseController
                     'For deleting rate  "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                     . 'After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. '
                     . 'Which unit you want to set instead?',
-                    ['%name%' => $vat->getName()],
                 );
 
                 return $this->confirmDeleteResponseFactory->createSetNewAndDeleteResponse(
@@ -65,14 +64,17 @@ class VatController extends AdminBaseController
                     'admin_vat_delete',
                     $id,
                     $this->vatFacade->getAllForDomainExceptId($this->adminDomainTabsFacade->getSelectedDomainId(), $id),
+                    ['%name%' => $vat->getName()],
                 );
             }
-            $message = t(
-                'Do you really want to remove rate "%name%" permanently? It is not used anywhere.',
+            $message = t('Do you really want to remove rate "%name%" permanently? It is not used anywhere.');
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_vat_delete',
+                $id,
                 ['%name%' => $vat->getName()],
             );
-
-            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_vat_delete', $id);
         } catch (VatNotFoundException $ex) {
             return new Response(t('Selected VAT doesn\'t exist'));
         }
