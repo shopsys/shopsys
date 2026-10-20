@@ -96,15 +96,14 @@ class StockController extends AdminBaseController
                 $this->adminDomainTabsFacade->getSelectedDomainConfig(),
             );
 
-            $this
-                ->addSuccessFlashTwig(
-                    t(
-                        'Setting for domain "%domainName%" was saved.',
-                        [
-                            '%domainName%' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
-                        ],
-                    ),
-                );
+            $this->addSuccessFlash(
+                t(
+                    'Setting for domain "%domainName%" was saved.',
+                    [
+                        '%domainName%' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
+                    ],
+                ),
+            );
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
