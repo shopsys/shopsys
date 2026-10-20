@@ -27,10 +27,10 @@ class BlogArticlesBatchLoader
 
         foreach ($batchLoadDataList as $batchLoadData) {
             $filterQueries[] = $this->filterQueryFactory->createPublishedByBlogCategory(
-                $batchLoadData->getBlogCategory(),
-                $batchLoadData->getOffset(),
-                $batchLoadData->getLimit(),
-                $batchLoadData->isOnlyVisibleOnHomepage(),
+                $batchLoadData->blogCategory,
+                $batchLoadData->offset,
+                $batchLoadData->limit,
+                $batchLoadData->onlyVisibleOnHomepage,
             );
         }
 
