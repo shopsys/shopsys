@@ -38,7 +38,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
     public function testCreateComplaint(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
         $orderItemProduct1 = $order->getProductItems()[0];
         $product1 = $orderItemProduct1->getProduct();
         $complaintItemQuantity1 = 1;
@@ -46,7 +46,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
         $orderItemProduct2 = $order->getProductItems()[1];
         $product2 = $orderItemProduct2->getProduct();
-        $complaintItemQuantity2 = 2;
+        $complaintItemQuantity2 = 1;
         $complaintItemFilesCount2 = 1;
 
         // Initialize product proxies before the GraphQL mutation to avoid
@@ -101,13 +101,13 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
     public function testCreateMoneyReturnComplaintWithoutBankAccountNumber(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
 
         $response = $this->createComplaint(
             $order,
             1,
             $order->getProductItems()[0],
-            2,
+            1,
             $order->getProductItems()[1],
             $this->complaintResolutionEnum::MONEY_RETURN,
         );
@@ -126,13 +126,13 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
     public function testCreateMoneyReturnComplaintWithBankAccountNumber(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
 
         $response = $this->createComplaint(
             $order,
             1,
             $order->getProductItems()[0],
-            2,
+            1,
             $order->getProductItems()[1],
             $this->complaintResolutionEnum::MONEY_RETURN,
             '6846460001/5500',
@@ -143,13 +143,13 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
     public function testCreateComplaintWithWrongResolution(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
 
         $response = $this->createComplaint(
             $order,
             1,
             $order->getProductItems()[0],
-            2,
+            1,
             $order->getProductItems()[1],
             'notExistingResolution',
         );
@@ -365,7 +365,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
     public function testCreateComplaintFromOrderWithWithdrawalRequestIsNotAllowed(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
 
         $withRequestData = $this->withdrawalRequestDataFactory->createFromArray([
             'firstName' => 'John',
@@ -380,7 +380,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             $order,
             1,
             $order->getProductItems()[0],
-            2,
+            1,
             $order->getProductItems()[1],
             $this->complaintResolutionEnum::FIX,
         );

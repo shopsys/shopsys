@@ -106,17 +106,19 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         )}
                     </div>
                 </div>
-                <div className="flex items-center gap-2 md:ml-auto">
-                    <Button
-                        aria-haspopup="dialog"
-                        className="w-full md:w-auto"
-                        size="small"
-                        variant="secondary"
-                        onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
-                    >
-                        {t('Create complaint')}
-                    </Button>
-                </div>
+                {orderedItem.remainingComplaintQuantity > 0 && (
+                    <div className="flex items-center gap-2 md:ml-auto">
+                        <Button
+                            aria-haspopup="dialog"
+                            className="w-full md:w-auto"
+                            size="small"
+                            variant="secondary"
+                            onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
+                        >
+                            {t('Create complaint')}
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ fragment ComplaintOrderedItemFragment on OrderItem {
     uuid
     name
     quantity
+    remainingComplaintQuantity
     unit
     totalPrice {
         priceWithVat

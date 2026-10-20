@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequest;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository;
 use SortDirection;
 
 class OrderItemApiFacade
@@ -20,6 +21,7 @@ class OrderItemApiFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly ComplaintRepository $complaintRepository,
     ) {
     }
 
@@ -107,6 +109,29 @@ class OrderItemApiFacade
             ->setParameter('orderItems', $orderItems)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItems
+     * @return array<string, int>
+     */
+    public function getRemainingComplaintQuantities(array $orderItems): array
+    {
+        if ($orderItems === []) {
+            return [];
+        }
+
+        $claimedQuantitiesIndexedByOrderItemId = $this->complaintRepository->getClaimedQuantitiesIndexedByOrderItemId($orderItems);
+        $remainingQuantities = [];
+
+        foreach ($orderItems as $orderItem) {
+            $remainingQuantities[$orderItem->getUuid()] = max(
+                0,
+                $orderItem->getQuantity() - ($claimedQuantitiesIndexedByOrderItemId[$orderItem->getId()] ?? 0),
+            );
+        }
+
+        return $remainingQuantities;
     }
 
     protected function createOrderItemExcludingOrdersWithWithdrawalQueryBuilder(): QueryBuilder
