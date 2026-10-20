@@ -1,4 +1,4 @@
-import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
+import { BellIcon } from 'components/Basic/Icon/BellIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
@@ -18,13 +18,15 @@ const WatchdogPopup = dynamic(
 
 type WatchDogButtonProps = {
     className?: string;
+    label?: string;
     product: WatchDogProductType;
     listIndex?: number;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
-export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, size = 'xlarge', className }) => {
+export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, size = 'xlarge', className, label }) => {
     const { t } = useTranslation();
+    const buttonLabel = label ?? t('Notify me when available');
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     if (!showWatchdogButton(product)) {
@@ -42,19 +44,16 @@ export const WatchDogButton: FC<WatchDogButtonProps> = ({ product, listIndex, si
     return (
         <Button
             aria-haspopup="dialog"
-            aria-label={t('Open watchdog popup for {{productName}}', {
-                ns: 'accessibility',
-                productName: product.fullName,
-            })}
+            aria-label={`${buttonLabel}: ${product.fullName}`}
             className={twJoin('whitespace-normal', className)}
             tid={TIDs.blocks_product_watchdog_button}
-            title={t('Watchdog popup')}
+            title={buttonLabel}
             size={size}
             variant="primary"
             onClick={openWatchDogPopup}
         >
-            <WatchdogIcon className={getButtonIconClassName(size)} />
-            {t('Watch the goods')}
+            <BellIcon aria-hidden="true" className={getButtonIconClassName(size)} />
+            {buttonLabel}
         </Button>
     );
 };

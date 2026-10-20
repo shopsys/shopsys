@@ -6,6 +6,7 @@
 import { StyleguideSection } from './StyleguideElements';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { BellIcon } from 'components/Basic/Icon/BellIcon';
 import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
@@ -76,8 +77,8 @@ import { UspThirdIcon } from 'components/Basic/Icon/UspThirdIcon';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
-import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
 import { WithdrawalIcon } from 'components/Basic/Icon/WithdrawalIcon';
+import { WrenchIcon } from 'components/Basic/Icon/WrenchIcon';
 import { WriteIcon } from 'components/Basic/Icon/WriteIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 
@@ -91,6 +92,10 @@ export const StyleguideIcons = () => (
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <ArrowSecondaryIcon className="size-10" />
                 <span className="text-center text-xs break-all">ArrowSecondaryIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <BellIcon className="size-10" />
+                <span className="text-center text-xs break-all">BellIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <BillingAddressIcon className="size-10" />
@@ -373,12 +378,12 @@ export const StyleguideIcons = () => (
                 <span className="text-center text-xs break-all">WarningIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WatchdogIcon className="size-10" />
-                <span className="text-center text-xs break-all">WatchdogIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <WithdrawalIcon className="size-10" />
                 <span className="text-center text-xs break-all">WithdrawalIcon</span>
+            </div>
+            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
+                <WrenchIcon className="size-10" />
+                <span className="text-center text-xs break-all">WrenchIcon</span>
             </div>
             <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
                 <WriteIcon className="size-10" />
