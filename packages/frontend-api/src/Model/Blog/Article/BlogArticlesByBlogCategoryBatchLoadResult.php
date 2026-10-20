@@ -10,21 +10,8 @@ class BlogArticlesByBlogCategoryBatchLoadResult
      * @param array<int, array<string, mixed>> $blogArticles
      */
     public function __construct(
-        protected readonly array $blogArticles,
-        protected readonly int $totalCount,
+        public readonly array $blogArticles,
+        public readonly int $totalCount,
     ) {
-    }
-
-    /**
-     * @return array<int, array<string, mixed>>
-     */
-    public function getBlogArticles(): array
-    {
-        return $this->blogArticles;
-    }
-
-    public function getTotalCount(): int
-    {
-        return $this->totalCount;
     }
 }

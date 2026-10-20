@@ -58,9 +58,9 @@ class BlogArticlesQuery extends AbstractQuery
                 return $this->blogArticlesByBlogCategoryBatchLoader
                     ->load($batchLoadData)
                     ->then(function (BlogArticlesByBlogCategoryBatchLoadResult $result) use (&$batchLoadedTotalCount): array {
-                        $batchLoadedTotalCount = $result->getTotalCount();
+                        $batchLoadedTotalCount = $result->totalCount;
 
-                        return $result->getBlogArticles();
+                        return $result->blogArticles;
                     });
             },
             Paginator::MODE_PROMISE,
