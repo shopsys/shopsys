@@ -369,7 +369,7 @@ class CategorySeoController extends AdminBaseController
                 ]),
             );
         } catch (ReadyCategorySeoMixNotFoundException) {
-            $this->addSuccessFlash(
+            $this->addErrorFlash(
                 t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
                 ]),
