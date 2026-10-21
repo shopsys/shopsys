@@ -92,6 +92,7 @@ class MailTemplateBuilder
     public function getMailTemplateWithContent(int $domainId, ?string $content = ''): string
     {
         return <<<EOT
+            <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,22 +119,27 @@ class MailTemplateBuilder
                     }
                     
                     /* Typography */
+                    h1 { font-size:26px; }
+                    h2 { font-size:20px; }
+                    h3 { font-size:18px; }
                     h1, h2, h3, h4, h5, h6 {
                         font-family: Arial, Helvetica, sans-serif !important;
                         margin-top: 0 !important;
                         margin-bottom: 10px !important;
-                        line-height: 1.1 !important;
-                        mso-line-height-rule: exactly;
+                        line-height: 1.25;
+                        mso-line-height-rule: at-least;
                     }
                     
                     td, p, span, strong, a {
                         font-family: Arial, Helvetica, sans-serif !important;
-                        line-height: 1.3 !important;
-                        mso-line-height-rule: exactly;
+                        line-height: 1.5;
+                        mso-line-height-rule: at-least;
                     }
+
+                    .main { overflow-wrap:anywhere; }
                     
                     a {
-                        color: #000000;
+                        color: #006bd6;
                         text-decoration: underline;
                     }
                     
@@ -146,8 +152,7 @@ class MailTemplateBuilder
                     
                     .content-block {
                         background-color: #ffffff !important;
-                        color: #000000 !important;
-                        box-shadow: 1px 4px 11px 0px rgba(0,0,0,0.15);
+                        color: #202139 !important;
                     }
                     
                     /* Client-specific fixes */
@@ -167,12 +172,18 @@ class MailTemplateBuilder
                     }
                     
                     /* Responsive */
-                    @media only screen and (max-width: 700px) {
+                    @media only screen and (max-width: 600px) {
+                        .mail-content { padding:24px 16px !important; }
+                        .mail-logo { padding:24px 16px !important; }
+                        .additional-services { padding-left:24px !important; }
+                        .product-description, .product-price { width:100% !important; display:block !important; text-align:left !important; padding:0 !important; }
+                        .product-price { padding-top:6px !important; }
+                        .order-addresses { padding:0 0 20px !important; }
                         .mobile-full-width {
                             width: 100% !important;
                             display: block !important;
                         }
-                        .order-addresses, .product-description, .product-price {
+                        .order-addresses {
                             width: 100% !important;
                             display: block !important;
                         }
@@ -184,22 +195,11 @@ class MailTemplateBuilder
                     h1 { font-size:22px !important; }
                     h2 { font-size:20px !important; }
                     h3 { font-size:18px !important; }
-                    p, td { font-size:16px !important; }
                     .content-table { width:700px !important; }
                 </style>
                 <![endif]-->
             </head>
-            <body style="margin:0; padding:0; -webkit-text-size-adjust:none;">
-                <!--[if mso]>
-                <div style="mso-hide:all">
-                    <table role="presentation" cellpadding="0" cellspacing="0" width="700" align="center"><tr><td>
-                <![endif]-->
-                
-                <!-- Preheader -->
-                <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
-                    &nbsp;
-                </div>
-
+            <body style="margin:0; padding:0; background-color:#F2F2F2; color:#202139; font-family:Arial,Helvetica,sans-serif; font-size:14px; -webkit-text-size-adjust:none;">
                 <!-- Main container -->
                 <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
@@ -209,19 +209,19 @@ class MailTemplateBuilder
                             <tr><td>
                             <![endif]-->
                             
-                            <div class="container-wrapper">
-                                <table role="presentation" class="content-block" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <div class="container-wrapper" style="width:100%; max-width:700px; margin:0 auto;">
+                                <table role="presentation" class="content-block" width="100%" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0" style="background-color:#ffffff; color:#202139;">
                                     <tr>
-                                        <td style="padding:30px 0 0 30px;">
+                                        <td class="mail-logo" bgcolor="#ffffff" style="padding:24px 40px; background-color:#ffffff;">
                                             <img src="{$this->getMailImageSrc($domainId, 'logo.png')}" height="50" alt="Company Logo" style="display:block; height:50px; width:auto;">
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="padding:30px;">
+                                        <td class="mail-content" style="padding:30px 40px;">
                                             <!--[if mso]>
-                                            <table role="presentation" border="0" cellspacing="0" cellpadding="0"><tr><td>
+                                            <table role="presentation" width="620" border="0" cellspacing="0" cellpadding="0"><tr><td>
                                             <![endif]-->
-                                            <div style="max-width:600px; margin:0 auto;" data-gjs-type="editable" class="gjs-editable main">
+                                            <div style="max-width:620px; margin:0 auto;" data-gjs-type="editable" class="gjs-editable main">
                                                 {$content}
                                             </div>
                                             <!--[if mso]>
@@ -248,12 +248,8 @@ class MailTemplateBuilder
                         </td>
                     </tr>
                 </table>
-                
-                <!--[if mso]>
-                </td></tr></table>
-                </div>
-                <![endif]-->
             </body>
+            </html>
         EOT;
     }
 }
