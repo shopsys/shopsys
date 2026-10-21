@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Blog\Category;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLink;
@@ -21,6 +22,7 @@ class BlogCategoryHreflangLinksBatchLoader
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly FriendlyUrlSlugBatchLoader $friendlyUrlSlugBatchLoader,
         protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -34,7 +36,7 @@ class BlogCategoryHreflangLinksBatchLoader
             $blogCategories,
             $relevantDomainIds,
         );
-        $slugsIndexedByDomainIdAndBlogCategoryId = $this->getSlugsIndexedByDomainIdAndBlogCategoryId(
+        $mainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId = $this->getMainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId(
             $relevantDomainIds,
             $visibleDomainIdsIndexedByBlogCategoryId,
         );
@@ -51,7 +53,7 @@ class BlogCategoryHreflangLinksBatchLoader
 
                 $hreflangLinks[] = $this->createHreflangLink(
                     $domainId,
-                    $slugsIndexedByDomainIdAndBlogCategoryId[$domainId][$blogCategory->getId()],
+                    $mainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId[$domainId][$blogCategory->getId()],
                 );
             }
 
@@ -66,11 +68,11 @@ class BlogCategoryHreflangLinksBatchLoader
      * @param array<int, int[]> $visibleDomainIdsIndexedByBlogCategoryId
      * @return array<int, array<int, string>>
      */
-    protected function getSlugsIndexedByDomainIdAndBlogCategoryId(
+    protected function getMainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId(
         array $relevantDomainIds,
         array $visibleDomainIdsIndexedByBlogCategoryId,
     ): array {
-        $slugsIndexedByDomainIdAndBlogCategoryId = [];
+        $mainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId = [];
 
         foreach ($relevantDomainIds as $domainId) {
             $blogCategoryIdsVisibleOnDomain = [];
@@ -85,20 +87,22 @@ class BlogCategoryHreflangLinksBatchLoader
                 continue;
             }
 
-            $slugsIndexedByDomainIdAndBlogCategoryId[$domainId] = $this->friendlyUrlSlugBatchLoader->getSlugsIndexedByEntityIdOnDomain(
+            $mainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId[$domainId] = $this->friendlyUrlSlugBatchLoader->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain(
                 $blogCategoryIdsVisibleOnDomain,
                 BlogCategoryDetailFriendlyUrlDataProvider::ROUTE_NAME,
                 $domainId,
             );
         }
 
-        return $slugsIndexedByDomainIdAndBlogCategoryId;
+        return $mainFriendlyUrlSlugsIndexedByDomainIdAndBlogCategoryId;
     }
 
-    protected function createHreflangLink(int $domainId, string $slug): HreflangLink
+    protected function createHreflangLink(int $domainId, string $mainFriendlyUrlSlug): HreflangLink
     {
-        $domainConfig = $this->domain->getDomainConfigById($domainId);
-
-        return new HreflangLink($domainConfig->getLocale(), $domainConfig->getUrl() . $slug, $domainId);
+        return new HreflangLink(
+            $this->domain->getDomainConfigById($domainId)->getLocale(),
+            $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($domainId, $mainFriendlyUrlSlug),
+            $domainId,
+        );
     }
 }

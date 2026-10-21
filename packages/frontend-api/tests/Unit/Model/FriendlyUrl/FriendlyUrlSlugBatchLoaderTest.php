@@ -22,7 +22,7 @@ class FriendlyUrlSlugBatchLoaderTest extends TestCase
 
     private const int OTHER_DOMAIN_ID = 2;
 
-    public function testSlugsOnOtherDomainAreLoadedFromRepositoryAndCached(): void
+    public function testMainFriendlyUrlSlugsOnOtherDomainAreLoadedFromRepositoryAndCached(): void
     {
         $cache = new ArrayAdapter();
         $friendlyUrlRepository = $this->createMock(FriendlyUrlRepository::class);
@@ -36,10 +36,10 @@ class FriendlyUrlSlugBatchLoaderTest extends TestCase
 
         $loader = $this->createLoader($friendlyUrlRepository, $cache);
 
-        $slugs = $loader->getSlugsIndexedByEntityIdOnDomain([3, 2], self::ROUTE_NAME, self::OTHER_DOMAIN_ID);
+        $mainFriendlyUrlSlugs = $loader->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain([3, 2], self::ROUTE_NAME, self::OTHER_DOMAIN_ID);
 
-        $this->assertSame([3 => '/blog/tipy', 2 => '/blog/novinky'], $slugs);
-        $this->assertSame($slugs, $loader->getSlugsIndexedByEntityIdOnDomain([3, 2], self::ROUTE_NAME, self::OTHER_DOMAIN_ID));
+        $this->assertSame([3 => 'blog/tipy', 2 => 'blog/novinky'], $mainFriendlyUrlSlugs);
+        $this->assertSame($mainFriendlyUrlSlugs, $loader->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain([3, 2], self::ROUTE_NAME, self::OTHER_DOMAIN_ID));
     }
 
     public function testCachedSlugOfOtherDomainDoesNotShadowCurrentDomain(): void
@@ -55,7 +55,7 @@ class FriendlyUrlSlugBatchLoaderTest extends TestCase
 
         $loader = $this->createLoader($friendlyUrlRepository, $cache);
 
-        $this->assertSame([3 => '/blog/tipy'], $loader->getSlugsIndexedByEntityIdOnDomain([3], self::ROUTE_NAME, self::OTHER_DOMAIN_ID));
+        $this->assertSame([3 => 'blog/tipy'], $loader->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain([3], self::ROUTE_NAME, self::OTHER_DOMAIN_ID));
         $this->assertSame([3 => '/blog/tips'], $loader->getSlugsIndexedByEntityId([3], self::ROUTE_NAME));
     }
 
@@ -69,7 +69,7 @@ class FriendlyUrlSlugBatchLoaderTest extends TestCase
         $this->expectException(FriendlyUrlNotFoundException::class);
         $this->expectExceptionMessage('Main friendly URL not found for route "front_blogcategory_detail", domain ID "2", and entity ID "3".');
 
-        $loader->getSlugsIndexedByEntityIdOnDomain([3], self::ROUTE_NAME, self::OTHER_DOMAIN_ID);
+        $loader->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain([3], self::ROUTE_NAME, self::OTHER_DOMAIN_ID);
     }
 
     private function createLoader(
