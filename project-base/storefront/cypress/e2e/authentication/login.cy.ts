@@ -37,7 +37,7 @@ describe('Login Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Login Page] should login from login page and then log out', function () {
+    it('[Login Page] should login from login page and then log out', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.login);
 
         fillInEmailAndPasswordOnLoginPage(staticData.customer1.emailRegistered, staticData.user.password);
@@ -73,7 +73,7 @@ describe('Login Tests', () => {
         cy.getByTID([TIDs.login_method_web, TIDs.last_used_login_method_badge]).should('be.visible');
     });
 
-    it('[Header] should login from header and then log out', function () {
+    it('[Header] should login from header and then log out', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         loginFromHeader(staticData.customer1.emailRegistered, staticData.user.password);
