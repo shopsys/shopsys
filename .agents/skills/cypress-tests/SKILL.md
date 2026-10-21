@@ -1125,7 +1125,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
 - **Deferred rendering**: preserve page-capture scrolling; the storefront intentionally delays rendering for web vitals. Hydration or a quiet DOM alone does not prove that all deferred content is ready.
 - **Retries in runMode**: 2 (configurable per test with `{ retries: { runMode: 0 } }`)
 - **Test groups**: Controlled by `GROUP` env var for CI (e.g., `GROUP=authentication`, `GROUP=b2b`)
-- **Promo-code rate limit**: The GitHub Actions Cypress compose file mounts `docker/conf/cypress-rate-limiter.yaml` only into its PHP test container. Like `when@test`, it disables only the apply-code quota because scenarios/retries share an IP; production limits remain unchanged. Verify throttling separately, not through cart-flow timing or longer waits.
+- **Promo-code rate limit**: GitHub Actions Cypress and project GitLab CI compose configurations mount the shared `project-base/gitlab/cypress-rate-limiter.yaml` read-only into their PHP test containers (`gitlab/cypress-rate-limiter.yaml` in downstream projects). It disables only the apply-code quota because scenarios/retries share an IP. The isolated CI backends run in Symfony prod mode, so `when@test` would not apply; isolation comes from the CI-only mount. Never mount it in review/live deployments or copy it into the application's regular config. Verify throttling separately without this override, not through cart-flow timing or longer waits.
 - **Translation loading**: Auto-loads `.po` files from `/app/app-translations/`, falls back to English
 
 ## Keeping This Skill Up-to-Date
