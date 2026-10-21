@@ -64,6 +64,9 @@ msgstr "Overovací kód"
 msgid "Confirm withdrawal from contract - order no. {order_number}"
 msgstr "Potvrďte odstúpenie od zmluvy - objednávka č. {order_number}"
 
+msgid "Created on"
+msgstr "Dátum vytvorenia"
+
 msgid "Dear Customer,<br /><br /> We are excited to let you know that the product you added to your watchlist is now back in stock:<br /><br /> <h2>{product_name}</h2> <img data-gjs-type=\"mail-custom-image-with-variable\" draggable=\"true\" alt=\"{product_name}\" src=\"\" path=\"{product_image}\" style=\"display:block;margin:auto\" class=\"mail-custom-image-with-variable gjs-plh-image gjs-selected\"> <p style=\"text-align: center; font-size: 18px; font-weight: bold;\"> Currently available: {product_quantity} </p> Don’t wait too long—supplies might be limited! Click the button below to secure your item:<br /><br /> <div style=\"text-align: center; margin: 20px 0;\"> <a data-cke-saved-href=\"{product_url}\" href=\"{product_url}\" style=\"display: inline-block; padding: 15px 30px; font-size: 16px; color: #fff; background-color: #00c8b7; text-decoration: none; border-radius: 5px;\" tabindex=\"0\"> Buy Now </a> </div> Thank you for using our services, and we wish you a pleasant shopping experience!<br /><br /> If you need immediate assistance or have additional questions, feel free to reply to this email or contact us.<br /><br /> Best regards<br /><br /> <hr> If you have any questions or need assistance, don’t hesitate to contact us."
 msgstr "Vážený zákazník,<br /><br /> S radosťou vám oznamujeme, že produkt, ktorý ste si pridali do sledovania, je opäť na sklade:<br /><br /> <h2>{product_name}</h2> <img data-gjs-type=\"mail-custom-image-with-variable\" draggable=\"true\" alt=\"{product_name}\" src=\"\" path=\"{product_image}\" style=\"display:block;margin:auto\" class=\"mail-custom-image-with-variable gjs-plh-image gjs-selected\"> <p style=\"text-align: center; font-size: 18px; font-weight: bold;\"> Aktuálne dostupné: {product_quantity} </p> Neváhajte príliš dlho—zásoby môžu byť obmedzené! Kliknite na tlačidlo nižšie a zabezpečte si svoj produkt:<br /><br /> <div style=\"text-align: center; margin: 20px 0;\"> <a data-cke-saved-href=\"{product_url}\" href=\"{product_url}\" style=\"display: inline-block; padding: 15px 30px; font-size: 16px; color: #fff; background-color: #00c8b7; text-decoration: none; border-radius: 5px;\" tabindex=\"0\"> Kúpiť teraz </a> </div> Ďakujeme, že využívate naše služby a prajeme vám príjemné nákupné zážitky!<br /><br /> Ak potrebujete okamžitú pomoc alebo máte ďalšie otázky, neváhajte odpovedať na tento email alebo nás kontaktovať.<br /><br /> S pozdravom<br /><br /> <hr> Ak máte akékoľvek otázky alebo potrebujete pomoc, neváhajte nás kontaktovať."
 
@@ -94,6 +97,9 @@ msgstr "Prijátaná nová dopyt po produkte"
 msgid "New product question from {customerName}"
 msgstr "Nová otázka k produktu od {customerName}"
 
+msgid "Order number"
+msgstr "Číslo objednávky"
+
 msgid "Personal information export - {domain}"
 msgstr "Export osobných informácií - {domain}"
 
@@ -106,8 +112,23 @@ msgstr "Registrácia bola dokončená"
 msgid "Reset password request"
 msgstr "Žiadosť o heslo"
 
+msgid "Thank you for your order"
+msgstr "Ďakujeme za vašu objednávku"
+
 msgid "Thank you for your product inquiry"
 msgstr "Ďakujeme za váš dopyt po produkte"
+
+msgid "Total including VAT"
+msgstr "Celkom vrátane DPH"
+
+msgid "View order"
+msgstr "Zobraziť objednávku"
+
+msgid "We have received your order {number}. You can find its summary and status here."
+msgstr "Prijali sme vašu objednávku {number}. Tu nájdete jej prehľad a stav."
+
+msgid "We have received your order. We will let you know when its status changes."
+msgstr "Vašu objednávku sme prijali. O zmene jej stavu vás budeme informovať."
 
 msgid "Withdrawal from contract - order no. {number}"
 msgstr "Odstúpenie od zmluvy - objednávka č. {number}"

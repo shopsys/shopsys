@@ -1,162 +1,102 @@
 {% trans_default_domain 'customerMessages' %}
 {% import _self as self %}
 
-<h2>{% trans into orderLocale %}Order items{% endtrans %}</h2>
-<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="border-bottom: 1px solid #efefef; min-width: 1px; margin-bottom: 10px;">
+<h2 style="font-size:20px; margin:24px 0 12px;">{% trans into orderLocale %}Order items{% endtrans %}</h2>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="border-bottom:1px solid #e5e5e5; margin-bottom:12px;">
     {% for orderItem in order.itemsSortedWithRelatedItems %}
-        {% if not orderItem.isTypeAdditionalService %}
-            {{ self.orderItemRows(orderItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
-            {% set additionalServiceItems = orderItem.relatedItems|filter(relatedItem => relatedItem.isTypeAdditionalService) %}
-
-            {% if additionalServiceItems|length > 0 %}
-                <tr>
-                    <td style="padding: 0 0 8px 32px; min-width: 1px;">
-                        <strong>{% trans into orderLocale %}Additional services{% endtrans %}</strong>
-                    </td>
-                </tr>
-
-                {% for relatedItem in additionalServiceItems %}
-                    {{ self.orderItemRows(relatedItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
-                {% endfor %}
-            {% endif %}
+        {% if not orderItem.isTypeAdditionalService and not orderItem.isTypeRounding and not orderItem.isTypeTransport and not orderItem.isTypePayment %}
+            <tr>
+                <td style="padding:16px 0; border-top:1px solid #e5e5e5;">
+                    {% if orderItem.isTypeProductGift %}
+                        {% set heading %}{% trans into orderLocale %}Gift with purchase{% endtrans %}{% endset %}
+                        {{ self.sectionHeading(heading) }}
+                    {% endif %}
+                    {{ self.orderItemRow(orderItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
+                    {% set additionalServiceItems = orderItem.relatedItems|filter(relatedItem => relatedItem.isTypeAdditionalService) %}
+                    {% if additionalServiceItems|length > 0 %}
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tr>
+                                <td class="additional-services" style="padding:16px 0 0 84px;">
+                                    {% set heading %}{% trans into orderLocale %}Additional services{% endtrans %}{% endset %}
+                                    {{ self.sectionHeading(heading) }}
+                                    {% for relatedItem in additionalServiceItems %}
+                                        {{ self.orderItemRow(relatedItem, order, orderLocale, orderItemTotalPricesById, displayPrice) }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                    {% endif %}
+                </td>
+            </tr>
         {% endif %}
     {% endfor %}
 </table>
 
-{% macro orderItemRows(orderItem, order, orderLocale, orderItemTotalPricesById, displayPrice) %}
+{% macro orderItemRow(orderItem, order, orderLocale, orderItemTotalPricesById, displayPrice) %}
     {% set entity = null %}
-    {% if orderItem.isTypeProduct and orderItem.product is not null %}
+    {% if orderItem.isTypeProduct %}
         {% set entity = orderItem.product %}
-    {% elseif orderItem.isTypeTransport and orderItem.transport is not null %}
-        {% set entity = orderItem.transport %}
-    {% elseif orderItem.isTypePayment and orderItem.payment is not null %}
-        {% set entity = orderItem.payment %}
-    {% elseif orderItem.isTypeProductGift and orderItem.productGift is not null %}
+    {% elseif orderItem.isTypeProductGift %}
         {% set entity = orderItem.productGift %}
-    {% elseif orderItem.isTypeAdditionalService and orderItem.additionalService is not null %}
+    {% elseif orderItem.isTypeAdditionalService %}
         {% set entity = orderItem.additionalService %}
     {% endif %}
-
-
-    {% if not orderItem.isTypeRounding and not orderItem.isTypeTransport and not orderItem.isTypePayment %}
+    {% set displayBoth = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
+    {% set displayWithoutVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITHOUT_VAT')) or displayBoth %}
+    {% set displayWithVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITH_VAT')) or displayBoth %}
+    {% set totalPrice = orderItemTotalPricesById[orderItem.id] %}
+    {% set hasUnitPrice = orderItem.isTypeProduct or orderItem.isTypeProductGift or orderItem.isTypeAdditionalService %}
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
         <tr>
-            <td style="{% if orderItem.isTypeAdditionalService %} padding: 0 0 8px 32px; {% elseif orderItem.isTypeDiscount or orderItem.isTypePromotion %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px; position: relative;">
-                {% if orderItem.isTypeProductGift %}
-                    <div style="position: absolute; top: 10px; left: 0; width: fit-content; max-width: 80px; background: linear-gradient(to right, #9333ea, #db2777); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 10;">
-                        {% trans into orderLocale %}Gift{% endtrans %}
-                    </div>
-                {% endif %}
+            {% if hasUnitPrice %}
+                <td width="{{ orderItem.isTypeAdditionalService ? 32 : 72 }}" valign="top" style="padding:0 12px 8px 0;">
+                    {% if entity is not null %}
+                        {{ image(entity, { width: orderItem.isTypeAdditionalService ? 24 : 60, style: 'display:block; height:auto;' }, order.domainId) }}
+                    {% endif %}
+                </td>
+            {% endif %}
+            <td valign="top" style="padding-bottom:8px;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
                     <tr>
-                        <td>
-                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                <tbody>
-                                <tr>
-                                    <td style="width: {% if orderItem.isTypeAdditionalService %}24{% else %}80{% endif %}px; padding-right: {% if orderItem.isTypeAdditionalService %}8{% else %}15{% endif %}px; text-align: center;">
-                                        {% if entity is not null %}
-                                            {{ image(entity, { width: orderItem.isTypeAdditionalService ? 24 : 60, style: 'display: block;' }, order.domainId) }}
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% set doNotDisplayBoth = displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
-                                        {% set displayBoth = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
-                                        {% set displayWithoutVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITHOUT_VAT')) or displayBoth %}
-                                        {% set displayWithVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITH_VAT')) or displayBoth %}
-                                        {% set isZeroPrice = orderItem.unitPriceWithoutVat.isZero is same as(true) %}
-                                        {% set isZeroTotalPrice = orderItemTotalPricesById[orderItem.id].priceWithVat.isZero is same as(true) %}
-
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                            <tbody>
-                                            <tr>
-                                                <td class="product-description">
-                                                    <strong>{{ orderItem.name }}</strong><br>
-                                                    {% if orderItem.isTypeAdditionalService %}
-                                                        {% if displayWithoutVat %}
-                                                            {% if not (displayBoth and isZeroPrice) %}
-                                                                {% trans into orderLocale %}Unit price{% endtrans %}
-                                                                {% if displayBoth %}
-                                                                    {% trans into orderLocale %}ex VAT{% endtrans %}
-                                                                {% endif %}
-                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
-                                                            {% endif %}
-                                                        {% endif %}
-
-                                                        {% if displayWithVat %}
-                                                            {% trans into orderLocale %}Unit price{% endtrans %}
-                                                            {% if displayBoth %}
-                                                                {% trans into orderLocale %}inc VAT{% endtrans %}
-                                                            {% endif %}
-                                                            <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}</span><br>
-                                                        {% endif %}
-                                                    {% elseif orderItem.isTypeProduct or orderItem.isTypeProductGift %}
-                                                        {% trans into orderLocale %}Amount{% endtrans %}: {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }}<br>
-
-                                                        {% if displayWithoutVat %}
-                                                            {% if not (displayBoth and isZeroPrice) %}
-                                                                {% trans into orderLocale %}Unit price{% endtrans %}
-                                                                {% if displayBoth %}
-                                                                    {% trans into orderLocale %}ex VAT{% endtrans %}
-                                                                {% endif %}
-                                                                <span style="white-space: nowrap;">{{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</span><br>
-                                                            {% endif %}
-                                                        {% endif %}
-
-                                                        {% if displayWithVat %}
-                                                            {% trans into orderLocale %}Unit price{% endtrans %}
-                                                            {% if displayBoth %}
-                                                                {% trans into orderLocale %}inc VAT{% endtrans %}
-                                                            {% endif %}
-                                                            <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</span><br>
-                                                        {% endif %}
-
-                                                        {% trans into orderLocale %}Catalog number{% endtrans %}: <span style="white-space: nowrap;">{{ orderItem.catnum }}</span><br>
-                                                    {% endif %}
-                                                </td>
-                                                <td align="right" class="product-price">
-                                                    {% if displayWithoutVat %}
-                                                        {% if not (displayBoth and isZeroTotalPrice) %}
-                                                            {% if doNotDisplayBoth %}
-                                                                <strong style="white-space: nowrap; padding-left: 10px;">
-                                                            {% endif %}
-
-                                                            {{ orderItemTotalPricesById[orderItem.id].priceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
-                                                            {% if displayBoth %}
-                                                                {{ 'ex VAT'|trans }}
-                                                            {% endif %}
-
-                                                            {% if doNotDisplayBoth %}
-                                                                </strong>
-                                                            {% endif %}
-                                                        {% endif %}
-                                                    {% endif %}
-
-                                                    {% if displayBoth %}
-                                                        <br>
-                                                    {% endif %}
-
-                                                    {% if displayWithVat %}
-                                                        <strong style="white-space: nowrap; padding-left: 10px;">
-                                                            {{ orderItemTotalPricesById[orderItem.id].priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
-                                                            {% if displayBoth and not isZeroTotalPrice %}
-                                                                {{ 'inc VAT'|trans }}&nbsp;
-                                                            {% endif %}
-                                                        </strong>
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <td class="product-description" valign="top" style="font-size:14px; overflow-wrap:anywhere;">
+                            <strong>{{ orderItem.name }}</strong>
+                            {% if hasUnitPrice %}
+                                <div style="color:#385483; font-size:13px; padding-top:4px;">
+                                    {% if displayWithoutVat and not (displayBoth and orderItem.unitPriceWithoutVat.isZero) %}
+                                        {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }} × {{ orderItem.unitPriceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}
+                                        {% if displayBoth %}{% trans into orderLocale %}ex VAT{% endtrans %}<br>{% endif %}
+                                    {% endif %}
+                                    {% if displayWithVat %}
+                                        {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }} × {{ orderItem.unitPriceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }} / {{ orderItem.unitName }}
+                                        {% if displayBoth %}{% trans into orderLocale %}inc VAT{% endtrans %}{% endif %}
+                                    {% endif %}
+                                </div>
+                                {% if not orderItem.isTypeAdditionalService and orderItem.catnum %}
+                                    <div style="color:#385483; font-size:12px; padding-top:2px;">{% trans into orderLocale %}Catalog number{% endtrans %}: {{ orderItem.catnum }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="product-price" align="right" valign="top" style="padding-left:12px; font-size:14px; color:{{ orderItem.isTypeAdditionalService ? '#202139' : '#006bd6' }};">
+                            {% if displayWithoutVat and not (displayBoth and totalPrice.priceWithVat.isZero) %}
+                                <span style="white-space:nowrap; font-weight:{{ displayBoth ? 'normal' : 'bold' }};">{{ totalPrice.priceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</span>
+                                {% if displayBoth %}<span style="white-space:nowrap; font-size:12px;">{% trans into orderLocale %}ex VAT{% endtrans %}</span><br>{% endif %}
+                            {% endif %}
+                            {% if displayWithVat %}
+                                <strong style="white-space:nowrap;">{{ totalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}</strong>
+                                {% if displayBoth and not totalPrice.priceWithVat.isZero %}<span style="white-space:nowrap; font-size:12px;">{% trans into orderLocale %}inc VAT{% endtrans %}</span>{% endif %}
+                            {% endif %}
                         </td>
                     </tr>
-                    </tbody>
                 </table>
             </td>
         </tr>
-    {% endif %}
+    </table>
+{% endmacro %}
 
+{% macro sectionHeading(label) %}
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin-bottom:10px;">
+        <tr>
+            <td style="color:#385483; font-size:14px; font-weight:600;">{{ label }}</td>
+        </tr>
+    </table>
 {% endmacro %}

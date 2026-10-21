@@ -64,6 +64,9 @@ msgstr ""
 msgid "Confirm withdrawal from contract - order no. {order_number}"
 msgstr ""
 
+msgid "Created on"
+msgstr "Created on"
+
 msgid "Dear Customer,<br /><br /> We are excited to let you know that the product you added to your watchlist is now back in stock:<br /><br /> <h2>{product_name}</h2> <img data-gjs-type=\"mail-custom-image-with-variable\" draggable=\"true\" alt=\"{product_name}\" src=\"\" path=\"{product_image}\" style=\"display:block;margin:auto\" class=\"mail-custom-image-with-variable gjs-plh-image gjs-selected\"> <p style=\"text-align: center; font-size: 18px; font-weight: bold;\"> Currently available: {product_quantity} </p> Don’t wait too long—supplies might be limited! Click the button below to secure your item:<br /><br /> <div style=\"text-align: center; margin: 20px 0;\"> <a data-cke-saved-href=\"{product_url}\" href=\"{product_url}\" style=\"display: inline-block; padding: 15px 30px; font-size: 16px; color: #fff; background-color: #00c8b7; text-decoration: none; border-radius: 5px;\" tabindex=\"0\"> Buy Now </a> </div> Thank you for using our services, and we wish you a pleasant shopping experience!<br /><br /> If you need immediate assistance or have additional questions, feel free to reply to this email or contact us.<br /><br /> Best regards<br /><br /> <hr> If you have any questions or need assistance, don’t hesitate to contact us."
 msgstr ""
 
@@ -94,6 +97,9 @@ msgstr ""
 msgid "New product question from {customerName}"
 msgstr ""
 
+msgid "Order number"
+msgstr "Order number"
+
 msgid "Personal information export - {domain}"
 msgstr ""
 
@@ -106,8 +112,23 @@ msgstr ""
 msgid "Reset password request"
 msgstr ""
 
+msgid "Thank you for your order"
+msgstr "Thank you for your order"
+
 msgid "Thank you for your product inquiry"
 msgstr ""
+
+msgid "Total including VAT"
+msgstr "Total including VAT"
+
+msgid "View order"
+msgstr "View order"
+
+msgid "We have received your order {number}. You can find its summary and status here."
+msgstr "We have received your order {number}. You can find its summary and status here."
+
+msgid "We have received your order. We will let you know when its status changes."
+msgstr "We have received your order. We will let you know when its status changes."
 
 msgid "Withdrawal from contract - order no. {number}"
 msgstr ""
