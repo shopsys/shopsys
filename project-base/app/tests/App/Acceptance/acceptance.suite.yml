@@ -14,6 +14,8 @@ modules:
             dump: ../var/cache/test-db-dump.sql
             populate: true
             cleanup: true
+            # psql is used because dumps from pg_dump 16.10+ contain the \restrict meta-command which cannot be executed via PDO
+            populator: 'PGPASSWORD=$password psql --quiet --set ON_ERROR_STOP=1 --host=$host --port=$port --username=$user --dbname=$dbname --file=$dump'
         Tests\App\Test\Codeception\Module\StrictWebDriver:
             host: '%SELENIUM_SERVER_HOST%'
             port: 4444
