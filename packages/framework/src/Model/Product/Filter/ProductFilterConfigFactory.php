@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
@@ -46,6 +45,14 @@ class ProductFilterConfigFactory
             $this->currentCustomerUser->getPricingGroup(),
         );
 
+        return $this->createWithParameterFlagAndBrandChoices($productFilterConfigIdsData, $locale, $category);
+    }
+
+    public function createWithParameterFlagAndBrandChoices(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+        string $locale,
+        Category $category,
+    ): ProductFilterConfig {
         $aggregatedParameterFilterChoices = $this->parameterFacade->getParameterFilterChoicesByIds(
             $productFilterConfigIdsData->getParameterValueIdsByParameterId(),
             $locale,
@@ -59,16 +66,6 @@ class ProductFilterConfigFactory
         );
     }
 
-    public function createForSearch(string $locale, string $searchText): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
-            $searchText,
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
-    }
-
     public function createForBrand(string $locale, Brand $brand): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
@@ -76,21 +73,19 @@ class ProductFilterConfigFactory
             $this->currentCustomerUser->getPricingGroup(),
         );
 
+        return $this->createWithFlagChoices($productFilterConfigIdsData, $locale);
+    }
+
+    public function createWithFlagChoices(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+        string $locale,
+    ): ProductFilterConfig {
         return $this->create(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             [],
             $productFilterConfigIdsData->getPriceRange(),
         );
-    }
-
-    public function createForAll(string $locale): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForAll(
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
     }
 
     /**
@@ -119,17 +114,7 @@ class ProductFilterConfigFactory
         return $sortedParameterFilterChoices;
     }
 
-    public function createForFlag(Flag $flag, string $locale): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
-            $flag->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
-    }
-
-    protected function createWithFlagAndBrandChoices(
+    public function createWithFlagAndBrandChoices(
         ProductFilterConfigIdsData $productFilterConfigIdsData,
         string $locale,
     ): ProductFilterConfig {
