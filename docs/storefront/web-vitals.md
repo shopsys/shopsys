@@ -136,3 +136,33 @@ As a styling solution for checkboxes and radiobuttons, we use a very old approac
 ## 9. Fix console errors and warnings
 
 We all know how easy it is to get used to errors and warnings in the console, right? But remember, somebody put the log there for some reason. As it may seem like "It's working, so why care..." it can still lead to some performance issues and cause problems.
+
+## 10. Diagnose server response time
+
+Server timing diagnostics are disabled by default. To enable them, set `SERVER_TIMING=1` in the storefront server's environment (locally, in `project-base/storefront/.env.local`) and restart the storefront process. Set `SERVER_TIMING=0` or remove the variable and restart to disable them again. Only the exact value `1` enables diagnostics, including in production builds used on staging environments. This is a server-only setting; do not use the `NEXT_PUBLIC_` prefix.
+
+For GitLab Kubernetes deployments, `app/deploy/deploy-project.sh` forwards the `SERVER_TIMING` CI/CD variable to the storefront container, defaulting to `0`. To enable diagnostics only on alpha, set its value to `1` with the environment scope `devel-alpha`, then redeploy that environment. To disable diagnostics, remove the scoped variable or set it to `0` and redeploy. Setting a CI/CD variable alone does not change already running containers.
+
+Enable this temporarily on a controlled diagnostic environment: the response exposes internal GraphQL operation names and shared cache hit/miss status to visitors. Leave it disabled on public production environments unless this exposure is intentional. Disabling it skips the measuring GraphQL exchange and wrapper timing; data fetching and error propagation remain unchanged.
+
+When enabled, open DevTools → Network, reload the page, and select the document request. Look for `Server-Timing` under Headers → Response Headers or inspect the Timing tab. Request metrics describe the current response. The `redis_initial_*` metrics instead describe the latest initial connection attempt in the responding server process. Neither is automatically sent to Sentry or another monitoring service:
+
+- `gssp`: total time spent in the `getServerSideProps` wrapper, including data fetching and preparing props. It does not include Next.js HTML rendering after the wrapper returns, proxy queues, or network latency.
+- `redis_client`: obtaining the shared Redis client for this request, including any initial import and connection wait. The wait uses a 100 ms timer, but a busy event loop can delay its execution. Work continuing in the background after the request stops waiting is not included.
+- `redis_initial_import`: loading the Redis library during the latest initial connection attempt.
+- `redis_initial_create`: creating and configuring that client.
+- `redis_initial_connect`: elapsed time of that client's `connect()` call, recorded on success or failure. It is absent while the connection is still pending.
+- `redis_initial_timeout`: actual elapsed time until the shared initial-wait timer fires (2 seconds during startup, 100 ms for a request-triggered attempt). It is absent if the attempt settles before the timeout. A value above the configured timeout reveals delayed timer execution; it is not a Redis command duration.
+- `translations`: loading the initial `common` translation namespace.
+- `gql_<operation>`: elapsed time from starting a server-side GraphQL query to its final result, including authentication, cache lookup and backend work where applicable.
+- `cache_<operation>`: Redis lookup duration, with `desc="hit"` or `desc="miss"`. Queries that bypass Redis do not emit this metric.
+
+Metrics contain operation names, not variables, cache keys or customer data. When diagnostics are enabled, numeric `redis_initial_*` durations are retained until the next initial connection attempt and repeated on subsequent responses from that process. This makes a connection completed in the background observable without retaining response objects. Missing phases have not completed; a response already sent is never updated. These startup values are not additional work on warm requests, do not cover automatic reconnects, and can differ between pods. Do not add them to `redis_client` or `gssp`; the timeout overlaps the import and connection work. Query durations overlap when requests run concurrently and must not be added together to calculate total SSR time. Cache timings are already included in the corresponding query timing.
+
+Compare repeated requests for the same page, customer state and deployment. Use the slowest query and cache outcomes to narrow down a high TTFB before changing caching or deferring data. A cache hit still requires client-side parsing and rendering; it does not imply low JavaScript blocking time.
+
+SSR query caching and translation loading share one Redis connection per server process. The Node.js `instrumentation.ts` startup hook warms the library and connection before Next.js serves requests, independently of Sentry configuration. It skips Redis during production builds and when `REDIS_HOST` is missing. Startup waits for the shared connection with a 2-second timeout; a failed or timed-out attempt allows the server to start without cache. The connection can still complete in the background. For deployments using HTTP readiness on `/api/health`, successful readiness follows this startup initialization; readiness does not require Redis to remain available. This warms the connection, not cached query results or translations.
+
+Initial attempts triggered later by requests keep their shared 100 ms timeout. These timers are not hard wall-clock deadlines when the event loop is busy. If the connection becomes ready within that window, they use the cache. Otherwise they load data without Redis while the connection continues in the background; later requests do not repeat the wait for the same attempt. Requests during automatic reconnection bypass the cache until the connection is ready. Failed initial connection attempts are retried on a later request after a three-second cooldown. An established connection uses bounded automatic reconnects, and commands are not queued while Redis is offline. Requests never disconnect the shared client. Cache keys, domain separation and TTLs are unchanged.
+
+When Redis cannot provide a translation version, SSR omits it rather than reporting version `0`; client navigation retains a known version and does not refresh translations solely because the version is unavailable. A missing version key during deployment is also treated as unknown. Once a real new version becomes available, client navigation refreshes the translations normally.

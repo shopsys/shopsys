@@ -4,9 +4,7 @@ import { TypeProductInProductListFragment } from 'graphql/requests/productLists/
 import { CSSProperties, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
-
-export const PRODUCT_COMPARISON_STICKY_TRIGGER_ID = 'js-product-comparison-sticky-trigger';
-export const PRODUCT_COMPARISON_END_TRIGGER_ID = 'js-table-compare-wrap';
+import { PRODUCT_COMPARISON_STICKY_TRIGGER_ID } from './productComparisonConstants';
 
 type ProductComparisonHeadProps = {
     comparedProducts: TypeProductInProductListFragment[];

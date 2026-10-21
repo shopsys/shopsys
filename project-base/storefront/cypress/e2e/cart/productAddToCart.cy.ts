@@ -179,6 +179,7 @@ describe('Product Add To Cart Tests', () => {
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.product_list_item_image, zIndex: 5 },
+                { tid: TIDs.simple_navigation_image, zIndex: 5 },
             ],
         });
         checkPopupIsVisible(true);

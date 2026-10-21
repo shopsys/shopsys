@@ -18,7 +18,6 @@ vi.mock('components/Blocks/Product/ProductsSlider', () => ({
             ))}
         </div>
     ),
-    VISIBLE_SLIDER_ITEMS_LAST_VISITED: 5,
 }));
 
 vi.mock('components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts', () => ({

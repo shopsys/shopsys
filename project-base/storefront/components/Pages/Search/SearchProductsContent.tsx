@@ -1,5 +1,6 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { ProductsList, productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { productListTwClass } from 'components/Blocks/Product/ProductsList/productsListConstants';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeSearchResultsConnectionFragment } from 'graphql/requests/search/fragments/SearchResultsConnectionFragment.generated';

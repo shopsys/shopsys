@@ -5,6 +5,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { Fragment, ReactNode, RefObject } from 'react';
 import { SwipeableHandlers } from 'react-swipeable';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -87,6 +88,8 @@ export const ProductsListContent: FC<ProductsListProps> = ({
 }) => {
     const { toggleProductInComparison, isProductInComparison } = useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
+    const currentCart = { cart, isCartFetchingOrUnavailable };
 
     return (
         <ProductListPresentation
@@ -106,6 +109,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                         toggleProductInWishlist(item.product, item.gtmProductListName, item.listIndex)
                     }
                     {...productItemProps}
+                    currentCart={currentCart}
                 />
             )}
         />

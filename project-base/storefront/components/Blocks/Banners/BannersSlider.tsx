@@ -5,7 +5,7 @@ import { onGtmPromotionClickEventHandler } from 'gtm/handlers/onGtmPromotionClic
 import { mapGtmBannerPromotion } from 'gtm/mappers/mapGtmBannerPromotion';
 import { GtmPromotionType } from 'gtm/types/events';
 import { useGtmPromotionListViewEvent } from 'gtm/utils/pageReadyEvents/useGtmPromotionListViewEvent';
-import { startTransition, useEffect, useEffectEvent, useReducer, useRef, useState } from 'react';
+import { startTransition, useEffect, useEffectEvent, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -31,7 +31,6 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         isSliding: false,
         slideDirection: 'NEXT',
     });
-    const [shouldRenderAllSlides, setShouldRenderAllSlides] = useState(false);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const checkAndClearInterval = () => {
@@ -53,7 +52,6 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     const slide = (dir: 'PREV' | 'NEXT') => {
-        setShouldRenderAllSlides(true);
         checkAndClearInterval();
         dispatchBannerSliderStateChange({ type: dir, numItems });
         setTimeout(() => {
@@ -65,7 +63,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     const onStartInterval = useEffectEvent(() => {
-        slide('NEXT');
+        startInterval();
     });
 
     const onClearInterval = useEffectEvent(() => {
@@ -73,30 +71,12 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     });
 
     useEffect(() => {
-        // Delay auto-rotation start so LCP stays locked to slide 1 (which has
-        // all the right priority hints). Start earlier if the user interacts first.
-        const controller = new AbortController();
-        const { signal } = controller;
+        onStartInterval();
 
-        const start = () => {
-            controller.abort();
-            setShouldRenderAllSlides(true);
-            onStartInterval();
-        };
-
-        const timeout = setTimeout(start, SLIDER_AUTOMATIC_SLIDE_INTERVAL);
-        window.addEventListener('scroll', start, { signal, passive: true });
-        window.addEventListener('pointerdown', start, { signal });
-
-        return () => {
-            clearTimeout(timeout);
-            controller.abort();
-            onClearInterval();
-        };
+        return () => onClearInterval();
     }, []);
 
     const moveToSlide = (slideToMoveTo: number) => {
-        setShouldRenderAllSlides(true);
         checkAndClearInterval();
         dispatchBannerSliderStateChange({ type: 'MOVE_TO', slideToMoveTo });
         startInterval();
@@ -150,12 +130,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     })}
                     onFocus={checkAndClearInterval}
                     onMouseEnter={checkAndClearInterval}
-                    onMouseLeave={() => {
-                        checkAndClearInterval();
-                        if (shouldRenderAllSlides) {
-                            startInterval();
-                        }
-                    }}
+                    onMouseLeave={startInterval}
                     onClick={() => onGtmPromotionClickEventHandler(currentPromotion, currentBanner.link)}
                 >
                     <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
@@ -177,15 +152,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                                     numItems,
                                 );
 
-                                return shouldRenderAllSlides || index === 0 ? (
-                                    <Banner key={item.uuid} banner={item} isFirst={index === 0} order={order} />
-                                ) : (
-                                    <div
-                                        key={item.uuid}
-                                        className="h-62.5 vl:h-106.25 flex-[1_0_100%] basis-full md:h-86.25"
-                                        style={{ order }}
-                                    />
-                                );
+                                return <Banner key={item.uuid} banner={item} isFirst={index === 0} order={order} />;
                             })}
                         </div>
                     </div>
