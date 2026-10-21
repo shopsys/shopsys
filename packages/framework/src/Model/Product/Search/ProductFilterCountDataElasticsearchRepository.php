@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Component\Elasticsearch\MultipleSearchRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -20,42 +19,15 @@ class ProductFilterCountDataElasticsearchRepository
     protected const string PARAMETER_PLUS_NUMBERS_QUERY_NAME_PREFIX = 'parameter_plus_numbers_';
 
     public function __construct(
-        protected readonly MultipleSearchRepository $multipleSearchRepository,
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         protected readonly AggregationResultToProductFilterCountDataTransformer $aggregationResultToCountDataTransformer,
     ) {
     }
 
-    public function getProductFilterCountDataInSearch(
-        ProductFilterData $productFilterData,
-        FilterQuery $baseFilterQuery,
-    ): ProductFilterCountData {
-        return $this->getProductFilterCountData($productFilterData, $baseFilterQuery, false);
-    }
-
-    public function getProductFilterCountDataInCategory(
-        ProductFilterData $productFilterData,
-        FilterQuery $baseFilterQuery,
-    ): ProductFilterCountData {
-        return $this->getProductFilterCountData($productFilterData, $baseFilterQuery, true);
-    }
-
-    protected function getProductFilterCountData(
-        ProductFilterData $productFilterData,
-        FilterQuery $baseFilterQuery,
-        bool $withParameters,
-    ): ProductFilterCountData {
-        $responsesIndexedByQueryName = $this->multipleSearchRepository->searchIndexedByKey(
-            $this->createSearchQueriesIndexedByQueryName($productFilterData, $baseFilterQuery, $withParameters),
-        );
-
-        return $this->createCountData($productFilterData, $responsesIndexedByQueryName, $withParameters);
-    }
-
     /**
      * @return array<string, array{index: string, body: array<string, mixed>}>
      */
-    protected function createSearchQueriesIndexedByQueryName(
+    public function createSearchQueriesIndexedByQueryName(
         ProductFilterData $productFilterData,
         FilterQuery $baseFilterQuery,
         bool $withParameters,
@@ -156,7 +128,7 @@ class ProductFilterCountDataElasticsearchRepository
     /**
      * @param array<string, array<string, mixed>> $responsesIndexedByQueryName
      */
-    protected function createCountData(
+    public function createCountData(
         ProductFilterData $productFilterData,
         array $responsesIndexedByQueryName,
         bool $withParameters,

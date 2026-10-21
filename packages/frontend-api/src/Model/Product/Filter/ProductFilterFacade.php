@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
+use Closure;
+use GraphQL\Executor\Promise\Promise;
+use GraphQL\Executor\Promise\PromiseAdapter;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
 
@@ -29,6 +36,10 @@ class ProductFilterFacade
         protected readonly ProductFilterDataFactory $productFilterDataFactory,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly ProductFilterElasticFacade $productFilterElasticFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly PromiseAdapter $promiseAdapter,
+        protected readonly DataLoaderInterface $elasticsearchSearchBatchLoader,
     ) {
     }
 
@@ -127,21 +138,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    public function getProductFilterConfigForSearch(string $searchText): ProductFilterConfig
-    {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($searchText) {
-                return $this->productFilterConfigFactory->createForSearch(
-                    $this->domain->getLocale(),
-                    $searchText,
-                );
-            },
-            'search',
-            $searchText,
-        );
-    }
-
     public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
     {
         if ($argument['filter'] === null) {
@@ -168,6 +164,110 @@ class ProductFilterFacade
             'flag',
             $locale,
             $flag->getId(),
+        );
+    }
+
+    public function getProductFilterConfigPromiseForAll(): Promise
+    {
+        return $this->getProductFilterConfigPromise(
+            fn (): array => $this->productFilterElasticFacade->getAggregationQueryForAll(
+                $this->currentCustomerUser->getPricingGroup(),
+            ),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
+                $productFilterConfigIdsData,
+                $this->domain->getLocale(),
+            ),
+            'all',
+        );
+    }
+
+    public function getProductFilterConfigPromiseForSearch(string $searchText): Promise
+    {
+        return $this->getProductFilterConfigPromise(
+            fn (): array => $this->productFilterElasticFacade->getAggregationQueryForSearch(
+                $searchText,
+                $this->currentCustomerUser->getPricingGroup(),
+            ),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
+                $productFilterConfigIdsData,
+                $this->domain->getLocale(),
+            ),
+            'search',
+            $searchText,
+        );
+    }
+
+    public function getProductFilterConfigPromiseForBrand(Brand $brand): Promise
+    {
+        return $this->getProductFilterConfigPromise(
+            fn (): array => $this->productFilterElasticFacade->getAggregationQueryInBrand(
+                $brand->getId(),
+                $this->currentCustomerUser->getPricingGroup(),
+            ),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithFlagChoices(
+                $productFilterConfigIdsData,
+                $this->domain->getLocale(),
+            ),
+            'brand',
+            $brand->getId(),
+        );
+    }
+
+    public function getProductFilterConfigPromiseForCategory(Category $category): Promise
+    {
+        return $this->getProductFilterConfigPromise(
+            fn (): array => $this->productFilterElasticFacade->getAggregationQueryInCategory(
+                $category,
+                $this->currentCustomerUser->getPricingGroup(),
+            ),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithParameterFlagAndBrandChoices(
+                $productFilterConfigIdsData,
+                $this->domain->getLocale(),
+                $category,
+            ),
+            'category',
+            $category->getId(),
+        );
+    }
+
+    public function getProductFilterConfigPromiseForFlag(Flag $flag): Promise
+    {
+        $locale = $this->domain->getLocale();
+
+        return $this->getProductFilterConfigPromise(
+            fn (): array => $this->productFilterElasticFacade->getAggregationQueryInFlag(
+                $flag->getId(),
+                $this->currentCustomerUser->getPricingGroup(),
+            ),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
+                $productFilterConfigIdsData,
+                $locale,
+            ),
+            'flag',
+            $locale,
+            $flag->getId(),
+        );
+    }
+
+    protected function getProductFilterConfigPromise(
+        Closure $createAggregationQuery,
+        Closure $createProductFilterConfig,
+        mixed ...$cacheKeyParts,
+    ): Promise {
+        if ($this->inMemoryCache->hasItem(static::PRODUCT_FILTER_CACHE_NAMESPACE, ...$cacheKeyParts)) {
+            return $this->promiseAdapter->createFulfilled(
+                $this->inMemoryCache->getItem(static::PRODUCT_FILTER_CACHE_NAMESPACE, ...$cacheKeyParts),
+            );
+        }
+
+        return $this->elasticsearchSearchBatchLoader->load($createAggregationQuery())->then(
+            fn (array $aggregationResponse): ProductFilterConfig => $this->inMemoryCache->getOrSaveValue(
+                static::PRODUCT_FILTER_CACHE_NAMESPACE,
+                fn (): ProductFilterConfig => $createProductFilterConfig(
+                    $this->productFilterElasticFacade->createProductFilterConfigIdsData($aggregationResponse),
+                ),
+                ...$cacheKeyParts,
+            ),
         );
     }
 }

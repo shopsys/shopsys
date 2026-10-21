@@ -32,6 +32,9 @@ overblog_dataloader:
         customerUploadedFilesBatchLoader:
             alias: "customer_uploaded_files_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\CustomerUploadedFile\\CustomerUploadedFilesBatchLoader:loadByBatchData"
+        elasticsearchSearchBatchLoader:
+            alias: "elasticsearch_search_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Elasticsearch\\ElasticsearchSearchBatchLoader:loadByQueries"
         filesBatchLoader:
             alias: "files_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Files\\FilesBatchLoader:loadByBatchData"

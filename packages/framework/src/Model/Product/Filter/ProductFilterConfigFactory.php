@@ -46,6 +46,14 @@ class ProductFilterConfigFactory
             $this->currentCustomerUser->getPricingGroup(),
         );
 
+        return $this->createWithParameterFlagAndBrandChoices($productFilterConfigIdsData, $locale, $category);
+    }
+
+    public function createWithParameterFlagAndBrandChoices(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+        string $locale,
+        Category $category,
+    ): ProductFilterConfig {
         $aggregatedParameterFilterChoices = $this->parameterFacade->getParameterFilterChoicesByIds(
             $productFilterConfigIdsData->getParameterValueIdsByParameterId(),
             $locale,
@@ -59,16 +67,6 @@ class ProductFilterConfigFactory
         );
     }
 
-    public function createForSearch(string $locale, string $searchText): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
-            $searchText,
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
-    }
-
     public function createForBrand(string $locale, Brand $brand): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
@@ -76,6 +74,13 @@ class ProductFilterConfigFactory
             $this->currentCustomerUser->getPricingGroup(),
         );
 
+        return $this->createWithFlagChoices($productFilterConfigIdsData, $locale);
+    }
+
+    public function createWithFlagChoices(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+        string $locale,
+    ): ProductFilterConfig {
         return $this->create(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
@@ -129,7 +134,7 @@ class ProductFilterConfigFactory
         return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
     }
 
-    protected function createWithFlagAndBrandChoices(
+    public function createWithFlagAndBrandChoices(
         ProductFilterConfigIdsData $productFilterConfigIdsData,
         string $locale,
     ): ProductFilterConfig {

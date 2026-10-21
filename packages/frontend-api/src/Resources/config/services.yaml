@@ -96,7 +96,15 @@ services:
         arguments:
             $productReviewCreateRateLimiter: '@limiter.frontend_api_product_review_create'
 
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade:
+        arguments:
+            $elasticsearchSearchBatchLoader: '@elasticsearch_search_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFacade:
+        arguments:
+            $elasticsearchSearchBatchLoader: '@elasticsearch_search_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertResolverMap:
         arguments:
