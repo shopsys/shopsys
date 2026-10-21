@@ -15,7 +15,7 @@ class MultipleSearchQuery
     protected array $body;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
+     * @param array<\Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery|\Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery> $filterQueries
      */
     public function __construct(protected readonly string $indexName, array $filterQueries)
     {
@@ -31,7 +31,7 @@ class MultipleSearchQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
+     * @param array<\Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery|\Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery> $filterQueries
      */
     protected function getBody(array $filterQueries): array
     {

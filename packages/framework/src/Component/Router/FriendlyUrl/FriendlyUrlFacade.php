@@ -159,7 +159,12 @@ class FriendlyUrlFacade
             return $domainConfig->getUrl();
         }
 
-        return $domainConfig->getUrl() . '/' . $mainFriendlyUrlSlug;
+        return $this->getAbsoluteUrlByMainFriendlyUrlSlug($domainId, $mainFriendlyUrlSlug);
+    }
+
+    public function getAbsoluteUrlByMainFriendlyUrlSlug(int $domainId, string $mainFriendlyUrlSlug): string
+    {
+        return $this->domain->getDomainConfigById($domainId)->getUrl() . '/' . $mainFriendlyUrlSlug;
     }
 
     public function getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(string $routeName, int $entityId): string
@@ -238,9 +243,7 @@ class FriendlyUrlFacade
 
     public function getAbsoluteUrlByFriendlyUrl(FriendlyUrl $friendlyUrl): string
     {
-        $domainConfig = $this->domain->getDomainConfigById($friendlyUrl->getDomainId());
-
-        return $domainConfig->getUrl() . '/' . $friendlyUrl->getSlug();
+        return $this->getAbsoluteUrlByMainFriendlyUrlSlug($friendlyUrl->getDomainId(), $friendlyUrl->getSlug());
     }
 
     protected function renewMainFriendlyUrlSlugCache(FriendlyUrl $mainFriendlyUrl): void

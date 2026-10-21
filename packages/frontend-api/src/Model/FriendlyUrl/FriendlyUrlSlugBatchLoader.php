@@ -60,6 +60,14 @@ class FriendlyUrlSlugBatchLoader
     /**
      * @param int[] $entityIds
      */
+    public function loadBlogCategoryMainFriendlyUrlSlugs(array $entityIds): Promise
+    {
+        return $this->loadMainFriendlyUrlSlugs($entityIds, BlogCategoryDetailFriendlyUrlDataProvider::ROUTE_NAME);
+    }
+
+    /**
+     * @param int[] $entityIds
+     */
     public function loadCategorySlugs(array $entityIds): Promise
     {
         return $this->loadSlugs($entityIds, ProductListFriendlyUrlDataProvider::ROUTE_NAME);
@@ -98,11 +106,52 @@ class FriendlyUrlSlugBatchLoader
 
     /**
      * @param int[] $entityIds
+     */
+    protected function loadMainFriendlyUrlSlugs(array $entityIds, string $routeName): Promise
+    {
+        $mainFriendlyUrlSlugsIndexedByEntityId = $this->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain(
+            $entityIds,
+            $routeName,
+            $this->domain->getId(),
+        );
+        $mainFriendlyUrlSlugs = [];
+
+        foreach ($entityIds as $entityId) {
+            $mainFriendlyUrlSlugs[] = $mainFriendlyUrlSlugsIndexedByEntityId[$entityId];
+        }
+
+        return $this->promiseAdapter->all($mainFriendlyUrlSlugs);
+    }
+
+    /**
+     * @param int[] $entityIds
      * @return array<int, string>
      */
     public function getSlugsIndexedByEntityId(array $entityIds, string $routeName): array
     {
-        $domainId = $this->domain->getId();
+        $mainFriendlyUrlSlugsIndexedByEntityId = $this->getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain(
+            $entityIds,
+            $routeName,
+            $this->domain->getId(),
+        );
+        $slugsIndexedByEntityId = [];
+
+        foreach ($mainFriendlyUrlSlugsIndexedByEntityId as $entityId => $mainFriendlyUrlSlug) {
+            $slugsIndexedByEntityId[$entityId] = '/' . $mainFriendlyUrlSlug;
+        }
+
+        return $slugsIndexedByEntityId;
+    }
+
+    /**
+     * @param int[] $entityIds
+     * @return array<int, string>
+     */
+    public function getMainFriendlyUrlSlugsIndexedByEntityIdOnDomain(
+        array $entityIds,
+        string $routeName,
+        int $domainId,
+    ): array {
         $slugsByEntityId = [];
         $missingEntityIds = [];
 
@@ -111,7 +160,7 @@ class FriendlyUrlSlugBatchLoader
             $cachedSlug = $this->mainFriendlyUrlSlugCache->get($cacheKey, fn () => null);
 
             if ($cachedSlug !== null) {
-                $slugsByEntityId[$entityId] = '/' . $cachedSlug;
+                $slugsByEntityId[$entityId] = $cachedSlug;
             } else {
                 $missingEntityIds[] = $entityId;
             }
@@ -132,7 +181,7 @@ class FriendlyUrlSlugBatchLoader
                 }
 
                 $slug = $friendlyUrls[$entityId]->getSlug();
-                $slugsByEntityId[$entityId] = '/' . $slug;
+                $slugsByEntityId[$entityId] = $slug;
 
                 $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey($routeName, $domainId, $entityId);
                 $this->mainFriendlyUrlSlugCache->delete($cacheKey);

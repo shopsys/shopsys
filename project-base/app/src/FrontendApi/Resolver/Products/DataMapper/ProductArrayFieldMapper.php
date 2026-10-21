@@ -7,6 +7,7 @@ namespace App\FrontendApi\Resolver\Products\DataMapper;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -50,6 +51,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         DataLoaderInterface $additionalServicesByIdsBatchLoader,
         DataLoaderInterface $categoriesBatchLoader,
         SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
+        FriendlyUrlFacade $friendlyUrlFacade,
         private readonly DataLoaderInterface $flagsBatchLoader,
         private readonly DataLoaderInterface $brandsBatchLoader,
     ) {
@@ -69,6 +71,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $additionalServicesByIdsBatchLoader,
             $categoriesBatchLoader,
             $seoAttributesQueryDtoFactory,
+            $friendlyUrlFacade,
         );
     }
 
