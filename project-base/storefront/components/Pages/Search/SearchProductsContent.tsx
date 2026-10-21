@@ -2,7 +2,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList, productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
+import { TypeSearchResultsConnectionFragment } from 'graphql/requests/search/fragments/SearchResultsConnectionFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmPaginatedProductListViewEvent';
@@ -14,7 +14,7 @@ import { getMappedProducts } from 'utils/mappers/products';
 type SearchProductsContentProps = {
     areSearchProductsFetching: boolean;
     isLoadingMoreSearchProducts: boolean;
-    searchProductsData: TypeSearchProductsQuery['productsSearch'];
+    searchProductsData: TypeSearchResultsConnectionFragment;
 };
 
 export const SearchProductsContent: FC<SearchProductsContentProps> = ({

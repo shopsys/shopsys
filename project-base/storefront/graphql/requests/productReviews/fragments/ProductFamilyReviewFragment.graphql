@@ -1,0 +1,5 @@
+fragment ProductFamilyReviewFragment on ProductReview {
+    ...ProductReviewFragment
+    productUuid
+    status
+}

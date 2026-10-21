@@ -1,5 +1,6 @@
 query OrderWithdrawalInstructionsQuery($urlHash: String!) {
     order(urlHash: $urlHash) {
-        ...OrderWithdrawalInstructionsFragment
+        __typename
+        withdrawalInstructions
     }
 }

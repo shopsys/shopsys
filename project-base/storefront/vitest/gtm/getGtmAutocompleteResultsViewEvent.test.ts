@@ -1,5 +1,4 @@
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { getGtmAutocompleteResultsViewEvent } from 'gtm/factories/getGtmAutocompleteResultsViewEvent';
 import { describe, expect, test } from 'vitest';
@@ -11,8 +10,6 @@ const autocompleteSearchResult = {
             uuid: '92c929d6-0fc5-4df2-8dbd-b7a94b2d9629',
             name: 'Smart article',
             slug: '/smart-article',
-            placement: 'footer',
-            external: false,
         },
     ],
     brandSearch: [{ __typename: 'Brand', name: 'Smart brand', slug: '/smart-brand' }],
@@ -33,19 +30,7 @@ const autocompleteSearchResult = {
     },
     productsSearch: {
         __typename: 'ProductConnection',
-        orderingMode: TypeProductOrderingModeEnum.Relevance,
-        defaultOrderingMode: null,
         totalCount: 23,
-        productFilterOptions: {
-            __typename: 'ProductFilterOptions',
-            minimalPrice: '0',
-            maximalPrice: '0',
-            inStock: 0,
-            brands: null,
-            flags: null,
-            parameters: null,
-        },
-        pageInfo: { hasNextPage: true },
         edges: [{ __typename: 'ProductEdge', node: null }],
     },
 } satisfies TypeAutocompleteSearchQuery;

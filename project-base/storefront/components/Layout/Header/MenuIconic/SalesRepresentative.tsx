@@ -2,7 +2,7 @@ import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { TypeSalesRepresentative } from 'graphql/types';
+import { TypeSalesRepresentativeFragment } from 'graphql/requests/customer/fragments/SalesRepresentativeFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -88,7 +88,9 @@ const getFullName = (firstName?: string | null, lastName?: string | null): strin
     return `${firstName} ${lastName}`;
 };
 
-const getShowSalesRepresentative = (salesRepresentative: TypeSalesRepresentative | null | undefined): boolean => {
+const getShowSalesRepresentative = (
+    salesRepresentative: TypeSalesRepresentativeFragment | null | undefined,
+): boolean => {
     return (
         !!salesRepresentative &&
         !!(

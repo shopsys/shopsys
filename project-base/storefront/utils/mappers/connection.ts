@@ -1,11 +1,19 @@
-export const mapConnectionEdges = <MappedNodeType>(
-    connectionEdges: ({ node: unknown | null } | null)[] | null | undefined,
-    mapper?: (unmappedNode: unknown) => MappedNodeType,
-): MappedNodeType[] | undefined =>
-    connectionEdges?.reduce((mappedEdges: MappedNodeType[], edge) => {
+type ConnectionEdges<Node> = ({ node: Node | null } | null)[] | null | undefined;
+
+export function mapConnectionEdges<Node>(connectionEdges: ConnectionEdges<Node>): Node[] | undefined;
+export function mapConnectionEdges<Node, MappedNode>(
+    connectionEdges: ConnectionEdges<Node>,
+    mapper: (node: Node) => MappedNode,
+): MappedNode[] | undefined;
+export function mapConnectionEdges<Node, MappedNode>(
+    connectionEdges: ConnectionEdges<Node>,
+    mapper?: (node: Node) => MappedNode,
+): (Node | MappedNode)[] | undefined {
+    return connectionEdges?.reduce((mappedEdges: (Node | MappedNode)[], edge) => {
         if (edge?.node) {
-            mappedEdges.push(mapper ? mapper(edge.node) : (edge.node as MappedNodeType));
+            mappedEdges.push(mapper ? mapper(edge.node) : edge.node);
         }
 
         return mappedEdges;
     }, []);
+}

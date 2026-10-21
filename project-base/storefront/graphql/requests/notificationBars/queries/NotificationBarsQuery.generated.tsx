@@ -6,7 +6,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { NotificationBarsFragment } from '../fragments/NotificationBarsFragment.generated';
+import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeNotificationBarsVariables = Exact<{ [key: string]: never; }>;
@@ -18,10 +18,19 @@ export type TypeNotificationBars = { notificationBars: Array<{ __typename: 'Noti
 export const NotificationBarsDocument = gql`
     query NotificationBars @redisCache(ttl: 300) {
   notificationBars {
-    ...NotificationBarsFragment
+    __typename
+    uuid
+    text
+    plainText
+    rgbColor
+    validityFrom
+    validityTo
+    mainImage {
+      ...ImageFragment
+    }
   }
 }
-    ${NotificationBarsFragment}`;
+    ${ImageFragment}`;
 
 export function useNotificationBars(options?: Omit<Urql.UseQueryArgs<TypeNotificationBarsVariables>, 'query'>) {
   return Urql.useQuery<TypeNotificationBars, TypeNotificationBarsVariables>({ query: NotificationBarsDocument, ...options });

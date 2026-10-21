@@ -1,5 +1,12 @@
 fragment SimpleNotBlogArticleFragment on NotBlogArticleInterface {
     __typename
     ...SimpleArticleSiteFragment
-    ...SimpleArticleLinkFragment
+    ... on ArticleLink {
+        __typename
+        uuid
+        name
+        url
+        placement
+        external
+    }
 }

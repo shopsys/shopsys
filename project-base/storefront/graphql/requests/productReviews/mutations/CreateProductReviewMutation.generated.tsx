@@ -6,7 +6,6 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { CustomerUserProductReviewFragment } from '../fragments/CustomerUserProductReviewFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** Represents the input for creating a product review */
@@ -31,34 +30,22 @@ export type TypeProductReviewInput = {
   text?: string | null | undefined;
 };
 
-/** One of possible moderation statuses of a product review */
-export type TypeProductReviewStatusEnum =
-  /** The review is approved and publicly visible */
-  | 'APPROVED'
-  /** The review is waiting for moderation */
-  | 'PENDING'
-  /** The review was rejected */
-  | 'REJECTED';
-
 export type TypeCreateProductReviewMutationVariables = Exact<{
   input: Types.TypeProductReviewInput;
 }>;
 
 
-export type TypeCreateProductReviewMutation = { CreateProductReview: { __typename: 'ProductReview', uuid: string, reviewerName: string | null, rating: number, text: string | null, createdAt: string, isVerifiedPurchase: boolean, status: Types.TypeProductReviewStatusEnum, rejectionReason: string | null, responseText: string | null, responseCreatedAt: string | null, rejectedImagesCount: number, productUuid: string | null, productName: string, product:
-      | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
-      | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
-      | { slug: string, isVisible: boolean, fullName: string, mainImage: { url: string } | null }
-     | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> } };
+export type TypeCreateProductReviewMutation = { CreateProductReview: { __typename: 'ProductReview', uuid: string } };
 
 
 export const CreateProductReviewMutationDocument = gql`
     mutation CreateProductReviewMutation($input: ProductReviewInput!) {
   CreateProductReview(input: $input) {
-    ...CustomerUserProductReviewFragment
+    __typename
+    uuid
   }
 }
-    ${CustomerUserProductReviewFragment}`;
+    `;
 
 export function useCreateProductReviewMutation() {
   return Urql.useMutation<TypeCreateProductReviewMutation, TypeCreateProductReviewMutationVariables>(CreateProductReviewMutationDocument);

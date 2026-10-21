@@ -3,7 +3,6 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -21,7 +20,7 @@ export type BlogPreviewProps = {
 export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogName, blogUrl, fetchingArticles }) => {
     const { t } = useTranslation();
 
-    const blogItems = mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles);
+    const blogItems = mapConnectionEdges(blogArticles);
     const blogMainItems = blogItems?.slice(0, 3);
     const blogSideItems = blogItems?.slice(3);
 

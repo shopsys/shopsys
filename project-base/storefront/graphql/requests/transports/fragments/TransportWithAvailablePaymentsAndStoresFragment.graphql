@@ -1,42 +1,6 @@
 fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
-    __typename
-    uuid
-    name
-    description
-    price {
-        ...PriceFragment
-    }
-    mainImage {
-        ...ImageFragment
-    }
-    group {
-        uuid
-        name
-        position
-        mainImage {
-            ...ImageFragment
-        }
-    }
-    payments {
-        ...SimplePaymentFragment
-    }
-    expectedDeliveryDate
+    ...TransportWithAvailablePaymentsFragment
     stores {
         ...ListedStoreConnectionFragment
     }
-    transportTypeCode
-    productsBlockingSelectionInCart {
-        reason
-        products {
-            uuid
-            fullName
-            mainCategory {
-                name
-            }
-            mainImage {
-                ...ImageFragment
-            }
-        }
-    }
-    vatPercent
 }

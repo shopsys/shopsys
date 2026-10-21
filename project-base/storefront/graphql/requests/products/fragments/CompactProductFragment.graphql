@@ -1,0 +1,55 @@
+fragment CompactProductFragment on Product {
+    __typename
+    id
+    uuid
+    slug
+    fullName
+    mainCategory {
+        name
+    }
+    isSellingDenied
+    flags {
+        ...SimpleFlagFragment
+    }
+    mainImage {
+        ...ImageFragment
+    }
+    price {
+        ...ListedProductPriceFragment
+    }
+    expectedRestockingDate
+    availability {
+        ...AvailabilityFragment
+    }
+    catalogNumber
+    brand {
+        __typename
+        name
+    }
+    categories {
+        __typename
+        name
+    }
+    isMainVariant
+    reviewsSummary {
+        __typename
+        averageRating
+        totalCount
+    }
+    productType
+
+    ... on MainVariant {
+        variantsCount
+    }
+
+    ... on Variant {
+        mainVariant {
+            __typename
+            reviewsSummary {
+                __typename
+                averageRating
+                totalCount
+            }
+        }
+    }
+}

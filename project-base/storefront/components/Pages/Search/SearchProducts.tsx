@@ -7,7 +7,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
+import { TypeSearchResultsConnectionFragment } from 'graphql/requests/search/fragments/SearchResultsConnectionFragment.generated';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -16,7 +16,7 @@ import { SearchProductsContent } from './SearchProductsContent';
 import { useSearchProductsData } from './searchUtils';
 
 type SearchProductsProps = {
-    searchProductsDataFromMainQuery?: TypeSearchProductsQuery['productsSearch'];
+    searchProductsDataFromMainQuery?: TypeSearchResultsConnectionFragment;
 };
 
 export const SearchProducts: FC<SearchProductsProps> = ({ searchProductsDataFromMainQuery }) => {

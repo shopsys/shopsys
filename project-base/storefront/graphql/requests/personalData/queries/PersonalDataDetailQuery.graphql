@@ -1,5 +1,102 @@
 query PersonalDataDetailQuery($hash: String!) {
     accessPersonalData(hash: $hash) {
-        ...PersonalDataDetailFragment
+        __typename
+        orders {
+            __typename
+            uuid
+            city
+            companyName
+            number
+            creationDate
+            items {
+                __typename
+                uuid
+                type
+                name
+            }
+            firstName
+            lastName
+            telephone
+            companyNumber
+            companyTaxNumber
+            street
+            city
+            postcode
+            country {
+                ...CountryFragment
+            }
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry {
+                ...CountryFragment
+            }
+            productItems {
+                __typename
+                uuid
+                quantity
+            }
+            totalPrice {
+                priceWithVat
+            }
+        }
+        customerUser {
+            __typename
+            uuid
+            firstName
+            lastName
+            email
+            telephone
+            street
+            city
+            postcode
+            country {
+                ...CountryFragment
+            }
+            deliveryAddresses {
+                ...DeliveryAddressFragment
+            }
+            ... on CompanyCustomerUser {
+                companyName
+                companyNumber
+                companyTaxNumber
+            }
+        }
+        newsletterSubscriber {
+            __typename
+            email
+            createdAt
+        }
+        exportLink
+        complaints {
+            __typename
+            uuid
+            number
+            createdAt
+            status
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryCity
+            deliveryPostcode
+            deliveryStreet
+            deliveryTelephone
+            deliveryCountry {
+                name
+            }
+            items {
+                __typename
+                productName
+                quantity
+                description
+                orderItem {
+                    uuid
+                }
+            }
+        }
     }
 }
