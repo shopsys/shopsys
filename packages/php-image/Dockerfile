@@ -107,6 +107,9 @@ RUN apk add --no-cache \
     rm /usr/local/bin/pie && \
     apk del .build-deps
 
+# Disable tracking of upload progress in session, it is not used and it exposes session handling to unauthenticated multipart requests
+RUN printf "session.upload_progress.enabled = Off\n" > $PHP_INI_DIR/conf.d/shopsys.ini
+
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
