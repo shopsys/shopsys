@@ -1,0 +1,7 @@
+query BrandsProductsWithMinimalPriceQuery($minimalPrice: Money) {
+    brands {
+        products(first: 1, filter: { minimalPrice: $minimalPrice }) {
+            totalCount
+        }
+    }
+}

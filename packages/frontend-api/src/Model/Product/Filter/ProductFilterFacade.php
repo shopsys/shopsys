@@ -52,36 +52,6 @@ class ProductFilterFacade
         );
     }
 
-    public function getProductFilterConfigForBrand(Brand $brand): ProductFilterConfig
-    {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($brand) {
-                return $this->productFilterConfigFactory->createForBrand(
-                    $this->domain->getLocale(),
-                    $brand,
-                );
-            },
-            'brand',
-            $brand->getId(),
-        );
-    }
-
-    public function getProductFilterConfigForCategory(Category $category): ProductFilterConfig
-    {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($category) {
-                return $this->productFilterConfigFactory->createForCategory(
-                    $this->domain->getLocale(),
-                    $category,
-                );
-            },
-            'category',
-            $category->getId(),
-        );
-    }
-
     protected function getValidatedProductFilterData(
         Argument $argument,
         ProductFilterConfig $productFilterConfig,
@@ -112,28 +82,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForCategory($category);
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForBrand($brand);
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
     public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
     {
         if ($argument['filter'] === null) {
@@ -158,6 +106,46 @@ class ProductFilterFacade
             'flag',
             $locale,
             $flag->getId(),
+        );
+    }
+
+    public function getValidatedProductFilterDataPromiseForCategory(Argument $argument, Category $category): Promise
+    {
+        return $this->getValidatedProductFilterDataPromise(
+            $argument,
+            fn (): Promise => $this->getProductFilterConfigPromiseForCategory($category),
+        );
+    }
+
+    public function getValidatedProductFilterDataPromiseForBrand(Argument $argument, Brand $brand): Promise
+    {
+        return $this->getValidatedProductFilterDataPromise(
+            $argument,
+            fn (): Promise => $this->getProductFilterConfigPromiseForBrand($brand),
+        );
+    }
+
+    public function getValidatedProductFilterDataPromiseForFlag(Argument $argument, Flag $flag): Promise
+    {
+        return $this->getValidatedProductFilterDataPromise(
+            $argument,
+            fn (): Promise => $this->getProductFilterConfigPromiseForFlag($flag),
+        );
+    }
+
+    protected function getValidatedProductFilterDataPromise(
+        Argument $argument,
+        Closure $getProductFilterConfigPromise,
+    ): Promise {
+        if ($argument['filter'] === null) {
+            return $this->promiseAdapter->createFulfilled($this->productFilterDataFactory->create());
+        }
+
+        return $getProductFilterConfigPromise()->then(
+            fn (ProductFilterConfig $productFilterConfig): ProductFilterData => $this->getValidatedProductFilterData(
+                $argument,
+                $productFilterConfig,
+            ),
         );
     }
 

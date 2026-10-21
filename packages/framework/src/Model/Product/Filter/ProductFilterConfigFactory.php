@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
@@ -14,8 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 class ProductFilterConfigFactory
 {
     public function __construct(
-        protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly ProductFilterElasticFacade $productFilterElasticFacade,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
@@ -36,18 +32,6 @@ class ProductFilterConfigFactory
         return new ProductFilterConfig($parameterChoices, $flagChoices, $brandChoices, $priceRange);
     }
 
-    public function createForCategory(
-        string $locale,
-        Category $category,
-    ): ProductFilterConfig {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
-            $category,
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithParameterFlagAndBrandChoices($productFilterConfigIdsData, $locale, $category);
-    }
-
     public function createWithParameterFlagAndBrandChoices(
         ProductFilterConfigIdsData $productFilterConfigIdsData,
         string $locale,
@@ -64,16 +48,6 @@ class ProductFilterConfigFactory
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
             $productFilterConfigIdsData->getPriceRange(),
         );
-    }
-
-    public function createForBrand(string $locale, Brand $brand): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
-            $brand->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagChoices($productFilterConfigIdsData, $locale);
     }
 
     public function createWithFlagChoices(
