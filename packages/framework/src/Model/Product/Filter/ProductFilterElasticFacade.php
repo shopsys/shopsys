@@ -18,20 +18,6 @@ class ProductFilterElasticFacade
     ) {
     }
 
-    public function getProductFilterDataInCategory(
-        Category $category,
-        PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        return $this->getProductFilterConfigIdsData($this->getAggregationQueryInCategory($category, $pricingGroup));
-    }
-
-    public function getProductFilterDataInBrand(
-        int $brandId,
-        PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        return $this->getProductFilterConfigIdsData($this->getAggregationQueryInBrand($brandId, $pricingGroup));
-    }
-
     public function getProductFilterDataInFlag(
         int $flagId,
         PricingGroup $pricingGroup,

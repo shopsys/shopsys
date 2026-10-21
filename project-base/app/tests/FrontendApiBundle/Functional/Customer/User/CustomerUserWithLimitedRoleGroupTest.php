@@ -126,6 +126,19 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         $this->assertSame('Filtering by price is not allowed for current user.', $errors[0]['message']);
     }
 
+    public function testCustomerUserCannotUseFilterByPriceInProductsOfBrands(): void
+    {
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('75000');
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/BrandsProductsWithMinimalPriceQuery.graphql', [
+            'minimalPrice' => $minimalPrice,
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('Filtering by price is not allowed for current user.', $errors[0]['message']);
+    }
+
     public function testCustomerUserCannotUseOrderingByPrice(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/ProductsQuery.graphql', [
