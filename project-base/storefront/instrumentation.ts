@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs';
 import { PHASE_PRODUCTION_BUILD } from 'next/constants';
 import { sentryDataCollection } from 'utils/sentry/dataCollection';
 import { getTracePropagationTargetsFromInternalEndpoint } from 'utils/sentry/tracePropagationTargets';
-import { sentryUrlPrivacyIntegration } from 'utils/sentry/urlPrivacy';
+import { scrubSentryData } from 'utils/sentry/urlPrivacy';
 
 const REDIS_STARTUP_WAIT_MS = 2000;
 
@@ -14,7 +14,8 @@ export async function register() {
         const sentryConfig = {
             dsn: sentryDsn,
             dataCollection: sentryDataCollection,
-            integrations: [sentryUrlPrivacyIntegration()],
+            beforeSend: scrubSentryData,
+            beforeSendSpan: scrubSentryData,
             environment: process.env.SENTRY_ENVIRONMENT,
             release: process.env.SENTRY_RELEASE,
             tracesSampleRate: 0.1,

@@ -1,11 +1,10 @@
 import type { getClient } from '@sentry/nextjs';
+import { routes } from 'config/routes';
 
-type SentryClient = NonNullable<ReturnType<typeof getClient>>;
-type Integration = Parameters<SentryClient['addIntegration']>[0];
-type Transport = NonNullable<ReturnType<SentryClient['getTransport']>>;
-type Envelope = Parameters<Transport['send']>[0];
+type Integration = Parameters<NonNullable<ReturnType<typeof getClient>>['addIntegration']>[0];
 
-const sensitiveParameterNames = /^(hash|email|token|access_token|refresh_token|password|secret|api_key)$/i;
+const sensitiveParameterNames =
+    /^(password|secret|api[_-]?key|(access_|refresh_)?token|e-?mail|[a-z0-9_-]*hash|[a-z0-9_-]*uuid)$/i;
 
 const isSensitiveParameter = (name: string): boolean => {
     try {
@@ -15,127 +14,38 @@ const isSensitiveParameter = (name: string): boolean => {
     }
 };
 
-const scrubString = (value: string): string =>
-    value.replace(/(^|[?&#])([^?&#=\s"'<>]+)=([^?&#\s"'<>]*)/g, (match, separator, name) =>
+// Derive localized capability URLs from the router so translated slugs stay covered.
+const sensitivePaths = Array.from(new Set(routes.flatMap((domainRoutes) => Object.values(domainRoutes))))
+    .filter((route) =>
+        route.split('/').some((segment) => segment.startsWith(':') && isSensitiveParameter(segment.slice(1))),
+    )
+    .map((route) => {
+        const prefix = route.slice(0, route.lastIndexOf('/') + 1);
+        const escapedPrefix = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp(`(${escapedPrefix})[^/?#\\s"'<>]+`, 'gi');
+    });
+
+const scrubString = (value: string): string => {
+    const scrubbedQuery = value.replace(/(^|[?&#])([^?&#=\s"'<>]+)=([^?&#\s"'<>]*)/g, (match, separator, name) =>
         isSensitiveParameter(name) ? `${separator}${name}=[Filtered]` : match,
     );
 
-const scrubJson = (value: unknown): string =>
-    JSON.stringify(value, (key, item) => {
-        if (isSensitiveParameter(key)) {
-            return '[Filtered]';
-        }
+    return sensitivePaths.reduce((result, path) => result.replace(path, '$1[Filtered]'), scrubbedQuery);
+};
 
-        return typeof item === 'string' ? scrubString(item) : item;
-    });
+export const scrubSentryData = <T>(value: T): T =>
+    JSON.parse(
+        JSON.stringify(value, (key, item) => {
+            if (isSensitiveParameter(key)) {
+                return '[Filtered]';
+            }
 
-const scrubRecording = async (payload: string | Uint8Array): Promise<string | Uint8Array> => {
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder('utf-8', { fatal: true });
-    const bytes = typeof payload === 'string' ? encoder.encode(payload) : payload;
-    const separator = bytes.indexOf(10);
-
-    if (separator === -1) {
-        throw new Error('Missing Sentry recording header');
-    }
-
-    const header = scrubJson(JSON.parse(decoder.decode(bytes.slice(0, separator))));
-    const body = bytes.slice(separator + 1);
-
-    if (typeof payload === 'string') {
-        return `${header}\n${scrubJson(JSON.parse(decoder.decode(body)))}`;
-    }
-
-    // Sentry 11 records rrweb Meta URLs outside beforeAddRecordingEvent. Scrub the
-    // complete recording, including DOM snapshots, before it reaches the transport.
-    const decompressed = await new Response(
-        new Blob([body]).stream().pipeThrough(new DecompressionStream('deflate')),
-    ).text();
-    const compressed = new Uint8Array(
-        await new Response(
-            new Blob([scrubJson(JSON.parse(decompressed))]).stream().pipeThrough(new CompressionStream('deflate')),
-        ).arrayBuffer(),
+            return typeof item === 'string' ? scrubString(item) : item;
+        }),
     );
-    const prefix = encoder.encode(`${header}\n`);
-    const result = new Uint8Array(prefix.length + compressed.length);
-    result.set(prefix);
-    result.set(compressed, prefix.length);
 
-    return result;
-};
-
-const scrubEnvelope = async (envelope: Envelope): Promise<void> => {
-    envelope[0] = JSON.parse(scrubJson(envelope[0]));
-
-    for (const item of envelope[1]) {
-        if (item[0].type === 'replay_recording') {
-            if (typeof item[1] !== 'string' && !(item[1] instanceof Uint8Array)) {
-                throw new Error('Unknown Sentry recording format');
-            }
-
-            item[1] = await scrubRecording(item[1]);
-            item[0].length = typeof item[1] === 'string' ? new TextEncoder().encode(item[1]).length : item[1].length;
-        } else if (!(item[1] instanceof Uint8Array)) {
-            item[1] = JSON.parse(scrubJson(item[1]));
-            // An existing length describes the original payload, not the sanitized one.
-            if (item[0].length !== undefined) {
-                item[0].length = new TextEncoder().encode(
-                    typeof item[1] === 'string' ? item[1] : JSON.stringify(item[1]),
-                ).length;
-            }
-        }
-    }
-};
-
-export const sentryUrlPrivacyIntegration = (): Integration => ({
-    name: 'StorefrontUrlPrivacy',
-    setup(client) {
-        const transport = client.getTransport();
-
-        if (!transport) {
-            return;
-        }
-
-        const send = transport.send.bind(transport);
-        const flush = transport.flush.bind(transport);
-        const pending = new Set<Promise<unknown>>();
-
-        transport.send = (envelope) => {
-            const sanitized = scrubEnvelope(envelope).then(
-                () => send(envelope),
-                () => {
-                    // Fail closed: unsupported compression or a changed SDK payload must
-                    // never fall back to sending the original credentials.
-                    client.recordDroppedEvent('event_processor', 'replay');
-                    return {};
-                },
-            );
-            pending.add(sanitized);
-            void sanitized.then(
-                () => pending.delete(sanitized),
-                () => pending.delete(sanitized),
-            );
-
-            return sanitized;
-        };
-        transport.flush = async (timeout) => {
-            let timer: ReturnType<typeof setTimeout> | undefined;
-            const started = Date.now();
-
-            try {
-                const finished = await Promise.race([
-                    Promise.allSettled(Array.from(pending)).then(() => true),
-                    new Promise<boolean>((resolve) => {
-                        if (timeout) {
-                            timer = setTimeout(() => resolve(false), timeout);
-                        }
-                    }),
-                ]);
-
-                return finished && (await flush(timeout ? Math.max(1, timeout - (Date.now() - started)) : timeout));
-            } finally {
-                clearTimeout(timer);
-            }
-        };
-    },
+// Feedback events bypass beforeSend, including the page URL attached by the feedback widget.
+export const sentryFeedbackUrlPrivacyIntegration = (): Integration => ({
+    name: 'StorefrontFeedbackUrlPrivacy',
+    processEvent: (event) => (event.type === 'feedback' ? scrubSentryData(event) : event),
 });

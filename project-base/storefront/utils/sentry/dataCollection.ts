@@ -9,7 +9,7 @@ export const sentryDataCollection = {
         response: { deny: ['forwarded', '-ip', 'remote-', 'via', '-user'] },
     },
     httpBodies: [],
-    // This covers SDK-filtered fields only. urlPrivacy also scrubs outgoing events and Replay recordings.
+    // This covers SDK-filtered fields only. The beforeSend callbacks also scrub event and span URLs.
     urlQueryParams: { deny: ['hash', 'email', 'forwarded', '-ip', 'remote-', 'via', '-user'] },
     genAI: { inputs: false, outputs: false },
     databaseQueryData: false,

@@ -1,9 +1,8 @@
-import { Blob as NodeBlob } from 'node:buffer';
-import { deflateSync, inflateSync } from 'node:zlib';
 import * as Sentry from '@sentry/nextjs';
+import { routes } from 'config/routes';
 import { sentryDataCollection } from 'utils/sentry/dataCollection';
-import { sentryUrlPrivacyIntegration } from 'utils/sentry/urlPrivacy';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { scrubSentryData, sentryFeedbackUrlPrivacyIntegration } from 'utils/sentry/urlPrivacy';
+import { afterEach, describe, expect, test } from 'vitest';
 
 const secretUrl = 'https://shop.example/reset-password?email=privacy-test%40example.test&hash=FAKE_RESET_TOKEN&page=2';
 
@@ -12,7 +11,10 @@ const createClient = (rejectRequests = false) => {
     const client = Sentry.init({
         dsn: 'https://public@sentry.invalid/1',
         defaultIntegrations: false,
-        integrations: [sentryUrlPrivacyIntegration()],
+        integrations: [sentryFeedbackUrlPrivacyIntegration()],
+        beforeSend: scrubSentryData,
+        beforeSendSpan: scrubSentryData,
+        tracesSampleRate: 1,
         dataCollection: sentryDataCollection,
         transport: (options: Parameters<typeof Sentry.createTransport>[0]) =>
             Sentry.createTransport(options, (request) => {
@@ -34,7 +36,6 @@ const createClient = (rejectRequests = false) => {
 afterEach(async () => {
     await Sentry.close();
     Sentry.getCurrentScope().setClient(undefined);
-    vi.unstubAllGlobals();
 });
 
 describe('Sentry outbound URL privacy', () => {
@@ -74,111 +75,33 @@ describe('Sentry outbound URL privacy', () => {
         expect(body).toContain('/products?page=2');
     });
 
-    test.each([false, true])('sanitizes the complete Replay envelope (compressed: %s)', async (compressed) => {
-        vi.stubGlobal('Blob', NodeBlob);
+    test('sanitizes serialized spans while preserving non-sensitive attributes', async () => {
         const { client, requests } = createClient();
-        const recording = JSON.stringify([
-            { type: 4, data: { href: secretUrl }, timestamp: 1 },
-            { type: 2, data: { node: { attributes: { href: secretUrl } } }, timestamp: 2 },
-            { type: 3, data: { attributes: [{ attributes: { href: secretUrl } }] }, timestamp: 3 },
-            { type: 5, data: { tag: 'breadcrumb', payload: { data: { to: secretUrl } } }, timestamp: 4 },
-        ]);
-        const payload = compressed
-            ? new Uint8Array(Buffer.concat([Buffer.from('{"segment_id":0}\n'), deflateSync(recording)]))
-            : `{"segment_id":0}\n${recording}`;
-
-        await client.sendEnvelope([
-            {},
-            [
-                [
-                    { type: 'replay_event' },
-                    {
-                        type: 'replay_event',
-                        urls: [secretUrl],
-                        error_ids: [],
-                        trace_ids: [],
-                        segment_names: [],
-                        replay_id: '12345678901234567890123456789012',
-                        segment_id: 0,
-                        replay_type: 'session',
-                    },
-                ],
-                [{ type: 'replay_recording', length: payload.length }, payload],
-            ],
-        ]);
-        expect(await client.flush(2000)).toBe(true);
-
-        expect(requests).toHaveLength(1);
-        const envelope = Buffer.from(requests[0]);
-        const lines = envelope.toString().split('\n');
-        expect(lines[2]).toContain('email=[Filtered]&hash=[Filtered]');
-        const prefix = `${lines.slice(0, 4).join('\n')}\n`;
-        const recordingPayload = envelope.subarray(Buffer.byteLength(prefix));
-        expect(JSON.parse(lines[3]).length).toBe(recordingPayload.length);
-        const recordingBody = recordingPayload.subarray(recordingPayload.indexOf(10) + 1);
-        const decoded = compressed ? inflateSync(recordingBody).toString() : recordingBody.toString();
-        const events = JSON.parse(decoded);
-        expect(events).toHaveLength(4);
-        expect(decoded).not.toContain('FAKE_RESET_TOKEN');
-        expect(decoded).not.toContain('privacy-test');
-        expect(decoded).toContain('page=2');
-    });
-
-    test('drops the entire Replay envelope instead of sending an unreadable recording', async () => {
-        const { client, requests } = createClient();
-
-        await client.sendEnvelope([
-            {},
-            [
-                [
-                    { type: 'replay_event' },
-                    {
-                        type: 'replay_event',
-                        urls: [secretUrl],
-                        error_ids: [],
-                        trace_ids: [],
-                        segment_names: [],
-                        replay_id: '12345678901234567890123456789012',
-                        segment_id: 0,
-                        replay_type: 'session',
-                    },
-                ],
-                [{ type: 'replay_recording', length: 4 }, new Uint8Array([0, 1, 2, 3])],
-            ],
-        ]);
-
-        expect(requests).toHaveLength(0);
-    });
-
-    test('does not send compressed Replay when the browser cannot sanitize it', async () => {
-        vi.stubGlobal('Blob', NodeBlob);
-        vi.stubGlobal('DecompressionStream', undefined);
-        const { client, requests } = createClient();
-        const payload = new Uint8Array(
-            Buffer.concat([Buffer.from('{"segment_id":0}\n'), deflateSync(JSON.stringify([{ url: secretUrl }]))]),
+        Sentry.startSpan(
+            { name: 'request', attributes: { 'http.url': secretUrl, 'http.request.method': 'GET' } },
+            () => {},
         );
 
-        await client.sendEnvelope([
-            {},
-            [
-                [
-                    { type: 'replay_event' },
-                    {
-                        type: 'replay_event',
-                        urls: [secretUrl],
-                        error_ids: [],
-                        trace_ids: [],
-                        segment_names: [],
-                        replay_id: '12345678901234567890123456789012',
-                        segment_id: 0,
-                        replay_type: 'session',
-                    },
-                ],
-                [{ type: 'replay_recording', length: payload.length }, payload],
-            ],
-        ]);
+        await client.flush(2000);
 
-        expect(requests).toHaveLength(0);
+        const bodies = requests.map((body) => String(body)).join('\n');
+        expect(bodies).toContain('"type":"span"');
+        expect(bodies).not.toMatch(/FAKE_RESET_TOKEN|privacy-test/);
+        expect(bodies).toContain('email=[Filtered]&hash=[Filtered]&page=2');
+        expect(bodies).toContain('GET');
+    });
+
+    test('sanitizes the page URL attached to serialized user feedback', async () => {
+        const { client, requests } = createClient();
+        Sentry.captureFeedback({ message: 'The page failed', url: secretUrl });
+
+        await client.flush(2000);
+
+        expect(requests).toHaveLength(1);
+        expect(requests[0]).toContain('"type":"feedback"');
+        expect(requests[0]).not.toMatch(/FAKE_RESET_TOKEN|privacy-test/);
+        expect(requests[0]).toContain('email=[Filtered]&hash=[Filtered]&page=2');
+        expect(requests[0]).toContain('The page failed');
     });
 
     test('recognizes duplicate, encoded, mixed-case parameters and fragment credentials', async () => {
@@ -194,5 +117,28 @@ describe('Sentry outbound URL privacy', () => {
         expect(requests).toHaveLength(1);
         expect(requests[0]).not.toMatch(/FAKE_RESET_TOKEN|privacy-test|SECOND_TOKEN|FRAGMENT_TOKEN/);
         expect(requests[0]).toContain('%68ash=[Filtered]&EMAIL=[Filtered]&hash=[Filtered]#token=[Filtered]');
+    });
+
+    test('removes capability credentials from every localized route and query name', async () => {
+        const { client, requests } = createClient();
+        const urls = Array.from(new Set(routes.flatMap((domain) => Object.values(domain))))
+            .filter((route) => route.includes(':'))
+            .map((route) => `https://shop.example${route.replace(/:[^/]+/g, 'FAKE_PATH_SECRET')}?page=2`);
+        client.captureEvent({
+            request: { url: '/order-confirmation?returnHash=FAKE_RETURN&writeReviewOrderHash=FAKE_REVIEW' },
+            breadcrumbs: urls.map((url) => ({ category: 'navigation', data: { to: url } })),
+            extra: { orderUrlHash: 'FAKE_STRUCTURED', cartUuid: 'FAKE_CART', safe: '/products?page=2' },
+        });
+
+        await client.flush(2000);
+
+        expect(urls.length).toBeGreaterThan(10);
+        expect(requests).toHaveLength(1);
+        expect(requests[0]).not.toMatch(/FAKE_/);
+        expect(requests[0]).toContain('/order-confirmation?returnHash=[Filtered]&writeReviewOrderHash=[Filtered]');
+        expect(requests[0]).toContain('/products?page=2');
+        for (const url of urls) {
+            expect(requests[0]).toContain(url.replace('FAKE_PATH_SECRET', '[Filtered]'));
+        }
     });
 });
