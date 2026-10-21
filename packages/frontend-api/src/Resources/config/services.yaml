@@ -50,7 +50,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryResolverMap:
         arguments:
-            $blogCategorySlugBatchLoader: '@blog_category_slug_batch_loader'
+            $blogCategoryMainFriendlyUrlSlugBatchLoader: '@blog_category_main_friendly_url_slug_batch_loader'
             $blogCategoryBreadcrumbBatchLoader: '@blog_category_breadcrumb_batch_loader'
             $blogCategoryChildrenBatchLoader: '@blog_category_children_batch_loader'
             $blogCategoriesBatchLoader: '@blog_categories_batch_loader'

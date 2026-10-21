@@ -8,6 +8,7 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 
@@ -15,8 +16,9 @@ class BlogCategoryResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly BlogCategoryFacade $blogCategoryFacade,
-        protected readonly DataLoaderInterface $blogCategorySlugBatchLoader,
+        protected readonly DataLoaderInterface $blogCategoryMainFriendlyUrlSlugBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryBreadcrumbBatchLoader,
         protected readonly DataLoaderInterface $blogCategoryChildrenBatchLoader,
         protected readonly DataLoaderInterface $blogCategoriesBatchLoader,
@@ -44,15 +46,20 @@ class BlogCategoryResolverMap extends ResolverMap
                     return $this->blogCategoriesBatchLoader->load($parent->getId());
                 },
                 'slug' => function (BlogCategory $blogCategory) {
-                    return $this->blogCategorySlugBatchLoader->load($blogCategory->getId());
+                    return $this->blogCategoryMainFriendlyUrlSlugBatchLoader
+                        ->load($blogCategory->getId())
+                        ->then(fn (string $mainFriendlyUrlSlug): string => '/' . $mainFriendlyUrlSlug);
                 },
                 'breadcrumb' => function (BlogCategory $blogCategory) {
                     return $this->blogCategoryBreadcrumbBatchLoader->load($blogCategory);
                 },
                 'link' => function (BlogCategory $blogCategory) {
-                    return $this->blogCategorySlugBatchLoader
+                    return $this->blogCategoryMainFriendlyUrlSlugBatchLoader
                         ->load($blogCategory->getId())
-                        ->then(fn (string $slug): string => $this->createAbsoluteUrl($slug));
+                        ->then(fn (string $mainFriendlyUrlSlug): string => $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug(
+                            $this->domain->getId(),
+                            $mainFriendlyUrlSlug,
+                        ));
                 },
                 'children' => function (BlogCategory $blogCategory) {
                     return $this->blogCategoryChildrenBatchLoader->load($blogCategory);
@@ -70,10 +77,5 @@ class BlogCategoryResolverMap extends ResolverMap
                 },
             ],
         ];
-    }
-
-    protected function createAbsoluteUrl(string $slug): string
-    {
-        return rtrim($this->domain->getUrl(), '/') . '/' . ltrim($slug, '/');
     }
 }
