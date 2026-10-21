@@ -24,7 +24,7 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.14.4",
-        "@biomejs/biome": "^2.2.0",
+        "@biomejs/biome": "^2.6.2",
         "@shopsys/biome-config": "file:vendor/shopsys/biome-config",
         "babel-jest": "^30.4.1",
         "jest": "^30.4.2",
