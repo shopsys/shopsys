@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Blog\Article;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Seo\SeoAttributesQueryDtoFactory;
@@ -19,6 +20,7 @@ class BlogArticleResolverMap extends ResolverMap
         protected readonly Domain $domain,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -43,7 +45,10 @@ class BlogArticleResolverMap extends ResolverMap
                     return '/' . $blogArticleData['mainSlug'];
                 },
                 'link' => function (array $blogArticleData) {
-                    return $this->domain->getUrl() . '/' . $blogArticleData['mainSlug'];
+                    return $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug(
+                        $this->domain->getId(),
+                        $blogArticleData['mainSlug'],
+                    );
                 },
                 'hreflangLinks' => function (array $blogArticleData) {
                     return $this->hreflangLinksFacade->getHreflangLinksWithIncludedDomainUrl($blogArticleData['hreflangLinks']);

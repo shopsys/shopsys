@@ -239,7 +239,7 @@ class HreflangLinksFacade
             // @deprecated - fallback for not yet exported data to Elasticsearch
             $domainId = array_key_exists('domainId', $hreflangLink) ? $hreflangLink['domainId'] : $this->getRelevantDomainIds($this->domain->getId())[$key];
 
-            $hreflangLinks[$key]['href'] = $this->domain->getDomainConfigById($domainId)->getUrl() . '/' . $hreflangLink['href'];
+            $hreflangLinks[$key]['href'] = $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($domainId, $hreflangLink['href']);
         }
 
         return $hreflangLinks;

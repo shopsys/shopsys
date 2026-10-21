@@ -11,6 +11,7 @@ use Presta\SitemapBundle\Sitemap\Url\GoogleMultilangUrlDecorator;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,6 +25,7 @@ class SitemapListener implements EventSubscriberInterface
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -201,7 +203,7 @@ class SitemapListener implements EventSubscriberInterface
 
     protected function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, string $slug): string
     {
-        return $domainConfig->getUrl() . '/' . $slug;
+        return $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($domainConfig->getId(), $slug);
     }
 
     protected function addStaticPageByRoute(
