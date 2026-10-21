@@ -93,10 +93,8 @@ RUN apk add --no-cache \
         rabbitmq-c-dev && \
     curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie && \
     chmod +x /usr/local/bin/pie && \
-    pecl install redis && \
-    docker-php-ext-enable redis && \
-    pecl install amqp && \
-    docker-php-ext-enable amqp && \
+    pie install phpredis/phpredis:^6.3.0 && \
+    pie install php-amqp/php-amqp:^2.2.0 && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install \
         bcmath \
