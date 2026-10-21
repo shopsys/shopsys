@@ -7,9 +7,6 @@ msgstr ""
 msgid "Additional services"
 msgstr "Doplnkové služby"
 
-msgid "Amount"
-msgstr "Množstvo"
-
 msgid "Billing address"
 msgstr "Fakturačná adresa"
 
@@ -40,11 +37,11 @@ msgstr "Oprava"
 msgid "Free"
 msgstr "Zdarma"
 
-msgid "Gift"
-msgstr "Darček"
-
 msgid "Gift voucher"
 msgstr "Darčekový poukaz"
+
+msgid "Gift with purchase"
+msgstr "Darček k nákupu"
 
 msgid "In stock"
 msgstr "Na sklade"
@@ -81,9 +78,6 @@ msgstr "Zasielame e-mailom po zaplatení"
 
 msgid "Transport"
 msgstr "Doprava"
-
-msgid "Unit price"
-msgstr "Jednotková cena"
 
 msgid "ex VAT"
 msgstr "bez DPH"
