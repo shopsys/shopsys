@@ -9,6 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
@@ -34,6 +35,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         private readonly SeoPageFacade $seoPageFacade,
         private readonly SeoPageDataFactory $seoPageDataFactory,
         private readonly SeoPageSlugTransformer $seoPageSlugTransformer,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -97,7 +99,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         if ($seoPageSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG || $isDemoSeoPage) {
             $canonicalUrl = $domainConfig->getUrl();
         } else {
-            $canonicalUrl = $domainConfig->getUrl() . '/' . $seoPageSlug;
+            $canonicalUrl = $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($domainId, $seoPageSlug);
         }
         $canonicalUrl = $this->forceHttps($canonicalUrl);
 
