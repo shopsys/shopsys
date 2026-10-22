@@ -83,7 +83,7 @@ class ProductConnectionFactory
         );
     }
 
-    public function getProductFilterOptionsClosure(ProductFilterData $productFilterData, mixed $searchText): Closure
+    public function getProductFilterOptionsClosure(ProductFilterData $productFilterData, string $searchText): Closure
     {
         return function () use ($productFilterData, $searchText): Promise {
             if ($searchText === '') {
