@@ -10,11 +10,11 @@ type ProductAvailabilityProps = {
     id?: string;
     availability: TypeAvailability;
     availableStoresCount: number | null;
-    displayMode?: 'compact' | 'default' | 'detail';
+    displayMode?: 'compact' | 'default' | 'detail' | 'inline';
     isInquiryType: boolean;
     isPersonalPickupOnly?: boolean;
     /**
-     * Classes of the second line (the shipping/pickup readiness), e.g. to drop its indentation under the name
+     * Classes of the shipping/pickup readiness details, e.g. to drop their indentation under the name
      * when the availability is centered
      */
     detailsClassName?: string;
@@ -43,6 +43,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
 
     const isCompactDisplay = displayMode === 'compact';
     const isDetailDisplay = displayMode === 'detail';
+    const isInlineDisplay = displayMode === 'inline';
 
     return (
         <span
@@ -51,6 +52,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
             className={twMergeCustom(
                 'flex text-left text-sm',
                 isCompactDisplay ? 'items-center gap-1 text-xs' : 'flex-col gap-0.5',
+                isInlineDisplay && 'flex-row flex-wrap items-center gap-x-2.5 overflow-hidden',
                 getAvailabilityTextColorClassName(availability.status),
                 className,
             )}
@@ -64,9 +66,17 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                     </>
                 ) : (
                     <>
-                        <span className="flex min-w-0 items-start gap-1">
+                        <span
+                            className={twMergeCustom(
+                                'flex min-w-0 items-start gap-1',
+                                isInlineDisplay && 'items-center',
+                            )}
+                        >
                             <ProductAvailabilityIcon
-                                className="mt-0.5 size-4 shrink-0 [&_path]:stroke-2"
+                                className={twMergeCustom(
+                                    'mt-0.5 size-4 shrink-0 [&_path]:stroke-2',
+                                    isInlineDisplay && 'mt-0',
+                                )}
                                 status={availability.status}
                             />
 
@@ -79,9 +89,16 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                                     // indented under the name, past the icon
                                     'pl-5 font-secondary text-text-less',
                                     isDetailDisplay ? 'underline hover:text-link-default' : 'text-xs',
+                                    isInlineDisplay && 'relative pl-0',
                                     detailsClassName,
                                 )}
                             >
+                                {isInlineDisplay && (
+                                    // Clip the separator outside the container when the details wrap to a new line.
+                                    <span aria-hidden="true" className="absolute -left-1.5">
+                                        ·
+                                    </span>
+                                )}
                                 {inStockAvailabilityDetails}
                             </span>
                         )}

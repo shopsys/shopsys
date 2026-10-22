@@ -7,9 +7,6 @@ msgstr ""
 msgid "Additional services"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
 msgid "Billing address"
 msgstr ""
 
@@ -40,10 +37,10 @@ msgstr ""
 msgid "Free"
 msgstr ""
 
-msgid "Gift"
+msgid "Gift voucher"
 msgstr ""
 
-msgid "Gift voucher"
+msgid "Gift with purchase"
 msgstr ""
 
 msgid "In stock"
@@ -80,9 +77,6 @@ msgid "Sent by email after payment"
 msgstr ""
 
 msgid "Transport"
-msgstr ""
-
-msgid "Unit price"
 msgstr ""
 
 msgid "ex VAT"

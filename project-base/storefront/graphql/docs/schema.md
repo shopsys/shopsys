@@ -122,6 +122,7 @@
     * [PurchasedGiftVoucher](#purchasedgiftvoucher)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
+    * [RemovedCartGift](#removedcartgift)
     * [SalesRepresentative](#salesrepresentative)
     * [SeoAttributes](#seoattributes)
     * [SeoPage](#seopage)
@@ -182,6 +183,7 @@
     * [RemoveCodeFromCartInput](#removecodefromcartinput)
     * [RemoveCustomerUserDataInput](#removecustomeruserdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
+    * [RestoreCartGiftInput](#restorecartgiftinput)
     * [SearchInput](#searchinput)
     * [SetCartItemAdditionalServicesInput](#setcartitemadditionalservicesinput)
   * [Enums](#enums)
@@ -2127,6 +2129,20 @@ Request access to personal data
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="mutation.restorecartgift">RestoreCartGift</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Restore a manually removed gift that is still available for the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#restorecartgiftinput">RestoreCartGiftInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="mutation.setcartitemadditionalservices">SetCartItemAdditionalServices</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
@@ -3800,6 +3816,15 @@ Total price with VAT reduced by applied gift vouchers, never below zero
 <td>
 
 Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cart.removedgifts">removedGifts</strong></td>
+<td valign="top">[<a href="#removedcartgift">RemovedCartGift</a>!]!</td>
+<td>
+
+Manually removed gifts that are still available for this cart and can be restored
 
 </td>
 </tr>
@@ -11162,6 +11187,41 @@ Zbozi.cz category text assigned to the product main category
 </tbody>
 </table>
 
+### RemovedCartGift
+
+A manually removed gift that can be restored to the cart
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="removedcartgift.product">product</strong></td>
+<td valign="top"><a href="#product">Product</a>!</td>
+<td>
+
+Gift product to restore
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="removedcartgift.quantity">quantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Current gift quantity that will be restored
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### SalesRepresentative
 
 Represents sales representative
@@ -15443,6 +15503,38 @@ Cart item UUID
 <td>
 
 Cart identifier, new cart will be created if not provided and customer is not logged in
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### RestoreCartGiftInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="restorecartgiftinput.cartuuid">cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier, new cart will be created if not provided and customer is not logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="restorecartgiftinput.giftproductuuid">giftProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the removed gift product to restore
 
 </td>
 </tr>

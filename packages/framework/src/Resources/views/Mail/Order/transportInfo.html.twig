@@ -1,17 +1,11 @@
 {% trans_default_domain 'customerMessages' %}
-<h2>{% trans into orderLocale %}Transport{% endtrans %}</h2>
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
     <tbody>
         <tr>
-            <td style="width: 40px; padding-right: 15px;">
-                {% if orderTransportItem.transport is not null %}
-                    {{ image(orderTransportItem.transport, { width: 40 }, order.domainId) }}
-                {% endif %}
+            <td style="padding:8px 12px 8px 0; font-size:14px;">
+                {% trans into orderLocale %}Transport{% endtrans %} · {{ orderTransportItem.name }}
             </td>
-            <td>
-                <strong>{{ orderTransportItem.name }}</strong>
-            </td>
-            <td align="right">
+            <td align="right" style="padding:8px 0; font-size:14px;">
                 {% set doNotDisplayBoth = displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
                 {% set displayBoth = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_BOTH')) %}
                 {% set displayWithoutVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Mail\\MailDisplayPriceResolver::DISPLAY_PRICE_WITHOUT_VAT')) or displayBoth %}
@@ -26,7 +20,7 @@
 
                         {{ orderTransportTotalPrice.priceWithoutVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
                         {% if displayBoth %}
-                            {{ 'ex VAT'|trans }}&nbsp;
+                            {% trans into orderLocale %}ex VAT{% endtrans %}&nbsp;
                         {% endif %}
 
                         {% if doNotDisplayBoth %}
@@ -43,7 +37,7 @@
                     <strong style="white-space: nowrap; padding-left: 10px;">
                         {{ orderTransportTotalPrice.priceWithVat|priceTextWithCurrencyByOrderAndLocale(order, orderLocale)|hidePrice(order.customerUser) }}
                         {% if displayBoth and not isZeroPrice %}
-                            {{ 'inc VAT'|trans }}&nbsp;
+                            {% trans into orderLocale %}inc VAT{% endtrans %}&nbsp;
                         {% endif %}
                     </strong>
                 {% endif %}

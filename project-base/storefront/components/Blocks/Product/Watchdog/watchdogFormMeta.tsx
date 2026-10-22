@@ -35,15 +35,15 @@ export const useWatchdogFormMeta = (): FormMeta<WatchdogFormType, { error: strin
     return {
         formName: 'watchdog-form',
         messages: {
-            error: t('An error occurred while creating your watchdog'),
+            error: t("We couldn't set up the notification. Please try again."),
         },
         fields: createFields<WatchdogFormType>({
             email: t('Your email'),
             productUuid: t('Product'),
             gdprAgreement: (
                 <Trans
-                    defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
-                    i18nKey="GdprAgreementCheckbox"
+                    defaultTrans="I agree to the <lnk1>processing of my personal data</lnk1>."
+                    i18nKey="WatchdogGdprAgreementCheckbox"
                     components={{
                         lnk1: privacyPolicyArticleUrl ? (
                             <Link

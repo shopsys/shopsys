@@ -1,0 +1,15 @@
+mutation ($cartUuid: Uuid, $giftProductUuid: Uuid!) {
+    RestoreCartGift(input: {cartUuid: $cartUuid, giftProductUuid: $giftProductUuid}) {
+        uuid
+        items {
+            uuid
+            type
+            quantity
+            product { uuid }
+        }
+        removedGifts {
+            quantity
+            product { uuid }
+        }
+    }
+}

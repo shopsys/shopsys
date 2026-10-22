@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 
 class Mailer
 {
@@ -62,7 +63,7 @@ class Mailer
             ->subject($subject)
             ->from(new Address($messageData->fromEmail, $messageData->fromName))
             ->to(...$messageData->getToEmailAsArray())
-            ->text(htmlspecialchars_decode(strip_tags($body)))
+            ->text(htmlspecialchars_decode((new DefaultHtmlToTextConverter())->convert($body, 'UTF-8')))
             ->html($body);
 
         $bccEmails = $messageData->getBccEmailAsArray();

@@ -89,6 +89,13 @@ class Cart
     protected $giftVouchers;
 
     /**
+     * @var int[]
+     */
+    #[AsMcpColumn(exposed: false)]
+    #[ORM\Column(type: 'json')]
+    protected $removedGiftProductIds = [];
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
     #[AsMcpColumn]
@@ -182,9 +189,47 @@ class Cart
         throw new InvalidCartItemException($message);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    public function markProductGiftRemoved($product): void
+    {
+        if (!$this->isProductGiftRemoved($product)) {
+            $this->removedGiftProductIds[] = $product->getId();
+            $this->updateLastActivityDate();
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isProductGiftRemoved($product)
+    {
+        return in_array($product->getId(), $this->removedGiftProductIds, true);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    public function restoreProductGift($product): void
+    {
+        $this->removedGiftProductIds = array_values(array_diff($this->removedGiftProductIds, [$product->getId()]));
+        $this->updateLastActivityDate();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    public function mergeRemovedProductGifts($cart): void
+    {
+        $this->removedGiftProductIds = array_values(array_unique([...$this->removedGiftProductIds, ...$cart->removedGiftProductIds]));
+    }
+
     public function clean(): void
     {
         $this->items->clear();
+        $this->removedGiftProductIds = [];
     }
 
     /**
