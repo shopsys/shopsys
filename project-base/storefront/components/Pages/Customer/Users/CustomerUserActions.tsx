@@ -19,6 +19,10 @@ export const CustomerUserActions: FC<CustomerUserActionsProps> = ({
     onEdit,
 }) => {
     const { t } = useTranslation();
+    if (!customerUser.canBeManagedByCurrentCustomerUser) {
+        return null;
+    }
+
     const userName = `${customerUser.firstName} ${customerUser.lastName}`;
 
     return (
