@@ -5,9 +5,6 @@ overblog_dataloader:
         additionalServicesByIdsBatchLoader:
             alias: "additional_services_by_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIdAndAdditionalServiceIds"
-        additionalServicesByProductIdBatchLoader:
-            alias: "additional_services_by_product_id_batch_loader"
-            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIds"
         blogCategorySlugBatchLoader:
             alias: "blog_category_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategorySlugs"
@@ -46,7 +43,7 @@ overblog_dataloader:
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadFlagSlugs"
         flagsBatchLoader:
             alias: "flags_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Flag\\FlagsBatchLoader:loadByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Flag\\FlagsBatchLoader:loadByIds"
         imagesBatchLoader:
             alias: "images_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\ImagesBatchLoader:loadByBatchData"
@@ -62,9 +59,6 @@ overblog_dataloader:
         productGiftsByMainProductIdsBatchLoader:
             alias: "product_gifts_by_main_product_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadProductGiftsByMainProductIds"
-        productSlugBatchLoader:
-            alias: "product_slug_batch_loader"
-            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadProductSlugs"
         productsByEntitiesBatchLoader:
             alias: "products_by_entities_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadByEntities"

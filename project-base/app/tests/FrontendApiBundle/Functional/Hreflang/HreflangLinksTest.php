@@ -95,9 +95,6 @@ class HreflangLinksTest extends GraphQlTestCase
 
         if ($graphQlType === 'product') {
             $this->handleDispatchedRecalculationMessages([$entity->getId()]);
-
-            // Wait for elasticsearch to index the product
-            sleep(1);
         }
 
         if ($graphQlType === 'blogArticle') {

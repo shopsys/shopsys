@@ -20,7 +20,7 @@ class ProductRepository
         int $domainId,
         PricingGroup $pricingGroup,
     ): Product {
-        $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder = $this->productRepository->getAllSellableWithoutInquiriesQueryBuilder($domainId, $pricingGroup);
         $queryBuilder->andWhere('p.uuid = :uuid');
         $queryBuilder->setParameter('uuid', $uuid);
         $queryBuilder->addSelect('productDomains')->leftJoin('p.domains', 'productDomains');

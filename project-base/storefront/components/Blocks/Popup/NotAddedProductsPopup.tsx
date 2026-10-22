@@ -14,7 +14,8 @@ export const NotAddedProductsPopup: FC<NotAddedProductsPopupProps> = ({ notAdded
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     return (
-        <Popup size="small" title={t('Some products could not have been added to your cart')}>
+        <Popup size="small" title={t('Products from the order were added to your cart')}>
+            <p className="mb-2">{t('These products cannot currently be purchased and were not added:')}</p>
             <ul>
                 {notAddedProductNames.map((productName) => (
                     <li key={productName} className="mb-2">

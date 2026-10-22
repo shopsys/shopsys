@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Symfony\Component\Clock\DatePoint;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
-use function sleep;
 
 final class ProductExpectedRestockingDateTest extends GraphQlTestCase
 {
@@ -103,9 +102,6 @@ final class ProductExpectedRestockingDateTest extends GraphQlTestCase
 
         $this->handleDispatchedRecalculationMessages();
 
-        // wait for elastic to reindex
-        sleep(1);
-
         $responseData = $this->getMainVariantResponseData($mainVariant);
 
         $this->assertSame($earliestRestockingDate->format(DATE_ATOM), $responseData['expectedRestockingDate']);
@@ -127,9 +123,6 @@ final class ProductExpectedRestockingDateTest extends GraphQlTestCase
 
         $this->handleDispatchedRecalculationMessages();
 
-        // wait for elastic to reindex
-        sleep(1);
-
         $responseData = $this->getMainVariantResponseData($mainVariant);
 
         $this->assertSame($visibleVariantRestockingDate->format(DATE_ATOM), $responseData['expectedRestockingDate']);
@@ -149,9 +142,6 @@ final class ProductExpectedRestockingDateTest extends GraphQlTestCase
         $this->editVariant($visibleVariant, 0);
 
         $this->handleDispatchedRecalculationMessages();
-
-        // wait for elastic to reindex
-        sleep(1);
 
         $responseData = $this->getMainVariantResponseData($mainVariant);
 

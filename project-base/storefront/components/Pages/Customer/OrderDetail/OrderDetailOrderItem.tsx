@@ -56,13 +56,6 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     const { canCreateComplaint } = useAuthorization();
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const isProductGift = orderItem.type === TypeOrderItemTypeEnum.ProductGift;
-    const showComplaintButton =
-        canCreateComplaint &&
-        isUserLoggedIn &&
-        isOrderFromRegisteredCustomer &&
-        orderItem.order.withdrawalRequest === null &&
-        orderItem.type === TypeOrderItemTypeEnum.Product &&
-        orderItem.product?.productType !== TypeProductTypeEnum.ElectronicGiftVoucher;
     const canShowProductReviewAction =
         !isReviewAvailabilityLoading &&
         settingsData?.settings?.productReviewsEnabled === true &&
@@ -88,6 +81,15 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
         isUserLoggedIn && isOrderFromRegisteredCustomer && orderItem.type === TypeOrderItemTypeEnum.Product
             ? purchasedGiftVouchers.filter((giftVoucher) => giftVoucher.productCatnum === orderItem.catnum)
             : [];
+    const showComplaintButton =
+        canCreateComplaint &&
+        isUserLoggedIn &&
+        isOrderFromRegisteredCustomer &&
+        orderItem.order.withdrawalRequest === null &&
+        orderItem.type === TypeOrderItemTypeEnum.Product &&
+        orderItem.product?.productType !== TypeProductTypeEnum.ElectronicGiftVoucher &&
+        // an electronic gift voucher whose product is no longer available is recognized by the purchased gift vouchers
+        purchasedGiftVouchersForItem.length === 0;
 
     const additionalServiceLines = mapOrderItemAdditionalServiceSummaryLines(orderItem.relatedItems, formatPrice);
 

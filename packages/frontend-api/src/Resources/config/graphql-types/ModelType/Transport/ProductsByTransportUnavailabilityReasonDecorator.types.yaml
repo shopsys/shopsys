@@ -10,3 +10,4 @@ ProductsByTransportUnavailabilityReasonDecorator:
             products:
                 type: "[Product!]!"
                 description: "Cart products that cannot be delivered using the transport for this reason"
+                resolve: '@=query("productsByEntitiesQuery", value["products"])'

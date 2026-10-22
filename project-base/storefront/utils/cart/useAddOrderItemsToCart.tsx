@@ -57,17 +57,13 @@ export const useAddOrderItemsToCart = () => {
                 );
             });
 
-            const notAddedProducts = newCart.modifications.multipleAddedProductModifications.notAddedProducts;
-            const addedAllProducts = notAddedProducts.length === 0;
+            const notAddedProductNames = newCart.modifications.multipleAddedProductModifications.notAddedProductNames;
+            const addedAllProducts = notAddedProductNames.length === 0;
             if (addedAllProducts) {
                 updatePageLoadingState({ isPageLoading: true, redirectPageType: SkeletonEnum.Cart });
                 router.push(cartUrl);
             } else {
-                updatePortalContent(
-                    <NotAddedProductsPopup
-                        notAddedProductNames={notAddedProducts.map((product) => product.fullName)}
-                    />,
-                );
+                updatePortalContent(<NotAddedProductsPopup notAddedProductNames={notAddedProductNames} />);
             }
         }
     };

@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
@@ -13,6 +14,7 @@ use App\Model\Product\ProductFacade;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -192,13 +194,13 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $this->assertActualCartContent($cartUuid, $expectedItems);
     }
 
-    public function testNotAvailableOrderItemIsSkippedWhileAdding(): void
+    public function testHiddenOrderItemIsSkippedWhileAdding(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
 
         $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
+        $orderItemName = $this->getOrderItemNameByProduct($order, $productInOrder);
         $this->hideProduct($productInOrder);
-        $productInOrderRefreshed = $this->productFacade->getById($productInOrder->getId());
 
         $locale = $this->getLocaleForFirstDomain();
         $expectedItems = [
@@ -230,13 +232,79 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
 
         $this->assertActualCartContent($data['uuid'], $expectedItems);
 
-        $expectedNotAddedProducts = [
-            [
-                'name' => $productInOrderRefreshed->getName($locale),
-            ],
-        ];
+        $this->assertSame([$orderItemName], $data['modifications']['multipleAddedProductModifications']['notAddedProductNames']);
+        $this->assertFalse($data['modifications']['someProductWasRemovedFromEshop']);
+    }
 
-        $this->assertSame($expectedNotAddedProducts, $data['modifications']['multipleAddedProductModifications']['notAddedProducts']);
+    public function testDeletedOrderItemIsSkippedWhileAdding(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
+
+        $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
+        $orderItemName = $this->getOrderItemNameByProduct($order, $productInOrder);
+        $this->productFacade->delete($productInOrder->getId());
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+                'shouldMerge' => false,
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
+
+        $this->assertCount(2, $data['items']);
+        $this->assertSame([$orderItemName], $data['modifications']['multipleAddedProductModifications']['notAddedProductNames']);
+        $this->assertFalse($data['modifications']['someProductWasRemovedFromEshop']);
+    }
+
+    public function testSellingDeniedOrderItemIsReportedAsNotAdded(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
+
+        $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
+        $productData = $this->productDataFactory->createFromProduct($productInOrder);
+        $productData->sellingDenied = true;
+        $this->productFacade->edit($productInOrder->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+                'shouldMerge' => false,
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
+
+        $this->assertSame([$this->getOrderItemNameByProduct($order, $productInOrder)], $data['modifications']['multipleAddedProductModifications']['notAddedProductNames']);
+        $this->assertFalse($data['modifications']['someProductWasRemovedFromEshop']);
+    }
+
+    public function testInquiryOrderItemIsReportedAsNotAdded(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '7', Order::class);
+
+        $productInOrder = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '12', Product::class);
+        $productData = $this->productDataFactory->createFromProduct($productInOrder);
+        $productData->productType = ProductTypeEnum::TYPE_INQUIRY;
+        $this->productFacade->edit($productInOrder->getId(), $productData);
+        $this->handleDispatchedRecalculationMessages();
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/AddOrderItemsToCart.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+                'orderUrlHash' => $order->getUrlHash(),
+                'shouldMerge' => false,
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
+
+        $this->assertSame([$this->getOrderItemNameByProduct($order, $productInOrder)], $data['modifications']['multipleAddedProductModifications']['notAddedProductNames']);
+        $this->assertFalse($data['modifications']['someProductWasRemovedFromEshop']);
     }
 
     public function testOrderItemsAreAddedFromCustomersOrder(): void
@@ -336,6 +404,19 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
         $this->assertArrayHasKey('items', $data);
         $this->assertArrayElements($expectedItems, $data['items']);
+    }
+
+    private function getOrderItemNameByProduct(Order $order, Product $product): string
+    {
+        return $this->em->createQueryBuilder()
+            ->select('oi.name')
+            ->from(OrderItem::class, 'oi')
+            ->where('oi.order = :order')
+            ->andWhere('oi.product = :product')
+            ->setParameter('order', $order)
+            ->setParameter('product', $product)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     private function hideProduct(Product $productInOrder): void

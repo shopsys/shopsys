@@ -3,5 +3,6 @@ CartMultipleAddedProductModificationsResultDecorator:
     decorator: true
     config:
         fields:
-            notAddedProducts:
-                type: "[Product!]!"
+            notAddedProductNames:
+                type: "[String!]!"
+                description: "Names of all order items that could not be added to the cart, including the items whose product is no longer available"
