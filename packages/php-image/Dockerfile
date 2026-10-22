@@ -37,6 +37,7 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  icu-data-full - ICU data for full locale support for intl extension
 #  icu-libs - ICU libraries for intl extension
 #  jpeg - Image format for gd extension
+#  libatomic - Atomic operations library required by the Node.js binary copied from node_builder stage
 #  libpng - Image format for gd extension
 #  libzip - Zip archive handling for zip extension
 #  musl-locales - Locales for internationalization
@@ -73,6 +74,7 @@ RUN apk add --no-cache \
         icu-data-full \
         icu-libs \
         jpeg \
+        libatomic \
         libpng \
         libzip \
         musl-locales \
