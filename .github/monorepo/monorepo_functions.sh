@@ -71,3 +71,15 @@ assert_split_branch_variable() {
         exit 1
     fi
 }
+
+configure_git_push_credentials() {
+    if [[ -z "${GIT_PUSH_TOKEN:-}" ]]; then
+        return
+    fi
+
+    export GIT_CONFIG_COUNT=2
+    export GIT_CONFIG_KEY_0=credential.https://github.com.helper
+    export GIT_CONFIG_VALUE_0=
+    export GIT_CONFIG_KEY_1=credential.https://github.com.helper
+    export GIT_CONFIG_VALUE_1='!f() { echo username=x-access-token; echo "password=${GIT_PUSH_TOKEN}"; }; f'
+}
