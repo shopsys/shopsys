@@ -15,6 +15,9 @@ memory_limit = 512M
 post_max_size = 32M
 upload_max_filesize = 32M
 
+; do not track upload progress in session, it is not used and it exposes session handling to unauthenticated multipart requests
+session.upload_progress.enabled = Off
+
 ; report all errors in development environment
 error_reporting = E_ALL
 
