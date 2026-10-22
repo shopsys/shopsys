@@ -242,6 +242,15 @@
             "symfony/flex": true,
             "php-http/discovery": true,
             "symfony/runtime": true
+        },
+        "policy": {
+            "advisories": {
+                "ignore-id": {
+                    "PKSA-qv5y-crcz-9nxw": "spomky-labs/otphp: no fixed version is compatible with scheb/2fa-google-authenticator required on this branch",
+                    "PKSA-kbc7-dq62-pt7d": "spomky-labs/otphp: no fixed version is compatible with scheb/2fa-google-authenticator required on this branch",
+                    "PKSA-y2cr-5h3j-g3ys": "firebase/php-jwt: no fixed version is compatible with google/auth required on this branch"
+                }
+            }
         }
     },
     "extra": {
