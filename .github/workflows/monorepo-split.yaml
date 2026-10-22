@@ -19,12 +19,14 @@ jobs:
                     fetch-depth: 0
             -   name: Prepare variables and files to be used for splitting
                 run: |
-                    echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
+                    echo "REMOTE_TEMPLATE=https://github.com/shopsys/" >> $GITHUB_ENV
             -   name: Install git-filter-repo
                 run: |
                     sudo apt-get update
                     sudo apt-get install -y git-filter-repo
             -   name: Split repositories
+                env:
+                    GIT_PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
                 run: |
                     git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all || true
                     bash ./.github/monorepo/split-repositories.sh "${{ github.ref_name }}" "${REMOTE_TEMPLATE}"

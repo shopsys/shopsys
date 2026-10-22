@@ -39,8 +39,10 @@ jobs:
                     ref: 'refs/heads/${{ github.event.repository.default_branch }}'
             -   name: Prepare variables for removing split branches from packages
                 run: |
-                    echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
+                    echo "REMOTE_TEMPLATE=https://github.com/shopsys/" >> $GITHUB_ENV
             -   name: Remove split branches from packages
+                env:
+                    GIT_PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
                 run: |
                     git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
                     bash ./.github/monorepo/remove_branch.sh "${{ needs.variables.outputs.BRANCH_NAME }}" "${REMOTE_TEMPLATE}"
