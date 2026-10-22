@@ -58,7 +58,8 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_url' => $options['new_combination_url'],
                 'back_label' => t('Back to overview of available combinations'),
-                'save_label' => t('Save'),
+                'apply' => true,
+                'entity' => $readyCategorySeoMix,
             ]);
     }
 

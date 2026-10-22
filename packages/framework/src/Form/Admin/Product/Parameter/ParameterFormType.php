@@ -83,6 +83,7 @@ final class ParameterFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_parameter_list',
                 'entity' => $options['parameter'],
+                'apply' => true,
             ]);
     }
 

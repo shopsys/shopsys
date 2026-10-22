@@ -42,6 +42,7 @@ final class CustomerUserUpdateFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_customer_list',
                 'entity' => $options['customerUser'],
+                'apply' => true,
             ]);
 
         if ($options['customerUser'] === null) {

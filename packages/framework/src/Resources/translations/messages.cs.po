@@ -3244,6 +3244,9 @@ msgstr "Sobota"
 msgid "Save"
 msgstr "Uložit"
 
+msgid "Save and close"
+msgstr "Uložit a zavřít"
+
 msgid "Save changes"
 msgstr "Uložit změny"
 

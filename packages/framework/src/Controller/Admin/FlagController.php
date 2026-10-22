@@ -77,7 +77,7 @@ class FlagController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_flag_list');
+            return $this->redirectAfterSave($form, 'admin_flag_list', 'admin_flag_edit', ['id' => $flag->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -114,7 +114,7 @@ class FlagController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_flag_list');
+            return $this->redirectAfterSave($form, 'admin_flag_list', 'admin_flag_edit', ['id' => $flag->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

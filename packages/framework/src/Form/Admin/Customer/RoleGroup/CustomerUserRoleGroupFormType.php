@@ -46,6 +46,7 @@ final class CustomerUserRoleGroupFormType extends AbstractType
         $builder->add('actionBar', ActionBarType::class, [
             'back_route' => 'admin_superadmin_customer_user_role_group_list',
             'entity' => $options['customer_user_role_group'],
+            'apply' => true,
         ]);
     }
 

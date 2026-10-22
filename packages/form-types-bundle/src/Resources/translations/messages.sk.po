@@ -10,8 +10,17 @@ msgstr "Späť na prehľad"
 msgid "Create"
 msgstr "Vytvoriť"
 
+msgid "Create and close"
+msgstr "Vytvoriť a zavrieť"
+
 msgid "No"
 msgstr "Nie"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "Save and close"
+msgstr "Uložiť a zavrieť"
 
 msgid "Save changes"
 msgstr "Uložiť zmeny"

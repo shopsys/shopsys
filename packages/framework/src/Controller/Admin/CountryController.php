@@ -66,7 +66,7 @@ class CountryController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_country_list');
+            return $this->redirectAfterSave($form, 'admin_country_list', 'admin_country_edit', ['id' => $country->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -108,7 +108,7 @@ class CountryController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_country_list');
+            return $this->redirectAfterSave($form, 'admin_country_list', 'admin_country_edit', ['id' => $country->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

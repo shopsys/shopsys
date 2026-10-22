@@ -10,8 +10,17 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
+msgid "Create and close"
+msgstr ""
+
 msgid "No"
 msgstr "No"
+
+msgid "Save"
+msgstr ""
+
+msgid "Save and close"
+msgstr ""
 
 msgid "Save changes"
 msgstr ""

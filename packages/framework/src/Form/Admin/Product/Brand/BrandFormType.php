@@ -91,6 +91,7 @@ final class BrandFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_brand_list',
                 'entity' => $options['brand'],
+                'apply' => true,
             ]);
     }
 

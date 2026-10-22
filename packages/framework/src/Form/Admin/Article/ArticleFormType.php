@@ -54,6 +54,7 @@ final class ArticleFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_article_list',
                 'entity' => $article,
+                'apply' => true,
             ]);
     }
 

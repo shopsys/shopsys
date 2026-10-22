@@ -63,6 +63,7 @@ final class BlogArticleFormType extends AbstractType
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_blogarticle_list',
                 'entity' => $options['blogArticle'],
+                'apply' => true,
             ]);
     }
 

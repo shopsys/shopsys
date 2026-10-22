@@ -109,7 +109,7 @@ class LanguageConstantController extends AdminBaseController
                 );
             }
 
-            return $this->redirectToRoute('admin_languageconstant_list');
+            return $this->redirectAfterSave($form, 'admin_languageconstant_list', 'admin_languageconstant_edit', ['key' => $key, 'namespace' => $namespace]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

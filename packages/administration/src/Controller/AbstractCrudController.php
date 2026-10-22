@@ -261,8 +261,11 @@ abstract class AbstractCrudController extends AdminBaseController
                     $this->addEditSuccessFlash($entity, $id);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
+                return $this->redirectAfterSave(
+                    $form,
+                    CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST),
+                    CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::EDIT),
+                    ['id' => $id],
                 );
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudEditHookExtensionInterface $extension) => $extension->onEditError($entity, $data, $exception), CrudEditHookExtensionInterface::class);
@@ -331,8 +334,11 @@ abstract class AbstractCrudController extends AdminBaseController
                     $this->addCreateSuccessFlash($entity);
                 }
 
-                return $this->redirect(
-                    $this->generateUrl(CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST)),
+                return $this->redirectAfterSave(
+                    $form,
+                    CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::LIST),
+                    CrudTransformationHelper::generateRouteName($this->definition->controllerName, ActionType::EDIT),
+                    ['id' => $this->crudEntityIdentifierExtractor->getId($entity)],
                 );
             } catch (Throwable $exception) {
                 $this->executeExtensions(fn (CrudCreateHookExtensionInterface $extension) => $extension->onCreateError($data, $exception), CrudCreateHookExtensionInterface::class);

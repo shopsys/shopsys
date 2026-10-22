@@ -73,7 +73,7 @@ class GiftPlanController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectToRoute('admin_giftplan_list');
+            return $this->redirectAfterSave($form, 'admin_giftplan_list', 'admin_giftplan_edit', ['id' => $giftPlan->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -153,7 +153,7 @@ class GiftPlanController extends AdminBaseController
                     ],
                 );
 
-            return $this->redirectToRoute('admin_giftplan_list');
+            return $this->redirectAfterSave($form, 'admin_giftplan_list', 'admin_giftplan_edit', ['id' => $giftPlan->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
