@@ -25,7 +25,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
-    private const string AUTHENTICATED_GIT_COMMAND_PREFIX = 'git -c url.https://x-access-token:$GITHUB_TOKEN@github.com/.insteadOf=https://github.com/';
+    private const string AUTHENTICATED_GIT_COMMAND_PREFIX = 'git -c credential.https://github.com.helper= -c credential.https://github.com.helper=\'!f() { echo username=x-access-token; echo "password=$GITHUB_TOKEN"; }; f\'';
 
     private const int MAX_WAIT_SECONDS = 7200;
 
