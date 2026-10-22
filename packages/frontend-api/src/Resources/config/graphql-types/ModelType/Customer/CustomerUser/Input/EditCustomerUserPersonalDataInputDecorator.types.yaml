@@ -6,6 +6,7 @@ EditCustomerUserPersonalDataInputDecorator:
     config:
         validation:
             -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupChangeAllowed:
         fields:
             customerUserUuid:
                 type: "Uuid"

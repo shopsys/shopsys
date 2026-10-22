@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
@@ -62,6 +63,7 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
         protected readonly WatchdogFacade $watchdogFacade,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -230,6 +232,10 @@ class CustomerUserMutation extends BaseTokenMutation
             throw new CannotDeleteOwnCustomerUserError('Cannot delete own user');
         }
 
+        if (!$this->canCustomerUserRemoveCustomerUser($currentCustomer, $customerUserToDelete)) {
+            throw new CustomerUserAccessDeniedUserError();
+        }
+
         if (!$customerUserToDelete->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
             return;
         }
@@ -255,6 +261,13 @@ class CustomerUserMutation extends BaseTokenMutation
                 'Customer user with uuid ' . $customerUserToDelete->getUuid() . ' is the last customer user with default role group.',
             );
         }
+    }
+
+    protected function canCustomerUserRemoveCustomerUser(
+        CustomerUser $removingCustomerUser,
+        CustomerUser $removedCustomerUser,
+    ): bool {
+        return $this->customerUserRoleResolver->canCustomerUserChangeRoleGroupOfCustomerUser($removingCustomerUser, $removedCustomerUser);
     }
 
     protected function loginRegisteredCustomerUser(CustomerUser $customerUser): LoginResultData
