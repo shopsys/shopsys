@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\EntityLog\Timeline\TwigComponent;
 
 use DateTimeImmutable;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\EntityLog\Timeline\TwigComponent\EntityLogTimelineComponent;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter;
@@ -180,14 +178,8 @@ class EntityLogTimelineComponentTest extends TestCase
      */
     protected function createEntityLogRepositoryStub(array $entityLogs): EntityLogRepository
     {
-        $query = $this->createStub(Query::class);
-        $query->method('getResult')->willReturn($entityLogs);
-
-        $queryBuilder = $this->createStub(QueryBuilder::class);
-        $queryBuilder->method('getQuery')->willReturn($query);
-
         $entityLogRepository = $this->createStub(EntityLogRepository::class);
-        $entityLogRepository->method('getQueryBuilderByEntityNameAndEntityId')->willReturn($queryBuilder);
+        $entityLogRepository->method('getEntityLogsBatch')->willReturn($entityLogs);
 
         return $entityLogRepository;
     }
