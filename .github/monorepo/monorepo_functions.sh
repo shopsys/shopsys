@@ -82,6 +82,11 @@ assert_split_branch_variable() {
 
 configure_git_push_credentials() {
     if [[ -z "${GIT_PUSH_TOKEN:-}" ]]; then
+        if [[ "$REMOTE_TEMPLATE" == https://* ]]; then
+            echo -e "${RED}You must provide GIT_PUSH_TOKEN to push to an HTTPS remote!${NC}"
+            exit 1
+        fi
+
         return
     fi
 
