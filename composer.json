@@ -134,7 +134,7 @@
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable": "^3.3.0",
         "prezent/doctrine-translatable-bundle": "^1.4",
-        "psr/log": "^1.0",
+        "psr/log": "^1.0 || ^2.0 || ^3.0",
         "ramsey/uuid": "^4.3.1",
         "roave/better-reflection": "^6.37",
         "scheb/2fa-bundle": "^6.12.0",
@@ -240,13 +240,6 @@
             "symfony/flex": true,
             "php-http/discovery": true,
             "symfony/runtime": true
-        },
-        "policy": {
-            "advisories": {
-                "ignore-id": {
-                    "PKSA-y2cr-5h3j-g3ys": "firebase/php-jwt: no fixed version is compatible with google/auth required on this branch"
-                }
-            }
         }
     },
     "extra": {
