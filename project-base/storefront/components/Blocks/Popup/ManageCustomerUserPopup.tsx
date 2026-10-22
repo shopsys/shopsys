@@ -43,9 +43,11 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const { canManageUsers, currentCustomerUserUuid: uuid } = useAuthorization();
     const customerUserData = getCustomerUser(customerUser);
-    const isRoleGroupDisabled = !canManageUsers || (mode === 'edit' && customerUser?.uuid === uuid);
+    const isRoleGroupDisabled =
+        !canManageUsers ||
+        (mode === 'edit' && (customerUser?.uuid === uuid || !customerUser?.canRoleGroupBeChangedByCurrentCustomerUser));
     const { customerUserRoleGroupsOptions, isFetching: isRoleGroupsFetching } =
-        useCustomerUserGroupsAsRadiobuttonOptions(isRoleGroupDisabled);
+        useCustomerUserGroupsAsRadiobuttonOptions(isRoleGroupDisabled, customerUser?.roleGroup);
 
     const customerUserDefaultFormData = {
         ...customerUserData,

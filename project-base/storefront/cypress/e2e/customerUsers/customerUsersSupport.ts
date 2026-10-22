@@ -44,6 +44,13 @@ export const clickDeleteUserButtonByEmail = (email: string) => {
     cy.waitForStableAndInteractiveDOM();
 };
 
+export const checkOnlyEditUserButtonIsVisibleByEmail = (email: string) => {
+    const userRow = () => cy.getByTID([TIDs.customer_users_table]).contains(email).closest('tr');
+
+    userRow().find(`[data-tid="${TIDs.customer_users_edit_button}"]`).should('be.visible');
+    userRow().find(`[data-tid="${TIDs.customer_users_delete_button}"]`).should('not.exist');
+};
+
 export const confirmDeleteUser = () => {
     cy.getByTID([TIDs.customer_users_delete_confirm_button]).should('be.visible').click();
     cy.waitForStableAndInteractiveDOM();
@@ -58,6 +65,21 @@ const FORM_PREFIX = '#customer-user-manage-profile-form-';
 
 export const waitForRoleGroupOptionsToLoad = () => {
     cy.getByTID([TIDs.layout_popup]).find('input[type="radio"]').should('exist');
+};
+
+export const checkRoleGroupOptionsCount = (expectedCount: number) => {
+    waitForRoleGroupOptionsToLoad();
+    cy.getByTID([TIDs.layout_popup]).find('input[type="radio"]').should('have.length', expectedCount);
+};
+
+export const checkRoleGroupOptionsAreDisabledWithEditedCustomerUserRoleGroupChecked = () => {
+    waitForRoleGroupOptionsToLoad();
+    cy.getByTID([TIDs.layout_popup])
+        .find('input[type="radio"]')
+        .each(($radio) => {
+            cy.wrap($radio).should('be.disabled');
+        });
+    cy.getByTID([TIDs.layout_popup]).find('input[type="radio"]:checked').should('have.length', 1);
 };
 
 export const checkRoleGroupOptionsAreEnabled = () => {
@@ -92,6 +114,17 @@ export const fillAddUserForm = (data: { email: string; firstName: string; lastNa
     cy.get(FORM_PREFIX + 'telephone')
         .clear()
         .type(data.telephone);
+};
+
+export const getRoleGroupNameByEmail = (email: string) =>
+    cy.getByTID([TIDs.customer_users_table]).contains(email).closest('tr').find('td').eq(1).invoke('text');
+
+export const getFirstNameInManageUserForm = () => cy.get(FORM_PREFIX + 'firstName').invoke('val');
+
+export const fillFirstNameInManageUserForm = (firstName: string) => {
+    cy.get(FORM_PREFIX + 'firstName')
+        .clear()
+        .type(firstName);
 };
 
 export const fillEditUserForm = (data: { firstName: string; lastName: string; telephone: string }) => {
