@@ -45,13 +45,9 @@ class ProductFilterFacade
 
     public function getProductFilterConfigForAll(): ProductFilterConfig
     {
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () {
-                return $this->productFilterConfigFactory->createForAll(
-                    $this->domain->getLocale(),
-                );
-            },
+        return $this->getProductFilterConfig(
+            $this->createAggregationQueryForAll(...),
+            $this->createProductFilterConfigForAll(...),
             'all',
         );
     }
@@ -101,14 +97,12 @@ class ProductFilterFacade
     {
         $locale = $this->domain->getLocale();
 
-        return $this->inMemoryCache->getOrSaveValue(
-            static::PRODUCT_FILTER_CACHE_NAMESPACE,
-            function () use ($flag, $locale) {
-                return $this->productFilterConfigFactory->createForFlag(
-                    $flag,
-                    $locale,
-                );
-            },
+        return $this->getProductFilterConfig(
+            fn (): array => $this->createAggregationQueryForFlag($flag),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->createProductFilterConfigForFlag(
+                $productFilterConfigIdsData,
+                $locale,
+            ),
             'flag',
             $locale,
             $flag->getId(),
@@ -158,13 +152,8 @@ class ProductFilterFacade
     public function getProductFilterConfigPromiseForAll(): Promise
     {
         return $this->getProductFilterConfigPromise(
-            fn (): array => $this->productFilterElasticFacade->getAggregationQueryForAll(
-                $this->currentCustomerUser->getPricingGroup(),
-            ),
-            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
-                $productFilterConfigIdsData,
-                $this->domain->getLocale(),
-            ),
+            $this->createAggregationQueryForAll(...),
+            $this->createProductFilterConfigForAll(...),
             'all',
         );
     }
@@ -223,17 +212,68 @@ class ProductFilterFacade
         $locale = $this->domain->getLocale();
 
         return $this->getProductFilterConfigPromise(
-            fn (): array => $this->productFilterElasticFacade->getAggregationQueryInFlag(
-                $flag->getId(),
-                $this->currentCustomerUser->getPricingGroup(),
-            ),
-            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
+            fn (): array => $this->createAggregationQueryForFlag($flag),
+            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->createProductFilterConfigForFlag(
                 $productFilterConfigIdsData,
                 $locale,
             ),
             'flag',
             $locale,
             $flag->getId(),
+        );
+    }
+
+    /**
+     * @return array{index: string, body: array<string, mixed>}
+     */
+    protected function createAggregationQueryForAll(): array
+    {
+        return $this->productFilterElasticFacade->getAggregationQueryForAll(
+            $this->currentCustomerUser->getPricingGroup(),
+        );
+    }
+
+    protected function createProductFilterConfigForAll(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+    ): ProductFilterConfig {
+        return $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
+            $productFilterConfigIdsData,
+            $this->domain->getLocale(),
+        );
+    }
+
+    /**
+     * @return array{index: string, body: array<string, mixed>}
+     */
+    protected function createAggregationQueryForFlag(Flag $flag): array
+    {
+        return $this->productFilterElasticFacade->getAggregationQueryInFlag(
+            $flag->getId(),
+            $this->currentCustomerUser->getPricingGroup(),
+        );
+    }
+
+    protected function createProductFilterConfigForFlag(
+        ProductFilterConfigIdsData $productFilterConfigIdsData,
+        string $locale,
+    ): ProductFilterConfig {
+        return $this->productFilterConfigFactory->createWithFlagAndBrandChoices(
+            $productFilterConfigIdsData,
+            $locale,
+        );
+    }
+
+    protected function getProductFilterConfig(
+        Closure $createAggregationQuery,
+        Closure $createProductFilterConfig,
+        mixed ...$cacheKeyParts,
+    ): ProductFilterConfig {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PRODUCT_FILTER_CACHE_NAMESPACE,
+            fn (): ProductFilterConfig => $createProductFilterConfig(
+                $this->productFilterElasticFacade->getProductFilterConfigIdsData($createAggregationQuery()),
+            ),
+            ...$cacheKeyParts,
         );
     }
 

@@ -18,6 +18,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade as BasePr
  * @method \GraphQL\Executor\Promise\Promise getValidatedProductFilterDataPromiseForCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
  * @method \GraphQL\Executor\Promise\Promise getValidatedProductFilterDataPromiseForBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
  * @method \GraphQL\Executor\Promise\Promise getValidatedProductFilterDataPromiseForFlag(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Flag\Flag $flag)
+ * @method array{index: string, body: array<string, mixed>} createAggregationQueryForFlag(\App\Model\Product\Flag\Flag $flag)
  */
 class ProductFilterFacade extends BaseProductFilterFacade
 {

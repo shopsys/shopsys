@@ -18,18 +18,6 @@ class ProductFilterElasticFacade
     ) {
     }
 
-    public function getProductFilterDataInFlag(
-        int $flagId,
-        PricingGroup $pricingGroup,
-    ): ProductFilterConfigIdsData {
-        return $this->getProductFilterConfigIdsData($this->getAggregationQueryInFlag($flagId, $pricingGroup));
-    }
-
-    public function getProductFilterDataForAll(PricingGroup $pricingGroup): ProductFilterConfigIdsData
-    {
-        return $this->getProductFilterConfigIdsData($this->getAggregationQueryForAll($pricingGroup));
-    }
-
     /**
      * @return array{index: string, body: array<string, mixed>}
      */
@@ -94,7 +82,7 @@ class ProductFilterElasticFacade
     /**
      * @param array{index: string, body: array<string, mixed>} $aggregationQuery
      */
-    protected function getProductFilterConfigIdsData(array $aggregationQuery): ProductFilterConfigIdsData
+    public function getProductFilterConfigIdsData(array $aggregationQuery): ProductFilterConfigIdsData
     {
         return $this->createProductFilterConfigIdsData($this->client->search($aggregationQuery));
     }

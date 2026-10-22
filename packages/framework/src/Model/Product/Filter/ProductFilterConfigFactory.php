@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductFilterConfigFactory
 {
     public function __construct(
-        protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly ProductFilterElasticFacade $productFilterElasticFacade,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
@@ -66,15 +62,6 @@ class ProductFilterConfigFactory
         );
     }
 
-    public function createForAll(string $locale): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForAll(
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $aggregatedParameterFilterChoices
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
@@ -99,16 +86,6 @@ class ProductFilterConfigFactory
         }
 
         return $sortedParameterFilterChoices;
-    }
-
-    public function createForFlag(Flag $flag, string $locale): ProductFilterConfig
-    {
-        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
-            $flag->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-
-        return $this->createWithFlagAndBrandChoices($productFilterConfigIdsData, $locale);
     }
 
     public function createWithFlagAndBrandChoices(
