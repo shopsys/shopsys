@@ -17,7 +17,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'AFN',
         'ALL',
         'AMD',
-        'ANG',
         'AOA',
         'ARS',
         'AUD',
@@ -44,7 +43,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'CNY',
         'COP',
         'CRC',
-        'CUC',
         'CUP',
         'CVE',
         'CZK',
@@ -172,7 +170,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'YER',
         'ZAR',
         'ZMW',
-        'ZWL',
     ];
 
     /**
