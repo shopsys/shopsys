@@ -314,6 +314,8 @@ export enum TypeAvailabilityStatusEnum {
 export type TypeBaseCustomerUser = {
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
+  /** Whether the currently logged customer user can edit or remove this customer user */
+  canBeManagedByCurrentCustomerUser: Scalars['Boolean']['output'];
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
@@ -864,6 +866,8 @@ export type TypeCompanyCustomerUser = TypeBaseCustomerUser & {
   __typename?: 'CompanyCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
+  /** Whether the currently logged customer user can edit or remove this customer user */
+  canBeManagedByCurrentCustomerUser: Scalars['Boolean']['output'];
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** The customer’s company name (only when customer is a company) */
@@ -1139,6 +1143,8 @@ export type TypeCurrentCompanyCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   __typename?: 'CurrentCompanyCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
+  /** Whether the currently logged customer user can edit or remove this customer user */
+  canBeManagedByCurrentCustomerUser: Scalars['Boolean']['output'];
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** The customer’s company name (only when customer is a company) */
@@ -1188,6 +1194,8 @@ export type TypeCurrentCompanyCustomerUser = TypeBaseCustomerUser & TypeCurrentC
 export type TypeCurrentCustomerUser = {
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
+  /** Whether the currently logged customer user can edit or remove this customer user */
+  canBeManagedByCurrentCustomerUser: Scalars['Boolean']['output'];
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
@@ -1232,6 +1240,8 @@ export type TypeCurrentRegularCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   __typename?: 'CurrentRegularCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
+  /** Whether the currently logged customer user can edit or remove this customer user */
+  canBeManagedByCurrentCustomerUser: Scalars['Boolean']['output'];
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
@@ -3435,7 +3445,7 @@ export type TypeQuery = {
   currentCustomerUser: Maybe<TypeCurrentCustomerUser>;
   /** Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords */
   currentCustomerUserProductReviews: TypeCustomerUserProductReviewConnection;
-  /** Returns all customer user role groups */
+  /** Returns customer user role groups the current customer user can assign */
   customerUserRoleGroups: Array<TypeCustomerUserRoleGroup>;
   /** Returns all customer users assigned to the current customer */
   customerUsers: Array<TypeBaseCustomerUser>;
@@ -3882,6 +3892,8 @@ export type TypeRegularCustomerUser = TypeBaseCustomerUser & {
   __typename?: 'RegularCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
+  /** Whether the currently logged customer user can edit or remove this customer user */
+  canBeManagedByCurrentCustomerUser: Scalars['Boolean']['output'];
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** Billing address country */

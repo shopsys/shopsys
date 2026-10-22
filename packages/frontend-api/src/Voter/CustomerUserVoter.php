@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -20,6 +21,7 @@ class CustomerUserVoter extends AbstractB2bVoter
         Domain $domain,
         protected readonly Security $security,
         protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
         parent::__construct($domain);
     }
@@ -46,7 +48,7 @@ class CustomerUserVoter extends AbstractB2bVoter
         }
 
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS)) {
-            return $this->isEditedCustomerUserFromSameCompany($inputData, $token);
+            return $this->canLoggedCustomerUserManageEditedCustomerUser($inputData, $token);
         }
 
         return false;
@@ -57,7 +59,7 @@ class CustomerUserVoter extends AbstractB2bVoter
         return false;
     }
 
-    protected function isEditedCustomerUserFromSameCompany(array $inputData, TokenInterface $token): bool
+    protected function canLoggedCustomerUserManageEditedCustomerUser(array $inputData, TokenInterface $token): bool
     {
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */
         $loggedUser = $token->getUser();
@@ -69,6 +71,6 @@ class CustomerUserVoter extends AbstractB2bVoter
             return false;
         }
 
-        return $loggedCustomerUser->getCustomer()->getId() === $editedCustomerUser->getCustomer()->getId();
+        return $this->customerUserRoleResolver->canCustomerUserManageCustomerUser($loggedCustomerUser, $editedCustomerUser);
     }
 }

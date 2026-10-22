@@ -42,6 +42,9 @@ BaseCustomerUserDecorator:
             roleGroup:
                 type: "CustomerUserRoleGroup!"
                 description: "The customer user role group"
+            canBeManagedByCurrentCustomerUser:
+                type: "Boolean!"
+                description: "Whether the currently logged customer user can edit or remove this customer user"
             salesRepresentative:
                 type: "SalesRepresentative"
                 description: "Sales representative assigned to customer"

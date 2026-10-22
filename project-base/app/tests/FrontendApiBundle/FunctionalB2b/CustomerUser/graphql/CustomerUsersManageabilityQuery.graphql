@@ -1,0 +1,6 @@
+query CustomerUsersManageabilityQuery {
+    customerUsers {
+        email
+        canBeManagedByCurrentCustomerUser
+    }
+}

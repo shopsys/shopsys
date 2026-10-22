@@ -10,7 +10,6 @@ use App\DataFixtures\Demo\CompanyOrderDataFixture;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\Model\Customer\User\CustomerUser;
-use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
@@ -20,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
+use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\CompanyOwnerTestHelper;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
 class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
@@ -29,7 +29,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     /**
      * @inject
      */
-    private CustomerUserDataFactory $customerUserDataFactory;
+    private CompanyOwnerTestHelper $companyOwnerTestHelper;
 
     /**
      * @see \Tests\FrontendApiBundle\Functional\Customer\User\CurrentCustomerUserTest::testUniqueBillingAddressIsNotValidatedInEditCustomerCompanyB2c()
@@ -101,6 +101,33 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     }
 
     /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserCustomerManagerTest::testCustomerUserRoleGroupsReturnsOnlyAssignableRoleGroups()
+     */
+    public function testCustomerUserRoleGroupsReturnsAllRoleGroups(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/CustomerUserRoleGroupsQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'customerUserRoleGroups');
+
+        $expectedRoleGroupUuids = array_map(
+            fn (string $referenceName): string => $this->getReference($referenceName, CustomerUserRoleGroup::class)->getUuid(),
+            [
+                CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER,
+                CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER,
+                CustomerUserRoleGroupDataFixture::ROLE_GROUP_CUSTOMER_MANAGER,
+                CustomerUserRoleGroupDataFixture::ROLE_GROUP_LIMITED_USER,
+                CustomerUserRoleGroupDataFixture::ROLE_GROUP_CATALOG_USER,
+                CustomerUserRoleGroupDataFixture::ROLE_GROUP_ACCOUNTANT,
+            ],
+        );
+        $actualRoleGroupUuids = array_column($responseData, 'uuid');
+
+        sort($expectedRoleGroupUuids);
+        sort($actualRoleGroupUuids);
+
+        $this->assertSame($expectedRoleGroupUuids, $actualRoleGroupUuids);
+    }
+
+    /**
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testRemoveCustomerUserMutationIsNotAllowed()
      */
     public function testRemoveCustomerUser(): void
@@ -112,7 +139,8 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
     public function testRemoveAnotherOwner(): void
     {
-        $ownerToDelete = $this->getAnotherOwnerToDelete();
+        $ownerToDelete = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, $this->domain->getId(), CustomerUser::class);
+        $this->companyOwnerTestHelper->makeCustomerUserAnotherCompanyOwner($ownerToDelete);
 
         $this->doTestSuccessfulCustomerUserRemoval($ownerToDelete);
     }
@@ -170,6 +198,27 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertSame($editedLastName, $refreshedUserToEdit->getLastName());
         $this->assertSame($editedTelephone->toPhoneNumber(), $refreshedUserToEdit->getTelephone());
         $this->assertSame($newRoleGroup->getUuid(), $refreshedUserToEdit->getRoleGroup()->getUuid());
+    }
+
+    public function testEditOwnRoleGroupReturnsRolesOfNewRoleGroup(): void
+    {
+        $this->companyOwnerTestHelper->makeCustomerUserAnotherCompanyOwner(
+            $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, $this->domain->getId(), CustomerUser::class),
+        );
+        $currentCustomerUser = $this->getCustomerUserByDefaultCredentials();
+        $catalogUserRoleGroupUuid = $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_CATALOG_USER, CustomerUserRoleGroup::class)->getUuid();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/EditCustomerUserPersonalDataMutation.graphql', [
+            'customerUserUuid' => $currentCustomerUser->getUuid(),
+            'firstName' => $currentCustomerUser->getFirstName(),
+            'lastName' => $currentCustomerUser->getLastName(),
+            'roleGroupUuid' => $catalogUserRoleGroupUuid,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'EditCustomerUserPersonalData');
+
+        $this->assertSame($catalogUserRoleGroupUuid, $responseData['roleGroup']['uuid']);
+        $this->assertSame([], $responseData['roles']);
+        $this->assertFalse($responseData['canBeManagedByCurrentCustomerUser']);
     }
 
     public function testEditCustomerUserPersonalDataFromAnotherCompanyIsNotAllowed(): void
@@ -356,17 +405,6 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $data = $this->getResponseDataForGraphQlType($response, 'OrderWithdrawalRequest');
         $this->assertTrue($data);
-    }
-
-    private function getAnotherOwnerToDelete(): CustomerUser
-    {
-        $userToDelete = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, $this->domain->getId(), CustomerUser::class);
-        $customerUserData = $this->customerUserDataFactory->createFromCustomerUser($userToDelete);
-        $customerUserData->roleGroup = $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER, CustomerUserRoleGroup::class);
-        $userToDelete->edit($customerUserData);
-        $this->em->flush();
-
-        return $userToDelete;
     }
 
     private function doTestSuccessfulCustomerUserRemoval(CustomerUser $userToDelete): void
