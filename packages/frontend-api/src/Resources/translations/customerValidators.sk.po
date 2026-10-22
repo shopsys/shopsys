@@ -28,6 +28,9 @@ msgstr "Názov reklamovaného produktu nemôže byť dlhší ako {{ limit }} zna
 msgid "Complaint item name is required"
 msgstr "Názov reklamovaného produktu je povinný"
 
+msgid "Customer role group cannot be assigned."
+msgstr "Túto skupinu rolí zákazníka nemôžete priradiť."
+
 msgid "Customer role group cannot be changed."
 msgstr "Skupina rolí zákazníka sa nedá zmeniť."
 
@@ -315,6 +318,9 @@ msgstr "Typ súboru {{ name }} nie je podporovaný."
 
 msgid "You can upload up to {{ limit }} photos"
 msgstr "Môžete nahrať najviac {{ limit }} fotografií"
+
+msgid "You cannot change the role group of this customer user to this role group."
+msgstr "Skupinu rolí tohto zákazníka nemôžete zmeniť na túto skupinu."
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
 msgstr "Musíte byť prihlásený, ak chcete zadať UUID dodacej adresy v objednávke"

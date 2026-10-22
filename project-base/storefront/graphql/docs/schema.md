@@ -768,7 +768,7 @@ Returns reviews written by the current customer user, regardless of their modera
 <td valign="top">[<a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!]!</td>
 <td>
 
-Returns all customer user role groups
+Returns customer user role groups the current customer user can assign
 
 </td>
 </tr>
@@ -4560,6 +4560,15 @@ UUID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="companycustomeruser.canrolegroupbechangedbycurrentcustomeruser">canRoleGroupBeChangedByCurrentCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="companycustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5301,6 +5310,15 @@ UUID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.canrolegroupbechangedbycurrentcustomeruser">canRoleGroupBeChangedByCurrentCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="currentcompanycustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5517,6 +5535,15 @@ Represents a currently logged regular customer user
 <td>
 
 UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.canrolegroupbechangedbycurrentcustomeruser">canRoleGroupBeChangedByCurrentCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)
 
 </td>
 </tr>
@@ -10520,6 +10547,15 @@ Represents a regular customer user
 <td>
 
 UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.canrolegroupbechangedbycurrentcustomeruser">canRoleGroupBeChangedByCurrentCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)
 
 </td>
 </tr>
@@ -16678,6 +16714,15 @@ UUID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="basecustomeruser.canrolegroupbechangedbycurrentcustomeruser">canRoleGroupBeChangedByCurrentCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="basecustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -16888,6 +16933,15 @@ Represents a common interface for a currently logged customer user (both company
 <td>
 
 UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.canrolegroupbechangedbycurrentcustomeruser">canRoleGroupBeChangedByCurrentCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)
 
 </td>
 </tr>

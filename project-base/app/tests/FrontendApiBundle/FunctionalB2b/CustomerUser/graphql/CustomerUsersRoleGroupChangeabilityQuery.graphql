@@ -1,0 +1,6 @@
+query CustomerUsersRoleGroupChangeabilityQuery {
+    customerUsers {
+        email
+        canRoleGroupBeChangedByCurrentCustomerUser
+    }
+}

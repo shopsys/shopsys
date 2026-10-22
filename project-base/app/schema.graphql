@@ -260,6 +260,8 @@ enum AvailabilityStatusEnum {
 interface BaseCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
+  "Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)"
+  canRoleGroupBeChangedByCurrentCustomerUser: Boolean!
   "city name"
   city: String
   "Billing address country"
@@ -708,6 +710,8 @@ input ChangeTransportInCartInput {
 type CompanyCustomerUser implements BaseCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
+  "Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)"
+  canRoleGroupBeChangedByCurrentCustomerUser: Boolean!
   "city name"
   city: String
   "The customer’s company name (only when customer is a company)"
@@ -968,6 +972,8 @@ input CreateWatchdogInput {
 type CurrentCompanyCustomerUser implements BaseCustomerUser & CurrentCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
+  "Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)"
+  canRoleGroupBeChangedByCurrentCustomerUser: Boolean!
   "city name"
   city: String
   "The customer’s company name (only when customer is a company)"
@@ -1017,6 +1023,8 @@ type CurrentCompanyCustomerUser implements BaseCustomerUser & CurrentCustomerUse
 interface CurrentCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
+  "Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)"
+  canRoleGroupBeChangedByCurrentCustomerUser: Boolean!
   "city name"
   city: String
   "Billing address country"
@@ -1060,6 +1068,8 @@ interface CurrentCustomerUser {
 type CurrentRegularCustomerUser implements BaseCustomerUser & CurrentCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
+  "Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)"
+  canRoleGroupBeChangedByCurrentCustomerUser: Boolean!
   "city name"
   city: String
   "Billing address country"
@@ -2872,7 +2882,7 @@ type Query {
   "Returns reviews written by the current customer user, regardless of their moderation status, newest first. When a product UUID is provided, only the reviews of the product and its variants are returned. The list can be paginated using `first`, `last`, `before` and `after` keywords"
   currentCustomerUserProductReviews(after: String, before: String, first: Int, last: Int, productUuid: Uuid): CustomerUserProductReviewConnection!
   CurrentRegularCustomerUser: CurrentRegularCustomerUser
-  "Returns all customer user role groups"
+  "Returns customer user role groups the current customer user can assign"
   customerUserRoleGroups: [CustomerUserRoleGroup!]!
   "Returns all customer users assigned to the current customer"
   customerUsers: [BaseCustomerUser!]!
@@ -3068,6 +3078,8 @@ input RegistrationDataInput {
 type RegularCustomerUser implements BaseCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
+  "Whether the currently logged customer user can change the role group of this customer user and remove them (removing the currently logged customer user themselves is never allowed)"
+  canRoleGroupBeChangedByCurrentCustomerUser: Boolean!
   "city name"
   city: String
   "Billing address country"

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 
 class CustomerUserRoleGroupFacade
@@ -17,6 +18,7 @@ class CustomerUserRoleGroupFacade
         protected readonly EntityManagerInterface $entityManager,
         protected readonly CustomerUserRoleGroupFactory $customerUserRoleGroupFactory,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -64,6 +66,20 @@ class CustomerUserRoleGroupFacade
     public function getAll(): array
     {
         return $this->customerUserRoleGroupRepository->getAll();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup[]
+     */
+    public function getAllAssignableByCustomerUser(CustomerUser $customerUser): array
+    {
+        return array_values(array_filter(
+            $this->getAll(),
+            fn (CustomerUserRoleGroup $customerUserRoleGroup): bool => $this->customerUserRoleResolver->canCustomerUserAssignRoleGroup(
+                $customerUser,
+                $customerUserRoleGroup,
+            ),
+        ));
     }
 
     public function getDefaultCustomerUserRoleGroup(): CustomerUserRoleGroup
