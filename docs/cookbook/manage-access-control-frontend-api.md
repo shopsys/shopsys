@@ -100,4 +100,17 @@ EditCustomerUserPersonalData:
 ```
 
 In this example, the `EditCustomerUserPersonalData` mutation uses the `can_manage_customer_user_voter` voter to check if the current user has the necessary permissions to edit a customer user's personal data.
-The `ROLE_API_MANAGE_CUSTOMERS` role can manage all customer users, but the `ROLE_API_CUSTOMER_SELF_MANAGE` role can only manage its own data.
+The `ROLE_API_MANAGE_CUSTOMERS` role can manage customer users of the same company whose role group it could assign (see [Assigning Role Groups](#5-assigning-role-groups)), but the `ROLE_API_CUSTOMER_SELF_MANAGE` role can only manage its own data.
+
+## 5. Assigning Role Groups
+
+A customer user can assign only a role group whose roles are a subset of their own roles.
+Roles on both sides are expanded through the role hierarchy, and the current customer user's roles are always read from their role group in the database, never from the request or from the access token.
+`ROLE_API_ALL` is compared as a role of its own, so the role group with `ROLE_API_ALL` can be assigned only by a customer user who has `ROLE_API_ALL` as well.
+
+The rule is implemented in `Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver::canCustomerUserAssignRoleGroup()` and it is applied in these places:
+
+- the `Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAssignable` constraint validates `roleGroupUuid` of the `AddNewCustomerUser` and `EditCustomerUserPersonalData` mutations
+- the `can_manage_customer_user_voter` voter denies editing or removing a customer user whose current role group the current customer user could not assign
+- the `customerUserRoleGroups` query returns only the role groups the current customer user can assign
+- the `canBeManagedByCurrentCustomerUser` field of `BaseCustomerUser` tells the storefront whether the current customer user can edit or remove the customer user
