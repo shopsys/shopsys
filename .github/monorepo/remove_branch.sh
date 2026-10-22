@@ -12,6 +12,7 @@ set -u
 
 assert_split_branch_variable
 assert_remote_template_variable
+configure_git_push_credentials
 
 assert_split_branch_is_not_protected
 
