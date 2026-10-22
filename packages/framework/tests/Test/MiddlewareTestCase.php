@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
+use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Withdrawal\WithdrawalRequestFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -59,7 +60,7 @@ class MiddlewareTestCase extends TestCase
         );
         $orderData = $orderDataFactory->create();
 
-        $orderInput = (new OrderInputFactory())->create($this->createDomainConfigStub());
+        $orderInput = (new OrderInputFactory($this->createStub(OrderInputPreloaderFacade::class)))->create($this->createDomainConfigStub());
 
         return new OrderProcessingData($orderInput, $orderData);
     }
