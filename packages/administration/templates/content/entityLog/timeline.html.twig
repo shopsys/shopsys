@@ -9,17 +9,22 @@
 
 <div {{ attributes }}>
     {% set groups = this.groups %}
+    {% set groupIdPrefix = 'entity-log-timeline-' ~ this.entityName ~ '-' ~ this.entityId ~ '-' %}
 
-    {% if groups|length == 0 %}
+    {% if groups|length == 0 and this.currentOldestEntityLogId is null %}
         <div class="text-secondary">{{ 'No logs created so far.'|trans }}</div>
     {% else %}
         <ul class="timeline">
+            {% if this.currentOldestEntityLogId is not null %}
+                <li id="{{ groupIdPrefix ~ this.currentOldestEntityLogId }}" data-live-ignore></li>
+            {% endif %}
+
             {% for group in groups %}
                 {% set isSingleEntry = group|length == 1 %}
                 {% set firstLog = group|first %}
                 {% set groupAction = this.getGroupAction(group) %}
 
-                <li class="timeline-event">
+                <li class="timeline-event" id="{{ groupIdPrefix ~ (group|last).id }}" data-live-ignore>
                     <div class="timeline-event-icon {{ this.getActionIconClass(groupAction) }}">
                         {{ ux_icon(this.getActionIconName(groupAction)) }}
                     </div>
@@ -90,5 +95,18 @@
                 </li>
             {% endfor %}
         </ul>
+
+        {% if this.hasMoreEntityLogs() %}
+            <div class="text-center mt-3">
+                <button type="button"
+                        class="btn"
+                        data-action="live#action"
+                        data-live-action-param="loadMore"
+                        data-loading="addAttribute(disabled)"
+                >
+                    {{ 'Show more'|trans }}
+                </button>
+            </div>
+        {% endif %}
     {% endif %}
 </div>

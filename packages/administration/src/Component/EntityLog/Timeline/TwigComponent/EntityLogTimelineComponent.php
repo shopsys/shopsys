@@ -10,20 +10,39 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
-use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Shopsys\FrameworkBundle\Component\Security\Attribute\RequireRole;
+use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Webmozart\Assert\Assert;
 
-#[AsTwigComponent(
+#[AsLiveComponent(
     name: 'Admin:EntityLogTimeline',
     template: '@ShopsysAdministration/content/entityLog/timeline.html.twig',
 )]
 class EntityLogTimelineComponent
 {
+    use DefaultActionTrait;
+
     protected const string MIXED_VALUE = 'mixed';
 
+    protected const int ENTITY_LOGS_PER_BATCH = 20;
+
+    #[LiveProp]
     public string $entityName;
 
+    #[LiveProp]
     public int $entityId;
+
+    #[LiveProp]
+    public ?int $currentOldestEntityLogId = null;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]|null
+     */
+    protected ?array $entityLogsBatch = null;
 
     public function __construct(
         protected readonly EntityLogRepository $entityLogRepository,
@@ -47,19 +66,28 @@ class EntityLogTimelineComponent
         $this->entityId = $entity->getId();
     }
 
+    #[LiveAction]
+    #[RequireRole(SystemRole::ADMIN)]
+    public function loadMore(): void
+    {
+        $oldestEntityLogId = $this->getOldestEntityLogId();
+
+        if ($oldestEntityLogId === null) {
+            return;
+        }
+
+        $this->currentOldestEntityLogId = $oldestEntityLogId;
+        $this->entityLogsBatch = null;
+    }
+
     /**
      * @return array<int, array<int, \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog>>
      */
     public function getGroups(): array
     {
-        $entityLogs = $this->entityLogRepository
-            ->getQueryBuilderByEntityNameAndEntityId($this->entityName, $this->entityId)
-            ->getQuery()
-            ->getResult();
-
         $itemsByCollectionNumber = [];
 
-        foreach ($entityLogs as $entityLog) {
+        foreach ($this->getEntityLogsBatch() as $entityLog) {
             $collectionNumber = $entityLog->getLogCollectionNumber();
 
             if ($collectionNumber === '') {
@@ -70,6 +98,39 @@ class EntityLogTimelineComponent
         }
 
         return array_values($itemsByCollectionNumber);
+    }
+
+    public function hasMoreEntityLogs(): bool
+    {
+        $oldestEntityLogId = $this->getOldestEntityLogId();
+
+        return $oldestEntityLogId !== null
+            && $this->entityLogRepository->hasEntityLogsOlderThan($this->entityName, $this->entityId, $oldestEntityLogId);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]
+     */
+    protected function getEntityLogsBatch(): array
+    {
+        if ($this->entityLogsBatch === null) {
+            $this->entityLogsBatch = $this->entityLogRepository->getEntityLogsBatch(
+                $this->entityName,
+                $this->entityId,
+                $this->currentOldestEntityLogId,
+                static::ENTITY_LOGS_PER_BATCH,
+            );
+        }
+
+        return $this->entityLogsBatch;
+    }
+
+    protected function getOldestEntityLogId(): ?int
+    {
+        $entityLogsBatch = $this->getEntityLogsBatch();
+        $oldestEntityLog = end($entityLogsBatch);
+
+        return $oldestEntityLog === false ? null : $oldestEntityLog->getId();
     }
 
     /**
