@@ -1,11 +1,16 @@
 ARG LINUX_DISTRIBUTION=alpine
 ARG project_root='/'
-ARG NODE_MAJOR=24
+ARG NODE_MAJOR=26
+ARG NPM_MAJOR=12
 ARG PHP_VERSION=8.5
 
 # Node and Composer are already installed in the node_builder and composer_builder stages
 FROM composer:latest AS composer_builder
 FROM node:${NODE_MAJOR}-${LINUX_DISTRIBUTION} AS node_builder
+
+# Upgrade npm bundled with the Node image to get patched versions of its dependencies
+ARG NPM_MAJOR
+RUN npm install -g npm@${NPM_MAJOR}
 
 
 FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
