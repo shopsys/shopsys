@@ -7,6 +7,10 @@
     {% endif %}
 {% endmacro %}
 
+{% macro entity_name(entityLog, timelineEntityName) -%}
+    {{ entityLog.entityName }}{% if entityLog.entityName != timelineEntityName %} #{{ entityLog.entityId }}{% endif %}
+{%- endmacro %}
+
 <div {{ attributes }}>
     {% set groups = this.groups %}
     {% set groupIdPrefix = 'entity-log-timeline-' ~ this.entityName ~ '-' ~ this.entityId ~ '-' %}
@@ -38,10 +42,10 @@
                                 <h4 class="mb-2 d-flex flex-wrap gap-2 align-items-center">
                                     <span class="badge {{ this.getActionBadgeClass(firstLog.action) }}">{{ firstLog.action|capitalize|trans }}</span>
                                     {% if firstLog.entityIdentifier is empty %}
-                                        <span>{{ firstLog.entityName }}</span>
+                                        <span>{{ _self.entity_name(firstLog, this.entityName) }}</span>
                                     {% else %}
                                         <span>{{ '%entityName% (%entityIdentifier%)'|trans({
-                                            '%entityName%': firstLog.entityName,
+                                            '%entityName%': _self.entity_name(firstLog, this.entityName),
                                             '%entityIdentifier%': firstLog.entityIdentifier,
                                         }) }}</span>
                                     {% endif %}
@@ -74,7 +78,7 @@
                                         <div class="border-start ps-3">
                                             <div class="d-flex flex-wrap gap-2 align-items-center mb-1">
                                                 <span class="badge {{ this.getActionBadgeClass(entityLog.action) }}">{{ entityLog.action|capitalize|trans }}</span>
-                                                <strong>{{ entityLog.entityName }}</strong>
+                                                <strong>{{ _self.entity_name(entityLog, this.entityName) }}</strong>
                                                 {% if entityLog.entityIdentifier is not empty %}
                                                     <span class="text-secondary">({{ entityLog.entityIdentifier }})</span>
                                                 {% endif %}
