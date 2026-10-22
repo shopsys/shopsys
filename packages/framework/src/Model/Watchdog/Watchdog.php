@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(name="watchdogs")
