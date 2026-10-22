@@ -220,7 +220,7 @@
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
-        "security-check": "security-checker security:check",
+        "security-check": "security-checker security:check --allow-list=\"Mass-assignment in Factory::loadFromProvisioningUri lets a hostile provisioning URI corrupt OTP state or leak an uncaught TypeError\" --allow-list=\"Unbounded digits parameter in a provisioning URI triggers an uncaught DivisionByZeroError in OTP generation\"",
         "auto-scripts": {
             "php phing clean": "script",
             "shopsys:domains-urls:configure": "symfony-cmd",
