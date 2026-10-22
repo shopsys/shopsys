@@ -1,4 +1,7 @@
 import { TypeLoginTypeEnum } from 'graphql/types';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
+
+export type AuthContext = GetServerSidePropsContext | NextPageContext;
 
 export type AuthNotification =
     | 'login'
