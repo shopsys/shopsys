@@ -1315,7 +1315,8 @@ jobs:
                     sudo apt-get install -y git-filter-repo
             -   name: Force split branch ${{ github.head_ref }} into the split repositories
                 env:
-                    REMOTE_TEMPLATE: https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/
+                    REMOTE_TEMPLATE: https://github.com/shopsys/
+                    GIT_PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
                     SPLIT_HEADS_FILE: ${{ runner.temp }}/split-heads.txt
                 run: bash ./.github/monorepo/split-repositories.sh "${SPLIT_BRANCH}" "${REMOTE_TEMPLATE}" true
             -   name: Wait for checks of the split repositories

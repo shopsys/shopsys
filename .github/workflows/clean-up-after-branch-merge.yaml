@@ -44,9 +44,10 @@ jobs:
                     persist-credentials: false
             -   name: Prepare variables for removing split branches from packages
                 run: |
-                    echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
+                    echo "REMOTE_TEMPLATE=https://github.com/shopsys/" >> $GITHUB_ENV
             -   name: Remove split branches from packages
                 env:
+                    GIT_PUSH_TOKEN: ${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}
                     BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
                     bash ./.github/monorepo/remove_branch.sh "${BRANCH_NAME}" "${REMOTE_TEMPLATE}"
