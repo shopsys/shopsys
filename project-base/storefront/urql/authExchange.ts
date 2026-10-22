@@ -20,6 +20,55 @@ import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isAuthError } from 'utils/errors/isAuthError';
 
 const HTTP_ONLY_REFRESH_TOKEN_PLACEHOLDER = '';
+const AUTH_REFRESH_TIMEOUT = 10_000;
+
+const withAuthRefreshLock = async (domainId: number, refresh: () => Promise<void>): Promise<void> => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined' || !navigator.locks?.request) {
+        await refresh();
+
+        return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), AUTH_REFRESH_TIMEOUT);
+    let lockAcquired = false;
+
+    try {
+        await navigator.locks.request(`shopsys-auth-refresh-${domainId}`, { signal: controller.signal }, async () => {
+            lockAcquired = true;
+            clearTimeout(timeout);
+            await refresh();
+        });
+    } catch (error) {
+        if (lockAcquired) {
+            throw error;
+        }
+
+        // Restricted browser contexts or a suspended lock holder must not block authentication indefinitely.
+        await refresh();
+    } finally {
+        clearTimeout(timeout);
+    }
+};
+
+const withAuthRefreshTimeout = async (refresh: (signal: AbortSignal) => Promise<void>): Promise<void> => {
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+
+    try {
+        await Promise.race([
+            refresh(controller.signal),
+            new Promise<never>((_resolve, reject) => {
+                timeout = setTimeout(() => {
+                    controller.abort();
+                    reject(new Error('Authentication refresh timed out'));
+                }, AUTH_REFRESH_TIMEOUT);
+            }),
+        ]);
+    } finally {
+        clearTimeout(timeout);
+    }
+};
 
 const isRefreshTokenMutation = (operation: Operation) => {
     const query = operation.query as DocumentNode;
@@ -80,12 +129,25 @@ const doTryRefreshToken = async (
     mutate: AuthUtilities['mutate'],
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
+    signal?: AbortSignal,
 ): Promise<void> => {
-    const { data: refreshTokenData } = await mutate<TypeRefreshTokens, TypeRefreshTokensVariables>(
+    const { data: refreshTokenData, error } = await mutate<TypeRefreshTokens, TypeRefreshTokensVariables>(
         RefreshTokensDocument,
         { refreshToken },
-        context ? undefined : { fetch: getAuthMutationFetcher(domainConfig) },
+        context
+            ? undefined
+            : {
+                  fetch: (input, init) => getAuthMutationFetcher(domainConfig)(input, { ...init, signal }),
+              },
     );
+
+    if (signal?.aborted) {
+        return;
+    }
+
+    if (error?.networkError) {
+        throw error.networkError;
+    }
 
     if (!refreshTokenData?.RefreshTokens) {
         if (context) {
@@ -111,10 +173,11 @@ const doTryRefreshToken = async (
     }
 };
 
-const refreshAuth = async (
+const doRefreshAuth = async (
     authUtilities: AuthUtilities,
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
+    signal?: AbortSignal,
 ): Promise<void> => {
     const refreshToken = context
         ? getRefreshTokenFromCookies(domainConfig, context)
@@ -122,26 +185,71 @@ const refreshAuth = async (
           ? HTTP_ONLY_REFRESH_TOKEN_PLACEHOLDER
           : undefined;
 
-    try {
-        if (refreshToken === undefined) {
-            if (context) {
-                removeTokensFromCookies(domainConfig, context);
-            } else {
-                removeAccessTokenFromCookies(domainConfig);
-                await clearAuthCookies(domainConfig);
-            }
+    if (refreshToken === undefined) {
+        if (context) {
+            removeTokensFromCookies(domainConfig, context);
+        } else {
+            removeAccessTokenFromCookies(domainConfig);
+            await clearAuthCookies(domainConfig, signal);
+        }
 
-            if (typeof window !== 'undefined') {
-                window.location.reload();
-            }
+        if (typeof window !== 'undefined' && !signal?.aborted) {
+            window.location.reload();
+        }
+
+        return;
+    }
+
+    await doTryRefreshToken(refreshToken, authUtilities.mutate, domainConfig, context, signal);
+};
+
+const getAccessTokenBeforeRefresh = (
+    domainConfig: DomainConfigType,
+    rejectedOperation?: Operation,
+): string | undefined => {
+    if (!rejectedOperation) {
+        return getAccessTokenFromCookies(domainConfig);
+    }
+
+    const fetchOptions =
+        typeof rejectedOperation.context.fetchOptions === 'function'
+            ? rejectedOperation.context.fetchOptions()
+            : rejectedOperation.context.fetchOptions;
+
+    // An auth error may arrive after another tab has already rotated the cookie.
+    return new Headers(fetchOptions?.headers).get('X-Auth-Token')?.replace(/^Bearer /, '');
+};
+
+const refreshAuth = async (
+    authUtilities: AuthUtilities,
+    domainConfig: DomainConfigType,
+    context?: GetServerSidePropsContext | NextPageContext,
+    rejectedOperation?: Operation,
+): Promise<void> => {
+    try {
+        if (context) {
+            await doRefreshAuth(authUtilities, domainConfig, context);
 
             return;
         }
 
-        await doTryRefreshToken(refreshToken, authUtilities.mutate, domainConfig, context);
+        const previousAccessToken = getAccessTokenBeforeRefresh(domainConfig, rejectedOperation);
+
+        await withAuthRefreshLock(domainConfig.domainId, async () => {
+            const currentAccessToken = getAccessTokenFromCookies(domainConfig);
+
+            // The auth endpoint writes shared cookies before the other tab releases its lock.
+            if (currentAccessToken && currentAccessToken !== previousAccessToken) {
+                return;
+            }
+
+            await withAuthRefreshTimeout((signal) => doRefreshAuth(authUtilities, domainConfig, undefined, signal));
+        });
     } catch (e) {
         // biome-ignore lint/suspicious/noConsole: intentional error logging in development
         console.error(e);
+        // URQL must fail queued requests rather than retry them with the rejected token and log the user out.
+        throw e;
     }
 };
 
@@ -161,9 +269,26 @@ const willAuthError = (
 
 export const getAuthExchangeOptions =
     (domainConfig: DomainConfigType, context?: GetServerSidePropsContext | NextPageContext) =>
-    async (authUtilities: AuthUtilities): Promise<AuthConfig> => ({
-        addAuthToOperation: (operation) => addAuthToOperation(operation, domainConfig, context),
-        didAuthError,
-        willAuthError: () => willAuthError(domainConfig, context),
-        refreshAuth: () => refreshAuth(authUtilities, domainConfig, context),
-    });
+    async (authUtilities: AuthUtilities): Promise<AuthConfig> => {
+        let rejectedOperation: Operation | undefined;
+
+        return {
+            addAuthToOperation: (operation) => addAuthToOperation(operation, domainConfig, context),
+            didAuthError: (error, operation) => {
+                if (!didAuthError(error)) {
+                    return false;
+                }
+
+                rejectedOperation = operation;
+
+                return true;
+            },
+            willAuthError: () => willAuthError(domainConfig, context),
+            refreshAuth: () => {
+                const operation = rejectedOperation;
+                rejectedOperation = undefined;
+
+                return refreshAuth(authUtilities, domainConfig, context, operation);
+            },
+        };
+    };

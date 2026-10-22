@@ -32,6 +32,26 @@ In the case of a successful refresh, the endpoint stores the rotated tokens in c
 While the URQL is refreshing tokens, all other calls are paused.
 After a successful refresh, previously forbidden requests are re-executed with the new access token.
 
+### Refresh coordination between tabs
+
+Browser tabs on the same origin coordinate token refresh with the [Web Locks API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API).
+Each domain ID has its own exclusive lock, so language domains sharing an origin but using separate cookies do not block each other.
+After acquiring the lock, a tab rereads the access-token cookie. If another tab has already replaced the token, the waiting tab uses that token without sending another `RefreshTokens` mutation.
+The refresh-session cookie is also checked inside the lock, so a waiting tab observes logout or a failed refresh in another tab.
+
+Web Locks requires a secure context (HTTPS or a trustworthy local origin) and is supported by Chromium browsers since version 69, Firefox since version 96, and Safari since version 15.4.
+It adds no dependencies. The browser releases the lock when the callback finishes, rejects, or its tab closes.
+Waiting for a lock and performing a refresh each have a ten-second timeout. A timed-out refresh aborts its browser request and releases the lock without removing cookies or reloading the page because of a late result.
+If Web Locks is unavailable, rejects a lock request, or the wait times out (for example, because the holder is suspended), the tab falls back to an independent refresh after rereading the cookie.
+In that fallback, concurrent requests remain possible; server-side refresh-token grace handling is still needed.
+
+[BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API) was considered, but messaging alone does not provide mutual exclusion or automatic recovery when a lock holder closes.
+A `localStorage` flag also lacks atomic compare-and-set and would require expiry and ownership recovery.
+Web Locks supplies these ownership guarantees directly. Coordination applies to browser tabs on the same origin and storage partition; SSR requests continue to refresh independently.
+Client coordination cannot recover a newly rotated token pair if the response carrying it is lost.
+
+### Logging in and out
+
 For logging the user in/out, we can use the `useAuth` hook.
 
 ```plain
