@@ -397,6 +397,9 @@ msgstr "Vymazat cache s graphql dotazy na FE"
 msgid "Clear"
 msgstr "Vymazat"
 
+msgid "Clear history"
+msgstr "Vymazat historii"
+
 msgid "Close"
 msgstr "Zavřít"
 
@@ -1359,6 +1362,9 @@ msgstr "Přehled měrných jednotek"
 
 msgid "Medium"
 msgstr "Střední"
+
+msgid "Message history"
+msgstr "Historie zpráv"
 
 msgid "Message text"
 msgstr "Text zprávy"
