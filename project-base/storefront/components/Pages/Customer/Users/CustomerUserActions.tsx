@@ -20,6 +20,7 @@ export const CustomerUserActions: FC<CustomerUserActionsProps> = ({
 }) => {
     const { t } = useTranslation();
     const userName = `${customerUser.firstName} ${customerUser.lastName}`;
+    const canBeRemoved = customerUser.canRoleGroupBeChangedByCurrentCustomerUser && !isCurrentUser;
 
     return (
         <div className="ml-auto grid w-fit grid-cols-2 items-center gap-2">
@@ -35,7 +36,7 @@ export const CustomerUserActions: FC<CustomerUserActionsProps> = ({
                 variant="ghost"
                 onClick={onEdit}
             />
-            {!isCurrentUser && (
+            {canBeRemoved && (
                 <IconButton
                     Icon={TrashCanIcon}
                     aria-haspopup="dialog"

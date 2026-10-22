@@ -17,13 +17,13 @@ export type TypeCustomerUserRoleEnum =
   | 'ROLE_API_MANAGE_COMPANY_DATA'
   | 'ROLE_API_MANAGE_CUSTOMERS';
 
-export type TypeSimpleCustomerUserFragment_CompanyCustomerUser = { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+export type TypeSimpleCustomerUserFragment_CompanyCustomerUser = { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, canRoleGroupBeChangedByCurrentCustomerUser: boolean, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
-export type TypeSimpleCustomerUserFragment_CurrentCompanyCustomerUser = { __typename: 'CurrentCompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+export type TypeSimpleCustomerUserFragment_CurrentCompanyCustomerUser = { __typename: 'CurrentCompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, canRoleGroupBeChangedByCurrentCustomerUser: boolean, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
-export type TypeSimpleCustomerUserFragment_CurrentRegularCustomerUser = { __typename: 'CurrentRegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+export type TypeSimpleCustomerUserFragment_CurrentRegularCustomerUser = { __typename: 'CurrentRegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, canRoleGroupBeChangedByCurrentCustomerUser: boolean, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
-export type TypeSimpleCustomerUserFragment_RegularCustomerUser = { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
+export type TypeSimpleCustomerUserFragment_RegularCustomerUser = { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, canRoleGroupBeChangedByCurrentCustomerUser: boolean, telephoneData: { prefix: string | null, countryCode: string | null, number: string } | null, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
 export type TypeSimpleCustomerUserFragment =
   | TypeSimpleCustomerUserFragment_CompanyCustomerUser
@@ -49,5 +49,6 @@ export const SimpleCustomerUserFragment = gql`
   roleGroup {
     ...CustomerUserRoleGroupFragment
   }
+  canRoleGroupBeChangedByCurrentCustomerUser
 }
     ${CustomerUserRoleGroupFragment}`;

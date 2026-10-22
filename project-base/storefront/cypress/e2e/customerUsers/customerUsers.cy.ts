@@ -1,5 +1,8 @@
 import {
+    checkOnlyEditUserButtonIsVisibleByEmail,
+    checkRoleGroupOptionsAreDisabledWithEditedCustomerUserRoleGroupChecked,
     checkRoleGroupOptionsAreEnabled,
+    checkRoleGroupOptionsCount,
     checkUsersTableIsVisible,
     clickAddNewUserButton,
     clickDeleteUserButtonByEmail,
@@ -7,11 +10,14 @@ import {
     confirmDeleteUser,
     fillAddUserForm,
     fillEditUserForm,
+    fillFirstNameInManageUserForm,
+    getFirstNameInManageUserForm,
+    getRoleGroupNameByEmail,
     submitManageUserForm,
     visitCustomerUsersPage,
 } from './customerUsersSupport';
 import { skipIfB2bNotConfigured } from 'e2e/b2bUser/b2bSupport';
-import { b2bUrl } from 'fixtures/demodata';
+import { b2bUrl, staticData } from 'fixtures/demodata';
 import {
     check403PageIsVisible,
     checkAndHideSuccessToast,
@@ -214,6 +220,39 @@ describe('Customer Users (B2B) Tests', () => {
                     cy.removeCustomerUserViaApi(createdUserUuid);
                 }
             });
+        });
+
+        it('should edit personal data of a user with a stronger role group without changing the role group', () => {
+            const editedFirstName = 'EditedByManager';
+
+            visitCustomerUsersPage();
+            checkUsersTableIsVisible();
+            checkOnlyEditUserButtonIsVisibleByEmail(staticData.b2bOwner.email);
+
+            getRoleGroupNameByEmail(staticData.b2bOwner.email).then((originalRoleGroupName) => {
+                clickEditUserButtonByEmail(staticData.b2bOwner.email);
+                checkRoleGroupOptionsAreDisabledWithEditedCustomerUserRoleGroupChecked();
+
+                getFirstNameInManageUserForm().then((originalFirstName) => {
+                    fillFirstNameInManageUserForm(editedFirstName);
+                    submitManageUserForm();
+                    checkAndHideSuccessToast();
+                    cy.getByTID([TIDs.customer_users_table]).contains(editedFirstName).should('be.visible');
+                    getRoleGroupNameByEmail(staticData.b2bOwner.email).should('equal', originalRoleGroupName);
+
+                    clickEditUserButtonByEmail(staticData.b2bOwner.email);
+                    fillFirstNameInManageUserForm(String(originalFirstName));
+                    submitManageUserForm();
+                    checkAndHideSuccessToast();
+                });
+            });
+        });
+
+        it('should offer only assignable role groups when adding a user', () => {
+            visitCustomerUsersPage();
+            checkUsersTableIsVisible();
+            clickAddNewUserButton();
+            checkRoleGroupOptionsCount(4);
         });
     });
 
