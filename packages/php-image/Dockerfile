@@ -1,11 +1,11 @@
 ARG LINUX_DISTRIBUTION=alpine
 ARG project_root='/'
-ARG NODE_MAJOR=24
+ARG NODE_VERSION=24.22.1
 ARG PHP_VERSION=8.5
 
 # Node and Composer are already installed in the node_builder and composer_builder stages
 FROM composer:latest AS composer_builder
-FROM node:${NODE_MAJOR}-${LINUX_DISTRIBUTION} AS node_builder
+FROM node:${NODE_VERSION}-${LINUX_DISTRIBUTION} AS node_builder
 
 
 FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
@@ -123,7 +123,9 @@ COPY --from=node_builder \
     /usr/local/bin/
 COPY --from=node_builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node_builder /usr/local/include/node /usr/local/include/node
-RUN if [ -e "/usr/local/bin/npm" ]; then rm /usr/local/bin/npm; fi && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+RUN if [ -e "/usr/local/bin/npm" ]; then rm /usr/local/bin/npm; fi \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 COPY ./docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
