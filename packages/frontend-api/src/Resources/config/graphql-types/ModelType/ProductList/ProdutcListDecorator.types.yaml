@@ -11,7 +11,8 @@ ProductListDecorator:
                 description: "Product list type"
             itemsCount:
                 type: "Int!"
-                description: "Total count of products in the list"
+                description: "Count of products in the list that are visible on the current domain"
+                resolve: '@=query("productsCountByProductListQuery", value)'
             products:
                 type: "[Product!]!"
                 description: "An array of the products in the list"

@@ -2,8 +2,10 @@ query ProductListQuery($uuid: Uuid, $type: ProductListTypeEnum!) {
     productList(input:{uuid: $uuid, type: $type}) {
         uuid
         type
+        itemsCount
         products {
             id
+            isSellingDenied
         }
     }
 }
