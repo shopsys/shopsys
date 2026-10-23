@@ -21,16 +21,16 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     }
 
     #[Override]
-    public function create(): FilesystemOperator
+    public function create(string $rootDirectory = ''): FilesystemOperator
     {
         if ($this->googleCloudStorageBucketName !== '') {
             $storageClient = new StorageClient(['projectId' => $this->googleCloudProjectId]);
             $bucket = $storageClient->bucket($this->googleCloudStorageBucketName);
-            $adapter = new GoogleCloudStorageAdapter($bucket);
+            $adapter = new GoogleCloudStorageAdapter($bucket, ltrim($rootDirectory, '/'));
 
             return new Filesystem($adapter);
         }
 
-        return $this->inner->create();
+        return $this->inner->create($rootDirectory);
     }
 }
