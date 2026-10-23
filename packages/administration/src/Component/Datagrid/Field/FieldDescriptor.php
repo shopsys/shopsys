@@ -20,7 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     property?: string|string[]|null,
  *     role?: string|null,
  *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
- *     class?: string|null
+ *     class?: string|null,
+ *     searchable?: bool,
+ *     filterable?: bool
  * }
  */
 final class FieldDescriptor
@@ -59,6 +61,8 @@ final class FieldDescriptor
             'role' => null,
             'permission' => null,
             'class' => null,
+            'searchable' => false,
+            'filterable' => false,
         ]);
 
         $optionsResolver->setAllowedTypes('label', 'string');
@@ -73,6 +77,8 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('role', ['string', 'null']);
         $optionsResolver->setAllowedTypes('permission', [Permission::class, 'null']);
         $optionsResolver->setAllowedTypes('class', ['string', 'null']);
+        $optionsResolver->setAllowedTypes('searchable', 'bool');
+        $optionsResolver->setAllowedTypes('filterable', 'bool');
 
         return $optionsResolver->resolve($options);
     }
@@ -114,6 +120,34 @@ final class FieldDescriptor
     public function isVirtual(): bool
     {
         return $this->options['virtual'];
+    }
+
+    /**
+     * Whether the quick search of the datagrid searches in this field. The field has to have a path of its
+     * own (see `getSelectProperties()`) leading to text, a combined field is searched in those of its properties
+     * leading to text; the datagrid refuses any other.
+     */
+    public function isSearchable(): bool
+    {
+        return $this->options['searchable'];
+    }
+
+    /**
+     * Whether the datagrid offers a filter over this field, picked by the kind of value its path leads to.
+     * A filter declared by `Datagrid::filters()` under the same name (see `getFilterName()`) takes precedence.
+     */
+    public function isFilterable(): bool
+    {
+        return $this->options['filterable'];
+    }
+
+    /**
+     * The name of the filter of this field — the name of the field, with the dots of a path replaced the
+     * same way a filter derives its name from its path, as a form name cannot contain a dot.
+     */
+    public function getFilterName(): string
+    {
+        return str_replace('.', '_', $this->name);
     }
 
     public function getHelp(): ?string
