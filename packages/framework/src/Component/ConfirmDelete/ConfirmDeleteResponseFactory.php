@@ -20,7 +20,8 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
-     * @param array<string, string|int|string[]|null> $messageParameters
+     * @param string $message translated message rendered as HTML, keep dynamic values out of it and pass them in $messageParameters
+     * @param array<string, string|int|string[]|null> $messageParameters placeholders replaced in the message by escaped values, list items are joined with <br>
      */
     public function createDeleteResponse(
         string $message,
@@ -46,8 +47,9 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
+     * @param string $message translated message rendered as plain text, keep dynamic values out of it and pass them in $messageParameters
      * @param object[] $possibleReplacements
-     * @param array<string, string|int|string[]|null> $messageParameters
+     * @param array<string, string|int|string[]|null> $messageParameters placeholders replaced in the message by escaped values, list items are joined with <br>
      */
     public function createSetNewAndDeleteResponse(
         string $message,
