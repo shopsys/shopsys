@@ -956,8 +956,6 @@ services:
     main_filesystem:
         class: League\Flysystem\FilesystemOperator
         factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
-        # public service is necessary for ElFinderBundle
-        public: true
 
     monolog.activation_strategy.not_found:
         abstract: true
