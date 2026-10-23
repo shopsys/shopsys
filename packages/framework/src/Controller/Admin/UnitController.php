@@ -57,13 +57,11 @@ class UnitController extends AdminBaseController
                     $message = t(
                         'Unit "%name%" set as default. For deleting existing unit you have to choose new default unit. '
                         . 'Which unit you want to set instead?',
-                        ['%name%' => $unit->getName()],
                     );
                 } else {
                     $message = t(
                         'For deleting unit "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                         . 'Which unit you want to set instead?',
-                        ['%name%' => $unit->getName()],
                     );
                 }
 
@@ -72,14 +70,17 @@ class UnitController extends AdminBaseController
                     'admin_unit_delete',
                     $id,
                     $this->unitFacade->getAllExceptId($id),
+                    ['%name%' => $unit->getName()],
                 );
             }
-            $message = t(
-                'Do you really want to remove unit "%name%" permanently? It is not used anywhere.',
+            $message = t('Do you really want to remove unit "%name%" permanently? It is not used anywhere.');
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_unit_delete',
+                $id,
                 ['%name%' => $unit->getName()],
             );
-
-            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_unit_delete', $id);
         } catch (UnitNotFoundException $ex) {
             return new Response(t('Selected unit doesn\'t exist'));
         }

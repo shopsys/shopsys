@@ -118,6 +118,10 @@ public function transform(mixed $value): array { /* ... */ }
 
 Sanitization, single-property validation and null fallbacks of an entity property live in a `set` property hook, never only in a setter (a constructor, `edit()` or a subclass can bypass a setter). Rules and examples: `docs/model/entities.md#property-hooks`.
 
+## Escaping dynamic values in administration HTML
+
+Never put a stored value (entity name, label, e-mail, file name, domain name) into an HTML string through `t()` parameters, `sprintf()` or concatenation when the string is printed raw — flash messages, delete confirmations, Twig extension output. Pass the value to the helper that escapes it (`add*FlashTwig()` template parameters, `ConfirmDeleteResponseFactory` `$messageParameters`) or escape it yourself. Rules and examples: `docs/security/output-escaping.md`.
+
 ## Visibility & typing
 
 Your project code is a final version used as-is, with no downstream extension surface to preserve:

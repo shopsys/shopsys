@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block grid_value_cell_id_text %}
-    {{ value|raw }}
+    {{ value|sanitize_html('shopsys.ckeditor_preview') }}
 {% endblock %}
 
 {% block grid_value_cell_id_validityFrom %}

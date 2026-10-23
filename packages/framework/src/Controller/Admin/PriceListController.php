@@ -237,21 +237,21 @@ class PriceListController extends AdminBaseController
             ));
 
             if ($data['selectPriceList'] === null) {
-                $this->addSuccessFlash(t(
-                    'New price list <strong><a href="{{ url }}">{{ name }}</a></strong> was created.',
+                $this->addSuccessFlashTwig(
+                    t('New price list <strong><a href="{{ url }}">{{ name }}</a></strong> was created.'),
                     [
-                        '{{ name }}' => $importResult->getPriceListName(),
-                        '{{ url }}' => $this->generateUrl('admin_pricelist_edit', ['id' => $importResult->getPriceListId()]),
+                        'name' => $importResult->getPriceListName(),
+                        'url' => $this->generateUrl('admin_pricelist_edit', ['id' => $importResult->getPriceListId()]),
                     ],
-                ));
+                );
             } else {
-                $this->addSuccessFlash(t(
-                    'Price list <strong><a href="{{ url }}">{{ name }}</a></strong> was replaced.',
+                $this->addSuccessFlashTwig(
+                    t('Price list <strong><a href="{{ url }}">{{ name }}</a></strong> was replaced.'),
                     [
-                        '{{ name }}' => $importResult->getPriceListName(),
-                        '{{ url }}' => $this->generateUrl('admin_pricelist_edit', ['id' => $importResult->getPriceListId()]),
+                        'name' => $importResult->getPriceListName(),
+                        'url' => $this->generateUrl('admin_pricelist_edit', ['id' => $importResult->getPriceListId()]),
                     ],
-                ));
+                );
             }
 
             if ($importResult->hasWarnings()) {

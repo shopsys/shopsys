@@ -160,8 +160,6 @@ class SalesRepresentativeController extends AdminBaseController
             $customersCount = count($customersUsingThisSalesRepresentative);
 
             if ($customersCount > 0) {
-                $customersEnumeration = implode('<br>', array_slice($customersUsingThisSalesRepresentative, 0, self::DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT));
-
                 $message = t(
                     '{1}Sales representative "%label%" is assigned to %count% customer and will be removed if you proceed.<br><br>
                         Customer:<br>
@@ -177,10 +175,8 @@ class SalesRepresentativeController extends AdminBaseController
                         +%extraCount% more<br><br>
                         Do you really want to remove sales representative "%label%" permanently?',
                     [
-                        '%label%' => $salesRepresentative->getPresentationalLabel(),
                         '%count%' => $customersCount,
                         '%extraCount%' => $customersCount - self::DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT,
-                        '%customersEnumeration%' => $customersEnumeration,
                     ],
                 );
 
@@ -188,20 +184,20 @@ class SalesRepresentativeController extends AdminBaseController
                     $message,
                     'admin_salesrepresentative_delete',
                     $id,
+                    [
+                        '%label%' => $salesRepresentative->getPresentationalLabel(),
+                        '%customersEnumeration%' => array_slice($customersUsingThisSalesRepresentative, 0, self::DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT),
+                    ],
                 );
             }
 
-            $message = t(
-                'Do you really want to remove sales representative "%label%" permanently? It is not used anywhere.',
-                [
-                    '%label%' => $salesRepresentative->getPresentationalLabel(),
-                ],
-            );
+            $message = t('Do you really want to remove sales representative "%label%" permanently? It is not used anywhere.');
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_salesrepresentative_delete',
                 $id,
+                ['%label%' => $salesRepresentative->getPresentationalLabel()],
             );
         } catch (SalesRepresentativeNotFoundException $ex) {
             return new Response(t('Selected sales representative doesn\'t exist.'));
