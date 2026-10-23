@@ -104,6 +104,11 @@ The repo convention is QueryBuilder/DQL with `setParameter()`, and native querie
 
 - **Twig `|raw` / autoescape off on user data** — `{{ userVar|raw }}`, `{% autoescape false %}`, `new Environment(..., ['autoescape' => false])`. **CWE-79, CWE-116.**
 - **Server-side template injection** — user input compiled as a template: `$twig->createTemplate($userInput)`, `->render('...' . $userInput)`, template body from DB/CMS. **CWE-1336, CWE-94.**
+- **Dynamic value in administration HTML composed outside a template** — the rules are in `docs/security/output-escaping.md`. Flag:
+    - `add*FlashTwig()` whose template string contains a dynamic value (via `t()` parameters, `sprintf()`, concatenation) instead of passing it as a template parameter — the value is compiled as Twig. **CWE-1336, CWE-79.**
+    - `ConfirmDeleteResponseFactory::createDeleteResponse()` / `createSetNewAndDeleteResponse()` with a `Twig\Markup` message whose entity name/label comes from `t()` parameters instead of the `$messageParameters` argument. **CWE-79.**
+    - HTML built in PHP (`t()`, `sprintf()`, `implode('<br>', ...)`) and printed with `|raw` (Twig extensions, grid cells, warnings) without escaping each stored value via `EscapedMessageInterpolator` (or `EscaperRuntime::escape()`). **CWE-79, CWE-116.**
+    - WYSIWYG (CKEditor) HTML printed with `|raw` instead of `|sanitize_html('shopsys.ckeditor_preview')`. **CWE-79.**
 - **React `dangerouslySetInnerHTML` on untrusted HTML** — flag when `__html` derives from user input and is not sanitized (DOMPurify). In this repo, backend GraphQL HTML fields (product/blog/advert descriptions, GrapesJS content) flow into `dangerouslySetInnerHTML` — confirm they are sanitized server-side; the `window.__ENV` injection in `_document.tsx` is already `<`-escaped, do not flag it. **CWE-79.**
 - **Wrong-context encoding** — `{{ var }}` inside `<script>` without `|escape('js')`; `href="{{ var }}"` allowing `javascript:`; `{{ x|json_encode|raw }}` without HEX flags. **CWE-79, CWE-116, CWE-83.**
 - **API returning `text/html`** instead of `application/json` for user-controlled data (browser sniffs → stored XSS). **CWE-79.**
@@ -183,6 +188,7 @@ The repo convention is QueryBuilder/DQL with `setParameter()`, and native querie
 - GoPay `notifyAction` lacking a signature — mitigated by the server-side status re-fetch (`updatePaymentTransactionsByOrder`). Only flag *new* handlers that skip the re-fetch.
 - Admin routes without an attribute are already denied by `RouteAccessChecker` — flag the *missing attribute* (so intent is explicit), not an imagined open route.
 - `%env(...)%` references in config are correct — flag hardcoded literals, not env references.
+- `add*Flash()` (without `Twig`) with `t()` parameters — the whole message is escaped; the same applies to a string message of `ConfirmDeleteResponseFactory`, and its values passed in `$messageParameters` are escaped too.
 
 ---
 

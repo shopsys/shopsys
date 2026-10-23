@@ -21,7 +21,8 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
-     * @param array<string, string|int|\Twig\Markup|null> $messageParameters
+     * @param string|\Twig\Markup $message translated message, a string is rendered as plain text and \Twig\Markup as HTML, keep dynamic values out of it and pass them in $messageParameters
+     * @param array<string, string|int|\Twig\Markup|null> $messageParameters placeholders replaced in the message by escaped values
      */
     public function createDeleteResponse(
         string|Markup $message,
@@ -47,8 +48,9 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
+     * @param string|\Twig\Markup $message translated message, a string is rendered as plain text and \Twig\Markup as HTML, keep dynamic values out of it and pass them in $messageParameters
      * @param object[] $possibleReplacements
-     * @param array<string, string|int|\Twig\Markup|null> $messageParameters
+     * @param array<string, string|int|\Twig\Markup|null> $messageParameters placeholders replaced in the message by escaped values
      */
     public function createSetNewAndDeleteResponse(
         string|Markup $message,
