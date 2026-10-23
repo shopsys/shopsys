@@ -41,7 +41,7 @@ class PriceQuery extends AbstractQuery
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
     ): PriceInterface {
-        $cartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+        $cartUuid ??= $this->gqlContextHelper->getCartUuid($context);
         $orderUuid = $this->gqlContextHelper->getOrderUuid($context);
 
         if ($cartUuid === null && $orderUuid !== null) {
@@ -89,7 +89,7 @@ class PriceQuery extends AbstractQuery
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
     ): PriceInterface {
-        $cartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+        $cartUuid ??= $this->gqlContextHelper->getCartUuid($context);
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 

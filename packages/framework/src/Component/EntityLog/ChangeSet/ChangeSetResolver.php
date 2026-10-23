@@ -40,7 +40,7 @@ class ChangeSetResolver
             $dataTypeResolversArray[] = $dataTypeResolver;
         }
 
-        //sort data type resolvers from higher to lower priority
+        // sort data type resolvers from higher to lower priority
         usort($dataTypeResolversArray, function (DataTypeResolverInterface $a, DataTypeResolverInterface $b) {
             return $b->getPriority() - $a->getPriority();
         });

@@ -87,8 +87,8 @@ class AdministratorUserProvider implements UserProviderInterface
         }
 
         if ($freshAdministrator->getRolesChangedAt() > $administrator->getRolesChangedAt()) {
-            //In this step token does not exist, so we are not able to update user roles.
-            //We notify RolesChangedListener for roles updating
+            // In this step token does not exist, so we are not able to update user roles.
+            // We notify RolesChangedListener for roles updating
             $this->administratorRolesChangedSubscriber->updateRoles();
         }
 

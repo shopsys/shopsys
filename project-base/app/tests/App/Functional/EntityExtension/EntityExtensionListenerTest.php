@@ -6,6 +6,7 @@ namespace Tests\App\Functional\EntityExtension;
 
 use Doctrine\ORM\Mapping\ManyToManyOwningSideMapping;
 use Override;
+use SortDirection;
 use Tests\App\Functional\EntityExtension\Model\DummyEntity;
 use Tests\App\Functional\EntityExtension\Model\ExtendedDummyEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -37,6 +38,6 @@ class EntityExtensionListenerTest extends TransactionFunctionalTestCase
 
         $mapping = $classMetadata->getAssociationMapping('flags');
         $this->assertInstanceOf(ManyToManyOwningSideMapping::class, $mapping);
-        $this->assertEquals(['id' => 'DESC'], $mapping->orderBy);
+        $this->assertEquals(['id' => SortDirection::Descending], $mapping->orderBy);
     }
 }
