@@ -6,6 +6,7 @@ namespace App\Model\Customer\User;
 
 use Doctrine\ORM\Mapping as ORM;
 use Override;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -19,6 +20,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method void setDefaultDeliveryAddress(\App\Model\Customer\DeliveryAddress $defaultDeliveryAddress)
  */
 #[AsMcpTable]
+#[LoggableChild]
 #[ORM\Table(name: 'customer_users')]
 #[ORM\Index(columns: ['email'])]
 #[ORM\UniqueConstraint(name: 'email_domain', columns: ['email', 'domain_id'])]

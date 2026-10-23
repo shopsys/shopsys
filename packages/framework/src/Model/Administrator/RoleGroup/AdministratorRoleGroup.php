@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -72,6 +73,7 @@ class AdministratorRoleGroup
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getName()
     {
         return match ($this->name) {

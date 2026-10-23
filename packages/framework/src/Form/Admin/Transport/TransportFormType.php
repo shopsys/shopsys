@@ -33,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -122,7 +123,7 @@ final class TransportFormType extends AbstractType
                     return $transportGroup->getName() ?? t('Name has not been entered in your current language') . ' (ID: ' . $transportGroup->getId() . ')';
                 },
                 'choice_value' => 'id',
-                'placeholder' => t('-- Choose transport group --'),
+                'placeholder' => '-- Choose transport group --',
                 'label' => 'Transport group',
             ]);
 
@@ -131,7 +132,7 @@ final class TransportFormType extends AbstractType
         ]);
 
         $builderDeliveryGroup
-            ->add('daysUntilDelivery', TextType::class, [
+            ->add('daysUntilDelivery', IntegerType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),

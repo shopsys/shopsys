@@ -10,6 +10,9 @@ security:
         - { path: ^/%admin_url%/2fa, roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: ^/%admin_url%/$, roles: PUBLIC_ACCESS }
 
+        # Prevent anonymous access to the default live component action
+        - { path: ^/%admin_url%/_components, roles: ROLE_ADMIN }
+
         # File manager access
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
