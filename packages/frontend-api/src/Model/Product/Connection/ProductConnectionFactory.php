@@ -18,14 +18,12 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader;
-use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
-use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFacade;
 
 class ProductConnectionFactory
 {
     public function __construct(
-        protected readonly ProductFilterOptionsFactory $productFilterOptionsFactory,
-        protected readonly ProductFilterFacade $productFilterFacade,
+        protected readonly ProductFilterOptionsFacade $productFilterOptionsFacade,
     ) {
     }
 
@@ -85,20 +83,14 @@ class ProductConnectionFactory
         );
     }
 
-    public function getProductFilterOptionsClosure(ProductFilterData $productFilterData, mixed $searchText): Closure
+    public function getProductFilterOptionsClosure(ProductFilterData $productFilterData, string $searchText): Closure
     {
-        return function () use ($productFilterData, $searchText) {
+        return function () use ($productFilterData, $searchText): Promise {
             if ($searchText === '') {
-                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
-            } else {
-                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForSearch($searchText);
+                return $this->productFilterOptionsFacade->getProductFilterOptionsPromiseForAll($productFilterData);
             }
 
-            return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
-                $productFilterConfig,
-                $productFilterData,
-                $searchText,
-            );
+            return $this->productFilterOptionsFacade->getProductFilterOptionsPromiseForSearch($productFilterData, $searchText);
         };
     }
 
@@ -112,10 +104,9 @@ class ProductConnectionFactory
         string $batchLoadDataId,
         ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): Promise {
-        $productFilterOptionsClosure = function () use ($category, $productFilterData, $readyCategorySeoMix) {
-            return $this->productFilterOptionsFactory->createProductFilterOptionsForCategory(
+        $productFilterOptionsClosure = function () use ($category, $productFilterData, $readyCategorySeoMix): Promise {
+            return $this->productFilterOptionsFacade->getProductFilterOptionsPromiseForCategory(
                 $category,
-                $this->productFilterFacade->getProductFilterConfigForCategory($category),
                 $productFilterData,
                 $readyCategorySeoMix,
             );
@@ -175,12 +166,8 @@ class ProductConnectionFactory
         string $defaultOrderingMode,
         string $batchLoadDataId,
     ): Promise {
-        $productFilterOptionsClosure = function () use ($flag, $productFilterData) {
-            return $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
-                $flag,
-                $this->productFilterFacade->getProductFilterConfigForFlag($flag),
-                $productFilterData,
-            );
+        $productFilterOptionsClosure = function () use ($flag, $productFilterData): Promise {
+            return $this->productFilterOptionsFacade->getProductFilterOptionsPromiseForFlag($flag, $productFilterData);
         };
 
         return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
@@ -195,12 +182,8 @@ class ProductConnectionFactory
         string $defaultOrderingMode,
         string $batchLoadDataId,
     ): Promise {
-        $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
-            return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
-                $brand,
-                $this->productFilterFacade->getProductFilterConfigForBrand($brand),
-                $productFilterData,
-            );
+        $productFilterOptionsClosure = function () use ($brand, $productFilterData): Promise {
+            return $this->productFilterOptionsFacade->getProductFilterOptionsPromiseForBrand($brand, $productFilterData);
         };
 
         return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);

@@ -7,8 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
-use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
-use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
@@ -18,13 +16,10 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 
 class ProductFilterOptionsFactory
 {
     public function __construct(
-        protected readonly ModuleFacade $moduleFacade,
-        protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
         protected readonly CategoryParameterFacade $categoryParameterFacade,
     ) {
     }
@@ -32,6 +27,11 @@ class ProductFilterOptionsFactory
     protected function createProductFilterOptionsInstance(): ProductFilterOptions
     {
         return new ProductFilterOptions();
+    }
+
+    public function createEmptyProductFilterOptions(): ProductFilterOptions
+    {
+        return $this->createProductFilterOptionsInstance();
     }
 
     protected function createFlagFilterOption(
@@ -101,24 +101,9 @@ class ProductFilterOptionsFactory
 
     public function createProductFilterOptionsForAll(
         ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
-        string $searchText = '',
     ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        if ($searchText !== '') {
-            $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForSearch(
-                $searchText,
-                $productFilterData,
-            );
-        } else {
-            $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForAll(
-                $productFilterData,
-            );
-        }
-
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
@@ -137,18 +122,10 @@ class ProductFilterOptionsFactory
     public function createProductFilterOptionsForCategory(
         Category $category,
         ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
         ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataInCategory(
-            $category,
-            $productFilterData,
-        );
-
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
@@ -266,19 +243,10 @@ class ProductFilterOptionsFactory
     }
 
     public function createProductFilterOptionsForBrand(
-        Brand $brand,
         ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
     ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForBrand(
-            $brand->getId(),
-            $productFilterData,
-        );
-
         return $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
@@ -404,19 +372,10 @@ class ProductFilterOptionsFactory
     }
 
     public function createProductFilterOptionsForFlag(
-        Flag $flag,
         ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
     ): ProductFilterOptions {
-        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
-        }
-
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForFlag(
-            $flag->getId(),
-            $productFilterData,
-        );
-
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,

@@ -14,6 +14,7 @@ use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\MultipleSearchRepository;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -23,15 +24,27 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
+use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
-class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransactionFunctionalTestCase
+class ProductFilterCountDataTest extends ParameterTransactionFunctionalTestCase
 {
     /**
      * @inject
      */
-    private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade;
+    private ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository;
+
+    /**
+     * @inject
+     */
+    private MultipleSearchRepository $multipleSearchRepository;
+
+    /**
+     * @inject
+     */
+    private FilterQueryFactory $filterQueryFactory;
 
     /**
      * @inject
@@ -53,9 +66,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
-                $category,
+            $countData = $this->getProductFilterCountData(
                 $filterData,
+                $this->filterQueryFactory->createListableProductsByCategoryWithPriceAndStockFilter($category, $filterData),
+                true,
             );
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
         }
@@ -87,13 +101,34 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
-                $searchText,
+            $countData = $this->getProductFilterCountData(
                 $filterData,
+                $this->filterQueryFactory->createListableProductsBySearchTextWithPriceAndStockFilter($searchText, $filterData),
+                false,
             );
 
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
         }
+    }
+
+    private function getProductFilterCountData(
+        ProductFilterData $productFilterData,
+        FilterQuery $baseFilterQuery,
+        bool $withParameters,
+    ): ProductFilterCountData {
+        $responsesIndexedByQueryName = $this->multipleSearchRepository->searchIndexedByKey(
+            $this->productFilterCountDataElasticsearchRepository->createSearchQueriesIndexedByQueryName(
+                $productFilterData,
+                $baseFilterQuery,
+                $withParameters,
+            ),
+        );
+
+        return $this->productFilterCountDataElasticsearchRepository->createCountData(
+            $productFilterData,
+            $responsesIndexedByQueryName,
+            $withParameters,
+        );
     }
 
     /**

@@ -52,10 +52,16 @@ class ProductsQuery extends AbstractQuery
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
-            $argument,
-            $brand,
+        return $this->productFilterFacade->getValidatedProductFilterDataPromiseForBrand($argument, $brand)->then(
+            fn (ProductFilterData $productFilterData): Promise => $this->getPromiseByBrand($argument, $brand, $productFilterData),
         );
+    }
+
+    protected function getPromiseByBrand(
+        Argument $argument,
+        Brand $brand,
+        ProductFilterData $productFilterData,
+    ): Promise {
         $batchLoadDataId = Uuid::uuid4()->toString();
 
         return $this->productConnectionFactory->createConnectionPromiseForBrand(
@@ -106,28 +112,24 @@ class ProductsQuery extends AbstractQuery
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
             $readyCategorySeoMix = null;
-            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-                $argument,
-                $category,
-            );
             $orderingMode = $this->productOrderingModeProvider->getOrderingModeFromArgument($argument);
             $defaultOrderingMode = $this->productOrderingModeProvider->getDefaultOrderingMode($argument);
         } else {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
             $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
-
-            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-                $argument,
-                $category,
-            );
-
-            $this->productFilterDataFactory->updateProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix, $productFilterData);
-
             $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
             $defaultOrderingMode = $orderingMode;
         }
 
-        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $defaultOrderingMode, $readyCategorySeoMix);
+        return $this->productFilterFacade->getValidatedProductFilterDataPromiseForCategory($argument, $category)->then(
+            function (ProductFilterData $productFilterData) use ($argument, $category, $orderingMode, $defaultOrderingMode, $readyCategorySeoMix): Promise {
+                if ($readyCategorySeoMix !== null) {
+                    $this->productFilterDataFactory->updateProductFilterDataFromReadyCategorySeoMix($readyCategorySeoMix, $productFilterData);
+                }
+
+                return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $defaultOrderingMode, $readyCategorySeoMix);
+            },
+        );
     }
 
     protected function getPromiseByCategory(
@@ -171,11 +173,16 @@ class ProductsQuery extends AbstractQuery
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
-            $argument,
-            $flag,
+        return $this->productFilterFacade->getValidatedProductFilterDataPromiseForFlag($argument, $flag)->then(
+            fn (ProductFilterData $productFilterData): Promise => $this->getPromiseByFlag($argument, $flag, $productFilterData),
         );
+    }
 
+    protected function getPromiseByFlag(
+        Argument $argument,
+        Flag $flag,
+        ProductFilterData $productFilterData,
+    ): Promise {
         $productFilterData->flags[] = $flag;
         $batchLoadDataId = Uuid::uuid4()->toString();
 

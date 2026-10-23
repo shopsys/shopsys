@@ -1,0 +1,26 @@
+query BrandProductsFilterOptions($brandUuid: Uuid!) {
+    brand(uuid: $brandUuid) {
+        products {
+            productFilterOptions {
+                minimalPrice
+                maximalPrice
+                inStock
+                flags {
+                    count
+                    flag {
+                        name
+                    }
+                }
+                brands {
+                    count
+                    brand {
+                        name
+                    }
+                }
+                parameters {
+                    name
+                }
+            }
+        }
+    }
+}

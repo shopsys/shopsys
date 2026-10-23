@@ -18,8 +18,8 @@ use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoryFacade implements TreeSelectionDataProviderInterface
@@ -39,7 +39,7 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterFacade $categoryParameterFacade,
-        protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
     ) {
     }
 
@@ -354,7 +354,7 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
      */
     public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
     {
-        $categoryIds = $this->productOnCurrentDomainElasticFacade->getCategoryIdsForFilterData($productFilterData);
+        $categoryIds = $this->productElasticsearchRepository->getCategoryIdsForFilterData($productFilterData);
         $categories = $this->categoryRepository->getCategoriesByIds($categoryIds);
 
         $categoriesIndexedByIds = [];
