@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
@@ -20,6 +21,7 @@ class CustomerUserResolverMap extends ResolverMap
         protected readonly LoginInfoFactory $loginInfoFactory,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
         protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -56,6 +58,15 @@ class CustomerUserResolverMap extends ResolverMap
             },
             'newsletterSubscription' => function (CustomerUser $customerUser) {
                 return $this->newsletterFacade->isSubscribed($customerUser);
+            },
+            'canBeManagedByCurrentCustomerUser' => function (CustomerUser $customerUser) {
+                $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+                if ($currentCustomerUser === null) {
+                    return false;
+                }
+
+                return $this->customerUserRoleResolver->canCustomerUserManageCustomerUser($currentCustomerUser, $customerUser);
             },
         ];
 

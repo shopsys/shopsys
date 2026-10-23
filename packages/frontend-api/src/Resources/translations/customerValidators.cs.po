@@ -28,6 +28,9 @@ msgstr "Název položky reklamace nesmí být delší než {{ limit }} znaků"
 msgid "Complaint item name is required"
 msgstr "Název položky reklamace je povinný"
 
+msgid "Customer role group cannot be assigned."
+msgstr "Tuto skupinu rolí zákazníka nemůžete přiřadit."
+
 msgid "Customer role group cannot be changed."
 msgstr "Skupinu rolí zákazníka nelze změnit."
 

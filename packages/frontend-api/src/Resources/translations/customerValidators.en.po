@@ -28,6 +28,9 @@ msgstr ""
 msgid "Complaint item name is required"
 msgstr ""
 
+msgid "Customer role group cannot be assigned."
+msgstr ""
+
 msgid "Customer role group cannot be changed."
 msgstr ""
 

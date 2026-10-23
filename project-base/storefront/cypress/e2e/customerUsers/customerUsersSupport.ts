@@ -44,6 +44,13 @@ export const clickDeleteUserButtonByEmail = (email: string) => {
     cy.waitForStableAndInteractiveDOM();
 };
 
+export const checkUserActionsAreNotVisibleByEmail = (email: string) => {
+    const userRow = () => cy.getByTID([TIDs.customer_users_table]).contains(email).closest('tr');
+
+    userRow().find(`[data-tid="${TIDs.customer_users_edit_button}"]`).should('not.exist');
+    userRow().find(`[data-tid="${TIDs.customer_users_delete_button}"]`).should('not.exist');
+};
+
 export const confirmDeleteUser = () => {
     cy.getByTID([TIDs.customer_users_delete_confirm_button]).should('be.visible').click();
     cy.waitForStableAndInteractiveDOM();
@@ -58,6 +65,11 @@ const FORM_PREFIX = '#customer-user-manage-profile-form-';
 
 export const waitForRoleGroupOptionsToLoad = () => {
     cy.getByTID([TIDs.layout_popup]).find('input[type="radio"]').should('exist');
+};
+
+export const checkRoleGroupOptionsCount = (expectedCount: number) => {
+    waitForRoleGroupOptionsToLoad();
+    cy.getByTID([TIDs.layout_popup]).find('input[type="radio"]').should('have.length', expectedCount);
 };
 
 export const checkRoleGroupOptionsAreEnabled = () => {

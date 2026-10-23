@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class CustomerUserRoleResolver
 {
+    protected const string CUSTOMER_USER_ROLES_CACHE_NAMESPACE = 'customerUserRoles';
+    protected const string CUSTOMER_USER_ROLE_GROUP_ROLES_CACHE_NAMESPACE = 'customerUserRoleGroupRoles';
+
     public function __construct(
         protected readonly CustomerUserRoleHierarchyProvider $customerUserRoleHierarchyProvider,
         protected readonly Security $security,
@@ -24,17 +27,65 @@ class CustomerUserRoleResolver
     public function getRolesForCustomerUser(CustomerUser $customerUser): array
     {
         return $this->inMemoryCache->getOrSaveValue(
-            'customerUserRoles',
-            function () use ($customerUser) {
-                $hierarchy = $this->customerUserRoleHierarchyProvider->generateRoleHierarchy();
-                $roleHierarchy = new RoleHierarchy($hierarchy);
-
-                $roles = $roleHierarchy->getReachableRoleNames($customerUser->getRoles());
-
-                return array_unique($roles);
-            },
+            static::CUSTOMER_USER_ROLES_CACHE_NAMESPACE,
+            fn (): array => $this->getReachableRoleNames($customerUser->getRoles()),
             $customerUser->getId(),
         );
+    }
+
+    public function resetRolesForCustomerUser(CustomerUser $customerUser): void
+    {
+        $this->inMemoryCache->deleteItem(static::CUSTOMER_USER_ROLES_CACHE_NAMESPACE, $customerUser->getId());
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getRolesForRoleGroup(CustomerUserRoleGroup $customerUserRoleGroup): array
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::CUSTOMER_USER_ROLE_GROUP_ROLES_CACHE_NAMESPACE,
+            fn (): array => $this->getReachableRoleNames($customerUserRoleGroup->getRoles()),
+            $customerUserRoleGroup->getId(),
+        );
+    }
+
+    public function canCustomerUserAssignRoleGroup(
+        CustomerUser $customerUser,
+        CustomerUserRoleGroup $customerUserRoleGroup,
+    ): bool {
+        $rolesMissingFromCustomerUser = array_diff(
+            $this->getRolesForRoleGroup($customerUserRoleGroup),
+            $this->getRolesForCustomerUser($customerUser),
+        );
+
+        return count($rolesMissingFromCustomerUser) === 0;
+    }
+
+    public function canCustomerUserManageCustomerUser(
+        CustomerUser $managingCustomerUser,
+        CustomerUser $managedCustomerUser,
+    ): bool {
+        if ($managingCustomerUser->getCustomer()->getId() !== $managedCustomerUser->getCustomer()->getId()) {
+            return false;
+        }
+
+        if (!in_array(CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS, $this->getRolesForCustomerUser($managingCustomerUser), true)) {
+            return false;
+        }
+
+        return $this->canCustomerUserAssignRoleGroup($managingCustomerUser, $managedCustomerUser->getRoleGroup());
+    }
+
+    /**
+     * @param string[] $roles
+     * @return string[]
+     */
+    protected function getReachableRoleNames(array $roles): array
+    {
+        $roleHierarchy = new RoleHierarchy($this->customerUserRoleHierarchyProvider->generateRoleHierarchy());
+
+        return array_values(array_unique($roleHierarchy->getReachableRoleNames($roles)));
     }
 
     public function canCustomerUserSeePrices(?CustomerUser $customerUser): bool

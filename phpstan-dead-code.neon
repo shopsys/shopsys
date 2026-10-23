@@ -44,9 +44,6 @@ parameters:
             path: packages/framework/src/Component/ArrayUtils/ArraySorterHelper.php
         -
             identifier: shipmonk.deadMethod
-            path: packages/framework/src/Component/Cache/InMemoryCache.php
-        -
-            identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/Deprecations/DeprecationHelper.php
         -
             identifier: shipmonk.deadProperty.neverRead

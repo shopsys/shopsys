@@ -1,5 +1,7 @@
 import {
     checkRoleGroupOptionsAreEnabled,
+    checkRoleGroupOptionsCount,
+    checkUserActionsAreNotVisibleByEmail,
     checkUsersTableIsVisible,
     clickAddNewUserButton,
     clickDeleteUserButtonByEmail,
@@ -11,7 +13,7 @@ import {
     visitCustomerUsersPage,
 } from './customerUsersSupport';
 import { skipIfB2bNotConfigured } from 'e2e/b2bUser/b2bSupport';
-import { b2bUrl } from 'fixtures/demodata';
+import { b2bUrl, staticData } from 'fixtures/demodata';
 import {
     check403PageIsVisible,
     checkAndHideSuccessToast,
@@ -214,6 +216,15 @@ describe('Customer Users (B2B) Tests', () => {
                     cy.removeCustomerUserViaApi(createdUserUuid);
                 }
             });
+        });
+
+        it('should not manage users with a stronger role group and offer only assignable role groups', () => {
+            visitCustomerUsersPage();
+            checkUsersTableIsVisible();
+            checkUserActionsAreNotVisibleByEmail(staticData.b2bOwner.email);
+
+            clickAddNewUserButton();
+            checkRoleGroupOptionsCount(2);
         });
     });
 
