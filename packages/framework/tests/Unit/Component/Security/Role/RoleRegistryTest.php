@@ -144,6 +144,23 @@ class RoleRegistryTest extends TestCase
         $this->assertContains('ROLE_USER', $roleConstants);
     }
 
+    public function testGetRoleIdentifiersWithAnyPermission(): void
+    {
+        $provider = $this->createProvider(self::TEST_ADMIN_CONTEXT, 10, function (RoleCollection $collection): void {
+            $collection->add(new Role('ROLE_PRODUCT', 'Products', [Permission::FULL]));
+            $collection->add(new Role('ROLE_ORDER', 'Orders', [Permission::EDIT]));
+            $collection->add(new Role('ROLE_NEWSLETTER', 'Newsletter', [Permission::VIEW, Permission::DELETE]));
+            $collection->add(new Role('ROLE_SYSTEM', 'System'));
+        });
+
+        $registry = new RoleRegistry([$provider], $this->contextResolver);
+
+        $this->assertSame(
+            ['ROLE_PRODUCT_CREATE', 'ROLE_PRODUCT_EDIT', 'ROLE_ORDER_EDIT'],
+            $registry->getRoleIdentifiersWithAnyPermission(self::TEST_ADMIN_CONTEXT, [Permission::CREATE, Permission::EDIT]),
+        );
+    }
+
     public function testMultipleProvidersProcessedInPriorityOrder(): void
     {
         $collectedRoles = [];
