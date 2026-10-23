@@ -32,6 +32,23 @@ class TopProductRepository
     }
 
     /**
+     * @param int[] $productIds
+     * @return int[]
+     */
+    public function getDomainIdsForProductIds(array $productIds): array
+    {
+        $rows = $this->em->createQueryBuilder()
+            ->select('DISTINCT tp.domainId')
+            ->from(TopProduct::class, 'tp')
+            ->where('tp.product IN (:productIds)')
+            ->setParameter('productIds', $productIds)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($rows, 'domainId');
+    }
+
+    /**
      * @return array<int, int>
      */
     public function getTopProductPositionsIndexedByProductIdForDomain(int $domainId): array

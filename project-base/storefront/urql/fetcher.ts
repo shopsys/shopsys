@@ -211,7 +211,11 @@ export const fetcher =
                 });
             }
 
-            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${authBucket}`;
+            const cacheVersion =
+                queryName === 'PromotedProductsQuery'
+                    ? `${(await redisClient.get(`${process.env.REDIS_PREFIX}:fe:queryCacheVersion:PromotedProductsQuery`)) ?? '0'}:`
+                    : '';
+            const key = `${getRedisPrefixPattern()}${queryName}:${host}:${domainId ? `${domainId}:` : ''}${authBucket}${cacheVersion}`;
             const hash = `${key}${await getHash(body)}`;
             const cacheStartedAt = performance.now();
             const fromCache = await redisClient.get(hash);

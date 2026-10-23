@@ -76,6 +76,11 @@ class IndexRepository
         }
     }
 
+    public function refreshIndex(string $indexAlias): void
+    {
+        $this->elasticsearchClient->indices()->refresh(['index' => $indexAlias]);
+    }
+
     /**
      * @param int[] $ids
      */
