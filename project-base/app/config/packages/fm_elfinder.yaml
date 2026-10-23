@@ -9,10 +9,10 @@ fm_elfinder:
                 roots:
                     local:
                         driver: Flysystem
-                        path: 'web/%shopsys.filemanager_upload_web_dir%'
+                        path: '/'
                         flysystem:
                             enabled: true
-                            filesystem: 'main_filesystem'
+                            filesystem: 'wysiwyg_filesystem'
                         # intentionally below the 32M limits of upload_max_filesize (php-ini-overrides.ini) and client_max_body_size (nginx.conf, orchestration/kubernetes/configmap/nginx.yaml)
                         # so the whole multipart request fits within them and Elfinder rejects too large files with a clear message instead of a server error
                         upload_max_size: 30M
@@ -35,12 +35,12 @@ fm_elfinder:
                             - 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
                             - 'application/zip'
                             - 'video/quicktime'
-                        tmb_path: 'web/%shopsys.filemanager_upload_web_dir%/_thumbnails'
+                        tmb_path: '_thumbnails'
                         url: '%shopsys.filemanager_upload_web_dir%'
                         tmb_url: '%shopsys.filemanager_upload_web_dir%/_thumbnails'
                         attributes:
                             thumbnails:
-                                pattern: '/^\/web\/content\/wysiwyg\/_thumbnails$/'
+                                pattern: '/^\/_thumbnails$/'
                                 hidden: true
                         disabled_commands:
                             - 'archive'
@@ -58,10 +58,10 @@ fm_elfinder:
                 roots:
                     local:
                         driver: Flysystem
-                        path: 'web/%shopsys.filemanager_upload_web_dir%'
+                        path: '/'
                         flysystem:
                             enabled: true
-                            filesystem: 'main_filesystem'
+                            filesystem: 'wysiwyg_filesystem'
                         # intentionally below the 32M limits of upload_max_filesize (php-ini-overrides.ini) and client_max_body_size (nginx.conf, orchestration/kubernetes/configmap/nginx.yaml)
                         # so the whole multipart request fits within them and Elfinder rejects too large files with a clear message instead of a server error
                         upload_max_size: 30M
@@ -84,12 +84,12 @@ fm_elfinder:
                             - 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
                             - 'application/zip'
                             - 'video/quicktime'
-                        tmb_path: 'web/%shopsys.filemanager_upload_web_dir%/_thumbnails'
+                        tmb_path: '_thumbnails'
                         url: '%shopsys.filemanager_upload_web_dir%'
                         tmb_url: '/%shopsys.filemanager_upload_web_dir%/_thumbnails'
                         attributes:
                             thumbnails:
-                                pattern: '/^\/web\/content\/wysiwyg\/_thumbnails$/'
+                                pattern: '/^\/_thumbnails$/'
                                 hidden: true
                         disabled_commands:
                             - 'archive'

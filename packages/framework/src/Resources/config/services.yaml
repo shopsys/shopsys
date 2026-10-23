@@ -990,3 +990,11 @@ services:
 
     twig.stringloader:
         class: Twig\Loader\ArrayLoader
+
+    wysiwyg_filesystem:
+        arguments:
+            - '%shopsys.filemanager_upload_dir%'
+        class: League\Flysystem\FilesystemOperator
+        factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
+        # public service is necessary for ElFinderBundle
+        public: true
