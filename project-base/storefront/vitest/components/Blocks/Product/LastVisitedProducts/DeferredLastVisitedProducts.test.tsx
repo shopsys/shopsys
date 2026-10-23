@@ -21,21 +21,20 @@ describe('DeferredLastVisitedProducts', () => {
         deferredReady.mockReturnValue(true);
     });
 
-    test.each([
-        { history: null },
-        { history: [] },
-        { history: ['current-product'] },
-    ])('keeps the component unmounted with history $history', ({ history }) => {
-        const store = createHistoryStore(history);
+    test.each([{ history: null }, { history: [] }, { history: ['current-product'] }])(
+        'keeps the component unmounted with history $history',
+        ({ history }) => {
+            const store = createHistoryStore(history);
 
-        render(
-            <CookiesStoreContext.Provider value={store}>
-                <DeferredLastVisitedProducts currentProductCatnum="current-product" />
-            </CookiesStoreContext.Provider>,
-        );
+            render(
+                <CookiesStoreContext.Provider value={store}>
+                    <DeferredLastVisitedProducts currentProductCatnum="current-product" />
+                </CookiesStoreContext.Provider>,
+            );
 
-        expect(screen.queryByText('Last visited products')).not.toBeInTheDocument();
-    });
+            expect(screen.queryByText('Last visited products')).not.toBeInTheDocument();
+        },
+    );
 
     test('waits for the deferred wave even when history contains another product', async () => {
         const store = createHistoryStore(['previous-product']);

@@ -58,35 +58,35 @@ describe('missing blog category', () => {
         expect(showErrorMessage).not.toHaveBeenCalled();
     });
 
-    test.each([
-        false,
-        true,
-    ])('still logs missing privacy policy configuration with debugging=%s', async (isDebugging) => {
-        debugging.enabled = isDebugging;
-        const operation = {
-            key: 2,
-            kind: 'query',
-            query: parse('query SettingsQuery { settings { privacyPolicyArticleUrl } }'),
-            variables: {},
-            context: {},
-        } as Operation;
-        const error = new CombinedError({
-            graphQLErrors: [
-                {
-                    message: 'Privacy policy article is not configured.',
-                    path: ['settings', 'privacyPolicyArticleUrl'],
-                    extensions: { userCode: 'article-not-found-privacy-policy', code: 404 },
-                },
-            ],
-        });
-        const exchange = getErrorExchange(
-            ((value: string) => value) as never,
-            { url: 'http://example.com' } as never,
-        )({ forward: () => fromValue({ operation, error }) } as never);
+    test.each([false, true])(
+        'still logs missing privacy policy configuration with debugging=%s',
+        async (isDebugging) => {
+            debugging.enabled = isDebugging;
+            const operation = {
+                key: 2,
+                kind: 'query',
+                query: parse('query SettingsQuery { settings { privacyPolicyArticleUrl } }'),
+                variables: {},
+                context: {},
+            } as Operation;
+            const error = new CombinedError({
+                graphQLErrors: [
+                    {
+                        message: 'Privacy policy article is not configured.',
+                        path: ['settings', 'privacyPolicyArticleUrl'],
+                        extensions: { userCode: 'article-not-found-privacy-policy', code: 404 },
+                    },
+                ],
+            });
+            const exchange = getErrorExchange(
+                ((value: string) => value) as never,
+                { url: 'http://example.com' } as never,
+            )({ forward: () => fromValue({ operation, error }) } as never);
 
-        await toPromise(exchange(fromValue(operation)));
+            await toPromise(exchange(fromValue(operation)));
 
-        expect(logException).toHaveBeenCalledOnce();
-        expect(showErrorMessage).not.toHaveBeenCalled();
-    });
+            expect(logException).toHaveBeenCalledOnce();
+            expect(showErrorMessage).not.toHaveBeenCalled();
+        },
+    );
 });

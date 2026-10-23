@@ -81,7 +81,7 @@ test:standards-with-graphql-schema-check:
 test:storefront-standards-with-codegen-with-tests-with-licenses-check:
     stage: test
     <<: *only-default
-    image: node:24.14.0-alpine3.22
+    image: node:24.22.1-alpine3.23
     tags:
         - tests
     needs:
@@ -323,8 +323,10 @@ review:
 ai:acceptance-criteria:
     stage: ai-review
     # Digest-pinned like the MCP images, because this job holds the Jira and Claude credentials and a floating tag
-    # would let a silently-updated upstream image run with them. This digest is docker:29.7.1-cli.
-    image: docker@sha256:27a51d5ab1cd38d9eeaba7b415b8c07bc10c31e1cf1ec8d78f6413fcfab3f44f
+    # would let a silently-updated upstream image run with them. This digest is node:24.22.1-alpine3.23.
+    image: node@sha256:0468540aa58203ff9e40c2aab3907c52644ab818af6176b1c70a026137dc92a2
+    # Only public MCP images are used; skip the inherited GitLab registry login before Docker is installed.
+    before_script: []
     tags:
         - review
     needs:
@@ -366,7 +368,7 @@ ai:acceptance-criteria:
     # Caps wall-clock for parity with the GitHub job - "--max-turns" bounds the agent's steps, this bounds the time.
     timeout: 30m
     script:
-        - apk add --no-cache bash curl git jq nodejs npm
+        - apk add --no-cache bash curl docker-cli git jq
         - npm install -g @anthropic-ai/claude-code@2.1.226
         - chmod +x ./gitlab/scripts/ai-acceptance-criteria.sh
         # The runner persists the clone credential as an "AUTHORIZATION: basic <base64(gitlab-ci-token:...)>"
@@ -489,9 +491,11 @@ ai:acceptance-criteria:
 ai:security-review:
     stage: ai-review
     # The same digest-pinned image as ai:acceptance-criteria, so there is one pinned digest to maintain and a
-    # silently-updated upstream image can never run while holding the Claude credential. Docker itself is not
-    # used here - the image is just a pinned Alpine with a package manager. This digest is docker:29.7.1-cli.
-    image: docker@sha256:27a51d5ab1cd38d9eeaba7b415b8c07bc10c31e1cf1ec8d78f6413fcfab3f44f
+    # silently-updated upstream image can never run while holding the Claude credential.
+    # This digest is node:24.22.1-alpine3.23.
+    image: node@sha256:0468540aa58203ff9e40c2aab3907c52644ab818af6176b1c70a026137dc92a2
+    # This job does not use Docker or the GitLab registry.
+    before_script: []
     tags:
         - tests
     # Reviews the diff only, so it does not wait for the build or the review environment.
@@ -520,7 +524,7 @@ ai:security-review:
     # Caps wall-clock for parity with the GitHub job - "--max-turns" bounds the agent's steps, this bounds the time.
     timeout: 20m
     script:
-        - apk add --no-cache bash curl git jq nodejs npm
+        - apk add --no-cache bash curl git jq
         - npm install -g @anthropic-ai/claude-code@2.1.226
         - chmod +x ./gitlab/scripts/ai-security-review.sh
         # The built-in /security-review baseline diffs against origin/HEAD, which a GitLab checkout does not set -

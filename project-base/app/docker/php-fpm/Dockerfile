@@ -46,8 +46,6 @@ RUN apk add --no-cache \
     git \
     linux-headers \
     mc \
-    nodejs \
-    npm \
     shadow
 
 RUN if [ -n "${www_data_gid}" ] && ! getent group ${www_data_gid} >/dev/null; then \

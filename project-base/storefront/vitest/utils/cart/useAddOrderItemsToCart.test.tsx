@@ -285,30 +285,31 @@ describe('repeat order GTM event', () => {
         );
     });
 
-    test.each([
-        0, 1, 2,
-    ])('does not send an add event when the merged quantity is %i and was already two', async (quantity) => {
-        mocks.cart = createCart([createItem('product', 2)]);
-        mocks.mutate.mockResolvedValue({
-            data: { AddOrderItemsToCart: createCart(quantity ? [createItem('product', quantity)] : []) },
-        });
+    test.each([0, 1, 2])(
+        'does not send an add event when the merged quantity is %i and was already two',
+        async (quantity) => {
+            mocks.cart = createCart([createItem('product', 2)]);
+            mocks.mutate.mockResolvedValue({
+                data: { AddOrderItemsToCart: createCart(quantity ? [createItem('product', quantity)] : []) },
+            });
 
-        await repeatOrder(true);
+            await repeatOrder(true);
 
-        expect(mocks.pushEvent).not.toHaveBeenCalled();
-    });
+            expect(mocks.pushEvent).not.toHaveBeenCalled();
+        },
+    );
 
-    test.each([
-        { error: new Error('Mutation failed') },
-        { data: undefined },
-    ])('does not report an unsuccessful mutation: %j', async (response) => {
-        mocks.cart = createCart([createItem('product', 2)]);
-        mocks.mutate.mockResolvedValue(response);
+    test.each([{ error: new Error('Mutation failed') }, { data: undefined }])(
+        'does not report an unsuccessful mutation: %j',
+        async (response) => {
+            mocks.cart = createCart([createItem('product', 2)]);
+            mocks.mutate.mockResolvedValue(response);
 
-        await repeatOrder(false);
+            await repeatOrder(false);
 
-        expect(mocks.pushEvent).not.toHaveBeenCalled();
-    });
+            expect(mocks.pushEvent).not.toHaveBeenCalled();
+        },
+    );
 
     test('does not send an empty event when no order item can be added', async () => {
         mocks.mutate.mockResolvedValue({
