@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
 import { ReactElement } from 'react';
 import { useComparisonPage } from 'utils/productLists/comparison/useComparisonPage';
@@ -149,4 +149,70 @@ test('uses the displayed position when a product is removed before the reordered
     expect(mocks.move).toHaveBeenCalledWith({
         input: { productListInput: { uuid: 'list', type: 'COMPARISON' }, productUuid: 'b', afterProductUuid: 'a' },
     });
+});
+
+test('does not offer undo that would re-add a legacy product group', () => {
+    const group = {
+        ...list(['family']).products[0],
+        __typename: 'MainVariant' as const,
+        isMainVariant: true,
+        variantsCount: 2,
+    };
+    mocks.comparison = { ...list(['family']), products: [group] };
+    renderHook(() => useComparisonPage());
+
+    act(() => mocks.callbacks.onProductRemoved('family'));
+
+    expect(mocks.success).toHaveBeenCalledWith(expect.any(String));
+});
+
+test('finishes undo without waiting for callbacks when a shared mutation lock rejects the add', async () => {
+    renderHook(() => useComparisonPage());
+    act(() => mocks.callbacks.onProductRemoved('b'));
+    const action = mocks.success.mock.calls[0][1].action as ReactElement<{ onUndo: () => Promise<boolean> }>;
+    mocks.comparison = list(['a', 'c']);
+    mocks.toggle.mockReturnValueOnce(false);
+    let outcome: boolean | undefined;
+
+    await act(async () => {
+        void action.props.onUndo().then((value) => {
+            outcome = value;
+        });
+    });
+
+    expect(outcome).toBe(false);
+    expect(mocks.move).not.toHaveBeenCalled();
+});
+
+test('focuses the empty state after removing the last saved variant group by keyboard', () => {
+    const group = {
+        ...list(['family']).products[0],
+        __typename: 'MainVariant' as const,
+        isMainVariant: true,
+        variantsCount: 2,
+    };
+    mocks.comparison = { ...list(['family']), products: [group] };
+    const Harness = () => {
+        const { products, emptyStateRef, handleRemove } = useComparisonPage();
+        return products.length ? (
+            <div data-comparison-variant-group>
+                <button type="button" onClick={() => handleRemove(products[0], 0)}>
+                    Remove group
+                </button>
+            </div>
+        ) : (
+            <div ref={emptyStateRef} tabIndex={-1}>
+                Empty comparison
+            </div>
+        );
+    };
+    const view = render(<Harness />);
+    const remove = screen.getByRole('button', { name: 'Remove group' });
+    remove.focus();
+    fireEvent.click(remove);
+
+    mocks.comparison = list([]);
+    view.rerender(<Harness />);
+
+    expect(screen.getByText('Empty comparison')).toHaveFocus();
 });

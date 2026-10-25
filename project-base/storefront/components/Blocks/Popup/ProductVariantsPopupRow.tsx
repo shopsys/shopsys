@@ -6,15 +6,18 @@ import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeProductVariantsQuery } from 'graphql/requests/products/queries/ProductVariantsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { ReactNode } from 'react';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { VARIANT_PURCHASE_CLASS_NAME, VARIANT_ROW_CLASS_NAME } from './productVariantsPopupStyles';
 
+export type ProductVariantsPopupVariant = Extract<
+    NonNullable<TypeProductVariantsQuery['product']>,
+    { __typename: 'MainVariant' }
+>['variants'][number];
+
 type ProductVariantsPopupRowProps = {
-    variant: Extract<
-        NonNullable<TypeProductVariantsQuery['product']>,
-        { __typename: 'MainVariant' }
-    >['variants'][number];
+    variant: ProductVariantsPopupVariant;
     gtmMessageOrigin: GtmMessageOriginType;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
@@ -36,6 +39,45 @@ export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
         cartItemQuantity,
     } = useProductAdditionalServices({ productUuid: variant.uuid, gtmProductListName });
 
+    return (
+        <ProductVariantsPopupRowLayout
+            variant={variant}
+            action={
+                <ProductAction
+                    gtmMessageOrigin={gtmMessageOrigin}
+                    gtmProductListName={gtmProductListName}
+                    listIndex={listIndex}
+                    product={variant}
+                    onAddToCartFlowStateChange={updateIsAddToCartFlowPending}
+                    onProductAddedToCart={(addedCartItem) => persistPendingServicesAfterAddToCart(addedCartItem.uuid)}
+                />
+            }
+        >
+            <AdditionalServices
+                additionalServices={variant.additionalServices}
+                className="col-span-2 pt-3 md:col-start-2"
+                isDisabled={isAddToCartFlowPending || isSettingAdditionalServices}
+                quantity={cartItemQuantity}
+                selectedServiceUuids={selectedServiceUuids}
+                tidDiscriminator={variant.catalogNumber}
+                unitName={variant.unit.name}
+                showSelectedServiceTotalPrice
+                onToggleService={onToggleService}
+            />
+        </ProductVariantsPopupRowLayout>
+    );
+};
+
+type ProductVariantsPopupRowLayoutProps = {
+    variant: ProductVariantsPopupVariant;
+    action: ReactNode;
+};
+
+export const ProductVariantsPopupRowLayout: FC<ProductVariantsPopupRowLayoutProps> = ({
+    variant,
+    action,
+    children,
+}) => {
     return (
         <li className={VARIANT_ROW_CLASS_NAME}>
             <div className="size-16 self-start sm:size-20 md:self-center">
@@ -65,30 +107,9 @@ export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
                     productPrice={variant.price}
                     textPriceSize="base"
                 />
-                <div className="col-start-1 xs:col-start-2 flex flex-col gap-2 md:col-start-1">
-                    <ProductAction
-                        gtmMessageOrigin={gtmMessageOrigin}
-                        gtmProductListName={gtmProductListName}
-                        listIndex={listIndex}
-                        product={variant}
-                        onAddToCartFlowStateChange={updateIsAddToCartFlowPending}
-                        onProductAddedToCart={(addedCartItem) =>
-                            persistPendingServicesAfterAddToCart(addedCartItem.uuid)
-                        }
-                    />
-                </div>
+                <div className="col-start-1 xs:col-start-2 flex flex-col gap-2 md:col-start-1">{action}</div>
             </div>
-            <AdditionalServices
-                additionalServices={variant.additionalServices}
-                className="col-span-2 pt-3 md:col-start-2"
-                isDisabled={isAddToCartFlowPending || isSettingAdditionalServices}
-                quantity={cartItemQuantity}
-                selectedServiceUuids={selectedServiceUuids}
-                tidDiscriminator={variant.catalogNumber}
-                unitName={variant.unit.name}
-                showSelectedServiceTotalPrice
-                onToggleService={onToggleService}
-            />
+            {children}
         </li>
     );
 };

@@ -6,7 +6,7 @@ import { useProductVariantsQuery } from 'graphql/requests/products/queries/Produ
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-
+import { ProductVariantsComparisonList } from './ProductVariantsComparisonList';
 import { ProductVariantsPopupRow } from './ProductVariantsPopupRow';
 import { ProductVariantsPopupSkeleton } from './ProductVariantsPopupSkeleton';
 
@@ -15,6 +15,7 @@ export type ProductVariantsPopupContentProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
+    onVariantCompared?: () => void;
 };
 
 export const ProductVariantsPopupContent: FC<ProductVariantsPopupContentProps> = ({
@@ -22,6 +23,7 @@ export const ProductVariantsPopupContent: FC<ProductVariantsPopupContentProps> =
     gtmMessageOrigin,
     gtmProductListName,
     listIndex,
+    onVariantCompared,
 }) => {
     const { t } = useTranslation();
     const [{ data, fetching, error }] = useProductVariantsQuery({
@@ -48,8 +50,21 @@ export const ProductVariantsPopupContent: FC<ProductVariantsPopupContentProps> =
     if (product.variants.length === 0) {
         return (
             <Alert icon={InfoIcon} variant="info">
-                {t('Currently, it is not possible to purchase any variant of this product.')}
+                {onVariantCompared
+                    ? t('No variants are available.')
+                    : t('Currently, it is not possible to purchase any variant of this product.')}
             </Alert>
+        );
+    }
+
+    if (onVariantCompared) {
+        return (
+            <ProductVariantsComparisonList
+                variants={product.variants}
+                gtmProductListName={gtmProductListName}
+                listIndex={listIndex}
+                onVariantCompared={onVariantCompared}
+            />
         );
     }
 
