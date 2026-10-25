@@ -1,9 +1,21 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { ProductVariantsTable } from 'components/Pages/ProductDetail/ProductDetailVariantsTable';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { PropsWithChildren } from 'react';
 import { describe, expect, test, vi } from 'vitest';
+
+import { renderWithTooltipProvider as render } from '../../helpers/renderWithTooltipProvider';
+
+const comparisonToggle = vi.hoisted(() => vi.fn());
+const wishlistToggle = vi.hoisted(() => vi.fn());
+vi.mock('utils/productLists/comparison/useComparison', () => ({
+    useComparison: () => ({ isProductInComparison: () => false, toggleProductInComparison: comparisonToggle }),
+}));
+vi.mock('utils/productLists/wishlist/useWishlist', () => ({
+    useWishlist: () => ({ isProductInWishlist: () => false, toggleProductInWishlist: wishlistToggle }),
+}));
 
 const openDeliveryOptionsPopupMock = vi.hoisted(() => vi.fn());
 
@@ -123,5 +135,14 @@ describe('ProductVariantsTable', () => {
 
         expect(screen.getByText('In stock')).toBeInTheDocument();
         expect(screen.queryByRole('button', { name: /In stock/ })).not.toBeInTheDocument();
+    });
+    test('targets the concrete variant when adding it to comparison or wishlist', () => {
+        render(<ProductVariantsTable deliveryOptionsProducts={[variant]} variants={[variant]} />);
+
+        fireEvent.click(screen.getByRole('button', { name: /Add to comparison/ }));
+        fireEvent.click(screen.getByRole('button', { name: /Add to wishlist/ }));
+
+        expect(comparisonToggle).toHaveBeenCalledWith(variant, GtmProductListNameType.product_detail_variants_table, 0);
+        expect(wishlistToggle).toHaveBeenCalledWith(variant, GtmProductListNameType.product_detail_variants_table, 0);
     });
 });
