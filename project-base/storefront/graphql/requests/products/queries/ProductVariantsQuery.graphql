@@ -1,0 +1,13 @@
+query ProductVariantsQuery($uuid: Uuid!) {
+    product(uuid: $uuid) {
+        __typename
+        ... on MainVariant {
+            variants {
+                ...ListedProductFragment
+                additionalServices {
+                    ...AdditionalServiceFragment
+                }
+            }
+        }
+    }
+}

@@ -99,8 +99,11 @@ export const AdditionalServices: FC<AdditionalServicesProps> = ({
 
     const closeDescriptionPopup = () => {
         setDescriptionPopupAdditionalService(null);
-        descriptionPopupTriggerRef.current?.focus();
+        const trigger = descriptionPopupTriggerRef.current;
         descriptionPopupTriggerRef.current = null;
+
+        // Let the description dialog release its focus trap before restoring focus.
+        requestAnimationFrame(() => trigger?.focus());
     };
 
     const handleToggleService = (additionalService: TypeAdditionalServiceFragment, isSelected: boolean) => {

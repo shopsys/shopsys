@@ -56,6 +56,37 @@ describe('useAddToCartHandler', () => {
         expect(document.activeElement).toBe(addToCartButton);
     });
 
+    test('restores the listing trigger after a failed add inside an open selector', async () => {
+        render(
+            <>
+                <button type="button">Choose a variant</button>
+                <div role="dialog" aria-label="Choose a variant">
+                    <button type="button">Add variant to cart</button>
+                </div>
+            </>,
+        );
+        const trigger = screen.getByRole('button', { name: 'Choose a variant' });
+        const addToCartButton = screen.getByRole('button', { name: 'Add variant to cart' });
+        useSessionStore.setState({ storedFocusElement: trigger });
+        addToCartButton.focus();
+        const { result } = renderHook(() =>
+            useAddToCartHandler({
+                gtmMessageOrigin: GtmMessageOriginType.other,
+                gtmProductListName: GtmProductListNameType.category_detail,
+                isWithSpinbox: false,
+                productUuid: 'variant-uuid',
+                spinboxRef: { current: null },
+            }),
+        );
+
+        await act(async () => {
+            await result.current.onAddToCartHandler();
+        });
+        useSessionStore.getState().restoreStoredFocus();
+
+        expect(trigger).toHaveFocus();
+    });
+
     test('stays in the loading state until additional services are persisted', async () => {
         let resolveAddToCart: (value: null) => void = () => undefined;
         const addToCartPromise = new Promise<null>((resolve) => {

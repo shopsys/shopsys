@@ -143,6 +143,39 @@ describe('Product Add To Cart Tests', () => {
         checkPopupIsVisible(true);
     });
 
+    it('[Variant Loading] should keep the popup in place when variants finish loading', () => {
+        let releaseResponse: () => void = () => undefined;
+        let loadingRect: DOMRect;
+        const responseGate = new Cypress.Promise<void>((resolve) => {
+            releaseResponse = resolve;
+        });
+
+        cy.intercept('POST', '/graphql/ProductVariantsQuery', (request) => {
+            request.reply(() => responseGate);
+        }).as('productVariants');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        cy.getByTID([TIDs.product_variants_button]).first().should('be.visible').click();
+        cy.getByTID([TIDs.product_variants_popup_loading]).should('be.visible');
+        cy.getByTID([TIDs.layout_popup])
+            .should(($popup) => {
+                expect($popup.css('transform')).to.equal('none');
+            })
+            .then(($popup) => {
+                loadingRect = $popup[0].getBoundingClientRect();
+                releaseResponse();
+            });
+        cy.wait('@productVariants');
+        cy.getByTID([TIDs.product_variants_popup_list]).should('be.visible');
+        cy.getByTID([TIDs.product_variants_popup_loading]).should('not.exist');
+        cy.getByTID([TIDs.layout_popup]).should(($popup) => {
+            const loadedRect = $popup[0].getBoundingClientRect();
+
+            expect(loadedRect.height, 'popup height').to.be.closeTo(loadingRect.height, 1);
+            expect(loadedRect.top, 'popup top').to.be.closeTo(loadingRect.top, 1);
+        });
+        checkPopupIsVisible(true);
+    });
+
     it('[Promoted Products Add] should add product to cart from promoted products on homepage', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 

@@ -28,6 +28,9 @@ export enum TIDs {
     // Login & Registration
     layout_header_menuiconic_login_link_popup = 'layout_header_menuiconic_login_link_popup',
     layout_popup = 'layout_popup',
+    product_variants_button = 'product_variants_button',
+    product_variants_popup_loading = 'product_variants_popup_loading',
+    product_variants_popup_list = 'product_variants_popup_list',
     login_form = 'login_form',
     login_method_web = 'login_method_web',
     login_form_submit_button = 'login_form_submit_button',
