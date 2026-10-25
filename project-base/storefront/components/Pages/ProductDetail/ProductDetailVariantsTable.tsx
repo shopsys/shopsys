@@ -102,7 +102,7 @@ const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvail
             className="mx-auto flex w-full max-w-sm flex-col gap-2 rounded-xl bg-background-more p-4 vl:p-5 md:max-w-none"
             data-tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
         >
-            <div className="flex w-full flex-col items-center justify-between gap-2 lg:flex-row">
+            <div className="flex w-full flex-col items-center gap-2 lg:grid lg:grid-cols-[4rem_minmax(0,1fr)_minmax(10rem,1fr)_auto] lg:gap-4">
                 <div
                     className="relative h-48 w-full shrink-0 lg:h-16 lg:w-16"
                     data-tid={TIDs.product_detail_main_image}
@@ -115,34 +115,36 @@ const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvail
                             variant.mainCategory?.name,
                             variant.mainImage?.name,
                         )}
-                        className="object-contain"
+                        className="object-contain mix-blend-multiply"
                         sizes="(max-width: 599px) 100vw, (max-width: 768px) 50vw, 64px"
                         src={variant.mainImage?.url}
                     />
                 </div>
 
-                <div className="line-clamp-2 min-h-10 text-center font-secondary font-semibold text-sm group-hover:text-link group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
+                <div className="wrap-break-word line-clamp-2 min-h-10 min-w-0 text-center font-secondary font-semibold text-sm lg:line-clamp-none lg:min-h-fit lg:text-left">
                     {variant.fullName}
                 </div>
 
                 <ProductVariantAvailability variant={variant} onClick={onAvailabilityClick} />
 
-                <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row">
-                    <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
+                <div className="flex w-full min-w-0 flex-col items-center gap-2 lg:w-auto lg:items-end">
+                    <ProductPrice className="justify-center lg:justify-end" productPrice={variant.price} />
 
-                    <div className="flex w-45 flex-col gap-2">
-                        <ProductAction
-                            buttonSize="large"
-                            isWatchdogButtonShownWithPurchaseAction
-                            gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
-                            gtmProductListName={GtmProductListNameType.product_detail_variants_table}
-                            listIndex={index}
-                            product={variant}
-                            onProductAddedToCart={(addedCartItem) =>
-                                persistPendingServicesAfterAddToCart(addedCartItem.uuid)
-                            }
-                        />
-                        <div className="flex justify-center gap-2 lg:justify-end">{listActions}</div>
+                    <div className="flex w-full flex-wrap items-center justify-center gap-2 lg:w-auto lg:justify-end">
+                        <div className="flex shrink-0 items-center">{listActions}</div>
+                        <div className="flex w-40 shrink-0 flex-col gap-2 sm:w-44">
+                            <ProductAction
+                                buttonSize="medium"
+                                isWatchdogButtonShownWithPurchaseAction
+                                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                                gtmProductListName={GtmProductListNameType.product_detail_variants_table}
+                                listIndex={index}
+                                product={variant}
+                                onProductAddedToCart={(addedCartItem) =>
+                                    persistPendingServicesAfterAddToCart(addedCartItem.uuid)
+                                }
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,7 +182,7 @@ const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onCli
             displayMode="detail"
             isInquiryType={variant.isInquiryType}
             className="min-w-40 items-center lg:items-start"
-            detailsClassName="pl-0 lg:pl-5"
+            detailsClassName="pl-0 text-xs lg:pl-5"
         />
     );
 
@@ -189,7 +191,12 @@ const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onCli
     }
 
     return (
-        <button aria-haspopup="dialog" className="cursor-pointer rounded-md" type="button" onClick={onClick}>
+        <button
+            aria-haspopup="dialog"
+            className="cursor-pointer rounded-md text-left lg:justify-self-start"
+            type="button"
+            onClick={onClick}
+        >
             {productAvailability}
         </button>
     );
