@@ -28,6 +28,9 @@ vi.mock('components/Pages/ProductDetail/ProductDetailGallery', () => ({
         <div role="img" aria-label="Product gallery" data-images={images.map((image) => image.url).join(',')} />
     ),
 }));
+vi.mock('components/Pages/ProductDetail/ProductDetailSecondaryActions/DeferredProductDetailSecondaryActions', () => ({
+    DeferredProductDetailSecondaryActions: () => null,
+}));
 vi.mock('components/Pages/ProductDetail/ProductDetailSections/ProductDetailSections', () => ({
     ProductDetailSections: () => null,
 }));

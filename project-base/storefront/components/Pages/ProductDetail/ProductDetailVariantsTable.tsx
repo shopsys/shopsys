@@ -4,16 +4,20 @@ import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { ProductListItemButtons } from 'components/Blocks/Product/ProductsList/ProductListItemActions';
 import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/productActionConstants';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { ReactNode } from 'react';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 import { generateProductImageAlt } from 'utils/productAltText';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 type ProductVariant = TypeMainVariantDetailFragment['variants'][number];
 
@@ -25,6 +29,8 @@ type ProductVariantsTableProps = {
 export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ deliveryOptionsProducts, variants }) => {
     const { t } = useTranslation();
     const openDeliveryOptionsPopup = useOpenDeliveryOptionsPopup();
+    const { isProductInComparison, toggleProductInComparison } = useComparison();
+    const { isProductInWishlist, toggleProductInWishlist } = useWishlist();
 
     if (variants.length === 0) {
         return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
@@ -42,6 +48,28 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ deliveryOp
                         key={variant.uuid}
                         index={index}
                         variant={variant}
+                        listActions={
+                            <ProductListItemButtons
+                                allowKeyboardFocus
+                                productName={variant.fullName}
+                                isProductInComparison={isProductInComparison(variant.uuid)}
+                                isProductInWishlist={isProductInWishlist(variant.uuid)}
+                                toggleProductInComparison={() =>
+                                    toggleProductInComparison(
+                                        variant,
+                                        GtmProductListNameType.product_detail_variants_table,
+                                        index,
+                                    )
+                                }
+                                toggleProductInWishlist={() =>
+                                    toggleProductInWishlist(
+                                        variant,
+                                        GtmProductListNameType.product_detail_variants_table,
+                                        index,
+                                    )
+                                }
+                            />
+                        }
                         onAvailabilityClick={() => openDeliveryOptionsPopup(deliveryOptionsProducts, variant.uuid)}
                     />
                 ))}
@@ -53,10 +81,11 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ deliveryOp
 type ProductVariantRowProps = {
     variant: ProductVariant;
     index: number;
+    listActions: ReactNode;
     onAvailabilityClick: () => void;
 };
 
-const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvailabilityClick }) => {
+const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvailabilityClick, listActions }) => {
     const {
         selectedServiceUuids,
         onToggleService,
@@ -113,6 +142,7 @@ const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvail
                                 persistPendingServicesAfterAddToCart(addedCartItem.uuid)
                             }
                         />
+                        <div className="flex justify-center gap-2 lg:justify-end">{listActions}</div>
                     </div>
                 </div>
             </div>

@@ -654,6 +654,26 @@ describe.each([TypeProductListTypeEnum.Wishlist, TypeProductListTypeEnum.Compari
         expect(result.current.list.isProductInList('fifth-product')).toBe(true);
     });
 
+    test('rejects a duplicate change of a product that is still being saved', async () => {
+        const { result, deferMutation } = setup(type);
+        await waitFor(() => expect(result.current.count).toBe(3));
+        let finish!: () => void;
+        deferMutation(
+            new Promise<void>((resolve) => {
+                finish = resolve;
+            }),
+        );
+        act(() => {
+            expect(result.current.list.toggleProductInList('fourth-product')).toBeInstanceOf(Promise);
+            expect(result.current.list.toggleProductInList('fourth-product')).toBeNull();
+            expect(result.current.list.toggleProductInList('fifth-product')).toBeInstanceOf(Promise);
+        });
+        await act(async () => {
+            finish();
+        });
+        await waitFor(() => expect(result.current.count).toBe(5));
+    });
+
     test('rejects a product change while clearing instead of leaving an unfinished operation', async () => {
         const { result, fetch, deferMutation } = setup(type);
         await waitFor(() => expect(result.current.count).toBe(3));

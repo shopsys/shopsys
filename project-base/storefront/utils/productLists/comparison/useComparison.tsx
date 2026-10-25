@@ -9,8 +9,11 @@ import {
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import { ProductInterfaceType } from 'types/product';
 import { useClient } from 'urql';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -20,6 +23,11 @@ import { useProductListGtmEvent } from 'utils/productLists/useProductListGtmEven
 import { useProductListQueryResult } from 'utils/productLists/useProductListQueryResult';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+
+const ProductVariantsPopup = dynamic(
+    () => import('components/Blocks/Popup/ProductVariantsPopup').then((component) => component.ProductVariantsPopup),
+    { ssr: false },
+);
 
 type ComparisonOptions = {
     onProductRemoved?: (productUuid: string) => void;
@@ -33,6 +41,8 @@ export const useComparison = ({
     showAddSuccessMessage = true,
 }: ComparisonOptions = {}) => {
     const { t } = useTranslation();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
     const {
         clearProductListGtmContext,
         pushAddProductListGtmEvent,
@@ -72,11 +82,40 @@ export const useComparison = ({
         },
     );
 
+    const chooseVariantForComparison = (
+        product: ProductInterfaceType,
+        gtmProductListName: GtmProductListNameType,
+        listIndex = 0,
+    ) => {
+        storeCurrentFocus();
+        updatePortalContent(
+            <ProductVariantsPopup
+                productUuid={product.uuid}
+                productSlug={product.slug}
+                productName={product.fullName}
+                gtmMessageOrigin={GtmMessageOriginType.other}
+                gtmProductListName={gtmProductListName}
+                listIndex={listIndex}
+                onVariantCompared={() => {
+                    if (isProductInList(product.uuid)) {
+                        toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
+                    }
+                }}
+            />,
+        );
+    };
+
     const toggleProductInComparison = (
         product: ProductInterfaceType,
         gtmProductListName: GtmProductListNameType,
         listIndex?: number,
     ) => {
+        if (product.__typename === 'MainVariant' && !isProductInList(product.uuid)) {
+            chooseVariantForComparison(product, gtmProductListName, listIndex);
+
+            return null;
+        }
+
         return toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
     };
 
@@ -84,6 +123,7 @@ export const useComparison = ({
         comparisonSummary: productListSummary,
         isProductInComparison: isProductInList,
         toggleProductInComparison,
+        chooseVariantForComparison,
         removeComparison: removeList,
         moveProductInComparison: moveProduct,
     };

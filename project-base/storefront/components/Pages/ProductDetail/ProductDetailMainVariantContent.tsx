@@ -24,6 +24,7 @@ import { DeferredProductDetailAccessories } from './ProductDetailAccessories/Def
 import { ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
+import { DeferredProductDetailSecondaryActions } from './ProductDetailSecondaryActions/DeferredProductDetailSecondaryActions';
 import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 
@@ -137,6 +138,9 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                                 )}
                             </div>
                         )}
+                        <div className="px-4 sm:px-5">
+                            <DeferredProductDetailSecondaryActions product={product} />
+                        </div>
                     </div>
                 </Webline>
 

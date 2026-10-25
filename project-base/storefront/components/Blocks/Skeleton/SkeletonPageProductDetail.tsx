@@ -99,6 +99,11 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
                                 </div>
                             </>
                         )}
+                        {isMainVariant && (
+                            <div className="px-4 sm:px-5">
+                                <SkeletonModuleProductDetailSecondaryActions />
+                            </div>
+                        )}
                     </div>
                 </div>
             </Webline>
