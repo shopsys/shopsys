@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices/AdditionalServices';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
-import type React from 'react';
+import { type default as React, useLayoutEffect, useRef } from 'react';
+import { useFocusTrap } from 'utils/useFocusTrap';
 import { describe, expect, test, vi } from 'vitest';
 
 vi.mock('components/Basic/Animations/AnimateCollapseDiv', () => ({
@@ -34,6 +35,22 @@ vi.mock('components/Forms/Button/IconButton', () => ({
             onClick={onClick}
         />
     ),
+}));
+
+vi.mock('components/Blocks/Product/AdditionalServices/AdditionalServiceDescriptionPopup', () => ({
+    AdditionalServiceDescriptionPopup: ({ onClose }: { onClose: () => void }) => {
+        const popupRef = useRef<HTMLDivElement>(null);
+        useFocusTrap(popupRef);
+        useLayoutEffect(() => popupRef.current?.querySelector('button')?.focus(), []);
+
+        return (
+            <div ref={popupRef} role="dialog" aria-label="Service description">
+                <button type="button" onClick={onClose}>
+                    Close description
+                </button>
+            </div>
+        );
+    },
 }));
 
 vi.mock('framer-motion', () => ({
@@ -153,6 +170,26 @@ describe('AdditionalServices', () => {
         onToggleService.mockClear();
         fireEvent.click(screen.getByRole('button', { name: 'Show description of Service 1' }));
         expect(onToggleService).not.toHaveBeenCalled();
+    });
+
+    test('restores focus after the description dialog releases its focus trap', async () => {
+        render(
+            <AdditionalServices
+                additionalServices={[createAdditionalService(1)]}
+                selectedServiceUuids={[]}
+                unitName="pcs"
+                onToggleService={vi.fn()}
+            />,
+        );
+        const trigger = screen.getByRole('button', { name: 'Show description of Service 1' });
+        trigger.focus();
+        fireEvent.click(trigger);
+        const closeButton = await screen.findByRole('button', { name: 'Close description' });
+        expect(closeButton).toHaveFocus();
+
+        fireEvent.click(closeButton);
+
+        await waitFor(() => expect(trigger).toHaveFocus());
     });
 
     test('does not render an info action when the service has no description', () => {
