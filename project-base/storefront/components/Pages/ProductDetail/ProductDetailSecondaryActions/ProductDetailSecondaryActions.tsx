@@ -1,13 +1,14 @@
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductQuestionButton } from 'components/Blocks/Product/ButtonsAction/ProductQuestionButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 export type ProductDetailSecondaryActionsProps = {
-    product: TypeProductDetailFragment;
+    product: TypeProductDetailFragment | TypeMainVariantDetailFragment;
 };
 
 export const ProductDetailSecondaryActions: FC<ProductDetailSecondaryActionsProps> = ({ product }) => {

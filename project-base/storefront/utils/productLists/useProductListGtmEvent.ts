@@ -73,6 +73,8 @@ export const useProductListGtmEvent = (
         if (!didStartMutation && !hasPendingGtmContext) {
             clearProductListGtmContext(product.uuid);
         }
+
+        return didStartMutation;
     };
 
     return {
