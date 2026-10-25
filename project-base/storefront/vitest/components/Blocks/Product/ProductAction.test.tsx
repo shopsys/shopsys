@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
-import { PRODUCT_VARIANTS_ID } from 'components/Blocks/Product/productActionConstants';
 import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import type { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
@@ -40,25 +39,14 @@ vi.mock('components/Blocks/Product/ProductInquiryButton', () => ({
     ),
 }));
 
-vi.mock('components/Forms/Button/LinkButton', () => ({
-    LinkButton: ({
-        'aria-label': ariaLabel,
-        children,
-        href,
-    }: {
-        'aria-label': string;
-        children: React.ReactNode;
-        href: string;
-    }) => (
-        <a aria-label={ariaLabel} data-testid="choose-variant" href={href}>
-            {children}
-        </a>
-    ),
+const { updatePortalContent, storeCurrentFocus } = vi.hoisted(() => ({
+    updatePortalContent: vi.fn(),
+    storeCurrentFocus: vi.fn(),
 }));
 
 vi.mock('store/useSessionStore', () => ({
-    useSessionStore: (selector: (state: { updatePortalContent: () => void }) => unknown) =>
-        selector({ updatePortalContent: vi.fn() }),
+    useSessionStore: (selector: (state: Record<string, unknown>) => unknown) =>
+        selector({ updatePortalContent, storeCurrentFocus }),
 }));
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -156,7 +144,7 @@ describe('ProductAction', () => {
         canCreateOrder = true;
     });
 
-    test('links the main variant action directly to the variants section', () => {
+    test('opens the variant selector with the listing context without navigating', () => {
         renderProductAction(
             createProduct({
                 __typename: 'MainVariant',
@@ -166,11 +154,24 @@ describe('ProductAction', () => {
             }),
         );
 
-        expect(
-            screen.getByRole('link', {
-                name: 'Go to page with product variants of Television Philips [M]',
-            }),
-        ).toHaveAttribute('href', `/television-philips-m#${PRODUCT_VARIANTS_ID}`);
+        const button = screen.getByRole('button', {
+            name: 'Choose a variant of Television Philips [M]',
+        });
+        expect(button).toHaveAttribute('aria-haspopup', 'dialog');
+        expect(updatePortalContent).not.toHaveBeenCalled();
+
+        fireEvent.click(button);
+
+        expect(storeCurrentFocus).toHaveBeenCalledOnce();
+        expect(updatePortalContent).toHaveBeenCalledOnce();
+        expect(updatePortalContent.mock.calls[0][0].props).toMatchObject({
+            productSlug: '/television-philips-m',
+            productUuid: inStockProduct.uuid,
+            productName: 'Television Philips [M]',
+            gtmMessageOrigin: GtmMessageOriginType.other,
+            gtmProductListName: GtmProductListNameType.other,
+            listIndex: 0,
+        });
     });
 
     test('offers only add to cart for a product in stock', () => {
@@ -218,19 +219,33 @@ describe('ProductAction', () => {
         expect(screen.queryByTestId('add-to-cart')).not.toBeInTheDocument();
     });
 
-    test('offers only a link to the variants for a main variant', () => {
+    test('offers only a variant selector for a main variant', () => {
         renderProductAction(createProduct({ isMainVariant: true }));
 
         expect(getWatchdogButtons()).toHaveLength(0);
-        expect(screen.getByTestId('choose-variant')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Choose a variant of Product' })).toBeInTheDocument();
         expect(screen.queryByTestId('add-to-cart')).not.toBeInTheDocument();
     });
 
-    test('offers only a link to the variants for a main variant that could be watched', () => {
+    test('offers only a variant selector for a main variant that could be watched', () => {
         renderProductAction(createProduct({ ...expectedRestockProduct, isMainVariant: true }));
 
         expect(getWatchdogButtons()).toHaveLength(0);
-        expect(screen.getByTestId('choose-variant')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Choose a variant of Product' })).toBeInTheDocument();
+    });
+
+    test('keeps hidden duplicate card actions outside keyboard navigation', () => {
+        renderProductAction(createProduct({ isMainVariant: true }), { skipKeyboardNavigation: true });
+
+        expect(screen.getByRole('button', { name: 'Choose a variant of Product' })).toHaveAttribute('tabindex', '-1');
+    });
+
+    test('does not offer variant selection to a customer who cannot create an order', () => {
+        canCreateOrder = false;
+
+        renderProductAction(createProduct({ isMainVariant: true }));
+
+        expect(screen.queryByRole('button', { name: 'Choose a variant of Product' })).not.toBeInTheDocument();
     });
 
     test('offers nothing to a customer who cannot create an order', () => {
