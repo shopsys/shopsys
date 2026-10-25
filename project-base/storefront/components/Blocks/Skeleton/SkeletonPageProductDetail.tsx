@@ -85,11 +85,11 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
                         {createEmptyArray(5).map((_, index) => (
                             <div
                                 key={index}
-                                className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 rounded-xl bg-skeleton-less p-4 vl:p-5 md:max-w-none lg:flex-row"
+                                className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 rounded-xl bg-skeleton-less p-4 vl:p-5 md:max-w-none lg:grid lg:grid-cols-[4rem_minmax(0,1fr)_minmax(10rem,1fr)_auto] lg:gap-4"
                             >
                                 <Skeleton className="h-48 w-full shrink-0 lg:h-16 lg:w-16" />
 
-                                <div className="flex w-full flex-col items-center gap-2 lg:w-80 lg:items-start">
+                                <div className="flex w-full min-w-0 flex-col items-center gap-2 lg:items-start">
                                     <Skeleton className="h-4 w-3/4" />
                                     <Skeleton className="h-4 w-1/2" />
                                 </div>
@@ -99,10 +99,14 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
                                     <Skeleton className="h-4 w-32" />
                                 </div>
 
-                                <div className="flex flex-col items-center gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row lg:justify-end">
+                                <div className="flex w-full min-w-0 flex-col items-center gap-2 lg:w-auto lg:items-end">
                                     <Skeleton className="h-6 w-24" />
-                                    <div className="w-45">
-                                        <SkeletonModuleProductDetailAddToCart size="large" />
+                                    <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-end">
+                                        <div className="flex shrink-0 items-center">
+                                            <Skeleton className="size-8" />
+                                            <Skeleton className="size-8" />
+                                        </div>
+                                        <Skeleton className="h-9 w-40 shrink-0 sm:w-44" />
                                     </div>
                                 </div>
                             </div>
