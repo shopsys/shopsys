@@ -1,6 +1,7 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
@@ -8,15 +9,24 @@ import { SkeletonModuleProductDetailAddToCart } from './SkeletonModuleProductDet
 import { SkeletonModuleProductDetailSecondaryActions } from './SkeletonModuleProductDetailSecondaryActions';
 import { SkeletonModuleProductDetailSections } from './SkeletonModuleProductDetailSections';
 
-export const SkeletonPageProductDetail: FC = () => (
+type SkeletonPageProductDetailProps = {
+    isMainVariant?: boolean;
+};
+
+export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ isMainVariant = false }) => (
     <>
         <SkeletonModuleBreadcrumbs count={3} />
 
         <VerticalStack gap="md">
             <Webline>
-                <div className="flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6 vl:gap-y-5">
+                <div
+                    className={twJoin(
+                        'flex vl:grid vl:grid-cols-[3fr_2fr] vl:grid-rows-[auto_1fr] flex-col gap-6',
+                        isMainVariant ? 'vl:gap-y-2' : 'vl:gap-y-5',
+                    )}
+                >
                     <div className="order-1 vl:col-start-2 vl:row-start-1">
-                        <Skeleton className="mb-1 h-6 w-2/6" />
+                        {!isMainVariant && <Skeleton className="mb-1 h-6 w-2/6" />}
                         <Skeleton className="h-8 w-5/6 lg:h-10" />
                     </div>
 
@@ -38,22 +48,63 @@ export const SkeletonPageProductDetail: FC = () => (
                             <Skeleton className="h-4 w-20 rounded-sm" />
                         </div>
 
+                        {isMainVariant && <Skeleton className="h-5 w-32" />}
+
                         <div className="flex flex-col gap-1">
                             <Skeleton className="h-4 w-3/4" />
                             <Skeleton className="h-4 w-2/4" />
                         </div>
 
-                        <div className="flex h-56 flex-col gap-4 rounded-xl bg-skeleton-less p-3 sm:p-6">
-                            <Skeleton className="h-8 w-20" />
-                            <Skeleton className="h-5 w-2/6" />
+                        {isMainVariant ? (
+                            <div className="flex flex-col gap-4 rounded-xl bg-skeleton-less p-4 sm:p-5">
+                                <SkeletonModuleProductDetailAddToCart size="large" />
+                                <Skeleton className="h-6 w-40" />
+                            </div>
+                        ) : (
+                            <div className="flex h-56 flex-col gap-4 rounded-xl bg-skeleton-less p-3 sm:p-6">
+                                <Skeleton className="h-8 w-20" />
+                                <Skeleton className="h-5 w-2/6" />
 
-                            <SkeletonModuleProductDetailAddToCart />
+                                <SkeletonModuleProductDetailAddToCart />
 
-                            <SkeletonModuleProductDetailSecondaryActions />
-                        </div>
+                                <SkeletonModuleProductDetailSecondaryActions />
+                            </div>
+                        )}
                     </div>
                 </div>
             </Webline>
+
+            {isMainVariant && (
+                <Webline>
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1">
+                        {createEmptyArray(5).map((_, index) => (
+                            <div
+                                key={index}
+                                className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 rounded-xl bg-skeleton-less p-4 vl:p-5 md:max-w-none lg:flex-row"
+                            >
+                                <Skeleton className="h-48 w-full shrink-0 lg:h-16 lg:w-16" />
+
+                                <div className="flex w-full flex-col items-center gap-2 lg:w-80 lg:items-start">
+                                    <Skeleton className="h-4 w-3/4" />
+                                    <Skeleton className="h-4 w-1/2" />
+                                </div>
+
+                                <div className="flex min-w-40 flex-col items-center gap-2 lg:items-start">
+                                    <Skeleton className="h-4 w-20" />
+                                    <Skeleton className="h-4 w-32" />
+                                </div>
+
+                                <div className="flex flex-col items-center gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row lg:justify-end">
+                                    <Skeleton className="h-6 w-24" />
+                                    <div className="w-45">
+                                        <SkeletonModuleProductDetailAddToCart size="large" />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </Webline>
+            )}
 
             <SkeletonModuleProductDetailSections />
 
