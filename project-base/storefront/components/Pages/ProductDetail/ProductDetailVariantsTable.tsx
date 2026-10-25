@@ -33,8 +33,9 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ deliveryOp
     return (
         <Webline>
             <ul
-                className="grid scroll-mt-fixed-header-with-navigation grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1"
+                className="grid scroll-mt-fixed-header grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1"
                 id={PRODUCT_VARIANTS_ID}
+                tabIndex={-1}
             >
                 {variants.map((variant, index) => (
                     <ProductVariantRow
