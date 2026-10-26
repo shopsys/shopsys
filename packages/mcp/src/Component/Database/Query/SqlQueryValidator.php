@@ -20,10 +20,12 @@ class SqlQueryValidator
     public const string ERROR_UNKNOWN_RELATION_ALIAS = 'The SQL query references an unknown table or relation alias.';
     public const string ERROR_DISALLOWED_CAST_TARGET = 'The SQL query uses a cast target that is not allowed.';
     public const string ERROR_RECURSIVE_CTE_NOT_SUPPORTED = 'Recursive common table expressions are not supported.';
+    public const string ERROR_SCHEMA_QUALIFIED_NAME = 'The SQL query must not qualify names with a schema or database. Use unqualified table names.';
     public const string ERROR_LIMIT_REQUIRED_FORMAT = 'The SQL query must include a top-level LIMIT <= %d.';
 
     protected const string NODE_TAG_A_STAR = 'A_Star';
     protected const string NODE_TAG_A_CONST = 'A_Const';
+    protected const string NODE_TAG_A_EXPR = 'A_Expr';
     protected const string NODE_TAG_COLUMN_REF = 'ColumnRef';
     protected const string NODE_TAG_COMMON_TABLE_EXPR = 'CommonTableExpr';
     protected const string NODE_TAG_DELETE_STMT = 'DeleteStmt';
@@ -162,6 +164,12 @@ class SqlQueryValidator
             return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createInvalid(self::ERROR_ONLY_SELECT_SUPPORTED);
         }
 
+        $validationErrorMessage = $this->findOutsideViewsSchemaReference($parsedSqlQuery->statement);
+
+        if ($validationErrorMessage !== null) {
+            return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createInvalid($validationErrorMessage);
+        }
+
         $validationErrorMessage = $this->validateSelectStatement(
             $parsedSqlQuery->statement[self::NODE_TAG_SELECT_STMT],
             $this->exposedSchemaProvider->getAllowedColumnsSetIndexedByTableNames(),
@@ -173,6 +181,51 @@ class SqlQueryValidator
         }
 
         return ExtendedClassNameResolver::resolve(SqlQueryValidationResult::class)::createValid($parsedSqlQuery->singleStatementSql);
+    }
+
+    /**
+     * The MCP connection resolves unqualified names to the views with exposed columns only (see McpDatabaseViewsManager),
+     * so a query can reach anything else only by naming it explicitly. The check therefore walks every node of the tree
+     * instead of the known node types, so that no construct can carry such a reference past it:
+     * - any schema or database qualification
+     * - an unqualified pg_* relation, because pg_catalog is searched implicitly before the search_path
+     *
+     * @param array<mixed> $node
+     */
+    protected function findOutsideViewsSchemaReference(array $node): ?string
+    {
+        if (($node['schemaname'] ?? '') !== '' || ($node['catalogname'] ?? '') !== '') {
+            return self::ERROR_SCHEMA_QUALIFIED_NAME;
+        }
+
+        $wrappedNodeTag = $this->getWrappedNodeTag($node);
+
+        if ($wrappedNodeTag === self::NODE_TAG_COLUMN_REF && count($node[self::NODE_TAG_COLUMN_REF]['fields'] ?? []) > 2) {
+            return self::ERROR_SCHEMA_QUALIFIED_NAME;
+        }
+
+        // OPERATOR(schema.op)
+        if ($wrappedNodeTag === self::NODE_TAG_A_EXPR && count($node[self::NODE_TAG_A_EXPR]['name'] ?? []) > 1) {
+            return self::ERROR_SCHEMA_QUALIFIED_NAME;
+        }
+
+        if ($wrappedNodeTag === self::NODE_TAG_RANGE_VAR && str_starts_with((string)($node[self::NODE_TAG_RANGE_VAR]['relname'] ?? ''), 'pg_')) {
+            return self::ERROR_TABLE_NOT_EXPOSED;
+        }
+
+        foreach ($node as $childNode) {
+            if (!is_array($childNode)) {
+                continue;
+            }
+
+            $validationErrorMessage = $this->findOutsideViewsSchemaReference($childNode);
+
+            if ($validationErrorMessage !== null) {
+                return $validationErrorMessage;
+            }
+        }
+
+        return null;
     }
 
     /**

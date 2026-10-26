@@ -128,10 +128,6 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT customer_id, COUNT(id) AS order_count FROM orders GROUP BY customer_id ORDER BY order_count DESC, customer_id ASC LIMIT 10',
         ];
 
-        yield 'public schema qualified table and column are allowed' => [
-            'sql' => 'SELECT public.products.id FROM public.products LIMIT 10',
-        ];
-
         yield 'correlated subquery is allowed' => [
             'sql' => 'SELECT id FROM products p WHERE EXISTS (SELECT 1 FROM product_translations pt WHERE pt.translatable_id = p.id) LIMIT 10',
         ];
@@ -334,12 +330,12 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'schema qualified column from non public schema is rejected' => [
             'sql' => 'SELECT pg_catalog.pg_user.usename FROM products LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
         yield 'cte shadowing pg catalog table is rejected when schema qualified relation is used' => [
             'sql' => 'WITH pg_user AS (SELECT 1 AS x) SELECT pg_catalog.pg_user.usename FROM pg_catalog.pg_user LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
         yield 'non allowlisted type cast shorthand is rejected' => [
@@ -399,7 +395,7 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'non public schema table is rejected' => [
             'sql' => 'SELECT other.products.id FROM other.products LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
         yield 'hidden join using column is rejected' => [
@@ -490,6 +486,56 @@ class SqlQueryValidatorTest extends TestCase
         yield 'unknown derived table column is rejected' => [
             'sql' => 'SELECT sub.missing_name FROM (SELECT name FROM product_translations) sub LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        ];
+
+        yield 'quoted public schema qualified table is rejected' => [
+            'sql' => 'SELECT p.id FROM "public"."products" p LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'database qualified table is rejected' => [
+            'sql' => 'SELECT p.id FROM shopsys.public.products p LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified table in union branch is rejected' => [
+            'sql' => 'SELECT 0 UNION ALL SELECT count(*) FROM public.administrators LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified table in scalar subquery is rejected' => [
+            'sql' => 'SELECT (SELECT count(*) FROM public.administrators) AS c LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified table in cte body is rejected' => [
+            'sql' => 'WITH a AS (SELECT id FROM public.administrators) SELECT id FROM a LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified table with tablesample is rejected' => [
+            'sql' => 'SELECT count(*) FROM public.administrators TABLESAMPLE SYSTEM (100) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified operator is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE id OPERATOR(public.=) 1 LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'unqualified pg catalog relation is rejected' => [
+            'sql' => 'SELECT count(*) FROM pg_stats LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+        ];
+
+        yield 'unqualified pg catalog relation in where subquery is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE EXISTS (SELECT 1 FROM pg_class) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+        ];
+
+        yield 'cte named as pg catalog relation is rejected' => [
+            'sql' => 'WITH pg_user AS (SELECT id FROM products) SELECT id FROM pg_user LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
     }
 
