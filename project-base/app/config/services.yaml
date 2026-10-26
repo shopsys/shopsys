@@ -80,6 +80,10 @@ services:
         arguments:
             - "%shopsys.performance_data.product.total_count%"
 
+    App\FrontendApi\Model\Product\Filter\ProductFilterFacade:
+        arguments:
+            $elasticsearchSearchBatchLoader: '@elasticsearch_search_batch_loader'
+
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 
     App\FrontendApi\Mutation\Customer\User\CustomerUserPasswordRecoveryMutation:
@@ -305,15 +309,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory:
         alias: App\Model\Product\Brand\BrandDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository:
-        alias: App\Model\Product\Filter\FlagFilterChoiceRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository:
-        alias: App\Model\Product\Filter\PriceRangeRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory:
-        alias: App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory:
         alias: App\Model\Product\Filter\ProductFilterDataFactory
