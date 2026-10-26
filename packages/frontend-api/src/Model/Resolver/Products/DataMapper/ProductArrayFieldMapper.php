@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -37,6 +38,7 @@ class ProductArrayFieldMapper
         protected readonly SeoAttributesQueryDtoFactory $seoAttributesQueryDtoFactory,
         protected readonly DataLoaderInterface $flagsBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -52,7 +54,7 @@ class ProductArrayFieldMapper
 
     public function getLink(array $data): string
     {
-        return $this->domain->getUrl() . '/' . $data['slug'];
+        return $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($this->domain->getId(), $data['slug']);
     }
 
     public function getSlug(array $data): string

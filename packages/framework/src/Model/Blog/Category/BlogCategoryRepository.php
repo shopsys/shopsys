@@ -183,18 +183,101 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]>
      */
-    public function getAllVisibleChildrenByBlogCategoryAndDomainId(BlogCategory $blogCategory, int $domainId): array
-    {
+    public function getAllVisibleChildrenByBlogCategoriesAndDomainIdIndexedByParentId(
+        array $blogCategories,
+        int $domainId,
+    ): array {
+        if ($blogCategories === []) {
+            return [];
+        }
+
+        $childrenIndexedByParentId = [];
+
+        foreach ($blogCategories as $blogCategory) {
+            $childrenIndexedByParentId[$blogCategory->getId()] = [];
+        }
+
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-            ->andWhere('bc.parent = :blogCategory')
-            ->setParameter('blogCategory', $blogCategory);
+            ->andWhere('bc.parent IN (:blogCategories)')
+            ->setParameter('blogCategories', $blogCategories);
 
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
         $this->addTranslation($queryBuilder, $locale);
 
-        return $queryBuilder->getQuery()->getResult();
+        $childBlogCategories = $queryBuilder->getQuery()->getResult();
+
+        foreach ($childBlogCategories as $childBlogCategory) {
+            $childrenIndexedByParentId[$childBlogCategory->getParent()->getId()][] = $childBlogCategory;
+        }
+
+        return $childrenIndexedByParentId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain>
+     */
+    public function getBlogCategoryDomainsByBlogCategoriesAndDomainIdIndexedByBlogCategoryId(
+        array $blogCategories,
+        int $domainId,
+    ): array {
+        if ($blogCategories === []) {
+            return [];
+        }
+
+        $blogCategoryDomains = $this->em->createQueryBuilder()
+            ->select('bcd')
+            ->from(BlogCategoryDomain::class, 'bcd')
+            ->andWhere('bcd.blogCategory IN (:blogCategories)')
+            ->andWhere('bcd.domainId = :domainId')
+            ->setParameter('blogCategories', $blogCategories)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->getResult();
+
+        $blogCategoryDomainsIndexedByBlogCategoryId = [];
+
+        foreach ($blogCategoryDomains as $blogCategoryDomain) {
+            $blogCategoryDomainsIndexedByBlogCategoryId[$blogCategoryDomain->getBlogCategory()->getId()] = $blogCategoryDomain;
+        }
+
+        return $blogCategoryDomainsIndexedByBlogCategoryId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @param int[] $domainIds
+     * @return array<int, int[]>
+     */
+    public function getVisibleDomainIdsByBlogCategoriesAndDomainIdsIndexedByBlogCategoryId(
+        array $blogCategories,
+        array $domainIds,
+    ): array {
+        if ($blogCategories === [] || $domainIds === []) {
+            return [];
+        }
+
+        $blogCategoryIdAndDomainIdPairs = $this->em->createQueryBuilder()
+            ->select('IDENTITY(bcd.blogCategory) AS blogCategoryId, bcd.domainId')
+            ->from(BlogCategoryDomain::class, 'bcd')
+            ->andWhere('bcd.blogCategory IN (:blogCategories)')
+            ->andWhere('bcd.domainId IN (:domainIds)')
+            ->andWhere('bcd.visible = TRUE')
+            ->setParameter('blogCategories', $blogCategories)
+            ->setParameter('domainIds', $domainIds)
+            ->getQuery()
+            ->getScalarResult();
+
+        $visibleDomainIdsIndexedByBlogCategoryId = [];
+
+        foreach ($blogCategoryIdAndDomainIdPairs as $blogCategoryIdAndDomainIdPair) {
+            $visibleDomainIdsIndexedByBlogCategoryId[(int)$blogCategoryIdAndDomainIdPair['blogCategoryId']][] = (int)$blogCategoryIdAndDomainIdPair['domainId'];
+        }
+
+        return $visibleDomainIdsIndexedByBlogCategoryId;
     }
 
     public function findBlogArticleMainBlogCategoryOnDomain(BlogArticle $blogArticle, int $domainId): ?BlogCategory
@@ -305,13 +388,21 @@ class BlogCategoryRepository extends NestedTreeRepository
      */
     public function getBlogCategoriesWithTranslationIndexedById(array $blogCategoryIds, string $locale): array
     {
-        $queryBuilder = $this->getByIdsQueryBuilder($blogCategoryIds)
+        $queryBuilder = $this->getByIdsQueryBuilder($blogCategoryIds);
+        $this->addLeftJoinedTranslationIndexedById($queryBuilder, $locale);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    protected function addLeftJoinedTranslationIndexedById(
+        QueryBuilder $blogCategoriesQueryBuilder,
+        string $locale,
+    ): void {
+        $blogCategoriesQueryBuilder
             ->indexBy('bc', 'bc.id')
             ->addSelect('bct')
             ->leftJoin('bc.translations', 'bct', Join::WITH, 'bct.locale = :locale')
             ->setParameter('locale', $locale);
-
-        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -361,15 +452,16 @@ class BlogCategoryRepository extends NestedTreeRepository
 
     /**
      * @param int[] $blogCategoryIds
-     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      */
-    public function getVisibleByIds(int $domainId, array $blogCategoryIds): array
+    public function getVisibleByIdsIndexedById(int $domainId, array $blogCategoryIds): array
     {
-        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->andWhere('bc.id IN (:blogCategoryIds)')
-            ->setParameter('blogCategoryIds', $blogCategoryIds)
-            ->getQuery()
-            ->getResult();
+            ->setParameter('blogCategoryIds', $blogCategoryIds);
+        $this->addLeftJoinedTranslationIndexedById($queryBuilder, $this->domain->getDomainConfigById($domainId)->getLocale());
+
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function findVisibleMainBlogCategoryOnDomain(int $domainId): ?BlogCategory

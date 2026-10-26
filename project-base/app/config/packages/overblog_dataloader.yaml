@@ -5,9 +5,33 @@ overblog_dataloader:
         additionalServicesByIdsBatchLoader:
             alias: "additional_services_by_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\AdditionalService\\AdditionalServicesBatchLoader:loadByProductIdAndAdditionalServiceIds"
+        blogArticlesByBlogCategoryBatchLoader:
+            alias: "blog_articles_by_blog_category_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Article\\BlogArticlesBatchLoader:loadByBlogCategoriesBatchLoadData"
+        blogArticlesTotalCountByBlogCategoryBatchLoader:
+            alias: "blog_articles_total_count_by_blog_category_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Article\\BlogArticlesBatchLoader:loadTotalCountByBlogCategories"
+        blogCategoriesBatchLoader:
+            alias: "blog_categories_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadByIds"
+        blogCategoriesVisibleBatchLoader:
+            alias: "blog_categories_visible_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadVisibleByIds"
         blogCategoryBreadcrumbBatchLoader:
             alias: "blog_category_breadcrumb_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoryBreadcrumbBatchLoader:loadBreadcrumbByBlogCategories"
+        blogCategoryChildrenBatchLoader:
+            alias: "blog_category_children_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadChildrenByBlogCategories"
+        blogCategoryHreflangLinksBatchLoader:
+            alias: "blog_category_hreflang_links_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoryHreflangLinksBatchLoader:loadByBlogCategories"
+        blogCategoryMainFriendlyUrlSlugBatchLoader:
+            alias: "blog_category_main_friendly_url_slug_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategoryMainFriendlyUrlSlugs"
+        blogCategorySeoAttributesBatchLoader:
+            alias: "blog_category_seo_attributes_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Blog\\Category\\BlogCategoriesBatchLoader:loadSeoAttributesByBlogCategories"
         blogCategorySlugBatchLoader:
             alias: "blog_category_slug_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\FriendlyUrl\\FriendlyUrlSlugBatchLoader:loadBlogCategorySlugs"

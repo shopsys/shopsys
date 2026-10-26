@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Seo;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
-use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -23,7 +22,6 @@ class HreflangLinksFacade
     protected const string ROUTE_BRAND_DETAIL = 'front_brand_detail';
     protected const string ROUTE_FLAG_DETAIL = 'front_flag_detail';
     protected const string ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
-    protected const string ROUTE_BLOG_CATEGORY_DETAIL = 'front_blogcategory_detail';
 
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
@@ -132,27 +130,6 @@ class HreflangLinksFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
-    public function getForBlogCategory(
-        BlogCategory $blogCategory,
-        int $currentDomainId,
-        bool $absoluteUrl = true,
-    ): array {
-        $isVisibleCallable = static function (BlogCategory $blogCategory, int $domainId): bool {
-            return $blogCategory->isVisible($domainId);
-        };
-
-        return $this->doGetHrefLinks(
-            $blogCategory,
-            $currentDomainId,
-            static::ROUTE_BLOG_CATEGORY_DETAIL,
-            $absoluteUrl,
-            $isVisibleCallable,
-        );
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
-     */
     public function getForFlag(Flag $flag, int $currentDomainId, bool $absoluteUrl = true): array
     {
         return $this->doGetHrefLinks($flag, $currentDomainId, static::ROUTE_FLAG_DETAIL, $absoluteUrl);
@@ -170,7 +147,7 @@ class HreflangLinksFacade
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     protected function doGetHrefLinks(
-        BlogArticle|BlogCategory|Brand|Category|Product|SeoPage|Flag $entity,
+        BlogArticle|Brand|Category|Product|SeoPage|Flag $entity,
         int $currentDomainId,
         string $routeName,
         bool $absoluteUrl,
@@ -198,7 +175,7 @@ class HreflangLinksFacade
     /**
      * @return int[]
      */
-    protected function getRelevantDomainIds(int $currentDomainId): array
+    public function getRelevantDomainIds(int $currentDomainId): array
     {
         $alternativeDomainIds = $this->seoSettingFacade->getAlternativeDomainsForDomain($currentDomainId);
 
@@ -239,7 +216,7 @@ class HreflangLinksFacade
             // @deprecated - fallback for not yet exported data to Elasticsearch
             $domainId = array_key_exists('domainId', $hreflangLink) ? $hreflangLink['domainId'] : $this->getRelevantDomainIds($this->domain->getId())[$key];
 
-            $hreflangLinks[$key]['href'] = $this->domain->getDomainConfigById($domainId)->getUrl() . '/' . $hreflangLink['href'];
+            $hreflangLinks[$key]['href'] = $this->friendlyUrlFacade->getAbsoluteUrlByMainFriendlyUrlSlug($domainId, $hreflangLink['href']);
         }
 
         return $hreflangLinks;

@@ -38,10 +38,25 @@ services:
     Shopsys\FrontendApiBundle\Controller\SocialNetworkController:
         tags: [ 'controller.service_arguments' ]
 
+    Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticleResolverMap:
+        arguments:
+            $blogCategoriesVisibleBatchLoader: '@blog_categories_visible_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
+    Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticlesQuery:
+        arguments:
+            $blogArticlesByBlogCategoryBatchLoader: '@blog_articles_by_blog_category_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryResolverMap:
         arguments:
-            $blogCategorySlugBatchLoader: '@blog_category_slug_batch_loader'
+            $blogCategoryMainFriendlyUrlSlugBatchLoader: '@blog_category_main_friendly_url_slug_batch_loader'
             $blogCategoryBreadcrumbBatchLoader: '@blog_category_breadcrumb_batch_loader'
+            $blogCategoryChildrenBatchLoader: '@blog_category_children_batch_loader'
+            $blogCategoriesBatchLoader: '@blog_categories_batch_loader'
+            $blogCategorySeoAttributesBatchLoader: '@blog_category_seo_attributes_batch_loader'
+            $blogArticlesTotalCountByBlogCategoryBatchLoader: '@blog_articles_total_count_by_blog_category_batch_loader'
+            $blogCategoryHreflangLinksBatchLoader: '@blog_category_hreflang_links_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
