@@ -27,6 +27,7 @@ fragment CategoryProductFilterOptions on Category {
             inStock
             minimalPrice
             maximalPrice
+            visibleFilterParametersCount
             parameters {
                 isCollapsed
                 name

@@ -29,3 +29,11 @@
     width: auto;
     height: auto;
 }
+
+.sortable-values-item-limit-after {
+    box-shadow: inset 0 -2px 0 var(--tblr-primary);
+}
+
+.sortable-values-item-limit-before {
+    box-shadow: inset 0 2px 0 var(--tblr-primary);
+}

@@ -367,6 +367,9 @@ msgstr "Priradiť produkt"
 msgid "Assign products"
 msgstr "Priradiť produkty"
 
+msgid "Assign products with parameters to the category first."
+msgstr "Najskôr priraďte do kategórie produkty s parametrami."
+
 msgid "Assign to category"
 msgstr "Priradiť ku kategórii"
 
@@ -1014,6 +1017,9 @@ msgstr "Zamietnuté bankou - nesprávne číslo karty"
 
 msgid "Declined in the 3DS server"
 msgstr "Zamietnuté na 3DS serveri"
+
+msgid "Decrease"
+msgstr "Znížiť"
 
 msgid "Default (not set)"
 msgstr "Predvolené (nenastavené)"
@@ -1948,6 +1954,9 @@ msgstr "Vrátane DPH"
 msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
 msgstr "Nesprávne nastavenia môžu mať negatívny vplyv na správnu funkčnosť e-shopu."
 
+msgid "Increase"
+msgstr "Zvýšiť"
+
 msgid "Individual roles"
 msgstr "Individuálne role"
 
@@ -2344,6 +2353,9 @@ msgstr "Nie je z čoho vyberať."
 msgid "Number of delivery days for out of stock products in XML feeds"
 msgstr "Počet dní doručenia pre produkty, ktoré nie sú na sklade v XML feedoch"
 
+msgid "Number of filter parameters displayed in the sidebar"
+msgstr "Počet parametrov filtra zobrazených v bočnom paneli"
+
 msgid "Number of generated promo codes"
 msgstr "Počet vygenerovaných promo kódov"
 
@@ -2520,6 +2532,9 @@ msgstr "Hodnoty parametra spojené s parametrom - <strong><a href=\"{{ url }}\">
 
 msgid "Parameters"
 msgstr "Parametre"
+
+msgid "Parameters above the highlighted line are displayed in the sidebar."
+msgstr "Parametre nad zvýraznenou čiarou sa zobrazujú v bočnom paneli."
 
 msgid "Parameters order in category"
 msgstr "Poradie parametrov v kategórii"
@@ -3453,6 +3468,9 @@ msgstr "Testovací e-mail bol odoslaný na %email%."
 
 msgid "Text review"
 msgstr "Textová recenzia"
+
+msgid "The first parameters in the category order are shown. Enter 0 to show parameters only in the All filters popup."
+msgstr "Zobrazia sa prvé parametre podľa poradia v kategórii. Zadaním 0 zobrazíte parametre iba v okne Všetky filtre."
 
 msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
 msgstr "Darčekový poukaz platí na celý sortiment tovaru a služieb. Darčekový poukaz nie je možné uplatniť po uvedenom dátume platnosti, po vypršaní platnosti jeho hodnota prepadá bez nároku na náhradu. Poukaz nie je možné zameniť za peniaze. Tovar či služba musí byť v rovnakej alebo vyššej hodnote."

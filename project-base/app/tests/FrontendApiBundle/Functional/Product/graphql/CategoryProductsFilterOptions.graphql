@@ -19,6 +19,7 @@ query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter
                 inStock
                 minimalPrice
                 maximalPrice
+                visibleFilterParametersCount
                 parameters {
                     isCollapsed
                     name
