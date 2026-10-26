@@ -8,6 +8,7 @@ const ApplicationErrors = {
     'cart-not-found': 'flash-message',
     'company-already-registered': 'flash-message',
     'complaint-not-found': 'flash-message',
+    'electronic-gift-voucher-not-complainable': 'flash-message',
     'handling-with-logged-customer-comparison': 'flash-message',
     'invalid-credentials': 'flash-message',
     'invalid-quantity': 'flash-message',
