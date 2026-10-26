@@ -107,9 +107,9 @@ class AdministratorRepository
             ->setParameter('superadminRole', SystemRole::SUPER_ADMIN);
     }
 
-    public function getCountExcludingSuperadmin(): int
+    public function getCount(): int
     {
-        return (int)($this->getAllListableExcludingSuperadminQueryBuilder()
+        return (int)($this->getAdministratorRepository()->createQueryBuilder('a')
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
     }

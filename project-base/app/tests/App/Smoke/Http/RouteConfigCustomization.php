@@ -231,6 +231,13 @@ class RouteConfigCustomization
                     ->setParameter('id', 2)
                     ->setExpectedStatusCode(200);
             })
+            ->customizeByRouteName('admin_administrator_delete', function (RouteConfig $config): void {
+                $config->changeDefaultRequestDataSet('Standard admin is not allowed to delete superadmin (with ID 1)')
+                    ->setExpectedStatusCode(308);
+                $config->addExtraRequestDataSet('Superadmin can delete another superadmin')
+                    ->setAuth(new BasicHttpAuth('supervisor', 'admin123'))
+                    ->setExpectedStatusCode(302);
+            })
             ->customizeByRouteName('admin_administrator_myaccount', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet('My account redirects to edit page')
                     ->setExpectedStatusCode(302);

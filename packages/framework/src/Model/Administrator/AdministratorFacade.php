@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AdministratorFacade
 {
@@ -20,7 +19,6 @@ class AdministratorFacade
         protected readonly AdministratorRepository $administratorRepository,
         protected readonly AdministratorFactory $administratorFactory,
         protected readonly AdministratorRoleFacade $administratorRoleFacade,
-        protected readonly TokenStorageInterface $tokenStorage,
         protected readonly ClockInterface $clock,
         protected readonly CurrentAdministrator $currentAdministrator,
     ) {
@@ -60,17 +58,17 @@ class AdministratorFacade
 
     protected function checkForDelete(Administrator $administrator): void
     {
-        $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
-
-        if ($adminCountExcludingSuperadmin === 1) {
+        if ($this->administratorRepository->getCount() === 1) {
             throw new DeletingLastAdministratorException();
         }
 
-        if ($this->tokenStorage->getToken()->getUser() === $administrator) {
+        $currentlyLoggedAdministrator = $this->currentAdministrator->getCurrentlyLoggedAdministrator();
+
+        if ($currentlyLoggedAdministrator->getId() === $administrator->getId()) {
             throw new DeletingSelfException();
         }
 
-        if ($administrator->isSuperadmin()) {
+        if ($administrator->isSuperadmin() && !$currentlyLoggedAdministrator->isSuperadmin()) {
             throw new DeletingSuperadminException();
         }
     }
