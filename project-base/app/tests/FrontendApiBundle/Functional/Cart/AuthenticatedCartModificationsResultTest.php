@@ -168,7 +168,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     {
         $this->addTestingProductToNewCart(1);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
-        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_FIRST, $this->domain->getId(), Store::class);
+        $store = $this->getReferenceForDomain(StoreDataFixture::STORE_SECOND, $this->domain->getId(), Store::class);
         $this->addTransportToExistingCart($transport, $store->getUuid());
         $this->storeFacade->delete($store->getId());
 

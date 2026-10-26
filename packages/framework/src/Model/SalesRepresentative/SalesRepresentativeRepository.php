@@ -37,6 +37,15 @@ class SalesRepresentativeRepository
     }
 
     /**
+     * @param int[] $salesRepresentativeIds
+     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative[]
+     */
+    public function getByIds(array $salesRepresentativeIds): array
+    {
+        return $this->getSalesRepresentativeRepository()->findBy(['id' => $salesRepresentativeIds]);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative[]
      */
     public function getAll(): array

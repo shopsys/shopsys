@@ -378,6 +378,7 @@ abstract class AbstractCrudController extends AdminBaseController
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Handler\DeleteHandlerInterface $handler */
         $handler = $this->definition->getHandlerForAction(ActionType::DELETE);
         $entity = $handler->getById($id);
+        $objectName = $entity->toHumanReadable();
 
         try {
             $this->executeExtensions(fn (CrudDeleteHookExtensionInterface $extension) => $extension->beforeDelete($entity), CrudDeleteHookExtensionInterface::class);
@@ -388,7 +389,7 @@ abstract class AbstractCrudController extends AdminBaseController
                 $this->addSuccessFlashTwig(
                     t('<strong>{{ objectName }}</strong> was deleted successfully.'),
                     [
-                        'objectName' => $entity->toHumanReadable(),
+                        'objectName' => $objectName,
                     ],
                 );
             }
@@ -400,7 +401,7 @@ abstract class AbstractCrudController extends AdminBaseController
                 $this->addErrorFlashTwig(
                     t('An error occurred while deleting <strong>{{ objectName }}</strong>.'),
                     [
-                        'objectName' => $entity->toHumanReadable(),
+                        'objectName' => $objectName,
                     ],
                 );
             }

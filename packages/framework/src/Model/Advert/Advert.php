@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImageFolder;
+use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -23,7 +24,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
 #[EntityImage]
 #[EntityImage('web')]
 #[EntityImage('mobile')]
-class Advert implements DomainSeparatedEntityInterface
+class Advert implements DomainSeparatedEntityInterface, Presentable
 {
     public const TYPE_IMAGE = 'image';
     public const TYPE_CODE = 'code';
@@ -179,7 +180,7 @@ class Advert implements DomainSeparatedEntityInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getName()
     {
@@ -262,5 +263,11 @@ class Advert implements DomainSeparatedEntityInterface
         }
 
         return $categoryIds;
+    }
+
+    #[Override]
+    public function toHumanReadable(): string
+    {
+        return $this->getName();
     }
 }

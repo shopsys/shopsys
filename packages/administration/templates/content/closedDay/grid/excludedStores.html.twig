@@ -1,0 +1,7 @@
+<div class="badges-list">
+    {% for store in value %}
+        <span class="badge">
+            <a href="{{ url('admin_crud_store_edit', { id: store.id }) }}">{{ store.name }}</a>
+        </span>
+    {% endfor %}
+</div>

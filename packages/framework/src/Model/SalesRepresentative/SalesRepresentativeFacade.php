@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class SalesRepresentativeFacade
@@ -19,11 +18,6 @@ class SalesRepresentativeFacade
         protected readonly SalesRepresentativeFactory $salesRepresentativeFactory,
         protected readonly ImageFacade $imageFacade,
     ) {
-    }
-
-    public function getAllQueryBuilder(): QueryBuilder
-    {
-        return $this->salesRepresentativeRepository->getAllQueryBuilder();
     }
 
     public function create(SalesRepresentativeData $salesRepresentativeData): SalesRepresentative
@@ -41,6 +35,15 @@ class SalesRepresentativeFacade
     public function getById(int $id): SalesRepresentative
     {
         return $this->salesRepresentativeRepository->getById($id);
+    }
+
+    /**
+     * @param int[] $salesRepresentativeIds
+     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative[]
+     */
+    public function getByIds(array $salesRepresentativeIds): array
+    {
+        return $this->salesRepresentativeRepository->getByIds($salesRepresentativeIds);
     }
 
     public function edit(
