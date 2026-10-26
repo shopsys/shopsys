@@ -33,7 +33,6 @@ CategoryDecorator:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=query("categoryBreadcrumbQuery", value)'
             images:
                 type: "[Image!]!"
                 description: "Category images"
