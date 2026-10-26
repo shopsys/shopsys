@@ -77,6 +77,7 @@ class CategoryDataFactory
         $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->parametersCollapsed = $parameters;
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
+        $categoryData->visibleFilterParametersCount = $category->getVisibleFilterParametersCount();
 
         $categoryData->pluginData = $this->pluginCrudExtensionFacade->getAllData('category', $category->getId());
         $categoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($category);

@@ -1,0 +1,16 @@
+query SingleNumericValueCount($uuid: Uuid!, $filter: ProductFilter) {
+    category(uuid: $uuid) {
+        products(filter: $filter) {
+            productFilterOptions {
+                parameters {
+                    uuid
+                    ... on ParameterSliderFilterOption {
+                        minimalValue
+                        maximalValue
+                        singleValueCount
+                    }
+                }
+            }
+        }
+    }
+}

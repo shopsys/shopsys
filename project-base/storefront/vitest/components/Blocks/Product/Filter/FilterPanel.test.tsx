@@ -4,6 +4,7 @@ import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
+import { getEmptyDefaultProductFiltersMap } from 'utils/seoCategories/getEmptyDefaultProductFiltersMap';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('next-translate/useTranslation', () => ({
@@ -13,6 +14,12 @@ vi.mock('next-translate/useTranslation', () => ({
             key === 'products count' ? (params?.count === 1 ? 'product' : 'products') : key,
     }),
 }));
+
+vi.mock('next/router', () => ({
+    useRouter: () => ({ events: { on: vi.fn(), off: vi.fn() } }),
+}));
+
+vi.mock('utils/ui/useMediaMin', () => ({ useMediaMin: () => false }));
 
 vi.mock('framer-motion', () => ({
     AnimatePresence: ({ children }: any) => children,
@@ -34,6 +41,7 @@ vi.mock('store/useSessionStore', () => ({
     useSessionStore: (selector: any) => {
         const mockState = {
             setIsFilterPanelOpen: mockSetIsFilterPanelOpen,
+            defaultProductFiltersMap: getEmptyDefaultProductFiltersMap(),
         };
         return selector(mockState);
     },
@@ -47,19 +55,19 @@ vi.mock('utils/queryParams/useUpdateFilterQuery', () => ({
     useUpdateFilterQuery: vi.fn(),
 }));
 
-vi.mock('utils/mappers/price', () => ({
+vi.mock('utils/mappers/price', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('utils/mappers/price')>()),
     isPriceVisible: vi.fn((price) => price !== undefined && price !== null && price !== ''),
 }));
 
 vi.mock('components/Blocks/Product/Filter/FilterGroupInStock', () => ({
-    FilterGroupInStock: ({ inStockCount }: { inStockCount: number }) =>
-        inStockCount > 0 ? (
-            <div data-testid="filter-group-in-stock">
-                <button tabIndex={0} title="In Stock (25)" type="button">
-                    In Stock ({inStockCount})
-                </button>
-            </div>
-        ) : null,
+    FilterGroupInStock: ({ inStockCount }: { inStockCount: number }) => (
+        <div data-testid="filter-group-in-stock">
+            <button tabIndex={0} title="In Stock (25)" type="button">
+                In Stock ({inStockCount})
+            </button>
+        </div>
+    ),
 }));
 
 vi.mock('components/Blocks/Product/Filter/FilterGroupPrice', () => ({
@@ -119,6 +127,7 @@ const mockResetAllFilterQueries = vi.fn();
 describe('FilterPanel Component', () => {
     const mockFilterOptions = {
         __typename: 'ProductFilterOptions' as const,
+        visibleFilterParametersCount: 5,
         inStock: 25,
         minimalPrice: '10',
         maximalPrice: '1000',
@@ -230,9 +239,9 @@ describe('FilterPanel Component', () => {
         vi.mocked(useCurrentFilterQuery).mockReturnValue({
             minimalPrice: 100,
             maximalPrice: 800,
-            flags: ['Sale'],
-            brands: ['Apple'],
-            parameters: [{ parameter: 'color-uuid', values: ['red'] }],
+            flags: ['sale-uuid'],
+            brands: ['apple-uuid'],
+            parameters: [{ parameter: 'color-uuid', values: ['red-uuid'] }],
         } as any);
 
         vi.mocked(useUpdateFilterQuery).mockReturnValue({
@@ -287,6 +296,7 @@ describe('FilterPanel Component', () => {
                 ...defaultProps,
                 productFilterOptions: {
                     __typename: 'ProductFilterOptions' as const,
+                    visibleFilterParametersCount: 5,
                     inStock: 0,
                     minimalPrice: '',
                     maximalPrice: '',
@@ -299,7 +309,7 @@ describe('FilterPanel Component', () => {
             render(<FilterPanel {...propsWithoutData} />);
 
             expect(screen.getByText('Product filter')).toBeInTheDocument();
-            expect(screen.queryByTestId('filter-group-in-stock')).not.toBeInTheDocument();
+            expect(screen.getByTestId('filter-group-in-stock')).toBeInTheDocument();
             expect(screen.queryByTestId('filter-group-price')).not.toBeInTheDocument();
             expect(screen.queryByTestId('filter-group-generic-flags')).not.toBeInTheDocument();
             expect(screen.queryByTestId('filter-group-generic-brands')).not.toBeInTheDocument();
@@ -512,11 +522,11 @@ describe('FilterPanel Component', () => {
             const customFilter = {
                 minimalPrice: 50,
                 maximalPrice: 500,
-                flags: ['Sale', 'New'],
-                brands: ['Apple', 'Samsung'],
+                flags: ['sale-uuid', 'new-uuid'],
+                brands: ['apple-uuid', 'samsung-uuid'],
                 parameters: [
-                    { parameter: 'color-uuid', values: ['red', 'blue'] },
-                    { parameter: 'size-uuid', values: ['small'] },
+                    { parameter: 'color-uuid', values: ['red-uuid', 'blue-uuid'] },
+                    { parameter: 'size-uuid', values: ['small-uuid'] },
                 ],
             };
 
@@ -555,7 +565,7 @@ describe('FilterPanel Component', () => {
             const partialFilter = {
                 minimalPrice: 100,
                 maximalPrice: undefined,
-                flags: ['Sale'],
+                flags: ['sale-uuid'],
                 brands: [],
                 parameters: [],
             };

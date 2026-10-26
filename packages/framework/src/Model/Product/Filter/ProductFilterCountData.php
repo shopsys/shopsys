@@ -26,6 +26,11 @@ class ProductFilterCountData
      */
     public $countByParameterIdAndValueId;
 
+    /**
+     * @var int[]|null
+     */
+    public $countByParameterId;
+
     public function __construct()
     {
         $this->countByBrandId = [];

@@ -13,6 +13,8 @@ type FilterGroupPriceProps = {
     initialMinPrice: string;
     initialMaxPrice: string;
     isActive: boolean;
+    isStandalone?: boolean;
+    idPrefix?: string;
 };
 
 export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
@@ -21,6 +23,8 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
     initialMinPrice,
     initialMaxPrice,
     isActive,
+    isStandalone = false,
+    idPrefix = '',
 }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(true);
     const currentFilter = useCurrentFilterQuery();
@@ -30,7 +34,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
 
     const minPriceOption = getPriceRounded(initialMinPrice);
     const maxPriceOption = getPriceRounded(initialMaxPrice);
-    const contentId = createAriaParameter('filter-group', title);
+    const contentId = createAriaParameter(`${idPrefix}filter-group`, title);
 
     const setMinimalPrice = (value: number) => {
         if (minimalPrice !== value) {
@@ -45,19 +49,23 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({
     };
 
     return (
-        <FilterGroupWrapper>
-            <FilterGroupTitle
-                ariaLabel={ariaLabel}
-                contentId={contentId}
-                isActive={isActive}
-                isOpen={isGroupOpen}
-                title={title}
-                onClick={() => setIsGroupOpen(!isGroupOpen)}
-            />
+        <FilterGroupWrapper isStandalone={isStandalone}>
+            {!isStandalone && (
+                <FilterGroupTitle
+                    ariaLabel={ariaLabel}
+                    contentId={contentId}
+                    isActive={isActive}
+                    isOpen={isGroupOpen}
+                    title={title}
+                    onClick={() => setIsGroupOpen(!isGroupOpen)}
+                />
+            )}
             <AnimatePresence initial={false}>
-                {isGroupOpen && (
-                    <FilterGroupContent id={contentId}>
+                {(isStandalone || isGroupOpen) && (
+                    <FilterGroupContent id={contentId} isStandalone={isStandalone}>
                         <RangeSlider
+                            isDisabled={minPriceOption === maxPriceOption && !isActive}
+                            idPrefix={idPrefix}
                             max={maxPriceOption}
                             maxValue={maximalPrice || maxPriceOption}
                             min={minPriceOption}

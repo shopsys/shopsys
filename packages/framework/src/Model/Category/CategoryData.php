@@ -66,6 +66,11 @@ class CategoryData
      */
     public $automatedFilters;
 
+    /**
+     * @var int
+     */
+    public $visibleFilterParametersCount = Category::DEFAULT_VISIBLE_FILTER_PARAMETERS_COUNT;
+
     public function __construct()
     {
         $this->name = [];

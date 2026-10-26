@@ -2461,6 +2461,9 @@ msgstr "Notifikační lišta byla úspěšně smazána"
 msgid "Number of delivery days for out of stock products in XML feeds"
 msgstr "Počet dní k doručení neskladových položek pro XML feedy"
 
+msgid "Number of filter parameters displayed in the sidebar"
+msgstr "Počet parametrů filtru zobrazených v bočním panelu"
+
 msgid "Number of generated promo codes"
 msgstr "Počet generovaných kupónů"
 
@@ -3657,6 +3660,9 @@ msgstr "Text"
 
 msgid "Text review"
 msgstr "Textová recenze"
+
+msgid "The first parameters in the category order are shown. Enter 0 to show parameters only in the All filters popup."
+msgstr "Zobrazí se první parametry podle pořadí v kategorii. Zadáním 0 zobrazíte parametry pouze v okně Všechny filtry."
 
 msgid "The gift voucher applies to all goods and services. The gift voucher cannot be redeemed after the stated validity date; after the validity expires, its value is forfeited without any right to compensation. The voucher cannot be exchanged for cash. The goods or services must be of equal or higher value."
 msgstr "Dárkový poukaz platí na veškerý sortiment zboží a služeb. Dárkový poukaz nelze uplatnit po uvedeném datu platnosti, po vypršení platnosti jeho hodnota propadá bez nároku na náhradu. Poukaz nelze směnit za peníze. Zboží či služba musí být ve stejné nebo vyšší hodnotě."

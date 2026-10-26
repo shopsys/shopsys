@@ -8893,6 +8893,15 @@ The pre-selected value (used for "ready category seo mixes")
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.singlevaluecount">singleValueCount</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Number of matching products when the parameter has only one available numeric value
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="parametersliderfilteroption.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
@@ -9898,6 +9907,15 @@ Minimal price of products for filtering
 <td>
 
 Parameter filter options
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productfilteroptions.visiblefilterparameterscount">visibleFilterParametersCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of category parameters shown in the sidebar; all parameters remain available in the filter popup
 
 </td>
 </tr>

@@ -141,7 +141,10 @@ class ProductFilterOptionsFactory
         ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            return $this->createProductFilterOptionsInstance();
+            $productFilterOptions = $this->createProductFilterOptionsInstance();
+            $productFilterOptions->visibleFilterParametersCount = $category->getVisibleFilterParametersCount();
+
+            return $productFilterOptions;
         }
 
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataInCategory(
@@ -155,6 +158,7 @@ class ProductFilterOptionsFactory
             $productFilterData,
             $readyCategorySeoMix,
         );
+        $productFilterOptions->visibleFilterParametersCount = $category->getVisibleFilterParametersCount();
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
@@ -218,6 +222,7 @@ class ProductFilterOptionsFactory
                 $isSliderSelectable,
                 $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice),
             );
+            $this->fillSingleValueCount($parameterFilterOption, $productFilterCountData);
 
             if ($parameterFilterOption->parameter->isSlider() !== false && $parameterFilterOption->minimalValue === 0.0 && $parameterFilterOption->maximalValue === 0.0) {
                 continue;
@@ -356,12 +361,26 @@ class ProductFilterOptionsFactory
                 );
             }
 
-            $productFilterOptions->parameters[] = $this->createParameterFilterOption(
+            $parameterFilterOption = $this->createParameterFilterOption(
                 $parameter,
                 $parameterValueFilterOptions,
                 false,
                 $isSliderSelectable,
             );
+            $this->fillSingleValueCount($parameterFilterOption, $productFilterCountData);
+            $productFilterOptions->parameters[] = $parameterFilterOption;
+        }
+    }
+
+    protected function fillSingleValueCount(
+        ParameterFilterOption $parameterFilterOption,
+        ProductFilterCountData $productFilterCountData,
+    ): void {
+        if ($parameterFilterOption->parameter->isSlider()
+            && $parameterFilterOption->minimalValue === $parameterFilterOption->maximalValue
+            && $productFilterCountData->countByParameterId !== null
+        ) {
+            $parameterFilterOption->singleValueCount = $productFilterCountData->countByParameterId[$parameterFilterOption->parameter->getId()] ?? 0;
         }
     }
 

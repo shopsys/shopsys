@@ -5,15 +5,16 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.generated';
-export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<
+export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptions', visibleFilterParametersCount: number, minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<
     | { __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> }
     | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean, colorIcon: { url: string } | null }> }
-    | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, isSelectable: boolean, unit: { __typename: 'Unit', name: string } | null }
+    | { __typename: 'ParameterSliderFilterOption', singleValueCount: number | null, name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, isSelectable: boolean, unit: { __typename: 'Unit', name: string } | null }
   > | null };
 
 export const ProductFilterOptionsFragment = gql`
     fragment ProductFilterOptionsFragment on ProductFilterOptions {
   __typename
+  visibleFilterParametersCount
   minimalPrice
   maximalPrice
   brands {
@@ -66,6 +67,7 @@ export const ProductFilterOptionsFragment = gql`
       isCollapsed
     }
     ... on ParameterSliderFilterOption {
+      singleValueCount
       name
       uuid
       __typename

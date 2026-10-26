@@ -191,35 +191,44 @@ final class CategoryFormType extends AbstractType
         FormBuilderInterface $builder,
         ?Category $category,
     ): void {
-        if ($category === null) {
-            return;
-        }
         $parametersFilterBuilder = $builder->create('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
+        $parametersFilterBuilder->add('visibleFilterParametersCount', IntegerType::class, [
+            'label' => 'Number of filter parameters displayed in the sidebar',
+            'help' => t('The first parameters in the category order are shown. Enter 0 to show parameters only in the All filters popup.'),
+            'required' => true,
+            'attr' => ['min' => 0, 'max' => 2147483647],
+            'constraints' => [
+                new Constraints\NotBlank(),
+                new Constraints\Range(min: 0, max: 2147483647),
+            ],
+        ]);
 
-        $parameterNamesById = [];
+        if ($category !== null) {
+            $parameterNamesById = [];
 
-        $parametersUsedByProductsInCategory = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+            $parametersUsedByProductsInCategory = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
 
-        foreach ($parametersUsedByProductsInCategory as $parameter) {
-            $parameterNamesById[$parameter->getId()] = $parameter->getName();
+            foreach ($parametersUsedByProductsInCategory as $parameter) {
+                $parameterNamesById[$parameter->getId()] = $parameter->getName();
+            }
+
+            $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
+                'entry_type' => IntegerType::class,
+                'labels_by_value' => $parameterNamesById,
+                'label' => 'Parameters order in category',
+                'required' => false,
+            ]);
+
+            $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
+                'required' => false,
+                'label' => 'Filter parameters closed by default',
+                'choices' => $parametersUsedByProductsInCategory,
+                'expanded' => true,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'multiple' => true,
+            ]);
         }
-
-        $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
-            'entry_type' => IntegerType::class,
-            'labels_by_value' => $parameterNamesById,
-            'label' => 'Parameters order in category',
-            'required' => false,
-        ]);
-
-        $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
-            'required' => false,
-            'label' => 'Filter parameters closed by default',
-            'choices' => $parametersUsedByProductsInCategory,
-            'expanded' => true,
-            'choice_label' => 'name',
-            'choice_value' => 'id',
-            'multiple' => true,
-        ]);
 
         $builder->add($parametersFilterBuilder);
     }

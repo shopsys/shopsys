@@ -119,14 +119,14 @@ describe('FilterGroupPrice Component', () => {
         test('shows active state when isActive prop is true', () => {
             render(<FilterGroupPrice {...defaultProps} isActive />);
 
-            const activeIndicator = document.querySelector('.bg-background-success');
+            const activeIndicator = document.querySelector('.size-2.bg-link-default');
             expect(activeIndicator).toBeInTheDocument();
         });
 
         test('hides active state when isActive prop is false', () => {
             render(<FilterGroupPrice {...defaultProps} isActive={false} />);
 
-            const activeIndicator = document.querySelector('.bg-background-success');
+            const activeIndicator = document.querySelector('.size-2.bg-link-default');
             expect(activeIndicator).not.toBeInTheDocument();
         });
     });

@@ -25,6 +25,8 @@ type FilterGroupParametersProps = {
     parameter: ParametersType;
     defaultNumberOfShownParameters: number;
     isActive: boolean;
+    isStandalone?: boolean;
+    idPrefix?: string;
 };
 
 export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
@@ -33,6 +35,8 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     defaultNumberOfShownParameters,
     parameterIndex,
     isActive,
+    isStandalone = false,
+    idPrefix = '',
 }) => {
     const { t } = useTranslation();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
@@ -58,7 +62,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
     const shownOptions = isCheckboxType ? parameter.values.slice(0, defaultNumberOfShownParameters) : [];
     const titleWithUnit = title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '');
-    const contentId = createAriaParameter('filter-group', titleWithUnit);
+    const contentId = createAriaParameter(`${idPrefix}filter-group`, titleWithUnit);
 
     const renderCheckboxOption = (parameterValueOption: (typeof shownOptions)[number], index: number) => {
         const isChecked = getIsSelectedParameterValue(
@@ -75,7 +79,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                 <Checkbox
                     count={parameterValueOption.count}
                     disabled={isDisabled}
-                    id={id}
+                    id={`${idPrefix}${id}`}
                     label={parameterValueOption.text}
                     name={id}
                     value={isChecked}
@@ -86,19 +90,24 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     };
 
     return (
-        <FilterGroupWrapper>
-            <FilterGroupTitle
-                ariaLabel={t('Filter by parameter {{ parameterName }}', { ns: 'accessibility', parameterName: title })}
-                contentId={contentId}
-                isActive={isActive}
-                isOpen={!isGroupCollapsed}
-                title={titleWithUnit}
-                onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
-            />
+        <FilterGroupWrapper isStandalone={isStandalone}>
+            {!isStandalone && (
+                <FilterGroupTitle
+                    ariaLabel={t('Filter by parameter {{ parameterName }}', {
+                        ns: 'accessibility',
+                        parameterName: title,
+                    })}
+                    contentId={contentId}
+                    isActive={isActive}
+                    isOpen={!isGroupCollapsed}
+                    title={titleWithUnit}
+                    onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
+                />
+            )}
 
             <AnimatePresence initial={false}>
-                {!isGroupCollapsed && (
-                    <FilterGroupContent id={contentId}>
+                {(isStandalone || !isGroupCollapsed) && (
+                    <FilterGroupContent id={contentId} isStandalone={isStandalone}>
                         {isCheckboxType && (
                             <>
                                 {shownOptions.map(renderCheckboxOption)}
@@ -138,7 +147,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                             bgColor={parameterValue.rgbHex ?? undefined}
                                             count={parameterValue.count}
                                             disabled={parameterValue.count === 0 && !isChecked}
-                                            id={id}
+                                            id={`${idPrefix}${id}`}
                                             imageUrl={parameterValue.colorIcon?.url}
                                             label={parameterValue.text}
                                             name={id}
@@ -151,9 +160,28 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 })}
                             </div>
                         )}
-                        {parameter.__typename === 'ParameterSliderFilterOption' && (
+                        {parameter.__typename === 'ParameterSliderFilterOption' &&
+                        parameter.minimalValue === parameter.maximalValue ? (
+                            <Checkbox
+                                count={parameter.singleValueCount ?? undefined}
+                                disabled={!parameter.isSelectable && !isActive}
+                                id={`${idPrefix}parameters.${parameterIndex}.singleValue.checked`}
+                                label={String(parameter.minimalValue)}
+                                name={`parameters.${parameterIndex}.singleValue.checked`}
+                                value={isActive}
+                                onChange={() =>
+                                    updateFilterParametersQuery(
+                                        parameter.uuid,
+                                        undefined,
+                                        isActive ? undefined : parameter.minimalValue,
+                                        isActive ? undefined : parameter.maximalValue,
+                                    )
+                                }
+                            />
+                        ) : parameter.__typename === 'ParameterSliderFilterOption' ? (
                             <RangeSlider
-                                isDisabled={!parameter.isSelectable}
+                                idPrefix={idPrefix}
+                                isDisabled={!parameter.isSelectable && !isActive}
                                 max={parameter.maximalValue}
                                 maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
                                 min={parameter.minimalValue}
@@ -176,7 +204,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     )
                                 }
                             />
-                        )}
+                        ) : null}
                     </FilterGroupContent>
                 )}
             </AnimatePresence>

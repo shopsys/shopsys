@@ -2643,6 +2643,8 @@ export type TypeParameterSliderFilterOption = TypeParameterFilterOptionInterface
   name: Scalars['String']['output'];
   /** The pre-selected value (used for "ready category seo mixes") */
   selectedValue: Maybe<Scalars['Float']['output']>;
+  /** Number of matching products when the parameter has only one available numeric value */
+  singleValueCount: Maybe<Scalars['Int']['output']>;
   /** The parameter unit */
   unit: Maybe<TypeUnit>;
   /** The parameter UUID */
@@ -3082,6 +3084,8 @@ export type TypeProductFilterOptions = {
   minimalPrice: Scalars['Money']['output'];
   /** Parameter filter options */
   parameters: Maybe<Array<TypeParameterFilterOptionInterface>>;
+  /** Number of category parameters shown in the sidebar; all parameters remain available in the filter popup */
+  visibleFilterParametersCount: Scalars['Int']['output'];
 };
 
 export type TypeProductList = {

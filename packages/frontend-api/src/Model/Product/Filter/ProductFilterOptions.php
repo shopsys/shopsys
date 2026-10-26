@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class ProductFilterOptions
 {
@@ -28,6 +29,8 @@ class ProductFilterOptions
      * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption[]
      */
     public array $parameters;
+
+    public int $visibleFilterParametersCount = Category::DEFAULT_VISIBLE_FILTER_PARAMETERS_COUNT;
 
     public function __construct()
     {

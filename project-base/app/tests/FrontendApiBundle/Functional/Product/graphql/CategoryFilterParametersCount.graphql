@@ -1,0 +1,9 @@
+query CategoryFilterParametersCount($uuid: Uuid!) {
+    category(uuid: $uuid) {
+        products {
+            productFilterOptions {
+                visibleFilterParametersCount
+            }
+        }
+    }
+}

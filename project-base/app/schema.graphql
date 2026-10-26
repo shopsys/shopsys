@@ -2162,6 +2162,8 @@ type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
   name: String!
   "The pre-selected value (used for \"ready category seo mixes\")"
   selectedValue: Float
+  "Number of matching products when the parameter has only one available numeric value"
+  singleValueCount: Int
   "The parameter unit"
   unit: Unit
   "The parameter UUID"
@@ -2540,6 +2542,8 @@ type ProductFilterOptions {
   minimalPrice: Money!
   "Parameter filter options"
   parameters: [ParameterFilterOptionInterface!]
+  "Number of category parameters shown in the sidebar; all parameters remain available in the filter popup"
+  visibleFilterParametersCount: Int!
 }
 
 type ProductList {
