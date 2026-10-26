@@ -47,6 +47,11 @@ services:
             $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
             $mcpDatabasePassword: '%env(MCP_DATABASE_PASSWORD)%'
 
+    Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager:
+        arguments:
+            $defaultConnection: '@doctrine.dbal.default_connection'
+            $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
+
     Shopsys\McpBundle\Component\Logger\McpRequestLogProcessor:
         tags:
             - { name: monolog.processor, channel: mcp }
