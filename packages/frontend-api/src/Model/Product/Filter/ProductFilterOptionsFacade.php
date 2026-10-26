@@ -78,6 +78,13 @@ class ProductFilterOptionsFacade
         ProductFilterData $productFilterData,
         ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): Promise {
+        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
+            $productFilterOptions = $this->productFilterOptionsFactory->createEmptyProductFilterOptions();
+            $productFilterOptions->visibleFilterParametersCount = $category->getVisibleFilterParametersCount();
+
+            return $this->promiseAdapter->createFulfilled($productFilterOptions);
+        }
+
         return $this->getProductFilterOptionsPromise(
             fn (): Promise => $this->productFilterFacade->getProductFilterConfigPromiseForCategory($category),
             fn (): Promise => $this->getProductFilterCountDataPromise(

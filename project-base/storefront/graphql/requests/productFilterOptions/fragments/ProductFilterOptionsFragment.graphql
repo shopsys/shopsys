@@ -1,5 +1,6 @@
 fragment ProductFilterOptionsFragment on ProductFilterOptions {
     __typename
+    visibleFilterParametersCount
     minimalPrice
     maximalPrice
     brands {
@@ -52,6 +53,7 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
             isCollapsed
         }
         ... on ParameterSliderFilterOption {
+            singleValueCount
             name
             uuid
             __typename

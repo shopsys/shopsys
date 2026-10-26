@@ -227,7 +227,10 @@ class CategoryDataFixture extends AbstractReferenceFixture
             );
         }
         $categoryData->parent = $rootCategory;
+        $categoryData->visibleFilterParametersCount = 0;
         $this->createCategory($categoryData, self::CATEGORY_BOOKS);
+
+        $categoryData->visibleFilterParametersCount = Category::DEFAULT_VISIBLE_FILTER_PARAMETERS_COUNT;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();

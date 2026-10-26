@@ -66,6 +66,11 @@ class CategoryData
      */
     public $automatedFilters;
 
+    /**
+     * @var int
+     */
+    public $visibleFilterParametersCount;
+
     public function __construct()
     {
         $this->name = [];
@@ -77,5 +82,6 @@ class CategoryData
         $this->parametersPosition = [];
         $this->parametersCollapsed = [];
         $this->automatedFilters = [];
+        $this->visibleFilterParametersCount = Category::DEFAULT_VISIBLE_FILTER_PARAMETERS_COUNT;
     }
 }

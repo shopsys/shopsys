@@ -204,6 +204,19 @@ class ProductFilterCountDataTest extends ParameterTransactionFunctionalTestCase
             ],
         ];
 
+        $countData->countByParameterId = [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => 10,
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => 10,
+        ];
+
         return [
             $category,
             $filterData,
@@ -265,6 +278,19 @@ class ProductFilterCountDataTest extends ParameterTransactionFunctionalTestCase
                 $this->getParameterValueIdForFirstDomain('3') => 1,
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
+        ];
+
+        $countData->countByParameterId = [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => 3,
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => 3,
         ];
 
         return [
@@ -344,6 +370,19 @@ class ProductFilterCountDataTest extends ParameterTransactionFunctionalTestCase
             ],
         ];
 
+        $countData->countByParameterId = [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => 8,
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => 8,
+        ];
+
         return [
             $category,
             $filterData,
@@ -417,6 +456,19 @@ class ProductFilterCountDataTest extends ParameterTransactionFunctionalTestCase
                 $this->getParameterValueIdForFirstDomain('1') => 1,
                 $this->getParameterValueIdForFirstDomain('3') => 1,
             ],
+        ];
+
+        $countData->countByParameterId = [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => 2,
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => 2,
         ];
 
         return [
@@ -499,6 +551,19 @@ class ProductFilterCountDataTest extends ParameterTransactionFunctionalTestCase
                 $this->getParameterValueIdForFirstDomain('2') => 4,
                 $this->getParameterValueIdForFirstDomain('3') => 1,
             ],
+        ];
+
+        $countData->countByParameterId = [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => 7,
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => 7,
         ];
 
         return [

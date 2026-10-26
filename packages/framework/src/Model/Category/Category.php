@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 use SortDirection;
+use Webmozart\Assert\Assert;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
@@ -32,6 +33,8 @@ use SortDirection;
 #[EntityImage]
 class Category extends AbstractTranslatableEntity implements TreeSelectionEntityInterface
 {
+    public const int DEFAULT_VISIBLE_FILTER_PARAMETERS_COUNT = 5;
+
     /**
      * @var int
      */
@@ -113,6 +116,17 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
     #[ORM\Column(type: 'json')]
     protected $automatedFilters;
 
+    /**
+     * @var int
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'integer')]
+    protected $visibleFilterParametersCount {
+        set {
+            $this->visibleFilterParametersCount = Assert::natural($value);
+        }
+    }
+
     public function __construct(CategoryData $categoryData)
     {
         $this->translations = new ArrayCollection();
@@ -130,11 +144,20 @@ class Category extends AbstractTranslatableEntity implements TreeSelectionEntity
         $this->setData($categoryData);
     }
 
+    /**
+     * @return int
+     */
+    public function getVisibleFilterParametersCount()
+    {
+        return $this->visibleFilterParametersCount;
+    }
+
     protected function setData(CategoryData $categoryData): void
     {
         $this->setParent($categoryData->parent);
         $this->setTranslations($categoryData);
         $this->automatedFilters = $categoryData->automatedFilters;
+        $this->visibleFilterParametersCount = $categoryData->visibleFilterParametersCount;
     }
 
     /**

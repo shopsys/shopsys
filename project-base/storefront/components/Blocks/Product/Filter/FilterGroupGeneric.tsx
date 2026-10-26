@@ -27,6 +27,8 @@ type FilterGroupGenericProps = {
     options: MappedFilterOption[];
     defaultNumberOfShownItems: number;
     isActive: boolean;
+    isStandalone?: boolean;
+    idPrefix?: string;
     ariaLabel: string;
 };
 
@@ -36,6 +38,8 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     defaultNumberOfShownItems,
     filterField,
     isActive,
+    isStandalone = false,
+    idPrefix = '',
     ariaLabel,
 }) => {
     const { t } = useTranslation();
@@ -45,7 +49,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);
 
     const selectedItems = currentFilter?.[filterField];
-    const contentId = createAriaParameter('filter-group', title);
+    const contentId = createAriaParameter(`${idPrefix}filter-group`, title);
 
     const { isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,
@@ -87,7 +91,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                 <Checkbox
                     count={option.count}
                     disabled={isDisabled}
-                    id={`${filterField}.${index}.checked`}
+                    id={`${idPrefix}${filterField}.${index}.checked`}
                     label={optionLabel}
                     labelWrapperClassName="min-w-0"
                     name={`${filterField}.${index}.checked`}
@@ -99,18 +103,20 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     };
 
     return (
-        <FilterGroupWrapper>
-            <FilterGroupTitle
-                ariaLabel={ariaLabel}
-                contentId={contentId}
-                isActive={isActive}
-                isOpen={isGroupOpen}
-                title={title}
-                onClick={() => setIsGroupOpen(!isGroupOpen)}
-            />
+        <FilterGroupWrapper isStandalone={isStandalone}>
+            {!isStandalone && (
+                <FilterGroupTitle
+                    ariaLabel={ariaLabel}
+                    contentId={contentId}
+                    isActive={isActive}
+                    isOpen={isGroupOpen}
+                    title={title}
+                    onClick={() => setIsGroupOpen(!isGroupOpen)}
+                />
+            )}
             <AnimatePresence initial={false}>
-                {isGroupOpen && (
-                    <FilterGroupContent id={contentId}>
+                {(isStandalone || isGroupOpen) && (
+                    <FilterGroupContent id={contentId} isStandalone={isStandalone}>
                         {shownOptions.map(renderOption)}
 
                         <AnimatePresence initial={false}>

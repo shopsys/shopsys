@@ -18,6 +18,8 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
+use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
@@ -38,6 +40,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
      * @inject
      */
     private TransformStringHelper $transformStringHelper;
+
+    /**
+     * @inject
+     */
+    private ModuleFacade $moduleFacade;
 
     #[Override]
     public function setUp(): void
@@ -328,10 +335,18 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $this->assertSame(8, $data['products']['productFilterOptions']['inStock']);
         $this->assertSame($minimalPrice, $data['products']['productFilterOptions']['minimalPrice']);
         $this->assertSame($maximalPrice, $data['products']['productFilterOptions']['maximalPrice']);
+        $this->assertSame(5, $data['products']['productFilterOptions']['visibleFilterParametersCount']);
 
         $this->assertArrayElements($expectedFlagFilterOptions, $data['products']['productFilterOptions']['flags']);
         $this->assertArrayElements($expectedBrandFilterOptions, $data['products']['productFilterOptions']['brands']);
         $this->assertEquals($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
+    }
+
+    public function testVisibleFilterParametersCountIsReturnedWhenFilterCountsAreDisabled(): void
+    {
+        $this->moduleFacade->setEnabled(ModuleList::PRODUCT_FILTER_COUNTS, false);
+
+        $this->assertSame(0, $this->getVisibleFilterParametersCount($this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class)));
     }
 
     public function testGetElectronicsBrandFilterOptionsWithAppliedFilter(): void
@@ -826,6 +841,46 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         yield [false, 'filter' => ['brands' => ['738ead90-3108-433d-ad6e-1ea23f68a13d']]];
     }
 
+    #[DataProvider('singleValueCountDataProvider')]
+    public function testSingleValueCountRespectsOtherFilters(
+        ?string $brandReference,
+        bool $selected,
+        int $expectedCount,
+    ): void {
+        $parameter = $this->getReference(ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS, Parameter::class);
+        $filter = [];
+
+        if ($brandReference !== null) {
+            $filter['brands'] = [$this->getReference($brandReference, Brand::class)->getUuid()];
+        }
+
+        if ($selected) {
+            $filter['parameters'] = [['parameter' => $parameter->getUuid(), 'minimalValue' => 5, 'maximalValue' => 5]];
+        }
+
+        $translatedName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
+            'urlSlug' => $this->transformStringHelper->createFriendlyUrlSlug($translatedName),
+            'filter' => $filter,
+        ]);
+        $parameters = array_column($this->getResponseDataForGraphQlType($response, 'category')['products']['productFilterOptions']['parameters'], null, 'uuid');
+
+        $this->assertSame(5.0, $parameters[$parameter->getUuid()]['minimalValue']);
+        $this->assertSame(5.0, $parameters[$parameter->getUuid()]['maximalValue']);
+        $this->assertSame($expectedCount, $parameters[$parameter->getUuid()]['singleValueCount']);
+    }
+
+    public static function singleValueCountDataProvider(): iterable
+    {
+        yield 'unfiltered' => [null, false, 1];
+
+        yield 'matching brand' => [BrandDataFixture::BRAND_A4TECH, false, 1];
+
+        yield 'excluding brand' => [BrandDataFixture::BRAND_LG, false, 0];
+
+        yield 'selected value' => [null, true, 1];
+    }
+
     public function testFilterOptionsOfMultipleBrandsInOneResponseMatchSingleBrandResponses(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/BrandsProductsFilterOptions.graphql');
@@ -888,6 +943,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'booksUuid' => $books->getUuid(),
         ]);
 
+        $this->assertSame(5, $this->getResponseDataForGraphQlType($response, 'electronics')['products']['productFilterOptions']['visibleFilterParametersCount']);
+        $this->assertSame(0, $this->getResponseDataForGraphQlType($response, 'books')['products']['productFilterOptions']['visibleFilterParametersCount']);
+
         foreach (['electronics' => $electronics, 'books' => $books] as $alias => $category) {
             $singleCategoryResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
                 'categoryUuid' => $category->getUuid(),
@@ -901,6 +959,15 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'Filter options of category ' . $alias . ' loaded in a batch differ from the single category response',
             );
         }
+    }
+
+    private function getVisibleFilterParametersCount(Category $category): int
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryProductsFilterOptions.graphql', [
+            'categoryUuid' => $category->getUuid(),
+        ]);
+
+        return $this->getResponseDataForGraphQlType($response, 'category')['products']['productFilterOptions']['visibleFilterParametersCount'];
     }
 
     private function getRedColorExpectedFile(): array
