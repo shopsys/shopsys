@@ -2740,6 +2740,9 @@ msgstr "Zde můžete přetáhnout další obsah."
 msgid "You can drag articles here."
 msgstr "Zde můžete přetáhnout články"
 
+msgid "You can't delete yourself."
+msgstr "Nemůžete smazat sami sebe."
+
 msgid "You cannot choose product that is main variant"
 msgstr "Nelze vybrat zboží, které je hlavní variantou"
 
