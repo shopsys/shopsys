@@ -16,6 +16,7 @@ use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Model\SalesRepresentative\SalesRepresentativeCrudHandler;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
+use Shopsys\FrameworkBundle\Component\Html\EscapedMessageInterpolator;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
@@ -26,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneNumberSearchHelper;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use SortDirection;
+use Twig\Markup;
 
 #[CrudController(SalesRepresentative::class)]
 #[ForRole(AdminRoleConstant::ROLE_SALES_REPRESENTATIVE)]
@@ -36,6 +38,7 @@ class SalesRepresentativeController extends AbstractCrudController
     public function __construct(
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly EscapedMessageInterpolator $escapedMessageInterpolator,
     ) {
     }
 
@@ -122,7 +125,7 @@ class SalesRepresentativeController extends AbstractCrudController
             'delete',
             fn (RowAction $rowAction) => $rowAction->addCallback(
                 function (array $row, RowAction $action): void {
-                    $action->setConfirmMessage($this->getDeleteConfirmMessage($row));
+                    $this->setDeleteConfirmMessage($action, $row);
                 },
             ),
         );
@@ -136,20 +139,20 @@ class SalesRepresentativeController extends AbstractCrudController
         ]);
     }
 
-    protected function getDeleteConfirmMessage(array $row): string
+    protected function setDeleteConfirmMessage(RowAction $action, array $row): void
     {
-        $label = htmlspecialchars($row['label']);
         $customersCount = $row['customerUsersSummary']['count'];
-        $customersEnumeration = implode('<br>', array_map(htmlspecialchars(...), $row['customerUsersSummary']['emails']));
 
         if ($customersCount === 0) {
-            return t(
-                'Do you really want to remove sales representative "%label%" permanently? It is not used anywhere.',
-                ['%label%' => $label],
+            $action->setConfirmMessage(
+                t('Do you really want to remove sales representative "%label%" permanently? It is not used anywhere.'),
+                ['%label%' => $row['label']],
             );
+
+            return;
         }
 
-        return t(
+        $message = t(
             '{1}Sales representative "%label%" is assigned to %count% customer and will be removed if you proceed.<br><br>
                         Customer:<br>
                         %customersEnumeration%<br><br>
@@ -164,10 +167,19 @@ class SalesRepresentativeController extends AbstractCrudController
                         +%extraCount% more<br><br>
                         Do you really want to remove sales representative "%label%" permanently?',
             [
-                '%label%' => $label,
                 '%count%' => $customersCount,
                 '%extraCount%' => $customersCount - static::DISPLAYED_CUSTOMERS_WHILE_DELETING_SALES_REPRESENTATIVE_COUNT,
-                '%customersEnumeration%' => $customersEnumeration,
+            ],
+        );
+
+        $action->setConfirmMessage(
+            new Markup($message, 'UTF-8'),
+            [
+                '%label%' => $row['label'],
+                '%customersEnumeration%' => new Markup(
+                    implode('<br>', array_map($this->escapedMessageInterpolator->escape(...), $row['customerUsersSummary']['emails'])),
+                    'UTF-8',
+                ),
             ],
         );
     }

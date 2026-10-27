@@ -21,7 +21,7 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
-     * @param array<string, string|int|string[]|null> $messageParameters
+     * @param array<string, string|int|\Twig\Markup|null> $messageParameters
      */
     public function createDeleteResponse(
         string|Markup $message,
@@ -32,7 +32,7 @@ class ConfirmDeleteResponseFactory
         $renderedTemplate = $this->twigEnvironment->render(
             '@ShopsysAdministration/partial/confirm_delete/direct_delete.html.twig',
             [
-                'message' => $this->createMessageHtml($message, $messageParameters),
+                'message' => $this->escapedMessageInterpolator->createHtml($message, $messageParameters),
                 'route' => $route,
                 'routeParams' => [
                     'id' => $entityId,
@@ -48,7 +48,7 @@ class ConfirmDeleteResponseFactory
 
     /**
      * @param object[] $possibleReplacements
-     * @param array<string, string|int|string[]|null> $messageParameters
+     * @param array<string, string|int|\Twig\Markup|null> $messageParameters
      */
     public function createSetNewAndDeleteResponse(
         string|Markup $message,
@@ -68,7 +68,7 @@ class ConfirmDeleteResponseFactory
         $renderedResponse = $this->twigEnvironment->render(
             '@ShopsysAdministration/partial/confirm_delete/set_new_and_delete.html.twig',
             [
-                'message' => $this->createMessageHtml($message, $messageParameters),
+                'message' => $this->escapedMessageInterpolator->createHtml($message, $messageParameters),
                 'route' => $route,
                 'entityId' => $entityId,
                 'routeCsrfToken' => $this->routeCsrfProtector->getCsrfTokenByRoute($route),
@@ -78,15 +78,5 @@ class ConfirmDeleteResponseFactory
         );
 
         return new Response($renderedResponse);
-    }
-
-    /**
-     * @param array<string, string|int|null> $messageParameters
-     */
-    protected function createMessageHtml(string|Markup $message, array $messageParameters): Markup
-    {
-        $messageHtml = $message instanceof Markup ? (string)$message : $this->escapedMessageInterpolator->escape($message);
-
-        return new Markup($this->escapedMessageInterpolator->interpolate($messageHtml, $messageParameters), 'UTF-8');
     }
 }

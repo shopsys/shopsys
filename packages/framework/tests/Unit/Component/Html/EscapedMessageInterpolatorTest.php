@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Html;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Html\EscapedMessageInterpolator;
+use Twig\Markup;
 
 class EscapedMessageInterpolatorTest extends TestCase
 {
@@ -58,6 +59,42 @@ class EscapedMessageInterpolatorTest extends TestCase
         );
 
         $this->assertSame('Remove "%domainName%" from "example.com"?', $interpolatedMessage);
+    }
+
+    public function testInterpolateKeepsMarkupParameters(): void
+    {
+        $escapedMessageInterpolator = new EscapedMessageInterpolator();
+
+        $interpolatedMessage = $escapedMessageInterpolator->interpolate(
+            'Customers:<br>%customers%',
+            ['%customers%' => new Markup('first@example.com<br>' . self::ESCAPED_XSS_PAYLOAD, 'UTF-8')],
+        );
+
+        $this->assertSame('Customers:<br>first@example.com<br>' . self::ESCAPED_XSS_PAYLOAD, $interpolatedMessage);
+    }
+
+    public function testCreateHtmlEscapesPlainTextMessageAndParameters(): void
+    {
+        $escapedMessageInterpolator = new EscapedMessageInterpolator();
+
+        $html = $escapedMessageInterpolator->createHtml(
+            'Remove <b>"%name%"</b>?',
+            ['%name%' => self::XSS_PAYLOAD],
+        );
+
+        $this->assertSame('Remove &lt;b&gt;&quot;' . self::ESCAPED_XSS_PAYLOAD . '&quot;&lt;/b&gt;?', (string)$html);
+    }
+
+    public function testCreateHtmlKeepsMarkupMessageAndEscapesParameters(): void
+    {
+        $escapedMessageInterpolator = new EscapedMessageInterpolator();
+
+        $html = $escapedMessageInterpolator->createHtml(
+            new Markup('Remove "%name%"?<br>It is not used anywhere.', 'UTF-8'),
+            ['%name%' => self::XSS_PAYLOAD],
+        );
+
+        $this->assertSame('Remove "' . self::ESCAPED_XSS_PAYLOAD . '"?<br>It is not used anywhere.', (string)$html);
     }
 
     public function testEscapeEscapesHtmlSpecialCharacters(): void
