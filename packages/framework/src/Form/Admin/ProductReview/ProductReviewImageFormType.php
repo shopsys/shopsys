@@ -55,7 +55,6 @@ final class ProductReviewImageFormType extends AbstractType
                     'data-product-review-photo-target' => 'label',
                 ],
                 'attr' => [
-                    'class' => 'product-review-image-approval-switch',
                     'data-product-review-photo-target' => 'checkbox',
                     'data-action' => 'change->product-review-photo#render',
                 ],
