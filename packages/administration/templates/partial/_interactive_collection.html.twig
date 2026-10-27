@@ -1,0 +1,53 @@
+{% set prototypeHtml %}
+    {%- if form.vars.prototype is defined -%}
+        {%- with { entry: form.vars.prototype } -%}
+            {{- block('collection_entry_wrapper') -}}
+        {%- endwith -%}
+    {%- endif -%}
+{% endset %}
+
+{# keys of the collection data do not have to be sequential (e.g. after an entry was removed and saved) #}
+{% set nextIndex = max([0]|merge(form.children|keys|filter(key => key matches '/^\\d+$/')|map(key => key + 1))) %}
+
+<div id="{{ form.vars.id }}"
+     data-controller="interactive-collection"
+     data-interactive-collection-prototype-value="{{ prototypeHtml|trim|e }}"
+     data-interactive-collection-index-value="{{ nextIndex }}"
+     {% if form.vars.prototype is defined %}data-interactive-collection-prototype-name-value="{{ form.vars.prototype.vars.name }}"{% endif %}
+>
+    {% block collection_header %}{% endblock %}
+
+    <div data-interactive-collection-target="entries">
+        {% for entry in form %}
+            {% block collection_entry_wrapper %}
+                <div class="row g-2 align-items-center mb-3 pb-3 border-bottom" data-interactive-collection-target="entry">
+                    <div class="col">
+                        {% block collection_entry %}
+                            {{ form_widget(entry) }}
+                            {{ form_errors(entry) }}
+                        {% endblock %}
+                    </div>
+                    {% if form.vars.allow_delete and not form.vars.disabled %}
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-icon btn-ghost-danger" data-action="interactive-collection#remove" title="{{ 'Delete'|trans }}">
+                                {{ ux_icon('delete') }}
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endblock %}
+        {% endfor %}
+        {% do form.setRendered %}
+    </div>
+
+    {% if form.vars.empty_message is not null %}
+        <div class="text-secondary mb-3" data-interactive-collection-target="empty"{{ form|length > 0 ? " hidden" }}>{{ form.vars.empty_message }}</div>
+    {% endif %}
+
+    {% if form.vars.allow_add and not form.vars.disabled %}
+        <button type="button" class="btn" data-action="interactive-collection#add">
+            {{ ux_icon('plus') }}
+            {{ form.vars.add_label }}
+        </button>
+    {% endif %}
+</div>

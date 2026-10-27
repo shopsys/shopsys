@@ -178,9 +178,8 @@ final class PromoCodeFormType extends AbstractType
                 'entry_type' => PromoCodeLimitType::class,
                 'entry_options' => ['discount' => $discountOptions],
                 'required' => false,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'error_bubbling' => false,
+                'add_label' => t('Add another limit'),
+                'empty_message' => t('Add limit'),
                 'constraints' => [
                     new Constraints\Count(
                         min: 1,
@@ -222,9 +221,8 @@ final class PromoCodeFormType extends AbstractType
             'entry_type' => PromoCodeFlagType::class,
             'entry_options' => ['label' => false],
             'required' => false,
-            'allow_add' => true,
-            'error_bubbling' => false,
-            'allow_delete' => true,
+            'add_label' => t('Add another flag'),
+            'empty_message' => t('Add some flag'),
             'constraints' => [
                 new UniqueFlags(),
             ],
