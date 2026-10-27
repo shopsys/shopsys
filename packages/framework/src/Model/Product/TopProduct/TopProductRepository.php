@@ -32,6 +32,22 @@ class TopProductRepository
     }
 
     /**
+     * @param int[] $productIds
+     */
+    public function hasAnyProduct(array $productIds): bool
+    {
+        $topProductCount = $this->em->createQueryBuilder()
+            ->select('COUNT(tp.domainId)')
+            ->from(TopProduct::class, 'tp')
+            ->where('tp.product IN (:productIds)')
+            ->setParameter('productIds', $productIds)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $topProductCount > 0;
+    }
+
+    /**
      * @return array<int, int>
      */
     public function getTopProductPositionsIndexedByProductIdForDomain(int $domainId): array

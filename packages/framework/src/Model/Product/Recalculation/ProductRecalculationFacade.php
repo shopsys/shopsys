@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
@@ -18,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
 
 class ProductRecalculationFacade
 {
@@ -37,6 +39,8 @@ class ProductRecalculationFacade
         protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
         protected readonly GiftFlagSynchronizerFacade $giftFlagSynchronizerFacade,
         protected readonly PromotionFlagFacade $promotionFlagFacade,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly TopProductRepository $topProductRepository,
     ) {
     }
 
@@ -99,8 +103,11 @@ class ProductRecalculationFacade
         }
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
+        $hadAnyPromotedProduct = false;
 
         foreach ($this->domain->getAllIds() as $domainId) {
+            $hadAnyPromotedProduct = $hadAnyPromotedProduct || $this->productElasticsearchProvider->hasPromotedProduct($productIds, $domainId);
+
             $productIdsExistingInElastic = $this->productElasticsearchProvider->getOnlyExistingProductsIds($productIds, $domainId);
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName()),
@@ -124,6 +131,10 @@ class ProductRecalculationFacade
                 $this->indexDefinitionLoader->getIndexDefinition(ExtendedClassNameResolver::resolve(ProductIndex::class)::getName(), $domainId),
                 $productIdsNotExistingInElastic,
             );
+        }
+
+        if ($hadAnyPromotedProduct || $this->topProductRepository->hasAnyProduct($productIds)) {
+            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::PROMOTED_PRODUCTS_QUERY_KEY_PART);
         }
     }
 
