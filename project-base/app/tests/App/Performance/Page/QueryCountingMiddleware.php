@@ -54,4 +54,9 @@ final class QueryCountingMiddleware implements Middleware
     {
         return $this->executedQueries;
     }
+
+    public function reset(): void
+    {
+        $this->executedQueries = [];
+    }
 }

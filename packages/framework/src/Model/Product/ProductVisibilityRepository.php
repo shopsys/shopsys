@@ -11,7 +11,6 @@ use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundException;
 
 class ProductVisibilityRepository
@@ -19,7 +18,6 @@ class ProductVisibilityRepository
     public function __construct(
         protected readonly EntityManagerDecorator $em,
         protected readonly Domain $domain,
-        protected readonly PricingGroupRepository $pricingGroupRepository,
         protected readonly ClockInterface $clock,
     ) {
     }
@@ -29,9 +27,15 @@ class ProductVisibilityRepository
      */
     public function refreshProductsVisibility(?array $productIds = null): void
     {
-        $this->calculateIndependentVisibility($productIds);
-        $this->hideVariantsWithInvisibleMainVariant($productIds);
-        $this->hideMainVariantsWithoutVisibleVariants($productIds);
+        if ($productIds === []) {
+            return;
+        }
+
+        $changedRowsCount = $this->recalculateVisibility($productIds);
+
+        if ($changedRowsCount === 0) {
+            return;
+        }
 
         // refresh entities after native query calls
         $this->em->refreshLoadedEntitiesByClassName(Product::class);
@@ -136,185 +140,162 @@ class ProductVisibilityRepository
     /**
      * @param int[]|null $productIds
      */
-    protected function calculateIndependentVisibility(?array $productIds): void
+    protected function recalculateVisibility(?array $productIds): int
     {
-        $variables = [
-            'now' => $this->clock->now(),
-            'locale' => null,
-            'domainId' => null,
-            'pricingGroupId' => null,
+        $parameters = [
+            ...$this->getIndependentVisibilityParameters(),
             'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-            'inquiryProductType' => ProductTypeEnum::TYPE_INQUIRY,
-        ];
-
-        $variableTypes = [
-            'now' => Types::DATETIME_IMMUTABLE,
-            'locale' => Types::STRING,
-            'domainId' => Types::INTEGER,
-            'pricingGroupId' => Types::INTEGER,
-            'variantTypeMain' => Types::STRING,
-            'inquiryProductType' => Types::STRING,
-        ];
-
-        if ($productIds !== null) {
-            $productIdsCondition = 'p.id IN (:productIds) AND';
-            $variables['productIds'] = $productIds;
-            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
-        } else {
-            $productIdsCondition = '';
-        }
-
-        $query = 'UPDATE product_visibilities AS pv
-            SET visible = CASE
-                    WHEN (
-                        p.hidden = FALSE
-                        AND
-                        (p.selling_from IS NULL OR p.selling_from <= :now)
-                        AND
-                        (p.selling_to IS NULL OR p.selling_to >= :now)
-                        AND
-                        (
-                            p.variant_type = :variantTypeMain
-                            OR
-                            p.product_type = :inquiryProductType
-                            OR
-                            EXISTS (
-                                SELECT 1
-                                FROM product_manual_input_prices as pmip
-                                WHERE pmip.input_price > 0
-                                    AND pmip.product_id = pv.product_id
-                                    AND pmip.pricing_group_id = pv.pricing_group_id
-                            )
-                        )
-                        AND EXISTS (
-                            SELECT 1
-                            FROM product_translations AS pt
-                            WHERE pt.translatable_id = pv.product_id
-                                AND pt.locale = :locale
-                                AND pt.name IS NOT NULL
-                        )
-                        AND EXISTS (
-                            SELECT 1
-                            FROM product_category_domains AS pcd
-                            JOIN category_domains AS cd ON cd.category_id = pcd.category_id
-                                AND cd.domain_id = pcd.domain_id
-                            WHERE pcd.product_id = p.id
-                                AND pcd.domain_id = pv.domain_id
-                                AND cd.visible = TRUE
-                        )
-                        AND 
-                        (pd.domain_hidden = FALSE)
-                    )
-                    THEN TRUE
-                    ELSE FALSE
-                END
-            FROM products AS p
-            JOIN product_domains AS pd ON pd.product_id = p.id
-            WHERE ' . $productIdsCondition . '
-                p.id = pv.product_id
-                AND pv.domain_id = :domainId
-                AND pv.domain_id = pd.domain_id
-                AND pv.pricing_group_id = :pricingGroupId
-            ';
-
-        foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
-            $domain = $this->domain->getDomainConfigById($pricingGroup->getDomainId());
-            $variables['locale'] = $domain->getLocale();
-            $variables['domainId'] = $domain->getId();
-            $variables['pricingGroupId'] = $pricingGroup->getId();
-
-            $this->em->getConnection()->executeStatement(
-                $query,
-                $variables,
-                $variableTypes,
-            );
-        }
-    }
-
-    /**
-     * @param int[]|null $productIds
-     */
-    protected function hideVariantsWithInvisibleMainVariant(?array $productIds): void
-    {
-        $variables = [
             'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
         ];
-        $variableTypes = [
+        $parameterTypes = [
+            ...$this->getIndependentVisibilityParameterTypes(),
+            'variantTypeMain' => Types::STRING,
             'variantTypeVariant' => Types::STRING,
         ];
 
-        if ($productIds !== null) {
-            $productIdsCondition = 'p.id IN (:productIds) AND';
-            $variables['productIds'] = $productIds;
-            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
-        } else {
-            $productIdsCondition = '';
+        $domainConfigs = $this->domain->getAll();
+        $domainLocaleRows = [];
+
+        foreach ($domainConfigs as $domainConfig) {
+            $domainId = $domainConfig->getId();
+            $domainLocaleRows[] = sprintf('(CAST(:domainId%1$d AS INTEGER), CAST(:locale%1$d AS TEXT))', $domainId);
+            $parameters['domainId' . $domainId] = $domainId;
+            $parameterTypes['domainId' . $domainId] = Types::INTEGER;
+            $parameters['locale' . $domainId] = $domainConfig->getLocale();
+            $parameterTypes['locale' . $domainId] = Types::STRING;
         }
 
-        $this->em->getConnection()->executeStatement(
-            'UPDATE product_visibilities AS pv
-            SET visible = FALSE
-            FROM products AS p
-            WHERE ' . $productIdsCondition . ' 
-                p.id = pv.product_id
-                AND p.variant_type = :variantTypeVariant
-                AND pv.visible = TRUE
-                AND EXISTS (
-                    SELECT 1
-                    FROM product_visibilities mpv
-                    WHERE mpv.product_id = p.main_variant_id
-                        AND mpv.domain_id = pv.domain_id
-                        AND mpv.pricing_group_id = pv.pricing_group_id
-                        AND mpv.visible = FALSE
-                )
-            ',
-            $variables,
-            $variableTypes,
+        if ($productIds !== null) {
+            $parameters['productIds'] = $productIds;
+            $parameterTypes['productIds'] = ArrayParameterType::INTEGER;
+        }
+
+        return $this->em->getConnection()->executeStatement(
+            $this->getVisibilityRecalculationSql($domainLocaleRows, $productIds !== null),
+            $parameters,
+            $parameterTypes,
         );
     }
 
     /**
-     * @param int[]|null $productIds
+     * @param string[] $domainLocaleRows
      */
-    protected function hideMainVariantsWithoutVisibleVariants(?array $productIds): void
+    protected function getVisibilityRecalculationSql(array $domainLocaleRows, bool $isRestrictedToProductIds): string
     {
-        $variables = [
-            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-        ];
-        $variableTypes = [
-            'variantTypeMain' => Types::STRING,
-        ];
+        $productIdsCondition = $isRestrictedToProductIds ? 'WHERE pv.product_id IN (:productIds)' : '';
 
-        if ($productIds !== null) {
-            $productIdsCondition = 'p.id IN (:productIds) AND';
-            $variables['productIds'] = $productIds;
-            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
-        } else {
-            $productIdsCondition = '';
-        }
+        return 'WITH domain_locales (domain_id, locale) AS (
+            VALUES ' . implode(', ', $domainLocaleRows) . '
+        ),
+        scoped_visibilities AS MATERIALIZED (
+            SELECT
+                pv.product_id,
+                pv.domain_id,
+                pv.pricing_group_id,
+                p.variant_type,
+                p.main_variant_id,
+                COALESCE((' . $this->getIndependentVisibilityConditionSql() . '), FALSE) AS independently_visible
+            FROM product_visibilities AS pv
+            JOIN pricing_groups AS pg ON pg.id = pv.pricing_group_id AND pg.domain_id = pv.domain_id
+            JOIN products AS p ON p.id = pv.product_id
+            JOIN product_domains AS pd ON pd.product_id = pv.product_id AND pd.domain_id = pv.domain_id
+            JOIN domain_locales AS dl ON dl.domain_id = pv.domain_id
+            ' . $productIdsCondition . '
+        ),
+        variant_family_visibilities AS (
+            SELECT
+                sv.*,
+                BOOL_OR(sv.independently_visible) FILTER (WHERE sv.variant_type = :variantTypeMain) OVER variant_family AS main_variant_independently_visible,
+                BOOL_OR(sv.independently_visible) FILTER (WHERE sv.variant_type = :variantTypeVariant) OVER variant_family AS any_variant_independently_visible
+            FROM scoped_visibilities AS sv
+            WINDOW variant_family AS (PARTITION BY COALESCE(sv.main_variant_id, sv.product_id), sv.domain_id, sv.pricing_group_id)
+        ),
+        calculated_visibilities AS (
+            SELECT
+                vfv.product_id,
+                vfv.domain_id,
+                vfv.pricing_group_id,
+                CASE
+                    WHEN vfv.variant_type = :variantTypeVariant THEN ' . $this->getVariantVisibilityConditionSql() . '
+                    WHEN vfv.variant_type = :variantTypeMain THEN ' . $this->getMainVariantVisibilityConditionSql() . '
+                    ELSE vfv.independently_visible
+                END AS visible
+            FROM variant_family_visibilities AS vfv
+        )
+        UPDATE product_visibilities AS pv
+        SET visible = cv.visible
+        FROM calculated_visibilities AS cv
+        WHERE pv.product_id = cv.product_id
+            AND pv.domain_id = cv.domain_id
+            AND pv.pricing_group_id = cv.pricing_group_id
+            AND pv.visible IS DISTINCT FROM cv.visible';
+    }
 
-        $this->em->getConnection()->executeStatement(
-            'UPDATE product_visibilities AS pv
-            SET visible = FALSE
-            FROM products AS p
-            WHERE ' . $productIdsCondition . '
-                p.id = pv.product_id
-                AND p.variant_type = :variantTypeMain
-                AND pv.visible = TRUE
-                AND NOT EXISTS (
+    protected function getVariantVisibilityConditionSql(): string
+    {
+        return '(vfv.independently_visible AND COALESCE(vfv.main_variant_independently_visible, FALSE))';
+    }
+
+    protected function getMainVariantVisibilityConditionSql(): string
+    {
+        return '(vfv.independently_visible AND COALESCE(vfv.any_variant_independently_visible, FALSE))';
+    }
+
+    protected function getIndependentVisibilityConditionSql(): string
+    {
+        return '(p.hidden = FALSE
+            AND (p.selling_from IS NULL OR p.selling_from <= :now)
+            AND (p.selling_to IS NULL OR p.selling_to >= :now)
+            AND (
+                p.variant_type = :variantTypeMain
+                OR p.product_type = :inquiryProductType
+                OR EXISTS (
                     SELECT 1
-                    FROM products vp
-                    JOIN product_visibilities vpv ON
-                        vpv.product_id = vp.id
-                        AND vpv.domain_id = pv.domain_id
-                        AND vpv.pricing_group_id = pv.pricing_group_id
-                    WHERE vp.main_variant_id = p.id
-                        AND vpv.visible = TRUE
+                    FROM product_manual_input_prices AS pmip
+                    WHERE pmip.product_id = pv.product_id
+                        AND pmip.pricing_group_id = pv.pricing_group_id
+                        AND pmip.input_price > 0
                 )
-            ',
-            $variables,
-            $variableTypes,
-        );
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM product_translations AS pt
+                WHERE pt.translatable_id = pv.product_id
+                    AND pt.locale = dl.locale
+                    AND pt.name IS NOT NULL
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM product_category_domains AS pcd
+                JOIN category_domains AS cd ON cd.category_id = pcd.category_id
+                    AND cd.domain_id = pcd.domain_id
+                WHERE pcd.product_id = pv.product_id
+                    AND pcd.domain_id = pv.domain_id
+                    AND cd.visible = TRUE
+            )
+            AND pd.domain_hidden = FALSE)';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getIndependentVisibilityParameters(): array
+    {
+        return [
+            'now' => $this->clock->now(),
+            'inquiryProductType' => ProductTypeEnum::TYPE_INQUIRY,
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    protected function getIndependentVisibilityParameterTypes(): array
+    {
+        return [
+            'now' => Types::DATETIME_IMMUTABLE,
+            'inquiryProductType' => Types::STRING,
+        ];
     }
 
     /**

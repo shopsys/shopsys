@@ -12,6 +12,9 @@ use App\Model\Category\Category;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
+use Override;
+use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -20,13 +23,15 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Symfony\Component\Clock\DatePoint;
+use Tests\App\Performance\Page\QueryCountingMiddleware;
+use Tests\App\Test\ProductVariantFamilyTestHelper;
+use Tests\App\Test\TableRowTestHelper;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
@@ -60,6 +65,16 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductInputPriceDataFactory $productInputPriceDataFactory;
+
+    /**
+     * @inject
+     */
+    private TableRowTestHelper $tableRowTestHelper;
+
+    /**
+     * @inject
+     */
+    private ClockInterface $clock;
 
     private function getDefaultProductData(): ProductData
     {
@@ -371,5 +386,106 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($this->getVisibilityForProduct($variant1)->isVisible());
         $this->assertFalse($this->getVisibilityForProduct($variant2)->isVisible());
         $this->assertFalse($this->getVisibilityForProduct($mainVariant)->isVisible());
+    }
+
+    public function testRefreshProductsVisibilityDoesNotRewriteUnchangedRows(): void
+    {
+        $this->productVisibilityRepository->refreshProductsVisibility();
+        $rowVersionsBeforeRecalculation = $this->getProductVisibilityRowVersions();
+
+        $this->productVisibilityRepository->refreshProductsVisibility();
+        $this->productVisibilityRepository->refreshProductsVisibility($this->getMainVariantFamilyProductIds());
+
+        $this->assertSame($rowVersionsBeforeRecalculation, $this->getProductVisibilityRowVersions());
+    }
+
+    public function testRefreshProductsVisibilityDoesNotRewriteVariantsOfHiddenMainVariant(): void
+    {
+        $variant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53', Product::class);
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
+        $this->setHidden($mainVariant->getId(), true);
+
+        $this->productVisibilityRepository->refreshProductsVisibility($this->getMainVariantFamilyProductIds());
+        $rowVersionsBeforeRecalculation = $this->getProductVisibilityRowVersions();
+
+        $this->productVisibilityRepository->refreshProductsVisibility($this->getMainVariantFamilyProductIds());
+
+        $this->assertSame($rowVersionsBeforeRecalculation, $this->getProductVisibilityRowVersions());
+        $this->assertFalse($this->getVisibilityForProduct($variant)->isVisible());
+    }
+
+    public function testRefreshProductsVisibilityWithoutChangesDoesNotRefreshLoadedEntities(): void
+    {
+        $mainVariantFamilyProductIds = $this->getMainVariantFamilyProductIds();
+        $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
+        $this->em->clear();
+        $this->productFacade->getById(array_first($mainVariantFamilyProductIds));
+        $this->domain->getAll();
+        $queryCountingMiddleware->reset();
+
+        $this->productVisibilityRepository->refreshProductsVisibility($mainVariantFamilyProductIds);
+
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueries());
+    }
+
+    public function testRefreshProductsVisibilityTreatsNullIndependentVisibilityConditionAsNotVisible(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $productVisibilityRepositoryWithNullCondition = new class($this->em, $this->domain, $this->clock) extends ProductVisibilityRepository {
+            #[Override]
+            protected function getIndependentVisibilityConditionSql(): string
+            {
+                return 'NULL';
+            }
+        };
+
+        $productVisibilityRepositoryWithNullCondition->refreshProductsVisibility([$product->getId()]);
+        $this->em->clear();
+
+        $this->assertFalse($this->getVisibilityForProduct($this->productFacade->getById($product->getId()))->isVisible());
+    }
+
+    public function testRefreshProductsVisibilityForNoProductIdsDoesNotQueryDatabase(): void
+    {
+        $productId = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class)->getId();
+        $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
+        $this->em->clear();
+        $this->productFacade->getById($productId);
+        $queryCountingMiddleware->reset();
+
+        $this->productVisibilityRepository->refreshProductsVisibility([]);
+
+        $this->assertSame(0, $queryCountingMiddleware->getQueryCount());
+    }
+
+    private function setHidden(int $productId, bool $hidden): void
+    {
+        $product = $this->productFacade->getById($productId);
+        $productData = $this->productDataFactory->createFromProduct($product);
+        $productData->hidden = $hidden;
+        $this->productFacade->edit($productId, $productData);
+    }
+
+    /**
+     * @return int[]
+     */
+    private function getMainVariantFamilyProductIds(): array
+    {
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
+
+        return ProductVariantFamilyTestHelper::getVariantFamilyProductIds(
+            $this->productFacade->getById($mainVariant->getId()),
+        );
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getProductVisibilityRowVersions(): array
+    {
+        return $this->tableRowTestHelper->getRowVersionsIndexedByPrimaryKey(
+            'product_visibilities',
+            ['product_id', 'domain_id', 'pricing_group_id'],
+        );
     }
 }
