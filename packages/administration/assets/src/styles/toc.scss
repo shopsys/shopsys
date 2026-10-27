@@ -1,9 +1,8 @@
 .toc {
+    position: sticky;
     top: 7.5rem !important;
     align-self: start;
     z-index: 500;
-
-    @extend .sticky-top;
 
     .nav {
         overflow: auto;
