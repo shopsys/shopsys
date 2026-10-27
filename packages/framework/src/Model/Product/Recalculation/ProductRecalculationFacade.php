@@ -85,7 +85,10 @@ class ProductRecalculationFacade
         $shouldRecalculateSellingDenied = $this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes);
 
         if ($shouldRecalculateSellingDenied) {
-            $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds);
+            $changedProductIds = [
+                ...$changedProductIds,
+                ...$this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds),
+            ];
         }
 
         $this->dispatchChangedProductsOutsideOfBatch($changedProductIds, $productIds, $exportScopes, $priority);
