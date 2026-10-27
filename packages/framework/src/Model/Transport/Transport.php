@@ -12,6 +12,7 @@ use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -27,6 +28,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation> getTranslations()
  */
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
 #[EntityImage]
@@ -60,7 +62,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\TransportPrice>
      */
-    #[ORM\OneToMany(targetEntity: TransportPrice::class, mappedBy: 'transport', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: TransportPrice::class, mappedBy: 'transport', cascade: ['persist'], orphanRemoval: true)]
     protected $prices;
 
     /**
@@ -114,7 +116,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
-    protected $deliveryDaysOfWeek;
+    protected $deliveryDaysOfWeek {
+        set {
+            sort($value);
+            $this->deliveryDaysOfWeek = $value;
+        }
+    }
 
     /**
      * @var bool
@@ -260,7 +267,17 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function setPrices($prices): void
     {
-        $this->prices = new ArrayCollection($prices);
+        foreach ($this->prices->toArray() as $currentPrice) {
+            if (!in_array($currentPrice, $prices, true)) {
+                $this->prices->removeElement($currentPrice);
+            }
+        }
+
+        foreach ($prices as $price) {
+            if (!$this->prices->contains($price)) {
+                $this->prices->add($price);
+            }
+        }
     }
 
     /**

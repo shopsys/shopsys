@@ -226,14 +226,4 @@ class TransportRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function deleteAllPricesByTransport(Transport $transport): void
-    {
-        $this->em->createQueryBuilder()
-            ->delete(TransportPrice::class, 'tp')
-            ->where('tp.transport = :transport')
-            ->setParameter('transport', $transport)
-            ->getQuery()
-            ->execute();
-    }
 }

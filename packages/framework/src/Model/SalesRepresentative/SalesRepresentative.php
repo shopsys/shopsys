@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
@@ -182,6 +183,7 @@ class SalesRepresentative implements Presentable
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getFullName()
     {
         return $this->firstName . ' ' . $this->lastName;

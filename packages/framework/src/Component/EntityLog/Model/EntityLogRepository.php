@@ -35,6 +35,56 @@ class EntityLogRepository
     /**
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]
      */
+    public function getEntityLogsBatch(
+        string $entityName,
+        int $entityId,
+        ?int $olderThanEntityLogId,
+        int $limit,
+    ): array {
+        $queryBuilder = $this->getQueryBuilderByEntityNameAndEntityId($entityName, $entityId)
+            ->setMaxResults($limit);
+
+        if ($olderThanEntityLogId !== null) {
+            $queryBuilder
+                ->andWhere('el.id < :olderThanEntityLogId')
+                ->setParameter('olderThanEntityLogId', $olderThanEntityLogId);
+        }
+
+        /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[] $entityLogs */
+        $entityLogs = $queryBuilder->getQuery()->getResult();
+        $lastEntityLog = end($entityLogs);
+
+        if (count($entityLogs) < $limit || $lastEntityLog === false || $lastEntityLog->getLogCollectionNumber() === '') {
+            return $entityLogs;
+        }
+
+        $restOfLastLogCollection = $this->getQueryBuilderByEntityNameAndEntityId($entityName, $entityId)
+            ->andWhere('el.id < :lastEntityLogId')
+            ->andWhere('el.logCollectionNumber = :logCollectionNumber')
+            ->setParameter('lastEntityLogId', $lastEntityLog->getId())
+            ->setParameter('logCollectionNumber', $lastEntityLog->getLogCollectionNumber())
+            ->getQuery()
+            ->getResult();
+
+        return array_merge($entityLogs, $restOfLastLogCollection);
+    }
+
+    public function hasEntityLogsOlderThan(string $entityName, int $entityId, int $olderThanEntityLogId): bool
+    {
+        $olderEntityLogIds = $this->getQueryBuilderByEntityNameAndEntityId($entityName, $entityId)
+            ->select('el.id')
+            ->andWhere('el.id < :olderThanEntityLogId')
+            ->setParameter('olderThanEntityLogId', $olderThanEntityLogId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return count($olderEntityLogIds) > 0;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]
+     */
     public function getEntityLogsFromLastLogCollection(string $entityName, int $entityId): array
     {
         /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog|null $lastEntityLog */

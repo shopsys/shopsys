@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -97,6 +98,7 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
      * @param mixed|null $locale
      * @return string
      */
+    #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     public function getName($locale = null)
     {
         return $this->translation($locale)->getName();

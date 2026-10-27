@@ -11,6 +11,9 @@ use Override;
 use Ramsey\Uuid\Uuid;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
 use Shopsys\FrameworkBundle\Component\Security\Role\SystemRole;
@@ -26,6 +29,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AsMcpTable]
+#[Loggable]
 #[ORM\Table(name: 'administrators')]
 #[ORM\Index(columns: ['username'])]
 #[ORM\Entity]
@@ -68,6 +72,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected $password;
 
@@ -75,12 +80,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 32)]
     protected $loginToken;
 
     /**
      * @var \DateTimeImmutable
      */
+    #[ExcludeLog]
     protected $lastActivity;
 
     /**
@@ -93,12 +100,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit>
      */
+    #[ExcludeLog]
     #[ORM\OneToMany(targetEntity: AdministratorGridLimit::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
     protected $gridLimits;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPinnedMenuItem>
      */
+    #[ExcludeLog]
     #[ORM\OneToMany(targetEntity: AdministratorPinnedMenuItem::class, mappedBy: 'administrator', cascade: ['persist'], orphanRemoval: true)]
     #[ORM\OrderBy(['position' => SortDirection::Ascending])]
     protected $pinnedMenuItems;
@@ -113,6 +122,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var \DateTimeImmutable|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $rolesChangedAt;
 
@@ -120,6 +130,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var \DateTimeImmutable
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'datetime_immutable')]
     protected $transferIssuesLastSeenDateTime;
 
@@ -127,6 +138,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'guid', unique: true)]
     protected $uuid;
 
@@ -141,6 +153,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 16, nullable: true)]
     protected $emailAuthenticationCode;
 
@@ -148,6 +161,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', nullable: true)]
     protected $googleAuthenticatorSecret;
 
@@ -163,6 +177,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var int[]|null
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'simple_array', nullable: true)]
     protected $displayOnlyDomainIds;
 
@@ -170,6 +185,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string
      */
     #[AsMcpColumn]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 10)]
     protected $selectedLocale;
 
@@ -177,6 +193,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var string|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected $resetPasswordHash;
 
@@ -184,6 +201,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @var \DateTimeImmutable|null
      */
     #[AsMcpColumn(exposed: false)]
+    #[ExcludeLog]
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     protected $resetPasswordHashValidThrough;
 
@@ -210,6 +228,11 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->email = $administratorData->email;
         $this->realName = $administratorData->realName;
         $this->username = $administratorData->username;
+
+        if ($this->roleGroup !== $administratorData->roleGroup) {
+            $this->setRolesChangedNow();
+        }
+
         $this->roleGroup = $administratorData->roleGroup;
         $this->displayOnlyDomainIds = $administratorData->displayOnlyDomainIds;
     }
@@ -251,6 +274,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getRealName()
     {
         return $this->realName;
@@ -509,12 +533,26 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[] $administratorRoles
      */
-    public function addRoles(array $administratorRoles): void
+    public function setRoles($administratorRoles): void
     {
-        $this->setRolesChangedNow();
+        $rolesChanged = false;
 
-        foreach ($administratorRoles as $role) {
-            $this->roles->add($role);
+        foreach ($this->roles->toArray() as $currentRole) {
+            if (!in_array($currentRole, $administratorRoles, true)) {
+                $this->roles->removeElement($currentRole);
+                $rolesChanged = true;
+            }
+        }
+
+        foreach ($administratorRoles as $administratorRole) {
+            if (!$this->roles->contains($administratorRole)) {
+                $this->roles->add($administratorRole);
+                $rolesChanged = true;
+            }
+        }
+
+        if ($rolesChanged) {
+            $this->setRolesChangedNow();
         }
     }
 

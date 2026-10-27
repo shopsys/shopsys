@@ -7,19 +7,28 @@
     {% endif %}
 {% endmacro %}
 
+{% macro entity_name(entityLog, timelineEntityName) -%}
+    {{ entityLog.entityName }}{% if entityLog.entityName != timelineEntityName %} #{{ entityLog.entityId }}{% endif %}
+{%- endmacro %}
+
 <div {{ attributes }}>
     {% set groups = this.groups %}
+    {% set groupIdPrefix = 'entity-log-timeline-' ~ this.entityName ~ '-' ~ this.entityId ~ '-' %}
 
-    {% if groups|length == 0 %}
+    {% if groups|length == 0 and this.currentOldestEntityLogId is null %}
         <div class="text-secondary">{{ 'No logs created so far.'|trans }}</div>
     {% else %}
         <ul class="timeline">
+            {% if this.currentOldestEntityLogId is not null %}
+                <li id="{{ groupIdPrefix ~ this.currentOldestEntityLogId }}" data-live-ignore></li>
+            {% endif %}
+
             {% for group in groups %}
                 {% set isSingleEntry = group|length == 1 %}
                 {% set firstLog = group|first %}
                 {% set groupAction = this.getGroupAction(group) %}
 
-                <li class="timeline-event">
+                <li class="timeline-event" id="{{ groupIdPrefix ~ (group|last).id }}" data-live-ignore>
                     <div class="timeline-event-icon {{ this.getActionIconClass(groupAction) }}">
                         {{ ux_icon(this.getActionIconName(groupAction)) }}
                     </div>
@@ -33,10 +42,10 @@
                                 <h4 class="mb-2 d-flex flex-wrap gap-2 align-items-center">
                                     <span class="badge {{ this.getActionBadgeClass(firstLog.action) }}">{{ firstLog.action|capitalize|trans }}</span>
                                     {% if firstLog.entityIdentifier is empty %}
-                                        <span>{{ firstLog.entityName }}</span>
+                                        <span>{{ _self.entity_name(firstLog, this.entityName) }}</span>
                                     {% else %}
                                         <span>{{ '%entityName% (%entityIdentifier%)'|trans({
-                                            '%entityName%': firstLog.entityName,
+                                            '%entityName%': _self.entity_name(firstLog, this.entityName),
                                             '%entityIdentifier%': firstLog.entityIdentifier,
                                         }) }}</span>
                                     {% endif %}
@@ -69,7 +78,7 @@
                                         <div class="border-start ps-3">
                                             <div class="d-flex flex-wrap gap-2 align-items-center mb-1">
                                                 <span class="badge {{ this.getActionBadgeClass(entityLog.action) }}">{{ entityLog.action|capitalize|trans }}</span>
-                                                <strong>{{ entityLog.entityName }}</strong>
+                                                <strong>{{ _self.entity_name(entityLog, this.entityName) }}</strong>
                                                 {% if entityLog.entityIdentifier is not empty %}
                                                     <span class="text-secondary">({{ entityLog.entityIdentifier }})</span>
                                                 {% endif %}
@@ -90,5 +99,18 @@
                 </li>
             {% endfor %}
         </ul>
+
+        {% if this.hasMoreEntityLogs() %}
+            <div class="text-center mt-3">
+                <button type="button"
+                        class="btn"
+                        data-action="live#action"
+                        data-live-action-param="loadMore"
+                        data-loading="addAttribute(disabled)"
+                >
+                    {{ 'Show more'|trans }}
+                </button>
+            </div>
+        {% endif %}
     {% endif %}
 </div>

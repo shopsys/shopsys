@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
 use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
@@ -119,6 +120,7 @@ class TransportGroup extends AbstractTranslatableEntity implements OrderableEnti
      * @param string|null $locale
      * @return string|null
      */
+    #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     public function getName($locale = null)
     {
         return $this->translation($locale)->getName();
