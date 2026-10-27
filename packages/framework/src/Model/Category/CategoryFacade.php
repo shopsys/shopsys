@@ -159,10 +159,14 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
             ];
         }
 
-        $this->nestedSetValuesRepository->updateNestedSetValues(
+        $changedCategoriesCount = $this->nestedSetValuesRepository->updateNestedSetValues(
             Category::class,
             $nestedSetValuesIndexedByCategoryId,
         );
+
+        if ($changedCategoriesCount === 0) {
+            return;
+        }
 
         $this->productRecalculationDispatcher->dispatchAllProducts();
     }
