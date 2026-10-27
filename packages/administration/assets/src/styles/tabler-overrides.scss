@@ -79,20 +79,24 @@ textarea.form-control.is-invalid {
     border-right-width: var(--tblr-border-width);
 }
 
+.card {
+    --tblr-card-cap-padding-y: 1rem;
+}
+
 .card-header {
-    background-color: var(--tblr-gray-200);
+    --tblr-card-header-bg: var(--tblr-gray-200);
 }
 
 .card-header-light {
-    background-color: var(--tblr-gray-50);
+    --tblr-card-header-bg: var(--tblr-gray-50);
 }
 
 .card-header-no-bg {
-    background-color: transparent;
+    --tblr-card-header-bg: transparent;
 }
 
 .card-footer-no-bg {
-    background-color: transparent;
+    --tblr-card-footer-bg: transparent;
 }
 
 .fixed-alert {
