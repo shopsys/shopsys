@@ -155,6 +155,7 @@ final class AdvertFormType extends AbstractType
                 'label' => 'Upload new image',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'hide_delete_button' => true,
             ]);
 
         $builderImageGroup
@@ -173,6 +174,7 @@ final class AdvertFormType extends AbstractType
                 'label' => 'Upload image for mobile devices',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'hide_delete_button' => true,
             ]);
 
         $builder
