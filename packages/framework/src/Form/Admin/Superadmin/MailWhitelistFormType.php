@@ -7,8 +7,8 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Superadmin;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Form\Admin\Mail\MailWhitelistCollectionType;
 use Shopsys\FrameworkBundle\Form\Constraints\WhitelistPattern;
+use Shopsys\FrameworkBundle\Form\InteractiveCollectionType;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\Transformers\MailWhitelistTransformer;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
@@ -47,16 +47,16 @@ final class MailWhitelistFormType extends AbstractType
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
                 'data' => t('E-mails are sent to addresses which comply with at least one regular expression. You can use <a href="https://regex101.com">https://regex101.com</a> for validating regular expressions.'),
             ])
-            ->add('mailWhitelist', MailWhitelistCollectionType::class, [
+            ->add('mailWhitelist', InteractiveCollectionType::class, [
                 'label' => 'E-mail addresses whitelist',
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
                 ],
                 'required' => false,
-                'allow_add' => true,
-                'error_bubbling' => false,
-                'allow_delete' => true,
+                'add_label' => t('Add another mail whitelist pattern'),
+                'empty_message' => t('Add some mail whitelist patterns'),
+                'prototype_data' => '/@example\.com$/',
                 'constraints' => [
                     new Constraints\All(constraints: [
                         new WhitelistPattern(),

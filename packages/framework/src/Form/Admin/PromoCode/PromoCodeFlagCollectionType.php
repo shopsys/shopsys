@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode;
 
 use Override;
+use Shopsys\FrameworkBundle\Form\InteractiveCollectionType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 final class PromoCodeFlagCollectionType extends AbstractType
 {
     #[Override]
     public function getParent(): string
     {
-        return CollectionType::class;
+        return InteractiveCollectionType::class;
     }
 }

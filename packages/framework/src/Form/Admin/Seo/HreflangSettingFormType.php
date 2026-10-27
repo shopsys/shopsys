@@ -8,10 +8,10 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\InteractiveCollectionType;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Count;
@@ -39,8 +39,7 @@ final class HreflangSettingFormType extends AbstractType
                 'message_level' => MessageType::MESSAGE_LEVEL_INFO,
                 'data' => t('For more information about hreflang tags, see the <a href="https://developers.google.com/search/docs/specialty/international/localized-versions">Google documentation</a>'),
             ])
-            ->add(self::FIELD_HREFLANG_COLLECTION, CollectionType::class, [
-                'block_prefix' => 'hreflang_setting_collection',
+            ->add(self::FIELD_HREFLANG_COLLECTION, InteractiveCollectionType::class, [
                 'label' => 'Alternate language domains',
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
@@ -59,9 +58,8 @@ final class HreflangSettingFormType extends AbstractType
                     ],
                 ],
                 'required' => false,
-                'allow_add' => true,
-                'error_bubbling' => false,
-                'allow_delete' => true,
+                'add_label' => t('Add language combination'),
+                'empty_message' => t('Add some alternate language combinations'),
                 'constraints' => [
                     new Callback(callback: [$this, 'validateDomainUniqueness']),
                 ],
