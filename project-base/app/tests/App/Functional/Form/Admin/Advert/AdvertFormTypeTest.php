@@ -93,8 +93,6 @@ final class AdvertFormTypeTest extends FunctionalTestCase
         $form = $this->formFactory->create(AdvertFormType::class, $advertData, [
             'scenario' => $advert === null ? AdvertFormType::SCENARIO_CREATE : AdvertFormType::SCENARIO_EDIT,
             'advert' => $advert,
-            'web_image_exists' => $existingImages,
-            'mobile_image_exists' => $existingImages,
             'csrf_protection' => false,
         ]);
 
