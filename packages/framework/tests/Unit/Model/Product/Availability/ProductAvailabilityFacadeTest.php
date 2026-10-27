@@ -228,6 +228,32 @@ final class ProductAvailabilityFacadeTest extends TestCase
         $this->assertSame(0, $productAvailabilityFacade->getNotOnStockQuantity($product, Domain::FIRST_DOMAIN_ID, 10));
     }
 
+    public function testNotOnStockQuantitiesOfProductsAreCalculatedFromOneStockQuantitiesLoad(): void
+    {
+        $productWithLowStock = $this->createVariantStub(2, false);
+        $productWithEnoughStock = $this->createVariantStub(3, false);
+        $productStockFacadeMock = $this->createMock(ProductStockFacade::class);
+        $productStockFacadeMock->expects($this->once())
+            ->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')
+            ->with($this->identicalTo([$productWithLowStock, $productWithEnoughStock]), Domain::FIRST_DOMAIN_ID)
+            ->willReturn([2 => 3, 3 => 10]);
+        $productAvailabilityFacade = $this->createProductAvailabilityFacadeWithProductStockFacade($productStockFacadeMock, [], '2026-07-12 12:00:00');
+        $products = [
+            $this->createMainVariantStub(),
+            $productWithLowStock,
+            $productWithEnoughStock,
+            $this->createVariantStub(4, true),
+        ];
+
+        $notOnStockQuantitiesIndexedByProductId = $productAvailabilityFacade->getNotOnStockQuantitiesIndexedByProductId(
+            $products,
+            Domain::FIRST_DOMAIN_ID,
+            5,
+        );
+
+        $this->assertSame([10 => null, 4 => 0, 2 => 2, 3 => 0], $notOnStockQuantitiesIndexedByProductId);
+    }
+
     public function testMainVariantWithOnlyElectronicVariantsIsDigital(): void
     {
         $productAvailabilityFacade = $this->createProductAvailabilityFacadeWithVariants(
@@ -523,12 +549,23 @@ final class ProductAvailabilityFacadeTest extends TestCase
         array $stockQuantitiesByProductId,
         string $now,
     ): ProductAvailabilityFacade {
-        $settingStub = $this->createStub(Setting::class);
-        $settingStub->method('getForDomain')->willReturn(self::FEED_DELIVERY_DAYS_SETTING);
-
         $productStockFacadeStub = $this->createStub(ProductStockFacade::class);
         $productStockFacadeStub->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')
             ->willReturn($stockQuantitiesByProductId);
+
+        return $this->createProductAvailabilityFacadeWithProductStockFacade($productStockFacadeStub, $variants, $now);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
+     */
+    private function createProductAvailabilityFacadeWithProductStockFacade(
+        ProductStockFacade $productStockFacade,
+        array $variants,
+        string $now,
+    ): ProductAvailabilityFacade {
+        $settingStub = $this->createStub(Setting::class);
+        $settingStub->method('getForDomain')->willReturn(self::FEED_DELIVERY_DAYS_SETTING);
 
         $clockStub = $this->createStub(ClockInterface::class);
         $clockStub->method('now')->willReturn($this->createDate($now));
@@ -541,7 +578,7 @@ final class ProductAvailabilityFacadeTest extends TestCase
 
         return new ProductAvailabilityFacade(
             $settingStub,
-            $productStockFacadeStub,
+            $productStockFacade,
             $this->createStub(StoreFacade::class),
             $this->createDomain(),
             new InMemoryCache(),
