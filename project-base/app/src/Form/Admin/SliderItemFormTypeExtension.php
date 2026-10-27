@@ -30,11 +30,9 @@ final class SliderItemFormTypeExtension extends AbstractTypeExtension
     {
         $builderImageGroup = $builder->get('image');
 
-        $imageConstraints = [];
-
-        if ($options['scenario'] === SliderItemFormType::SCENARIO_CREATE) {
-            $imageConstraints[] = new MustUploadFile();
-        }
+        $imageConstraints = [
+            new MustUploadFile(),
+        ];
 
         $builderImageGroup
             ->add('image', ImageUploadType::class, [

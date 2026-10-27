@@ -9,6 +9,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
+use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
@@ -32,12 +33,6 @@ final class SliderItemFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $imageConstraints = [];
-
-        if ($options['scenario'] === self::SCENARIO_CREATE) {
-            $imageConstraints[] = new Constraints\NotBlank(message: 'Please choose image');
-        }
-
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => 'Settings',
         ]);
@@ -113,7 +108,9 @@ final class SliderItemFormType extends AbstractType
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => $options['scenario'] === self::SCENARIO_CREATE,
-                'constraints' => $imageConstraints,
+                'constraints' => [
+                    new MustUploadFile(message: 'Please choose image'),
+                ],
                 'image_entity_class' => SliderItem::class,
                 'file_constraints' => [
                     new Constraints\File(
@@ -126,7 +123,7 @@ final class SliderItemFormType extends AbstractType
                 'label' => 'Upload image',
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
-                'hide_delete_button' => $options['scenario'] === self::SCENARIO_EDIT,
+                'hide_delete_button' => true,
             ]);
 
         $builder
