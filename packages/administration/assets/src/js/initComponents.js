@@ -1,4 +1,4 @@
-import { Dropdown, Modal, Popover, Tab, Tooltip } from '@tabler/core';
+import { Autosize, Dropdown, Modal, Popover, Tab, Tooltip } from '@tabler/core';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
 import TomSelect from 'tom-select';
@@ -181,7 +181,7 @@ function initDropdown($container) {
 
 function initAutosize($container) {
     $container.filterAllNodes('[data-bs-toggle="autosize"]').each(function () {
-        window.autosize?.(this);
+        Autosize.getOrCreateInstance(this);
     });
 }
 

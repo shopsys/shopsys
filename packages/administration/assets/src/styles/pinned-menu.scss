@@ -1,3 +1,5 @@
+@use '@tabler/core/scss/config' as *;
+
 @include media-breakpoint-up(lg) {
     .nav-link-pin-button,
     .nav-link-pinned-item .nav-link-icon {
