@@ -2740,6 +2740,9 @@ msgstr ""
 msgid "You can drag articles here."
 msgstr ""
 
+msgid "You can't delete yourself."
+msgstr ""
+
 msgid "You cannot choose product that is main variant"
 msgstr ""
 

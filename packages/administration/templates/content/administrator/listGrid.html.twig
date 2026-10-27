@@ -1,5 +1,17 @@
 {% extends '@ShopsysAdministration/datagrid/grid.html.twig' %}
 
+{% block grid_action_cell_type_delete %}
+    {% if row.a.id is same as(app.user.id) %}
+        <span class="px-1 text-secondary">
+            <span class="icon d-inline-flex align-items-center justify-content-center">
+                {{ info_icon('You can\'t delete yourself.'|trans) }}
+            </span>
+        </span>
+    {% else %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}
+
 {% block grid_value_cell_id_realName %}
     <a href="{{ url('admin_administrator_edit', { id: row.a.id }) }}">{{ value }}</a>
 {% endblock %}

@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthentica
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -255,6 +256,8 @@ class AdministratorController extends AdminBaseController
                     'name' => $this->administratorFacade->getById($id)->getRealName(),
                 ],
             );
+        } catch (DeletingSuperadminException) {
+            throw new AccessDeniedException('Superadmin can only be deleted by superadmin.');
         } catch (AdministratorNotFoundException) {
             $this->addErrorFlash(t('Selected administrated doesn\'t exist.'));
         }
