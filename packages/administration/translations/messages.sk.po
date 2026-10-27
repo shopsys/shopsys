@@ -406,6 +406,9 @@ msgstr "Vymazať cache dotazov obchodu"
 msgid "Clear"
 msgstr "Vymazať"
 
+msgid "Clear history"
+msgstr "Vymazať históriu"
+
 msgid "Close"
 msgstr "Zavrieť"
 
@@ -1377,6 +1380,9 @@ msgstr "Prehľad Measurement units"
 
 msgid "Medium"
 msgstr "Stredné"
+
+msgid "Message history"
+msgstr "História správ"
 
 msgid "Message text"
 msgstr "Text správy"
