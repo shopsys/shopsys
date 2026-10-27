@@ -16,6 +16,8 @@ use Override;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
+    protected const int REFRESH_BATCH_SIZE = 1000;
+
     protected RepositoryFactory $repositoryFactory;
 
     public function __construct(
@@ -84,9 +86,79 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
             return;
         }
 
-        foreach ($identityMap[$className] as $entity) {
-            $this->refresh($entity);
+        $initializedEntities = array_values(array_filter(
+            $identityMap[$className],
+            fn (object $entity): bool => !$this->isUninitializedObject($entity),
+        ));
+
+        if ($this->hasRefreshCascadingAssociation($className)) {
+            foreach ($initializedEntities as $entity) {
+                $this->refresh($entity);
+            }
+
+            return;
         }
+
+        $entitiesBatches = array_chunk($initializedEntities, static::REFRESH_BATCH_SIZE);
+
+        foreach ($entitiesBatches as $entitiesBatch) {
+            $this->refreshEntities($className, $entitiesBatch);
+        }
+    }
+
+    /**
+     * @param object[] $entities
+     */
+    protected function refreshEntities(string $className, array $entities): void
+    {
+        $identifierFieldNames = $this->getClassMetadata($className)->getIdentifierFieldNames();
+        $queryBuilder = $this->createQueryBuilder()
+            ->select('e')
+            ->from($className, 'e');
+
+        if (count($identifierFieldNames) === 1) {
+            $identifierFieldName = array_first($identifierFieldNames);
+            $queryBuilder
+                ->where(sprintf('e.%s IN (:identifiers)', $identifierFieldName))
+                ->setParameter('identifiers', array_map(
+                    fn (object $entity): mixed => $this->getUnitOfWork()->getEntityIdentifier($entity)[$identifierFieldName],
+                    $entities,
+                ));
+        } else {
+            $identifierConditions = [];
+
+            foreach ($entities as $entityIndex => $entity) {
+                $identifier = $this->getUnitOfWork()->getEntityIdentifier($entity);
+                $identifierFieldConditions = [];
+
+                foreach ($identifierFieldNames as $identifierFieldName) {
+                    $parameterName = $identifierFieldName . $entityIndex;
+                    $identifierFieldConditions[] = sprintf('e.%s = :%s', $identifierFieldName, $parameterName);
+                    $queryBuilder->setParameter($parameterName, $identifier[$identifierFieldName]);
+                }
+
+                $identifierConditions[] = '(' . implode(' AND ', $identifierFieldConditions) . ')';
+            }
+
+            $queryBuilder->where(implode(' OR ', $identifierConditions));
+        }
+
+        $queryBuilder->getQuery()
+            ->setHint(Query::HINT_REFRESH, true)
+            ->getResult();
+    }
+
+    protected function hasRefreshCascadingAssociation(string $className): bool
+    {
+        $associationMappings = $this->getClassMetadata($className)->associationMappings;
+
+        foreach ($associationMappings as $associationMapping) {
+            if ($associationMapping->isCascadeRefresh()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
