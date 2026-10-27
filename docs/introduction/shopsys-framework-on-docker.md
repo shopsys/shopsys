@@ -121,7 +121,7 @@ Alpine Linux also has longtime problem with connection to MSSQL databases, due t
 
 We divide images used by us into 3 types.
 
-##### Not extended, only used (PostgreSQL, Redis, Elasticsearch)
+##### Not extended, only used (PostgreSQL, Redis, RabbitMQ, Elasticsearch)
 
 Those images are only used as it is, we are not extending them and we are only using them as they are. In this case we choose Alpine Distribution thanks to its size.
 

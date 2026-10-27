@@ -56,6 +56,8 @@ You can also log in into the administration section on [http://127.0.0.1:8000/ad
 You can also manage the application database using [Adminer](https://www.adminer.org) by going to [http://127.0.0.1:1100](http://127.0.0.1:1100)
 and Redis storage using [Redis commander](https://github.com/joeferner/redis-commander) by going to [http://127.0.0.1:1600](http://127.0.0.1:1600).
 
+RabbitMQ messages and queues can be inspected in the [RabbitMQ management UI](https://www.rabbitmq.com/docs/management) at [http://127.0.0.1:15672](http://127.0.0.1:15672) (login `guest` / `guest`).
+
 Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).
 You can use [Kibana](https://www.elastic.co/downloads/kibana) for Elasticseacrh management, it is available on [http://127.0.0.1:5601](http://127.0.0.1:5601).
 
