@@ -49,6 +49,7 @@ class CategoryVisibilityRepository
             WHERE c.id = cd.category_id
                 AND cd.domain_id = :domainId
                 AND c.parent_id IS NULL
+                AND cd.visible = FALSE
             ',
             [
                 'domainId' => $domainConfig->getId(),
@@ -73,13 +74,7 @@ class CategoryVisibilityRepository
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd
-                SET visible = (
-                    cd.enabled = TRUE
-                    AND
-                    ct.name IS NOT NULL
-                    AND
-                    parent_cd.visible = TRUE
-                )
+                SET visible = NOT cd.visible
 
             FROM categories AS c
             LEFT JOIN category_translations ct ON ct.translatable_id = c.id AND ct.locale = :locale
@@ -87,6 +82,7 @@ class CategoryVisibilityRepository
             WHERE c.id = cd.category_id
                 AND cd.domain_id = :domainId
                 AND c.level = :level
+                AND cd.visible IS DISTINCT FROM COALESCE((' . $this->getCategoryVisibilityConditionSql() . '), FALSE)
             ',
             [
                 'domainId' => $domainConfig->getId(),
@@ -94,6 +90,13 @@ class CategoryVisibilityRepository
                 'level' => $level,
             ],
         );
+    }
+
+    protected function getCategoryVisibilityConditionSql(): string
+    {
+        return 'cd.enabled = TRUE
+            AND ct.name IS NOT NULL
+            AND parent_cd.visible = TRUE';
     }
 
     public function onKernelResponse(ResponseEvent $event): void
