@@ -7,9 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXy;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository;
@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductPromotionXyRepository;
 class PromotionFlagFacade
 {
     protected const string DEFAULT_PROMOTION_FLAG_COLOR = '#efd6ff';
+    protected const int UPDATE_ALL_BATCH_SIZE = 500;
 
     public function __construct(
         protected readonly FlagFacade $flagFacade,
@@ -30,58 +31,118 @@ class PromotionFlagFacade
     ) {
     }
 
-    public function updatePromotionFlags(int $productId): void
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     */
+    public function updatePromotionFlagsForProducts(array $products): void
     {
-        try {
-            $product = $this->productFacade->getById($productId);
+        $domainIds = $this->domain->getAllIds();
+        $promotionFlagsIndexedByProductIdAndDomainId = $this->getPromotionFlagsIndexedByProductIdAndDomainId($products, $domainIds);
+        $haveAnyFlagsChanged = false;
+
+        foreach ($products as $product) {
             $flagsByDomainId = [];
 
-            foreach ($this->domain->getAllIds() as $domainId) {
-                $flagsByDomainId[$domainId] = $this->getUpdatedFlagsOnDomain($product, $domainId);
+            foreach ($domainIds as $domainId) {
+                $flagsByDomainId[$domainId] = $this->getUpdatedFlagsOnDomain(
+                    $product,
+                    $domainId,
+                    $promotionFlagsIndexedByProductIdAndDomainId[$product->getId()][$domainId],
+                );
             }
 
             if (!$this->haveFlagsChanged($product, $flagsByDomainId)) {
-                return;
+                continue;
             }
 
             $product->setFlags($flagsByDomainId);
+            $haveAnyFlagsChanged = true;
+        }
+
+        if ($haveAnyFlagsChanged) {
             $this->em->flush();
-        } catch (ProductNotFoundException) {
-            // Product has been deleted, nothing to update
         }
     }
 
     public function updatePromotionFlagsForAll(): void
     {
-        foreach ($this->productPromotionXyRepository->getAllProductIdsWithPromotionXy() as $productId) {
-            $this->updatePromotionFlags($productId);
+        $productIdsWithPromotionXy = $this->productPromotionXyRepository->getAllProductIdsWithPromotionXy();
+
+        $productIdsBatches = array_chunk($productIdsWithPromotionXy, static::UPDATE_ALL_BATCH_SIZE);
+
+        foreach ($productIdsBatches as $productIdsBatch) {
+            $this->updatePromotionFlagsForProducts(
+                $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($productIdsBatch),
+            );
+            $this->em->clear();
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param int[] $domainIds
+     * @return array<int, array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null>>
+     */
+    protected function getPromotionFlagsIndexedByProductIdAndDomainId(array $products, array $domainIds): array
+    {
+        $promotionFlagsIndexedByQuantities = [];
+        $promotionFlagsIndexedByProductIdAndDomainId = [];
+
+        foreach ($products as $product) {
+            foreach ($domainIds as $domainId) {
+                $promotionXy = $this->findApplicablePromotionXy($product, $domainId);
+
+                if ($promotionXy === null) {
+                    $promotionFlagsIndexedByProductIdAndDomainId[$product->getId()][$domainId] = null;
+
+                    continue;
+                }
+
+                $promotionQuantitiesKey = $this->getPromotionQuantitiesKey($promotionXy);
+
+                if (!array_key_exists($promotionQuantitiesKey, $promotionFlagsIndexedByQuantities)) {
+                    $promotionFlagsIndexedByQuantities[$promotionQuantitiesKey] = $this->findOrCreatePromotionFlag(
+                        $promotionXy->getBuyQuantity(),
+                        $promotionXy->getFreeQuantity(),
+                    );
+                }
+
+                $promotionFlagsIndexedByProductIdAndDomainId[$product->getId()][$domainId] = $promotionFlagsIndexedByQuantities[$promotionQuantitiesKey];
+            }
+        }
+
+        return $promotionFlagsIndexedByProductIdAndDomainId;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    protected function getUpdatedFlagsOnDomain(Product $product, int $domainId): array
+    protected function getUpdatedFlagsOnDomain(Product $product, int $domainId, ?Flag $promotionFlag): array
     {
-        $currentFlags = $product->getFlags($domainId);
-        $promotionXy = $product->getPromotionXy($domainId);
-        $isSellableOnDomain = !$product->isCalculatedSellingDenied($domainId);
-
         $nonPromotionFlags = array_filter(
-            $currentFlags,
+            $product->getFlags($domainId),
             static fn (Flag $flag): bool => !$flag->hasPromotionXy(),
         );
 
-        if ($promotionXy === null || !$isSellableOnDomain) {
+        if ($promotionFlag === null) {
             return array_values($nonPromotionFlags);
         }
 
-        $buyQuantity = $promotionXy->getBuyQuantity();
-        $freeQuantity = $promotionXy->getFreeQuantity();
+        return array_values([...$nonPromotionFlags, $promotionFlag]);
+    }
 
-        $flagForCurrentProductPromotion = $this->findOrCreatePromotionFlag($buyQuantity, $freeQuantity);
+    protected function findApplicablePromotionXy(Product $product, int $domainId): ?ProductPromotionXy
+    {
+        if ($product->isCalculatedSellingDenied($domainId)) {
+            return null;
+        }
 
-        return array_values([...$nonPromotionFlags, $flagForCurrentProductPromotion]);
+        return $product->getPromotionXy($domainId);
+    }
+
+    protected function getPromotionQuantitiesKey(ProductPromotionXy $promotionXy): string
+    {
+        return $promotionXy->getBuyQuantity() . '+' . $promotionXy->getFreeQuantity();
     }
 
     protected function findOrCreatePromotionFlag(int $x, int $y): Flag

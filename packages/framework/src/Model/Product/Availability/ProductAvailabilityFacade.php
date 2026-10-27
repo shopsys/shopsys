@@ -442,13 +442,52 @@ class ProductAvailabilityFacade
             return 0;
         }
 
-        $notOnStockQuantity = 0;
-        $productTotalQuantity = $this->getGroupedStockQuantityByProductAndDomainId($product, $domainId);
+        $productTotalQuantity = $this->getGroupedStockQuantityByProductAndDomainId($product, $domainId) ?? 0;
 
-        if ($quantityToAdd > $productTotalQuantity) {
-            $notOnStockQuantity = $quantityToAdd - $productTotalQuantity;
+        return $this->calculateNotOnStockQuantity($quantityToAdd, $productTotalQuantity);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return array<int, int|null>
+     */
+    public function getNotOnStockQuantitiesIndexedByProductId(
+        array $products,
+        int $domainId,
+        int $quantityToAdd,
+    ): array {
+        $notOnStockQuantitiesIndexedByProductId = [];
+        $productsWithStockQuantity = [];
+
+        foreach ($products as $product) {
+            if ($product->isMainVariant() || $product->isElectronicGiftVoucher()) {
+                $notOnStockQuantitiesIndexedByProductId[$product->getId()] = $this->getNotOnStockQuantity($product, $domainId, $quantityToAdd);
+            } else {
+                $productsWithStockQuantity[] = $product;
+            }
         }
 
-        return $notOnStockQuantity;
+        $stockQuantitiesIndexedByProductId = $this->getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId(
+            $productsWithStockQuantity,
+            $domainId,
+        );
+
+        foreach ($productsWithStockQuantity as $product) {
+            $notOnStockQuantitiesIndexedByProductId[$product->getId()] = $this->calculateNotOnStockQuantity(
+                $quantityToAdd,
+                $stockQuantitiesIndexedByProductId[$product->getId()],
+            );
+        }
+
+        return $notOnStockQuantitiesIndexedByProductId;
+    }
+
+    protected function calculateNotOnStockQuantity(int $quantityToAdd, int $productTotalQuantity): int
+    {
+        if ($quantityToAdd > $productTotalQuantity) {
+            return $quantityToAdd - $productTotalQuantity;
+        }
+
+        return 0;
     }
 }

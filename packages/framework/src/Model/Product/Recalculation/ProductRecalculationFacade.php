@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScope
 use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
@@ -41,6 +42,7 @@ class ProductRecalculationFacade
         protected readonly PromotionFlagFacade $promotionFlagFacade,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
         protected readonly TopProductRepository $topProductRepository,
+        protected readonly ProductFacade $productFacade,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
@@ -94,20 +96,16 @@ class ProductRecalculationFacade
         $this->dispatchChangedProductsOutsideOfBatch($changedProductIds, $productIds, $exportScopes, $priority);
 
         if ($shouldRecalculateVisibility || $shouldRecalculateSellingDenied) {
-            foreach ($productIds as $productId) {
-                $this->giftFlagSynchronizerFacade->refreshForGiftProductId($productId);
-            }
+            $this->giftFlagSynchronizerFacade->refreshForGiftProductIds($productIds);
         }
+
+        $products = $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($productIds);
 
         if ($this->productExportScopeConfigFacade->shouldRecalculateGiftFlags($exportScopes)) {
-            foreach ($productIds as $productId) {
-                $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProductId($productId);
-            }
+            $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts($products);
         }
 
-        foreach ($productIds as $productId) {
-            $this->promotionFlagFacade->updatePromotionFlags($productId);
-        }
+        $this->promotionFlagFacade->updatePromotionFlagsForProducts($products);
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
         $hadAnyPromotedProduct = false;

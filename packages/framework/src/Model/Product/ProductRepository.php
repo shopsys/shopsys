@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
@@ -178,13 +179,40 @@ class ProductRepository
      */
     public function getAllByIdsWithDomainsIndexedById(array $ids): array
     {
+        return $this->createAllByIdsWithDomainsIndexedByIdQueryBuilder($ids)
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param int[] $ids
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Product>
+     */
+    public function getAllRefreshedByIdsWithDomainsAndFlagsIndexedById(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        return $this->createAllByIdsWithDomainsIndexedByIdQueryBuilder(array_values(array_unique($ids)))
+            ->addSelect('f', 'ppx')
+            ->leftJoin('pd.flags', 'f')
+            ->leftJoin('pd.promotionXy', 'ppx')
+            ->getQuery()
+            ->setHint(Query::HINT_REFRESH, true)
+            ->getResult();
+    }
+
+    /**
+     * @param int[] $ids
+     */
+    protected function createAllByIdsWithDomainsIndexedByIdQueryBuilder(array $ids): QueryBuilder
+    {
         return $this->em->createQueryBuilder()
             ->select('p, pd')
             ->from(Product::class, 'p', 'p.id')
             ->join('p.domains', 'pd')
             ->where('p.id IN (:ids)')
-            ->setParameter('ids', $ids)
-            ->getQuery()->getResult();
+            ->setParameter('ids', $ids);
     }
 
     /**
