@@ -45,7 +45,7 @@
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="standards-check"/>
-            <arg value="-ws"/>
+            <arg value="--workspaces"/>
             <arg value="--if-present"/>
         </exec>
     </target>
@@ -54,7 +54,7 @@
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="standards-fix"/>
-            <arg value="-ws"/>
+            <arg value="--workspaces"/>
             <arg value="--if-present"/>
         </exec>
     </target>
@@ -189,7 +189,7 @@
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="stylelint"/>
-            <arg value="-ws"/>
+            <arg value="--workspaces"/>
             <arg value="--if-present"/>
         </exec>
     </target>
@@ -198,7 +198,7 @@
         <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="stylelint-fix"/>
-            <arg value="-ws"/>
+            <arg value="--workspaces"/>
             <arg value="--if-present"/>
         </exec>
     </target>

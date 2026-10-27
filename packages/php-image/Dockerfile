@@ -1,11 +1,16 @@
 ARG LINUX_DISTRIBUTION=alpine
 ARG project_root='/'
-ARG NODE_MAJOR=24
+ARG NODE_MAJOR=26
+ARG NPM_MAJOR=12
 ARG PHP_VERSION=8.5
 
 # Node and Composer are already installed in the node_builder and composer_builder stages
 FROM composer:latest AS composer_builder
 FROM node:${NODE_MAJOR}-${LINUX_DISTRIBUTION} AS node_builder
+
+# Upgrade npm bundled with the Node image to get patched versions of its dependencies
+ARG NPM_MAJOR
+RUN npm install -g npm@${NPM_MAJOR}
 
 
 FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
@@ -32,6 +37,7 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_DISTRIBUTION} AS base
 #  icu-data-full - ICU data for full locale support for intl extension
 #  icu-libs - ICU libraries for intl extension
 #  jpeg - Image format for gd extension
+#  libatomic - Atomic operations library required by the Node.js binary copied from node_builder stage
 #  libpng - Image format for gd extension
 #  libzip - Zip archive handling for zip extension
 #  musl-locales - Locales for internationalization
@@ -68,6 +74,7 @@ RUN apk add --no-cache \
         icu-data-full \
         icu-libs \
         jpeg \
+        libatomic \
         libpng \
         libzip \
         musl-locales \
