@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Parameter;
 use Override;
+use Shopsys\FrameworkBundle\Component\Doctrine\NestedSetValuesRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -40,6 +39,7 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterFacade $categoryParameterFacade,
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+        protected readonly NestedSetValuesRepository $nestedSetValuesRepository,
     ) {
     }
 
@@ -151,22 +151,21 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
     {
         $rootCategoryId = $this->getRootCategory()->getId();
 
-        $query = $this->em->createQuery('
-            UPDATE ' . Category::class . ' c 
-            SET c.parent = :parent, c.level = :level, c.lft = :lft, c.rgt = :rgt 
-            WHERE c.id = :id
-        ');
+        $nestedSetValuesIndexedByCategoryId = [];
 
         foreach ($categoriesOrderingData as $categoryOrderingData) {
-            $parameters = new ArrayCollection([
-                new Parameter('id', (int)$categoryOrderingData['id']),
-                new Parameter('parent', $categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId),
-                new Parameter('level', $categoryOrderingData['depth'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY),
-                new Parameter('lft', $categoryOrderingData['left'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY),
-                new Parameter('rgt', $categoryOrderingData['right'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY),
-            ]);
-            $query->execute($parameters);
+            $nestedSetValuesIndexedByCategoryId[(int)$categoryOrderingData['id']] = [
+                'parent' => $categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId,
+                'level' => $categoryOrderingData['depth'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'lft' => $categoryOrderingData['left'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'rgt' => $categoryOrderingData['right'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+            ];
         }
+
+        $this->nestedSetValuesRepository->updateNestedSetValues(
+            Category::class,
+            $nestedSetValuesIndexedByCategoryId,
+        );
 
         $this->productRecalculationDispatcher->dispatchAllProducts();
     }
