@@ -92,6 +92,13 @@ $sidebar-mobile-offset: $navbar-height;
         padding-bottom: 0.6em;
     }
 
+    // full-width items without Tabler's sidebar inset
+    .navbar-nav {
+        --tblr-sidebar-inset: 0;
+        --tblr-sidebar-nav-padding-x: 1rem;
+        --tblr-nav-link-icon-width: 1.25rem;
+    }
+
     .navbar-divider {
         border-color: $sidebar-divider-color;
         opacity: 1;
