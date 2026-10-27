@@ -75,8 +75,7 @@ textarea.form-control.is-invalid {
     vertical-align: text-bottom;
 }
 
-.table > :not(caption) > * > *,
-.markdown > table > :not(caption) > * > * {
+.table > :not(caption) > * > * {
     border-right-width: var(--tblr-border-width);
 }
 
