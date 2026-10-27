@@ -61,31 +61,10 @@ msgstr ""
 msgid "Add URL"
 msgstr ""
 
-msgid "Add another flag"
-msgstr ""
-
-msgid "Add another limit"
-msgstr ""
-
-msgid "Add another mail whitelist pattern"
-msgstr ""
-
-msgid "Add another parameter"
-msgstr ""
-
-msgid "Add another price with weight limit"
-msgstr ""
-
 msgid "Add country"
 msgstr ""
 
 msgid "Add item"
-msgstr ""
-
-msgid "Add language combination"
-msgstr ""
-
-msgid "Add limit"
 msgstr ""
 
 msgid "Add new customer user"
@@ -94,28 +73,10 @@ msgstr ""
 msgid "Add new customer user to %companyName%"
 msgstr ""
 
-msgid "Add opening hours"
-msgstr ""
-
 msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
-msgstr ""
-
-msgid "Add some alternate language combinations"
-msgstr ""
-
-msgid "Add some flag"
-msgstr ""
-
-msgid "Add some mail whitelist patterns"
-msgstr ""
-
-msgid "Add some parameters"
-msgstr ""
-
-msgid "Add video"
 msgstr ""
 
 msgid "Additional service"
