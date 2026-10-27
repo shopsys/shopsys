@@ -304,11 +304,35 @@ class LuigisBoxBatchLoader
             $idsByType[$type][] = $id;
         }
 
-        return $this->combinedArticleElasticsearchFacade->getArticlesByIds(
+        $articles = $this->combinedArticleElasticsearchFacade->getArticlesByIds(
             $idsByType,
             $this->domain->getId(),
             count($luigisBoxResult->getIds()),
         );
+
+        return $this->sortArticlesByIdsWithPrefix($articles, $luigisBoxResult->getIdsWithPrefix());
+    }
+
+    /**
+     * @param string[] $idsWithPrefix
+     */
+    protected function sortArticlesByIdsWithPrefix(array $articles, array $idsWithPrefix): array
+    {
+        $articlesIndexedByIdWithPrefix = [];
+
+        foreach ($articles as $article) {
+            $articlesIndexedByIdWithPrefix[$article['index'] . '-' . $article['id']] = $article;
+        }
+
+        $sortedArticles = [];
+
+        foreach ($idsWithPrefix as $idWithPrefix) {
+            if (array_key_exists($idWithPrefix, $articlesIndexedByIdWithPrefix)) {
+                $sortedArticles[] = $articlesIndexedByIdWithPrefix[$idWithPrefix];
+            }
+        }
+
+        return $sortedArticles;
     }
 
     /**
