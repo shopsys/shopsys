@@ -337,10 +337,14 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
             ];
         }
 
-        $this->nestedSetValuesRepository->updateNestedSetValues(
+        $changedBlogCategoriesCount = $this->nestedSetValuesRepository->updateNestedSetValues(
             BlogCategory::class,
             $nestedSetValuesIndexedByBlogCategoryId,
         );
+
+        if ($changedBlogCategoriesCount === 0) {
+            return;
+        }
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $allIds = array_map(
