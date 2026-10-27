@@ -9,15 +9,19 @@ use App\DataFixtures\Demo\CompanyDataFixture;
 use App\DataFixtures\Demo\CompanyOrderDataFixture;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Order\Order;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory;
+use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
@@ -30,6 +34,16 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
      * @inject
      */
     private CustomerUserDataFactory $customerUserDataFactory;
+
+    /**
+     * @inject
+     */
+    private WatchdogFacade $watchdogFacade;
+
+    /**
+     * @inject
+     */
+    private WatchdogDataFactory $watchdogDataFactory;
 
     /**
      * @see \Tests\FrontendApiBundle\Functional\Customer\User\CurrentCustomerUserTest::testUniqueBillingAddressIsNotValidatedInEditCustomerCompanyB2c()
@@ -371,14 +385,30 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
     private function doTestSuccessfulCustomerUserRemoval(CustomerUser $userToDelete): void
     {
+        $userToDeleteEmail = $userToDelete->getEmail();
+        $this->createWatchdog($userToDeleteEmail);
+        $this->createWatchdog(static::DEFAULT_USER_EMAIL);
+
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/RemoveCustomerUserMutation.graphql', [
             'customerUserUuid' => $userToDelete->getUuid(),
         ]);
 
         $this->assertTrue($response['data']['RemoveCustomerUser'] ?? null);
 
+        $this->assertSame([], $this->watchdogFacade->getWatchdogsByEmail($userToDeleteEmail), 'Watchdogs of the removed customer user should be deleted');
+        $this->assertNotEmpty($this->watchdogFacade->getWatchdogsByEmail(static::DEFAULT_USER_EMAIL), 'Watchdogs of the current customer user should be kept');
+
         $this->expectException(CustomerUserNotFoundException::class);
         $this->customerUserFacade->getByUuid($userToDelete->getUuid());
+    }
+
+    private function createWatchdog(string $email): void
+    {
+        $watchdogData = $this->watchdogDataFactory->createByDomainId($this->domain->getId());
+        $watchdogData->email = $email;
+        $watchdogData->product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+
+        $this->watchdogFacade->create($watchdogData);
     }
 
     private function getCustomerUserFromAnotherCompany(): CustomerUser
