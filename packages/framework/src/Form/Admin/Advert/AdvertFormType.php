@@ -139,14 +139,6 @@ final class AdvertFormType extends AbstractType
             ),
         ];
 
-        $existingImageConstraints = [
-            new Constraints\When(
-                expression: 'value.imagesToDelete != []',
-                constraints: $imageConstraints,
-                groups: [self::VALIDATION_GROUP_TYPE_IMAGE],
-            ),
-        ];
-
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
@@ -159,7 +151,7 @@ final class AdvertFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
-                'constraints' => ($options['web_image_exists'] ? $existingImageConstraints : $imageConstraints),
+                'constraints' => $imageConstraints,
                 'label' => 'Upload new image',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -177,7 +169,7 @@ final class AdvertFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
-                'constraints' => ($options['mobile_image_exists'] ? $existingImageConstraints : $imageConstraints),
+                'constraints' => $imageConstraints,
                 'label' => 'Upload image for mobile devices',
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -204,14 +196,10 @@ final class AdvertFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['scenario', 'advert', 'web_image_exists', 'mobile_image_exists'])
-            ->setAllowedTypes('web_image_exists', 'bool')
-            ->setAllowedTypes('mobile_image_exists', 'bool')
+            ->setRequired(['scenario', 'advert'])
             ->setAllowedValues('scenario', [self::SCENARIO_CREATE, self::SCENARIO_EDIT])
             ->setAllowedTypes('advert', [Advert::class, 'null'])
             ->setDefaults([
-                'web_image_exists' => false,
-                'mobile_image_exists' => false,
                 'data_class' => AdvertData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'validation_groups' => function (FormInterface $form) {

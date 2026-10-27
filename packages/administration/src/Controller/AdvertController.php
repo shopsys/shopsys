@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
-use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use SortDirection;
 
 #[CrudController(Advert::class)]
@@ -34,7 +33,6 @@ class AdvertController extends AbstractCrudController
     public function __construct(
         protected readonly AdvertFacade $advertFacade,
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
-        protected readonly ImageExtension $imageExtension,
     ) {
     }
 
@@ -117,8 +115,6 @@ class AdvertController extends AbstractCrudController
         $formConfigurator->useFormType(AdvertFormType::class, [
             'scenario' => $entity === null ? AdvertFormType::SCENARIO_CREATE : AdvertFormType::SCENARIO_EDIT,
             'advert' => $entity,
-            'web_image_exists' => $entity !== null && $this->imageExtension->imageExists($entity, AdvertFacade::IMAGE_TYPE_WEB),
-            'mobile_image_exists' => $entity !== null && $this->imageExtension->imageExists($entity, AdvertFacade::IMAGE_TYPE_MOBILE),
         ]);
     }
 }
