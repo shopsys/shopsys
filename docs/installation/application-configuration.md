@@ -8,7 +8,7 @@ For operating Shopsys Platform it is needed to have correctly set connections to
 
 !!! note
 
-    All default values use default ports for all external services like PostgreSQL database, elasticsearch, redis, ...
+    All default values use default ports for all external services like PostgreSQL database, elasticsearch, redis, RabbitMQ, ...
 
 !!! tip
 
@@ -47,6 +47,12 @@ You may want to set some settings in a different way (such as production, test, 
 
 `REDIS_PREFIX` (default: `''`)
 : separates more projects that use the same redis service
+
+`MESSENGER_TRANSPORT_DSN` (default: `amqp://guest:guest@rabbitmq:5672/%2f/messages`)
+: connection string of your RabbitMQ message broker, see [Introduction to asynchronous processing](../asynchronous-processing/introduction-to-asynchronous-processing.md)
+
+`MESSENGER_TRANSPORT_VHOST` (default: `'/'`)
+: RabbitMQ virtual host, separates more projects that use the same RabbitMQ service
 
 `MAILER_DSN` (default: `smtp://smtp-server:25?verify_peer=false`, overridden to `smtp://smtp-server:1025?verify_peer=false` for the `dev` environment via `.env.dev` to match the local MailDev container)
 : set to `null://null` if you don't want to send any emails, see [Symfony documentation](https://symfony.com/doc/current/mailer.html#disabling-delivery)
