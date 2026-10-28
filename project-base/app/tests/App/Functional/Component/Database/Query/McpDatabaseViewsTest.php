@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Component\Database\Query;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
+use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
 use Tests\App\Test\FunctionalTestCase;
 
 /**
@@ -22,12 +23,26 @@ class McpDatabaseViewsTest extends FunctionalTestCase
      */
     private SqlExecutor $sqlExecutor;
 
+    /**
+     * @inject
+     */
+    private ExposedSchemaProvider $exposedSchemaProvider;
+
     public function testExposedColumnCanBeRead(): void
     {
         $sqlExecutionResult = $this->sqlExecutor->execute('SELECT username FROM administrators ORDER BY id LIMIT 10');
 
         $this->assertTrue($sqlExecutionResult->isValid);
         $this->assertNotEmpty($sqlExecutionResult->data['rows'] ?? []);
+    }
+
+    public function testEveryExposedTableCanBeQueried(): void
+    {
+        foreach ($this->exposedSchemaProvider->getExposedTableNames() as $tableName) {
+            $sqlExecutionResult = $this->sqlExecutor->execute(sprintf('SELECT * FROM %s LIMIT 1', $tableName));
+
+            $this->assertTrue($sqlExecutionResult->isValid, sprintf('Table "%s": %s', $tableName, $sqlExecutionResult->errorMessage));
+        }
     }
 
     #[DataProvider('provideQueriesResolvedToExposedColumnsOnly')]
