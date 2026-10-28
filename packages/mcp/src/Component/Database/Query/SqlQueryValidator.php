@@ -13,6 +13,7 @@ class SqlQueryValidator
     public const string ERROR_EMPTY_QUERY = 'SQL query must not be empty.';
     public const string ERROR_ONLY_SELECT_SUPPORTED = 'Only SELECT statements are supported.';
     public const string ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT = 'The SQL query uses an unsupported read/write construct.';
+    public const string ERROR_FUNCTION_NOT_ALLOWED = 'The SQL query calls a function that is not allowed.';
     public const string ERROR_UNSUPPORTED_CONSTRUCT = 'The SQL query uses an unsupported construct. Use plain SELECT with joins, subqueries, CTEs, CASE, operators, and allowed functions and casts.';
     public const string ERROR_TABLE_NOT_EXPOSED = 'The SQL query references a table that is not exposed through MCP.';
     public const string ERROR_TYPE_NOT_ALLOWED = 'The SQL query uses a type that is not allowed.';
@@ -404,11 +405,11 @@ class SqlQueryValidator
         }
 
         if ($wrappedNodeTag === self::NODE_TAG_FUNC_CALL && !$this->isAllowedFunctionCall($wrappedNode)) {
-            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
+            return self::ERROR_FUNCTION_NOT_ALLOWED;
         }
 
         if ($wrappedNodeTag === self::NODE_TAG_SQL_VALUE_FUNCTION && !$this->isAllowedSqlValueFunction($wrappedNode)) {
-            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
+            return self::ERROR_FUNCTION_NOT_ALLOWED;
         }
 
         if ($wrappedNodeTag === self::NODE_TAG_RANGE_VAR && !array_key_exists((string)($wrappedNode['relname'] ?? ''), $allowedRelationNamesSet)) {
