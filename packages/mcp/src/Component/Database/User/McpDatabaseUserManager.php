@@ -17,6 +17,7 @@ class McpDatabaseUserManager
         protected readonly string $databaseUser,
         protected readonly string $mcpDatabaseUser,
         protected readonly string $mcpDatabasePassword,
+        protected readonly McpDatabaseRoleChecker $mcpDatabaseRoleChecker,
     ) {
     }
 
@@ -61,7 +62,7 @@ class McpDatabaseUserManager
 
     protected function ensureRole(): void
     {
-        $roleStatementAction = $this->mcpUserExists() ? 'ALTER' : 'CREATE';
+        $roleStatementAction = $this->mcpDatabaseRoleChecker->exists() ? 'ALTER' : 'CREATE';
 
         $this->defaultConnection->executeStatement(sprintf(
             '%s ROLE %s WITH LOGIN PASSWORD %s CONNECTION LIMIT %d NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS',
@@ -120,13 +121,5 @@ class McpDatabaseUserManager
             $this->defaultConnection->quoteSingleIdentifier($this->databaseUser),
             $this->defaultConnection->quoteSingleIdentifier($this->mcpDatabaseUser),
         ));
-    }
-
-    protected function mcpUserExists(): bool
-    {
-        return (bool)$this->defaultConnection->fetchOne(
-            'SELECT 1 FROM pg_roles WHERE rolname = ?',
-            [$this->mcpDatabaseUser],
-        );
     }
 }
