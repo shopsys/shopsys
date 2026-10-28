@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Command;
 
-use Doctrine\DBAL\Connection;
 use Override;
 use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
 use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
@@ -23,7 +22,6 @@ class RecreateDatabaseViewsCommand extends Command
     public function __construct(
         protected readonly McpDatabaseViewsManager $mcpDatabaseViewsManager,
         protected readonly McpAvailabilityChecker $mcpAvailabilityChecker,
-        protected readonly Connection $defaultConnection,
     ) {
         parent::__construct();
     }
@@ -43,7 +41,7 @@ class RecreateDatabaseViewsCommand extends Command
             return Command::SUCCESS;
         }
 
-        $this->defaultConnection->transactional(fn () => $this->mcpDatabaseViewsManager->recreateViews());
+        $this->mcpDatabaseViewsManager->recreateViews();
 
         $io->success(sprintf('MCP database views were recreated in the "%s" schema.', McpDatabaseViewsManager::VIEWS_SCHEMA_NAME));
 

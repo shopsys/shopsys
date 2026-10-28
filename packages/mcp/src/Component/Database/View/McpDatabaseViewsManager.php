@@ -38,33 +38,38 @@ class McpDatabaseViewsManager
         ));
     }
 
+    /**
+     * The views are replaced atomically, MCP queries never see the schema without them.
+     */
     public function recreateViews(): void
     {
         if (!$this->mcpDatabaseRoleChecker->exists()) {
             throw new McpDatabaseRoleNotFoundException($this->mcpDatabaseUser);
         }
 
-        $this->dropViews();
+        $this->defaultConnection->transactional(function (): void {
+            $this->dropViews();
 
-        $viewsSchemaName = $this->defaultConnection->quoteSingleIdentifier(self::VIEWS_SCHEMA_NAME);
-        $mcpDatabaseUser = $this->defaultConnection->quoteSingleIdentifier($this->mcpDatabaseUser);
+            $viewsSchemaName = $this->defaultConnection->quoteSingleIdentifier(self::VIEWS_SCHEMA_NAME);
+            $mcpDatabaseUser = $this->defaultConnection->quoteSingleIdentifier($this->mcpDatabaseUser);
 
-        $this->defaultConnection->executeStatement(sprintf('CREATE SCHEMA %s', $viewsSchemaName));
+            $this->defaultConnection->executeStatement(sprintf('CREATE SCHEMA %s', $viewsSchemaName));
 
-        foreach ($this->getExposedColumnNamesIndexedByTableNames() as $tableName => $columnNames) {
-            $quotedTableName = $this->defaultConnection->quoteSingleIdentifier($tableName);
+            foreach ($this->getExposedColumnNamesIndexedByTableNames() as $tableName => $columnNames) {
+                $quotedTableName = $this->defaultConnection->quoteSingleIdentifier($tableName);
 
-            $this->defaultConnection->executeStatement(sprintf(
-                'CREATE VIEW %s.%s AS SELECT %s FROM public.%s',
-                $viewsSchemaName,
-                $quotedTableName,
-                implode(', ', array_map($this->defaultConnection->quoteSingleIdentifier(...), $columnNames)),
-                $quotedTableName,
-            ));
-        }
+                $this->defaultConnection->executeStatement(sprintf(
+                    'CREATE VIEW %s.%s AS SELECT %s FROM public.%s',
+                    $viewsSchemaName,
+                    $quotedTableName,
+                    implode(', ', array_map($this->defaultConnection->quoteSingleIdentifier(...), $columnNames)),
+                    $quotedTableName,
+                ));
+            }
 
-        $this->defaultConnection->executeStatement(sprintf('GRANT USAGE ON SCHEMA %s TO %s', $viewsSchemaName, $mcpDatabaseUser));
-        $this->defaultConnection->executeStatement(sprintf('GRANT SELECT ON ALL TABLES IN SCHEMA %s TO %s', $viewsSchemaName, $mcpDatabaseUser));
+            $this->defaultConnection->executeStatement(sprintf('GRANT USAGE ON SCHEMA %s TO %s', $viewsSchemaName, $mcpDatabaseUser));
+            $this->defaultConnection->executeStatement(sprintf('GRANT SELECT ON ALL TABLES IN SCHEMA %s TO %s', $viewsSchemaName, $mcpDatabaseUser));
+        });
     }
 
     /**
