@@ -7,28 +7,28 @@ namespace Shopsys\McpBundle\EventSubscriber;
 use Override;
 use Shopsys\FrameworkBundle\Event\DatabaseSchemaPreparedEvent;
 use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
-use Shopsys\McpBundle\Component\Database\User\McpReadOnlyUserManager;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DatabaseSchemaPreparedSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        protected readonly McpReadOnlyUserManager $mcpReadOnlyUserManager,
+        protected readonly McpDatabaseUserManager $mcpDatabaseUserManager,
         protected readonly McpAvailabilityChecker $mcpAvailabilityChecker,
     ) {
     }
 
-    public function ensureMcpReadOnlyUser(DatabaseSchemaPreparedEvent $databaseSchemaPreparedEvent): void
+    public function ensureMcpDatabaseUser(DatabaseSchemaPreparedEvent $databaseSchemaPreparedEvent): void
     {
         if (!$this->mcpAvailabilityChecker->isAvailable()) {
-            $databaseSchemaPreparedEvent->addMessage('MCP read-only database role was not prepared because MCP database credentials are not configured.');
+            $databaseSchemaPreparedEvent->addMessage('MCP database role was not prepared because MCP database credentials are not configured.');
 
             return;
         }
 
-        $mcpDatabaseUser = $this->mcpReadOnlyUserManager->ensureReadOnlyUser();
+        $mcpDatabaseUser = $this->mcpDatabaseUserManager->ensureMcpUser();
 
-        $databaseSchemaPreparedEvent->addMessage(sprintf('MCP read-only database role "%s" prepared.', $mcpDatabaseUser));
+        $databaseSchemaPreparedEvent->addMessage(sprintf('MCP database role "%s" prepared.', $mcpDatabaseUser));
     }
 
     /**
@@ -38,7 +38,7 @@ class DatabaseSchemaPreparedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            DatabaseSchemaPreparedEvent::class => 'ensureMcpReadOnlyUser',
+            DatabaseSchemaPreparedEvent::class => 'ensureMcpDatabaseUser',
         ];
     }
 }

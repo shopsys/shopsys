@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\Database\User;
 
 use Doctrine\DBAL\Connection;
-use Shopsys\McpBundle\Component\Database\User\McpReadOnlyUserManager;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager;
 use Tests\App\Test\FunctionalTestCase;
 
-final class McpReadOnlyDatabaseRoleTest extends FunctionalTestCase
+final class McpDatabaseRoleTest extends FunctionalTestCase
 {
-    private const string TEST_TABLE_PREFIX = 'mcp_read_only_role_test_';
+    private const string TEST_TABLE_PREFIX = 'mcp_database_role_test_';
     private const string VISIBLE_ROW_VALUE = 'mcp-visible-row';
 
     /**
@@ -23,7 +23,7 @@ final class McpReadOnlyDatabaseRoleTest extends FunctionalTestCase
      */
     private Connection $defaultConnection;
 
-    public function testMcpConnectionUsesDedicatedReadOnlyDatabaseRole(): void
+    public function testMcpConnectionUsesDedicatedDatabaseRole(): void
     {
         $mcpUser = $this->mcpConnection->fetchOne('SELECT current_user');
         $defaultConnectionCurrentUser = $this->defaultConnection->fetchOne('SELECT current_user');
@@ -51,7 +51,7 @@ final class McpReadOnlyDatabaseRoleTest extends FunctionalTestCase
 
         $this->assertNotSame($defaultConnectionCurrentUser, $mcpUser);
         $this->assertFalse((bool)$isSuperuser);
-        $this->assertSame(McpReadOnlyUserManager::CONNECTION_LIMIT, (int)$connectionLimit);
+        $this->assertSame(McpDatabaseUserManager::CONNECTION_LIMIT, (int)$connectionLimit);
         $this->assertTrue((bool)$hasSelectPrivilege);
         $this->assertFalse((bool)$hasInsertPrivilege);
         $this->assertFalse((bool)$hasUpdatePrivilege);
