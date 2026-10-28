@@ -9,6 +9,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'cart-not-found': t('Cart not found.'),
         'company-already-registered': t('Customer is already registered.'),
         'complaint-not-found': t('Complaint not found.'),
+        'electronic-gift-voucher-not-complainable': t('Electronic gift voucher cannot be complained.'),
         'handling-with-logged-customer-comparison': t('Product not found.'),
         'invalid-credentials': t('Invalid credentials.'),
         'invalid-quantity': t('Complaint item quantity exceeds the order item quantity.'),
