@@ -240,7 +240,7 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'nextval is rejected' => [
             'sql' => 'SELECT nextval(\'products_id_seq\') LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'select for update is rejected' => [
@@ -250,102 +250,102 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'setval is rejected' => [
             'sql' => 'SELECT setval(\'products_id_seq\', 1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'set config is rejected' => [
             'sql' => 'SELECT set_config(\'search_path\', \'pg_catalog\', false) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'dblink is rejected' => [
             'sql' => 'SELECT dblink(\'dbname=shopsys\', \'SELECT 1\') LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg cancel backend is rejected' => [
             'sql' => 'SELECT pg_cancel_backend(123) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified pg cancel backend is rejected' => [
             'sql' => 'SELECT pg_catalog.pg_cancel_backend(123) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg terminate backend is rejected' => [
             'sql' => 'SELECT pg_terminate_backend(123) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg advisory function is rejected' => [
             'sql' => 'SELECT pg_advisory_lock(1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified pg advisory function is rejected' => [
             'sql' => 'SELECT pg_catalog.pg_advisory_lock(1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg read file is rejected' => [
             'sql' => "SELECT pg_read_file('postgresql.conf', 0, 100) LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg read binary file is rejected' => [
             'sql' => "SELECT pg_read_binary_file('postgresql.conf', 0, 100) LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg ls dir is rejected' => [
             'sql' => "SELECT pg_ls_dir('.') LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg stat file is rejected' => [
             'sql' => "SELECT pg_stat_file('postgresql.conf') LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg sleep is rejected' => [
             'sql' => 'SELECT pg_sleep(1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'version is rejected' => [
             'sql' => 'SELECT version() LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'current database is rejected' => [
             'sql' => 'SELECT current_database() LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'current setting is rejected' => [
             'sql' => "SELECT current_setting('data_directory') LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'blocked special sql value op current user is rejected' => [
             'sql' => 'SELECT current_user LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'blocked special sql value op current role is rejected' => [
             'sql' => 'SELECT current_role LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'non allowlisted regular function is rejected' => [
             'sql' => 'SELECT md5(name) FROM product_translations LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified safe builtin is rejected' => [
             'sql' => 'SELECT pg_catalog.round(1.23, 1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified column from non public schema is rejected' => [

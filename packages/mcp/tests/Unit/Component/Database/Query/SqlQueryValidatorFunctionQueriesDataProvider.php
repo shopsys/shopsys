@@ -61,22 +61,22 @@ class SqlQueryValidatorFunctionQueriesDataProvider
     {
         yield 'allowed function called with schema is rejected' => [
             'sql' => 'SELECT pg_catalog.extract(\'year\', created_at) FROM orders LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'sql standard syntax of not allowed function is rejected' => [
             'sql' => 'SELECT collation for (number) FROM orders LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'padding function allocating memory beyond the statement timeout is rejected' => [
             'sql' => 'SELECT lpad(\'\', 200000000, \'x\') LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'format with width is rejected' => [
             'sql' => 'SELECT format(\'%200000000s\', \'x\') LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
     }
 }
