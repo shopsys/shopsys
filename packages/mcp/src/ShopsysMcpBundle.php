@@ -20,7 +20,7 @@ class ShopsysMcpBundle extends AbstractBundle
     protected const string MCP_INSTRUCTIONS = <<<'TEXT'
 This server exposes MCP tools, not MCP resources.
 Use the tools in this order: getDatabaseTableNames, then getDatabaseSchema, then executeSql.
-Do not use SELECT * and always include a top-level LIMIT.
+Use unqualified table names and always include a top-level LIMIT.
 TEXT;
 
     #[Override]

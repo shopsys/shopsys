@@ -68,24 +68,11 @@ class ExposedSchemaProviderTest extends TestCase
         $this->assertSame(['product_translations'], array_keys($filteredExposedSchema));
     }
 
-    public function testGetExposedTableNamesAndAllowedColumnsSetIndexedByTableNamesReturnStoredSchemaProjection(): void
+    public function testGetExposedTableNamesReturnsStoredSchemaTableNames(): void
     {
         $exposedSchemaProvider = $this->createExposedSchemaProvider();
 
-        $exposedTableNames = $exposedSchemaProvider->getExposedTableNames();
-        $allowedColumnsSetIndexedByTableNames = $exposedSchemaProvider->getAllowedColumnsSetIndexedByTableNames();
-
-        $this->assertSame(['products', 'product_translations'], $exposedTableNames);
-        $this->assertSame([
-            'products' => [
-                'id' => true,
-                'name' => true,
-            ],
-            'product_translations' => [
-                'id' => true,
-                'locale' => true,
-            ],
-        ], $allowedColumnsSetIndexedByTableNames);
+        $this->assertSame(['products', 'product_translations'], $exposedSchemaProvider->getExposedTableNames());
     }
 
     private function createExposedSchemaProvider(): ExposedSchemaProvider
