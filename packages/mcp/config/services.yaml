@@ -40,6 +40,11 @@ services:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
 
+    Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleChecker:
+        arguments:
+            $defaultConnection: '@doctrine.dbal.default_connection'
+            $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
+
     Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager:
         arguments:
             $defaultConnection: '@doctrine.dbal.default_connection'

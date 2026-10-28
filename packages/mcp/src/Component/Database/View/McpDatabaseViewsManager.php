@@ -6,6 +6,8 @@ namespace Shopsys\McpBundle\Component\Database\View;
 
 use Doctrine\DBAL\Connection;
 use Shopsys\McpBundle\Component\Database\Schema\AllowedDatabaseColumnsProvider;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleChecker;
+use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleNotFoundException;
 
 /**
  * MCP queries run against views in a dedicated schema that contain only the exposed columns of the exposed tables,
@@ -20,6 +22,7 @@ class McpDatabaseViewsManager
     public function __construct(
         protected readonly Connection $defaultConnection,
         protected readonly AllowedDatabaseColumnsProvider $allowedDatabaseColumnsProvider,
+        protected readonly McpDatabaseRoleChecker $mcpDatabaseRoleChecker,
         protected readonly string $mcpDatabaseUser,
     ) {
     }
@@ -37,6 +40,10 @@ class McpDatabaseViewsManager
 
     public function recreateViews(): void
     {
+        if (!$this->mcpDatabaseRoleChecker->exists()) {
+            throw new McpDatabaseRoleNotFoundException($this->mcpDatabaseUser);
+        }
+
         $this->dropViews();
 
         $viewsSchemaName = $this->defaultConnection->quoteSingleIdentifier(self::VIEWS_SCHEMA_NAME);
