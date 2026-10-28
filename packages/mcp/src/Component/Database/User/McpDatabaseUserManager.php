@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use RuntimeException;
 
-class McpReadOnlyUserManager
+class McpDatabaseUserManager
 {
     public const int CONNECTION_LIMIT = 10;
 
@@ -20,7 +20,7 @@ class McpReadOnlyUserManager
     ) {
     }
 
-    public function ensureReadOnlyUser(): string
+    public function ensureMcpUser(): string
     {
         $this->validateConfiguration();
 
@@ -34,7 +34,7 @@ class McpReadOnlyUserManager
         } catch (Exception $exception) {
             throw new RuntimeException(
                 sprintf(
-                    'MCP read-only database role "%s" could not be prepared. Ensure the active database connection can manage roles and grants.',
+                    'MCP database role "%s" could not be prepared. Ensure the active database connection can manage roles and grants.',
                     $this->mcpDatabaseUser,
                 ),
                 previous: $exception,
@@ -51,7 +51,7 @@ class McpReadOnlyUserManager
         }
 
         if ($this->databaseUser === $this->mcpDatabaseUser) {
-            throw new RuntimeException('MCP_DATABASE_USER must differ from the application database owner so MCP can use a dedicated read-only role.');
+            throw new RuntimeException('MCP_DATABASE_USER must differ from the application database owner so MCP can use a dedicated role.');
         }
 
         if (trim($this->mcpDatabasePassword) === '') {

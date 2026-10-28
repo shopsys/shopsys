@@ -40,7 +40,7 @@ services:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
 
-    Shopsys\McpBundle\Component\Database\User\McpReadOnlyUserManager:
+    Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager:
         arguments:
             $defaultConnection: '@doctrine.dbal.default_connection'
             $databaseUser: '%env(DATABASE_USER)%'
