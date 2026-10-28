@@ -172,6 +172,9 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT id::bytea FROM products LIMIT 1',
         ];
 
+        yield 'allowed json value returning type is accepted' => [
+            'sql' => 'SELECT JSON_VALUE(\'1\', \'$\' RETURNING int4) LIMIT 1',
+        ];
 
         yield 'wildcard select is allowed because the views contain exposed columns only' => [
             'sql' => 'SELECT * FROM products LIMIT 10',
@@ -356,17 +359,17 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'non allowlisted type cast shorthand is rejected' => [
             'sql' => "SELECT 'administrators'::regclass::oid LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_DISALLOWED_CAST_TARGET,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
         ];
 
         yield 'non allowlisted type cast via cast syntax is rejected' => [
             'sql' => "SELECT CAST('administrators' AS regclass)::oid LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_DISALLOWED_CAST_TARGET,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
         ];
 
         yield 'non allowlisted type cast on exposed column is rejected' => [
             'sql' => 'SELECT id::text::regclass FROM products LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_DISALLOWED_CAST_TARGET,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
         ];
 
         yield 'range function in from clause is rejected' => [
@@ -388,7 +391,6 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT other.products.id FROM other.products LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
-
 
         yield 'non exposed table in union branch is rejected' => [
             'sql' => 'SELECT 0 UNION ALL SELECT count(*) FROM administrator_mcp_tokens LIMIT 10',
@@ -443,6 +445,36 @@ class SqlQueryValidatorTest extends TestCase
         yield 'schema qualified operator is rejected' => [
             'sql' => 'SELECT id FROM products WHERE id OPERATOR(public.=) 1 LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified operator of any subquery is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE id OPERATOR(public.=) ANY (SELECT id FROM orders) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified sort operator is rejected' => [
+            'sql' => 'SELECT id FROM products ORDER BY id USING OPERATOR(public.<) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'schema qualified collation is rejected' => [
+            'sql' => 'SELECT catnum COLLATE public."C" FROM products LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'non allowlisted json value returning type is rejected' => [
+            'sql' => 'SELECT JSON_VALUE(\'"pg_authid"\', \'$\' RETURNING regclass) LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
+        ];
+
+        yield 'table row type as json value returning type is rejected' => [
+            'sql' => 'SELECT JSON_VALUE(\'{}\', \'$\' RETURNING public.administrators) LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
+        ];
+
+        yield 'json table is rejected' => [
+            'sql' => 'SELECT a FROM JSON_TABLE(\'[1]\', \'$[*]\' COLUMNS (a int4 PATH \'$\')) jt LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
         ];
 
         yield 'unqualified pg catalog relation is rejected' => [

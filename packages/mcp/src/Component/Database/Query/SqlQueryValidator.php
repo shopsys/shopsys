@@ -14,7 +14,7 @@ class SqlQueryValidator
     public const string ERROR_ONLY_SELECT_SUPPORTED = 'Only SELECT statements are supported.';
     public const string ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT = 'The SQL query uses an unsupported read/write construct.';
     public const string ERROR_TABLE_NOT_EXPOSED = 'The SQL query references a table that is not exposed through MCP.';
-    public const string ERROR_DISALLOWED_CAST_TARGET = 'The SQL query uses a cast target that is not allowed.';
+    public const string ERROR_TYPE_NOT_ALLOWED = 'The SQL query uses a type that is not allowed.';
     public const string ERROR_RECURSIVE_CTE_NOT_SUPPORTED = 'Recursive common table expressions are not supported.';
     public const string ERROR_SCHEMA_QUALIFIED_NAME = 'The SQL query must not qualify names with a schema or database. Use unqualified table names.';
     public const string ERROR_LIMIT_REQUIRED_FORMAT = 'The SQL query must include a top-level LIMIT <= %d.';
@@ -27,6 +27,7 @@ class SqlQueryValidator
     protected const string NODE_TAG_FUNC_CALL = 'FuncCall';
     protected const string NODE_TAG_INSERT_STMT = 'InsertStmt';
     protected const string NODE_TAG_INTO_CLAUSE = 'IntoClause';
+    protected const string NODE_TAG_JSON_TABLE = 'JsonTable';
     protected const string NODE_TAG_LOCKING_CLAUSE = 'LockingClause';
     protected const string NODE_TAG_MERGE_STMT = 'MergeStmt';
     protected const string NODE_TAG_RANGE_FUNCTION = 'RangeFunction';
@@ -35,13 +36,13 @@ class SqlQueryValidator
     protected const string NODE_TAG_SELECT_STMT = 'SelectStmt';
     protected const string NODE_TAG_SQL_VALUE_FUNCTION = 'SQLValueFunction';
     protected const string NODE_TAG_STRING = 'String';
-    protected const string NODE_TAG_TYPE_CAST = 'TypeCast';
     protected const string NODE_TAG_UPDATE_STMT = 'UpdateStmt';
 
     protected const array UNSUPPORTED_NODE_TAGS = [
         self::NODE_TAG_DELETE_STMT,
         self::NODE_TAG_INSERT_STMT,
         self::NODE_TAG_INTO_CLAUSE,
+        self::NODE_TAG_JSON_TABLE,
         self::NODE_TAG_LOCKING_CLAUSE,
         self::NODE_TAG_MERGE_STMT,
         self::NODE_TAG_RANGE_FUNCTION,
@@ -105,10 +106,10 @@ class SqlQueryValidator
     ];
 
     /**
-     * Whitelist for PostgreSQL type casts parsed as TypeCast,
-     * for example ::text, ::int4, ::numeric, ::timestamp.
+     * Whitelist for PostgreSQL type names used anywhere in a query,
+     * for example in type casts ::text, ::int4, ::numeric, ::timestamp.
      */
-    protected const array ALLOWED_TYPE_CAST_NAMES = [
+    protected const array ALLOWED_TYPE_NAMES = [
         'bool',
         'boolean',
         'bpchar',
@@ -195,30 +196,20 @@ class SqlQueryValidator
      * The MCP connection resolves unqualified names to the views with exposed columns only (see McpDatabaseViewsManager),
      * so a query can reach anything else only by naming it explicitly. The check therefore walks every node of the tree
      * instead of the known node types, so that no construct can carry such a reference past it:
-     * - any schema or database qualification
+     * - any schema or database qualification of a table, column, operator or collation
      * - an unqualified pg_* relation, because pg_catalog is searched implicitly before the search_path; the allowed relation
-     *   names checked later would not catch it when a query names its CTE pg_* and references the name outside of the CTE scope
+     *   names checked later would not catch it when a query names its CTE pg_* and references the name outside of the CTE scope;
+     *   it relies on PostgreSQL naming all relations in pg_catalog with the pg_ prefix
      *
      * @param array<mixed> $node
      */
     protected function findOutsideViewsSchemaReference(array $node): ?string
     {
-        if (($node['schemaname'] ?? '') !== '' || ($node['catalogname'] ?? '') !== '') {
+        if ($this->isSchemaQualifiedName($node)) {
             return self::ERROR_SCHEMA_QUALIFIED_NAME;
         }
 
-        $wrappedNodeTag = $this->getWrappedNodeTag($node);
-
-        if ($wrappedNodeTag === self::NODE_TAG_COLUMN_REF && count($node[self::NODE_TAG_COLUMN_REF]['fields'] ?? []) > 2) {
-            return self::ERROR_SCHEMA_QUALIFIED_NAME;
-        }
-
-        // OPERATOR(schema.op)
-        if ($wrappedNodeTag === self::NODE_TAG_A_EXPR && count($node[self::NODE_TAG_A_EXPR]['name'] ?? []) > 1) {
-            return self::ERROR_SCHEMA_QUALIFIED_NAME;
-        }
-
-        if ($wrappedNodeTag === self::NODE_TAG_RANGE_VAR && str_starts_with((string)($node[self::NODE_TAG_RANGE_VAR]['relname'] ?? ''), 'pg_')) {
+        if ($this->getWrappedNodeTag($node) === self::NODE_TAG_RANGE_VAR && str_starts_with((string)($node[self::NODE_TAG_RANGE_VAR]['relname'] ?? ''), 'pg_')) {
             return self::ERROR_TABLE_NOT_EXPOSED;
         }
 
@@ -239,6 +230,34 @@ class SqlQueryValidator
 
     /**
      * @param array<mixed> $node
+     */
+    protected function isSchemaQualifiedName(array $node): bool
+    {
+        if (($node['schemaname'] ?? '') !== '' || ($node['catalogname'] ?? '') !== '') {
+            return true;
+        }
+
+        $wrappedNodeTag = $this->getWrappedNodeTag($node);
+
+        if ($wrappedNodeTag === self::NODE_TAG_COLUMN_REF && count($node[self::NODE_TAG_COLUMN_REF]['fields'] ?? []) > 2) {
+            return true;
+        }
+
+        if ($wrappedNodeTag === self::NODE_TAG_A_EXPR && count($node[self::NODE_TAG_A_EXPR]['name'] ?? []) > 1) {
+            return true;
+        }
+
+        foreach (['operName', 'useOp', 'collname'] as $qualifiableNameFieldName) {
+            if (is_array($node[$qualifiableNameFieldName] ?? null) && count($node[$qualifiableNameFieldName]) > 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<mixed> $node
      * @param array<string, bool> $allowedRelationNamesSet
      */
     protected function validateNode(array $node, array $allowedRelationNamesSet): ?string
@@ -249,6 +268,11 @@ class SqlQueryValidator
 
         if ($this->isRecursiveWithClause($node['withClause'] ?? null)) {
             return self::ERROR_RECURSIVE_CTE_NOT_SUPPORTED;
+        }
+
+        // type names are typed fields of casts, but also of other constructs, for example JSON_VALUE(... RETURNING type)
+        if (array_key_exists('typeName', $node) && !$this->isAllowedTypeName($node['typeName'])) {
+            return self::ERROR_TYPE_NOT_ALLOWED;
         }
 
         $wrappedNodeTag = $this->getWrappedNodeTag($node);
@@ -304,10 +328,6 @@ class SqlQueryValidator
             return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
         }
 
-        if ($wrappedNodeTag === self::NODE_TAG_TYPE_CAST && !$this->isAllowedTypeCast($wrappedNode)) {
-            return self::ERROR_DISALLOWED_CAST_TARGET;
-        }
-
         if ($wrappedNodeTag === self::NODE_TAG_RANGE_VAR && !array_key_exists((string)($wrappedNode['relname'] ?? ''), $allowedRelationNamesSet)) {
             return self::ERROR_TABLE_NOT_EXPOSED;
         }
@@ -361,24 +381,21 @@ class SqlQueryValidator
         return in_array($sqlValueFunctionOperator, self::ALLOWED_SPECIAL_SQL_VALUE_OPS, true);
     }
 
-    /**
-     * @param array<string, mixed> $typeCast
-     */
-    protected function isAllowedTypeCast(array $typeCast): bool
+    protected function isAllowedTypeName(mixed $typeName): bool
     {
-        $typeNameParts = $this->getTypeNameParts($typeCast['typeName'] ?? null);
+        $typeNameParts = $this->getTypeNameParts($typeName);
 
         if ($typeNameParts === null || $typeNameParts === []) {
             return false;
         }
 
         if (count($typeNameParts) === 1) {
-            return in_array($typeNameParts[0], self::ALLOWED_TYPE_CAST_NAMES, true);
+            return in_array($typeNameParts[0], self::ALLOWED_TYPE_NAMES, true);
         }
 
         return count($typeNameParts) === 2
             && $typeNameParts[0] === 'pg_catalog'
-            && in_array($typeNameParts[1], self::ALLOWED_TYPE_CAST_NAMES, true);
+            && in_array($typeNameParts[1], self::ALLOWED_TYPE_NAMES, true);
     }
 
     protected function isRecursiveWithClause(mixed $withClause): bool
