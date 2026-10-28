@@ -52,6 +52,7 @@ class SqlQueryValidatorTest extends TestCase
 
     #[DataProvider('provideValidQueries')]
     #[DataProviderExternal(SqlQueryValidatorNodeQueriesDataProvider::class, 'provideValidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorFunctionQueriesDataProvider::class, 'provideValidQueries')]
     public function testValidateReturnsValidResultForSupportedReadOnlyQueries(
         string $sql,
     ): void {
@@ -63,6 +64,7 @@ class SqlQueryValidatorTest extends TestCase
 
     #[DataProvider('provideInvalidQueries')]
     #[DataProviderExternal(SqlQueryValidatorNodeQueriesDataProvider::class, 'provideInvalidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorFunctionQueriesDataProvider::class, 'provideInvalidQueries')]
     public function testValidateReturnsInvalidResultForUnsupportedQueries(
         string $sql,
         string $expectedErrorMessage,
