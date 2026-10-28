@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\Database\User;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\DriverException;
 use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
 use Tests\App\Test\FunctionalTestCase;
 
 final class McpDatabaseRoleTest extends FunctionalTestCase
 {
     private const string TEST_TABLE_PREFIX = 'mcp_database_role_test_';
-    private const string VISIBLE_ROW_VALUE = 'mcp-visible-row';
+    private const string HIDDEN_ROW_VALUE = 'mcp-hidden-row';
 
     /**
      * @inject doctrine.dbal.mcp_connection
@@ -33,17 +35,18 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
         $connectionLimit = $this->mcpConnection->fetchOne(
             'SELECT rolconnlimit FROM pg_roles WHERE rolname = current_user',
         );
-        $hasSelectPrivilege = $this->mcpConnection->fetchOne(
-            "SELECT has_table_privilege(current_user, 'public.administrator_roles', 'SELECT')",
+        // the MCP connection sets some of them per session as well, so the role defaults are read from the catalog
+        $roleSettings = $this->mcpConnection->fetchFirstColumn(
+            'SELECT unnest(setconfig) FROM pg_db_role_setting WHERE setrole = current_user::regrole AND setdatabase = 0',
         );
-        $hasInsertPrivilege = $this->mcpConnection->fetchOne(
-            "SELECT has_table_privilege(current_user, 'public.administrator_roles', 'INSERT')",
+        $hasSelectPrivilegeOnView = $this->mcpConnection->fetchOne(
+            "SELECT has_table_privilege(current_user, 'mcp.administrators', 'SELECT')",
         );
-        $hasUpdatePrivilege = $this->mcpConnection->fetchOne(
-            "SELECT has_table_privilege(current_user, 'public.administrator_roles', 'UPDATE')",
+        $hasInsertPrivilegeOnView = $this->mcpConnection->fetchOne(
+            "SELECT has_table_privilege(current_user, 'mcp.administrators', 'INSERT')",
         );
-        $hasDeletePrivilege = $this->mcpConnection->fetchOne(
-            "SELECT has_table_privilege(current_user, 'public.administrator_roles', 'DELETE')",
+        $hasUsagePrivilegeOnPublicSchema = $this->mcpConnection->fetchOne(
+            "SELECT has_schema_privilege(current_user, 'public', 'USAGE')",
         );
         $hasCreatePrivilegeOnPublicSchema = $this->mcpConnection->fetchOne(
             "SELECT has_schema_privilege(current_user, 'public', 'CREATE')",
@@ -52,14 +55,27 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
         $this->assertNotSame($defaultConnectionCurrentUser, $mcpUser);
         $this->assertFalse((bool)$isSuperuser);
         $this->assertSame(McpDatabaseUserManager::CONNECTION_LIMIT, (int)$connectionLimit);
-        $this->assertTrue((bool)$hasSelectPrivilege);
-        $this->assertFalse((bool)$hasInsertPrivilege);
-        $this->assertFalse((bool)$hasUpdatePrivilege);
-        $this->assertFalse((bool)$hasDeletePrivilege);
+        $this->assertEqualsCanonicalizing([
+            'search_path=' . McpDatabaseViewsManager::VIEWS_SCHEMA_NAME,
+            'default_transaction_read_only=on',
+            'work_mem=' . McpDatabaseUserManager::WORK_MEM,
+            'temp_file_limit=' . McpDatabaseUserManager::TEMP_FILE_LIMIT,
+        ], $roleSettings);
+        $this->assertTrue((bool)$hasSelectPrivilegeOnView);
+        $this->assertFalse((bool)$hasInsertPrivilegeOnView);
+        $this->assertTrue((bool)$hasUsagePrivilegeOnPublicSchema);
         $this->assertFalse((bool)$hasCreatePrivilegeOnPublicSchema);
     }
 
-    public function testMcpConnectionCanReadNewTableCreatedByApplicationDatabaseUser(): void
+    public function testMcpConnectionCannotReadTablesOfPublicSchema(): void
+    {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('permission denied');
+
+        $this->mcpConnection->fetchOne('SELECT password FROM public.administrators LIMIT 1');
+    }
+
+    public function testMcpConnectionCannotReadNewTableCreatedByApplicationDatabaseUser(): void
     {
         $tableName = self::TEST_TABLE_PREFIX . bin2hex(random_bytes(6));
         $quotedTableName = $this->defaultConnection->quoteSingleIdentifier($tableName);
@@ -72,14 +88,15 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
             $this->defaultConnection->executeStatement(sprintf(
                 'INSERT INTO public.%s (value) VALUES (?)',
                 $quotedTableName,
-            ), [self::VISIBLE_ROW_VALUE]);
+            ), [self::HIDDEN_ROW_VALUE]);
 
-            $visibleValue = $this->mcpConnection->fetchOne(sprintf(
+            $this->expectException(DriverException::class);
+            $this->expectExceptionMessage('permission denied');
+
+            $this->mcpConnection->fetchOne(sprintf(
                 'SELECT value FROM public.%s LIMIT 1',
                 $quotedTableName,
             ));
-
-            $this->assertSame(self::VISIBLE_ROW_VALUE, $visibleValue);
         } finally {
             $this->defaultConnection->executeStatement(sprintf(
                 'DROP TABLE IF EXISTS public.%s',
