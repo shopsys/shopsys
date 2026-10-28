@@ -21,4 +21,12 @@ class McpDatabaseRoleChecker
             [$this->mcpDatabaseUser],
         );
     }
+
+    public function canUsePublicSchema(): bool
+    {
+        return (bool)$this->defaultConnection->fetchOne(
+            'SELECT has_schema_privilege(?, \'public\', \'USAGE\')',
+            [$this->mcpDatabaseUser],
+        );
+    }
 }

@@ -8,12 +8,13 @@ use Doctrine\DBAL\Connection;
 use Shopsys\McpBundle\Component\Database\Schema\AllowedDatabaseColumnsProvider;
 use Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleChecker;
 use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleNotFoundException;
+use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleWithoutPublicSchemaUsageException;
 
 /**
  * MCP queries run against views in a dedicated schema that contain only the exposed columns of the exposed tables,
  * so hidden columns do not exist for unqualified names, whatever way of referencing a column a query uses.
  * Whether the MCP role can also read the tables in the public schema directly depends on how the role is provisioned,
- * the recommended setup grants it nothing there (see McpDatabaseUserManager), the SQL validator rejects such references as well.
+ * the recommended setup grants it no privileges on the tables there (see McpDatabaseUserManager), the SQL validator rejects such references as well.
  */
 class McpDatabaseViewsManager
 {
@@ -45,6 +46,10 @@ class McpDatabaseViewsManager
     {
         if (!$this->mcpDatabaseRoleChecker->exists()) {
             throw new McpDatabaseRoleNotFoundException($this->mcpDatabaseUser);
+        }
+
+        if (!$this->mcpDatabaseRoleChecker->canUsePublicSchema()) {
+            throw new McpDatabaseRoleWithoutPublicSchemaUsageException($this->mcpDatabaseUser);
         }
 
         $this->defaultConnection->transactional(function (): void {
