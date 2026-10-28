@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\McpBundle\Unit\Component\Database\Query;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 use Shopsys\McpBundle\Component\Database\Query\Exception\SqlQueryParsingException;
 use Shopsys\McpBundle\Component\Database\Query\PostgresQueryParser;
@@ -50,6 +51,7 @@ class SqlQueryValidatorTest extends TestCase
     }
 
     #[DataProvider('provideValidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorNodeQueriesDataProvider::class, 'provideValidQueries')]
     public function testValidateReturnsValidResultForSupportedReadOnlyQueries(
         string $sql,
     ): void {
@@ -60,6 +62,7 @@ class SqlQueryValidatorTest extends TestCase
     }
 
     #[DataProvider('provideInvalidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorNodeQueriesDataProvider::class, 'provideInvalidQueries')]
     public function testValidateReturnsInvalidResultForUnsupportedQueries(
         string $sql,
         string $expectedErrorMessage,
@@ -172,10 +175,6 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT id::bytea FROM products LIMIT 1',
         ];
 
-        yield 'allowed json value returning type is accepted' => [
-            'sql' => 'SELECT JSON_VALUE(\'1\', \'$\' RETURNING int4) LIMIT 1',
-        ];
-
         yield 'wildcard select is allowed because the views contain exposed columns only' => [
             'sql' => 'SELECT * FROM products LIMIT 10',
         ];
@@ -244,7 +243,7 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'select for update is rejected' => [
             'sql' => 'SELECT id FROM products LIMIT 10 FOR UPDATE',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_CONSTRUCT,
         ];
 
         yield 'setval is rejected' => [
@@ -374,7 +373,7 @@ class SqlQueryValidatorTest extends TestCase
 
         yield 'range function in from clause is rejected' => [
             'sql' => 'SELECT value FROM generate_series(1, 2) AS t(value) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_CONSTRUCT,
         ];
 
         yield 'non exposed table is rejected' => [
@@ -462,19 +461,9 @@ class SqlQueryValidatorTest extends TestCase
             'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'non allowlisted json value returning type is rejected' => [
-            'sql' => 'SELECT JSON_VALUE(\'"pg_authid"\', \'$\' RETURNING regclass) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
-        ];
-
-        yield 'table row type as json value returning type is rejected' => [
-            'sql' => 'SELECT JSON_VALUE(\'{}\', \'$\' RETURNING public.administrators) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
-        ];
-
         yield 'json table is rejected' => [
             'sql' => 'SELECT a FROM JSON_TABLE(\'[1]\', \'$[*]\' COLUMNS (a int4 PATH \'$\')) jt LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_CONSTRUCT,
         ];
 
         yield 'unqualified pg catalog relation is rejected' => [

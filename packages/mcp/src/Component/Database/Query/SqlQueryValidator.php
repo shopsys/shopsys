@@ -13,6 +13,7 @@ class SqlQueryValidator
     public const string ERROR_EMPTY_QUERY = 'SQL query must not be empty.';
     public const string ERROR_ONLY_SELECT_SUPPORTED = 'Only SELECT statements are supported.';
     public const string ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT = 'The SQL query uses an unsupported read/write construct.';
+    public const string ERROR_UNSUPPORTED_CONSTRUCT = 'The SQL query uses an unsupported construct. Use plain SELECT with joins, subqueries, CTEs, CASE, operators, and allowed functions and casts.';
     public const string ERROR_TABLE_NOT_EXPOSED = 'The SQL query references a table that is not exposed through MCP.';
     public const string ERROR_TYPE_NOT_ALLOWED = 'The SQL query uses a type that is not allowed.';
     public const string ERROR_RECURSIVE_CTE_NOT_SUPPORTED = 'Recursive common table expressions are not supported.';
@@ -21,33 +22,58 @@ class SqlQueryValidator
 
     protected const string NODE_TAG_A_CONST = 'A_Const';
     protected const string NODE_TAG_A_EXPR = 'A_Expr';
+    protected const string NODE_TAG_A_INDICES = 'A_Indices';
+    protected const string NODE_TAG_A_INDIRECTION = 'A_Indirection';
+    protected const string NODE_TAG_A_STAR = 'A_Star';
     protected const string NODE_TAG_COLUMN_REF = 'ColumnRef';
     protected const string NODE_TAG_COMMON_TABLE_EXPR = 'CommonTableExpr';
-    protected const string NODE_TAG_DELETE_STMT = 'DeleteStmt';
     protected const string NODE_TAG_FUNC_CALL = 'FuncCall';
-    protected const string NODE_TAG_INSERT_STMT = 'InsertStmt';
-    protected const string NODE_TAG_INTO_CLAUSE = 'IntoClause';
-    protected const string NODE_TAG_JSON_TABLE = 'JsonTable';
-    protected const string NODE_TAG_LOCKING_CLAUSE = 'LockingClause';
-    protected const string NODE_TAG_MERGE_STMT = 'MergeStmt';
-    protected const string NODE_TAG_RANGE_FUNCTION = 'RangeFunction';
-    protected const string NODE_TAG_RANGE_TABLE_FUNC = 'RangeTableFunc';
     protected const string NODE_TAG_RANGE_VAR = 'RangeVar';
     protected const string NODE_TAG_SELECT_STMT = 'SelectStmt';
     protected const string NODE_TAG_SQL_VALUE_FUNCTION = 'SQLValueFunction';
     protected const string NODE_TAG_STRING = 'String';
-    protected const string NODE_TAG_UPDATE_STMT = 'UpdateStmt';
 
-    protected const array UNSUPPORTED_NODE_TAGS = [
-        self::NODE_TAG_DELETE_STMT,
-        self::NODE_TAG_INSERT_STMT,
-        self::NODE_TAG_INTO_CLAUSE,
-        self::NODE_TAG_JSON_TABLE,
-        self::NODE_TAG_LOCKING_CLAUSE,
-        self::NODE_TAG_MERGE_STMT,
-        self::NODE_TAG_RANGE_FUNCTION,
-        self::NODE_TAG_RANGE_TABLE_FUNC,
-        self::NODE_TAG_UPDATE_STMT,
+    /**
+     * Whitelist for the PostgreSQL parse tree nodes a query may consist of. Anything else, including any syntax
+     * added in future PostgreSQL versions, is rejected, so that no construct can call a function or reach an object
+     * the other checks do not know about. Some of the nodes are checked further, see validateWrappedNode().
+     */
+    protected const array ALLOWED_NODE_TAGS = [
+        self::NODE_TAG_SELECT_STMT,
+        'ResTarget',
+        self::NODE_TAG_RANGE_VAR,
+        'RangeSubselect',
+        'JoinExpr',
+        self::NODE_TAG_COMMON_TABLE_EXPR,
+        'SortBy',
+        'WindowDef',
+        'GroupingSet',
+        'List',
+        self::NODE_TAG_COLUMN_REF,
+        self::NODE_TAG_A_STAR,
+        self::NODE_TAG_A_CONST,
+        self::NODE_TAG_STRING,
+        'Integer',
+        'Float',
+        'Boolean',
+        'A_ArrayExpr',
+        'RowExpr',
+        self::NODE_TAG_A_INDICES,
+        self::NODE_TAG_A_INDIRECTION,
+        self::NODE_TAG_A_EXPR,
+        'BoolExpr',
+        'NullTest',
+        'BooleanTest',
+        'SubLink',
+        'CaseExpr',
+        'CaseWhen',
+        'CoalesceExpr',
+        'MinMaxExpr',
+        'CollateClause',
+        'GroupingFunc',
+        'TypeCast',
+        self::NODE_TAG_FUNC_CALL,
+        self::NODE_TAG_SQL_VALUE_FUNCTION,
     ];
 
     /**
@@ -141,11 +167,6 @@ class SqlQueryValidator
     ) {
     }
 
-    /**
-     * Which columns a query can read is enforced by the database: the MCP connection resolves unqualified names
-     * to views that contain only the exposed columns (see McpDatabaseViewsManager). The validator therefore only
-     * keeps the query a single read-only SELECT within the views schema, with allowed functions and casts and a LIMIT.
-     */
     public function validate(string $sql): SqlQueryValidationResult
     {
         if (trim($sql) === '') {
@@ -270,7 +291,6 @@ class SqlQueryValidator
             return self::ERROR_RECURSIVE_CTE_NOT_SUPPORTED;
         }
 
-        // type names are typed fields of casts, but also of other constructs, for example JSON_VALUE(... RETURNING type)
         if (array_key_exists('typeName', $node) && !$this->isAllowedTypeName($node['typeName'])) {
             return self::ERROR_TYPE_NOT_ALLOWED;
         }
@@ -309,8 +329,12 @@ class SqlQueryValidator
         array $wrappedNode,
         array $allowedRelationNamesSet,
     ): ?string {
-        if (in_array($wrappedNodeTag, self::UNSUPPORTED_NODE_TAGS, true)) {
-            return self::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT;
+        if ($this->isParseTreeNodeTag($wrappedNodeTag) && !in_array($wrappedNodeTag, self::ALLOWED_NODE_TAGS, true)) {
+            return self::ERROR_UNSUPPORTED_CONSTRUCT;
+        }
+
+        if ($wrappedNodeTag === self::NODE_TAG_A_INDIRECTION && !$this->isAllowedIndirection($wrappedNode)) {
+            return self::ERROR_UNSUPPORTED_CONSTRUCT;
         }
 
         if (
@@ -357,6 +381,26 @@ class SqlQueryValidator
         }
 
         return $cteNames;
+    }
+
+    /**
+     * PostgreSQL reads (expression).name as a call of the function name, so only subscripts and (expression).* are allowed.
+     * alias.name is read the same way when the relation has no such column, it cannot be told apart from a column
+     * without resolving the names, but it reaches only the built-in functions taking a whole row.
+     *
+     * @param array<string, mixed> $indirection
+     */
+    protected function isAllowedIndirection(array $indirection): bool
+    {
+        foreach ($indirection['indirection'] ?? [] as $indirectionItem) {
+            $indirectionItemTag = is_array($indirectionItem) ? $this->getWrappedNodeTag($indirectionItem) : null;
+
+            if ($indirectionItemTag !== self::NODE_TAG_A_INDICES && $indirectionItemTag !== self::NODE_TAG_A_STAR) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -458,6 +502,14 @@ class SqlQueryValidator
         }
 
         return $typeNameParts;
+    }
+
+    /**
+     * Parse tree node tags start with an upper case letter, the typed fields of the nodes with a lower case one.
+     */
+    protected function isParseTreeNodeTag(string $wrappedNodeTag): bool
+    {
+        return ctype_upper($wrappedNodeTag[0]);
     }
 
     /**
