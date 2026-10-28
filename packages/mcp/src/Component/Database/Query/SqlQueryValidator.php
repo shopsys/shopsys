@@ -135,6 +135,7 @@ class SqlQueryValidator
         'nth_value',
         'ntile',
         'nullif',
+        'overlaps',
         'percent_rank',
         'percentile_cont',
         'percentile_disc',
@@ -160,6 +161,7 @@ class SqlQueryValidator
         'strpos',
         'substring',
         'sum',
+        'timezone',
         'to_char',
         'to_date',
         'to_timestamp',
@@ -461,14 +463,28 @@ class SqlQueryValidator
     }
 
     /**
+     * The parser turns SQL standard syntax, for example EXTRACT(... FROM ...), TRIM(...) or ... AT TIME ZONE ...,
+     * into calls of pg_catalog functions, a call written by the client with a schema is not marked like that.
+     *
      * @param array<string, mixed> $funcCall
      */
     protected function isAllowedFunctionCall(array $funcCall): bool
     {
         $functionNameParts = $this->getFunctionNameParts($funcCall);
 
-        return $functionNameParts !== null
-            && count($functionNameParts) === 1
+        if ($functionNameParts === null) {
+            return false;
+        }
+
+        if (
+            count($functionNameParts) === 2
+            && $functionNameParts[0] === 'pg_catalog'
+            && ($funcCall['funcformat'] ?? null) === 'COERCE_SQL_SYNTAX'
+        ) {
+            array_shift($functionNameParts);
+        }
+
+        return count($functionNameParts) === 1
             && in_array($functionNameParts[0], self::ALLOWED_REGULAR_FUNCTION_NAMES, true);
     }
 

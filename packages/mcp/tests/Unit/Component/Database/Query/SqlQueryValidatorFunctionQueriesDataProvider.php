@@ -29,6 +29,14 @@ class SqlQueryValidatorFunctionQueriesDataProvider
             'sql' => 'SELECT date_part(\'year\', created_at), age(now(), created_at), date_bin(\'1 day\', created_at, \'2000-01-01\') FROM orders LIMIT 10',
         ];
 
+        yield 'sql standard syntax of allowed functions is allowed' => [
+            'sql' => 'SELECT EXTRACT(YEAR FROM created_at), substring(number FROM 1 FOR 2), position(\'1\' IN number), trim(BOTH \' \' FROM number), created_at AT TIME ZONE \'UTC\' FROM orders LIMIT 10',
+        ];
+
+        yield 'overlaps is allowed' => [
+            'sql' => 'SELECT id FROM orders WHERE (created_at, created_at) OVERLAPS (current_date - 7, current_date) LIMIT 10',
+        ];
+
         yield 'statistical functions are allowed' => [
             'sql' => 'SELECT stddev_samp(id), var_pop(id), corr(id, domain_id), max(width_bucket(id, 0, 1000, 10)) FROM orders LIMIT 1',
         ];
@@ -51,6 +59,16 @@ class SqlQueryValidatorFunctionQueriesDataProvider
      */
     public static function provideInvalidQueries(): iterable
     {
+        yield 'allowed function called with schema is rejected' => [
+            'sql' => 'SELECT pg_catalog.extract(\'year\', created_at) FROM orders LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+        ];
+
+        yield 'sql standard syntax of not allowed function is rejected' => [
+            'sql' => 'SELECT collation for (number) FROM orders LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+        ];
+
         yield 'padding function allocating memory beyond the statement timeout is rejected' => [
             'sql' => 'SELECT lpad(\'\', 200000000, \'x\') LIMIT 1',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
