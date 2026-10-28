@@ -75,23 +75,6 @@ class ExposedSchemaProvider
         return array_keys($this->getStoredExposedSchema());
     }
 
-    /**
-     * @return array<string, array<string, bool>>
-     */
-    public function getAllowedColumnsSetIndexedByTableNames(): array
-    {
-        $allowedColumnsSetIndexedByTableNames = [];
-
-        foreach ($this->getStoredExposedSchema() as $tableName => $tableSchema) {
-            $allowedColumnsSetIndexedByTableNames[$tableName] = array_fill_keys(
-                array_keys($tableSchema['columns']),
-                true,
-            );
-        }
-
-        return $allowedColumnsSetIndexedByTableNames;
-    }
-
     public function generateExposedSchemaJson(): string
     {
         return json_encode(
