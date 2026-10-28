@@ -9,6 +9,7 @@ use Shopsys\McpBundle\Component\Database\Schema\AllowedDatabaseColumnsProvider;
 use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
 use Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleChecker;
 use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleNotFoundException;
+use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleWithoutPublicSchemaUsageException;
 use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
 use Shopsys\McpBundle\EventSubscriber\MigrationsSubscriber;
 use Shopsys\MigrationBundle\Event\MigrationsFinishedEvent;
@@ -18,6 +19,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
 {
     private const string NON_EXISTENT_MCP_DATABASE_USER = 'mcp_views_test_non_existent_role';
+    private const string MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE = 'mcp_views_test_role_without_public_schema_usage';
 
     /**
      * @inject
@@ -75,17 +77,31 @@ class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
 
     public function testRecreateViewsFailsWhenMcpDatabaseRoleDoesNotExist(): void
     {
-        $connection = $this->em->getConnection();
-        $mcpDatabaseViewsManager = new McpDatabaseViewsManager(
-            $connection,
-            $this->allowedDatabaseColumnsProvider,
-            new McpDatabaseRoleChecker($connection, self::NON_EXISTENT_MCP_DATABASE_USER),
-            self::NON_EXISTENT_MCP_DATABASE_USER,
-        );
-
         $this->expectException(McpDatabaseRoleNotFoundException::class);
 
-        $mcpDatabaseViewsManager->recreateViews();
+        $this->createMcpDatabaseViewsManager(self::NON_EXISTENT_MCP_DATABASE_USER)->recreateViews();
+    }
+
+    public function testRecreateViewsFailsWhenMcpDatabaseRoleCannotUsePublicSchema(): void
+    {
+        // roles are created transactionally, so the rollback of the test removes it
+        $this->em->getConnection()->executeStatement(sprintf('CREATE ROLE %s', self::MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE));
+
+        $this->expectException(McpDatabaseRoleWithoutPublicSchemaUsageException::class);
+
+        $this->createMcpDatabaseViewsManager(self::MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE)->recreateViews();
+    }
+
+    private function createMcpDatabaseViewsManager(string $mcpDatabaseUser): McpDatabaseViewsManager
+    {
+        $connection = $this->em->getConnection();
+
+        return new McpDatabaseViewsManager(
+            $connection,
+            $this->allowedDatabaseColumnsProvider,
+            new McpDatabaseRoleChecker($connection, $mcpDatabaseUser),
+            $mcpDatabaseUser,
+        );
     }
 
     /**
