@@ -72,6 +72,12 @@ class CustomerUserRoleResolverTest extends TestCase
             'expectedResult' => true,
         ];
 
+        yield 'customer manager can assign self manage included in managing customers' => [
+            'customerUserRoles' => [CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS],
+            'rolesToAssign' => [CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE],
+            'expectedResult' => true,
+        ];
+
         yield 'customer manager cannot assign all roles' => [
             'customerUserRoles' => [CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS],
             'rolesToAssign' => [CustomerUserRole::ROLE_API_ALL],
