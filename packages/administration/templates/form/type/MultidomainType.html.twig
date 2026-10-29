@@ -3,7 +3,9 @@
     <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
         {{ form_label(form) }}
 
-        {{ form_help(form) }}
+        {% if help %}
+            <div class="mb-2">{{ form_help(form) }}</div>
+        {% endif %}
 
         {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\FormTypeLayout::LAYOUT_INLINE') %}
             {% set itemCount = form|length %}
