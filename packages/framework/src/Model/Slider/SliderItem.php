@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Slider;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Override;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Attributes\EntityImage;
@@ -33,6 +34,17 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     protected $id;
+
+    /**
+     * @var string
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'guid', unique: true)]
+    protected $uuid {
+        set {
+            $this->uuid = $value ?: Uuid::uuid4()->toString();
+        }
+    }
 
     /**
      * @var string
@@ -115,6 +127,7 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
 
     public function __construct(SliderItemData $sliderItemData)
     {
+        $this->uuid = $sliderItemData->uuid;
         $this->setData($sliderItemData);
     }
 
@@ -142,6 +155,14 @@ class SliderItem implements OrderableEntityInterface, DomainSeparatedEntityInter
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**
