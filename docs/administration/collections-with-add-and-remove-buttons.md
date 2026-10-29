@@ -41,14 +41,28 @@ All other `CollectionType` options work as usual, especially:
 
 ## Customizing the look
 
-To change how the entries look, give the collection its own block prefix and embed the shared template in its widget block, overriding only the blocks you need:
+To change how the entries look, create your own collection type with `InteractiveCollectionType` as its parent:
 
 ```php
-$builder->add('flags', InteractiveCollectionType::class, [
-    'entry_type' => PromoCodeFlagType::class,
-    'block_prefix' => 'promo_code_flag_collection',
-]);
+final class PromoCodeFlagCollectionType extends AbstractType
+{
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'entry_type' => PromoCodeFlagType::class,
+            'add_label' => t('Add another flag'),
+            'empty_message' => t('Add some flag'),
+        ]);
+    }
+
+    public function getParent(): string
+    {
+        return InteractiveCollectionType::class;
+    }
+}
 ```
+
+Then embed the shared template in the widget block of the type, overriding only the blocks you need:
 
 ```twig
 {% block promo_code_flag_collection_widget %}
@@ -69,6 +83,8 @@ $builder->add('flags', InteractiveCollectionType::class, [
 
 The current entry is available as `entry`, the collection as `form`.
 Newly added entries are rendered from the same blocks, so they look the same as the existing ones.
+
+If you only need to change the look of a single collection, you can skip the own type and set the `block_prefix` option of `InteractiveCollectionType` instead, e.g. `'block_prefix' => 'transport_prices_with_limits_collection'` renders the collection with the `transport_prices_with_limits_collection_widget` block.
 
 ## Extending the behaviour
 
