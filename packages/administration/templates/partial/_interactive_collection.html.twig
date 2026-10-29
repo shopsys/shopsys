@@ -7,7 +7,7 @@
 {% endset %}
 
 {# keys of the collection data do not have to be sequential (e.g. after an entry was removed and saved) #}
-{% set nextIndex = max([0]|merge(form.children|keys|filter(key => key matches '/^\\d+$/')|map(key => key + 1))) %}
+{% set nextIndex = form.children is empty ? 0 : max(form.children|keys) + 1 %}
 
 <div id="{{ form.vars.id }}"
      data-controller="interactive-collection"
