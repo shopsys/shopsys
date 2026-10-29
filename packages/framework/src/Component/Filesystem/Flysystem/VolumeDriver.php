@@ -13,9 +13,12 @@ class VolumeDriver extends Driver
     #[Override]
     protected function configure()
     {
-        @parent::configure();
-
         $thumbnailPath = $this->options['tmbPath'];
+
+        // disable thumbnail path in the parent class, because it is not compatible with Flysystem
+        $this->options['tmbPath'] = null;
+
+        @parent::configure();
 
         if (!$thumbnailPath) {
             return;
@@ -120,19 +123,26 @@ class VolumeDriver extends Driver
     #[Override]
     protected function createTmb($thumbnailPath, $stat)
     {
-        @mkdir($this->tmbPath, 0777, true);
+        // the parent creates the thumbnail on the local disk, so it is created in the temporary directory and then saved to the filesystem
+        $thumbnailDirectory = $this->tmbPath;
+        $this->tmbPath = $this->getTempPath();
 
-        $name = parent::createTmb($thumbnailPath, $stat);
+        try {
+            $name = parent::createTmb($thumbnailPath, $stat);
+        } finally {
+            $this->tmbPath = $thumbnailDirectory;
+        }
 
         if ($name !== false) {
-            $fp = fopen($this->createThumbnailPath($name), 'rb');
+            $temporaryThumbnailPath = $this->getTempPath() . DIRECTORY_SEPARATOR . $name;
+            $fp = fopen($temporaryThumbnailPath, 'rb');
 
             if ($fp === false) {
                 return false;
             }
 
             $this->_save($fp, $this->tmbPath, $name, $stat);
-            unlink($this->createThumbnailPath($name));
+            unlink($temporaryThumbnailPath);
         }
 
         return $name;

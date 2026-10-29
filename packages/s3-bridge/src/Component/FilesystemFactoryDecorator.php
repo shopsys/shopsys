@@ -21,18 +21,19 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     }
 
     #[Override]
-    public function create(): FilesystemOperator
+    public function create(string $rootDirectory = ''): FilesystemOperator
     {
         if ($this->s3Configuration->isConfigured()) {
             $s3Adapter = new AwsS3V3Adapter(
                 $this->createS3Client(),
                 $this->s3Configuration->bucketName,
+                ltrim($rootDirectory, '/'),
             );
 
             return new Filesystem($s3Adapter, ['visibility' => Visibility::PUBLIC]);
         }
 
-        return $this->inner->create();
+        return $this->inner->create($rootDirectory);
     }
 
     protected function createS3Client(): S3Client

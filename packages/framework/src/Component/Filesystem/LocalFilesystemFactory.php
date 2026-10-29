@@ -12,9 +12,9 @@ use Override;
 class LocalFilesystemFactory implements FilesystemFactoryInterface
 {
     #[Override]
-    public function create(): FilesystemOperator
+    public function create(string $rootDirectory = ''): FilesystemOperator
     {
-        $adapter = new LocalFilesystemAdapter('/');
+        $adapter = new LocalFilesystemAdapter('/' . ltrim($rootDirectory, '/'));
 
         return new Filesystem($adapter);
     }

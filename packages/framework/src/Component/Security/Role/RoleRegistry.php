@@ -97,6 +97,25 @@ final class RoleRegistry implements RoleRegistryInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getRoleIdentifiersWithAnyPermission(string $context, array $permissions): array
+    {
+        $roleIdentifiers = [];
+
+        foreach ($this->getRoles($context) as $role) {
+            foreach ($permissions as $permission) {
+                if ($role->hasPermission($permission)) {
+                    $roleIdentifiers[] = RoleIdentifierHelper::getIdentifierWithPermission($role->getConstant(), $permission);
+                }
+            }
+        }
+
+        return $roleIdentifiers;
+    }
+
+    /**
      * @param class-string<\Shopsys\FrameworkBundle\Component\Context\AbstractContext> $context
      */
     private function getRoleCollection(string $context): RoleCollection
