@@ -29,7 +29,7 @@
                         <a href="{{ protectedUrl('admin_order_edit_changestatus', {id: order.id, statusId: status.id,}) }}"
                            class="dropdown-item{% if order.status.id == status.id %} active{% endif %}"
                            data-confirm-window
-                           data-confirm-message="{{ 'Do you really want to change order status to <strong>%s</strong>?'|trans({'%s': status.name}) }}"
+                           data-confirm-message="{{ 'Do you really want to change order status to <strong>%s</strong>?'|trans({'%s': status.name|e}) }}"
                            data-confirm-style="warning"
                         >
                             <span class="status status-{{ status.type|order_status_color }}">

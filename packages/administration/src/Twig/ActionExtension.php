@@ -11,11 +11,13 @@ use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
 use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
 use Shopsys\AdministrationBundle\Component\Security\AccessControl\AccessControlDataProviderInterface;
+use Shopsys\FrameworkBundle\Component\Html\EscapedMessageInterpolator;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface;
 use Twig\Extension\AbstractExtension;
+use Twig\Markup;
 use Twig\TwigFunction;
 
 class ActionExtension extends AbstractExtension
@@ -25,6 +27,7 @@ class ActionExtension extends AbstractExtension
         protected readonly RouteAccessCheckerInterface $routeAccessChecker,
         protected readonly RouteCsrfProtector $csrfProtector,
         protected readonly AccessControlDataProviderInterface $accessControlDataProvider,
+        protected readonly EscapedMessageInterpolator $escapedMessageInterpolator,
     ) {
     }
 
@@ -43,7 +46,21 @@ class ActionExtension extends AbstractExtension
                 'action_has_access',
                 $this->checkActionAccess(...),
             ),
+            new TwigFunction(
+                'action_confirm_message',
+                $this->createConfirmMessageHtml(...),
+            ),
         ];
+    }
+
+    /**
+     * Returns a plain string (not \Twig\Markup), so Twig escapes the HTML once more when it is printed into an HTML attribute
+     *
+     * @param array<string, string|int|\Twig\Markup|null> $parameters
+     */
+    protected function createConfirmMessageHtml(string|Markup $message, array $parameters): string
+    {
+        return (string)$this->escapedMessageInterpolator->createHtml($message, $parameters);
     }
 
     protected function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): string

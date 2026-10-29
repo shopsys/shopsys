@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface;
+use Twig\Markup;
 
 /**
  * This class is used for defining row actions in grid.
@@ -20,7 +21,12 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
     private ?string $additionalClass = null;
 
-    private ?string $confirmMessage = null;
+    private string|Markup|null $confirmMessage = null;
+
+    /**
+     * @var array<string, string|int|\Twig\Markup|null>
+     */
+    private array $confirmMessageParameters = [];
 
     /**
      * @var array<\Closure(mixed, self): void>
@@ -43,10 +49,14 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
 
     /**
      * If you want to show confirm dialog before action is executed, use this method to set confirm message.
+     *
+     * @param string|\Twig\Markup $confirmMessage translated message, a string is rendered as plain text and \Twig\Markup as HTML, keep dynamic values out of it and pass them in $parameters
+     * @param array<string, string|int|\Twig\Markup|null> $parameters placeholders replaced in the message by escaped values
      */
-    public function setConfirmMessage(string $confirmMessage): self
+    public function setConfirmMessage(string|Markup $confirmMessage, array $parameters = []): self
     {
         $this->confirmMessage = $confirmMessage;
+        $this->confirmMessageParameters = $parameters;
 
         return $this;
     }
@@ -150,17 +160,14 @@ final class RowAction extends AbstractRoutableAction implements GridRowActionInt
             $this->attributes['class'] .= ' ' . $this->additionalClass;
         }
 
-        if ($this->confirmMessage !== null) {
-            $this->attributes['data-confirm-message'] = $this->confirmMessage;
-            $this->attributes['data-confirm-window'] = true;
-        }
-
         return [
             'name' => $this->name,
             'label' => $this->label,
             'icon' => $this->icon,
             'actionRoute' => $this->actionRoute,
             'disabled' => $this->isDisabled,
+            'confirmMessage' => $this->confirmMessage,
+            'confirmMessageParameters' => $this->confirmMessageParameters,
         ];
     }
 

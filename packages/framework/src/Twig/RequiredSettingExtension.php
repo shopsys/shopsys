@@ -9,6 +9,7 @@ use Override;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Html\EscapedMessageInterpolator;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
@@ -48,6 +49,7 @@ class RequiredSettingExtension extends AbstractExtension
         protected readonly PaymentFacade $paymentFacade,
         protected readonly TransportFacade $transportFacade,
         protected readonly ProductReviewEnabledChecker $productReviewEnabledChecker,
+        protected readonly EscapedMessageInterpolator $escapedMessageInterpolator,
     ) {
     }
 
@@ -106,8 +108,8 @@ class RequiredSettingExtension extends AbstractExtension
 
             $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Shipping or payment is not set for domain %domainName%.</a>',
+            $this->addRequiredSettingsMessage(
+                t('<a href="%url%">Shipping or payment is not set for domain %domainName%.</a>'),
                 [
                     '%url%' => $this->generateUrlWithSelectedDomainTab('admin_transportandpayment_list', $domainId),
                     '%domainName%' => $domainConfig->getName(),
@@ -119,8 +121,8 @@ class RequiredSettingExtension extends AbstractExtension
     protected function checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled(): void
     {
         if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Some required email templates are not fully set.</a>',
+            $this->addRequiredSettingsMessage(
+                t('<a href="%url%">Some required email templates are not fully set.</a>'),
                 [
                     '%url%' => $this->router->generate('admin_mail_template'),
                 ],
@@ -131,8 +133,8 @@ class RequiredSettingExtension extends AbstractExtension
     protected function checkAtLeastOneStockExists(): void
     {
         if ($this->stockFacade->getCount() === 0) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no warehouses, you need to create some.</a>',
+            $this->addRequiredSettingsMessage(
+                t('<a href="%url%">There are no warehouses, you need to create some.</a>'),
                 [
                     '%url%' => $this->router->generate('admin_stock_list'),
                 ],
@@ -151,8 +153,8 @@ class RequiredSettingExtension extends AbstractExtension
         foreach ($domainIdsWithoutDefault as $domainId) {
             $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Domain "%domainName%" has no default warehouse.</a>',
+            $this->addRequiredSettingsMessage(
+                t('<a href="%url%">Domain "%domainName%" has no default warehouse.</a>'),
                 [
                     '%url%' => $this->router->generate('admin_stock_list'),
                     '%domainName%' => $domainConfig->getName(),
@@ -168,8 +170,8 @@ class RequiredSettingExtension extends AbstractExtension
         foreach ($defaultButDisabled as $row) {
             $domainConfig = $this->domain->getDomainConfigById($row['domainId']);
 
-            $this->requiredSettingsMessages[] = t(
-                'Warehouse <a href="%url%">%stockName%</a> is set as default on domain "%domainName%" but is not enabled there.',
+            $this->addRequiredSettingsMessage(
+                t('Warehouse <a href="%url%">%stockName%</a> is set as default on domain "%domainName%" but is not enabled there.'),
                 [
                     '%url%' => $this->router->generate('admin_stock_edit', ['id' => $row['stockId']]),
                     '%stockName%' => $row['stockName'],
@@ -182,8 +184,8 @@ class RequiredSettingExtension extends AbstractExtension
     protected function checkAtLeastOneCountryExists(): void
     {
         if ($this->countryFacade->getCount() === 0) {
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">There are no countries, you need to create some.</a>',
+            $this->addRequiredSettingsMessage(
+                t('<a href="%url%">There are no countries, you need to create some.</a>'),
                 [
                     '%url%' => $this->router->generate('admin_country_list'),
                 ],
@@ -198,8 +200,8 @@ class RequiredSettingExtension extends AbstractExtension
         foreach ($notConfiguredDomainIds as $domainId) {
             $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-            $this->requiredSettingsMessages[] = t(
-                '<a href="%url%">Phone prefixes are not configured for domain %domainName%.</a>',
+            $this->addRequiredSettingsMessage(
+                t('<a href="%url%">Phone prefixes are not configured for domain %domainName%.</a>'),
                 [
                     '%url%' => $this->generateUrlWithSelectedDomainTab('admin_phoneprefix_settings', $domainId),
                     '%domainName%' => $domainConfig->getName(),
@@ -214,8 +216,8 @@ class RequiredSettingExtension extends AbstractExtension
             $domainConfig = $this->domain->getDomainConfigById($domainId);
 
             if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
-                $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">Term and conditions article for domain %domainName% is not set.</a>',
+                $this->addRequiredSettingsMessage(
+                    t('<a href="%url%">Term and conditions article for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_termsandconditions', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -224,8 +226,8 @@ class RequiredSettingExtension extends AbstractExtension
             }
 
             if ($this->setting->getForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
-                $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">Privacy policy article for domain %domainName% is not set.</a>',
+                $this->addRequiredSettingsMessage(
+                    t('<a href="%url%">Privacy policy article for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_privacypolicy', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -234,8 +236,8 @@ class RequiredSettingExtension extends AbstractExtension
             }
 
             if ($this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
-                $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">User consent policy article for domain %domainName% is not set.</a>',
+                $this->addRequiredSettingsMessage(
+                    t('<a href="%url%">User consent policy article for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_userconsentpolicy_setting', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -246,8 +248,8 @@ class RequiredSettingExtension extends AbstractExtension
             if ($this->productReviewEnabledChecker->isEnabledForDomain($domainId)
                 && $this->setting->getForDomain(Setting::PRODUCT_REVIEW_POLICY_ARTICLE_ID, $domainConfig->getId()) === null
             ) {
-                $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">Product review policy article for domain %domainName% is not set.</a>',
+                $this->addRequiredSettingsMessage(
+                    t('<a href="%url%">Product review policy article for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('shopsys_administration_productreviewpolicy_setting', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -290,12 +292,20 @@ class RequiredSettingExtension extends AbstractExtension
             $message .= sprintf(
                 '<li><a href="%s">%s</a></li>',
                 $this->router->generate('admin_parametervalues_edit', ['id' => $parameter->getId()]),
-                $parameter->getName(),
+                $this->escapedMessageInterpolator->escape($parameter->getName()),
             );
         }
         $message .= '</ul>';
 
         $this->requiredSettingsMessages[] = $message;
+    }
+
+    /**
+     * @param array<string, string|int> $parameters
+     */
+    protected function addRequiredSettingsMessage(string $message, array $parameters = []): void
+    {
+        $this->requiredSettingsMessages[] = $this->escapedMessageInterpolator->interpolate($message, $parameters);
     }
 
     protected function checkPublicHolidaysAreSet(): void
@@ -324,8 +334,8 @@ class RequiredSettingExtension extends AbstractExtension
 
         foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
             if (!$this->closedDayFacade->hasPublicHolidays($domainId, $yearStart, $yearEnd)) {
-                $this->requiredSettingsMessages[] = t(
-                    '<a href="%url%">Public holidays for year %year% are not set.</a>',
+                $this->addRequiredSettingsMessage(
+                    t('<a href="%url%">Public holidays for year %year% are not set.</a>'),
                     [
                         '%url%' => $this->router->generate('admin_crud_closed_day_list'),
                         '%year%' => $year,
