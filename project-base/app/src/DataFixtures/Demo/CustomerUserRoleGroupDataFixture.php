@@ -75,6 +75,10 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
             $customerUserRoleGroupData->names[$locale] = t('Customer manager', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $customerUserRoleGroupData->roles = [
+            CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
+            CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES,
+            CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION,
+            CustomerUserRole::ROLE_API_COMPLAINT_CREATION,
             CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS,
         ];
 

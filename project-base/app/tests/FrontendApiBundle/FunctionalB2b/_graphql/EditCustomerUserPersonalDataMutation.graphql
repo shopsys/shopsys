@@ -23,6 +23,8 @@ mutation EditCustomerUserPersonalDataMutation(
         roleGroup {
             uuid
         }
+        roles
+        canRoleGroupBeChangedByCurrentCustomerUser
         telephone
         telephoneData {
             countryCode

@@ -354,7 +354,7 @@ QueryDecorator:
                 type: '[CustomerUserRoleGroup!]!'
                 resolve: "@=query('customerUserRoleGroupsQuery')"
                 access: "@=isGranted('is_company_owner_voter')"
-                description: "Returns all customer user role groups"
+                description: "Returns customer user role groups the current customer user can assign"
             complaint:
                 type: "Complaint!"
                 args:

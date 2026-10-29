@@ -13,10 +13,10 @@ use Shopsys\FrameworkBundle\Component\Security\Role\RoleRegistryInterface;
 /**
  * Generates role hierarchy for Frontend API context
  */
-final class CustomerUserRoleHierarchyProvider extends AbstractRoleHierarchyProvider
+class CustomerUserRoleHierarchyProvider extends AbstractRoleHierarchyProvider
 {
     public function __construct(
-        private readonly RoleRegistryInterface $roleRegistry,
+        protected readonly RoleRegistryInterface $roleRegistry,
     ) {
     }
 
@@ -39,15 +39,26 @@ final class CustomerUserRoleHierarchyProvider extends AbstractRoleHierarchyProvi
 
         return array_merge(
             $this->buildSystemRoleHierarchy($regularRoles),
+            $this->buildCustomerManagementRoleHierarchy(),
             $this->buildPermissionHierarchy($regularRoles),
         );
+    }
+
+    /**
+     * @return array<string, string[]>
+     */
+    protected function buildCustomerManagementRoleHierarchy(): array
+    {
+        return [
+            CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS => [CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE],
+        ];
     }
 
     /**
      * @param array<\Shopsys\FrameworkBundle\Component\Security\Role\Role> $regularRoles
      * @return array<string, string[]>
      */
-    private function buildSystemRoleHierarchy(array $regularRoles): array
+    protected function buildSystemRoleHierarchy(array $regularRoles): array
     {
         /** @var string[] $roles */
         $roles = [];
@@ -66,7 +77,7 @@ final class CustomerUserRoleHierarchyProvider extends AbstractRoleHierarchyProvi
     /**
      * @return array<\Shopsys\FrameworkBundle\Component\Security\Role\Role>
      */
-    private function getRegularRoles(): array
+    protected function getRegularRoles(): array
     {
         return array_filter(
             $this->roleRegistry->getRoles($this->getTargetContext()),
