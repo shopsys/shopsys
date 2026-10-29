@@ -8,10 +8,4 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 
 class SliderItemData extends BaseSliderItemData
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
-     */
-    public $mobileImage;
-
-    public ?string $uuid = null;
 }

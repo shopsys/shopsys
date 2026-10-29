@@ -3,6 +3,9 @@ SliderItemDecorator:
     decorator: true
     config:
         fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
             name:
                 type: "String!"
                 description: "Slider name"

@@ -22,6 +22,11 @@ class SliderItemData
     public $image;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $mobileImage;
+
+    /**
      * @var bool
      */
     public $hidden;
@@ -55,6 +60,11 @@ class SliderItemData
      * @var \DateTimeImmutable|null
      */
     public $datetimeVisibleTo;
+
+    /**
+     * @var string|null
+     */
+    public $uuid;
 
     public function __construct()
     {

@@ -4,77 +4,12 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Model\Slider\SliderItemFacade;
 use Override;
-use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
-use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
-use Shopsys\FrameworkBundle\Form\ImageUploadType;
-use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints;
 
 final class SliderItemFormTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $this->buildImagesGroup($builder, $options);
-    }
-
-    private function buildImagesGroup(FormBuilderInterface $builder, array $options): void
-    {
-        $builderImageGroup = $builder->get('image');
-
-        $imageConstraints = [
-            new MustUploadFile(),
-        ];
-
-        $builderImageGroup
-            ->add('image', ImageUploadType::class, [
-                'required' => $options['scenario'] === SliderItemFormType::SCENARIO_CREATE,
-                'constraints' => $imageConstraints,
-                'image_entity_class' => SliderItem::class,
-                'image_type' => SliderItemFacade::IMAGE_TYPE_WEB,
-                'file_constraints' => [
-                    new Constraints\File(
-                        maxSize: '15M',
-                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
-                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                        extensions: [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
-                    ),
-                ],
-                'label' => t('Upload image'),
-                'entity' => $options['slider_item'],
-                'info_text' => t('You can upload following formats: PNG, JPG'),
-                'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
-            ]);
-
-        $builderImageGroup
-            ->add('mobileImage', ImageUploadType::class, [
-                'required' => $options['scenario'] === SliderItemFormType::SCENARIO_CREATE,
-                'constraints' => $imageConstraints,
-                'image_entity_class' => SliderItem::class,
-                'image_type' => SliderItemFacade::IMAGE_TYPE_MOBILE,
-                'file_constraints' => [
-                    new Constraints\File(
-                        maxSize: '15M',
-                        maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
-                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                        extensions: [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
-                    ),
-                ],
-                'label' => t('Upload image for mobile devices'),
-                'entity' => $options['slider_item'],
-                'info_text' => t('You can upload following formats: PNG, JPG'),
-                'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
-            ]);
-    }
-
     /**
      * {@inheritdoc}
      */
