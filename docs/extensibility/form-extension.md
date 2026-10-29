@@ -29,13 +29,13 @@ Implement this function and return an array containing `class` of `ProductFormTy
 ## Changing rendering of already existing form type
 
 If you want to change the way the form is rendered or if you want to add your own classes, you need to follow a few steps.
-Many of our forms have their own theme, which describes how to render form row. These files are located in `Shopsys/FrameworkBundle/Resources/views/Admin/Form` folder.
+Many of our forms have their own theme, which describes how to render form row. These files are located in the `templates/form` folder of the `shopsys/administration` package.
 Copy the theme of the form type you want to change into your project namespace and replace the file you want to
 change with your own file in `twig/form_themes` in `config/packages/twig.yaml` file. Now you can change whatever you want.
 
 Remember that files you copy into your project cannot be automatically upgraded with newer versions of Shopsys Platform.
 
-If you want to change the whole style of rendering forms in administration, you need to copy the whole [`theme.html.twig`]({{github.link}}/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) which defines the style of
+If you want to change the whole style of rendering forms in administration, you need to copy the whole [`theme.html.twig`]({{github.link}}/packages/administration/templates/form/theme.html.twig) which defines the style of
 rendering default Symfony rows.
 You can read more about `theme.html.twig` below.
 
