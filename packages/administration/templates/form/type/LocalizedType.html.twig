@@ -19,10 +19,13 @@
     <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
         {{ form_label(form) }}
 
+        {% if help %}
+            <div class="mb-2">{{ form_help(form) }}</div>
+        {% endif %}
+
         {% if layout is same as constant('\\Shopsys\\FrameworkBundle\\Form\\FormTypeLayout::LAYOUT_INLINE') %}
             <fieldset>
                 {{ form_widget(form) }}
-                {{ form_help(form) }}
             </fieldset>
         {% else %}
             {% set itemCount = form|length %}
