@@ -50,7 +50,7 @@ You can learn how to set up multiple cron instances in [Working with Multiple Cr
 
 !!! note
 
-    For testing purposes (e.g., on CI server) there is a special phing target `run-all-crons-serially` that allows you to run all the CRON modules serially.
+    For testing purposes (e.g., on CI server) there is a special phing target `cron-run-all-serially` that allows you to run all the CRON modules serially.
 
 ## Cron Limitations
 
