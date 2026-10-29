@@ -70,7 +70,7 @@ At this point we pass this data to previously mentioned helper method and sort t
 use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculatorHelper;
 
 public function __construct(
-    private readonly CategoryNestedSetCalculator $categoryNestedSetCalculatorHelper,
+    private readonly CategoryNestedSetCalculatorHelper $categoryNestedSetCalculatorHelper,
 ) {
 }
 
