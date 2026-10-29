@@ -58,8 +58,28 @@
 {%- endblock -%}
 
 {%- block form_label_class -%}
-    col-xl-2
+    {%- if not label_wrapped_in_column|default(false) -%}
+        col-xl-2
+    {%- endif -%}
 {%- endblock form_label_class %}
+
+{# help of a collection is rendered under the label, because below all the entries it is easily overlooked #}
+{%- block collection_row -%}
+    {%- if help is empty or label is same as(false) -%}
+        {{- block('form_row') -}}
+    {%- else -%}
+        <div{% with {attr: row_attr|merge({class: (row_attr.class|default('mb-3') ~ ' row')|trim})} %}{{ block('attributes') }}{% endwith %}>
+            <div class="col-xl-2">
+                {{- form_label(form, null, {label_wrapped_in_column: true, label_attr: label_attr|merge({class: (label_attr.class|default('') ~ ' pb-0')|trim})}) -}}
+                {{- form_help(form) -}}
+            </div>
+            <div class="{{ block('form_group_class') }}">
+                {{- form_widget(form, {attr: attr|merge({'aria-describedby': id ~ '_help'})}) -}}
+                {{- form_errors(form) -}}
+            </div>
+        </div>
+    {%- endif -%}
+{%- endblock -%}
 
 {%- block form_group_class -%}
     {# if label is not rendered, render form group with full width #}
