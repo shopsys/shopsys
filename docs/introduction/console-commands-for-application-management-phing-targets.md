@@ -43,12 +43,12 @@ Let us take look at the first one, that is located in the same file:
 ```xml
 <target
     name="build-deploy-part-1-db-independent"
-    depends="clean,composer-prod,dirs-create,domains-urls-check,assets,npm"
+    depends="build-version-generate,clean,composer-prod,dirs-create,assets,npm"
     description="First part of application build for production preserving your DB (can be run without maintenance page)."
 />
 ```
 
-Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
+Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`build-version-generate`,`clean`,`composer-prod`,`dirs-create`,`assets`,`npm`).
 
 !!! note
 

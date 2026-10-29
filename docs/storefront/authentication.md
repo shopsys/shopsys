@@ -5,7 +5,7 @@
 If you didn't do it previously, you have to generate private keys for the Frontend API.
 
 ```bash
-php phing frontend-generate-new-keys
+php phing frontend-api-generate-new-keys
 ```
 
 ## Authentication mechanism
