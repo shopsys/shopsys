@@ -12,13 +12,11 @@ use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStocksType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductCatnum;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
@@ -673,14 +671,6 @@ final class ProductFormType extends AbstractType
         $builderParametersGroup
             ->add($builder->create('parameters', ProductParameterValueType::class, [
                 'required' => false,
-                'add_label' => t('Add another parameter'),
-                'empty_message' => t('Add some parameters'),
-                'entry_type' => ProductParameterValueFormType::class,
-                'constraints' => [
-                    new UniqueProductParameters(
-                        message: 'Parameter {{ parameterName }} is used more than once',
-                    ),
-                ],
                 'label' => false,
             ])
                 ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));

@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Form\Admin\PromoCode\Constraint\UniqueFlags;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -175,11 +174,8 @@ final class PromoCodeFormType extends AbstractType
         $limitsGroup->add(
             $limitsGroup->create('limits', PromoCodeLimitCollectionType::class, [
                 'label' => false,
-                'entry_type' => PromoCodeLimitType::class,
                 'entry_options' => ['discount' => $discountOptions],
                 'required' => false,
-                'add_label' => t('Add another limit'),
-                'empty_message' => t('Add limit'),
                 'constraints' => [
                     new Constraints\Count(
                         min: 1,
@@ -218,14 +214,8 @@ final class PromoCodeFormType extends AbstractType
 
         $flagsGroup->add('flags', PromoCodeFlagCollectionType::class, [
             'label' => false,
-            'entry_type' => PromoCodeFlagType::class,
             'entry_options' => ['label' => false],
             'required' => false,
-            'add_label' => t('Add another flag'),
-            'empty_message' => t('Add some flag'),
-            'constraints' => [
-                new UniqueFlags(),
-            ],
         ]);
 
         $builder->add($flagsGroup);
