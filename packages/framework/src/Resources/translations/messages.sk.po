@@ -127,23 +127,65 @@ msgstr "Aktívny"
 msgid "Add"
 msgstr "Pridať"
 
+msgid "Add another flag"
+msgstr "Pridať ďalšiu značku"
+
+msgid "Add another limit"
+msgstr "Pridať ďalší limit"
+
+msgid "Add another mail whitelist pattern"
+msgstr "Pridať ďalší vzor bieleho zoznamu emailov"
+
+msgid "Add another parameter"
+msgstr "Pridať ďalší parameter"
+
+msgid "Add another price with weight limit"
+msgstr "Pridať ďalšiu cenu s hmotnostným limitom"
+
 msgid "Add customer user"
 msgstr "Pridať zákazníka"
 
 msgid "Add files"
 msgstr "Pridať súbory"
 
+msgid "Add item"
+msgstr "Pridať položku"
+
+msgid "Add language combination"
+msgstr "Pridať kombináciu jazykov"
+
+msgid "Add limit"
+msgstr "Pridať limit"
+
 msgid "Add new customer user to %companyName%"
 msgstr "Pridať nového zákazníka do %companyName%"
 
+msgid "Add opening hours"
+msgstr "Pridať otváracie hodiny"
+
 msgid "Add product"
 msgstr "Pridať produkt"
+
+msgid "Add some alternate language combinations"
+msgstr "Pridať niektoré alternatívne kombinácie jazykov"
+
+msgid "Add some flag"
+msgstr "Pridať niektoré značky"
+
+msgid "Add some mail whitelist patterns"
+msgstr "Pridať niektoré vzory bieleho zoznamu emailov"
+
+msgid "Add some parameters"
+msgstr "Pridať niektoré parametre"
 
 msgid "Add to products"
 msgstr "Pridať k produktom"
 
 msgid "Add variant"
 msgstr "Pridať variant"
+
+msgid "Add video"
+msgstr "Pridať video"
 
 msgid "Added"
 msgstr "Pridané"
