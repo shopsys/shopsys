@@ -16,6 +16,7 @@ class McpSessionSettingsDriver extends AbstractDriverMiddleware
         Driver $wrappedDriver,
         protected readonly int $statementTimeoutMilliseconds,
         protected readonly int $lockTimeoutMilliseconds,
+        protected readonly int $workMemKilobytes,
         protected readonly string $viewsSchemaName,
     ) {
         parent::__construct($wrappedDriver);
@@ -37,6 +38,10 @@ class McpSessionSettingsDriver extends AbstractDriverMiddleware
         $connection->exec(sprintf(
             'SET lock_timeout TO %s',
             $connection->quote(sprintf('%dms', $this->lockTimeoutMilliseconds)),
+        ));
+        $connection->exec(sprintf(
+            'SET work_mem TO %s',
+            $connection->quote(sprintf('%dkB', $this->workMemKilobytes)),
         ));
 
         return $connection;

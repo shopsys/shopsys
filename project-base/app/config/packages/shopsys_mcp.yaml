@@ -5,3 +5,4 @@ shopsys_mcp:
         lock_timeout_ms: 1000
         max_returned_rows: 500
         statement_timeout_ms: 10000
+        work_mem_kb: 4096
