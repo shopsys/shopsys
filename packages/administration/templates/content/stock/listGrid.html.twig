@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block grid_value_cell_id_stores %}
-    <div class="badges-list">
+    <div class="badge-list">
         {% include '@ShopsysAdministration/partial/store_links.html.twig' with { stores: storesByStockId[row.s.id] | default([]) } only %}
     </div>
 {% endblock %}

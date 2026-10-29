@@ -1,3 +1,5 @@
+@use '@tabler/core/scss/config' as *;
+
 $sidebar-width: 18rem;
 
 $sidebar-bg: linear-gradient(90deg, #1a2342 0%, #243056 100%);
@@ -88,6 +90,13 @@ $sidebar-mobile-offset: $navbar-height;
 
     .sidebar.navbar-nav {
         padding-bottom: 0.6em;
+    }
+
+    // full-width items without Tabler's sidebar inset
+    .navbar-nav {
+        --tblr-sidebar-inset: 0;
+        --tblr-sidebar-nav-padding-x: 1rem;
+        --tblr-nav-link-icon-width: 1.25rem;
     }
 
     .navbar-divider {

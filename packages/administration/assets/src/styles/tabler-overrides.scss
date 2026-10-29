@@ -15,7 +15,7 @@
 
 // fix disabled button in input group border color
 .input-group {
-    --tblr-btn-disabled-border-color: #{$border-color};
+    --tblr-btn-disabled-border-color: var(--tblr-border-color);
 }
 
 .inline-labeled-field__content {
@@ -39,14 +39,6 @@
 
 .tooltip {
     --tblr-tooltip-max-width: 36em;
-}
-
-// fix empty space on the left (https://github.com/tabler/tabler/issues/2271)
-@include media-breakpoint-up(lg) {
-    :host,
-    :root {
-        margin-left: 0;
-    }
 }
 
 body {
@@ -83,25 +75,28 @@ textarea.form-control.is-invalid {
     vertical-align: text-bottom;
 }
 
-.table > :not(caption) > * > *,
-.markdown > table > :not(caption) > * > * {
+.table > :not(caption) > * > * {
     border-right-width: var(--tblr-border-width);
 }
 
+.card {
+    --tblr-card-cap-padding-y: 1rem;
+}
+
 .card-header {
-    background-color: var(--tblr-gray-200);
+    --tblr-card-header-bg: var(--tblr-gray-200);
 }
 
 .card-header-light {
-    background-color: var(--tblr-gray-50);
+    --tblr-card-header-bg: var(--tblr-gray-50);
 }
 
 .card-header-no-bg {
-    background-color: transparent;
+    --tblr-card-header-bg: transparent;
 }
 
 .card-footer-no-bg {
-    background-color: transparent;
+    --tblr-card-footer-bg: transparent;
 }
 
 .fixed-alert {

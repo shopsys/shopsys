@@ -1,10 +1,9 @@
-@import '@tabler/core/scss/tabler';
+@import '@tabler/core/dist/css/tabler.css';
 
-@import 'tom-select/src/scss/tom-select.bootstrap5';
-@import '@tabler/core/scss/vendor/tom-select';
+@import 'tom-select/dist/css/tom-select.bootstrap5.css';
 @import '@melloware/coloris/dist/coloris.css';
-@import '@tabler/core/scss/vendor/coloris';
 @import 'nouislider/dist/nouislider.css';
+@import '@tabler/core/dist/css/tabler-vendors.css';
 @import '~flatpickr/dist/flatpickr.css';
 
 @import 'form';
