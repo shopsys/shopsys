@@ -26,7 +26,7 @@ Custom form types that honour `disabled` on top of that:
 | `TreeSelectionType` (e.g. `CategoriesType` used for product category assignment)                  | All checkboxes in the tree are disabled, including branches lazily loaded via AJAX; the tree can still be expanded and browsed.                                                                                              |
 | `ProductsType` (product variants, accessories, related products)                                  | Plain list of the assigned products with their images, names and catalogue numbers; no "Add product" button, no delete action, no drag handle, and no products picker JavaScript is attached, so drag-and-drop does nothing. |
 | `RolesType`                                                                                       | The role grid is rendered without its editing controls.                                                                                                                                                                      |
-| `InteractiveCollectionType` (see [Collections with Add and Remove Buttons](./collection-type.md)) | Entries are rendered without the add and remove buttons.                                                                                                                                                                     |
+| `InteractiveCollectionType` (see [Collections with Add and Remove Buttons](./collections-with-add-and-remove-buttons.md)) | Entries are rendered without the add and remove buttons.                                                                                                                                                                     |
 
 ## Field types that do not support disabling yet
 

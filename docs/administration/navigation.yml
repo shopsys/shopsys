@@ -6,6 +6,6 @@ arrange:
     - internal-grid
     - admin-rights.md
     - disabling-form-fields.md
-    - collection-type.md
+    - collections-with-add-and-remove-buttons.md
     - icons.md
     - javascript-utilities.md
