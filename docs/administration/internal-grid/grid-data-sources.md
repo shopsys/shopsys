@@ -77,7 +77,7 @@ As in the case of `QueryBuilderDataSource`, it is possible to change the setting
 ### Tips for optimal usage QueryBuilderDataSource or QueryBuilderWithRowManipulatorDataSource
 
 - The query should return an array of scalar values instead of an entity if the table contains large collections of records.
-- Grid with callback calls the callback for each item separately. To avoid calling SQL queries for each item, use the second parameter of the callback function in which the entire result for the bulk query is stored in the local cache. See. e.g. `Shopsys\FrameworkBundle\Controller\Admin\OrderController::getOrdersGrid()`.
+- Grid with callback calls the callback for each item separately. To avoid calling SQL queries for each item, use the second parameter of the callback function in which the entire result for the bulk query is stored in the local cache. See. e.g. `Shopsys\AdministrationBundle\Controller\OrderListController::getOrdersGrid()`.
 - For large collections, consider turning off the $hint parameter, it may speed up the query.
 - For large collections, create indexes over columns in conditions.
 - For columns in conditions where the LIKE "%something%" condition is used, use a trigram index instead of default B-tree index. (CREATE INDEX example_trgm_idx ON example USING gin (text_column gin_trgm_ops);)

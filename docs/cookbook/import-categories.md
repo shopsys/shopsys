@@ -186,10 +186,10 @@ As we don't change the parent and we don't sort the siblings, there's no reason 
 Now we have all categories created or edited, and we have built the sorted array of IDs with related parent IDs.
 
 ```diff
-+ use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
++ use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculatorHelper;
 
  public function __construct(
-     private readonly CategoryNestedSetCalculator $categoryNestedSetCalculatorHelper,
+     private readonly CategoryNestedSetCalculatorHelper $categoryNestedSetCalculatorHelper,
  ) {
  }
 
