@@ -88,7 +88,6 @@ class SqlExecutor
                 str_starts_with($sqlState, self::POSTGRES_CONNECTION_EXCEPTION_SQLSTATE_PREFIX)
                 || $sqlState === self::POSTGRES_TOO_MANY_CONNECTIONS_SQLSTATE
                 || $sqlState === self::POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE
-                // the lock timeout runs out while migrations recreate the MCP views
                 || $sqlState === self::POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE
             ) {
                 return true;

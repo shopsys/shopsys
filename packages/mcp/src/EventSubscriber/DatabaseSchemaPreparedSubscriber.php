@@ -7,13 +7,13 @@ namespace Shopsys\McpBundle\EventSubscriber;
 use Override;
 use Shopsys\FrameworkBundle\Event\DatabaseSchemaPreparedEvent;
 use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
-use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DatabaseSchemaPreparedSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        protected readonly McpDatabaseUserManager $mcpDatabaseUserManager,
+        protected readonly McpDatabaseUserFacade $mcpDatabaseUserFacade,
         protected readonly McpAvailabilityChecker $mcpAvailabilityChecker,
     ) {
     }
@@ -26,7 +26,7 @@ class DatabaseSchemaPreparedSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $mcpDatabaseUser = $this->mcpDatabaseUserManager->ensureMcpUser();
+        $mcpDatabaseUser = $this->mcpDatabaseUserFacade->ensureMcpUser();
 
         $databaseSchemaPreparedEvent->addMessage(sprintf('MCP database role "%s" prepared.', $mcpDatabaseUser));
     }

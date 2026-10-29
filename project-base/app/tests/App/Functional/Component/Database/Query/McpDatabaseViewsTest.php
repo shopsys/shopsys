@@ -64,12 +64,10 @@ class McpDatabaseViewsTest extends FunctionalTestCase
      */
     public static function provideQueriesResolvedToExposedColumnsOnly(): iterable
     {
-        // PostgreSQL renames the columns by position, the renamed columns are the columns of the view
         yield 'column aliases of table' => [
             'sql' => 'SELECT * FROM administrators a(c1, c2, c3, username) LIMIT 10',
         ];
 
-        // the view has no such column, so PostgreSQL resolves the name to the decoy of the outer query
         yield 'hidden column in subquery behind derived table decoy' => [
             'sql' => 'SELECT (SELECT password FROM administrators LIMIT 1) AS x FROM (SELECT 1 AS password) d LIMIT 10',
         ];

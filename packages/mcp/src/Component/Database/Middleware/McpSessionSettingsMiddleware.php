@@ -14,6 +14,7 @@ class McpSessionSettingsMiddleware implements Middleware
     public function __construct(
         protected readonly int $statementTimeoutMilliseconds,
         protected readonly int $lockTimeoutMilliseconds,
+        protected readonly string $viewsSchemaName,
     ) {
     }
 
@@ -24,6 +25,7 @@ class McpSessionSettingsMiddleware implements Middleware
             $driver,
             $this->statementTimeoutMilliseconds,
             $this->lockTimeoutMilliseconds,
+            $this->viewsSchemaName,
         );
     }
 }

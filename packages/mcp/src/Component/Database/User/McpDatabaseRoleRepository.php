@@ -6,27 +6,26 @@ namespace Shopsys\McpBundle\Component\Database\User;
 
 use Doctrine\DBAL\Connection;
 
-class McpDatabaseRoleChecker
+class McpDatabaseRoleRepository
 {
     public function __construct(
         protected readonly Connection $defaultConnection,
-        protected readonly string $mcpDatabaseUser,
     ) {
     }
 
-    public function exists(): bool
+    public function roleExists(string $roleName): bool
     {
         return (bool)$this->defaultConnection->fetchOne(
             'SELECT 1 FROM pg_roles WHERE rolname = ?',
-            [$this->mcpDatabaseUser],
+            [$roleName],
         );
     }
 
-    public function canUsePublicSchema(): bool
+    public function canRoleUsePublicSchema(string $roleName): bool
     {
         return (bool)$this->defaultConnection->fetchOne(
             'SELECT has_schema_privilege(?, \'public\', \'USAGE\')',
-            [$this->mcpDatabaseUser],
+            [$roleName],
         );
     }
 }

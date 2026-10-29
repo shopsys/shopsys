@@ -9,6 +9,8 @@ use Override;
 use Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -54,6 +56,15 @@ TEXT;
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('database')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('views_schema_name')
+                            ->cannotBeEmpty()
+                            ->defaultValue('mcp')
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
     }
 
@@ -66,6 +77,11 @@ TEXT;
             ->get(McpSessionSettingsMiddleware::class)
                 ->arg('$statementTimeoutMilliseconds', $config['query']['statement_timeout_ms'])
                 ->arg('$lockTimeoutMilliseconds', $config['query']['lock_timeout_ms'])
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseUserFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseViewsFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
             ->get(SqlExecutor::class)
                 ->arg('$maxReturnedRows', $config['query']['max_returned_rows'])
             ->get(SqlQueryValidator::class)
