@@ -9,7 +9,6 @@ use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\Driver\Middleware\AbstractDriverMiddleware;
 use Override;
 use SensitiveParameter;
-use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
 
 class McpSessionSettingsDriver extends AbstractDriverMiddleware
 {
@@ -17,6 +16,7 @@ class McpSessionSettingsDriver extends AbstractDriverMiddleware
         Driver $wrappedDriver,
         protected readonly int $statementTimeoutMilliseconds,
         protected readonly int $lockTimeoutMilliseconds,
+        protected readonly string $viewsSchemaName,
     ) {
         parent::__construct($wrappedDriver);
     }
@@ -29,8 +29,7 @@ class McpSessionSettingsDriver extends AbstractDriverMiddleware
         $connection = parent::connect($params);
 
         $connection->exec('SET default_transaction_read_only TO on');
-        // unqualified names resolve to the views with exposed columns only, see McpDatabaseViewsManager
-        $connection->exec(sprintf('SET search_path TO %s', McpDatabaseViewsManager::VIEWS_SCHEMA_NAME));
+        $connection->exec(sprintf('SET search_path TO %s', $connection->quote($this->viewsSchemaName)));
         $connection->exec(sprintf(
             'SET statement_timeout TO %s',
             $connection->quote(sprintf('%dms', $this->statementTimeoutMilliseconds)),

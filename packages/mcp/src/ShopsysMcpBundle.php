@@ -9,6 +9,8 @@ use Override;
 use Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +24,9 @@ This server exposes MCP tools, not MCP resources.
 Use the tools in this order: getDatabaseTableNames, then getDatabaseSchema, then executeSql.
 Use unqualified table names and always include a top-level LIMIT.
 TEXT;
+
+    protected const array NOT_DEDICATED_SCHEMA_NAMES = ['public', 'information_schema'];
+    protected const string SYSTEM_SCHEMA_NAME_PREFIX = 'pg_';
 
     #[Override]
     public function configure(DefinitionConfigurator $definition): void
@@ -54,7 +59,31 @@ TEXT;
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('database')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('views_schema_name')
+                            ->cannotBeEmpty()
+                            ->defaultValue('mcp')
+                            ->validate()
+                                ->ifTrue(static fn (mixed $viewsSchemaName): bool => !self::isDedicatedSchemaName((string)$viewsSchemaName))
+                                ->thenInvalid('The MCP views schema %s must be a dedicated schema. It is dropped with everything in it on every migration run and it is the only schema in the search_path of the MCP connection, so it must not be "public", a system schema or a list of schemas.')
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
+    }
+
+    /**
+     * The views schema is dropped with everything in it on every migration run and it is the only schema
+     * in the search_path of the MCP connection, so neither public, a system schema nor a list of schemas can be used
+     */
+    protected static function isDedicatedSchemaName(string $schemaName): bool
+    {
+        return !in_array($schemaName, self::NOT_DEDICATED_SCHEMA_NAMES, true)
+            && !str_starts_with($schemaName, self::SYSTEM_SCHEMA_NAME_PREFIX)
+            && !str_contains($schemaName, ',');
     }
 
     #[Override]
@@ -66,6 +95,11 @@ TEXT;
             ->get(McpSessionSettingsMiddleware::class)
                 ->arg('$statementTimeoutMilliseconds', $config['query']['statement_timeout_ms'])
                 ->arg('$lockTimeoutMilliseconds', $config['query']['lock_timeout_ms'])
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseUserFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseViewsFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
             ->get(SqlExecutor::class)
                 ->arg('$maxReturnedRows', $config['query']['max_returned_rows'])
             ->get(SqlQueryValidator::class)

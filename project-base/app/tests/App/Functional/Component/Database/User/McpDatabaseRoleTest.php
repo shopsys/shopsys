@@ -6,14 +6,13 @@ namespace Tests\App\Functional\Component\Database\User;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\DriverException;
-use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserManager;
-use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Tests\App\Test\FunctionalTestCase;
 
 final class McpDatabaseRoleTest extends FunctionalTestCase
 {
     private const string TEST_TABLE_PREFIX = 'mcp_database_role_test_';
-    private const string HIDDEN_ROW_VALUE = 'mcp-hidden-row';
 
     /**
      * @inject doctrine.dbal.mcp_connection
@@ -25,8 +24,15 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
      */
     private Connection $defaultConnection;
 
+    /**
+     * @inject
+     */
+    private McpDatabaseViewsFacade $mcpDatabaseViewsFacade;
+
     public function testMcpConnectionUsesDedicatedDatabaseRole(): void
     {
+        $viewsSchemaName = $this->mcpDatabaseViewsFacade->getViewsSchemaName();
+        $viewName = $this->defaultConnection->quote($viewsSchemaName . '.administrators');
         $mcpUser = $this->mcpConnection->fetchOne('SELECT current_user');
         $defaultConnectionCurrentUser = $this->defaultConnection->fetchOne('SELECT current_user');
         $isSuperuser = $this->mcpConnection->fetchOne(
@@ -35,15 +41,14 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
         $connectionLimit = $this->mcpConnection->fetchOne(
             'SELECT rolconnlimit FROM pg_roles WHERE rolname = current_user',
         );
-        // the MCP connection sets some of them per session as well, so the role defaults are read from the catalog
         $roleSettings = $this->mcpConnection->fetchFirstColumn(
             'SELECT unnest(setconfig) FROM pg_db_role_setting WHERE setrole = current_user::regrole AND setdatabase = 0',
         );
         $hasSelectPrivilegeOnView = $this->mcpConnection->fetchOne(
-            "SELECT has_table_privilege(current_user, 'mcp.administrators', 'SELECT')",
+            sprintf("SELECT has_table_privilege(current_user, %s, 'SELECT')", $viewName),
         );
         $hasInsertPrivilegeOnView = $this->mcpConnection->fetchOne(
-            "SELECT has_table_privilege(current_user, 'mcp.administrators', 'INSERT')",
+            sprintf("SELECT has_table_privilege(current_user, %s, 'INSERT')", $viewName),
         );
         $hasUsagePrivilegeOnPublicSchema = $this->mcpConnection->fetchOne(
             "SELECT has_schema_privilege(current_user, 'public', 'USAGE')",
@@ -54,12 +59,12 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
 
         $this->assertNotSame($defaultConnectionCurrentUser, $mcpUser);
         $this->assertFalse((bool)$isSuperuser);
-        $this->assertSame(McpDatabaseUserManager::CONNECTION_LIMIT, (int)$connectionLimit);
+        $this->assertSame(McpDatabaseUserFacade::CONNECTION_LIMIT, (int)$connectionLimit);
         $this->assertEqualsCanonicalizing([
-            'search_path=' . McpDatabaseViewsManager::VIEWS_SCHEMA_NAME,
+            'search_path=' . $viewsSchemaName,
             'default_transaction_read_only=on',
-            'work_mem=' . McpDatabaseUserManager::WORK_MEM,
-            'temp_file_limit=' . McpDatabaseUserManager::TEMP_FILE_LIMIT,
+            'work_mem=' . McpDatabaseUserFacade::WORK_MEM,
+            'temp_file_limit=' . McpDatabaseUserFacade::TEMP_FILE_LIMIT,
         ], $roleSettings);
         $this->assertTrue((bool)$hasSelectPrivilegeOnView);
         $this->assertFalse((bool)$hasInsertPrivilegeOnView);
@@ -85,10 +90,6 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
                 'CREATE TABLE public.%s (id SERIAL PRIMARY KEY, value VARCHAR(255) NOT NULL)',
                 $quotedTableName,
             ));
-            $this->defaultConnection->executeStatement(sprintf(
-                'INSERT INTO public.%s (value) VALUES (?)',
-                $quotedTableName,
-            ), [self::HIDDEN_ROW_VALUE]);
 
             $this->expectException(DriverException::class);
             $this->expectExceptionMessage('permission denied');

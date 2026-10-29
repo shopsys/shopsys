@@ -7,7 +7,7 @@ namespace Tests\App\Functional\Component\Database\Schema;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
 use Override;
-use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Tests\App\Test\Doctrine\AttributeMappedEntityHelper;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -18,7 +18,7 @@ abstract class AbstractDatabaseSchemaFunctionalTestCase extends TransactionFunct
     /**
      * @inject
      */
-    protected McpDatabaseViewsManager $mcpDatabaseViewsManager;
+    protected McpDatabaseViewsFacade $mcpDatabaseViewsFacade;
 
     #[Override]
     protected function setUp(): void
@@ -26,7 +26,7 @@ abstract class AbstractDatabaseSchemaFunctionalTestCase extends TransactionFunct
         parent::setUp();
 
         $this->skipTestIfNotRunningInMonorepo();
-        $this->mcpDatabaseViewsManager->dropViews();
+        $this->mcpDatabaseViewsFacade->dropViews();
         $this->setUpTestSchema();
     }
 

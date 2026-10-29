@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Database\View;
 
+use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Shopsys\McpBundle\Component\Availability\McpAvailabilityChecker;
 use Shopsys\McpBundle\Component\Database\Schema\AllowedDatabaseColumnsProvider;
 use Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider;
-use Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleChecker;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleRepository;
 use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleNotFoundException;
 use Shopsys\McpBundle\Component\Database\View\Exception\McpDatabaseRoleWithoutPublicSchemaUsageException;
-use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsManager;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsRepository;
 use Shopsys\McpBundle\EventSubscriber\MigrationsSubscriber;
 use Shopsys\MigrationBundle\Event\MigrationsFinishedEvent;
 use Shopsys\MigrationBundle\Event\MigrationsStartingEvent;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
+class McpDatabaseViewsFacadeTest extends TransactionFunctionalTestCase
 {
     private const string NON_EXISTENT_MCP_DATABASE_USER = 'mcp_views_test_non_existent_role';
     private const string MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE = 'mcp_views_test_role_without_public_schema_usage';
@@ -24,7 +26,7 @@ class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private McpDatabaseViewsManager $mcpDatabaseViewsManager;
+    private McpDatabaseViewsFacade $mcpDatabaseViewsFacade;
 
     /**
      * @inject
@@ -36,9 +38,24 @@ class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
      */
     private AllowedDatabaseColumnsProvider $allowedDatabaseColumnsProvider;
 
+    /**
+     * @inject
+     */
+    private McpDatabaseRoleRepository $mcpDatabaseRoleRepository;
+
+    /**
+     * @inject
+     */
+    private McpDatabaseViewsRepository $mcpDatabaseViewsRepository;
+
+    /**
+     * @inject
+     */
+    private DatabaseSchemaFacade $databaseSchemaFacade;
+
     public function testViewsContainExposedColumnsOfExposedTables(): void
     {
-        $this->mcpDatabaseViewsManager->recreateViews();
+        $this->mcpDatabaseViewsFacade->recreateViews();
 
         $expectedColumnNamesIndexedByTableNames = array_map(
             static fn (array $tableSchema): array => array_keys($tableSchema['columns']),
@@ -67,7 +84,7 @@ class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
     {
         $mcpAvailabilityChecker = $this->createStub(McpAvailabilityChecker::class);
         $mcpAvailabilityChecker->method('isAvailable')->willReturn(false);
-        $migrationsSubscriber = new MigrationsSubscriber($this->mcpDatabaseViewsManager, $mcpAvailabilityChecker);
+        $migrationsSubscriber = new MigrationsSubscriber($this->mcpDatabaseViewsFacade, $mcpAvailabilityChecker);
 
         $migrationsSubscriber->dropMcpViews();
         $migrationsSubscriber->recreateMcpViews();
@@ -79,28 +96,28 @@ class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
     {
         $this->expectException(McpDatabaseRoleNotFoundException::class);
 
-        $this->createMcpDatabaseViewsManager(self::NON_EXISTENT_MCP_DATABASE_USER)->recreateViews();
+        $this->createMcpDatabaseViewsFacade(self::NON_EXISTENT_MCP_DATABASE_USER)->recreateViews();
     }
 
     public function testRecreateViewsFailsWhenMcpDatabaseRoleCannotUsePublicSchema(): void
     {
-        // roles are created transactionally, so the rollback of the test removes it
         $this->em->getConnection()->executeStatement(sprintf('CREATE ROLE %s', self::MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE));
 
         $this->expectException(McpDatabaseRoleWithoutPublicSchemaUsageException::class);
 
-        $this->createMcpDatabaseViewsManager(self::MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE)->recreateViews();
+        $this->createMcpDatabaseViewsFacade(self::MCP_DATABASE_USER_WITHOUT_PUBLIC_SCHEMA_USAGE)->recreateViews();
     }
 
-    private function createMcpDatabaseViewsManager(string $mcpDatabaseUser): McpDatabaseViewsManager
+    private function createMcpDatabaseViewsFacade(string $mcpDatabaseUser): McpDatabaseViewsFacade
     {
-        $connection = $this->em->getConnection();
-
-        return new McpDatabaseViewsManager(
-            $connection,
+        return new McpDatabaseViewsFacade(
+            $this->em->getConnection(),
+            $this->databaseSchemaFacade,
             $this->allowedDatabaseColumnsProvider,
-            new McpDatabaseRoleChecker($connection, $mcpDatabaseUser),
+            $this->mcpDatabaseRoleRepository,
+            $this->mcpDatabaseViewsRepository,
             $mcpDatabaseUser,
+            $this->mcpDatabaseViewsFacade->getViewsSchemaName(),
         );
     }
 
@@ -109,17 +126,7 @@ class McpDatabaseViewsManagerTest extends TransactionFunctionalTestCase
      */
     private function getViewColumnNamesIndexedByViewNames(): array
     {
-        $viewColumns = $this->em->getConnection()->fetchAllAssociative(
-            'SELECT table_name, column_name FROM information_schema.columns WHERE table_schema = ? ORDER BY table_name, ordinal_position',
-            [McpDatabaseViewsManager::VIEWS_SCHEMA_NAME],
-        );
-        $viewColumnNamesIndexedByViewNames = [];
-
-        foreach ($viewColumns as $viewColumn) {
-            $viewColumnNamesIndexedByViewNames[(string)$viewColumn['table_name']][] = (string)$viewColumn['column_name'];
-        }
-
-        return $viewColumnNamesIndexedByViewNames;
+        return $this->mcpDatabaseViewsRepository->getColumnNamesIndexedByTableNames($this->mcpDatabaseViewsFacade->getViewsSchemaName());
     }
 
     /**

@@ -274,7 +274,7 @@ class SqlQueryValidator
     }
 
     /**
-     * The MCP connection resolves unqualified names to the views with exposed columns only (see McpDatabaseViewsManager),
+     * The MCP connection resolves unqualified names to the views with exposed columns only (see McpDatabaseViewsFacade),
      * so a query can reach anything else only by naming it explicitly. The check therefore walks every node of the tree
      * instead of the known node types, so that no construct can carry such a reference past it:
      * - any schema or database qualification of a table, column, operator or collation
