@@ -7,9 +7,13 @@ namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 use App\DataFixtures\Demo\CompanyDataFixture;
 use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAssignable;
 use Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupChangeAllowed;
+use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\CustomerUserRoleGroupTestHelper;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
@@ -23,6 +27,16 @@ final class CustomerUserCustomerManagerTest extends GraphQlB2bDomainWithLoginTes
      * @inject
      */
     private CustomerUserRoleGroupTestHelper $customerUserRoleGroupTestHelper;
+
+    /**
+     * @inject
+     */
+    private CustomerUserRoleGroupFacade $customerUserRoleGroupFacade;
+
+    /**
+     * @inject
+     */
+    private CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory;
 
     public function testCustomerUserRoleGroupsReturnsOnlyAssignableRoleGroups(): void
     {
@@ -160,6 +174,25 @@ final class CustomerUserCustomerManagerTest extends GraphQlB2bDomainWithLoginTes
         ksort($actualRoleGroupChangeabilityByEmail);
 
         $this->assertSame($expectedRoleGroupChangeabilityByEmail, $actualRoleGroupChangeabilityByEmail);
+    }
+
+    public function testCustomerUserOnlyManagingCustomersCanChangeOwnPersonalData(): void
+    {
+        $customerUserRoleGroupData = $this->customerUserRoleGroupDataFactory->create();
+        $customerUserRoleGroupData->names = [$this->domain->getLocale() => 'Managing customers only'];
+        $customerUserRoleGroupData->roles = [CustomerUserRole::ROLE_API_MANAGE_CUSTOMERS];
+        $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
+
+        $this->customerUserRoleGroupTestHelper->assignRoleGroup($this->getCustomerUserByDefaultCredentials(), $customerUserRoleGroup);
+
+        $this->logout();
+        $this->login();
+
+        $personalDataInput = ChangePersonalAndCompanyDataInputProvider::getPersonalDataInputArray();
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/ChangePersonalDataMutation.graphql', $personalDataInput);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
+
+        $this->assertSame($personalDataInput['firstName'], $responseData['firstName']);
     }
 
     private function doTestRemoveCustomerUserIsNotAllowed(string $email): void

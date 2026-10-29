@@ -2086,8 +2086,8 @@ msgstr "Text"
 msgid "Main variant"
 msgstr "Hlavní varianta"
 
-msgid "Manage all customers under the user's company"
-msgstr "Spravovat všechny zákazníky pod firmou uživatele"
+msgid "Manage all customers under the user's company (includes managing own data)"
+msgstr "Spravovat všechny zákazníky pod firmou uživatele (včetně správy vlastních údajů)"
 
 msgid "Manage company data (e.g., billing address)"
 msgstr "Spravovat údaje o firmě (např. fakturační adresu)"
