@@ -6,7 +6,7 @@ These factories are responsible for creating and preparing GTM event objects. Th
 
 ```ts
 export const getGtmCartViewEvent = (
-    currencyCode: string; // the code of the currency used on the domain
+    currencyCode: string, // the code of the currency used on the domain
     valueWithoutVat: number, // the value of the cart without VAT
     valueWithVat: number, // the value of the cart with VAT
     products: GtmCartItemType[] | undefined, // products in cart, if available
@@ -29,7 +29,7 @@ export const getGtmContactInformationViewEvent = (
 
 ```ts
 export const getGtmPaymentAndTransportViewEvent = (
-    currencyCode: string; // the code of the currency used on the domain
+    currencyCode: string, // the code of the currency used on the domain
     gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information
 ): GtmPaymentAndTransportViewEventType => {
     // function body not included in this code block
@@ -111,8 +111,8 @@ export const getGtmProductClickEvent = (
 
 ```ts
 export const getGtmProductDetailViewEvent = (
-    product: ProductDetailFragment | MainVariantDetailFragment, // information about the product displayed on on the product detail page
-    currencyCode: string; // the code of the currency used on the domain
+    product: ProductDetailFragment | MainVariantDetailFragment, // information about the product displayed on the product detail page
+    currencyCode: string, // the code of the currency used on the domain
     domainUrl: string, // URL of the current domain
 ): GtmProductDetailViewEventType => {
     // function body not included in this code block
@@ -186,7 +186,7 @@ export const getGtmChangeCartItemEvent = (
     cartItem: CartItemFragment, // removed (or added) cart item
     listIndex: number | undefined, // list index from which the item was removed/added, it can be index within cart (for removing) or index within any other list (for adding)
     quantity: number, // how much was removed/added, absolute value of the delta of the previous and current quantity
-    currencyCode: string; // the code of the currency used on the domain
+    currencyCode: string, // the code of the currency used on the domain
     eventValueWithoutVat: number, // value of the event without VAT, calculated as product price without VAT * quantity
     eventValueWithVat: number, // value of the event with VAT, calculated as product price with VAT * quantity
     gtmProductListName: GtmProductListNameType, // name of the list from which the product was removed/added
@@ -208,7 +208,7 @@ export const getGtmChangeProductListItemEvent = (
         | GtmEventType.remove_from_comparison, // type of the event saying if we are removing or adding items to product list
     product: ProductInterfaceType, // removed or added wishlist/comparison product
     listIndex: number | undefined, // list index from which the item was removed/added
-    currencyCode: string; // the code of the currency used on the domain
+    currencyCode: string, // the code of the currency used on the domain
     gtmProductListName: GtmProductListNameType, // name of the list from which the product was removed/added
     domainUrl: string, // URL of the current domain
     arePricesHidden: boolean, // boolean pointer saying if prices are hidden for the current user

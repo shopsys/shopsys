@@ -69,7 +69,7 @@ If you want to know more about what is happening during installation, continue w
 
 #### 2.1 Enable second domain (optional)
 
-There are two domains each for different language in default installation. First one is available via IP adress `127.0.O.1` and second one via `127.0.0.2`.
+There are two domains each for different language in default installation. First one is available via IP address `127.0.0.1` and second one via `127.0.0.2`.
 `127.0.0.2` is not alias of `127.0.0.1` on Mac by default. To create this alias in network interface run:
 
 ```sh
