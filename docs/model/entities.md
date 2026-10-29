@@ -457,7 +457,7 @@ class BrandDataFactory
 }
 ```
 
-The factory has an implementation in the framework and can be overriden in your project.
+The factory has an implementation in the framework and can be overridden in your project.
 
 ### Full example of entity construction
 

@@ -304,7 +304,7 @@ This effectively skips the constraint because the group will never be active dur
 YourInput:
     type: input-object
     inherits:
-        - ' FrontendApiInputDecorator'
+        - 'FrontendApiInputDecorator'
     config:
         validation:
             # All original decorator constraints FIRST
