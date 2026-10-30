@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\McpBundle\Unit\Component\Database\Query;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 use Shopsys\McpBundle\Component\Database\Query\Exception\SqlQueryParsingException;
 use Shopsys\McpBundle\Component\Database\Query\PostgresQueryParser;
@@ -50,6 +51,8 @@ class SqlQueryValidatorTest extends TestCase
     }
 
     #[DataProvider('provideValidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorNodeQueriesDataProvider::class, 'provideValidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorFunctionQueriesDataProvider::class, 'provideValidQueries')]
     public function testValidateReturnsValidResultForSupportedReadOnlyQueries(
         string $sql,
     ): void {
@@ -60,6 +63,8 @@ class SqlQueryValidatorTest extends TestCase
     }
 
     #[DataProvider('provideInvalidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorNodeQueriesDataProvider::class, 'provideInvalidQueries')]
+    #[DataProviderExternal(SqlQueryValidatorFunctionQueriesDataProvider::class, 'provideInvalidQueries')]
     public function testValidateReturnsInvalidResultForUnsupportedQueries(
         string $sql,
         string $expectedErrorMessage,
@@ -100,11 +105,11 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT p.id, pt.translatable_id FROM products p JOIN product_translations pt ON pt.translatable_id = p.id LIMIT 10',
         ];
 
-        yield 'translation locale column is allowed' => [
+        yield 'column of table aliased in from clause is allowed' => [
             'sql' => 'SELECT pt.locale FROM product_translations pt LIMIT 10',
         ];
 
-        yield 'unqualified column in join is allowed when it belongs to exactly one relation' => [
+        yield 'unqualified column in join is allowed' => [
             'sql' => 'SELECT catnum FROM products p JOIN product_translations pt ON pt.translatable_id = p.id LIMIT 10',
         ];
 
@@ -120,16 +125,12 @@ class SqlQueryValidatorTest extends TestCase
             'sql' => 'SELECT sub.id2 FROM (SELECT id FROM products) AS sub(id2) LIMIT 10',
         ];
 
-        yield 'derived table with exposed column is allowed' => [
+        yield 'derived table is allowed' => [
             'sql' => 'SELECT sub.id FROM (SELECT id FROM administrators) sub LIMIT 10',
         ];
 
         yield 'order by aggregate alias is allowed' => [
             'sql' => 'SELECT customer_id, COUNT(id) AS order_count FROM orders GROUP BY customer_id ORDER BY order_count DESC, customer_id ASC LIMIT 10',
-        ];
-
-        yield 'public schema qualified table and column are allowed' => [
-            'sql' => 'SELECT public.products.id FROM public.products LIMIT 10',
         ];
 
         yield 'correlated subquery is allowed' => [
@@ -175,6 +176,26 @@ class SqlQueryValidatorTest extends TestCase
         yield 'allowed bytea cast is accepted' => [
             'sql' => 'SELECT id::bytea FROM products LIMIT 1',
         ];
+
+        yield 'wildcard select is allowed because the views contain exposed columns only' => [
+            'sql' => 'SELECT * FROM products LIMIT 10',
+        ];
+
+        yield 'hidden column is not checked by the validator, the views do not contain it' => [
+            'sql' => 'SELECT password FROM administrators LIMIT 10',
+        ];
+
+        yield 'natural join is allowed' => [
+            'sql' => 'SELECT id FROM products NATURAL JOIN orders LIMIT 10',
+        ];
+
+        yield 'union of exposed tables is allowed' => [
+            'sql' => 'SELECT id FROM products UNION SELECT id FROM orders LIMIT 10',
+        ];
+
+        yield 'quoted table name of an exposed table is allowed' => [
+            'sql' => 'SELECT p.id FROM "products" p LIMIT 10',
+        ];
     }
 
     /**
@@ -217,149 +238,144 @@ class SqlQueryValidatorTest extends TestCase
             'expectedErrorMessage' => sprintf(SqlQueryValidator::ERROR_LIMIT_REQUIRED_FORMAT, self::MAX_RETURNED_ROWS),
         ];
 
-        yield 'wildcard select is rejected' => [
-            'sql' => 'SELECT * FROM products LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_WILDCARD_SELECT_NOT_SUPPORTED,
-        ];
-
         yield 'nextval is rejected' => [
             'sql' => 'SELECT nextval(\'products_id_seq\') LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'select for update is rejected' => [
             'sql' => 'SELECT id FROM products LIMIT 10 FOR UPDATE',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_CONSTRUCT,
         ];
 
         yield 'setval is rejected' => [
             'sql' => 'SELECT setval(\'products_id_seq\', 1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'set config is rejected' => [
             'sql' => 'SELECT set_config(\'search_path\', \'pg_catalog\', false) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'dblink is rejected' => [
             'sql' => 'SELECT dblink(\'dbname=shopsys\', \'SELECT 1\') LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg cancel backend is rejected' => [
             'sql' => 'SELECT pg_cancel_backend(123) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified pg cancel backend is rejected' => [
             'sql' => 'SELECT pg_catalog.pg_cancel_backend(123) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg terminate backend is rejected' => [
             'sql' => 'SELECT pg_terminate_backend(123) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg advisory function is rejected' => [
             'sql' => 'SELECT pg_advisory_lock(1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified pg advisory function is rejected' => [
             'sql' => 'SELECT pg_catalog.pg_advisory_lock(1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg read file is rejected' => [
             'sql' => "SELECT pg_read_file('postgresql.conf', 0, 100) LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg read binary file is rejected' => [
             'sql' => "SELECT pg_read_binary_file('postgresql.conf', 0, 100) LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg ls dir is rejected' => [
             'sql' => "SELECT pg_ls_dir('.') LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg stat file is rejected' => [
             'sql' => "SELECT pg_stat_file('postgresql.conf') LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'pg sleep is rejected' => [
             'sql' => 'SELECT pg_sleep(1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'version is rejected' => [
             'sql' => 'SELECT version() LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'current database is rejected' => [
             'sql' => 'SELECT current_database() LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'current setting is rejected' => [
             'sql' => "SELECT current_setting('data_directory') LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'blocked special sql value op current user is rejected' => [
             'sql' => 'SELECT current_user LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'blocked special sql value op current role is rejected' => [
             'sql' => 'SELECT current_role LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'non allowlisted regular function is rejected' => [
             'sql' => 'SELECT md5(name) FROM product_translations LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified safe builtin is rejected' => [
             'sql' => 'SELECT pg_catalog.round(1.23, 1) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_FUNCTION_NOT_ALLOWED,
         ];
 
         yield 'schema qualified column from non public schema is rejected' => [
             'sql' => 'SELECT pg_catalog.pg_user.usename FROM products LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
         yield 'cte shadowing pg catalog table is rejected when schema qualified relation is used' => [
             'sql' => 'WITH pg_user AS (SELECT 1 AS x) SELECT pg_catalog.pg_user.usename FROM pg_catalog.pg_user LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
         yield 'non allowlisted type cast shorthand is rejected' => [
             'sql' => "SELECT 'administrators'::regclass::oid LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_DISALLOWED_CAST_TARGET,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
         ];
 
         yield 'non allowlisted type cast via cast syntax is rejected' => [
             'sql' => "SELECT CAST('administrators' AS regclass)::oid LIMIT 1",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_DISALLOWED_CAST_TARGET,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
         ];
 
         yield 'non allowlisted type cast on exposed column is rejected' => [
             'sql' => 'SELECT id::text::regclass FROM products LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_DISALLOWED_CAST_TARGET,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TYPE_NOT_ALLOWED,
         ];
 
         yield 'range function in from clause is rejected' => [
             'sql' => 'SELECT value FROM generate_series(1, 2) AS t(value) LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_CONSTRUCT,
         ];
 
         yield 'non exposed table is rejected' => [
@@ -367,129 +383,104 @@ class SqlQueryValidatorTest extends TestCase
             'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
 
-        yield 'hidden column behind derived table is rejected' => [
-            'sql' => 'SELECT x.password FROM (SELECT password FROM administrators) x LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
-        ];
-
-        yield 'hidden column behind derived table with column alias is rejected' => [
-            'sql' => 'SELECT x.password FROM (SELECT password FROM administrators) AS x(password) LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
-        ];
-
-        yield 'hidden column behind derived table disguised as exposed column alias is rejected' => [
-            'sql' => 'SELECT x.id FROM (SELECT password FROM administrators) AS x(id) LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
-        ];
-
         yield 'non exposed table hidden behind derived table is rejected' => [
             'sql' => 'SELECT x.secret_hash FROM (SELECT secret_hash FROM administrator_mcp_tokens) x LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
 
-        yield 'hidden column in scalar subquery select list is rejected' => [
-            'sql' => 'SELECT (SELECT username FROM administrators LIMIT 1) AS visible_username, (SELECT password FROM administrators LIMIT 1) AS hidden_password LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
-        ];
-
-        yield 'hidden column behind nested derived tables is rejected' => [
-            'sql' => 'SELECT x.username FROM (SELECT username FROM (SELECT username, password FROM administrators) y) x LIMIT 1',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
-        ];
-
         yield 'non public schema table is rejected' => [
             'sql' => 'SELECT other.products.id FROM other.products LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
+        ];
+
+        yield 'non exposed table in union branch is rejected' => [
+            'sql' => 'SELECT 0 UNION ALL SELECT count(*) FROM administrator_mcp_tokens LIMIT 10',
             'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
 
-        yield 'hidden join using column is rejected' => [
-            'sql' => 'SELECT p.id FROM products p JOIN product_translations pt USING (secret_hash) LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'non exposed table in where subquery is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE EXISTS (SELECT 1 FROM administrator_mcp_tokens) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
 
-        yield 'natural join is rejected' => [
-            'sql' => 'SELECT p.id FROM products p NATURAL JOIN product_translations pt LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_READ_WRITE_CONSTRUCT,
+        yield 'update cte is rejected' => [
+            'sql' => 'WITH updated AS (UPDATE products SET catnum = \'x\' RETURNING id) SELECT id FROM updated LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_ONLY_SELECT_SUPPORTED,
         ];
 
-        yield 'hidden single table column is rejected' => [
-            'sql' => 'SELECT secret_hash FROM products LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'limit only inside union branch is rejected' => [
+            'sql' => 'SELECT id FROM products UNION (SELECT id FROM orders LIMIT 10)',
+            'expectedErrorMessage' => sprintf(SqlQueryValidator::ERROR_LIMIT_REQUIRED_FORMAT, self::MAX_RETURNED_ROWS),
         ];
 
-        yield 'hidden column with output alias is rejected' => [
-            'sql' => 'SELECT password AS password_alias FROM administrators LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'quoted public schema qualified table is rejected' => [
+            'sql' => 'SELECT p.id FROM "public"."products" p LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden column in cte body is rejected' => [
-            'sql' => 'WITH administrator_passwords AS (SELECT password FROM administrators) SELECT password FROM administrator_passwords LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'database qualified table is rejected' => [
+            'sql' => 'SELECT p.id FROM shopsys.public.products p LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden column in where clause is rejected' => [
-            'sql' => 'SELECT id FROM administrators WHERE password IS NOT NULL LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified table in union branch is rejected' => [
+            'sql' => 'SELECT 0 UNION ALL SELECT count(*) FROM public.administrators LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden column in order by clause is rejected' => [
-            'sql' => 'SELECT id FROM administrators ORDER BY password LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified table in scalar subquery is rejected' => [
+            'sql' => 'SELECT (SELECT count(*) FROM public.administrators) AS c LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden column in allowed function argument is rejected' => [
-            'sql' => 'SELECT LENGTH(password) FROM administrators LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified table in cte body is rejected' => [
+            'sql' => 'WITH a AS (SELECT id FROM public.administrators) SELECT id FROM a LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden column in union branch is rejected' => [
-            'sql' => 'SELECT username FROM administrators UNION ALL SELECT password FROM administrators LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified table with tablesample is rejected' => [
+            'sql' => 'SELECT count(*) FROM public.administrators TABLESAMPLE SYSTEM (100) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden column in case expression is rejected' => [
-            'sql' => 'SELECT CASE WHEN password LIKE \'$2y$%\' THEN username ELSE email END FROM administrators LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified operator is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE id OPERATOR(public.=) 1 LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden qualified column is rejected' => [
-            'sql' => 'SELECT pt.secret_hash FROM products p JOIN product_translations pt ON pt.translatable_id = p.id LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified operator of any subquery is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE id OPERATOR(public.=) ANY (SELECT id FROM orders) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'hidden unqualified column in join is rejected' => [
-            'sql' => 'SELECT secret_hash FROM products p JOIN product_translations pt ON pt.translatable_id = p.id LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified sort operator is rejected' => [
+            'sql' => 'SELECT id FROM products ORDER BY id USING OPERATOR(public.<) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'select output alias is not visible in where clause' => [
-            'sql' => "SELECT catnum AS hidden_secret_col FROM products WHERE hidden_secret_col = 'x' LIMIT 10",
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'schema qualified collation is rejected' => [
+            'sql' => 'SELECT catnum COLLATE public."C" FROM products LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_SCHEMA_QUALIFIED_NAME,
         ];
 
-        yield 'ambiguous unqualified column in join is rejected' => [
-            'sql' => 'SELECT id FROM products p JOIN product_translations pt ON pt.translatable_id = p.id LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_AMBIGUOUS_UNQUALIFIED_COLUMN,
+        yield 'json table is rejected' => [
+            'sql' => 'SELECT a FROM JSON_TABLE(\'[1]\', \'$[*]\' COLUMNS (a int4 PATH \'$\')) jt LIMIT 1',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNSUPPORTED_CONSTRUCT,
         ];
 
-        yield 'base table name is not visible when alias is defined' => [
-            'sql' => 'SELECT products.id FROM products p LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNKNOWN_RELATION_ALIAS,
+        yield 'unqualified pg catalog relation is rejected' => [
+            'sql' => 'SELECT count(*) FROM pg_stats LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
 
-        yield 'unknown qualified relation alias is rejected' => [
-            'sql' => 'SELECT missing.id FROM products LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_UNKNOWN_RELATION_ALIAS,
+        yield 'unqualified pg catalog relation in where subquery is rejected' => [
+            'sql' => 'SELECT id FROM products WHERE EXISTS (SELECT 1 FROM pg_class) LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
 
-        yield 'unknown cte column is rejected' => [
-            'sql' => 'WITH czk_currency AS (SELECT exchange_rate FROM currencies WHERE code = \'CZK\') SELECT czk.missing_rate FROM czk_currency czk LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
-        ];
-
-        yield 'unknown derived table column is rejected' => [
-            'sql' => 'SELECT sub.missing_name FROM (SELECT name FROM product_translations) sub LIMIT 10',
-            'expectedErrorMessage' => SqlQueryValidator::ERROR_COLUMN_NOT_EXPOSED,
+        yield 'cte named as pg catalog relation is rejected' => [
+            'sql' => 'WITH pg_user AS (SELECT id FROM products) SELECT id FROM pg_user LIMIT 10',
+            'expectedErrorMessage' => SqlQueryValidator::ERROR_TABLE_NOT_EXPOSED,
         ];
     }
 
@@ -507,42 +498,10 @@ class SqlQueryValidatorTest extends TestCase
     private function createExposedSchemaProvider(): ExposedSchemaProvider
     {
         $exposedSchemaProvider = $this->createStub(ExposedSchemaProvider::class);
-        $exposedSchemaProvider->method('getAllowedColumnsSetIndexedByTableNames')
-            ->willReturn($this->getAllowedColumnsSetIndexedByTableNames());
+        $exposedSchemaProvider->method('getExposedTableNames')
+            ->willReturn(['administrators', 'currencies', 'orders', 'products', 'product_translations']);
 
         return $exposedSchemaProvider;
-    }
-
-    /**
-     * @return array<string, array<string, bool>>
-     */
-    private function getAllowedColumnsSetIndexedByTableNames(): array
-    {
-        return [
-            'administrators' => [
-                'id' => true,
-                'username' => true,
-            ],
-            'currencies' => [
-                'code' => true,
-                'exchange_rate' => true,
-            ],
-            'orders' => [
-                'customer_id' => true,
-                'id' => true,
-                'currency_code' => true,
-            ],
-            'products' => [
-                'id' => true,
-                'catnum' => true,
-            ],
-            'product_translations' => [
-                'id' => true,
-                'locale' => true,
-                'translatable_id' => true,
-                'name' => true,
-            ],
-        ];
     }
 
     private function skipTestIfPgQueryExtensionIsMissing(): void

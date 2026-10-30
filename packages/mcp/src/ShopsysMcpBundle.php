@@ -9,6 +9,8 @@ use Override;
 use Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,7 +22,7 @@ class ShopsysMcpBundle extends AbstractBundle
     protected const string MCP_INSTRUCTIONS = <<<'TEXT'
 This server exposes MCP tools, not MCP resources.
 Use the tools in this order: getDatabaseTableNames, then getDatabaseSchema, then executeSql.
-Do not use SELECT * and always include a top-level LIMIT.
+Use unqualified table names and always include a top-level LIMIT.
 TEXT;
 
     #[Override]
@@ -52,6 +54,19 @@ TEXT;
                             ->min(1)
                             ->defaultValue(1000)
                         ->end()
+                        ->integerNode('work_mem_kb')
+                            ->min(64)
+                            ->defaultValue(4096)
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('database')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('views_schema_name')
+                            ->cannotBeEmpty()
+                            ->defaultValue('mcp')
+                        ->end()
                     ->end()
                 ->end()
             ->end();
@@ -66,6 +81,12 @@ TEXT;
             ->get(McpSessionSettingsMiddleware::class)
                 ->arg('$statementTimeoutMilliseconds', $config['query']['statement_timeout_ms'])
                 ->arg('$lockTimeoutMilliseconds', $config['query']['lock_timeout_ms'])
+                ->arg('$workMemKilobytes', $config['query']['work_mem_kb'])
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseUserFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseViewsFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
             ->get(SqlExecutor::class)
                 ->arg('$maxReturnedRows', $config['query']['max_returned_rows'])
             ->get(SqlQueryValidator::class)

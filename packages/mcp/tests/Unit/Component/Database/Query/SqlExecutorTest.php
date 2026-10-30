@@ -96,6 +96,10 @@ class SqlExecutorTest extends TestCase
         yield 'cannot connect now' => [
             'sqlState' => SqlExecutor::POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE,
         ];
+
+        yield 'lock not available' => [
+            'sqlState' => SqlExecutor::POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE,
+        ];
     }
 
     public function testExecuteReturnsAtMostConfiguredNumberOfRows(): void

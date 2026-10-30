@@ -188,6 +188,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/luigis-box/tests/Unit/Component/LuigisBox/LuigisBoxClientTest.php',
                 __DIR__ . '/packages/luigis-box/tests/Unit/Model/Batch/LuigisBoxBatchLoaderTest.php',
                 __DIR__ . '/packages/maker/src/EntityConfig/EntityFieldsConfigurator.php',
+                __DIR__ . '/packages/mcp/tests/Unit/Component/Database/Query/SqlQueryValidatorNodeQueriesDataProvider.php',
                 __DIR__ . '/packages/mcp/tests/Unit/Component/Database/Query/SqlQueryValidatorTest.php',
                 __DIR__ . '/packages/migrations/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
                 __DIR__ . '/packages/product-feed-zbozi/src/DataFixtures/ZboziPluginDataFixture.php',

@@ -16,6 +16,7 @@ class SqlExecutor
     protected const string ERROR_SYSTEM_UNAVAILABLE = 'System is temporarily unavailable, try it later.';
     public const string POSTGRES_TOO_MANY_CONNECTIONS_SQLSTATE = '53300';
     public const string POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE = '57P03';
+    public const string POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE = '55P03';
     protected const string POSTGRES_CONNECTION_EXCEPTION_SQLSTATE_PREFIX = '08';
 
     public function __construct(
@@ -87,6 +88,7 @@ class SqlExecutor
                 str_starts_with($sqlState, self::POSTGRES_CONNECTION_EXCEPTION_SQLSTATE_PREFIX)
                 || $sqlState === self::POSTGRES_TOO_MANY_CONNECTIONS_SQLSTATE
                 || $sqlState === self::POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE
+                || $sqlState === self::POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE
             ) {
                 return true;
             }
