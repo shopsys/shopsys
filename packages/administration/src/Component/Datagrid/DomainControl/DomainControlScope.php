@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\DomainControl;
 
+use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridScopeInterface;
 
 /**
  * The domain control of one datagrid — the domains it works with, the way the administrator picks
  * among them, and how the datagrid relates to a domain.
+ *
+ * A part of the state of the datagrid added by `DomainControlStateSubscriber`.
  */
-final readonly class DomainControlScope
+final readonly class DomainControlScope implements DatagridScopeInterface
 {
     /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType $type Never `NONE` — a datagrid without a domain control has no scope
@@ -77,6 +81,7 @@ final readonly class DomainControlScope
      * entity does not belong to a domain. An administrator without any domain gets an empty list, which
      * matches nothing.
      */
+    #[Override]
     public function createCondition(): ?ConditionInterface
     {
         if ($this->domainIdPath === null) {

@@ -19,7 +19,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use stdClass;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 
 final class FilterSetResolverTest extends TestCase
 {
@@ -106,7 +106,7 @@ final class FilterSetResolverTest extends TestCase
     {
         $declaredFilters = new FilterCollection();
         $declaredFilters->add(EntityFilter::new('tags'));
-        $resolver = DatagridNarrowingResolverFactory::createFilterSetResolver();
+        $resolver = DatagridStateFactoryFixture::createFilterSetResolver();
 
         $toManyFilters = $resolver->resolve($this->createAdapter([
             'tags' => new PathDescription('tags', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::ASSOCIATION, stdClass::class),
@@ -125,7 +125,7 @@ final class FilterSetResolverTest extends TestCase
      */
     private function resolve(array $fields, FilterCollection $declaredFilters): FilterCollection
     {
-        return DatagridNarrowingResolverFactory::createFilterSetResolver()->resolve($this->createAdapter([
+        return DatagridStateFactoryFixture::createFilterSetResolver()->resolve($this->createAdapter([
             'name' => new PathDescription('name', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING),
             'note' => new PathDescription('note', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING),
             'status' => new PathDescription('status', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING),

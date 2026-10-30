@@ -12,7 +12,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
-use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -22,7 +22,8 @@ use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterf
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Webmozart\Assert\InvalidArgumentException;
 
 class DatagridTest extends TestCase
 {
@@ -72,7 +73,7 @@ class DatagridTest extends TestCase
         $accessChecker = $this->createStub(AccessCheckerInterface::class);
         $accessChecker->method('hasPermission')->willReturnMap($permissionMap);
 
-        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), null, ['roleConstant' => self::DATAGRID_ROLE]);
+        return new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), ['roleConstant' => self::DATAGRID_ROLE]);
     }
 
     public function testRestrictedFieldIsNeitherFetchedNorDisplayedWithoutPermission(): void
@@ -87,7 +88,7 @@ class DatagridTest extends TestCase
             ->add('purchasePrice', ['role' => 'ROLE_PRODUCT'])
             ->add('internalNote', ['permission' => Permission::EDIT]);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame(['name'], $this->fetchedFieldNames);
         $this->assertSame(['name'], array_keys($this->columnsById));
@@ -105,7 +106,7 @@ class DatagridTest extends TestCase
             ->add('purchasePrice', ['role' => 'ROLE_PRODUCT'])
             ->add('internalNote', ['permission' => Permission::EDIT]);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame(['name', 'purchasePrice', 'internalNote'], $this->fetchedFieldNames);
         $this->assertSame(['name', 'purchasePrice', 'internalNote'], array_keys($this->columnsById));
@@ -115,11 +116,11 @@ class DatagridTest extends TestCase
     {
         $accessChecker = $this->createMock(AccessCheckerInterface::class);
         $accessChecker->expects($this->never())->method('hasPermission');
-        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), null, ['roleConstant' => self::DATAGRID_ROLE]);
+        $datagrid = new Datagrid($this->adapter, $this->gridFactory, $accessChecker, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), ['roleConstant' => self::DATAGRID_ROLE]);
 
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame(['name'], $this->fetchedFieldNames);
     }
@@ -131,7 +132,7 @@ class DatagridTest extends TestCase
             ->add('name')
             ->add('price', ['class' => 'text-end']);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame('', $this->columnsById['name']->getClassAttribute());
         $this->assertSame('text-end', $this->columnsById['price']->getClassAttribute());
@@ -142,21 +143,21 @@ class DatagridTest extends TestCase
         $datagrid = $this->createDatagrid();
         $datagrid->add('customer', ['property' => ['lastName', 'firstName']]);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame('customer', $this->columnsById['customer']->getSourceColumnName());
         $this->assertSame('lastName,firstName', $this->columnsById['customer']->getOrderSourceColumnName());
     }
 
     /**
-     * The narrowing is resolved from the fields once, so a field changed afterwards — restricted by a role, for one —
-     * would keep narrowing the records as it was; the change is refused instead.
+     * The state is created from the configuration frozen once, so a field changed afterwards — restricted by a role,
+     * for one — would keep narrowing the records as it was; the change is refused instead.
      */
-    public function testFieldsCannotBeChangedOnceTheNarrowingIsResolved(): void
+    public function testFieldsCannotBeChangedOnceTheConfigurationIsFrozen(): void
     {
         $datagrid = $this->createDatagrid();
         $datagrid->add('name');
-        $datagrid->getNarrowing();
+        $datagrid->getConfig();
 
         $changes = [
             static fn (Datagrid $datagrid) => $datagrid->add('email'),
@@ -167,10 +168,44 @@ class DatagridTest extends TestCase
         foreach ($changes as $change) {
             try {
                 $change($datagrid);
-                $this->fail('A change of the fields has to be refused once the narrowing is resolved.');
+                $this->fail('A change of the fields has to be refused once the configuration is frozen.');
             } catch (LogicException $exception) {
-                $this->assertStringContainsString('already resolved', $exception->getMessage());
+                $this->assertStringContainsString('already frozen', $exception->getMessage());
             }
         }
+    }
+
+    public function testConfigurationIsFrozenOnce(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $datagrid->add('name');
+
+        $this->assertSame($datagrid->getConfig(), $datagrid->getConfig());
+    }
+
+    /**
+     * A field displayed on behalf of a feature narrowing the datagrid obeys the permissions as any other field.
+     */
+    public function testRestrictedAdditionalFieldIsNotDisplayedWithoutPermission(): void
+    {
+        $datagrid = $this->createDatagrid([['ROLE_SECRET', Permission::VIEW, false]]);
+        $datagrid->add('name');
+
+        $datagrid->createView(new DatagridState($datagrid->getConfig(), additionalFields: [
+            new FieldDescriptor('secret', ['role' => 'ROLE_SECRET']),
+            new FieldDescriptor('domainId'),
+        ]));
+
+        $this->assertSame(['name', 'domainId'], $this->fetchedFieldNames);
+    }
+
+    public function testStateOfAnotherDatagridIsRefused(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $anotherDatagrid = $this->createDatagrid();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $datagrid->createView(DatagridStateFactoryFixture::createState($anotherDatagrid));
     }
 }

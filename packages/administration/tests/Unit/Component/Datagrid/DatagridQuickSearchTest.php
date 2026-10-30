@@ -8,6 +8,8 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -17,10 +19,10 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 
 /**
- * The rules of the quick search are covered by `SearchablePathResolverTest` and `DatagridNarrowingResolverTest`;
+ * The rules of the quick search are covered by `SearchablePathResolverTest` and `DatagridStateFactoryTest`;
  * this asserts that the datagrid offers it over its current fields and sends it with the request.
  */
 final class DatagridQuickSearchTest extends TestCase
@@ -37,19 +39,20 @@ final class DatagridQuickSearchTest extends TestCase
     public function testDatagridWithoutSearchableFieldHasNoQuickSearch(): void
     {
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
-        $datagrid = $this->createDatagrid($adapter, 'hrnek');
+        $datagrid = $this->createDatagrid($adapter);
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $state = $this->createState($datagrid, 'hrnek');
+        $datagrid->createView($state);
 
-        $this->assertNull($datagrid->getNarrowing()->quickSearch);
+        $this->assertNull($state->get(QuickSearch::class));
         $this->assertNull($adapter->getLastRequest()->condition);
     }
 
     public function testTermIsSearchedInEverySearchableField(): void
     {
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
-        $datagrid = $this->createDatagrid($adapter, 'hrnek');
+        $datagrid = $this->createDatagrid($adapter);
         $datagrid
             ->add('name', [
                 'label' => 'Name',
@@ -62,30 +65,14 @@ final class DatagridQuickSearchTest extends TestCase
             ])
             ->add('createdAt');
 
-        $datagrid->createView();
+        $state = $this->createState($datagrid, 'hrnek');
+        $datagrid->createView($state);
 
         $this->assertEquals(
             Condition::orX(Condition::contains('name', 'hrnek'), Condition::contains('brand.name', 'hrnek')),
             $adapter->getLastRequest()->condition,
         );
-        $this->assertSame(['Name', 'Brand'], $datagrid->getNarrowing()->quickSearch?->getLabels());
-    }
-
-    /**
-     * The narrowing is resolved from the datagrid as configured at the first call, so that the condition sent to
-     * the adapter and the forms rendered by the page are always the same ones.
-     */
-    public function testNarrowingIsResolvedOnce(): void
-    {
-        $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
-        $datagrid = $this->createDatagrid($adapter, 'hrnek');
-        $datagrid->add('name', ['searchable' => true]);
-        $narrowing = $datagrid->getNarrowing();
-
-        $datagrid->createView();
-
-        $this->assertSame($narrowing, $datagrid->getNarrowing());
-        $this->assertEquals(Condition::orX(Condition::contains('name', 'hrnek')), $adapter->getLastRequest()->condition);
+        $this->assertSame(['Name', 'Brand'], $state->get(QuickSearch::class)?->getLabels());
     }
 
     /**
@@ -94,17 +81,22 @@ final class DatagridQuickSearchTest extends TestCase
     public function testRestrictedFieldIsNotSearchedInWithoutPermission(): void
     {
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
-        $datagrid = $this->createDatagrid($adapter, 'hrnek', false);
+        $datagrid = $this->createDatagrid($adapter, false);
         $datagrid
             ->add('name', ['searchable' => true])
             ->add('purchasePrice', ['searchable' => true, 'role' => 'ROLE_PURCHASE_PRICES']);
 
-        $datagrid->createView();
+        $datagrid->createView($this->createState($datagrid, 'hrnek'));
 
         $this->assertEquals(Condition::orX(Condition::contains('name', 'hrnek')), $adapter->getLastRequest()->condition);
     }
 
-    private function createDatagrid(CapturingAdapter $adapter, string $term, bool $hasPermission = true): Datagrid
+    private function createState(Datagrid $datagrid, string $term): DatagridState
+    {
+        return DatagridStateFactoryFixture::createState($datagrid, DatagridStateFactoryFixture::createRequest(['text' => $term]));
+    }
+
+    private function createDatagrid(CapturingAdapter $adapter, bool $hasPermission = true): Datagrid
     {
         $gridStub = $this->createStub(Grid::class);
         $gridStub->method('createView')->willReturn($this->createStub(GridView::class));
@@ -114,19 +106,9 @@ final class DatagridQuickSearchTest extends TestCase
         $accessCheckerStub = $this->createStub(AccessCheckerInterface::class);
         $accessCheckerStub->method('hasPermission')->willReturn($hasPermission);
 
-        return new Datagrid(
-            $adapter,
-            $gridFactoryStub,
-            $accessCheckerStub,
-            $this->createStub(AdministratorGridFacade::class),
-            $this->createStub(Security::class),
-            DatagridNarrowingResolverFactory::create(),
-            DatagridNarrowingResolverFactory::createRequestState(['text' => $term]),
-            null,
-            [
-                'name' => DatagridNarrowingResolverFactory::GRID_ID,
-                'roleConstant' => 'ROLE_CRUD_TEST',
-            ],
-        );
+        return new Datagrid($adapter, $gridFactoryStub, $accessCheckerStub, $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), [
+            'name' => DatagridStateFactoryFixture::GRID_ID,
+            'roleConstant' => 'ROLE_CRUD_TEST',
+        ]);
     }
 }

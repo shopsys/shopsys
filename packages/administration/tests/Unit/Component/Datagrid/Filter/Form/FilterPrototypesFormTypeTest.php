@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Form\FormInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 
 final class FilterPrototypesFormTypeTest extends TestCase
 {
@@ -82,7 +82,7 @@ final class FilterPrototypesFormTypeTest extends TestCase
             $filters->add($filter);
         }
 
-        return DatagridNarrowingResolverFactory::createFormFactory()->createNamed('Product_filter', FilterPrototypesFormType::class, null, [
+        return DatagridStateFactoryFixture::createFormFactory()->createNamed('Product_filter', FilterPrototypesFormType::class, null, [
             'filters' => $filters,
         ]);
     }

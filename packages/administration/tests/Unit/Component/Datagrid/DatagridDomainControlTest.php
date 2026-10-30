@@ -17,7 +17,6 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
-use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -27,10 +26,16 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 
+/**
+ * The domain control is a feature of its own, added to the state of the datagrid by `DomainControlStateSubscriber`;
+ * this asserts what the datagrid lists and displays by it.
+ */
 final class DatagridDomainControlTest extends TestCase
 {
+    private ?DomainControlScope $scope = null;
+
     /**
      * The label of the automatically added domain field is translated right away.
      */
@@ -48,27 +53,12 @@ final class DatagridDomainControlTest extends TestCase
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $domainField = $adapter->getLastRequestFields()['domainId'] ?? null;
         $this->assertNotNull($domainField);
         $this->assertSame('@ShopsysAdministration/datagrid/cell/domain_icon.html.twig', $domainField->getTemplate());
         $this->assertSame('domainId', $domainField->getMappingProperty());
-    }
-
-    /**
-     * The domain field narrows nothing, so it is added even when the narrowing was resolved before the view — an
-     * extension asking for the narrowing while configuring the datagrid does not break the view.
-     */
-    public function testDomainFieldIsAddedEvenOnceTheNarrowingIsResolved(): void
-    {
-        $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
-        $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
-        $datagrid->getNarrowing();
-
-        $datagrid->createView();
-
-        $this->assertArrayHasKey('domainId', $adapter->getLastRequestFields());
     }
 
     public function testDomainFieldIsLastByDefault(): void
@@ -77,7 +67,7 @@ final class DatagridDomainControlTest extends TestCase
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertSame(['name', 'domainId'], array_keys($adapter->getLastRequestFields()));
     }
@@ -88,7 +78,7 @@ final class DatagridDomainControlTest extends TestCase
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1], 1));
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertArrayNotHasKey('domainId', $adapter->getLastRequestFields());
     }
@@ -99,7 +89,7 @@ final class DatagridDomainControlTest extends TestCase
         $datagrid = $this->createDatagrid($adapter, null);
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertArrayNotHasKey('domainId', $adapter->getLastRequestFields());
     }
@@ -110,7 +100,7 @@ final class DatagridDomainControlTest extends TestCase
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2, null));
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertArrayNotHasKey('domainId', $adapter->getLastRequestFields());
     }
@@ -126,7 +116,7 @@ final class DatagridDomainControlTest extends TestCase
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2, 'domains.domainId'));
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertSame(['name'], array_keys($adapter->getLastRequestFields()));
         $this->assertTrue($this->getLastRequestMatcher($adapter)(['domains' => [['domainId' => 3], ['domainId' => 2]]]));
@@ -141,7 +131,7 @@ final class DatagridDomainControlTest extends TestCase
         ]);
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $fields = $adapter->getLastRequestFields();
         $this->assertSame(['domainId', 'name'], array_keys($fields));
@@ -149,12 +139,28 @@ final class DatagridDomainControlTest extends TestCase
         $this->assertNull($fields['domainId']->getTemplate());
     }
 
+    /**
+     * A field declared on the datagrid takes precedence even when the administrator is not allowed to see it,
+     * the domain is not displayed in its place.
+     */
+    public function testManuallyAddedDomainFieldHiddenFromAdministratorIsNotReplaced(): void
+    {
+        $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
+        $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
+        $datagrid->add('domainId', ['role' => 'ROLE_SECRET']);
+        $datagrid->add('name');
+
+        $this->createView($datagrid);
+
+        $this->assertSame(['name'], array_keys($adapter->getLastRequestFields()));
+    }
+
     public function testDomainConditionLimitsTheDatagridToTheSelectedDomain(): void
     {
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $matchesRow = $this->getLastRequestMatcher($adapter);
         $this->assertTrue($matchesRow(['domainId' => 2]));
@@ -170,7 +176,7 @@ final class DatagridDomainControlTest extends TestCase
             'visible' => false,
         ]);
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertTrue($this->getLastRequestMatcher($adapter)(['domainId' => 2]));
     }
@@ -184,8 +190,8 @@ final class DatagridDomainControlTest extends TestCase
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
         $datagrid = $this->createDatagrid($adapter, $this->createScope([1, 2, 3], 2));
 
-        $datagrid->createView();
-        $datagrid->createView();
+        $this->createView($datagrid);
+        $this->createView($datagrid);
 
         $this->assertCount(2, $adapter->requests);
         $this->assertEquals($adapter->requests[0], $adapter->requests[1]);
@@ -198,7 +204,7 @@ final class DatagridDomainControlTest extends TestCase
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class));
         $datagrid = $this->createDatagrid($adapter, null);
 
-        $datagrid->createView();
+        $this->createView($datagrid);
 
         $this->assertNull($adapter->getLastRequest()->condition);
     }
@@ -231,14 +237,21 @@ final class DatagridDomainControlTest extends TestCase
         return new DomainControlScope(DomainControlType::FILTER, $domainIds, $selectedDomainId, 'crud_test', $domainIdPath);
     }
 
+    private function createView(Datagrid $datagrid): void
+    {
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid, null, $this->scope));
+    }
+
     private function createDatagrid(CapturingAdapter $adapter, ?DomainControlScope $scope): Datagrid
     {
+        $this->scope = $scope;
+
         $gridStub = $this->createStub(Grid::class);
         $gridStub->method('createView')->willReturn($this->createStub(GridView::class));
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturn($gridStub);
 
-        return new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), DatagridNarrowingResolverFactory::create(), DatagridRequestState::outsideRequest('datagrid'), $scope, [
+        return new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), [
             'roleConstant' => 'ROLE_CRUD_TEST',
         ]);
     }
