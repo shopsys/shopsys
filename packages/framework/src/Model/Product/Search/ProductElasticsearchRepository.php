@@ -115,21 +115,17 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @return int[]
+     * @return array{index: string, body: array<string, mixed>}
      */
-    public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array
+    public function getAggregationQueryForCategoryIds(ProductFilterData $productFilterData): array
     {
-        $result = $this->client->search(
-            $this->filterQueryFactory->createListableWithProductFilter($productFilterData)->setLimit(0)->getAggregationQueryForProductCountInCategories(),
-        );
-
-        return $this->extractCategoryIdsAggregation($result);
+        return $this->filterQueryFactory->createListableWithProductFilter($productFilterData)->setLimit(0)->getAggregationQueryForProductCountInCategories();
     }
 
     /**
      * @return int[]
      */
-    protected function extractCategoryIdsAggregation(array $productCountAggregation): array
+    public function extractCategoryIdsAggregation(array $productCountAggregation): array
     {
         $result = [];
 
