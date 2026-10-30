@@ -151,6 +151,11 @@ services:
         arguments:
             $brandSearchResultsProviders: !tagged_iterator 'shopsys.frontend_api.brands_search_results_provider'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery:
+        arguments:
+            $elasticsearchSearchBatchLoader: '@elasticsearch_search_batch_loader'
+            $categoriesBatchLoader: '@categories_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
         arguments:
             $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
