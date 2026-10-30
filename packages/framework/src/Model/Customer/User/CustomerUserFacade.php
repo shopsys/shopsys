@@ -164,9 +164,16 @@ class CustomerUserFacade
 
     public function editByAdmin(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData): CustomerUser
     {
-        $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
+        $customerUser = $this->getCustomerUserById($customerUserId);
+        $originalEmail = $customerUser->getEmail();
 
         $this->setEmail($customerUserUpdateData->customerUserData->email, $customerUser);
+
+        if ($customerUser->getEmail() !== $originalEmail) {
+            $this->newsletterFacade->deleteSubscribedEmailIfExists($originalEmail, $customerUser->getDomainId());
+        }
+
+        $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
 
         $this->em->flush();
 
