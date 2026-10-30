@@ -41,7 +41,7 @@ Read the source first — the docblocks are complete and the code is short. Docs
 | Hook interfaces (before/after/onError) | `vendor/shopsys/administration/src/Component/Crud/Extension/` | same page, section *Hooks System* |
 | Form configurator (FormType vs builder) | `vendor/shopsys/administration/src/Component/Crud/Form/CrudFormConfigurator.php` | *configureForm* section of the configuration reference |
 | Datagrid, fields, row actions | `vendor/shopsys/administration/src/Component/Datagrid/` | [Datagrid](https://docs.shopsys.com/en/latest/administration/datagrid/), [Fields](https://docs.shopsys.com/en/latest/administration/datagrid/fields/), [Row actions](https://docs.shopsys.com/en/latest/administration/datagrid/row-actions/) |
-| Domain control, quick search, the condition tree | `vendor/shopsys/administration/src/Component/Datagrid/Condition/`, `.../Datagrid/DomainControl/` | [Narrowing the records](https://docs.shopsys.com/en/latest/administration/datagrid/narrowing/) |
+| Domain control, quick search, the state of the datagrid, the condition tree | `vendor/shopsys/administration/src/Component/Datagrid/State/`, `.../Datagrid/Condition/`, `.../Datagrid/DomainControl/` | [Narrowing the records](https://docs.shopsys.com/en/latest/administration/datagrid/narrowing/) |
 | Filters: built-in types, writing your own | `vendor/shopsys/administration/src/Component/Datagrid/Filter/` | [Filters](https://docs.shopsys.com/en/latest/administration/datagrid/filters/) |
 | Top actions (`Action`, `ActionsConfig`) | `vendor/shopsys/administration/src/Component/Action/`, `.../Component/Config/ActionsConfig.php` | [Actions](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/actions/) |
 | Extending an existing CRUD controller | `vendor/shopsys/administration/src/Controller/AbstractCrudControllerExtension.php` | [Extending](https://docs.shopsys.com/en/latest/administration/crud-controller/getting-started/extending-existing-crud-controller/) |
@@ -208,8 +208,9 @@ rich-text/HTML columns (sorting them orders by markup) and on columns the legacy
 sort. Datagrid methods: `add` / `update` / `remove` / `reorder`,
 `setDefaultOrder`, `setPagination`, `enableDragAndDrop(field)`, `actions()` (row actions:
 `add` / `update` / `delete` / `reorder`), `filters()` (`add` / `remove`),
-`getDomainControlScope()` (known while configuring), `getNarrowing()` (the quick search, the filter
-panel and their condition, resolved once the datagrid is configured — fields and filters cannot change after that).
+`getConfig()` (freezes the configuration — fields and filters cannot change after that). The list
+creates the state of the datagrid from it (`DatagridStateFactory`: subscribers of the domain control, the quick
+search and the filter add their parts and their conditions are combined) and lists the records by it.
 
 **Narrowing the list** — pick by who drives the condition:
 

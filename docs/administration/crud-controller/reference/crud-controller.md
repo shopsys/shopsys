@@ -301,7 +301,7 @@ The templates define empty blocks around the main content, so the extending temp
 {% endblock %}
 ```
 
-The edit page passes the displayed record to the template as `entity`. Other variables the template needs are provided by [`configureTemplateParameters()`](#template-parameters) described below.
+The edit page passes the displayed record to the template as `entity`. The list page passes the view of the datagrid as `grid` and its state as `datagridState` — the `datagrid_controls` block renders the domain control, the quick search and the filter from it by `component('Admin:Grid:Controls', { state: datagridState, gridView: grid })`. Other variables the template needs are provided by [`configureTemplateParameters()`](#template-parameters) described below.
 
 ### Template parameters
 
