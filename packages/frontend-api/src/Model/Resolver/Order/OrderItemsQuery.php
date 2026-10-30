@@ -30,6 +30,8 @@ class OrderItemsQuery extends AbstractQuery
 
     public function orderItemsQuery(Argument $argument): ConnectionInterface|Promise
     {
+        $this->pageSizeValidator->checkMaxPageSize($argument);
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();

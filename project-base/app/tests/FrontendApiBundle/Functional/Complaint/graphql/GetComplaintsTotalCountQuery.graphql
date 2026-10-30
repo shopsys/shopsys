@@ -1,0 +1,5 @@
+query GetComplaintsTotalCountQuery ($first: Int) {
+    complaints(first: $first) {
+        totalCount
+    }
+}

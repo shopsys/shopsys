@@ -116,6 +116,16 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
         $this->assertItemsOfDeletedOrderAreExcluded();
     }
 
+    public function testGetOrderItemsRejectsPageSizeOverMaximumAllowedLimit(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/GetOrderItemsQuery.graphql',
+            ['first' => 101],
+        );
+
+        $this->assertUserError($response, 'max-allowed-limit');
+    }
+
     public function testOrderItemWithHiddenProductHasNoProduct(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
