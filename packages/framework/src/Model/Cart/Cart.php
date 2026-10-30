@@ -91,7 +91,7 @@ class Cart
     /**
      * @var int[]
      */
-    #[AsMcpColumn(exposed: false)]
+    #[AsMcpColumn]
     #[ORM\Column(type: 'json')]
     protected $removedGiftProductIds;
 
