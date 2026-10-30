@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
+use Closure;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -13,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductFilterDataMapper
 {
+    protected const string ENTITIES_CACHE_NAMESPACE = 'productFilterDataMapperEntities';
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
@@ -28,6 +32,7 @@ class ProductFilterDataMapper
         protected readonly BrandFacade $brandFacade,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly ProductFilterDataFactory $productFilterDataFactory,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -42,11 +47,19 @@ class ProductFilterDataMapper
         $productFilterData->flags = [];
 
         if (isset($frontendApiFilter['brands'])) {
-            $productFilterData->brands = $this->brandFacade->getByUuids($frontendApiFilter['brands']);
+            $productFilterData->brands = $this->getEntitiesByUuids(
+                'brands',
+                $frontendApiFilter['brands'],
+                $this->brandFacade->getByUuids(...),
+            );
         }
 
         if (isset($frontendApiFilter['flags'])) {
-            $productFilterData->flags = $this->flagFacade->getByUuids($frontendApiFilter['flags']);
+            $productFilterData->flags = $this->getEntitiesByUuids(
+                'flags',
+                $frontendApiFilter['flags'],
+                $this->flagFacade->getByUuids(...),
+            );
         }
 
         return $productFilterData;
@@ -105,7 +118,36 @@ class ProductFilterDataMapper
             }
         }
 
-        $this->parametersByUuid = $this->parameterFacade->getParametersByUuids($parameterUuids);
-        $this->parameterValuesByUuid = $this->parameterFacade->getParameterValuesByUuids($parameterValueUuids);
+        $this->parametersByUuid = $this->getEntitiesByUuids(
+            'parameters',
+            $parameterUuids,
+            $this->parameterFacade->getParametersByUuids(...),
+        );
+        $this->parameterValuesByUuid = $this->getEntitiesByUuids(
+            'parameterValues',
+            $parameterValueUuids,
+            $this->parameterFacade->getParameterValuesByUuids(...),
+        );
+    }
+
+    /**
+     * The same filter is often mapped several times in one request (e.g. for each flag of a list),
+     * so the entities are loaded only once, while the mapped filter data are always created anew
+     *
+     * @template T
+     * @param string[] $uuids
+     * @param \Closure(string[]): T $loadEntitiesByUuids
+     * @return T
+     */
+    protected function getEntitiesByUuids(string $entityName, array $uuids, Closure $loadEntitiesByUuids): mixed
+    {
+        sort($uuids);
+
+        return $this->inMemoryCache->getOrSaveValue(
+            static::ENTITIES_CACHE_NAMESPACE,
+            static fn (): mixed => $loadEntitiesByUuids($uuids),
+            $entityName,
+            ...$uuids,
+        );
     }
 }
