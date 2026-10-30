@@ -210,7 +210,7 @@ data:
             }
 
             # location for administration interface, uses admin error pages
-            location ~ ^/(?:[^/]+/)?({{ADMIN_URL}}|ckeditor|elfinder(\.main\.js)?|efconnect|build|bundles)(?:/|$) {
+            location ~ ^/(?:(?!content(?:-test)?/)[^/]+/)?({{ADMIN_URL}}|ckeditor|elfinder(\.main\.js)?|efconnect|build|bundles)(?:/|$) {
                 # hide dotfiles (send to @app)
                 location ~ /\. {
                     return 470; # send to @app
