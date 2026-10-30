@@ -80,10 +80,12 @@ class MyController extends AbstractController
     /**
     * ...
     * @param Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory $datagridFactory
+    * @param Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateFactory $datagridStateFactory
     */
     public function __construct(
         // ...
         private readonly DatagridFactory $datagridFactory,
+        private readonly DatagridStateFactory $datagridStateFactory,
     ) {
     }
     
@@ -95,10 +97,13 @@ class MyController extends AbstractController
             'roleConstant' => 'ROLE_MY', // required - enables permission-based features
         ]);
         
+        // ... configure the datagrid, then create its state - what narrows it in the current request
+        $datagridState = $this->datagridStateFactory->create($datagrid->getConfig());
         
-        // In template use {{ grid.render }} method to render the datagrid
+        // In template use {{ datagrid.render }} method to render the datagrid, its quick search, filter and domain
+        // control are rendered by the Admin:Grid:Controls component, see narrowing.md
         return $this->render('my_template.html.twig', [
-            'datagrid' => $datagrid->createView(),
+            'datagrid' => $datagrid->createView($datagridState),
         ]);
     }
 }

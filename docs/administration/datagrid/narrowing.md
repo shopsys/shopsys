@@ -29,9 +29,9 @@ is what makes the contract safe and simple:
 - a request without a condition lists every record, and an adapter applies the condition of every request — it
   carries the limit of the domain control as well, so an adapter ignoring it lists the records of every domain.
 
-`Datagrid::createView()` sends such a request itself. Its condition is the one of `Datagrid::getNarrowing()` —
-everything that narrows the datagrid on behalf of the administrator (the domain control, and the quick search or
-the filter) combined by `Condition::andX()`, see [How the narrowing is resolved](#how-the-narrowing-is-resolved).
+`Datagrid::createView()` sends such a request itself. Its condition is the one of the state of the datagrid —
+everything that narrows the datagrid in the current request (the domain control, and the quick search or the filter)
+combined by `Condition::andX()`, see [Configuration, state and components](#configuration-state-and-components).
 
 A fixed scope the administrator neither sees nor switches off ("only records that are not deleted") is not a
 condition of the request but a part of the query itself, so it belongs to `configureQuery()` of the CRUD
@@ -56,9 +56,9 @@ $datagrid
     ->add('name', ['label' => t('Name'), 'searchable' => true]);
 ```
 
-The datagrid renders a text input above the records (the `Admin:Grid:QuickSearch` component, added to the
-`datagrid_controls` block of the CRUD list template; next to a filter it becomes a tab of the same card) and
-narrows the records by `Condition::orX()` of
+The datagrid renders a text input above the records (the `Admin:Grid:QuickSearch` component, rendered by
+the `Admin:Grid:Controls` component in the `datagrid_controls` block of the CRUD list template; next to a filter it
+becomes a tab of the same card) and narrows the records by `Condition::orX()` of
 `contains` over every searchable field. The searched text travels in a GET form named `<gridId>_search`,
 so the pager keeps it and the URL can be shared; the order and the limit of the grid travel with the search
 and the page starts over.
@@ -70,38 +70,96 @@ and why. An adapter that cannot describe its paths (records in memory) cannot be
 a searchable field is searched and has to hold text — a number or an enum fails only when something is searched,
 by `OperatorNotApplicableToValueException`. A field hidden by `visible: false` can still be searchable.
 
-Outside the CRUD controller the pieces are `Datagrid::getNarrowing()->quickSearch` (null when no field is
-searchable or the datagrid is built outside a request) and the component: `component('Admin:Grid:QuickSearch', { quickSearch: datagrid.narrowing.quickSearch, gridView: gridView })`.
+The quick search is the `QuickSearch` part of the state of the datagrid — `$datagridState->get(QuickSearch::class)`,
+null when no field is searchable or the state is created outside a request. It carries the name of its form, the
+searched term and the searched fields; the component builds the form from it.
 
 ## Filters
 
 Rules the administrator composes — grouped, combined by `AND` or `OR` — are declared as filters on the datagrid
 and rendered as a form above the records; see [Filters](./filters.md). A composed filter outranks the quick search:
-once the administrator composed a rule (`DatagridNarrowing::$filterActive`), the filter narrows the records and the
+once the administrator composed a rule (`FilterPanel::isActive()`), the filter narrows the records and the
 searched term is not applied.
 
-## How the narrowing is resolved
+## Configuration, state and components
 
-`Datagrid::getNarrowing()` resolves the narrowing once — on its first call, which `createView()` makes — from
-the fields and the filters as they are configured at that moment, so ask for it once the datagrid is configured.
-A field or a filter changed afterwards would never reach the narrowing — a field restricted by a role would keep
-being searched in — so `add()`, `update()`, `remove()` and `filters()` refuse to change the datagrid then.
-The result is an immutable `DatagridNarrowing`: the `domainControlScope`, the `quickSearch`, the `filterPanel`
-(the offered filters, the form composed from them and the prototypes of its rules), `filterActive` and the
-`condition` combining them. Only the
-fields the administrator is allowed to see take part, and so do only the declared filters that are not declared
-under the name of such a hidden field or over a path overlapping one of its properties (the property itself, a path
-under it or the association it lies under).
+A datagrid is listed in three steps, each of them knowing as little about the others as possible:
 
-The `DatagridNarrowingResolver` service puts it together from smaller services, each of them replaceable in
-a project:
+1. **Configuration.** The datagrid is configured — fields, filters, the domain control — and
+   `Datagrid::getConfig()` freezes it into a read-only `DatagridConfig`: the ID of the datagrid, its adapter,
+   the fields the administrator is allowed to see and the declared filters the administrator is allowed to use
+   (those not declared under the name of a field hidden from the administrator or over a path overlapping one of its
+   properties — the property itself, a path under it or the association it lies under). A field or a filter changed
+   afterwards would never reach the state — a field restricted by a role would keep
+   being searched in — so `add()`, `update()`, `remove()` and `filters()` refuse to change the datagrid then.
+2. **State.** `DatagridStateFactory::create($config)` dispatches a `DatagridStateEvent` and every feature narrowing
+   the datagrid adds its part of the state by a subscriber of its own — `DomainControlStateSubscriber` adds
+   the `DomainControlScope`, `QuickSearchStateSubscriber` the `QuickSearch` and `FilterStateSubscriber`
+   the `FilterPanel`. The quick search and the filter validate their declarations even outside a request (a test or
+   a command fails on a field that cannot be searched as well), the domain control needs a request of a logged-in
+   administrator, whose domains and selection it reads. Each of them reads its own part of the main request; a GET
+   form is submitted from the query by hand, once. The factory then combines the conditions of the parts into the one of the
+   `DatagridState`: every scope (`DatagridScopeInterface`, the domain control) by `AND` with the one search
+   (`DatagridSearchInterface`) that applies (`DatagridState::getAppliedSearch()`) — the filter whenever any rule was
+   composed, the quick search otherwise.
+3. **View and components.** `Datagrid::createView($datagridState)` lists the records by the condition of the state,
+   and the `Admin:Grid:Controls` component renders the part of every feature by the component of that feature —
+   the tab of the applied search is the open one.
+   A state of something the administrator asked for that cannot be applied — an invalid filter — is
+   `isInvalid()`, the page answers 422 then.
 
-- `SearchablePathResolver` finds the paths of the `searchable` fields and refuses a field that cannot be searched,
-- `FilterSetResolver` merges the filters picked for the `filterable` fields (by `FilterGuesser`) with the declared
-  ones, sorts them by label and adapts copies of them to the adapter, so a declaration is never changed,
-- `DatagridFormFactory` builds the GET forms of the quick search and the filter from the `DatagridRequestState`,
-- `DatagridNarrowingResolver::createSearchCondition()` decides that the filter outranks the quick search — override
-  it to apply both.
+The CRUD list does all of it in `listAction()`. A page of your own lists a datagrid the same way:
+
+```php
+$datagrid = $this->datagridFactory->create($adapter, [
+    'name' => 'order',
+    'roleConstant' => 'ROLE_MY',
+    // optional - the domain control of a CRUD datagrid follows the configuration of the CRUD controller
+    'domainControl' => new DomainControlConfig(DomainControlType::SWITCHER),
+]);
+$datagrid->add('number', ['label' => t('Number'), 'searchable' => true]);
+
+$datagridState = $this->datagridStateFactory->create($datagrid->getConfig());
+$response = $this->render('my_template.html.twig', [
+    'grid' => $datagrid->createView($datagridState),
+    'datagridState' => $datagridState,
+]);
+
+if ($datagridState->isInvalid()) {
+    $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+}
+
+return $response;
+```
+
+```twig
+{{ component('Admin:Grid:Controls', { state: datagridState, gridView: grid }) }}
+{{ grid.render }}
+```
+
+The state is required by `createView()` and the factory refuses to create the state of a datagrid with a domain
+control when no subscriber limited it to the domains, so the domain control is never left out by mistake.
+
+### Changing what narrows the datagrid
+
+- **which search outranks which** — extend `DatagridStateFactory` and override `getSearchPrecedence()` (or
+  `createCondition()` to combine the parts differently), then alias the service to your class;
+- **how a feature reads the request** — extend its subscriber (`QuickSearchStateSubscriber`, …) and alias the
+  service to your class; a part of the same class can be added only once, so a second subscriber adding it fails
+  instead of silently competing with the first one;
+- **a new way of narrowing** (filters saved by the administrator, for one) — add a subscriber of
+  `DatagridStateEvent` adding a part of its own implementing `DatagridSearchInterface` (or `DatagridScopeInterface`
+  for a scope that always applies) and render it by a component of your own, in the `datagrid_controls` block
+  of the list template next to the built-in controls (`{{ parent() }}`). A search not ranked by
+  `getSearchPrecedence()` applies when no ranked one is active; among such searches the one added first — by
+  the listener of the higher priority — applies. A field displayed on behalf of the feature is added by
+  `DatagridStateEvent::addField()` and obeys the `role` and `permission` options as any other field.
+
+The smaller services the subscribers use are replaceable as well — `SearchablePathResolver` finds the paths
+of the `searchable` fields and refuses a field that cannot be searched, `FilterSetResolver` merges the filters
+picked for the `filterable` fields (by `FilterGuesser`) with the declared ones, sorts them by label and adapts copies
+of them to the adapter, so a declaration is never changed, and `QuickSearchFormFactory` and `FilterFormFactory` build
+the forms.
 
 ## The condition tree
 
