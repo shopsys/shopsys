@@ -55,7 +55,7 @@ class McpDatabaseViewsFacadeTest extends TransactionFunctionalTestCase
 
     public function testViewsContainExposedColumnsOfExposedTables(): void
     {
-        $this->mcpDatabaseViewsFacade->recreateViews();
+        $viewsCount = $this->mcpDatabaseViewsFacade->recreateViews();
 
         $expectedColumnNamesIndexedByTableNames = array_map(
             static fn (array $tableSchema): array => array_keys($tableSchema['columns']),
@@ -66,6 +66,7 @@ class McpDatabaseViewsFacadeTest extends TransactionFunctionalTestCase
             $this->sortColumnNamesIndexedByTableNames($expectedColumnNamesIndexedByTableNames),
             $this->sortColumnNamesIndexedByTableNames($this->getViewColumnNamesIndexedByViewNames()),
         );
+        $this->assertSame(count($expectedColumnNamesIndexedByTableNames), $viewsCount);
     }
 
     public function testMigrationCanDropColumnUsedByView(): void
@@ -87,7 +88,7 @@ class McpDatabaseViewsFacadeTest extends TransactionFunctionalTestCase
         $migrationsSubscriber = new MigrationsSubscriber($this->mcpDatabaseViewsFacade, $mcpAvailabilityChecker);
 
         $migrationsSubscriber->dropMcpViews();
-        $migrationsSubscriber->recreateMcpViews();
+        $migrationsSubscriber->recreateMcpViews(new MigrationsFinishedEvent());
 
         $this->assertSame([], $this->getViewColumnNamesIndexedByViewNames());
     }

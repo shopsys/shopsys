@@ -36,7 +36,10 @@ class McpDatabaseViewsFacade
         $this->databaseSchemaFacade->dropSchemaIfExists($this->viewsSchemaName);
     }
 
-    public function recreateViews(): void
+    /**
+     * @return int the number of the created views
+     */
+    public function recreateViews(): int
     {
         if (!$this->mcpDatabaseRoleRepository->roleExists($this->mcpDatabaseUser)) {
             throw new McpDatabaseRoleNotFoundException($this->mcpDatabaseUser);
@@ -46,15 +49,18 @@ class McpDatabaseViewsFacade
             throw new McpDatabaseRoleWithoutPublicSchemaUsageException($this->mcpDatabaseUser);
         }
 
-        $this->defaultConnection->transactional(function (): void {
+        return $this->defaultConnection->transactional(function (): int {
             $this->dropViews();
             $this->databaseSchemaFacade->createSchema($this->viewsSchemaName);
+            $exposedColumnNamesIndexedByTableNames = $this->getExposedColumnNamesIndexedByTableNames();
 
-            foreach ($this->getExposedColumnNamesIndexedByTableNames() as $tableName => $columnNames) {
+            foreach ($exposedColumnNamesIndexedByTableNames as $tableName => $columnNames) {
                 $this->mcpDatabaseViewsRepository->createView($this->viewsSchemaName, self::PUBLIC_SCHEMA_NAME, $tableName, $columnNames);
             }
 
             $this->mcpDatabaseViewsRepository->grantSelectOnViews($this->viewsSchemaName, $this->mcpDatabaseUser);
+
+            return count($exposedColumnNamesIndexedByTableNames);
         });
     }
 
