@@ -2,8 +2,3 @@ SliderItem:
     type: object
     inherits:
         - 'SliderItemDecorator'
-    config:
-        fields:
-            uuid:
-                type: "Uuid!"
-                description: "UUID"

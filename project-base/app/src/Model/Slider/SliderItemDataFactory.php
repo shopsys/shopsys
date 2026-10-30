@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Model\Slider;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory as BaseSliderItemDataFactory;
 
 /**
+ * @method \App\Model\Slider\SliderItemData create()
  * @method \App\Model\Slider\SliderItemData createFromSliderItem(\App\Model\Slider\SliderItem $sliderItem)
- * @method __construct(\Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade)
+ * @method void fillFromSliderItem(\App\Model\Slider\SliderItemData $sliderItemData, \App\Model\Slider\SliderItem $sliderItem)
+ * @method __construct(\Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory)
  */
 class SliderItemDataFactory extends BaseSliderItemDataFactory
 {
@@ -22,32 +23,5 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
     protected function createInstance(): BaseSliderItemData
     {
         return new SliderItemData();
-    }
-
-    /**
-     * @return \App\Model\Slider\SliderItemData
-     */
-    #[Override]
-    public function create(): BaseSliderItemData
-    {
-        /** @var \App\Model\Slider\SliderItemData $sliderItemData */
-        $sliderItemData = parent::create();
-
-        $sliderItemData->mobileImage = $this->imageUploadDataFactory->create();
-
-        return $sliderItemData;
-    }
-
-    /**
-     * @param \App\Model\Slider\SliderItemData $sliderItemData
-     * @param \App\Model\Slider\SliderItem $sliderItem
-     */
-    #[Override]
-    protected function fillFromSliderItem(BaseSliderItemData $sliderItemData, BaseSliderItem $sliderItem): void
-    {
-        parent::fillFromSliderItem($sliderItemData, $sliderItem);
-
-        $sliderItemData->image = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_WEB);
-        $sliderItemData->mobileImage = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
     }
 }

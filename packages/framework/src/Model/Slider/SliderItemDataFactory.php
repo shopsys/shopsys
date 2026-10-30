@@ -23,6 +23,7 @@ class SliderItemDataFactory
         $sliderItemData = $this->createInstance();
 
         $sliderItemData->image = $this->imageUploadDataFactory->create();
+        $sliderItemData->mobileImage = $this->imageUploadDataFactory->create();
 
         return $sliderItemData;
     }
@@ -41,7 +42,8 @@ class SliderItemDataFactory
         $sliderItemData->link = $sliderItem->getLink();
         $sliderItemData->hidden = $sliderItem->isHidden();
         $sliderItemData->domainId = $sliderItem->getDomainId();
-        $sliderItemData->image = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem);
+        $sliderItemData->image = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_WEB);
+        $sliderItemData->mobileImage = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
         $sliderItemData->description = $sliderItem->getDescription();
         $sliderItemData->rgbBackgroundColor = $sliderItem->getRgbBackgroundColor();
         $sliderItemData->opacity = $sliderItem->getOpacity();

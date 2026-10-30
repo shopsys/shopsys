@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Twig\Environment;
@@ -29,7 +28,6 @@ class ImageExtension extends AbstractExtension
     public function __construct(
         string $frontDesignImageUrlPrefix,
         protected readonly Domain $domain,
-        protected readonly ImageLocator $imageLocator,
         protected readonly ImageFacade $imageFacade,
         protected readonly Environment $twigEnvironment,
         protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
@@ -47,20 +45,6 @@ class ImageExtension extends AbstractExtension
             new TwigFunction('image', $this->getImageHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('imageUrl', $this->getImageUrlForTemplate(...)),
         ];
-    }
-
-    /**
-     * @param object|\Shopsys\FrameworkBundle\Component\Image\Image $imageOrEntity
-     */
-    public function imageExists(object $imageOrEntity, ?string $type = null): bool
-    {
-        try {
-            $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
-        } catch (ImageNotFoundException $e) {
-            return false;
-        }
-
-        return $this->imageLocator->imageExists($image);
     }
 
     /**
