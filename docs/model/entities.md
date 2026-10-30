@@ -14,7 +14,7 @@ This article describes how we work with entities and our specialities.
 
 Is a class that creates an entity.
 The framework must allow using extended entities and this problem is solved using factories.
-We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/ObjectIsCreatedByFactorySniff.php).
+We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/General/ObjectIsCreatedByFactorySniff.php).
 
 The only entities that are not created by a factory are `*Translation` and `*Domain` entities.
 These entities are created by their main entity.
@@ -430,7 +430,7 @@ e.g., [`CustomerData`]({{github.link}}/packages/framework/src/Model/Customer/Cus
 
 Is the only place where entity data is created.
 The framework must allow using extended entity data and this problem is solved, as same as with entities, by factories.
-We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/ObjectIsCreatedByFactorySniff.php).
+We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/General/ObjectIsCreatedByFactorySniff.php).
 
 Data factory can also fill default values
 (e.g., [`PaymentDataFactory`]({{github.link}}/packages/framework/src/Model/Payment/PaymentDataFactory.php) fills default VAT for new payment objects).
@@ -457,7 +457,7 @@ class BrandDataFactory
 }
 ```
 
-The factory has an implementation in the framework and can be overriden in your project.
+The factory has an implementation in the framework and can be overridden in your project.
 
 ### Full example of entity construction
 

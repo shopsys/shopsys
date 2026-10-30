@@ -18,10 +18,6 @@ The template is not configured globally (via `config/packages/twig.yaml`) but in
 
 The menu template works similarly to the default `knp_menu.html.twig`, but it uses BEM classes and supports a few custom features.
 
-## Javascript
-
-The behavior of the side menu is controlled via the JS component [`Shopsys.sideMenu`]({{github.link}}/packages/framework/assets/js/admin/components/SideMenu.js).
-
 ## Icons
 
 There is an extra attribute `icon` supported to allow icons in the menu.

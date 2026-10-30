@@ -38,7 +38,7 @@ Also, the additional dispatch in the extended code is not needed (e.g., when a m
 
 Thanks to the Symfony's Messenger middleware `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayEnvelopeMiddleware`, the dispatched messages are first collected in the `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector`.
 
-Each message passed through this middleware is then stamped with the `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedStamp` stamp.
+Each message passed through this middleware is then stamped with the `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopeStamp` stamp.
 You can read more about message stamps in the [Symfony documentation](https://symfony.com/doc/5.4/messenger.html#envelopes-stamps).
 
 The real sending of the messages is done in the subscriber `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DispatchCollectedEnvelopesSubscriber`,
@@ -58,7 +58,7 @@ Batch handlers (`Symfony\Component\Messenger\Handler\BatchHandlerInterface`) are
 
 #### What if I really need to dispatch a message immediately?
 
-Message wrapped in the envelope stamped with the `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedStamp` stamp is sent immediately.
+Message wrapped in the envelope stamped with the `Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopeStamp` stamp is sent immediately.
 So, you can dispatch a message like
 
 ```php

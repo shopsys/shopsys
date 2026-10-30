@@ -76,7 +76,7 @@ $this->translator->trans('{0} no products|{1} product|]1,Inf[ products', ['%coun
 // shortcut for Translator::staticTrans()
 t('Offer in feed');
 
-// see Shopsys\FrameworkBundle\Component\TranslationConstraintViolationExtractor
+// see Shopsys\FrameworkBundle\Component\Translation\ConstraintViolationExtractor
 $executionContextInterface->addViolation('This message will be extracted into "validators" translation domain');
 
 // see Shopsys\FrameworkBundle\Component\Translation\ConstraintMessageExtractor

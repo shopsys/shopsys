@@ -199,7 +199,7 @@ class ProductRepository extends BaseProductRepository
 ```
 
 Add information about the class extension into the container configuration in [`services.yaml`]({{github.link}}/project-base/app/config/services.yaml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for), you need to add the same line into [`services_test.yaml`]({{github.link}}/project-base/config/services_test.yaml) as well.
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for), you need to add the same line into [`services_test.yaml`]({{github.link}}/project-base/app/config/services_test.yaml) as well.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
@@ -239,7 +239,7 @@ class ProductFacade extends BaseProductFacade
 
 Add information about the class extension into the container configuration in [`services.yaml`]({{github.link}}/project-base/app/config/services.yaml).
 To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for),
-you need to add the same line into [`services_test.yaml`]({{github.link}}/project-base/config/services_test.yaml) as well.
+you need to add the same line into [`services_test.yaml`]({{github.link}}/project-base/app/config/services_test.yaml) as well.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
@@ -439,7 +439,7 @@ class VatFacade extends BaseVatFacade
     You should overwrite the `protected $vatRepository` annotation so IDE knows that you are using the extended `VatRepository`
 
 Add information about the class extension into the container configuration in [`services.yaml`]({{github.link}}/project-base/app/config/services.yaml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for), you need to add the same line into [`services_test.yaml`]({{github.link}}/project-base/config/services_test.yaml) as well.
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for), you need to add the same line into [`services_test.yaml`]({{github.link}}/project-base/app/config/services_test.yaml) as well.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@App\Model\Pricing\Vat\VatFacade'
