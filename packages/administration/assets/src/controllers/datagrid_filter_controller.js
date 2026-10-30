@@ -198,7 +198,11 @@ export default class extends Controller {
      * so they are destroyed before the content they are bound to is thrown away.
      */
     disposeContent(element) {
-        element.querySelectorAll('select').forEach(select => select.tomselect?.destroy());
-        element.querySelectorAll('input').forEach(input => input._flatpickr?.destroy());
+        element.querySelectorAll('select').forEach(select => {
+            select.tomselect?.destroy();
+        });
+        element.querySelectorAll('input').forEach(input => {
+            input._flatpickr?.destroy();
+        });
     }
 }
