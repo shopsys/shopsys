@@ -60,6 +60,8 @@ class MergeCartFacade
 
     protected function mergeCarts(Cart $cart, Cart $currentCart): void
     {
+        $currentCart->mergeRemovedProductGifts($cart);
+
         foreach ($cart->getItems() as $itemToMerge) {
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
 

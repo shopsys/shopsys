@@ -89,6 +89,13 @@ class Cart
     protected $giftVouchers;
 
     /**
+     * @var int[]
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'json')]
+    protected $removedGiftProductIds;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
     #[AsMcpColumn]
@@ -154,6 +161,7 @@ class Cart
         $this->lastActivityAt = new DatePoint('today');
         $this->promoCodes = new ArrayCollection();
         $this->giftVouchers = new ArrayCollection();
+        $this->removedGiftProductIds = [];
     }
 
     public function addItem(CartItem $item): void
@@ -180,6 +188,43 @@ class Cart
         $message = 'Cart item with ID = ' . $itemId . ' is not in cart for remove.';
 
         throw new InvalidCartItemException($message);
+    }
+
+    public function markProductGiftRemoved(Product $product): void
+    {
+        if (!$this->isProductGiftRemoved($product)) {
+            $this->removedGiftProductIds[] = $product->getId();
+            $this->updateLastActivityDate();
+        }
+    }
+
+    public function isProductGiftRemoved(Product $product): bool
+    {
+        return in_array($product->getId(), $this->removedGiftProductIds, true);
+    }
+
+    public function hasRemovedProductGifts(): bool
+    {
+        return count($this->removedGiftProductIds) > 0;
+    }
+
+    public function restoreProductGift(Product $product): void
+    {
+        $this->removedGiftProductIds = array_values(array_diff($this->removedGiftProductIds, [$product->getId()]));
+        $this->updateLastActivityDate();
+    }
+
+    public function mergeRemovedProductGifts(Cart $cart): void
+    {
+        $this->removedGiftProductIds = array_values(array_unique([...$this->removedGiftProductIds, ...$cart->removedGiftProductIds]));
+    }
+
+    /**
+     * @param int[] $giftProductIds
+     */
+    public function retainRemovedProductGiftIds(array $giftProductIds): void
+    {
+        $this->removedGiftProductIds = array_values(array_intersect($this->removedGiftProductIds, $giftProductIds));
     }
 
     public function clean(): void

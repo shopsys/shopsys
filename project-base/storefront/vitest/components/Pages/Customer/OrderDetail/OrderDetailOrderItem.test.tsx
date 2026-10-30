@@ -82,6 +82,34 @@ describe('OrderDetailOrderItem', () => {
         authorization.canCreateComplaint = false;
     });
 
+    test('keeps a deleted gift visible with its saved price and no checkbox', () => {
+        render(
+            <OrderDetailOrderItem
+                isOrderFromRegisteredCustomer
+                orderItem={{
+                    ...orderItem,
+                    type: TypeOrderItemTypeEnum.ProductGift,
+                    product: null,
+                    unitPrice: orderItem.totalPrice,
+                }}
+                orderUrlHash="order-url-hash"
+                orderUuid="order-uuid"
+                productReviewsAllowed
+                purchasedGiftVouchers={[]}
+                isReviewAvailabilityLoading={false}
+                reviewedProductUuids={new Set()}
+            />,
+        );
+
+        expect(screen.getByText('Gift with purchase')).toBeInTheDocument();
+        expect(screen.getByText('Product')).toBeInTheDocument();
+        expect(screen.getByText('1 pcs')).toBeInTheDocument();
+        expect(screen.getAllByText('10')).toHaveLength(2);
+        expect(screen.getByRole('button', { name: 'Select code: CAT-1' })).toBeInTheDocument();
+        expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+        expect(screen.queryByText('Write a review')).not.toBeInTheDocument();
+    });
+
     test('shows an explanation instead of a review link for an already reviewed product', () => {
         render(
             <OrderDetailOrderItem

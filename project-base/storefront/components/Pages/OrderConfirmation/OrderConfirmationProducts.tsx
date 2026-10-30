@@ -31,16 +31,6 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
             <div className="relative">
                 <ul className={twJoin('flex max-h-125 flex-col gap-2 overflow-y-auto', items.length > 3 && 'pb-10')}>
                     {items.map((item) => {
-                        // prices of the order, not the current prices of the product, which can also be no longer available
-                        const orderedUnitPrice = {
-                            ...item.unitPrice,
-                            __typename: 'ProductPrice' as const,
-                            isPriceFrom: false,
-                            nextPriceChange: null,
-                            percentageDiscount: null,
-                            basicPrice: item.unitPrice,
-                        };
-
                         if (item.type === TypeOrderItemTypeEnum.Product) {
                             return (
                                 <OrderItemProductCard
@@ -54,7 +44,7 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                                     freeQuantity={null}
                                     fullName={item.name}
                                     mainImage={item.product?.mainImage}
-                                    price={orderedUnitPrice}
+                                    price={item}
                                     quantity={item.quantity}
                                     unit={item.unit}
                                 />
@@ -68,7 +58,8 @@ export const OrderConfirmationProducts: FC<OrderConfirmationProductsProps> = ({ 
                                     categoryName={item.product?.mainCategory?.name}
                                     fullName={item.name}
                                     mainImage={item.product?.mainImage}
-                                    price={orderedUnitPrice}
+                                    unitPrice={item.unitPrice.priceWithVat}
+                                    totalPrice={item.totalPrice.priceWithVat}
                                     quantity={item.quantity}
                                     unit={item.unit}
                                 />
