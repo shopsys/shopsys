@@ -24,11 +24,24 @@ class MigrationsSubscriber implements EventSubscriberInterface
         $this->mcpDatabaseViewsFacade->dropViews();
     }
 
-    public function recreateMcpViews(): void
+    public function recreateMcpViews(MigrationsFinishedEvent $migrationsFinishedEvent): void
     {
-        if ($this->mcpAvailabilityChecker->isAvailable()) {
-            $this->mcpDatabaseViewsFacade->recreateViews();
+        if (!$this->mcpAvailabilityChecker->isAvailable()) {
+            $migrationsFinishedEvent->addMessage(sprintf(
+                'MCP database schema "%s" was dropped because MCP database credentials are not configured.',
+                $this->mcpDatabaseViewsFacade->getViewsSchemaName(),
+            ));
+
+            return;
         }
+
+        $viewsCount = $this->mcpDatabaseViewsFacade->recreateViews();
+
+        $migrationsFinishedEvent->addMessage(sprintf(
+            'MCP database schema "%s" was recreated with %d views of the exposed tables.',
+            $this->mcpDatabaseViewsFacade->getViewsSchemaName(),
+            $viewsCount,
+        ));
     }
 
     /**

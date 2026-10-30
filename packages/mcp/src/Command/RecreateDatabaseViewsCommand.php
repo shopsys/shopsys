@@ -36,14 +36,21 @@ class RecreateDatabaseViewsCommand extends Command
 
         if (!$this->mcpAvailabilityChecker->isAvailable()) {
             $this->mcpDatabaseViewsFacade->dropViews();
-            $io->note('MCP database views were dropped because MCP database credentials are not configured.');
+            $io->note(sprintf(
+                'MCP database schema "%s" was dropped because MCP database credentials are not configured.',
+                $this->mcpDatabaseViewsFacade->getViewsSchemaName(),
+            ));
 
             return Command::SUCCESS;
         }
 
-        $this->mcpDatabaseViewsFacade->recreateViews();
+        $viewsCount = $this->mcpDatabaseViewsFacade->recreateViews();
 
-        $io->success(sprintf('MCP database views were recreated in the "%s" schema.', $this->mcpDatabaseViewsFacade->getViewsSchemaName()));
+        $io->success(sprintf(
+            'MCP database schema "%s" was recreated with %d views of the exposed tables.',
+            $this->mcpDatabaseViewsFacade->getViewsSchemaName(),
+            $viewsCount,
+        ));
 
         return Command::SUCCESS;
     }

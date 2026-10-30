@@ -57,7 +57,12 @@ class MigrateCommand extends Command
 
                 $this->executeCheckSchemaCommand($output);
 
-                $this->eventDispatcher->dispatch(new MigrationsFinishedEvent());
+                $migrationsFinishedEvent = new MigrationsFinishedEvent();
+                $this->eventDispatcher->dispatch($migrationsFinishedEvent);
+
+                foreach ($migrationsFinishedEvent->getMessages() as $message) {
+                    $output->writeln($message);
+                }
             });
         } catch (Exception $ex) {
             $message = 'Database migration process did not run properly. Transaction was reverted.';
