@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Twig\Runtime;
 
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\StorageAttributes;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\Finder\Finder;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 
@@ -19,11 +20,12 @@ class DomainIconRuntime implements RuntimeExtensionInterface
     protected ?array $icons = null;
 
     public function __construct(
-        protected readonly string $kernelProjectDir,
         protected readonly Environment $twigEnvironment,
         protected readonly Domain $domain,
         protected readonly DomainFacade $domainFacade,
         protected readonly Packages $assetPackages,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly string $domainImagesDirectory,
     ) {
     }
 
@@ -58,15 +60,15 @@ class DomainIconRuntime implements RuntimeExtensionInterface
 
         $this->icons = [];
 
-        $finder = Finder::create()
-            ->files()
-            ->in($this->kernelProjectDir . '/web/content/admin/images/domain')
-            ->name('/\d+\.png$/')
-            ->depth(0);
+        $iconFiles = $this->filesystem->listContents($this->domainImagesDirectory)
+            ->filter(static fn (StorageAttributes $storageAttributes): bool => $storageAttributes->isFile());
 
-        foreach ($finder as $file) {
-            $domainId = (int)$file->getBasename('.png');
-            $this->icons[$domainId] = $file->getBasename();
+        foreach ($iconFiles as $iconFile) {
+            $iconFileName = basename($iconFile->path());
+
+            if (preg_match('/^(\d+)\.png$/', $iconFileName, $matches) === 1) {
+                $this->icons[(int)$matches[1]] = $iconFileName;
+            }
         }
     }
 }

@@ -59,7 +59,8 @@ services:
 
     Shopsys\AdministrationBundle\Twig\Runtime\DomainIconRuntime:
         arguments:
-            - '%kernel.project_dir%'
+            $filesystem: '@main_filesystem'
+            $domainImagesDirectory: '%shopsys.domain_images_dir%'
         tags: ['twig.runtime']
 
     Shopsys\FrameworkBundle\Component\Security\AccessControl\RouteAccessCheckerInterface:
