@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter;
 
+use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterGroupData;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * The filter of one datagrid — the filters offered to the administrator, the form of the groups of rules composed
- * from them and the prototypes of the rules.
+ * The filter of one datagrid — the filters offered to the administrator and the form of the groups of rules composed
+ * from them.
  *
- * Built by `DatagridNarrowingResolver` from the filters and the request state of the datagrid; the component renders
- * the forms, the condition narrows the records.
+ * A part of the state of the datagrid added by `FilterStateSubscriber`, which submits the form once — the condition
+ * narrows the records before they are loaded, the component renders the very same form with its errors.
  */
-final readonly class FilterPanel
+final readonly class FilterPanel implements DatagridSearchInterface
 {
     /**
      * @param \Symfony\Component\Form\FormInterface<\Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData> $form
-     * @param \Symfony\Component\Form\FormInterface $prototypesForm The prototypes of the rules the page swaps in, never submitted
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection $filters The filters offered, already adapted to the medium of the datagrid
      */
     public function __construct(
         public FormInterface $form,
-        public FormInterface $prototypesForm,
         public FilterCollection $filters,
     ) {
     }
@@ -40,11 +40,29 @@ final readonly class FilterPanel
     }
 
     /**
+     * Any composed rule outranks the quick search, even an invalid one.
+     */
+    #[Override]
+    public function isActive(): bool
+    {
+        return $this->hasRules();
+    }
+
+    /**
+     * Whether the composed rules cannot be applied — the form is never valid unless submitted.
+     */
+    public function isInvalid(): bool
+    {
+        return $this->hasRules() && $this->form->isValid() === false;
+    }
+
+    /**
      * The condition of everything the administrator composed: the rules of a group combined by the operator of
      * the group, the groups by the operator of the form. An invalid form narrows nothing and shows its errors
      * instead of quietly listing more than the administrator asked for; a rule of an unknown filter or without
      * a value narrows nothing either. Null when nothing narrows at all.
      */
+    #[Override]
     public function createCondition(): ?ConditionInterface
     {
         if ($this->hasRules() === false || $this->form->isValid() === false) {

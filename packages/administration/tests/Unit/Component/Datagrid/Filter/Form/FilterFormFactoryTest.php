@@ -2,52 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Request;
+namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Filter\Form;
 
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterFormFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
-use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridFormFactory;
-use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 
-final class DatagridFormFactoryTest extends TestCase
+final class FilterFormFactoryTest extends TestCase
 {
-    public function testQuickSearchFormIsSubmittedFromTheQuery(): void
-    {
-        $form = $this->createFormFactory()->createQuickSearchForm(new DatagridRequestState('ProductReview', ['text' => '  hrnek ']));
-
-        $this->assertSame('ProductReview_search', $form->getName());
-        $this->assertTrue($form->isSubmitted());
-        $this->assertSame('hrnek', $this->createFormFactory()->getSearchTerm($form));
-    }
-
-    public function testQuickSearchFormWithoutQueryIsNotSubmitted(): void
-    {
-        $form = $this->createFormFactory()->createQuickSearchForm(new DatagridRequestState('ProductReview'));
-
-        $this->assertFalse($form->isSubmitted());
-        $this->assertNull($this->createFormFactory()->getSearchTerm($form));
-    }
-
-    public function testBlankTermCountsAsNoSearch(): void
-    {
-        $form = $this->createFormFactory()->createQuickSearchForm(new DatagridRequestState('ProductReview', ['text' => '   ']));
-
-        $this->assertNull($this->createFormFactory()->getSearchTerm($form));
-    }
-
     public function testComposedFilterIsSubmittedFromTheQuery(): void
     {
-        $form = $this->createFormFactory()->createFilterForm($this->createFilters(), new DatagridRequestState('ProductReview', null, [
+        $form = $this->createFormFactory()->createForm($this->createFilters(), 'ProductReview_filter', [
             'groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'x']]]],
-        ]));
+        ]);
 
         $this->assertSame('ProductReview_filter', $form->getName());
         $this->assertTrue($form->isSubmitted());
@@ -62,8 +37,8 @@ final class DatagridFormFactoryTest extends TestCase
     {
         $filters = $this->createFilters();
 
-        foreach ([new DatagridRequestState('ProductReview'), new DatagridRequestState('ProductReview', null, ['groups' => []])] as $state) {
-            $form = $this->createFormFactory()->createFilterForm($filters, $state);
+        foreach ([null, ['groups' => []]] as $query) {
+            $form = $this->createFormFactory()->createForm($filters, 'ProductReview_filter', $query);
 
             $this->assertFalse($form->isSubmitted());
             $this->assertCount(1, $form->getData()->groups);
@@ -71,9 +46,20 @@ final class DatagridFormFactoryTest extends TestCase
         }
     }
 
-    private function createFormFactory(): DatagridFormFactory
+    /**
+     * The page swaps the prototypes into the filter form, so they are named as that form.
+     */
+    public function testPrototypesAreNamedAsTheFilterForm(): void
     {
-        return new DatagridFormFactory(DatagridNarrowingResolverFactory::createFormFactory());
+        $form = $this->createFormFactory()->createPrototypesForm($this->createFilters(), 'ProductReview_filter');
+
+        $this->assertSame('ProductReview_filter', $form->getName());
+        $this->assertFalse($form->isSubmitted());
+    }
+
+    private function createFormFactory(): FilterFormFactory
+    {
+        return new FilterFormFactory(DatagridStateFactoryFixture::createFormFactory());
     }
 
     private function createFilters(): FilterCollection

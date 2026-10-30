@@ -34,7 +34,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Form\FormInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyEntityManagerFactory;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyProduct;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 
 /**
  * The filters over the paths of a real mapping, down to the query on the PostgreSQL platform — a value a filter
@@ -123,7 +123,7 @@ final class FilterQueryTest extends TestCase
         $filters = new FilterCollection();
         $filters->add($filter);
 
-        $form = DatagridNarrowingResolverFactory::createFormFactory()->createNamed('Product_filter', DatagridFilterFormType::class, FilterFormData::createStartingPoint(), [
+        $form = DatagridStateFactoryFixture::createFormFactory()->createNamed('Product_filter', DatagridFilterFormType::class, FilterFormData::createStartingPoint(), [
             'filters' => $filters,
         ]);
         $form->submit(['groups' => [['rules' => [['filter' => 'rating', 'operator' => ExpressionOperatorEnum::GREATER_THAN, 'value' => $value]]]]]);

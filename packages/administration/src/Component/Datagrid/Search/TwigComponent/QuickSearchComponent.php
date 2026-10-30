@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Search\TwigComponent;
 
 use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearchFormFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
- * Renders the quick search of a datagrid — a GET form named after the datagrid, carrying the order and the
- * limit of the grid along so that a search never loses them, and starting from the first page.
+ * Renders the quick search of a datagrid — a GET form named after the datagrid, filled with the searched text,
+ * carrying the order and the limit of the grid along so that a search never loses them, and starting from
+ * the first page.
  */
 #[AsTwigComponent(
     name: 'Admin:Grid:QuickSearch',
@@ -30,8 +32,15 @@ final class QuickSearchComponent
 
     private ?FormView $formView = null;
 
+    public function __construct(
+        private readonly QuickSearchFormFactory $quickSearchFormFactory,
+    ) {
+    }
+
     public function getFormView(): FormView
     {
-        return $this->formView ??= $this->quickSearch->form->createView();
+        return $this->formView ??= $this->quickSearchFormFactory
+            ->createForm($this->quickSearch->formName, $this->quickSearch->term)
+            ->createView();
     }
 }

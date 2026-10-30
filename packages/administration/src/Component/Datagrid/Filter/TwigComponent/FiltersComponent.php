@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter\TwigComponent;
 
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterPanel;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterFormFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
@@ -12,6 +14,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
  * Renders the filter of a datagrid — the composed groups of rules, and the prototypes the page swaps in
  * when the administrator adds a rule or changes its filter or operation. Sent by GET, so the composed
  * filter lives in the URL; the order and the limit of the grid travel along, the page starts over.
+ *
+ * The form of the rules is the one submitted while the state of the datagrid was created, so that its errors
+ * are rendered; the prototypes decide nothing, so the component builds them itself.
  */
 #[AsTwigComponent(
     name: 'Admin:Grid:Filters',
@@ -19,16 +24,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 )]
 final class FiltersComponent
 {
-    /**
-     * The view of the submitted filter form — the page passes the form itself among the parameters of `render()`,
-     * which turns it into its view and answers 422 when the composed filter is invalid.
-     */
-    public FormView $filterForm;
-
-    /**
-     * The view of the prototypes of the rules, passed to `render()` the same way as the filter form.
-     */
-    public FormView $prototypesForm;
+    public FilterPanel $filter;
 
     public GridView $gridView;
 
@@ -37,9 +33,32 @@ final class FiltersComponent
      */
     public bool $embedded = false;
 
+    private ?FormView $formView = null;
+
+    private ?FormView $prototypesFormView = null;
+
+    public function __construct(
+        private readonly FilterFormFactory $filterFormFactory,
+    ) {
+    }
+
+    public function getFormView(): FormView
+    {
+        return $this->formView ??= $this->filter->form->createView();
+    }
+
+    public function getPrototypesFormView(): FormView
+    {
+        return $this->prototypesFormView ??= $this->filterFormFactory
+            ->createPrototypesForm($this->filter->filters, $this->filter->form->getName())
+            ->createView();
+    }
+
     /**
-     * Whether any rule was composed — the panel is then marked as active. Given by the page, which takes it from
-     * `DatagridNarrowing::$filterActive`.
+     * Whether any rule was composed — the panel is then marked as active.
      */
-    public bool $active = false;
+    public function isActive(): bool
+    {
+        return $this->filter->isActive();
+    }
 }

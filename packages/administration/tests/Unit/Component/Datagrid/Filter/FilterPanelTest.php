@@ -35,6 +35,8 @@ final class FilterPanelTest extends TestCase
         ]));
 
         $this->assertTrue($filterPanel->hasRules());
+        $this->assertTrue($filterPanel->isActive());
+        $this->assertFalse($filterPanel->isInvalid());
         $this->assertEquals(
             Condition::orX(
                 Condition::andX(Condition::contains('name', 'hrnek'), Condition::greaterThan('price', 100)),
@@ -76,12 +78,14 @@ final class FilterPanelTest extends TestCase
             [FilterGroupData::OPERATOR_AND, [$this->createRule('name', ExpressionOperatorEnum::CONTAINS, 'hrnek')]],
         ]), false);
 
-        $this->assertTrue($filterPanel->hasRules());
+        $this->assertTrue($filterPanel->isActive());
+        $this->assertTrue($filterPanel->isInvalid());
         $this->assertNull($filterPanel->createCondition());
     }
 
     /**
-     * A form never submitted is only the starting point it offers, so it is never asked whether it is valid.
+     * A form never submitted is only the starting point it offers, so it is never asked whether it is valid — it never
+     * is unless submitted.
      */
     public function testUnsubmittedFormHasNoRules(): void
     {
@@ -89,9 +93,10 @@ final class FilterPanelTest extends TestCase
         $formMock->method('isSubmitted')->willReturn(false);
         $formMock->expects($this->never())->method('isValid');
 
-        $filterPanel = new FilterPanel($formMock, $this->createStub(FormInterface::class), $this->createResolvedFilters());
+        $filterPanel = new FilterPanel($formMock, $this->createResolvedFilters());
 
-        $this->assertFalse($filterPanel->hasRules());
+        $this->assertFalse($filterPanel->isActive());
+        $this->assertFalse($filterPanel->isInvalid());
         $this->assertNull($filterPanel->createCondition());
     }
 
@@ -112,7 +117,7 @@ final class FilterPanelTest extends TestCase
         $formStub->method('isValid')->willReturn($valid);
         $formStub->method('getData')->willReturn($data);
 
-        return new FilterPanel($formStub, $this->createStub(FormInterface::class), $this->createResolvedFilters());
+        return new FilterPanel($formStub, $this->createResolvedFilters());
     }
 
     private function createResolvedFilters(): FilterCollection

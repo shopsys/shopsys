@@ -11,6 +11,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -21,7 +22,7 @@ use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterf
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
-use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridNarrowingResolverFactory;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\OrderableDummy;
 
 /**
@@ -45,18 +46,18 @@ final class DatagridDragAndDropTest extends TestCase
     {
         $gridMock = $this->createGridMock();
         $gridMock->expects($this->once())->method('enableDragAndDrop')->with(OrderableDummy::class, 'position');
-        $datagrid = $this->createDatagrid($gridMock, $this->createStub(DataSourceInterface::class), null);
+        $datagrid = $this->createDatagrid($gridMock, $this->createStub(DataSourceInterface::class));
 
-        $datagrid->createView();
+        $datagrid->createView($this->createState($datagrid));
     }
 
     public function testSearchedRecordsAreListedByTheirPositionWithoutDragAndDrop(): void
     {
         $gridMock = $this->createGridMock();
         $gridMock->expects($this->never())->method('enableDragAndDrop');
-        $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition(), ['text' => 'hrnek']);
+        $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition());
 
-        $datagrid->createView();
+        $datagrid->createView($this->createState($datagrid, ['text' => 'hrnek']));
         $this->gridDataSource?->getPaginatedRows();
     }
 
@@ -64,12 +65,12 @@ final class DatagridDragAndDropTest extends TestCase
     {
         $gridMock = $this->createGridMock();
         $gridMock->expects($this->never())->method('enableDragAndDrop');
-        $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition(), null, [
-            'groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'hrnek']]]],
-        ]);
+        $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition());
         $datagrid->filters()->add(TextFilter::new('name'));
 
-        $datagrid->createView();
+        $datagrid->createView($this->createState($datagrid, null, [
+            'groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'hrnek']]]],
+        ]));
         $this->gridDataSource?->getPaginatedRows();
     }
 
@@ -101,12 +102,16 @@ final class DatagridDragAndDropTest extends TestCase
      * @param array<string, mixed>|null $quickSearchQuery
      * @param array<string, mixed>|null $filterQuery
      */
-    private function createDatagrid(
-        Grid $grid,
-        DataSourceInterface $dataSource,
-        ?array $quickSearchQuery,
+    private function createState(
+        Datagrid $datagrid,
+        ?array $quickSearchQuery = null,
         ?array $filterQuery = null,
-    ): Datagrid {
+    ): DatagridState {
+        return DatagridStateFactoryFixture::createState($datagrid, DatagridStateFactoryFixture::createRequest($quickSearchQuery, $filterQuery));
+    }
+
+    private function createDatagrid(Grid $grid, DataSourceInterface $dataSource): Datagrid
+    {
         $gridFactoryStub = $this->createStub(GridFactory::class);
         $gridFactoryStub->method('create')->willReturnCallback(function (string $name, DataSourceInterface $gridDataSource) use ($grid): Grid {
             $this->gridDataSource = $gridDataSource;
@@ -133,20 +138,10 @@ final class DatagridDragAndDropTest extends TestCase
             }
         };
 
-        $datagrid = new Datagrid(
-            $adapter,
-            $gridFactoryStub,
-            $this->createStub(AccessCheckerInterface::class),
-            $this->createStub(AdministratorGridFacade::class),
-            $this->createStub(Security::class),
-            DatagridNarrowingResolverFactory::create(),
-            DatagridNarrowingResolverFactory::createRequestState($quickSearchQuery, $filterQuery),
-            null,
-            [
-                'name' => DatagridNarrowingResolverFactory::GRID_ID,
-                'roleConstant' => 'ROLE_CRUD_TEST',
-            ],
-        );
+        $datagrid = new Datagrid($adapter, $gridFactoryStub, $this->createStub(AccessCheckerInterface::class), $this->createStub(AdministratorGridFacade::class), $this->createStub(Security::class), [
+            'name' => DatagridStateFactoryFixture::GRID_ID,
+            'roleConstant' => 'ROLE_CRUD_TEST',
+        ]);
         $datagrid
             ->add('name', ['searchable' => true])
             ->enableDragAndDrop('position');

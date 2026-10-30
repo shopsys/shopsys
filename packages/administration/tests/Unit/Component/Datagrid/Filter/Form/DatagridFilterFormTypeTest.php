@@ -178,7 +178,7 @@ final class DatagridFilterFormTypeTest extends TestCase
 
             $this->assertTrue($form->isValid(), (string)$form->getErrors(true));
             $this->assertNull($form->getData()->groups[0]->rules[0]->value);
-            $this->assertEquals(Condition::equals('inStock', $expected), new FilterPanel($form, $this->createStub(FormInterface::class), $this->filters)->createCondition());
+            $this->assertEquals(Condition::equals('inStock', $expected), new FilterPanel($form, $this->filters)->createCondition());
         }
     }
 

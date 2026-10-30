@@ -58,8 +58,8 @@ class FilterListTest extends TransactionFunctionalTestCase
         $crawler = $client->request('GET', $this->generateListPath($client));
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertCount(1, $crawler->filter('a[data-bs-toggle="tab"][href="#datagrid-quick-search"].active'));
-        $this->assertCount(1, $crawler->filter('a[data-bs-toggle="tab"][href="#datagrid-filter"]'));
+        $this->assertCount(1, $crawler->filter('a[data-bs-toggle="tab"][href="#ProductReview_search_tab"].active'));
+        $this->assertCount(1, $crawler->filter('a[data-bs-toggle="tab"][href="#ProductReview_filter_tab"]'));
         $this->assertGreaterThan(0, $crawler->filter('[data-controller="datagrid-filter"]')->count());
         // the starting point: one group with one rule waiting to be filled
         $this->assertCount(1, $crawler->filter('form [data-datagrid-filter-target="group"]'));
@@ -80,8 +80,8 @@ class FilterListTest extends TransactionFunctionalTestCase
         $crawler = $client->request('GET', $this->generateListPath($client), $this->composeFilter('status', 'in', [ProductReviewStatusEnum::STATUS_PENDING]));
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertCount(1, $crawler->filter('a[data-bs-toggle="tab"][href="#datagrid-filter"].active'));
-        $this->assertCount(0, $crawler->filter('a[data-bs-toggle="tab"][href="#datagrid-quick-search"].active'));
+        $this->assertCount(1, $crawler->filter('a[data-bs-toggle="tab"][href="#ProductReview_filter_tab"].active'));
+        $this->assertCount(0, $crawler->filter('a[data-bs-toggle="tab"][href="#ProductReview_search_tab"].active'));
     }
 
     public function testInvalidRuleIsReportedInsteadOfNarrowing(): void

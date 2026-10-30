@@ -21,6 +21,7 @@ use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateFactory;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SilencedExceptionEvent;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
@@ -43,6 +44,9 @@ abstract class AbstractCrudController extends AdminBaseController
 
     #[Required]
     public DatagridFactory $datagridFactory;
+
+    #[Required]
+    public DatagridStateFactory $datagridStateFactory;
 
     #[Required]
     public OrmAdapterFactory $ormAdapterFactory;
@@ -125,20 +129,21 @@ abstract class AbstractCrudController extends AdminBaseController
         $this->configureDatagrid($datagrid);
         $this->executeExtensions(fn (AbstractCrudControllerExtension $extension) => $extension->configureDatagrid($datagrid));
 
-        $gridView = $datagrid->createView();
-        $narrowing = $datagrid->getNarrowing();
+        $datagridState = $this->datagridStateFactory->create($datagrid->getConfig());
 
-        return $this->renderAction(ActionType::LIST, [
+        $response = $this->renderAction(ActionType::LIST, [
             'title' => $this->definition->getConfig()->getTitle(ActionType::LIST),
-            'grid' => $gridView,
+            'grid' => $datagrid->createView($datagridState),
+            'datagridState' => $datagridState,
             'topActions' => $this->getConfiguredActions(ActionType::LIST),
-            'domainControlScope' => $narrowing->domainControlScope,
-            'quickSearch' => $narrowing->quickSearch,
-            // the forms themselves, so that they are rendered as their views and an invalid filter answers 422
-            'filterForm' => $narrowing->filterPanel?->form,
-            'filterPrototypesForm' => $narrowing->filterPanel?->prototypesForm,
-            'filterActive' => $narrowing->filterActive,
         ]);
+
+        // the forms of the datagrid are rendered by its components, so the status is not set by render() itself
+        if ($datagridState->isInvalid() && $response->getStatusCode() === Response::HTTP_OK) {
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $response;
     }
 
     final public function detailAction(int $id): Response

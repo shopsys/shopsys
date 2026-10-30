@@ -15,13 +15,10 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\EntityClassAwareAdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
-use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\PathDescribingAdapterInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
-use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowing;
-use Shopsys\AdministrationBundle\Component\Datagrid\Narrowing\DatagridNarrowingResolver;
-use Shopsys\AdministrationBundle\Component\Datagrid\Request\DatagridRequestState;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -35,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use SortDirection;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 /**
  * @phpstan-import-type DatagridOptions from \Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory
@@ -51,7 +49,7 @@ final class Datagrid
 
     private FilterCollection $filters;
 
-    private ?DatagridNarrowing $narrowing = null;
+    private ?DatagridConfig $config = null;
 
     private string $identificationName = 'id';
 
@@ -84,9 +82,6 @@ final class Datagrid
         private readonly AccessCheckerInterface $accessChecker,
         private readonly AdministratorGridFacade $administratorGridFacade,
         private readonly Security $security,
-        private readonly DatagridNarrowingResolver $narrowingResolver,
-        private readonly DatagridRequestState $requestState,
-        private readonly ?DomainControlScope $domainControlScope,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
@@ -98,32 +93,18 @@ final class Datagrid
     }
 
     /**
-     * The domains the datagrid works with, null when it has no domain control. Known already while the datagrid
-     * is configured, so it can decide about the fields.
+     * The configuration as the current administrator sees it, frozen on the first call — ask once the datagrid
+     * is configured; the fields and the filters cannot be changed after that, the change would never reach
+     * the state created from the configuration (see `DatagridStateFactory`).
      */
-    public function getDomainControlScope(): ?DomainControlScope
+    public function getConfig(): DatagridConfig
     {
-        return $this->domainControlScope;
-    }
-
-    /**
-     * What narrows the records on behalf of the administrator — the domain control, the quick search and the filter
-     * panel. Resolved from the fields and the filters on the first call (`createView()` makes one), so ask once
-     * the datagrid is configured; the fields and the filters cannot be changed after that, the change would never
-     * reach the narrowing.
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
-     */
-    public function getNarrowing(): DatagridNarrowing
-    {
-        return $this->narrowing ??= $this->narrowingResolver->resolve(
+        return $this->config ??= new DatagridConfig(
+            $this->options['name'],
             $this->adapter,
             $this->getAccessibleFields(),
             $this->getAccessibleFilters(),
-            $this->requestState,
-            $this->domainControlScope,
+            $this->getDomainControlConfig(),
         );
     }
 
@@ -138,6 +119,7 @@ final class Datagrid
             'name' => 'datagrid',
             'crudDefinition' => null,
             'pagination' => true,
+            'domainControl' => null,
         ]);
 
         $resolver->setRequired('roleConstant');
@@ -146,6 +128,7 @@ final class Datagrid
         $resolver->setAllowedTypes('crudDefinition', [Definition::class, 'null']);
         $resolver->setAllowedTypes('pagination', 'bool');
         $resolver->setAllowedTypes('roleConstant', 'string');
+        $resolver->setAllowedTypes('domainControl', [DomainControlConfig::class, 'null']);
 
         return $resolver->resolve($options);
     }
@@ -273,7 +256,7 @@ final class Datagrid
      */
     public function add(string $name, array $options = []): self
     {
-        $this->assertNotNarrowedYet();
+        $this->assertNotFrozen();
 
         if ($this->fields->containsKey($name)) {
             throw new InvalidArgumentException(sprintf('Field with name "%s" already exists.', $name));
@@ -306,7 +289,7 @@ final class Datagrid
      */
     public function update(string $name, array $options): self
     {
-        $this->assertNotNarrowedYet();
+        $this->assertNotFrozen();
 
         if (!$this->fields->containsKey($name)) {
             throw new InvalidArgumentException(sprintf('Field with name "%s" does not exist.', $name));
@@ -322,7 +305,7 @@ final class Datagrid
      */
     public function remove(string $name): self
     {
-        $this->assertNotNarrowedYet();
+        $this->assertNotFrozen();
 
         if (!$this->fields->containsKey($name)) {
             throw new InvalidArgumentException(sprintf('Field with name "%s" does not exist.', $name));
@@ -347,11 +330,11 @@ final class Datagrid
      * A field declared `'filterable' => true` gets a filter picked by the kind of value its path leads to; a filter
      * declared here under the name of that field (see `FieldDescriptor::getFilterName()`) replaces the picked one.
      * The filters are offered in the alphabetical order of their labels. Declare them while configuring the datagrid,
-     * they are adapted to the adapter once the narrowing is resolved (see `getNarrowing()`).
+     * they are adapted to the adapter when the state of the datagrid is created (see `DatagridStateFactory`).
      */
     public function filters(): FilterCollection
     {
-        $this->assertNotNarrowedYet();
+        $this->assertNotFrozen();
 
         return $this->filters;
     }
@@ -364,17 +347,21 @@ final class Datagrid
         return $this->actions;
     }
 
-    public function createView(): GridView
+    /**
+     * Lists the records the state narrows the datagrid to. The state is required, so that the domain control
+     * of the datagrid is never left out by mistake — create it from the configuration by `DatagridStateFactory`.
+     */
+    public function createView(DatagridState $state): GridView
     {
-        $this->addDomainFieldIfWorthDisplaying();
+        Assert::true($state->isCreatedFor($this->getConfig()), 'The state was created for the configuration of another datagrid.');
 
         // fields the administrator is not allowed to see are neither fetched nor displayed
-        $accessibleFields = $this->getAccessibleFields();
+        $accessibleFields = [...$this->getConfig()->fields, ...$this->getAdditionalFields($state)];
 
         $datasource = $this->adapter->getDatasource(new DatasourceRequest(
             $this->identificationName,
             $accessibleFields,
-            $this->getNarrowing()->condition,
+            $state->condition,
         ));
 
         if ($this->dragAndDropEntityClass !== null && $this->defaultOrder !== null) {
@@ -394,7 +381,7 @@ final class Datagrid
             // Pagination is intentionally left disabled - reordering and saving positions must work
             // over the whole list, not just the current page. Saving renumbers the listed records, so the records
             // narrowed by the administrator are only listed in their order, a part of them is never reordered.
-            if ($this->getNarrowing()->isNarrowedByAdministrator() === false) {
+            if ($state->isNarrowedByAdministrator() === false) {
                 $grid->enableDragAndDrop($this->dragAndDropEntityClass, $this->defaultOrder['field']);
             }
         } elseif ($this->options['pagination'] === true) {
@@ -524,41 +511,40 @@ final class Datagrid
     }
 
     /**
-     * Displays the domain of every record when the domain control works with several domains.
+     * The fields displayed on behalf of the features narrowing the datagrid — a field declared on the datagrid takes
+     * precedence, even one the administrator is not allowed to see, and a restricted field is displayed only to
+     * the administrator allowed to see it.
      *
-     * Displaying the domain and limiting the records to the domains of the control are independent —
-     * the limit is a part of every request the datagrid sends to its adapter, so hiding or removing the
-     * field never widens the listed records. Adding the field manually takes precedence. A record related
-     * to several domains (the path leads through a collection) has no single domain to display.
+     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[]
      */
-    private function addDomainFieldIfWorthDisplaying(): void
+    private function getAdditionalFields(DatagridState $state): array
     {
-        $domainControlScope = $this->getDomainControlScope();
-
-        if ($domainControlScope === null || $domainControlScope->isDomainWorthDisplaying() === false) {
-            return;
-        }
-
-        if ($this->fields->containsKey($domainControlScope->domainIdPath) || $this->leadsThroughCollection($domainControlScope->domainIdPath)) {
-            return;
-        }
-
-        // the field narrows nothing, so it is added even once the narrowing is resolved
-        $this->fields->set($domainControlScope->domainIdPath, new FieldDescriptor($domainControlScope->domainIdPath, [
-            'label' => t('Domain'),
-            'template' => '@ShopsysAdministration/datagrid/cell/domain_icon.html.twig',
-        ]));
+        return array_values(array_filter(
+            $state->additionalFields,
+            fn (FieldDescriptor $field): bool => $this->fields->containsKey($field->getName()) === false && $this->isAccessible($field),
+        ));
     }
 
-    private function leadsThroughCollection(string $path): bool
+    /**
+     * The domain control of a CRUD datagrid follows its configuration unless given explicitly; a datagrid outside
+     * CRUD has none.
+     */
+    private function getDomainControlConfig(): ?DomainControlConfig
     {
-        return $this->adapter instanceof PathDescribingAdapterInterface && $this->adapter->describePath($path)->isToMany();
+        if ($this->options['domainControl'] !== null) {
+            return $this->options['domainControl'];
+        }
+
+        /** @var \Shopsys\AdministrationBundle\Component\Crud\Definition|null $crudDefinition */
+        $crudDefinition = $this->options['crudDefinition'];
+
+        return $crudDefinition?->getConfig()->getDomainControlConfig();
     }
 
-    private function assertNotNarrowedYet(): void
+    private function assertNotFrozen(): void
     {
-        if ($this->narrowing !== null) {
-            throw new LogicException('The narrowing of the datagrid is already resolved (by getNarrowing() or createView()), so a change of its configuration would never reach it - configure the datagrid first.');
+        if ($this->config !== null) {
+            throw new LogicException('The configuration of the datagrid is already frozen (by getConfig()), so a change of it would never reach the state of the datagrid - configure the datagrid first.');
         }
     }
 

@@ -1,4 +1,4 @@
-{% set form = filterForm %}
+{% set form = this.formView %}
 
 {% macro ruleFields(fieldsForm) %}
     <div class="datagrid-filter__operator" style="flex: 0 0 14rem">
@@ -103,7 +103,7 @@
     {# the prototypes are kept out of the form, so they are never submitted #}
     <template data-datagrid-filter-target="groupTemplate">{{ _self.group(form.groups.vars.prototype) }}</template>
     <template data-datagrid-filter-target="ruleTemplate">{{ _self.rule(form.groups.vars.prototype.rules.vars.prototype) }}</template>
-    {% for filterPrototypes in prototypesForm.prototypes %}
+    {% for filterPrototypes in this.prototypesFormView.prototypes %}
         {% for arityPrototype in filterPrototypes %}
             <template data-datagrid-filter-target="prototype" data-filter="{{ filterPrototypes.vars.name }}" data-arity="{{ arityPrototype.vars.name }}">{{ _self.ruleFields(arityPrototype) }}</template>
         {% endfor %}
