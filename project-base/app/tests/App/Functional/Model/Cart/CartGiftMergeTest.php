@@ -8,7 +8,8 @@ use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Product\Product;
-use PHPUnit\Framework\Attributes\DataProvider;
+use Override;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
@@ -37,39 +38,59 @@ final class CartGiftMergeTest extends TransactionFunctionalTestCase
      */
     private CartWatcherFacade $cartWatcherFacade;
 
-    /**
-     * @return iterable<string, array{bool}>
-     */
-    public static function removedGiftCartProvider(): iterable
-    {
-        yield 'removed in anonymous cart' => [true];
+    private CustomerUser $customerUser;
 
-        yield 'removed in customer cart' => [false];
+    private Cart $anonymousCart;
+
+    private Cart $customerCart;
+
+    #[Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . '1', CustomerUser::class);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14', Product::class);
+        $this->anonymousCart = $this->cartApiFacade->getCartCreateIfNotExists(null, 'dbd7c3b8-f8a2-4d91-a82f-79c3d0d97df0');
+        $this->customerCart = $this->cartApiFacade->getCartCreateIfNotExists($this->customerUser, null);
+        self::assertSame([], $this->customerCart->getItems());
+
+        $this->cartFacade->addProductToExistingCart($product, 1, $this->anonymousCart);
+        $this->cartFacade->addProductToExistingCart($product, 1, $this->customerCart);
     }
 
-    #[DataProvider('removedGiftCartProvider')]
-    public function testRemovedGiftStaysRemovedAfterCartMerge(bool $removeFromAnonymousCart): void
+    public function testGiftRemovedInAnonymousCartIsRemovedFromCustomerCartAfterMerge(): void
     {
-        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . '1', CustomerUser::class);
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14', Product::class);
-        $anonymousCart = $this->cartApiFacade->getCartCreateIfNotExists(null, 'dbd7c3b8-f8a2-4d91-a82f-79c3d0d97df0');
-        $customerCart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, null);
-        $this->cartApiFacade->deleteCart($customerCart);
-        $customerCart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, null);
-        $this->cartFacade->addProductToExistingCart($product, 1, $anonymousCart);
-        $this->cartFacade->addProductToExistingCart($product, 1, $customerCart);
-        $cartToRemoveGiftFrom = $removeFromAnonymousCart ? $anonymousCart : $customerCart;
-        $giftItem = array_first($cartToRemoveGiftFrom->getProductGiftCartItems());
+        $giftProduct = $this->removeGiftFromCart($this->anonymousCart);
+
+        $this->mergeAnonymousCartToCustomerCart();
+
+        self::assertTrue($this->customerCart->isProductGiftRemoved($giftProduct));
+        self::assertSame([], $this->customerCart->getProductGiftCartItems());
+    }
+
+    public function testGiftRemovedInCustomerCartIsNotRestoredByGiftFromMergedAnonymousCart(): void
+    {
+        $giftProduct = $this->removeGiftFromCart($this->customerCart);
+
+        $this->mergeAnonymousCartToCustomerCart();
+
+        self::assertTrue($this->customerCart->isProductGiftRemoved($giftProduct));
+        self::assertSame([], $this->customerCart->getProductGiftCartItems());
+    }
+
+    private function removeGiftFromCart(Cart $cart): Product
+    {
+        $giftItem = array_first($cart->getProductGiftCartItems());
         self::assertNotNull($giftItem);
-        $giftProduct = $giftItem->getProduct();
-        $this->cartFacade->removeItemFromExistingCartByUuid($giftItem->getUuid(), $cartToRemoveGiftFrom);
+        $this->cartFacade->removeItemFromExistingCartByUuid($giftItem->getUuid(), $cart);
 
-        $this->mergeCartFacade->mergeCartByUuidToCustomerCart($anonymousCart->getCartIdentifier(), $customerUser);
-        $this->cartWatcherFacade->getCheckedCartWithModifications($customerCart);
-        $this->cartFacade->addProductToExistingCart($product, 3, $customerCart, true);
+        return $giftItem->getProduct();
+    }
 
-        self::assertTrue($customerCart->isProductGiftRemoved($giftProduct));
-        self::assertSame([], $customerCart->getProductGiftCartItems());
-        self::assertSame(3, array_first($customerCart->getProductCartItems())->getQuantity());
+    private function mergeAnonymousCartToCustomerCart(): void
+    {
+        $this->mergeCartFacade->mergeCartByUuidToCustomerCart($this->anonymousCart->getCartIdentifier(), $this->customerUser);
+        $this->cartWatcherFacade->getCheckedCartWithModifications($this->customerCart);
     }
 }

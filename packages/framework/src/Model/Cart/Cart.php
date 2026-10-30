@@ -190,10 +190,7 @@ class Cart
         throw new InvalidCartItemException($message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    public function markProductGiftRemoved($product): void
+    public function markProductGiftRemoved(Product $product): void
     {
         if (!$this->isProductGiftRemoved($product)) {
             $this->removedGiftProductIds[] = $product->getId();
@@ -201,36 +198,23 @@ class Cart
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
-     */
-    public function isProductGiftRemoved($product)
+    public function isProductGiftRemoved(Product $product): bool
     {
         return in_array($product->getId(), $this->removedGiftProductIds, true);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasRemovedProductGifts()
+    public function hasRemovedProductGifts(): bool
     {
         return count($this->removedGiftProductIds) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    public function restoreProductGift($product): void
+    public function restoreProductGift(Product $product): void
     {
         $this->removedGiftProductIds = array_values(array_diff($this->removedGiftProductIds, [$product->getId()]));
         $this->updateLastActivityDate();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
-    public function mergeRemovedProductGifts($cart): void
+    public function mergeRemovedProductGifts(Cart $cart): void
     {
         $this->removedGiftProductIds = array_values(array_unique([...$this->removedGiftProductIds, ...$cart->removedGiftProductIds]));
     }
@@ -238,7 +222,7 @@ class Cart
     /**
      * @param int[] $giftProductIds
      */
-    public function retainRemovedProductGiftIds($giftProductIds): void
+    public function retainRemovedProductGiftIds(array $giftProductIds): void
     {
         $this->removedGiftProductIds = array_values(array_intersect($this->removedGiftProductIds, $giftProductIds));
     }

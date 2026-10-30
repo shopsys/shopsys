@@ -53,7 +53,6 @@ final class CartGiftTest extends GraphQlTestCase
         $updatedCart = $this->addProduct($this->unrelatedProduct, 1, $cart['uuid']);
 
         self::assertSame([], $this->getGiftItems($updatedCart));
-        self::assertSame([$this->giftProduct->getUuid()], array_column(array_column($cart['removedGifts'], 'product'), 'uuid'));
         self::assertSame($cart['removedGifts'], $updatedCart['removedGifts']);
     }
 
@@ -123,8 +122,7 @@ final class CartGiftTest extends GraphQlTestCase
 
         $response = $this->restoreGift($cart['uuid'], $this->unrelatedProduct->getUuid());
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        self::assertSame('cart-item-invalid', $this->getErrorsFromResponse($response)[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'cart-item-invalid');
     }
 
     public function testGiftCannotBeRestoredWithoutProductThatQualifiesForIt(): void
@@ -135,8 +133,7 @@ final class CartGiftTest extends GraphQlTestCase
 
         $response = $this->restoreGift($cart['uuid'], $this->giftProduct->getUuid());
 
-        $this->assertResponseContainsArrayOfErrors($response);
-        self::assertSame('cart-item-invalid', $this->getErrorsFromResponse($response)[0]['extensions']['userCode']);
+        $this->assertUserError($response, 'cart-item-invalid');
     }
 
     public function testRemovedGiftIsAddedAgainWhenQualifyingProductReturnsToCart(): void
@@ -160,11 +157,19 @@ final class CartGiftTest extends GraphQlTestCase
         self::assertSame([], $this->getGiftItems($updatedCart));
         self::assertCount(2, $updatedCart['items']);
         self::assertSame($cart['removedGifts'], $updatedCart['removedGifts']);
+    }
+
+    public function testGiftIsRestoredAsSeparateItemWhenGiftProductIsAlsoBoughtNormally(): void
+    {
+        $cart = $this->createCartWithRemovedGift();
+        $cart = $this->addProduct($this->giftProduct, 1, $cart['uuid']);
 
         $response = $this->restoreGift($cart['uuid'], $this->giftProduct->getUuid());
         $restoredCart = $this->getResponseDataForGraphQlType($response, 'RestoreCartGift');
+
         self::assertCount(3, $restoredCart['items']);
         self::assertCount(1, $this->getGiftItems($restoredCart));
+        self::assertSame([], $restoredCart['removedGifts']);
     }
 
     /**
@@ -176,7 +181,10 @@ final class CartGiftTest extends GraphQlTestCase
         $giftItems = $this->getGiftItems($cart);
         self::assertCount(1, $giftItems, 'The demo gift plan must add a gift before it can be removed.');
 
-        return $this->removeItem($cart['uuid'], array_first($giftItems)['uuid']);
+        $cart = $this->removeItem($cart['uuid'], array_first($giftItems)['uuid']);
+        self::assertSame([$this->giftProduct->getUuid()], array_column(array_column($cart['removedGifts'], 'product'), 'uuid'));
+
+        return $cart;
     }
 
     /**
