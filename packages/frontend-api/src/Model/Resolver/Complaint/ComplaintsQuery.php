@@ -33,6 +33,8 @@ class ComplaintsQuery extends AbstractQuery
 
     public function complaintsQuery(Argument $argument): ConnectionInterface|Promise
     {
+        $this->pageSizeValidator->checkMaxPageSize($argument);
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();

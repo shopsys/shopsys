@@ -147,6 +147,16 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
         ];
     }
 
+    public function testGetComplaintsRejectsPageSizeOverMaximumAllowedLimit(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/GetComplaintsTotalCountQuery.graphql',
+            ['first' => 101],
+        );
+
+        $this->assertUserError($response, 'max-allowed-limit');
+    }
+
     /**
      * @param array<string, mixed> $queryVariables
      * @param array<string, int> $expectedCountsByStatusReferenceName
