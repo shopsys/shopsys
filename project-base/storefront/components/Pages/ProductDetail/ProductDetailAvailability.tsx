@@ -1,6 +1,7 @@
 import { useOpenDeliveryOptionsPopup } from 'components/Blocks/Popup/DeliveryOptionsPopup/useOpenDeliveryOptionsPopup';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 
 type ProductDetailAvailabilityProps = {
@@ -8,9 +9,14 @@ type ProductDetailAvailabilityProps = {
 };
 
 export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ product }) => {
+    const { t } = useTranslation();
     const openDeliveryOptionsPopup = useOpenDeliveryOptionsPopup();
 
-    if (product.isSellingDenied || product.isInquiryType) {
+    if (product.isSellingDenied) {
+        return <p className="text-text-error">{t('This item can no longer be purchased')}</p>;
+    }
+
+    if (product.isInquiryType) {
         return null;
     }
 

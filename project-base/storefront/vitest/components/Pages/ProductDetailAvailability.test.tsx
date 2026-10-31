@@ -35,6 +35,26 @@ const product = {
 } as unknown as TypeProductDetailFragment;
 
 describe('ProductDetailAvailability', () => {
+    test.each([
+        TypeAvailabilityStatusEnum.InStock,
+        TypeAvailabilityStatusEnum.OutOfStock,
+        TypeAvailabilityStatusEnum.ExpectedRestock,
+    ])('shows the discontinued message instead of availability %s when selling is denied', (status) => {
+        render(
+            <ProductDetailAvailability
+                product={{
+                    ...product,
+                    isSellingDenied: true,
+                    availability: { ...product.availability, name: 'Stock availability', status },
+                }}
+            />,
+        );
+
+        expect(screen.getByText('This item can no longer be purchased')).toBeInTheDocument();
+        expect(screen.queryByText('Stock availability')).not.toBeInTheDocument();
+        expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    });
+
     test('shows the out-of-stock status even when the product can be ordered', () => {
         render(<ProductDetailAvailability product={product} />);
 

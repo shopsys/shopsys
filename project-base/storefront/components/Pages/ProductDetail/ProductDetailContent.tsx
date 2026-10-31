@@ -53,7 +53,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
     const isWatchdogButtonVisible = showWatchdogButton(product);
     const isPurchaseActionVisible =
-        product.isInquiryType || (!product.isSellingDenied && !product.isCurrentlyOutOfStock);
+        !product.isSellingDenied && (product.isInquiryType || !product.isCurrentlyOutOfStock);
     const isDeliveryOptionsVisible = showProductDeliveryOptionsPopup(product);
     const isEmailDeliveryInfoVisible =
         isProductSellable(product) && product.productType === TypeProductTypeEnum.ElectronicGiftVoucher;
