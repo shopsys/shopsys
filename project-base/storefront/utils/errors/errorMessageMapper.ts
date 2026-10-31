@@ -12,7 +12,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'electronic-gift-voucher-not-complainable': t('Electronic gift voucher cannot be complained.'),
         'handling-with-logged-customer-comparison': t('Product not found.'),
         'invalid-credentials': t('Invalid credentials.'),
-        'invalid-quantity': t('Complaint item quantity exceeds the order item quantity.'),
+        'invalid-quantity': t('Complaint item quantity exceeds the remaining quantity available for complaint.'),
         'invalid-refresh-token': t('Invalid refresh token.'),
         'max-allowed-limit': t('Max allowed limit reached.'),
         'max-transaction-count-reached': t('Max transaction count reached.'),

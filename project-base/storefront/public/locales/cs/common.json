@@ -159,7 +159,7 @@
     "Complaint item": "Položka reklamace",
     "Complaint item catalog number must be at most {{ max }} characters": "Katalogové číslo položky reklamace nesmí být delší než {{ max }} znaků",
     "Complaint item name must be at most {{ max }} characters": "Název položky reklamace nesmí být delší než {{ max }} znaků",
-    "Complaint item quantity exceeds the order item quantity.": "Množství reklamované položky převyšuje množství položky objednávky.",
+    "Complaint item quantity exceeds the remaining quantity available for complaint.": "Reklamované množství překračuje zbývající množství dostupné k reklamaci.",
     "Complaint not found.": "Reklamace nalezena.",
     "Complaint number": "Číslo reklamace",
     "Confirm the withdrawal request in your email": "Potvrďte žádost o odstoupení ve svém emailu",

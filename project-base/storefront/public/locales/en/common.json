@@ -141,7 +141,7 @@
     "Complaint item": "Complaint item",
     "Complaint item catalog number must be at most {{ max }} characters": "Complaint item catalog number must be at most {{ max }} characters",
     "Complaint item name must be at most {{ max }} characters": "Complaint item name must be at most {{ max }} characters",
-    "Complaint item quantity exceeds the order item quantity.": "Complaint item quantity exceeds the order item quantity.",
+    "Complaint item quantity exceeds the remaining quantity available for complaint.": "Complaint item quantity exceeds the remaining quantity available for complaint.",
     "Complaint not found.": "Complaint not found.",
     "Complaint number": "Complaint number",
     "Confirm the withdrawal request in your email": "Confirm the withdrawal request in your email",
