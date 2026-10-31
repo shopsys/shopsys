@@ -1,0 +1,55 @@
+{% set quickSearch = this.quickSearch %}
+{% set filter = this.filter %}
+{% set domainChoice = this.hasDomainChoice %}
+{# the tabs are named after the forms, so that two datagrids on one page never clash #}
+{% set quickSearchTabId = quickSearch is not null ? quickSearch.formName ~ '_tab' %}
+{% set filterTabId = filter is not null ? filter.form.name ~ '_tab' %}
+{% if quickSearch is not null or filter is not null %}
+    <div class="row row-deck row-cards mb-3">
+        <div class="col-12{{ domainChoice ? ' col-xl-8' }}">
+            <div class="card">
+                {% if quickSearch is not null and filter is not null %}
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                            <li class="nav-item">
+                                <a href="#{{ quickSearchTabId }}" class="nav-link{{ not this.filterTabOpen ? ' active' }}" data-bs-toggle="tab">
+                                    {{ 'Quick search'|trans }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#{{ filterTabId }}" class="nav-link{{ this.filterTabOpen ? ' active' }}" data-bs-toggle="tab">
+                                    {{ 'Filter'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <div class="tab-content">
+                        {% if quickSearch is not null %}
+                            <div class="tab-pane{{ not this.filterTabOpen ? ' active show' }}" id="{{ quickSearchTabId }}">
+                                {{ component('Admin:Grid:QuickSearch', { quickSearch: quickSearch, gridView: gridView, embedded: true }) }}
+                            </div>
+                        {% endif %}
+                        {% if filter is not null %}
+                            <div class="tab-pane{{ this.filterTabOpen ? ' active show' }}" id="{{ filterTabId }}">
+                                {{ component('Admin:Grid:Filters', { filter: filter, gridView: gridView, embedded: true }) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if domainChoice %}
+            <div class="col-12 col-xl-4">
+                <div class="card">
+                    <div class="card-body d-grid align-items-center row-gap-2 column-gap-3" style="grid-template-columns: auto minmax(0, 1fr)">
+                        {{ component('Admin:Grid:DomainControl', { scope: this.domainControl, select: true }) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% elseif domainChoice %}
+    {{ component('Admin:Grid:DomainControl', { scope: this.domainControl }) }}
+{% endif %}

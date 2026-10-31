@@ -16,6 +16,7 @@ use Symfony\Bundle\SecurityBundle\Security;
  *     crudDefinition?: \Shopsys\AdministrationBundle\Component\Crud\Definition|null,
  *     pagination?: bool,
  *     roleConstant: string,
+ *     domainControl?: \Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig|null,
  * }
  */
 final class DatagridFactory

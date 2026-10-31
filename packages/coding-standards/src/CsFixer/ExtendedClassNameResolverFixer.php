@@ -44,6 +44,8 @@ final class ExtendedClassNameResolverFixer implements ConfigurableFixerInterface
     private const array DEFAULT_EXCLUDED_CLASS_NAMES = [
         'Shopsys\FrameworkBundle\Component\Money\HiddenMoney',
         'Shopsys\FrameworkBundle\Component\Money\Money',
+        'Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface',
+        'Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData',
     ];
 
     public function __construct()
@@ -119,7 +121,7 @@ SAMPLE,
                 ->setAllowedTypes(['string[]'])
                 ->setDefault(self::DEFAULT_EXCLUDED_NAMESPACE_PREFIXES)
                 ->getOption(),
-            (new FixerOptionBuilder('excluded_class_names', 'Classes documented as not extendable although they are not final, for example because the framework itself extends them'))
+            (new FixerOptionBuilder('excluded_class_names', 'Classes and interfaces whose static calls are never wrapped, together with their descendants and implementations, for example classes documented as not extendable although they are not final, or classes extended by inheritance instead of class extension'))
                 ->setAllowedTypes(['string[]'])
                 ->setDefault(self::DEFAULT_EXCLUDED_CLASS_NAMES)
                 ->getOption(),
@@ -284,15 +286,27 @@ SAMPLE,
             return false;
         }
 
-        if (in_array($className, $this->configuration['excluded_class_names'], true)) {
-            return false;
-        }
-
         if (!$this->hasAnyPrefix($className, $this->configuration['namespace_prefixes']) || $this->hasAnyPrefix($className, $this->configuration['excluded_namespace_prefixes'])) {
             return false;
         }
 
+        // checked only within the prefixes, as finding the descendants autoloads the class
+        if ($this->isExcludedClassOrDescendant($className)) {
+            return false;
+        }
+
         return $this->isExtendableClass($className);
+    }
+
+    private function isExcludedClassOrDescendant(string $className): bool
+    {
+        foreach ($this->configuration['excluded_class_names'] as $excludedClassName) {
+            if ($className === $excludedClassName || is_a($className, $excludedClassName, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function isExtendableClass(string $className): bool

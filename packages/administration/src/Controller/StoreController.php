@@ -12,12 +12,13 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Model\Store\StoreCrudHandler;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\Exception\GoogleAddressCoordinatesException;
 use Shopsys\FrameworkBundle\Component\AddressCoordinates\GoogleAddressCoordinatesFacade;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
@@ -44,6 +45,7 @@ class StoreController extends AbstractCrudController
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly GoogleAddressCoordinatesFacade $addressCoordinatesFacade,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -56,7 +58,7 @@ class StoreController extends AbstractCrudController
                 SideMenuBuilder::SECTION_LISTS,
                 ['after' => SideMenuBuilder::LIST_PARAMETER_VALUE],
             )
-            ->setListDomainControl(CrudListDomainControl::SWITCHER)
+            ->setListDomainControl(DomainControlType::SWITCHER)
             ->registerHandler(StoreCrudHandler::class);
     }
 
@@ -118,7 +120,7 @@ class StoreController extends AbstractCrudController
     {
         $formConfigurator->useFormType(StoreFormType::class, [
             'store' => $entity,
-            'domain_id' => $entity instanceof Store ? $entity->getDomainId() : $this->getSelectedListDomainId(),
+            'domain_id' => $entity instanceof Store ? $entity->getDomainId() : $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
     }
 

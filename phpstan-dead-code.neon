@@ -18,9 +18,22 @@ parameters:
         -
             identifier: shipmonk.deadProperty.neverRead
             path: packages/administration/src/Component/Crud/CrudRegistryItem.php
+        # public API of the CRUD form and template configuration used by project controllers, exercised only by tests in the monorepo
         -
             identifier: shipmonk.deadMethod
-            path: packages/administration/src/Component/Datagrid/Adapter/Orm/ProxyQuery.php
+            path: packages/administration/src/Component/Crud/Form/CrudFormConfigurator.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Crud/Template/CrudTemplateParameters.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Condition/Condition.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/AbstractFilter.php
+        -
+            identifier: shipmonk.deadMethod
+            path: packages/administration/src/Component/Datagrid/Filter/EntityFilter.php
         -
             identifier: shipmonk.deadMethod
             path: packages/administration/src/Component/Datagrid/Datagrid.php
@@ -136,6 +149,10 @@ parameters:
             identifier: shipmonk.deadMethod
             path: packages/http-smoke-testing/src/RouteInfo.php
         # individual members
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            message: '#^Property\ Shopsys\\AdministrationBundle\\Component\\Security\\AccessControl\\RouteAccessControlData::\$routeName\ is\ never\ read\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/administration/src/Component/Security/AccessControl/RouteAccessControlData.php
         -
             identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\AdministrationBundle\\Component\\Security\\AccessControl\\RouteAccessControlDataProvider::clearCache$#'

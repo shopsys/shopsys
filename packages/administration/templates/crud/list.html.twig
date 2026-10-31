@@ -11,12 +11,8 @@
 {% endblock %}
 
 {% block main_content %}
-    {% block domain_control %}
-        {% if listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::QUICK_FILTER')) %}
-            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: listDomainFilterNamespace, domainIds: listDomainIds })) }}
-        {% elseif listDomainControl is same as(constant('Shopsys\\AdministrationBundle\\Component\\Config\\CrudListDomainControl::SWITCHER')) %}
-            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
-        {% endif %}
+    {% block datagrid_controls %}
+        {{ component('Admin:Grid:Controls', { state: datagridState, gridView: grid }) }}
     {% endblock %}
 
     {% block before_grid %}{% endblock %}
