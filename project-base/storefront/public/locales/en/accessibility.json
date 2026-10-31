@@ -25,6 +25,7 @@
     "Cart, {{ count }} items, {{ price }}. Show cart popup_many": "Cart, {{ count }} items, {{ price }}. Show cart popup",
     "Cart, {{ count }} items, {{ price }}. Show cart popup_other": "Cart, {{ count }} items, {{ price }}. Show cart popup",
     "Checkout steps navigation": "Checkout steps navigation",
+    "Choose a variant of {{ productName }}": "Choose a variant of {{ productName }}",
     "Choose payment {{ paymentName }}": "Choose payment {{ paymentName }}",
     "Choose payment {{ paymentName }} for {{ price }}": "Choose payment {{ paymentName }} for {{ price }}",
     "Choose transport {{ transportName }}": "Choose transport {{ transportName }}",
