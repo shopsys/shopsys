@@ -1,6 +1,26 @@
 #!/bin/sh
 set -e
 
+TYPE=${TYPE:-regression}
+COMMAND=${COMMAND:-run}
+SKIP_SNAPSHOTS=${SKIP_SNAPSHOTS-0}
+export TYPE COMMAND SKIP_SNAPSHOTS
+
+case "$COMMAND" in
+    run|selected|open|smoke) ;;
+    *) echo "Unknown Cypress COMMAND: $COMMAND" >&2; exit 1 ;;
+esac
+case "$TYPE" in
+    regression|base) ;;
+    *) echo "Unknown Cypress TYPE: $TYPE (expected regression or base)" >&2; exit 1 ;;
+esac
+case "$SKIP_SNAPSHOTS:$TYPE" in
+    0:*) ;;
+    1:regression) ;;
+    1:base) echo "Cannot generate screenshot references with SKIP_SNAPSHOTS=1." >&2; exit 1 ;;
+    *) echo "SKIP_SNAPSHOTS must be 0 or 1." >&2; exit 1 ;;
+esac
+
 # Install dependencies if node_modules is empty or cypress is missing
 if [ ! -d "/app/node_modules/cypress" ]; then
     echo "📦 Installing dependencies..."
@@ -10,6 +30,7 @@ fi
 echo "TYPE variable is set to: $TYPE"
 echo "COMMAND variable is set to: $COMMAND"
 echo "SPEC variable is set to: $SPEC"
+echo "SKIP_SNAPSHOTS variable is set to: $SKIP_SNAPSHOTS"
 
 if [ -n "$SPEC" ]; then
     echo "🎯 Running specific test: $SPEC"
@@ -20,9 +41,6 @@ if [ -n "$SPEC" ]; then
         echo "🔍 Running npm run specific-base $SPEC"
         npm run specific-base "$SPEC"
     fi
-elif [ "$COMMAND" = "generate" ]; then
-    echo "📊 Generating snapshots lookup table"
-    npm run generate-snapshots-table
 elif [ "$COMMAND" = "smoke" ]; then
     echo "💨 Running smoke tests"
     npm run smoke

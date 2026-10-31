@@ -186,6 +186,25 @@ describe('AuthNotificationLoader', () => {
         expect(getAuthNotification(1)).toBe('login');
     });
 
+    test('keeps a login notification across an intermediate client-side navigation before the document reload', async () => {
+        const { unmount } = renderToastNotifications();
+        storeAuthNotification(1, 'login');
+
+        act(() => {
+            routerEvents.routeChangeCompleteHandler?.();
+        });
+
+        expect(screen.queryByText('Successfully logged in')).not.toBeInTheDocument();
+        expect(getAuthNotification(1)).toBe('login');
+
+        unmount();
+        simulateDocumentNavigation();
+        renderToastNotifications();
+
+        expect(await screen.findByText('Successfully logged in')).toBeInTheDocument();
+        expect(getAuthNotification(1)).toBeNull();
+    });
+
     test('keeps a registration notification across a reload caused by authentication state mismatch', async () => {
         authState.isUserLoggedIn = false;
         const { unmount } = renderToastNotifications();

@@ -77,9 +77,11 @@ export const staticData = {
         helloKitty: {
             uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
             name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
+            fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
             catnum: '9177759',
         },
         philips32PFL4308: {
+            name: '32" Philips 32PFL4308',
             uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
             catnum: '9176508',
         },
@@ -95,7 +97,7 @@ export const staticData = {
         a4techMouse: {
             uuid: 'd5a669ed-46aa-5c55-b1fe-54e7b81de4cd',
             catnum: '5960453',
-            name: 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black',
+            name: 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
         },
         philips100: {
             uuid: 'a6f85d96-58f4-5a1b-9e63-51539e9911ff',
@@ -215,8 +217,8 @@ export const url = {
 
 type RouteMap = Record<string, string>;
 
-const b2bDomainId = Cypress.env('B2B_DOMAIN_ID') ? Number(Cypress.env('B2B_DOMAIN_ID')) : null;
-const b2bBaseUrl = (Cypress.env('B2B_BASE_URL') as string) || null;
+const b2bDomainId = Cypress.expose('B2B_DOMAIN_ID') ? Number(Cypress.expose('B2B_DOMAIN_ID')) : null;
+const b2bBaseUrl = (Cypress.expose('B2B_BASE_URL') as string) || null;
 
 // null when B2B is not configured — B2B test files check this and skip
 export const b2bDomain =

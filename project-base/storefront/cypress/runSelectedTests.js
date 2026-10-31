@@ -35,7 +35,7 @@ promptFn(prompt).then((answers) => {
         console.log('No TYPE variable specified. Using "regression"');
     }
 
-    const command = `cypress run --env visualRegressionType=${typeValue} --spec ${filesToRun.join(',')}`;
+    const command = `cypress run --expose visualRegressionType=${typeValue} --spec ${filesToRun.join(',')}`;
     console.log(`Running command: ${command}`);
 
     const child = spawn(command, { shell: true });
@@ -50,6 +50,7 @@ promptFn(prompt).then((answers) => {
 
     child.on('close', (code) => {
         if (code !== 0) {
+            process.exitCode = code ?? 1;
             console.error(`Process exited with code ${code}`);
         } else {
             console.log('Process completed successfully.');

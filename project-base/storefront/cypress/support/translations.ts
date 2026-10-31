@@ -124,7 +124,7 @@ const applyParams = (text: string, params?: Record<string, string | number>): st
 
 // Unified translation with smart fallback chain (common.json → .po files)
 const translateWithFallback = (key: string, params?: Record<string, string | number>): Cypress.Chainable<string> => {
-    const locale = Cypress.env('TEST_LOCALE');
+    const locale = Cypress.expose('TEST_LOCALE');
 
     return loadTranslations(locale).then((commonTranslations) => {
         // 1. Try common.json first
