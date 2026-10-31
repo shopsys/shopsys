@@ -152,7 +152,6 @@ class ProductReviewApiFacade
             $productReview->getImages(),
             static fn (ProductReviewImage $productReviewImage): bool => $productReviewImage->isRejected(),
         ));
-        $reviewArray['product_id'] = $productReview->getProduct()?->getId();
 
         return $reviewArray;
     }

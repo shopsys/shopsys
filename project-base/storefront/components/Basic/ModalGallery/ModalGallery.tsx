@@ -1,7 +1,7 @@
+import { MediaCarouselPositionCounter } from 'components/Basic/MediaCarousel/MediaCarouselPositionCounter';
 import { MediaCarouselItem, MediaCarouselTrackHandle } from 'components/Basic/MediaCarousel/MediaCarouselTrack';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { clamp } from 'utils/numbers/clamp';
 import { useFocusTrap } from 'utils/useFocusTrap';
 import { useKeypress } from 'utils/useKeyPress';
@@ -14,13 +14,18 @@ type ModalGalleryProps = {
     items: MediaCarouselItem[];
     initialIndex: number;
     galleryName: string;
+    galleryTitle?: string;
     onCloseModal: () => void;
 };
 
-const NON_BREAKING_SPACE = '\u00A0';
-
-export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galleryName, onCloseModal }) => {
-    const { t } = useTranslation();
+export const ModalGallery: FC<ModalGalleryProps> = ({
+    initialIndex,
+    items,
+    galleryName,
+    galleryTitle = galleryName,
+    onCloseModal,
+}) => {
+    const galleryTitleId = useId();
     const lastItemIndex = items.length - 1;
     const normalizedInitialIndex = items.length > 0 ? clamp(initialIndex, 0, lastItemIndex) : 0;
     const [selectedIndex, setSelectedIndex] = useState(normalizedInitialIndex);
@@ -30,7 +35,6 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
     const selectedGalleryItem = items[selectedIndex];
     const hasMultipleItems = items.length > 1;
-    const isSelectedItemImage = selectedGalleryItem?.__typename === 'Image';
 
     const selectItem = (index: number) => {
         carouselTrackRef.current?.scrollToIndex(index);
@@ -61,18 +65,19 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
         return null;
     }
 
-    const selectedItemCaption = isSelectedItemImage ? selectedGalleryItem.name : null;
-
     return (
         <RemoveScroll>
             <div
-                aria-label={t('Gallery', { ns: 'accessibility' })}
+                aria-labelledby={galleryTitleId}
                 aria-modal="true"
                 className="fixed inset-0 z-maximum grid h-screen select-none grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)_auto] overflow-hidden bg-background-default p-2 outline-hidden supports-[height:100dvh]:h-dvh sm:p-4"
                 ref={modalRef}
                 role="dialog"
             >
-                <header className="z-above flex h-12 items-center justify-end">
+                <header className="z-above flex h-12 min-w-0 items-center justify-between gap-3">
+                    <h2 className="min-w-0 truncate text-sm text-text-less sm:text-base" id={galleryTitleId}>
+                        {galleryTitle}
+                    </h2>
                     <ModalGalleryCloseButton ref={closeButtonRef} onClose={onCloseModal} />
                 </header>
 
@@ -91,20 +96,21 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     )}
                 </section>
 
-                <footer className="flex min-w-0 flex-col items-center gap-3 pt-3">
-                    <p className="h-5 max-w-full truncate text-center text-sm text-text-less">
-                        {selectedItemCaption ?? NON_BREAKING_SPACE}
-                    </p>
-
-                    {hasMultipleItems && (
+                {hasMultipleItems && (
+                    <footer className="flex min-w-0 flex-col items-center gap-3 pt-3">
+                        <MediaCarouselPositionCounter
+                            itemCount={items.length}
+                            selectedIndex={selectedIndex}
+                            slideName={galleryTitle}
+                        />
                         <ModalGalleryCarousel
                             galleryName={galleryName}
                             items={items}
                             selectedIndex={selectedIndex}
                             onSelectItem={selectItem}
                         />
-                    )}
-                </footer>
+                    </footer>
+                )}
             </div>
         </RemoveScroll>
     );

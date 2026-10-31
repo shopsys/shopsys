@@ -35,6 +35,7 @@ class ProductReviewDocumentMapper
     {
         return [
             'uuid' => $productReview->getUuid(),
+            'product_id' => $productReview->getProduct()?->getId(),
             'product_uuid' => $productReview->getProduct()?->getUuid(),
             'product_name' => $productReview->getProductName(),
             'reviewer_name' => $this->getPublicReviewerName($productReview),

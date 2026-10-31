@@ -26,6 +26,10 @@ query ProductDetailReviews($productUuid: Uuid!, $first: Int, $after: String, $or
                     rejectedImagesCount
                     productUuid
                     productName
+                    product {
+                        uuid
+                        fullName
+                    }
                 }
             }
             pageInfo {
