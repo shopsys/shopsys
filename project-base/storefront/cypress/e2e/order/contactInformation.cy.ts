@@ -135,7 +135,9 @@ describe('Contact Information Page Tests', () => {
             cy.preselectPaymentForTest(staticData.payment.onDelivery.uuid);
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-            fillCustomerInformationInThirdStep('123', ' changed', ' changed');
+            cy.get('#contact-information-form-telephone').clear();
+            fillCustomerInformationInThirdStep('123456123', ' changed', ' changed');
+            cy.get('#contact-information-form-telephone').should('have.value', '123456123');
             clearPostcodeInThirdStep();
             fillBillingAdressInThirdStep(' changed 123', ' changed', '29292');
             fillInNoteInThirdStep(staticData.orderNote);

@@ -1,3 +1,4 @@
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { UploadIcon } from 'components/Basic/Icon/UploadIcon';
 import { Image } from 'components/Basic/Image/Image';
@@ -67,7 +68,7 @@ const FilePreview: FC<{ file: File }> = ({ file }) => {
     return (
         <Image
             alt={file.name}
-            className="size-20 overflow-hidden rounded-md object-contain p-1 mix-blend-multiply"
+            className="size-full object-contain mix-blend-multiply"
             height={80}
             src={previewUrl}
             width={80}
@@ -188,9 +189,12 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                         {legendText && <p className={legendTwClass}>{legendText}</p>}
                         {error && formatError(error)}
                         {value && value.length > 0 && showPreviews && (
-                            <ul className="mt-2 flex flex-wrap gap-3">
+                            <ul className="mt-4 flex flex-wrap gap-3">
                                 {value.map((file: File, index: number) => (
-                                    <li key={`${file.name}-${index}`} className="flex flex-col items-center gap-1">
+                                    <li
+                                        key={`${file.name}-${index}`}
+                                        className="relative flex size-20 items-center justify-center rounded-xl bg-white p-2 shadow-sm"
+                                    >
                                         <FilePreview file={file} />
                                         <div className="flex w-20 flex-col text-center text-xs">
                                             <span className="truncate" title={file.name}>
@@ -200,9 +204,14 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                                         </div>
 
                                         <IconButton
-                                            Icon={TrashCanIcon}
+                                            Icon={CloseIcon}
+                                            ariaLabel={t('Remove file')}
+                                            className="absolute -top-2 -right-2 z-10 shadow-md"
                                             disabled={disabled}
+                                            size="compact"
                                             title={t('Remove file')}
+                                            tooltipLabel={t('Remove file')}
+                                            tooltipPlacement="top"
                                             onClick={() => removeFile(file)}
                                         />
                                     </li>
@@ -221,7 +230,6 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                                             Icon={TrashCanIcon}
                                             ariaLabel={t('Remove file')}
                                             disabled={disabled}
-                                            shape="rounded"
                                             size="small"
                                             title={t('Remove file')}
                                             tooltipLabel={t('Remove file')}

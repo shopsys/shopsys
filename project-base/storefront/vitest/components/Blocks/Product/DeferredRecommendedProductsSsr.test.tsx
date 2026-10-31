@@ -112,62 +112,61 @@ describe.each([
         expect(server.fetch).not.toHaveBeenCalled();
     });
 
-    test.each([
-        'products',
-        'empty',
-        'error',
-    ] as const)('hydrates and requests recommendations automatically, then handles %s', async (result) => {
-        const server = createTestClient(false);
-        mockedRouter.pathname = pathname;
-        const container = document.createElement('div');
-        container.innerHTML = renderToString(recommendations(server.client, recommendationType, itemUuids));
-        document.body.appendChild(container);
-        const browser = createTestClient(true);
-        const onRecoverableError = vi.fn();
+    test.each(['products', 'empty', 'error'] as const)(
+        'hydrates and requests recommendations automatically, then handles %s',
+        async (result) => {
+            const server = createTestClient(false);
+            mockedRouter.pathname = pathname;
+            const container = document.createElement('div');
+            container.innerHTML = renderToString(recommendations(server.client, recommendationType, itemUuids));
+            document.body.appendChild(container);
+            const browser = createTestClient(true);
+            const onRecoverableError = vi.fn();
 
-        render(recommendations(browser.client, recommendationType, itemUuids), {
-            container,
-            hydrate: true,
-            onRecoverableError,
-        });
+            render(recommendations(browser.client, recommendationType, itemUuids), {
+                container,
+                hydrate: true,
+                onRecoverableError,
+            });
 
-        expect(server.fetch).not.toHaveBeenCalled();
-        await waitFor(() => expect(browser.fetch).toHaveBeenCalledTimes(1));
-        expect(JSON.parse(browser.fetch.mock.calls[0][1]?.body as string).variables).toEqual({
-            itemUuids,
-            userIdentifier: 'test-visitor',
-            recommendationType,
-            recommenderClientIdentifier: identifier,
-            limit: 10,
-        });
-        expect(screen.getByRole('status')).toBeInTheDocument();
-        expect(onRecoverableError).not.toHaveBeenCalled();
+            expect(server.fetch).not.toHaveBeenCalled();
+            await waitFor(() => expect(browser.fetch).toHaveBeenCalledTimes(1));
+            expect(JSON.parse(browser.fetch.mock.calls[0][1]?.body as string).variables).toEqual({
+                itemUuids,
+                userIdentifier: 'test-visitor',
+                recommendationType,
+                recommenderClientIdentifier: identifier,
+                limit: 10,
+            });
+            expect(screen.getByRole('status')).toBeInTheDocument();
+            expect(onRecoverableError).not.toHaveBeenCalled();
 
-        await act(async () => {
-            browser.respond(
-                result === 'error'
-                    ? { errors: [{ message: 'Recommendations unavailable' }] }
-                    : {
-                          data: {
-                              recommendedProducts:
-                                  result === 'products'
-                                      ? [{ slug: '/recommended-product', fullName: 'Recommended product' }]
-                                      : [],
+            await act(async () => {
+                browser.respond(
+                    result === 'error'
+                        ? { errors: [{ message: 'Recommendations unavailable' }] }
+                        : {
+                              data: {
+                                  recommendedProducts:
+                                      result === 'products'
+                                          ? [{ slug: '/recommended-product', fullName: 'Recommended product' }]
+                                          : [],
+                              },
                           },
-                      },
-            );
-        });
+                );
+            });
 
-        await waitFor(() => expect(screen.queryByRole('status')).not.toBeInTheDocument());
-        if (result === 'products') {
-            expect(screen.getByRole('link', { name: 'Recommended product' })).toHaveAttribute(
-                'href',
-                '/recommended-product',
-            );
-        } else {
-            expect(screen.queryByRole('heading', { name: 'Recommended for you' })).not.toBeInTheDocument();
-        }
-        expect(browser.fetch).toHaveBeenCalledTimes(1);
-        expect(onRecoverableError).not.toHaveBeenCalled();
-    });
+            await waitFor(() => expect(screen.queryByRole('status')).not.toBeInTheDocument());
+            if (result === 'products') {
+                expect(screen.getByRole('link', { name: 'Recommended product' })).toHaveAttribute(
+                    'href',
+                    '/recommended-product',
+                );
+            } else {
+                expect(screen.queryByRole('heading', { name: 'Recommended for you' })).not.toBeInTheDocument();
+            }
+            expect(browser.fetch).toHaveBeenCalledTimes(1);
+            expect(onRecoverableError).not.toHaveBeenCalled();
+        },
+    );
 });

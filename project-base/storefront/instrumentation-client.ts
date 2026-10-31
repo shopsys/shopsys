@@ -1,7 +1,9 @@
 import { getPublicConfigProperty } from 'envConfig';
 import { SENTRY_APPLICATION_KEY } from 'sentryApplicationKey';
 import * as Sentry from '@sentry/nextjs';
+import { sentryDataCollection } from 'utils/sentry/dataCollection';
 import { getTracePropagationTargetsFromPublicGraphqlEndpoints as getPublicGraphqlTracePropagationTargets } from 'utils/sentry/tracePropagationTargets';
+import { scrubSentryData, sentryFeedbackUrlPrivacyIntegration } from 'utils/sentry/urlPrivacy';
 
 const dsn = getPublicConfigProperty('sentryDsn');
 const environment = getPublicConfigProperty('sentryEnvironment');
@@ -16,11 +18,15 @@ const tracePropagationTargets = getPublicGraphqlTracePropagationTargets(
 if (isSentryEnabled) {
     Sentry.init({
         dsn: dsn,
+        dataCollection: sentryDataCollection,
+        beforeSend: scrubSentryData,
+        beforeSendSpan: scrubSentryData,
         environment: environment,
         release: release,
         tracesSampleRate: 0.1,
         denyUrls: [/^https?:\/\/([a-z0-9-]+\.)*(smartsupp\.com|smartsuppchat\.com|smartsuppcdn\.com)\//],
         integrations: [
+            sentryFeedbackUrlPrivacyIntegration(),
             Sentry.browserTracingIntegration(),
             Sentry.thirdPartyErrorFilterIntegration({
                 filterKeys: [SENTRY_APPLICATION_KEY],
@@ -32,14 +38,15 @@ if (isSentryEnabled) {
         replaysOnErrorSampleRate: enableReplays ? 1.0 : 0,
     });
 
-    // Lazy load replay integration if enabled
+    // Keep SENTRY_REPLAYS_ENABLE=0 until an SDK fix passes outbound URL privacy checks.
+    // In SDK 11.1.0, Replay hooks do not cover initial URLs or DOM links with credentials.
     if (enableReplays) {
         import('utils/sentry/replayIntegration').then(({ replayIntegration }) => {
             Sentry.addIntegration(
                 replayIntegration({
-                    maskAllText: false,
-                    blockAllMedia: false,
-                    maskAllInputs: false,
+                    maskAllText: true,
+                    blockAllMedia: true,
+                    maskAllInputs: true,
                 }),
             );
         });
