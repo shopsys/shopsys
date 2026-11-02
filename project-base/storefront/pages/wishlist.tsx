@@ -8,9 +8,11 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { NextPage } from 'next';
+import { createClient } from 'urql/createClient';
+import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { buildServerSideProps, prefetchLayoutQueries, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const WishlistPage: NextPage<ServerSidePropsType> = () => {
@@ -29,25 +31,33 @@ const WishlistPage: NextPage<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, t }) =>
-        async (context) =>
-            initServerSideProps({
-                context,
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = createClient({ t, ssrExchange, domainConfig, redisClient, context });
+            const layoutResult = await prefetchLayoutQueries({ client, context, domainConfig });
+            const pageQueryResults = isUserLoggedInSSR(client)
+                ? [
+                      await client
+                          .query(ProductListQueryDocument, {
+                              input: {
+                                  type: TypeProductListTypeEnum.Wishlist,
+                                  uuid: null,
+                              },
+                          })
+                          .toPromise(),
+                  ]
+                : [];
+
+            return buildServerSideProps({
+                layoutResult,
+                pageQueryResults,
+                client,
                 redisClient,
+                ssrExchange,
+                context,
                 domainConfig,
-                t,
-                prefetchedQueries: [
-                    {
-                        query: ProductListQueryDocument,
-                        variables: {
-                            input: {
-                                type: TypeProductListTypeEnum.Wishlist,
-                                uuid: null,
-                            },
-                        },
-                    },
-                ],
-            }),
+            });
+        },
 );
 
 export default WishlistPage;
