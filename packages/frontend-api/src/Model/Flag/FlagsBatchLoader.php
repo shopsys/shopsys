@@ -23,7 +23,7 @@ class FlagsBatchLoader
      */
     public function loadByIds(array $flagsIds): Promise
     {
-        $flagsIndexedById = $this->flagFacade->getByIds(array_merge(...$flagsIds), $this->domain->getCurrentDomainConfig());
+        $flagsIndexedById = $this->flagFacade->getVisibleFlagsByIds(array_merge(...$flagsIds), $this->domain->getLocale());
 
         return $this->promiseAdapter->all(array_map(
             static fn (array $flagIds) => array_values(array_intersect_key($flagsIndexedById, array_flip($flagIds))),
