@@ -9,7 +9,7 @@ import {
     useProductListQuery,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
-import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
+import { useCallback, useEffect, useEffectEvent, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
@@ -18,6 +18,9 @@ import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useRefetchOnTabFocus } from 'utils/useRefetchOnTabFocus';
 import { useUpdateProductListUuid } from './useUpdateProductListUuid';
+
+// A selector may unmount while its mutation is still running; other instances must share its lock.
+const mutatingProductUuidsByList = new Map<string, Set<string>>();
 
 export const useProductList = (
     productListType: TypeProductListTypeEnum,
@@ -49,7 +52,14 @@ export const useProductList = (
     const [, TypeRemoveProductFromListMutation] = useRemoveProductFromListMutation();
     const [, removeListMutation] = useRemoveProductListMutation();
 
-    const mutatingProductUuidsRef = useRef(new Set<string>());
+    const mutationKey = `${productListType}:${productListUuid ?? 'new'}`;
+
+    const releaseProductMutation = (productUuid: string, pending: Set<string>) => {
+        pending.delete(productUuid);
+        if (pending.size === 0) {
+            mutatingProductUuidsByList.delete(mutationKey);
+        }
+    };
 
     const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn);
 
@@ -134,9 +144,7 @@ export const useProductList = (
         }
     };
 
-    const addToList = async (productUuid: string) => {
-        mutatingProductUuidsRef.current.add(productUuid);
-
+    const addToList = async (productUuid: string, pending: Set<string>) => {
         try {
             const addProductToListResult = await TypeAddProductToListMutation({
                 input: {
@@ -164,13 +172,11 @@ export const useProductList = (
                 callbacks.addProductSuccess(addProductToListResult.data?.AddProductToList, productUuid);
             }
         } finally {
-            mutatingProductUuidsRef.current.delete(productUuid);
+            releaseProductMutation(productUuid, pending);
         }
     };
 
-    const removeFromList = async (productUuid: string) => {
-        mutatingProductUuidsRef.current.add(productUuid);
-
+    const removeFromList = async (productUuid: string, pending: Set<string>) => {
         try {
             const removeProductFromListResult = await TypeRemoveProductFromListMutation({
                 input: {
@@ -201,7 +207,7 @@ export const useProductList = (
                 callbacks.removeProductSuccess(removeProductFromListResult.data?.RemoveProductFromList, productUuid);
             }
         } finally {
-            mutatingProductUuidsRef.current.delete(productUuid);
+            releaseProductMutation(productUuid, pending);
         }
     };
 
@@ -214,19 +220,23 @@ export const useProductList = (
     };
 
     const toggleProductInList = (productUuid: string) => {
-        if (mutatingProductUuidsRef.current.has(productUuid)) {
+        const pending = mutatingProductUuidsByList.get(mutationKey) ?? new Set<string>();
+        if (pending.has(productUuid)) {
             return false;
         }
 
         // Block all mutations when no list exists yet — concurrent creates would produce duplicate lists
-        if (!productListUuid && mutatingProductUuidsRef.current.size > 0) {
+        if (!productListUuid && pending.size > 0) {
             return false;
         }
 
+        pending.add(productUuid);
+        mutatingProductUuidsByList.set(mutationKey, pending);
+
         if (isProductInList(productUuid)) {
-            removeFromList(productUuid);
+            removeFromList(productUuid, pending);
         } else {
-            addToList(productUuid);
+            addToList(productUuid, pending);
         }
 
         return true;

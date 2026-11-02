@@ -66,7 +66,7 @@ export const useAddToCartHandler = ({
                         addedCartItem={addToCartResult.addProductResult.cartItem}
                     />,
                 );
-            } else {
+            } else if (!document.querySelector('[role="dialog"], [role="alertdialog"]')) {
                 clearStoredFocus();
             }
         } finally {

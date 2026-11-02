@@ -29,6 +29,7 @@
     "Cart, {{ count }} items, {{ price }}. Show cart popup_many": "Košík, {{ count }} položek, {{ price }}. Zobrazit popup košíku",
     "Cart, {{ count }} items, {{ price }}. Show cart popup_other": "Košík, {{ count }} položek, {{ price }}. Zobrazit popup košíku",
     "Checkout steps navigation": "Navigace v krocích objednávky",
+    "Choose a variant of {{ productName }}": "Vybrat variantu produktu {{ productName }}",
     "Choose payment {{ paymentName }}": "Vybrat platbu {{ paymentName }}",
     "Choose payment {{ paymentName }} for {{ price }}": "Vybrat platbu {{ paymentName }} za {{ price }}",
     "Choose transport {{ transportName }}": "Vybrat dopravu {{ transportName }}",
