@@ -16,7 +16,7 @@ export const getAuthMutationFetcher = (domainConfig: DomainConfigType): typeof f
         });
 };
 
-export const clearAuthCookies = async (domainConfig: DomainConfigType): Promise<void> => {
+export const clearAuthCookies = async (domainConfig: DomainConfigType, signal?: AbortSignal): Promise<void> => {
     await fetch(AUTH_CLEAR_ENDPOINT, {
         cache: 'no-store',
         credentials: 'same-origin',
@@ -24,5 +24,6 @@ export const clearAuthCookies = async (domainConfig: DomainConfigType): Promise<
             [AUTH_DOMAIN_ID_HEADER]: domainConfig.domainId.toString(),
         },
         method: 'POST',
+        signal,
     });
 };
