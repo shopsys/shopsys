@@ -60,6 +60,11 @@ services:
         arguments:
             $logger: '@monolog.logger.mcp'
 
+    Shopsys\McpBundle\Component\PostDeploy\Task\CheckMcpDatabaseRolePrivilegesTask:
+        arguments:
+            $databaseUser: '%env(DATABASE_USER)%'
+            $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
+
     Shopsys\McpBundle\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']

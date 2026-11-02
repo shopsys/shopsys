@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Component\Database\User;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\DriverException;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseRoleRepository;
 use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
 use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Tests\App\Test\FunctionalTestCase;
@@ -28,6 +29,11 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
      * @inject
      */
     private McpDatabaseViewsFacade $mcpDatabaseViewsFacade;
+
+    /**
+     * @inject
+     */
+    private McpDatabaseRoleRepository $mcpDatabaseRoleRepository;
 
     public function testMcpConnectionUsesDedicatedDatabaseRole(): void
     {
@@ -78,6 +84,45 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
         $this->expectExceptionMessage('permission denied');
 
         $this->mcpConnection->fetchOne('SELECT password FROM public.administrators LIMIT 1');
+    }
+
+    public function testMcpDatabaseRoleHasNoPrivilegesOnTablesOfPublicSchema(): void
+    {
+        $mcpDatabaseUser = (string)$this->mcpConnection->fetchOne('SELECT current_user');
+
+        $this->assertSame([], $this->mcpDatabaseRoleRepository->getPublicSchemaTableNamesReadableByRole($mcpDatabaseUser));
+        $this->assertFalse($this->mcpDatabaseRoleRepository->hasDefaultPrivilegesOnPublicSchemaTables($mcpDatabaseUser));
+    }
+
+    public function testPrivilegesOnTablesOfPublicSchemaGrantedToMcpDatabaseRoleAreFound(): void
+    {
+        $mcpDatabaseUser = (string)$this->mcpConnection->fetchOne('SELECT current_user');
+        $quotedMcpDatabaseUser = $this->defaultConnection->quoteSingleIdentifier($mcpDatabaseUser);
+        $quotedDatabaseUser = $this->defaultConnection->quoteSingleIdentifier(
+            (string)$this->defaultConnection->fetchOne('SELECT current_user'),
+        );
+        $tableName = self::TEST_TABLE_PREFIX . bin2hex(random_bytes(6));
+        $quotedTableName = $this->defaultConnection->quoteSingleIdentifier($tableName);
+
+        try {
+            $this->defaultConnection->executeStatement(sprintf('CREATE TABLE public.%s (id SERIAL PRIMARY KEY)', $quotedTableName));
+            $this->defaultConnection->executeStatement(sprintf('GRANT SELECT ON public.%s TO %s', $quotedTableName, $quotedMcpDatabaseUser));
+            $this->defaultConnection->executeStatement(sprintf(
+                'ALTER DEFAULT PRIVILEGES FOR ROLE %s IN SCHEMA public GRANT SELECT ON TABLES TO %s',
+                $quotedDatabaseUser,
+                $quotedMcpDatabaseUser,
+            ));
+
+            $this->assertSame([$tableName], $this->mcpDatabaseRoleRepository->getPublicSchemaTableNamesReadableByRole($mcpDatabaseUser));
+            $this->assertTrue($this->mcpDatabaseRoleRepository->hasDefaultPrivilegesOnPublicSchemaTables($mcpDatabaseUser));
+        } finally {
+            $this->defaultConnection->executeStatement(sprintf(
+                'ALTER DEFAULT PRIVILEGES FOR ROLE %s IN SCHEMA public REVOKE ALL ON TABLES FROM %s',
+                $quotedDatabaseUser,
+                $quotedMcpDatabaseUser,
+            ));
+            $this->defaultConnection->executeStatement(sprintf('DROP TABLE IF EXISTS public.%s', $quotedTableName));
+        }
     }
 
     public function testMcpConnectionCannotReadNewTableCreatedByApplicationDatabaseUser(): void

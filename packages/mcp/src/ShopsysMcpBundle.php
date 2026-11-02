@@ -6,11 +6,13 @@ namespace Shopsys\McpBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Override;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
 use Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
 use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
 use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
+use Shopsys\McpBundle\Component\PostDeploy\Task\CheckMcpDatabaseRolePrivilegesTask;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -122,6 +124,18 @@ TEXT;
         $builder->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
                 'Shopsys\McpBundle\Migrations' => __DIR__ . '/Migrations',
+            ],
+        ]);
+        $builder->prependExtensionConfig('shopsys_framework', [
+            'post_deploy' => [
+                'tasks' => [
+                    // runs on every deploy, so MCP enabled later is checked as well, and last, a failed check stops the remaining post-deploy tasks
+                    CheckMcpDatabaseRolePrivilegesTask::POST_DEPLOY_TASK_NAME => [
+                        'run' => PostDeployTaskRunEnum::ALWAYS,
+                        'priority' => -1000,
+                        'service' => CheckMcpDatabaseRolePrivilegesTask::class,
+                    ],
+                ],
             ],
         ]);
     }

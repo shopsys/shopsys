@@ -28,4 +28,38 @@ class McpDatabaseRoleRepository
             [$roleName],
         );
     }
+
+    /**
+     * @return list<string>
+     */
+    public function getPublicSchemaTableNamesReadableByRole(string $roleName): array
+    {
+        $tableNames = $this->defaultConnection->fetchFirstColumn(
+            'SELECT c.relname
+            FROM pg_class c
+            WHERE c.relnamespace = \'public\'::regnamespace
+                AND c.relkind IN (\'r\', \'p\', \'v\', \'m\', \'f\')
+                AND has_table_privilege(CAST(? AS name), c.oid, \'SELECT\')
+            ORDER BY c.relname',
+            [$roleName],
+        );
+
+        return array_map(static fn (mixed $tableName): string => (string)$tableName, $tableNames);
+    }
+
+    /**
+     * Default privileges give the role access to the tables created in the public schema in the future,
+     * both with the IN SCHEMA public clause and without a schema (defaclnamespace = 0 applies to every schema)
+     */
+    public function hasDefaultPrivilegesOnPublicSchemaTables(string $roleName): bool
+    {
+        return (bool)$this->defaultConnection->fetchOne(
+            'SELECT 1
+            FROM pg_default_acl d, aclexplode(d.defaclacl) acl
+            WHERE d.defaclobjtype = \'r\'
+                AND (d.defaclnamespace = 0 OR d.defaclnamespace = \'public\'::regnamespace)
+                AND acl.grantee = (SELECT r.oid FROM pg_roles r WHERE r.rolname = ?)',
+            [$roleName],
+        );
+    }
 }
