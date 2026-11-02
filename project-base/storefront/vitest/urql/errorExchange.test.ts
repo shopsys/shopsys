@@ -1,4 +1,5 @@
 import { parse } from 'graphql';
+import { LoginMutationDocument } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import { CombinedError, Operation } from 'urql';
 import { getErrorExchange } from 'urql/errorExchange';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -242,6 +243,105 @@ describe('getErrorExchange', () => {
             graphQLErrors: '[]',
             networkError,
             location: 'getErrorExchange.handleErrorMessagesForMutation.AddToCartMutation',
+        });
+    });
+    test('returns invalid login credentials to the caller without reporting them to Sentry', async () => {
+        const operation = {
+            key: 1,
+            kind: 'mutation',
+            query: LoginMutationDocument,
+            variables: {},
+            context: {},
+        } as Operation;
+        const error = new CombinedError({
+            response: new Response(null, { status: 200 }),
+            graphQLErrors: [
+                {
+                    message: 'Log in failed.',
+                    path: ['Login'],
+                    extensions: { userCode: 'invalid-credentials', code: 404 },
+                },
+            ],
+        });
+        const exchange = getErrorExchange(
+            ((value: string) => value) as never,
+            { url: 'http://example.com' } as never,
+        )({ forward: () => fromValue({ operation, error } as never) } as never);
+
+        const result = await toPromise(exchange(fromValue(operation)));
+
+        expect(result.error).toBe(error);
+        expect(logExceptionMock).not.toHaveBeenCalled();
+        expect(removeTokensFromCookiesMock).not.toHaveBeenCalled();
+        expect(removeAccessTokenFromCookiesMock).not.toHaveBeenCalled();
+        expect(clearAuthCookiesMock).not.toHaveBeenCalled();
+    });
+
+    test.each([
+        {
+            scenario: 'an unexpected error with the same message',
+            query: LoginMutationDocument,
+            error: new CombinedError({ graphQLErrors: [{ message: 'Log in failed.', extensions: { code: 500 } }] }),
+        },
+        {
+            scenario: 'an unexpected GraphQL error mixed with invalid credentials',
+            query: LoginMutationDocument,
+            error: new CombinedError({
+                graphQLErrors: [
+                    { message: 'Internal Server Error', extensions: { code: 500 } },
+                    { message: 'Log in failed.', extensions: { userCode: 'invalid-credentials', code: 404 } },
+                ],
+            }),
+        },
+        {
+            scenario: 'a network error accompanying invalid credentials',
+            query: LoginMutationDocument,
+            error: new CombinedError({
+                networkError: new TypeError('Failed to fetch'),
+                graphQLErrors: [
+                    { message: 'Log in failed.', extensions: { userCode: 'invalid-credentials', code: 404 } },
+                ],
+            }),
+        },
+        {
+            scenario: 'an HTTP server error accompanying invalid credentials',
+            query: LoginMutationDocument,
+            error: new CombinedError({
+                response: new Response(null, { status: 500 }),
+                graphQLErrors: [
+                    { message: 'Log in failed.', extensions: { userCode: 'invalid-credentials', code: 404 } },
+                ],
+            }),
+        },
+        {
+            scenario: 'invalid credentials from another mutation',
+            query: parse('mutation LoginViaExchangeTokenMutation { __typename }'),
+            error: new CombinedError({
+                graphQLErrors: [
+                    { message: 'Invalid exchange token.', extensions: { userCode: 'invalid-credentials', code: 404 } },
+                ],
+            }),
+        },
+    ])('still reports $scenario', async ({ query, error }) => {
+        const operation = {
+            key: 1,
+            kind: 'mutation',
+            query,
+            variables: {},
+            context: {},
+        } as Operation;
+        const exchange = getErrorExchange(
+            ((value: string) => value) as never,
+            { url: 'http://example.com' } as never,
+        )({ forward: () => fromValue({ operation, error } as never) } as never);
+
+        const result = await toPromise(exchange(fromValue(operation)));
+
+        expect(result.error).toBe(error);
+        expect(logExceptionMock).toHaveBeenCalledExactlyOnceWith(error, {
+            graphQLErrors: JSON.stringify(error.graphQLErrors),
+            networkError: error.networkError,
+            location: expect.stringContaining('getErrorExchange.handleErrorMessagesForMutation.'),
         });
     });
 });
