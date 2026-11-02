@@ -111,23 +111,20 @@ describe('CollapsibleText', () => {
         expect(button).toHaveAttribute('aria-expanded', 'false');
     });
 
-    test.each([
-        'wheel',
-        'touchstart',
-        'keydown',
-        'pointerdown',
-        'scrollend',
-    ])('cancels pending collapse on %s before reaching the description', (eventName) => {
-        vi.stubGlobal('scrollTo', vi.fn());
-        const button = renderExpandedDescription();
-        fireEvent.click(button);
+    test.each(['wheel', 'touchstart', 'keydown', 'pointerdown', 'scrollend'])(
+        'cancels pending collapse on %s before reaching the description',
+        (eventName) => {
+            vi.stubGlobal('scrollTo', vi.fn());
+            const button = renderExpandedDescription();
+            fireEvent.click(button);
 
-        fireEvent(window, new Event(eventName));
-        vi.stubGlobal('scrollY', 230);
-        fireEvent.scroll(window);
+            fireEvent(window, new Event(eventName));
+            vi.stubGlobal('scrollY', 230);
+            fireEvent.scroll(window);
 
-        expect(button).toHaveAttribute('aria-expanded', 'true');
-    });
+            expect(button).toHaveAttribute('aria-expanded', 'true');
+        },
+    );
 
     test('can retry closing after interrupted scrolling', () => {
         const scrollTo = vi.fn();

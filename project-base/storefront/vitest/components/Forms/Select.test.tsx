@@ -112,21 +112,20 @@ describe('Select content and keyboard interaction', () => {
     test.each([
         { richContent: false, selectedName: 'ColorForest', optionName: 'Forest' },
         { richContent: true, selectedName: 'Forest On request 200 Kč', optionName: 'Forest On request 200 Kč' },
-    ])('selects and displays a value with rich content: $richContent', async ({
-        richContent,
-        selectedName,
-        optionName,
-    }) => {
-        const user = userEvent.setup();
-        render(<ColorSelect richContent={richContent} />);
+    ])(
+        'selects and displays a value with rich content: $richContent',
+        async ({ richContent, selectedName, optionName }) => {
+            const user = userEvent.setup();
+            render(<ColorSelect richContent={richContent} />);
 
-        await user.click(screen.getByRole('button', { name: 'Choose color' }));
-        await user.click(await screen.findByRole('option', { name: optionName }));
+            await user.click(screen.getByRole('button', { name: 'Choose color' }));
+            await user.click(await screen.findByRole('option', { name: optionName }));
 
-        expect(screen.getByRole('button', { name: selectedName })).toBeInTheDocument();
-        await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
-        expect(screen.getByRole('button', { name: 'Choose color' })).toHaveFocus();
-    });
+            expect(screen.getByRole('button', { name: selectedName })).toBeInTheDocument();
+            await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
+            expect(screen.getByRole('button', { name: 'Choose color' })).toHaveFocus();
+        },
+    );
 
     test('opens with arrows, navigates with Home and End, and selects with Space', async () => {
         const user = userEvent.setup();
@@ -215,8 +214,7 @@ describe('Select combobox label', () => {
 describe('Select closing', () => {
     test('closes after clicking outside even when a parent stops bubbling mouse events', () => {
         render(
-            // biome-ignore lint/a11y/noNoninteractiveElementInteractions: Emulates the popup event boundary from production.
-            <dialog open onMouseDown={(event) => event.stopPropagation()}>
+            <dialog open>
                 <Select
                     activeOption={null}
                     ariaLabel="Choose color"
@@ -228,6 +226,7 @@ describe('Select closing', () => {
                 <textarea aria-label="Review text" />
             </dialog>,
         );
+        screen.getByRole('dialog').addEventListener('mousedown', (event) => event.stopPropagation());
 
         const selectToggleButton = screen.getByRole('button', { name: 'Choose color' });
         fireEvent.click(selectToggleButton);

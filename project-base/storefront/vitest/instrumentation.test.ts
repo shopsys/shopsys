@@ -50,40 +50,40 @@ describe('Redis startup instrumentation', () => {
         vi.unstubAllEnvs();
     });
 
-    test.each([
-        '',
-        'https://public@example.invalid/1',
-    ])('waits beyond the request timeout and reuses the warmed client with Sentry DSN "%s"', async (dsn) => {
-        vi.stubEnv('SENTRY_DSN', dsn);
-        vi.stubEnv('INTERNAL_ENDPOINT', 'http://backend/');
-        const completed = vi.fn();
+    test.each(['', 'https://public@example.invalid/1'])(
+        'waits beyond the request timeout and reuses the warmed client with Sentry DSN "%s"',
+        async (dsn) => {
+            vi.stubEnv('SENTRY_DSN', dsn);
+            vi.stubEnv('INTERNAL_ENDPOINT', 'http://backend/');
+            const completed = vi.fn();
 
-        const startup = register().then(completed);
-        await vi.dynamicImportSettled();
-        await vi.advanceTimersByTimeAsync(800);
-        expect(completed).not.toHaveBeenCalled();
-        finishConnecting();
-        await startup;
+            const startup = register().then(completed);
+            await vi.dynamicImportSettled();
+            await vi.advanceTimersByTimeAsync(800);
+            expect(completed).not.toHaveBeenCalled();
+            finishConnecting();
+            await startup;
 
-        const response = new ServerResponse(new IncomingMessage(new Socket()));
-        expect(await getRedisClient(response)).toBe(client);
-        expect(createClient).toHaveBeenCalledOnce();
-        expect(client.connect).toHaveBeenCalledOnce();
-        expect(response.getHeader('Server-Timing')).toContain('redis_initial_connect;dur=');
-        expect(response.getHeader('Server-Timing')).not.toContain('redis_initial_timeout');
-        expect(vi.getTimerCount()).toBe(0);
-        expect(Sentry.init).toHaveBeenCalledTimes(dsn ? 1 : 0);
-        if (dsn) {
-            expect(Sentry.init).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    dsn,
-                    tracesSampleRate: 0.1,
-                    tracePropagationTargets: [expect.any(RegExp)],
-                }),
-            );
-        }
-        expect(onRequestError).toBe(Sentry.captureRequestError);
-    });
+            const response = new ServerResponse(new IncomingMessage(new Socket()));
+            expect(await getRedisClient(response)).toBe(client);
+            expect(createClient).toHaveBeenCalledOnce();
+            expect(client.connect).toHaveBeenCalledOnce();
+            expect(response.getHeader('Server-Timing')).toContain('redis_initial_connect;dur=');
+            expect(response.getHeader('Server-Timing')).not.toContain('redis_initial_timeout');
+            expect(vi.getTimerCount()).toBe(0);
+            expect(Sentry.init).toHaveBeenCalledTimes(dsn ? 1 : 0);
+            if (dsn) {
+                expect(Sentry.init).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        dsn,
+                        tracesSampleRate: 0.1,
+                        tracePropagationTargets: [expect.any(RegExp)],
+                    }),
+                );
+            }
+            expect(onRequestError).toBe(Sentry.captureRequestError);
+        },
+    );
 
     test('allows startup after two seconds and reuses a connection completed in the background', async () => {
         const completed = vi.fn();

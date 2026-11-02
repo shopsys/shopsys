@@ -41,6 +41,7 @@ describe('client instrumentation', () => {
         config.sentryReplaysEnable = replay;
 
         const instrumentation = await import('instrumentation-client');
+        const { scrubSentryData } = await import('utils/sentry/urlPrivacy');
         await vi.dynamicImportSettled();
 
         expect(Sentry.init).toHaveBeenCalledWith(
@@ -49,7 +50,13 @@ describe('client instrumentation', () => {
                 tracesSampleRate: 0.1,
                 replaysSessionSampleRate: replay ? 0.1 : 0,
                 replaysOnErrorSampleRate: replay ? 1.0 : 0,
-                integrations: [{ name: 'BrowserTracing' }, { name: 'ThirdPartyErrorFilter' }],
+                beforeSend: scrubSentryData,
+                beforeSendSpan: scrubSentryData,
+                integrations: [
+                    { name: 'StorefrontFeedbackUrlPrivacy', processEvent: expect.any(Function) },
+                    { name: 'BrowserTracing' },
+                    { name: 'ThirdPartyErrorFilter' },
+                ],
                 tracePropagationTargets: expect.arrayContaining([expect.any(RegExp)]),
             }),
         );
@@ -63,9 +70,9 @@ describe('client instrumentation', () => {
         }
         if (replay) {
             expect(Sentry.replayIntegration).toHaveBeenCalledWith({
-                maskAllText: false,
-                blockAllMedia: false,
-                maskAllInputs: false,
+                maskAllText: true,
+                blockAllMedia: true,
+                maskAllInputs: true,
             });
             expect(Sentry.addIntegration).toHaveBeenCalledWith({ name: 'Replay' });
         }

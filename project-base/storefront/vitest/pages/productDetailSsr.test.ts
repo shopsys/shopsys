@@ -53,29 +53,29 @@ describe('product detail SSR prefetch', () => {
         { type: 'RegularProduct' as const, isLuigisBoxActive: true },
         { type: 'RegularProduct' as const, isLuigisBoxActive: false },
         { type: 'MainVariant' as const, isLuigisBoxActive: true },
-    ])('uses product data without separate review or recommendation queries for %j', async ({
-        type,
-        isLuigisBoxActive,
-    }) => {
-        product.__typename = type;
-        const result = await runSsr(isLuigisBoxActive);
+    ])(
+        'uses product data without separate review or recommendation queries for %j',
+        async ({ type, isLuigisBoxActive }) => {
+            product.__typename = type;
+            const result = await runSsr(isLuigisBoxActive);
 
-        expect(result).toEqual({ props: { prefetched: true } });
-        expect(buildServerSideProps).toHaveBeenCalledWith(
-            expect.objectContaining({ pageQueryResults: [{ data: { product } }] }),
-        );
-        expect(query.mock.calls.map(([document]) => document)).toEqual([ProductDetailQueryDocument]);
-    });
+            expect(result).toEqual({ props: { prefetched: true } });
+            expect(buildServerSideProps).toHaveBeenCalledWith(
+                expect.objectContaining({ pageQueryResults: [{ data: { product } }] }),
+            );
+            expect(query.mock.calls.map(([document]) => document)).toEqual([ProductDetailQueryDocument]);
+        },
+    );
 
-    test.each([
-        null,
-        { totalCount: 0 },
-    ])('returns without fetching reviews or recommendations for summary %j', async (summary) => {
-        product.reviewsSummary = summary;
+    test.each([null, { totalCount: 0 }])(
+        'returns without fetching reviews or recommendations for summary %j',
+        async (summary) => {
+            product.reviewsSummary = summary;
 
-        const result = await runSsr();
+            const result = await runSsr();
 
-        expect(result).toEqual({ props: { prefetched: true } });
-        expect(query.mock.calls.map(([document]) => document)).toEqual([ProductDetailQueryDocument]);
-    });
+            expect(result).toEqual({ props: { prefetched: true } });
+            expect(query.mock.calls.map(([document]) => document)).toEqual([ProductDetailQueryDocument]);
+        },
+    );
 });

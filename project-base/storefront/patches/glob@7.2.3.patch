@@ -1,0 +1,46 @@
+--- a/glob.js
++++ b/glob.js
+@@ -382,7 +382,7 @@
+   // dot is set.  Stuff like @(.foo|.bar) isn't allowed.
+   var pn = remain[0]
+   var negate = !!this.minimatch.negate
+-  var rawGlob = pn._glob
++  var rawGlob = pn._glob || pn.pattern
+   var dotOk = this.dot || rawGlob.charAt(0) === '.'
+ 
+   var matchedEntries = []
+@@ -391,9 +391,9 @@
+     if (e.charAt(0) !== '.' || dotOk) {
+       var m
+       if (negate && !prefix) {
+-        m = !e.match(pn)
++        m = !pn.test(e)
+       } else {
+-        m = e.match(pn)
++        m = pn.test(e)
+       }
+       if (m)
+         matchedEntries.push(e)
+--- a/sync.js
++++ b/sync.js
+@@ -144,7 +144,7 @@
+   // dot is set.  Stuff like @(.foo|.bar) isn't allowed.
+   var pn = remain[0]
+   var negate = !!this.minimatch.negate
+-  var rawGlob = pn._glob
++  var rawGlob = pn._glob || pn.pattern
+   var dotOk = this.dot || rawGlob.charAt(0) === '.'
+ 
+   var matchedEntries = []
+@@ -153,9 +153,9 @@
+     if (e.charAt(0) !== '.' || dotOk) {
+       var m
+       if (negate && !prefix) {
+-        m = !e.match(pn)
++        m = !pn.test(e)
+       } else {
+-        m = e.match(pn)
++        m = pn.test(e)
+       }
+       if (m)
+         matchedEntries.push(e)
