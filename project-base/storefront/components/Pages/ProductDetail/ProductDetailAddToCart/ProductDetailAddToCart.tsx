@@ -1,6 +1,5 @@
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices/AdditionalServices';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
 import { SkeletonModuleProductDetailAddToCart } from 'components/Blocks/Skeleton/SkeletonModuleProductDetailAddToCart';
@@ -22,18 +21,16 @@ import { showWatchdogButton } from 'utils/product/showWatchdogButton';
 export type ProductDetailAddToCartProps = {
     buttonSize?: 'small' | 'medium' | 'large' | 'xlarge';
     buttonTid?: string;
-    isInPurchaseActionsRow?: boolean;
+    isFullWidth?: boolean;
     product: TypeProductDetailFragment;
-    shouldDisplayAdditionalServices?: boolean;
     spinboxId?: string;
 };
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     buttonSize = 'xlarge',
     buttonTid = TIDs.pages_productdetail_addtocart_button,
-    isInPurchaseActionsRow = false,
+    isFullWidth = false,
     product,
-    shouldDisplayAdditionalServices = true,
     spinboxId,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
@@ -41,18 +38,11 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     const { canCreateOrder } = useAuthorization();
     const { isCartFetchingOrUnavailable } = useCurrentCart();
 
-    const {
-        cartItem,
-        isAddToCartFlowPending,
-        selectedServiceUuids,
-        updateIsAddToCartFlowPending,
-        onToggleService,
-        persistPendingServicesAfterAddToCart,
-        isSettingAdditionalServices,
-    } = useProductAdditionalServices({
-        productUuid: product.uuid,
-        gtmProductListName: GtmProductListNameType.product_detail,
-    });
+    const { cartItem, isAddToCartFlowPending, updateIsAddToCartFlowPending, persistPendingServicesAfterAddToCart } =
+        useProductAdditionalServices({
+            productUuid: product.uuid,
+            gtmProductListName: GtmProductListNameType.product_detail,
+        });
 
     const { onAddToCartHandler, isAddingToCart } = useAddToCartHandler({
         spinboxRef,
@@ -88,7 +78,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
         return (
             <ProductInquiryButton
                 buttonSize={buttonSize}
-                className="sm:max-w-60"
+                className={isFullWidth ? 'w-full' : 'sm:max-w-60'}
                 productName={product.fullName}
                 productUuid={product.uuid}
             />
@@ -100,74 +90,53 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     }
 
     if (isCartFetchingOrUnavailable) {
-        return <SkeletonModuleProductDetailAddToCart size={buttonSize} />;
+        return <SkeletonModuleProductDetailAddToCart isFullWidth={isFullWidth} size={buttonSize} />;
     }
-
-    const additionalServicesElement = shouldDisplayAdditionalServices ? (
-        <AdditionalServices
-            additionalServices={product.additionalServices}
-            className={isInPurchaseActionsRow ? 'w-full basis-full' : undefined}
-            isDisabled={isAddToCartPending || isSettingAdditionalServices}
-            quantity={cartItem?.quantity}
-            selectedServiceUuids={selectedServiceUuids}
-            tidDiscriminator={product.catalogNumber}
-            unitName={product.unit.name}
-            showSelectedServiceTotalPrice
-            onToggleService={onToggleService}
-        />
-    ) : null;
 
     if (cartItem && !isAddToCartPending) {
         return (
-            <div className={isInPurchaseActionsRow ? 'contents' : 'flex flex-col gap-4'}>
-                <CartItemQuantityControls
-                    cartItem={cartItem}
-                    className={twJoin('w-full', isInPurchaseActionsRow ? 'min-w-max flex-1' : 'sm:max-w-60')}
-                    gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
-                    gtmProductListName={GtmProductListNameType.product_detail}
-                    size={buttonSize}
-                    spinboxId={spinboxId}
-                />
-
-                {additionalServicesElement}
-            </div>
+            <CartItemQuantityControls
+                cartItem={cartItem}
+                className={twJoin(
+                    'w-full',
+                    !isFullWidth && 'sm:max-w-60',
+                    buttonSize === 'xlarge' && '[&_button]:size-14',
+                )}
+                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                gtmProductListName={GtmProductListNameType.product_detail}
+                size={buttonSize}
+                spinboxId={spinboxId}
+            />
         );
     }
 
     const isWatchdogButtonVisible = showWatchdogButton(product);
 
     return (
-        <div className={isInPurchaseActionsRow ? 'contents' : 'flex w-full flex-1 flex-col gap-4'}>
-            <div
-                className={twJoin('relative flex w-full', isInPurchaseActionsRow ? 'min-w-max flex-1' : 'sm:max-w-60')}
-            >
-                {isAddToCartPending && (
-                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+        <div className={twJoin('relative flex w-full', !isFullWidth && 'sm:max-w-60')}>
+            {isAddToCartPending && (
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+            )}
+
+            <Button
+                aria-haspopup="dialog"
+                aria-label={addToCartAriaLabel}
+                className={twJoin(
+                    'h-auto w-full whitespace-normal text-balance',
+                    buttonSize !== 'xlarge' && 'min-h-9',
+                    buttonSize === 'large' && 'sm:min-h-10',
+                    buttonSize === 'xlarge' && 'min-h-14',
                 )}
-
-                <Button
-                    aria-haspopup="dialog"
-                    aria-label={addToCartAriaLabel}
-                    className={twJoin(
-                        'h-auto w-full text-balance',
-                        isInPurchaseActionsRow ? 'whitespace-nowrap' : 'whitespace-normal',
-                        buttonSize !== 'xlarge' && 'min-h-9',
-                        buttonSize === 'large' && 'sm:min-h-10',
-                        buttonSize === 'xlarge' && 'min-h-10 sm:min-h-14',
-                    )}
-                    disabled={isAddToCartPending}
-                    hasDisabledLook={isAddToCartPending}
-                    size={buttonSize}
-                    tid={buttonTid}
-                    variant={isWatchdogButtonVisible ? 'secondary' : 'primary'}
-                    onClick={onAddToCartHandler}
-                >
-                    <CartIcon className={getButtonIconClassName(buttonSize)} />
-                    {t('Add to cart')}
-                </Button>
-            </div>
-
-            {additionalServicesElement}
+                disabled={isAddToCartPending}
+                hasDisabledLook={isAddToCartPending}
+                size={buttonSize}
+                tid={buttonTid}
+                variant={isWatchdogButtonVisible ? 'secondary' : 'primary'}
+                onClick={onAddToCartHandler}
+            >
+                <CartIcon className={getButtonIconClassName(buttonSize)} />
+                {t('Add to cart')}
+            </Button>
         </div>
     );
 };

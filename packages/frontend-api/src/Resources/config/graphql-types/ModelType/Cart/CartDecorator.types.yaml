@@ -9,6 +9,9 @@ CartDecorator:
             items:
                 type: "[CartItem!]!"
                 description: "All items in the cart"
+            removedGifts:
+                type: "[RemovedCartGift!]!"
+                description: "Manually removed gifts that are still available for this cart and can be restored"
             transport:
                 type: "Transport"
                 description: "Selected transport if transport provided"

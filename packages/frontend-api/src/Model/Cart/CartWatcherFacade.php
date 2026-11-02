@@ -62,11 +62,13 @@ class CartWatcherFacade
         $this->checkAdditionalServicesValidity($cart);
         $this->checkPromoCodeValidity($cart);
         $this->checkGiftVoucherValidity($cart);
+        $this->checkRemovedProductGifts($cart);
 
         $this->em->flush();
 
         $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
         $this->setPromoCodes($cart);
+        $this->cartWithModificationsResult->setRemovedGifts($this->giftCartFacade->getRemovedGiftCartItemSetups($cart, $this->domain->getId()));
 
         return $this->cartWithModificationsResult;
     }
@@ -149,6 +151,11 @@ class CartWatcherFacade
             $cart->removeGiftVoucherById($giftVoucher->getId());
             $this->cartWithModificationsResult->addChangedGiftVoucher($giftVoucher->getCode());
         }
+    }
+
+    protected function checkRemovedProductGifts(Cart $cart): void
+    {
+        $this->giftCartFacade->forgetRemovedProductGiftsWithoutQualifyingProduct($cart, $this->domain->getId());
     }
 
     protected function checkStockQuantities(Cart $cart): void

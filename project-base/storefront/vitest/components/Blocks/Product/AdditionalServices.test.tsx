@@ -277,7 +277,8 @@ describe('AdditionalServices', () => {
         const prices = screen.getAllByText('+ €10');
         expect(prices).toHaveLength(2);
         expect(prices[0]).toHaveClass('font-semibold', 'text-text-default');
-        expect(screen.queryByText('/ pcs')).not.toBeInTheDocument();
+        expect(screen.getAllByText('/ pcs')).toHaveLength(2);
+        expect(screen.getByRole('checkbox', { name: /Service 1/ })).toHaveAccessibleDescription('Price: €10 / pcs');
         expect(prices[0].closest('label')).toBeNull();
         expect(screen.queryByText('+ €30')).not.toBeInTheDocument();
         expect(screen.queryByText('€10 / pcs')).not.toBeInTheDocument();

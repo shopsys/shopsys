@@ -41,7 +41,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
     const handleError = useErrorHandler({
         form: formProviderMethods,
         gtmOrigin: GtmMessageOriginType.watchdog,
-        customMessage: t('There was an error while creating your watchdog'),
+        customMessage: t("We couldn't set up the notification. Please try again."),
     });
 
     const watchdogHandler: SubmitHandler<WatchdogFormType> = async (watchdogFormData) => {
@@ -60,7 +60,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
         }
 
         closePortalContent();
-        showSuccessMessage(t('Your watchdog has been created'));
+        showSuccessMessage(t("We'll email you when this product is in stock."));
 
         onGtmCreateWatchdotEventHandler(watchdogFormData, product, domainConfig, !canSeePrices, listIndex);
     };
@@ -69,12 +69,12 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
         <Popup
             size="small"
             className="overflow-x-auto"
-            title={t('Watchdog')}
-            ariaDescription={t(
-                'This product is on watchdog. Please fill in your email below to be notified when the product becomes available.',
-                { ns: 'accessibility' },
-            )}
+            title={t('Notify me when available')}
+            ariaDescription={t("Enter your email and we'll let you know when this product is in stock.")}
         >
+            <p aria-hidden="true" className="mb-4 text-sm">
+                {t("Enter your email and we'll let you know when this product is in stock.")}
+            </p>
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>
@@ -103,9 +103,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton aria-label={t('Send. Submit watchdog request', { ns: 'accessibility' })}>
-                                {t('Send')}
-                            </SubmitButton>
+                            <SubmitButton>{t('Notify me')}</SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>

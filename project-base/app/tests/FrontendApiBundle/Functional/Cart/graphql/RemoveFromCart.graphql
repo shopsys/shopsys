@@ -8,6 +8,21 @@ mutation RemoveFromCart(
             cartUuid: $cartUuid
         }
     ) {
+        uuid
+        items {
+            uuid
+            type
+            quantity
+            product {
+                uuid
+            }
+        }
+        removedGifts {
+            quantity
+            product {
+                uuid
+            }
+        }
         modifications {
             itemModifications {
                 noLongerListableCartItems{

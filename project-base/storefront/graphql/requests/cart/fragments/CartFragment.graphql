@@ -3,6 +3,20 @@ fragment CartFragment on Cart {
     uuid
     items {
         ...CartItemFragment
+        product {
+            gifts {
+                uuid
+            }
+        }
+    }
+    removedGifts {
+        quantity
+        product {
+            ...ProductGiftFragment
+            unit {
+                name
+            }
+        }
     }
     totalPrice {
         ...PriceFragment

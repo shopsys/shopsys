@@ -585,6 +585,8 @@ export type TypeCart = {
   remainingAmountToPay: Scalars['Money']['output'];
   /** Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step */
   remainingItemsAmountToPay: Scalars['Money']['output'];
+  /** Manually removed gifts that are still available for this cart and can be restored */
+  removedGifts: Array<TypeRemovedCartGift>;
   /** Rounding amount if payment has rounding allowed */
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
@@ -1782,6 +1784,8 @@ export type TypeMutation = {
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
   RequestPersonalDataAccess: TypePersonalDataPage;
+  /** Restore a manually removed gift that is still available for the cart */
+  RestoreCartGift: TypeCart;
   /** Set the chosen additional services of a cart item */
   SetCartItemAdditionalServices: TypeCart;
   /** Set default delivery address by Uuid */
@@ -1989,6 +1993,11 @@ export type TypeMutationRequestPasswordRecoveryArgs = {
 
 export type TypeMutationRequestPersonalDataAccessArgs = {
   input: TypePersonalDataAccessRequestInput;
+};
+
+
+export type TypeMutationRestoreCartGiftArgs = {
+  input: TypeRestoreCartGiftInput;
 };
 
 
@@ -4061,6 +4070,22 @@ export type TypeRemoveFromCartInput = {
   cartItemUuid: Scalars['Uuid']['input'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+/** A manually removed gift that can be restored to the cart */
+export type TypeRemovedCartGift = {
+  __typename?: 'RemovedCartGift';
+  /** Gift product to restore */
+  product: TypeProduct;
+  /** Current gift quantity that will be restored */
+  quantity: Scalars['Int']['output'];
+};
+
+export type TypeRestoreCartGiftInput = {
+  /** Cart identifier, new cart will be created if not provided and customer is not logged in */
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  /** UUID of the removed gift product to restore */
+  giftProductUuid: Scalars['Uuid']['input'];
 };
 
 /** Represents sales representative */

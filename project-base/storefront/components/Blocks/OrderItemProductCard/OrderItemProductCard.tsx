@@ -8,7 +8,7 @@ import { ProductAvailability } from 'components/Blocks/Product/ProductAvailabili
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
+import { ComponentProps, ReactNode } from 'react';
 import { isCartItemPartiallyAvailable } from 'utils/cart/isCartItemPartiallyAvailable';
 import { generateProductImageAlt } from 'utils/productAltText';
 import { OrderItemProductPrice } from './OrderItemProductPrice';
@@ -20,7 +20,8 @@ type OrderItemProductCardProps = {
     quantity: number;
     freeQuantity: number | null;
     unit: string | null;
-    price: TypeProductPriceFragment;
+    price: ComponentProps<typeof OrderItemProductPrice>['productPrice'];
+    gifts?: ReactNode;
     product?: TypeCartItemFragment['product'];
     additionalServices?: AdditionalServiceSummaryLine[];
     areAdditionalServicePricesHighlighted?: boolean;
@@ -34,6 +35,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     freeQuantity,
     unit,
     price,
+    gifts,
     product,
     additionalServices,
     areAdditionalServicePricesHighlighted,
@@ -53,9 +55,10 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                         width={80}
                     />
                 </div>
-                <div className="flex flex-1 items-center justify-between gap-2.5">
+
+                <div className="flex min-w-0 flex-1 items-center justify-between gap-2.5">
                     <div className="flex flex-col gap-0.5">
-                        <span className="max-w-44 font-semibold text-sm">{fullName}</span>
+                        <span className="wrap-break-words max-w-44 font-semibold text-sm">{fullName}</span>
                         {product !== undefined &&
                             (isCartItemPartiallyAvailable(product, quantity) ? (
                                 <CartItemPartialAvailability
@@ -73,6 +76,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                                 />
                             ))}
                     </div>
+
                     <span className="whitespace-nowrap font-semibold text-sm">
                         {quantity} {unit}
                     </span>
@@ -81,9 +85,11 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
 
             <OrderItemProductPrice freeQuantity={freeQuantity} productPrice={price} quantity={quantity} unit={unit} />
 
+            {gifts && <ul className="mt-3 border-border-less border-t pt-3">{gifts}</ul>}
+
             {additionalServices && (
                 <AdditionalServiceSummaryList
-                    className="mt-2.5 border-border-less border-t pt-2.5"
+                    className={gifts ? 'mt-5' : 'mt-2.5 border-border-less border-t pt-2.5'}
                     isPriceHighlighted={areAdditionalServicePricesHighlighted}
                     services={additionalServices}
                     showHeading

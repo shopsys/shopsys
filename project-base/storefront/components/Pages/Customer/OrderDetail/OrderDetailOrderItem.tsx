@@ -1,11 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
+import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
@@ -122,6 +122,26 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
         );
     }
 
+    if (isProductGift) {
+        return (
+            <ul className="border-border-default border-t py-5 first:border-none first:pt-0 last:pb-0">
+                <OrderItemGiftCard
+                    isWide
+                    imageTid={TIDs.order_detail_item_image}
+                    catnum={orderItem.catnum}
+                    categoryName={orderItem.product?.mainCategory?.name}
+                    fullName={orderItem.name}
+                    mainImage={orderItem.product?.mainImage}
+                    productUrl={orderItem.product?.isVisible ? orderItem.product.slug : undefined}
+                    quantity={orderItem.quantity}
+                    unit={orderItem.unit}
+                    unitPrice={orderItem.unitPrice.priceWithVat}
+                    totalPrice={orderItem.totalPrice.priceWithVat}
+                />
+            </ul>
+        );
+    }
+
     return (
         <div
             className={twJoin(
@@ -130,8 +150,6 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
             )}
         >
             <div className="relative flex flex-col gap-3">
-                {isProductGift && <GiftBadge className="top-5 rounded-tl-md" />}
-
                 <div
                     className={twMergeCustom(
                         'flex vl:grid w-full vl:grid-cols-[3fr_2fr_1fr_2fr] flex-wrap items-center justify-between gap-3 vl:gap-5',

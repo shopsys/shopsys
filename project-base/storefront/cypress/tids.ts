@@ -91,6 +91,8 @@ export enum TIDs {
     pages_cart_list_item_ = 'pages_cart_list_item_',
     pages_cart_list_item_name = 'pages_cart_list_item_name',
     pages_cart_removecartitembutton = 'pages_cart_removecartitembutton',
+    pages_cart_gift_checkbox_label = 'pages_cart_gift_checkbox_label',
+    pages_cart_gift_ = 'pages_cart_gift_',
     pages_cart_cartpreview_discount = 'pages_cart_cartpreview_discount',
     pages_cart_cart_preview_total = 'pages_cart_cart_preview_total',
     cart_page_empty_cart_text = 'cart_page_empty_cart_text',
