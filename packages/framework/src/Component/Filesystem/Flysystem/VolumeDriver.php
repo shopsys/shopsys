@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Filesystem\Flysystem;
 
 use Barryvdh\elFinderFlysystemDriver\Driver;
 use elFinder;
+use League\Flysystem\PathTraversalDetected;
 use Override;
 
 class VolumeDriver extends Driver
@@ -193,7 +194,12 @@ class VolumeDriver extends Driver
     #[Override]
     protected function _stat($path, $hash = '')
     {
-        $stat = parent::_stat($path);
+        try {
+            $stat = parent::_stat($path);
+        } catch (PathTraversalDetected) {
+            // elFinder stats some command targets outside of its exception handling, so the path is reported as not found instead
+            return [];
+        }
 
         if ($hash !== '') {
             $stat['hash'] = $hash;
