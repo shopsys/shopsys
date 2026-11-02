@@ -3684,15 +3684,6 @@ Count of products that will be filtered if this filter option is applied.
 
 </td>
 </tr>
-<tr>
-<td colspan="2" valign="top"><strong id="brandfilteroption.isabsolute">isAbsolute</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
-
-</td>
-</tr>
 </tbody>
 </table>
 
@@ -6146,15 +6137,6 @@ Count of products that will be filtered if this filter option is applied.
 <td>
 
 Flag
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="flagfilteroption.isabsolute">isAbsolute</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
 
 </td>
 </tr>
@@ -8999,15 +8981,6 @@ Count of products that will be filtered if this filter option is applied.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.isabsolute">isAbsolute</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.isselected">isSelected</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -9066,15 +9039,6 @@ Parameter value filter option
 <td>
 
 Count of products that will be filtered if this filter option is applied.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong id="parametervaluefilteroption.isabsolute">isAbsolute</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
 
 </td>
 </tr>

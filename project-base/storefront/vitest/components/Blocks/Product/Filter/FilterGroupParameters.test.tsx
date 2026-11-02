@@ -102,7 +102,6 @@ const createCheckboxParameter = (
                 name: v.name,
                 text: v.name,
                 count: v.count,
-                isAbsolute: false,
                 isSelected,
             };
         }),
@@ -129,7 +128,6 @@ const createColorParameter = (
                 name: v.name,
                 text: v.name,
                 count: v.count,
-                isAbsolute: false,
                 isSelected,
                 rgbColor: v.rgbColor,
             };

@@ -436,8 +436,6 @@ type BrandFilterOption {
   brand: Brand!
   "Count of products that will be filtered if this filter option is applied."
   count: Int!
-  "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."
-  isAbsolute: Boolean!
 }
 
 "Represents entity able to return breadcrumb"
@@ -1244,8 +1242,6 @@ type FlagFilterOption {
   count: Int!
   "Flag"
   flag: Flag!
-  "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."
-  isAbsolute: Boolean!
   "Indicator whether the option is already selected (used for \"ready category seo mixes\")"
   isSelected: Boolean!
 }
@@ -2193,8 +2189,6 @@ type ParameterValueColorFilterOption {
   colorIcon: File
   "Count of products that will be filtered if this filter option is applied."
   count: Int!
-  "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."
-  isAbsolute: Boolean!
   "Indicator whether the option is already selected (used for \"ready category seo mixes\")"
   isSelected: Boolean!
   "RGB hex of color parameter"
@@ -2209,8 +2203,6 @@ type ParameterValueColorFilterOption {
 type ParameterValueFilterOption {
   "Count of products that will be filtered if this filter option is applied."
   count: Int!
-  "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."
-  isAbsolute: Boolean!
   "Indicator whether the option is already selected (used for \"ready category seo mixes\")"
   isSelected: Boolean!
   "Parameter value"

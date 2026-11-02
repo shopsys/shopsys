@@ -552,8 +552,6 @@ export type TypeBrandFilterOption = {
   brand: TypeBrand;
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
-  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
-  isAbsolute: Scalars['Boolean']['output'];
 };
 
 /** Represents entity able to return breadcrumb */
@@ -1437,8 +1435,6 @@ export type TypeFlagFilterOption = {
   count: Scalars['Int']['output'];
   /** Flag */
   flag: TypeFlag;
-  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
-  isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
 };
@@ -2676,8 +2672,6 @@ export type TypeParameterValueColorFilterOption = {
   colorIcon: Maybe<TypeFile>;
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
-  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
-  isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
   /** RGB hex of color parameter */
@@ -2693,8 +2687,6 @@ export type TypeParameterValueFilterOption = {
   __typename?: 'ParameterValueFilterOption';
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
-  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
-  isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
   /** Parameter value */
