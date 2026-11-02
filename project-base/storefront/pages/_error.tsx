@@ -31,6 +31,12 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, err, domainConfig }):
 
 ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageProps> => {
     const statusCode = context.res?.statusCode ?? (context.err as any)?.statusCode ?? 500;
+    const requestUrl = context.asPath ?? context.req?.url;
+    const requestContext = {
+        statusCode,
+        ...(requestUrl && { requestPath: requestUrl.split(/[?#]/, 1)[0] }),
+        ...(context.req?.method && { requestMethod: context.req.method }),
+    };
 
     let errorMessage: string | undefined;
     if (context.err) {
@@ -42,7 +48,7 @@ ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageP
 
     if (statusCode !== 404) {
         logException(context.err ?? new Error('Unknown error'), {
-            statusCode,
+            ...requestContext,
             location: 'ErrorPage.getInitialProps',
         });
     }
@@ -81,7 +87,7 @@ ErrorPage.getInitialProps = async (context: NextPageContext): Promise<ErrorPageP
         } catch (e) {
             // getDomainConfig failed (e.g., unknown domain) - fall back to minimal rendering
             logException(e, {
-                statusCode,
+                ...requestContext,
                 location: 'ErrorPage.getInitialProps.getDomainConfig',
             });
         }

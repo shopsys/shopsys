@@ -1,31 +1,11 @@
 const REDIS_PREFIX = `${process.env.REDIS_PREFIX}:fe:translates:`;
 const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
 
-const logException = async (e) => {
-    if (process.env.APP_ENV === 'development') {
-        // biome-ignore lint/suspicious/noConsole: intentional error logging in development
-        console.error(e);
+const logException = async (error) => {
+    if (typeof window === 'undefined') {
+        const { logException: logServerException } = await import('./utils/errors/logException');
+        logServerException(error, { location: 'i18n loadLocaleFrom' });
     }
-
-    let parsedException;
-
-    try {
-        if (e instanceof Error) {
-            parsedException = { message: e.message, cause: e.cause, name: e.name, stack: e.stack };
-        } else {
-            parsedException = JSON.stringify(e);
-        }
-    } catch {
-        parsedException = 'Unknown exception thrown inside i18n.js loadLocaleFrom function';
-    }
-
-    fetch(`${process.env.INTERNAL_ENDPOINT}api/log-exception`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ exception: parsedException }),
-    });
 };
 
 module.exports = {
@@ -74,9 +54,7 @@ module.exports = {
                             }
                         };
 
-                        await cacheToRedis().catch((reject) => {
-                            logException(reject);
-                        });
+                        await cacheToRedis().catch(logException);
                     }
 
                     if (cachedTranslates !== null) {
@@ -85,7 +63,7 @@ module.exports = {
                 }
             }
         } catch (error) {
-            logException(error);
+            await logException(error);
         }
 
         return (await import('./i18n-translator')).getFreshTranslates(locale, namespace);

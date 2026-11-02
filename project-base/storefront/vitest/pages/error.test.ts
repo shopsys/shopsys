@@ -46,6 +46,34 @@ describe('ErrorPage.getInitialProps', () => {
         });
     });
 
+    test('includes the request path and method when no original exception is available', async () => {
+        const context = {
+            req: { url: '/products?token=secret#details', method: 'GET' },
+            res: { statusCode: 502 },
+        } as NextPageContext;
+
+        await ErrorPage.getInitialProps!(context);
+
+        expect(logException).toHaveBeenNthCalledWith(1, new Error('Unknown error'), {
+            location: 'ErrorPage.getInitialProps',
+            statusCode: 502,
+            requestPath: '/products',
+            requestMethod: 'GET',
+        });
+    });
+
+    test('includes the client path when the server request is unavailable', async () => {
+        const context = { asPath: '/cart?step=payment#summary' } as NextPageContext;
+
+        await ErrorPage.getInitialProps!(context);
+
+        expect(logException).toHaveBeenCalledExactlyOnceWith(new Error('Unknown error'), {
+            location: 'ErrorPage.getInitialProps',
+            statusCode: 500,
+            requestPath: '/cart',
+        });
+    });
+
     test('does not report a not-found response', async () => {
         const context = { res: { statusCode: 404 } } as NextPageContext;
 
