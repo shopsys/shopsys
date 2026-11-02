@@ -7,14 +7,12 @@ query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter
                         name
                     }
                     count
-                    isAbsolute
                 }
                 brands {
                     brand {
                         name
                     }
                     count
-                    isAbsolute
                 }
                 inStock
                 minimalPrice
@@ -30,14 +28,12 @@ query CategoryProductsFilterOptions($categoryUuid: Uuid!, $filter: ProductFilter
                         values {
                             text
                             count
-                            isAbsolute
                         }
                     }
                     ... on ParameterColorFilterOption {
                         values {
                             text
                             count
-                            isAbsolute
                             rgbHex
                             colorIcon {
                                 anchorText

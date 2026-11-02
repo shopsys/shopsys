@@ -15,14 +15,12 @@ fragment CategoryProductFilterOptions on Category {
                     name
                 }
                 count
-                isAbsolute
             }
             brands {
                 brand {
                     name
                 }
                 count
-                isAbsolute
             }
             inStock
             minimalPrice
@@ -38,14 +36,12 @@ fragment CategoryProductFilterOptions on Category {
                     values {
                         text
                         count
-                        isAbsolute
                     }
                 }
                 ... on ParameterColorFilterOption {
                     values {
                         text
                         count
-                        isAbsolute
                         rgbHex
                         colorIcon {
                             anchorText

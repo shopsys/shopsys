@@ -18,13 +18,11 @@ fragment FlagProductFilterOptions on ProductFilterOptions {
             name
         }
         count
-        isAbsolute
     }
     brands {
         brand {
             name
         }
         count
-        isAbsolute
     }
 }

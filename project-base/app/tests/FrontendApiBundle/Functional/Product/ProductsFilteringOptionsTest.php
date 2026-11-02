@@ -59,17 +59,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 2,
-                'isAbsolute' => true,
             ],
             [
                 'text' => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'text' => t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -79,14 +76,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 2,
-                'isAbsolute' => true,
                 'rgbHex' => '#000000',
                 'colorIcon' => null,
             ],
             [
                 'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 3,
-                'isAbsolute' => true,
                 'rgbHex' => '#ff0000',
                 'colorIcon' => $this->getRedColorExpectedFile(),
             ],
@@ -98,17 +93,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => '27',
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'text' => '30',
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'text' => '47',
                 'count' => 1,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -118,12 +110,10 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 2,
-                'isAbsolute' => true,
             ],
             [
                 'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 2,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -135,14 +125,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 3,
-                'isAbsolute' => true,
             ],
             [
                 'flag' => [
                     'name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -152,35 +140,30 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     'name' => t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'brand' => [
                     'name' => t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'brand' => [
                     'name' => t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'brand' => [
                     'name' => t('Samsung', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'brand' => [
                     'name' => t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -201,7 +184,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 1,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -214,7 +196,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 1,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -249,12 +230,10 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 3,
-                        'isAbsolute' => true,
                     ],
                     [
                         'text' => t('3840×2160 (4K UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 1,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -277,7 +256,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 1,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -290,7 +268,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 4,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -303,7 +280,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 4,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -345,35 +321,30 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     'name' => t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 0,
-                'isAbsolute' => false,
             ],
             [
                 'brand' => [
                     'name' => t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => false,
             ],
             [
                 'brand' => [
                     'name' => t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => false,
             ],
             [
                 'brand' => [
                     'name' => t('Samsung', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => false,
             ],
             [
                 'brand' => [
                     'name' => t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 1,
-                'isAbsolute' => false,
             ],
         ];
 
@@ -397,14 +368,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 0,
-                'isAbsolute' => false,
             ],
             [
                 'flag' => [
                     'name' => t('Promotion {{ x }} + {{ y }} free', ['{{ x }}' => 3, '{{ y }}' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 ],
                 'count' => 0,
-                'isAbsolute' => false,
             ],
         ];
 
@@ -432,17 +401,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'text' => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'text' => t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 0,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -452,14 +418,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
-                'isAbsolute' => true,
                 'rgbHex' => '#000000',
                 'colorIcon' => null,
             ],
             [
                 'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
-                'isAbsolute' => true,
                 'rgbHex' => '#ff0000',
                 'colorIcon' => $this->getRedColorExpectedFile(),
             ],
@@ -471,17 +435,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             [
                 'text' => '27',
                 'count' => 0,
-                'isAbsolute' => true,
             ],
             [
                 'text' => '30',
                 'count' => 1,
-                'isAbsolute' => true,
             ],
             [
                 'text' => '47',
                 'count' => 1,
-                'isAbsolute' => true,
             ],
         ];
 
@@ -496,12 +457,10 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     $this->firstDomainLocale,
                 ),
                 'count' => 0,
-                'isAbsolute' => false,
             ],
             [
                 'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 2,
-                'isAbsolute' => false,
             ],
         ];
 
@@ -531,7 +490,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 0,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -552,7 +510,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 0,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -582,7 +539,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 2,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -595,7 +551,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 2,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -608,7 +563,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     [
                         'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 0,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],
@@ -626,7 +580,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             $this->firstDomainLocale,
                         ),
                         'count' => 2,
-                        'isAbsolute' => true,
                     ],
                     [
                         'text' => t(
@@ -636,7 +589,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             $this->firstDomainLocale,
                         ),
                         'count' => 0,
-                        'isAbsolute' => true,
                     ],
                 ],
             ],

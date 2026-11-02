@@ -11,7 +11,6 @@ class ParameterValueFilterOption
     public function __construct(
         public readonly ParameterValue $parameterValue,
         public readonly int $count,
-        public readonly bool $isAbsolute,
         public readonly bool $isSelected,
     ) {
     }

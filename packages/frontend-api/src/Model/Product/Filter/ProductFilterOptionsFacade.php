@@ -46,7 +46,6 @@ class ProductFilterOptionsFacade
             fn (ProductFilterConfig $productFilterConfig, ProductFilterCountData $productFilterCountData): ProductFilterOptions => $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
                 $productFilterConfig,
                 $productFilterCountData,
-                $productFilterData,
             ),
         );
     }
@@ -68,7 +67,6 @@ class ProductFilterOptionsFacade
             fn (ProductFilterConfig $productFilterConfig, ProductFilterCountData $productFilterCountData): ProductFilterOptions => $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
                 $productFilterConfig,
                 $productFilterCountData,
-                $productFilterData,
             ),
         );
     }
@@ -113,7 +111,6 @@ class ProductFilterOptionsFacade
             fn (ProductFilterConfig $productFilterConfig, ProductFilterCountData $productFilterCountData): ProductFilterOptions => $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
                 $productFilterConfig,
                 $productFilterCountData,
-                $productFilterData,
             ),
         );
     }
@@ -133,7 +130,6 @@ class ProductFilterOptionsFacade
             fn (ProductFilterConfig $productFilterConfig, ProductFilterCountData $productFilterCountData): ProductFilterOptions => $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
                 $productFilterConfig,
                 $productFilterCountData,
-                $productFilterData,
             ),
         );
     }

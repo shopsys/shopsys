@@ -37,15 +37,14 @@ class ProductFilterOptionsFactory
     protected function createFlagFilterOption(
         Flag $flag,
         int $count,
-        bool $isAbsolute,
         bool $isSelected = false,
     ): FlagFilterOption {
-        return new FlagFilterOption($flag, $count, $isAbsolute, $isSelected);
+        return new FlagFilterOption($flag, $count, $isSelected);
     }
 
-    protected function createBrandFilterOption(Brand $brand, int $count, bool $isAbsolute): BrandFilterOption
+    protected function createBrandFilterOption(Brand $brand, int $count): BrandFilterOption
     {
-        return new BrandFilterOption($brand, $count, $isAbsolute);
+        return new BrandFilterOption($brand, $count);
     }
 
     /**
@@ -64,16 +63,14 @@ class ProductFilterOptionsFactory
     protected function createParameterValueFilterOption(
         ParameterValue $parameterValue,
         int $count,
-        bool $isAbsolute,
         bool $isSelected = false,
     ): ParameterValueFilterOption {
-        return new ParameterValueFilterOption($parameterValue, $count, $isAbsolute, $isSelected);
+        return new ParameterValueFilterOption($parameterValue, $count, $isSelected);
     }
 
     public function createProductFilterOptions(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData,
         ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
         $productFilterOptions = $this->createProductFilterOptionsInstance();
@@ -82,7 +79,7 @@ class ProductFilterOptionsFactory
 
         $productFilterOptions->inStock = $productFilterCountData->countInStock ?? 0;
 
-        $this->fillFlags($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData, $readyCategorySeoMix);
+        $this->fillFlags($productFilterOptions, $productFilterConfig, $productFilterCountData, $readyCategorySeoMix);
 
         return $productFilterOptions;
     }
@@ -92,8 +89,8 @@ class ProductFilterOptionsFactory
         ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
     ): ProductFilterOptions {
-        $productFilterOptions = $this->createProductFilterOptions($productFilterConfig, $productFilterCountData, $productFilterData);
-        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+        $productFilterOptions = $this->createProductFilterOptions($productFilterConfig, $productFilterCountData);
+        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData);
         $this->fillParameters($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
 
         return $productFilterOptions;
@@ -102,18 +99,15 @@ class ProductFilterOptionsFactory
     public function createProductFilterOptionsForAll(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData,
         );
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData,
         );
 
         return $productFilterOptions;
@@ -129,14 +123,12 @@ class ProductFilterOptionsFactory
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData,
             $readyCategorySeoMix,
         );
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData,
         );
         $this->fillParametersForCategory(
             $productFilterOptions,
@@ -162,7 +154,6 @@ class ProductFilterOptionsFactory
 
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
             $parameter = $parameterFilterChoice->getParameter();
-            $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
 
             $parameterValueFilterOptions = [];
 
@@ -183,7 +174,6 @@ class ProductFilterOptionsFactory
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
-                    $isAbsolute,
                     $this->isParameterValueSelected($readyCategorySeoMix, $parameter, $parameterValue),
                 );
             }
@@ -245,12 +235,10 @@ class ProductFilterOptionsFactory
     public function createProductFilterOptionsForBrand(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         return $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData,
         );
     }
 
@@ -258,16 +246,12 @@ class ProductFilterOptionsFactory
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData,
         ?ReadyCategorySeoMix $readyCategorySeoMix,
     ): void {
-        $isAbsolute = count($productFilterData->flags) === 0;
-
         foreach ($productFilterConfig->getFlagChoices() as $flag) {
             $productFilterOptions->flags[] = $this->createFlagFilterOption(
                 $flag,
                 $productFilterCountData->countByFlagId[$flag->getId()] ?? 0,
-                $isAbsolute,
                 $readyCategorySeoMix !== null && $readyCategorySeoMix->getFlag() === $flag,
             );
         }
@@ -277,15 +261,11 @@ class ProductFilterOptionsFactory
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData,
     ): void {
-        $isAbsolute = count($productFilterData->brands) === 0;
-
         foreach ($productFilterConfig->getBrandChoices() as $brand) {
             $productFilterOptions->brands[] = $this->createBrandFilterOption(
                 $brand,
                 $productFilterCountData->countByBrandId[$brand->getId()] ?? 0,
-                $isAbsolute,
             );
         }
     }
@@ -298,7 +278,6 @@ class ProductFilterOptionsFactory
     ): void {
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
             $parameter = $parameterFilterChoice->getParameter();
-            $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
 
             $parameterValueFilterOptions = [];
 
@@ -319,7 +298,6 @@ class ProductFilterOptionsFactory
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
-                    $isAbsolute,
                     false,
                 );
             }
@@ -331,17 +309,6 @@ class ProductFilterOptionsFactory
                 $isSliderSelectable,
             );
         }
-    }
-
-    protected function isParameterFiltered(Parameter $parameter, ProductFilterData $productFilterData): bool
-    {
-        foreach ($productFilterData->parameters as $parameterFilterData) {
-            if ($parameterFilterData->parameter === $parameter) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     protected function isParameterValueFiltered(
@@ -374,14 +341,12 @@ class ProductFilterOptionsFactory
     public function createProductFilterOptionsForFlag(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData,
         );
-        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData);
 
         return $productFilterOptions;
     }

@@ -11,7 +11,6 @@ class BrandFilterOption
     public function __construct(
         public readonly Brand $brand,
         public readonly int $count,
-        public readonly bool $isAbsolute,
     ) {
     }
 }
