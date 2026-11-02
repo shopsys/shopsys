@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
@@ -44,20 +43,6 @@ class FlagRepository
         return $flag;
     }
 
-    /**
-     * @param int[] $flagIds
-     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag> visible flags translated to the locale of the domain, indexed by ID and sorted by position
-     */
-    public function getByIds(array $flagIds, DomainConfig $domainConfig): array
-    {
-        return $this->getVisibleWithTranslationAndDomainsQueryBuilder($domainConfig->getLocale())
-            ->andWhere('f.id IN (:flagIds)')
-            ->indexBy('f', 'f.id')
-            ->orderBy('f.position', SortDirection::Ascending)
-            ->setParameter('flagIds', $flagIds)
-            ->getQuery()->getResult();
-    }
-
     public function getByUuid(string $uuid): Flag
     {
         $flag = $this->getFlagRepository()->findOneBy(['uuid' => $uuid]);
@@ -88,16 +73,16 @@ class FlagRepository
 
     /**
      * @param int[] $flagsIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag> visible flags translated to the locale, indexed by ID and sorted by position
      */
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
     {
-        $flagsQueryBuilder = $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
+        return $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
             ->andWhere('f.id IN (:flagsIds)')
+            ->indexBy('f', 'f.id')
             ->orderBy('f.position', SortDirection::Ascending)
-            ->setParameter('flagsIds', $flagsIds);
-
-        return $flagsQueryBuilder->getQuery()->getResult();
+            ->setParameter('flagsIds', $flagsIds)
+            ->getQuery()->getResult();
     }
 
     public function getVisibleQueryBuilder(): QueryBuilder
