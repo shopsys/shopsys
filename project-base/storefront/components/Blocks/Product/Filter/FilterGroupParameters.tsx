@@ -76,6 +76,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                     count={parameterValueOption.count}
                     disabled={isDisabled}
                     id={id}
+                    isCountAbsolute={parameterValueOption.isAbsolute}
                     label={parameterValueOption.text}
                     name={id}
                     value={isChecked}
@@ -140,6 +141,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                             disabled={parameterValue.count === 0 && !isChecked}
                                             id={id}
                                             imageUrl={parameterValue.colorIcon?.url}
+                                            isCountAbsolute={parameterValue.isAbsolute}
                                             label={parameterValue.text}
                                             name={id}
                                             value={isChecked}

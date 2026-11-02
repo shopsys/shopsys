@@ -8,6 +8,7 @@ type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelEl
 type LabelWrapperProps = NativeProps & {
     label: string | ReactNode | ReactNode[] | undefined;
     count?: number;
+    isCountAbsolute?: boolean;
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'radio' | 'selectbox';
     inputSize?: 'small' | 'default';
     required?: boolean;
@@ -18,6 +19,7 @@ type LabelWrapperProps = NativeProps & {
 export const LabelWrapper: FC<LabelWrapperProps> = ({
     label,
     count,
+    isCountAbsolute = true,
     inputType,
     inputSize,
     required,
@@ -113,7 +115,12 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         )}
                     </span>
 
-                    {!!count && !checked && <span className="ml-auto font-normal text-text-less">({count})</span>}
+                    {!!count && !checked && (
+                        <span className="ml-auto font-normal text-text-less">
+                            ({!isCountAbsolute && '+'}
+                            {count})
+                        </span>
+                    )}
                 </span>
             </label>
         )}
