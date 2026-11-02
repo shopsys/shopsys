@@ -132,6 +132,7 @@ describe('FilterPanel Component', () => {
                     rgbColor: '#ff0000',
                 },
                 count: 15,
+                isAbsolute: true,
                 isSelected: false,
             },
             {
@@ -143,6 +144,7 @@ describe('FilterPanel Component', () => {
                     rgbColor: '#00ff00',
                 },
                 count: 8,
+                isAbsolute: true,
                 isSelected: false,
             },
         ],
@@ -155,6 +157,7 @@ describe('FilterPanel Component', () => {
                     uuid: 'apple-uuid',
                 },
                 count: 12,
+                isAbsolute: true,
             },
             {
                 __typename: 'BrandFilterOption' as const,
@@ -164,6 +167,7 @@ describe('FilterPanel Component', () => {
                     uuid: 'samsung-uuid',
                 },
                 count: 10,
+                isAbsolute: true,
             },
         ],
         parameters: [
@@ -178,6 +182,7 @@ describe('FilterPanel Component', () => {
                         uuid: 'red-uuid',
                         text: 'Red',
                         count: 5,
+                        isAbsolute: true,
                         isSelected: false,
                     },
                     {
@@ -185,6 +190,7 @@ describe('FilterPanel Component', () => {
                         uuid: 'blue-uuid',
                         text: 'Blue',
                         count: 3,
+                        isAbsolute: true,
                         isSelected: false,
                     },
                 ],
@@ -200,6 +206,7 @@ describe('FilterPanel Component', () => {
                         uuid: 'small-uuid',
                         text: 'Small',
                         count: 7,
+                        isAbsolute: true,
                         isSelected: false,
                     },
                     {
@@ -207,6 +214,7 @@ describe('FilterPanel Component', () => {
                         uuid: 'large-uuid',
                         text: 'Large',
                         count: 4,
+                        isAbsolute: true,
                         isSelected: false,
                     },
                 ],
@@ -668,6 +676,7 @@ describe('FilterPanel Component', () => {
                             uuid: `value-${i}a-uuid`,
                             text: `Value ${i}A`,
                             count: 5,
+                            isAbsolute: true,
                             isSelected: false,
                         },
                         {
@@ -675,6 +684,7 @@ describe('FilterPanel Component', () => {
                             uuid: `value-${i}b-uuid`,
                             text: `Value ${i}B`,
                             count: 3,
+                            isAbsolute: true,
                             isSelected: false,
                         },
                     ],

@@ -270,6 +270,12 @@ describe('FilterGroupParameters', () => {
             expect(checkboxes[2]).toBeChecked();
         });
 
+        test('renders relative product count with plus sign for unchecked option', () => {
+            render(<FilterGroupParameters {...defaultCheckboxProps} />);
+
+            expect(screen.getByText('(+8)')).toBeInTheDocument();
+        });
+
         test('calls updateFilterParametersQuery when checkbox is selected', async () => {
             const user = userEvent.setup();
 
@@ -345,6 +351,12 @@ describe('FilterGroupParameters', () => {
                 input.getAttribute('name')?.includes('parameters.1.values'),
             );
             expect(colorInputs).toHaveLength(4);
+        });
+
+        test('renders relative product count with plus sign for unchecked color', () => {
+            render(<FilterGroupParameters {...defaultColorProps} />);
+
+            expect(screen.getByText('(+15)')).toBeInTheDocument();
         });
 
         test('renders color swatches with correct colors', () => {
@@ -534,8 +546,8 @@ describe('FilterGroupParameters', () => {
             render(<FilterGroupParameters {...defaultColorProps} />);
 
             expect(screen.getByRole('checkbox', { name: 'Red' })).toBeInTheDocument();
-            expect(screen.getByRole('checkbox', { name: 'Blue (15)' })).toBeInTheDocument();
-            expect(screen.getByRole('checkbox', { name: 'Green (10)' })).toBeInTheDocument();
+            expect(screen.getByRole('checkbox', { name: 'Blue (+15)' })).toBeInTheDocument();
+            expect(screen.getByRole('checkbox', { name: 'Green (+10)' })).toBeInTheDocument();
         });
 
         test('has proper ARIA labels for range slider inputs', () => {
