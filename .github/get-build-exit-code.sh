@@ -13,15 +13,13 @@ getBuildExitCodeBasedOnJobResults() {
     TESTS_STOREFRONT_SMOKE_RESULT=${10}
     TESTS_STOREFRONT_ACCEPTANCE_RESULT=${11}
     UNIT_TESTS_STOREFRONT_RESULT=${12}
-    TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT=${13}
-    REGENERATION_STARTED=${14}
-    CHECK_UPGRADE_NOTES_RESULT=${15}
+    CHECK_UPGRADE_NOTES_RESULT=${13}
 
     if [[ "$BUILD_FORK_RESULT" == "success" ]]; then
         return 0
     fi
 
-    if [[ "$STANDARDS_RESULT" == "success" && "$TESTS_RESULT" == "success" && "$TESTS_CZECH_RESULT" == "success" && "$CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT" == "success" && "$STANDARDS_STOREFRONT_RESULT" == "success" && "$TRANSLATIONS_DUMP_RESULT" == "success" && ("$REVIEW_RESULT" == "success" || "$REVIEW_RESULT" == "skipped") && "$CHECK_CONSOLE_COMMANDS_RESULT" == "success" && (("$TESTS_STOREFRONT_ACCEPTANCE_RESULT" == "success" && "$REGENERATION_STARTED" == "false") || ("$TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT" == "success" && "$REGENERATION_STARTED" == "true")) && "$UNIT_TESTS_STOREFRONT_RESULT" == "success" && "$TESTS_STOREFRONT_SMOKE_RESULT" == "success" && ("$CHECK_UPGRADE_NOTES_RESULT" == "success" || "$CHECK_UPGRADE_NOTES_RESULT" == "skipped") ]]; then
+    if [[ "$STANDARDS_RESULT" == "success" && "$TESTS_RESULT" == "success" && "$TESTS_CZECH_RESULT" == "success" && "$CHECK_DEMO_DATA_LIMITED_DOMAINS_RESULT" == "success" && "$STANDARDS_STOREFRONT_RESULT" == "success" && "$TRANSLATIONS_DUMP_RESULT" == "success" && ("$REVIEW_RESULT" == "success" || "$REVIEW_RESULT" == "skipped") && "$CHECK_CONSOLE_COMMANDS_RESULT" == "success" && "$TESTS_STOREFRONT_ACCEPTANCE_RESULT" == "success" && "$UNIT_TESTS_STOREFRONT_RESULT" == "success" && "$TESTS_STOREFRONT_SMOKE_RESULT" == "success" && ("$CHECK_UPGRADE_NOTES_RESULT" == "success" || "$CHECK_UPGRADE_NOTES_RESULT" == "skipped") ]]; then
         return 0
     else
         return 1

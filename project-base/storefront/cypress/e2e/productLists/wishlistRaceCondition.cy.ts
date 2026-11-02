@@ -11,7 +11,7 @@ describe('Wishlist Race Condition Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Wishlist Add - Rapid Click] should send only one AddProductToList request while button is processing', function () {
+    it('[Wishlist Add - Rapid Click] should send only one AddProductToList request while button is processing', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -27,7 +27,7 @@ describe('Wishlist Race Condition Tests', () => {
         );
     });
 
-    it('[Wishlist Remove - Rapid Click] should send only one RemoveProductFromList request while button is processing', function () {
+    it('[Wishlist Remove - Rapid Click] should send only one RemoveProductFromList request while button is processing', () => {
         visitEntityByUuid('product', staticData.products.helloKitty.uuid);
 
         cy.getByTID([TIDs.product_wishlist_button]).first().should('be.visible').click();
@@ -46,7 +46,7 @@ describe('Wishlist Race Condition Tests', () => {
         );
     });
 
-    it('[Wishlist Add - Different Products Rapid Click] should send only one AddProductToList request when no list exists yet', function () {
+    it('[Wishlist Add - Different Products Rapid Click] should send only one AddProductToList request when no list exists yet', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
         checkNumberOfApiRequestsTriggeredByActions(

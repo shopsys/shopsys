@@ -2,6 +2,7 @@ import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { validateEmail } from 'components/Forms/validationRules';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
@@ -12,6 +13,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useDebounce } from 'utils/useDebounce';
 
 const LoginPopup = dynamic(
     () => import('components/Blocks/Popup/LoginPopup').then((component) => component.LoginPopup),
@@ -27,14 +29,19 @@ export const ContactInformationPersonalInformation: FC = () => {
     const { formState } = formProviderMethods;
     const isUserLoggedIn = useIsUserLoggedIn();
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
+    const debouncedEmail = useDebounce(emailValue, 300);
+    const shouldCheckEmail =
+        !isUserLoggedIn &&
+        emailValue === debouncedEmail &&
+        !formState.errors.email &&
+        validateEmail(t).isValidSync(debouncedEmail);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQuery({
+    const [{ data: isCustomerUserRegisteredData, operation, error }] = useIsCustomerUserRegisteredQuery({
         variables: {
-            email: emailValue,
+            email: debouncedEmail,
         },
-        pause: !isEmailFilledCorrectly,
+        pause: !shouldCheckEmail,
     });
 
     const openLoginPopup = () => {
@@ -42,7 +49,10 @@ export const ContactInformationPersonalInformation: FC = () => {
     };
 
     const isEmailAlreadyRegistered =
-        isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && !formState.errors.email;
+        shouldCheckEmail &&
+        !error &&
+        operation?.variables.email === emailValue &&
+        isCustomerUserRegisteredData?.isCustomerUserRegistered;
 
     return (
         <FormBlockWrapper>

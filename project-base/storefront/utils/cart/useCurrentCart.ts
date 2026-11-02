@@ -12,6 +12,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
     const isCartHydrated = useSessionStore((s) => s.isCartHydrated);
+    const isCartStale = useSessionStore((s) => s.isCartStale);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const isWithCart = isUserLoggedIn || !!cartUuid;
     const { canCreateOrder } = useAuthorization();
@@ -22,12 +23,12 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     const [{ data: fetchedCartData, fetching: isCartFetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
-        pause: !isCartHydrated || !isWithCart || !canCreateOrder,
+        pause: !isCartHydrated || isCartStale || !isWithCart || !canCreateOrder,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
     let cart: CurrentCartType['cart'];
-    if (isCartHydrated) {
+    if (isCartHydrated && !isCartStale) {
         if (isWithCart) {
             cart = fetchedCartData?.cart;
         } else {
@@ -36,7 +37,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     }
     return {
         fetchCart: () => {
-            if (isWithCart) {
+            if (isWithCart && !isCartStale) {
                 fetchCart();
             }
         },

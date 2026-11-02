@@ -12,7 +12,7 @@
     "next": true,
     "vitest": {
         "entry": ["vitest/**/*.test.{ts,tsx}", "vitest/setup.ts"],
-        "config": ["vitest.config.js"]
+        "config": ["vitest.config.mjs"]
     },
     "postcss": true,
     "graphql-codegen": {

@@ -1,11 +1,73 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
 import { staticData } from 'fixtures/demodata';
-import { translations } from 'support';
+import { t, translations } from 'support';
 import { TIDs } from 'tids';
 
 const getTransportGroupButtonByName = (transportGroupName: string) =>
     cy.getByTID([TIDs.transport_group_button]).contains(transportGroupName).closest('button');
+
+const checkSelectedOption = (sectionTid: TIDs, expectedUuid: string | null) => {
+    const selectedOption = cy.getByTID([sectionTid]).find('input[type="radio"]:checked');
+
+    if (expectedUuid === null) {
+        selectedOption.should('not.exist');
+
+        return;
+    }
+
+    // The outgoing list stays mounted during its exit animation.
+    cy.getByTID([sectionTid]).find('input[type="radio"]').should('have.length', 1);
+    selectedOption.should('have.length', 1).and('have.value', expectedUuid);
+};
+
+export const checkSelectedTransport = (expectedUuid: string | null) => {
+    checkSelectedOption(TIDs.pages_order_transport, expectedUuid);
+};
+
+export const checkSelectedPayment = (expectedUuid: string | null) => {
+    checkSelectedOption(TIDs.pages_order_payment, expectedUuid);
+
+    if (expectedUuid === null) {
+        cy.getByTID([TIDs.pages_order_payment]).should(($section) => {
+            const radios = Array.from($section[0].querySelectorAll<HTMLInputElement>('input[type="radio"]'));
+            expect(radios.length, 'available payment options').to.be.greaterThan(0);
+            expect(new Set(radios.map((radio) => radio.value)).size, 'outgoing payment option removed').to.equal(
+                radios.length,
+            );
+
+            const sectionRect = $section[0].getBoundingClientRect();
+            radios.forEach((radio) => {
+                const label = radio.labels?.[0];
+                expect(label, `label for payment ${radio.value}`).to.exist;
+                expect(Cypress.dom.isVisible(label!), `payment ${radio.value} is visible`).to.equal(true);
+                const labelRect = label!.getBoundingClientRect();
+                expect(labelRect.top, 'payment starts inside its section').to.be.at.least(sectionRect.top);
+                expect(labelRect.bottom, 'payment ends inside its section').to.be.at.most(sectionRect.bottom);
+            });
+        });
+    }
+};
+
+export const checkTransportPrice = (transportUuid: string, expected: 'free' | 'paid') => {
+    cy.getByTID([TIDs.pages_order_transport])
+        .find(`label[for="${transportUuid}"]`)
+        // The outgoing transport list remains mounted during the selection animation.
+        .should('have.length', 1)
+        .and('be.visible')
+        .within(() => {
+            if (expected === 'free') {
+                t('Free').then((free) => {
+                    cy.getByTID([TIDs.transport_and_payment_price]).should('have.text', free);
+                });
+            } else {
+                cy.getByTID([TIDs.transport_and_payment_price])
+                    .should('be.visible')
+                    .invoke('text')
+                    .should('match', /[1-9]/);
+            }
+        });
+};
 
 export const openTransportGroupByName = (transportGroupName: string) => {
     getTransportGroupButtonByName(transportGroupName).then(($button) => {
@@ -44,7 +106,7 @@ export const chooseTransportPersonalCollectionAndStore = (
 export const changeSelectionOfTransportByName = (transportName: string, transportGroupName?: string) => {
     cy.get('body').then(($body) => {
         const transportLabelSelector = `[data-tid="${TIDs.pages_order_transport}"] [data-tid="${TIDs.pages_order_selectitem_label_name}"]`;
-        const visibleTransportLabel = [...$body.find(transportLabelSelector)].find(
+        const visibleTransportLabel = $body.find(transportLabelSelector).toArray().find(
             (transportLabel) =>
                 transportLabel.textContent?.includes(transportName) && Cypress.$(transportLabel).is(':visible'),
         );

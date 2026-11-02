@@ -44,6 +44,7 @@ services:
         container_name: shopsys-framework-php-fpm
         volumes:
             - web-volume:/var/www/html/project-base/app/web
+            - ./project-base/gitlab/cypress-rate-limiter.yaml:/var/www/html/project-base/app/config/packages/zz_cypress_rate_limiter.yaml:ro
 
     php-consumer:
         restart: always
@@ -96,6 +97,9 @@ services:
         profiles:
             - storefront-acceptance-tests
         environment:
+            - TYPE=regression
+            - COMMAND=run
+            - SKIP_SNAPSHOTS=0
             - GROUP=${GROUP}
             - TEST_LOCALE=${TEST_LOCALE:-en}
             - B2B_DOMAIN_ID=${B2B_DOMAIN_ID:-2}
@@ -114,7 +118,7 @@ services:
         build:
             context: ./project-base/storefront/cypress
             dockerfile: ./docker/Dockerfile
-        container_name: shopsys-framework-cypress
+        container_name: shopsys-framework-cypress-regenerate
         profiles:
             - storefront-acceptance-tests
         volumes:
@@ -126,6 +130,7 @@ services:
         environment:
             - TYPE=base
             - COMMAND=run
+            - SKIP_SNAPSHOTS=0
             - GROUP=${GROUP}
             - TEST_LOCALE=${TEST_LOCALE:-en}
             - B2B_DOMAIN_ID=${B2B_DOMAIN_ID:-2}

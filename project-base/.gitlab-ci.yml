@@ -17,6 +17,8 @@ stages:
         -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
 
 variables:
+    # Opt in to functional-only acceptance runs; reference generation always keeps screenshots enabled.
+    SKIP_SNAPSHOTS: "0"
     TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}
     STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}-storefront
     HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
@@ -186,7 +188,7 @@ test:storefront-acceptance:
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
         - cd storefront
-        - GROUP=$GROUP TEST_LOCALE=en docker compose run cypress
+        - GROUP=$GROUP TEST_LOCALE=en docker compose run --rm cypress
     after_script:
         - docker compose logs php-fpm > php-fpm-log.txt
         - docker compose logs webserver > webserver-log.txt
@@ -214,7 +216,7 @@ test:cypress-smoke:
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
         - cd storefront
-        - docker compose run --rm -e TYPE=null -e COMMAND=smoke -e TEST_LOCALE=en cypress
+        - docker compose run --rm -e COMMAND=smoke -e TEST_LOCALE=en cypress
     after_script:
         - docker compose logs php-fpm > php-fpm-log.txt
         - docker compose logs webserver > webserver-log.txt
@@ -267,7 +269,7 @@ regenerate-storefront-screenshots:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker compose up -d
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick
-        - GROUP=$GROUP TEST_LOCALE=en docker compose run cypress-regenerate-screenshots
+        - GROUP=$GROUP TEST_LOCALE=en docker compose run --rm cypress-regenerate-screenshots
         - git add ./storefront/cypress/snapshots/e2e
         - git status
         - |

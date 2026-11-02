@@ -1,14 +1,16 @@
+import { TIDs } from 'cypress/tids';
 import React from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
 type InformationCardProps = {
     icon: React.ReactNode;
     heading: string;
+    tid?: TIDs;
 };
 
-export const InformationCard: FC<InformationCardProps> = ({ children, icon, heading, className }) => {
+export const InformationCard: FC<InformationCardProps> = ({ children, icon, heading, className, tid }) => {
     return (
-        <div className={twMergeCustom('flex flex-col gap-3', className)}>
+        <div className={twMergeCustom('flex flex-col gap-3', className)} data-tid={tid}>
             <div className="flex items-center gap-3">
                 {icon}
                 <span className="h5">{heading}</span>

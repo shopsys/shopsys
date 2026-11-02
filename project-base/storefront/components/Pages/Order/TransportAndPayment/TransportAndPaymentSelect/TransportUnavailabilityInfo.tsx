@@ -1,5 +1,6 @@
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -20,7 +21,10 @@ export const TransportUnavailabilityInfo: FC<TransportUnavailabilityInfoProps> =
     const hiddenProductsCount = products.length - INITIAL_VISIBLE_PRODUCTS_COUNT;
 
     return (
-        <div className="flex w-full flex-col gap-2 p-5 pt-0 text-sm text-text-less">
+        <div
+            className="flex w-full flex-col gap-2 p-5 pt-0 text-sm text-text-less"
+            data-tid={TIDs.transport_unavailability_info}
+        >
             <div className="flex items-center gap-2">
                 <InfoIcon className="size-4 shrink-0" />
 
@@ -30,7 +34,10 @@ export const TransportUnavailabilityInfo: FC<TransportUnavailabilityInfoProps> =
             <ul className="flex flex-col gap-1 pl-6">
                 {visibleProducts.map((product) => (
                     <li key={product.uuid} className="flex items-center gap-2.5">
-                        <div className="flex size-7 items-center justify-center rounded-full">
+                        <div
+                            className="flex size-7 items-center justify-center rounded-full"
+                            data-tid={TIDs.transport_unavailability_product_image}
+                        >
                             <Image
                                 alt={generateProductImageAlt(
                                     product.fullName,
