@@ -156,15 +156,15 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                     data-tid={TIDs.comparison_product_image}
                 >
                     <Image
+                        fill
                         alt={generateProductImageAlt(
                             product.fullName,
                             product.mainCategory?.name,
                             product.mainImage?.name,
                         )}
-                        className="max-h-full w-auto object-contain"
-                        height={144}
+                        className="object-contain"
+                        sizes="(min-width: 768px) 320px, 50vw"
                         src={product.mainImage?.url}
-                        width={180}
                     />
                 </div>
                 <span
