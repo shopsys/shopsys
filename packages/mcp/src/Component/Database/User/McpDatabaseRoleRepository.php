@@ -39,7 +39,11 @@ class McpDatabaseRoleRepository
             FROM pg_class c
             WHERE c.relnamespace = \'public\'::regnamespace
                 AND c.relkind IN (\'r\', \'p\', \'v\', \'m\', \'f\')
-                AND has_table_privilege(CAST(? AS name), c.oid, \'SELECT\')
+                AND has_any_column_privilege(CAST(? AS name), c.oid, \'SELECT\')
+                AND NOT EXISTS (
+                    SELECT 1 FROM pg_depend d
+                    WHERE d.classid = \'pg_class\'::regclass AND d.objid = c.oid AND d.objsubid = 0 AND d.deptype = \'e\'
+                )
             ORDER BY c.relname',
             [$roleName],
         );
