@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
@@ -39,6 +40,7 @@ class CustomerUserFacade
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly HashGenerator $hashGenerator,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -156,7 +158,7 @@ class CustomerUserFacade
         }
 
         if ($this->areRolesChanged($customerUser->getRoles(), $customerUserOriginalRoles)) {
-            $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+            $this->onCustomerUserRolesChanged($customerUser);
         }
 
         return $customerUser;
@@ -317,7 +319,7 @@ class CustomerUserFacade
         $this->em->flush();
 
         if ($this->areRolesChanged($customerUser->getRoles(), $customerUserOriginalRoles)) {
-            $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+            $this->onCustomerUserRolesChanged($customerUser);
         }
 
         return $customerUser;
@@ -363,6 +365,12 @@ class CustomerUserFacade
     public function isLastSecurityChangeOlderThan(string $customerUserUuid, DateTimeInterface $referenceDateTime): bool
     {
         return $this->customerUserRepository->isLastSecurityChangeOlderThan($customerUserUuid, $referenceDateTime);
+    }
+
+    protected function onCustomerUserRolesChanged(CustomerUser $customerUser): void
+    {
+        $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+        $this->customerUserRoleResolver->resetRolesCacheForCustomerUser($customerUser);
     }
 
     /**

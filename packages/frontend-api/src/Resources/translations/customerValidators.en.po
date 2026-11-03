@@ -28,6 +28,9 @@ msgstr ""
 msgid "Complaint item name is required"
 msgstr ""
 
+msgid "Customer role group cannot be assigned."
+msgstr ""
+
 msgid "Customer role group cannot be changed."
 msgstr ""
 
@@ -314,6 +317,9 @@ msgid "Type of file {{ name }} is unsupported."
 msgstr ""
 
 msgid "You can upload up to {{ limit }} photos"
+msgstr ""
+
+msgid "You cannot change the role group of this customer user to this role group."
 msgstr ""
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"

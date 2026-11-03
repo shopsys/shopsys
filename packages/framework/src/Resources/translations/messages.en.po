@@ -2086,7 +2086,7 @@ msgstr ""
 msgid "Main variant"
 msgstr ""
 
-msgid "Manage all customers under the user's company"
+msgid "Manage all customers under the user's company (includes managing own data)"
 msgstr ""
 
 msgid "Manage company data (e.g., billing address)"
