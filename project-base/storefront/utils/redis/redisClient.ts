@@ -35,6 +35,8 @@ const createAndConnectRedisClient = async (timings?: RedisConnectionTimings): Pr
         url: `redis://${process.env.REDIS_HOST}`,
         // Requests use the backend while reconnecting instead of waiting in Redis's offline queue.
         disableOfflineQueue: true,
+        // Redis deployments close connections after 60 seconds without commands.
+        pingInterval: 30000,
         socket: {
             connectTimeout: 5000,
             reconnectStrategy: (retries) =>
