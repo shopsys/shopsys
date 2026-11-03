@@ -15,5 +15,6 @@ class DownloadFileResponse extends Response
 
         $this->headers->set('Content-type', $mimeType);
         $this->headers->set('Content-Disposition', HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, $filename));
+        $this->headers->set('X-Content-Type-Options', 'nosniff');
     }
 }
