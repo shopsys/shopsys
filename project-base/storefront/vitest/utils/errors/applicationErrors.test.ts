@@ -26,6 +26,7 @@ describe('isFlashMessageError', () => {
         'register-by-order-is-not-possible',
         'store-not-found',
         'too-many-code-application-attempts',
+        'too-many-customer-registration-attempts',
         'too-many-login-attempts',
         'too-many-password-recovery-attempts',
         'too-many-store-search-attempts',
