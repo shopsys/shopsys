@@ -191,12 +191,11 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                         {value && value.length > 0 && showPreviews && (
                             <ul className="mt-4 flex flex-wrap gap-3">
                                 {value.map((file: File, index: number) => (
-                                    <li
-                                        key={`${file.name}-${index}`}
-                                        className="relative flex size-20 items-center justify-center rounded-xl bg-white p-2 shadow-sm"
-                                    >
-                                        <FilePreview file={file} />
-                                        <div className="flex w-20 flex-col text-center text-xs">
+                                    <li key={`${file.name}-${index}`} className="relative flex w-20 flex-col gap-2">
+                                        <div className="flex size-20 items-center justify-center rounded-xl bg-white p-2 shadow-sm">
+                                            <FilePreview file={file} />
+                                        </div>
+                                        <div className="flex flex-col text-center text-xs">
                                             <span className="truncate" title={file.name}>
                                                 {file.name}
                                             </span>
