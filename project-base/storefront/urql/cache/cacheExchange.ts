@@ -97,6 +97,7 @@ export const cache = cacheExchange({
         RegularCustomerUser: keyUuid,
         RegularProduct: keyUuid,
         OrganizationSetting: keyNull,
+        SeoAttributes: keyNull,
         SeoSetting: keyNull,
         SeoPage: keyNull,
         Settings: keyNull,

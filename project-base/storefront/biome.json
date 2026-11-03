@@ -110,10 +110,6 @@
                             "urql": {
                                 "importNames": ["createClient"],
                                 "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
-                            },
-                            "next-urql": {
-                                "importNames": ["initUrqlClient"],
-                                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
                             }
                         },
                         "patterns": [

@@ -3,7 +3,7 @@ import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/quer
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import type { GetServerSidePropsContext } from 'next';
 import type { Translate } from 'next-translate';
-import { Client, type ClientOptions, type Exchange, fetchExchange, gql, ssrExchange } from 'urql';
+import { Client, type Exchange, fetchExchange, gql, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRoles';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
@@ -15,8 +15,6 @@ const { fetchMock } = vi.hoisted(() => ({ fetchMock: vi.fn<typeof fetch>() }));
 
 vi.mock('utils/isClient', () => ({ isClient: false }));
 vi.mock('@urql/devtools', () => ({ devtoolsExchange: (({ forward }) => forward) satisfies Exchange }));
-// Avoid next-urql's browser singleton in jsdom while exercising real exchanges and SSR data.
-vi.mock('next-urql', () => ({ initUrqlClient: (options: ClientOptions) => new Client(options) }));
 vi.mock('urql/fetcher', () => ({ fetcher: () => fetchMock }));
 vi.mock('utils/staticUrls/getServerSideInternationalizedStaticUrl', () => ({
     getServerSideInternationalizedStaticUrl: () => ({ trimmedUrlWithoutQueryParams: '/customer/orders' }),
@@ -168,4 +166,21 @@ test('redirects anonymous visitors away from a protected page', async () => {
 
     expect(result).toMatchObject({ redirect: { statusCode: 302, destination: expect.stringContaining('/login') } });
     expect(fetchMock).not.toHaveBeenCalled();
+});
+
+test('keeps customer data and credentials isolated between server requests', async () => {
+    const first = createServer('accessToken-1=first-token');
+    const second = createServer('accessToken-2=second-token', defaultTestConfig.domains[1]);
+
+    expect(first.client).not.toBe(second.client);
+    await first.client.query(CurrentCustomerUserAuthQueryDocument, {}).toPromise();
+    await second.client.query(CurrentCustomerUserAuthQueryDocument, {}).toPromise();
+
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const firstHeaders = new Headers(fetchMock.mock.calls[0][1]?.headers);
+    const secondHeaders = new Headers(fetchMock.mock.calls[1][1]?.headers);
+    expect(firstHeaders.get('X-Auth-Token')).toBe('Bearer first-token');
+    expect(firstHeaders.get('X-Domain-Id')).toBe('1');
+    expect(secondHeaders.get('X-Auth-Token')).toBe('Bearer second-token');
+    expect(secondHeaders.get('X-Domain-Id')).toBe('2');
 });
