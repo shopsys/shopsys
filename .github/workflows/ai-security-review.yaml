@@ -17,7 +17,7 @@ jobs:
         name: Claude security audit
         if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
         runs-on: ubuntu-22.04
-        timeout-minutes: 20
+        timeout-minutes: 35
         steps:
             -   name: GIT checkout
                 uses: actions/checkout@v7

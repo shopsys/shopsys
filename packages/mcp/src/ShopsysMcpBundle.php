@@ -6,9 +6,13 @@ namespace Shopsys\McpBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Override;
+use Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskRunEnum;
 use Shopsys\McpBundle\Component\Database\Middleware\McpSessionSettingsMiddleware;
 use Shopsys\McpBundle\Component\Database\Query\SqlExecutor;
 use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
+use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
+use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
+use Shopsys\McpBundle\Component\PostDeploy\Task\CheckMcpDatabaseRolePrivilegesTask;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,8 +24,11 @@ class ShopsysMcpBundle extends AbstractBundle
     protected const string MCP_INSTRUCTIONS = <<<'TEXT'
 This server exposes MCP tools, not MCP resources.
 Use the tools in this order: getDatabaseTableNames, then getDatabaseSchema, then executeSql.
-Do not use SELECT * and always include a top-level LIMIT.
+Use unqualified table names and always include a top-level LIMIT.
 TEXT;
+
+    protected const array NOT_DEDICATED_SCHEMA_NAMES = ['public', 'information_schema'];
+    protected const string SYSTEM_SCHEMA_NAME_PREFIX = 'pg_';
 
     #[Override]
     public function configure(DefinitionConfigurator $definition): void
@@ -52,9 +59,37 @@ TEXT;
                             ->min(1)
                             ->defaultValue(1000)
                         ->end()
+                        ->integerNode('work_mem_kb')
+                            ->min(64)
+                            ->defaultValue(4096)
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('database')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('views_schema_name')
+                            ->cannotBeEmpty()
+                            ->defaultValue('mcp')
+                            ->validate()
+                                ->ifTrue(static fn (mixed $viewsSchemaName): bool => !self::isDedicatedSchemaName((string)$viewsSchemaName))
+                                ->thenInvalid('The MCP views schema %s must be a dedicated schema. It is dropped with everything in it on every migration run and it is the only schema in the search_path of the MCP connection, so it must not be "public", a system schema or a list of schemas.')
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end();
+    }
+
+    /**
+     * The views schema is dropped with everything in it on every migration run and it is the only schema
+     * in the search_path of the MCP connection, so neither public, a system schema nor a list of schemas can be used
+     */
+    protected static function isDedicatedSchemaName(string $schemaName): bool
+    {
+        return !in_array($schemaName, self::NOT_DEDICATED_SCHEMA_NAMES, true)
+            && !str_starts_with($schemaName, self::SYSTEM_SCHEMA_NAME_PREFIX)
+            && !str_contains($schemaName, ',');
     }
 
     #[Override]
@@ -66,6 +101,12 @@ TEXT;
             ->get(McpSessionSettingsMiddleware::class)
                 ->arg('$statementTimeoutMilliseconds', $config['query']['statement_timeout_ms'])
                 ->arg('$lockTimeoutMilliseconds', $config['query']['lock_timeout_ms'])
+                ->arg('$workMemKilobytes', $config['query']['work_mem_kb'])
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseUserFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
+            ->get(McpDatabaseViewsFacade::class)
+                ->arg('$viewsSchemaName', $config['database']['views_schema_name'])
             ->get(SqlExecutor::class)
                 ->arg('$maxReturnedRows', $config['query']['max_returned_rows'])
             ->get(SqlQueryValidator::class)
@@ -83,6 +124,18 @@ TEXT;
         $builder->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
                 'Shopsys\McpBundle\Migrations' => __DIR__ . '/Migrations',
+            ],
+        ]);
+        $builder->prependExtensionConfig('shopsys_framework', [
+            'post_deploy' => [
+                'tasks' => [
+                    // runs on every deploy, so MCP enabled later is checked as well, and last, a failed check stops the remaining post-deploy tasks
+                    CheckMcpDatabaseRolePrivilegesTask::POST_DEPLOY_TASK_NAME => [
+                        'run' => PostDeployTaskRunEnum::ALWAYS,
+                        'priority' => -1000,
+                        'service' => CheckMcpDatabaseRolePrivilegesTask::class,
+                    ],
+                ],
             ],
         ]);
     }

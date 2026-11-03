@@ -96,6 +96,48 @@ class SqlExecutorTest extends TestCase
         yield 'cannot connect now' => [
             'sqlState' => SqlExecutor::POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE,
         ];
+
+        yield 'lock not available' => [
+            'sqlState' => SqlExecutor::POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE,
+        ];
+    }
+
+    #[DataProvider('getUndefinedObjectSqlStatesData')]
+    public function testExecuteReturnsActionableMessageWhenQueryReferencesUndefinedColumnOrTable(
+        string $sqlState,
+        string $expectedErrorMessage,
+    ): void {
+        $mcpConnection = $this->createStub(Connection::class);
+        $mcpConnection->method('executeQuery')
+            ->willThrowException($this->createDriverException($sqlState));
+
+        $sqlExecutor = $this->createSqlExecutor(
+            $mcpConnection,
+            SqlQueryValidationResult::createValid(self::SIMPLE_SELECT_SQL),
+        );
+
+        $sqlExecutionResult = $sqlExecutor->execute(self::SIMPLE_SELECT_SQL);
+
+        $this->assertEquals(
+            SqlExecutionResult::createInvalid($expectedErrorMessage),
+            $sqlExecutionResult,
+        );
+    }
+
+    /**
+     * @return iterable<string, array{sqlState: string, expectedErrorMessage: string}>
+     */
+    public static function getUndefinedObjectSqlStatesData(): iterable
+    {
+        yield 'hidden or misspelled column' => [
+            'sqlState' => SqlExecutor::POSTGRES_UNDEFINED_COLUMN_SQLSTATE,
+            'expectedErrorMessage' => SqlExecutor::ERROR_UNDEFINED_COLUMN,
+        ];
+
+        yield 'misspelled table or cte referenced outside of its scope' => [
+            'sqlState' => SqlExecutor::POSTGRES_UNDEFINED_TABLE_SQLSTATE,
+            'expectedErrorMessage' => SqlExecutor::ERROR_UNDEFINED_TABLE,
+        ];
     }
 
     public function testExecuteReturnsAtMostConfiguredNumberOfRows(): void

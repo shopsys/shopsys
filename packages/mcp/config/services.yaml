@@ -40,12 +40,17 @@ services:
         arguments:
             $mcpConnection: '@doctrine.dbal.mcp_connection'
 
-    Shopsys\McpBundle\Component\Database\User\McpReadOnlyUserManager:
+    Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade:
         arguments:
             $defaultConnection: '@doctrine.dbal.default_connection'
             $databaseUser: '%env(DATABASE_USER)%'
             $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
             $mcpDatabasePassword: '%env(MCP_DATABASE_PASSWORD)%'
+
+    Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade:
+        arguments:
+            $defaultConnection: '@doctrine.dbal.default_connection'
+            $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
 
     Shopsys\McpBundle\Component\Logger\McpRequestLogProcessor:
         tags:
@@ -54,6 +59,11 @@ services:
     Shopsys\McpBundle\Component\Logger\McpToolCallLogger:
         arguments:
             $logger: '@monolog.logger.mcp'
+
+    Shopsys\McpBundle\Component\PostDeploy\Task\CheckMcpDatabaseRolePrivilegesTask:
+        arguments:
+            $databaseUser: '%env(DATABASE_USER)%'
+            $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
 
     Shopsys\McpBundle\Controller\:
         resource: '../src/Controller/'

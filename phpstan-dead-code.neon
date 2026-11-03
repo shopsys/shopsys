@@ -70,9 +70,6 @@ parameters:
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/Paginator/PaginationResult.php
         -
-            identifier: shipmonk.deadConstant
-            path: packages/framework/src/Component/PostDeploy/Task/PostDeployTaskRunEnum.php
-        -
             identifier: shipmonk.deadMethod
             path: packages/framework/src/Component/Security/AccessControl/AccessChecker.php
         -

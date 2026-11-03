@@ -14,8 +14,13 @@ class SqlExecutor
 {
     protected const string ERROR_EXECUTION_FAILED = 'SQL execution failed.';
     protected const string ERROR_SYSTEM_UNAVAILABLE = 'System is temporarily unavailable, try it later.';
+    public const string ERROR_UNDEFINED_COLUMN = 'The SQL query references a column that does not exist or is not exposed through MCP. Use getDatabaseSchema to see the exposed columns.';
+    public const string ERROR_UNDEFINED_TABLE = 'The SQL query references a table that does not exist. Use getDatabaseTableNames to see the exposed tables.';
     public const string POSTGRES_TOO_MANY_CONNECTIONS_SQLSTATE = '53300';
     public const string POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE = '57P03';
+    public const string POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE = '55P03';
+    public const string POSTGRES_UNDEFINED_COLUMN_SQLSTATE = '42703';
+    public const string POSTGRES_UNDEFINED_TABLE_SQLSTATE = '42P01';
     protected const string POSTGRES_CONNECTION_EXCEPTION_SQLSTATE_PREFIX = '08';
 
     public function __construct(
@@ -41,11 +46,7 @@ class SqlExecutor
         try {
             $rows = $this->executeQuery($singleStatementSql);
         } catch (DbalException $exception) {
-            if ($this->isSystemUnavailableException($exception)) {
-                return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createInvalid(self::ERROR_SYSTEM_UNAVAILABLE);
-            }
-
-            return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createInvalid(self::ERROR_EXECUTION_FAILED);
+            return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createInvalid($this->getExecutionErrorMessage($exception));
         }
 
         return ExtendedClassNameResolver::resolve(SqlExecutionResult::class)::createValid([
@@ -70,29 +71,45 @@ class SqlExecutor
         }
     }
 
+    /**
+     * The database error is never passed on, its message and hints could reveal the hidden columns.
+     * Only the errors the MCP client can act upon by itself get a message of their own.
+     */
+    protected function getExecutionErrorMessage(DbalException $exception): string
+    {
+        if ($this->isSystemUnavailableException($exception)) {
+            return self::ERROR_SYSTEM_UNAVAILABLE;
+        }
+
+        return match ($this->findSqlState($exception)) {
+            self::POSTGRES_UNDEFINED_COLUMN_SQLSTATE => self::ERROR_UNDEFINED_COLUMN,
+            self::POSTGRES_UNDEFINED_TABLE_SQLSTATE => self::ERROR_UNDEFINED_TABLE,
+            default => self::ERROR_EXECUTION_FAILED,
+        };
+    }
+
     protected function isSystemUnavailableException(DbalException $exception): bool
     {
-        for ($current = $exception; $current !== null; $current = $current->getPrevious()) {
-            if (!$current instanceof DbalDriverException) {
-                continue;
-            }
+        $sqlState = $this->findSqlState($exception);
 
-            $sqlState = $current->getSQLState();
-
-            if ($sqlState === null) {
-                continue;
-            }
-
-            if (
+        return $sqlState !== null
+            && (
                 str_starts_with($sqlState, self::POSTGRES_CONNECTION_EXCEPTION_SQLSTATE_PREFIX)
                 || $sqlState === self::POSTGRES_TOO_MANY_CONNECTIONS_SQLSTATE
                 || $sqlState === self::POSTGRES_CANNOT_CONNECT_NOW_SQLSTATE
-            ) {
-                return true;
+                || $sqlState === self::POSTGRES_LOCK_NOT_AVAILABLE_SQLSTATE
+            );
+    }
+
+    protected function findSqlState(DbalException $exception): ?string
+    {
+        for ($current = $exception; $current !== null; $current = $current->getPrevious()) {
+            if ($current instanceof DbalDriverException && $current->getSQLState() !== null) {
+                return $current->getSQLState();
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

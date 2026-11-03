@@ -25,17 +25,26 @@ final class McpSessionSettingsMiddlewareTest extends FunctionalTestCase
         $actualLockTimeoutMilliseconds = (int)$this->mcpConnection->fetchOne(
             "SELECT (EXTRACT(EPOCH FROM current_setting('lock_timeout')::interval) * 1000)::int",
         );
+        $actualWorkMemKilobytes = (int)$this->mcpConnection->fetchOne(
+            "SELECT pg_size_bytes(current_setting('work_mem')) / 1024",
+        );
+        // the role may set the same value, so the source tells the session setting apart
+        $workMemSource = $this->mcpConnection->fetchOne(
+            "SELECT source FROM pg_settings WHERE name = 'work_mem'",
+        );
         $defaultTransactionReadOnly = $this->mcpConnection->fetchOne(
             "SELECT current_setting('default_transaction_read_only')",
         );
 
         $this->assertSame($expectedQuerySettings['statement_timeout_ms'], $actualStatementTimeoutMilliseconds);
         $this->assertSame($expectedQuerySettings['lock_timeout_ms'], $actualLockTimeoutMilliseconds);
+        $this->assertSame($expectedQuerySettings['work_mem_kb'], $actualWorkMemKilobytes);
+        $this->assertSame('session', $workMemSource);
         $this->assertSame('on', $defaultTransactionReadOnly);
     }
 
     /**
-     * @return array{statement_timeout_ms: int, lock_timeout_ms: int}
+     * @return array{statement_timeout_ms: int, lock_timeout_ms: int, work_mem_kb: int}
      */
     private function getExpectedQuerySettings(): array
     {
