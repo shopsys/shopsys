@@ -160,6 +160,7 @@ const getTokens = (
         refreshToken: tokens.refreshToken,
     };
 
+    tokens.accessToken = '';
     tokens.refreshToken = '';
 
     return result;

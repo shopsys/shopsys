@@ -21,7 +21,7 @@ export const setTokensToCookies = (
     context: AuthServerContext,
 ): void => {
     setCookie(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), accessToken, {
-        httpOnly: false,
+        httpOnly: true,
         req: context?.req,
         res: context?.res,
         path: '/',

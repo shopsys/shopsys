@@ -14,7 +14,7 @@ import {
     getRefreshTokenFromCookies,
     hasRefreshTokenInCookies,
 } from 'utils/auth/getTokensFromCookies';
-import { removeAccessTokenFromCookies, removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isAuthError } from 'utils/errors/isAuthError';
@@ -37,14 +37,19 @@ const isRefreshTokenMutation = (operation: Operation) => {
 };
 
 /**
- * Add access token to each request if authState is valid
+ * Add access token to each server-side request if authState is valid
  * Access token is not added to the RefreshTokens mutation (allows refreshing tokens with invalid access token)
+ * In the browser the HttpOnly access token cookie is sent with the request itself
  */
 const addAuthToOperation = (
     operation: Operation,
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
 ): Operation => {
+    if (!context) {
+        return operation;
+    }
+
     const accessToken = getAccessTokenFromCookies(domainConfig, context);
 
     if (!accessToken || isRefreshTokenMutation(operation)) {
@@ -90,8 +95,6 @@ const doTryRefreshToken = async (
     if (!refreshTokenData?.RefreshTokens) {
         if (context) {
             removeTokensFromCookies(domainConfig, context);
-        } else {
-            removeAccessTokenFromCookies(domainConfig);
         }
 
         if (typeof window !== 'undefined') {
@@ -127,7 +130,6 @@ const refreshAuth = async (
             if (context) {
                 removeTokensFromCookies(domainConfig, context);
             } else {
-                removeAccessTokenFromCookies(domainConfig);
                 await clearAuthCookies(domainConfig);
             }
 
@@ -149,10 +151,12 @@ const willAuthError = (
     domainConfig: DomainConfigType,
     context?: GetServerSidePropsContext | NextPageContext,
 ): boolean => {
+    if (!context) {
+        return false;
+    }
+
     const accessToken = getAccessTokenFromCookies(domainConfig, context);
-    const hasRefreshToken = context
-        ? !!getRefreshTokenFromCookies(domainConfig, context)
-        : hasRefreshTokenInCookies(domainConfig);
+    const hasRefreshToken = !!getRefreshTokenFromCookies(domainConfig, context);
 
     // If we have a refresh token but no access token, we should refresh
     // This handles the case where access token expired but backend returns 200 with null instead of 401

@@ -13,7 +13,6 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 const { authState, reloadMock, routerEvents } = vi.hoisted(() => ({
     authState: {
-        hasAccessToken: true,
         hasRefreshToken: true,
         isCustomerUserFetching: false,
         isCustomerUserStale: false,
@@ -53,7 +52,6 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
 }));
 
 vi.mock('utils/auth/getTokensFromCookies', () => ({
-    getAccessTokenFromCookies: () => (authState.hasAccessToken ? 'access-token' : undefined),
     hasRefreshTokenInCookies: () => authState.hasRefreshToken,
 }));
 
@@ -85,7 +83,6 @@ describe('AuthNotificationLoader', () => {
         vi.clearAllMocks();
         consumeAuthNotification(1);
         sessionStorage.clear();
-        authState.hasAccessToken = true;
         authState.hasRefreshToken = true;
         authState.isCustomerUserFetching = false;
         authState.isCustomerUserStale = false;
@@ -149,13 +146,11 @@ describe('AuthNotificationLoader', () => {
     });
 
     test('does not consume a notification created in the current document before navigation finishes', async () => {
-        authState.hasAccessToken = false;
         authState.hasRefreshToken = false;
         authState.isUserLoggedIn = false;
         const { rerender } = renderToastNotifications();
 
         storeAuthNotification(1, 'registration');
-        authState.hasAccessToken = true;
         authState.hasRefreshToken = true;
         authState.isUserLoggedIn = true;
         rerender(
@@ -268,7 +263,6 @@ describe('AuthNotificationLoader', () => {
     });
 
     test('keeps a logout notification stored until authentication state synchronization finishes', async () => {
-        authState.hasAccessToken = false;
         authState.hasRefreshToken = false;
         authState.isCustomerUserStale = true;
         storeAuthNotification(1, 'logout');

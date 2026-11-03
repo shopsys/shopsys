@@ -994,6 +994,8 @@ type CurrentCompanyCustomerUser implements BaseCustomerUser & CurrentCustomerUse
   firstName: String
   "Whether the customer user has password set or not"
   hasPasswordSet: Boolean!
+  "Whether the current session was opened by an administrator via login as customer"
+  isAdministratorLoggedAsCustomer: Boolean!
   "Last name"
   lastName: String
   "Current login information"
@@ -1039,6 +1041,8 @@ interface CurrentCustomerUser {
   firstName: String
   "Whether the customer user has password set or not"
   hasPasswordSet: Boolean!
+  "Whether the current session was opened by an administrator via login as customer"
+  isAdministratorLoggedAsCustomer: Boolean!
   "Last name"
   lastName: String
   "Current login information"
@@ -1084,6 +1088,8 @@ type CurrentRegularCustomerUser implements BaseCustomerUser & CurrentCustomerUse
   firstName: String
   "Whether the customer user has password set or not"
   hasPasswordSet: Boolean!
+  "Whether the current session was opened by an administrator via login as customer"
+  isAdministratorLoggedAsCustomer: Boolean!
   "Last name"
   lastName: String
   "Current login information"

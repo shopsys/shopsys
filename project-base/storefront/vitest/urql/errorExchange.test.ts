@@ -4,21 +4,14 @@ import { getErrorExchange } from 'urql/errorExchange';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { fromValue, toPromise } from 'wonka';
 
-const {
-    clearAuthCookiesMock,
-    logExceptionMock,
-    removeAccessTokenFromCookiesMock,
-    removeTokensFromCookiesMock,
-    showErrorMessageMock,
-    errorDebugging,
-} = vi.hoisted(() => ({
-    clearAuthCookiesMock: vi.fn().mockResolvedValue(undefined),
-    logExceptionMock: vi.fn(),
-    removeAccessTokenFromCookiesMock: vi.fn(),
-    removeTokensFromCookiesMock: vi.fn(),
-    showErrorMessageMock: vi.fn(),
-    errorDebugging: { enabled: false },
-}));
+const { clearAuthCookiesMock, logExceptionMock, removeTokensFromCookiesMock, showErrorMessageMock, errorDebugging } =
+    vi.hoisted(() => ({
+        clearAuthCookiesMock: vi.fn().mockResolvedValue(undefined),
+        logExceptionMock: vi.fn(),
+        removeTokensFromCookiesMock: vi.fn(),
+        showErrorMessageMock: vi.fn(),
+        errorDebugging: { enabled: false },
+    }));
 
 vi.mock('utils/errors/isWithErrorDebugging', () => ({
     get isWithErrorDebugging() {
@@ -32,7 +25,6 @@ vi.mock('utils/auth/authMutationFetcher', () => ({
 }));
 
 vi.mock('utils/auth/removeTokensFromCookies', () => ({
-    removeAccessTokenFromCookies: removeAccessTokenFromCookiesMock,
     removeTokensFromCookies: removeTokensFromCookiesMock,
 }));
 
@@ -81,12 +73,10 @@ describe('getErrorExchange', () => {
         } as never);
 
         clearAuthCookiesMock.mockClear();
-        removeAccessTokenFromCookiesMock.mockClear();
         removeTokensFromCookiesMock.mockClear();
 
         await toPromise(exchange(fromValue(operation)));
 
-        expect(removeAccessTokenFromCookiesMock).toHaveBeenCalledWith(domainConfig);
         expect(clearAuthCookiesMock).toHaveBeenCalledWith(domainConfig);
         expect(removeTokensFromCookiesMock).not.toHaveBeenCalled();
     });
@@ -123,13 +113,11 @@ describe('getErrorExchange', () => {
         } as never);
 
         clearAuthCookiesMock.mockClear();
-        removeAccessTokenFromCookiesMock.mockClear();
         removeTokensFromCookiesMock.mockClear();
 
         await toPromise(exchange(fromValue(operation)));
 
         expect(removeTokensFromCookiesMock).not.toHaveBeenCalled();
-        expect(removeAccessTokenFromCookiesMock).not.toHaveBeenCalled();
         expect(clearAuthCookiesMock).not.toHaveBeenCalled();
     });
 

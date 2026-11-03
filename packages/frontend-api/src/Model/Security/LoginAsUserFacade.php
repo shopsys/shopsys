@@ -14,16 +14,13 @@ use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
-use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class LoginAsUserFacade
 {
     public function __construct(
-        protected readonly RequestStack $requestStack,
-        protected readonly TokenAuthenticator $tokenAuthenticator,
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly TokenFacade $tokenFacade,
         protected readonly TokensDataFactory $tokensDataFactory,
@@ -33,6 +30,7 @@ class LoginAsUserFacade
         protected readonly ProductListFacade $productListFacade,
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly LoginAsUserExchangeTokenFacade $loginAsUserExchangeTokenFacade,
+        protected readonly TokenStorageInterface $tokenStorage,
     ) {
     }
 
@@ -62,25 +60,29 @@ class LoginAsUserFacade
 
     public function getCurrentAdministratorLoggedAsCustomer(): ?Administrator
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        if ($request === null) {
-            return null;
-        }
-        $tokenString = $this->tokenAuthenticator->getCredentials($request);
-
-        if ($tokenString === null) {
-            return null;
-        }
-        $unencryptedToken = $this->tokenFacade->getTokenByString($tokenString);
-        $claims = $unencryptedToken->claims();
-        $administratorUuid = $claims->get(FrontendApiUser::CLAIM_ADMINISTRATOR_UUID);
+        $administratorUuid = $this->getCurrentAdministratorUuid();
 
         if ($administratorUuid === null) {
             return null;
         }
 
         return $this->administratorFacade->findByUuid($administratorUuid);
+    }
+
+    public function isAdministratorLoggedAsCustomer(): bool
+    {
+        return $this->getCurrentAdministratorUuid() !== null;
+    }
+
+    protected function getCurrentAdministratorUuid(): ?string
+    {
+        $user = $this->tokenStorage->getToken()?->getUser();
+
+        if (!$user instanceof FrontendApiUser) {
+            return null;
+        }
+
+        return $user->getAdministratorUuid();
     }
 
     public function loginAndReturnAccessAndRefreshToken(CustomerUser $customerUser): TokensData

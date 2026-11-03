@@ -8,7 +8,7 @@ import {
     getAuthNotification,
     hasAuthNotificationFromPreviousDocument,
 } from 'utils/auth/authNotificationStorage';
-import { getAccessTokenFromCookies, hasRefreshTokenInCookies } from 'utils/auth/getTokensFromCookies';
+import { hasRefreshTokenInCookies } from 'utils/auth/getTokensFromCookies';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
@@ -21,7 +21,7 @@ export const AuthNotificationLoader = () => {
     const [{ data: currentCustomerUserData, fetching: isCustomerUserFetching, stale: isCustomerUserStale }] =
         useCurrentCustomerUserQuery();
     const isUserLoggedIn = !!currentCustomerUserData?.currentCustomerUser;
-    const hasAuthCookies = !!getAccessTokenFromCookies(domainConfig) && hasRefreshTokenInCookies(domainConfig);
+    const hasAuthCookies = hasRefreshTokenInCookies(domainConfig);
     const isAuthStateSynchronized =
         !isCustomerUserFetching && !isCustomerUserStale && isUserLoggedIn === hasAuthCookies;
     // A notification created in this document must wait for the auth redirect to finish before it can be consumed.

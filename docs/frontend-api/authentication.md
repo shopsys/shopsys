@@ -62,14 +62,19 @@ If you're running an application in [Docker](../installation/installation-using-
 
 ## How to access the restricted parts
 
-If you need to access the protected section, you must send a Bearer credential in the Authorization header.
+If you need to access the protected section, you must send a Bearer credential in the `X-Auth-Token` header.
 
-The Authorization header looks like this:
+The header looks like this:
 
 ```sh
   curl
-    -H "Authorization: Bearer --ACCESS TOKEN--"
+    -H "X-Auth-Token: Bearer --ACCESS TOKEN--"
 ```
+
+A browser-based client can keep the access token in the `HttpOnly` cookie `accessToken-<domainId>` instead.
+The cookie is accepted only for a `POST` request that carries the `X-Domain-Id` header and whose `Origin` header matches the domain URL, so another site cannot make the browser send an authenticated request.
+The header takes precedence over the cookie when both are present.
+The `Origin` check is exact, so a storefront opened directly on its Next.js port (for example `http://127.0.0.1:3000` instead of the domain URL `http://127.0.0.1:8000`) is treated as anonymous by the cookie authentication; use the domain URL served by the web server during development.
 
 The user is authenticated by the `TokenAuthenticator` class.
 This authenticator creates (if the token is valid) an instance of the user represented by the `FrontendApiUser` class.

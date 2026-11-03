@@ -459,10 +459,6 @@ parameters:
             path: packages/framework/tests/Test/Provider/TestOrderProvider.php
         -
             identifier: shipmonk.deadMethod
-            message: '#^Unused\ Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser::getAdministratorUuid$#'
-            path: packages/frontend-api/src/Model/User/FrontendApiUser.php
-        -
-            identifier: shipmonk.deadMethod
             message: '#^Unused\ Shopsys\\HttpSmokeTesting\\RequestDataSetGenerator::skipRoute\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/http-smoke-testing/src/RequestDataSetGenerator.php
         -

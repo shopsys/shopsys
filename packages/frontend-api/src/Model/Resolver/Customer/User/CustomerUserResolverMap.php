@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\Exception\MissingCustomerUserLoginTypeException;
+use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 
 class CustomerUserResolverMap extends ResolverMap
 {
@@ -22,6 +23,7 @@ class CustomerUserResolverMap extends ResolverMap
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly CurrentCustomerUserRoleResolver $currentCustomerUserRoleResolver,
+        protected readonly LoginAsUserFacade $loginAsUserFacade,
     ) {
     }
 
@@ -73,6 +75,9 @@ class CustomerUserResolverMap extends ResolverMap
                 }
 
                 return $this->loginInfoFactory->createFromCustomerUserLoginType($mostRecentLoginType);
+            },
+            'isAdministratorLoggedAsCustomer' => function (): bool {
+                return $this->loginAsUserFacade->isAdministratorLoggedAsCustomer();
             },
         ];
 

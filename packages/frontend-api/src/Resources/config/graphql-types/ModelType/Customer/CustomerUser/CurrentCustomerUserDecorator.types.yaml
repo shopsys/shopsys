@@ -9,3 +9,6 @@ CurrentCustomerUserDecorator:
             loginInfo:
                 type: "LoginInfo!"
                 description: "Current login information"
+            isAdministratorLoggedAsCustomer:
+                type: "Boolean!"
+                description: "Whether the current session was opened by an administrator via login as customer"

@@ -57,6 +57,7 @@ query CurrentCustomerUser {
             companyNumber
             companyTaxNumber
         }
+        isAdministratorLoggedAsCustomer
         __typename
     }
 }

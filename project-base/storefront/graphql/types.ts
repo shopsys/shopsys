@@ -1165,6 +1165,8 @@ export type TypeCurrentCompanyCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   firstName: Maybe<Scalars['String']['output']>;
   /** Whether the customer user has password set or not */
   hasPasswordSet: Scalars['Boolean']['output'];
+  /** Whether the current session was opened by an administrator via login as customer */
+  isAdministratorLoggedAsCustomer: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Current login information */
@@ -1210,6 +1212,8 @@ export type TypeCurrentCustomerUser = {
   firstName: Maybe<Scalars['String']['output']>;
   /** Whether the customer user has password set or not */
   hasPasswordSet: Scalars['Boolean']['output'];
+  /** Whether the current session was opened by an administrator via login as customer */
+  isAdministratorLoggedAsCustomer: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Current login information */
@@ -1256,6 +1260,8 @@ export type TypeCurrentRegularCustomerUser = TypeBaseCustomerUser & TypeCurrentC
   firstName: Maybe<Scalars['String']['output']>;
   /** Whether the customer user has password set or not */
   hasPasswordSet: Scalars['Boolean']['output'];
+  /** Whether the current session was opened by an administrator via login as customer */
+  isAdministratorLoggedAsCustomer: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Current login information */

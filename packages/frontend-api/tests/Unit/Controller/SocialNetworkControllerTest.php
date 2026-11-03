@@ -8,10 +8,14 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
 use Shopsys\FrontendApiBundle\Model\Security\TokensData;
 use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade;
+use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator;
+use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +27,12 @@ final class SocialNetworkControllerTest extends TestCase
     {
         $response = new Response();
         $tokens = (new TokensDataFactory())->create('access-token', 'refresh-token');
-        $controller = new TestableSocialNetworkController();
+        $controller = new TestableSocialNetworkController(
+            $this->createStub(SocialNetworkFacade::class),
+            $this->createStub(Domain::class),
+            $this->createStub(DomainRouterFactory::class),
+            $this->createTokenAuthenticator(),
+        );
 
         $controller->setTokenCookiesForTest($response, $tokens, 3);
 
@@ -41,14 +50,20 @@ final class SocialNetworkControllerTest extends TestCase
     {
         $response = new Response();
         $tokens = (new TokensDataFactory())->create('access-token', 'refresh-token');
-        $controller = new TestableSocialNetworkController();
+        $controller = new TestableSocialNetworkController(
+            $this->createStub(SocialNetworkFacade::class),
+            $this->createStub(Domain::class),
+            $this->createStub(DomainRouterFactory::class),
+            $this->createTokenAuthenticator(),
+        );
 
         $controller->setTokenCookiesForTest($response, $tokens, 1);
 
         $cookies = $this->getCookiesByName($response);
         $this->assertFalse($cookies['refreshTokenPresent-1']->isHttpOnly());
         $this->assertSame('1', $cookies['refreshTokenPresent-1']->getValue());
-        $this->assertFalse($cookies['accessToken-1']->isHttpOnly());
+        $this->assertTrue($cookies['accessToken-1']->isHttpOnly());
+        $this->assertSame('access-token', $cookies['accessToken-1']->getValue());
     }
 
     public function testSuccessfulSocialLoginRedirectIncludesLoginType(): void
@@ -72,6 +87,7 @@ final class SocialNetworkControllerTest extends TestCase
             $this->createStub(SocialNetworkFacade::class),
             $domainStub,
             $domainRouterFactoryStub,
+            $this->createTokenAuthenticator(),
         );
         $request = new Request();
         $request->setSession($this->createStub(SessionInterface::class));
@@ -80,6 +96,16 @@ final class SocialNetworkControllerTest extends TestCase
 
         $this->assertSame('google', $generatedParameters['socialNetwork']);
         $this->assertArrayNotHasKey('exceptionType', $generatedParameters);
+    }
+
+    private function createTokenAuthenticator(): TokenAuthenticator
+    {
+        return new TokenAuthenticator(
+            $this->createStub(TokenFacade::class),
+            $this->createStub(FrontendApiUserProvider::class),
+            $this->createStub(CustomerUserFacade::class),
+            $this->createStub(Domain::class),
+        );
     }
 
     /**
@@ -99,10 +125,6 @@ final class SocialNetworkControllerTest extends TestCase
 
 final class TestableSocialNetworkController extends SocialNetworkController
 {
-    public function __construct()
-    {
-    }
-
     public function setTokenCookiesForTest(Response $response, TokensData $tokens, int $domainId): void
     {
         $this->setTokenCookies($response, $tokens, $domainId);

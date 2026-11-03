@@ -18,6 +18,26 @@ describe('setTokensToCookies', () => {
         vi.mocked(setCookie).mockClear();
     });
 
+    test('stores access token in a secure HttpOnly SameSite=Lax session cookie', () => {
+        setTokensToCookies('access-token', 'refresh-token', domainConfig, context);
+
+        expect(setCookie).toHaveBeenCalledWith(
+            'accessToken-3',
+            'access-token',
+            expect.objectContaining({
+                httpOnly: true,
+                path: '/',
+                sameSite: 'lax',
+                secure: true,
+            }),
+        );
+        expect(setCookie).toHaveBeenCalledWith(
+            'accessToken-3',
+            'access-token',
+            expect.not.objectContaining({ maxAge: expect.anything() }),
+        );
+    });
+
     test('stores refresh token in a secure HttpOnly SameSite=Lax cookie', () => {
         setTokensToCookies('access-token', 'refresh-token', domainConfig, context);
 

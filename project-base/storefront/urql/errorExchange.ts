@@ -6,7 +6,7 @@ import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
 import { clearAuthCookies } from 'utils/auth/authMutationFetcher';
-import { removeAccessTokenFromCookies, removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { FlashMessageKeys, isNoLogError } from 'utils/errors/applicationErrors';
 import { ErrorOrchestrator } from 'utils/errors/ErrorOrchestrator';
@@ -88,7 +88,6 @@ export const getErrorExchange =
                         if (context) {
                             removeTokensFromCookies(domainConfig, context);
                         } else {
-                            removeAccessTokenFromCookies(domainConfig);
                             void clearAuthCookies(domainConfig).catch(logException);
                         }
 

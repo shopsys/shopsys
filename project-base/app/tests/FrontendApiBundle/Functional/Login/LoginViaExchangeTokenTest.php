@@ -45,6 +45,26 @@ class LoginViaExchangeTokenTest extends GraphQlTestCase
      */
     private PasswordHasherFactoryInterface $passwordHasherFactory;
 
+    public function testCustomerLoggedInViaExchangeTokenIsMarkedAsAdministratorLoggedAsCustomer(): void
+    {
+        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . '1', CustomerUser::class);
+        $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
+        $unencryptedToken = $this->loginAsUserExchangeTokenFacade->createAndGetUnencryptedToken($customerUser, $administrator);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/LoginViaExchangeTokenMutation.graphql',
+            ['exchangeToken' => $unencryptedToken],
+        );
+        $accessToken = $this->getResponseDataForGraphQlType($response, 'LoginViaExchangeToken')['accessToken'];
+        $this->configureCurrentClient(null, null, [
+            'CONTENT_TYPE' => 'application/graphql',
+            'HTTP_X-Auth-Token' => sprintf('Bearer %s', $accessToken),
+        ]);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/CurrentCustomerUserQuery.graphql');
+
+        $this->assertTrue($this->getResponseDataForGraphQlType($response, 'currentCustomerUser')['isAdministratorLoggedAsCustomer']);
+    }
+
     public function testLoginViaExchangeTokenMutationWithValidToken(): void
     {
         $graphQlType = 'LoginViaExchangeToken';
