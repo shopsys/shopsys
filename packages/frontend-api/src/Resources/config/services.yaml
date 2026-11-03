@@ -72,6 +72,10 @@ services:
         arguments:
             $mainFriendlyUrlSlugCache: '@main_friendly_url_slug_cache'
 
+    Shopsys\FrontendApiBundle\Model\Customer\User\CustomerRegistrationRateLimiter:
+        arguments:
+            $customerRegistrationLimiter: '@limiter.frontend_api_customer_registration'
+
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20 }
