@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 
 class PaymentTransactionDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const string TIMEOUTED_GOPAY_PAYMENT_ID = '12454321';
+
     public function __construct(
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         private readonly PaymentTransactionFacade $paymentTransactionFacade,
@@ -28,7 +30,7 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
         $this->createPaymentTransaction($order, 'TR-123456', PaymentStatus::CANCELED);
 
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_14, Order::class);
-        $this->createPaymentTransaction($order, '12454321', PaymentStatus::TIMEOUTED);
+        $this->createPaymentTransaction($order, self::TIMEOUTED_GOPAY_PAYMENT_ID, PaymentStatus::TIMEOUTED);
         $this->createPaymentTransaction($order, '52467431', PaymentStatus::CANCELED);
     }
 
