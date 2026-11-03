@@ -9,9 +9,15 @@ use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
+use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Mime\MimeTypesInterface;
 
 abstract class AbstractUploadedFileFacade
 {
+    protected const array VIEWABLE_EXTENSIONS = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+
+    protected const string FALLBACK_MIME_TYPE = 'application/octet-stream';
+
     public function __construct(
         protected readonly FilesystemOperator $filesystem,
         protected readonly EntityManagerInterface $em,
@@ -51,6 +57,18 @@ abstract class AbstractUploadedFileFacade
         );
     }
 
+    public function isUploadedFileViewableInBrowser(AbstractUploadedFile $uploadedFile): bool
+    {
+        return in_array(strtolower($uploadedFile->getExtension()), static::VIEWABLE_EXTENSIONS, true);
+    }
+
+    public function getMimeTypeByExtension(AbstractUploadedFile $uploadedFile): string
+    {
+        $mimeTypes = $this->getMimeTypes()->getMimeTypes(strtolower($uploadedFile->getExtension()));
+
+        return array_first($mimeTypes) ?? static::FALLBACK_MIME_TYPE;
+    }
+
     protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
@@ -75,6 +93,11 @@ abstract class AbstractUploadedFileFacade
 
             $this->em->flush();
         }
+    }
+
+    protected function getMimeTypes(): MimeTypesInterface
+    {
+        return MimeTypes::getDefault();
     }
 
     abstract protected function getRepository(): UploadedFileRepositoryInterface;
