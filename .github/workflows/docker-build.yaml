@@ -1389,17 +1389,35 @@ jobs:
                     docker compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
                     ./set-urls-for-review.sh printDomains
             -   name: Add Review URL to Pull request description
-                uses: Jerome1337/comment-pull-request@v1.0.4
+                uses: actions/github-script@v9
                 env:
-                    GITHUB_TOKEN: ${{ github.token }}
-                with:
-                    description-message: |
+                    LIVE_PREVIEW: |
                         ----
                         :globe_with_meridians: Live Preview:
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}/sk
-                    delete-previous-comment: false
+                with:
+                    script: |
+                        const marker = '<!-- Replace -->'
+                        const pullRequest = context.payload.pull_request
+
+                        if (!pullRequest) {
+                            core.info('Not a pull request run, the description is left untouched.')
+                            return
+                        }
+
+                        const { owner, repo } = context.repo
+                        const pullNumber = pullRequest.number
+                        const livePreview = process.env.LIVE_PREVIEW.trimEnd()
+                        const { data: currentPullRequest } = await github.rest.pulls.get({ owner, repo, pull_number: pullNumber })
+                        const bodyWithoutPreviousBlock = (currentPullRequest.body ?? '')
+                            .replace(/^<!-- Replace -->\n.*?\n<!-- Replace -->\n?/ms, '')
+                            .trimEnd()
+                        const body = `${bodyWithoutPreviousBlock}\n\n${marker}\n${livePreview}\n${marker}\n`
+
+                        await github.rest.pulls.update({ owner, repo, pull_number: pullNumber, body })
+                        core.info(`Updated the description of pull request #${pullNumber} with the review URLs.`)
     ai-acceptance-criteria:
         name: AI acceptance criteria
         needs: [variables, review]
