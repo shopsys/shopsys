@@ -1,3 +1,4 @@
+import { Kind, parse, visit } from 'graphql';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { handleAuthMutation, handleClearAuthCookies } from 'utils/auth/server/authApi';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -84,6 +85,40 @@ describe('auth API', () => {
         getCookieMock.mockReset();
         setCookieMock.mockClear();
         vi.stubGlobal('fetch', fetchMock);
+    });
+
+    test.each([
+        'LoginMutation',
+        'LoginViaExchangeTokenMutation',
+        'RecoverPasswordMutation',
+        'RefreshTokens',
+        'RegistrationByOrderMutation',
+        'RegistrationMutation',
+    ])('requests typenames for every object returned by %s', async (operationName) => {
+        getCookieMock.mockReturnValue('server-refresh-token');
+        fetchMock.mockResolvedValue(Response.json({ data: {} }));
+        const { response } = createResponse();
+
+        await handleAuthMutation(createRequest(operationName), response);
+
+        const backendRequest = fetchMock.mock.calls[0][1] as RequestInit;
+        const { query } = JSON.parse(String(backendRequest.body));
+        let objectSelections = 0;
+        visit(parse(query), {
+            SelectionSet(node, _key, parent) {
+                if (parent && 'kind' in parent && parent.kind === Kind.OPERATION_DEFINITION) {
+                    return;
+                }
+
+                objectSelections++;
+                expect(
+                    node.selections.some(
+                        (selection) => selection.kind === Kind.FIELD && selection.name.value === '__typename',
+                    ),
+                ).toBe(true);
+            },
+        });
+        expect(objectSelections).toBeGreaterThan(0);
     });
 
     test('stores token response in cookies and redacts refresh token from browser response', async () => {
