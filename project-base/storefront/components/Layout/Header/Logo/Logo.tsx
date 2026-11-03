@@ -22,6 +22,7 @@ export const Logo: FC<LogoProps> = ({ imageClassName }) => {
             type="homepage"
         >
             <Image
+                priority
                 alt="Shopsys.com"
                 className={twMergeCustom(
                     'h-auto vl:w-40 w-32 max-w-full group-focus-visible:brightness-0',
