@@ -527,6 +527,23 @@ class Order implements DomainSeparatedEntityInterface
     }
 
     /**
+     * @param string $externalPaymentIdentifier
+     * @return bool
+     */
+    public function hasPaymentTransactionWithExternalPaymentIdentifier($externalPaymentIdentifier)
+    {
+        $paymentTransactions = $this->getPaymentTransactions();
+
+        foreach ($paymentTransactions as $paymentTransaction) {
+            if ($paymentTransaction->getExternalPaymentIdentifier() === $externalPaymentIdentifier) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction[]
      */
     public function getGoPayTransactions(): array
