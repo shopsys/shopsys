@@ -4,12 +4,14 @@ import { usePersistStore } from 'store/usePersistStore';
 import { SocialNetworkLoginLink } from './SocialNetworkLoginLink';
 
 type SocialNetworkLoginProps = {
+    isClientMounted: boolean;
     socialNetworks: TypeLoginTypeEnum[];
     shouldOverwriteCustomerUserCart: boolean | undefined;
     lastLoginType: LastLoginType | null;
 };
 
 export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
+    isClientMounted,
     socialNetworks,
     shouldOverwriteCustomerUserCart,
     lastLoginType,
@@ -23,9 +25,10 @@ export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
                 const url = {
                     pathname: `/social-network/login/${socialNetwork}`,
                     query: {
-                        ...(cartUuid && { cartUuid }),
+                        ...(isClientMounted && cartUuid && { cartUuid }),
                         ...(shouldOverwriteCustomerUserCart !== undefined && { shouldOverwriteCustomerUserCart }),
-                        ...(productListUuids.length > 0 && { productListUuids: productListUuids.join(',') }),
+                        ...(isClientMounted &&
+                            productListUuids.length > 0 && { productListUuids: productListUuids.join(',') }),
                     },
                 };
 
