@@ -2,7 +2,15 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { MobileBottomNavigation } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomNavigation';
 import { type ReactNode } from 'react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { useSessionStore } from 'store/useSessionStore';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+
+const isUserLoggedIn = vi.hoisted(() => vi.fn(() => false));
+
+beforeEach(() => {
+    isUserLoggedIn.mockReturnValue(false);
+    useSessionStore.setState({ portalContent: null });
+});
 
 afterEach(() => {
     vi.unstubAllGlobals();
@@ -28,7 +36,17 @@ vi.mock('utils/cart/useCurrentCart', () => ({
 }));
 
 vi.mock('utils/auth/useIsUserLoggedIn', () => ({
-    useIsUserLoggedIn: () => false,
+    useIsUserLoggedIn: isUserLoggedIn,
+}));
+
+vi.mock('components/Blocks/Popup/AccountLoginPopup', () => ({
+    AccountLoginPopup: ({ loginFormName }: { loginFormName: string }) => (
+        <div role="dialog" aria-label="Account login" data-form-name={loginFormName}>
+            <button type="button" onClick={() => useSessionStore.getState().closePortalContent()}>
+                Close login
+            </button>
+        </div>
+    ),
 }));
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
@@ -76,7 +94,37 @@ vi.mock('components/Layout/Header/AutocompleteSearch/AutocompleteSearch', () => 
 }));
 
 describe('MobileBottomNavigation', () => {
+    test('opens the shared login popup for guests and closes other mobile panels', async () => {
+        const user = userEvent.setup();
+        const TestPage = () => {
+            const content = useSessionStore((state) => state.portalContent);
+            return (
+                <>
+                    <MobileBottomNavigation />
+                    {content}
+                </>
+            );
+        };
+        render(<TestPage />);
+        await user.click(screen.getByRole('button', { name: 'Menu' }));
+        expect(await screen.findByTestId('mobile-menu')).toHaveAttribute('data-active', 'true');
+        const accountButton = screen.getByRole('button', { name: 'Account' });
+        await user.click(accountButton);
+        expect(screen.getByRole('dialog', { name: 'Account login' })).toHaveAttribute(
+            'data-form-name',
+            'mobile-bottom-navigation-login-form',
+        );
+        expect(screen.getAllByRole('dialog')).toHaveLength(1);
+        expect(screen.queryByTestId('account-drawer')).not.toBeInTheDocument();
+        expect(screen.getByTestId('mobile-menu')).toHaveAttribute('data-active', 'false');
+        expect(accountButton).toHaveAttribute('aria-expanded', 'true');
+        expect(accountButton).toHaveAttribute('aria-haspopup', 'dialog');
+        await user.click(screen.getByRole('button', { name: 'Close login' }));
+        expect(accountButton).toHaveAttribute('aria-expanded', 'false');
+    });
+
     test('mounts panel implementations only after their actions are used', async () => {
+        isUserLoggedIn.mockReturnValue(true);
         const user = userEvent.setup();
 
         render(<MobileBottomNavigation />);

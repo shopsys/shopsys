@@ -97,7 +97,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
             </div>
 
             <nav aria-label={t('User account navigation', { ns: 'accessibility' })}>
-                <ul className="flex max-h-[87dvh] flex-col gap-2">
+                <ul className="flex flex-col gap-2">
                     {(canCreateOrder || canViewCompanyOrders) && (
                         <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerOrdersUrl}>
                             <MenuIconicSubItemLink
@@ -203,7 +203,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                         </MenuIconicSubItemLink>
                     </MenuIconicItemUserAuthenticatedContentListItem>
 
-                    <MenuIconicItemUserAuthenticatedContentListItem>
+                    <MenuIconicItemUserAuthenticatedContentListItem className="mt-2">
                         <MenuIconicSubItemLink
                             tid={TIDs.user_menu_logout}
                             title={t('Logout')}

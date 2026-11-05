@@ -29,6 +29,7 @@ export type LoginFormProps = {
     formWrapperClassName?: string;
     formContentWrapperClassName?: string;
     onEmailChange?: ChangeEventHandler<HTMLInputElement>;
+    isCompact?: boolean;
 };
 
 export const LoginForm: FC<LoginFormProps> = ({
@@ -38,6 +39,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     formWrapperClassName,
     formContentWrapperClassName,
     onEmailChange,
+    isCompact,
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -104,7 +106,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
                                 textInputProps={{
-                                    label: formMeta.fields.email.label,
+                                    label: isCompact ? t('Email') : formMeta.fields.email.label,
                                     required: true,
                                     type: 'email',
                                     autoComplete: 'email',
@@ -124,17 +126,28 @@ export const LoginForm: FC<LoginFormProps> = ({
                             }}
                         />
 
-                        <FormButtonWrapper className="mt-0 flex items-center justify-between">
+                        <FormButtonWrapper
+                            className={twJoin(
+                                'mt-0 flex flex-wrap items-center justify-between gap-3',
+                                isCompact && 'flex-col items-stretch gap-4',
+                            )}
+                        >
                             <div className="whitespace-nowrap">
                                 <ExtendedNextLink
                                     aria-label={t('Go to reset password page', { ns: 'accessibility' })}
                                     href={resetPasswordUrl}
                                     skeletonType="reset-password"
+                                    className={isCompact ? 'ml-auto block w-fit text-sm' : undefined}
                                 >
-                                    {t('Lost your password?')}
+                                    {isCompact ? t('Forgot your password?') : t('Lost your password?')}
                                 </ExtendedNextLink>
                             </div>
-                            <SubmitButton size="large" tid={TIDs.login_form_submit_button}>
+                            <SubmitButton
+                                className={isCompact ? 'w-full' : undefined}
+                                size={isCompact ? 'xlarge' : 'large'}
+                                tid={TIDs.login_form_submit_button}
+                                wrapperClassName={isCompact ? 'w-full' : undefined}
+                            >
                                 {t('Login')}
                             </SubmitButton>
                         </FormButtonWrapper>
@@ -144,11 +157,12 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 <>
                                     <div className="flex items-center gap-3 text-sm text-text-less">
                                         <div className="h-px flex-1 bg-background-accent-less" />
-                                        <span>{t('or')}</span>
+                                        <span>{isCompact ? t('or continue with') : t('or')}</span>
                                         <div className="h-px flex-1 bg-background-accent-less" />
                                     </div>
 
                                     <SocialNetworkLogin
+                                        isCompact={isCompact}
                                         shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                                         socialNetworks={settingsData.settings.socialNetworkLoginConfig}
                                         lastLoginType={visibleLastLoginType}

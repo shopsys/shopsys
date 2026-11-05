@@ -3,6 +3,7 @@ import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { AccountLoginPopup } from 'components/Blocks/Popup/AccountLoginPopup';
 import { CartCount } from 'components/Layout/Header/Cart/CartCount';
 import {
     MobileBottomNavigationButton,
@@ -13,6 +14,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { useSessionStore } from 'store/useSessionStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -42,6 +44,8 @@ export const MobileBottomNavigation: FC = () => {
     const { url } = useDomainConfig();
     const { cart } = useCurrentCart();
     const isUserLoggedIn = useIsUserLoggedIn();
+    const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
+    const isLoginPopupOpen = useSessionStore((store) => store.portalContent?.type === AccountLoginPopup);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const openedPanelsRef = useRef(new Set<Panel>());
     const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
@@ -87,10 +91,24 @@ export const MobileBottomNavigation: FC = () => {
                     <MobileBottomNavigationLink href={homeUrl} icon={HomeIcon} label={t('Home')} />
 
                     <MobileBottomNavigationButton
+                        ariaHaspopup="dialog"
                         icon={UserIcon}
-                        isExpanded={openPanel === 'account'}
+                        isExpanded={isUserLoggedIn ? openPanel === 'account' : isLoginPopupOpen}
                         label={t('Account')}
-                        onClick={() => togglePanel('account')}
+                        onClick={(event) => {
+                            if (isUserLoggedIn) {
+                                togglePanel('account');
+                                return;
+                            }
+
+                            // Finish the drawer focus cleanup before the popup captures its return target.
+                            flushSync(closeOpenPanel);
+                            // Safari does not focus buttons on pointer clicks; preserve the popup's return target.
+                            event.currentTarget.focus({ preventScroll: true });
+                            updatePortalContent(
+                                <AccountLoginPopup loginFormName="mobile-bottom-navigation-login-form" />,
+                            );
+                        }}
                     >
                         {isUserLoggedIn && (
                             <span
@@ -145,13 +163,11 @@ export const MobileBottomNavigation: FC = () => {
                 <MobileBottomSearchWithOverlay searchInputRef={searchInputRef} onClose={closeOpenPanel} />
             )}
 
-            {openedPanelsRef.current.has('account') && (
+            {isUserLoggedIn && openedPanelsRef.current.has('account') && (
                 <MobileBottomAccountDrawer
                     isActive={openPanel === 'account'}
-                    isUserLoggedIn={isUserLoggedIn}
                     setIsActive={(isActive) => setOpenPanel(isActive ? 'account' : null)}
                     title={t('My account')}
-                    onClose={closeOpenPanel}
                 />
             )}
         </>

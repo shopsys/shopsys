@@ -1,8 +1,7 @@
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AnimatePresence } from 'framer-motion';
-import { forwardRef, TouchEvent as ReactTouchEvent } from 'react';
-import { RemoveScroll } from 'react-remove-scroll';
+import { forwardRef, type MouseEventHandler, TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
@@ -18,12 +17,13 @@ type MenuIconicItemLinkProps = {
     href?: string;
     title?: string;
     type?: PageType;
-    onClick?: () => void;
+    onClick?: MouseEventHandler<HTMLElement>;
     onTouchEnd?: (e: ReactTouchEvent<HTMLButtonElement>) => void;
     isActive?: boolean;
     tabIndex?: number;
     ariaLabel?: string;
     ariaExpanded?: boolean;
+    ariaControls?: string;
     ariaHaspopup?: 'menu' | 'dialog';
 };
 
@@ -84,6 +84,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
             onTouchEnd,
             ariaLabel,
             ariaExpanded,
+            ariaControls,
             ariaHaspopup,
         },
         _,
@@ -94,6 +95,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         if (href) {
             return (
                 <ExtendedNextLink
+                    aria-controls={ariaControls}
                     aria-expanded={ariaExpanded}
                     aria-haspopup={ariaHaspopup}
                     aria-label={ariaLabel}
@@ -111,6 +113,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
 
         return (
             <button
+                aria-controls={ariaControls}
                 aria-expanded={ariaExpanded}
                 aria-haspopup={ariaHaspopup}
                 aria-label={ariaLabel}
@@ -136,12 +139,13 @@ type MenuIconicItemUserAuthenticatedContentListItemProps = {
 
 export const MenuIconicItemUserAuthenticatedContentListItem: FC<
     MenuIconicItemUserAuthenticatedContentListItemProps
-> = ({ children, isActive = false }) => (
+> = ({ children, className, isActive = false }) => (
     <li
         className={twMergeCustom(
             'h-14 rounded-xl border border-background-default bg-background-more',
             'hover:border-border-less hover:bg-background-default',
             isActive && 'border-border-less bg-background-default',
+            className,
         )}
     >
         {children}
@@ -149,14 +153,14 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 );
 
 type MenuIconicItemUserPopoverProps = {
-    isHovered: boolean;
-    isAuthenticated: boolean;
+    id: string;
+    isOpen: boolean;
     topClassName?: string;
 };
 
 export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
-    isHovered,
-    isAuthenticated,
+    id,
+    isOpen,
     topClassName = 'top-13.5',
     children,
 }) => {
@@ -166,26 +170,18 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
         return null;
     }
 
-    const positionClasses = isAuthenticated
-        ? '-right-full min-w-88.75'
-        : 'right-0 max-w-83.75 lg:-right-45 lg:min-w-185 vl:min-w-201.75';
-
     return (
         <AnimatePresence initial={false}>
-            {isHovered && (
-                <RemoveScroll>
-                    <AnimateAppearDiv
-                        className={twMergeCustom(
-                            'pointer-events-auto absolute z-cart hidden origin-top',
-                            topClassName,
-                            'vl:block rounded-xl bg-background-default p-5',
-                            'before:absolute before:-top-5 before:left-0 before:h-5 before:w-full',
-                            positionClasses,
-                        )}
-                    >
-                        {children}
-                    </AnimateAppearDiv>
-                </RemoveScroll>
+            {isOpen && (
+                <AnimateAppearDiv
+                    id={id}
+                    className={twMergeCustom(
+                        'pointer-events-auto absolute right-0 z-cart max-h-[70dvh] w-89 origin-top-right overflow-y-auto rounded-xl border border-border-less bg-background-default p-4 shadow-xl',
+                        topClassName,
+                    )}
+                >
+                    {children}
+                </AnimateAppearDiv>
             )}
         </AnimatePresence>
     );

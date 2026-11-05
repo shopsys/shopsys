@@ -34,6 +34,7 @@ export enum TIDs {
     last_used_login_method_badge = 'last_used_login_method_badge',
     social_network_login_link_ = 'social_network_login_link_',
     login_popup_register_button = 'login_popup_register_button',
+    login_popup_register_link = 'login_popup_register_link',
     login_in_order_button = 'login_in_order_button',
     registration_submit_button = 'registration_submit_button',
     registration_after_order_submit_button = 'registration_after_order_submit_button',

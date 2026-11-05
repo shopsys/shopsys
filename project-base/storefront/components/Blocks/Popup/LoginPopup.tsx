@@ -1,8 +1,6 @@
-import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { LoginForm, LoginFormProps } from 'components/Blocks/Login/LoginForm';
-import { Popup } from 'components/Layout/Popup/Popup';
-import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { LoginPopupLayout } from './LoginPopupLayout';
 
 export const LoginPopup: FC<LoginFormProps> = ({
     defaultEmail,
@@ -13,21 +11,17 @@ export const LoginPopup: FC<LoginFormProps> = ({
     const title = t('Log in and continue with order');
 
     return (
-        <Popup size="small" contentClassName="overflow-y-auto" isTitleHidden title={title}>
-            <VerticalStack gap="xs">
-                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-background-most">
-                    <UserIcon aria-hidden="true" className="size-7" focusable="false" />
-                </div>
-
-                <h4 className="text-center">{title}</h4>
-
+        <LoginPopupLayout title={title}>
+            <div className="px-6 vl:px-10 vl:py-12 pt-14 pb-8">
+                <h3 className="mb-7 text-balance font-semibold text-2xl leading-8 tracking-tight">{title}</h3>
                 <LoginForm
                     defaultEmail={defaultEmail}
                     formName={formName}
-                    formContentWrapperClassName="px-5!"
+                    formContentWrapperClassName="gap-4"
+                    isCompact
                     shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                 />
-            </VerticalStack>
-        </Popup>
+            </div>
+        </LoginPopupLayout>
     );
 };

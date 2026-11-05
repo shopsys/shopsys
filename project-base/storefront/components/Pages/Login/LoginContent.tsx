@@ -26,10 +26,10 @@ export const LoginContent: FC = () => {
                         </>
                     }
                     icon={UserIcon}
-                    title={t('Log in to your account')}
+                    title={t('Login')}
                 />
 
-                <LoginForm />
+                <LoginForm formContentWrapperClassName="gap-4" isCompact />
             </VerticalStack>
         </Webline>
     );

@@ -1,3 +1,4 @@
+import { DRAWER_WIDTH_CLASS_NAME } from 'components/Basic/Drawer/drawerConstants';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
@@ -27,7 +28,9 @@ type PopupProps = {
     ariaDescription?: string;
     hideCloseButton?: boolean;
     isTitleHidden?: boolean;
+    isDrawer?: boolean;
     contentClassName?: string;
+    headerClassName?: string;
     key?: string;
     children?: React.ReactNode;
     className?: string;
@@ -42,8 +45,10 @@ export const Popup: React.FC<PopupProps> = ({
     children,
     hideCloseButton,
     isTitleHidden,
+    isDrawer = false,
     className,
     contentClassName,
+    headerClassName,
     key,
     role = 'dialog',
     size = 'medium',
@@ -53,6 +58,7 @@ export const Popup: React.FC<PopupProps> = ({
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const windowDimensions = useWindowDimensions();
     const [popupPositions, setPopupPositions] = useState({ left: 0, top: 0 });
+    const [isPopupVisible, setIsPopupVisible] = useState(true);
     const popupRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -61,7 +67,7 @@ export const Popup: React.FC<PopupProps> = ({
     const descriptionId = ariaDescription ? `${popupId}-description` : undefined;
     const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
 
-    const handleClosePopup = () => {
+    const completeClosePopup = () => {
         if (onClose) {
             onClose();
 
@@ -69,6 +75,15 @@ export const Popup: React.FC<PopupProps> = ({
         }
 
         closePortalContent();
+    };
+
+    const handleClosePopup = () => {
+        if (isDrawer) {
+            setIsPopupVisible(false);
+            return;
+        }
+
+        completeClosePopup();
     };
 
     // Focus must be established before paint so form auto-focus cannot remain behind the modal.
@@ -120,73 +135,75 @@ export const Popup: React.FC<PopupProps> = ({
             <RemoveScroll>
                 <Overlay className="z-modalOverlay" isActive onClick={handleClosePopup} />
 
-                <AnimatePresence>
-                    <m.div
-                        key="popup"
-                        animate={{ opacity: 1, scale: 1 }}
-                        aria-describedby={descriptionId}
-                        aria-labelledby={titleId}
-                        aria-modal="true"
-                        data-tid={TIDs.layout_popup}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        ref={popupRef}
-                        role={role}
-                        tabIndex={-1}
-                        transition={{ duration: 0.2 }}
-                        className={twMergeCustom(
-                            'fixed z-maximum mx-5 flex max-h-[80vh] cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
-                            popupWidthClassNameBySize[size],
-                            className,
-                        )}
-                        initial={{
-                            opacity: 0,
-                            scale: 0.8,
-                        }}
-                        style={{
-                            left: popupPositions.left,
-                            top: popupPositions.top,
-                        }}
-                        onMouseDown={(event) => {
-                            event.stopPropagation();
-                        }}
-                        onTouchMove={(event) => {
-                            event.stopPropagation();
-                        }}
-                    >
-                        <div className="mb-3 flex justify-between">
-                            <h2
-                                aria-describedby={descriptionId}
-                                className={twMergeCustom('h3 outline-hidden', isTitleHidden && 'sr-only')}
-                                id={titleId}
-                                ref={titleRef}
-                                tabIndex={-1}
-                            >
-                                {title}
-                            </h2>
-
-                            {!hideCloseButton && (
-                                <IconButton
-                                    Icon={CloseIcon}
-                                    ariaLabel={t('Close popup', { ns: 'accessibility' })}
-                                    className="ml-auto"
-                                    ref={closeButtonRef}
-                                    shape="rounded"
-                                    size="small"
-                                    title={t('Close popup')}
-                                    variant="ghost"
-                                    onClick={handleClosePopup}
-                                />
+                <AnimatePresence onExitComplete={completeClosePopup}>
+                    {isPopupVisible && (
+                        <m.div
+                            key="popup"
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            aria-describedby={descriptionId}
+                            aria-labelledby={titleId}
+                            aria-modal="true"
+                            data-tid={TIDs.layout_popup}
+                            exit={isDrawer ? { x: '100%' } : { opacity: 0, scale: 0.8 }}
+                            ref={popupRef}
+                            role={role}
+                            tabIndex={-1}
+                            transition={{ duration: 0.2 }}
+                            className={twMergeCustom(
+                                'fixed z-maximum mx-5 flex max-h-[80vh] cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
+                                popupWidthClassNameBySize[size],
+                                isDrawer && 'mx-0 h-dvh max-h-none rounded-none',
+                                isDrawer && DRAWER_WIDTH_CLASS_NAME,
+                                className,
                             )}
-                        </div>
+                            initial={isDrawer ? { x: '100%' } : { opacity: 0, scale: 0.8 }}
+                            style={{
+                                left: isDrawer ? undefined : popupPositions.left,
+                                right: isDrawer ? 0 : undefined,
+                                top: isDrawer ? 0 : popupPositions.top,
+                            }}
+                            onMouseDown={(event) => {
+                                event.stopPropagation();
+                            }}
+                            onTouchMove={(event) => {
+                                event.stopPropagation();
+                            }}
+                        >
+                            <div className={twMergeCustom('mb-3 flex justify-between', headerClassName)}>
+                                <h2
+                                    aria-describedby={descriptionId}
+                                    className={twMergeCustom('h3 outline-hidden', isTitleHidden && 'sr-only')}
+                                    id={titleId}
+                                    ref={titleRef}
+                                    tabIndex={-1}
+                                >
+                                    {title}
+                                </h2>
 
-                        {ariaDescription && (
-                            <p className="sr-only" id={descriptionId}>
-                                {ariaDescription}
-                            </p>
-                        )}
+                                {!hideCloseButton && (
+                                    <IconButton
+                                        Icon={CloseIcon}
+                                        ariaLabel={t('Close popup', { ns: 'accessibility' })}
+                                        className="ml-auto"
+                                        ref={closeButtonRef}
+                                        shape="rounded"
+                                        size="small"
+                                        title={t('Close popup')}
+                                        variant="ghost"
+                                        onClick={handleClosePopup}
+                                    />
+                                )}
+                            </div>
 
-                        <div className={twMergeCustom(contentClassName)}>{children}</div>
-                    </m.div>
+                            {ariaDescription && (
+                                <p className="sr-only" id={descriptionId}>
+                                    {ariaDescription}
+                                </p>
+                            )}
+
+                            <div className={twMergeCustom(contentClassName)}>{children}</div>
+                        </m.div>
+                    )}
                 </AnimatePresence>
             </RemoveScroll>
         </div>

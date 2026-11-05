@@ -1,115 +1,44 @@
-import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { AccountLoginPopup } from 'components/Blocks/Popup/AccountLoginPopup';
 import { TIDs } from 'cypress/tids';
-import { MouseEvent as ReactMouseEvent, useState } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { twMergeCustom } from 'utils/twMerge';
-import { useMediaMin } from 'utils/ui/useMediaMin';
-import { useDebounce } from 'utils/useDebounce';
-import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
-import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUnauthenticatedContent';
-
-const isBrowserPasswordManagerHovered = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => e.relatedTarget === window;
+import { MenuIconicItemLink } from './MenuIconicElements';
 
 type MenuIconicItemUserUnauthenticatedProps = {
     loginFormName: string;
     shouldShowLabel?: boolean;
-    userPopoverTopClassName?: string;
 };
 
 export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthenticatedProps> = ({
     loginFormName,
     shouldShowLabel = true,
-    userPopoverTopClassName,
 }) => {
     const { t } = useTranslation();
-    const [isActive, setIsActive] = useState(false);
-    const isActiveDelayed = useDebounce(isActive, isActive ? 200 : 0);
-    const isDesktop = useMediaMin('vl');
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const isActive = useSessionStore((s) => s.portalContent?.type === AccountLoginPopup);
 
     return (
-        <>
-            {/* biome-ignore lint/a11y/useSemanticElements: The wrapper manages hover state for the popover while containing nested navigation controls, so it cannot be replaced with a semantic button. */}
-            <div
-                aria-expanded={isActive}
-                aria-haspopup="menu"
-                aria-label={t('Show registration and login popup', { ns: 'accessibility' })}
-                data-tid={TIDs.my_account_link}
-                role="button"
-                tabIndex={0}
-                className={twMergeCustom(
-                    'group min-size-12 rounded-md outline-hidden group-has-[[aria-haspopup=menu][aria-expanded=true]]/header:z-aboveOverlay lg:relative lg:flex',
-                )}
-                onMouseEnter={() => isDesktop && setIsActive(true)}
-                onMouseLeave={(e) => isDesktop && !isBrowserPasswordManagerHovered(e) && setIsActive(false)}
-                onClick={(e) => {
-                    if (!isDesktop && e.target === e.currentTarget) {
-                        setIsActive((current) => !current);
-                    }
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === 'Escape') {
-                        e.preventDefault();
-                        setIsActive(false);
-
-                        return;
-                    }
-
-                    if (e.target !== e.currentTarget) {
-                        return;
-                    }
-
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setIsActive((current) => !current);
-                    }
-                }}
+        <MenuIconicItemLink
+            ariaExpanded={isActive}
+            ariaHaspopup="dialog"
+            ariaLabel={t('Show registration and login popup', { ns: 'accessibility' })}
+            className="min-size-12 cursor-pointer text-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
+            tid={TIDs.my_account_link}
+            title={t('Login form')}
+            onClick={(event) => {
+                // Safari does not focus buttons on pointer clicks; the popup must restore focus here too.
+                event.currentTarget.focus({ preventScroll: true });
+                updatePortalContent(<AccountLoginPopup loginFormName={loginFormName} />);
+            }}
+        >
+            <span
+                className="flex flex-col items-center gap-1"
+                data-tid={TIDs.layout_header_menuiconic_login_link_popup}
             >
-                <MenuIconicItemLink
-                    ariaExpanded={isActive}
-                    ariaHaspopup="menu"
-                    ariaLabel={t('Show registration and login popup', { ns: 'accessibility' })}
-                    className="cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 group-focus-visible:text-text-default"
-                    tabIndex={-1}
-                    tid={TIDs.layout_header_menuiconic_login_link_popup}
-                    title={t('Login form')}
-                    onClick={() => !isDesktop && setIsActive(!isActive)}
-                    onTouchEnd={(e) => {
-                        e.preventDefault();
-                        setIsActive(!isActive);
-                    }}
-                >
-                    <UserIcon className="size-6" />
-                    {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
-                </MenuIconicItemLink>
-
-                <Drawer isActive={isActive} setIsActive={setIsActive} title={t('Account')}>
-                    <MenuIconicItemUserUnauthenticatedContent
-                        loginFormName={loginFormName}
-                        onMenuClose={() => setIsActive(false)}
-                    />
-                </Drawer>
-
-                <MenuIconicItemUserPopover
-                    isAuthenticated={false}
-                    isHovered={isActiveDelayed}
-                    topClassName={userPopoverTopClassName}
-                >
-                    <MenuIconicItemUserUnauthenticatedContent
-                        loginFormName={loginFormName}
-                        onMenuClose={() => setIsActive(false)}
-                    />
-                </MenuIconicItemUserPopover>
-            </div>
-
-            {isDesktop && (
-                <Overlay
-                    shouldDisablePointerEventsOnExit
-                    isActive={isActiveDelayed}
-                    onClick={() => setIsActive(false)}
-                />
-            )}
-        </>
+                <UserIcon className="size-6" />
+                {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
+            </span>
+        </MenuIconicItemLink>
     );
 };

@@ -104,11 +104,7 @@ export const MenuIconic: FC<MenuIconicProps> = ({
                             userPopoverTopClassName={userPopoverTopClassName}
                         />
                     ) : (
-                        <MenuIconicItemUserUnauthenticated
-                            loginFormName={loginFormName}
-                            shouldShowLabel={!isCompact}
-                            userPopoverTopClassName={userPopoverTopClassName}
-                        />
+                        <MenuIconicItemUserUnauthenticated loginFormName={loginFormName} shouldShowLabel={!isCompact} />
                     )}
                 </MenuIconicItem>
             </ul>

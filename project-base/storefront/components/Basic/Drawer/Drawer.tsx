@@ -1,4 +1,5 @@
 import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
+import { DRAWER_WIDTH_CLASS_NAME } from 'components/Basic/Drawer/drawerConstants';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { OVERLAY_PORTAL_ROOT_ID } from 'components/Basic/Portal/portalConstants';
 import { AnimatePresence, m } from 'framer-motion';
@@ -116,7 +117,8 @@ export const Drawer: FC<DrawerProps> = ({
                         tabIndex={-1}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'pointer-events-auto fixed top-0 right-0 z-maximum h-dvh min-w-90 overflow-y-auto rounded-none bg-background-default p-5 focus-visible:outline-hidden',
+                            'pointer-events-auto fixed top-0 right-0 z-maximum h-dvh overflow-y-auto rounded-none bg-background-default p-5 focus-visible:outline-hidden',
+                            DRAWER_WIDTH_CLASS_NAME,
                             className,
                         )}
                     >
