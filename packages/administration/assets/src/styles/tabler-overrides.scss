@@ -83,6 +83,12 @@ textarea.form-control.is-invalid {
     --tblr-card-cap-padding-y: 1rem;
 }
 
+// keeps the original height of small buttons, e.g. in card headers
+.btn-sm,
+.btn-group-sm > .btn {
+    --tblr-btn-padding-y: 0.3125rem;
+}
+
 .card-header {
     --tblr-card-header-bg: var(--tblr-gray-200);
 }
