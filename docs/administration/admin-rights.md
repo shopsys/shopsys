@@ -1,5 +1,7 @@
 # Admin Rights and Access Control
 
+[TOC]
+
 The administration interface uses PHP attributes to protect routes and integrate with the platform's role-based access control system. This provides intuitive, declaration-based security that's easy to read and maintain.
 
 !!! info "Global RBAC System"

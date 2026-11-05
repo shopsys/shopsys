@@ -1,5 +1,7 @@
 # Unit tests
 
+[TOC]
+
 Storefront unit tests are written using the [Vitest](https://vitest.dev/) testing library. It has a very similar API to Jest, so anybody with a skill in Vitest or Jest should be able to write them with ease. However, in order to follow a specific guideline and a set of standards, below you can see a _cookbook_ that should help you write unit tests for this codebase.
 
 ## Snapshot tests

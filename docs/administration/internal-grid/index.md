@@ -1,5 +1,7 @@
 # Grid
 
+[TOC]
+
 ## Basics
 
 Grid is a component that displays data in a customizable table view in the administration.

@@ -1,5 +1,7 @@
 # URQL Graphcache Exchange
 
+[TOC]
+
 ## Introduction
 
 The URQL library provides a flexible and efficient way to interact with GraphQL APIs in your JavaScript or TypeScript application. A significant part of this interaction is dealing with caching to reduce network requests, improve responsiveness, and manage the local state. This is where the Graphcache exchange comes in. When using this module, ensure you're familiar with the URQL graph cache and its related concepts. It's also crucial to be aware of the GraphQL schema and the generated GraphQL types, as they play a vital role in how the cache is managed.
