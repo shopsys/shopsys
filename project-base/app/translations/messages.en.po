@@ -40,15 +40,6 @@ msgstr ""
 msgid "Unsupported order"
 msgstr ""
 
-msgid "Upload image"
-msgstr ""
-
-msgid "Upload image for mobile devices"
-msgstr ""
-
-msgid "You can upload following formats: PNG, JPG"
-msgstr ""
-
 msgid "from most expensive"
 msgstr ""
 

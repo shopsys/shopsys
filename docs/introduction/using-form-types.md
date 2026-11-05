@@ -285,6 +285,17 @@ Requires the `domain_id` option, accepts `placeholder_source_path` and `h1_requi
 
 Uses `AbstractFileUploadType` to display a widget for images upload and to work with them (same as `FileUploadType`).
 
+To require at least one image, add the `MustUploadFile` constraint to the `constraints` option.
+It is satisfied by a newly uploaded image as well as by an already stored image that is not being deleted, so it works on both create and edit pages and supports validation groups:
+
+```php
+$builder->add('image', ImageUploadType::class, [
+    'constraints' => [
+        new MustUploadFile(message: 'Please choose image'),
+    ],
+]);
+```
+
 #### entity
 
 Defines which entity should the images be assigned to.

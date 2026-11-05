@@ -14,6 +14,9 @@ use Shopsys\FrameworkBundle\Component\Router\UrlNormalizer;
 
 class SliderItemFacade
 {
+    public const string IMAGE_TYPE_WEB = 'web';
+    public const string IMAGE_TYPE_MOBILE = 'mobile';
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly SliderItemRepository $sliderItemRepository,
@@ -39,7 +42,8 @@ class SliderItemFacade
 
         $this->em->persist($sliderItem);
         $this->em->flush();
-        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEB);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
 
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
 
@@ -57,7 +61,8 @@ class SliderItemFacade
         $this->setSliderItemRouteName($sliderItem);
 
         $this->em->flush();
-        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEB);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
 
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
 

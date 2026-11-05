@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Migrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Override;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+
+final class Version20261029120000 extends AbstractMigration
+{
+    #[Override]
+    public function up(Schema $schema): void
+    {
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20210727191108')) {
+            $this->sql('ALTER TABLE slider_items ADD uuid UUID DEFAULT NULL');
+            $this->sql('UPDATE slider_items SET uuid = uuid_generate_v4()');
+            $this->sql('ALTER TABLE slider_items ALTER uuid SET NOT NULL');
+            $this->sql('CREATE UNIQUE INDEX UNIQ_67AAA529D17F50A6 ON slider_items (uuid)');
+        }
+    }
+}

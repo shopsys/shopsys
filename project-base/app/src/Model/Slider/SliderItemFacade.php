@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Slider;
 
-use Override;
-use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
-use Shopsys\FrameworkBundle\Model\Slider\SliderItemData;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade as BaseSliderItemFacade;
 
 /**
  * @property \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method \App\Model\Slider\SliderItem getById(int $sliderItemId)
+ * @method \App\Model\Slider\SliderItem create(\App\Model\Slider\SliderItemData $sliderItemData)
+ * @method \App\Model\Slider\SliderItem edit(int $sliderItemId, \App\Model\Slider\SliderItemData $sliderItemData)
  * @method \App\Model\Slider\SliderItem[] getAllVisibleOnCurrentDomain()
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository, \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade)
  * @method void fixUrlInSliderItemData(\App\Model\Slider\SliderItemData $sliderItemData)
@@ -20,51 +19,4 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade as BaseSliderItemFacad
  */
 class SliderItemFacade extends BaseSliderItemFacade
 {
-    public const string IMAGE_TYPE_MOBILE = 'mobile';
-    public const string IMAGE_TYPE_WEB = 'web';
-
-    /**
-     * @param \App\Model\Slider\SliderItemData $sliderItemData
-     */
-    #[Override]
-    public function create(SliderItemData $sliderItemData): SliderItem
-    {
-        $this->fixUrlInSliderItemData($sliderItemData);
-
-        /** @var \App\Model\Slider\SliderItem $sliderItem */
-        $sliderItem = $this->sliderItemFactory->create($sliderItemData);
-        $this->setSliderItemRouteName($sliderItem);
-
-        $this->em->persist($sliderItem);
-        $this->em->flush();
-        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEB);
-        $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
-
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
-
-        return $sliderItem;
-    }
-
-    /**
-     * @param \App\Model\Slider\SliderItemData $sliderItemData
-     */
-    #[Override]
-    public function edit(int $sliderItemId, SliderItemData $sliderItemData): SliderItem
-    {
-        /** @var \App\Model\Slider\SliderItem $sliderItem */
-        $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
-        $this->fixUrlInSliderItemData($sliderItemData);
-
-        $sliderItem->edit($sliderItemData);
-        $this->setSliderItemRouteName($sliderItem);
-
-        $this->em->flush();
-
-        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEB);
-        $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
-
-        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
-
-        return $sliderItem;
-    }
 }
