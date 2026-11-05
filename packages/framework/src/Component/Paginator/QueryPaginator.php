@@ -102,12 +102,15 @@ class QueryPaginator
 
         $query = $totalQueryBuilder->getQuery();
 
+        // every parameter is flattened as a whole, so that the native query binds its value by the type it was set
+        // with — a value of a type of its own (money) cannot be bound as it is
         $parametersAssoc = [];
 
         foreach ($query->getParameters() as $parameter) {
-            $parametersAssoc[$parameter->getName()] = $parameter->getValue();
+            $parametersAssoc[$parameter->getName()] = $parameter;
         }
 
+        /** @var \Doctrine\ORM\Query\Parameter[] $flattenedParameters */
         $flattenedParameters = ExtendedClassNameResolver::resolve(SqlParametersFlattener::class)::flattenArrayParameters(
             $query->getDQL(),
             $parametersAssoc,
@@ -119,7 +122,16 @@ class QueryPaginator
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('total_count', 'totalCount');
 
-        return $em->createNativeQuery($sql, $rsm)
-            ->setParameters($flattenedParameters);
+        $totalNativeQuery = $em->createNativeQuery($sql, $rsm);
+
+        foreach ($flattenedParameters as $position => $parameter) {
+            $totalNativeQuery->setParameter(
+                $position,
+                $parameter->getValue(),
+                $parameter->typeWasSpecified() ? $parameter->getType() : null,
+            );
+        }
+
+        return $totalNativeQuery;
     }
 }

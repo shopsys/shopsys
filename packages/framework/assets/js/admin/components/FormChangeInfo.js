@@ -7,6 +7,7 @@ export default class FormChangeInfo {
     constructor() {
         FormChangeInfo.isFormSubmitted = FormChangeInfo.isFormSubmitted || false;
         FormChangeInfo.isInfoShown = FormChangeInfo.isInfoShown || false;
+        FormChangeInfo.isDocumentInitialized = FormChangeInfo.isDocumentInitialized || false;
     }
 
     initContent($container) {
@@ -22,6 +23,13 @@ export default class FormChangeInfo {
     }
 
     initDocument() {
+        // the handlers are delegated to the document, so they cover any content registered later as well
+        if (FormChangeInfo.isDocumentInitialized) {
+            return;
+        }
+
+        FormChangeInfo.isDocumentInitialized = true;
+
         $(document).on('submit', '.page-body form', event => {
             if (event.isDefaultPrevented() === false) {
                 FormChangeInfo.isFormSubmitted = true;

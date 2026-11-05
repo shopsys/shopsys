@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid;
 
+use LogicException;
 use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\FrameworkBundle\Component\Grid\Column;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -19,6 +22,8 @@ use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterf
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Webmozart\Assert\InvalidArgumentException;
 
 class DatagridTest extends TestCase
 {
@@ -42,8 +47,8 @@ class DatagridTest extends TestCase
     protected function setUp(): void
     {
         $this->adapter = $this->createStub(AdapterInterface::class);
-        $this->adapter->method('getDatasource')->willReturnCallback(function (string $identificationName, array $fields): DataSourceInterface {
-            $this->fetchedFieldNames = array_map(static fn (FieldDescriptor $field) => $field->getName(), $fields);
+        $this->adapter->method('getDatasource')->willReturnCallback(function (DatasourceRequest $request): DataSourceInterface {
+            $this->fetchedFieldNames = array_map(static fn (FieldDescriptor $field) => $field->getName(), $request->fields);
 
             return $this->createStub(DataSourceInterface::class);
         });
@@ -83,7 +88,7 @@ class DatagridTest extends TestCase
             ->add('purchasePrice', ['role' => 'ROLE_PRODUCT'])
             ->add('internalNote', ['permission' => Permission::EDIT]);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame(['name'], $this->fetchedFieldNames);
         $this->assertSame(['name'], array_keys($this->columnsById));
@@ -101,7 +106,7 @@ class DatagridTest extends TestCase
             ->add('purchasePrice', ['role' => 'ROLE_PRODUCT'])
             ->add('internalNote', ['permission' => Permission::EDIT]);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame(['name', 'purchasePrice', 'internalNote'], $this->fetchedFieldNames);
         $this->assertSame(['name', 'purchasePrice', 'internalNote'], array_keys($this->columnsById));
@@ -115,7 +120,7 @@ class DatagridTest extends TestCase
 
         $datagrid->add('name');
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame(['name'], $this->fetchedFieldNames);
     }
@@ -127,7 +132,7 @@ class DatagridTest extends TestCase
             ->add('name')
             ->add('price', ['class' => 'text-end']);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame('', $this->columnsById['name']->getClassAttribute());
         $this->assertSame('text-end', $this->columnsById['price']->getClassAttribute());
@@ -138,9 +143,69 @@ class DatagridTest extends TestCase
         $datagrid = $this->createDatagrid();
         $datagrid->add('customer', ['property' => ['lastName', 'firstName']]);
 
-        $datagrid->createView();
+        $datagrid->createView(DatagridStateFactoryFixture::createState($datagrid));
 
         $this->assertSame('customer', $this->columnsById['customer']->getSourceColumnName());
         $this->assertSame('lastName,firstName', $this->columnsById['customer']->getOrderSourceColumnName());
+    }
+
+    /**
+     * The state is created from the configuration frozen once, so a field changed afterwards — restricted by a role,
+     * for one — would keep narrowing the records as it was; the change is refused instead.
+     */
+    public function testFieldsCannotBeChangedOnceTheConfigurationIsFrozen(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $datagrid->add('name');
+        $datagrid->getConfig();
+
+        $changes = [
+            static fn (Datagrid $datagrid) => $datagrid->add('email'),
+            static fn (Datagrid $datagrid) => $datagrid->update('name', ['role' => 'ROLE_SECRET']),
+            static fn (Datagrid $datagrid) => $datagrid->remove('name'),
+        ];
+
+        foreach ($changes as $change) {
+            try {
+                $change($datagrid);
+                $this->fail('A change of the fields has to be refused once the configuration is frozen.');
+            } catch (LogicException $exception) {
+                $this->assertStringContainsString('already frozen', $exception->getMessage());
+            }
+        }
+    }
+
+    public function testConfigurationIsFrozenOnce(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $datagrid->add('name');
+
+        $this->assertSame($datagrid->getConfig(), $datagrid->getConfig());
+    }
+
+    /**
+     * A field displayed on behalf of a feature narrowing the datagrid obeys the permissions as any other field.
+     */
+    public function testRestrictedAdditionalFieldIsNotDisplayedWithoutPermission(): void
+    {
+        $datagrid = $this->createDatagrid([['ROLE_SECRET', Permission::VIEW, false]]);
+        $datagrid->add('name');
+
+        $datagrid->createView(new DatagridState($datagrid->getConfig(), additionalFields: [
+            new FieldDescriptor('secret', ['role' => 'ROLE_SECRET']),
+            new FieldDescriptor('domainId'),
+        ]));
+
+        $this->assertSame(['name', 'domainId'], $this->fetchedFieldNames);
+    }
+
+    public function testStateOfAnotherDatagridIsRefused(): void
+    {
+        $datagrid = $this->createDatagrid();
+        $anotherDatagrid = $this->createDatagrid();
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $datagrid->createView(DatagridStateFactoryFixture::createState($anotherDatagrid));
     }
 }

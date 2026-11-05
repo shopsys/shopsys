@@ -11,9 +11,9 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Model\Store\ClosedDay\ClosedDayCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
@@ -50,7 +50,7 @@ class ClosedDayController extends AbstractCrudController
             ->setEntityNameSingular(t('Holiday / internal day'))
             ->setEntityNamePlural(t('Holidays and internal days'))
             ->setMenuSection(SideMenuBuilder::ROOT_SETTING, SideMenuBuilder::SECTION_LISTS)
-            ->setListDomainControl(CrudListDomainControl::SWITCHER)
+            ->setListDomainControl(DomainControlType::SWITCHER)
             ->setTemplate(ActionType::LIST, '@ShopsysAdministration/content/closedDay/list.html.twig')
             ->registerHandler(ClosedDayCrudHandler::class);
     }

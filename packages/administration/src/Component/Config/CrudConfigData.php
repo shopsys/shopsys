@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Config;
 
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudTransformationHelper;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Webmozart\Assert\Assert;
@@ -31,7 +32,6 @@ final readonly class CrudConfigData
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType[] $enabledActions
      * @param MenuItemPosition $menuSectionPosition
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, null|class-string<\Shopsys\AdministrationBundle\Component\Crud\Handler\HandlerInterface>> $handlerClasses
-     * @param int[]|null $listAllowedDomainIds
      * @param array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, string> $templates
      */
     public function __construct(
@@ -50,8 +50,7 @@ final readonly class CrudConfigData
         private ?string $customRoleSection,
         private array $handlerClasses,
         private ?string $menuIcon,
-        private ?CrudListDomainControl $listDomainControl,
-        private ?array $listAllowedDomainIds,
+        private DomainControlConfig $domainControlConfig,
         private array $templates,
     ) {
         foreach ($this->enabledActions as $action) {
@@ -187,17 +186,9 @@ final readonly class CrudConfigData
         return $this->menuIcon;
     }
 
-    public function getListDomainControl(): ?CrudListDomainControl
+    public function getDomainControlConfig(): DomainControlConfig
     {
-        return $this->listDomainControl;
-    }
-
-    /**
-     * @return int[]|null
-     */
-    public function getListAllowedDomainIds(): ?array
-    {
-        return $this->listAllowedDomainIds;
+        return $this->domainControlConfig;
     }
 
     /**

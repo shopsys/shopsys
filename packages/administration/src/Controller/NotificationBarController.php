@@ -13,9 +13,9 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Model\NotificationBar\NotificationBarCrudHandler;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\ForRole;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
@@ -40,7 +40,7 @@ class NotificationBarController extends AbstractCrudController
         $config
             ->setMenuTitle(t('Notification bar'))
             ->setMenuSection(SideMenuBuilder::ROOT_CMS, null, ['after' => SideMenuBuilder::AUTOCOMPLETE_SETTING])
-            ->setListDomainControl(CrudListDomainControl::SWITCHER)
+            ->setListDomainControl(DomainControlType::SWITCHER)
             ->registerHandler(NotificationBarCrudHandler::class);
     }
 

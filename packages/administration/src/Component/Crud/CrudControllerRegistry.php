@@ -113,7 +113,12 @@ final class CrudControllerRegistry
         /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $crudController */
         $crudController = $this->controllers->get($controllerClass);
 
-        $config = new CrudConfig($meta['entityName'], $this->crudRoleConstantProvider->findCustomRoleConstant($controllerClass));
+        $config = new CrudConfig(
+            $meta['entityName'],
+            $this->crudRoleConstantProvider->findCustomRoleConstant($controllerClass),
+            $meta['entityClass'],
+            $meta['controllerName'],
+        );
         $crudController->configure($config);
 
         foreach ($extensions as $extension) {

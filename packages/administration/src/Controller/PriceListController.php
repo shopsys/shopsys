@@ -14,9 +14,9 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Model\PriceList\PriceListCrudHandler;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\CsvResponse;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
@@ -60,7 +60,7 @@ class PriceListController extends AbstractCrudController
         $config
             ->setRoutePrefix('/pricing')
             ->setMenuSection(SideMenuBuilder::ROOT_PRICING, null, 'first')
-            ->setListDomainControl(CrudListDomainControl::QUICK_FILTER)
+            ->setListDomainControl(DomainControlType::FILTER)
             ->registerHandler(PriceListCrudHandler::class);
     }
 
@@ -112,15 +112,7 @@ class PriceListController extends AbstractCrudController
             ])
             ->add('validTo', [
                 'label' => t('Valid to'),
-            ]);
-
-        if ($this->domain->isMultidomain()) {
-            $datagrid->add('domainId', [
-                'label' => t('Domain'),
-            ]);
-        }
-
-        $datagrid
+            ])
             ->add('validityStatus', [
                 'label' => t('Status'),
                 'virtual' => true,

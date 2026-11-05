@@ -8,11 +8,15 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 - `name` (optional, string) - The name of the datagrid
 - `crudDefinition` (optional, `Shopsys\AdministrationBundle\Component\Crud\Definition`) - Crud Definition provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
 - `pagination` (optional, bool) - Enable or disable pagination. Default is `true`. With pagination enabled, the page size chosen by the logged-in administrator is remembered per datagrid `name` and restored on the next visit
+- `domainControl` (optional, `Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig`) - The domain control of the datagrid - the domains it works with and the way the administrator picks among them. For a datagrid of a Crud Controller it follows the configuration of the controller (`crudDefinition`) automatically, so pass it only for a standalone datagrid. When the listed records relate to a domain (`domainId` of an entity implementing `DomainSeparatedEntityInterface`, or the `domainIdPath` of the configuration), the datagrid is limited to the selected domains and displays the domain of every record when the domain filter offers several domains. See [List domain control](../crud-controller/reference/crud-controller.md#list-domain-control)
 
+## Configuration and state
+
+The datagrid itself reads nothing from its surroundings. Once it is configured, `Datagrid::getConfig()` freezes the configuration and `DatagridStateFactory::create($datagrid->getConfig())` creates the state of the datagrid in the current request - everything the administrator narrows the records by: the domain control, the quick search and the filters declared by `filters()`. `Datagrid::createView($datagridState)` lists the records by it. Outside a request (a command, a test) the state validates the declarations but builds no form - except that a datagrid with a domain control needs a request of a logged-in administrator, whose domains and selection it reads. A fixed scope of the records belongs to the query of the adapter (`configureQuery()` of a Crud Controller). See [Narrowing the records](./narrowing.md#configuration-state-and-components).
 
 ## Methods Configuration
 
-You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
+You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features. The records are narrowed through the adapter, see [Narrowing the records](./narrowing.md).
 All methods are chainable, so you can call them one after another.
 
 ```php
@@ -70,6 +74,7 @@ Requirements and behavior:
 - the adapter must be entity-class-aware (e.g. the default ORM adapter); array-backed datagrids are not supported,
 - the listing is always ordered by the given field, so a manual `setDefaultOrder()` cannot be combined with drag-and-drop (and removing the ordering field is blocked until `disableDragAndDrop()` is called),
 - ordering by any other column is disabled and pagination is turned off, so the whole list can be reordered at once,
+- while the quick search or the filter narrows the list, its rows are only listed in their order and cannot be dragged — saving the order renumbers the listed rows, so reordering a part of them would mix up the positions of the rest,
 - saving the new order is handled automatically; it is available only to administrators with the edit permission.
 
 More information about configuration-specific sections can be found in the following sections:

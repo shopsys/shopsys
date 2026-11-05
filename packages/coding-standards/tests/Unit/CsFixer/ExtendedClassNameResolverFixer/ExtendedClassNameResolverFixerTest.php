@@ -7,6 +7,8 @@ namespace Tests\CodingStandards\Unit\CsFixer\ExtendedClassNameResolverFixer;
 use Override;
 use Shopsys\CodingStandards\CsFixer\ExtendedClassNameResolverFixer;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
+use Tests\CodingStandards\Unit\CsFixer\ExtendedClassNameResolverFixer\Source\ExcludedDummyInterface;
+use Tests\CodingStandards\Unit\CsFixer\ExtendedClassNameResolverFixer\Source\ExcludedDummyValue;
 
 final class ExtendedClassNameResolverFixerTest extends AbstractFixerTestCase
 {
@@ -17,6 +19,7 @@ final class ExtendedClassNameResolverFixerTest extends AbstractFixerTestCase
         $fixer->configure([
             'namespace_prefixes' => ['Tests\CodingStandards\Unit\CsFixer\ExtendedClassNameResolverFixer\Source\\'],
             'excluded_namespace_prefixes' => [],
+            'excluded_class_names' => [ExcludedDummyValue::class, ExcludedDummyInterface::class],
         ]);
 
         return $fixer;
@@ -39,5 +42,7 @@ final class ExtendedClassNameResolverFixerTest extends AbstractFixerTestCase
         yield [__DIR__ . '/correct/already_resolved.php'];
 
         yield [__DIR__ . '/correct/global_namespace.php'];
+
+        yield [__DIR__ . '/correct/excluded_class_descendants.php'];
     }
 }
