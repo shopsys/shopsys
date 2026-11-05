@@ -46,6 +46,7 @@ ux_icons:
         folder: 'tabler:folder-filled'
         forward-page: 'tabler:external-link'
         gear: 'tabler:settings-filled'
+        history: 'tabler:history'
         house: 'tabler:home-filled'
         house-outline: 'tabler:home'
         id: 'tabler:id'

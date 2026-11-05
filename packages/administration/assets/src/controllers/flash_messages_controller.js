@@ -1,6 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
 import { Toast } from '@tabler/core';
+import { addFlashMessageToHistory } from '../js/utils/flashMessageHistory';
 
 const flashMessagesHeader = 'X-Admin-Flash-Messages';
 const processedLiveResponses = new WeakSet();
@@ -124,5 +125,15 @@ export default class extends Controller {
         }
 
         new Toast(toastElement).show();
+        this.addToastToHistory(toastElement);
+    }
+
+    addToastToHistory(toastElement) {
+        const bgClass = [...toastElement.classList].find(className => className.startsWith('bg-'));
+        const messageElement = toastElement.querySelector('.toast-message');
+
+        if (messageElement) {
+            addFlashMessageToHistory(bgClass, messageElement.innerHTML);
+        }
     }
 }

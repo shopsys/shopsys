@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="container-fluid py-2" id="navbar-menu">
+                <div class="container-fluid flex-nowrap py-2" id="navbar-menu">
                     <div class="d-none d-xxl-flex navbar-nav min-h-0">
                         <div class="dropdown">
                             <div class="my-2 my-md-0">
@@ -73,14 +73,14 @@
                         {% if isMultidomain() %}
                             {% if allowedAdminLocales()|length > 1 %}
                                 <div class="nav-item dropdown me-2">
-                                    <a class="nav-link dropdown-toggle px-2"
+                                    <a class="nav-link px-2"
                                        data-bs-toggle="dropdown"
                                        href="#"
                                        role="button"
                                        aria-expanded="false"
                                        title="{{ 'Switch locale'|trans }}"
                                     >
-                                        <span class="nav-link-icon">{{ localeFlag(app.user.selectedLocale) }}</span>
+                                        <span class="nav-link-icon me-0">{{ localeFlag(app.user.selectedLocale) }}</span>
                                     </a>
                                     <ul class="dropdown-menu overflow-auto" style="max-height: 300px">
                                         {% for locale in allowedAdminLocales() %}
@@ -99,8 +99,8 @@
                             {% endif %}
 
                             <div class="nav-item dropdown me-2">
-                                <a class="nav-link dropdown-toggle px-2" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon">{{ ux_icon('filter') }}</span>
+                                <a class="nav-link px-2" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon me-0 me-md-2">{{ ux_icon('filter') }}</span>
                                     <span class="nav-link-title d-none d-md-inline">{{ 'Domain filter'|trans }}</span>
                                     {% if app.user.displayOnlyDomainIds|length > 0 %}
                                         <span class="badge badge-sm bg-red text-red-fg">{{ app.user.displayOnlyDomainIds|length }}</span>
@@ -111,8 +111,8 @@
                         {% endif %}
 
                         <div class="nav-item dropdown me-2">
-                            <a class="nav-link dropdown-toggle px-2" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                <span class="nav-link-icon">{{ ux_icon('forward-page') }}</span>
+                            <a class="nav-link px-2" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                <span class="nav-link-icon me-0 me-md-2">{{ ux_icon('forward-page') }}</span>
                                 <span class="d-none d-md-inline">{{ 'Go to Frontend'|trans }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end overflow-auto" style="max-height: 300px; max-width: 270px;">
@@ -131,9 +131,11 @@
                             </ul>
                         </div>
 
+                        {% include '@ShopsysAdministration/partial/flash_message/history.html.twig' %}
+
                         <div class="nav-item dropdown">
                             <a href="#"
-                               class="nav-link dropdown-toggle d-flex lh-1 text-reset p-0 px-2"
+                               class="nav-link d-flex lh-1 text-reset p-0 px-2"
                                data-bs-toggle="dropdown"
                                aria-label="{{ 'Open user menu'|trans }}"
                             >

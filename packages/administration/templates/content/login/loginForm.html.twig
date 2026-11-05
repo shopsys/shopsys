@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
+    {{ form_start(form, {attr: form.vars.attr|merge({'data-controller': 'flash-message-history-clear'})}) }}
     {{ form_errors(form) }}
 
     <div class="mb-3">
