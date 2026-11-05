@@ -122,8 +122,12 @@ describe('useLogin', () => {
         vi.clearAllMocks();
     });
 
-    test('stores web as the last login method after a successful mutation', async () => {
+    test('closes the login popup before navigation and stores the successful login method', async () => {
+        act(() => useSessionStore.getState().updatePortalContent(<div>Login form</div>));
         loginMutationMock.mockResolvedValue({ data: { Login: { showCartMergeInfo: false } } });
+        performAuthHardNavigationMock.mockImplementationOnce(() => {
+            expect(useSessionStore.getState().portalContent).toBeNull();
+        });
         const { result } = renderHook(() => useLogin());
 
         await act(async () => {
@@ -131,9 +135,12 @@ describe('useLogin', () => {
         });
 
         expect(persistStoreState.updateLastLoginType).toHaveBeenCalledWith(TypeLoginTypeEnum.Web);
+        expect(performAuthHardNavigationMock).toHaveBeenCalledOnce();
     });
 
-    test('keeps the last login method after an unsuccessful mutation', async () => {
+    test('keeps the popup open and the last login method after an unsuccessful mutation', async () => {
+        const loginPopup = <div>Login form</div>;
+        act(() => useSessionStore.getState().updatePortalContent(loginPopup));
         loginMutationMock.mockResolvedValue({ error: new Error('Invalid credentials') });
         const { result } = renderHook(() => useLogin());
 
@@ -143,5 +150,7 @@ describe('useLogin', () => {
 
         expect(persistStoreState.updateLastLoginType).not.toHaveBeenCalled();
         expect(useSessionStore.getState().isCartStale).toBe(false);
+        expect(useSessionStore.getState().portalContent).toBe(loginPopup);
+        expect(performAuthHardNavigationMock).not.toHaveBeenCalled();
     });
 });

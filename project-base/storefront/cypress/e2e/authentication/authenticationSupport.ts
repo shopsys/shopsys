@@ -10,7 +10,7 @@ import {
 import { TIDs } from 'tids';
 
 const preventScrollOptions = { scrollBehavior: false } as const;
-const headerLoginFormParentTIDs = [TIDs.header, TIDs.my_account_link];
+const headerLoginFormParentTIDs = [TIDs.layout_popup];
 const headerLoginFormTIDs = [...headerLoginFormParentTIDs, TIDs.login_form];
 
 const fillInEmailAndPasswordInScopedLoginForm = (
@@ -46,7 +46,7 @@ const goToRegistrationPageFromHeaderTID = (headerTID: TIDs.header | TIDs.fixed_h
         .should('be.visible')
         .click({ scrollBehavior: false })
         .should('have.attr', 'aria-expanded', 'true');
-    cy.getByTID([headerTID, TIDs.my_account_link, TIDs.login_popup_register_button])
+    cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_button])
         .filter(':visible')
         .first()
         .should('be.visible')
@@ -118,11 +118,11 @@ export const loginFromHeader = (email: string | undefined, password: string) => 
 
 export const logoutFromHeader = () => {
     openHeaderUserMenu();
-    cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.user_menu_logout])
+    cy.getByTID([TIDs.header, TIDs.user_menu_logout])
         .filter(':visible')
         .first()
         .should('be.visible')
-        .click({ scrollBehavior: false });
+        .click({ scrollBehavior: 'nearest' });
 };
 
 export const fillInEmailAndPasswordInLoginPopup = (email: string | undefined, password: string) => {

@@ -75,8 +75,8 @@ export const CartInHeaderList: FC<CartInHeaderListProps> = ({ hideFocusTrap, isD
             <div
                 ref={scrollContainerRef}
                 className={twJoin(
-                    'w-full overflow-y-auto overflow-x-hidden md:w-127',
-                    isDrawer ? 'min-h-0 flex-1' : 'max-h-[50dvh]',
+                    'w-full overflow-y-auto overflow-x-hidden',
+                    isDrawer ? 'min-h-0 flex-1' : 'max-h-[50dvh] md:w-127',
                     hasScrollableItems && 'pr-2',
                 )}
             >

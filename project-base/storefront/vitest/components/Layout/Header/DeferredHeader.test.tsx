@@ -2,11 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { DeferredAutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/DeferredAutocompleteSearch';
 import { DeferredCartInHeader } from 'components/Layout/Header/Cart/DeferredCartInHeader';
 import { DeferredMenuIconic } from 'components/Layout/Header/MenuIconic/DeferredMenuIconic';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const { deferredReady } = vi.hoisted(() => ({ deferredReady: vi.fn(() => true) }));
+const isUserLoggedIn = vi.hoisted(() => vi.fn(() => false));
 
 vi.mock('utils/useDeferredRender', () => ({ useDeferredRender: deferredReady }));
+vi.mock('utils/auth/useIsUserLoggedIn', () => ({ useIsUserLoggedIn: isUserLoggedIn }));
 vi.mock('components/providers/AuthorizationProvider', () => ({
     useAuthorization: () => ({ canCreateOrder: true }),
 }));
@@ -38,6 +40,10 @@ const HeaderParts = ({ isDesktop }: { isDesktop: boolean | undefined }) => (
 );
 
 describe('deferred desktop header', () => {
+    beforeEach(() => {
+        isUserLoggedIn.mockReturnValue(false);
+    });
+
     test('keeps placeholders before the viewport is recognized even after the deferred wave', () => {
         render(<HeaderParts isDesktop={undefined} />);
 
@@ -70,7 +76,8 @@ describe('deferred desktop header', () => {
         expect(screen.getByText('Menu placeholder')).toBeInTheDocument();
     });
 
-    test('mounts after switching to desktop and unmounts after switching back to mobile', async () => {
+    test.each([false, true])('handles desktop and mobile switches with logged-in state %s', async (loggedIn) => {
+        isUserLoggedIn.mockReturnValue(loggedIn);
         const { rerender } = render(<HeaderParts isDesktop={false} />);
 
         rerender(<HeaderParts isDesktop />);
@@ -83,7 +90,11 @@ describe('deferred desktop header', () => {
 
         expect(screen.queryByText('Interactive search')).not.toBeInTheDocument();
         expect(screen.queryByText('Interactive cart')).not.toBeInTheDocument();
-        expect(screen.queryByText('Interactive menu')).not.toBeInTheDocument();
+        if (loggedIn) {
+            expect(screen.queryByText('Interactive menu')).not.toBeInTheDocument();
+        } else {
+            expect(screen.getByText('Interactive menu')).toBeInTheDocument();
+        }
         expect(screen.queryByText('Search placeholder')).not.toBeInTheDocument();
     });
 });

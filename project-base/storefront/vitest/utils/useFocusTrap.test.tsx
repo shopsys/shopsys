@@ -53,4 +53,38 @@ describe('useFocusTrap', () => {
 
         expect(screen.getByRole('button', { name: 'First' })).toHaveFocus();
     });
+    test('wraps keyboard focus around visible controls when responsive content is hidden', async () => {
+        const user = userEvent.setup();
+        render(<FocusTrapTest />);
+        const first = screen.getByRole('button', { name: 'First' });
+        const last = screen.getByRole('button', { name: 'Last' });
+        const hiddenPanel = document.createElement('section');
+        hiddenPanel.style.display = 'none';
+        hiddenPanel.innerHTML = '<a href="/registration">Hidden registration</a>';
+        last.parentElement?.append(hiddenPanel);
+        first.focus();
+
+        await user.tab({ shift: true });
+
+        expect(last).toHaveFocus();
+        await user.tab();
+        expect(first).toHaveFocus();
+    });
+
+    test('skips a disabled control with an explicit tab index when wrapping focus', async () => {
+        const user = userEvent.setup();
+        render(<FocusTrapTest />);
+        const first = screen.getByRole('button', { name: 'First' });
+        const last = screen.getByRole('button', { name: 'Last' });
+        const disabledButton = document.createElement('button');
+        disabledButton.disabled = true;
+        disabledButton.tabIndex = 0;
+        disabledButton.textContent = 'Logging out...';
+        last.parentElement?.append(disabledButton);
+        first.focus();
+
+        await user.tab({ shift: true });
+
+        expect(last).toHaveFocus();
+    });
 });
