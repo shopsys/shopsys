@@ -44,3 +44,5 @@ export const DEFAULT_ORDERED_ITEMS_FILTER = {
     type: TypeOrderItemTypeEnum.Product,
     excludeProductTypes: [TypeProductTypeEnum.ElectronicGiftVoucher],
 };
+
+export const DRAWER_WIDTH_CLASS_NAME = 'w-[calc(100vw-2.5rem)] min-w-0 max-w-100';

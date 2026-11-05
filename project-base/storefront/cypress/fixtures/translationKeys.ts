@@ -74,6 +74,7 @@ export const translationKeys = {
             userAdded: 'User has been added successfully',
         },
         error: {
+            invalidCredentials: 'Invalid credentials.',
             emailAlreadyRegistered: 'This email is already registered',
         },
         info: {
