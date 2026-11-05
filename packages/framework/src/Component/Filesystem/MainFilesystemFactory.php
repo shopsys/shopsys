@@ -18,9 +18,9 @@ class MainFilesystemFactory implements FilesystemFactoryInterface
     }
 
     #[Override]
-    public function create(): FilesystemOperator
+    public function create(string $rootDirectory = ''): FilesystemOperator
     {
-        $adapter = new LocalFilesystemAdapter($this->projectDir);
+        $adapter = new LocalFilesystemAdapter($this->projectDir . '/' . ltrim($rootDirectory, '/'));
 
         return new Filesystem($adapter, [
             Config::OPTION_DIRECTORY_VISIBILITY => Visibility::PUBLIC,
