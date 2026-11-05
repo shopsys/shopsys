@@ -174,19 +174,20 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
 
 ```diff
      "config": {
+         "process-timeout": 1200,
          "preferred-install": "dist",
--        "component-dir": "project-base/web/components",
+         "component-dir": "web/components",
+         "sort-packages": true,
 -        "platform": {
--            "php": "8.5"
--        }
-+        "component-dir": "project-base/web/components"
-     },
+-            "php": "8.5.0"
+-        },
+         "allow-plugins": {
 ```
 
 Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by Shopsys Platform).
 Then commit the changed `composer.json` and `composer.lock` so all the devs can share the same configuration.
 
-If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-83-platform-in-the-composer-config).
+If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-85-platform-in-the-composer-config).
 
 ---
 
