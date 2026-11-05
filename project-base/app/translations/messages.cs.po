@@ -40,15 +40,6 @@ msgstr "Nepodporovaný typ souboru"
 msgid "Unsupported order"
 msgstr "Neplatné řazení"
 
-msgid "Upload image"
-msgstr "Nahrát obrázek"
-
-msgid "Upload image for mobile devices"
-msgstr "Nahrát obrázek pro mobilní zařízení"
-
-msgid "You can upload following formats: PNG, JPG"
-msgstr "Můžete nahrát následující formáty: PNG, JPG"
-
 msgid "from most expensive"
 msgstr "od nejdražšího"
 
