@@ -1,0 +1,4 @@
+# Newly published package versions are withheld for 7 days (10080 minutes) to limit the exposure to compromised releases,
+# the same policy as "config.policy.cooldown" in composer.json.
+# It applies when the lockfile is resolved (pnpm add, pnpm update), "pnpm install --frozen-lockfile" is not affected.
+minimumReleaseAge: 10080
