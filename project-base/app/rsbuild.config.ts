@@ -40,6 +40,7 @@ export default defineConfig({
                 sassOptions: {
                     quietDeps: true,
                     silenceDeprecations: ['import'],
+                    charset: false,
                 },
             },
         }),
