@@ -12,19 +12,18 @@ use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStocksType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductCatnum;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\FileUploadType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\InteractiveCollectionType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
@@ -44,7 +43,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -673,15 +671,6 @@ final class ProductFormType extends AbstractType
         $builderParametersGroup
             ->add($builder->create('parameters', ProductParameterValueType::class, [
                 'required' => false,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'entry_type' => ProductParameterValueFormType::class,
-                'constraints' => [
-                    new UniqueProductParameters(
-                        message: 'Parameter {{ parameterName }} is used more than once',
-                    ),
-                ],
-                'error_bubbling' => false,
                 'label' => false,
             ])
                 ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
@@ -883,10 +872,9 @@ final class ProductFormType extends AbstractType
         ]);
         $videosGroup
             ->add(
-                $builder->create('productVideosData', CollectionType::class, [
+                $builder->create('productVideosData', InteractiveCollectionType::class, [
                     'entry_type' => VideoTokenType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
+                    'add_label' => t('Add video'),
                     'label' => false,
                     'required' => false,
                 ]),

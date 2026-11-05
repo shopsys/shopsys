@@ -8,7 +8,6 @@ export default class Product {
         Product.initializeSideNavigation($container);
         Product.initBackToTopButton();
         Product.initMobileTOC();
-        Product.initProductVideos($container);
     }
 
     static initializeSideNavigation($container) {
@@ -171,26 +170,6 @@ export default class Product {
         setTimeout(() => {
             Product.adjustFloatingButtonPosition();
         }, 500);
-    }
-
-    static initProductVideos($container) {
-        $container.filterAllNodes('.js-videos-collection').on('click', '.js-remove-row', function () {
-            $(this).parent().parent().remove();
-        });
-
-        $container.filterAllNodes('.js-videos-collection-add-row').on('click', function (_event) {
-            const $collection = $(this).closest('.js-form-group').find('.js-videos-collection');
-            let index = $collection.data('index');
-            index++;
-            const prototype = $collection.data('prototype');
-            const item = prototype.replace(/__name__label__/g, index).replace(/__name__/g, index);
-
-            const $item = $($.parseHTML(item));
-
-            $item.data('index', index);
-            $collection.data('index', index);
-            $collection.append($item);
-        });
     }
 }
 

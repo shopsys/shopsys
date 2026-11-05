@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\Price\PriceWithLimitType;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,14 +26,12 @@ final class TransportInputPricesType extends AbstractType
             ])
             ->add(
                 'pricesWithLimits',
-                CollectionType::class,
+                InteractiveCollectionType::class,
                 [
                     'label' => false,
                     'block_prefix' => 'transport_prices_with_limits_collection',
                     'entry_type' => PriceWithLimitType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'error_bubbling' => false,
+                    'add_label' => t('Add another price with weight limit'),
                     'entry_options' => [
                         'domain_id' => $options['domain_id'],
                         'current_transport_prices_indexed_by_id' => $options['current_transport_prices_indexed_by_id'],
