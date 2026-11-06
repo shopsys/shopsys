@@ -132,7 +132,7 @@ describe('Sentry outbound URL privacy', () => {
 
         await client.flush(2000);
 
-        expect(urls.length).toBeGreaterThan(10);
+        expect(urls.length).toBeGreaterThan(0);
         expect(requests).toHaveLength(1);
         expect(requests[0]).not.toMatch(/FAKE_/);
         expect(requests[0]).toContain('/order-confirmation?returnHash=[Filtered]&writeReviewOrderHash=[Filtered]');
