@@ -82,33 +82,6 @@ class ProductFilterFacade
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
-    public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForFlag($flag);
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    public function getProductFilterConfigForFlag(Flag $flag): ProductFilterConfig
-    {
-        $locale = $this->domain->getLocale();
-
-        return $this->getProductFilterConfig(
-            fn (): array => $this->createAggregationQueryForFlag($flag),
-            fn (ProductFilterConfigIdsData $productFilterConfigIdsData): ProductFilterConfig => $this->createProductFilterConfigForFlag(
-                $productFilterConfigIdsData,
-                $locale,
-            ),
-            'flag',
-            $locale,
-            $flag->getId(),
-        );
-    }
-
     public function getValidatedProductFilterDataPromiseForCategory(Argument $argument, Category $category): Promise
     {
         return $this->getValidatedProductFilterDataPromise(

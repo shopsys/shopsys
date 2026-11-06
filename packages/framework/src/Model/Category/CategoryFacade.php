@@ -16,10 +16,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoryFacade implements TreeSelectionDataProviderInterface
@@ -39,7 +37,6 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterFacade $categoryParameterFacade,
-        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
     ) {
     }
 
@@ -361,32 +358,6 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
     protected function dispatchCategoryEvent(Category $category, string $eventType): void
     {
         $this->eventDispatcher->dispatch(new CategoryEvent($category), $eventType);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
-    {
-        $categoryIds = $this->productElasticsearchRepository->getCategoryIdsForFilterData($productFilterData);
-        $categories = $this->categoryRepository->getCategoriesByIds($categoryIds);
-
-        $categoriesIndexedByIds = [];
-
-        foreach ($categories as $category) {
-            $categoriesIndexedByIds[$category->getId()] = $category;
-        }
-
-        $sortedCategories = [];
-
-        foreach ($categoryIds as $categoryId) {
-            if (!array_key_exists($categoryId, $categoriesIndexedByIds)) {
-                continue;
-            }
-            $sortedCategories[] = $categoriesIndexedByIds[$categoryId];
-        }
-
-        return $sortedCategories;
     }
 
     /**

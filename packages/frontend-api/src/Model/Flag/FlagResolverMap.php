@@ -9,14 +9,13 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class FlagResolverMap extends ResolverMap
 {
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DataLoaderInterface $flagSlugBatchLoader,
-        protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly DataLoaderInterface $flagHreflangLinksBatchLoader,
     ) {
     }
 
@@ -35,7 +34,7 @@ class FlagResolverMap extends ResolverMap
                     return $this->flagSlugBatchLoader->load($flag->getId());
                 },
                 'hreflangLinks' => function (Flag $flag) {
-                    return $this->hreflangLinksFacade->getForFlag($flag, $this->domain->getId());
+                    return $this->flagHreflangLinksBatchLoader->load($flag);
                 },
                 'seo' => fn (Flag $flag) => $flag->getSeoAttributes($this->domain->getId()),
             ],

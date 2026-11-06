@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProvider
 
 class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    protected const string ROUTE_NAME = 'front_flag_detail';
+    public const string ROUTE_NAME = 'front_flag_detail';
 
     public function __construct(
         protected readonly EntityManagerInterface $em,

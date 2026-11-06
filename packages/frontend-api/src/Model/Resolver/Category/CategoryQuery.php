@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 
+use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -16,10 +18,12 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFo
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -40,6 +44,9 @@ class CategoryQuery extends AbstractQuery
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly TransformStringHelper $transformStringHelper,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+        protected readonly DataLoaderInterface $elasticsearchSearchBatchLoader,
+        protected readonly DataLoaderInterface $categoriesBatchLoader,
     ) {
     }
 
@@ -52,21 +59,21 @@ class CategoryQuery extends AbstractQuery
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function categoriesFilteredByProductFilterForFlagQuery(Argument $argument, Flag $flag): array
+    public function categoriesFilteredByProductFilterForFlagQuery(Argument $argument, Flag $flag): Promise
     {
         $argument['filter'] = $argument['productFilter'];
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
-            $argument,
-            $flag,
-        );
+        return $this->productFilterFacade->getValidatedProductFilterDataPromiseForFlag($argument, $flag)
+            ->then(function (ProductFilterData $productFilterData) use ($flag): Promise {
+                $productFilterData->flags = [$flag];
 
-        $productFilterData->flags = [$flag];
-
-        return $this->categoryFacade->getCategoriesOfProductByFilterData($productFilterData);
+                return $this->elasticsearchSearchBatchLoader->load(
+                    $this->productElasticsearchRepository->getAggregationQueryForCategoryIds($productFilterData),
+                );
+            })
+            ->then(fn (array $categoryIdsAggregation): Promise => $this->categoriesBatchLoader->load(
+                $this->productElasticsearchRepository->extractCategoryIdsAggregation($categoryIdsAggregation),
+            ));
     }
 
     public function categoryOrSeoMixByUuidOrUrlSlugQuery(
