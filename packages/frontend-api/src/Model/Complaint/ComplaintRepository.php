@@ -8,9 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintActualResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use SortDirection;
@@ -20,8 +19,7 @@ class ComplaintRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
-        protected readonly ComplaintStatusTypeEnum $complaintStatusTypeEnum,
-        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
+        protected readonly ComplaintActualResolutionEnum $complaintActualResolutionEnum,
     ) {
     }
 
@@ -173,10 +171,9 @@ class ComplaintRepository
             ->join('ci.complaint', 'c')
             ->join('c.status', 'cs')
             ->where('ci.orderItem IN (:orderItems)')
-            ->andWhere('cs.statusType NOT IN (:statusTypesReleasingClaimedQuantity) OR c.resolution IN (:resolutionsKeepingClaimedQuantity)')
+            ->andWhere('cs.closed = FALSE OR c.actualResolution IN (:resolutionsKeepingClaimedQuantity)')
             ->setParameter('orderItems', $orderItems)
-            ->setParameter('statusTypesReleasingClaimedQuantity', $this->complaintStatusTypeEnum->getStatusTypesReleasingClaimedQuantity())
-            ->setParameter('resolutionsKeepingClaimedQuantity', $this->complaintResolutionEnum->getResolutionsKeepingClaimedQuantity())
+            ->setParameter('resolutionsKeepingClaimedQuantity', $this->complaintActualResolutionEnum->getResolutionsKeepingClaimedQuantity())
             ->groupBy('ci.orderItem')
             ->getQuery()
             ->getArrayResult();

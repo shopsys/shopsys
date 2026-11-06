@@ -2382,7 +2382,7 @@ export type TypeOrderItem = {
   quantity: Scalars['Int']['output'];
   /** Order items related to this order item (e.g. additional services of a product item) */
   relatedItems: Array<TypeOrderItem>;
-  /** Quantity still available for complaint after subtracting quantities claimed by complaints that are unresolved or resolved by money return */
+  /** Quantity still available for complaint after subtracting quantities claimed by complaints that are not closed or were resolved by money return */
   remainingComplaintQuantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;

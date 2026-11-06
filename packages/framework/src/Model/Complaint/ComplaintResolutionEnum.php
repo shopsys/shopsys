@@ -54,14 +54,6 @@ class ComplaintResolutionEnum extends AbstractEnum
         return $returnArray;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getResolutionsKeepingClaimedQuantity(): array
-    {
-        return [static::MONEY_RETURN];
-    }
-
     public function isMoneyReturn(string $value): bool
     {
         return $value === static::MONEY_RETURN;

@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Complaint;
 
-use App\DataFixtures\Demo\ComplaintStatusDataFixture;
 use App\DataFixtures\Demo\OrderDataFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintActualResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusDataFactory;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
@@ -33,6 +34,16 @@ final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private ComplaintDataFactory $complaintDataFactory;
+
+    /**
+     * @inject
+     */
+    private ComplaintStatusFacade $complaintStatusFacade;
+
+    /**
+     * @inject
+     */
+    private ComplaintStatusDataFactory $complaintStatusDataFactory;
 
     public function testRemainingQuantityCanBeClaimedAcrossMultipleComplaints(): void
     {
@@ -64,7 +75,7 @@ final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
         $this->assertUserError($response, 'invalid-quantity');
     }
 
-    public function testResolvedMoneyReturnComplaintKeepsClaimedQuantity(): void
+    public function testClosedComplaintResolvedByMoneyReturnKeepsClaimedQuantity(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2, Order::class);
         $orderItem = $order->getProductItems()[0];
@@ -74,14 +85,14 @@ final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
         $this->assertUserError($response, 'invalid-quantity');
     }
 
-    public function testResolvedFixComplaintReleasesClaimedQuantity(): void
+    public function testComplaintInClosedStatusReleasesClaimedQuantity(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
         $orderItem = $order->getProductItems()[0];
 
         $firstResponse = $this->createComplaintForQuantities($order, $orderItem, [$orderItem->getQuantity()]);
         $firstComplaint = $this->getResponseDataForGraphQlType($firstResponse, 'CreateComplaint');
-        $this->resolveComplaint($firstComplaint['number']);
+        $this->closeComplaintInCustomClosedStatus($firstComplaint['number'], ComplaintActualResolutionEnum::REJECTED);
 
         $secondResponse = $this->createComplaintForQuantities($order, $orderItem, [$orderItem->getQuantity()]);
         $secondComplaint = $this->getResponseDataForGraphQlType($secondResponse, 'CreateComplaint');
@@ -89,11 +100,17 @@ final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
         $this->assertSame(0, $secondComplaint['items'][0]['orderItem']['remainingComplaintQuantity']);
     }
 
-    private function resolveComplaint(string $complaintNumber): void
+    private function closeComplaintInCustomClosedStatus(string $complaintNumber, string $actualResolution): void
     {
+        $closedComplaintStatusData = $this->complaintStatusDataFactory->create();
+        $closedComplaintStatusData->name = array_fill_keys(array_keys($closedComplaintStatusData->name), 'Rejected');
+        $closedComplaintStatusData->closed = true;
+        $closedComplaintStatus = $this->complaintStatusFacade->create($closedComplaintStatusData);
+
         $complaint = $this->entityManager->getRepository(Complaint::class)->findOneBy(['number' => $complaintNumber]);
         $complaintData = $this->complaintDataFactory->createFromComplaint($complaint);
-        $complaintData->status = $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED, ComplaintStatus::class);
+        $complaintData->status = $closedComplaintStatus;
+        $complaintData->actualResolution = $actualResolution;
 
         $this->complaintFacade->edit($complaint->getId(), $complaintData);
     }

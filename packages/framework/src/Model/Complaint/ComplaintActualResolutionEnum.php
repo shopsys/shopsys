@@ -34,4 +34,12 @@ class ComplaintActualResolutionEnum extends ComplaintResolutionEnum
             t('Rejected', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN) => static::REJECTED,
         ];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getResolutionsKeepingClaimedQuantity(): array
+    {
+        return [static::MONEY_RETURN];
+    }
 }
