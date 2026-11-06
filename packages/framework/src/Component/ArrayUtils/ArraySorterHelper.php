@@ -13,7 +13,7 @@ class ArraySorterHelper
         $collator = new Collator($locale);
 
         usort($array, static function ($a, $b) use ($valueKey, $collator) {
-            return (int)($collator->getSortKey($a[$valueKey]) >= $collator->getSortKey($b[$valueKey]));
+            return $collator->compare($a[$valueKey], $b[$valueKey]);
         });
     }
 }
