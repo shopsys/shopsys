@@ -41,6 +41,8 @@ services:
         alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
     Tests\App\Test\Client:
 
+    Tests\App\Test\TableRowTestHelper: ~
+
     Tests\FrontendApiBundle\Functional\Order\OrderCancellationTestHelper: ~
 
     Tests\FrontendApiBundle\Functional\Order\OrderPaidTestHelper: ~

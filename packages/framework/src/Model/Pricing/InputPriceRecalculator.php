@@ -65,7 +65,9 @@ class InputPriceRecalculator
                     $payment->getPaymentDomain($paymentInputPrice->getDomainId())->getVat()->getPercent(),
                 );
 
-                $paymentInputPrice->setPrice($newInputPrice);
+                if (!$newInputPrice->equals($paymentInputPrice->getPrice())) {
+                    $paymentInputPrice->setPrice($newInputPrice);
+                }
             }
         });
     }
@@ -89,7 +91,9 @@ class InputPriceRecalculator
                     $transport->getTransportDomain($transportInputPrice->getDomainId())->getVat()->getPercent(),
                 );
 
-                $transportInputPrice->setPrice($newInputPrice);
+                if (!$newInputPrice->equals($transportInputPrice->getPrice())) {
+                    $transportInputPrice->setPrice($newInputPrice);
+                }
             }
         });
     }

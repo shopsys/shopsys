@@ -92,30 +92,82 @@ class GiftCartFacade
         int $quantity,
         int $domainId,
     ): bool {
-        if ($product->getProductType() === ProductTypeEnum::TYPE_INQUIRY) {
-            return false;
+        return $this->getSellableGiftProductIds([$product], $pricingGroup, $quantity, $domainId) !== [];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $giftProducts
+     * @return int[]
+     */
+    public function getSellableGiftProductIds(
+        array $giftProducts,
+        PricingGroup $pricingGroup,
+        int $quantity,
+        int $domainId,
+    ): array {
+        $orderableGiftProducts = array_filter(
+            $giftProducts,
+            static fn (Product $giftProduct): bool => $giftProduct->getProductType() !== ProductTypeEnum::TYPE_INQUIRY,
+        );
+        $giftProductsOnStock = $this->getGiftProductsOnStock($orderableGiftProducts, $quantity, $domainId);
+
+        if ($giftProductsOnStock === []) {
+            return [];
         }
 
-        if (!$product->isAllowedNegativeStock()) {
-            $notOnStockQuantity = $this->productAvailabilityFacade->getNotOnStockQuantity(
-                $product,
-                $domainId,
-                $quantity,
-            ) ?? 0;
-
-            if ($notOnStockQuantity > 0 && $quantity - $notOnStockQuantity <= 0) {
-                return false;
-            }
-        }
-
-        $productVisibility = $this->productVisibilityFacade
-            ->getProductVisibility(
-                $product,
+        if ($this->shouldPreloadGiftProductVisibilities($giftProductsOnStock)) {
+            $this->productVisibilityFacade->preloadProductVisibilitiesByProductIds(
+                array_map(static fn (Product $giftProduct): int => $giftProduct->getId(), $giftProductsOnStock),
                 $pricingGroup,
                 $domainId,
             );
+        }
 
-        return $productVisibility->isVisible() && !$product->isCalculatedSellingDenied($domainId);
+        $sellableGiftProductIds = [];
+
+        foreach ($giftProductsOnStock as $giftProduct) {
+            $productVisibility = $this->productVisibilityFacade->getProductVisibility($giftProduct, $pricingGroup, $domainId);
+
+            if ($productVisibility->isVisible() && !$giftProduct->isCalculatedSellingDenied($domainId)) {
+                $sellableGiftProductIds[] = $giftProduct->getId();
+            }
+        }
+
+        return $sellableGiftProductIds;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $giftProducts
+     */
+    protected function shouldPreloadGiftProductVisibilities(array $giftProducts): bool
+    {
+        return count($giftProducts) > 1;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $giftProducts
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    protected function getGiftProductsOnStock(array $giftProducts, int $quantity, int $domainId): array
+    {
+        $giftProductsWithLimitedStock = array_values(array_filter(
+            $giftProducts,
+            static fn (Product $giftProduct): bool => !$giftProduct->isAllowedNegativeStock(),
+        ));
+        $notOnStockQuantitiesIndexedByProductId = $this->productAvailabilityFacade->getNotOnStockQuantitiesIndexedByProductId(
+            $giftProductsWithLimitedStock,
+            $domainId,
+            $quantity,
+        );
+
+        return array_values(array_filter(
+            $giftProducts,
+            static function (Product $giftProduct) use ($notOnStockQuantitiesIndexedByProductId, $quantity): bool {
+                $notOnStockQuantity = $notOnStockQuantitiesIndexedByProductId[$giftProduct->getId()] ?? 0;
+
+                return $notOnStockQuantity <= 0 || $quantity - $notOnStockQuantity > 0;
+            },
+        ));
     }
 
     public function refreshProductGiftCartItemsAndGetInvalidItems(Cart $cart, int $domainId): array

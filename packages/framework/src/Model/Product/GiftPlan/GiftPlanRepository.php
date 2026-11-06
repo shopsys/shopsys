@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\GiftPlan;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\Exception\GiftPlanNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -85,27 +86,6 @@ class GiftPlanRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
-     */
-    public function findActiveGiftPlansByMainProductAndDomainId(Product $mainProduct, int $domainId): array
-    {
-        $now = $this->clock->now();
-
-        $qb = $this->getRepository()->createQueryBuilder('gp')
-            ->innerJoin('gp.mainProducts', 'mp')
-            ->where('mp = :mainProduct')
-            ->andWhere('gp.domainId = :domainId')
-            ->andWhere('(gp.validFrom IS NULL OR gp.validFrom < :now)')
-            ->andWhere('(gp.validTo IS NULL OR gp.validTo > :now)')
-            ->setParameter('mainProduct', $mainProduct)
-            ->setParameter('now', $now)
-            ->setParameter('domainId', $domainId)
-            ->orderBy('gp.id', SortDirection::Ascending);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * @param int[] $mainProductIds
      * @return int[][]
      */
@@ -115,23 +95,11 @@ class GiftPlanRepository
             return [];
         }
 
-        $now = $this->clock->now();
-
-        $qb = $this->getRepository()->createQueryBuilder('gp')
-            ->select('DISTINCT mp.id AS mainProductId, gift.id AS giftProductId')
-            ->innerJoin('gp.mainProducts', 'mp')
-            ->innerJoin('gp.giftProduct', 'gift')
-            ->where('mp.id IN (:mainProductIds)')
+        $rows = $this->createActiveGiftProductIdsQueryBuilder($mainProductIds)
             ->andWhere('gp.domainId = :domainId')
-            ->andWhere('(gp.validFrom IS NULL OR gp.validFrom < :now)')
-            ->andWhere('(gp.validTo IS NULL OR gp.validTo > :now)')
-            ->setParameter('mainProductIds', $mainProductIds)
             ->setParameter('domainId', $domainId)
-            ->setParameter('now', $now)
-            ->orderBy('mp.id', SortDirection::Ascending)
-            ->addOrderBy('gift.id', SortDirection::Ascending);
-
-        $rows = $qb->getQuery()->getArrayResult();
+            ->getQuery()
+            ->getArrayResult();
 
         $giftIdsIndexedByMainProductId = array_fill_keys(array_map('intval', $mainProductIds), []);
 
@@ -149,18 +117,82 @@ class GiftPlanRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
+     * @param int[] $mainProductIds
+     * @return array<int, array<int, int[]>>
      */
-    public function findAll(): array
+    public function getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(array $mainProductIds): array
     {
-        return $this->getRepository()->findAll();
+        if ($mainProductIds === []) {
+            return [];
+        }
+
+        $rows = $this->createActiveGiftProductIdsQueryBuilder($mainProductIds)
+            ->addSelect('gp.domainId AS domainId')
+            ->getQuery()
+            ->getArrayResult();
+
+        $giftProductIdsIndexedByDomainIdAndMainProductId = [];
+
+        foreach ($rows as $row) {
+            $giftProductIdsIndexedByDomainIdAndMainProductId[(int)$row['domainId']][(int)$row['mainProductId']][] = (int)$row['giftProductId'];
+        }
+
+        return $giftProductIdsIndexedByDomainIdAndMainProductId;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlan[]
+     * @param int[] $mainProductIds
      */
-    public function findByGiftProductId(int $giftProductId): array
+    protected function createActiveGiftProductIdsQueryBuilder(array $mainProductIds): QueryBuilder
     {
-        return $this->getRepository()->findBy(['giftProduct' => $giftProductId], ['id' => SortDirection::Ascending]);
+        return $this->getRepository()->createQueryBuilder('gp')
+            ->select('DISTINCT mp.id AS mainProductId, gift.id AS giftProductId')
+            ->innerJoin('gp.mainProducts', 'mp')
+            ->innerJoin('gp.giftProduct', 'gift')
+            ->where('mp.id IN (:mainProductIds)')
+            ->andWhere('(gp.validFrom IS NULL OR gp.validFrom < :now)')
+            ->andWhere('(gp.validTo IS NULL OR gp.validTo > :now)')
+            ->setParameter('mainProductIds', $mainProductIds)
+            ->setParameter('now', $this->clock->now())
+            ->orderBy('mp.id', SortDirection::Ascending)
+            ->addOrderBy('gift.id', SortDirection::Ascending);
+    }
+
+    /**
+     * @param int[] $giftProductIds
+     * @return int[]
+     */
+    public function getMainProductIdsByGiftProductIds(array $giftProductIds): array
+    {
+        if ($giftProductIds === []) {
+            return [];
+        }
+
+        $rows = $this->createMainProductIdsQueryBuilder()
+            ->where('IDENTITY(gp.giftProduct) IN (:giftProductIds)')
+            ->setParameter('giftProductIds', $giftProductIds)
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return array_map('intval', $rows);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getAllMainProductIds(): array
+    {
+        $rows = $this->createMainProductIdsQueryBuilder()
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        return array_map('intval', $rows);
+    }
+
+    protected function createMainProductIdsQueryBuilder(): QueryBuilder
+    {
+        return $this->getRepository()->createQueryBuilder('gp')
+            ->select('DISTINCT mp.id')
+            ->innerJoin('gp.mainProducts', 'mp');
     }
 }
