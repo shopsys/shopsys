@@ -165,10 +165,13 @@ class CartApiFacade
         return $notAddedProductNames;
     }
 
-    public function restoreProductGiftToCart(string $giftProductUuid, Cart $cart): void
-    {
+    public function restoreProductGiftToCart(
+        string $giftProductUuid,
+        Cart $cart,
+        ?string $mainProductUuid = null,
+    ): void {
         try {
-            $this->giftCartFacade->restoreProductGiftToCart($cart, $giftProductUuid, $this->domain->getId());
+            $this->giftCartFacade->restoreProductGiftToCart($cart, $giftProductUuid, $this->domain->getId(), $mainProductUuid);
         } catch (InvalidCartItemException $e) {
             throw new InvalidCartItemUserError($e->getMessage());
         }

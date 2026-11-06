@@ -55,6 +55,9 @@ foreach ($packagesDirectoryIterator as $path) {
  * As ecs-skip-rules.php file is included in this file, the variable would be overridden.
  */
 $pathsExcludedFromStrictTyping = [
+    // Package gift entities and setup data keep their new extension surface untyped.
+    __DIR__ . '/packages/framework/src/Model/Cart/Item/CartItem.php',
+    __DIR__ . '/packages/framework/src/Model/Product/GiftPlan/GiftCartItemSetup.php',
     __DIR__ . '/packages/framework/tests/Unit/Component/ClassExtension/Source/*',
     __DIR__ . '/packages/framework/src/Model/Localization/TranslatableEntityTrait.php',
     __DIR__ . '/packages/framework/src/Model/Security/UniqueLoginInterface.php',
@@ -209,6 +212,9 @@ return ECSConfig::configure()
             ],
             ForbiddenSuperGlobalSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
+            ],
+            ReturnTypeHintSniff::class => [
+                __DIR__ . '/packages/framework/src/Model/Cart/Item/CartItem.php',
             ],
             PropertyTypeHintSniff::class => $pathsExcludedFromStrictTyping,
             ParameterTypeHintSniff::class . '.' . ParameterTypeHintSniff::CODE_MISSING_NATIVE_TYPE_HINT => $pathsExcludedFromStrictTyping,

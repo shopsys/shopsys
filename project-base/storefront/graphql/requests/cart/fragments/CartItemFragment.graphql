@@ -3,6 +3,7 @@ fragment CartItemFragment on CartItem {
     uuid
     quantity
     type
+    giftMainProductUuid
     freeQuantity
     product {
         __typename

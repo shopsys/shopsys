@@ -79,6 +79,7 @@ class MergeCartFacade
                     $itemToMerge->getWatchedPrice(),
                     $itemToMerge->getType(),
                 );
+                $newCartItem->setGiftMainProduct($itemToMerge->getGiftMainProduct());
                 $newCartItem->setAdditionalServices($itemToMerge->getAdditionalServices());
                 $newCartItem->setWatchedAdditionalServicePrices($itemToMerge->getWatchedAdditionalServicePrices());
                 $currentCart->addItem($newCartItem);

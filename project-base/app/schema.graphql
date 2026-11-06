@@ -505,6 +505,8 @@ type CartItem {
   additionalServices: [AdditionalService!]!
   "Quantity of free items from X+Y promotion"
   freeQuantity: Int!
+  "UUID of the product this gift belongs to"
+  giftMainProductUuid: Uuid
   "Product in the cart"
   product: Product!
   "Quantity of items in the cart"
@@ -3219,6 +3221,8 @@ input RemoveCustomerUserDataInput {
 
 "A manually removed gift that can be restored to the cart"
 type RemovedCartGift {
+  "UUID of the product this removed gift belongs to"
+  mainProductUuid: Uuid
   "Gift product to restore"
   product: Product!
   "Current gift quantity that will be restored"
@@ -3237,6 +3241,8 @@ input RestoreCartGiftInput {
   cartUuid: Uuid = null
   "UUID of the removed gift product to restore"
   giftProductUuid: Uuid!
+  "Restore the gift only for this product; omitted restores all eligible removed gifts of this product type"
+  mainProductUuid: Uuid
 }
 
 "Represents sales representative"

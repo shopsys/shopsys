@@ -40,7 +40,7 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
     const [restoringGiftUuid, setRestoringGiftUuid] = useState<string | null>(null);
     const checkboxToRefocus = useRef<HTMLInputElement | null>(null);
 
-    const restoreGift = async (giftProductUuid: string) => {
+    const restoreGift = async (giftProductUuid: string, mainProductUuid?: string | null) => {
         if (restoringGiftUuid !== null) {
             return;
         }
@@ -48,7 +48,7 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
         setRestoringGiftUuid(giftProductUuid);
 
         try {
-            const result = await restoreCartGiftMutation({ input: { cartUuid, giftProductUuid } });
+            const result = await restoreCartGiftMutation({ input: { cartUuid, giftProductUuid, mainProductUuid } });
 
             if (result.data?.RestoreCartGift) {
                 dispatchBroadcastChannel('refetchCart', domainId);
@@ -130,7 +130,7 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
                                         if (giftItem.state === 'added') {
                                             onRemoveGift(giftItem.cartItem, giftItem.listIndex);
                                         } else {
-                                            void restoreGift(gift.uuid);
+                                            void restoreGift(gift.uuid, giftItem.removedGift.mainProductUuid);
                                         }
                                     }}
                                 />

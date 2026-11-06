@@ -11,6 +11,9 @@ use App\Model\Product\Product;
 use Override;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
@@ -37,6 +40,16 @@ final class CartGiftMergeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private CartWatcherFacade $cartWatcherFacade;
+
+    /**
+     * @inject
+     */
+    private GiftPlanFacade $giftPlanFacade;
+
+    /**
+     * @inject
+     */
+    private GiftPlanDataFactory $giftPlanDataFactory;
 
     private CustomerUser $customerUser;
 
@@ -79,7 +92,34 @@ final class CartGiftMergeTest extends TransactionFunctionalTestCase
         self::assertSame([], $this->customerCart->getProductGiftCartItems());
     }
 
-    private function removeGiftFromCart(Cart $cart): Product
+    public function testSharedGiftRemovalRemainsSpecificToItsParentAfterLoginMerge(): void
+    {
+        $otherParent = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $gift = array_first($this->customerCart->getProductGiftCartItems())->getProduct();
+        $planData = $this->giftPlanDataFactory->create();
+        $planData->name = 'Shared gift after login';
+        $planData->domainId = 1;
+        $planData->giftProduct = $gift;
+        $planData->mainProducts = [$otherParent];
+        $this->giftPlanFacade->create($planData);
+        $this->cartFacade->addProductToExistingCart($otherParent, 3, $this->customerCart);
+        $removedParent = array_first($this->anonymousCart->getProductCartItems())->getProduct();
+        $this->removeGiftFromCart($this->anonymousCart);
+
+        $this->mergeAnonymousCartToCustomerCart();
+        $this->em->flush();
+        $this->em->clear();
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists($this->customerUser, null);
+
+        self::assertTrue($cart->isProductGiftRemoved($gift, $removedParent));
+        self::assertFalse($cart->isProductGiftRemoved($gift, $otherParent));
+        $gifts = array_values($cart->getProductGiftCartItems());
+        self::assertCount(1, $gifts);
+        self::assertSame($otherParent->getId(), $gifts[0]->getGiftMainProduct()->getId());
+        self::assertSame(3, $gifts[0]->getQuantity());
+    }
+
+    private function removeGiftFromCart(Cart $cart): BaseProduct
     {
         $giftItem = array_first($cart->getProductGiftCartItems());
         self::assertNotNull($giftItem);

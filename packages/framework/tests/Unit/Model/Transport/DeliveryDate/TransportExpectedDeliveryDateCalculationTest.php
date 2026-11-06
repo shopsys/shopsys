@@ -145,6 +145,22 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
     }
 
+    public function testSeparateRowsOfSameGiftShareStockForRestockingDate(): void
+    {
+        $product = $this->createStub(Product::class);
+        $product->method('getId')->willReturn(1);
+        $availability = $this->createStub(ProductAvailabilityFacade::class);
+        $availability->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')->willReturn([1 => 1]);
+        $availability->method('findValidExpectedRestockingDate')->willReturn(new DatePoint(self::RESTOCKING_DATE, new DateTimeZone('UTC')));
+        $cart = $this->createStub(Cart::class);
+        $cart->method('getQuantifiedProducts')->willReturn([new QuantifiedProduct($product, 1), new QuantifiedProduct($product, 1)]);
+
+        $date = $this->createTransportExpectedDeliveryDateCalculation(productAvailabilityFacade: $availability)
+            ->calculateExpectedDeliveryDate($this->createTransportStubDeliveringAnyDay(self::DAYS_UNTIL_DELIVERY), $cart, Domain::FIRST_DOMAIN_ID);
+
+        $this->assertDeliveryDateSame(self::DELIVERY_DATE_AFTER_RESTOCKING, $date);
+    }
+
     public function testStandardDeliveryDateIsReturnedWithoutCart(): void
     {
         $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()->calculateExpectedDeliveryDate(

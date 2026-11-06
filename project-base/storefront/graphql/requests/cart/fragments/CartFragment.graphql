@@ -10,6 +10,7 @@ fragment CartFragment on Cart {
         }
     }
     removedGifts {
+        mainProductUuid
         quantity
         product {
             ...ProductGiftFragment

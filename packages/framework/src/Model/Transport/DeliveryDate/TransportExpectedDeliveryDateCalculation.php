@@ -513,9 +513,16 @@ class TransportExpectedDeliveryDateCalculation
                 $domainId,
             );
 
+        $quantitiesByProductId = [];
+
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $productId = $quantifiedProduct->getProduct()->getId();
+            $quantitiesByProductId[$productId] = ($quantitiesByProductId[$productId] ?? 0) + $quantifiedProduct->getQuantity();
+        }
+
         return array_filter(
             $quantifiedProducts,
-            static fn (QuantifiedProduct $quantifiedProduct): bool => $quantifiedProduct->getQuantity() > $stockQuantitiesIndexedByProductId[$quantifiedProduct->getProduct()->getId()],
+            static fn (QuantifiedProduct $quantifiedProduct): bool => $quantitiesByProductId[$quantifiedProduct->getProduct()->getId()] > $stockQuantitiesIndexedByProductId[$quantifiedProduct->getProduct()->getId()],
         );
     }
 

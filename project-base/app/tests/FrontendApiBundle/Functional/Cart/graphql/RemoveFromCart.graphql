@@ -12,12 +12,14 @@ mutation RemoveFromCart(
         items {
             uuid
             type
+            giftMainProductUuid
             quantity
             product {
                 uuid
             }
         }
         removedGifts {
+            mainProductUuid
             quantity
             product {
                 uuid

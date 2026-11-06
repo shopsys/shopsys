@@ -11,6 +11,8 @@ use App\Model\Product\ProductFacade;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 final class CartGiftTest extends GraphQlTestCase
@@ -29,6 +31,16 @@ final class CartGiftTest extends GraphQlTestCase
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
+
+    /**
+     * @inject
+     */
+    private GiftPlanFacade $giftPlanFacade;
+
+    /**
+     * @inject
+     */
+    private GiftPlanDataFactory $giftPlanDataFactory;
 
     private Product $productWithGift;
 
@@ -172,6 +184,78 @@ final class CartGiftTest extends GraphQlTestCase
         self::assertSame([], $restoredCart['removedGifts']);
     }
 
+    public function testSharedGiftCanBeRemovedAndRestoredForEachProductIndependently(): void
+    {
+        $this->addGiftPlan($this->giftProduct, [$this->unrelatedProduct]);
+        $cart = $this->addProduct($this->productWithGift, 5);
+        $cart = $this->addProduct($this->unrelatedProduct, 3, $cart['uuid']);
+        $gifts = array_column($this->getGiftItems($cart), null, 'giftMainProductUuid');
+        self::assertCount(2, $gifts);
+        self::assertSame(5, $gifts[$this->productWithGift->getUuid()]['quantity']);
+        self::assertSame(3, $gifts[$this->unrelatedProduct->getUuid()]['quantity']);
+
+        $cart = $this->removeItem($cart['uuid'], $gifts[$this->productWithGift->getUuid()]['uuid']);
+        $cart = $this->addProduct($this->productWithGift, 2, $cart['uuid'], true);
+
+        self::assertCount(1, $this->getGiftItems($cart));
+        self::assertSame($this->unrelatedProduct->getUuid(), array_first($this->getGiftItems($cart))['giftMainProductUuid']);
+        self::assertSame(3, array_first($this->getGiftItems($cart))['quantity']);
+        self::assertSame($this->productWithGift->getUuid(), $cart['removedGifts'][0]['mainProductUuid']);
+        self::assertSame(2, $cart['removedGifts'][0]['quantity']);
+
+        $response = $this->restoreGift($cart['uuid'], $this->giftProduct->getUuid(), $this->productWithGift->getUuid());
+        $cart = $this->getResponseDataForGraphQlType($response, 'RestoreCartGift');
+        $gifts = array_column($this->getGiftItems($cart), null, 'giftMainProductUuid');
+        self::assertSame(2, $gifts[$this->productWithGift->getUuid()]['quantity']);
+        self::assertSame(3, $gifts[$this->unrelatedProduct->getUuid()]['quantity']);
+        self::assertSame([], $cart['removedGifts']);
+    }
+
+    public function testOnlyRequestedRemovedGiftPairIsRestored(): void
+    {
+        $this->addGiftPlan($this->giftProduct, [$this->unrelatedProduct]);
+        $cart = $this->addProduct($this->unrelatedProduct, 3);
+        $cart = $this->addProduct($this->productWithGift, 2, $cart['uuid']);
+
+        foreach ($this->getGiftItems($cart) as $gift) {
+            $cart = $this->removeItem($cart['uuid'], $gift['uuid']);
+        }
+
+        $response = $this->restoreGift($cart['uuid'], $this->giftProduct->getUuid(), $this->unrelatedProduct->getUuid());
+        $cart = $this->getResponseDataForGraphQlType($response, 'RestoreCartGift');
+
+        self::assertCount(1, $this->getGiftItems($cart));
+        self::assertSame($this->unrelatedProduct->getUuid(), array_first($this->getGiftItems($cart))['giftMainProductUuid']);
+        self::assertSame($this->productWithGift->getUuid(), $cart['removedGifts'][0]['mainProductUuid']);
+    }
+
+    public function testDifferentGiftsForOneProductRemainIndependent(): void
+    {
+        $this->addGiftPlan($this->unrelatedProduct, [$this->productWithGift]);
+        $cart = $this->addProduct($this->productWithGift, 2);
+        self::assertCount(2, $this->getGiftItems($cart));
+        $originalGift = array_first(array_filter($this->getGiftItems($cart), fn (array $item) => $item['product']['uuid'] === $this->giftProduct->getUuid()));
+
+        $cart = $this->removeItem($cart['uuid'], $originalGift['uuid']);
+
+        self::assertCount(1, $this->getGiftItems($cart));
+        self::assertSame($this->unrelatedProduct->getUuid(), array_first($this->getGiftItems($cart))['product']['uuid']);
+        self::assertSame($this->giftProduct->getUuid(), $cart['removedGifts'][0]['product']['uuid']);
+    }
+
+    /**
+     * @param \App\Model\Product\Product[] $mainProducts
+     */
+    private function addGiftPlan(Product $gift, array $mainProducts): void
+    {
+        $data = $this->giftPlanDataFactory->create();
+        $data->name = 'Independent gift regression';
+        $data->domainId = Domain::FIRST_DOMAIN_ID;
+        $data->giftProduct = $gift;
+        $data->mainProducts = $mainProducts;
+        $this->giftPlanFacade->create($data);
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -222,11 +306,12 @@ final class CartGiftTest extends GraphQlTestCase
     /**
      * @return array<string, mixed>
      */
-    private function restoreGift(string $cartUuid, string $giftProductUuid): array
+    private function restoreGift(string $cartUuid, string $giftProductUuid, ?string $mainProductUuid = null): array
     {
         return $this->getResponseContentForGql(__DIR__ . '/graphql/RestoreCartGift.graphql', [
             'cartUuid' => $cartUuid,
             'giftProductUuid' => $giftProductUuid,
+            'mainProductUuid' => $mainProductUuid,
         ]);
     }
 

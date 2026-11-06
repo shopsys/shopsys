@@ -8,3 +8,6 @@ RestoreCartGiftInputDecorator:
             giftProductUuid:
                 type: "Uuid!"
                 description: "UUID of the removed gift product to restore"
+            mainProductUuid:
+                type: "Uuid"
+                description: "Restore the gift only for this product; omitted restores all eligible removed gifts of this product type"

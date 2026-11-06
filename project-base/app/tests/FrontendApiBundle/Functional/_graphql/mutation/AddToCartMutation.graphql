@@ -62,6 +62,7 @@ mutation AddToCart(
                 quantity
                 freeQuantity
                 type
+                giftMainProductUuid
                 additionalServices {
                     catnum
                 }
@@ -75,6 +76,7 @@ mutation AddToCart(
                 }
             }
             removedGifts {
+                mainProductUuid
                 quantity
                 product {
                     uuid

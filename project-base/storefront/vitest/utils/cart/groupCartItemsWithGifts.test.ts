@@ -4,6 +4,7 @@ import { groupCartItemsWithGifts } from 'utils/cart/groupCartItemsWithGifts';
 import { describe, expect, test } from 'vitest';
 
 type CartItem = TypeCartFragment['items'][number];
+type RemovedGift = TypeCartFragment['removedGifts'][number];
 
 const makeItem = (uuid: string, giftUuids: string[] = [], type = TypeCartItemTypeEnum.Product): CartItem =>
     ({
@@ -14,7 +15,7 @@ const makeItem = (uuid: string, giftUuids: string[] = [], type = TypeCartItemTyp
     }) as CartItem;
 
 describe('groupCartItemsWithGifts', () => {
-    test('groups an added shared gift once and preserves its server quantity, item and original list index', () => {
+    test('preserves the item and index of a legacy gift without an explicit parent', () => {
         const firstProduct = makeItem('printer', ['gift']);
         const gift = makeItem('gift', [], TypeCartItemTypeEnum.ProductGift);
         const secondProduct = makeItem('coffee machine', ['gift']);
@@ -42,7 +43,7 @@ describe('groupCartItemsWithGifts', () => {
         expect(items).toEqual([firstProduct, gift, secondProduct]);
     });
 
-    test('keeps a removed shared gift under the same product with all related products', () => {
+    test('keeps a legacy removed gift under its first qualifying product', () => {
         const products = [makeItem('printer', ['gift']), makeItem('coffee machine', ['gift'])];
         const removedGift = {
             product: { uuid: 'gift', fullName: 'gift' },
@@ -62,6 +63,58 @@ describe('groupCartItemsWithGifts', () => {
             },
         ]);
         expect(rows[1].gifts).toEqual([]);
+    });
+
+    test('groups shared gifts independently using the server parent and quantity in either insertion order', () => {
+        const printer = makeItem('printer', ['gift']);
+        const coffee = makeItem('coffee', ['gift', 'beans']);
+        const printerGift = {
+            ...makeItem('gift', [], TypeCartItemTypeEnum.ProductGift),
+            uuid: 'printer-gift',
+            giftMainProductUuid: 'printer',
+            quantity: 5,
+        };
+        const coffeeGift = {
+            ...makeItem('gift', [], TypeCartItemTypeEnum.ProductGift),
+            uuid: 'coffee-gift',
+            giftMainProductUuid: 'coffee',
+            quantity: 3,
+        };
+        const beans = {
+            ...makeItem('beans', [], TypeCartItemTypeEnum.ProductGift),
+            giftMainProductUuid: 'coffee',
+            quantity: 3,
+        };
+
+        for (const parents of [
+            [printer, coffee],
+            [coffee, printer],
+        ]) {
+            const rows = groupCartItemsWithGifts([...parents, printerGift, coffeeGift, beans], []);
+
+            expect(rows.find((row) => row.cartItem === printer)?.gifts).toEqual([
+                expect.objectContaining({ state: 'added', cartItem: printerGift }),
+            ]);
+            expect(rows.find((row) => row.cartItem === coffee)?.gifts).toEqual([
+                expect.objectContaining({ state: 'added', cartItem: coffeeGift }),
+                expect.objectContaining({ state: 'added', cartItem: beans }),
+            ]);
+        }
+    });
+
+    test('shows one removed pair under its parent while the shared gift stays selected for another', () => {
+        const printer = makeItem('printer');
+        const coffee = makeItem('coffee');
+        const gift = {
+            ...makeItem('gift', [], TypeCartItemTypeEnum.ProductGift),
+            giftMainProductUuid: 'coffee',
+        };
+        const removed = { product: { uuid: 'gift' }, quantity: 5, mainProductUuid: 'printer' } as RemovedGift;
+
+        const rows = groupCartItemsWithGifts([coffee, gift, printer], [removed]);
+
+        expect(rows[0].gifts).toEqual([expect.objectContaining({ state: 'added', cartItem: gift })]);
+        expect(rows[1].gifts).toEqual([expect.objectContaining({ state: 'removed', removedGift: removed })]);
     });
 
     test('moves a shared gift to the remaining eligible product when its first owner disappears', () => {

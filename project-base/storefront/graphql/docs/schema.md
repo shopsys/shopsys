@@ -3965,6 +3965,15 @@ Quantity of free items from X+Y promotion
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.giftmainproductuuid">giftMainProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of the product this gift belongs to
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -11202,6 +11211,15 @@ A manually removed gift that can be restored to the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="removedcartgift.mainproductuuid">mainProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of the product this removed gift belongs to
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="removedcartgift.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -15535,6 +15553,15 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 <td>
 
 UUID of the removed gift product to restore
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="restorecartgiftinput.mainproductuuid">mainProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Restore the gift only for this product; omitted restores all eligible removed gifts of this product type
 
 </td>
 </tr>

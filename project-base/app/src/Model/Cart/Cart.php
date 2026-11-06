@@ -29,9 +29,9 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \App\Model\Product\Product[] getPersonalPickupOnlyProducts()
  * @method \App\Model\Product\Product[] getElectronicGiftVoucherProducts()
  * @method \App\Model\Product\Product[] getProductsOtherThanElectronicGiftVouchers()
- * @method void markProductGiftRemoved(\App\Model\Product\Product $product)
- * @method bool isProductGiftRemoved(\App\Model\Product\Product $product)
- * @method void restoreProductGift(\App\Model\Product\Product $product)
+ * @method void markProductGiftRemoved(\App\Model\Product\Product $product, \App\Model\Product\Product|null $mainProduct = null)
+ * @method bool isProductGiftRemoved(\App\Model\Product\Product $product, \App\Model\Product\Product|null $mainProduct = null)
+ * @method void restoreProductGift(\App\Model\Product\Product $product, \App\Model\Product\Product|null $mainProduct = null)
  * @method void mergeRemovedProductGifts(\App\Model\Cart\Cart $cart)
  */
 #[AsMcpTable]

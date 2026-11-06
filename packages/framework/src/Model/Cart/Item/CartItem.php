@@ -22,6 +22,7 @@ use Symfony\Component\Clock\DatePoint;
 #[AsMcpTable]
 #[ORM\Table(name: 'cart_items')]
 #[ORM\Entity]
+#[ORM\UniqueConstraint(name: 'unique_cart_product_gift_pair', columns: ['cart_id', 'product_id', 'gift_main_product_id'], options: ['where' => "(type = 'productGift')"])]
 class CartItem
 {
     /**
@@ -48,6 +49,14 @@ class CartItem
     #[ORM\JoinColumn(nullable: true, name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Product::class)]
     protected $product;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    #[AsMcpColumn]
+    #[ORM\ManyToOne(targetEntity: Product::class)]
+    #[ORM\JoinColumn(name: 'gift_main_product_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    protected $giftMainProduct = null;
 
     /**
      * @var int
@@ -196,7 +205,8 @@ class CartItem
 
     public function isSimilarItemAs(self $cartItem): bool
     {
-        return $this->getProduct()->getId() === $cartItem->getProduct()->getId() && $this->getType() === $cartItem->getType();
+        return $this->getProduct()->getId() === $cartItem->getProduct()->getId() && $this->getType() === $cartItem->getType()
+            && $this->giftMainProduct?->getId() === $cartItem->getGiftMainProduct()?->getId();
     }
 
     /**
@@ -239,6 +249,30 @@ class CartItem
     protected function setType($type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public function getGiftMainProduct()
+    {
+        return $this->giftMainProduct;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $mainProduct
+     */
+    public function setGiftMainProduct($mainProduct)
+    {
+        $this->giftMainProduct = $mainProduct;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGiftMainProductUuid()
+    {
+        return $this->giftMainProduct?->getUuid();
     }
 
     public function isProductGift(): bool

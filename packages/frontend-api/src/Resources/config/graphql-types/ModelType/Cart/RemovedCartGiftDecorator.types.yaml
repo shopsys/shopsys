@@ -11,3 +11,6 @@ RemovedCartGiftDecorator:
             quantity:
                 type: "Int!"
                 description: "Current gift quantity that will be restored"
+            mainProductUuid:
+                type: "Uuid"
+                description: "UUID of the product this removed gift belongs to"

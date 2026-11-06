@@ -15,6 +15,9 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method bool isSimilarItemAs(\App\Model\Cart\Item\CartItem $cartItem)
  * @property \App\Model\Cart\Cart $cart
  * @method __construct(\App\Model\Cart\Cart $cart, \App\Model\Product\Product $product, int $quantity, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface|null $watchedPrice, string $type = \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum::TYPE_PRODUCT)
+ * @property \App\Model\Product\Product|null $giftMainProduct
+ * @method \App\Model\Product\Product|null getGiftMainProduct()
+ * @method setGiftMainProduct(\App\Model\Product\Product|null $mainProduct)
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'cart_items')]

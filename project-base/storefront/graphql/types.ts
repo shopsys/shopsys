@@ -624,6 +624,8 @@ export type TypeCartItem = {
   additionalServices: Array<TypeAdditionalService>;
   /** Quantity of free items from X+Y promotion */
   freeQuantity: Scalars['Int']['output'];
+  /** UUID of the product this gift belongs to */
+  giftMainProductUuid: Maybe<Scalars['Uuid']['output']>;
   /** Product in the cart */
   product: TypeProduct;
   /** Quantity of items in the cart */
@@ -4075,6 +4077,8 @@ export type TypeRemoveFromCartInput = {
 /** A manually removed gift that can be restored to the cart */
 export type TypeRemovedCartGift = {
   __typename?: 'RemovedCartGift';
+  /** UUID of the product this removed gift belongs to */
+  mainProductUuid: Maybe<Scalars['Uuid']['output']>;
   /** Gift product to restore */
   product: TypeProduct;
   /** Current gift quantity that will be restored */
@@ -4086,6 +4090,8 @@ export type TypeRestoreCartGiftInput = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** UUID of the removed gift product to restore */
   giftProductUuid: Scalars['Uuid']['input'];
+  /** Restore the gift only for this product; omitted restores all eligible removed gifts of this product type */
+  mainProductUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represents sales representative */

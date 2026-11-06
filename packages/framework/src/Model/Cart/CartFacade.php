@@ -152,7 +152,7 @@ class CartFacade
         $cartItemToRemove = $cart->getItemByUuid($cartItemUuid);
 
         if ($cartItemToRemove->isProductGift()) {
-            $cart->markProductGiftRemoved($cartItemToRemove->getProduct());
+            $cart->markProductGiftRemoved($cartItemToRemove->getProduct(), $cartItemToRemove->getGiftMainProduct());
         }
 
         $cart->removeItemById($cartItemToRemove->getId());

@@ -25,12 +25,15 @@ export const groupCartItemsWithGifts = (
     const rows = cartItems.map((cartItem, listIndex): CartProductRow => ({ cartItem, listIndex, gifts: [] }));
     const groupedGiftItemUuids = new Set<string>();
 
-    const addGiftToProduct = (gift: GiftState, productUuid: string): boolean => {
+    const addGiftToProduct = (gift: GiftState, productUuid: string, mainProductUuid?: string | null): boolean => {
         const relatedRows = rows.filter(
             ({ cartItem }) =>
                 cartItem.type === TypeCartItemTypeEnum.Product &&
-                cartItem.product.gifts.some((productGift) => productGift.uuid === productUuid),
+                (mainProductUuid
+                    ? cartItem.product.uuid === mainProductUuid
+                    : cartItem.product.gifts.some((productGift) => productGift.uuid === productUuid)),
         );
+
         const parentRow = relatedRows[0];
 
         if (!parentRow) {
@@ -51,14 +54,18 @@ export const groupCartItemsWithGifts = (
     for (const { cartItem, listIndex } of rows) {
         if (
             cartItem.type === TypeCartItemTypeEnum.ProductGift &&
-            addGiftToProduct({ state: 'added', cartItem, listIndex }, cartItem.product.uuid)
+            addGiftToProduct(
+                { state: 'added', cartItem, listIndex },
+                cartItem.product.uuid,
+                cartItem.giftMainProductUuid,
+            )
         ) {
             groupedGiftItemUuids.add(cartItem.uuid);
         }
     }
 
     for (const removedGift of removedGifts) {
-        addGiftToProduct({ state: 'removed', removedGift }, removedGift.product.uuid);
+        addGiftToProduct({ state: 'removed', removedGift }, removedGift.product.uuid, removedGift.mainProductUuid);
     }
 
     return rows.filter(({ cartItem }) => !groupedGiftItemUuids.has(cartItem.uuid));

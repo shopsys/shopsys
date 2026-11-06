@@ -50,7 +50,7 @@ const addedGift: CartProductGift = {
 };
 const removedGift: CartProductGift = {
     state: 'removed',
-    removedGift: { product, quantity: 1 },
+    removedGift: { product, quantity: 1, mainProductUuid: 'parent-product' },
     relatedProducts: [],
 };
 
@@ -77,6 +77,7 @@ describe('CartProductGifts', () => {
         const paidGift: CartProductGift = {
             ...removedGift,
             removedGift: {
+                mainProductUuid: 'parent-product',
                 quantity,
                 product: {
                     ...product,
@@ -99,6 +100,24 @@ describe('CartProductGifts', () => {
         expect(screen.getByRole('checkbox', { name: /Coffee beans/ })).toHaveAccessibleName(
             new RegExp(`\\+ €1\\.16 / ${unitName}`),
         );
+    });
+
+    test('restores only the selected parent and gift pair', async () => {
+        restoreCartGiftMutation.mockResolvedValue({ data: { RestoreCartGift: { uuid: 'cart' } } });
+        render(
+            <CartProductGifts
+                gifts={[removedGift]}
+                isRemovingGift={false}
+                parentCartItemUuid="parent"
+                onRemoveGift={vi.fn()}
+            />,
+        );
+
+        await userEvent.click(screen.getByRole('checkbox', { name: product.fullName }));
+
+        expect(restoreCartGiftMutation).toHaveBeenCalledWith({
+            input: { cartUuid: 'cart', giftProductUuid: product.uuid, mainProductUuid: 'parent-product' },
+        });
     });
 
     test('restores keyboard focus after removing the gift', async () => {

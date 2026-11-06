@@ -80,7 +80,7 @@ class CartMutation extends AbstractMutation
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $input['cartUuid']);
 
-        $this->cartApiFacade->restoreProductGiftToCart($input['giftProductUuid'], $cart);
+        $this->cartApiFacade->restoreProductGiftToCart($input['giftProductUuid'], $cart, $input['mainProductUuid'] ?? null);
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }

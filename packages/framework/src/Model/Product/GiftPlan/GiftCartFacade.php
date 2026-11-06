@@ -32,9 +32,7 @@ class GiftCartFacade
 
     public function refreshProductGiftsInCart(Cart $cart, int $domainId): void
     {
-        $giftCartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
-
-        $this->applyGiftCartItemSetupListToCart($cart, $giftCartItemSetupList, $domainId);
+        $this->applyGiftCartItemSetupListToCart($cart, $this->getAvailableGiftCartItemSetupListByCart($cart, $domainId), $domainId);
     }
 
     /**
@@ -45,24 +43,28 @@ class GiftCartFacade
         foreach ($giftCartItemSetupList as $giftCartItemSetup) {
             $giftProduct = $giftCartItemSetup->getGiftProduct();
 
-            if ($cart->isProductGiftRemoved($giftProduct)) {
+            if ($cart->isProductGiftRemoved($giftProduct, $giftCartItemSetup->getMainProduct())) {
                 continue;
             }
 
             $giftQuantity = $giftCartItemSetup->getQuantity();
 
-            $giftCartItems = array_filter($cart->getProductGiftCartItems(), fn (CartItem $cartItem) => $cartItem->getProduct()->getId() === $giftProduct->getId());
+            $giftCartItems = array_filter($cart->getProductGiftCartItems(), fn (CartItem $cartItem) => $cartItem->getProduct()->getId() === $giftProduct->getId()
+                && $cartItem->getGiftMainProduct()?->getId() === $giftCartItemSetup->getMainProduct()?->getId());
             $giftCartItem = array_first($giftCartItems);
 
             if ($giftCartItem) {
-                $giftCartItem->changeQuantity($giftQuantity);
-                $giftCartItem->setAddedAtToNow();
+                if ($giftCartItem->getQuantity() !== $giftQuantity) {
+                    $giftCartItem->changeQuantity($giftQuantity);
+                    $giftCartItem->setAddedAtToNow();
+                }
 
                 continue;
             }
 
             $giftPrice = $this->giftPlanSettingFacade->calculateBaseGiftPrice($domainId, $giftProduct->getVatForDomain($domainId));
             $newCartItem = $this->cartItemFactory->create($cart, $giftProduct, $giftQuantity, $giftPrice, CartItemTypeEnum::TYPE_PRODUCT_GIFT);
+            $newCartItem->setGiftMainProduct($giftCartItemSetup->getMainProduct());
             $cart->addItem($newCartItem);
             $this->em->persist($newCartItem);
             $this->em->flush();
@@ -70,7 +72,7 @@ class GiftCartFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[]
+     * @return array<string, \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup>
      */
     protected function getGiftCartItemSetupListByCart(Cart $cart, int $domainId): array
     {
@@ -89,15 +91,66 @@ class GiftCartFacade
                     continue;
                 }
 
-                if (!array_key_exists($giftProduct->getId(), $giftsSetup)) {
-                    $giftsSetup[$giftProduct->getId()] = new GiftCartItemSetup($giftProduct, $item->getQuantity());
-                } else {
-                    $giftsSetup[$giftProduct->getId()]->addQuantity($item->getQuantity());
-                }
+                $key = $item->getProduct()->getId() . ':' . $giftProduct->getId();
+                $giftsSetup[$key] = new GiftCartItemSetup($giftProduct, $item->getQuantity(), $item->getProduct());
             }
         }
 
         return $giftsSetup;
+    }
+
+    /**
+     * @return array<string, \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup>
+     */
+    protected function getAvailableGiftCartItemSetupListByCart(Cart $cart, int $domainId): array
+    {
+        $setups = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+        ksort($setups, SORT_NATURAL);
+        // Existing gifts keep priority over newly added or restored pairs when stock is limited.
+        $existingKeys = [];
+
+        foreach ($cart->getProductGiftCartItems() as $item) {
+            $existingKeys[] = $item->getGiftMainProduct()?->getId() . ':' . $item->getProduct()->getId();
+        }
+
+        $setups = array_replace(array_intersect_key(array_fill_keys($existingKeys, null), $setups), $setups);
+        $allocatedQuantities = $this->getPurchasedProductQuantities($cart);
+        $availableSetups = [];
+
+        foreach ($setups as $key => $setup) {
+            $giftProduct = $setup->getGiftProduct();
+
+            if ($cart->isProductGiftRemoved($giftProduct, $setup->getMainProduct())) {
+                continue;
+            }
+
+            $allocatedQuantity = $allocatedQuantities[$giftProduct->getId()] ?? 0;
+            $quantity = $this->getAvailableGiftQuantity($giftProduct, $allocatedQuantity + $setup->getQuantity(), $domainId) - $allocatedQuantity;
+
+            if ($quantity <= 0) {
+                continue;
+            }
+
+            $availableSetups[$key] = new GiftCartItemSetup($giftProduct, $quantity, $setup->getMainProduct());
+            $allocatedQuantities[$giftProduct->getId()] = $allocatedQuantity + $quantity;
+        }
+
+        return $availableSetups;
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    protected function getPurchasedProductQuantities(Cart $cart): array
+    {
+        $quantities = [];
+
+        foreach ($cart->getProductCartItems() as $item) {
+            $productId = $item->getProduct()->getId();
+            $quantities[$productId] = ($quantities[$productId] ?? 0) + $item->getQuantity();
+        }
+
+        return $quantities;
     }
 
     /**
@@ -109,22 +162,31 @@ class GiftCartFacade
             return [];
         }
 
-        $removedGiftCartItemSetups = [];
-        $giftCartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+        $allocatedQuantities = $this->getPurchasedProductQuantities($cart);
 
-        foreach ($giftCartItemSetupList as $giftCartItemSetup) {
-            $giftProduct = $giftCartItemSetup->getGiftProduct();
+        foreach ($this->getAvailableGiftCartItemSetupListByCart($cart, $domainId) as $setup) {
+            $giftProductId = $setup->getGiftProduct()->getId();
+            $allocatedQuantities[$giftProductId] = ($allocatedQuantities[$giftProductId] ?? 0) + $setup->getQuantity();
+        }
 
-            if (!$cart->isProductGiftRemoved($giftProduct)) {
+        $removedSetups = [];
+
+        foreach ($this->getGiftCartItemSetupListByCart($cart, $domainId) as $setup) {
+            $giftProduct = $setup->getGiftProduct();
+
+            if (!$cart->isProductGiftRemoved($giftProduct, $setup->getMainProduct())) {
                 continue;
             }
 
-            $quantity = $this->getAvailableGiftQuantity($giftProduct, $giftCartItemSetup->getQuantity(), $domainId);
+            $allocatedQuantity = $allocatedQuantities[$giftProduct->getId()] ?? 0;
+            $quantity = $this->getAvailableGiftQuantity($giftProduct, $allocatedQuantity + $setup->getQuantity(), $domainId) - $allocatedQuantity;
 
-            $removedGiftCartItemSetups[] = new GiftCartItemSetup($giftProduct, $quantity);
+            if ($quantity > 0) {
+                $removedSetups[] = new GiftCartItemSetup($giftProduct, $quantity, $setup->getMainProduct());
+            }
         }
 
-        return $removedGiftCartItemSetups;
+        return $removedSetups;
     }
 
     public function forgetRemovedProductGiftsWithoutQualifyingProduct(Cart $cart, int $domainId): void
@@ -136,27 +198,33 @@ class GiftCartFacade
         $mainProductIds = array_map(fn (CartItem $cartItem) => $cartItem->getProduct()->getId(), $cart->getProductCartItems());
         $giftProductIdsIndexedByMainProductIds = $this->giftPlanFacade->findActiveGiftProductIdsByMainProductIds($mainProductIds, $domainId);
 
-        $cart->retainRemovedProductGiftIds(array_merge(...array_values($giftProductIdsIndexedByMainProductIds)));
+        $cart->retainRemovedProductGiftIds($giftProductIdsIndexedByMainProductIds);
     }
 
-    public function restoreProductGiftToCart(Cart $cart, string $giftProductUuid, int $domainId): void
-    {
-        $giftCartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+    public function restoreProductGiftToCart(
+        Cart $cart,
+        string $giftProductUuid,
+        int $domainId,
+        ?string $mainProductUuid = null,
+    ): void {
+        $restored = false;
 
-        foreach ($giftCartItemSetupList as $giftCartItemSetup) {
-            $giftProduct = $giftCartItemSetup->getGiftProduct();
-
-            if ($giftProduct->getUuid() !== $giftProductUuid || !$cart->isProductGiftRemoved($giftProduct)) {
+        foreach ($this->getRemovedGiftCartItemSetups($cart, $domainId) as $setup) {
+            if ($setup->getGiftProduct()->getUuid() !== $giftProductUuid
+                || ($mainProductUuid !== null && $setup->getMainProductUuid() !== $mainProductUuid)
+            ) {
                 continue;
             }
 
-            $cart->restoreProductGift($giftProduct);
-            $this->applyGiftCartItemSetupListToCart($cart, [$giftCartItemSetup], $domainId);
-
-            return;
+            $cart->restoreProductGift($setup->getGiftProduct(), $setup->getMainProduct());
+            $restored = true;
         }
 
-        throw new InvalidCartItemException('The removed gift is not available for this cart.');
+        if (!$restored) {
+            throw new InvalidCartItemException('The removed gift is not available for this cart.');
+        }
+
+        $this->refreshProductGiftsInCart($cart, $domainId);
     }
 
     public function isGiftProductSellable(
@@ -199,27 +267,20 @@ class GiftCartFacade
     public function refreshProductGiftCartItemsAndGetInvalidItems(Cart $cart, int $domainId): array
     {
         $invalidItems = [];
-        $giftCartItemSetups = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+        $giftCartItemSetups = $this->getAvailableGiftCartItemSetupListByCart($cart, $domainId);
 
         foreach ($cart->getProductGiftCartItems() as $item) {
-            $giftCartItemSetup = $giftCartItemSetups[$item->getProduct()->getId()] ?? null;
+            $key = $item->getGiftMainProduct()?->getId() . ':' . $item->getProduct()->getId();
+            $giftCartItemSetup = $giftCartItemSetups[$key] ?? null;
 
-            if ($giftCartItemSetup === null || $cart->isProductGiftRemoved($item->getProduct())) {
+            if ($giftCartItemSetup === null || $cart->isProductGiftRemoved($item->getProduct(), $item->getGiftMainProduct())) {
                 $invalidItems[] = $item;
 
                 continue;
             }
-
-            $giftQuantity = $giftCartItemSetup->getQuantity();
-
-            if ($giftQuantity === $item->getQuantity()) {
-                continue;
-            }
-
-            $item->changeQuantity($giftQuantity);
-            $item->setAddedAtToNow();
-            $this->em->flush();
         }
+
+        $this->applyGiftCartItemSetupListToCart($cart, $giftCartItemSetups, $domainId);
 
         return $invalidItems;
     }
