@@ -3,16 +3,12 @@
 }
 
 .form-check-input:not(:disabled):hover {
-    border-color: var(--border-color-hovered);
+    border-color: var(--tblr-primary);
     cursor: pointer;
 }
 
 .form-check-label:not(:has(+ .form-check-input:disabled)):hover {
     cursor: pointer;
-}
-
-.product-review-image-approval-switch:not(:checked):not(:disabled) {
-    background-color: var(--tblr-gray-400);
 }
 
 .form-check-hoverable .form-check {
