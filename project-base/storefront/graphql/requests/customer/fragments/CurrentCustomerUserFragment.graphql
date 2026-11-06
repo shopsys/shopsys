@@ -8,4 +8,5 @@ fragment CurrentCustomerUserFragment on CurrentCustomerUser {
     loginInfo {
         ...LoginInfoFragment
     }
+    isAdministratorLoggedAsCustomer
 }

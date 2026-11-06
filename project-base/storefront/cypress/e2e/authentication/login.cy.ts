@@ -19,16 +19,19 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-const checkRefreshCookieIsProtected = () => {
-    cy.getCookie('refreshToken-1').should((cookie) => {
-        expect(cookie).not.to.be.null;
-        expect(cookie?.httpOnly).to.be.true;
-        expect(cookie?.sameSite).to.equal('lax');
-        expect(cookie?.secure).to.equal(Cypress.config('baseUrl')?.startsWith('https') ?? false);
-    });
+const checkAuthCookiesAreProtected = () => {
+    for (const cookieName of ['accessToken-1', 'refreshToken-1']) {
+        cy.getCookie(cookieName).should((cookie) => {
+            expect(cookie).not.to.be.null;
+            expect(cookie?.httpOnly).to.be.true;
+            expect(cookie?.sameSite).to.equal('lax');
+            expect(cookie?.secure).to.equal(Cypress.config('baseUrl')?.startsWith('https') ?? false);
+        });
+    }
     cy.window()
         .its('document.cookie')
-        .should('not.contain', 'refreshToken-1=')
+        .should('not.contain', 'accessToken-1=')
+        .and('not.contain', 'refreshToken-1=')
         .and('contain', 'refreshTokenPresent-1=1');
 };
 
@@ -45,7 +48,7 @@ describe('Login Tests', () => {
         checkAndHideSuccessToast(translations.toast.success.loggedIn);
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
-        checkRefreshCookieIsProtected();
+        checkAuthCookiesAreProtected();
 
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
         cy.intercept('POST', '/api/auth/token', (request) => {

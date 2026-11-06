@@ -65,6 +65,7 @@ export type CurrentCustomerType = {
     pricingGroup: string;
     hasPasswordSet: boolean;
     loginInfo: TypeLoginInfoFragment;
+    isAdministratorLoggedAsCustomer: boolean;
     roles: string[];
     roleGroup: TypeCustomerUserRoleGroup;
     salesRepresentative?: TypeSalesRepresentativeFragment | null;

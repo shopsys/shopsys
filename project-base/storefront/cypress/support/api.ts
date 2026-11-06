@@ -26,7 +26,7 @@ const setAuthenticationCookies = (
     };
     const refreshExpiry = Math.floor(Date.now() / 1000) + 3600 * 24 * 14;
 
-    cy.setCookie(`accessToken-${domainId}`, accessToken, { ...commonOptions, httpOnly: false });
+    cy.setCookie(`accessToken-${domainId}`, accessToken, { ...commonOptions, httpOnly: true });
     cy.setCookie(`refreshToken-${domainId}`, refreshToken, {
         ...commonOptions,
         expiry: refreshExpiry,

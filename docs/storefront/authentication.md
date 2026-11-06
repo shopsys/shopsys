@@ -16,9 +16,10 @@ Proper options for authExchange can be obtained with `getAuthExchangeOptions` fr
 The following options are created for `authExchange`:
 
 `addAuthToOperation`
-Responsible for adding access token as `X-Auth-Token: Bearer xxx` header to each request made with URQL.
+Responsible for adding access token as `X-Auth-Token: Bearer xxx` header to each server-side request made with URQL.
 The authentication header is not added when no access token exists or when the `RefreshTokens` mutation is performed.
 When the `RefreshToken` mutation is performed, the access token can be already invalid, and FE API blocks every request with an invalid access token.
+In the browser, no header is added: the access token lives in an `HttpOnly` cookie that the browser sends with the request itself, and the Frontend API accepts it only for same-origin `POST` requests carrying the `X-Domain-Id` header.
 
 `didAuthError`
 Check whether an error returned from the API is an authentication error (e.g. HTTP response status code is 401).
@@ -48,8 +49,9 @@ login(email: string, password: string);
 
 This function calls the API mutation with the provided email and password.
 If everything is OK, the user is logged in.
-The access token is stored in a JavaScript-readable session cookie and the refresh token is stored in a `Secure`, `HttpOnly`, `SameSite=Lax` cookie.
-A non-sensitive `refreshTokenPresent` cookie lets the client detect that a refresh session exists without exposing the token itself.
+Both tokens are stored in `Secure`, `HttpOnly`, `SameSite=Lax` cookies (the access token as a session cookie, the refresh token with a 14-day lifetime) and the auth endpoint returns them to the browser blanked.
+A non-sensitive `refreshTokenPresent` cookie lets the client detect that a session exists without exposing the tokens themselves.
+Whether an administrator is logged in as the customer is exposed by the `isAdministratorLoggedAsCustomer` field of `currentCustomerUser`, so the browser never needs to decode the token.
 The Zustand state is then updated with information that the user is logged in.
 
 User logout

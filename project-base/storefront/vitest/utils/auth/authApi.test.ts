@@ -86,7 +86,7 @@ describe('auth API', () => {
         vi.stubGlobal('fetch', fetchMock);
     });
 
-    test('stores token response in cookies and redacts refresh token from browser response', async () => {
+    test('stores token response in cookies and redacts both tokens from browser response', async () => {
         fetchMock.mockResolvedValue(
             new Response(
                 JSON.stringify({
@@ -110,9 +110,15 @@ describe('auth API', () => {
             'new-refresh-token',
             expect.objectContaining({ httpOnly: true, sameSite: 'lax', secure: true }),
         );
+        expect(setCookieMock).toHaveBeenCalledWith(
+            'accessToken-1',
+            'new-access-token',
+            expect.objectContaining({ httpOnly: true, sameSite: 'lax', secure: true }),
+        );
         expect(JSON.stringify(jsonMock.mock.calls[0][0])).not.toContain('new-refresh-token');
+        expect(JSON.stringify(jsonMock.mock.calls[0][0])).not.toContain('new-access-token');
         expect(jsonMock.mock.calls[0][0]).toMatchObject({
-            data: { Login: { tokens: { accessToken: 'new-access-token', refreshToken: '' } } },
+            data: { Login: { tokens: { accessToken: '', refreshToken: '' } } },
         });
     });
 

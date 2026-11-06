@@ -146,6 +146,13 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $this->assertFalse($data['newsletterSubscription']);
     }
 
+    public function testCustomerUserLoggedInByPasswordIsNotMarkedAsAdministratorLoggedAsCustomer(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/CurrentCustomerUserQuery.graphql');
+
+        $this->assertFalse($this->getResponseDataForGraphQlType($response, 'currentCustomerUser')['isAdministratorLoggedAsCustomer']);
+    }
+
     public function testChangePersonalData(): void
     {
         $response = $this->getResponseContentForGql(

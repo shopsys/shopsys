@@ -178,7 +178,7 @@ Beyond cookies, the Shopsys storefront implements complete domain isolation acro
 
 - Uses domain-specific naming: `accessToken-3`, `refreshToken-3`, `refreshTokenPresent-3`, `cookiesStore-3`
 - All cookies use `path="/"` for reliable visibility
-- Refresh tokens are stored in `Secure`, `HttpOnly`, `SameSite=Lax` cookies and are only read server-side
+- Access and refresh tokens are stored in `Secure`, `HttpOnly`, `SameSite=Lax` cookies and are only read server-side; the browser detects a session through the `refreshTokenPresent` marker
 - Prevents authentication and preference conflicts
 
 ### 2. LocalStorage Isolation (Persist Store)
@@ -238,15 +238,15 @@ import {
 
 // Client-side
 const domainConfig = useDomainConfig();
-const accessToken = getAccessTokenFromCookies(domainConfig);
-const hasRefreshSession = hasRefreshTokenInCookies(domainConfig);
+const hasSession = hasRefreshTokenInCookies(domainConfig);
 
 // Server-side
 const domainConfig = getDomainConfig(context);
+const accessToken = getAccessTokenFromCookies(domainConfig, context);
 const refreshToken = getRefreshTokenFromCookies(domainConfig, context);
 ```
 
-Client-side code must never read or send the refresh token directly.
+Client-side code cannot read either token: both cookies are `HttpOnly`, so the browser sends the access token cookie with its GraphQL requests and the Frontend API reads it there.
 
 ### Removing Cookies
 

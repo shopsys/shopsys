@@ -10,24 +10,24 @@ vi.mock('utils/isClient', () => ({ isClient: false }));
 
 const {
     authMutationFetcherMock,
+    clearAuthCookiesMock,
     getAccessTokenMock,
     getRefreshTokenMock,
     hasRefreshTokenMock,
-    removeAccessTokenMock,
     removeTokensMock,
     setTokensMock,
 } = vi.hoisted(() => ({
     authMutationFetcherMock: vi.fn(),
+    clearAuthCookiesMock: vi.fn(),
     getAccessTokenMock: vi.fn(),
     getRefreshTokenMock: vi.fn(),
     hasRefreshTokenMock: vi.fn(),
-    removeAccessTokenMock: vi.fn(),
     removeTokensMock: vi.fn(),
     setTokensMock: vi.fn(),
 }));
 
 vi.mock('utils/auth/authMutationFetcher', () => ({
-    clearAuthCookies: vi.fn(),
+    clearAuthCookies: clearAuthCookiesMock,
     getAuthMutationFetcher: () => authMutationFetcherMock,
 }));
 
@@ -38,7 +38,6 @@ vi.mock('utils/auth/getTokensFromCookies', () => ({
 }));
 
 vi.mock('utils/auth/removeTokensFromCookies', () => ({
-    removeAccessTokenFromCookies: removeAccessTokenMock,
     removeTokensFromCookies: removeTokensMock,
 }));
 
@@ -50,10 +49,10 @@ describe('getAuthExchangeOptions', () => {
     const domainConfig = { domainId: 1 } as never;
 
     beforeEach(() => {
+        clearAuthCookiesMock.mockReset();
         getAccessTokenMock.mockReset();
         getRefreshTokenMock.mockReset();
         hasRefreshTokenMock.mockReset();
-        removeAccessTokenMock.mockClear();
         removeTokensMock.mockReset();
         setTokensMock.mockReset();
     });
@@ -62,22 +61,61 @@ describe('getAuthExchangeOptions', () => {
         vi.unstubAllGlobals();
     });
 
-    test('adds access token even though refresh token is hidden from browser JavaScript', async () => {
-        getAccessTokenMock.mockReturnValue('access-token');
-        const config = await getAuthExchangeOptions(domainConfig)({} as AuthUtilities);
-        const operation = {
+    const createOperation = (): Operation =>
+        ({
             context: { fetchOptions: { headers: { Existing: 'header' } } },
             kind: 'query',
             query: parse('query CurrentCustomer { currentCustomerUser { uuid } }'),
-        } as unknown as Operation;
+        }) as unknown as Operation;
 
-        const authorizedOperation = config.addAuthToOperation(operation);
+    test('adds access token from the server-side request cookies', async () => {
+        const context = { req: {}, res: {} } as never;
+        getAccessTokenMock.mockReturnValue('access-token');
+        const config = await getAuthExchangeOptions(domainConfig, context)({} as AuthUtilities);
+
+        const authorizedOperation = config.addAuthToOperation(createOperation());
         const fetchOptions = authorizedOperation.context.fetchOptions as RequestInit;
 
+        expect(getAccessTokenMock).toHaveBeenCalledWith(domainConfig, context);
         expect(fetchOptions.headers).toMatchObject({
             Existing: 'header',
             'X-Auth-Token': 'Bearer access-token',
         });
+    });
+
+    test('leaves browser requests to the HttpOnly access token cookie instead of reading it from JavaScript', async () => {
+        const config = await getAuthExchangeOptions(domainConfig)({} as AuthUtilities);
+        const operation = createOperation();
+
+        const authorizedOperation = config.addAuthToOperation(operation);
+
+        expect(authorizedOperation).toBe(operation);
+        expect(getAccessTokenMock).not.toHaveBeenCalled();
+        expect(config.willAuthError?.(operation)).toBe(false);
+    });
+
+    test('keeps the auth cookies for the server-side refresh when the browser refresh fails', async () => {
+        vi.stubGlobal('window', undefined);
+        hasRefreshTokenMock.mockReturnValue(true);
+        const mutateMock = vi.fn().mockResolvedValue({ data: { RefreshTokens: null } });
+        const config = await getAuthExchangeOptions(domainConfig)({ mutate: mutateMock } as unknown as AuthUtilities);
+
+        await config.refreshAuth();
+
+        expect(clearAuthCookiesMock).not.toHaveBeenCalled();
+        expect(removeTokensMock).not.toHaveBeenCalled();
+    });
+
+    test('clears the auth cookies through the auth endpoint when the browser has no refresh token', async () => {
+        vi.stubGlobal('window', undefined);
+        hasRefreshTokenMock.mockReturnValue(false);
+        const mutateMock = vi.fn();
+        const config = await getAuthExchangeOptions(domainConfig)({ mutate: mutateMock } as unknown as AuthUtilities);
+
+        await config.refreshAuth();
+
+        expect(clearAuthCookiesMock).toHaveBeenCalledWith(domainConfig);
+        expect(mutateMock).not.toHaveBeenCalled();
     });
 
     test('refreshes browser session through auth endpoint without exposing refresh token', async () => {

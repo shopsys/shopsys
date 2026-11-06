@@ -13,18 +13,14 @@ type AuthServerContext = {
     res?: ServerResponse;
 };
 
-const deleteAuthCookie = (cookieName: string, domainConfig: DomainConfigType, context?: AuthServerContext): void => {
+const deleteAuthCookie = (cookieName: string, domainConfig: DomainConfigType, context: AuthServerContext): void => {
     deleteCookie(getCookieName(cookieName, domainConfig.domainId), {
-        req: context?.req,
-        res: context?.res,
+        req: context.req,
+        res: context.res,
         path: '/',
         sameSite: 'lax',
         secure: domainConfig.url.startsWith('https'),
     });
-};
-
-export const removeAccessTokenFromCookies = (domainConfig: DomainConfigType, context?: AuthServerContext): void => {
-    deleteAuthCookie(ACCESS_TOKEN_COOKIE_NAME, domainConfig, context);
 };
 
 export const removeTokensFromCookies = (domainConfig: DomainConfigType, context: AuthServerContext): void => {

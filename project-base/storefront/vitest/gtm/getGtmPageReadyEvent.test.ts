@@ -75,6 +75,7 @@ const currentCustomer = {
         loginType: TypeLoginTypeEnum.Web,
         externalId: 'external-id',
     },
+    isAdministratorLoggedAsCustomer: false,
     roles: [],
     roleGroup: {
         __typename: 'CustomerUserRoleGroup',

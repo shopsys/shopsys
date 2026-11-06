@@ -8,7 +8,7 @@ use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator as BaseTokenAuthent
 
 /**
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
- * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider $frontendApiUserProvider, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade)
+ * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider $frontendApiUserProvider, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
  */
 class TokenAuthenticator extends BaseTokenAuthenticator

@@ -3,7 +3,7 @@ import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/C
 import { useRouter } from 'next/router';
 import { useEffect, useEffectEvent } from 'react';
 import { getAuthNotification } from 'utils/auth/authNotificationStorage';
-import { getAccessTokenFromCookies, hasRefreshTokenInCookies } from 'utils/auth/getTokensFromCookies';
+import { hasRefreshTokenInCookies } from 'utils/auth/getTokensFromCookies';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
@@ -28,7 +28,7 @@ export const useAuthStateSynchronization = () => {
             return;
         }
 
-        const hasAuthCookies = !!getAccessTokenFromCookies(domainConfig) && hasRefreshTokenInCookies(domainConfig);
+        const hasAuthCookies = hasRefreshTokenInCookies(domainConfig);
 
         if (isUserLoggedIn !== hasAuthCookies) {
             reloadOnAuthStateMismatch();

@@ -5409,6 +5409,15 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.isadministratorloggedascustomer">isAdministratorLoggedAsCustomer</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the current session was opened by an administrator via login as customer
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="currentcompanycustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5607,6 +5616,15 @@ First name
 <td>
 
 Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.isadministratorloggedascustomer">isAdministratorLoggedAsCustomer</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the current session was opened by an administrator via login as customer
 
 </td>
 </tr>
@@ -17005,6 +17023,15 @@ First name
 <td>
 
 Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.isadministratorloggedascustomer">isAdministratorLoggedAsCustomer</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the current session was opened by an administrator via login as customer
 
 </td>
 </tr>

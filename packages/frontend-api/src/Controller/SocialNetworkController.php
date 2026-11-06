@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrontendApiBundle\Model\Security\TokensData;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade;
+use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +21,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SocialNetworkController extends AbstractController
 {
     protected const int REFRESH_TOKEN_EXPIRATION_SECONDS = 3600 * 24 * 14;
-
-    protected const string ACCESS_TOKEN_COOKIE_NAME = 'accessToken';
 
     protected const string REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
 
@@ -41,6 +40,7 @@ class SocialNetworkController extends AbstractController
         protected readonly SocialNetworkFacade $socialNetworkFacade,
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly TokenAuthenticator $tokenAuthenticator,
     ) {
     }
 
@@ -78,13 +78,13 @@ class SocialNetworkController extends AbstractController
         $refreshTokenExpiration = new DateTimeImmutable(sprintf('+%d seconds', static::REFRESH_TOKEN_EXPIRATION_SECONDS));
 
         $response->headers->setCookie(Cookie::create(
-            sprintf('%s-%d', static::ACCESS_TOKEN_COOKIE_NAME, $domainId),
+            $this->tokenAuthenticator->getAccessTokenCookieNameForDomainId($domainId),
             $tokens->accessToken,
             0,
             '/',
             null,
             true,
-            false,
+            true,
             false,
             Cookie::SAMESITE_LAX,
         ));

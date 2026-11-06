@@ -6,16 +6,35 @@ namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\BillingAddress;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RegisterTest extends GraphQlTestCase
 {
+    use CustomerRegistrationRateLimitTrait;
+
     private const DEFAULT_USER_FIRST_NAME = 'John';
     private const DEFAULT_USER_LAST_NAME = 'Doe';
     private const DEFAULT_USER_EMAIL = 'new-no-reply@shopsys.com';
     private const DEFAULT_USER_PASSWORD = 'user123';
+
+    #[Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->clearCustomerRegistrationRateLimits();
+    }
+
+    #[Override]
+    protected function tearDown(): void
+    {
+        $this->clearCustomerRegistrationRateLimits();
+
+        parent::tearDown();
+    }
 
     public function testRegister(): void
     {
@@ -76,6 +95,24 @@ class RegisterTest extends GraphQlTestCase
 
         $this->assertArrayHasKey('message', $alreadyRegisteredEmailError);
         $this->assertEquals($expectedViolationMessage, $alreadyRegisteredEmailError['message']);
+    }
+
+    public function testRegistrationSharesRateLimitWithRegistrationQueriesAndIsCheckedBeforeValidation(): void
+    {
+        $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/IsCustomerUserRegisteredQuery.graphql', [
+            'email' => 'no-reply@shopsys.com',
+        ]);
+        $this->exhaustCustomerRegistrationRateLimit();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables('no-reply@shopsys.com'));
+
+        $this->assertUserError($response, self::TOO_MANY_CUSTOMER_REGISTRATION_ATTEMPTS_USER_CODE);
+        $this->assertArrayNotHasKey('validation', $this->getErrorsFromResponse($response)[0]['extensions']);
+
+        $this->configureCurrentClient(null, null, ['REMOTE_ADDR' => self::DIFFERENT_CLIENT_IP]);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables());
+
+        $this->assertSuccessfulRegistration($response);
     }
 
     public function testRegisterWithWrongData(): void

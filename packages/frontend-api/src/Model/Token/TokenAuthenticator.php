@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Token;
 use GraphQL\Error\FormattedError;
 use Lcobucci\JWT\Token\RegisteredClaims;
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
@@ -27,11 +28,15 @@ class TokenAuthenticator extends AbstractAuthenticator
 {
     protected const HEADER_AUTHORIZATION = 'X-Auth-Token';
     protected const BEARER = 'Bearer ';
+    protected const string ACCESS_TOKEN_COOKIE_NAME = 'accessToken';
+    protected const string HEADER_DOMAIN_ID = 'X-Domain-Id';
+    protected const string HEADER_ORIGIN = 'Origin';
 
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly FrontendApiUserProvider $frontendApiUserProvider,
         protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -41,13 +46,11 @@ class TokenAuthenticator extends AbstractAuthenticator
     #[Override]
     public function authenticate(Request $request): Passport
     {
-        $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
+        $credentials = $this->getCredentials($request);
 
-        if ($authorizationHeader === null) {
+        if ($credentials === null) {
             throw new CustomUserMessageAuthenticationException('Authorization header not provided.');
         }
-
-        $credentials = substr($authorizationHeader, strlen(static::BEARER));
 
         $token = $this->tokenFacade->getTokenByString($credentials);
 
@@ -83,11 +86,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     #[Override]
     public function supports(Request $request): bool
     {
-        return $request->headers->has(static::HEADER_AUTHORIZATION) &&
-            str_starts_with(
-                $request->headers->get(static::HEADER_AUTHORIZATION),
-                static::BEARER,
-            );
+        return $this->getCredentials($request) !== null;
     }
 
     #[Override]
@@ -115,10 +114,42 @@ class TokenAuthenticator extends AbstractAuthenticator
     {
         $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
 
-        if ($authorizationHeader === null) {
+        if ($authorizationHeader !== null) {
+            return str_starts_with($authorizationHeader, static::BEARER)
+                ? substr($authorizationHeader, strlen(static::BEARER))
+                : null;
+        }
+
+        if (!$this->isCookieAuthenticationAllowed($request)) {
             return null;
         }
 
-        return substr($authorizationHeader, strlen(static::BEARER));
+        return $request->cookies->get($this->getAccessTokenCookieName()) ?: null;
+    }
+
+    public function getAccessTokenCookieNameForDomainId(int $domainId): string
+    {
+        return sprintf('%s-%d', static::ACCESS_TOKEN_COOKIE_NAME, $domainId);
+    }
+
+    protected function getAccessTokenCookieName(): string
+    {
+        return $this->getAccessTokenCookieNameForDomainId($this->domain->getId());
+    }
+
+    protected function isCookieAuthenticationAllowed(Request $request): bool
+    {
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return false;
+        }
+
+        if ($request->headers->get(static::HEADER_DOMAIN_ID) !== (string)$this->domain->getId()) {
+            return false;
+        }
+
+        $origin = $request->headers->get(static::HEADER_ORIGIN);
+        $domainOrigin = Request::create($this->domain->getUrl())->getSchemeAndHttpHost();
+
+        return $origin !== null && strcasecmp(rtrim($origin, '/'), $domainOrigin) === 0;
     }
 }

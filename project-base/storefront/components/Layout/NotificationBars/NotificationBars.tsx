@@ -1,13 +1,9 @@
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
-import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { getAccessTokenFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { getImageAlt } from 'utils/imageAltText';
@@ -16,21 +12,8 @@ import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRev
 export const NotificationBars: FC = () => {
     const { activeNotificationBars } = useNotificationBarsWithRevalidation();
     const user = useCurrentCustomerData();
-    const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const logout = useLogout();
-    const domainConfig = useDomainConfig();
-
-    useEffect(() => {
-        const encodedAccessToken = getAccessTokenFromCookies(domainConfig);
-        if (!encodedAccessToken) {
-            return;
-        }
-
-        const decodedAccessToken = jwtDecode(encodedAccessToken) as { administratorUuid?: string };
-        const isUserAdmin = !!decodedAccessToken.administratorUuid;
-
-        setLoggedAsUserEmail(isUserAdmin && user ? user.email : undefined);
-    }, [user, domainConfig]);
+    const loggedAsUserEmail = user?.isAdministratorLoggedAsCustomer ? user.email : undefined;
 
     return (
         <>

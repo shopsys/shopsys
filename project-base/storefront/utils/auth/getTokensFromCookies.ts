@@ -24,7 +24,7 @@ const getNonEmptyCookieValue = (cookieName: string, context?: AuthServerContext)
 
 export const getAccessTokenFromCookies = (
     domainConfig: DomainConfigType,
-    context?: AuthServerContext,
+    context: AuthServerContext,
 ): string | undefined => {
     return getNonEmptyCookieValue(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), context);
 };

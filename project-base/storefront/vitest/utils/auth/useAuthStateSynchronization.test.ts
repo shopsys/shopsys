@@ -5,7 +5,6 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const { authState, reloadMock } = vi.hoisted(() => ({
     authState: {
-        accessToken: 'access-token' as string | undefined,
         domainId: 1,
         isCustomerUserFetching: false,
         isCustomerUserStale: false,
@@ -31,7 +30,6 @@ vi.mock('next/router', () => ({
 }));
 
 vi.mock('utils/auth/getTokensFromCookies', () => ({
-    getAccessTokenFromCookies: () => authState.accessToken,
     hasRefreshTokenInCookies: () => authState.hasRefreshToken,
 }));
 
@@ -43,7 +41,6 @@ describe('useAuthStateSynchronization', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         sessionStorage.clear();
-        authState.accessToken = 'access-token';
         authState.domainId = 1;
         authState.isCustomerUserFetching = false;
         authState.isCustomerUserStale = false;
@@ -59,7 +56,6 @@ describe('useAuthStateSynchronization', () => {
     });
 
     test('keeps an anonymous page when authentication cookies are absent', () => {
-        authState.accessToken = undefined;
         authState.isUserLoggedIn = false;
         authState.hasRefreshToken = false;
 
@@ -69,7 +65,6 @@ describe('useAuthStateSynchronization', () => {
     });
 
     test('reloads an authenticated page when authentication cookies are absent', () => {
-        authState.accessToken = undefined;
         authState.hasRefreshToken = false;
 
         renderHook(() => useAuthStateSynchronization());
@@ -86,7 +81,6 @@ describe('useAuthStateSynchronization', () => {
     });
 
     test('waits for the customer user query before checking authentication state', () => {
-        authState.accessToken = undefined;
         authState.hasRefreshToken = false;
         authState.isCustomerUserFetching = true;
 
@@ -96,7 +90,6 @@ describe('useAuthStateSynchronization', () => {
     });
 
     test('waits for stale customer user data to be revalidated before checking authentication state', () => {
-        authState.accessToken = undefined;
         authState.hasRefreshToken = false;
         authState.isCustomerUserStale = true;
 
@@ -128,7 +121,6 @@ describe('useAuthStateSynchronization', () => {
 
     test('checks authentication state again after client-side navigation', () => {
         const { rerender } = renderHook(() => useAuthStateSynchronization());
-        authState.accessToken = undefined;
         authState.hasRefreshToken = false;
         authState.path = '/customer/orders';
 
