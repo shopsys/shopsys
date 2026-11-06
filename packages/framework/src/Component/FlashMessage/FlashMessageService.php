@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Twig\Environment;
+use Twig\Runtime\EscaperRuntime;
 
 class FlashMessageService
 {
@@ -20,37 +21,42 @@ class FlashMessageService
 
     public function addSuccessFlashTwig(string $template, array $parameters = []): void
     {
-        $this->addSuccessFlash($this->renderStringTwigTemplate($template, $parameters));
+        $this->addFlashMessage(FlashMessage::KEY_SUCCESS, $this->renderStringTwigTemplate($template, $parameters));
     }
 
     public function addErrorFlashTwig(string $template, array $parameters = []): void
     {
-        $this->addErrorFlash($this->renderStringTwigTemplate($template, $parameters));
+        $this->addFlashMessage(FlashMessage::KEY_ERROR, $this->renderStringTwigTemplate($template, $parameters));
     }
 
     public function addInfoFlashTwig(string $template, array $parameters = []): void
     {
-        $this->addInfoFlash($this->renderStringTwigTemplate($template, $parameters));
+        $this->addFlashMessage(FlashMessage::KEY_INFO, $this->renderStringTwigTemplate($template, $parameters));
+    }
+
+    public function addWarningFlashTwig(string $template, array $parameters = []): void
+    {
+        $this->addFlashMessage(FlashMessage::KEY_WARNING, $this->renderStringTwigTemplate($template, $parameters));
     }
 
     public function addErrorFlash(string $message): void
     {
-        $this->addFlashMessage(FlashMessage::KEY_ERROR, $message);
+        $this->addFlashMessage(FlashMessage::KEY_ERROR, $this->escape($message));
     }
 
     public function addInfoFlash(string $message): void
     {
-        $this->addFlashMessage(FlashMessage::KEY_INFO, $message);
+        $this->addFlashMessage(FlashMessage::KEY_INFO, $this->escape($message));
     }
 
     public function addSuccessFlash(string $message): void
     {
-        $this->addFlashMessage(FlashMessage::KEY_SUCCESS, $message);
+        $this->addFlashMessage(FlashMessage::KEY_SUCCESS, $this->escape($message));
     }
 
     public function addWarningFlash(string $message): void
     {
-        $this->addFlashMessage(FlashMessage::KEY_WARNING, $message);
+        $this->addFlashMessage(FlashMessage::KEY_WARNING, $this->escape($message));
     }
 
     public function isFlashMessageBagEmpty(): bool
@@ -103,6 +109,11 @@ class FlashMessageService
     protected function addFlashMessage(string $type, string $message): void
     {
         $this->getSession()->getFlashBag()->add($type, $message);
+    }
+
+    protected function escape(string $value): string
+    {
+        return $this->twigEnvironment->getRuntime(EscaperRuntime::class)->escape($value);
     }
 
     protected function renderStringTwigTemplate(string $template, array $parameters = []): string

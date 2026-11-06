@@ -97,7 +97,6 @@ class ComplaintStatusController extends AdminBaseController
                     'Because status "%name%"  is used with other complaints also, you have to choose a new status which will replace '
                     . 'the existing one. Which status you want to set to these complaints? When changing this, there won\'t be emails '
                     . 'sent to customers.',
-                    ['%name%' => $complaintStatus->getName()],
                 );
 
                 return $this->confirmDeleteResponseFactory->createSetNewAndDeleteResponse(
@@ -105,17 +104,16 @@ class ComplaintStatusController extends AdminBaseController
                     'admin_complaintstatus_delete',
                     $id,
                     $this->complaintStatusFacade->getAllExceptId($id),
+                    ['%name%' => $complaintStatus->getName()],
                 );
             }
-            $message = t(
-                'Do you really want to remove status of complaint "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $complaintStatus->getName()],
-            );
+            $message = t('Do you really want to remove status of complaint "%name%" permanently? It is not used anywhere.');
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_complaintstatus_delete',
                 $id,
+                ['%name%' => $complaintStatus->getName()],
             );
         } catch (ComplaintStatusNotFoundException) {
             return new Response(t('Selected complaint status doesn\'t exist.'));

@@ -44,12 +44,14 @@ class CurrencyController extends AdminBaseController
     {
         try {
             $currency = $this->currencyFacade->getById($id);
-            $message = t(
-                'Do you really want to remove currency "%name%" permanently?',
+            $message = t('Do you really want to remove currency "%name%" permanently?');
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_currency_delete',
+                $id,
                 ['%name%' => $currency->getName()],
             );
-
-            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_currency_delete', $id);
         } catch (CurrencyNotFoundException $ex) {
             return new Response(t('Selected currency doesn\'t exist.'));
         }

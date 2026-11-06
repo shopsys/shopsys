@@ -180,23 +180,25 @@ class ArticleController extends AdminBaseController
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
             $message = t(
                 'Article "%name%" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?',
-                ['%name%' => $article->getName()],
             );
         } elseif ($this->userConsentPolicyFacade->isArticleUsedAsUserConsentPolicyArticle($article)) {
             $message = t(
                 'Article "%name%" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?',
-                ['%name%' => $article->getName()],
             );
         } elseif ($this->productReviewPolicyFacade->isArticleUsedAsProductReviewPolicyArticle($article)) {
             $message = t(
                 'Article "%name%" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?',
-                ['%name%' => $article->getName()],
             );
         } else {
             $message = t('Do you really want to remove this article?');
         }
 
-        return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_article_delete', $id);
+        return $this->confirmDeleteResponseFactory->createDeleteResponse(
+            $message,
+            'admin_article_delete',
+            $id,
+            ['%name%' => $article->getName()],
+        );
     }
 
     #[Route(path: '/article/save-ordering/', condition: 'request.isXmlHttpRequest()')]

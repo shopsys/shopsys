@@ -24,6 +24,11 @@ trait FlashMessageTrait
         $this->flashMessageService->addInfoFlashTwig($template, $parameters);
     }
 
+    public function addWarningFlashTwig(string $template, array $parameters = []): void
+    {
+        $this->flashMessageService->addWarningFlashTwig($template, $parameters);
+    }
+
     public function addErrorFlash(string $message): void
     {
         $this->flashMessageService->addErrorFlash($message);
