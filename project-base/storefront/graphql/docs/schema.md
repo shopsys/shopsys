@@ -9957,7 +9957,26 @@ Count of products in the list that are visible on the current domain
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
-An array of the products in the list
+Products visible on the current domain, optionally limited to a requested range
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">limit</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">offset</td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlist.productuuids">productUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Ordered identifiers of products visible on the current domain
 
 </td>
 </tr>

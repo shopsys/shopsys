@@ -8,7 +8,7 @@ import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 type ProductListCallbacks = {
-    addProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
+    addProductSuccess: (productUuid: string) => void;
 };
 
 const { productListCallbacksRef, toggleProductInListWithGtmMock } = vi.hoisted(() => ({
@@ -82,7 +82,7 @@ describe('useWishlist', () => {
                 { uuid: 'product-uuid' } as ProductInterfaceType,
                 GtmProductListNameType.product_detail,
             );
-            productListCallbacksRef.current?.addProductSuccess(undefined, 'product-uuid');
+            productListCallbacksRef.current?.addProductSuccess('product-uuid');
         });
         expect(screen.getByText('The item has been added to your wishlist.')).toBeInTheDocument();
 

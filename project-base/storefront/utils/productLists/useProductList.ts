@@ -1,242 +1,125 @@
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { useProductListState, useProductLists } from 'components/providers/ProductListsProvider';
 import { useAddProductToListMutation } from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
+import { useMoveProductInListMutation } from 'graphql/requests/productLists/mutations/MoveProductInListMutation.generated';
 import { useRemoveProductFromListMutation } from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
 import { useRemoveProductListMutation } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
-import {
-    ProductListQueryDocument,
-    TypeProductListQuery,
-    TypeProductListQueryVariables,
-    useProductListQuery,
-} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
-import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
-import { useSessionStore } from 'store/useSessionStore';
-import { useClient } from 'urql';
-import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { useRefetchOnTabFocus } from 'utils/useRefetchOnTabFocus';
-import { useUpdateProductListUuid } from './useUpdateProductListUuid';
 
 export const useProductList = (
     productListType: TypeProductListTypeEnum,
     callbacks: {
         removeSuccess: () => void;
         removeError: () => void;
-        addProductSuccess: (
-            updatedProductList: TypeProductListFragment | null | undefined,
-            productUuid: string,
-        ) => void;
+        addProductSuccess: (productUuid: string) => void;
         addProductError: (productUuid: string) => void;
-        removeProductSuccess: (
-            updatedProductList: TypeProductListFragment | null | undefined,
-            productUuid: string,
-        ) => void;
+        removeProductSuccess: (productUuid: string) => void;
         removeProductError: (productUuid: string) => void;
     },
 ) => {
-    const client = useClient();
+    const state = useProductListState(productListType);
+    const { notifyChange } = useProductLists();
     const { t } = useTranslation();
-    const isProductListHydrated = useSessionStore((s) => s.isProductListHydrated);
-    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const productListUuids = usePersistStore((s) => s.productListUuids);
-    const updateProductListUuid = useUpdateProductListUuid(productListType);
-    const productListUuid = productListUuids[productListType] ?? null;
-    const isUserLoggedIn = useIsUserLoggedIn();
+    const [, addMutation] = useAddProductToListMutation();
+    const [, removeMutation] = useRemoveProductFromListMutation();
+    const [, clearMutation] = useRemoveProductListMutation();
+    const [, moveMutation] = useMoveProductInListMutation();
 
-    const [, TypeAddProductToListMutation] = useAddProductToListMutation();
-    const [, TypeRemoveProductFromListMutation] = useRemoveProductFromListMutation();
-    const [, removeListMutation] = useRemoveProductListMutation();
+    const isProductInList = (uuid: string) => !!state.summary?.productUuids.includes(uuid);
 
-    const mutatingProductUuidsRef = useRef(new Set<string>());
-
-    const isQueryPaused = !isProductListHydrated || (!productListUuid && !isUserLoggedIn);
-
-    const [{ data: productListData, fetching }, reexecuteQuery] = useProductListQuery({
-        variables: {
-            input: {
-                type: productListType,
-                uuid: productListUuid,
-            },
-        },
-        pause: isQueryPaused,
-    });
-
-    const refetchOnFocus = useCallback(() => {
-        if (isQueryPaused) {
-            return;
-        }
-        reexecuteQuery({ requestPolicy: 'network-only' });
-    }, [reexecuteQuery, isQueryPaused]);
-    useRefetchOnTabFocus(refetchOnFocus);
-
-    const [productListOverride, setProductListOverride] = useState<TypeProductListFragment | null>(null);
-
-    useEffect(() => {
-        setProductListOverride(null);
-    }, [productListData]);
-
-    const currentProductList = productListOverride ?? productListData?.productList ?? null;
-
-    // Consider loading when query is paused due to hydration not being complete yet
-    const isProductListFetching = fetching || !isProductListHydrated;
-
-    const refetchWithNetworkOnly = async () => {
-        const result = await client
-            .query<TypeProductListQuery, TypeProductListQueryVariables>(
-                ProductListQueryDocument,
-                {
-                    input: { type: productListType, uuid: productListUuid },
-                },
-                { requestPolicy: 'network-only' },
-            )
-            .toPromise();
-
-        return result.data;
-    };
-
-    useEffect(() => {
-        updatePageLoadingState({ isProductListHydrated: true });
-    }, [updatePageLoadingState]);
-
-    const onUpdateProductListUuid = useEffectEvent((uuid: string | null) => {
-        updateProductListUuid(uuid);
-    });
-
-    useEffect(() => {
-        if (isQueryPaused || productListData === undefined) {
-            return;
-        }
-
-        onUpdateProductListUuid(productListData?.productList?.uuid ?? null);
-        // Sync only when the UUID value changes, not on every productListData reference change.
-    }, [productListData?.productList?.uuid, isQueryPaused]);
-
-    const removeList = async () => {
-        const removeListResult = await removeListMutation({
-            input: {
-                type: productListType,
-                uuid: productListUuid,
-            },
-        });
-
-        if (removeListResult.error) {
-            const { applicationError } = getUserFriendlyErrors(removeListResult.error, t);
-
-            if (applicationError?.type === `${productListType}-product-list-not-found`) {
-                callbacks.removeSuccess();
-            } else {
-                callbacks.removeError();
+    const clearList = async () => {
+        const selection = state.getSelection();
+        try {
+            const result = await clearMutation({ input: { type: productListType, uuid: selection.uuid } });
+            if (!state.isCurrentSelection(selection)) return;
+            if (result.error) {
+                const { applicationError } = getUserFriendlyErrors(result.error, t);
+                if (applicationError?.type !== `${productListType}-product-list-not-found`) {
+                    throw result.error;
+                }
+                state.invalidate();
             }
-        } else {
+            state.applyMutationResult(null, selection);
+            notifyChange(productListType, selection.uuid);
             callbacks.removeSuccess();
+        } catch {
+            if (state.isCurrentSelection(selection)) callbacks.removeError();
         }
     };
+    const removeList = async () => {
+        await state.enqueueMutation('clear', clearList);
+    };
 
-    const addToList = async (productUuid: string) => {
-        mutatingProductUuidsRef.current.add(productUuid);
-
+    const changeProduct = async (productUuid: string, remove: boolean) => {
+        const selection = state.getSelection();
+        const onError = remove ? callbacks.removeProductError : callbacks.addProductError;
+        const onSuccess = remove ? callbacks.removeProductSuccess : callbacks.addProductSuccess;
         try {
-            const addProductToListResult = await TypeAddProductToListMutation({
-                input: {
-                    productUuid,
-                    productListInput: {
-                        uuid: productListUuid,
-                        type: productListType,
-                    },
-                },
-            });
-
-            if (addProductToListResult.error) {
-                const { applicationError } = getUserFriendlyErrors(addProductToListResult.error, t);
-
-                if (applicationError?.type === `${productListType}-product-already-in-list`) {
-                    const freshProductListData = await refetchWithNetworkOnly();
-                    callbacks.addProductSuccess(freshProductListData?.productList, productUuid);
-                } else {
-                    callbacks.addProductError(productUuid);
+            const input = { productUuid, productListInput: { uuid: selection.uuid, type: productListType } };
+            const result = remove ? await removeMutation({ input }) : await addMutation({ input });
+            if (!state.isCurrentSelection(selection)) return;
+            const data = result.data;
+            let list = data && ('RemoveProductFromList' in data ? data.RemoveProductFromList : data.AddProductToList);
+            if (result.error) {
+                const { applicationError } = getUserFriendlyErrors(result.error, t);
+                const recoverable = remove
+                    ? [`${productListType}-product-not-in-list`, `${productListType}-product-list-not-found`]
+                    : [`${productListType}-product-already-in-list`];
+                if (!applicationError || !recoverable.includes(applicationError.type)) {
+                    throw result.error;
                 }
+                // Recovery waits for visibility and must not turn an unavailable response into a deleted list.
+                list = await state.refreshForRecovery();
             } else {
-                if (addProductToListResult.data?.AddProductToList) {
-                    setProductListOverride(addProductToListResult.data.AddProductToList);
-                }
-                callbacks.addProductSuccess(addProductToListResult.data?.AddProductToList, productUuid);
+                if (list === undefined) throw new Error('Product list response is missing.');
+                state.applyMutationResult(list, selection);
             }
-        } finally {
-            mutatingProductUuidsRef.current.delete(productUuid);
+            notifyChange(productListType, selection.uuid ?? list?.uuid ?? null);
+            onSuccess(productUuid);
+            return list;
+        } catch {
+            if (state.isCurrentSelection(selection)) onError(productUuid);
         }
-    };
-
-    const removeFromList = async (productUuid: string) => {
-        mutatingProductUuidsRef.current.add(productUuid);
-
-        try {
-            const removeProductFromListResult = await TypeRemoveProductFromListMutation({
-                input: {
-                    productUuid,
-                    productListInput: {
-                        uuid: productListUuid,
-                        type: productListType,
-                    },
-                },
-            });
-
-            if (removeProductFromListResult.error) {
-                const { applicationError } = getUserFriendlyErrors(removeProductFromListResult.error, t);
-
-                if (
-                    applicationError?.type === `${productListType}-product-not-in-list` ||
-                    applicationError?.type === `${productListType}-product-list-not-found`
-                ) {
-                    const freshProductListData = await refetchWithNetworkOnly();
-                    callbacks.removeProductSuccess(freshProductListData?.productList, productUuid);
-                } else {
-                    callbacks.removeProductError(productUuid);
-                }
-            } else {
-                if (removeProductFromListResult.data?.RemoveProductFromList) {
-                    setProductListOverride(removeProductFromListResult.data.RemoveProductFromList);
-                }
-                callbacks.removeProductSuccess(removeProductFromListResult.data?.RemoveProductFromList, productUuid);
-            }
-        } finally {
-            mutatingProductUuidsRef.current.delete(productUuid);
-        }
-    };
-
-    const isProductInList = (productUuid: string) => {
-        if (!productListUuid) {
-            return false;
-        }
-
-        return !!currentProductList?.products.find((product) => product.uuid === productUuid);
     };
 
     const toggleProductInList = (productUuid: string) => {
-        if (mutatingProductUuidsRef.current.has(productUuid)) {
-            return false;
-        }
-
-        // Block all mutations when no list exists yet — concurrent creates would produce duplicate lists
-        if (!productListUuid && mutatingProductUuidsRef.current.size > 0) {
-            return false;
-        }
-
-        if (isProductInList(productUuid)) {
-            removeFromList(productUuid);
-        } else {
-            addToList(productUuid);
-        }
-
-        return true;
+        const remove = isProductInList(productUuid);
+        return state.enqueueMutation(productUuid, () => changeProduct(productUuid, remove));
     };
 
+    const moveConfirmedProduct = async (
+        productUuid: string,
+        afterProductUuid: string | null,
+        uuid = state.getSelection().uuid,
+    ) => {
+        const selection = state.getSelection();
+        if (!uuid || uuid !== selection.uuid) return false;
+        try {
+            const result = await moveMutation({
+                input: { productListInput: { uuid, type: productListType }, productUuid, afterProductUuid },
+            });
+            if (result.error || !result.data?.MoveProductInList || !state.isCurrentSelection(selection)) return false;
+            state.applyMutationResult(result.data.MoveProductInList, selection);
+            notifyChange(productListType, selection.uuid);
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+    const moveProduct = async (productUuid: string, afterProductUuid: string | null, uuid?: string | null) =>
+        (await state.enqueueMutation(Symbol('move'), () =>
+            moveConfirmedProduct(productUuid, afterProductUuid, uuid),
+        )) ?? false;
+
     return {
-        productListData: !productListUuid ? undefined : productListData,
+        productListSummary: state.summary,
         isProductInList,
         removeList,
         toggleProductInList,
-        isProductListFetching,
+        moveProduct,
+        isProductListFetching: state.fetching,
+        hasProductListError: state.error,
     };
 };

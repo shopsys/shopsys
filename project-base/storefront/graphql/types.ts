@@ -3098,12 +3098,20 @@ export type TypeProductList = {
   __typename?: 'ProductList';
   /** Count of products in the list that are visible on the current domain */
   itemsCount: Scalars['Int']['output'];
-  /** An array of the products in the list */
+  /** Ordered identifiers of products visible on the current domain */
+  productUuids: Array<Scalars['Uuid']['output']>;
+  /** Products visible on the current domain, optionally limited to a requested range */
   products: Array<TypeProduct>;
   /** Product list type */
   type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid: Scalars['Uuid']['output'];
+};
+
+
+export type TypeProductListProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: Scalars['Int']['input'];
 };
 
 export type TypeProductListInput = {

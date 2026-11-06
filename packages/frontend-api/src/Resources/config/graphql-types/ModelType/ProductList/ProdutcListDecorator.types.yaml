@@ -13,7 +13,18 @@ ProductListDecorator:
                 type: "Int!"
                 description: "Count of products in the list that are visible on the current domain"
                 resolve: '@=query("productsCountByProductListQuery", value)'
+            productUuids:
+                type: "[Uuid!]!"
+                description: "Ordered identifiers of products visible on the current domain"
+                resolve: '@=query("productUuidsByProductListQuery", value)'
             products:
                 type: "[Product!]!"
-                description: "An array of the products in the list"
-                resolve: '@=query("productsByProductListQuery", value)'
+                description: "Products visible on the current domain, optionally limited to a requested range"
+                args:
+                    offset:
+                        type: "Int!"
+                        defaultValue: 0
+                    limit:
+                        type: "Int"
+                        defaultValue: null
+                resolve: '@=query("productsByProductListQuery", value, args)'

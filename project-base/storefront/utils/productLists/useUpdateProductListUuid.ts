@@ -1,11 +1,12 @@
 import { TypeProductListTypeEnum } from 'graphql/types';
-import { usePersistStore } from 'store/usePersistStore';
+import { usePersistStoreApi } from 'store/usePersistStore';
 
 export const useUpdateProductListUuid = (productListType: TypeProductListTypeEnum) => {
-    const productListUuids = usePersistStore((s) => s.productListUuids);
-    const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
+    const store = usePersistStoreApi();
 
     const updateProductListUuid = (productListUuid: string | null) => {
+        const { productListUuids, updateProductListUuids } = store.getState();
+        if ((productListUuids[productListType] ?? null) === productListUuid) return;
         const updatedProductListUuids = {
             ...productListUuids,
         };

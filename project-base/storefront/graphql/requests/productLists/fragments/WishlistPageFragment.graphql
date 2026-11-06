@@ -1,0 +1,7 @@
+fragment WishlistPageFragment on ProductList {
+    __typename
+    uuid
+    products(offset: $offset, limit: $limit) {
+        ...ListedProductFragment
+    }
+}

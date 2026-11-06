@@ -1,0 +1,10 @@
+query ProductListPageQuery($uuid: Uuid!, $type: ProductListTypeEnum!, $offset: Int!, $limit: Int!) {
+    productList(input: {uuid: $uuid, type: $type}) {
+        uuid
+        itemsCount
+        productUuids
+        products(offset: $offset, limit: $limit) {
+            id
+        }
+    }
+}

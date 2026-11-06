@@ -1,4 +1,9 @@
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { useProductLists } from 'components/providers/ProductListsProvider';
+import {
+    ProductListQueryDocument,
+    TypeProductListQuery,
+    TypeProductListQueryVariables,
+} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -6,25 +11,22 @@ import { ProductInterfaceType } from 'types/product';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useProductList } from 'utils/productLists/useProductList';
 import { useProductListGtmEvent } from 'utils/productLists/useProductListGtmEvent';
-import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductListUuid';
+import { useProductListQueryResult } from 'utils/productLists/useProductListQueryResult';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-type ComparisonCallbacks = {
+type ComparisonOptions = {
     onProductRemoved?: (productUuid: string) => void;
     onProductRemoveError?: (productUuid: string) => void;
-    onProductAdded?: (productUuid: string, productList: TypeProductListFragment | null | undefined) => void;
-    onAddProductError?: (productUuid: string) => void;
+    showAddSuccessMessage?: boolean;
 };
 
 export const useComparison = ({
     onProductRemoved,
     onProductRemoveError,
-    onProductAdded,
-    onAddProductError,
-}: ComparisonCallbacks = {}) => {
+    showAddSuccessMessage = true,
+}: ComparisonOptions = {}) => {
     const { t } = useTranslation();
-    const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const {
         clearProductListGtmContext,
         pushAddProductListGtmEvent,
@@ -32,36 +34,29 @@ export const useComparison = ({
         toggleProductInListWithGtm,
     } = useProductListGtmEvent(GtmEventType.add_to_comparison, GtmEventType.remove_from_comparison);
 
-    const { productListData, removeList, isProductInList, toggleProductInList, isProductListFetching } = useProductList(
+    const { productListSummary, removeList, isProductInList, toggleProductInList, moveProduct } = useProductList(
         TypeProductListTypeEnum.Comparison,
         {
             addProductError: (productUuid) => {
                 clearProductListGtmContext(productUuid);
                 showErrorMessage(t('Unable to add product to comparison.'));
-                onAddProductError?.(productUuid);
             },
-            addProductSuccess: (result, productUuid) => {
-                if (!onProductAdded) {
+            addProductSuccess: (productUuid) => {
+                if (showAddSuccessMessage) {
                     showSuccessMessage(t('Product added to comparison.'));
                 }
-                updateComparisonUuid(result?.uuid ?? null);
                 pushAddProductListGtmEvent(productUuid);
-                onProductAdded?.(productUuid, result);
             },
             removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
             removeSuccess: () => {
                 showSuccessMessage(t('Comparison products have been cleaned.'));
-                updateComparisonUuid(null);
             },
             removeProductError: (productUuid) => {
                 clearProductListGtmContext(productUuid);
                 showErrorMessage(t('Unable to remove product from comparison.'));
                 onProductRemoveError?.(productUuid);
             },
-            removeProductSuccess: (result, productUuid) => {
-                if (!result) {
-                    updateComparisonUuid(null);
-                }
+            removeProductSuccess: (productUuid) => {
                 if (!onProductRemoved) {
                     showSuccessMessage(t('Product has been removed from your comparison.'));
                 }
@@ -76,14 +71,40 @@ export const useComparison = ({
         gtmProductListName: GtmProductListNameType,
         listIndex?: number,
     ) => {
-        toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
+        return toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
     };
 
     return {
-        comparison: productListData?.productList,
-        isProductListFetching,
+        comparisonSummary: productListSummary,
         isProductInComparison: isProductInList,
         toggleProductInComparison,
         removeComparison: removeList,
+        moveProductInComparison: moveProduct,
+    };
+};
+
+export const useComparisonDetails = () => {
+    const { lists, visible } = useProductLists();
+    const metadata = lists.COMPARISON;
+    const hasProducts = !!metadata.summary && metadata.count > 0;
+    const result = useProductListQueryResult<TypeProductListQuery, TypeProductListQueryVariables>({
+        query: ProductListQueryDocument,
+        variables: { input: metadata.input },
+        pause: !visible || !metadata.readyForDetails || !hasProducts,
+        selectionKey: metadata.selectionKey,
+        revision: metadata.revision,
+    });
+    const list = result.data?.productList;
+    const productsByUuid = new Map(list?.products.map((product) => [product.uuid, product]));
+    const products =
+        metadata.summary?.productUuids.flatMap((uuid) => {
+            const product = productsByUuid.get(uuid);
+            return product ? [product] : [];
+        }) ?? [];
+
+    return {
+        comparison: metadata.summary === null ? null : list ? { ...list, products } : undefined,
+        isProductListFetching: metadata.fetching || (hasProducts && result.fetching),
+        hasProductListError: metadata.error || !!result.error,
     };
 };

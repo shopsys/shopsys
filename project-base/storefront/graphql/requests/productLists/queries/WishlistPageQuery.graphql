@@ -1,0 +1,5 @@
+query WishlistPageQuery($input: ProductListInput!, $offset: Int!, $limit: Int!) {
+    productList(input: $input) {
+        ...WishlistPageFragment
+    }
+}

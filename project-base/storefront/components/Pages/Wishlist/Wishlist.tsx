@@ -1,3 +1,4 @@
+import { Alert } from 'components/Basic/Alert/Alert';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
@@ -10,7 +11,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaginationProvider } from 'components/providers/PaginationProvider';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
@@ -18,8 +18,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
-import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
+import { getWishlistPageRange } from 'utils/productLists/wishlist/getWishlistPageRange';
+import { useWishlist, useWishlistPage } from 'utils/productLists/wishlist/useWishlist';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { pushQueries } from 'utils/queryParams/pushQueries';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
@@ -35,34 +35,33 @@ const RemoveAllProductsPopup = dynamic(
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
-    const { wishlist, isProductListFetching, removeWishlist } = useWishlist();
+    const { removeWishlist } = useWishlist();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const router = useRouter();
-    const totalCount = wishlist?.products.length ?? 0;
-    const lastPage = Math.max(1, Math.ceil(totalCount / DEFAULT_PAGE_SIZE));
-    const page = Number.isInteger(currentPage) && currentPage > 0 ? Math.min(currentPage, lastPage) : 1;
-    const loadMore = Number.isInteger(currentLoadMore) && currentLoadMore >= 0 ? currentLoadMore : 0;
-    const offset = (page - 1) * DEFAULT_PAGE_SIZE;
-    const visibleProducts = wishlist?.products.slice(offset, offset + calculatePageSize(loadMore));
+    const { wishlist, totalCount, page, loadMore, isProductListFetching, hasProductListError } = useWishlistPage(
+        currentPage,
+        currentLoadMore,
+    );
+    const offset = getWishlistPageRange(page, loadMore).offset;
 
     useEffect(() => {
-        if (!isProductListFetching && (currentPage !== page || currentLoadMore !== loadMore)) {
+        if (!isProductListFetching && !hasProductListError && (currentPage !== page || currentLoadMore !== loadMore)) {
             pushQueries(router, {
                 ...router.query,
                 [PAGE_QUERY_PARAMETER_NAME]: page > 1 ? page.toString() : undefined,
                 [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
             });
         }
-    }, [isProductListFetching, currentPage, page, currentLoadMore, loadMore, router]);
+    }, [isProductListFetching, hasProductListError, currentPage, page, currentLoadMore, loadMore, router]);
 
     const handleRemoveAllClick = () => {
         updatePortalContent(
             <RemoveAllProductsPopup
                 description={t('All products in wishlist will be removed ({{ productCount }} in total).', {
-                    productCount: wishlist?.products.length ?? 0,
+                    productCount: totalCount,
                 })}
                 removeAllHandler={removeWishlist}
             />,
@@ -105,20 +104,26 @@ export const Wishlist: FC = () => {
                             areProductsFetching={isProductListFetching}
                             gtmMessageOrigin={GtmMessageOriginType.other}
                             gtmProductListName={GtmProductListNameType.wishlist}
-                            products={visibleProducts}
+                            products={wishlist?.products}
                         />
 
                         <PaginationProvider paginationScrollTargetRef={paginationScrollTargetRef}>
                             <Pagination
                                 isWithLoadMore
-                                hasNextPage={offset + (visibleProducts?.length ?? 0) < totalCount}
+                                hasNextPage={offset + (wishlist?.products.length ?? 0) < totalCount}
                                 totalCount={totalCount}
                             />
                         </PaginationProvider>
                     </div>
                 )}
 
-                {totalCount === 0 && !isProductListFetching && (
+                {hasProductListError && !wishlist && (
+                    <Alert title={t('Something went wrong.')} variant="error">
+                        {t('Please try again later or contact us.')}
+                    </Alert>
+                )}
+
+                {totalCount === 0 && !isProductListFetching && !hasProductListError && (
                     <PageHero
                         actionHref="/"
                         actionSkeletonType="homepage"

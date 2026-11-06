@@ -3,9 +3,6 @@ import {
     ProductComparisonUndoAction,
 } from 'components/Pages/ProductComparison/ProductComparisonUndoAction';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
-import { useMoveProductInListMutation } from 'graphql/requests/productLists/mutations/MoveProductInListMutation.generated';
-import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent';
 import dynamic from 'next/dynamic';
@@ -13,7 +10,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useComparison, useComparisonDetails } from 'utils/productLists/comparison/useComparison';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useLatest } from 'utils/ui/useLatest';
@@ -26,20 +23,23 @@ const RemoveAllProductsPopup = dynamic(
 
 export const useComparisonPage = () => {
     const { t } = useTranslation();
-    const [, moveProductInListMutation] = useMoveProductInListMutation();
     const emptyStateRef = useRef<HTMLDivElement>(null);
     const focusEmptyStateAfterRemoval = useRef(false);
     const removedProducts = useRef(new Map<string, { product: TypeProductInProductListFragment; index: number }>());
     const [restoringProduct, setRestoringProduct] = useState<{ uuid: string; index: number } | null>(null);
-    const undoRequests = useRef(new Map<string, (list: TypeProductListFragment | null | undefined) => void>());
-    const { comparison, isProductListFetching, removeComparison, toggleProductInComparison, isProductInComparison } =
-        useComparison({
-            onProductRemoved: handleProductRemoved,
-            onProductRemoveError: (uuid) => removedProducts.current.delete(uuid),
-            onProductAdded: (uuid, list) => finishUndo(uuid, list),
-            onAddProductError: (uuid) => finishUndo(uuid, null),
-        });
-    const latestComparisonActions = useLatest({ toggleProductInComparison, isProductInComparison, comparison });
+    const {
+        comparisonSummary,
+        removeComparison,
+        toggleProductInComparison,
+        isProductInComparison,
+        moveProductInComparison,
+    } = useComparison({
+        onProductRemoved: handleProductRemoved,
+        onProductRemoveError: (uuid) => removedProducts.current.delete(uuid),
+        showAddSuccessMessage: false,
+    });
+    const { comparison, isProductListFetching, hasProductListError } = useComparisonDetails();
+    const latestComparisonActions = useLatest({ toggleProductInComparison, isProductInComparison, comparisonSummary });
 
     useEffect(
         () => () => {
@@ -71,26 +71,18 @@ export const useComparisonPage = () => {
 
     useGtmSliderProductListViewEvent(comparison?.products, GtmProductListNameType.product_comparison_page);
 
-    function finishUndo(uuid: string, list: TypeProductListFragment | null | undefined): void {
-        undoRequests.current.get(uuid)?.(list);
-        undoRequests.current.delete(uuid);
-    }
-
     async function undoRemoval(product: TypeProductInProductListFragment, index: number): Promise<boolean> {
         setRestoringProduct({ uuid: product.uuid, index });
         try {
             const actions = latestComparisonActions.current;
             const list = actions.isProductInComparison(product.uuid)
-                ? actions.comparison
-                : await new Promise<TypeProductListFragment | null | undefined>((resolve) => {
-                      undoRequests.current.set(product.uuid, resolve);
-                      actions.toggleProductInComparison(product, GtmProductListNameType.product_comparison_page);
-                  });
+                ? actions.comparisonSummary
+                : await actions.toggleProductInComparison(product, GtmProductListNameType.product_comparison_page);
             if (!list) return false;
             // The added product lands on top; move it back after the product that preceded it
-            const others = list.products.filter((item) => item.uuid !== product.uuid);
+            const others = list.productUuids.filter((uuid) => uuid !== product.uuid);
             const afterProduct = others[Math.min(index, others.length) - 1];
-            return afterProduct ? await moveProduct(product.uuid, afterProduct.uuid, list.uuid) : true;
+            return afterProduct ? await moveProduct(product.uuid, afterProduct, list.uuid) : true;
         } finally {
             setRestoringProduct(null);
         }
@@ -140,14 +132,7 @@ export const useComparisonPage = () => {
     ): Promise<boolean> => {
         if (!listUuid) return false;
         try {
-            const result = await moveProductInListMutation({
-                input: {
-                    productListInput: { uuid: listUuid, type: TypeProductListTypeEnum.Comparison },
-                    productUuid,
-                    afterProductUuid,
-                },
-            });
-            if (!result.error && result.data?.MoveProductInList) return true;
+            if (await moveProductInComparison(productUuid, afterProductUuid, listUuid)) return true;
         } catch {
             // Network failures must restore the last confirmed order as well.
         }
@@ -159,6 +144,7 @@ export const useComparisonPage = () => {
         moveProduct,
         products,
         isLoading: isProductListFetching && !comparison,
+        hasProductListError: hasProductListError && !comparison,
         emptyStateRef,
         handleRemove,
         handleRemoveAll,
