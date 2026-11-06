@@ -124,6 +124,9 @@ msgstr "Číslo účtu"
 msgid "Active"
 msgstr "Aktivní"
 
+msgid "Actual resolution"
+msgstr "Způsob vyřízení"
+
 msgid "Add"
 msgstr "Přidat"
 
@@ -2710,6 +2713,9 @@ msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to zn
 msgid "Postcode"
 msgstr "PSČ"
 
+msgid "Preferred resolution"
+msgstr "Preferovaný způsob řešení"
+
 msgid "Prefix"
 msgstr "Prefix"
 
@@ -2985,9 +2991,6 @@ msgstr "Povinné, pokud je recenze zamítnutá."
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
-
-msgid "Resolution"
-msgstr "Způsob vyřešení"
 
 msgid "Resolved"
 msgstr "Vyřízena"

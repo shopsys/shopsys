@@ -756,6 +756,8 @@ type CompanyCustomerUser implements BaseCustomerUser {
 }
 
 type Complaint {
+  "Actual resolution of the complaint, filled in when the complaint is closed"
+  actualResolution: ComplaintResolution
   "Number of the bank account if the resolution is money return"
   bankAccountNumber: String
   "Date and time when the complaint was created"
@@ -788,7 +790,7 @@ type Complaint {
   number: String!
   "Order for which the complaint was created"
   order: Order
-  "Resolution of the complaint"
+  "Resolution of the complaint preferred by the customer"
   resolution: ComplaintResolution!
   "Status of the complaint"
   status: String!

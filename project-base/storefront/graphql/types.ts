@@ -913,6 +913,8 @@ export type TypeCompanyCustomerUser = TypeBaseCustomerUser & {
 
 export type TypeComplaint = {
   __typename?: 'Complaint';
+  /** Actual resolution of the complaint, filled in when the complaint is closed */
+  actualResolution: Maybe<TypeComplaintResolution>;
   /** Number of the bank account if the resolution is money return */
   bankAccountNumber: Maybe<Scalars['String']['output']>;
   /** Date and time when the complaint was created */
@@ -945,7 +947,7 @@ export type TypeComplaint = {
   number: Scalars['String']['output'];
   /** Order for which the complaint was created */
   order: Maybe<TypeOrder>;
-  /** Resolution of the complaint */
+  /** Resolution of the complaint preferred by the customer */
   resolution: TypeComplaintResolution;
   /** Status of the complaint */
   status: Scalars['String']['output'];

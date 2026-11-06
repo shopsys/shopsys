@@ -4769,6 +4769,15 @@ UUID
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="complaint.actualresolution">actualResolution</strong></td>
+<td valign="top"><a href="#complaintresolution">ComplaintResolution</a></td>
+<td>
+
+Actual resolution of the complaint, filled in when the complaint is closed
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="complaint.bankaccountnumber">bankAccountNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -4917,7 +4926,7 @@ Order for which the complaint was created
 <td valign="top"><a href="#complaintresolution">ComplaintResolution</a>!</td>
 <td>
 
-Resolution of the complaint
+Resolution of the complaint preferred by the customer
 
 </td>
 </tr>
