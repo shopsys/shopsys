@@ -37,7 +37,7 @@ class ExposedSchemaProvider
     protected ?array $storedExposedSchema = null;
 
     public function __construct(
-        protected readonly Connection $mcpConnection,
+        protected readonly Connection $defaultConnection,
         protected readonly AllowedDatabaseColumnsProvider $allowedDatabaseColumnsProvider,
         protected readonly SchemaNameNormalizer $schemaNameNormalizer,
         protected readonly string $cacheDir,
@@ -161,7 +161,7 @@ class ExposedSchemaProvider
      */
     protected function getLiveTableSchemas(array $allowedTables): array
     {
-        $schemaManager = $this->mcpConnection->createSchemaManager();
+        $schemaManager = $this->defaultConnection->createSchemaManager();
         $liveTablesIndexedByTableNames = [];
         $tableSchemas = [];
 
@@ -332,7 +332,7 @@ class ExposedSchemaProvider
     {
         return $column->getType()->getSQLDeclaration(
             $column->toArray(),
-            $this->mcpConnection->getDatabasePlatform(),
+            $this->defaultConnection->getDatabasePlatform(),
         );
     }
 
