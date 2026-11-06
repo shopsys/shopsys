@@ -32,7 +32,10 @@ class GiftCartFacade
 
     public function refreshProductGiftsInCart(Cart $cart, int $domainId): void
     {
-        $this->applyGiftCartItemSetupListToCart($cart, $this->getAvailableGiftCartItemSetupListByCart($cart, $domainId), $domainId);
+        $giftCartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+        $availableGiftCartItemSetupList = $this->getAvailableGiftCartItemSetupList($cart, $giftCartItemSetupList, $domainId);
+
+        $this->applyGiftCartItemSetupListToCart($cart, $availableGiftCartItemSetupList, $domainId);
     }
 
     /**
@@ -100,24 +103,37 @@ class GiftCartFacade
     }
 
     /**
+     * @param array<string, \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup> $giftCartItemSetupList
      * @return array<string, \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup>
      */
-    protected function getAvailableGiftCartItemSetupListByCart(Cart $cart, int $domainId): array
-    {
-        $setups = $this->getGiftCartItemSetupListByCart($cart, $domainId);
-        ksort($setups, SORT_NATURAL);
-        // Existing gifts keep priority over newly added or restored pairs when stock is limited.
-        $existingKeys = [];
+    protected function getAvailableGiftCartItemSetupList(
+        Cart $cart,
+        array $giftCartItemSetupList,
+        int $domainId,
+    ): array {
+        ksort($giftCartItemSetupList, SORT_NATURAL);
+        $prioritizedSetups = [];
 
+        // Existing gifts keep priority over newly added or restored pairs when stock is limited.
         foreach ($cart->getProductGiftCartItems() as $item) {
-            $existingKeys[] = $item->getGiftMainProduct()?->getId() . ':' . $item->getProduct()->getId();
+            $key = $item->getGiftMainProduct()?->getId() . ':' . $item->getProduct()->getId();
+
+            if (!isset($giftCartItemSetupList[$key])) {
+                continue;
+            }
+
+            $prioritizedSetups[$key] = $giftCartItemSetupList[$key];
+            unset($giftCartItemSetupList[$key]);
         }
 
-        $setups = array_replace(array_intersect_key(array_fill_keys($existingKeys, null), $setups), $setups);
+        foreach ($giftCartItemSetupList as $key => $setup) {
+            $prioritizedSetups[$key] = $setup;
+        }
+
         $allocatedQuantities = $this->getPurchasedProductQuantities($cart);
         $availableSetups = [];
 
-        foreach ($setups as $key => $setup) {
+        foreach ($prioritizedSetups as $key => $setup) {
             $giftProduct = $setup->getGiftProduct();
 
             if ($cart->isProductGiftRemoved($giftProduct, $setup->getMainProduct())) {
@@ -162,16 +178,18 @@ class GiftCartFacade
             return [];
         }
 
+        $giftCartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+        $availableGiftCartItemSetupList = $this->getAvailableGiftCartItemSetupList($cart, $giftCartItemSetupList, $domainId);
         $allocatedQuantities = $this->getPurchasedProductQuantities($cart);
 
-        foreach ($this->getAvailableGiftCartItemSetupListByCart($cart, $domainId) as $setup) {
+        foreach ($availableGiftCartItemSetupList as $setup) {
             $giftProductId = $setup->getGiftProduct()->getId();
             $allocatedQuantities[$giftProductId] = ($allocatedQuantities[$giftProductId] ?? 0) + $setup->getQuantity();
         }
 
         $removedSetups = [];
 
-        foreach ($this->getGiftCartItemSetupListByCart($cart, $domainId) as $setup) {
+        foreach ($giftCartItemSetupList as $setup) {
             $giftProduct = $setup->getGiftProduct();
 
             if (!$cart->isProductGiftRemoved($giftProduct, $setup->getMainProduct())) {
@@ -267,7 +285,8 @@ class GiftCartFacade
     public function refreshProductGiftCartItemsAndGetInvalidItems(Cart $cart, int $domainId): array
     {
         $invalidItems = [];
-        $giftCartItemSetups = $this->getAvailableGiftCartItemSetupListByCart($cart, $domainId);
+        $giftCartItemSetupList = $this->getGiftCartItemSetupListByCart($cart, $domainId);
+        $giftCartItemSetups = $this->getAvailableGiftCartItemSetupList($cart, $giftCartItemSetupList, $domainId);
 
         foreach ($cart->getProductGiftCartItems() as $item) {
             $key = $item->getGiftMainProduct()?->getId() . ':' . $item->getProduct()->getId();

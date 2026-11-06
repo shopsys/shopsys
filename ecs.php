@@ -213,7 +213,8 @@ return ECSConfig::configure()
             ForbiddenSuperGlobalSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/HttpFoundation/Exception/NotFoundRedirectToStorefrontException.php',
             ],
-            ReturnTypeHintSniff::class => [
+            // Void inference reports this fully qualified code instead of the usual short code.
+            ReturnTypeHintSniff::class . '.SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint' => [
                 __DIR__ . '/packages/framework/src/Model/Cart/Item/CartItem.php',
             ],
             PropertyTypeHintSniff::class => $pathsExcludedFromStrictTyping,
