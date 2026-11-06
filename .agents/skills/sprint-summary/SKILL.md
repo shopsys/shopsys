@@ -383,7 +383,18 @@ Once the article is ready, always instruct the user with the following steps:
 1. Verify the article contents (and optionally have a colleague review it).
    When adding or replacing screenshots and videos manually, give each one a caption describing what it shows and turn on its border (select the media -> "Border" in the toolbar), so all media in the article look the same. When recording videos manually, keep the mouse cursor visible (enable "show cursor" and ideally click highlighting in the screen recorder).
 2. Once satisfied with the contents, create a public link for the Confluence page.
-3. Send that public link to the marketing department so they distribute the summary by e-mail to the subscribers.
+3. Send that public link together with the three newsletter highlights below to the marketing department so they can announce the new sprint summary by e-mail to subscribers.
+
+#### Newsletter highlights for marketing
+
+At the end of the final response to the user, always include a separate Czech block titled **„3 lákadla do newsletteru pro marketing“**, ready to copy and send to marketing with the article link. This is a handoff for the newsletter announcement, not an extra section in the Markdown or Confluence article.
+
+- Select the three most interesting or important distinct changes actually covered in the final article, ordered by their appeal to newsletter readers. Prioritize concrete benefits for customers, e-shop operators, and developers: valuable new capabilities, noticeable UX improvements, or significant performance/security improvements. Do not rank by Jira priority or implementation effort alone.
+- Write each highlight as one bullet with a short, engaging Czech title and 1–2 concise sentences explaining the benefit and giving readers a reason to open the full summary. Use language understandable to non-technical readers; omit ticket IDs and internal implementation details.
+- Keep every claim grounded in the article. Avoid clickbait, invented metrics, unsupported promises, or presenting a bug fix as a new feature. Do not split one feature into multiple highlights just to fill the list.
+- If the article contains fewer than three distinct substantive changes, provide only the available highlights and briefly explain the lower count to the user outside the copy-ready block.
+
+Only prepare the handoff; do not send it to marketing automatically.
 
 ## Rules for Describing Changes
 
