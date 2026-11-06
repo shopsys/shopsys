@@ -664,6 +664,9 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+msgid "Closed complaint"
+msgstr ""
+
 msgid "Code"
 msgstr ""
 

@@ -664,6 +664,9 @@ msgstr "Vymazať cache obchodu"
 msgid "Close"
 msgstr "Zavrieť"
 
+msgid "Closed complaint"
+msgstr "Uzavretá reklamácia"
+
 msgid "Code"
 msgstr "Kód"
 

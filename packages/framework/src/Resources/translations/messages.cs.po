@@ -664,6 +664,9 @@ msgstr "Vymazat Storefront cache"
 msgid "Close"
 msgstr "Zavřít"
 
+msgid "Closed complaint"
+msgstr "Uzavřená reklamace"
+
 msgid "Code"
 msgstr "Kód"
 
