@@ -5,6 +5,7 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
     brands {
         __typename
         count
+        isAbsolute
         brand {
             __typename
             uuid
@@ -15,6 +16,7 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
     flags {
         __typename
         count
+        isAbsolute
         flag {
             ...SimpleFlagFragment
         }
@@ -30,6 +32,7 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
                 uuid
                 text
                 count
+                isAbsolute
                 isSelected
             }
             isCollapsed
@@ -43,6 +46,7 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
                 uuid
                 text
                 count
+                isAbsolute
                 rgbHex
                 isSelected
                 colorIcon {

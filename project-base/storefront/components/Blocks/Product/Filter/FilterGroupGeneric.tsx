@@ -19,7 +19,7 @@ import { useFilterShowLess } from './utils/useFilterShowLess';
 
 type FilterFieldType = 'flags' | 'brands';
 
-export type MappedFilterOption = { name: string; uuid: string; count?: number; rgbColor?: string };
+export type MappedFilterOption = { name: string; uuid: string; count?: number; isAbsolute: boolean; rgbColor?: string };
 
 type FilterGroupGenericProps = {
     title: string;
@@ -88,6 +88,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                     count={option.count}
                     disabled={isDisabled}
                     id={`${filterField}.${index}.checked`}
+                    isCountAbsolute={option.isAbsolute}
                     label={optionLabel}
                     labelWrapperClassName="min-w-0"
                     name={`${filterField}.${index}.checked`}

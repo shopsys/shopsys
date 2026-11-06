@@ -13,6 +13,7 @@ export type CheckboxProps = NativeProps & {
     value: boolean;
     label: ReactNode;
     count?: number;
+    isCountAbsolute?: boolean;
     labelWrapperClassName?: string;
 };
 
@@ -23,6 +24,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
             name,
             label,
             count,
+            isCountAbsolute,
             required,
             disabled,
             onChange,
@@ -40,6 +42,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
             disabled={disabled}
             htmlFor={id}
             inputType="checkbox"
+            isCountAbsolute={isCountAbsolute}
             label={label}
             required={required}
         >

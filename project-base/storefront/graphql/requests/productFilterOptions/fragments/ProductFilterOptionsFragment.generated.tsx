@@ -5,9 +5,9 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.generated';
-export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<
-    | { __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> }
-    | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean, colorIcon: { url: string } | null }> }
+export type TypeProductFilterOptionsFragment = { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, isAbsolute: boolean, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isAbsolute: boolean, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<
+    | { __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isAbsolute: boolean, isSelected: boolean }> }
+    | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, isAbsolute: boolean, rgbHex: string | null, isSelected: boolean, colorIcon: { url: string } | null }> }
     | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, isSelectable: boolean, unit: { __typename: 'Unit', name: string } | null }
   > | null };
 
@@ -19,6 +19,7 @@ export const ProductFilterOptionsFragment = gql`
   brands {
     __typename
     count
+    isAbsolute
     brand {
       __typename
       uuid
@@ -29,6 +30,7 @@ export const ProductFilterOptionsFragment = gql`
   flags {
     __typename
     count
+    isAbsolute
     flag {
       ...SimpleFlagFragment
     }
@@ -44,6 +46,7 @@ export const ProductFilterOptionsFragment = gql`
         uuid
         text
         count
+        isAbsolute
         isSelected
       }
       isCollapsed
@@ -57,6 +60,7 @@ export const ProductFilterOptionsFragment = gql`
         uuid
         text
         count
+        isAbsolute
         rgbHex
         isSelected
         colorIcon {

@@ -12,6 +12,7 @@ type ColorLabelWrapperProps = NativeProps & {
     bgColor: string;
     imageUrl?: string;
     count?: number;
+    isCountAbsolute?: boolean;
     checked?: boolean;
     disabled?: boolean;
 };
@@ -21,6 +22,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
     bgColor,
     imageUrl,
     count,
+    isCountAbsolute = true,
     disabled,
     checked,
     htmlFor,
@@ -65,7 +67,12 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             </ColorPreview>
             <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
-                {!!count && !checked && <div className="ml-auto font-normal text-text-less">({count})</div>}
+                {!!count && !checked && (
+                    <div className="ml-auto font-normal text-text-less">
+                        ({!isCountAbsolute && '+'}
+                        {count})
+                    </div>
+                )}
             </div>
         </label>
     </div>
