@@ -1,8 +1,11 @@
+import { captureException } from '@sentry/nextjs';
 import i18n from 'i18n';
 import { getFreshTranslates } from 'i18n-translator';
 import { type AppRedisClient, getRedisClient } from 'utils/redis/redisClient';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+vi.mock('@sentry/nextjs', () => ({ captureException: vi.fn() }));
+vi.mock('envConfig', () => ({ getPublicConfigProperty: () => 'no-debug' }));
 vi.mock('utils/redis/redisClient', () => ({ getRedisClient: vi.fn() }));
 vi.mock('i18n-translator', () => ({ getFreshTranslates: vi.fn() }));
 
@@ -43,10 +46,54 @@ describe('translations using the shared Redis connection', () => {
     });
 
     test('loads fresh translations if Redis fails during a cache read', async () => {
-        const client = { mGet: vi.fn().mockRejectedValue(new Error('Connection lost')) };
+        const error = new Error('Connection lost', { cause: { code: 'EPIPE' } });
+        const client = { mGet: vi.fn().mockRejectedValue(error) };
         vi.mocked(getRedisClient).mockResolvedValue(client as unknown as AppRedisClient);
 
         expect(await i18n.loadLocaleFrom('cs', 'accessibility')).toEqual(translations);
         expect(getFreshTranslates).toHaveBeenCalledExactlyOnceWith('cs', 'accessibility');
+        expect(captureException).toHaveBeenCalledExactlyOnceWith(error, {
+            extra: { location: 'i18n loadLocaleFrom' },
+        });
+        expect(vi.mocked(captureException).mock.calls[0][0]).toBe(error);
+        expect(fetch).not.toHaveBeenCalled();
+    });
+
+    test('reports the original cache-write failure and still loads fresh translations', async () => {
+        const error = new TypeError('Cache write failed');
+        const client = {
+            mGet: vi.fn().mockResolvedValue([null, null]),
+            set: vi.fn().mockResolvedValueOnce('OK').mockRejectedValueOnce(error),
+        };
+        vi.mocked(getRedisClient).mockResolvedValue(client as unknown as AppRedisClient);
+
+        expect(await i18n.loadLocaleFrom('sk', 'common')).toEqual(translations);
+        expect(captureException).toHaveBeenCalledExactlyOnceWith(error, {
+            extra: { location: 'i18n loadLocaleFrom' },
+        });
+        expect(vi.mocked(captureException).mock.calls[0][0]).toBe(error);
+        expect(fetch).not.toHaveBeenCalled();
+    });
+
+    test.each(['Cache unavailable', { code: 'ECONNRESET' }])(
+        'reports a non-Error rejection without serializing it: %j',
+        async (reason) => {
+            vi.mocked(getRedisClient).mockRejectedValueOnce(reason);
+
+            expect(await i18n.loadLocaleFrom('en', 'common')).toEqual(translations);
+            expect(captureException).toHaveBeenCalledExactlyOnceWith(reason, {
+                extra: { location: 'i18n loadLocaleFrom' },
+            });
+            expect(fetch).not.toHaveBeenCalled();
+        },
+    );
+
+    test('loads translations in the browser without Redis or server error reporting', async () => {
+        vi.stubGlobal('window', {});
+
+        expect(await i18n.loadLocaleFrom('en', 'common')).toEqual(translations);
+        expect(getRedisClient).not.toHaveBeenCalled();
+        expect(captureException).not.toHaveBeenCalled();
+        expect(fetch).not.toHaveBeenCalled();
     });
 });
