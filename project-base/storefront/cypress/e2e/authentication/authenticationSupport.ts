@@ -122,7 +122,7 @@ export const logoutFromHeader = () => {
         .filter(':visible')
         .first()
         .should('be.visible')
-        .click({ scrollBehavior: false });
+        .click({ scrollBehavior: 'nearest' });
 };
 
 export const fillInEmailAndPasswordInLoginPopup = (email: string | undefined, password: string) => {
