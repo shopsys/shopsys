@@ -45,7 +45,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
             .filter(
                 (item) =>
                     item.type === TypeCartItemTypeEnum.ProductGift &&
-                    product.gifts.some((gift) => gift.uuid === item.product.uuid),
+                    (item.giftMainProductUuid
+                        ? item.giftMainProductUuid === product.uuid
+                        : product.gifts.some((gift) => gift.uuid === item.product.uuid)),
             )
             .map((cartItem) => ({
                 cartItem,
@@ -53,7 +55,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
                     .filter(
                         (item) =>
                             item.type === TypeCartItemTypeEnum.Product &&
-                            item.product.gifts.some((gift) => gift.uuid === cartItem.product.uuid),
+                            (cartItem.giftMainProductUuid
+                                ? item.product.uuid === cartItem.giftMainProductUuid
+                                : item.product.gifts.some((gift) => gift.uuid === cartItem.product.uuid)),
                     )
                     .map((item) => item.product.fullName),
             })) ?? [];
