@@ -109,6 +109,7 @@ describe('MobileBottomNavigation', () => {
         await user.click(screen.getByRole('button', { name: 'Menu' }));
         expect(await screen.findByTestId('mobile-menu')).toHaveAttribute('data-active', 'true');
         const accountButton = screen.getByRole('button', { name: 'Account' });
+        expect(accountButton).toHaveAttribute('name', 'account-login');
         await user.click(accountButton);
         expect(screen.getByRole('dialog', { name: 'Account login' })).toHaveAttribute(
             'data-form-name',

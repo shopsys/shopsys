@@ -8,7 +8,7 @@ export const AccountLoginPopup: FC<{ loginFormName: string }> = ({ loginFormName
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     return (
-        <LoginPopupLayout isWide title={t('Login')}>
+        <LoginPopupLayout isWide focusFallbackSelector='button[name="account-login"]' title={t('Login')}>
             <MenuIconicItemUserUnauthenticatedContent loginFormName={loginFormName} onMenuClose={closePortalContent} />
         </LoginPopupLayout>
     );

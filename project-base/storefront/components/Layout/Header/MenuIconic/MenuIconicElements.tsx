@@ -16,6 +16,7 @@ export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, ti
 type MenuIconicItemLinkProps = {
     href?: string;
     title?: string;
+    name?: string;
     type?: PageType;
     onClick?: MouseEventHandler<HTMLElement>;
     onTouchEnd?: (e: ReactTouchEvent<HTMLButtonElement>) => void;
@@ -78,6 +79,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
             tid,
             href,
             title,
+            name,
             type,
             tabIndex,
             onClick,
@@ -119,6 +121,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                 aria-label={ariaLabel}
                 className={twMergeCustom(menuIconicItemLinkTwClass, className)}
                 data-tid={tid}
+                name={name}
                 tabIndex={tabIndex}
                 title={title}
                 type="button"

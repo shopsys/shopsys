@@ -31,6 +31,7 @@ type PopupProps = {
     isDrawer?: boolean;
     contentClassName?: string;
     headerClassName?: string;
+    focusFallbackSelector?: string;
     key?: string;
     children?: React.ReactNode;
     className?: string;
@@ -49,6 +50,7 @@ export const Popup: React.FC<PopupProps> = ({
     className,
     contentClassName,
     headerClassName,
+    focusFallbackSelector,
     key,
     role = 'dialog',
     size = 'medium',
@@ -88,9 +90,9 @@ export const Popup: React.FC<PopupProps> = ({
 
     // Focus must be established before paint so form auto-focus cannot remain behind the modal.
     useLayoutEffect(() => {
-        storeCurrentFocus();
+        storeCurrentFocus(focusFallbackSelector);
         (titleRef.current ?? popupRef.current)?.focus({ preventScroll: true });
-    }, [storeCurrentFocus]);
+    }, [focusFallbackSelector, storeCurrentFocus]);
 
     useLayoutEffect(() => {
         if (!popupRef.current) {

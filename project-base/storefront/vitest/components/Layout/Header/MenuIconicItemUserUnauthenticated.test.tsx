@@ -1,6 +1,8 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { MenuIconicItemUserUnauthenticated } from 'components/Layout/Header/MenuIconic/MenuIconicItemUserUnauthenticated';
+import { MobileBottomNavigationButton } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomNavigationItem';
 import type { ComponentProps, ReactNode } from 'react';
 import { createFocusManagementSlice, type FocusManagementSlice } from 'store/slices/createFocusManagementSlice';
 import { createPortalSlice, type PortalSlice } from 'store/slices/createPortalSlice';
@@ -61,12 +63,26 @@ vi.mock('framer-motion', () => ({
     },
 }));
 
-const TestPage = () => {
+const TestPage = ({ isDesktop = true }: { isDesktop?: boolean }) => {
     const portalContent = useTestStore((state) => state.portalContent);
     return (
         <>
-            <MenuIconicItemUserUnauthenticated loginFormName="header-login-form" />
-            <MenuIconicItemUserUnauthenticated loginFormName="fixed-header-login-form" />
+            {isDesktop ? (
+                <>
+                    <MenuIconicItemUserUnauthenticated loginFormName="header-login-form" />
+                    <MenuIconicItemUserUnauthenticated loginFormName="fixed-header-login-form" />
+                </>
+            ) : (
+                <ul>
+                    <MobileBottomNavigationButton
+                        icon={UserIcon}
+                        isExpanded={!!portalContent}
+                        label="Mobile account"
+                        name="account-login"
+                        onClick={() => {}}
+                    />
+                </ul>
+            )}
             {portalContent}
         </>
     );
@@ -81,7 +97,7 @@ describe('Header account dialog', () => {
                 disconnect() {}
             },
         );
-        useTestStore.setState({ portalContent: null, storedFocusElement: null });
+        useTestStore.setState({ portalContent: null, storedFocusElement: null, storedFocusFallbackSelector: null });
     });
     afterEach(() => {
         cleanup();
@@ -119,6 +135,17 @@ describe('Header account dialog', () => {
             expect(trigger).toHaveAttribute('aria-expanded', 'false');
         },
     );
+
+    test('returns focus to the mobile account button when its desktop trigger has unmounted', async () => {
+        const user = userEvent.setup();
+        const { rerender } = render(<TestPage />);
+        await user.click(screen.getAllByRole('button', { name: 'Show registration and login popup' })[1]);
+
+        rerender(<TestPage isDesktop={false} />);
+        await user.keyboard('{Escape}');
+
+        await waitFor(() => expect(screen.getByRole('button', { name: 'Mobile account' })).toHaveFocus());
+    });
 
     test.each(['{Enter}', ' '])('opens with %s, moves focus inside and traps both tab directions', async (key) => {
         const user = userEvent.setup();

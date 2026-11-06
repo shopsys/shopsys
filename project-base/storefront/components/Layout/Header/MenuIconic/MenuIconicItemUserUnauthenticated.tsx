@@ -25,6 +25,7 @@ export const MenuIconicItemUserUnauthenticated: FC<MenuIconicItemUserUnauthentic
             ariaLabel={t('Show registration and login popup', { ns: 'accessibility' })}
             className="min-size-12 cursor-pointer text-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
             tid={TIDs.my_account_link}
+            name="account-login"
             title={t('Login form')}
             onClick={(event) => {
                 // Safari does not focus buttons on pointer clicks; the popup must restore focus here too.

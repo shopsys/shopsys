@@ -124,6 +124,12 @@ describe('Login Tests', () => {
         cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_link]).should('be.focused');
         cy.realPress('Tab');
         cy.getByTID([TIDs.layout_popup]).find('button').first().should('be.focused');
+        cy.realPress('Escape');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+        cy.focused().should('be.visible').and('have.attr', 'name', 'account-login');
+
+        cy.realPress('Enter');
+        cy.getByTID([TIDs.layout_popup]).should('be.visible');
         cy.viewport(1600, 720);
         closeHeaderLoginForm();
         cy.getByTID([TIDs.header, TIDs.my_account_link]).should('be.focused');

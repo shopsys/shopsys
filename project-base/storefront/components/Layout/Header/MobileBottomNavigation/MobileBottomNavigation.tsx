@@ -95,6 +95,7 @@ export const MobileBottomNavigation: FC = () => {
                         icon={UserIcon}
                         isExpanded={isUserLoggedIn ? openPanel === 'account' : isLoginPopupOpen}
                         label={t('Account')}
+                        name="account-login"
                         onClick={(event) => {
                             if (isUserLoggedIn) {
                                 togglePanel('account');

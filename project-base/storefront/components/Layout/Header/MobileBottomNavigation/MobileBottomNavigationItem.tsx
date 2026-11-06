@@ -30,6 +30,7 @@ type MobileBottomNavigationButtonProps = {
     isExpanded: boolean;
     label: string;
     ariaHaspopup?: 'dialog';
+    name?: string;
     onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -39,6 +40,7 @@ export const MobileBottomNavigationButton: FC<MobileBottomNavigationButtonProps>
     isExpanded,
     label,
     ariaHaspopup,
+    name,
     onClick,
 }) => (
     <li>
@@ -46,6 +48,7 @@ export const MobileBottomNavigationButton: FC<MobileBottomNavigationButtonProps>
             aria-expanded={isExpanded}
             aria-haspopup={ariaHaspopup}
             className={mobileBottomNavigationItemClassName}
+            name={name}
             type="button"
             onClick={onClick}
         >
