@@ -7,7 +7,7 @@ export const LastUsedLoginMethodBadge: FC = () => {
     return (
         <span
             data-tid={TIDs.last_used_login_method_badge}
-            className="absolute -top-2.5 -right-2 z-above inline-flex w-fit items-center text-nowrap rounded-full bg-background-accent px-2 py-0.5 font-secondary font-semibold text-text-inverted text-xs"
+            className="absolute -top-2.5 right-2 z-above inline-flex w-fit items-center text-nowrap rounded-full bg-background-accent px-2 py-0.5 font-secondary font-semibold text-text-inverted text-xs"
         >
             {t('Last used')}
         </span>

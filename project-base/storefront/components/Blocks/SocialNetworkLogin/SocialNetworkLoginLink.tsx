@@ -24,9 +24,15 @@ type SocialNetworkLoginLinkProps = {
     href: UrlObject;
     isLastUsed: boolean;
     socialNetwork: TypeLoginTypeEnum;
+    isCompact?: boolean;
 };
 
-export const SocialNetworkLoginLink: FC<SocialNetworkLoginLinkProps> = ({ href, isLastUsed, socialNetwork }) => {
+export const SocialNetworkLoginLink: FC<SocialNetworkLoginLinkProps> = ({
+    href,
+    isLastUsed,
+    socialNetwork,
+    isCompact,
+}) => {
     const { t } = useTranslation();
     const socialNetworkName = getSocialNetworkName(socialNetwork);
     const label = t('Continue with {{ socialNetwork }}', { socialNetwork: socialNetworkName });
@@ -41,10 +47,12 @@ export const SocialNetworkLoginLink: FC<SocialNetworkLoginLinkProps> = ({ href, 
             className={twJoin(
                 'relative flex w-full items-center justify-center gap-2 rounded-input bg-background-default text-text-default no-underline transition-colors hover:bg-background-more hover:no-underline',
                 isLastUsed ? 'border-2 border-background-accent p-2.75' : 'border p-3',
+                isCompact && 'min-w-0 gap-2 text-sm [&>svg]:size-5',
+                isCompact && !isLastUsed && 'border-border-less',
             )}
         >
             <SocialNetworkIcon socialNetwork={socialNetwork} />
-            <span className="min-w-0 truncate">{label}</span>
+            <span className="min-w-0 truncate">{isCompact ? socialNetworkName : label}</span>
             {isLastUsed && <LastUsedLoginMethodBadge />}
         </ExtendedNextLink>
     );

@@ -40,7 +40,7 @@ export const MobileMenu: FC<MobileMenuProps> = ({
 
             <Drawer
                 ariaLabel={t('Mobile navigation menu', { ns: 'accessibility' })}
-                className="z-maximum w-78 overflow-x-hidden p-0"
+                className="z-maximum overflow-x-hidden p-0"
                 isActive={isMenuOpened}
                 setIsActive={handleMenuActiveChange}
                 shouldRenderHeader={false}

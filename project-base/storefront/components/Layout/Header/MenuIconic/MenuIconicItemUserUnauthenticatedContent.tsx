@@ -1,17 +1,18 @@
-import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
+import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
+import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
+import { Image } from 'components/Basic/Image/Image';
 import { LoginForm } from 'components/Blocks/Login/LoginForm';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { useFocusTrap } from 'utils/useFocusTrap';
+import logo from '/public/images/logo.svg';
 
 type MenuIconicItemUserUnauthenticatedContentProps = {
-    hideFocusTrap?: boolean;
     loginFormName: string;
     onMenuClose: () => void;
 };
@@ -27,71 +28,93 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registr
     const titleId = `${idPrefix}-registration-benefits-title`;
     const listId = `${idPrefix}-registration-benefits-list`;
     const registrationBenefits = [
-        t('Faster checkout for purchases'),
-        t('Simplified complaint process'),
-        t('Order history for easy reordering'),
+        { Icon: ClockIcon, text: t('Faster checkout next time') },
+        { Icon: OrderIcon, text: t('Order history and easy reordering') },
+        { Icon: DocumentIcon, text: t('Easier complaint handling') },
     ];
 
     return (
         <section
             aria-labelledby={titleId}
-            className="vl:order-1 mb-auto vl:w-1/2 rounded-xl bg-background-brand-less p-5 vl:p-9 text-text-inverted"
+            className="relative isolate vl:order-1 vl:flex hidden min-w-0 flex-col justify-center overflow-hidden bg-background-accent-less px-6 vl:px-10 py-10 vl:py-12 text-text-default"
         >
-            <h3 className="h4" id={titleId}>
-                {t('Benefits of registration')}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-1 overflow-hidden">
+                <Image
+                    alt=""
+                    className="absolute top-24 -right-16 h-auto w-[120%] max-w-none -rotate-12 opacity-[0.035] brightness-0"
+                    src={logo}
+                />
+            </div>
+
+            <h3 className="font-semibold text-2xl leading-8 tracking-tight" id={titleId}>
+                {t('Why create an account?')}
             </h3>
 
-            <ul className="my-4 flex flex-col gap-1" id={listId}>
-                {registrationBenefits.map((registrationBenefit) => (
-                    <li key={registrationBenefit} className="flex items-start gap-2 text-text-inverted">
-                        <CheckmarkIcon aria-hidden="true" className="mt-0.5 size-5 shrink-0" focusable="false" />
-                        <span>{registrationBenefit}</span>
+            <ul className="mt-7 mb-9 flex flex-col gap-5" id={listId}>
+                {registrationBenefits.map(({ Icon, text }) => (
+                    <li key={text} className="flex items-center gap-3 text-md text-text-default leading-6">
+                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-background-default/80 text-icon-accent">
+                            <Icon aria-hidden="true" className="size-5" focusable="false" />
+                        </span>
+                        <span>{text}</span>
                     </li>
                 ))}
             </ul>
 
             <LinkButton
                 aria-describedby={listId}
-                aria-label={t('Register. Go to registration page', { ns: 'accessibility' })}
                 href={registrationUrl}
-                size="large"
+                className="w-full"
+                size="xlarge"
                 skeletonType="registration"
                 tid={TIDs.login_popup_register_button}
-                variant="inverted"
+                variant="secondary"
                 onClick={onMenuClose}
             >
-                {t('Register')}
-                <ArrowSecondaryIcon aria-hidden="true" className="size-5 -rotate-90 p-1 md:size-6" focusable="false" />
+                {t('Create account')}
             </LinkButton>
         </section>
     );
 };
 
 export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnauthenticatedContentProps> = ({
-    hideFocusTrap,
     loginFormName,
     onMenuClose,
 }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
-    const contentRef = useRef<HTMLDivElement>(null);
     const loginFormEmail = useSessionStore((store) => store.loginFormEmail);
     const setLoginFormEmail = useSessionStore((store) => store.setLoginFormEmail);
 
-    useFocusTrap(hideFocusTrap ? undefined : contentRef);
-
     return (
-        <div className="flex w-full vl:flex-row flex-col gap-8 vl:p-5 text-left" ref={contentRef}>
-            <div className="vl:order-2 vl:w-91 w-full">
-                <h3 className="h4 mb-5">{t('Log in to your account')}</h3>
+        <div className="grid w-full vl:grid-cols-2 text-left">
+            <div className="vl:order-2 w-full min-w-0 px-6 vl:px-10 vl:py-12 pt-14 pb-8">
+                <h3 className="mb-6 vl:mb-7 text-balance font-semibold text-2xl leading-8 tracking-tight">
+                    {t('Login')}
+                </h3>
 
                 <LoginForm
                     defaultEmail={loginFormEmail}
                     formName={loginFormName}
+                    formContentWrapperClassName="gap-4"
+                    isCompact
                     onEmailChange={(event) => setLoginFormEmail(event.currentTarget.value)}
                 />
             </div>
+
+            <p className="vl:hidden bg-background-accent-less px-6 py-6 text-center text-sm text-text-less">
+                {t("Don't have an account?")}{' '}
+                <ExtendedNextLink
+                    className="inline-block font-semibold"
+                    href={registrationUrl}
+                    skeletonType="registration"
+                    tid={TIDs.login_popup_register_link}
+                    onClick={onMenuClose}
+                >
+                    {t('Register')}
+                </ExtendedNextLink>
+            </p>
 
             <RegistrationBenefits
                 idPrefix={loginFormName}

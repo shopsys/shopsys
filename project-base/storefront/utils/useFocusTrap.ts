@@ -10,9 +10,22 @@ const focusableElementsSelector = [
 ].join(', ');
 
 const getFocusableElements = (container: HTMLElement): HTMLElement[] =>
-    Array.from(container.querySelectorAll<HTMLElement>(focusableElementsSelector)).filter(
-        (element) => !element.closest('[aria-hidden="true"]'),
-    );
+    Array.from(container.querySelectorAll<HTMLElement>(focusableElementsSelector)).filter((element) => {
+        if (element.closest('[aria-hidden="true"]') || getComputedStyle(element).visibility === 'hidden') {
+            return false;
+        }
+
+        // Responsive panels can remain in the DOM while their controls cannot receive focus.
+        let ancestor: HTMLElement | null = element;
+        while (ancestor) {
+            if (getComputedStyle(ancestor).display === 'none') {
+                return false;
+            }
+            ancestor = ancestor.parentElement;
+        }
+
+        return true;
+    });
 
 // prevents Tab/Shift+Tab from escaping modal, keeps focus within modal, essential for accessibility
 export const useFocusTrap = (containerRef: React.RefObject<HTMLElement | null> | undefined) => {
