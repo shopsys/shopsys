@@ -141,12 +141,11 @@ const createSliderParameter = (
     name: string,
     min: number,
     max: number,
-    currentMin: number,
-    currentMax: number,
     unit: string | null = null,
 ): ParametersType =>
     ({
         __typename: 'ParameterSliderFilterOption',
+        singleValueCount: null,
         uuid,
         name,
         isCollapsed: false,
@@ -154,10 +153,7 @@ const createSliderParameter = (
         unit: unit ? { name: unit } : null,
         minimalValue: min,
         maximalValue: max,
-        selectedValue: {
-            minimalValue: currentMin,
-            maximalValue: currentMax,
-        },
+        selectedValue: null,
     }) as any;
 
 const mockCheckboxParameter: ParametersType = createCheckboxParameter('param-1', 'Material', [
@@ -175,7 +171,7 @@ const mockColorParameter: ParametersType = createColorParameter('param-2', 'Colo
     { uuid: 'color-yellow', name: 'Yellow', count: 0, rgbColor: '#FFFF00' },
 ]);
 
-const mockSliderParameter: ParametersType = createSliderParameter('param-3', 'Weight', 0, 100, 10, 50, 'kg');
+const mockSliderParameter: ParametersType = createSliderParameter('param-3', 'Weight', 0, 100, 'kg');
 
 const defaultCheckboxProps = {
     title: 'Material Filter',
@@ -221,7 +217,95 @@ describe('FilterGroupParameters', () => {
         ];
     });
 
+    describe('Single numeric value', () => {
+        test('shows the supplied product count for an unchecked value', () => {
+            mockCurrentFilterQuery.parameters = [];
+            const props = {
+                ...defaultSliderProps,
+                isActive: false,
+                parameter: { ...createSliderParameter('param-3', 'Weight', 5, 5), singleValueCount: 3 },
+            };
+            const { rerender } = render(<FilterGroupParameters {...props} />);
+            expect(screen.getByRole('checkbox', { name: /^5\s*\(3\)$/ })).toBeEnabled();
+
+            rerender(<FilterGroupParameters {...props} isActive />);
+
+            expect(screen.getByRole('checkbox', { name: '5' })).toBeChecked();
+            expect(screen.queryByText('(3)')).not.toBeInTheDocument();
+        });
+
+        test.each([0, 2.5, 5])('selects and clears the exact value %s', async (value) => {
+            const user = userEvent.setup();
+            mockCurrentFilterQuery.parameters = [];
+            const props = {
+                ...defaultSliderProps,
+                isActive: false,
+                parameter: createSliderParameter('param-3', 'Weight', value, value),
+            };
+            const { rerender } = render(<FilterGroupParameters {...props} />);
+            const checkbox = screen.getByRole('checkbox', { name: String(value) });
+            expect(checkbox).not.toBeChecked();
+            expect(screen.queryByRole('spinbutton')).not.toBeInTheDocument();
+            expect(screen.queryByRole('slider')).not.toBeInTheDocument();
+
+            await user.click(screen.getByText(String(value), { exact: true }));
+
+            expect(mockUpdateFilterQuery).toHaveBeenLastCalledWith('param-3', undefined, value, value);
+            mockCurrentFilterQuery.parameters = [{ parameter: 'param-3', minimalValue: value, maximalValue: value }];
+            rerender(<FilterGroupParameters {...props} isActive />);
+            expect(checkbox).toBeChecked();
+            await user.click(screen.getByText(String(value), { exact: true }));
+            expect(mockUpdateFilterQuery).toHaveBeenLastCalledWith('param-3', undefined, undefined, undefined);
+        });
+
+        test('disables an unavailable value while keeping its active selection removable', async () => {
+            const user = userEvent.setup();
+            mockCurrentFilterQuery.parameters = [];
+            const props = {
+                ...defaultSliderProps,
+                isActive: false,
+                parameter: { ...createSliderParameter('param-3', 'Weight', 5, 5), isSelectable: false },
+            };
+            const { rerender } = render(<FilterGroupParameters {...props} />);
+            expect(screen.getByRole('checkbox', { name: '5' })).toBeDisabled();
+
+            mockCurrentFilterQuery.parameters = [{ parameter: 'param-3', minimalValue: 5, maximalValue: 5 }];
+            rerender(<FilterGroupParameters {...props} isActive />);
+            expect(screen.getByRole('checkbox', { name: '5' })).toBeEnabled();
+            expect(screen.getByRole('checkbox', { name: '5' })).toBeChecked();
+            await user.click(screen.getByText('5', { exact: true }));
+
+            expect(mockUpdateFilterQuery).toHaveBeenLastCalledWith('param-3', undefined, undefined, undefined);
+        });
+
+        test('keeps a slider when only the user-selected bounds are equal', () => {
+            mockCurrentFilterQuery.parameters = [{ parameter: 'param-3', minimalValue: 5, maximalValue: 5 }];
+
+            render(<FilterGroupParameters {...defaultSliderProps} />);
+
+            expect(screen.getAllByRole('spinbutton')).toHaveLength(2);
+            expect(screen.getAllByRole('slider')).toHaveLength(2);
+            expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+        });
+    });
+
     describe('Basic Rendering', () => {
+        test('shows collapsed parameter values directly in standalone mode', () => {
+            render(
+                <FilterGroupParameters
+                    {...defaultCheckboxProps}
+                    isStandalone
+                    defaultNumberOfShownParameters={5}
+                    parameter={{ ...mockCheckboxParameter, isCollapsed: true }}
+                />,
+            );
+
+            expect(screen.getByText('Cotton')).toBeInTheDocument();
+            expect(screen.getByText('Linen')).toBeInTheDocument();
+            expect(screen.queryByText('Material Filter')).not.toBeInTheDocument();
+            expect(screen.queryByText('Show more')).not.toBeInTheDocument();
+        });
+
         test('renders filter group with title', () => {
             render(<FilterGroupParameters {...defaultCheckboxProps} />);
 
@@ -234,14 +318,14 @@ describe('FilterGroupParameters', () => {
         test('renders active state correctly', () => {
             render(<FilterGroupParameters {...defaultSliderProps} />);
 
-            const activeIndicator = document.querySelector('.bg-background-success');
+            const activeIndicator = document.querySelector('.size-2.bg-link-default');
             expect(activeIndicator).toBeInTheDocument();
         });
 
         test('renders inactive state correctly', () => {
             render(<FilterGroupParameters {...defaultCheckboxProps} />);
 
-            const activeIndicator = document.querySelector('.bg-background-success');
+            const activeIndicator = document.querySelector('.size-2.bg-link-default');
             expect(activeIndicator).not.toBeInTheDocument();
         });
 
@@ -464,7 +548,7 @@ describe('FilterGroupParameters', () => {
         test('renders slider without unit when not available', () => {
             const sliderWithoutUnit = {
                 ...defaultSliderProps,
-                parameter: createSliderParameter('param-3', 'Weight', 0, 100, 10, 50, null),
+                parameter: createSliderParameter('param-3', 'Weight', 0, 100, null),
             };
 
             render(<FilterGroupParameters {...sliderWithoutUnit} />);

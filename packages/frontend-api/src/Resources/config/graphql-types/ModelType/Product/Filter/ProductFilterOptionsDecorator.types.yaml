@@ -19,6 +19,9 @@ ProductFilterOptionsDecorator:
             inStock:
                 type: "Int!"
                 description: "Number of products in stock that will be filtered"
+            visibleFilterParametersCount:
+                type: "Int!"
+                description: "Number of category parameters shown in the sidebar; all parameters remain available in the filter popup"
             parameters:
                 type: "[ParameterFilterOption!]"
                 description: "Parameter filter options"

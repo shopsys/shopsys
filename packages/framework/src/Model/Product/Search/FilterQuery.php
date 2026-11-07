@@ -885,6 +885,9 @@ class FilterQuery
                         'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
                     ],
                     'aggs' => [
+                        'products' => [
+                            'reverse_nested' => new stdClass(),
+                        ],
                         'by_value' => [
                             'terms' => [
                                 'field' => 'parameters.parameter_value_id',

@@ -5,6 +5,9 @@ ParameterSliderFilterOptionDecorator:
         - 'ParameterFilterOptionDecorator'
     config:
         fields:
+            singleValueCount:
+                type: "Int"
+                description: "Number of matching products when the parameter has only one available numeric value"
             minimalValue:
                 type: "Float!"
                 description: "The parameter minimal value"

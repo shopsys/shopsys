@@ -3,8 +3,11 @@ import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 
-export const FilterGroupWrapper: FC = ({ children }) => <div className="py-4 vl:py-5">{children}</div>;
+export const FilterGroupWrapper: FC<{ isStandalone?: boolean }> = ({ children, isStandalone }) => (
+    <div className={isStandalone ? '' : 'py-4 vl:py-5'}>{children}</div>
+);
 
 export const FilterGroupTitle: FC<{
     isOpen: boolean;
@@ -26,16 +29,27 @@ export const FilterGroupTitle: FC<{
         >
             <span className="h6 flex items-center gap-2.5 text-left">
                 {title}
-                {isActive && <span className="vl:hidden size-2 rounded-full bg-background-success" />}
+                {isActive && <span className="vl:hidden size-2 shrink-0 rounded-full bg-link-default" />}
             </span>
             <ArrowIcon className={twJoin('size-5 rotate-0 select-none text-xs transition', isOpen && 'rotate-180')} />
         </button>
     );
 };
 
-export const FilterGroupContent: FC<{ keyName?: string; id?: string }> = ({ children, keyName, id }) => (
+export const FilterGroupContent: FC<{ keyName?: string; id?: string; isStandalone?: boolean }> = ({
+    children,
+    keyName,
+    id,
+    isStandalone,
+}) => (
     <AnimateCollapseDiv className="block!" keyName={keyName}>
-        <div className="flex! flex-col flex-wrap gap-2.5 pt-4 vl:pt-2.5 pb-1 vl:pb-0" id={id}>
+        <div
+            className={twMergeCustom(
+                'flex! flex-col flex-wrap gap-2.5 pt-4 vl:pt-2.5 pb-1 vl:pb-0',
+                isStandalone && 'gap-4 pt-0 vl:pt-0',
+            )}
+            id={id}
+        >
             {children}
         </div>
     </AnimateCollapseDiv>

@@ -38,6 +38,25 @@
     @apply [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden;
 }
 
+@utility thin-scrollbar {
+    scrollbar-color: var(--color-background-most) transparent;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        width: 0.25rem;
+        height: 0.25rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 9999px;
+        background: var(--color-background-most);
+    }
+}
+
 @utility scroll-mt-fixed-header {
     scroll-margin-top: calc(var(--fixed-header-height, 0px) + var(--spacing-5));
 }
