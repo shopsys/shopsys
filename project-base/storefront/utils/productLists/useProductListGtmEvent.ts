@@ -52,11 +52,11 @@ export const useProductListGtmEvent = (
         );
     };
 
-    const toggleProductInListWithGtm = (
+    const toggleProductInListWithGtm = <Result extends boolean | null | Promise<unknown>>(
         product: ProductInterfaceType,
         gtmProductListName: GtmProductListNameType,
         listIndex: number | undefined,
-        toggleProductInList: (productUuid: string) => boolean,
+        toggleProductInList: (productUuid: string) => Result,
     ) => {
         const hasPendingGtmContext = productListGtmContextRef.current.has(product.uuid);
 
@@ -73,6 +73,13 @@ export const useProductListGtmEvent = (
         if (!didStartMutation && !hasPendingGtmContext) {
             clearProductListGtmContext(product.uuid);
         }
+
+        if (didStartMutation instanceof Promise) {
+            const clearContext = () => clearProductListGtmContext(product.uuid);
+            void didStartMutation.then(clearContext, clearContext);
+        }
+
+        return didStartMutation;
     };
 
     return {

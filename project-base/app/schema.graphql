@@ -2555,8 +2555,10 @@ type ProductFilterOptions {
 type ProductList {
   "Count of products in the list that are visible on the current domain"
   itemsCount: Int!
-  "An array of the products in the list"
-  products: [Product!]!
+  "Products visible on the current domain, optionally limited to a requested range"
+  products(limit: Int = null, offset: Int! = 0): [Product!]!
+  "Ordered identifiers of products visible on the current domain"
+  productUuids: [Uuid!]!
   "Product list type"
   type: ProductListTypeEnum!
   "Product list identifier"

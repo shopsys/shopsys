@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SubMenu } from 'components/Layout/Header/MobileMenu/MobileMenuSubItems';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { type MouseEventHandler, type ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -19,12 +20,8 @@ vi.mock('utils/staticUrls/getInternationalizedStaticUrls', () => ({
     getInternationalizedStaticUrls: (urls: string[]) => urls,
 }));
 
-vi.mock('utils/productLists/comparison/useComparison', () => ({
-    useComparison: () => ({ comparison: { products: [{ uuid: 'first' }, { uuid: 'second' }] } }),
-}));
-
-vi.mock('utils/productLists/wishlist/useWishlist', () => ({
-    useWishlist: () => ({ wishlist: { products: [{ uuid: 'first' }] } }),
+vi.mock('utils/productLists/useProductListCount', () => ({
+    useProductListCount: (type: TypeProductListTypeEnum) => (type === TypeProductListTypeEnum.Comparison ? 2 : 1),
 }));
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({

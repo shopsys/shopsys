@@ -8,8 +8,8 @@ import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 type ProductListCallbacks = {
-    addProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
-    removeProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
+    addProductSuccess: (productUuid: string) => void;
+    removeProductSuccess: (productUuid: string) => void;
     removeProductError: (productUuid: string) => void;
 };
 
@@ -70,7 +70,7 @@ describe('useComparison', () => {
         const onProductRemoved = vi.fn();
         const { result } = renderHook(() => useComparison({ onProductRemoved }));
 
-        act(() => productListCallbacksRef.current?.removeProductSuccess(undefined, 'first-product'));
+        act(() => productListCallbacksRef.current?.removeProductSuccess('first-product'));
         expect(onProductRemoved).toHaveBeenLastCalledWith('first-product');
 
         act(() => {
@@ -84,7 +84,7 @@ describe('useComparison', () => {
         act(() => productListCallbacksRef.current?.removeProductError('second-product'));
         expect(onProductRemoved).toHaveBeenCalledTimes(1);
 
-        act(() => productListCallbacksRef.current?.removeProductSuccess(undefined, 'second-product'));
+        act(() => productListCallbacksRef.current?.removeProductSuccess('second-product'));
         expect(onProductRemoved).toHaveBeenCalledTimes(2);
         expect(onProductRemoved).toHaveBeenLastCalledWith('second-product');
     });
@@ -107,7 +107,7 @@ describe('useComparison', () => {
                 { uuid: 'product-uuid' } as ProductInterfaceType,
                 GtmProductListNameType.product_detail,
             );
-            productListCallbacksRef.current?.addProductSuccess(undefined, 'product-uuid');
+            productListCallbacksRef.current?.addProductSuccess('product-uuid');
         });
         expect(screen.getByText('Product added to comparison.')).toBeInTheDocument();
 

@@ -1,0 +1,41 @@
+mutation ProductListSequentialMutations(
+    $uuid: Uuid!
+    $type: ProductListTypeEnum!
+    $firstProductUuid: Uuid!
+    $secondProductUuid: Uuid!
+    $addedProductUuid: Uuid!
+) {
+    added: AddProductToList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $addedProductUuid}) {
+        ...ProductListState
+    }
+    moved: MoveProductInList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $addedProductUuid, afterProductUuid: $secondProductUuid}) {
+        ...ProductListState
+    }
+    removed: RemoveProductFromList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $addedProductUuid}) {
+        ...ProductListState
+    }
+    removedFirst: RemoveProductFromList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $firstProductUuid}) {
+        ...ProductListState
+    }
+    removedLast: RemoveProductFromList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $secondProductUuid}) {
+        ...ProductListState
+    }
+    recreated: AddProductToList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $addedProductUuid}) {
+        ...ProductListState
+    }
+    cleared: RemoveProductList(input: {uuid: $uuid, type: $type}) {
+        uuid
+    }
+    afterClear: AddProductToList(input: {productListInput: {uuid: $uuid, type: $type}, productUuid: $secondProductUuid}) {
+        ...ProductListState
+    }
+}
+
+fragment ProductListState on ProductList {
+    uuid
+    itemsCount
+    productUuids
+    products(offset: 0, limit: 2) {
+        id
+    }
+}

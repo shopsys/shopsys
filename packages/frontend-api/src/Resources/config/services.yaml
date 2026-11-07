@@ -293,6 +293,11 @@ services:
         arguments:
             $productGiftsByMainProductIdsBatchLoader: '@product_gifts_by_main_product_ids_batch_loader'
 
+
+    Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade:
+        arguments:
+            $elasticsearchSearchBatchLoader: '@elasticsearch_search_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
         arguments:
             $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'

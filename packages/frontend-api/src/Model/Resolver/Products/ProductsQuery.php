@@ -16,13 +16,14 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
@@ -35,7 +36,7 @@ class ProductsQuery extends AbstractQuery
         protected readonly ProductFilterFacade $productFilterFacade,
         protected readonly ProductConnectionFactory $productConnectionFactory,
         protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
-        protected readonly ProductListFacade $productListFacade,
+        protected readonly ProductListApiFacade $productListApiFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly ProductFilterDataFactory $productFilterDataFactory,
@@ -86,17 +87,34 @@ class ProductsQuery extends AbstractQuery
         );
     }
 
-    public function productsByProductListQuery(ProductList $productList): Promise
+    public function productsByProductListQuery(ProductList $productList, ?Argument $argument = null): Promise
     {
-        $productIds = $this->productListFacade->getProductIdsByProductList($productList);
+        $offset = $argument['offset'] ?? 0;
+        $limit = $argument['limit'] ?? null;
 
-        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
+        if ($offset < 0 || ($limit !== null && $limit < 0)) {
+            throw new InvalidArgumentUserError('Product list offset and limit must not be negative.');
+        }
+
+        return $this->productListApiFacade->getVisibleProductIdentifiers($productList)
+            ->then(function (array $identifiers) use ($offset, $limit): Promise {
+                $pageIds = array_slice(array_column($identifiers, 'id'), $offset, $limit);
+
+                return $this->productsVisibleAndSortedByIdsBatchLoader->loadMany(array_chunk($pageIds, 1000))
+                    ->then(static fn (array $products): array => array_merge([], ...$products));
+            });
     }
 
     public function productsCountByProductListQuery(ProductList $productList): Promise
     {
-        return $this->productsByProductListQuery($productList)
-            ->then(static fn (array $products): int => count($products));
+        return $this->productListApiFacade->getVisibleProductIdentifiers($productList)
+            ->then(static fn (array $identifiers): int => count($identifiers));
+    }
+
+    public function productUuidsByProductListQuery(ProductList $productList): Promise
+    {
+        return $this->productListApiFacade->getVisibleProductIdentifiers($productList)
+            ->then(static fn (array $identifiers): array => array_column($identifiers, 'uuid'));
     }
 
     /**
