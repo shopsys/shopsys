@@ -41,6 +41,12 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
 
                 <CustomerRecordColumnInfo title={t('Resolution')}>{complaint.resolution.name}</CustomerRecordColumnInfo>
 
+                {complaint.actualResolution && (
+                    <CustomerRecordColumnInfo title={t('Actual resolution')}>
+                        {complaint.actualResolution.name}
+                    </CustomerRecordColumnInfo>
+                )}
+
                 {complaintDocumentNumber && (
                     <CustomerRecordColumnInfo
                         title={complaintOrder ? t('Order number') : t('Order or document number')}

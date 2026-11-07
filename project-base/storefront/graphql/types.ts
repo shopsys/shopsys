@@ -913,6 +913,8 @@ export type TypeCompanyCustomerUser = TypeBaseCustomerUser & {
 
 export type TypeComplaint = {
   __typename?: 'Complaint';
+  /** Actual resolution of the complaint, filled in when the complaint is closed */
+  actualResolution: Maybe<TypeComplaintResolution>;
   /** Number of the bank account if the resolution is money return */
   bankAccountNumber: Maybe<Scalars['String']['output']>;
   /** Date and time when the complaint was created */
@@ -945,7 +947,7 @@ export type TypeComplaint = {
   number: Scalars['String']['output'];
   /** Order for which the complaint was created */
   order: Maybe<TypeOrder>;
-  /** Resolution of the complaint */
+  /** Resolution of the complaint preferred by the customer */
   resolution: TypeComplaintResolution;
   /** Status of the complaint */
   status: Scalars['String']['output'];
@@ -2380,6 +2382,8 @@ export type TypeOrderItem = {
   quantity: Scalars['Int']['output'];
   /** Order items related to this order item (e.g. additional services of a product item) */
   relatedItems: Array<TypeOrderItem>;
+  /** Quantity still available for complaint after subtracting quantities claimed by complaints that are not closed or were resolved by money return */
+  remainingComplaintQuantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;
   /** Transport method applied to the order */

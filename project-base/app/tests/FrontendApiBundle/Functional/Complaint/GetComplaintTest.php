@@ -41,6 +41,7 @@ class GetComplaintTest extends GraphQlWithLoginTestCase
         $expectedComplaint = $this->getReference(ComplaintDataFixture::COMPLAINT_PREFIX . $expectedComplaintId);
 
         $this->assertComplaint($expectedComplaint, $responseData);
+        $this->assertSame($expectedComplaint->getActualResolution(), $responseData['actualResolution']['value'] ?? null);
     }
 
     public function testComplaintItemWithHiddenProductHasNoProduct(): void

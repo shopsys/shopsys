@@ -232,6 +232,9 @@ msgstr ""
 msgid "Please choose review status"
 msgstr ""
 
+msgid "Please choose the actual resolution of the closed complaint"
+msgstr ""
+
 msgid "Please choose type of limitation"
 msgstr ""
 

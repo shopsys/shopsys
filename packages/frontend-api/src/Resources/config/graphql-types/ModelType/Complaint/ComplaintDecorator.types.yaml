@@ -56,7 +56,10 @@ ComplaintDecorator:
                 description: "The customer's email address"
             resolution:
                 type: "ComplaintResolution!"
-                description: "Resolution of the complaint"
+                description: "Resolution of the complaint preferred by the customer"
+            actualResolution:
+                type: "ComplaintResolution"
+                description: "Actual resolution of the complaint, filled in when the complaint is closed"
             bankAccountNumber:
                 type: "String"
                 description: "Number of the bank account if the resolution is money return"

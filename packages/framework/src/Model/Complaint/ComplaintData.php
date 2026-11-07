@@ -104,5 +104,10 @@ class ComplaintData
     /**
      * @var string|null
      */
+    public $actualResolution;
+
+    /**
+     * @var string|null
+     */
     public $bankAccountNumber;
 }

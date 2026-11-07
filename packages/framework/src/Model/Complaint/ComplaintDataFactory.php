@@ -58,6 +58,7 @@ class ComplaintDataFactory
         $complaintData->email = $complaint->getEmail();
         $complaintData->manualDocumentNumber = $complaint->getManualDocumentNumber();
         $complaintData->resolution = $complaint->getResolution();
+        $complaintData->actualResolution = $complaint->getActualResolution();
         $complaintData->bankAccountNumber = $complaint->getBankAccountNumber();
 
         foreach ($complaint->getItems() as $complaintItem) {

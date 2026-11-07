@@ -71,6 +71,7 @@ class ComplaintHelper
         $complaintData->deliveryCompanyName = $deliveryAddress?->getCompanyName();
 
         $complaintData->resolution = $resolution;
+        $complaintData->actualResolution = $status->isClosed() ? $resolution : null;
         $complaintData->bankAccountNumber = $bankAccountNumber;
 
         return $this->complaintApiFacade->create($complaintData);
