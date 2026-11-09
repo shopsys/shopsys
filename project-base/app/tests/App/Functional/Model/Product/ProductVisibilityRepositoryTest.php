@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
-use Shopsys\FrameworkBundle\Model\Product\ProductVariantFamilyRecalculationRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -56,11 +55,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductVisibilityRepository $productVisibilityRepository;
-
-    /**
-     * @inject
-     */
-    private ProductVariantFamilyRecalculationRepository $productVariantFamilyRecalculationRepository;
 
     /**
      * @inject
@@ -420,63 +414,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($this->getVisibilityForProduct($variant)->isVisible());
     }
 
-    public function testRefreshProductsVisibilityForMainVariantIdMakesItsVariantsVisibleAgain(): void
-    {
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
-        $this->setHidden($mainVariant->getId(), true);
-        $this->productVisibilityRepository->refreshProductsVisibility($this->getMainVariantFamilyProductIds());
-
-        $this->setHidden($mainVariant->getId(), false);
-        $this->productVisibilityRepository->refreshProductsVisibility([$mainVariant->getId()]);
-        $this->em->clear();
-
-        $variants = $this->productFacade->getById($mainVariant->getId())->getVariants();
-
-        foreach ($variants as $variant) {
-            $this->assertTrue($this->getVisibilityForProduct($variant)->isVisible());
-        }
-    }
-
-    public function testRefreshProductsVisibilityForVariantIdMakesVariantVisibleWhenAllVariantsWereHidden(): void
-    {
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
-        $variantIds = array_map(static fn (Product $variant): int => $variant->getId(), $mainVariant->getVariants());
-
-        foreach ($variantIds as $variantId) {
-            $this->setHidden($variantId, true);
-        }
-
-        $this->productVisibilityRepository->refreshProductsVisibility($this->getMainVariantFamilyProductIds());
-        $this->em->clear();
-        $this->assertFalse($this->getVisibilityForProduct($this->productFacade->getById($mainVariant->getId()))->isVisible());
-
-        $visibleVariantId = array_first($variantIds);
-        $this->setHidden($visibleVariantId, false);
-        $this->productVisibilityRepository->refreshProductsVisibility([$visibleVariantId]);
-        $this->em->clear();
-
-        $this->assertTrue($this->getVisibilityForProduct($this->productFacade->getById($visibleVariantId))->isVisible());
-        $this->assertTrue($this->getVisibilityForProduct($this->productFacade->getById($mainVariant->getId()))->isVisible());
-    }
-
-    public function testRefreshProductsVisibilityReturnsIdsOfChangedVariantFamilyMembers(): void
-    {
-        $variant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53', Product::class);
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
-        $this->setHidden($mainVariant->getId(), true);
-
-        $productIdsWithChangedVisibility = $this->productVisibilityRepository->refreshProductsVisibility([$variant->getId()]);
-
-        $this->assertEqualsCanonicalizing($this->getMainVariantFamilyProductIds(), $productIdsWithChangedVisibility);
-    }
-
-    public function testRefreshProductsVisibilityReturnsNoIdsWhenNothingChanged(): void
-    {
-        $productIdsWithChangedVisibility = $this->productVisibilityRepository->refreshProductsVisibility($this->getMainVariantFamilyProductIds());
-
-        $this->assertSame([], $productIdsWithChangedVisibility);
-    }
-
     public function testRefreshProductsVisibilityWithoutChangesDoesNotRefreshLoadedEntities(): void
     {
         $mainVariantFamilyProductIds = $this->getMainVariantFamilyProductIds();
@@ -490,22 +427,10 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertCount(1, array_slice($queryCountingMiddleware->getExecutedQueries(), $queriesExecutedBeforeRefreshCount));
     }
 
-    public function testRefreshProductsVisibilityOfAllProductsUpdatesVisibilityWithoutReturningIds(): void
-    {
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
-        $this->setHidden($mainVariant->getId(), true);
-
-        $productIdsWithChangedVisibility = $this->productVisibilityRepository->refreshProductsVisibility();
-        $this->em->clear();
-
-        $this->assertSame([], $productIdsWithChangedVisibility);
-        $this->assertFalse($this->getVisibilityForProduct($this->productFacade->getById($mainVariant->getId()))->isVisible());
-    }
-
     public function testRefreshProductsVisibilityTreatsNullIndependentVisibilityConditionAsNotVisible(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $productVisibilityRepositoryWithNullCondition = new class($this->em, $this->domain, $this->clock, $this->productVariantFamilyRecalculationRepository) extends ProductVisibilityRepository {
+        $productVisibilityRepositoryWithNullCondition = new class($this->em, $this->domain, $this->clock) extends ProductVisibilityRepository {
             #[Override]
             protected function getIndependentVisibilityConditionSql(): string
             {

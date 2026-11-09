@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Psr\Clock\ClockInterface;
@@ -18,31 +19,27 @@ class ProductVisibilityRepository
         protected readonly EntityManagerDecorator $em,
         protected readonly Domain $domain,
         protected readonly ClockInterface $clock,
-        protected readonly ProductVariantFamilyRecalculationRepository $productVariantFamilyRecalculationRepository,
     ) {
     }
 
     /**
      * @param int[]|null $productIds
-     * @return int[]
      */
-    public function refreshProductsVisibility(?array $productIds = null): array
+    public function refreshProductsVisibility(?array $productIds = null): void
     {
         if ($productIds === []) {
-            return [];
+            return;
         }
 
-        $productIdsWithChangedVisibility = $this->recalculateVisibility($productIds);
+        $changedRowsCount = $this->recalculateVisibility($productIds);
 
-        if ($productIds !== null && $productIdsWithChangedVisibility === []) {
-            return [];
+        if ($changedRowsCount === 0) {
+            return;
         }
 
         // refresh entities after native query calls
         $this->em->refreshLoadedEntitiesByClassName(Product::class);
         $this->em->refreshLoadedEntitiesByClassName(ProductVisibility::class);
-
-        return $productIdsWithChangedVisibility;
     }
 
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
@@ -142,9 +139,8 @@ class ProductVisibilityRepository
 
     /**
      * @param int[]|null $productIds
-     * @return int[]
      */
-    protected function recalculateVisibility(?array $productIds): array
+    protected function recalculateVisibility(?array $productIds): int
     {
         $parameters = [
             ...$this->getIndependentVisibilityParameters(),
@@ -169,11 +165,15 @@ class ProductVisibilityRepository
             $parameterTypes['locale' . $domainId] = Types::STRING;
         }
 
-        return $this->productVariantFamilyRecalculationRepository->executeRecalculationAndGetChangedProductIds(
+        if ($productIds !== null) {
+            $parameters['productIds'] = $productIds;
+            $parameterTypes['productIds'] = ArrayParameterType::INTEGER;
+        }
+
+        return $this->em->getConnection()->executeStatement(
             $this->getVisibilityRecalculationSql($domainLocaleRows, $productIds !== null),
             $parameters,
             $parameterTypes,
-            $productIds,
         );
     }
 
@@ -182,8 +182,9 @@ class ProductVisibilityRepository
      */
     protected function getVisibilityRecalculationSql(array $domainLocaleRows, bool $isRestrictedToProductIds): string
     {
-        return 'WITH ' . $this->productVariantFamilyRecalculationRepository->getRequestedVariantFamilyRestrictionCteSql($isRestrictedToProductIds) . '
-        domain_locales (domain_id, locale) AS (
+        $productIdsCondition = $isRestrictedToProductIds ? 'WHERE pv.product_id IN (:productIds)' : '';
+
+        return 'WITH domain_locales (domain_id, locale) AS (
             VALUES ' . implode(', ', $domainLocaleRows) . '
         ),
         scoped_visibilities AS MATERIALIZED (
@@ -199,7 +200,7 @@ class ProductVisibilityRepository
             JOIN products AS p ON p.id = pv.product_id
             JOIN product_domains AS pd ON pd.product_id = pv.product_id AND pd.domain_id = pv.domain_id
             JOIN domain_locales AS dl ON dl.domain_id = pv.domain_id
-            ' . $this->productVariantFamilyRecalculationRepository->getRequestedVariantFamilyRestrictionWhereSql('pv.product_id', $isRestrictedToProductIds) . '
+            ' . $productIdsCondition . '
         ),
         variant_family_visibilities AS (
             SELECT
@@ -224,18 +225,14 @@ class ProductVisibilityRepository
                     ELSE vfv.independently_visible
                 END AS visible
             FROM variant_family_visibilities AS vfv
-        ),
-        updated_product_visibilities AS (
-            UPDATE product_visibilities AS pv
-            SET visible = cv.visible
-            FROM calculated_visibilities AS cv
-            WHERE pv.product_id = cv.product_id
-                AND pv.domain_id = cv.domain_id
-                AND pv.pricing_group_id = cv.pricing_group_id
-                AND pv.visible IS DISTINCT FROM cv.visible
-            RETURNING pv.product_id
         )
-        SELECT DISTINCT product_id FROM updated_product_visibilities';
+        UPDATE product_visibilities AS pv
+        SET visible = cv.visible
+        FROM calculated_visibilities AS cv
+        WHERE pv.product_id = cv.product_id
+            AND pv.domain_id = cv.domain_id
+            AND pv.pricing_group_id = cv.pricing_group_id
+            AND pv.visible IS DISTINCT FROM cv.visible';
     }
 
     protected function getIndependentVisibilityConditionSql(): string
