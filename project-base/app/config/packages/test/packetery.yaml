@@ -1,0 +1,6 @@
+parameters:
+    packetery_config:
+        api_password: ''
+        enabled: false
+        rest_api_url: ''
+        sender: ''
