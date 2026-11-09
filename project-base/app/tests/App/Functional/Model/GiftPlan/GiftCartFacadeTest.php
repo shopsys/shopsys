@@ -79,12 +79,12 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
         $this->em->clear();
         $giftProducts = $this->getProductsByIds($giftProductIds);
         $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(Domain::FIRST_DOMAIN_ID);
-        $queriesExecutedBeforeSellabilityCheckCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->giftCartFacade->getSellableGiftProductIds($giftProducts, $defaultPricingGroup, 1, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_stocks\b~', $queriesExecutedBeforeSellabilityCheckCount));
-        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeSellabilityCheckCount));
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_stocks\b~'));
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~'));
     }
 
     public function testSellabilityOfSingleGiftProductReusesAlreadyLoadedVisibility(): void
@@ -94,11 +94,11 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
         $giftProduct = $this->productFacade->getById(1);
         $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(Domain::FIRST_DOMAIN_ID);
         $this->productVisibilityFacade->getProductVisibility($giftProduct, $defaultPricingGroup, Domain::FIRST_DOMAIN_ID);
-        $queriesExecutedBeforeSellabilityCheckCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->giftCartFacade->isGiftProductSellable($giftProduct, $defaultPricingGroup, 1, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeSellabilityCheckCount));
+        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~'));
     }
 
     /**

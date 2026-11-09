@@ -71,15 +71,12 @@ final class PromotionFlagFacadeTest extends TransactionFunctionalTestCase
             $this->removePromotionFlagsFromProduct($productId);
         }
 
-        $queriesExecutedBeforeUpdateCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->createPromotionFlagFacadeWithSingleProductBatches()->updatePromotionFlagsForAll();
         $this->em->clear();
 
-        $productsBatchLoadingQueries = $queryCountingMiddleware->getExecutedQueriesMatching(
-            ProductQueryPattern::PRODUCTS_WITH_DOMAINS_AND_FLAGS_LOAD,
-            $queriesExecutedBeforeUpdateCount,
-        );
+        $productsBatchLoadingQueries = $queryCountingMiddleware->getExecutedQueriesMatching(ProductQueryPattern::PRODUCTS_WITH_DOMAINS_AND_FLAGS_LOAD);
         $this->assertCount(count($productIdsWithPromotion), $productsBatchLoadingQueries);
 
         foreach ($productIdsWithPromotion as $productId) {

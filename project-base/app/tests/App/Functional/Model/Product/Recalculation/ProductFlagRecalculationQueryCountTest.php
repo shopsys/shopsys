@@ -37,19 +37,19 @@ final class ProductFlagRecalculationQueryCountTest extends TransactionFunctional
         $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
         $this->em->clear();
         $products = $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($productIds);
-        $queriesExecutedBeforeRecalculationCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts($products);
         $this->promotionFlagFacade->updatePromotionFlagsForProducts($products);
 
-        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_domains\b|\bproduct_domain_flags\b~', $queriesExecutedBeforeRecalculationCount));
-        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~\bgift_plans\b~', $queriesExecutedBeforeRecalculationCount));
+        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_domains\b|\bproduct_domain_flags\b~'));
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~\bgift_plans\b~'));
         $this->assertCount(
             count($this->domain->getAllIds()),
-            $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeRecalculationCount),
+            $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~'),
         );
-        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_promotion_xy\b~', $queriesExecutedBeforeRecalculationCount));
-        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM flags\b.*\bproduct_promotion_xy\b~s', $queriesExecutedBeforeRecalculationCount));
+        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_promotion_xy\b~'));
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM flags\b.*\bproduct_promotion_xy\b~s'));
     }
 
     /**

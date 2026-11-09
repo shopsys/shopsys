@@ -58,10 +58,10 @@ final class QueryCountingMiddleware implements Middleware
     /**
      * @return string[]
      */
-    public function getExecutedQueriesMatching(string $pattern, int $fromQueryIndex = 0): array
+    public function getExecutedQueriesMatching(string $pattern): array
     {
         return array_values(array_filter(
-            array_slice($this->executedQueries, $fromQueryIndex),
+            $this->executedQueries,
             static fn (string $executedQuery): bool => preg_match($pattern, $executedQuery) === 1,
         ));
     }

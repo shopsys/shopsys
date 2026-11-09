@@ -116,15 +116,12 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
 
         $this->assertNotContains(true, $this->getHasGiftFlagIndexedByProductId($mainProductIds));
 
-        $queriesExecutedBeforeRefreshCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->createGiftFlagSynchronizerFacadeWithSingleProductBatches()->refreshAllGiftPlans();
         $this->em->clear();
 
-        $mainProductsBatchLoadingQueries = $queryCountingMiddleware->getExecutedQueriesMatching(
-            ProductQueryPattern::PRODUCTS_WITH_DOMAINS_AND_FLAGS_LOAD,
-            $queriesExecutedBeforeRefreshCount,
-        );
+        $mainProductsBatchLoadingQueries = $queryCountingMiddleware->getExecutedQueriesMatching(ProductQueryPattern::PRODUCTS_WITH_DOMAINS_AND_FLAGS_LOAD);
         $this->assertCount(count($mainProductIds), $mainProductsBatchLoadingQueries);
         $this->assertSame($hasGiftFlagIndexedByMainProductId, $this->getHasGiftFlagIndexedByProductId($mainProductIds));
     }
