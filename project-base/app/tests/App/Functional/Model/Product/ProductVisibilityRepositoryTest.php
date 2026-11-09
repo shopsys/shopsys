@@ -420,11 +420,11 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
         $this->em->clear();
         $this->productFacade->getById(array_first($mainVariantFamilyProductIds));
-        $queriesExecutedBeforeRefreshCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->productVisibilityRepository->refreshProductsVisibility($mainVariantFamilyProductIds);
 
-        $this->assertCount(1, array_slice($queryCountingMiddleware->getExecutedQueries(), $queriesExecutedBeforeRefreshCount));
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueries());
     }
 
     public function testRefreshProductsVisibilityTreatsNullIndependentVisibilityConditionAsNotVisible(): void
@@ -450,11 +450,11 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
         $this->em->clear();
         $this->productFacade->getById($productId);
-        $queriesExecutedBeforeRefreshCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->productVisibilityRepository->refreshProductsVisibility([]);
 
-        $this->assertSame($queriesExecutedBeforeRefreshCount, $queryCountingMiddleware->getQueryCount());
+        $this->assertSame(0, $queryCountingMiddleware->getQueryCount());
     }
 
     private function setHidden(int $productId, bool $hidden): void

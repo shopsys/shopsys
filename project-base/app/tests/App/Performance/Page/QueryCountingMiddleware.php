@@ -65,4 +65,9 @@ final class QueryCountingMiddleware implements Middleware
             static fn (string $executedQuery): bool => preg_match($pattern, $executedQuery) === 1,
         ));
     }
+
+    public function reset(): void
+    {
+        $this->executedQueries = [];
+    }
 }
