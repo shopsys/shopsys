@@ -27,7 +27,7 @@ export const closeComparisonToast = () => {
 export const checkComparisonProductOrder = (catnums: string[]) => {
     cy.getByTID([TIDs.comparison_table])
         .find('[data-comparison-product]')
-        .then(($products) => {
+        .should(($products) => {
             expect($products.toArray().map((product) => product.dataset.tid)).to.deep.equal(
                 catnums.map((catnum) => TIDs.comparison_product_ + catnum),
             );
