@@ -125,6 +125,44 @@ final class McpDatabaseRoleTest extends FunctionalTestCase
         }
     }
 
+    public function testPrivilegeOnSingleColumnOfPublicSchemaTableGrantedToMcpDatabaseRoleIsFound(): void
+    {
+        $mcpDatabaseUser = (string)$this->mcpConnection->fetchOne('SELECT current_user');
+        $tableName = self::TEST_TABLE_PREFIX . bin2hex(random_bytes(6));
+        $quotedTableName = $this->defaultConnection->quoteSingleIdentifier($tableName);
+
+        try {
+            $this->defaultConnection->executeStatement(sprintf('CREATE TABLE public.%s (id SERIAL PRIMARY KEY, value TEXT)', $quotedTableName));
+            $this->defaultConnection->executeStatement(sprintf(
+                'GRANT SELECT (value) ON public.%s TO %s',
+                $quotedTableName,
+                $this->defaultConnection->quoteSingleIdentifier($mcpDatabaseUser),
+            ));
+
+            $this->assertSame([$tableName], $this->mcpDatabaseRoleRepository->getPublicSchemaTableNamesReadableByRole($mcpDatabaseUser));
+        } finally {
+            $this->defaultConnection->executeStatement(sprintf('DROP TABLE IF EXISTS public.%s', $quotedTableName));
+        }
+    }
+
+    public function testRelationsOfExtensionsInPublicSchemaAreNotReportedAsReadable(): void
+    {
+        $mcpDatabaseUser = (string)$this->mcpConnection->fetchOne('SELECT current_user');
+        $isExtensionInstalled = (bool)$this->defaultConnection->fetchOne('SELECT 1 FROM pg_extension WHERE extname = \'pg_stat_statements\'');
+
+        try {
+            if (!$isExtensionInstalled) {
+                $this->defaultConnection->executeStatement('CREATE EXTENSION pg_stat_statements SCHEMA public');
+            }
+
+            $this->assertSame([], $this->mcpDatabaseRoleRepository->getPublicSchemaTableNamesReadableByRole($mcpDatabaseUser));
+        } finally {
+            if (!$isExtensionInstalled) {
+                $this->defaultConnection->executeStatement('DROP EXTENSION IF EXISTS pg_stat_statements');
+            }
+        }
+    }
+
     public function testMcpConnectionCannotReadNewTableCreatedByApplicationDatabaseUser(): void
     {
         $tableName = self::TEST_TABLE_PREFIX . bin2hex(random_bytes(6));

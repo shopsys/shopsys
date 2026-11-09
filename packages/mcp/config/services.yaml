@@ -29,16 +29,11 @@ services:
 
     Shopsys\McpBundle\Component\Database\Schema\ExposedSchemaProvider:
         arguments:
-            $mcpConnection: '@doctrine.dbal.mcp_connection'
             $cacheDir: '%kernel.cache_dir%'
 
     Shopsys\McpBundle\Component\Database\Schema\McpSchemaCacheWarmer:
         tags:
             - { name: kernel.cache_warmer }
-
-    Shopsys\McpBundle\Component\Database\Schema\SchemaNameNormalizer:
-        arguments:
-            $mcpConnection: '@doctrine.dbal.mcp_connection'
 
     Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade:
         arguments:

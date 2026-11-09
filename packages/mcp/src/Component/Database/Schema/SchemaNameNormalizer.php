@@ -12,7 +12,7 @@ use Doctrine\DBAL\Schema\Name\UnqualifiedName;
 class SchemaNameNormalizer
 {
     public function __construct(
-        protected readonly Connection $mcpConnection,
+        protected readonly Connection $defaultConnection,
     ) {
     }
 
@@ -29,7 +29,7 @@ class SchemaNameNormalizer
     protected function normalizeIdentifier(Identifier $identifier): string
     {
         return $identifier->toNormalizedValue(
-            $this->mcpConnection->getDatabasePlatform()->getUnquotedIdentifierFolding(),
+            $this->defaultConnection->getDatabasePlatform()->getUnquotedIdentifierFolding(),
         );
     }
 }
