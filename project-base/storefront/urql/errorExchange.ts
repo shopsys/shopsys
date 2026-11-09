@@ -155,8 +155,14 @@ const handleErrorMessagesForMutation = (error: CombinedError, t: Translate, oper
     const parsedErrors = getUserFriendlyErrors(error, t);
     const mutationName = getMutationName(operation);
     const config = MUTATION_ERROR_CONFIG[mutationName];
+    const isExpectedLoginError =
+        mutationName === 'LoginMutation' &&
+        !error.networkError &&
+        (error.response?.status ?? 200) < 500 &&
+        error.graphQLErrors.length > 0 &&
+        error.graphQLErrors.every(({ extensions }) => extensions.userCode === 'invalid-credentials');
 
-    if (!isNoLogError(parsedErrors.applicationError?.type ?? '')) {
+    if (!isNoLogError(parsedErrors.applicationError?.type ?? '') && !isExpectedLoginError) {
         logException(error, {
             graphQLErrors: JSON.stringify(error.graphQLErrors),
             networkError: error.networkError,
