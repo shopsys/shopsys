@@ -193,7 +193,7 @@ class ProductRepository
             return [];
         }
 
-        return $this->createAllByIdsWithDomainsIndexedByIdQueryBuilder(array_values(array_unique($ids)))
+        return $this->createAllByIdsWithDomainsIndexedByIdQueryBuilder($ids)
             ->addSelect('f', 'ppx')
             ->leftJoin('pd.flags', 'f')
             ->leftJoin('pd.promotionXy', 'ppx')
