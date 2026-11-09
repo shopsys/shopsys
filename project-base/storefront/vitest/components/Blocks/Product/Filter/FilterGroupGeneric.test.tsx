@@ -107,13 +107,15 @@ const createMockFlagOption = (id: string, name: string, rgbColor: string = '#FF0
     uuid: id,
     name,
     count: 5,
+    isAbsolute: true,
     rgbColor,
 });
 
-const createMockBrandOption = (id: string, name: string): MappedFilterOption => ({
+const createMockBrandOption = (id: string, name: string, isAbsolute: boolean = true): MappedFilterOption => ({
     uuid: id,
     name,
     count: 5,
+    isAbsolute,
 });
 
 const mockFlagOptions: MappedFilterOption[] = [
@@ -186,6 +188,26 @@ describe('FilterGroupGeneric', () => {
 
             const checkboxes = screen.getAllByRole('checkbox');
             expect(checkboxes).toHaveLength(3);
+        });
+
+        test('renders absolute product counts without plus sign', () => {
+            render(<FilterGroupGeneric {...defaultProps} filterField="brands" options={mockBrandOptions} />);
+
+            expect(screen.getAllByText('(5)')).toHaveLength(2);
+            expect(screen.queryByText('(+5)')).not.toBeInTheDocument();
+        });
+
+        test('renders relative product counts with plus sign', () => {
+            const relativeBrandOptions = [
+                createMockBrandOption('brand-1', 'Apple', false),
+                createMockBrandOption('brand-2', 'Samsung', false),
+                createMockBrandOption('brand-3', 'Google', false),
+            ];
+
+            render(<FilterGroupGeneric {...defaultProps} filterField="brands" options={relativeBrandOptions} />);
+
+            expect(screen.getAllByText('(+5)')).toHaveLength(2);
+            expect(screen.queryByText('(5)')).not.toBeInTheDocument();
         });
 
         test('renders show more button when options exceed default number', () => {
