@@ -50,6 +50,43 @@ describe('getErrorExchange', () => {
         errorDebugging.enabled = false;
     });
 
+    test('waits for server cookie deletion before returning an authentication error', async () => {
+        const domainConfig = { domainId: 1, url: 'https://example.com' };
+        const context = { req: {}, res: {} };
+        const operation = {
+            key: 1,
+            kind: 'query',
+            query: parse('query TestQuery { __typename }'),
+            variables: {},
+            context: {},
+        } as Operation;
+        const error = new CombinedError({
+            graphQLErrors: [{ message: 'Expired', extensions: { userCode: 'expired-token' } }],
+        });
+        let finishDeletion!: () => void;
+        removeTokensFromCookiesMock.mockImplementationOnce(
+            () =>
+                new Promise<void>((resolve) => {
+                    finishDeletion = resolve;
+                }),
+        );
+        const exchange = getErrorExchange(
+            ((value: string) => value) as never,
+            domainConfig as never,
+            context as never,
+        )({ forward: () => fromValue({ operation, error } as never) } as never);
+        const received = vi.fn();
+        const result = toPromise(exchange(fromValue(operation))).then(received);
+
+        expect(removeTokensFromCookiesMock).toHaveBeenCalledWith(domainConfig, context);
+        await Promise.resolve();
+        expect(received).not.toHaveBeenCalled();
+
+        finishDeletion();
+        await result;
+        expect(received).toHaveBeenCalledWith(expect.objectContaining({ error }));
+    });
+
     test('should clear auth cookies for graphql auth errors returned with HTTP 200', async () => {
         const domainConfig = {
             url: 'http://example.com',

@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next/server';
 import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-vi.mock('cookies-next', () => ({
+vi.mock('cookies-next/server', () => ({
     setCookie: vi.fn(),
 }));
 
@@ -18,8 +18,8 @@ describe('setTokensToCookies', () => {
         vi.mocked(setCookie).mockClear();
     });
 
-    test('stores refresh token in a secure HttpOnly SameSite=Lax cookie', () => {
-        setTokensToCookies('access-token', 'refresh-token', domainConfig, context);
+    test('stores refresh token in a secure HttpOnly SameSite=Lax cookie', async () => {
+        await setTokensToCookies('access-token', 'refresh-token', domainConfig, context);
 
         expect(setCookie).toHaveBeenCalledWith(
             'refreshToken-3',
@@ -34,8 +34,8 @@ describe('setTokensToCookies', () => {
         );
     });
 
-    test('stores only a non-sensitive refresh-token marker for browser JavaScript', () => {
-        setTokensToCookies('access-token', 'refresh-token', domainConfig, context);
+    test('stores only a non-sensitive refresh-token marker for browser JavaScript', async () => {
+        await setTokensToCookies('access-token', 'refresh-token', domainConfig, context);
 
         expect(setCookie).toHaveBeenCalledWith(
             'refreshTokenPresent-3',

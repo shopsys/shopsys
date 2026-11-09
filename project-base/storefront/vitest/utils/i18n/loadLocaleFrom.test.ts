@@ -32,7 +32,8 @@ describe('translations using the shared Redis connection', () => {
     test('keeps the shared connection open after reading cached translations', async () => {
         const client = {
             mGet: vi.fn().mockResolvedValue([JSON.stringify(translations), null]),
-            disconnect: vi.fn(),
+            close: vi.fn(),
+            destroy: vi.fn(),
         };
         vi.mocked(getRedisClient).mockResolvedValue(client as unknown as AppRedisClient);
 
@@ -42,7 +43,8 @@ describe('translations using the shared Redis connection', () => {
             `${process.env.REDIS_PREFIX}:fe:translates:en:common/updating`,
         ]);
         expect(getFreshTranslates).not.toHaveBeenCalled();
-        expect(client.disconnect).not.toHaveBeenCalled();
+        expect(client.close).not.toHaveBeenCalled();
+        expect(client.destroy).not.toHaveBeenCalled();
     });
 
     test('loads fresh translations if Redis fails during a cache read', async () => {

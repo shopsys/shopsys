@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/nextjs';
-import { RedisClientType } from 'redis';
 import { fetcher } from 'urql/fetcher';
+import type { AppRedisClient } from 'utils/redis/redisClient';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const isClientGetter = vi.fn();
@@ -23,7 +23,7 @@ const mockRedisClient = {
     isReady: true,
     get: mockRedisClientGet,
     set: mockRedisClientSet,
-} as unknown as RedisClientType;
+} as unknown as AppRedisClient;
 
 const REQUEST_WITH_DIRECTIVE = {
     headers: {

@@ -10,10 +10,14 @@ const { deleteCookieMock, fetchMock, getCookieMock, setCookieMock } = vi.hoisted
     setCookieMock: vi.fn(),
 }));
 
-vi.mock('cookies-next', () => ({
+vi.mock('cookies-next/server', () => ({
     deleteCookie: deleteCookieMock,
-    getCookie: getCookieMock,
     setCookie: setCookieMock,
+}));
+
+vi.mock('utils/auth/getTokensFromCookies', () => ({
+    getAccessTokenFromCookies: () => getCookieMock('accessToken-1'),
+    getRefreshTokenFromCookies: () => getCookieMock('refreshToken-1'),
 }));
 
 vi.mock('envConfig', () => ({
@@ -241,10 +245,10 @@ describe('auth API', () => {
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
-    test('clears all authentication cookies on the clear endpoint', () => {
+    test('clears all authentication cookies on the clear endpoint', async () => {
         const { endMock, response, statusMock } = createResponse();
 
-        handleClearAuthCookies(createRequest('ClearSession'), response);
+        await handleClearAuthCookies(createRequest('ClearSession'), response);
 
         expect(deleteCookieMock).toHaveBeenCalledTimes(3);
         expect(deleteCookieMock).toHaveBeenCalledWith(

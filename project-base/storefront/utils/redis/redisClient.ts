@@ -1,9 +1,8 @@
 import type { ServerResponse } from 'http';
-import type { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { logException } from 'utils/errors/logException';
 import { isServerTimingEnabled, recordServerTiming } from 'utils/serverSide/serverTiming';
 
-export type AppRedisClient = RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
+export type AppRedisClient = Awaited<ReturnType<typeof createAndConnectRedisClient>>;
 
 const REDIS_RETRY_COOLDOWN_MS = 3000;
 const REDIS_INITIAL_WAIT_MS = 100;
@@ -22,7 +21,7 @@ type RedisState = {
 
 type GlobalRedis = typeof globalThis & { __shopsysRedis?: RedisState };
 
-const createAndConnectRedisClient = async (timings?: RedisConnectionTimings): Promise<AppRedisClient> => {
+const createAndConnectRedisClient = async (timings?: RedisConnectionTimings) => {
     const importStartedAt = timings ? performance.now() : 0;
     const { createClient } = await import('redis');
     if (timings) {
@@ -40,7 +39,7 @@ const createAndConnectRedisClient = async (timings?: RedisConnectionTimings): Pr
             reconnectStrategy: (retries) =>
                 !allowReconnect || retries > 10 ? false : Math.min((retries + 1) * 100, 3000),
         },
-    }) as AppRedisClient;
+    });
 
     client.on('error', (error) => {
         // Initial connection failures are logged by the caller handling connect()'s rejection.

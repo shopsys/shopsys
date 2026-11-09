@@ -1,11 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { getCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next/client';
 import {
     ACCESS_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_PRESENT_COOKIE_NAME,
 } from 'utils/auth/authConstants';
 import { getCookieName } from 'utils/cookies/cookieNaming';
+import { getCookies } from 'utils/cookies/getCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 
 export type AuthServerContext = {
@@ -14,10 +15,11 @@ export type AuthServerContext = {
 };
 
 const getNonEmptyCookieValue = (cookieName: string, context?: AuthServerContext): string | undefined => {
-    const cookie = getCookie(cookieName, {
-        req: context?.req,
-        res: context?.res,
-    });
+    const cookie = context?.req
+        ? getCookies(context)[cookieName]
+        : typeof window === 'undefined'
+          ? undefined
+          : getCookie(cookieName);
 
     return typeof cookie === 'string' && cookie.length > 0 ? cookie : undefined;
 };

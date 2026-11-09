@@ -1,9 +1,9 @@
 import { AuthUtilities, authExchange } from '@urql/exchange-auth';
 import { parse } from 'graphql';
-import { RedisClientType } from 'redis';
 import { Client, fetchExchange, Operation } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
 import { fetcher } from 'urql/fetcher';
+import type { AppRedisClient } from 'utils/redis/redisClient';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('utils/isClient', () => ({ isClient: false }));
@@ -159,7 +159,7 @@ describe('getAuthExchangeOptions', () => {
                     url: 'https://test.ts/graphql/',
                     preferGetMethod: false,
                     exchanges: [authExchange(getAuthExchangeOptions(domainConfig, context)), fetchExchange],
-                    fetch: fetcher(redisClient as unknown as RedisClientType),
+                    fetch: fetcher(redisClient as unknown as AppRedisClient),
                 });
             const query = parse(
                 'query PromotedProductsQuery @redisCachePerPricingGroup(ttl: 3600) { promotedProducts { uuid } }',

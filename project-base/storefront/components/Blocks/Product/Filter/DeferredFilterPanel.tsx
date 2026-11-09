@@ -17,10 +17,8 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
     const { t } = useTranslation();
     const shouldRender = useDeferredRender('filter_panel');
     const isDesktop = useMediaMin('vl');
-    const { isFilterPanelOpen, setIsFilterPanelOpen } = useSessionStore((s) => ({
-        isFilterPanelOpen: s.isFilterPanelOpen,
-        setIsFilterPanelOpen: s.setIsFilterPanelOpen,
-    }));
+    const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
+    const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
     const filterPanel = shouldRender ? <FilterPanel {...props} /> : <SkeletonModuleFilterPanel />;
 
     if (isDesktop === false) {

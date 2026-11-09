@@ -1,5 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie as deleteClientCookie } from 'cookies-next/client';
+import { deleteCookie as deleteServerCookie } from 'cookies-next/server';
 import {
     ACCESS_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_COOKIE_NAME,
@@ -13,8 +14,12 @@ type AuthServerContext = {
     res?: ServerResponse;
 };
 
-const deleteAuthCookie = (cookieName: string, domainConfig: DomainConfigType, context?: AuthServerContext): void => {
-    deleteCookie(getCookieName(cookieName, domainConfig.domainId), {
+const deleteAuthCookie = (
+    cookieName: string,
+    domainConfig: DomainConfigType,
+    context: AuthServerContext,
+): Promise<void> => {
+    return deleteServerCookie(getCookieName(cookieName, domainConfig.domainId), {
         req: context?.req,
         res: context?.res,
         path: '/',
@@ -23,12 +28,19 @@ const deleteAuthCookie = (cookieName: string, domainConfig: DomainConfigType, co
     });
 };
 
-export const removeAccessTokenFromCookies = (domainConfig: DomainConfigType, context?: AuthServerContext): void => {
-    deleteAuthCookie(ACCESS_TOKEN_COOKIE_NAME, domainConfig, context);
+export const removeAccessTokenFromCookies = (domainConfig: DomainConfigType): void => {
+    deleteClientCookie(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), {
+        path: '/',
+        sameSite: 'lax',
+        secure: domainConfig.url.startsWith('https'),
+    });
 };
 
-export const removeTokensFromCookies = (domainConfig: DomainConfigType, context: AuthServerContext): void => {
-    deleteAuthCookie(ACCESS_TOKEN_COOKIE_NAME, domainConfig, context);
-    deleteAuthCookie(REFRESH_TOKEN_COOKIE_NAME, domainConfig, context);
-    deleteAuthCookie(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig, context);
+export const removeTokensFromCookies = async (
+    domainConfig: DomainConfigType,
+    context: AuthServerContext,
+): Promise<void> => {
+    await deleteAuthCookie(ACCESS_TOKEN_COOKIE_NAME, domainConfig, context);
+    await deleteAuthCookie(REFRESH_TOKEN_COOKIE_NAME, domainConfig, context);
+    await deleteAuthCookie(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig, context);
 };

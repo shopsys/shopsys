@@ -25,7 +25,7 @@ const broadcastImpl: BroadcastImpl = (f, name, domainId) => (set, get, store) =>
 
     const onSet: typeof set = (...args) => {
         const previous = get() as Item;
-        set(...args);
+        set(...(args as Parameters<typeof set>));
 
         const updated = get() as Item;
 

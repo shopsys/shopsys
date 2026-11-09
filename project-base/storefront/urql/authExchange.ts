@@ -89,7 +89,7 @@ const doTryRefreshToken = async (
 
     if (!refreshTokenData?.RefreshTokens) {
         if (context) {
-            removeTokensFromCookies(domainConfig, context);
+            await removeTokensFromCookies(domainConfig, context);
         } else {
             removeAccessTokenFromCookies(domainConfig);
         }
@@ -102,7 +102,7 @@ const doTryRefreshToken = async (
     }
 
     if (context) {
-        setTokensToCookies(
+        await setTokensToCookies(
             refreshTokenData.RefreshTokens.accessToken,
             refreshTokenData.RefreshTokens.refreshToken,
             domainConfig,
@@ -125,7 +125,7 @@ const refreshAuth = async (
     try {
         if (refreshToken === undefined) {
             if (context) {
-                removeTokensFromCookies(domainConfig, context);
+                await removeTokensFromCookies(domainConfig, context);
             } else {
                 removeAccessTokenFromCookies(domainConfig);
                 await clearAuthCookies(domainConfig);

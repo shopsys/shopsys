@@ -253,7 +253,7 @@ export const handleAuthMutation = async (request: NextApiRequest, response: Next
     const variables = getVariables(authMutationRequest, domainConfig, context);
 
     if (!variables) {
-        removeTokensFromCookies(domainConfig, context);
+        await removeTokensFromCookies(domainConfig, context);
         response.status(401).json({ errors: [{ message: 'Refresh token is not available.' }] });
         return;
     }
@@ -290,26 +290,26 @@ export const handleAuthMutation = async (request: NextApiRequest, response: Next
     const tokens = getTokens(responseBody, authMutationRequest.operationName);
 
     if (tokens) {
-        setTokensToCookies(tokens.accessToken, tokens.refreshToken, domainConfig, context);
+        await setTokensToCookies(tokens.accessToken, tokens.refreshToken, domainConfig, context);
     } else if (authMutationRequest.operationName === AuthMutationOperationName.RefreshTokens) {
-        removeTokensFromCookies(domainConfig, context);
+        await removeTokensFromCookies(domainConfig, context);
     } else if (
         authMutationRequest.operationName === AuthMutationOperationName.Logout &&
         getNestedRecord(responseBody, 'data')?.Logout === true
     ) {
-        removeTokensFromCookies(domainConfig, context);
+        await removeTokensFromCookies(domainConfig, context);
     }
 
     response.status(graphqlResponse.status).json(responseBody);
 };
 
-export const handleClearAuthCookies = (request: NextApiRequest, response: NextApiResponse): void => {
+export const handleClearAuthCookies = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
     const domainConfig = validateRequest(request, response);
 
     if (!domainConfig) {
         return;
     }
 
-    removeTokensFromCookies(domainConfig, { req: request, res: response });
+    await removeTokensFromCookies(domainConfig, { req: request, res: response });
     response.status(204).end();
 };
