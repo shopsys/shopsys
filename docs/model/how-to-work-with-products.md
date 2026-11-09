@@ -34,16 +34,11 @@ Only the standard products or the specific variants can actually be purchased.
 
 Some attributes that are used on Shopsys Platform are not set directly, but their value is automatically calculated based on other attributes.
 For example, if a category of products does not have a name for a locale of the specific domain, this category will be automatically set as not visible on this domain.
-The recalculations of these special attributes can be initialized as `immediate` or `scheduled`:
+The visibility and selling denial of products are recalculated asynchronously, together with the export of products to Elasticsearch.
+When a product is changed, a message is dispatched to the message broker, and the recalculation is done later by a consumer of the message.
 
-**immediate** - recalculation is initialized when the event `kernel.response` is caught.  
-See a class `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator` and a method `onKernelResponse`.
+For example, a method `edit` of a class `Shopsys\FrameworkBundle\Model\Product\ProductFacade` calls a method `dispatchSingleProductId` of a class `Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher`.
+It means that the product does not have recalculated attributes immediately after the method `edit` is completed, but only after the dispatched message is consumed.
+You can read more about the recalculations in [Product Recalculations](../asynchronous-processing/product-recalculations.md).
 
-**scheduled** - recalculation is initialized later.  
-A product or a category of products can be marked for scheduled recalculation, the recalculation itself is initialized with a cron module, see a class `Shopsys\FrameworkBundle\Command\RecalculationsCommand`.
-
-For example, a method `edit` of a class `Shopsys\FrameworkBundle\Model\Product\ProductFacade` calls a method `scheduleProductForImmediateRecalculation` of a class `Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler`.
-The product is marked for `immediate` recalculation of availability by this request.
-The recalculation itself is initialized when the event `kernel.response` is caught by a method `onKernelResponse`.
-It means that the product does not have recalculated availability immediately after the method `edit` is completed.
-This approach with `kernel.response` event is a legacy feature and it will be removed in the future, see [Recalculating products availability and prices immediately instead of on finish request](https://github.com/shopsys/shopsys/issues/202).
+The console command `shopsys:recalculations` (see a class `Shopsys\FrameworkBundle\Command\RecalculationsCommand`) recalculates the visibility of categories and the visibility, selling denial and automatic flags of all products at once.
