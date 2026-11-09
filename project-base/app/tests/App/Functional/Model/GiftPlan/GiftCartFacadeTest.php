@@ -98,7 +98,7 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
 
         $this->giftCartFacade->isGiftProductSellable($giftProduct, $defaultPricingGroup, 1, Domain::FIRST_DOMAIN_ID);
 
-        $this->assertSame([], $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeSellabilityCheckCount));
+        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeSellabilityCheckCount));
     }
 
     /**

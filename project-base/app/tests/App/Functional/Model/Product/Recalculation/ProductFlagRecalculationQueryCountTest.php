@@ -42,13 +42,13 @@ final class ProductFlagRecalculationQueryCountTest extends TransactionFunctional
         $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts($products);
         $this->promotionFlagFacade->updatePromotionFlagsForProducts($products);
 
-        $this->assertSame([], $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_domains\b|\bproduct_domain_flags\b~', $queriesExecutedBeforeRecalculationCount));
+        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_domains\b|\bproduct_domain_flags\b~', $queriesExecutedBeforeRecalculationCount));
         $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~\bgift_plans\b~', $queriesExecutedBeforeRecalculationCount));
         $this->assertCount(
             count($this->domain->getAllIds()),
             $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeRecalculationCount),
         );
-        $this->assertSame([], $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_promotion_xy\b~', $queriesExecutedBeforeRecalculationCount));
+        $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_promotion_xy\b~', $queriesExecutedBeforeRecalculationCount));
         $this->assertCount(1, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM flags\b.*\bproduct_promotion_xy\b~s', $queriesExecutedBeforeRecalculationCount));
     }
 
