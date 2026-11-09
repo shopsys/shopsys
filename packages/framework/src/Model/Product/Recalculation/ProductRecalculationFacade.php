@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScope
 use Shopsys\FrameworkBundle\Model\Product\Flag\PromotionFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository;
@@ -41,6 +42,8 @@ class ProductRecalculationFacade
         protected readonly PromotionFlagFacade $promotionFlagFacade,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
         protected readonly TopProductRepository $topProductRepository,
+        protected readonly ProductFacade $productFacade,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -56,7 +59,7 @@ class ProductRecalculationFacade
                 $productIdsWithScopes[self::KEY_PRODUCT_IDS],
             );
 
-            $this->recalculateWithScope($idsToRecalculate, $productIdsWithScopes[self::KEY_SCOPES]);
+            $this->recalculateWithScope($idsToRecalculate, $productIdsWithScopes[self::KEY_SCOPES], $priority);
 
             $logger?->info('Products recalculated', [
                 'product_ids' => Json::encode($idsToRecalculate),
@@ -72,35 +75,37 @@ class ProductRecalculationFacade
      * @param int[] $productIds
      * @param string[] $exportScopes
      */
-    protected function recalculateWithScope(array $productIds, array $exportScopes): void
+    protected function recalculateWithScope(array $productIds, array $exportScopes, string $priority): void
     {
         $shouldRecalculateVisibility = $this->productExportScopeConfigFacade->shouldRecalculateVisibility($exportScopes);
+        $changedProductIds = [];
 
         if ($shouldRecalculateVisibility) {
-            $this->productVisibilityFacade->calculateProductVisibilityForIds($productIds);
+            $changedProductIds = $this->productVisibilityFacade->calculateProductVisibilityForIds($productIds);
         }
 
         $shouldRecalculateSellingDenied = $this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes);
 
         if ($shouldRecalculateSellingDenied) {
-            $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds);
+            $changedProductIds = [
+                ...$changedProductIds,
+                ...$this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds),
+            ];
         }
+
+        $this->dispatchChangedProductsOutsideOfBatch($changedProductIds, $productIds, $exportScopes, $priority);
 
         if ($shouldRecalculateVisibility || $shouldRecalculateSellingDenied) {
-            foreach ($productIds as $productId) {
-                $this->giftFlagSynchronizerFacade->refreshForGiftProductId($productId);
-            }
+            $this->giftFlagSynchronizerFacade->refreshForGiftProductIds($productIds);
         }
+
+        $products = $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($productIds);
 
         if ($this->productExportScopeConfigFacade->shouldRecalculateGiftFlags($exportScopes)) {
-            foreach ($productIds as $productId) {
-                $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProductId($productId);
-            }
+            $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts($products);
         }
 
-        foreach ($productIds as $productId) {
-            $this->promotionFlagFacade->updatePromotionFlags($productId);
-        }
+        $this->promotionFlagFacade->updatePromotionFlagsForProducts($products);
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
         $hadAnyPromotedProduct = false;
@@ -136,6 +141,30 @@ class ProductRecalculationFacade
         if ($hadAnyPromotedProduct || $this->topProductRepository->hasAnyProduct($productIds)) {
             $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::PROMOTED_PRODUCTS_QUERY_KEY_PART);
         }
+    }
+
+    /**
+     * @param int[] $changedProductIds
+     * @param int[] $batchProductIds
+     * @param string[] $exportScopes
+     */
+    protected function dispatchChangedProductsOutsideOfBatch(
+        array $changedProductIds,
+        array $batchProductIds,
+        array $exportScopes,
+        string $priority,
+    ): void {
+        $changedProductIdsOutsideOfBatch = array_values(array_diff($changedProductIds, $batchProductIds));
+
+        if ($changedProductIdsOutsideOfBatch === []) {
+            return;
+        }
+
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $changedProductIdsOutsideOfBatch,
+            $priority,
+            $exportScopes,
+        );
     }
 
     /**

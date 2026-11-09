@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -20,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPrio
 class GiftFlagSynchronizerFacade
 {
     public const string FLAG_GIFT_UUID = '3b709b97-604d-462d-b045-885f126e78d2';
+    protected const int REFRESH_ALL_BATCH_SIZE = 500;
 
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -36,14 +36,15 @@ class GiftFlagSynchronizerFacade
 
     public function refreshAllGiftPlans(): void
     {
-        $giftPlans = $this->giftPlanRepository->findAll();
+        $mainProductIds = $this->giftPlanRepository->getAllMainProductIds();
 
-        foreach ($giftPlans as $giftPlan) {
-            foreach ($giftPlan->getMainProducts() as $mainProduct) {
-                foreach ($this->domain->getAllIds() as $domainId) {
-                    $this->recalculateGiftFlagForMainProductAndDomainId($mainProduct, $domainId);
-                }
-            }
+        $mainProductIdsBatches = array_chunk($mainProductIds, static::REFRESH_ALL_BATCH_SIZE);
+
+        foreach ($mainProductIdsBatches as $mainProductIdsBatch) {
+            $this->recalculateGiftFlagForMainProducts(
+                $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($mainProductIdsBatch),
+            );
+            $this->em->clear();
         }
     }
 
@@ -52,41 +53,128 @@ class GiftFlagSynchronizerFacade
      */
     public function dispatchMainProductForGriftFlagRecalculation(array $mainProducts): void
     {
+        $this->dispatchMainProductIdsForGiftFlagRecalculation(
+            array_map(static fn (Product $mainProduct): int => $mainProduct->getId(), $mainProducts),
+        );
+    }
+
+    /**
+     * @param int[] $giftProductIds
+     */
+    public function refreshForGiftProductIds(array $giftProductIds): void
+    {
+        $this->dispatchMainProductIdsForGiftFlagRecalculation(
+            $this->giftPlanRepository->getMainProductIdsByGiftProductIds($giftProductIds),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
+     */
+    public function recalculateGiftFlagForMainProducts(array $mainProducts): void
+    {
+        $mainProductsIndexedById = [];
+
         foreach ($mainProducts as $mainProduct) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId(
-                $mainProduct->getId(),
-                ProductRecalculationPriorityEnum::REGULAR,
-                [ProductExportScopeConfig::SCOPE_GIFT_FLAGS],
+            $mainProductsIndexedById[$mainProduct->getId()] = $mainProduct;
+        }
+
+        if ($mainProductsIndexedById === []) {
+            return;
+        }
+
+        $giftProductIdsIndexedByDomainIdAndMainProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(
+            array_keys($mainProductsIndexedById),
+        );
+        $allGiftProductIds = [];
+
+        foreach ($giftProductIdsIndexedByDomainIdAndMainProductId as $giftProductIdsIndexedByMainProductId) {
+            $allGiftProductIds = array_merge($allGiftProductIds, ...array_values($giftProductIdsIndexedByMainProductId));
+        }
+
+        $giftProductsIndexedById = $allGiftProductIds === []
+            ? []
+            : $this->productFacade->getAllByIdsWithDomainsIndexedById(array_values(array_unique($allGiftProductIds)));
+        $domainIds = $this->domain->getAllIds();
+        $hasAnyGiftFlagChanged = false;
+
+        foreach ($domainIds as $domainId) {
+            $giftProductIdsIndexedByMainProductId = $giftProductIdsIndexedByDomainIdAndMainProductId[$domainId] ?? [];
+            $sellableGiftProductIds = $this->getSellableGiftProductIdsOnDomain(
+                $giftProductsIndexedById,
+                array_merge(...array_values($giftProductIdsIndexedByMainProductId)),
+                $domainId,
             );
-        }
-    }
 
-    public function refreshForGiftProductId(int $giftProductId): void
-    {
-        $giftPlans = $this->giftPlanRepository->findByGiftProductId($giftProductId);
-
-        foreach ($giftPlans as $giftPlan) {
-            $this->dispatchMainProductForGriftFlagRecalculation($giftPlan->getMainProducts());
-        }
-    }
-
-    public function recalculateGiftFlagForMainProductId(int $mainProductId): void
-    {
-        try {
-            $mainProduct = $this->productFacade->getById($mainProductId);
-
-            foreach ($this->domain->getAllIds() as $domainId) {
-                $this->recalculateGiftFlagForMainProductAndDomainId($mainProduct, $domainId);
+            foreach ($mainProductsIndexedById as $mainProductId => $mainProduct) {
+                $shouldHaveGiftFlag = $this->shouldHaveGiftFlag(
+                    $giftProductIdsIndexedByMainProductId[$mainProductId] ?? [],
+                    $sellableGiftProductIds,
+                );
+                $hasGiftFlagChanged = $this->updateGiftFlagOnDomain($mainProduct, $domainId, $shouldHaveGiftFlag);
+                $hasAnyGiftFlagChanged = $hasAnyGiftFlagChanged || $hasGiftFlagChanged;
             }
-        } catch (ProductNotFoundException) {
-            // deleted product, nothing to recalculate
+        }
+
+        if ($hasAnyGiftFlagChanged) {
+            $this->em->flush();
         }
     }
 
-    protected function recalculateGiftFlagForMainProductAndDomainId(Product $mainProduct, int $domainId): void
+    /**
+     * @param int[] $mainProductIds
+     */
+    protected function dispatchMainProductIdsForGiftFlagRecalculation(array $mainProductIds): void
     {
-        $shouldHaveFlag = $this->shouldHaveGiftFlag($mainProduct, $domainId);
+        if ($mainProductIds === []) {
+            return;
+        }
 
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $mainProductIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_GIFT_FLAGS],
+        );
+    }
+
+    /**
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Product\Product> $giftProductsIndexedById
+     * @param int[] $giftProductIds
+     * @return int[]
+     */
+    protected function getSellableGiftProductIdsOnDomain(
+        array $giftProductsIndexedById,
+        array $giftProductIds,
+        int $domainId,
+    ): array {
+        if ($giftProductIds === []) {
+            return [];
+        }
+
+        $giftProducts = array_map(
+            static fn (int $giftProductId): Product => $giftProductsIndexedById[$giftProductId],
+            array_values(array_unique($giftProductIds)),
+        );
+
+        return $this->giftCartFacade->getSellableGiftProductIds(
+            $giftProducts,
+            $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
+            1,
+            $domainId,
+        );
+    }
+
+    /**
+     * @param int[] $giftProductIdsOfMainProduct
+     * @param int[] $sellableGiftProductIds
+     */
+    protected function shouldHaveGiftFlag(array $giftProductIdsOfMainProduct, array $sellableGiftProductIds): bool
+    {
+        return array_intersect($giftProductIdsOfMainProduct, $sellableGiftProductIds) !== [];
+    }
+
+    protected function updateGiftFlagOnDomain(Product $mainProduct, int $domainId, bool $shouldHaveFlag): bool
+    {
         $flags = $mainProduct->getFlags($domainId);
 
         $giftFlag = $this->getGiftFlag();
@@ -120,27 +208,7 @@ class GiftFlagSynchronizerFacade
             $changed = true;
         }
 
-        if (!$changed) {
-            return;
-        }
-
-        $this->em->flush();
-    }
-
-    protected function shouldHaveGiftFlag(Product $mainProduct, int $domainId): bool
-    {
-        $activeGiftPlans = $this->giftPlanRepository->findActiveGiftPlansByMainProductAndDomainId($mainProduct, $domainId);
-        $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-
-        foreach ($activeGiftPlans as $activeGiftPlan) {
-            $giftProduct = $activeGiftPlan->getGiftProduct();
-
-            if ($this->giftCartFacade->isGiftProductSellable($giftProduct, $defaultPricingGroup, 1, $domainId)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $changed;
     }
 
     protected function getGiftFlag(): Flag

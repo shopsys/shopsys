@@ -19,10 +19,11 @@ class ProductVisibilityFacade
 
     /**
      * @param int[] $productIds
+     * @return int[]
      */
-    public function calculateProductVisibilityForIds(array $productIds): void
+    public function calculateProductVisibilityForIds(array $productIds): array
     {
-        $this->productVisibilityRepository->refreshProductsVisibility($productIds);
+        return $this->productVisibilityRepository->refreshProductsVisibility($productIds);
     }
 
     public function calculateProductVisibilityForAll(): void
