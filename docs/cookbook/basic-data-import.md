@@ -451,24 +451,68 @@ Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@App\Model\Pricing\Vat\Vat
 
 You will get a list of all available cron modules as an output.
 
-```text
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Feed\FeedCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule"
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule"
-php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule"
-php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule"
+```no-highlight
+default
+-------
+
+ php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule" --instance-name=default
+
+service
+-------
+
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Component\Cron\DeleteOldCronModuleRunsCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrontendApiBundle\Model\Security\DeleteExpiredExchangeTokensCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Payment\ReturnHash\DeleteExpiredPaymentReturnHashesCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Customer\User\RemoveOldCustomerUserRefreshTokenChainsCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueLogCleanerCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\ProductFeed\ZboziBundle\Model\ZboziCategory\ZboziCategoryCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\List\RemoveOldProductListsCronModule" --instance-name=service
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\GiftPlan\RecalculateGiftFlagsCronModule" --instance-name=service
+
+export
+------
+
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Feed\FeedCronModule" --instance-name=export
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule" --instance-name=export
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapCronModule" --instance-name=export
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportCronModule" --instance-name=export
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportCronModule" --instance-name=export
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportChangedCronModule" --instance-name=export
+
+products
+--------
+
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductRecalculationCronModule" --instance-name=products
+
+gopay
+-----
+
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\GoPay\GoPayAvailablePaymentsCronModule" --instance-name=gopay
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\GoPay\OrderGoPayStatusUpdateCronModule" --instance-name=gopay
+
+dataBridgeImport
+----------------
+
+ php bin/console shopsys:cron --module="App\Component\DataBridge\DummyCronModule" --instance-name=dataBridgeImport
+
+packetery
+---------
+
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Component\Packetery\PacketeryCronModule" --instance-name=packetery
+
+watchdog
+--------
+
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Watchdog\WatchdogCronModule" --instance-name=watchdog
 ```
 
 #### 4.2 - Find your module and run the appropriate console command
 
 ```sh
-php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule"
+php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule" --instance-name=default
 ```
 
 !!! hint
