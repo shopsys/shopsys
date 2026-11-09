@@ -10,15 +10,15 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Doctrine\ORM\Events;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanRepository;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage;
 use Tests\App\Performance\Page\QueryCountingMiddleware;
 use Tests\App\Test\EntityManagerClearCounter;
 use Tests\App\Test\ProductQueryPattern;
@@ -59,6 +59,11 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
+    private DelayedEnvelopesCollector $delayedEnvelopesCollector;
+
+    /**
+     * @inject
+     */
     private PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
@@ -93,13 +98,11 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
 
     public function testRefreshForGiftProductIdsDispatchesMainProductsForGiftFlagsRecalculation(): void
     {
-        $productRecalculationDispatcherMock = $this->createMock(ProductRecalculationDispatcher::class);
-        $productRecalculationDispatcherMock->expects($this->once())
-            ->method('dispatchProductIds')
-            ->with([$this->getMainProductId()], ProductRecalculationPriorityEnum::REGULAR, [ProductExportScopeConfig::SCOPE_GIFT_FLAGS]);
+        $this->delayedEnvelopesCollector->resetEnvelopes();
 
-        $this->createGiftFlagSynchronizerFacadeWithProductRecalculationDispatcher($productRecalculationDispatcherMock)
-            ->refreshForGiftProductIds([$this->getGiftProductId()]);
+        $this->giftFlagSynchronizerFacade->refreshForGiftProductIds([$this->getGiftProductId()]);
+
+        $this->assertSame([$this->getMainProductId()], $this->popDispatchedRegularRecalculationProductIds());
     }
 
     public function testRefreshAllGiftPlansLoadsAndRecalculatesMainProductsInBatches(): void
@@ -139,38 +142,40 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame(count($mainProductIds), $entityManagerClearCounter->getClearsCount());
     }
 
-    private function createGiftFlagSynchronizerFacadeWithProductRecalculationDispatcher(
-        ProductRecalculationDispatcher $productRecalculationDispatcher,
-    ): GiftFlagSynchronizerFacade {
-        return new GiftFlagSynchronizerFacade(
-            ...$this->getGiftFlagSynchronizerFacadeConstructorArguments($productRecalculationDispatcher),
-        );
-    }
-
     private function createGiftFlagSynchronizerFacadeWithSingleProductBatches(): GiftFlagSynchronizerFacade
     {
-        return new class(...$this->getGiftFlagSynchronizerFacadeConstructorArguments($this->productRecalculationDispatcher)) extends GiftFlagSynchronizerFacade {
+        return new class(
+            $this->em,
+            $this->giftPlanRepository,
+            $this->flagFacade,
+            $this->domain,
+            $this->productRecalculationDispatcher,
+            $this->pricingGroupSettingFacade,
+            $this->giftCartFacade,
+            $this->inMemoryCache,
+            $this->productFacade,
+        ) extends GiftFlagSynchronizerFacade {
             protected const int REFRESH_ALL_BATCH_SIZE = 1;
         };
     }
 
     /**
-     * @return array{\Doctrine\ORM\EntityManagerInterface, \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanRepository, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain, \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade, \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade, \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache, \Shopsys\FrameworkBundle\Model\Product\ProductFacade}
+     * @return int[]
      */
-    private function getGiftFlagSynchronizerFacadeConstructorArguments(
-        ProductRecalculationDispatcher $productRecalculationDispatcher,
-    ): array {
-        return [
-            $this->em,
-            $this->giftPlanRepository,
-            $this->flagFacade,
-            $this->domain,
-            $productRecalculationDispatcher,
-            $this->pricingGroupSettingFacade,
-            $this->giftCartFacade,
-            $this->inMemoryCache,
-            $this->productFacade,
-        ];
+    private function popDispatchedRegularRecalculationProductIds(): array
+    {
+        $dispatchedProductIds = [];
+        $envelopes = $this->delayedEnvelopesCollector->popEnvelopes();
+
+        foreach ($envelopes as $envelope) {
+            $message = $envelope->getMessage();
+
+            if ($message instanceof ProductRecalculationPriorityRegularMessage) {
+                $dispatchedProductIds[] = $message->productId;
+            }
+        }
+
+        return $dispatchedProductIds;
     }
 
     private function getMainProductId(): int
