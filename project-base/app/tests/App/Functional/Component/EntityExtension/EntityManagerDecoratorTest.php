@@ -28,11 +28,11 @@ final class EntityManagerDecoratorTest extends TransactionFunctionalTestCase
         $this->em->clear();
         $products = $this->productFacade->getAllByIds($productIds);
         $this->changeProductsWeight($productIds);
-        $queriesExecutedBeforeRefreshCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->em->refreshLoadedEntitiesByClassName(Product::class);
 
-        $this->assertCount(1, array_slice($queryCountingMiddleware->getExecutedQueries(), $queriesExecutedBeforeRefreshCount));
+        $this->assertCount(1, $queryCountingMiddleware->getExecutedQueries());
 
         foreach ($products as $product) {
             $this->assertSame(self::CHANGED_WEIGHT, $product->getWeight());
@@ -92,11 +92,11 @@ final class EntityManagerDecoratorTest extends TransactionFunctionalTestCase
         $this->em->clear();
         $productProxy = $this->em->getReference(Product::class, $productId);
         $this->changeProductsWeight([$productId]);
-        $queriesExecutedBeforeRefreshCount = $queryCountingMiddleware->getQueryCount();
+        $queryCountingMiddleware->reset();
 
         $this->em->refreshLoadedEntitiesByClassName(Product::class);
 
-        $this->assertSame($queriesExecutedBeforeRefreshCount, $queryCountingMiddleware->getQueryCount());
+        $this->assertSame(0, $queryCountingMiddleware->getQueryCount());
         $this->assertSame(self::CHANGED_WEIGHT, $productProxy->getWeight());
     }
 
