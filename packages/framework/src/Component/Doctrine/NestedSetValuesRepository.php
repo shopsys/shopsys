@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
@@ -25,32 +24,28 @@ class NestedSetValuesRepository
         $classMetadata = $this->em->getClassMetadata($entityClassName);
         $nestedSetValuesBatches = array_chunk($nestedSetValuesIndexedById, static::NESTED_SET_UPDATE_BATCH_SIZE, true);
 
-        return $this->em->getConnection()->transactional(
-            function (Connection $connection) use ($classMetadata, $nestedSetValuesBatches): int {
-                $changedRowsCount = 0;
+        $changedRowsCount = 0;
 
-                foreach ($nestedSetValuesBatches as $nestedSetValuesBatch) {
-                    $parameters = [];
-                    $rowIndex = 0;
+        foreach ($nestedSetValuesBatches as $nestedSetValuesBatch) {
+            $parameters = [];
+            $rowIndex = 0;
 
-                    foreach ($nestedSetValuesBatch as $id => $nestedSetValues) {
-                        $parameters['id' . $rowIndex] = $id;
-                        $parameters['parentId' . $rowIndex] = $nestedSetValues['parent'];
-                        $parameters['level' . $rowIndex] = $nestedSetValues['level'];
-                        $parameters['lft' . $rowIndex] = $nestedSetValues['lft'];
-                        $parameters['rgt' . $rowIndex] = $nestedSetValues['rgt'];
-                        $rowIndex++;
-                    }
+            foreach ($nestedSetValuesBatch as $id => $nestedSetValues) {
+                $parameters['id' . $rowIndex] = $id;
+                $parameters['parentId' . $rowIndex] = $nestedSetValues['parent'];
+                $parameters['level' . $rowIndex] = $nestedSetValues['level'];
+                $parameters['lft' . $rowIndex] = $nestedSetValues['lft'];
+                $parameters['rgt' . $rowIndex] = $nestedSetValues['rgt'];
+                $rowIndex++;
+            }
 
-                    $changedRowsCount += (int)$connection->executeStatement(
-                        $this->getNestedSetValuesUpdateSql($classMetadata, count($nestedSetValuesBatch)),
-                        $parameters,
-                    );
-                }
+            $changedRowsCount += (int)$this->em->getConnection()->executeStatement(
+                $this->getNestedSetValuesUpdateSql($classMetadata, count($nestedSetValuesBatch)),
+                $parameters,
+            );
+        }
 
-                return $changedRowsCount;
-            },
-        );
+        return $changedRowsCount;
     }
 
     protected function getNestedSetValuesUpdateSql(ClassMetadata $classMetadata, int $rowsCount): string
