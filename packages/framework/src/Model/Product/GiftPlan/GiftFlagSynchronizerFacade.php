@@ -88,7 +88,7 @@ class GiftFlagSynchronizerFacade
 
         $giftProductsIndexedById = $allGiftProductIds === []
             ? []
-            : $this->productFacade->getAllByIdsWithDomainsIndexedById(array_values(array_unique($allGiftProductIds)));
+            : $this->productFacade->getAllByIdsWithDomainsIndexedById($allGiftProductIds);
         $domainIds = $this->domain->getAllIds();
         $hasAnyGiftFlagChanged = false;
 
