@@ -1,5 +1,7 @@
 # How to Set Up Domains and Locales (Languages)
 
+[TOC]
+
 This article describes how to work with domains and languages during the development of your project.
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
