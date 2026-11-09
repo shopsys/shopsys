@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\GiftPlan;
 
-use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Doctrine\DBAL\ArrayParameterType;
@@ -39,27 +38,27 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
 
     public function testOnlyOrderableVisibleGiftProductsOnStockAreSellable(): void
     {
-        $giftProductOnStock = $this->getProduct(1);
-        $giftProductOutOfStock = $this->getProduct(2);
-        $inquiryGiftProduct = $this->getProduct(3);
-        $hiddenGiftProduct = $this->getProduct(4);
+        $giftProductOnStockId = 1;
+        $giftProductOutOfStockId = 2;
+        $inquiryGiftProductId = 3;
+        $hiddenGiftProductId = 4;
         $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(Domain::FIRST_DOMAIN_ID);
-        $this->setLimitedStockQuantity([$giftProductOnStock->getId(), $hiddenGiftProduct->getId()], 10);
-        $this->setLimitedStockQuantity([$giftProductOutOfStock->getId()], 0);
+        $this->setLimitedStockQuantity([$giftProductOnStockId, $hiddenGiftProductId], 10);
+        $this->setLimitedStockQuantity([$giftProductOutOfStockId], 0);
         $this->em->getConnection()->executeStatement(
             'UPDATE product_visibilities SET visible = FALSE WHERE product_id = :productId AND pricing_group_id = :pricingGroupId AND domain_id = :domainId',
             [
-                'productId' => $hiddenGiftProduct->getId(),
+                'productId' => $hiddenGiftProductId,
                 'pricingGroupId' => $defaultPricingGroup->getId(),
                 'domainId' => Domain::FIRST_DOMAIN_ID,
             ],
         );
         $this->em->clear();
         $giftProducts = $this->getProductsByIds([
-            $giftProductOnStock->getId(),
-            $giftProductOutOfStock->getId(),
-            $inquiryGiftProduct->getId(),
-            $hiddenGiftProduct->getId(),
+            $giftProductOnStockId,
+            $giftProductOutOfStockId,
+            $inquiryGiftProductId,
+            $hiddenGiftProductId,
         ]);
 
         $sellableGiftProductIds = $this->giftCartFacade->getSellableGiftProductIds(
@@ -69,16 +68,13 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
             Domain::FIRST_DOMAIN_ID,
         );
 
-        $this->assertSame([$giftProductOnStock->getId()], $sellableGiftProductIds);
+        $this->assertSame([$giftProductOnStockId], $sellableGiftProductIds);
     }
 
     public function testSellabilityOfGiftProductsIsCheckedWithOneStockQueryAndOneVisibilityQuery(): void
     {
         $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
-        $giftProductIds = array_map(
-            fn (int $productNumber): int => $this->getProduct($productNumber)->getId(),
-            [1, 2, 4, 5],
-        );
+        $giftProductIds = [1, 2, 4, 5];
         $this->setLimitedStockQuantity($giftProductIds, 10);
         $this->em->clear();
         $giftProducts = $this->getProductsByIds($giftProductIds);
@@ -94,9 +90,8 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
     public function testSellabilityOfSingleGiftProductReusesAlreadyLoadedVisibility(): void
     {
         $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
-        $giftProductId = $this->getProduct(1)->getId();
         $this->em->clear();
-        $giftProduct = $this->productFacade->getById($giftProductId);
+        $giftProduct = $this->productFacade->getById(1);
         $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(Domain::FIRST_DOMAIN_ID);
         $this->productVisibilityFacade->getProductVisibility($giftProduct, $defaultPricingGroup, Domain::FIRST_DOMAIN_ID);
         $queriesExecutedBeforeSellabilityCheckCount = $queryCountingMiddleware->getQueryCount();
@@ -104,11 +99,6 @@ final class GiftCartFacadeTest extends TransactionFunctionalTestCase
         $this->giftCartFacade->isGiftProductSellable($giftProduct, $defaultPricingGroup, 1, Domain::FIRST_DOMAIN_ID);
 
         $this->assertSame([], $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_visibilities\b~', $queriesExecutedBeforeSellabilityCheckCount));
-    }
-
-    private function getProduct(int $productNumber): Product
-    {
-        return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productNumber, Product::class);
     }
 
     /**
