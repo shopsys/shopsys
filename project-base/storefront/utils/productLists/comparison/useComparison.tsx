@@ -3,6 +3,7 @@ import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { ProductInterfaceType } from 'types/product';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -11,6 +12,11 @@ import { useProductListGtmEvent } from 'utils/productLists/useProductListGtmEven
 import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductListUuid';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+
+const ProductVariantsPopup = dynamic(
+    () => import('components/Blocks/Popup/ProductVariantsPopup').then((component) => component.ProductVariantsPopup),
+    { ssr: false },
+);
 
 type ComparisonCallbacks = {
     onProductRemoved?: (productUuid: string) => void;
@@ -121,5 +127,3 @@ export const useComparison = ({
         removeComparison: removeList,
     };
 };
-
-import { ProductVariantsPopup } from 'components/Blocks/Popup/ProductVariantsPopup';
