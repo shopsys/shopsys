@@ -85,10 +85,7 @@ class ProductRecalculationFacade
         $shouldRecalculateSellingDenied = $this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes);
 
         if ($shouldRecalculateSellingDenied) {
-            $changedProductIds = [
-                ...$changedProductIds,
-                ...$this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds),
-            ];
+            $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds);
         }
 
         if ($shouldRecalculateVisibility || $shouldRecalculateSellingDenied) {

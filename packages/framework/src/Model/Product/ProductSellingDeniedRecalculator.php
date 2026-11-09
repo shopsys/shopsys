@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductSellingDeniedRecalculator
 {
     public function __construct(
-        protected readonly ProductVariantFamilyRecalculationRepository $productVariantFamilyRecalculationRepository,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
      * @param int[] $productIds
-     * @return int[]
      */
-    public function calculateSellingDeniedForProductIds(array $productIds): array
+    public function calculateSellingDeniedForProductIds(array $productIds): void
     {
         if ($productIds === []) {
-            return [];
+            return;
         }
 
-        return $this->recalculateSellingDenied($productIds);
+        $this->recalculateSellingDenied($productIds);
     }
 
     public function calculateSellingDeniedForAll(): void
@@ -33,30 +34,37 @@ class ProductSellingDeniedRecalculator
 
     /**
      * @param int[]|null $productIds
-     * @return int[]
      */
-    protected function recalculateSellingDenied(?array $productIds): array
+    protected function recalculateSellingDenied(?array $productIds): void
     {
-        return $this->productVariantFamilyRecalculationRepository->executeRecalculationAndGetChangedProductIds(
+        $parameters = [
+            ...$this->getIndependentSellingDeniedParameters(),
+            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
+        ];
+        $parameterTypes = [
+            ...$this->getIndependentSellingDeniedParameterTypes(),
+            'variantTypeMain' => Types::STRING,
+            'variantTypeVariant' => Types::STRING,
+        ];
+
+        if ($productIds !== null) {
+            $parameters['productIds'] = $productIds;
+            $parameterTypes['productIds'] = ArrayParameterType::INTEGER;
+        }
+
+        $this->em->getConnection()->executeStatement(
             $this->getSellingDeniedRecalculationSql($productIds !== null),
-            [
-                ...$this->getIndependentSellingDeniedParameters(),
-                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-                'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
-            ],
-            [
-                ...$this->getIndependentSellingDeniedParameterTypes(),
-                'variantTypeMain' => Types::STRING,
-                'variantTypeVariant' => Types::STRING,
-            ],
-            $productIds,
+            $parameters,
+            $parameterTypes,
         );
     }
 
     protected function getSellingDeniedRecalculationSql(bool $isRestrictedToProductIds): string
     {
-        return 'WITH ' . $this->productVariantFamilyRecalculationRepository->getRequestedVariantFamilyRestrictionCteSql($isRestrictedToProductIds) . '
-        scoped_product_domains AS (
+        $productIdsCondition = $isRestrictedToProductIds ? 'WHERE pd.product_id IN (:productIds)' : '';
+
+        return 'WITH scoped_product_domains AS (
             SELECT
                 pd.product_id,
                 pd.domain_id,
@@ -65,7 +73,7 @@ class ProductSellingDeniedRecalculator
                 COALESCE((' . $this->getIndependentSellingDeniedConditionSql() . '), FALSE) AS independently_selling_denied
             FROM product_domains AS pd
             JOIN products AS p ON p.id = pd.product_id
-            ' . $this->productVariantFamilyRecalculationRepository->getRequestedVariantFamilyRestrictionWhereSql('pd.product_id', $isRestrictedToProductIds) . '
+            ' . $productIdsCondition . '
         ),
         variant_family_product_domains AS (
             SELECT
@@ -89,17 +97,13 @@ class ProductSellingDeniedRecalculator
                     ELSE vfpd.independently_selling_denied
                 END AS calculated_selling_denied
             FROM variant_family_product_domains AS vfpd
-        ),
-        updated_product_domains AS (
-            UPDATE product_domains AS pd
-            SET calculated_selling_denied = cpd.calculated_selling_denied
-            FROM calculated_product_domains AS cpd
-            WHERE pd.product_id = cpd.product_id
-                AND pd.domain_id = cpd.domain_id
-                AND pd.calculated_selling_denied IS DISTINCT FROM cpd.calculated_selling_denied
-            RETURNING pd.product_id
         )
-        SELECT DISTINCT product_id FROM updated_product_domains';
+        UPDATE product_domains AS pd
+        SET calculated_selling_denied = cpd.calculated_selling_denied
+        FROM calculated_product_domains AS cpd
+        WHERE pd.product_id = cpd.product_id
+            AND pd.domain_id = cpd.domain_id
+            AND pd.calculated_selling_denied IS DISTINCT FROM cpd.calculated_selling_denied';
     }
 
     protected function getIndependentSellingDeniedConditionSql(): string

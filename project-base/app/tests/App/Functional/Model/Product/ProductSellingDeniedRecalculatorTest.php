@@ -11,7 +11,6 @@ use App\Model\Product\ProductFacade;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\ProductVariantFamilyRecalculationRepository;
 use Tests\App\Test\ProductVariantFamilyTestHelper;
 use Tests\App\Test\TableRowTestHelper;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -32,11 +31,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
-    /**
-     * @inject
-     */
-    private ProductVariantFamilyRecalculationRepository $productVariantFamilyRecalculationRepository;
 
     /**
      * @inject
@@ -198,67 +192,10 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertTrue($this->productFacade->getById($variant->getId())->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
     }
 
-    public function testCalculateSellingDeniedForMainVariantIdMakesItsVariantsSellableAgain(): void
-    {
-        $this->setSellingDenied($this->getMainVariantId(), true);
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($this->getMainVariantFamilyProductIds());
-
-        $this->setSellingDenied($this->getMainVariantId(), false);
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds([$this->getMainVariantId()]);
-        $this->em->clear();
-
-        $variants = $this->productFacade->getById($this->getMainVariantId())->getVariants();
-
-        foreach ($variants as $variant) {
-            $this->assertFalse($variant->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
-        }
-    }
-
-    public function testCalculateSellingDeniedForVariantIdMakesVariantSellableWhenAllVariantsWereNotSellable(): void
-    {
-        $variantIds = array_map(
-            static fn (Product $variant): int => $variant->getId(),
-            $this->productFacade->getById($this->getMainVariantId())->getVariants(),
-        );
-
-        foreach ($variantIds as $variantId) {
-            $this->setSellingDenied($variantId, true);
-        }
-
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($this->getMainVariantFamilyProductIds());
-        $this->em->clear();
-        $this->assertTrue($this->productFacade->getById($this->getMainVariantId())->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
-
-        $sellableVariantId = array_first($variantIds);
-        $this->setSellingDenied($sellableVariantId, false);
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds([$sellableVariantId]);
-        $this->em->clear();
-
-        $this->assertFalse($this->productFacade->getById($sellableVariantId)->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
-        $this->assertFalse($this->productFacade->getById($this->getMainVariantId())->isCalculatedSellingDenied(Domain::FIRST_DOMAIN_ID));
-    }
-
-    public function testCalculateSellingDeniedReturnsIdsOfChangedVariantFamilyMembers(): void
-    {
-        $variantId = array_first($this->productFacade->getById($this->getMainVariantId())->getVariants())->getId();
-        $this->setSellingDenied($this->getMainVariantId(), true);
-
-        $productIdsWithChangedSellingDenied = $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds([$variantId]);
-
-        $this->assertEqualsCanonicalizing($this->getMainVariantFamilyProductIds(), $productIdsWithChangedSellingDenied);
-    }
-
-    public function testCalculateSellingDeniedReturnsNoIdsWhenNothingChanged(): void
-    {
-        $productIdsWithChangedSellingDenied = $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($this->getMainVariantFamilyProductIds());
-
-        $this->assertSame([], $productIdsWithChangedSellingDenied);
-    }
-
     public function testCalculateSellingDeniedTreatsNullIndependentSellingDeniedConditionAsSellable(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $productSellingDeniedRecalculatorWithNullCondition = new class($this->productVariantFamilyRecalculationRepository) extends ProductSellingDeniedRecalculator {
+        $productSellingDeniedRecalculatorWithNullCondition = new class($this->em) extends ProductSellingDeniedRecalculator {
             #[Override]
             protected function getIndependentSellingDeniedConditionSql(): string
             {
@@ -295,7 +232,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
             'UPDATE products SET selling_denied = TRUE WHERE id = :productId',
             ['productId' => $product->getId()],
         );
-        $productSellingDeniedRecalculatorWithExtendedCondition = new class($this->productVariantFamilyRecalculationRepository) extends ProductSellingDeniedRecalculator {
+        $productSellingDeniedRecalculatorWithExtendedCondition = new class($this->em) extends ProductSellingDeniedRecalculator {
             #[Override]
             protected function getIndependentSellingDeniedConditionSql(): string
             {
