@@ -77,13 +77,13 @@ class GiftFlagSynchronizerFacade
             return;
         }
 
-        $giftProductIdsIndexedByDomainIdAndMainProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(
+        $giftProductIdsIndexedByDomainIdAndProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(
             array_keys($productsIndexedById),
         );
         $allGiftProductIds = [];
 
-        foreach ($giftProductIdsIndexedByDomainIdAndMainProductId as $giftProductIdsIndexedByMainProductId) {
-            $allGiftProductIds = array_merge($allGiftProductIds, ...array_values($giftProductIdsIndexedByMainProductId));
+        foreach ($giftProductIdsIndexedByDomainIdAndProductId as $giftProductIdsIndexedByProductId) {
+            $allGiftProductIds = array_merge($allGiftProductIds, ...array_values($giftProductIdsIndexedByProductId));
         }
 
         $giftProductsIndexedById = $allGiftProductIds === []
@@ -93,16 +93,16 @@ class GiftFlagSynchronizerFacade
         $hasAnyGiftFlagChanged = false;
 
         foreach ($domainIds as $domainId) {
-            $giftProductIdsIndexedByMainProductId = $giftProductIdsIndexedByDomainIdAndMainProductId[$domainId] ?? [];
+            $giftProductIdsIndexedByProductId = $giftProductIdsIndexedByDomainIdAndProductId[$domainId] ?? [];
             $sellableGiftProductIds = $this->getSellableGiftProductIdsOnDomain(
                 $giftProductsIndexedById,
-                array_merge(...array_values($giftProductIdsIndexedByMainProductId)),
+                array_merge(...array_values($giftProductIdsIndexedByProductId)),
                 $domainId,
             );
 
             foreach ($productsIndexedById as $productId => $product) {
                 $shouldHaveGiftFlag = $this->shouldHaveGiftFlag(
-                    $giftProductIdsIndexedByMainProductId[$productId] ?? [],
+                    $giftProductIdsIndexedByProductId[$productId] ?? [],
                     $sellableGiftProductIds,
                 );
                 $hasGiftFlagChanged = $this->updateGiftFlagOnDomain($product, $domainId, $shouldHaveGiftFlag);
@@ -159,17 +159,17 @@ class GiftFlagSynchronizerFacade
     }
 
     /**
-     * @param int[] $giftProductIdsOfMainProduct
+     * @param int[] $giftProductIdsOfProduct
      * @param int[] $sellableGiftProductIds
      */
-    protected function shouldHaveGiftFlag(array $giftProductIdsOfMainProduct, array $sellableGiftProductIds): bool
+    protected function shouldHaveGiftFlag(array $giftProductIdsOfProduct, array $sellableGiftProductIds): bool
     {
-        return array_intersect($giftProductIdsOfMainProduct, $sellableGiftProductIds) !== [];
+        return array_intersect($giftProductIdsOfProduct, $sellableGiftProductIds) !== [];
     }
 
-    protected function updateGiftFlagOnDomain(Product $mainProduct, int $domainId, bool $shouldHaveFlag): bool
+    protected function updateGiftFlagOnDomain(Product $product, int $domainId, bool $shouldHaveFlag): bool
     {
-        $flags = $mainProduct->getFlags($domainId);
+        $flags = $product->getFlags($domainId);
 
         $giftFlag = $this->getGiftFlag();
 
@@ -187,7 +187,7 @@ class GiftFlagSynchronizerFacade
 
         if ($shouldHaveFlag && !$hasGiftFlag) {
             $flags[] = $giftFlag;
-            $mainProduct->setFlags([$domainId => $flags]);
+            $product->setFlags([$domainId => $flags]);
             $changed = true;
         } elseif (!$shouldHaveFlag && $hasGiftFlag) {
             $filtered = [];
@@ -198,7 +198,7 @@ class GiftFlagSynchronizerFacade
                 }
             }
 
-            $mainProduct->setFlags([$domainId => $filtered]);
+            $product->setFlags([$domainId => $filtered]);
             $changed = true;
         }
 
