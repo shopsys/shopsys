@@ -1,6 +1,6 @@
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import { authExchange } from '@urql/exchange-auth';
-import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next/client';
 import { parse } from 'graphql';
 import { PropsWithChildren } from 'react';
 import { toast } from 'react-toastify';
