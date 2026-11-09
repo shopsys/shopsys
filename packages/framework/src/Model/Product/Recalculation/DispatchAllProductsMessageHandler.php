@@ -30,7 +30,11 @@ class DispatchAllProductsMessageHandler
                 continue;
             }
 
-            $this->dispatchProductIds($productIdsToDispatch, $message->exportScopes);
+            $this->productRecalculationDispatcher->dispatchProductIds(
+                $productIdsToDispatch,
+                ProductRecalculationPriorityEnum::REGULAR,
+                $message->exportScopes,
+            );
             $productIdsToDispatch = [];
         }
 
@@ -38,19 +42,10 @@ class DispatchAllProductsMessageHandler
             return;
         }
 
-        $this->dispatchProductIds($productIdsToDispatch, $message->exportScopes);
-    }
-
-    /**
-     * @param int[] $productIds
-     * @param string[] $exportScopes
-     */
-    protected function dispatchProductIds(array $productIds, array $exportScopes): void
-    {
         $this->productRecalculationDispatcher->dispatchProductIds(
-            $productIds,
+            $productIdsToDispatch,
             ProductRecalculationPriorityEnum::REGULAR,
-            $exportScopes,
+            $message->exportScopes,
         );
     }
 }
