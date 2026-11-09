@@ -88,12 +88,8 @@ class ProductSellingDeniedRecalculator
                 vfpd.product_id,
                 vfpd.domain_id,
                 CASE
-                    WHEN vfpd.variant_type = :variantTypeVariant THEN
-                        vfpd.independently_selling_denied
-                        OR COALESCE(vfpd.main_variant_independently_selling_denied, FALSE)
-                    WHEN vfpd.variant_type = :variantTypeMain THEN
-                        vfpd.independently_selling_denied
-                        OR COALESCE(vfpd.all_variants_independently_selling_denied, TRUE)
+                    WHEN vfpd.variant_type = :variantTypeVariant THEN ' . $this->getVariantSellingDeniedConditionSql() . '
+                    WHEN vfpd.variant_type = :variantTypeMain THEN ' . $this->getMainVariantSellingDeniedConditionSql() . '
                     ELSE vfpd.independently_selling_denied
                 END AS calculated_selling_denied
             FROM variant_family_product_domains AS vfpd
@@ -104,6 +100,16 @@ class ProductSellingDeniedRecalculator
         WHERE pd.product_id = cpd.product_id
             AND pd.domain_id = cpd.domain_id
             AND pd.calculated_selling_denied IS DISTINCT FROM cpd.calculated_selling_denied';
+    }
+
+    protected function getVariantSellingDeniedConditionSql(): string
+    {
+        return '(vfpd.independently_selling_denied OR COALESCE(vfpd.main_variant_independently_selling_denied, FALSE))';
+    }
+
+    protected function getMainVariantSellingDeniedConditionSql(): string
+    {
+        return '(vfpd.independently_selling_denied OR COALESCE(vfpd.all_variants_independently_selling_denied, TRUE))';
     }
 
     protected function getIndependentSellingDeniedConditionSql(): string
