@@ -59,26 +59,24 @@ class NestedSetValuesRepository
             );
         }
 
-        return strtr(
-            'UPDATE {table} AS t
-            SET {parent} = v.parent_id, {level} = v.level, {lft} = v.lft, {rgt} = v.rgt
-            FROM (VALUES {values}) AS v (id, parent_id, level, lft, rgt)
-            WHERE t.{id} = v.id
+        return sprintf(
+            'UPDATE %1$s AS t
+            SET %2$s = v.parent_id, %3$s = v.level, %4$s = v.lft, %5$s = v.rgt
+            FROM (VALUES %7$s) AS v (id, parent_id, level, lft, rgt)
+            WHERE t.%6$s = v.id
                 AND (
-                    t.{parent} IS DISTINCT FROM v.parent_id
-                    OR t.{level} <> v.level
-                    OR t.{lft} <> v.lft
-                    OR t.{rgt} <> v.rgt
+                    t.%2$s IS DISTINCT FROM v.parent_id
+                    OR t.%3$s <> v.level
+                    OR t.%4$s <> v.lft
+                    OR t.%5$s <> v.rgt
                 )',
-            [
-                '{table}' => $classMetadata->getTableName(),
-                '{id}' => $classMetadata->getSingleIdentifierColumnName(),
-                '{parent}' => $classMetadata->getSingleAssociationJoinColumnName('parent'),
-                '{level}' => $classMetadata->getColumnName('level'),
-                '{lft}' => $classMetadata->getColumnName('lft'),
-                '{rgt}' => $classMetadata->getColumnName('rgt'),
-                '{values}' => implode(', ', $valuesRows),
-            ],
+            $classMetadata->getTableName(),
+            $classMetadata->getSingleAssociationJoinColumnName('parent'),
+            $classMetadata->getColumnName('level'),
+            $classMetadata->getColumnName('lft'),
+            $classMetadata->getColumnName('rgt'),
+            $classMetadata->getSingleIdentifierColumnName(),
+            implode(', ', $valuesRows),
         );
     }
 }
