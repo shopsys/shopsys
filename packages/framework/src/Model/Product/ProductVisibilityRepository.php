@@ -216,12 +216,8 @@ class ProductVisibilityRepository
                 vfv.domain_id,
                 vfv.pricing_group_id,
                 CASE
-                    WHEN vfv.variant_type = :variantTypeVariant THEN
-                        vfv.independently_visible
-                        AND COALESCE(vfv.main_variant_independently_visible, FALSE)
-                    WHEN vfv.variant_type = :variantTypeMain THEN
-                        vfv.independently_visible
-                        AND COALESCE(vfv.any_variant_independently_visible, FALSE)
+                    WHEN vfv.variant_type = :variantTypeVariant THEN ' . $this->getVariantVisibilityConditionSql() . '
+                    WHEN vfv.variant_type = :variantTypeMain THEN ' . $this->getMainVariantVisibilityConditionSql() . '
                     ELSE vfv.independently_visible
                 END AS visible
             FROM variant_family_visibilities AS vfv
@@ -233,6 +229,16 @@ class ProductVisibilityRepository
             AND pv.domain_id = cv.domain_id
             AND pv.pricing_group_id = cv.pricing_group_id
             AND pv.visible IS DISTINCT FROM cv.visible';
+    }
+
+    protected function getVariantVisibilityConditionSql(): string
+    {
+        return '(vfv.independently_visible AND COALESCE(vfv.main_variant_independently_visible, FALSE))';
+    }
+
+    protected function getMainVariantVisibilityConditionSql(): string
+    {
+        return '(vfv.independently_visible AND COALESCE(vfv.any_variant_independently_visible, FALSE))';
     }
 
     protected function getIndependentVisibilityConditionSql(): string
