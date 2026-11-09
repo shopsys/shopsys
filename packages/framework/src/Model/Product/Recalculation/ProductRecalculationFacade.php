@@ -95,7 +95,7 @@ class ProductRecalculationFacade
         $products = $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($productIds);
 
         if ($this->productExportScopeConfigFacade->shouldRecalculateGiftFlags($exportScopes)) {
-            $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts($products);
+            $this->giftFlagSynchronizerFacade->recalculateGiftFlagForProducts($products);
         }
 
         $this->promotionFlagFacade->updatePromotionFlagsForProducts($products);

@@ -203,7 +203,7 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
     private function recalculateGiftFlagOfMainProduct(): void
     {
         $this->em->clear();
-        $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts(
+        $this->giftFlagSynchronizerFacade->recalculateGiftFlagForProducts(
             $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById([$this->getMainProductId()]),
         );
         $this->em->clear();

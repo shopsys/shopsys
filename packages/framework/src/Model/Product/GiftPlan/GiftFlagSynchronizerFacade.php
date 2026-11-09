@@ -41,7 +41,7 @@ class GiftFlagSynchronizerFacade
         $mainProductIdsBatches = array_chunk($mainProductIds, static::REFRESH_ALL_BATCH_SIZE);
 
         foreach ($mainProductIdsBatches as $mainProductIdsBatch) {
-            $this->recalculateGiftFlagForMainProducts(
+            $this->recalculateGiftFlagForProducts(
                 $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($mainProductIdsBatch),
             );
             $this->em->clear();
@@ -69,22 +69,16 @@ class GiftFlagSynchronizerFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $mainProducts
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Product\Product> $productsIndexedById
      */
-    public function recalculateGiftFlagForMainProducts(array $mainProducts): void
+    public function recalculateGiftFlagForProducts(array $productsIndexedById): void
     {
-        $mainProductsIndexedById = [];
-
-        foreach ($mainProducts as $mainProduct) {
-            $mainProductsIndexedById[$mainProduct->getId()] = $mainProduct;
-        }
-
-        if ($mainProductsIndexedById === []) {
+        if ($productsIndexedById === []) {
             return;
         }
 
         $giftProductIdsIndexedByDomainIdAndMainProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(
-            array_keys($mainProductsIndexedById),
+            array_keys($productsIndexedById),
         );
         $allGiftProductIds = [];
 
@@ -106,12 +100,12 @@ class GiftFlagSynchronizerFacade
                 $domainId,
             );
 
-            foreach ($mainProductsIndexedById as $mainProductId => $mainProduct) {
+            foreach ($productsIndexedById as $productId => $product) {
                 $shouldHaveGiftFlag = $this->shouldHaveGiftFlag(
-                    $giftProductIdsIndexedByMainProductId[$mainProductId] ?? [],
+                    $giftProductIdsIndexedByMainProductId[$productId] ?? [],
                     $sellableGiftProductIds,
                 );
-                $hasGiftFlagChanged = $this->updateGiftFlagOnDomain($mainProduct, $domainId, $shouldHaveGiftFlag);
+                $hasGiftFlagChanged = $this->updateGiftFlagOnDomain($product, $domainId, $shouldHaveGiftFlag);
                 $hasAnyGiftFlagChanged = $hasAnyGiftFlagChanged || $hasGiftFlagChanged;
             }
         }

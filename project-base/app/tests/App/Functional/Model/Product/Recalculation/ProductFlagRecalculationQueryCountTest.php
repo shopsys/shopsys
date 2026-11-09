@@ -39,7 +39,7 @@ final class ProductFlagRecalculationQueryCountTest extends TransactionFunctional
         $products = $this->productFacade->getAllRefreshedByIdsWithDomainsAndFlagsIndexedById($productIds);
         $queryCountingMiddleware->reset();
 
-        $this->giftFlagSynchronizerFacade->recalculateGiftFlagForMainProducts($products);
+        $this->giftFlagSynchronizerFacade->recalculateGiftFlagForProducts($products);
         $this->promotionFlagFacade->updatePromotionFlagsForProducts($products);
 
         $this->assertCount(0, $queryCountingMiddleware->getExecutedQueriesMatching('~FROM product_domains\b|\bproduct_domain_flags\b~'));
