@@ -16,7 +16,7 @@ import {
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { useClient } from 'urql';
+import { useClient, useQuery } from 'urql';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
@@ -29,6 +29,12 @@ import { getPreviousProductsFromCache } from './getPreviousProductsFromCache';
 import { hasReadAllItemsFromCache } from './hasReadAllItemsFromCache';
 import { mergeItemEdges } from './mergeItemEdges';
 import { readProductsFromCache } from './readProductsFromCache';
+
+type ProductsQueryData = TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery;
+type ProductsQueryVariables =
+    | TypeCategoryProductsQueryVariables
+    | TypeFlagProductsQueryVariables
+    | TypeBrandProductsQueryVariables;
 
 export const useProductsData = (
     queryDocument: DocumentNode,
@@ -57,17 +63,21 @@ export const useProductsData = (
     const totalProductCountRef = useRef(totalProductCount);
     totalProductCountRef.current = totalProductCount;
 
-    const [productsData, setProductsData] = useState(
-        readProductsFromCache(
-            queryDocument,
-            client,
+    // The React query hook safely consumes SSR data even when shared entities update other subscribers.
+    const [{ data: initialProductsData }] = useQuery<ProductsQueryData, ProductsQueryVariables>({
+        query: queryDocument,
+        variables: {
             urlSlug,
-            currentSort,
-            mappedFilter,
-            getEndCursor(currentPage),
-            initialPageSizeRef.current,
-        ),
-    );
+            orderingMode: currentSort,
+            filter: mappedFilter,
+            endCursor: getEndCursor(currentPage),
+            pageSize: initialPageSizeRef.current,
+        },
+    });
+    const [productsData, setProductsData] = useState<ReturnType<typeof readProductsFromCache>>(() => ({
+        products: initialProductsData?.products.edges,
+        hasNextPage: !!initialProductsData?.products.pageInfo.hasNextPage,
+    }));
 
     const [areProductsFetching, setAreProductsFetching] = useState(!productsData.products);
     const [isLoadingMoreProducts, setIsLoadingMoreProducts] = useState(false);
@@ -129,12 +139,7 @@ export const useProductsData = (
 
         const fetchProducts = async () => {
             const productsResponse = await client
-                .query<
-                    TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery,
-                    | TypeCategoryProductsQueryVariables
-                    | TypeFlagProductsQueryVariables
-                    | TypeBrandProductsQueryVariables
-                >(queryDocument, {
+                .query<ProductsQueryData, ProductsQueryVariables>(queryDocument, {
                     endCursor,
                     filter: mappedFilter,
                     orderingMode: currentSort,

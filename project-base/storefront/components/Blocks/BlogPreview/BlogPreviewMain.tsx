@@ -31,15 +31,14 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                     key={article.uuid}
                     title={t('Blog article')}
                 >
-                    <div className="overflow-hidden rounded-xl">
+                    <div className="relative aspect-video overflow-hidden rounded-xl xl:aspect-16/11">
                         <Image
+                            fill
                             alt={getImageAlt(article.mainImage?.name, article.name)}
-                            className="aspect-video size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 xl:aspect-16/11"
-                            height={220}
+                            className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                             sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"
                             src={article.mainImage?.url}
                             tid={TIDs.blog_preview_image}
-                            width={320}
                         />
                     </div>
 

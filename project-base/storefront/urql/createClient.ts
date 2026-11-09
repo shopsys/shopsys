@@ -3,8 +3,6 @@ import { CurrentCustomerUserAuthQueryDocument } from 'graphql/requests/customer/
 import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
-// biome-ignore lint/style/noRestrictedImports: This file owns the approved initUrqlClient bridge for the storefront.
-import { initUrqlClient } from 'next-urql';
 import { Client, createRequest, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
@@ -16,6 +14,8 @@ import { isClient } from 'utils/isClient';
 import type { AppRedisClient } from 'utils/redis/redisClient';
 
 export const DOMAIN_ID_HEADER = AUTH_DOMAIN_ID_HEADER;
+
+let browserClient: Client | undefined;
 
 export const createClient = ({
     t,
@@ -30,6 +30,10 @@ export const createClient = ({
     redisClient?: AppRedisClient;
     context?: GetServerSidePropsContext | NextPageContext;
 }): Client => {
+    if (isClient && browserClient) {
+        return browserClient;
+    }
+
     const locale = context?.locale ?? getExplicitPathDomainLocaleOrDefault(domainConfig.url);
     const internalGraphqlEndpoint = getInternalGraphqlEndpoint(
         getServerConfigProperty('internalGraphqlEndpoint'),
@@ -53,20 +57,24 @@ export const createClient = ({
         });
     }
 
-    return initUrqlClient(
-        {
-            url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
-            exchanges: getUrqlExchanges(ssrExchange, t, domainConfig, context),
-            preferGetMethod: false,
-            fetchOptions: {
-                headers: {
-                    OriginalHost: publicGraphqlEndpointObject.host,
-                    [DOMAIN_ID_HEADER]: domainConfig.domainId.toString(),
-                    'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
-                },
+    const client = new Client({
+        url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
+        exchanges: getUrqlExchanges(ssrExchange, t, domainConfig, context),
+        preferGetMethod: false,
+        fetchOptions: {
+            headers: {
+                OriginalHost: publicGraphqlEndpointObject.host,
+                [DOMAIN_ID_HEADER]: domainConfig.domainId.toString(),
+                'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
             },
-            fetch: fetcher(redisClient, context?.res),
         },
-        false,
-    );
+        fetch: fetcher(redisClient, context?.res),
+    });
+
+    // Reuse the hydrated cache across browser navigation; SSR clients stay request-local.
+    if (isClient) {
+        browserClient = client;
+    }
+
+    return client;
 };

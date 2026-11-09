@@ -149,6 +149,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                     </div>
 
                                     <SocialNetworkLogin
+                                        isClientMounted={isClientMounted}
                                         shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
                                         socialNetworks={settingsData.settings.socialNetworkLoginConfig}
                                         lastLoginType={visibleLastLoginType}

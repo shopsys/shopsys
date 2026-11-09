@@ -1,4 +1,5 @@
 import { getPublicConfigProperty, getServerConfigProperty } from 'envConfig';
+import { formatDocument } from '@urql/core';
 import { DocumentNode, print } from 'graphql';
 import { LoginMutationDocument } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import { LoginViaExchangeTokenMutationDocument } from 'graphql/requests/auth/mutations/LoginViaExchangeTokenMutation.generated';
@@ -265,7 +266,7 @@ export const handleAuthMutation = async (request: NextApiRequest, response: Next
     const graphqlResponse = await fetch(getGraphqlEndpoint(domainConfig), {
         body: JSON.stringify({
             operationName: authMutationRequest.operationName,
-            query: print(AUTH_MUTATION_DOCUMENTS[authMutationRequest.operationName]),
+            query: print(formatDocument(AUTH_MUTATION_DOCUMENTS[authMutationRequest.operationName])),
             variables,
         }),
         headers: getGraphqlHeaders(domainConfig, accessToken, clientIpAddress),
