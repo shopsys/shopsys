@@ -53,6 +53,12 @@ You can also log in into the administration section on [http://127.0.0.1:8000/ad
 - Username: `admin` or `superadmin` (the latter has access to advanced options)
 - Password: `admin123`
 
+Demo data also contains these administrators (password `admin123` as well):
+
+- `supervisor` – another superadmin
+- `operator` – another administrator with full access
+- `viewer` – administrator with full access in view-only mode
+
 You can also manage the application database using [Adminer](https://www.adminer.org) by going to [http://127.0.0.1:1100](http://127.0.0.1:1100)
 and Redis storage using [Redis commander](https://github.com/joeferner/redis-commander) by going to [http://127.0.0.1:1600](http://127.0.0.1:1600).
 

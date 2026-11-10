@@ -21,6 +21,22 @@ A project built on Shopsys Platform: Symfony/PHP backend (`app/`), Next.js/React
 - **After GraphQL changes, run `make generate-schema`** so backend and storefront stay in sync (CI fails if they drift).
 - **Test coverage decision**: for every implementation change, follow `.agents/skills/test-writing/SKILL.md` to name the changed behavior, inspect existing coverage and choose which tests to add, extend or reuse, or why none are needed. For storefront changes apply the scenario ownership rules in `storefront-tests`; include actual verification and remaining gaps in the handoff. Use test-first for reproducible bugs and well-defined logic when practical; this does not authorize running Cypress or preflight.
 
+## Demo administrator accounts
+
+Demo data (`app/src/DataFixtures/Demo/AdministratorDataFixture.php`) creates these administration accounts, all with the password `admin123`.
+
+**As an AI agent, log in as `supervisor` or `operator`, never as `superadmin` or `admin`.** Those two belong to the people testing on the same environment, and an administrator can be logged in only once at a time — using them would log the person out. Pick the account by the role you need, so permission-dependent behavior is tested with the right one.
+
+| Username     | Access                  | Who uses it | Use it for                                                         |
+| ------------ | ----------------------- | ----------- | ------------------------------------------------------------------ |
+| `supervisor` | Superadmin              | AI agents   | Superadmin-only settings and actions                               |
+| `operator`   | Full access             | AI agents   | Regular administration work (default choice)                       |
+| `viewer`     | Full access (view only) | AI agents   | Checking that read-only administrators can see but not change data |
+| `superadmin` | Superadmin              | People      | —                                                                  |
+| `admin`      | Full access             | People      | —                                                                  |
+
+In the production environment, logging in with the default password is refused unless `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` is set (review environments set it).
+
 ## Skills — the rest lives here
 
 - **Architecture & how to extend** (where code lives, Entity Extension, vendor overrides, Data/Factory/Facade, docs links) → `.agents/skills/shopsys-architecture/SKILL.md`
