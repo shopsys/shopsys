@@ -95,7 +95,7 @@ GoPay calls it with `GET` and appends `id=<GoPay payment id>` whenever the payme
 
 - the order UUID has to be valid and the `id` has to match one of the order's payment transactions, otherwise the request ends with 404 (the response is the same for every rejection, so the endpoint reveals nothing about existing orders),
 - the payment status is always re-fetched from the GoPay API, the notification itself carries no status,
-- a GoPay API failure is logged and answered with `503` and `{"status": "error"}`, the paid status of the order is not updated.
+- a GoPay API failure is logged and answered with `503`, the payment transactions updated before the failure are rolled back and the paid status of the order is not updated.
 
 The hourly `OrderGoPayStatusUpdateCronModule` remains the safety net for notifications that never arrived.
 

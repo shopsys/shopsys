@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 class PaymentStatusNotifyController extends AbstractController
 {
@@ -57,7 +58,7 @@ class PaymentStatusNotifyController extends AbstractController
                 'orderId' => $order->getId(),
             ]);
 
-            return new JsonResponse(['status' => 'error'], Response::HTTP_SERVICE_UNAVAILABLE);
+            throw new ServiceUnavailableHttpException(null, 'Payment status notification could not be processed.', $exception);
         }
 
         return new JsonResponse(['status' => 'ok']);

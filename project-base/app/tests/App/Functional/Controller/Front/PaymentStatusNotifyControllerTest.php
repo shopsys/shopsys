@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentTransactionDataFixture;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,20 +44,27 @@ final class PaymentStatusNotifyControllerTest extends ApplicationTestCase
     public function testGoPayApiFailureIsReportedAsTemporaryErrorWithoutMarkingOrderAsPaid(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
-        $paymentTransactionData = $this->paymentTransactionDataFactory->create();
-        $paymentTransactionData->order = $order;
-        $paymentTransactionData->payment = $order->getPayment();
-        $paymentTransactionData->paidAmount = $order->getTotalPriceWithVat();
-        $paymentTransactionData->externalPaymentIdentifier = GoPayClient::PAYMENT_ID_WITH_API_FAILURE;
-        $paymentTransactionData->externalPaymentStatus = PaymentStatus::CREATED;
-        $this->paymentTransactionFacade->create($paymentTransactionData);
+        $this->createPaymentTransactionFailingOnGoPayApi($order);
 
         $response = $this->notify($order->getUuid(), GoPayClient::PAYMENT_ID_WITH_API_FAILURE);
 
         $this->assertSame(Response::HTTP_SERVICE_UNAVAILABLE, $response->getStatusCode());
-        $this->assertSame(['status' => 'error'], json_decode((string)$response->getContent(), true, 512, JSON_THROW_ON_ERROR));
         $this->em->refresh($order);
         $this->assertFalse($order->isPaid());
+    }
+
+    public function testGoPayApiFailureRollsBackTransactionsUpdatedBeforeTheFailure(): void
+    {
+        $order = $this->getGoPayOrder();
+        $this->createPaymentTransactionFailingOnGoPayApi($order);
+
+        $response = $this->notify($order->getUuid(), PaymentTransactionDataFixture::TIMEOUTED_GOPAY_PAYMENT_ID);
+
+        $this->assertSame(Response::HTTP_SERVICE_UNAVAILABLE, $response->getStatusCode());
+        $this->em->clear();
+        $order = $this->getGoPayOrder();
+        $this->assertFalse($order->isPaid());
+        $this->assertSame(PaymentStatus::TIMEOUTED, $this->getPaymentTransactionByExternalPaymentIdentifier($order, PaymentTransactionDataFixture::TIMEOUTED_GOPAY_PAYMENT_ID)->getExternalPaymentStatus());
     }
 
     public function testNotificationWithUnknownPaymentIdentifierIsRejected(): void
@@ -106,6 +114,30 @@ final class PaymentStatusNotifyControllerTest extends ApplicationTestCase
         );
 
         return self::getCurrentClient()->getResponse();
+    }
+
+    private function createPaymentTransactionFailingOnGoPayApi(Order $order): void
+    {
+        $paymentTransactionData = $this->paymentTransactionDataFactory->create();
+        $paymentTransactionData->order = $order;
+        $paymentTransactionData->payment = $order->getPayment();
+        $paymentTransactionData->paidAmount = $order->getTotalPriceWithVat();
+        $paymentTransactionData->externalPaymentIdentifier = GoPayClient::PAYMENT_ID_WITH_API_FAILURE;
+        $paymentTransactionData->externalPaymentStatus = PaymentStatus::CREATED;
+        $this->paymentTransactionFacade->create($paymentTransactionData);
+    }
+
+    private function getPaymentTransactionByExternalPaymentIdentifier(Order $order, string $externalPaymentIdentifier): PaymentTransaction
+    {
+        $paymentTransactions = $order->getPaymentTransactions();
+
+        foreach ($paymentTransactions as $paymentTransaction) {
+            if ($paymentTransaction->getExternalPaymentIdentifier() === $externalPaymentIdentifier) {
+                return $paymentTransaction;
+            }
+        }
+
+        $this->fail(sprintf('The order has no payment transaction "%s".', $externalPaymentIdentifier));
     }
 
     private function getGoPayOrder(): Order
