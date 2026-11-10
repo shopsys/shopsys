@@ -17,13 +17,13 @@ import { useGtmFriendlyPageReadyEvent } from 'gtm/factories/useGtmFriendlyPageRe
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageReadyEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { isProductSellable } from 'utils/product/isProductSellable';
 import { showProductDeliveryOptionsPopup } from 'utils/product/showProductDeliveryOptionsPopup';
 import { showWatchdogButton } from 'utils/product/showWatchdogButton';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
+import { ProductDetailAdditionalServices } from './ProductDetailAdditionalServices';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailHeading } from './ProductDetailElements';
@@ -57,7 +57,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
     const isDeliveryOptionsVisible = showProductDeliveryOptionsPopup(product);
     const isEmailDeliveryInfoVisible =
         isProductSellable(product) && product.productType === TypeProductTypeEnum.ElectronicGiftVoucher;
-    const areMultiplePurchaseActionsVisible = isWatchdogButtonVisible && isPurchaseActionVisible;
 
     return (
         <ProductAdditionalServicesSelectionProvider>
@@ -95,36 +94,30 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
 
-                        <ProductGift gifts={product.gifts} />
-
-                        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-4 sm:p-5">
+                        <div className="flex min-w-0 flex-col gap-6 rounded-xl bg-background-more p-4 sm:p-5">
                             <div className="flex flex-col gap-2">
                                 <ProductDetailPrice productPrice={product.price} />
                                 <ProductDetailAvailability product={product} />
                             </div>
 
                             {(isWatchdogButtonVisible || isPurchaseActionVisible) && (
-                                <div className="flex flex-col flex-wrap gap-3 sm:flex-row">
+                                <div className="flex w-full min-w-0 max-w-80 flex-col gap-3">
                                     {isWatchdogButtonVisible && (
                                         <WatchDogButton
-                                            className={twJoin(
-                                                'h-auto min-h-10 w-full text-balance sm:min-h-14',
-                                                areMultiplePurchaseActionsVisible
-                                                    ? 'min-w-max flex-1 whitespace-nowrap'
-                                                    : 'sm:max-w-60',
-                                            )}
+                                            className="h-auto min-h-14 w-full text-balance"
                                             product={product}
                                         />
                                     )}
 
                                     {isPurchaseActionVisible && (
-                                        <DeferredProductDetailAddToCart
-                                            isInPurchaseActionsRow={areMultiplePurchaseActionsVisible}
-                                            product={product}
-                                        />
+                                        <DeferredProductDetailAddToCart isFullWidth product={product} />
                                     )}
                                 </div>
                             )}
+
+                            <ProductGift gifts={product.gifts} />
+
+                            <ProductDetailAdditionalServices product={product} />
 
                             {isDeliveryOptionsVisible && (
                                 <DeliveryOptionsLink preselectedProductUuid={product.uuid} products={[product]} />

@@ -2,9 +2,14 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ProductDetailAvailability } from 'components/Pages/ProductDetail/ProductDetailAvailability';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeProductTypeEnum } from 'graphql/types';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const openDeliveryOptionsPopupMock = vi.hoisted(() => vi.fn());
+const authorization = vi.hoisted(() => ({ canCreateOrder: true }));
+
+vi.mock('components/providers/AuthorizationProvider', () => ({
+    useAuthorization: () => authorization,
+}));
 
 vi.mock('components/Blocks/Popup/DeliveryOptionsPopup/useOpenDeliveryOptionsPopup', () => ({
     useOpenDeliveryOptionsPopup: () => openDeliveryOptionsPopupMock,
@@ -35,6 +40,10 @@ const product = {
 } as unknown as TypeProductDetailFragment;
 
 describe('ProductDetailAvailability', () => {
+    beforeEach(() => {
+        authorization.canCreateOrder = true;
+    });
+
     test.each([
         TypeAvailabilityStatusEnum.InStock,
         TypeAvailabilityStatusEnum.OutOfStock,
@@ -59,6 +68,41 @@ describe('ProductDetailAvailability', () => {
         render(<ProductDetailAvailability product={product} />);
 
         expect(screen.getByText('Out of stock')).toBeInTheDocument();
+        expect(screen.getByText('You can order this item now. The restock date is not yet known.')).toBeInTheDocument();
+    });
+
+    test('explains that an expected restock does not prevent ordering', () => {
+        render(
+            <ProductDetailAvailability
+                product={{
+                    ...product,
+                    availability: { ...product.availability, status: TypeAvailabilityStatusEnum.ExpectedRestock },
+                }}
+            />,
+        );
+
+        expect(
+            screen.getByText("You can order this item now. We'll ship it once it's back in stock."),
+        ).toBeInTheDocument();
+    });
+
+    test.each([
+        { isCurrentlyOutOfStock: true },
+        { isSellingDenied: true },
+        { isInquiryType: true },
+        { isVisible: false },
+        { isMainVariant: true },
+    ])('does not promise ordering for an unsellable product: %j', (overrides) => {
+        render(<ProductDetailAvailability product={{ ...product, ...overrides }} />);
+
+        expect(screen.queryByText(/You can order/)).not.toBeInTheDocument();
+    });
+
+    test('does not promise ordering without order permission', () => {
+        authorization.canCreateOrder = false;
+        render(<ProductDetailAvailability product={product} />);
+
+        expect(screen.queryByText(/You can order/)).not.toBeInTheDocument();
     });
 
     test('opens delivery options for the product when availability is clicked', () => {
@@ -108,6 +152,7 @@ describe('ProductDetailAvailability', () => {
 
         expect(screen.getByText('In stock')).toBeInTheDocument();
         expect(screen.getByText('Ready to ship · 1 store')).toBeInTheDocument();
+        expect(screen.queryByText(/You can order/)).not.toBeInTheDocument();
     });
 
     test('does not show store availability when no store has the product', () => {
