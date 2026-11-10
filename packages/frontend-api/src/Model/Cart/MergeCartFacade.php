@@ -61,6 +61,11 @@ class MergeCartFacade
     protected function mergeCarts(Cart $cart, Cart $currentCart): void
     {
         foreach ($cart->getItems() as $itemToMerge) {
+            // gifts are derived from the merged products, so they are recalculated by the cart watcher
+            if ($itemToMerge->isProductGift()) {
+                continue;
+            }
+
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
 
             if ($similarItem instanceof CartItem) {

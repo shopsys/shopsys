@@ -29,6 +29,9 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \App\Model\Product\Product[] getPersonalPickupOnlyProducts()
  * @method \App\Model\Product\Product[] getElectronicGiftVoucherProducts()
  * @method \App\Model\Product\Product[] getProductsOtherThanElectronicGiftVouchers()
+ * @method \App\Model\Cart\Item\CartItem|null findProductCartItem(\App\Model\Product\Product $product)
+ * @method \App\Model\Cart\Item\CartItem|null findRelatedItemByProduct(\App\Model\Cart\Item\CartItem $parentItem, \App\Model\Product\Product $product, string $type)
+ * @method \App\Model\Cart\Item\CartItem|null findParentItem(\App\Model\Cart\Item\CartItem $relatedItem)
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'carts')]
