@@ -330,6 +330,41 @@
         {
             "type": "package",
             "package": {
+                "name": "becklyn/ordered-form-bundle",
+                "version": "1.4.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/Becklyn/OrderedFormBundle.git",
+                    "reference": "5a068240bf4fb56a82fc48d1eb146e985138eb70"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/Becklyn/OrderedFormBundle/zipball/5a068240bf4fb56a82fc48d1eb146e985138eb70",
+                    "reference": "5a068240bf4fb56a82fc48d1eb146e985138eb70",
+                    "shasum": ""
+                },
+                "require": {
+                    "php": ">=7.4",
+                    "symfony/config": "^5.4.3 || ^6.0.3 || ^7.0 || ^8.0",
+                    "symfony/dependency-injection": "^5.4.3 || ^6.0.3 || ^7.0 || ^8.0",
+                    "symfony/form": "^5.4.3 || ^6.0.3 || ^7.0 || ^8.0",
+                    "symfony/http-kernel": "^5.4.4 || ^6.0.4 || ^7.0 || ^8.0"
+                },
+                "type": "symfony-bundle",
+                "autoload": {
+                    "psr-4": {
+                        "Becklyn\\OrderedFormBundle\\": "src/"
+                    }
+                },
+                "license": [
+                    "BSD-3-Clause"
+                ],
+                "description": "This bundle adds functionality for ordering form elements"
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "jms/translation-bundle",
                 "version": "2.7.0",
                 "source": {
