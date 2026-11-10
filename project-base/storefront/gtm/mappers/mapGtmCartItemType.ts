@@ -37,6 +37,24 @@ export const mapGtmCartItemType = (
     return mappedCartItem;
 };
 
+export const mergeGtmCartItemsWithSameId = (mappedCartItems: GtmCartItemType[]): GtmCartItemType[] => {
+    const cartItemsById = new Map<GtmCartItemType['id'], GtmCartItemType>();
+
+    for (const mappedCartItem of mappedCartItems) {
+        const alreadyMappedCartItem = cartItemsById.get(mappedCartItem.id);
+
+        if (alreadyMappedCartItem) {
+            alreadyMappedCartItem.quantity += mappedCartItem.quantity;
+
+            continue;
+        }
+
+        cartItemsById.set(mappedCartItem.id, { ...mappedCartItem });
+    }
+
+    return Array.from(cartItemsById.values());
+};
+
 const mapGtmCartItemVariant = (product: TypeCartItemFragment['product']): string | undefined => {
     if (product.__typename !== 'Variant' || product.parameters.length === 0) {
         return undefined;

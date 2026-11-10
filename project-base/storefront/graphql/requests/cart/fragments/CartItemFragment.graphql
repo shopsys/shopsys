@@ -3,6 +3,9 @@ fragment CartItemFragment on CartItem {
     uuid
     quantity
     type
+    relatedItems {
+        uuid
+    }
     freeQuantity
     product {
         __typename

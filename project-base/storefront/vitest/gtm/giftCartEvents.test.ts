@@ -6,6 +6,8 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmChangeCartItemEventHandler } from 'gtm/handlers/onGtmChangeCartItemEventHandler';
 import { onGtmRemoveFromCartEventHandler } from 'gtm/handlers/onGtmRemoveFromCartEventHandler';
+import { onGtmRestoreCartGiftEventHandler } from 'gtm/handlers/onGtmRestoreCartGiftEventHandler';
+import { getGtmMappedCart } from 'gtm/utils/getGtmMappedCart';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { describe, expect, test, vi } from 'vitest';
@@ -132,6 +134,61 @@ describe('gift cart events', () => {
         );
     });
 
+    test('reports a shared gift that changed for several products once with the summed changed quantity', () => {
+        const phone = createCartItem('phone', 1);
+        phone.product = { ...phone.product, id: 2, catalogNumber: 'SKU-2' };
+
+        sendChange(
+            [createCartItem('product', 1), createCartItem('gift', 1, TypeCartItemTypeEnum.ProductGift), phone],
+            [
+                createCartItem('product', 2),
+                createCartItem('gift', 2, TypeCartItemTypeEnum.ProductGift),
+                phone,
+                createCartItem('phone-gift', 1, TypeCartItemTypeEnum.ProductGift),
+            ],
+        );
+
+        expect(gtmSafePushEvent).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+                ecommerce: expect.objectContaining({
+                    valueWithoutVat: 120,
+                    valueWithVat: 145.2,
+                    products: [
+                        expect.objectContaining({ id: 1, quantity: 1 }),
+                        expect.objectContaining({ id: 'gift-1', productType: 'gift', quantity: 2 }),
+                    ],
+                }),
+            }),
+        );
+    });
+
+    test('reports a gift shared by several products once in the cart with the summed quantity', () => {
+        const phone = createCartItem('phone', 2);
+        phone.product = { ...phone.product, id: 2, catalogNumber: 'SKU-2' };
+
+        const gtmCart = getGtmMappedCart(
+            {
+                items: [
+                    createCartItem('coffee-machine', 1),
+                    createCartItem('coffee-machine-gift', 1, TypeCartItemTypeEnum.ProductGift),
+                    phone,
+                    createCartItem('phone-gift', 2, TypeCartItemTypeEnum.ProductGift),
+                ],
+                totalItemsPrice: { priceWithoutVat: '330', priceWithVat: '399.3' },
+            } as unknown as TypeCartFragment,
+            [],
+            false,
+            { url: 'https://example.com', currencyCode: 'EUR' } as DomainConfigType,
+            'cart',
+        );
+
+        expect(gtmCart.products).toEqual([
+            expect.objectContaining({ id: 1, quantity: 1 }),
+            expect.objectContaining({ id: 'gift-1', sku: 'gift-SKU-1', productType: 'gift', quantity: 3 }),
+            expect.objectContaining({ id: 2, quantity: 2 }),
+        ]);
+    });
+
     test.each([
         { withoutVat: '0', withVat: '0', totalWithoutVat: 0, totalWithVat: 0 },
         { withoutVat: '10', withVat: '12.1', totalWithoutVat: 20, totalWithVat: 24.2 },
@@ -163,4 +220,44 @@ describe('gift cart events', () => {
             }),
         );
     });
+
+    test.each([
+        { withoutVat: '0', withVat: '0', totalWithoutVat: 0, totalWithVat: 0 },
+        { withoutVat: '10', withVat: '12.1', totalWithoutVat: 20, totalWithVat: 24.2 },
+        { withoutVat: '***', withVat: '***', totalWithoutVat: null, totalWithVat: null },
+    ])(
+        'reports a restored gift as added using its actual price $withVat',
+        ({ withoutVat, withVat, totalWithoutVat, totalWithVat }) => {
+            const gift = createCartItem('gift', 2, TypeCartItemTypeEnum.ProductGift);
+            gift.product.giftPrice.priceWithoutVat = withoutVat;
+            gift.product.giftPrice.priceWithVat = withVat;
+
+            onGtmRestoreCartGiftEventHandler(
+                gift,
+                'EUR',
+                1,
+                GtmProductListNameType.cart,
+                'https://example.com',
+                withVat === '***',
+            );
+
+            expect(gtmSafePushEvent).toHaveBeenLastCalledWith(
+                expect.objectContaining({
+                    event: GtmEventType.add_to_cart,
+                    ecommerce: expect.objectContaining({
+                        valueWithoutVat: totalWithoutVat,
+                        valueWithVat: totalWithVat,
+                        products: [
+                            expect.objectContaining({
+                                id: 'gift-1',
+                                sku: 'gift-SKU-1',
+                                productType: 'gift',
+                                quantity: 2,
+                            }),
+                        ],
+                    }),
+                }),
+            );
+        },
+    );
 });

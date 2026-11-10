@@ -86,6 +86,50 @@ describe('getGtmCreateOrderEventOrderPart', () => {
         ]);
     });
 
+    test('reports a gift shared by several products once with the summed quantity', () => {
+        const createItem = (uuid: string, type: TypeCartItemTypeEnum, productId: number, quantity: number) =>
+            ({
+                uuid,
+                type,
+                quantity,
+                additionalServices: [],
+                product: {
+                    __typename: 'RegularProduct',
+                    id: productId,
+                    catalogNumber: `SKU-${productId}`,
+                    productType: TypeProductTypeEnum.Basic,
+                    slug: `/product-${productId}`,
+                    flags: [],
+                    availability: { status: TypeAvailabilityStatusEnum.InStock },
+                    price: { priceWithoutVat: '100', priceWithVat: '121', vatAmount: '21' },
+                    giftPrice: { priceWithoutVat: '0', priceWithVat: '0', vatAmount: '0' },
+                },
+            }) as unknown as TypeCartItemFragment;
+
+        const result = getGtmCreateOrderEventOrderPart(
+            {
+                ...cart,
+                items: [
+                    createItem('coffee-machine', TypeCartItemTypeEnum.Product, 1, 1),
+                    createItem('coffee-machine-gift', TypeCartItemTypeEnum.ProductGift, 72, 1),
+                    createItem('phone', TypeCartItemTypeEnum.Product, 2, 2),
+                    createItem('phone-gift', TypeCartItemTypeEnum.ProductGift, 72, 2),
+                ],
+            },
+            payment,
+            [],
+            '202600001',
+            undefined,
+            domainConfig,
+        );
+
+        expect(result.products).toEqual([
+            expect.objectContaining({ id: 1, quantity: 1 }),
+            expect.objectContaining({ id: 'gift-72', sku: 'gift-SKU-72', productType: 'gift', quantity: 3 }),
+            expect.objectContaining({ id: 2, quantity: 2 }),
+        ]);
+    });
+
     test('should include payment, transport and discount order values', () => {
         const result = getGtmCreateOrderEventOrderPart(
             cart,
