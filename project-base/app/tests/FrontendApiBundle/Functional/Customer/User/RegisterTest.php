@@ -97,11 +97,9 @@ class RegisterTest extends GraphQlTestCase
         $this->assertEquals($expectedViolationMessage, $alreadyRegisteredEmailError['message']);
     }
 
-    public function testRegistrationSharesRateLimitWithRegistrationQueriesAndIsCheckedBeforeValidation(): void
+    public function testRegistrationIsRateLimitedPerClientIpBeforeValidation(): void
     {
-        $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/IsCustomerUserRegisteredQuery.graphql', [
-            'email' => 'no-reply@shopsys.com',
-        ]);
+        $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables('no-reply@shopsys.com'));
         $this->exhaustCustomerRegistrationRateLimit();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables('no-reply@shopsys.com'));

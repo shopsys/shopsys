@@ -29,10 +29,4 @@ trait CustomerRegistrationRateLimitTrait
     {
         $this->exhaustRateLimit(self::CUSTOMER_REGISTRATION_RATE_LIMITER_SERVICE_ID, self::CUSTOMER_REGISTRATION_RATE_LIMITER_KEY_PREFIX . $this->getClientIp());
     }
-
-    private function getRemainingCustomerRegistrationRateLimitTokens(): int
-    {
-        return $this->peekRateLimit(self::CUSTOMER_REGISTRATION_RATE_LIMITER_SERVICE_ID, self::CUSTOMER_REGISTRATION_RATE_LIMITER_KEY_PREFIX . $this->getClientIp())
-            ->getRemainingTokens();
-    }
 }
