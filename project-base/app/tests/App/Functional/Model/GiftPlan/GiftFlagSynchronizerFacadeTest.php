@@ -139,17 +139,7 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
 
     private function createGiftFlagSynchronizerFacadeWithSingleProductBatches(): GiftFlagSynchronizerFacade
     {
-        return new class(
-            $this->em,
-            $this->giftPlanRepository,
-            $this->flagFacade,
-            $this->domain,
-            $this->productRecalculationDispatcher,
-            $this->pricingGroupSettingFacade,
-            $this->giftCartFacade,
-            $this->inMemoryCache,
-            $this->productFacade,
-        ) extends GiftFlagSynchronizerFacade {
+        return new class($this->em, $this->giftPlanRepository, $this->flagFacade, $this->domain, $this->productRecalculationDispatcher, $this->pricingGroupSettingFacade, $this->giftCartFacade, $this->inMemoryCache, $this->productFacade) extends GiftFlagSynchronizerFacade {
             protected const int REFRESH_ALL_BATCH_SIZE = 1;
         };
     }
