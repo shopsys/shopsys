@@ -1,0 +1,14 @@
+CartRemovedProductGiftDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "A manually removed gift that can be restored to the cart"
+        fields:
+            giftProduct:
+                type: "Product!"
+                description: "Gift product to restore"
+                resolve: '@=query("productByEntityQuery", value.getGiftProduct())'
+            mainProduct:
+                type: "Product!"
+                description: "Product in the cart this removed gift belongs to"
+                resolve: '@=query("productByEntityQuery", value.getMainProduct())'

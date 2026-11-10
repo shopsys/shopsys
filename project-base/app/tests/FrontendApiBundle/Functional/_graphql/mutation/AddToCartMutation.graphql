@@ -77,6 +77,12 @@ mutation AddToCart(
                     }
                 }
             }
+            removedProductGifts {
+                mainProduct { uuid }
+                giftProduct {
+                    uuid
+                }
+            }
             transport {
                 name
                 description
