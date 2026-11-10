@@ -1,10 +1,12 @@
+import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
+import { OrderItemPrice } from './OrderItemPrice';
 
 type OrderItemProductPriceProps = {
-    productPrice: TypeProductPriceFragment;
+    productPrice: TypeProductPriceFragment | Pick<TypeOrderDetailItemFragment, 'unitPrice' | 'totalPrice'>;
     quantity: number;
     freeQuantity: number | null;
     unit: string | null;
@@ -17,6 +19,16 @@ export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({
     freeQuantity,
 }) => {
     const formatPrice = useFormatPrice();
+    if ('unitPrice' in productPrice) {
+        return (
+            <OrderItemPrice
+                totalPrice={productPrice.totalPrice.priceWithVat}
+                unit={unit}
+                unitPrice={productPrice.unitPrice.priceWithVat}
+            />
+        );
+    }
+
     const isSpecialPrice =
         !!productPrice.percentageDiscount &&
         productPrice.percentageDiscount > 0 &&
