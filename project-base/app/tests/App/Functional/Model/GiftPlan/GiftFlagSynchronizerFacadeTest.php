@@ -10,7 +10,6 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Doctrine\ORM\Events;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -18,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftFlagSynchronizerFacade;
 use Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftPlanRepository;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage;
 use Tests\App\Performance\Page\QueryCountingMiddleware;
 use Tests\App\Test\EntityManagerClearCounter;
 use Tests\App\Test\ProductQueryPattern;
@@ -59,11 +57,6 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private DelayedEnvelopesCollector $delayedEnvelopesCollector;
-
-    /**
-     * @inject
-     */
     private PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
@@ -96,13 +89,15 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
         $this->assertFalse($this->hasProductGiftFlag($this->getMainProductId()));
     }
 
-    public function testRefreshForGiftProductIdsDispatchesMainProductsForGiftFlagsRecalculation(): void
+    public function testRefreshForGiftProductIdsRecalculatesGiftFlagOfMainProduct(): void
     {
-        $this->delayedEnvelopesCollector->resetEnvelopes();
+        $this->removeGiftFlagFromProduct($this->getMainProductId());
 
         $this->giftFlagSynchronizerFacade->refreshForGiftProductIds([$this->getGiftProductId()]);
+        $this->handleDispatchedRecalculationMessages();
+        $this->em->clear();
 
-        $this->assertSame([$this->getMainProductId()], $this->popDispatchedRegularRecalculationProductIds());
+        $this->assertTrue($this->hasProductGiftFlag($this->getMainProductId()));
     }
 
     public function testRefreshAllGiftPlansLoadsAndRecalculatesMainProductsInBatches(): void
@@ -157,25 +152,6 @@ final class GiftFlagSynchronizerFacadeTest extends TransactionFunctionalTestCase
         ) extends GiftFlagSynchronizerFacade {
             protected const int REFRESH_ALL_BATCH_SIZE = 1;
         };
-    }
-
-    /**
-     * @return int[]
-     */
-    private function popDispatchedRegularRecalculationProductIds(): array
-    {
-        $dispatchedProductIds = [];
-        $envelopes = $this->delayedEnvelopesCollector->popEnvelopes();
-
-        foreach ($envelopes as $envelope) {
-            $message = $envelope->getMessage();
-
-            if ($message instanceof ProductRecalculationPriorityRegularMessage) {
-                $dispatchedProductIds[] = $message->productId;
-            }
-        }
-
-        return $dispatchedProductIds;
     }
 
     private function getMainProductId(): int
