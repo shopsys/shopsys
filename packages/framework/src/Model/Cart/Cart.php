@@ -303,6 +303,42 @@ class Cart
         return $this->getProducts() !== [] && $this->getProductsOtherThanElectronicGiftVouchers() === [];
     }
 
+    public function findProductCartItem(Product $product): ?CartItem
+    {
+        foreach ($this->getProductCartItems() as $item) {
+            if ($item->getProduct()->getId() === $product->getId()) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+    public function findRelatedItemByProduct(CartItem $parentItem, Product $product, string $type): ?CartItem
+    {
+        foreach ($parentItem->getRelatedItems() as $relatedItem) {
+            if ($relatedItem->getType() === $type
+                && $relatedItem->getProduct()->getId() === $product->getId()
+                && $this->items->contains($relatedItem)
+            ) {
+                return $relatedItem;
+            }
+        }
+
+        return null;
+    }
+
+    public function findParentItem(CartItem $relatedItem): ?CartItem
+    {
+        foreach ($this->items as $item) {
+            if (in_array($relatedItem, $item->getRelatedItems(), true)) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
     public function findSimilarItemByItem(CartItem $item): ?CartItem
     {
         foreach ($this->items as $similarItem) {
