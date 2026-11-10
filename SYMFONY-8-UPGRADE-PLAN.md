@@ -73,6 +73,62 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
   on `dev-master` (2026-08-08) without a tag. All overrides and patches therefore stay; the overrides already point to the latest tags.
   Symfony 8.2 is only BETA1 (2026-11-04), so the constraint stays `^8.1` (resolves to 8.1.11).
 
+
+## Upstream status of the overridden packages (checked 2026-11-10)
+
+| Package | License | Last upstream activity | Symfony 8 upstream | Verdict |
+| --- | --- | --- | --- | --- |
+| `overblog/dataloader-bundle` | MIT | merge 2026-08-08 (mcg-web) | PR #40 "add Symfony 8.0" **merged 2026-08-08**, issue #39 asks for a tag (2026-10-06, no answer); master is 16 commits ahead of v1.1.0 (`AsDataLoader` attribute, config changes) | alive, only the release is missing |
+| `jms/translation-bundle` | Apache-2.0 | 2.7.0 + 3.0.0-beta1 on 2026-04-18 (goetas, deguif) | no issue nor PR about Symfony 8, `2.x` and `master` still `^5.4 \|\| ^6.4 \|\| ^7.1`; CI matrix 5.4/6.4/7.2 on PHP 8.3/8.4 | alive, accepts community PRs, nobody started Symfony 8 |
+| `prezent/doctrine-translatable` + `-bundle` | MIT | 5.0.0 / 3.0.0 on 2025-12-03 (Robert-Jan Bijl), org active in 2026 | no issue nor PR; external PR #31 (2023) ignored without a comment; CI only `.travis.yml` (dead) | alive, single maintainer, Symfony 8 only when they need it |
+| `overblog/graphiql-bundle` | MIT | commit 2024-11-22 | PR #47 (2025-12-18) does the same XML → PHP config change as our patch, 2026-07 question "is this package abandoned?" unanswered | neglected (maintainer only works on GraphQLBundle) |
+| `becklyn/ordered-form-bundle` | BSD-3-Clause | commit 2024-01-17 (external PR), 5 stars, 0 issues | nothing, the only fork (klapaudius) is on Symfony 7 too | dormant, the company lives, the bundle does not |
+| `enlightn/security-checker` | MIT | commit 2023-12-10, maintainer silent | PR #40 "allow symfony 8" (dbu, 2026-03-23) unanswered even after a ping in 2026-05; issue #39 notes it duplicates `composer audit` | dead |
+
+Other facts gathered for the decisions:
+
+- `position` form option (becklyn) is a documented extensibility feature (`docs/extensibility/form-extension.md`) and is used in `PromoCodeFormType`;
+  the bundle is 10 PHP files / 554 lines (+ 289 lines of tests): a compiler pass replacing `form.resolved_type_factory`,
+  `OrderedResolvedFormType(Factory)`, `FormFieldSorter`, `RelativePosition` and `FormPositionExtension`.
+- Prezent is referenced from 49 PHP files (47 in `packages/framework`) and from entity annotations in every project; maintained alternatives
+  (`knplabs/doctrine-behaviors` 3.1 with Symfony 8, Gedmo translatable via the already installed `stof/doctrine-extensions-bundle`) use a different
+  translation model, so a migration is not a reasonable option.
+- `prezent/doctrine-translatable` 5.0.0 requires the abandoned `doctrine/common`, the only abandoned package in our tree. Composer 2.11 defaults to
+  `audit.abandoned = fail`, so a plain `composer audit` currently exits with 1 because of it.
+- Our Symfony 8 patches: JMS = `JMSTranslationExtension` + new `Resources/config/{services,console}.php`; Prezent bundle = `PrezentDoctrineTranslatableExtension`
+  + new `Resources/config/{services,sonata}.php`; the PHP config format works on Symfony 5.4+, so both can ship as a minor release.
+  JMS additionally extends `Symfony\Component\HttpKernel\DependencyInjection\Extension`, deprecated since Symfony 8.1 in favour of
+  `Symfony\Component\DependencyInjection\Extension\Extension` (available in all supported versions).
+- The `shopsys-php-fpm:latest` image has PHP 8.5, Composer 2.11, git and unzip, so upstream test suites can run with
+  `docker run --rm -v "$PWD/../<repo>:/app" -w /app shopsys-php-fpm:latest sh -c 'SYMFONY_REQUIRE=^8.1 composer update && vendor/bin/simple-phpunit'`
+  without installing anything on the host.
+
+## Phase 9 — Resolve the overridden packages (proposal, pending confirmation)
+
+- [ ] **overblog/dataloader-bundle — wait for the tag.** Keep the metadata override; when v1.2 (or similar) is tagged, bump the constraint, drop the override
+      and review the 16 commits since v1.1.0 (`AsDataLoader`, config changes) in the upgrade.
+- [ ] **jms/translation-bundle — upstream PR from a shopsys fork, minor release 2.8 supporting Symfony 5.4 / 6.4 / 7.x / 8.x.**
+    - fork `schmittjoh/JMSTranslationBundle` under the shopsys org, clone to `../JMSTranslationBundle`, branch from `2.x`
+    - changes: `|| ^8.0` for `symfony/*` in `require` and `require-dev` (+ `symfony/phpunit-bridge ^7.2 || ^8.0`), XML → PHP DI config (our patch),
+      base class `Symfony\Component\DependencyInjection\Extension\Extension`, CI matrix + `^8.1` on PHP 8.4 with the `sensio/framework-extra-bundle` removal step
+    - run the suite in Docker for `^5.4`, `^6.4`, `^7.2`, `^8.1` (command above), then open the PR against `2.x`
+    - until it is released: either keep override + patch, or switch the override to a `vcs` repository on the fork (`dev-symfony-8 as 2.8.0`); after the release drop both
+- [ ] **prezent/doctrine-translatable + bundle — same approach, two PRs.**
+    - lib: `symfony/cache ^6.4|^7.1|^8.0`, drop the `doctrine/common` requirement (abandoned, nothing from it is needed with ORM 3); bundle: `|| ^8.0` constraints, XML → PHP config (our patch)
+    - both repos have only a dead `.travis.yml`, so verification is our Docker run of their PHPUnit suites
+    - fallback if the PRs get no reaction within ~1 month: publish `shopsys/doctrine-translatable` and `shopsys/doctrine-translatable-bundle` on Packagist from the forks
+      (MIT allows it, keep the copyright notice and LICENSE) and `replace` the prezent packages in our composer.json
+- [ ] **becklyn/ordered-form-bundle — inline into `packages/form-types-bundle`, drop the dependency.**
+    - move the 10 classes (+ tests) under the Shopsys namespace, register the compiler pass in `ShopsysFormTypesBundle::build()`, keep the `position` option API
+    - BSD-3-Clause: keep the Becklyn copyright notice and license text (file headers + `open-source-license-acknowledgements-and-third-party-copyrights.md`), do not use the Becklyn name for promotion
+    - upgrade note for projects: remove `BecklynOrderedFormBundle` from `bundles.php` and the composer requirement; the `position` option keeps working
+- [ ] **enlightn/security-checker — replace by `composer audit`.**
+    - `"security-check": "composer audit --locked"` keeps `composer security-check` and `project-base/.gitlab-ci.yml` working; remove the package, its patch and its override
+    - set `config.audit.abandoned` to `report` until the prezent PR removes `doctrine/common`, otherwise the check fails on the abandoned package
+    - `composer install/update` already prints the same audit automatically (Composer ≥ 2.4), the explicit script stays for CI
+- [ ] **overblog/graphiql-bundle — keep the patch (dev-only UI), low priority.** Optionally +1 upstream PR #47, which is the same change.
+- [ ] Order of work: becklyn (no upstream dependency) → enlightn → JMS PR → Prezent PRs → dataloader when tagged; each step removes its override/patch and gets an upgrade note.
+
 ## Result
 
 Upgrade finished on 2026-07-03: Symfony 8.1.1, all test suites green, standards + PHPStan clean.
