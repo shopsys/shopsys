@@ -28,7 +28,7 @@ class FlagRepository
         $queryBuilder = $this->flagRepository->getVisibleQueryBuilder()
             ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('ft.name IN (:flagNames)')
+            ->andWhere('ft.name IN (:flagNames)')
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $this->domain->getLocale()), SortDirection::Ascending)
             ->setParameter('flagNames', $flagNames)
             ->setParameter('locale', $this->domain->getLocale());

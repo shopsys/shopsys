@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
@@ -44,25 +43,6 @@ class FlagRepository
         return $flag;
     }
 
-    /**
-     * @param int[] $flagIds
-     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag> visible flags translated to the locale of the domain, indexed by ID and sorted by position
-     */
-    public function getByIds(array $flagIds, DomainConfig $domainConfig): array
-    {
-        return $this->em->createQueryBuilder()
-            ->select('f, ft')
-            ->from(Flag::class, 'f')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('f.id IN (:flagIds)')
-            ->andWhere('f.visible = true')
-            ->indexBy('f', 'f.id')
-            ->orderBy('f.position', SortDirection::Ascending)
-            ->setParameter('flagIds', $flagIds)
-            ->setParameter('locale', $domainConfig->getLocale())
-            ->getQuery()->getResult();
-    }
-
     public function getByUuid(string $uuid): Flag
     {
         $flag = $this->getFlagRepository()->findOneBy(['uuid' => $uuid]);
@@ -93,19 +73,16 @@ class FlagRepository
 
     /**
      * @param int[] $flagsIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag> visible flags translated to the locale, indexed by ID and sorted by position
      */
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
     {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('ft')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('f.id IN (:flagsIds)')
+        return $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
+            ->andWhere('f.id IN (:flagsIds)')
+            ->indexBy('f', 'f.id')
             ->orderBy('f.position', SortDirection::Ascending)
             ->setParameter('flagsIds', $flagsIds)
-            ->setParameter('locale', $locale);
-
-        return $flagsQueryBuilder->getQuery()->getResult();
+            ->getQuery()->getResult();
     }
 
     public function getVisibleQueryBuilder(): QueryBuilder
@@ -113,6 +90,15 @@ class FlagRepository
         return $this->getFlagRepository()->createQueryBuilder('f')
             ->select('f')
             ->where('f.visible = true');
+    }
+
+    protected function getVisibleWithTranslationAndDomainsQueryBuilder(string $locale): QueryBuilder
+    {
+        return $this->getVisibleQueryBuilder()
+            ->addSelect('ft', 'fd')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->leftJoin('f.domains', 'fd')
+            ->setParameter('locale', $locale);
     }
 
     /**
@@ -136,12 +122,9 @@ class FlagRepository
 
     public function getVisibleFlagById(int $flagId, string $locale): Flag
     {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('ft')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('f.id = :flagId')
-            ->setParameter('flagId', $flagId)
-            ->setParameter('locale', $locale);
+        $flagsQueryBuilder = $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
+            ->andWhere('f.id = :flagId')
+            ->setParameter('flagId', $flagId);
 
         $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
 
@@ -157,21 +140,15 @@ class FlagRepository
      */
     public function getAllVisibleFlags(string $locale): array
     {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('f')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->orderBy('f.position', SortDirection::Ascending)
-            ->setParameter('locale', $locale);
+        $flagsQueryBuilder = $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
+            ->orderBy('f.position', SortDirection::Ascending);
 
         return $flagsQueryBuilder->getQuery()->getResult();
     }
 
     public function getVisibleByUuid(string $uuid, string $locale): Flag
     {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('ft')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->setParameter('locale', $locale)
+        $flagsQueryBuilder = $this->getVisibleWithTranslationAndDomainsQueryBuilder($locale)
             ->andWhere('f.uuid = :uuid')
             ->setParameter('uuid', $uuid);
 

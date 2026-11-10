@@ -1,0 +1,5 @@
+query FlagByUrlSlugQuery($urlSlug: String!) {
+    flag(urlSlug: $urlSlug) {
+        name
+    }
+}
