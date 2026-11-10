@@ -131,11 +131,12 @@ Other facts gathered for the decisions:
 
 ### Status 2026-11-10 (everything prepared locally, nothing pushed yet — Petr reviews before anything is sent)
 
-- **becklyn + enlightn** are handled by the separate branch `pk/remove-unmaintained-dependencies` (based on `20.0`, 3 commits: takeover into
-  `shopsys/form-types-bundle` with tests, `composer security-check` → `@composer audit` with `audit.abandoned: report`, upgrade notes).
-  Standards, PHPStan and the full test suite are green there. On this branch the commits `allowed Symfony 8 for becklyn/ordered-form-bundle and
-  enlightn/security-checker via composer metadata overrides` and `patched enlightn/security-checker for Symfony 8 console` carry a note that they are
-  to be removed once that PR is merged (PR number to be filled in).
+- **becklyn** is handled by the separate branch `pk/remove-becklyn-ordered-form-bundle` (based on `20.0`: takeover into `shopsys/form-types-bundle`
+  with tests + upgrade note) and **enlightn** by `pk/composer-audit-security-check` (`composer security-check` → `@composer audit` with
+  `audit.abandoned: report` + upgrade note). Standards, PHPStan and the full test suite were green for the combined change. On this branch the commit
+  `allowed Symfony 8 for becklyn/ordered-form-bundle via composer metadata override` (remove after the becklyn PR, placeholder #XXXX) and the commits
+  `allowed Symfony 8 for enlightn/security-checker via composer metadata override` + `patched enlightn/security-checker for Symfony 8 console`
+  (remove after the composer audit PR, placeholder #YYYY) carry the removal notes.
 - **jms/translation-bundle**: local branch `symfony-8` in `../JMSTranslationBundle` on top of `2.x` (commit "Add Symfony 8 support, drop Symfony 5.4"):
   PHP DI config, `Symfony\Component\Routing\Attribute\Route` (the `Annotation\Route` class is gone in Symfony 8, the attribute one exists since 6.4,
   hence 5.4 is dropped), DI `Extension` base class, Symfony 8 test kernel config, CI matrix 6.4 / 7.2 / 8.1. Suite green in Docker for all three
