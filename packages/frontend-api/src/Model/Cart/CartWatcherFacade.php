@@ -67,6 +67,7 @@ class CartWatcherFacade
 
         $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
         $this->setPromoCodes($cart);
+        $this->cartWithModificationsResult->setRemovedProductGifts($this->giftCartFacade->getRestorableRemovedProductGifts($cart, $this->domain->getId()));
 
         return $this->cartWithModificationsResult;
     }

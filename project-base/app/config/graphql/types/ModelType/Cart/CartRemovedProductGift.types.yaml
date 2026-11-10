@@ -1,0 +1,4 @@
+CartRemovedProductGift:
+    type: object
+    inherits:
+        - 'CartRemovedProductGiftDecorator'

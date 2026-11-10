@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGiftFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -18,6 +19,7 @@ class MergeCartFacade
         protected readonly CartApiFacade $cartFacade,
         protected readonly CartItemFactory $cartItemFactory,
         protected readonly EntityManagerInterface $entityManager,
+        protected readonly CartRemovedProductGiftFactory $cartRemovedProductGiftFactory,
     ) {
     }
 
@@ -60,6 +62,8 @@ class MergeCartFacade
 
     protected function mergeCarts(Cart $cart, Cart $currentCart): void
     {
+        $this->mergeRemovedProductGifts($cart, $currentCart);
+
         foreach ($cart->getItems() as $itemToMerge) {
             // gifts are derived from the merged products, so they are recalculated by the cart watcher
             if ($itemToMerge->isProductGift()) {
@@ -98,6 +102,19 @@ class MergeCartFacade
         $this->entityManager->flush();
 
         $this->cartFacade->deleteCart($cart);
+    }
+
+    protected function mergeRemovedProductGifts(Cart $cart, Cart $currentCart): void
+    {
+        foreach ($cart->getRemovedProductGifts() as $removedProductGift) {
+            if ($currentCart->findRemovedProductGift($removedProductGift->getMainProduct(), $removedProductGift->getGiftProduct()) !== null) {
+                continue;
+            }
+
+            $currentCart->addRemovedProductGift(
+                $this->cartRemovedProductGiftFactory->create($currentCart, $removedProductGift->getMainProduct(), $removedProductGift->getGiftProduct()),
+            );
+        }
     }
 
     /**

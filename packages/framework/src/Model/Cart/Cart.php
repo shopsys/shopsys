@@ -89,6 +89,12 @@ class Cart
     protected $giftVouchers;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift>
+     */
+    #[ORM\OneToMany(targetEntity: CartRemovedProductGift::class, mappedBy: 'cart', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    protected $removedProductGifts;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
     #[AsMcpColumn]
@@ -154,6 +160,7 @@ class Cart
         $this->lastActivityAt = new DatePoint('today');
         $this->promoCodes = new ArrayCollection();
         $this->giftVouchers = new ArrayCollection();
+        $this->removedProductGifts = new ArrayCollection();
     }
 
     public function addItem(CartItem $item): void
@@ -172,6 +179,7 @@ class Cart
         foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
                 $this->items->removeElement($item);
+                $this->forgetRemovedProductGiftsOfMainItem($item);
                 $this->updateLastActivityDate();
 
                 return;
@@ -180,6 +188,62 @@ class Cart
         $message = 'Cart item with ID = ' . $itemId . ' is not in cart for remove.';
 
         throw new InvalidCartItemException($message);
+    }
+
+    public function addRemovedProductGift(CartRemovedProductGift $removedProductGift): void
+    {
+        $this->removedProductGifts->add($removedProductGift);
+        $this->updateLastActivityDate();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift[]
+     */
+    public function getRemovedProductGifts()
+    {
+        return $this->removedProductGifts->getValues();
+    }
+
+    public function isProductGiftRemoved(Product $mainProduct, Product $giftProduct): bool
+    {
+        return $this->findRemovedProductGift($mainProduct, $giftProduct) !== null;
+    }
+
+    public function hasRemovedProductGifts(): bool
+    {
+        return !$this->removedProductGifts->isEmpty();
+    }
+
+    public function restoreProductGift(CartRemovedProductGift $removedProductGift): void
+    {
+        $this->removedProductGifts->removeElement($removedProductGift);
+        $this->updateLastActivityDate();
+    }
+
+    public function findRemovedProductGift(Product $mainProduct, Product $giftProduct): ?CartRemovedProductGift
+    {
+        foreach ($this->removedProductGifts as $removedGift) {
+            if ($removedGift->getMainProduct()->getId() === $mainProduct->getId()
+                && $removedGift->getGiftProduct()->getId() === $giftProduct->getId()
+            ) {
+                return $removedGift;
+            }
+        }
+
+        return null;
+    }
+
+    protected function forgetRemovedProductGiftsOfMainItem(CartItem $item): void
+    {
+        if (!$item->isProduct() || !$item->hasProduct()) {
+            return;
+        }
+
+        foreach ($this->removedProductGifts as $removedGift) {
+            if ($removedGift->getMainProduct()->getId() === $item->getProduct()->getId()) {
+                $this->removedProductGifts->removeElement($removedGift);
+            }
+        }
     }
 
     public function clean(): void
