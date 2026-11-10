@@ -113,7 +113,6 @@
         "dragonmantank/cron-expression": "^3.0",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^6.0",
-        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.22",
@@ -251,7 +250,7 @@
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
-        "security-check": "security-checker security:check",
+        "security-check": "@composer audit --locked",
         "auto-scripts": {
             "php project-base/app/app/downloadPhing.php": "script",
             "php phing clean": "script",
@@ -274,6 +273,13 @@
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
+        },
+        "policy": {
+            "abandoned": {
+                "ignore": {
+                    "doctrine/common": "required by prezent/doctrine-translatable"
+                }
+            }
         }
     },
     "extra": {
