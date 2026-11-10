@@ -66,6 +66,14 @@ Work is done on branch `pk-symfony-8` as a series of small commits.
 - 2026-07-03: 3 of the overridden bundles load DI config from XML which Symfony 8 removed — solved with composer patches
   converting the definitions to PHP config files (consistent with the already used patching of `overblog/graphql-bundle`).
 
+- 2026-11-10: rebased onto current `20.0` and re-checked upstream Symfony 8 support of the 7 overridden packages (Packagist):
+  none has a tagged release allowing Symfony 8 — `becklyn/ordered-form-bundle` 1.4.0, `enlightn/security-checker` 2.0.0,
+  `jms/translation-bundle` 2.7.0 (3.0.0-beta1 still `^7.1`), `overblog/graphiql-bundle` 1.0.0, `prezent/doctrine-translatable` 5.0.0,
+  `prezent/doctrine-translatable-bundle` 3.0.0 are all still capped at Symfony 7; only `overblog/dataloader-bundle` allows `^8.0`
+  on `dev-master` (2026-08-08) without a tag. All overrides and patches therefore stay; the overrides already point to the latest tags.
+  Symfony 8.2 is only BETA1 (2026-11-04), so the constraint stays `^8.1` (resolves to 8.1.11).
+
 ## Result
 
 Upgrade finished on 2026-07-03: Symfony 8.1.1, all test suites green, standards + PHPStan clean.
+Rebased onto `20.0` on 2026-11-10: Symfony 8.1.11, overrides and patches unchanged (no upstream Symfony 8 releases yet).
