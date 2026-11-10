@@ -526,11 +526,7 @@ class Order implements DomainSeparatedEntityInterface
         return $this->goPayBankSwift;
     }
 
-    /**
-     * @param string $externalPaymentIdentifier
-     * @return bool
-     */
-    public function hasPaymentTransactionWithExternalPaymentIdentifier($externalPaymentIdentifier)
+    public function hasPaymentTransactionWithExternalPaymentIdentifier(string $externalPaymentIdentifier): bool
     {
         $paymentTransactions = $this->getPaymentTransactions();
 
