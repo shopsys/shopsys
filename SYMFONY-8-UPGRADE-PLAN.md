@@ -129,7 +129,7 @@ Other facts gathered for the decisions:
 - [ ] **overblog/graphiql-bundle — keep the patch (dev-only UI), low priority.** Optionally +1 upstream PR #47, which is the same change.
 - [ ] Order of work: becklyn (no upstream dependency) → enlightn → JMS PR → Prezent PRs → dataloader when tagged; each step removes its override/patch and gets an upgrade note.
 
-### Status 2026-11-10 (becklyn and enlightn PRs opened, upstream PRs still local — Petr reviews before anything is sent upstream)
+### Status 2026-11-10 (becklyn and enlightn PRs opened, upstream PRs opened from pk16011990 forks)
 
 - **becklyn** is handled by PR [#5019](https://github.com/shopsys/shopsys/pull/5019) (`pk/remove-becklyn-ordered-form-bundle`, Jira SSP-4600) and
   **enlightn** by PR [#5020](https://github.com/shopsys/shopsys/pull/5020) (`pk/composer-audit-security-check`, Jira SSP-4601), both single commits
@@ -139,15 +139,19 @@ Other facts gathered for the decisions:
   `allowed Symfony 8 for becklyn/ordered-form-bundle via composer metadata override` (remove after #5019 is merged) and the commits
   `allowed Symfony 8 for enlightn/security-checker via composer metadata override` + `patched enlightn/security-checker for Symfony 8 console`
   (remove after #5020 is merged) carry the removal notes.
-- **jms/translation-bundle**: local branch `symfony-8` in `../JMSTranslationBundle` on top of `2.x` (commit "Add Symfony 8 support, drop Symfony 5.4"):
+- **jms/translation-bundle**: upstream PR [schmittjoh/JMSTranslationBundle#628](https://github.com/schmittjoh/JMSTranslationBundle/pull/628) against `2.x`
+  (branch `symfony-8` in `../JMSTranslationBundle`, fork `pk16011990/JMSTranslationBundle`, commit "Add Symfony 8 support, drop Symfony 5.4"):
   PHP DI config, `Symfony\Component\Routing\Attribute\Route` (the `Annotation\Route` class is gone in Symfony 8, the attribute one exists since 6.4,
   hence 5.4 is dropped), DI `Extension` base class, Symfony 8 test kernel config, CI matrix 6.4 / 7.2 / 8.1. Suite green in Docker for all three
   (170 tests, same as baseline).
-- **prezent/doctrine-translatable**: local branch `symfony-8` in `../doctrine-translatable` (commits "Allow Symfony 8" — `symfony/cache ^8.0`,
+- **prezent/doctrine-translatable**: upstream PR [Prezent/doctrine-translatable#46](https://github.com/Prezent/doctrine-translatable/pull/46)
+  (branch `symfony-8` in `../doctrine-translatable`, fork `pk16011990/doctrine-translatable`; commits "Allow Symfony 8" — `symfony/cache ^8.0`,
   `doctrine/event-manager` instead of the abandoned `doctrine/common`, native lazy objects in the ORM test case — and "Remove no-op
   ReflectionProperty::setAccessible() call" for PHP 8.5). Suite green for Symfony 7.4 and 8.1.
-- **prezent/doctrine-translatable-bundle**: local branch `symfony-8` in `../doctrine-translatable-bundle` (commit "Add Symfony 8 support": PHP DI config,
-  constraints). Suite green for Symfony 7.4 and 8.1 against the local library branch.
+- **prezent/doctrine-translatable-bundle**: upstream PR [Prezent/doctrine-translatable-bundle#33](https://github.com/Prezent/doctrine-translatable-bundle/pull/33)
+  (branch `symfony-8` in `../doctrine-translatable-bundle`, fork `pk16011990/doctrine-translatable-bundle`; commit "Add Symfony 8 support": PHP DI config,
+  constraints, `composer.json` kept in upstream CRLF). Suite green for Symfony 7.4 and 8.1 against the local library branch; installable on
+  Symfony 8 only after the library releases with #46.
 - **overblog/dataloader-bundle** and **overblog/graphiql-bundle**: unchanged, waiting for the upstream tag / low priority.
 
 ## Result
