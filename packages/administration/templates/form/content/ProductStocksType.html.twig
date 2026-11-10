@@ -3,7 +3,7 @@
         <div class="row mb-3">
             <div class="fw-semibold text-body-secondary col-form-label col-xl-2">{{ 'Total stock quantity'|trans }}</div>
             <div class="col-xl-10 col-form-label">
-                <div class="badges-list">
+                <div class="badge-list">
                     {% for domainId, totalQuantity in total_stock_quantities_by_domain_id %}
                         <span class="badge badge-pill {{ totalQuantity > 0 ? 'bg-green-lt' : 'bg-red-lt' }}">
                             {% if isMultidomain() %}

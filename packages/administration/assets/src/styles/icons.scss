@@ -1,13 +1,31 @@
 // allows to use tabler icon styles with icons rendered by Javascript
 // usage example: <span class="icon-wrapper"><svg>...</svg></span>
 
-.icon-wrapper > svg {
-    @extend .icon;
+// mirrors Tabler's .icon and .icon-lg, which cannot be extended from the precompiled CSS
+.icon-wrapper > svg,
+.icon-wrapper-lg > svg {
+    --tblr-icon-size: 1.25rem;
+    display: inline-block;
+    width: var(--tblr-icon-size);
+    height: var(--tblr-icon-size);
+    font-size: var(--tblr-icon-size);
+    vertical-align: bottom;
+    transform-origin: center;
+    stroke-width: 1.5;
 }
 
 .icon-wrapper-lg > svg {
-    @extend .icon;
-    @extend .icon-lg;
+    --tblr-icon-size: 3.5rem;
+    stroke-width: 1;
+}
+
+.btn .icon-wrapper > svg {
+    width: var(--tblr-btn-icon-size);
+    min-width: var(--tblr-btn-icon-size);
+    height: var(--tblr-btn-icon-size);
+    margin: 0 calc(var(--tblr-btn-padding-x) / 2) 0 calc(var(--tblr-btn-padding-x) / -4);
+    font-size: var(--tblr-btn-icon-size);
+    color: var(--tblr-btn-icon-color);
 }
 
 .file-icon {
