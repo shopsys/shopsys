@@ -23,3 +23,6 @@ CartItemDecorator:
             additionalServices:
                 type: "[AdditionalService!]!"
                 description: "Additional services chosen for the cart item"
+            relatedItems:
+                type: "[CartItem!]!"
+                description: "Cart items related to this cart item (e.g. gifts of a product item)"

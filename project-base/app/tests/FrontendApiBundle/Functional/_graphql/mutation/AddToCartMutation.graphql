@@ -62,6 +62,9 @@ mutation AddToCart(
                 quantity
                 freeQuantity
                 type
+                relatedItems {
+                    uuid
+                }
                 additionalServices {
                     catnum
                 }
@@ -106,6 +109,7 @@ mutation AddToCart(
 }
 
 fragment TestProductFragment on Product {
+    uuid
     name
     slug
     shortDescription
@@ -171,6 +175,7 @@ fragment TestProductFragment on Product {
 }
 
 fragment TestMainVariantFragment on MainVariant {
+    uuid
     name
     slug
     shortDescription
