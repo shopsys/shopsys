@@ -33,23 +33,23 @@ class GiftPlanRepositoryTest extends TransactionFunctionalTestCase
         $mainProductWithSaleExcludedGiftId = $this->getProductId(10);
         $mainProductWithValidGiftId = $this->getProductId(14);
         $mainProductWithExpiredGiftId = $this->getProductId(77);
-        $expectedGiftProductIdsIndexedByMainProductId = [
+        $expectedGiftProductIdsIndexedByProductId = [
             $mainProductWithSaleExcludedGiftId => [$this->getProductId(71)],
             $mainProductWithValidGiftId => [$this->getProductId(72)],
         ];
-        $expectedGiftProductIdsIndexedByDomainIdAndMainProductId = array_fill_keys(
+        $expectedGiftProductIdsIndexedByDomainIdAndProductId = array_fill_keys(
             $this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds(),
-            $expectedGiftProductIdsIndexedByMainProductId,
+            $expectedGiftProductIdsIndexedByProductId,
         );
 
-        $giftProductIdsIndexedByDomainIdAndMainProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndMainProductId([
+        $giftProductIdsIndexedByDomainIdAndProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndProductId([
             $mainProductWithExpiredGiftId,
             $mainProductWithValidGiftId,
             $mainProductWithSaleExcludedGiftId,
         ]);
 
-        ksort($giftProductIdsIndexedByDomainIdAndMainProductId);
-        $this->assertSame($expectedGiftProductIdsIndexedByDomainIdAndMainProductId, $giftProductIdsIndexedByDomainIdAndMainProductId);
+        ksort($giftProductIdsIndexedByDomainIdAndProductId);
+        $this->assertSame($expectedGiftProductIdsIndexedByDomainIdAndProductId, $giftProductIdsIndexedByDomainIdAndProductId);
     }
 
     public function testGetMainProductIdsByGiftProductIds(): void

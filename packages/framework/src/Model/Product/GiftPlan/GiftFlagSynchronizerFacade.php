@@ -77,7 +77,7 @@ class GiftFlagSynchronizerFacade
             return;
         }
 
-        $giftProductIdsIndexedByDomainIdAndProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(
+        $giftProductIdsIndexedByDomainIdAndProductId = $this->giftPlanRepository->getActiveGiftProductIdsIndexedByDomainIdAndProductId(
             array_keys($productsIndexedById),
         );
         $allGiftProductIds = [];

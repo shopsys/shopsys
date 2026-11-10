@@ -117,27 +117,27 @@ class GiftPlanRepository
     }
 
     /**
-     * @param int[] $mainProductIds
+     * @param int[] $productIds
      * @return array<int, array<int, int[]>>
      */
-    public function getActiveGiftProductIdsIndexedByDomainIdAndMainProductId(array $mainProductIds): array
+    public function getActiveGiftProductIdsIndexedByDomainIdAndProductId(array $productIds): array
     {
-        if ($mainProductIds === []) {
+        if ($productIds === []) {
             return [];
         }
 
-        $rows = $this->createActiveGiftProductIdsQueryBuilder($mainProductIds)
+        $rows = $this->createActiveGiftProductIdsQueryBuilder($productIds)
             ->addSelect('gp.domainId AS domainId')
             ->getQuery()
             ->getArrayResult();
 
-        $giftProductIdsIndexedByDomainIdAndMainProductId = [];
+        $giftProductIdsIndexedByDomainIdAndProductId = [];
 
         foreach ($rows as $row) {
-            $giftProductIdsIndexedByDomainIdAndMainProductId[(int)$row['domainId']][(int)$row['mainProductId']][] = (int)$row['giftProductId'];
+            $giftProductIdsIndexedByDomainIdAndProductId[(int)$row['domainId']][(int)$row['mainProductId']][] = (int)$row['giftProductId'];
         }
 
-        return $giftProductIdsIndexedByDomainIdAndMainProductId;
+        return $giftProductIdsIndexedByDomainIdAndProductId;
     }
 
     /**
