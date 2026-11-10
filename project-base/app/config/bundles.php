@@ -46,7 +46,6 @@ return [
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
     Shopsys\AdministrationBundle\ShopsysAdministrationBundle::class => ['all' => true],
-    Becklyn\OrderedFormBundle\BecklynOrderedFormBundle::class => ['all' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\AI\McpBundle\McpBundle::class => ['all' => true],

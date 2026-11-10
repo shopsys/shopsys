@@ -280,6 +280,12 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
+            <arg value="${path.packages}/form-types-bundle/phpunit.xml"/>
+            <arg value="${path.packages}/form-types-bundle/tests"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
             <arg value="${path.packages}/framework/phpunit.xml"/>
             <arg value="${path.packages}/framework/tests/"/>
         </exec>

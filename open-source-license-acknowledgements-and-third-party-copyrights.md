@@ -20,7 +20,6 @@ You can check all the dependencies using the instructions from the section Libra
 | aws/aws-sdk-php                                | Apache-2.0                               | https://aws.amazon.com/sdk-for-php                                    | Amazon Web Services (https://aws.amazon.com)                                                                                                                                                                                                                                                                                                 |
 | bacon/bacon-qr-code                            | BSD-2-Clause                             | https://github.com/Bacon/BaconQrCode                                  | Ben Scholzen 'DASPRiD' (https://dasprids.de/)                                                                                                                                                                                                                                                                                                |
 | barryvdh/elfinder-flysystem-driver             | MIT                                      |                                                                       | Barry vd. Heuvel                                                                                                                                                                                                                                                                                                                             |
-| becklyn/ordered-form-bundle                    | BSD-3-Clause                             | https://github.com/Becklyn/OrderedFormBundle                          | Becklyn Studios (http://becklyn.com/)                                                                                                                                                                                                                                                                                                        |
 | brick/math                                     | MIT                                      |                                                                       |                                                                                                                                                                                                                                                                                                                                              |
 | carbonphp/carbon-doctrine-types                | MIT                                      |                                                                       | KyleKatarn                                                                                                                                                                                                                                                                                                                                   |
 | clue/ndjson-react                              | MIT                                      | https://github.com/clue/reactphp-ndjson                               | Christian Lück                                                                                                                                                                                                                                                                                                                               |
@@ -644,6 +643,47 @@ https://github.com/Python-Markdown/markdown/blob/master/LICENSE.md
 
 License: MIT  
 https://github.com/shopsys/readthedocs-version-warning-mkdocs-plugin/blob/master/LICENSE
+
+## Third-party code included in Shopsys Platform
+
+### Becklyn/OrderedFormBundle
+
+The implementation of the `position` form option in `packages/form-types-bundle/src/OrderedForm` and its compiler pass were taken over from this bundle and adapted to Shopsys Platform.
+
+License: BSD-3-Clause  
+https://github.com/Becklyn/OrderedFormBundle/blob/1.x/LICENSE
+
+```
+BSD 3-Clause License
+
+Copyright (c) 2018, Becklyn Studios
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
 
 ## Libraries dynamically referenced via Composer
 
