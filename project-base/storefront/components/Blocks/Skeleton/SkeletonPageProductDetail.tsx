@@ -4,6 +4,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
+import { SkeletonModuleProductDetailAdditionalServices } from './SkeletonModuleProductDetailAdditionalServices';
 import { SkeletonModuleProductDetailAddToCart } from './SkeletonModuleProductDetailAddToCart';
 import { SkeletonModuleProductDetailSecondaryActions } from './SkeletonModuleProductDetailSecondaryActions';
 import { SkeletonModuleProductDetailSections } from './SkeletonModuleProductDetailSections';
@@ -43,12 +44,38 @@ export const SkeletonPageProductDetail: FC = () => (
                             <Skeleton className="h-4 w-2/4" />
                         </div>
 
-                        <div className="flex h-56 flex-col gap-4 rounded-xl bg-skeleton-less p-3 sm:p-6">
-                            <Skeleton className="h-8 w-20" />
-                            <Skeleton className="h-5 w-2/6" />
+                        <div className="flex min-w-0 flex-col gap-6 rounded-xl bg-skeleton-less p-4 sm:p-5">
+                            <div className="flex flex-col gap-2">
+                                <Skeleton className="h-8 w-24" />
+                                <Skeleton className="h-5 w-2/5" />
+                            </div>
 
-                            <SkeletonModuleProductDetailAddToCart />
+                            <div className="w-full max-w-80">
+                                <SkeletonModuleProductDetailAddToCart isFullWidth />
+                            </div>
 
+                            <div className="flex flex-col gap-3">
+                                <div className="flex items-center gap-2">
+                                    <Skeleton className="size-4" />
+                                    <Skeleton className="h-5 w-32" />
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Skeleton className="size-16 shrink-0" />
+                                    <Skeleton className="h-5 w-3/5" />
+                                </div>
+                            </div>
+
+                            <SkeletonModuleProductDetailAdditionalServices
+                                additionalServices={[
+                                    { uuid: 'first', deliveryDaysExtension: 1 },
+                                    { uuid: 'second', deliveryDaysExtension: 0 },
+                                ]}
+                            />
+
+                            <Skeleton className="h-5 w-36" />
+                        </div>
+
+                        <div className="px-4 sm:px-5">
                             <SkeletonModuleProductDetailSecondaryActions />
                         </div>
                     </div>
