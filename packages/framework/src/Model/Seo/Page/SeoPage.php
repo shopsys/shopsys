@@ -60,6 +60,7 @@ class SeoPage
 
     public function edit(SeoPageData $seoPageData): void
     {
+        $this->createMissingDomains($seoPageData);
         $this->setData($seoPageData);
     }
 
@@ -139,6 +140,28 @@ class SeoPage
         }
 
         $this->setDomains($seoPageData);
+    }
+
+    protected function createMissingDomains(SeoPageData $seoPageData): void
+    {
+        foreach ($seoPageData->pageSlugsIndexedByDomainId as $domainId => $pageSlug) {
+            if ($pageSlug === null || $this->hasSeoPageDomain($domainId)) {
+                continue;
+            }
+
+            $this->domains->add(new SeoPageDomain($domainId, $this));
+        }
+    }
+
+    protected function hasSeoPageDomain(int $domainId): bool
+    {
+        foreach ($this->domains as $seoPageDomain) {
+            if ($seoPageDomain->getDomainId() === $domainId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected function setDomains(SeoPageData $seoPageData): void
