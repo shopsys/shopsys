@@ -45,6 +45,7 @@ $sidebar-mobile-offset: $navbar-height;
     .navbar.navbar-vertical {
         .navbar-collapse {
             flex: 1 1 auto;
+            scrollbar-gutter: stable;
         }
 
         .navbar-platform-brand-image {
