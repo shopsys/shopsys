@@ -155,7 +155,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                 </button>
 
                 <Drawer
-                    className="flex flex-col overflow-hidden"
+                    className="flex w-full min-w-0 max-w-137 flex-col overflow-hidden"
                     isActive={isActive}
                     setIsActive={setIsActive}
                     title={t('Cart')}

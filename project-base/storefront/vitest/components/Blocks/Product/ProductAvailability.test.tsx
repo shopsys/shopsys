@@ -18,30 +18,42 @@ const inStockAvailability = {
 } as TypeAvailability;
 
 describe('ProductAvailability', () => {
-    test('shows shipping readiness together with the store count in the default display', () => {
-        render(
-            <ProductAvailability availability={inStockAvailability} availableStoresCount={1} isInquiryType={false} />,
-        );
+    test.each(['default', 'inline'] as const)(
+        'shows shipping readiness and store count in %s display',
+        (displayMode) => {
+            render(
+                <ProductAvailability
+                    availability={inStockAvailability}
+                    availableStoresCount={1}
+                    displayMode={displayMode}
+                    isInquiryType={false}
+                />,
+            );
 
-        expect(screen.getByText('In stock')).toBeInTheDocument();
-        expect(screen.getByText('Ready to ship · 1 store')).toBeInTheDocument();
-    });
+            expect(screen.getByText('In stock')).toBeInTheDocument();
+            expect(screen.getByText('Ready to ship · 1 store')).toBeInTheDocument();
+        },
+    );
 
-    test('does not show shipping readiness for an out-of-stock product', () => {
-        render(
-            <ProductAvailability
-                availability={{
-                    name: 'Out of stock',
-                    status: TypeAvailabilityStatusEnum.OutOfStock,
-                }}
-                availableStoresCount={null}
-                isInquiryType={false}
-            />,
-        );
+    test.each(['default', 'inline'] as const)(
+        'does not show shipping readiness out of stock in %s display',
+        (displayMode) => {
+            render(
+                <ProductAvailability
+                    availability={{
+                        name: 'Out of stock',
+                        status: TypeAvailabilityStatusEnum.OutOfStock,
+                    }}
+                    availableStoresCount={null}
+                    displayMode={displayMode}
+                    isInquiryType={false}
+                />,
+            );
 
-        expect(screen.getByText('Out of stock')).toBeInTheDocument();
-        expect(screen.queryByText(/Ready to ship/)).not.toBeInTheDocument();
-    });
+            expect(screen.getByText('Out of stock')).toBeInTheDocument();
+            expect(screen.queryByText(/Ready to ship/)).not.toBeInTheDocument();
+        },
+    );
 
     test('does not promise shipping readiness when store availability is unknown', () => {
         render(

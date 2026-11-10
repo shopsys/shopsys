@@ -85,7 +85,9 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
     const priceDescriptionId = `${checkboxId}-price`;
     const isSelectedInCart = isInCartList === true && isSelected && quantity !== undefined;
     const isTotalPriceShown = showSelectedServiceTotalPrice === true && isSelected;
-    const isUnitShown = isSelected ? !isTotalPriceShown : showSelectedServiceTotalPrice === true;
+    const isUnitShown = isSelected
+        ? !isTotalPriceShown
+        : isInCartList === true || showSelectedServiceTotalPrice === true;
     const desktopPrice = !isSelectedInCart ? (
         <AdditionalServiceAddOnPrice
             isHighlighted={isTotalPriceShown}

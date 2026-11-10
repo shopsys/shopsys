@@ -6,7 +6,10 @@ import {
     checkGiftIsDisplayedInOrderSummary,
     checkGiftIsDisplayedOnProductDetail,
 } from './giftWithProductSupport';
-import { addToCartOnProductDetailPage } from 'e2e/cart/cartSupport';
+import {
+    addToCartOnProductDetailPage,
+    increaseCartItemQuantityWithSpinbox,
+} from 'e2e/cart/cartSupport';
 import {
     changeOrderConfirmationDynamicPartsToStaticDemodata,
     changeOrderDetailDynamicPartsToStaticDemodata,
@@ -69,6 +72,53 @@ describe('Gift with Product Tests (SSP-2756)', () => {
                 { tid: TIDs.footer_copyright },
             ],
         });
+    });
+
+    it('[Removed Gift] should keep a removed gift excluded until it is explicitly restored', () => {
+        cy.addProductToCartForTest(staticData.products.delonghi.uuid, 1).then((cart) =>
+            cy.storeCartUuidInLocalStorage(cart.uuid),
+        );
+        cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
+        checkGiftIsDisplayedInCart();
+
+        cy.getByTID([
+            [TIDs.pages_cart_list_item_, staticData.products.delonghi.catnum],
+            [TIDs.pages_cart_gift_, staticData.products.giftTicket100czk.uuid],
+            TIDs.pages_cart_gift_checkbox_label,
+        ]).click();
+        cy.waitForStableAndInteractiveDOM();
+        cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.giftTicket100czk.catnum]]).should('not.exist');
+        cy.getByTID([[TIDs.pages_cart_gift_, staticData.products.giftTicket100czk.uuid]])
+            .find('input[type="checkbox"]')
+            .should('not.be.checked');
+
+        increaseCartItemQuantityWithSpinbox(staticData.products.delonghi.catnum);
+        cy.waitForStableAndInteractiveDOM();
+        cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.delonghi.catnum], TIDs.spinbox_input])
+            .should('have.value', '2');
+        cy.getByTID([
+            [TIDs.pages_cart_list_item_, staticData.products.delonghi.catnum],
+            [TIDs.pages_cart_gift_, staticData.products.giftTicket100czk.uuid],
+        ])
+            .find('input[type="checkbox"]')
+            .should('not.be.checked');
+
+        cy.addProductToCartForTest(staticData.products.helloKitty.uuid, 1);
+        cy.reload();
+        cy.waitForStableAndInteractiveDOM();
+        cy.getByTID([
+            [TIDs.pages_cart_list_item_, staticData.products.delonghi.catnum],
+            [TIDs.pages_cart_gift_, staticData.products.giftTicket100czk.uuid],
+        ])
+            .find('input[type="checkbox"]')
+            .should('not.be.checked');
+
+        cy.getByTID([
+            [TIDs.pages_cart_gift_, staticData.products.giftTicket100czk.uuid],
+            TIDs.pages_cart_gift_checkbox_label,
+        ]).click();
+        cy.waitForStableAndInteractiveDOM();
+        checkGiftIsDisplayedInCart();
     });
 
     it('[Checkout Flow] should show gift in order summary, order confirmation, and order detail', () => {

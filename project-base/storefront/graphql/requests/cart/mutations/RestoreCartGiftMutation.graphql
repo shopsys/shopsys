@@ -1,0 +1,5 @@
+mutation RestoreCartGiftMutation($input: RestoreCartGiftInput!) {
+    RestoreCartGift(input: $input) {
+        ...CartFragment
+    }
+}
