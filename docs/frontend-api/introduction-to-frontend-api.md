@@ -277,15 +277,15 @@ Your custom constraints will only work if you also include all the decorator's o
     FrontendApi constraints must be listed first, before your custom ones.
 
 ```yaml
-# project-base/app/config/graphql/types/.../YourInput.types.yaml
-YourInput:
+# app/config/graphql/types/ModelType/Cart/CartInput/ChangePaymentInCartInput.types.yaml
+ChangePaymentInCartInput:
     type: input-object
     inherits:
-        - 'FrontendApiInputDecorator'
+        - 'ChangePaymentInCartInputDecorator'
     config:
         validation:
             # All original decorator constraints FIRST
-            - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint: ~
+            - Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart: ~
             # Your custom constraints AFTER
             - App\Component\Constraints\YourCustomConstraint: ~
 ```
@@ -300,17 +300,15 @@ If you want to remove or replace a validation constraint from the decorator, you
 This effectively skips the constraint because the group will never be active during validation.
 
 ```yaml
-# app/config/graphql/types/.../YourInput.types.yaml
-YourInput:
+# app/config/graphql/types/ModelType/Cart/CartInput/ChangePaymentInCartInput.types.yaml
+ChangePaymentInCartInput:
     type: input-object
     inherits:
-        - ' FrontendApiInputDecorator'
+        - 'ChangePaymentInCartInputDecorator'
     config:
         validation:
-            # All original decorator constraints FIRST
-            ...
             # Disable the original constraint by assigning a non-existent group
-            - Shopsys\FrontendApiBundle\Component\Constraints\OriginalConstraint:
+            - Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart:
                 groups: "removed-validation"
             # Add your replacement constraint (or omit if you just want to remove validation)
             - App\Component\Constraints\YourReplacementConstraint: ~
