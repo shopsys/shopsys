@@ -31,7 +31,10 @@ class CustomerUploadedFileController
             $hash = $request->query->getString('hash');
             $uploadedFile = $this->getCustomerUploadedFile($uploadedFilename, $uploadedFileId, $hash);
 
-            return $this->uploadedFileResponseFactory->createDownloadResponse($this->customerUploadedFileFacade, $uploadedFile);
+            return $this->uploadedFileResponseFactory->createDownloadResponse(
+                $this->customerUploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile),
+                $uploadedFile->getNameWithExtension(),
+            );
         } catch (Exception $ex) {
             throw new NotFoundRedirectToStorefrontException(sprintf('File "%s" not found.', $uploadedFilename), $ex);
         }
@@ -47,7 +50,11 @@ class CustomerUploadedFileController
                 return $this->downloadAction($request, $uploadedFileId, $uploadedFilename);
             }
 
-            return $this->uploadedFileResponseFactory->createInlineViewResponse($this->customerUploadedFileFacade, $uploadedFile);
+            return $this->uploadedFileResponseFactory->createInlineViewResponse(
+                $this->customerUploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile),
+                $uploadedFile->getNameWithExtension(),
+                $this->customerUploadedFileFacade->getMimeTypeByExtension($uploadedFile),
+            );
         } catch (Exception $ex) { // never disclose backend error pages
             throw new NotFoundRedirectToStorefrontException(sprintf('File "%s" not found.', $uploadedFilename), $ex);
         }

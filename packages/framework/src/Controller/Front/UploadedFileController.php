@@ -25,7 +25,10 @@ class UploadedFileController
         try {
             $uploadedFile = $this->getByIdSlugAndExtension($uploadedFileId, $uploadedFilename);
 
-            return $this->uploadedFileResponseFactory->createDownloadResponse($this->uploadedFileFacade, $uploadedFile);
+            return $this->uploadedFileResponseFactory->createDownloadResponse(
+                $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile),
+                $uploadedFile->getNameWithExtension(),
+            );
         } catch (Exception $e) {
             throw new NotFoundRedirectToStorefrontException(sprintf('Uploaded file with ID "%s" not found.', $uploadedFileId), $e);
         }
@@ -40,7 +43,11 @@ class UploadedFileController
                 return $this->downloadAction($uploadedFileId, $uploadedFilename);
             }
 
-            return $this->uploadedFileResponseFactory->createInlineViewResponse($this->uploadedFileFacade, $uploadedFile);
+            return $this->uploadedFileResponseFactory->createInlineViewResponse(
+                $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile),
+                $uploadedFile->getNameWithExtension(),
+                $this->uploadedFileFacade->getMimeTypeByExtension($uploadedFile),
+            );
         } catch (Exception $e) {
             throw new NotFoundRedirectToStorefrontException(sprintf('Uploaded file with ID "%s" not found.', $uploadedFileId), $e);
         }
