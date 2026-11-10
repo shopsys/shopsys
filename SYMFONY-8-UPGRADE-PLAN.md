@@ -129,14 +129,16 @@ Other facts gathered for the decisions:
 - [ ] **overblog/graphiql-bundle — keep the patch (dev-only UI), low priority.** Optionally +1 upstream PR #47, which is the same change.
 - [ ] Order of work: becklyn (no upstream dependency) → enlightn → JMS PR → Prezent PRs → dataloader when tagged; each step removes its override/patch and gets an upgrade note.
 
-### Status 2026-11-10 (everything prepared locally, nothing pushed yet — Petr reviews before anything is sent)
+### Status 2026-11-10 (becklyn and enlightn PRs opened, upstream PRs still local — Petr reviews before anything is sent upstream)
 
-- **becklyn** is handled by the separate branch `pk/remove-becklyn-ordered-form-bundle` (based on `20.0`: takeover into `shopsys/form-types-bundle`
-  with tests + upgrade note) and **enlightn** by `pk/composer-audit-security-check` (`composer security-check` → `@composer audit` with
-  `audit.abandoned: report` + upgrade note). Standards, PHPStan and the full test suite were green for the combined change. On this branch the commit
-  `allowed Symfony 8 for becklyn/ordered-form-bundle via composer metadata override` (remove after the becklyn PR, placeholder #XXXX) and the commits
+- **becklyn** is handled by PR [#5019](https://github.com/shopsys/shopsys/pull/5019) (`pk/remove-becklyn-ordered-form-bundle`, Jira SSP-4600) and
+  **enlightn** by PR [#5020](https://github.com/shopsys/shopsys/pull/5020) (`pk/composer-audit-security-check`, Jira SSP-4601), both single commits
+  based on `20.0`: takeover into `shopsys/form-types-bundle` with tests + upgrade note, and `composer security-check` → `@composer audit` with
+  `audit.abandoned: report` + upgrade note. Standards, PHPStan and the full test suite were green for the combined change; the DI container lints
+  in dev/test/prod and the form tests pass without any `exclude` in the bundle `services.yaml`. On this branch the commit
+  `allowed Symfony 8 for becklyn/ordered-form-bundle via composer metadata override` (remove after #5019 is merged) and the commits
   `allowed Symfony 8 for enlightn/security-checker via composer metadata override` + `patched enlightn/security-checker for Symfony 8 console`
-  (remove after the composer audit PR, placeholder #YYYY) carry the removal notes.
+  (remove after #5020 is merged) carry the removal notes.
 - **jms/translation-bundle**: local branch `symfony-8` in `../JMSTranslationBundle` on top of `2.x` (commit "Add Symfony 8 support, drop Symfony 5.4"):
   PHP DI config, `Symfony\Component\Routing\Attribute\Route` (the `Annotation\Route` class is gone in Symfony 8, the attribute one exists since 6.4,
   hence 5.4 is dropped), DI `Extension` base class, Symfony 8 test kernel config, CI matrix 6.4 / 7.2 / 8.1. Suite green in Docker for all three
