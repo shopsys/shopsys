@@ -98,7 +98,7 @@ class PromotionFlagFacade
                     continue;
                 }
 
-                $promotionQuantitiesKey = $this->getPromotionQuantitiesKey($promotionXy);
+                $promotionQuantitiesKey = $promotionXy->getBuyQuantity() . '+' . $promotionXy->getFreeQuantity();
 
                 if (!array_key_exists($promotionQuantitiesKey, $promotionFlagsIndexedByQuantities)) {
                     $promotionFlagsIndexedByQuantities[$promotionQuantitiesKey] = $this->findOrCreatePromotionFlag(
@@ -138,11 +138,6 @@ class PromotionFlagFacade
         }
 
         return $product->getPromotionXy($domainId);
-    }
-
-    protected function getPromotionQuantitiesKey(ProductPromotionXy $promotionXy): string
-    {
-        return $promotionXy->getBuyQuantity() . '+' . $promotionXy->getFreeQuantity();
     }
 
     protected function findOrCreatePromotionFlag(int $x, int $y): Flag
