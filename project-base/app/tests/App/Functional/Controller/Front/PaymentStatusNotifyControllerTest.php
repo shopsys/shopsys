@@ -127,8 +127,10 @@ final class PaymentStatusNotifyControllerTest extends ApplicationTestCase
         $this->paymentTransactionFacade->create($paymentTransactionData);
     }
 
-    private function getPaymentTransactionByExternalPaymentIdentifier(Order $order, string $externalPaymentIdentifier): PaymentTransaction
-    {
+    private function getPaymentTransactionByExternalPaymentIdentifier(
+        Order $order,
+        string $externalPaymentIdentifier,
+    ): PaymentTransaction {
         $paymentTransactions = $order->getPaymentTransactions();
 
         foreach ($paymentTransactions as $paymentTransaction) {
