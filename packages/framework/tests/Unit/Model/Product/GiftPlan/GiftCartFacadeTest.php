@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
+use Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemTypeEnum;
@@ -59,6 +60,20 @@ final class GiftCartFacadeTest extends TestCase
         self::assertSame([3, 3], array_map(static fn (CartItem $item) => $item->getQuantity(), $items));
     }
 
+    public function testRemovedGiftStaysRemovedWhenItsStockIsZero(): void
+    {
+        $firstProduct = $this->createProduct(1);
+        $gift = $this->createProduct(3);
+        $cart = $this->createCart([$firstProduct], [1]);
+        $this->markGiftRemoved($cart, $gift, $firstProduct);
+        $facade = $this->createGiftCartFacade([1 => [$gift]], 0);
+
+        $facade->refreshProductGiftsInCart($cart, 1);
+
+        self::assertSame([], $facade->getRestorableRemovedProductGifts($cart, 1));
+        self::assertTrue($cart->isProductGiftRemoved($firstProduct, $gift));
+    }
+
     private function createProduct(int $id): Product
     {
         $product = $this->createStub(Product::class);
@@ -94,6 +109,12 @@ final class GiftCartFacadeTest extends TestCase
     {
         $planFacade = $this->createStub(GiftPlanFacade::class);
         $planFacade->method('findActiveGiftProductsByMainProducts')->willReturn($giftsByParent);
+        $planFacade->method('findActiveGiftProductIdsByMainProductIds')->willReturnCallback(
+            static fn (array $mainProductIds) => array_map(
+                static fn (array $gifts) => array_map(static fn (Product $gift) => $gift->getId(), $gifts),
+                array_intersect_key($giftsByParent, array_flip($mainProductIds)),
+            ),
+        );
         $currentUser = $this->createStub(CurrentCustomerUser::class);
         $currentUser->method('getPricingGroup')->willReturn($this->createStub(PricingGroup::class));
         $visibility = $this->createStub(ProductVisibility::class);
@@ -111,5 +132,10 @@ final class GiftCartFacadeTest extends TestCase
     private function createCartItemFactory(): CartItemFactory
     {
         return new CartItemFactory(new EntityNameResolver([]), new CartItemTypeEnum());
+    }
+
+    private function markGiftRemoved(Cart $cart, Product $gift, Product $mainProduct): void
+    {
+        $cart->addRemovedProductGift(new CartRemovedProductGift($cart, $mainProduct, $gift));
     }
 }

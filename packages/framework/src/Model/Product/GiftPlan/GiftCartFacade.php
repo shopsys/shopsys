@@ -129,12 +129,17 @@ class GiftCartFacade
             }
         }
 
+        /** @var \Shopsys\FrameworkBundle\Model\Product\GiftPlan\GiftCartItemSetup[] $prioritizedSetups */
         $prioritizedSetups = [...$setupsWithGiftCartItem, ...$setupsWithoutGiftCartItem];
         $allocatedQuantities = $this->getPurchasedProductQuantities($cart);
         $availableSetups = [];
 
         foreach ($prioritizedSetups as $setup) {
             $giftProduct = $setup->giftProduct;
+
+            if ($cart->isProductGiftRemoved($setup->mainProduct, $giftProduct)) {
+                continue;
+            }
 
             $allocatedQuantity = $allocatedQuantities[$giftProduct->getId()] ?? 0;
             $quantity = $this->getAvailableGiftQuantity($giftProduct, $allocatedQuantity + $setup->quantity, $domainId) - $allocatedQuantity;
@@ -163,6 +168,37 @@ class GiftCartFacade
         }
 
         return $quantities;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift[]
+     */
+    public function getRestorableRemovedProductGifts(Cart $cart, int $domainId): array
+    {
+        if (!$cart->hasRemovedProductGifts()) {
+            return [];
+        }
+
+        $mainProductIds = array_map(fn (CartItem $cartItem) => $cartItem->getProduct()->getId(), $cart->getProductCartItems());
+        $giftProductIdsByMainProductId = $this->giftPlanFacade->findActiveGiftProductIdsByMainProductIds($mainProductIds, $domainId);
+        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
+        $restorableGifts = [];
+
+        foreach ($cart->getRemovedProductGifts() as $removedGift) {
+            $mainProduct = $removedGift->getMainProduct();
+            $giftProduct = $removedGift->getGiftProduct();
+            $mainItem = $cart->findProductCartItem($mainProduct);
+            $giftProductIds = $giftProductIdsByMainProductId[$mainProduct->getId()] ?? [];
+
+            if ($mainItem !== null
+                && in_array($giftProduct->getId(), $giftProductIds, true)
+                && $this->isGiftProductSellable($giftProduct, $pricingGroup, $mainItem->getQuantity(), $domainId)
+            ) {
+                $restorableGifts[] = $removedGift;
+            }
+        }
+
+        return $restorableGifts;
     }
 
     public function isGiftProductSellable(

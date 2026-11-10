@@ -29,9 +29,12 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method \App\Model\Product\Product[] getPersonalPickupOnlyProducts()
  * @method \App\Model\Product\Product[] getElectronicGiftVoucherProducts()
  * @method \App\Model\Product\Product[] getProductsOtherThanElectronicGiftVouchers()
+ * @method bool isProductGiftRemoved(\App\Model\Product\Product $mainProduct, \App\Model\Product\Product $giftProduct)
  * @method \App\Model\Cart\Item\CartItem|null findProductCartItem(\App\Model\Product\Product $product)
  * @method \App\Model\Cart\Item\CartItem|null findRelatedItemByProduct(\App\Model\Cart\Item\CartItem $parentItem, \App\Model\Product\Product $product, string $type)
  * @method \App\Model\Cart\Item\CartItem|null findParentItem(\App\Model\Cart\Item\CartItem $relatedItem)
+ * @method \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift|null findRemovedProductGift(\App\Model\Product\Product $mainProduct, \App\Model\Product\Product $giftProduct)
+ * @method void forgetRemovedProductGiftsOfMainItem(\App\Model\Cart\Item\CartItem $item)
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'carts')]
