@@ -50,6 +50,7 @@ use Shopsys\McpAttributes\Attribute\AsMcpTable;
  * @method void edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
  * @method void setData(\App\Model\Product\ProductData $productData)
  * @method void editRelatedProducts(\App\Model\Product\Product[] $relatedProducts)
+ * @property array<int, \App\Model\Product\ProductDomain> $productDomainsByDomainId
  */
 #[AsMcpTable]
 #[ORM\Table(name: 'products')]

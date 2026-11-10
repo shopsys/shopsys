@@ -32,6 +32,8 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 
         $this->handleDispatchedRecalculationMessages();
 
+        $product = $this->productFacade->getById($product->getId());
+
         self::assertTrue($product->isCalculatedSellingDenied($this->domain->getId()));
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/ProductQuery.graphql', [
