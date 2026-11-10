@@ -64,7 +64,7 @@ class ProductSellingDeniedRecalculator
     {
         $productIdsCondition = $isRestrictedToProductIds ? 'WHERE pd.product_id IN (:productIds)' : '';
 
-        return 'WITH scoped_product_domains AS (
+        return 'WITH scoped_product_domains AS MATERIALIZED (
             SELECT
                 pd.product_id,
                 pd.domain_id,
