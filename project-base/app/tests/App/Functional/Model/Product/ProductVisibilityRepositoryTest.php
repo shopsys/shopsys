@@ -420,6 +420,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $queryCountingMiddleware = QueryCountingMiddleware::createInjectedInto($this->em->getConnection());
         $this->em->clear();
         $this->productFacade->getById(array_first($mainVariantFamilyProductIds));
+        $this->domain->getAll();
         $queryCountingMiddleware->reset();
 
         $this->productVisibilityRepository->refreshProductsVisibility($mainVariantFamilyProductIds);

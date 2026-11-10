@@ -153,7 +153,7 @@ class ProductVisibilityRepository
             'variantTypeVariant' => Types::STRING,
         ];
 
-        $domainConfigs = $this->domain->getAllIncludingDomainConfigsWithoutDataCreated();
+        $domainConfigs = $this->domain->getAll();
         $domainLocaleRows = [];
 
         foreach ($domainConfigs as $domainConfig) {
