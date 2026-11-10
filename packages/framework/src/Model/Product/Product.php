@@ -183,6 +183,14 @@ class Product extends AbstractTranslatableEntity
     protected $domains;
 
     /**
+     * Cache for individually queried domains as matching() queries the database on every call
+     * Loading all domains at once is unnecessary and can be very inefficient when only one domain is needed
+     *
+     * @var array<int, \Shopsys\FrameworkBundle\Model\Product\ProductDomain>
+     */
+    protected array $productDomainsByDomainId = [];
+
+    /**
      * @var string
      */
     #[AsMcpColumn]
@@ -859,6 +867,10 @@ class Product extends AbstractTranslatableEntity
      */
     protected function getProductDomain(int $domainId)
     {
+        if (isset($this->productDomainsByDomainId[$domainId])) {
+            return $this->productDomainsByDomainId[$domainId];
+        }
+
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('domainId', $domainId))
             ->setMaxResults(1);
@@ -868,6 +880,8 @@ class Product extends AbstractTranslatableEntity
         if ($result === false) {
             throw new ProductDomainNotFoundException($domainId, $this->id);
         }
+
+        $this->productDomainsByDomainId[$domainId] = $result;
 
         return $result;
     }
