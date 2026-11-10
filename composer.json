@@ -365,6 +365,46 @@
         {
             "type": "package",
             "package": {
+                "name": "enlightn/security-checker",
+                "version": "v2.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/enlightn/security-checker.git",
+                    "reference": "d495ab07639388c7c770c5223aa0d42fee1d2604"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/enlightn/security-checker/zipball/d495ab07639388c7c770c5223aa0d42fee1d2604",
+                    "reference": "d495ab07639388c7c770c5223aa0d42fee1d2604",
+                    "shasum": ""
+                },
+                "require": {
+                    "ext-json": "*",
+                    "guzzlehttp/guzzle": "^6.3|^7.0",
+                    "php": ">=8.2",
+                    "symfony/console": "^7 || ^8.0",
+                    "symfony/finder": "^3|^4|^5|^6|^7|^8.0",
+                    "symfony/process": "^3.4|^4|^5|^6|^7|^8.0",
+                    "symfony/yaml": "^3.4|^4|^5|^6|^7|^8.0"
+                },
+                "bin": [
+                    "security-checker"
+                ],
+                "type": "library",
+                "autoload": {
+                    "psr-4": {
+                        "Enlightn\\SecurityChecker\\": "src"
+                    }
+                },
+                "license": [
+                    "MIT"
+                ],
+                "description": "A PHP dependency vulnerabilities scanner based on the Security Advisories Database."
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "jms/translation-bundle",
                 "version": "2.7.0",
                 "source": {
