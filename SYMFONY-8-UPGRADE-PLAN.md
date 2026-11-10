@@ -129,6 +129,24 @@ Other facts gathered for the decisions:
 - [ ] **overblog/graphiql-bundle — keep the patch (dev-only UI), low priority.** Optionally +1 upstream PR #47, which is the same change.
 - [ ] Order of work: becklyn (no upstream dependency) → enlightn → JMS PR → Prezent PRs → dataloader when tagged; each step removes its override/patch and gets an upgrade note.
 
+### Status 2026-11-10 (everything prepared locally, nothing pushed yet — Petr reviews before anything is sent)
+
+- **becklyn + enlightn** are handled by the separate branch `pk/remove-unmaintained-dependencies` (based on `20.0`, 3 commits: takeover into
+  `shopsys/form-types-bundle` with tests, `composer security-check` → `@composer audit` with `audit.abandoned: report`, upgrade notes).
+  Standards, PHPStan and the full test suite are green there. On this branch the commits `allowed Symfony 8 for becklyn/ordered-form-bundle and
+  enlightn/security-checker via composer metadata overrides` and `patched enlightn/security-checker for Symfony 8 console` carry a note that they are
+  to be removed once that PR is merged (PR number to be filled in).
+- **jms/translation-bundle**: local branch `symfony-8` in `../JMSTranslationBundle` on top of `2.x` (commit "Add Symfony 8 support, drop Symfony 5.4"):
+  PHP DI config, `Symfony\Component\Routing\Attribute\Route` (the `Annotation\Route` class is gone in Symfony 8, the attribute one exists since 6.4,
+  hence 5.4 is dropped), DI `Extension` base class, Symfony 8 test kernel config, CI matrix 6.4 / 7.2 / 8.1. Suite green in Docker for all three
+  (170 tests, same as baseline).
+- **prezent/doctrine-translatable**: local branch `symfony-8` in `../doctrine-translatable` (commits "Allow Symfony 8" — `symfony/cache ^8.0`,
+  `doctrine/event-manager` instead of the abandoned `doctrine/common`, native lazy objects in the ORM test case — and "Remove no-op
+  ReflectionProperty::setAccessible() call" for PHP 8.5). Suite green for Symfony 7.4 and 8.1.
+- **prezent/doctrine-translatable-bundle**: local branch `symfony-8` in `../doctrine-translatable-bundle` (commit "Add Symfony 8 support": PHP DI config,
+  constraints). Suite green for Symfony 7.4 and 8.1 against the local library branch.
+- **overblog/dataloader-bundle** and **overblog/graphiql-bundle**: unchanged, waiting for the upstream tag / low priority.
+
 ## Result
 
 Upgrade finished on 2026-07-03: Symfony 8.1.1, all test suites green, standards + PHPStan clean.
