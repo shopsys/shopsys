@@ -27,7 +27,6 @@ class AdministratorChecker extends InMemoryUserChecker
     {
         if ($this->environment === EnvironmentType::PRODUCTION
             && !$this->ignoreDefaultAdminPasswordCheck
-            && in_array($user->getUserIdentifier(), ['admin', 'superadmin', 'operator', 'supervisor', 'viewer'], true)
             && password_verify('admin123', $user->getPassword())
         ) {
             throw new LoginWithDefaultPasswordException();
