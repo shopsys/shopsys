@@ -115,7 +115,7 @@ class GiftCartFacade
             return [];
         }
 
-        if ($this->shouldPreloadGiftProductVisibilities($giftProductsOnStock)) {
+        if (count($giftProductsOnStock) > 1) {
             $this->productVisibilityFacade->preloadProductVisibilitiesByProductIds(
                 array_map(static fn (Product $giftProduct): int => $giftProduct->getId(), $giftProductsOnStock),
                 $pricingGroup,
@@ -134,14 +134,6 @@ class GiftCartFacade
         }
 
         return $sellableGiftProductIds;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $giftProducts
-     */
-    protected function shouldPreloadGiftProductVisibilities(array $giftProducts): bool
-    {
-        return count($giftProducts) > 1;
     }
 
     /**
