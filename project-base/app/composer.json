@@ -46,7 +46,6 @@
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.7",
         "doctrine/persistence": "^4.1",
-        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "guzzlehttp/guzzle": "^7.5.0",
@@ -165,7 +164,7 @@
             "shopsys:domains-urls:configure": "symfony-cmd",
             "ckeditor:install --clear=skip --release=full --tag=4.22.1": "symfony-cmd"
         },
-        "security-check": "security-checker security:check"
+        "security-check": "@composer audit --locked"
     },
     "config": {
         "process-timeout": 1200,
@@ -182,6 +181,13 @@
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
+        },
+        "policy": {
+            "abandoned": {
+                "ignore": {
+                    "doctrine/common": "required by prezent/doctrine-translatable"
+                }
+            }
         }
     },
     "extra": {

@@ -123,9 +123,6 @@
     "elasticsearch/elasticsearch": {
         "version": "v6.7.2"
     },
-    "enlightn/security-checker": {
-        "version": "v1.2"
-    },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
     },
