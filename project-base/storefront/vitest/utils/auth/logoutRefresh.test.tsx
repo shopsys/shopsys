@@ -22,6 +22,9 @@ vi.mock('store/usePersistStore', () => ({
         selector({ resetContactInformation: vi.fn(), updateProductListUuids: vi.fn() }),
 }));
 
+vi.mock('components/providers/ProductListsProvider', () => ({
+    useProductLists: () => ({ invalidateSession: vi.fn() }),
+}));
 vi.mock('utils/auth/performAuthHardNavigation', () => ({ performAuthHardNavigation: vi.fn() }));
 vi.mock('utils/auth/authNotificationStorage', () => ({ storeAuthNotification: vi.fn() }));
 vi.mock('utils/order/orderConfirmationContextStorage', () => ({ clearOrderConfirmationContext: vi.fn() }));

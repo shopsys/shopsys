@@ -1,10 +1,8 @@
 fragment ProductListFragment on ProductList {
     __typename
     uuid
-    productUuids
     # keep the page size low, the product fragment is heavy and the query must fit the Frontend API complexity limit
     products(first: 20) {
-        totalCount
         edges {
             node {
                 ...ProductInProductListFragment
