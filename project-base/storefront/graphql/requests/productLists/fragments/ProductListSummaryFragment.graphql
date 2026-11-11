@@ -1,0 +1,6 @@
+fragment ProductListSummaryFragment on ProductList {
+    __typename
+    uuid
+    itemsCount
+    productUuids
+}

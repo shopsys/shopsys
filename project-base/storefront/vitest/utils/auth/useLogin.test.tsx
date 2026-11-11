@@ -5,12 +5,14 @@ import { useHandleActionsAfterLogin, useLogin, useLoginAfterPasswordRecovery } f
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 const {
+    invalidateSessionMock,
     dispatchBroadcastChannelMock,
     loginMutationMock,
     performAuthHardNavigationMock,
     persistStoreState,
     storeAuthNotificationMock,
 } = vi.hoisted(() => ({
+    invalidateSessionMock: vi.fn(),
     dispatchBroadcastChannelMock: vi.fn(),
     loginMutationMock: vi.fn(),
     performAuthHardNavigationMock: vi.fn(),
@@ -22,6 +24,10 @@ const {
         updateUserEntryState: vi.fn(),
     },
     storeAuthNotificationMock: vi.fn(),
+}));
+
+vi.mock('components/providers/ProductListsProvider', () => ({
+    useProductLists: () => ({ invalidateSession: invalidateSessionMock }),
 }));
 
 vi.mock('components/providers/DomainConfigProvider', () => ({
@@ -88,6 +94,14 @@ describe('useHandleActionsAfterLogin', () => {
             result.current(true, '/customer');
         });
 
+        expect(invalidateSessionMock).toHaveBeenCalledOnce();
+        expect(invalidateSessionMock.mock.invocationCallOrder[0]).toBeLessThan(
+            persistStoreState.updateProductListUuids.mock.invocationCallOrder[0],
+        );
+        expect(dispatchBroadcastChannelMock).toHaveBeenCalledWith('reloadPage', 1);
+        expect(dispatchBroadcastChannelMock.mock.invocationCallOrder[0]).toBeLessThan(
+            persistStoreState.updateProductListUuids.mock.invocationCallOrder[0],
+        );
         expect(storeAuthNotificationMock).toHaveBeenCalledWith(1, 'login-with-cart-modifications');
         expect(performAuthHardNavigationMock).toHaveBeenCalledOnce();
         expect(performAuthHardNavigationMock).toHaveBeenCalledWith('/customer');
@@ -143,5 +157,21 @@ describe('useLogin', () => {
 
         expect(persistStoreState.updateLastLoginType).not.toHaveBeenCalled();
         expect(useSessionStore.getState().isCartStale).toBe(false);
+    });
+});
+
+describe('useLoginAfterPasswordRecovery', () => {
+    test('suspends and notifies before resetting list identity', () => {
+        vi.clearAllMocks();
+        const { result } = renderHook(() => useLoginAfterPasswordRecovery());
+        act(() => result.current(false));
+        expect(invalidateSessionMock).toHaveBeenCalledOnce();
+        expect(dispatchBroadcastChannelMock).toHaveBeenCalledWith('reloadPage', 1);
+        expect(invalidateSessionMock.mock.invocationCallOrder[0]).toBeLessThan(
+            persistStoreState.updateProductListUuids.mock.invocationCallOrder[0],
+        );
+        expect(dispatchBroadcastChannelMock.mock.invocationCallOrder[0]).toBeLessThan(
+            persistStoreState.updateProductListUuids.mock.invocationCallOrder[0],
+        );
     });
 });

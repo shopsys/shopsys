@@ -6,6 +6,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
+import { ProductListSummaryFragment } from '../fragments/ProductListSummaryFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeProductListInput = {
@@ -20,23 +21,22 @@ export type TypeProductListTypeEnum =
   | 'COMPARISON'
   | 'WISHLIST';
 
-export type TypeProductListCountQueryVariables = Exact<{
+export type TypeProductListSummaryQueryVariables = Exact<{
   input: Types.TypeProductListInput;
 }>;
 
 
-export type TypeProductListCountQuery = { productList: { uuid: string, itemsCount: number } | null };
+export type TypeProductListSummaryQuery = { productList: { __typename: 'ProductList', uuid: string, itemsCount: number, productUuids: Array<string> } | null };
 
 
-export const ProductListCountQueryDocument = gql`
-    query ProductListCountQuery($input: ProductListInput!) {
+export const ProductListSummaryQueryDocument = gql`
+    query ProductListSummaryQuery($input: ProductListInput!) {
   productList(input: $input) {
-    uuid
-    itemsCount
+    ...ProductListSummaryFragment
   }
 }
-    `;
+    ${ProductListSummaryFragment}`;
 
-export function useProductListCountQuery(options: Omit<Urql.UseQueryArgs<TypeProductListCountQueryVariables>, 'query'>) {
-  return Urql.useQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>({ query: ProductListCountQueryDocument, ...options });
+export function useProductListSummaryQuery(options: Omit<Urql.UseQueryArgs<TypeProductListSummaryQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeProductListSummaryQuery, TypeProductListSummaryQueryVariables>({ query: ProductListSummaryQueryDocument, ...options });
 };
