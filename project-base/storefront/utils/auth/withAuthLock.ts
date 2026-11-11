@@ -1,3 +1,5 @@
+import { useLogoutStore } from 'store/useLogoutStore';
+
 const AUTH_TIMEOUT = 10_000;
 
 const withAuthTimeout = async <T>(action: (signal: AbortSignal) => Promise<T>, message: string): Promise<T> => {
@@ -24,13 +26,37 @@ export const withAuthLock = async <T>(
     action: (signal: AbortSignal) => Promise<T>,
     timeoutMessage = 'Authentication request timed out',
 ): Promise<T> => {
-    const run = () => withAuthTimeout(action, timeoutMessage);
+    const getLogoutDeadline = () =>
+        typeof window === 'undefined' ? undefined : useLogoutStore.getState().logoutDeadlineByDomain[domainId];
+    const checkLogoutDeadline = () => {
+        const deadline = getLogoutDeadline();
+        if (deadline !== undefined && deadline <= Date.now()) {
+            throw new Error('Authentication lock timed out');
+        }
+    };
+    const run = () => {
+        checkLogoutDeadline();
+
+        return withAuthTimeout(action, timeoutMessage);
+    };
+    checkLogoutDeadline();
     if (typeof window === 'undefined' || typeof navigator === 'undefined' || !navigator.locks?.request) {
         return run();
     }
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), AUTH_TIMEOUT);
+    const waitStarted = Date.now();
+    let timeout: ReturnType<typeof setTimeout>;
+    const checkWaitTimeout = () => {
+        // A logout may start after an ordinary refresh has already queued for this lock.
+        const remaining = (getLogoutDeadline() ?? waitStarted + AUTH_TIMEOUT) - Date.now();
+        if (remaining > 0) {
+            timeout = setTimeout(checkWaitTimeout, remaining);
+        } else {
+            controller.abort();
+        }
+    };
+    timeout = setTimeout(checkWaitTimeout, AUTH_TIMEOUT);
     let lockAcquired = false;
 
     try {

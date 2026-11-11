@@ -25,6 +25,7 @@ type MenuIconicItemLinkProps = {
     ariaLabel?: string;
     ariaExpanded?: boolean;
     ariaHaspopup?: 'menu' | 'dialog';
+    disabled?: boolean;
 };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
@@ -35,6 +36,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     tid,
     isActive = false,
     ariaLabel,
+    disabled,
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
         'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:no-underline',
@@ -60,8 +62,10 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     return (
         <button
             aria-label={ariaLabel}
-            className={twJoin(menuIconicSubItemLinkTwClass, 'outline-hidden')}
+            className={twJoin(menuIconicSubItemLinkTwClass, 'outline-hidden disabled:cursor-wait')}
             data-tid={tid}
+            disabled={disabled}
+            aria-busy={disabled || undefined}
             tabIndex={0}
             onClick={onClick}
         >
