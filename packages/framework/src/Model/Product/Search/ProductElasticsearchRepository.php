@@ -37,6 +37,22 @@ class ProductElasticsearchRepository
         }, $result['hits']['hits']);
     }
 
+    /**
+     * @param array<string, mixed> $result
+     * @return array<int, array{id: int, uuid: string}>
+     */
+    public function extractProductIdentifiersFromFields(array $result): array
+    {
+        $identifiersById = [];
+
+        foreach ($result['hits']['hits'] as $hit) {
+            $id = (int)$hit['fields'][ProductExportFieldProvider::ID][0];
+            $identifiersById[$id] = ['id' => $id, 'uuid' => $hit['fields'][ProductExportFieldProvider::UUID][0]];
+        }
+
+        return $identifiersById;
+    }
+
     public function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];

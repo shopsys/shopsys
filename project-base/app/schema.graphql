@@ -2557,6 +2557,10 @@ type ProductList {
   itemsCount: Int!
   "An array of the products in the list"
   products: [Product!]!
+  "Paginated products visible on the current domain, in list order"
+  productsConnection(after: String, before: String, first: Int, last: Int): ProductListProductConnection!
+  "Ordered identifiers of products visible on the current domain"
+  productUuids: [Uuid!]!
   "Product list type"
   type: ProductListTypeEnum!
   "Product list identifier"
@@ -2582,6 +2586,24 @@ input ProductListMoveProductInput {
   productListInput: ProductListInput!
   "Product to move"
   productUuid: Uuid!
+}
+
+"A connection to a list of items."
+type ProductListProductConnection {
+  "Information to aid in pagination."
+  edges: [ProductListProductEdge]
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Total number of products visible on the current domain"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type ProductListProductEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Product
 }
 
 "One of possible types of the product list"

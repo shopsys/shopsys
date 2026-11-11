@@ -3098,12 +3098,24 @@ export type TypeProductList = {
   __typename?: 'ProductList';
   /** Count of products in the list that are visible on the current domain */
   itemsCount: Scalars['Int']['output'];
+  /** Ordered identifiers of products visible on the current domain */
+  productUuids: Array<Scalars['Uuid']['output']>;
   /** An array of the products in the list */
   products: Array<TypeProduct>;
+  /** Paginated products visible on the current domain, in list order */
+  productsConnection: TypeProductListProductConnection;
   /** Product list type */
   type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid: Scalars['Uuid']['output'];
+};
+
+
+export type TypeProductListProductsConnectionArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type TypeProductListInput = {
@@ -3119,6 +3131,26 @@ export type TypeProductListMoveProductInput = {
   productListInput: TypeProductListInput;
   /** Product to move */
   productUuid: Scalars['Uuid']['input'];
+};
+
+/** A connection to a list of items. */
+export type TypeProductListProductConnection = {
+  __typename?: 'ProductListProductConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeProductListProductEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Total number of products visible on the current domain */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeProductListProductEdge = {
+  __typename?: 'ProductListProductEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeProduct>;
 };
 
 /** One of possible types of the product list */

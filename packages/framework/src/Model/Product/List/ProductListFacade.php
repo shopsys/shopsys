@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\List;
 
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductNotInListException;
@@ -13,11 +14,14 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductListFacade
 {
+    protected const string PRODUCT_IDS_CACHE_NAMESPACE = 'productListProductIds';
+
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly ProductListFactory $productListFactory,
         protected readonly ProductListRepository $productListRepository,
         protected readonly ProductListItemFactory $productListItemFactory,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -40,6 +44,7 @@ class ProductListFacade
 
         $productList->addItem($newProductListItem);
         $this->entityManager->flush();
+        $this->inMemoryCache->deleteItem(static::PRODUCT_IDS_CACHE_NAMESPACE, $productList->getUuid());
 
         return $productList;
     }
@@ -57,6 +62,7 @@ class ProductListFacade
         $productListItem->setPosition($position);
         $productList->setUpdatedAtToNow();
         $this->entityManager->flush();
+        $this->inMemoryCache->deleteItem(static::PRODUCT_IDS_CACHE_NAMESPACE, $productList->getUuid());
 
         return $productList;
     }
@@ -72,7 +78,11 @@ class ProductListFacade
      */
     public function getProductIdsByProductList(ProductList $productList): array
     {
-        return $this->productListRepository->getProductIdsByProductList($productList);
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PRODUCT_IDS_CACHE_NAMESPACE,
+            fn (): array => $this->productListRepository->getProductIdsByProductList($productList),
+            $productList->getUuid(),
+        );
     }
 
     public function findProductListByTypeAndCustomerUser(
@@ -111,6 +121,7 @@ class ProductListFacade
         $productList->removeItem($productListItem);
         $this->entityManager->remove($productListItem);
         $this->entityManager->flush();
+        $this->inMemoryCache->deleteItem(static::PRODUCT_IDS_CACHE_NAMESPACE, $productList->getUuid());
 
         if ($productList->getItemsCount() === 0) {
             $this->entityManager->remove($productList);
@@ -126,11 +137,13 @@ class ProductListFacade
     {
         $this->entityManager->remove($productList);
         $this->entityManager->flush();
+        $this->inMemoryCache->deleteItem(static::PRODUCT_IDS_CACHE_NAMESPACE, $productList->getUuid());
     }
 
     public function removeOldAnonymousProductLists(DateTimeImmutable $olderThan): void
     {
         $this->productListRepository->removeOldAnonymousProductLists($olderThan);
+        $this->inMemoryCache->deleteAllItemsInNamespace(static::PRODUCT_IDS_CACHE_NAMESPACE);
     }
 
     /**
