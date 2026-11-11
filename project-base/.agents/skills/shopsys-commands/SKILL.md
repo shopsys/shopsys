@@ -58,6 +58,13 @@ docker compose exec php-fpm php bin/console <command>
 
 For the full list of Phing targets: `docker compose exec php-fpm php phing -l`.
 
+### Code-quality pitfalls
+
+- **Run coding standards through Phing, not `ecs check` on hand-picked files.** The skip rules in the ECS config match absolute paths, so `ecs check <relative/file>` reports false violations (e.g. the factory rule in test files, `FunctionLength` in old tests). `standards-fix` is the reference run.
+- **Phing is `php phing <target>`** — there is no `vendor/bin/phing`. When a Phing call is a prerequisite (e.g. `entities-dump`, which ECS reads), keep its output visible: discarding it hides a failed run, and a stale entity dump makes `ecs --fix` rewrite entities to typed properties.
+- **Run PHPStan on every changed file, tests included.** Test properties typed with the application class (`App\Model\…`) often receive framework-typed values and fail with `assign.propertyType` only in CI.
+- Don't run `--fix` on whole directories as a shortcut; it rewrites files you did not touch.
+
 ### Targeted backend tests
 
 Choose the owning test config. In a standalone project, Docker mounts host `app/`
