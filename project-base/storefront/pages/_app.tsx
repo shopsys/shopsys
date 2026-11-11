@@ -9,6 +9,7 @@ import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider'
 import { CurrentCustomerUserProvider } from 'components/providers/CurrentCustomerUserProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { PersistStoreProvider } from 'components/providers/PersistStoreProvider';
+import { ProductListsProvider } from 'components/providers/ProductListsProvider';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { GtmProvider } from 'gtm/context/GtmProvider';
 import { AppProps as NextAppProps } from 'next/app';
@@ -109,21 +110,23 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                                 <PersistStoreProvider>
                                     <DeferredToastContainer />
                                     <CurrentCustomerUserProvider>
-                                        <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                                            <GtmProvider ipAddress={pageProps.ipAddress}>
-                                                <MotionConfig reducedMotion="user">
-                                                    <LazyMotion features={framerMotionPlugins}>
-                                                        <RouteAccessibilityManager>
-                                                            <RouteAnnouncer />
-                                                            <AppPageContent
-                                                                Component={Component}
-                                                                pageProps={pageProps}
-                                                            />
-                                                        </RouteAccessibilityManager>
-                                                    </LazyMotion>
-                                                </MotionConfig>
-                                            </GtmProvider>
-                                        </AuthorizationProvider>
+                                        <ProductListsProvider>
+                                            <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                                                <GtmProvider ipAddress={pageProps.ipAddress}>
+                                                    <MotionConfig reducedMotion="user">
+                                                        <LazyMotion features={framerMotionPlugins}>
+                                                            <RouteAccessibilityManager>
+                                                                <RouteAnnouncer />
+                                                                <AppPageContent
+                                                                    Component={Component}
+                                                                    pageProps={pageProps}
+                                                                />
+                                                            </RouteAccessibilityManager>
+                                                        </LazyMotion>
+                                                    </MotionConfig>
+                                                </GtmProvider>
+                                            </AuthorizationProvider>
+                                        </ProductListsProvider>
                                     </CurrentCustomerUserProvider>
                                 </PersistStoreProvider>
                             </DomainConfigProvider>

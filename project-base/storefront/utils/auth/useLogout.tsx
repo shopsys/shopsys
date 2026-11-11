@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useProductLists } from 'components/providers/ProductListsProvider';
 import { useLogoutMutation } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
 import { toast } from 'react-toastify';
 import { useLogoutStore } from 'store/useLogoutStore';
@@ -16,6 +17,7 @@ import { v4 as uuid } from 'uuid';
 
 export const useLogout = () => {
     const { t } = useTranslation();
+    const { invalidateSession } = useProductLists();
     const [, logoutMutation] = useLogoutMutation();
 
     const resetContactInformation = usePersistStore((s) => s.resetContactInformation);
@@ -76,11 +78,12 @@ export const useLogout = () => {
             );
 
             if (logoutResult.data?.Logout) {
+                invalidateSession();
+                dispatchBroadcastChannel('reloadPage', domainId);
                 resetContactInformation();
                 clearOrderConfirmationContext();
                 updateProductListUuids({});
                 storeAuthNotification(domainId, 'logout');
-                dispatchBroadcastChannel('reloadPage', domainId);
                 isLogoutSuccessful = true;
                 performAuthHardNavigation();
             } else {
