@@ -267,10 +267,17 @@ class ProductAvailabilityFacade
             $quantifiedProducts,
         );
 
-        foreach ($quantifiedProducts as $quantifiedProduct) {
-            $stockQuantity = $stockQuantitiesIndexedByProductIdAndStockId[$quantifiedProduct->getProduct()->getId()][$stock->getId()] ?? 0;
+        $quantitiesByProductId = [];
 
-            if ($quantifiedProduct->getQuantity() > $stockQuantity) {
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $productId = $quantifiedProduct->getProduct()->getId();
+            $quantitiesByProductId[$productId] = ($quantitiesByProductId[$productId] ?? 0) + $quantifiedProduct->getQuantity();
+        }
+
+        foreach ($quantitiesByProductId as $productId => $quantity) {
+            $stockQuantity = $stockQuantitiesIndexedByProductIdAndStockId[$productId][$stock->getId()] ?? 0;
+
+            if ($quantity > $stockQuantity) {
                 return true;
             }
         }
