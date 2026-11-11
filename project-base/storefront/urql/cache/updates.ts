@@ -59,7 +59,7 @@ import {
     TypeCreateOrderMutation,
     TypeCreateOrderMutationVariables,
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { TypeProductListSummaryFragment } from 'graphql/requests/productLists/fragments/ProductListSummaryFragment.generated';
 import {
     TypeAddProductToListMutation,
     TypeAddProductToListMutationVariables,
@@ -76,16 +76,12 @@ import {
     TypeRemoveProductListMutation,
     TypeRemoveProductListMutationVariables,
 } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
+
 import {
-    ProductListCountQueryDocument,
-    TypeProductListCountQuery,
-    TypeProductListCountQueryVariables,
-} from 'graphql/requests/productLists/queries/ProductListCountQuery.generated';
-import {
-    ProductListQueryDocument,
-    TypeProductListQuery,
-    TypeProductListQueryVariables,
-} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+    ProductListSummaryQueryDocument,
+    TypeProductListSummaryQuery,
+    TypeProductListSummaryQueryVariables,
+} from 'graphql/requests/productLists/queries/ProductListSummaryQuery.generated';
 import {
     TypeRegistrationByOrderMutation,
     TypeRegistrationByOrderMutationVariables,
@@ -192,27 +188,42 @@ export const cacheUpdates: UpdatesConfig = {
         ) {
             manuallyUpdateCartQuery(cache, result.RemoveCodeFromCart, result.RemoveCodeFromCart.uuid);
         },
-        MoveProductInList(result: TypeMoveProductInListMutation, args: TypeMoveProductInListMutationVariables, cache) {
-            if (result.MoveProductInList) {
+        MoveProductInList(
+            result: TypeMoveProductInListMutation,
+            args: TypeMoveProductInListMutationVariables,
+            cache,
+            info,
+        ) {
+            if (!info.error && result.MoveProductInList) {
                 manuallyUpdateProductListQuery(args.input.productListInput, result.MoveProductInList, cache);
             }
         },
-        AddProductToList(result: TypeAddProductToListMutation, args: TypeAddProductToListMutationVariables, cache) {
+        AddProductToList(
+            result: TypeAddProductToListMutation,
+            args: TypeAddProductToListMutationVariables,
+            cache,
+            info,
+        ) {
+            if (info.error || !result.AddProductToList) return;
             manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
         },
         RemoveProductFromList(
             result: TypeRemoveProductFromListMutation,
             args: TypeRemoveProductFromListMutationVariables,
             cache,
+            info,
         ) {
-            if (result.RemoveProductFromList === null) {
-                manuallyRemoveProductListQuery(cache, args.input.productListInput);
-            } else {
-                manuallyUpdateProductListQuery(args.input.productListInput, result.RemoveProductFromList, cache);
-            }
+            if (info.error) return;
+            manuallyUpdateProductListQuery(args.input.productListInput, result.RemoveProductFromList, cache);
         },
-        RemoveProductList(_result: TypeRemoveProductListMutation, args: TypeRemoveProductListMutationVariables, cache) {
-            manuallyRemoveProductListQuery(cache, args.input);
+        RemoveProductList(
+            _result: TypeRemoveProductListMutation,
+            args: TypeRemoveProductListMutationVariables,
+            cache,
+            info,
+        ) {
+            if (info.error) return;
+            manuallyUpdateProductListQuery(args.input, null, cache);
         },
         ChangePaymentInOrder(_result, _args, cache) {
             invalidateFields(cache, ['order']);
@@ -284,61 +295,18 @@ const manuallyUpdateCurrentCustomerUserDeliveryAddresses = (
     );
 };
 
-const manuallyRemoveProductListQuery = (cache: Cache, args: TypeProductListInput) => {
-    const nullData = { __typename: 'Query' as const, productList: null };
-
-    cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
-        { query: ProductListQueryDocument, variables: { input: args } },
-        () => nullData,
-    );
-    cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
-        { query: ProductListCountQueryDocument, variables: { input: args } },
-        () => nullData,
-    );
-
-    // Also clear the cache entry for uuid: null, which may have been written
-    // by the dual-write in manuallyUpdateProductListQuery when the list was first created
-    if (args.uuid) {
-        const nullUuidInput = { type: args.type, uuid: null };
-        cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
-            { query: ProductListQueryDocument, variables: { input: nullUuidInput } },
-            () => nullData,
-        );
-        cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
-            { query: ProductListCountQueryDocument, variables: { input: nullUuidInput } },
-            () => nullData,
-        );
-    }
-};
-
-const manuallyUpdateProductListQuery = (input: TypeProductListInput, result: TypeProductListFragment, cache: Cache) => {
-    const uuid = input.uuid ?? result.uuid;
-    const queryInput = { type: input.type, uuid };
-    const countData = {
-        __typename: 'Query' as const,
-        productList: { __typename: 'ProductList' as const, uuid, itemsCount: result.products.length },
-    };
-
-    cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
-        { query: ProductListQueryDocument, variables: { input: queryInput } },
-        () => ({ __typename: 'Query', productList: result }),
-    );
-    cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
-        { query: ProductListCountQueryDocument, variables: { input: queryInput } },
-        () => countData,
-    );
-
-    // When the mutation was sent with a different UUID than what the result contains
-    // (e.g. null UUID when creating a new list), also update the cache entry
-    // that the count query hook is currently subscribed to
-    if (input.uuid !== uuid) {
-        const originalInput = { type: input.type, uuid: input.uuid ?? null };
-        cache.updateQuery<TypeProductListCountQuery, TypeProductListCountQueryVariables>(
-            { query: ProductListCountQueryDocument, variables: { input: originalInput } },
-            () => countData,
-        );
-        cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(
-            { query: ProductListQueryDocument, variables: { input: originalInput } },
+const manuallyUpdateProductListQuery = (
+    input: TypeProductListInput,
+    result: TypeProductListSummaryFragment | null,
+    cache: Cache,
+) => {
+    const selectedInput = { type: input.type, uuid: input.uuid ?? null };
+    const uuid = result ? (selectedInput.uuid ?? result.uuid) : null;
+    // Creating a list links its UUID; deleting it also clears lookup by the current account.
+    const inputs = selectedInput.uuid === uuid ? [selectedInput] : [selectedInput, { type: input.type, uuid }];
+    for (const queryInput of inputs) {
+        cache.updateQuery<TypeProductListSummaryQuery, TypeProductListSummaryQueryVariables>(
+            { query: ProductListSummaryQueryDocument, variables: { input: queryInput } },
             () => ({ __typename: 'Query', productList: result }),
         );
     }

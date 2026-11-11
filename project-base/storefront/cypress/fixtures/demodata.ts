@@ -200,6 +200,7 @@ export const url = {
     stores: route['/stores'] as string,
     contactForm: route['/contact-form'] as string,
     productComparison: route['/product-comparison'] as string,
+    wishlist: route['/wishlist'] as string,
     order: {
         transportAndPayment: route['/order/transport-and-payment'] as string,
         contactInformation: route['/order/contact-information'] as string,

@@ -3,12 +3,14 @@ import { useLogout } from 'utils/auth/useLogout';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const {
+    invalidateSessionMock,
     dispatchBroadcastChannelMock,
     logoutMutationMock,
     performAuthHardNavigationMock,
     persistStoreState,
     storeAuthNotificationMock,
 } = vi.hoisted(() => ({
+    invalidateSessionMock: vi.fn(),
     dispatchBroadcastChannelMock: vi.fn(),
     logoutMutationMock: vi.fn(),
     performAuthHardNavigationMock: vi.fn(),
@@ -17,6 +19,10 @@ const {
         updateProductListUuids: vi.fn(),
     },
     storeAuthNotificationMock: vi.fn(),
+}));
+
+vi.mock('components/providers/ProductListsProvider', () => ({
+    useProductLists: () => ({ invalidateSession: invalidateSessionMock }),
 }));
 
 vi.mock('components/providers/DomainConfigProvider', () => ({
@@ -60,6 +66,14 @@ describe('useLogout', () => {
             await result.current();
         });
 
+        expect(invalidateSessionMock).toHaveBeenCalledOnce();
+        expect(invalidateSessionMock.mock.invocationCallOrder[0]).toBeLessThan(
+            persistStoreState.updateProductListUuids.mock.invocationCallOrder[0],
+        );
+        expect(dispatchBroadcastChannelMock).toHaveBeenCalledWith('reloadPage', 1);
+        expect(dispatchBroadcastChannelMock.mock.invocationCallOrder[0]).toBeLessThan(
+            persistStoreState.updateProductListUuids.mock.invocationCallOrder[0],
+        );
         expect(storeAuthNotificationMock).toHaveBeenCalledWith(1, 'logout');
         expect(performAuthHardNavigationMock).toHaveBeenCalledOnce();
         expect(performAuthHardNavigationMock).toHaveBeenCalledWith();
