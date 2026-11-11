@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    backupGlobals="false"
+    bootstrap="tests/autoload.php"
+    colors="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    failOnWarning="true"
+    failOnNotice="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
+    failOnPhpunitNotice="true"
+    displayDetailsOnPhpunitNotices="true"
+    failOnDeprecation="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    failOnPhpunitDeprecation="true"
+    displayDetailsOnPhpunitDeprecations="true"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
+>
+  <testsuites>
+    <testsuite name="Unit">
+      <directory>tests/Unit</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <ini name="error_reporting" value="24575"/>
+  </php>
+  <source/>
+</phpunit>

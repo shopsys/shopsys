@@ -43,7 +43,6 @@
         "arvenil/ninja-mutex": "^0.6",
         "giggsey/libphonenumber-for-php": "^8.13",
         "barryvdh/elfinder-flysystem-driver": "^0.5",
-        "becklyn/ordered-form-bundle": "^1.4",
         "brick/math": "^0.12",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",

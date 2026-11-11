@@ -78,7 +78,7 @@ and blocks of custom form widgets for various [FormTypes](../introduction/using-
 
 ## Changing order of groups and fields
 
-Thanks to the usage of [Becklyn/OrderedFormBundle](https://github.com/Becklyn/OrderedFormBundle), all form types contain an option called `position`.
+All form types contain an option called `position` provided by the `shopsys/form-types-bundle` package (the implementation was taken over from [Becklyn/OrderedFormBundle](https://github.com/Becklyn/OrderedFormBundle)).
 With this option, you can specify the position of your group or field **on the same hierarchical layer**.
 
 Option `position` can contain four different values:
