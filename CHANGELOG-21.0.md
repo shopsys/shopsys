@@ -40,4 +40,3 @@ You can see all the changes done to the package that you carry about with this t
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
 <!-- Add generated changelog below this line -->
-
