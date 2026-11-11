@@ -1,0 +1,13 @@
+query ProductListRepeatedMembershipQuery($uuid: Uuid!) {
+    productList(input: {uuid: $uuid, type: WISHLIST}) {
+        first: productUuids
+        second: productUuids
+        third: productUuids
+        fourth: productUuids
+        fifth: productUuids
+        sixth: productUuids
+        seventh: productUuids
+        eighth: productUuids
+        ninth: productUuids
+    }
+}

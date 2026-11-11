@@ -13,7 +13,18 @@ ProductListDecorator:
                 type: "Int!"
                 description: "Count of products in the list that are visible on the current domain"
                 resolve: '@=query("productsCountByProductListQuery", value)'
+            productUuids:
+                type: "[Uuid!]!"
+                description: "Ordered identifiers of products visible on the current domain"
+                resolve: '@=query("productUuidsByProductListQuery", value)'
+                # Allow at most eight complete membership snapshots within the default 1700-point budget.
+                complexity: '@=200'
             products:
                 type: "[Product!]!"
                 description: "An array of the products in the list"
                 resolve: '@=query("productsByProductListQuery", value)'
+            productsConnection:
+                type: "ProductListProductConnection!"
+                description: "Paginated products visible on the current domain, in list order"
+                argsBuilder: "Relay::Connection"
+                resolve: '@=query("productsConnectionByProductListQuery", value, args)'
