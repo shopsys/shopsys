@@ -55,6 +55,8 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
     - `project-base/` and `utils/`: `final`, `private`, typehints & return types everywhere.
     - `packages/`: `protected` (not `private`), no typehints/return types in entities & data objects, no `final` (except FormType, which requires it) — because these are extended in project-base.
       Full detail → `.agents/skills/coding-conventions/SKILL.md`.
+- **Design conventions from the first line** — when planning and when implementing (not only in review): reuse an existing relation concept instead of a bespoke column or JSON, give every API field a consumer, keep names consistent across PHP/GraphQL/storefront/tests, no guards for impossible states, keep hot paths cheap. → `.agents/skills/coding-conventions/SKILL.md` (_Design conventions_)
+- **Self-review before handoff** — when an implementation is done and its checks pass, review your own diff with fresh eyes (parallel read-only subagents when available) and fix what is real, before reporting it or committing. → `.agents/skills/self-review/SKILL.md`
 - **Multi-domain/multi-language** is supported by default — consider it when changing entities, forms, and the API.
 - **Commits** — every commit or commit message you produce (incl. amend/reword/split, and commits made on the user's behalf by other skills) follows `.agents/skills/commit-conventions/SKILL.md`: atomic functional units, Shopsys message format, never `Co-Authored-By`. Interactive grouping of the working tree → `/commit`.
 
@@ -70,6 +72,7 @@ Think: "Can other Shopsys projects reuse this?" → Yes = `/packages/`, No = `/p
 
 - **Commands** (build, DB, tests, checks, schema, Mutagen) → `.agents/skills/shopsys-commands/SKILL.md`
 - **Coding conventions & docblocks** → `.agents/skills/coding-conventions/SKILL.md`
+- **Review your own finished change** (design, simplicity, naming, tests, upgrade notes) → `.agents/skills/self-review/SKILL.md`
 - **Find where code lives / how it works / example patterns** → `.agents/skills/codebase-locator`, `codebase-analyzer`, `codebase-pattern-finder`
 - **Deep research · plan · implement** → `.agents/skills/research-codebase`, `create-plan`, `implement-plan`
 - **Tests** — choose by product domain via `.agents/skills/test-writing/SKILL.md`: backend **including administration and Jest** → `.agents/skills/backend-tests/SKILL.md`; Next.js storefront **Vitest and Cypress routing** → `.agents/skills/storefront-tests/SKILL.md`. Cypress-specific work always uses `cypress-tests`; do not apply the Cypress toolkit to Vitest, Jest or PHPUnit.

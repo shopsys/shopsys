@@ -54,6 +54,9 @@ For EVERY changed file, verify each of these with zero assumptions:
 - Are all magic numbers/strings explained or extracted to constants?
 - Do commit messages and PR descriptions match what the code actually does?
 
+### Design conventions
+- Apply `.agents/skills/coding-conventions/SKILL.md` → *Design conventions* (data model, API, simplicity): is an existing concept reused, does every API field have a consumer, are names consistent across PHP/GraphQL/storefront/tests, is there a guard for a state nobody can create, a parallel flow next to an existing one, or a loop on a request hot path that adds queries?
+
 ### Logic & Correctness
 - Trace every code path manually - are there unreachable branches?
 - Check every conditional - are the operators correct? (`>` vs `>=`, `===` vs `==`, `&&` vs `||`)
