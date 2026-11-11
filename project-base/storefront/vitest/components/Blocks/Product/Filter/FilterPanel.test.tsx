@@ -356,7 +356,7 @@ describe('FilterPanel Component', () => {
     });
 
     describe('Clear All Functionality', () => {
-        test('clear all button resets all filters', async () => {
+        test('clear all button resets all filters and closes the mobile panel', async () => {
             const user = userEvent.setup();
             render(<FilterPanel {...defaultProps} />);
 
@@ -364,6 +364,7 @@ describe('FilterPanel Component', () => {
             await user.click(clearButton);
 
             expect(mockResetAllFilterQueries).toHaveBeenCalled();
+            expect(mockSetIsFilterPanelOpen).toHaveBeenCalledWith(false);
         });
 
         test('clear all button is keyboard accessible', async () => {

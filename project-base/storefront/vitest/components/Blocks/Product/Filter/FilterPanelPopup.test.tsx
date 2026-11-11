@@ -94,6 +94,7 @@ beforeEach(() => {
         isFilterPanelOpen: false,
         storedFocusElement: null,
         defaultProductFiltersMap: getEmptyDefaultProductFiltersMap(),
+        originalCategorySlug: undefined,
     });
     vi.mocked(useMediaMin).mockReturnValue(true);
     vi.mocked(useCurrentFilterQuery).mockReturnValue({ onlyInStock: true });
@@ -117,6 +118,62 @@ beforeEach(() => {
 });
 
 describe('Desktop filter popup', () => {
+    test.each([
+        { parameterCount: 0, limit: 0 },
+        { parameterCount: 0, limit: 5 },
+        { parameterCount: 1, limit: 1 },
+        { parameterCount: 7, limit: 7 },
+        { parameterCount: 7, limit: 20 },
+    ])(
+        'hides the popup shortcut when $parameterCount parameters fit within the limit $limit',
+        ({ parameterCount, limit }) => {
+            render(
+                <FilterPanel
+                    {...props}
+                    productFilterOptions={{
+                        ...props.productFilterOptions,
+                        parameters: props.productFilterOptions.parameters?.slice(0, parameterCount) ?? null,
+                        visibleFilterParametersCount: limit,
+                    }}
+                />,
+            );
+
+            expect(screen.queryByRole('button', { name: /^All filters/ })).not.toBeInTheDocument();
+            expect(screen.queryAllByRole('button', { name: /^Parameter/ })).toHaveLength(parameterCount);
+        },
+    );
+
+    test('keeps availability and price only in the sidebar', async () => {
+        const user = userEvent.setup();
+        render(<FilterPanel {...props} />);
+
+        await user.click(screen.getByRole('button', { name: /^All filters/ }));
+        const popup = await screen.findByRole('dialog');
+
+        expect(within(popup).queryByRole('tab', { name: /Availability|Price/ })).not.toBeInTheDocument();
+        expect(within(popup).queryByText('In stock')).not.toBeInTheDocument();
+        expect(within(popup).queryByText('Price')).not.toBeInTheDocument();
+    });
+
+    test('offers clearing SEO presets without URL filters and keeps the popup open during the redirect', async () => {
+        const user = userEvent.setup();
+        vi.mocked(useCurrentFilterQuery).mockReturnValue(null);
+        useSessionStore.setState({ originalCategorySlug: 'original-category' });
+        const { rerender } = render(<FilterPanel {...props} />);
+        await user.click(screen.getByRole('button', { name: /^All filters/ }));
+        const popup = await screen.findByRole('dialog');
+
+        await user.click(within(popup).getByRole('button', { name: 'Clear all active filters' }));
+        act(() => Router.events.emit('routeChangeStart', '/original-category', { shallow: true }));
+        act(() => useSessionStore.setState({ originalCategorySlug: undefined }));
+        rerender(<FilterPanel {...props} />);
+
+        expect(resetAllFilterQueries).toHaveBeenCalledOnce();
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        expect(within(popup).queryByRole('button', { name: 'Clear all active filters' })).not.toBeInTheDocument();
+        expect(within(popup).getByRole('button', { name: 'Show 42 products count' })).toHaveFocus();
+    });
+
     test('limits the sidebar to the first five parameters in category order', () => {
         const parameters = props.productFilterOptions.parameters ?? [];
         const { rerender } = render(<FilterPanel {...props} />);
@@ -127,7 +184,7 @@ describe('Desktop filter popup', () => {
                 .getAllByRole('button', { name: /^Parameter/ })
                 .map((button) => button.textContent),
         ).toEqual(['Parameter 0', 'Parameter 1', 'Parameter 2', 'Parameter 3', 'Parameter 4']);
-        expect(within(sidebar).getAllByRole('button', { name: 'All filters (9)' })).toHaveLength(1);
+        expect(within(sidebar).getAllByRole('button', { name: 'All filters (7)' })).toHaveLength(1);
 
         rerender(
             <FilterPanel
@@ -155,7 +212,7 @@ describe('Desktop filter popup', () => {
         expect(within(sidebar).queryByRole('button', { name: 'Parameter 1' })).not.toBeInTheDocument();
     });
 
-    test.each([0, 2, 5, 20])('shows the configured %i parameters and keeps all groups in the popup', async (count) => {
+    test.each([0, 2, 5])('shows the configured %i parameters and keeps all groups in the popup', async (count) => {
         const user = userEvent.setup();
         render(
             <FilterPanel
@@ -174,7 +231,7 @@ describe('Desktop filter popup', () => {
         await user.click(within(sidebar).getByRole('button', { name: /^All filters/ }));
         const popup = await screen.findByRole('dialog');
 
-        expect(within(popup).getAllByRole('tab')).toHaveLength(9);
+        expect(within(popup).getAllByRole('tab')).toHaveLength(7);
         expect(within(popup).getByRole('tab', { name: 'Parameter 6' })).toBeInTheDocument();
     });
 
@@ -193,7 +250,7 @@ describe('Desktop filter popup', () => {
         expect(within(sidebar).getByRole('button', { name: 'Parameter 0' })).toBeInTheDocument();
         expect(within(sidebar).getByText('Price')).toBeInTheDocument();
         expect(within(sidebar).getByText('In stock')).toBeInTheDocument();
-        expect(within(sidebar).getAllByRole('button', { name: 'All filters (3)' })).toHaveLength(1);
+        expect(within(sidebar).queryByRole('button', { name: /^All filters/ })).not.toBeInTheDocument();
     });
 
     test('the lower shortcut opens all groups and restores focus to itself', async () => {
@@ -203,7 +260,7 @@ describe('Desktop filter popup', () => {
 
         await user.click(opener);
         const popup = await screen.findByRole('dialog');
-        expect(within(popup).getAllByRole('tab')).toHaveLength(9);
+        expect(within(popup).getAllByRole('tab')).toHaveLength(7);
         await user.keyboard('{Escape}');
 
         await waitFor(() => expect(opener).toHaveFocus());
@@ -217,7 +274,7 @@ describe('Desktop filter popup', () => {
         await user.click(opener);
         const popup = await screen.findByRole('dialog', { name: 'Product filter' });
 
-        expect(within(popup).getAllByRole('tab')).toHaveLength(9);
+        expect(within(popup).getAllByRole('tab')).toHaveLength(7);
         expect(within(popup).getByRole('region', { name: 'Product filters' })).toBeInTheDocument();
         expect(within(popup).getByRole('heading', { name: 'Product filter' })).toHaveFocus();
         await user.click(within(popup).getByRole('tab', { name: 'Parameter 6' }));
@@ -252,16 +309,21 @@ describe('Desktop filter popup', () => {
         expect(resetAllFilterQueries).not.toHaveBeenCalled();
     });
 
-    test('clear all resets the URL filters and closes the popup', async () => {
+    test('clear all resets the URL filters and keeps the popup open', async () => {
         const user = userEvent.setup();
-        render(<FilterPanel {...props} />);
+        const { rerender } = render(<FilterPanel {...props} />);
         await user.click(screen.getByRole('button', { name: /^All filters/ }));
         const popup = await screen.findByRole('dialog');
 
         await user.click(within(popup).getByRole('button', { name: 'Clear all active filters' }));
 
         expect(resetAllFilterQueries).toHaveBeenCalledOnce();
-        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        vi.mocked(useCurrentFilterQuery).mockReturnValue(null);
+        rerender(<FilterPanel {...props} />);
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        expect(within(popup).queryByRole('button', { name: 'Clear all active filters' })).not.toBeInTheDocument();
+        expect(within(popup).getByRole('button', { name: 'Show 42 products count' })).toHaveFocus();
     });
 
     test('retains an open popup and selects an available group if the selected group disappears', async () => {
@@ -270,11 +332,19 @@ describe('Desktop filter popup', () => {
         await user.click(screen.getByRole('button', { name: /^All filters/ }));
         await screen.findByRole('dialog');
 
-        rerender(<FilterPanel {...props} categoryAutomatedFilters={[TypeCategoryAutomatedFilterEnum.OnStock]} />);
+        rerender(
+            <FilterPanel
+                {...props}
+                productFilterOptions={{
+                    ...props.productFilterOptions,
+                    parameters: props.productFilterOptions.parameters?.slice(1) ?? null,
+                }}
+            />,
+        );
 
         expect(screen.getByRole('dialog')).toBeInTheDocument();
-        expect(screen.queryByRole('tab', { name: /Availability/ })).not.toBeInTheDocument();
-        expect(screen.getByRole('tabpanel', { name: 'Price' })).toBeInTheDocument();
+        expect(screen.queryByRole('tab', { name: 'Parameter 0' })).not.toBeInTheDocument();
+        expect(screen.getByRole('tabpanel', { name: 'Parameter 1' })).toBeInTheDocument();
     });
 
     test('closes on page navigation and keeps the next category behind the same opener', async () => {
@@ -327,7 +397,7 @@ describe('Desktop filter popup', () => {
         render(<FilterPanel {...props} />);
         await user.click(screen.getByRole('button', { name: /^All filters/ }));
         const popup = await screen.findByRole('dialog');
-        const availability = within(popup).getByRole('tab', { name: /Availability/ });
+        const availability = within(popup).getByRole('tab', { name: 'Parameter 0' });
         await user.click(availability);
 
         await user.keyboard('{End}');
@@ -404,13 +474,17 @@ describe('Desktop filter popup', () => {
                     ...props.productFilterOptions,
                     inStock: 0,
                     maximalPrice: '10',
-                    parameters: [],
+                    parameters:
+                        props.productFilterOptions.parameters?.map((parameter) => ({
+                            ...parameter,
+                            values: [],
+                        })) ?? null,
                 }}
             />,
         );
         await user.click(screen.getByRole('button', { name: /^All filters/ }));
         const popup = await screen.findByRole('dialog');
-        const selected = within(popup).getByRole('tab', { name: /Availability/ });
+        const selected = within(popup).getByRole('tab', { name: 'Parameter 0' });
         expect(selected).toHaveAttribute('tabindex', '0');
         expect(selected).toHaveAttribute('aria-disabled', 'true');
         expect(selected).not.toBeDisabled();

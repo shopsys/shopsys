@@ -166,17 +166,32 @@ beforeEach(() => {
 });
 
 describe('Primary filters alongside the complete popup', () => {
+    test('keeps flags outside the parameter limit even when no parameters are shown in the sidebar', () => {
+        render(
+            <FilterPanel
+                {...props}
+                productFilterOptions={{ ...props.productFilterOptions, visibleFilterParametersCount: 0 }}
+            />,
+        );
+        const sidebar = screen.getByRole('region', { name: 'Product filters' });
+
+        expect(within(sidebar).getByRole('checkbox', { name: /Action/ })).toBeInTheDocument();
+        expect(within(sidebar).getByRole('checkbox', { name: /LG/ })).toBeInTheDocument();
+        expect(within(sidebar).queryByText('Material')).not.toBeInTheDocument();
+        expect(within(sidebar).getByRole('button', { name: 'All filters (8)' })).toBeInTheDocument();
+    });
+
     test('keeps popup labels attached to their own controls for all shared filter types', async () => {
         const user = userEvent.setup();
         const { container } = render(<FilterPanel {...props} />);
         const sidebar = screen.getByRole('region', { name: 'Product filters' });
         expect(within(sidebar).queryByText('Advanced')).not.toBeInTheDocument();
-        expect(within(sidebar).queryByText('Action')).not.toBeInTheDocument();
+        expect(within(sidebar).getByText('Action')).toBeInTheDocument();
         await user.click(screen.getByRole('button', { name: /^All filters/ }));
         const popup = await screen.findByRole('dialog');
         expect(within(popup).getByRole('tab', { name: /^Advanced/ })).toBeInTheDocument();
 
-        for (const name of ['Availability', 'Price', 'Flags', 'Brands', 'Material', 'Color', 'Screen size']) {
+        for (const name of ['Flags', 'Brands', 'Material', 'Color', 'Screen size']) {
             await user.click(within(popup).getByRole('tab', { name }));
             const panel = within(popup).getByRole('tabpanel');
             const labels = Array.from(panel.querySelectorAll<HTMLLabelElement>('label[for]'));
@@ -199,18 +214,18 @@ describe('Primary filters alongside the complete popup', () => {
         const sidebar = screen.getByRole('region', { name: 'Product filters' });
         expect(within(sidebar).getByRole('checkbox', { name: 'In stock' })).toBeEnabled();
         await user.click(screen.getByRole('button', { name: /^All filters/ }));
-        const popup = await screen.findByRole('dialog');
-        const stock = within(popup).getByRole('checkbox', { name: 'In stock' });
+        await screen.findByRole('dialog');
+        const stock = within(sidebar).getByRole('checkbox', { name: 'In stock' });
         expect(stock).toBeChecked();
-        await user.click(within(popup).getByText('In stock', { exact: true }));
+        await user.keyboard('{Escape}');
+        await user.click(within(sidebar).getByText('In stock', { exact: true }));
         expect(updateFilterInStockQuery).toHaveBeenCalledExactlyOnceWith(false);
 
         vi.mocked(useCurrentFilterQuery).mockReturnValue(null);
         rerender(<FilterPanel {...zeroStockProps} />);
 
         expect(within(sidebar).getByRole('checkbox', { name: 'In stock' })).toBeDisabled();
-        expect(within(popup).getByRole('tab', { name: /Availability/ })).toHaveAttribute('aria-disabled', 'true');
-        expect(within(popup).getByRole('status')).toBeInTheDocument();
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
 
     test('synchronizes a single numeric value between sidebar and popup', async () => {
@@ -253,55 +268,55 @@ describe('Primary filters alongside the complete popup', () => {
         { value: 0, isDesktop: true },
         { value: 2, isDesktop: false },
         { value: 0, isDesktop: false },
-    ])('shows the numeric SEO preset $value as checked and locked (desktop: $isDesktop)', async ({
-        value,
-        isDesktop,
-    }) => {
-        const user = userEvent.setup();
-        vi.mocked(useMediaMin).mockReturnValue(isDesktop);
-        render(
-            <FilterPanel
-                {...props}
-                originalSlug="original-category"
-                productFilterOptions={{
-                    ...props.productFilterOptions,
-                    parameters:
-                        props.productFilterOptions.parameters?.map((parameter) =>
-                            parameter.__typename === 'ParameterSliderFilterOption'
-                                ? {
-                                      ...parameter,
-                                      minimalValue: value,
-                                      maximalValue: value,
-                                      selectedValue: value,
-                                      isSelectable: false,
-                                  }
-                                : parameter,
-                        ) ?? null,
-                }}
-            />,
-        );
-        const filters = screen.getByRole('region', { name: 'Product filters' });
-        const checkbox = within(filters).getByRole('checkbox', { name: String(value) });
-        expect(checkbox).toBeChecked();
-        expect(checkbox).toBeDisabled();
+    ])(
+        'shows the numeric SEO preset $value as checked and locked (desktop: $isDesktop)',
+        async ({ value, isDesktop }) => {
+            const user = userEvent.setup();
+            vi.mocked(useMediaMin).mockReturnValue(isDesktop);
+            render(
+                <FilterPanel
+                    {...props}
+                    originalSlug="original-category"
+                    productFilterOptions={{
+                        ...props.productFilterOptions,
+                        parameters:
+                            props.productFilterOptions.parameters?.map((parameter) =>
+                                parameter.__typename === 'ParameterSliderFilterOption'
+                                    ? {
+                                          ...parameter,
+                                          minimalValue: value,
+                                          maximalValue: value,
+                                          selectedValue: value,
+                                          isSelectable: false,
+                                      }
+                                    : parameter,
+                            ) ?? null,
+                    }}
+                />,
+            );
+            const filters = screen.getByRole('region', { name: 'Product filters' });
+            const checkbox = within(filters).getByRole('checkbox', { name: String(value) });
+            expect(checkbox).toBeChecked();
+            expect(checkbox).toBeDisabled();
 
-        if (isDesktop) {
-            await user.click(within(filters).getByRole('button', { name: /^All filters/ }));
-            const popup = await screen.findByRole('dialog');
-            const tab = within(popup).getByRole('tab', { name: /^Screen size/ });
-            expect(tab).toHaveAttribute('aria-disabled', 'false');
-            expect(within(tab).getByLabelText('Active filters')).toBeInTheDocument();
-            await user.click(tab);
-            const popupCheckbox = within(within(popup).getByRole('tabpanel')).getByRole('checkbox', {
-                name: String(value),
-            });
-            expect(popupCheckbox).toBeChecked();
-            expect(popupCheckbox).toBeDisabled();
-        }
+            if (isDesktop) {
+                await user.click(within(filters).getByRole('button', { name: /^All filters/ }));
+                const popup = await screen.findByRole('dialog');
+                const tab = within(popup).getByRole('tab', { name: /^Screen size/ });
+                expect(tab).toHaveAttribute('aria-disabled', 'false');
+                expect(within(tab).getByLabelText('Active filters')).toBeInTheDocument();
+                await user.click(tab);
+                const popupCheckbox = within(within(popup).getByRole('tabpanel')).getByRole('checkbox', {
+                    name: String(value),
+                });
+                expect(popupCheckbox).toBeChecked();
+                expect(popupCheckbox).toBeDisabled();
+            }
 
-        await user.click(checkbox);
-        expect(updateFilterParametersQuery).not.toHaveBeenCalled();
-    });
+            await user.click(checkbox);
+            expect(updateFilterParametersQuery).not.toHaveBeenCalled();
+        },
+    );
 
     test.each([true, false])('keeps a numeric SEO range locked (desktop: %s)', async (isDesktop) => {
         const user = userEvent.setup();

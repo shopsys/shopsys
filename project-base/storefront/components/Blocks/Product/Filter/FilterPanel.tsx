@@ -48,16 +48,18 @@ export const FilterPanel: FC<FilterPanelProps> = ({
     const currentFilter = useCurrentFilterQuery();
     const isDesktop = useMediaMin('vl') === true;
     const popupId = useId();
+    const showResultsButtonId = useId();
     const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
     const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
     const restoreStoredFocus = useSessionStore((s) => s.restoreStoredFocus);
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
+    const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
     const shouldDisplayInStockFilter = !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     const createFilterGroups = (isStandalone: boolean): FilterPanelGroup[] => {
         const idPrefix = isStandalone ? popupId : '';
         const filterGroups: FilterPanelGroup[] = [];
-        if (shouldDisplayInStockFilter) {
+        if (!isStandalone && shouldDisplayInStockFilter) {
             filterGroups.push({
                 id: 'availability',
                 title: t('Availability'),
@@ -66,7 +68,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 content: <FilterGroupInStock idPrefix={idPrefix} inStockCount={filterOptions.inStock} />,
             });
         }
-        if (isPriceVisible(filterOptions.minimalPrice)) {
+        if (!isStandalone && isPriceVisible(filterOptions.minimalPrice)) {
             const isActive = currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined;
             filterGroups.push({
                 id: 'price',
@@ -179,12 +181,15 @@ export const FilterPanel: FC<FilterPanelProps> = ({
     const primaryGroupIds = [
         'availability',
         'price',
+        'flags',
         'brands',
         ...(filterOptions.parameters
             ?.slice(0, filterOptions.visibleFilterParametersCount)
             .map((parameter) => parameter.uuid) ?? []),
     ];
     const primaryGroups = filterGroups.filter((group) => primaryGroupIds.includes(group.id));
+    const hasHiddenParameters = (filterOptions.parameters?.length ?? 0) > filterOptions.visibleFilterParametersCount;
+    const popupGroups = createFilterGroups(true);
 
     useEffect(() => {
         const closeOnNavigation = (_url: string, { shallow }: { shallow: boolean }) => {
@@ -205,8 +210,13 @@ export const FilterPanel: FC<FilterPanelProps> = ({
     };
 
     const handleClearAllFiltersClick = () => {
+        if (isDesktop) {
+            document.getElementById(showResultsButtonId)?.focus();
+        }
         resetAllFilterQueries();
-        closeFilterPanel();
+        if (!isDesktop) {
+            closeFilterPanel();
+        }
     };
 
     const footer = (
@@ -217,7 +227,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     : 'flex w-full flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-background-more px-5 py-4'
             }
         >
-            {currentFilter !== null && (
+            {(currentFilter !== null || !!originalCategorySlug) && (
                 <Button
                     aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                     size="large"
@@ -228,7 +238,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     {t('Clear all')}
                 </Button>
             )}
-            <Button className="ml-auto" size="large" onClick={closeFilterPanel}>
+            <Button className="ml-auto" id={showResultsButtonId} size="large" onClick={closeFilterPanel}>
                 {t('Show')} {totalCount} {t('products count', { count: totalCount })}
             </Button>
         </div>
@@ -290,15 +300,17 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                             ))}
                     </div>
                 </div>
-                <Button
-                    aria-haspopup="dialog"
-                    className="w-full"
-                    size="large"
-                    tid={TIDs.all_filters_button}
-                    onClick={() => setIsFilterPanelOpen(true)}
-                >
-                    {t('All filters')} ({filterGroups.length})
-                </Button>
+                {hasHiddenParameters && (
+                    <Button
+                        aria-haspopup="dialog"
+                        className="w-full"
+                        size="large"
+                        tid={TIDs.all_filters_button}
+                        onClick={() => setIsFilterPanelOpen(true)}
+                    >
+                        {t('All filters')} ({popupGroups.length})
+                    </Button>
+                )}
             </section>
             {isFilterPanelOpen &&
                 createPortal(
@@ -315,7 +327,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                             data-tid={TIDs.filter_panel}
                             id="filter-panel"
                         >
-                            <FilterPanelDesktopContent groups={createFilterGroups(true)} />
+                            <FilterPanelDesktopContent groups={popupGroups} />
                             {footer}
                         </section>
                     </Popup>,
