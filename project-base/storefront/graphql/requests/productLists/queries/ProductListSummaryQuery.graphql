@@ -1,0 +1,5 @@
+query ProductListSummaryQuery($input: ProductListInput!) {
+    productList(input: $input) {
+        ...ProductListSummaryFragment
+    }
+}

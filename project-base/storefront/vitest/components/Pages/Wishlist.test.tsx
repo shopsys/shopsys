@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import type { ReactNode } from 'react';
+import { getWishlistPageRange } from 'utils/productLists/wishlist/getWishlistPageRange';
 import { LOAD_MORE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
@@ -10,6 +12,8 @@ const mocks = vi.hoisted(() => ({
     replace: vi.fn(),
     productCount: 12,
     isProductListFetching: false,
+    hasProductListError: false,
+    partialProductCount: undefined as number | undefined,
 }));
 
 vi.mock('next/router', () => ({
@@ -103,13 +107,27 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
 }));
 
 vi.mock('utils/productLists/wishlist/useWishlist', () => ({
-    useWishlist: () => ({
-        isProductListFetching: mocks.isProductListFetching,
-        removeWishlist: vi.fn(),
-        wishlist: {
-            products: Array.from({ length: mocks.productCount }, (_, index) => ({ uuid: `product-${index}` })),
-        },
-    }),
+    useWishlist: () => ({ removeWishlist: vi.fn() }),
+    useWishlistPage: (requestedPage: number, requestedLoadMore: number) => {
+        const range = getWishlistPageRange(requestedPage, requestedLoadMore, mocks.productCount);
+        return {
+            ...range,
+            totalCount: mocks.productCount,
+            isProductListFetching: mocks.isProductListFetching,
+            hasProductListError: mocks.hasProductListError,
+            wishlist:
+                mocks.hasProductListError && mocks.partialProductCount === undefined
+                    ? undefined
+                    : {
+                          products: Array.from({ length: mocks.productCount }, (_, i) => ({
+                              uuid: `product-${i}`,
+                          })).slice(
+                              range.offset,
+                              range.offset + (mocks.partialProductCount ?? DEFAULT_PAGE_SIZE * (range.loadMore + 1)),
+                          ),
+                      },
+        };
+    },
 }));
 
 describe('Wishlist', () => {
@@ -117,6 +135,8 @@ describe('Wishlist', () => {
         mocks.query = {};
         mocks.productCount = 12;
         mocks.isProductListFetching = false;
+        mocks.hasProductListError = false;
+        mocks.partialProductCount = undefined;
     });
 
     test('renders the product list view mode toggle for a non-empty wishlist', () => {
@@ -267,6 +287,45 @@ describe('Wishlist', () => {
 
         expect(mocks.replace).not.toHaveBeenCalled();
         expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+    });
+
+    test('preserves a requested page after loading fails and restores its products on recovery', () => {
+        mocks.query = { page: '3' };
+        mocks.productCount = 0;
+        mocks.hasProductListError = true;
+        const { rerender } = render(<Wishlist />);
+
+        expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
+        expect(screen.queryByText(/Your wishlist is feeling empty/)).not.toBeInTheDocument();
+        expect(mocks.replace).not.toHaveBeenCalled();
+
+        mocks.hasProductListError = false;
+        mocks.productCount = 65;
+        rerender(<Wishlist />);
+
+        expect(screen.getByText('product-60')).toBeInTheDocument();
+        expect(within(screen.getByTestId('products-list')).getAllByRole('listitem')).toHaveLength(5);
+        expect(mocks.replace).not.toHaveBeenCalled();
+    });
+
+    test('shows a partial page failure without presenting unloaded pages as complete', () => {
+        mocks.query = { lm: '3' };
+        mocks.productCount = 120;
+        mocks.partialProductCount = 30;
+        mocks.hasProductListError = true;
+        const { rerender } = render(<Wishlist />);
+
+        expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
+        expect(within(screen.getByTestId('products-list')).getAllByRole('listitem')).toHaveLength(30);
+        expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+        expect(mocks.push).not.toHaveBeenCalled();
+
+        mocks.hasProductListError = false;
+        mocks.partialProductCount = undefined;
+        rerender(<Wishlist />);
+
+        expect(screen.queryByText('Something went wrong.')).not.toBeInTheDocument();
+        expect(within(screen.getByTestId('products-list')).getAllByRole('listitem')).toHaveLength(120);
     });
 
     test('hides pagination for a wishlist that fits on one page', () => {

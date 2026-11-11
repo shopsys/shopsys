@@ -1,0 +1,11 @@
+fragment WishlistPageFragment on ProductList {
+    __typename
+    uuid
+    productsConnection(after: $endCursor, first: $pageSize) {
+        edges {
+            node {
+                ...ListedProductFragment
+            }
+        }
+    }
+}

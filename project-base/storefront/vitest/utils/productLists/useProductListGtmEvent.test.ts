@@ -25,7 +25,10 @@ vi.mock('gtm/handlers/onGtmChangeProductListItemEventHandler', () => ({
 describe('useProductListGtmEvent', () => {
     test('should keep pending GTM context when repeated toggle is ignored', async () => {
         const product = { uuid: 'product-uuid' } as ProductInterfaceType;
-        const toggleProductInListMock = vi.fn().mockReturnValueOnce(true).mockReturnValueOnce(false);
+        const toggleProductInListMock = vi
+            .fn<() => Promise<void> | null>()
+            .mockReturnValueOnce(Promise.resolve())
+            .mockReturnValueOnce(null);
         const { result } = renderHook(() =>
             useProductListGtmEvent(GtmEventType.add_to_wishlist, GtmEventType.remove_from_wishlist),
         );
@@ -54,6 +57,37 @@ describe('useProductListGtmEvent', () => {
             3,
             GtmProductListNameType.category_detail,
             false,
+        );
+    });
+
+    test('forwards mutation completion and clears the context of a cancelled change', async () => {
+        const product = { uuid: 'cancelled-product' } as ProductInterfaceType;
+        const { result } = renderHook(() =>
+            useProductListGtmEvent(GtmEventType.add_to_wishlist, GtmEventType.remove_from_wishlist),
+        );
+        const cancelled = Promise.resolve(undefined);
+        expect(
+            result.current.toggleProductInListWithGtm(
+                product,
+                GtmProductListNameType.category_detail,
+                3,
+                () => cancelled,
+            ),
+        ).toBe(cancelled);
+        await cancelled;
+        result.current.toggleProductInListWithGtm(product, GtmProductListNameType.product_detail, 0, () =>
+            Promise.resolve(),
+        );
+        result.current.pushAddProductListGtmEvent(product.uuid);
+        await waitFor(() =>
+            expect(onGtmChangeProductListItemEventHandlerMock).toHaveBeenCalledWith(
+                GtmEventType.add_to_wishlist,
+                product,
+                domainConfigMock,
+                0,
+                GtmProductListNameType.product_detail,
+                false,
+            ),
         );
     });
 });
