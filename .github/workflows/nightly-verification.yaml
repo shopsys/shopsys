@@ -5,7 +5,7 @@ on:
             target-ref:
                 description: 'Branch to verify (dispatched in shopsys/shopsys and all split repositories)'
                 required: false
-                default: '20.0'
+                default: '21.0'
 # The nightly run is never cancelled by a newer one — it queues instead.
 concurrency:
     group: nightly-verification-${{ github.ref }}
@@ -37,7 +37,7 @@ jobs:
             -   name: Resolve target ref
                 id: ref
                 env:
-                    INPUT_TARGET_REF: ${{ github.event.inputs.target-ref || '20.0' }}
+                    INPUT_TARGET_REF: ${{ github.event.inputs.target-ref || '21.0' }}
                 run: echo "target-ref=$INPUT_TARGET_REF" >> "$GITHUB_OUTPUT"
             -   name: Collect packages with a dispatchable CI workflow
                 id: targets
