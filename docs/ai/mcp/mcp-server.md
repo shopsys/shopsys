@@ -107,9 +107,14 @@ ALTER ROLE "<mcp-user>" SET temp_file_limit = '256MB';
 
 ## What developers need to configure
 
-MCP exposure is explicit. Nothing is exposed automatically just because it exists as a Doctrine entity.
+Shopsys Platform ships with the MCP exposure already decided: all entities and fields defined by the platform are exposed, except for the security-sensitive ones (for example authentication tokens, password hashes, or setting values), which are explicitly marked as hidden. A project therefore does not need to configure anything to get the complete data model available through MCP.
 
-The expected setup is simple:
+This includes customer personal data (names, e-mails, addresses, orders). If your data-protection requirements demand it, hide the additional fields or entities as described below.
+
+The exposure is explicit in the code, not implicit: every Doctrine entity and every mapped field carries an attribute with the reviewed decision, and a PHPStan rule enforces it (see [How this is enforced](#how-this-is-enforced)). A new entity or field is never exposed just because it exists, it has to be marked first.
+This matters mainly for your own code. When you add an entity or a field in the project, or want to change the platform's decision (hide an additional field, or expose one that is hidden by default), override the entity and set the attributes as described below.
+
+The expected setup for an entity or a field that you add or change is simple:
 
 1. decide whether an entity should be exposed at all
 2. mark the entity with `#[AsMcpTable(exposed: ...)]`
@@ -176,7 +181,7 @@ This is useful when the mapped property comes from a parent class that cannot be
 
 ### Are the attributes mandatory?
 
-Yes, for entities covered by the MCP exposure rule, the intent must be explicit.
+Yes, for entities covered by the MCP exposure rule, the intent must be explicit. The platform's own entities already have the attributes in place, so you only add them to the entities and fields of your project, and change them where you want to deviate from the platform's defaults.
 
 That means the code should clearly say:
 
