@@ -89,8 +89,7 @@ class GiftVoucherDataFixture extends AbstractReferenceFixture implements Depende
             self::GIFT_VOUCHER_FULL_PAYMENT_CODE,
             Domain::FIRST_DOMAIN_ID,
             GiftVoucherStatusEnum::STATUS_UNREDEEMED,
-            $sourceOrder,
-            Money::create(self::GIFT_VOUCHER_FULL_PAYMENT_VALUE),
+            value: Money::create(self::GIFT_VOUCHER_FULL_PAYMENT_VALUE),
         );
 
         $this->createGiftVoucher(
@@ -98,8 +97,7 @@ class GiftVoucherDataFixture extends AbstractReferenceFixture implements Depende
             self::GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_CODE,
             Domain::FIRST_DOMAIN_ID,
             GiftVoucherStatusEnum::STATUS_UNREDEEMED,
-            $sourceOrder,
-            Money::create(self::GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_VALUE),
+            value: Money::create(self::GIFT_VOUCHER_LAST_ORDER_CASH_PAYMENT_VALUE),
         );
 
         $this->createGiftVoucher(
@@ -107,8 +105,7 @@ class GiftVoucherDataFixture extends AbstractReferenceFixture implements Depende
             self::GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_CODE,
             Domain::FIRST_DOMAIN_ID,
             GiftVoucherStatusEnum::STATUS_UNREDEEMED,
-            $sourceOrder,
-            Money::create(self::GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_VALUE),
+            value: Money::create(self::GIFT_VOUCHER_LAST_ORDER_VOUCHER_PAYMENT_VALUE),
         );
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
