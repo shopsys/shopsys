@@ -83,7 +83,7 @@ test:standards-with-graphql-schema-check:
 test:storefront-standards-with-codegen-with-tests-with-licenses-check:
     stage: test
     <<: *only-default
-    image: node:24.22.1-alpine3.23
+    image: node:24.22.3-alpine3.23
     tags:
         - tests
     needs:
@@ -325,8 +325,8 @@ review:
 ai:acceptance-criteria:
     stage: ai-review
     # Digest-pinned like the MCP images, because this job holds the Jira and Claude credentials and a floating tag
-    # would let a silently-updated upstream image run with them. This digest is node:24.22.1-alpine3.23.
-    image: node@sha256:0468540aa58203ff9e40c2aab3907c52644ab818af6176b1c70a026137dc92a2
+    # would let a silently-updated upstream image run with them. This digest is node:24.22.3-alpine3.23.
+    image: node@sha256:3946fb783fdce8a2812136ea694bc95c698c4f4096f3fd18568dc27a8ac389dc
     # Only public MCP images are used; skip the inherited GitLab registry login before Docker is installed.
     before_script: []
     tags:
@@ -494,8 +494,8 @@ ai:security-review:
     stage: ai-review
     # The same digest-pinned image as ai:acceptance-criteria, so there is one pinned digest to maintain and a
     # silently-updated upstream image can never run while holding the Claude credential.
-    # This digest is node:24.22.1-alpine3.23.
-    image: node@sha256:0468540aa58203ff9e40c2aab3907c52644ab818af6176b1c70a026137dc92a2
+    # This digest is node:24.22.3-alpine3.23.
+    image: node@sha256:3946fb783fdce8a2812136ea694bc95c698c4f4096f3fd18568dc27a8ac389dc
     # This job does not use Docker or the GitLab registry.
     before_script: []
     tags:
