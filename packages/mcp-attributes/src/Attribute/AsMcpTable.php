@@ -6,7 +6,7 @@ namespace Shopsys\McpAttributes\Attribute;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_CLASS)]
+#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_PROPERTY)]
 class AsMcpTable
 {
     public function __construct(

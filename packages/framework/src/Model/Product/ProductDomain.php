@@ -109,6 +109,7 @@ class ProductDomain
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'product_domain_flags')]
     #[ORM\ManyToMany(targetEntity: Flag::class)]
     protected $flags;

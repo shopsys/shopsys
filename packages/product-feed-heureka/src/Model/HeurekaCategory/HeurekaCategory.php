@@ -42,6 +42,7 @@ class HeurekaCategory
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'heureka_category_categories')]
     #[ORM\JoinColumn(name: 'heureka_category_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]

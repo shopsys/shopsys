@@ -203,6 +203,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'product_excluded_transports')]
     #[ORM\ManyToMany(targetEntity: Transport::class)]
     protected $excludedTransports;
@@ -210,6 +211,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Product>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'related_products')]
     #[ORM\JoinColumn(name: 'main_product', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'related_product', referencedColumnName: 'id')]

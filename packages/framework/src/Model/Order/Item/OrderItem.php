@@ -191,6 +191,7 @@ class OrderItem
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'order_item_relations')]
     #[ORM\JoinColumn(name: 'order_item_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'related_item_id', referencedColumnName: 'id')]

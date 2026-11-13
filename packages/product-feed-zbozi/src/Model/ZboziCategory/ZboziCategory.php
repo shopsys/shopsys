@@ -49,7 +49,7 @@ class ZboziCategory
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
-    #[AsMcpColumn]
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'zbozi_category_categories')]
     #[ORM\JoinColumn(name: 'zbozi_category_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]

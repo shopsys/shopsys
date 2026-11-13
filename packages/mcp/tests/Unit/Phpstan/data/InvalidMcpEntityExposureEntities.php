@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Phpstan\Fixture;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
 use Shopsys\McpAttributes\Attribute\AsMcpInheritedColumn;
@@ -57,4 +58,31 @@ class DuplicateInheritedFieldNameMcpEntity extends DuplicateInheritedFieldNameMc
     #[ORM\Column]
     #[AsMcpColumn(exposed: true)]
     public string $title;
+}
+
+#[ORM\Entity]
+#[AsMcpTable(exposed: true)]
+class MissingManyToManyExposureMcpEntity
+{
+    #[ORM\Id]
+    #[ORM\Column]
+    #[AsMcpColumn(exposed: true)]
+    public int $id;
+
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    public Collection $missingExposure;
+}
+
+#[ORM\Entity]
+#[AsMcpTable(exposed: true)]
+class ManyToManyWithColumnAttributeMcpEntity
+{
+    #[ORM\Id]
+    #[ORM\Column]
+    #[AsMcpColumn(exposed: true)]
+    public int $id;
+
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[AsMcpColumn(exposed: true)]
+    public Collection $wrongColumnAttribute;
 }
