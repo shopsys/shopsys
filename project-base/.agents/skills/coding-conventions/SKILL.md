@@ -1,6 +1,6 @@
 ---
 name: coding-conventions
-description: Coding principles and conventions for this Shopsys project — DRY/KISS/reuse, comment and docblock quality, test-code rules, the project visibility/typing rules, and documentation best practices. Read it before writing or modifying PHP so your code matches the codebase.
+description: Coding principles and conventions for this Shopsys project — DRY/KISS/reuse, design conventions (data model, API, simplicity), comment and docblock quality, test-code rules, the project visibility/typing rules, and documentation best practices. Read it before planning or writing PHP so your design and code match the codebase.
 ---
 
 > **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
@@ -43,6 +43,7 @@ Follow these whenever you write or modify code in this project.
 
 - **Only** add comments that provide real value. Write self-documenting code with clear names.
 - Explain **why**, not **what**; focus on business logic, complex algorithms, non-obvious decisions.
+- A comment must be **true and verified**. Never describe a hypothetical scenario you haven't confirmed ("…deleted meanwhile", "…may happen when…") — if you can't point at the code path that creates it, don't write the comment. If the code is self-describing, write none.
 
 ```php
 // GOOD
@@ -109,10 +110,38 @@ public function findById(int $id): ?User { /* ... */ }
 public function transform(mixed $value): array { /* ... */ }
 ```
 
+## Design conventions — apply while designing, not only in review
+
+Decide these **before the first line is written** (when planning) and keep to them while implementing. They are the same rules the `self-review` skill checks afterwards — if you follow them from the start, the review has nothing to find.
+
+The class and field names in the examples below (gift plans, `CartRemovedProductGift`, the cart watcher) come from one feature and only illustrate the rule — look for the equivalent in the code you are changing.
+
+### Data model
+
+- **Reuse an existing relation concept before inventing a bespoke one.** Look for the same shape elsewhere in the model (e.g. `OrderItem::$relatedItems` for items that belong to another item) and use it for the new case — don't add a special-purpose column (`gift_main_product_id`) next to it.
+- **Never store structured data as JSON or delimited strings** (a JSON column of `"mainId:giftId"` keys) when a relation table fits. A relation gives you foreign keys, `ON DELETE CASCADE`, `orphanRemoval` and queries, and no hand-maintained array.
+- **Clean up at the one place where the data changes**, not in a periodic recalculation. Forgetting a record when its owning item is removed belongs in the method that removes items (every caller goes through it); let FK cascades do the rest.
+- **Scaffolding follows the nearest sibling.** An entity gets a `*Data` object and `*DataFactory` only when it is edited through forms, admin or imports. A small immutable record created from code (like `CartItem`) needs only its `*Factory` and a constructor with arguments. A value object is `readonly` with public properties, not a mutable class with getters.
+
+### API (GraphQL Frontend API, public methods, mutation inputs)
+
+- **Every field and argument needs a consumer.** Before adding one, find who reads it (storefront, tests, docs). Do not mirror an internal class into the schema just because the fields exist there.
+- **Optional means a real caller omits it.** A nullable input nobody omits is dead flexibility every implementation must handle — make it required.
+- **Names agree across layers.** The GraphQL type is named like the PHP class it exposes (`CartRemovedProductGift`), fields that sit side by side say what they are (`giftProduct` next to `mainProduct`, not `product`), and one vocabulary is used for the feature (not `CartGift` / `ProductGift` / `RemovedGift` mixed).
+- **Follow sibling patterns for the same kind of class.** In result and watcher classes a value filled later is a nullable property whose getter throws `LogicException` when unset, watcher checks are named `check…Validity`, and getters/setters sit among their siblings.
+
+### Simplicity
+
+- **Don't guard states that can't happen.** Before adding a defensive check, prove the state is reachable — who could create it? If nobody can, leave the check out; the database constraint or the type system fails loudly if you were wrong.
+- **Reuse the existing flow instead of building a parallel one.** If an existing path (e.g. the cart watcher recalculating gifts) already produces the result, change the input it reads rather than adding a second path with its own validation and recomputation.
+- **Inline single-use helpers** unless the name genuinely helps the reader.
+- **Compute only what is needed on hot paths** (the cart watcher and GraphQL resolvers run on every request). Iterate the small set you need (the removed gifts) instead of building the big one (every product/gift pair) and filtering it. Count the queries a new loop adds; batch or preload instead of looking items up one by one.
+
 ## Test-code rules
 
 - In functional and GraphQL test cases, inject services with the `@inject` annotation — **not** `$this->getContainer()->get(...)`.
 - Use `.agents/skills/test-writing/SKILL.md` to select the domain guide: `backend-tests` for PHP and admin Jest, `storefront-tests` for Vitest and Cypress routing.
+- The test design rules (fixtures instead of magic ids, assert the scenario's preconditions, no stub-heavy duplicates of functional tests, scenario-describing names) live in `test-writing` and `backend-tests` — follow them while writing the test, not afterwards.
 
 ## Entity property hooks
 

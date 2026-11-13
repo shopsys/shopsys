@@ -17,6 +17,8 @@ A project built on Shopsys Platform: Symfony/PHP backend (`app/`), Next.js/React
 - **Never edit `vendor/shopsys/`** — it's read-only reference. Change platform behavior by extending it from `app/` (Entity Extension, service/FormType overrides). → `.agents/skills/shopsys-architecture/SKILL.md`
 - **Your code conventions:** `final` classes, `private` visibility, typehints and return types everywhere, docblocks for non-obvious types. → `.agents/skills/coding-conventions/SKILL.md`
 - **Reuse first (DRY/KISS):** check `vendor/shopsys/` and `app/src/` for existing functionality before writing new code.
+- **Design conventions from the first line** — when planning and when implementing (not only in review): reuse an existing relation concept instead of a bespoke column or JSON, give every API field a consumer, keep names consistent across PHP/GraphQL/storefront/tests, no guards for impossible states, keep hot paths cheap. → `.agents/skills/coding-conventions/SKILL.md` (_Design conventions_)
+- **Self-review before handoff** — when an implementation is done and its checks pass, review your own diff with fresh eyes (parallel read-only subagents when available) and fix what is real, before reporting it or committing. → `.agents/skills/self-review/SKILL.md`
 - **Commands run in Docker:** PHP/Composer/Phing and storefront/pnpm run inside containers; git/`make` on the host. Never start/stop containers yourself. → `.agents/skills/shopsys-commands/SKILL.md`
 - **After GraphQL changes, run `make generate-schema`** so backend and storefront stay in sync (CI fails if they drift).
 - **Test coverage decision**: for every implementation change, follow `.agents/skills/test-writing/SKILL.md` to name the changed behavior, inspect existing coverage and choose which tests to add, extend or reuse, or why none are needed. For storefront changes apply the scenario ownership rules in `storefront-tests`; include actual verification and remaining gaps in the handoff. Use test-first for reproducible bugs and well-defined logic when practical; this does not authorize running Cypress or preflight.
@@ -33,5 +35,6 @@ A project built on Shopsys Platform: Symfony/PHP backend (`app/`), Next.js/React
 - **Deep multi-agent research** → `.agents/skills/research-codebase/SKILL.md`
 - **Plan a change** → `.agents/skills/create-plan/SKILL.md`
 - **Implement an approved plan** → `.agents/skills/implement-plan/SKILL.md`
+- **Review your own finished change** (design, simplicity, naming, tests, upgrade notes) → `.agents/skills/self-review/SKILL.md`
 - **Tests** — choose by product domain via `.agents/skills/test-writing/SKILL.md`: backend **including administration and Jest** → `.agents/skills/backend-tests/SKILL.md`; Next.js storefront **Vitest and Cypress routing** → `.agents/skills/storefront-tests/SKILL.md`. Use the project `cypress-tests` skill when available for Cypress work; never start Cypress yourself.
 - **More** — the list above isn't exhaustive; browse `.agents/skills/` for the full set (e.g. `web-search-research`, `storefront-pr-review`).

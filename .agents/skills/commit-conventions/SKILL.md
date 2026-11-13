@@ -30,6 +30,8 @@ and every commit should make sense on its own and be cherry-pickable.
 - **Migrations** go with the code that depends on them (same functional unit)
 - **Order matters** — arrange commits so each one builds on the previous and none depends on a later one
 - If a message gets too long to describe the change, the change is too big — split the commit
+- **An independent fix gets its own commit.** A bug fix that doesn't depend on the feature (e.g. a miscalculation in an existing service that you noticed on the way) is extracted into a commit before the feature, even when you found it while building the feature — it is revertable and reviewable on its own.
+- **The message names the behavior changes, not every touched file.** Before finalizing, skim the production files in the diff: a behavior change the message doesn't mention is a missing bullet or belongs in another commit. Mechanical follow-ups (renames, signature adjustments forced by the change) need no bullet.
 
 Group changes **by feature/functionality** first, then by type (additions, removals, renames,
 refactors) and scope (backend, frontend, config, tests). If a single file contains changes for

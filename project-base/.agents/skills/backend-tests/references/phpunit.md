@@ -109,6 +109,8 @@ public function testProductIsSoldOutAfterStockIsDepleted(): void
 - Good: `testOrderStatusChangesToShippedWhenTrackingNumberIsSet`
 - Bad: `testUpdateOrderStatusMethod`, `testOrderFacade`
 - Class name: `<TestedClass>Test`, in the same namespace mirror as the source
+- Rename the test when the design under it changes — a name that describes a removed mechanism (`…WithoutProductThatQualifiesForIt` after the qualifying check is gone) is a lie. Assertion helper names say what they check (`assertCartContainsOneGift`, not `…OnlyGift`).
+- Tests may instantiate entities directly when it keeps the scenario short; the "create objects through their factory" rule (`ObjectIsCreatedByFactorySniff`) is skipped for `packages/*/tests/*` in the monorepo `ecs.php`. For tests elsewhere confirm with `php phing standards-fix` rather than assuming.
 
 ### Data Providers
 
@@ -179,6 +181,21 @@ $fresh = $this->productFacade->getById($product->getId());
 
 Fixture classes live in `app/src/DataFixtures/Demo/`.
 Always use the class constant (e.g. `BrandDataFixture::BRAND_CANON`), never raw strings.
+
+**Derive related entities from the fixture that defines the relation instead of repeating their ids.** A test about a gift needs the product that has a gift and the gift itself — take them from the gift-plan fixture, not from `PRODUCT_PREFIX . '14'` / `'72'` copied into every test:
+
+```php
+// BAD — magic ids that silently stop matching when the demo data changes
+$productWithGift = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '14', Product::class);
+$giftProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
+
+// GOOD — the plan fixture is the single source of the relation
+$giftPlan = $this->getReferenceForDomain(GiftPlanDataFixture::GIFT_PLAN_VALID, Domain::FIRST_DOMAIN_ID, GiftPlan::class);
+$productWithGift = array_first($giftPlan->getMainProducts());
+$giftProduct = $giftPlan->getGiftProduct();
+```
+
+If a getter on a shared base type returns a framework class while the test property is the application class, narrow it with an inline `@var` on a local variable (`/** @var \App\Model\Product\Product $product */`) — PHPStan reports `assign.propertyType` otherwise, and it runs on test files too.
 
 ---
 
