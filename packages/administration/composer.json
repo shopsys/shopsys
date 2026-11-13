@@ -29,9 +29,9 @@
     "require": {
         "knplabs/knp-menu-bundle": "^3.5",
         "php": "^8.5",
-        "shopsys/form-types-bundle": "20.0.0",
-        "shopsys/framework": "20.0.0",
-        "shopsys/migrations": "20.0.0",
+        "shopsys/form-types-bundle": "20.0.x-dev",
+        "shopsys/framework": "20.0.x-dev",
+        "shopsys/migrations": "20.0.x-dev",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/form": "^7.4",
@@ -55,8 +55,8 @@
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpstan/phpstan-webmozart-assert": "^2.0",
         "phpunit/phpunit": "^12.5",
-        "shopsys/biome-config": "20.0.0",
-        "shopsys/coding-standards": "20.0.0"
+        "shopsys/biome-config": "20.0.x-dev",
+        "shopsys/coding-standards": "20.0.x-dev"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
