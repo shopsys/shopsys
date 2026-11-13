@@ -1118,7 +1118,7 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
 
 ## Cypress Config Highlights
 
-- **Versions**: Cypress 16.1.1, cypress-visual-regression 6.0.1 and cypress-real-events 1.15.1; Node 24.14.0 in CI. Public configuration uses `expose` / `Cypress.expose()` and CLI `--expose`; use `cy.env()` for secrets, never expose them.
+- **Versions**: Cypress 16.1.1, cypress-visual-regression 6.0.1 and cypress-real-events 1.15.1; Node 24.22.3 in CI. Public configuration uses `expose` / `Cypress.expose()` and CLI `--expose`; use `cy.env()` for secrets, never expose them.
 - **Browser**: `defaultBrowser: 'chrome-for-testing'` applies to regression, regeneration and smoke commands. The shared Cypress Dockerfile pins Chrome for Testing 155.0.8059.39 using the official `cypress/factory` image pinned by version and digest. Rebuild that image after browser changes; do not fall back to Electron or an automatically updated local Chrome. Browser updates require reviewed CI-generated baselines, not automatic acceptance of differences. Native local runs need Chrome for Testing installed and discoverable; their pixels are not interchangeable with CI references.
 - **CLI tooling**: glob 13, inquirer 14 and uuid 14. The Cypress TypeScript compiler stays aligned with storefront at 5.9.3; do not assume a test-library update also authorizes an application-wide compiler migration.
 - **Viewport**: 1600x720 (covers the five-column product grid at the 1560px `xxl` breakpoint)
