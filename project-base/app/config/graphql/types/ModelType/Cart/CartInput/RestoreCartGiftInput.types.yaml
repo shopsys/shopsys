@@ -1,0 +1,4 @@
+RestoreCartGiftInput:
+    type: input-object
+    inherits:
+        - 'RestoreCartGiftInputDecorator'

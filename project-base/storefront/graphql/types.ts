@@ -587,6 +587,8 @@ export type TypeCart = {
   remainingAmountToPay: Scalars['Money']['output'];
   /** Total items price with VAT reduced by applied gift vouchers, never below zero, excluding the transport and payment selected in a later order step */
   remainingItemsAmountToPay: Scalars['Money']['output'];
+  /** Manually removed gifts that are still available for this cart and can be restored */
+  removedProductGifts: Array<TypeCartRemovedProductGift>;
   /** Rounding amount if payment has rounding allowed */
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
@@ -628,6 +630,8 @@ export type TypeCartItem = {
   product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
+  /** Cart items related to this cart item (e.g. gifts of a product item) */
+  relatedItems: Array<TypeCartItem>;
   /** Cart item type */
   type: TypeCartItemTypeEnum;
   /** Cart item UUID */
@@ -675,6 +679,15 @@ export type TypeCartPaymentModificationsResult = {
 export type TypeCartPromoCodeModificationsResult = {
   __typename?: 'CartPromoCodeModificationsResult';
   noLongerApplicablePromoCode: Array<Scalars['String']['output']>;
+};
+
+/** A manually removed gift that can be restored to the cart */
+export type TypeCartRemovedProductGift = {
+  __typename?: 'CartRemovedProductGift';
+  /** Gift product to restore */
+  giftProduct: TypeProduct;
+  /** Product in the cart this removed gift belongs to */
+  mainProduct: TypeProduct;
 };
 
 export type TypeCartTransportModificationsResult = {
@@ -1792,6 +1805,8 @@ export type TypeMutation = {
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
   RequestPersonalDataAccess: TypePersonalDataPage;
+  /** Restore a manually removed gift that is still available for the cart */
+  RestoreCartGift: TypeCart;
   /** Set the chosen additional services of a cart item */
   SetCartItemAdditionalServices: TypeCart;
   /** Set default delivery address by Uuid */
@@ -1999,6 +2014,11 @@ export type TypeMutationRequestPasswordRecoveryArgs = {
 
 export type TypeMutationRequestPersonalDataAccessArgs = {
   input: TypePersonalDataAccessRequestInput;
+};
+
+
+export type TypeMutationRestoreCartGiftArgs = {
+  input: TypeRestoreCartGiftInput;
 };
 
 
@@ -4073,6 +4093,15 @@ export type TypeRemoveFromCartInput = {
   cartItemUuid: Scalars['Uuid']['input'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+export type TypeRestoreCartGiftInput = {
+  /** Cart identifier, new cart will be created if not provided and customer is not logged in */
+  cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  /** UUID of the removed gift product to restore */
+  giftProductUuid: Scalars['Uuid']['input'];
+  /** UUID of the product in the cart the removed gift belongs to */
+  mainProductUuid: Scalars['Uuid']['input'];
 };
 
 /** Represents sales representative */

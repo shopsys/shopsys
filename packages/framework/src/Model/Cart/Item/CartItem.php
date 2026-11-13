@@ -116,6 +116,16 @@ class CartItem
     #[ORM\Column(type: 'json')]
     protected $watchedAdditionalServicePrices;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem>
+     */
+    #[ORM\JoinTable(name: 'cart_item_relations')]
+    #[ORM\JoinColumn(name: 'cart_item_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'related_item_id', referencedColumnName: 'id', unique: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[ORM\OrderBy(['id' => SortDirection::Ascending])]
+    protected $relatedItems;
+
     public function __construct(
         Cart $cart,
         Product $product,
@@ -132,6 +142,7 @@ class CartItem
         $this->setType($type);
         $this->additionalServices = new ArrayCollection();
         $this->watchedAdditionalServicePrices = [];
+        $this->relatedItems = new ArrayCollection();
     }
 
     public function changeQuantity(int $newQuantity): void
@@ -292,5 +303,20 @@ class CartItem
     public function setWatchedAdditionalServicePrices($watchedAdditionalServicePrices): void
     {
         $this->watchedAdditionalServicePrices = $watchedAdditionalServicePrices;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     */
+    public function getRelatedItems()
+    {
+        return $this->relatedItems->getValues();
+    }
+
+    public function addRelatedItem(self $relatedItem): void
+    {
+        if (!$this->relatedItems->contains($relatedItem)) {
+            $this->relatedItems->add($relatedItem);
+        }
     }
 }

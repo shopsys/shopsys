@@ -163,6 +163,24 @@ class CartApiFacade
         return $notAddedProductNames;
     }
 
+    public function restoreProductGiftToCart(
+        string $giftProductUuid,
+        string $mainProductUuid,
+        Cart $cart,
+    ): void {
+        foreach ($cart->getRemovedProductGifts() as $removedGift) {
+            if ($removedGift->getGiftProduct()->getUuid() === $giftProductUuid
+                && $removedGift->getMainProduct()->getUuid() === $mainProductUuid
+            ) {
+                $cart->restoreProductGift($removedGift);
+
+                return;
+            }
+        }
+
+        throw new InvalidCartItemUserError('The removed gift is not in this cart.');
+    }
+
     public function removeItemByUuidFromCart(string $cartItemUuid, Cart $cart): Cart
     {
         try {

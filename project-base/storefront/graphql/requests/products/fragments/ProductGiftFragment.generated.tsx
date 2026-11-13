@@ -5,11 +5,12 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeProductGiftFragment_MainVariant = { uuid: string, name: string, fullName: string, mainCategory: { name: string } | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> };
+import { ProductPriceFragment } from './ProductPriceFragment.generated';
+export type TypeProductGiftFragment_MainVariant = { uuid: string, name: string, fullName: string, mainCategory: { name: string } | null, images: Array<{ __typename: 'Image', name: string | null, url: string }>, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } } };
 
-export type TypeProductGiftFragment_RegularProduct = { uuid: string, name: string, fullName: string, mainCategory: { name: string } | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> };
+export type TypeProductGiftFragment_RegularProduct = { uuid: string, name: string, fullName: string, mainCategory: { name: string } | null, images: Array<{ __typename: 'Image', name: string | null, url: string }>, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } } };
 
-export type TypeProductGiftFragment_Variant = { uuid: string, name: string, fullName: string, mainCategory: { name: string } | null, images: Array<{ __typename: 'Image', name: string | null, url: string }> };
+export type TypeProductGiftFragment_Variant = { uuid: string, name: string, fullName: string, mainCategory: { name: string } | null, images: Array<{ __typename: 'Image', name: string | null, url: string }>, giftPrice: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: string | null, percentageDiscount: number | null, basicPrice: { priceWithVat: string, priceWithoutVat: string, vatAmount: string } } };
 
 export type TypeProductGiftFragment =
   | TypeProductGiftFragment_MainVariant
@@ -28,5 +29,9 @@ export const ProductGiftFragment = gql`
   images {
     ...ImageFragment
   }
+  giftPrice {
+    ...ProductPriceFragment
+  }
 }
-    ${ImageFragment}`;
+    ${ImageFragment}
+${ProductPriceFragment}`;

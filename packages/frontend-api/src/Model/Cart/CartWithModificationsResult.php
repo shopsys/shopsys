@@ -97,6 +97,11 @@ class CartWithModificationsResult
     protected ?PriceInterface $roundingPrice = null;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift[]|null
+     */
+    protected ?array $removedProductGifts = null;
+
+    /**
      * @var \Shopsys\FrontendApiBundle\Model\Cart\PromoCodeQueryDto[]
      */
     protected array $promoCodes = [];
@@ -457,6 +462,26 @@ class CartWithModificationsResult
     public function setRoundingPrice(?PriceInterface $roundingPrice): void
     {
         $this->roundingPrice = $roundingPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift[]
+     */
+    public function getRemovedProductGifts(): array
+    {
+        if ($this->removedProductGifts === null) {
+            throw new LogicException('Removed product gifts must be set before calling the getter.');
+        }
+
+        return $this->removedProductGifts;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartRemovedProductGift[] $removedProductGifts
+     */
+    public function setRemovedProductGifts(array $removedProductGifts): void
+    {
+        $this->removedProductGifts = $removedProductGifts;
     }
 
     public function addPromoCode(PromoCode $promoCode, PriceInterface $promoCodeDiscountPrice): void

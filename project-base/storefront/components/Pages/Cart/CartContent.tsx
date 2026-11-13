@@ -27,7 +27,7 @@ export const CartContent: FC<CartContentProps> = ({ cart, cartPreviewRef }) => {
             <Webline width="xl">
                 <CartSteps activeStep={1} domainUrl={url} />
 
-                <CartList items={cart.items} />
+                <CartList items={cart.items} removedProductGifts={cart.removedProductGifts} />
 
                 <Adverts className="mt-5 vl:mt-8" positionName="cartPreview" />
 
