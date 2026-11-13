@@ -41,7 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Add generated changelog below this line -->
 
-## [v20.0.0](https://github.com/shopsys/shopsys/compare/v19.0.0...v20.0.0) (2026-11-10)
+## [v20.0.0](https://github.com/shopsys/shopsys/compare/v19.0.0...v20.0.0) (2026-11-13)
 
 <!-- Release notes generated using configuration in .github/release.yml at 20.0 -->
 
