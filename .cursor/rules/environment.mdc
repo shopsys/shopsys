@@ -75,10 +75,10 @@ docker compose exec php-fpm php phing translations-dump
 ## Key File Locations
 
 - **Frontend Code**: `project-base/storefront/`
-- **Backend Code**: `project-base/src/`
+- **Backend Code**: `project-base/app/src/`
 - **React Components**: `project-base/storefront/components/`
 - **GraphQL Queries**: `project-base/storefront/graphql/requests/`
-- **Symfony Configuration**: `project-base/config/`
+- **Symfony Configuration**: `project-base/app/config/`
 
 ## Essential Principles
 
