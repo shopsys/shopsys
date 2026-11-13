@@ -23,7 +23,7 @@
         "php": "^8.5",
         "google/cloud-storage": "^1.10",
         "league/flysystem-google-cloud-storage": "^3.0",
-        "shopsys/framework": "dev-rc-20-0-0 as 20.0.0",
+        "shopsys/framework": "20.0.0",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/framework-bundle": "^7.4",

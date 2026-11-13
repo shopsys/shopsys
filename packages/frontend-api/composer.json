@@ -35,10 +35,10 @@
         "overblog/graphql-bundle": "^1.9",
         "overblog/graphiql-bundle": "^1.0",
         "overblog/dataloader-bundle": "^1.1",
-        "shopsys/framework": "dev-rc-20-0-0 as 20.0.0",
-        "shopsys/mcp-attributes": "dev-rc-20-0-0 as 20.0.0",
-        "shopsys/migrations": "dev-rc-20-0-0 as 20.0.0",
-        "shopsys/plugin-interface": "dev-rc-20-0-0 as 20.0.0",
+        "shopsys/framework": "20.0.0",
+        "shopsys/mcp-attributes": "20.0.0",
+        "shopsys/migrations": "20.0.0",
+        "shopsys/plugin-interface": "20.0.0",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/http-foundation": "^7.4",
@@ -57,7 +57,7 @@
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpstan/phpstan-webmozart-assert": "^2.0",
         "phpunit/phpunit": "^12.5",
-        "shopsys/coding-standards": "dev-rc-20-0-0 as 20.0.0"
+        "shopsys/coding-standards": "20.0.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
