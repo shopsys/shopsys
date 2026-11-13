@@ -113,7 +113,7 @@ jobs:
                         exit 1
                     fi
 
-                    JOBS_JSON=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate --slurp --jq '[.[].jobs[]]')
+                    JOBS_JSON=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate --jq '.jobs[]' | jq -s '.')
 
                     # Both standards jobs are candidates; each failed one contributes a log, the autofixer
                     # gets every log that exists and the step fails only when neither job failed.
