@@ -50,11 +50,14 @@ class McpEntityExposureAttributeRuleTest extends RuleTestCase
 
         $this->assertSame(
             [
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 12],
-                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 12],
-                [McpEntityExposureAttributeRule::IDENTIFIER_INHERITED_COLUMN_UNKNOWN_FIELD, 28],
-                [McpEntityExposureAttributeRule::IDENTIFIER_ENTITY_EXPOSURE, 43],
-                [McpEntityExposureAttributeRule::IDENTIFIER_INHERITED_COLUMN_DUPLICATE_FIELD_NAME, 51],
+                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 13],
+                [McpEntityExposureAttributeRule::IDENTIFIER_COLUMN_EXPOSURE, 13],
+                [McpEntityExposureAttributeRule::IDENTIFIER_INHERITED_COLUMN_UNKNOWN_FIELD, 29],
+                [McpEntityExposureAttributeRule::IDENTIFIER_ENTITY_EXPOSURE, 44],
+                [McpEntityExposureAttributeRule::IDENTIFIER_INHERITED_COLUMN_DUPLICATE_FIELD_NAME, 52],
+                [McpEntityExposureAttributeRule::IDENTIFIER_JOIN_TABLE_EXPOSURE, 63],
+                [McpEntityExposureAttributeRule::IDENTIFIER_JOIN_TABLE_COLUMN_ATTRIBUTE, 76],
+                [McpEntityExposureAttributeRule::IDENTIFIER_JOIN_TABLE_EXPOSURE, 76],
             ],
             $actualErrors,
         );

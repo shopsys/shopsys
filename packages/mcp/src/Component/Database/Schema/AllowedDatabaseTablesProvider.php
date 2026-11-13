@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Component\Database\Schema;
 
-use Doctrine\DBAL\Schema\Name\Parsers;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
@@ -33,20 +32,13 @@ class AllowedDatabaseTablesProvider
                 continue;
             }
 
-            $tableName = $this->normalizeTableName($classMetadata->getTableName());
+            $tableName = $this->schemaNameNormalizer->normalizeTableNameFromString($classMetadata->getTableName());
             $allowedClassMetadataIndexedByTableNames[$tableName] = $classMetadata;
         }
 
         ksort($allowedClassMetadataIndexedByTableNames);
 
         return $allowedClassMetadataIndexedByTableNames;
-    }
-
-    protected function normalizeTableName(string $tableName): string
-    {
-        return $this->schemaNameNormalizer->normalizeTableName(
-            Parsers::getOptionallyQualifiedNameParser()->parse($tableName),
-        );
     }
 
     protected function isTableExposed(ClassMetadata $classMetadata): bool
