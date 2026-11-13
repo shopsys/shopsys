@@ -86,6 +86,19 @@ Shopsys includes a complete implementation of the [GoPay](https://doc.gopay.com/
 - [`GoPayAvailablePaymentsCronModule`]({{github.link}}/packages/framework/src/Model/GoPay/GoPayAvailablePaymentsCronModule.php): Downloads and updates available GoPay payment methods for all domains
 - [`OrderGoPayStatusUpdateCronModule`]({{github.link}}/packages/framework/src/Model/GoPay/OrderGoPayStatusUpdateCronModule.php): Updates the status of unpaid GoPay orders from the last 21 days and sends email notifications when an order's payment status changes from unpaid to paid
 
+#### Payment status notification
+
+Every GoPay payment is created with a `notification_url` pointing to the `front_order_payment_status_notify` route (`/order/payment-status-notify?orderIdentifier=<order uuid>`), see [`GoPayOrderMapper`]({{github.link}}/packages/framework/src/Model/GoPay/GoPayOrderMapper.php).
+GoPay calls it with `GET` and appends `id=<GoPay payment id>` whenever the payment state changes.
+
+[`PaymentStatusNotifyController`]({{github.link}}/packages/framework/src/Controller/Front/PaymentStatusNotifyController.php) never trusts the caller:
+
+- the order UUID has to be valid and the `id` has to match one of the order's payment transactions, otherwise the request ends with 404 (the response is the same for every rejection, so the endpoint reveals nothing about existing orders),
+- the payment status is always re-fetched from the GoPay API, the notification itself carries no status,
+- a GoPay API failure is logged and answered with `503`, the payment transactions updated before the failure are rolled back and the paid status of the order is not updated.
+
+The hourly `OrderGoPayStatusUpdateCronModule` remains the safety net for notifications that never arrived.
+
 ### Configuring GoPay
 
 To configure GoPay in your Shopsys project, you need to set up the `GOPAY_CONFIG` environment variable.

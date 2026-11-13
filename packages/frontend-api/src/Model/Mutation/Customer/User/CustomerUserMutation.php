@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerRegistrationRateLimiter;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
@@ -64,6 +65,7 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
         protected readonly WatchdogFacade $watchdogFacade,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
+        protected readonly CustomerRegistrationRateLimiter $customerRegistrationRateLimiter,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -131,6 +133,8 @@ class CustomerUserMutation extends BaseTokenMutation
 
     public function registerMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
+        $this->customerRegistrationRateLimiter->consume();
+
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
 
