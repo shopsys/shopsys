@@ -107,7 +107,7 @@ jobs:
                     echo "MERGE_BASE=${MERGE_BASE}" >> $GITHUB_OUTPUT
 
                     RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/docker-build.yaml/runs?head_sha=${HEAD_SHA}&event=pull_request&per_page=10" \
-                        --jq '[.workflow_runs[] | select(.status == "completed")] | sort_by(.created_at) | reverse | .[0].id // empty')
+                        --jq '[.workflow_runs[] | select(.status == "completed" and .conclusion != "skipped" and .conclusion != "cancelled")] | sort_by(.created_at) | reverse | .[0].id // empty')
                     if [ -z "${RUN_ID}" ]; then
                         echo "::error::No completed Docker build run found for ${HEAD_SHA} — wait for CI to finish and try again."
                         exit 1
