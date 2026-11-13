@@ -69,6 +69,15 @@ class McpDatabaseViewsFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame(count($expectedColumnNamesIndexedByTableNames), $viewsCount);
     }
 
+    public function testViewsContainJoinTablesOfExposedManyToManyAssociations(): void
+    {
+        $this->mcpDatabaseViewsFacade->recreateViews();
+
+        $sortedViewColumnNamesIndexedByViewNames = $this->sortColumnNamesIndexedByTableNames($this->getViewColumnNamesIndexedByViewNames());
+
+        $this->assertSame(['gift_plan_id', 'main_product_id'], $sortedViewColumnNamesIndexedByViewNames['gift_plan_main_products']);
+    }
+
     public function testMigrationCanDropColumnUsedByView(): void
     {
         $this->eventDispatcher->dispatch(new MigrationsStartingEvent());

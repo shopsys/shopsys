@@ -102,6 +102,7 @@ class CartItem
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'cart_item_additional_services')]
     #[ORM\JoinColumn(name: 'cart_item_id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'additional_service_id', onDelete: 'CASCADE')]

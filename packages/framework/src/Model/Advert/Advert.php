@@ -101,6 +101,7 @@ class Advert implements DomainSeparatedEntityInterface, Presentable
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'advert_categories')]
     #[ORM\ManyToMany(targetEntity: Category::class)]
     protected $categories;

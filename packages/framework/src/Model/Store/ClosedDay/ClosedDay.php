@@ -30,6 +30,7 @@ class ClosedDay implements DomainSeparatedEntityInterface, Presentable
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\Store>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'closed_day_excluded_stores')]
     #[ORM\ManyToMany(targetEntity: Store::class)]
     protected $excludedStores;

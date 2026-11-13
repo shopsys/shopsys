@@ -58,6 +58,7 @@ class GiftPlan implements DomainSeparatedEntityInterface
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Product>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'gift_plan_main_products')]
     #[ORM\JoinColumn(name: 'gift_plan_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'main_product_id', referencedColumnName: 'id', onDelete: 'CASCADE')]

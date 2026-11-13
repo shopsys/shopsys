@@ -63,6 +63,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
      */
+    #[AsMcpTable]
     #[ORM\JoinTable(name: 'payments_transports')]
     #[ORM\ManyToMany(targetEntity: Transport::class, inversedBy: 'payments', cascade: ['persist'])]
     #[ORM\OrderBy(['position' => SortDirection::Ascending])]
