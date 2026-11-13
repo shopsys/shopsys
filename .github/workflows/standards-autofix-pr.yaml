@@ -106,14 +106,16 @@ jobs:
                     MERGE_BASE=$(git merge-base HEAD "origin/${BASE_REF}")
                     echo "MERGE_BASE=${MERGE_BASE}" >> $GITHUB_OUTPUT
 
+                    # The run itself may still be in progress (e.g. Cypress tests are running) - only the
+                    # conclusion of the standards jobs below matters, a finished failed job is enough.
                     RUN_ID=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/docker-build.yaml/runs?head_sha=${HEAD_SHA}&event=pull_request&per_page=10" \
-                        --jq '[.workflow_runs[] | select(.status == "completed")] | sort_by(.created_at) | reverse | .[0].id // empty')
+                        --jq '[.workflow_runs[] | select(.conclusion != "skipped" and .conclusion != "cancelled")] | sort_by(.created_at) | reverse | .[0].id // empty')
                     if [ -z "${RUN_ID}" ]; then
-                        echo "::error::No completed Docker build run found for ${HEAD_SHA} — wait for CI to finish and try again."
+                        echo "::error::No Docker build run found for ${HEAD_SHA} — wait for CI to start and try again."
                         exit 1
                     fi
 
-                    JOBS_JSON=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate --slurp --jq '[.[].jobs[]]')
+                    JOBS_JSON=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/jobs" --paginate --jq '.jobs[]' | jq -s '.')
 
                     # Both standards jobs are candidates; each failed one contributes a log, the autofixer
                     # gets every log that exists and the step fails only when neither job failed.
@@ -128,7 +130,7 @@ jobs:
                             continue
                         fi
                         if [ "${JOB_CONCLUSION}" != "failure" ]; then
-                            echo "\"${JOB_NAME}\" of run ${RUN_ID} did not fail (conclusion: ${JOB_CONCLUSION})."
+                            echo "\"${JOB_NAME}\" of run ${RUN_ID} did not fail (conclusion: ${JOB_CONCLUSION:-still running})."
                             continue
                         fi
                         gh api "repos/${GITHUB_REPOSITORY}/actions/jobs/${JOB_ID}/logs" > "${LOG_PATH}"
@@ -138,7 +140,7 @@ jobs:
                     done
 
                     if [ "${FAILED_LOGS}" -eq 0 ]; then
-                        echo "::error::Neither \"Check standards\" nor \"Check Storefront standards\" of run ${RUN_ID} failed — nothing to fix."
+                        echo "::error::Neither \"Check standards\" nor \"Check Storefront standards\" of run ${RUN_ID} failed (yet) — nothing to fix."
                         exit 1
                     fi
                     echo "SKILL_ARGS=${SKILL_ARGS}" >> $GITHUB_OUTPUT
