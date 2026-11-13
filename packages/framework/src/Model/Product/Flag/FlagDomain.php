@@ -59,7 +59,7 @@ class FlagDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
