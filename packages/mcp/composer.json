@@ -27,10 +27,10 @@
     "require": {
         "php": "^8.5",
         "ext-pg_query": "*",
-        "shopsys/administration": "20.0.x-dev",
-        "shopsys/framework": "20.0.x-dev",
-        "shopsys/mcp-attributes": "20.0.x-dev",
-        "shopsys/migrations": "20.0.x-dev",
+        "shopsys/administration": "20.0.0",
+        "shopsys/framework": "20.0.0",
+        "shopsys/mcp-attributes": "20.0.0",
+        "shopsys/migrations": "20.0.0",
         "symfony/clock": "^7.4",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
@@ -48,7 +48,7 @@
         "phpstan/phpstan-phpunit": "^2.0.6",
         "phpstan/phpstan-symfony": "^2.0.6",
         "phpunit/phpunit": "^12.5",
-        "shopsys/coding-standards": "20.0.x-dev"
+        "shopsys/coding-standards": "20.0.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

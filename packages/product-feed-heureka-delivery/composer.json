@@ -30,7 +30,7 @@
     "require": {
         "php": "^8.5",
         "doctrine/orm": "^3.7",
-        "shopsys/framework": "20.0.x-dev",
+        "shopsys/framework": "20.0.0",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/framework-bundle": "^7.4",
