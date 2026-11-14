@@ -15,6 +15,8 @@ use stdClass;
 
 class FilterQuery
 {
+    public const int DEFAULT_LIMIT = 1000;
+
     protected const int MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 400;
 
     /**
@@ -27,7 +29,7 @@ class FilterQuery
      */
     protected array $sorting = [];
 
-    protected int $limit = 1000;
+    protected int $limit = self::DEFAULT_LIMIT;
 
     protected int $page = 1;
 

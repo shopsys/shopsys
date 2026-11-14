@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
@@ -23,6 +24,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
@@ -43,6 +45,7 @@ class ProductsQuery extends AbstractQuery
         protected readonly BrandQuery $brandQuery,
         protected readonly CategoryQuery $categoryQuery,
         protected readonly FlagQuery $flagQuery,
+        protected readonly ProductListApiFacade $productListApiFacade,
     ) {
     }
 
@@ -93,10 +96,33 @@ class ProductsQuery extends AbstractQuery
         return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 
+    public function productsConnectionByProductListQuery(ProductList $productList, Argument $argument): Promise
+    {
+        $this->pageSizeValidator->checkMaxPageSize($argument);
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        return $this->productListApiFacade->getVisibleProductIdentifiers($productList)
+            ->then(function (array $identifiers) use ($argument): Promise {
+                $productIds = array_column($identifiers, 'id');
+                $paginator = new Paginator(
+                    fn (int $offset, int $limit): Promise => $this->productsVisibleAndSortedByIdsBatchLoader->load(array_slice($productIds, $offset, $limit)),
+                    Paginator::MODE_PROMISE,
+                );
+
+                return $paginator->auto($argument, count($productIds));
+            });
+    }
+
     public function productsCountByProductListQuery(ProductList $productList): Promise
     {
-        return $this->productsByProductListQuery($productList)
-            ->then(static fn (array $products): int => count($products));
+        return $this->productListApiFacade->getVisibleProductIdentifiers($productList)
+            ->then(static fn (array $identifiers): int => count($identifiers));
+    }
+
+    public function productUuidsByProductListQuery(ProductList $productList): Promise
+    {
+        return $this->productListApiFacade->getVisibleProductIdentifiers($productList)
+            ->then(static fn (array $identifiers): array => array_column($identifiers, 'uuid'));
     }
 
     /**

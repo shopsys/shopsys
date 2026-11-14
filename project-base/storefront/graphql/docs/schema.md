@@ -111,6 +111,8 @@
     * [ProductEdge](#productedge)
     * [ProductFilterOptions](#productfilteroptions)
     * [ProductList](#productlist)
+    * [ProductListProductConnection](#productlistproductconnection)
+    * [ProductListProductEdge](#productlistproductedge)
     * [ProductPrice](#productprice)
     * [ProductReview](#productreview)
     * [ProductReviewConnection](#productreviewconnection)
@@ -9962,6 +9964,44 @@ An array of the products in the list
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="productlist.productsconnection">productsConnection</strong></td>
+<td valign="top"><a href="#productlistproductconnection">ProductListProductConnection</a>!</td>
+<td>
+
+Paginated products visible on the current domain, in list order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlist.productuuids">productUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Ordered identifiers of products visible on the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="productlist.type">type</strong></td>
 <td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
 <td>
@@ -9976,6 +10016,85 @@ Product list type
 <td>
 
 Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductListProductConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistproductconnection.edges">edges</strong></td>
+<td valign="top">[<a href="#productlistproductedge">ProductListProductEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistproductconnection.pageinfo">pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistproductconnection.totalcount">totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of products visible on the current domain
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductListProductEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistproductedge.cursor">cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlistproductedge.node">node</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
