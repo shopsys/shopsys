@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -31,6 +32,11 @@ class UserFacadeTest extends TransactionFunctionalTestCase
      */
     protected CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
 
+    /**
+     * @inject
+     */
+    protected NewsletterFacade $newsletterFacade;
+
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException(): void
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
@@ -43,6 +49,27 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
 
         $this->expectNotToPerformAssertions();
+    }
+
+    public function testEditByAdminMovesNewsletterSubscriptionToChangedEmail(): void
+    {
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
+            self::EXISTING_EMAIL_ON_DOMAIN_1,
+            Domain::FIRST_DOMAIN_ID,
+        );
+        $this->newsletterFacade->addSubscribedEmailIfNotExists(self::EXISTING_EMAIL_ON_DOMAIN_1, Domain::FIRST_DOMAIN_ID);
+
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+        $customerUserUpdateData->customerUserData->email = 'changed-email@shopsys.com';
+        $customerUserUpdateData->customerUserData->newsletterSubscription = true;
+
+        $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
+
+        $this->assertTrue($this->newsletterFacade->isSubscribed($customerUser));
+        $this->assertNull($this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
+            self::EXISTING_EMAIL_ON_DOMAIN_1,
+            Domain::FIRST_DOMAIN_ID,
+        ));
     }
 
     public function testCreateNotDuplicateEmail(): void
