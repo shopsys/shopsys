@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\PhoneType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintActualResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
@@ -42,6 +43,7 @@ final class ComplaintFormType extends AbstractType
         protected readonly CountryFacade $countryFacade,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
         protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
+        protected readonly ComplaintActualResolutionEnum $complaintActualResolutionEnum,
     ) {
     }
 
@@ -82,7 +84,10 @@ final class ComplaintFormType extends AbstractType
                 'attr' => [
                     'novalidate' => 'novalidate',
                 ],
-                'constraints' => [new Constraints\Callback(callback: [$this, 'validateQuantityIsLessOrEqualThanOrdered'])],
+                'constraints' => [
+                    new Constraints\Callback(callback: [$this, 'validateQuantityIsLessOrEqualThanOrdered']),
+                    new Constraints\Callback(callback: [$this, 'validateActualResolutionIsFilledForClosedStatus']),
+                ],
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
@@ -137,8 +142,35 @@ final class ComplaintFormType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ])
+            ->add('actualResolution', ChoiceType::class, [
+                'label' => 'Actual resolution',
+                'required' => false,
+                'choices' => $this->complaintActualResolutionEnum->getAllIndexedByTranslations(),
+                'multiple' => false,
+                'expanded' => false,
+            ])
+            ->add('order', DisplayOnlyOrderType::class, [
+                'label' => 'Order or document number',
+                'order' => $complaint->getOrder(),
+                'manualDocumentNumber' => $complaint->getManualDocumentNumber(),
+            ])
+            ->add('user', DisplayOnlyCustomerType::class, [
+                'label' => 'Customer',
+                'user' => $complaint->getCustomerUser(),
+            ])
+            ->add('email', TextType::class, [
+                'label' => 'Email',
+                'constraints' => [
+                    new Constraints\NotBlank(message: 'Please enter email'),
+                    new Email(message: 'Please enter valid email'),
+                    new Constraints\Length(
+                        max: 255,
+                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
+                    ),
+                ],
+            ])
             ->add('resolution', ChoiceType::class, [
-                'label' => 'Resolution',
+                'label' => 'Preferred resolution',
                 'required' => true,
                 'choices' => $this->complaintResolutionEnum->getAllIndexedByTranslations(),
                 'multiple' => false,
@@ -167,26 +199,6 @@ final class ComplaintFormType extends AbstractType
                 ],
                 'row_attr' => [
                     'data-js-complaint-bank-account-number' => null,
-                ],
-            ])
-            ->add('order', DisplayOnlyOrderType::class, [
-                'label' => 'Order or document number',
-                'order' => $complaint->getOrder(),
-                'manualDocumentNumber' => $complaint->getManualDocumentNumber(),
-            ])
-            ->add('user', DisplayOnlyCustomerType::class, [
-                'label' => 'Customer',
-                'user' => $complaint->getCustomerUser(),
-            ])
-            ->add('email', TextType::class, [
-                'label' => 'Email',
-                'constraints' => [
-                    new Constraints\NotBlank(message: 'Please enter email'),
-                    new Email(message: 'Please enter valid email'),
-                    new Constraints\Length(
-                        max: 255,
-                        maxMessage: 'Email cannot be longer than {{ limit }} characters',
-                    ),
                 ],
             ]);
 
@@ -306,5 +318,19 @@ final class ComplaintFormType extends AbstractType
                 ->atPath(sprintf('complaintItems[%s].quantity', $key))
                 ->addViolation();
         }
+    }
+
+    public function validateActualResolutionIsFilledForClosedStatus(
+        ComplaintData $complaintData,
+        ExecutionContextInterface $context,
+    ): void {
+        if ($complaintData->actualResolution !== null || $complaintData->status === null || !$complaintData->status->isClosed()) {
+            return;
+        }
+
+        $context
+            ->buildViolation(t('Please choose the actual resolution of the closed complaint', [], Translator::VALIDATOR_TRANSLATION_DOMAIN))
+            ->atPath('actualResolution')
+            ->addViolation();
     }
 }

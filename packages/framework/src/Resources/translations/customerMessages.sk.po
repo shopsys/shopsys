@@ -73,6 +73,9 @@ msgstr "Export osobných údajov"
 msgid "Personal information overview"
 msgstr "Prehľad osobných údajov"
 
+msgid "Rejected"
+msgstr "Zamietnuté"
+
 msgid "Remaining to pay"
 msgstr "Zostáva zaplatiť"
 

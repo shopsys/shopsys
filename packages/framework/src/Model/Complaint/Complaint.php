@@ -203,6 +203,13 @@ class Complaint implements DomainSeparatedEntityInterface
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    protected $actualResolution;
+
+    /**
+     * @var string|null
+     */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 34, nullable: true)]
     protected $bankAccountNumber;
 
@@ -412,6 +419,7 @@ class Complaint implements DomainSeparatedEntityInterface
         $this->email = $complaintData->email;
         $this->manualDocumentNumber = $complaintData->manualDocumentNumber;
         $this->resolution = $complaintData->resolution;
+        $this->actualResolution = $complaintData->actualResolution;
         $this->bankAccountNumber = $complaintData->bankAccountNumber;
     }
 
@@ -471,6 +479,14 @@ class Complaint implements DomainSeparatedEntityInterface
     public function getResolution()
     {
         return $this->resolution;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActualResolution()
+    {
+        return $this->actualResolution;
     }
 
     /**

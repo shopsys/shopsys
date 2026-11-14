@@ -11,8 +11,14 @@ class ComplaintStatusData
      */
     public $name;
 
+    /**
+     * @var bool
+     */
+    public $closed;
+
     public function __construct()
     {
         $this->name = [];
+        $this->closed = false;
     }
 }

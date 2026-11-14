@@ -40,6 +40,7 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'cst.name', t('Name'), true);
+        $grid->addColumn('closed', 'cs.closed', t('Closed complaint'), true);
 
         $grid->addDeleteActionColumn('admin_complaintstatus_deleteconfirm', ['id' => 'cs.id'])
             ->setAjaxConfirm();

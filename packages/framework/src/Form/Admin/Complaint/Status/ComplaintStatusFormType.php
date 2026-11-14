@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -31,6 +32,10 @@ final class ComplaintStatusFormType extends AbstractType
                         ),
                     ],
                 ],
+            ])
+            ->add('closed', CheckboxType::class, [
+                'label' => 'Closed complaint',
+                'required' => false,
             ]);
     }
 

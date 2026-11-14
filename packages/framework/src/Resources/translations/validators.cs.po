@@ -232,6 +232,9 @@ msgstr "Prosím vyberte parametr"
 msgid "Please choose review status"
 msgstr "Prosím vyberte stav recenze"
 
+msgid "Please choose the actual resolution of the closed complaint"
+msgstr "Vyberte prosím způsob vyřízení uzavřené reklamace"
+
 msgid "Please choose type of limitation"
 msgstr "Prosím vyberte typ omezení"
 

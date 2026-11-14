@@ -17,6 +17,9 @@ fragment ComplaintDetailFragment on Complaint {
     resolution {
         ...ComplaintResolutionFragment
     }
+    actualResolution {
+        ...ComplaintResolutionFragment
+    }
     status
     items {
         ...ComplaintItemFragment

@@ -124,6 +124,9 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
+msgid "Actual resolution"
+msgstr ""
+
 msgid "Add"
 msgstr ""
 
@@ -662,6 +665,9 @@ msgid "Clean Storefront Cache"
 msgstr ""
 
 msgid "Close"
+msgstr ""
+
+msgid "Closed complaint"
 msgstr ""
 
 msgid "Code"
@@ -2707,6 +2713,9 @@ msgstr ""
 msgid "Postcode"
 msgstr ""
 
+msgid "Preferred resolution"
+msgstr ""
+
 msgid "Prefix"
 msgstr ""
 
@@ -2981,9 +2990,6 @@ msgid "Required when the review is rejected."
 msgstr ""
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
-msgstr ""
-
-msgid "Resolution"
 msgstr ""
 
 msgid "Resolved"

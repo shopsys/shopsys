@@ -73,6 +73,9 @@ msgstr ""
 msgid "Personal information overview"
 msgstr ""
 
+msgid "Rejected"
+msgstr ""
+
 msgid "Remaining to pay"
 msgstr ""
 

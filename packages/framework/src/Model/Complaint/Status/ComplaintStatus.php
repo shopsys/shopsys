@@ -54,6 +54,13 @@ class ComplaintStatus extends AbstractTranslatableEntity
     #[ORM\Column(type: 'string', length: 25)]
     protected $statusType;
 
+    /**
+     * @var bool
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'boolean')]
+    protected $closed;
+
     public function __construct(ComplaintStatusData $complaintStatusData, string $statusType, string $code)
     {
         $this->translations = new ArrayCollection();
@@ -69,6 +76,8 @@ class ComplaintStatus extends AbstractTranslatableEntity
 
     protected function setData(ComplaintStatusData $complaintStatusData): void
     {
+        $this->closed = $complaintStatusData->closed;
+
         $this->setTranslations($complaintStatusData);
     }
 
@@ -120,6 +129,14 @@ class ComplaintStatus extends AbstractTranslatableEntity
     public function getStatusType()
     {
         return $this->statusType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isClosed()
+    {
+        return $this->closed;
     }
 
     public function checkForDelete(): void
