@@ -51,13 +51,13 @@ const ParameterTable = ({ parameters }: ParameterTableProps) => (
             >
                 <Cell
                     isHead
-                    className="block px-4 pt-4 pb-1 text-left align-top md:table-cell md:w-[42%] md:border-border-less md:border-r md:px-6 md:py-4"
+                    className="block p-4 text-left align-top md:table-cell md:w-[42%] md:border-border-less md:border-r md:px-6"
                     scope="row"
                 >
                     <span className="font-normal text-sm">{parameter.name}</span>
                 </Cell>
 
-                <Cell className="block bg-background-default px-4 pt-0 pb-4 align-top text-sm md:table-cell md:px-6 md:py-4">
+                <Cell className="block bg-background-default p-4 align-top text-sm md:table-cell md:px-6">
                     <div className="inline-flex flex-wrap gap-1">{renderParameterValues(parameter)}</div>
                 </Cell>
             </Row>
