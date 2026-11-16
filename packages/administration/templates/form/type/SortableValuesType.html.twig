@@ -5,7 +5,7 @@
         {% set item_input_name = full_name ~ '[]' %}
         {% set full_name = "" %}
         {% set attr = attr|merge({
-            'class': (attr.class|default('') ~ ' js-sortable-values-input input')|trim,
+            'class': (attr.class|default('') ~ ' js-sortable-values-input form-select')|trim,
         }) %}
         {% set select_label = label ?: placeholder ?: 'Select value'|trans %}
 
