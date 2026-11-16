@@ -86,10 +86,10 @@ export const AutocompleteSearch: FC<AutocompleteSearchProps> = ({
         favoritesData?.autocompleteFavorites.brands.length
     );
 
-    const shouldShowPopup = shouldOpenPopupOnMount || isWithFavorites || isWithValidSearchQuery;
+    const shouldShowPopup = isWithFavorites || isWithValidSearchQuery;
     const isSearchResultsPopupVisible = isSearchResultsPopupOpen && shouldShowPopup;
 
-    const showFavorites = !isWithValidSearchQuery && (shouldOpenPopupOnMount || isWithFavorites);
+    const showFavorites = !isWithValidSearchQuery && isWithFavorites;
 
     const handleSearch = () => {
         if (isWithValidSearchQuery) {
