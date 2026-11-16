@@ -19,22 +19,37 @@ vi.mock('utils/errors/isWithErrorDebugging', () => ({
 vi.mock('utils/errors/logException', () => ({ logException: vi.fn() }));
 vi.mock('utils/toasts/showErrorMessage', () => ({ showErrorMessage: vi.fn() }));
 
-describe('missing blog category', () => {
+describe.each([
+    {
+        entity: 'blog category',
+        query: parse('query BlogCategoryQuery { blogCategory(urlSlug: "missing-category") { name } }'),
+        message: 'No visible blog category was found by slug "missing-category"',
+        path: ['blogCategory'],
+        userCode: 'blog-category-not-found',
+    },
+    {
+        entity: 'article',
+        query: parse('query ArticleDetailQuery { article(urlSlug: "careers-at-shopsys") { name } }'),
+        message: 'Article with URL slug `careers-at-shopsys` does not exist.',
+        path: ['article'],
+        userCode: 'article-not-found',
+    },
+])('missing $entity', ({ query, message, path, userCode }) => {
     test.each([false, true])('returns 404 without logging or toasts with debugging=%s', async (isDebugging) => {
         debugging.enabled = isDebugging;
         const operation = {
             key: 1,
             kind: 'query',
-            query: parse('query BlogCategoryQuery { blogCategory(urlSlug: "missing-category") { name } }'),
+            query,
             variables: {},
             context: {},
         } as Operation;
         const error = new CombinedError({
             graphQLErrors: [
                 {
-                    message: 'No visible blog category was found by slug "missing-category"',
-                    path: ['blogCategory'],
-                    extensions: { userCode: 'blog-category-not-found', code: 404 },
+                    message,
+                    path,
+                    extensions: { userCode, code: 404 },
                 },
             ],
         });
@@ -57,7 +72,9 @@ describe('missing blog category', () => {
         expect(logException).not.toHaveBeenCalled();
         expect(showErrorMessage).not.toHaveBeenCalled();
     });
+});
 
+describe('missing special article configuration', () => {
     test.each([false, true])(
         'still logs missing privacy policy configuration with debugging=%s',
         async (isDebugging) => {

@@ -37,10 +37,10 @@ describe('isFlashMessageError', () => {
 
     test('should return false for no-flash-message codes', () => {
         expect(isFlashMessageError('category-not-found')).toBe(false);
-        expect(isFlashMessageError('article-not-found')).toBe(false);
     });
 
     test('should return false for no-log codes', () => {
+        expect(isFlashMessageError('article-not-found')).toBe(false);
         expect(isFlashMessageError('blog-category-not-found')).toBe(false);
         expect(isFlashMessageError('no-result-found-for-slug')).toBe(false);
         expect(isFlashMessageError('expired-token')).toBe(false);
@@ -58,7 +58,6 @@ describe('isFlashMessageError', () => {
 describe('isNoFlashMessageError', () => {
     test.each([
         'advert-position-without-category',
-        'article-not-found',
         'article-not-found-privacy-policy',
         'article-not-found-terms-and-conditions',
         'article-not-found-user-consent-policy',
@@ -105,6 +104,7 @@ describe('isNoFlashMessageError', () => {
     });
 
     test('should return false for no-log codes', () => {
+        expect(isNoFlashMessageError('article-not-found')).toBe(false);
         expect(isNoFlashMessageError('blog-category-not-found')).toBe(false);
         expect(isNoFlashMessageError('expired-token')).toBe(false);
         expect(isNoFlashMessageError('no-result-found-for-slug')).toBe(false);
@@ -119,6 +119,7 @@ describe('isNoFlashMessageError', () => {
 
 describe('isNoLogError', () => {
     test.each([
+        'article-not-found',
         'blog-category-not-found',
         'COMPARISON-product-already-in-list',
         'COMPARISON-product-not-in-list',
@@ -183,7 +184,6 @@ describe('error code classification coverage', () => {
             'too-many-withdrawal-request-attempts',
             // No-flash-message codes (logged but no toast)
             'advert-position-without-category',
-            'article-not-found',
             'article-not-found-privacy-policy',
             'article-not-found-terms-and-conditions',
             'article-not-found-user-consent-policy',
@@ -220,6 +220,7 @@ describe('error code classification coverage', () => {
             'unable-to-generate-breadcrumb-items',
             'WISHLIST-product-list-not-found',
             // No-log codes
+            'article-not-found',
             'blog-category-not-found',
             'COMPARISON-product-already-in-list',
             'COMPARISON-product-not-in-list',
