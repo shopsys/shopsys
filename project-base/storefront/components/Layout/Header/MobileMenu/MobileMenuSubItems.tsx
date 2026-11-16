@@ -4,10 +4,10 @@ import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { StoreIcon } from 'components/Basic/Icon/StoreIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { useComparison } from 'utils/productLists/comparison/useComparison';
-import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
+import { useProductListCount } from 'utils/productLists/useProductListCount';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type SubMenuProps = {
@@ -21,8 +21,8 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
         ['/stores', '/product-comparison', '/wishlist'],
         url,
     );
-    const { comparison } = useComparison();
-    const { wishlist } = useWishlist();
+    const comparisonCount = useProductListCount(TypeProductListTypeEnum.Comparison);
+    const wishlistCount = useProductListCount(TypeProductListTypeEnum.Wishlist);
 
     return (
         <div className="mt-auto">
@@ -39,7 +39,7 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
                     />
 
                     <SubMenuItem
-                        count={comparison?.products.length}
+                        count={comparisonCount}
                         href={productComparisonUrl}
                         icon={CompareIcon}
                         label={t('Comparison')}
@@ -48,7 +48,7 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
                     />
 
                     <SubMenuItem
-                        count={wishlist?.products.length}
+                        count={wishlistCount}
                         href={wishlistUrl}
                         icon={HeartIcon}
                         label={t('Wishlist')}

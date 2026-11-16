@@ -46,7 +46,6 @@
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.7",
         "doctrine/persistence": "^4.1",
-        "enlightn/security-checker": "^2.0",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "guzzlehttp/guzzle": "^7.5.0",
@@ -64,25 +63,25 @@
         "sentry/sentry-symfony": "^5.0.1",
         "sentry/sentry": "^4.10.0",
         "shopsys/deployment": "^5.0.0",
-        "shopsys/form-types-bundle": "20.0.x-dev",
-        "shopsys/framework": "20.0.x-dev",
-        "shopsys/frontend-api": "20.0.x-dev",
-        "shopsys/administration": "20.0.x-dev",
-        "shopsys/migrations": "20.0.x-dev",
-        "shopsys/plugin-interface": "20.0.x-dev",
-        "shopsys/brand-feed-luigis-box": "20.0.x-dev",
-        "shopsys/category-feed-luigis-box": "20.0.x-dev",
-        "shopsys/product-feed-google": "20.0.x-dev",
-        "shopsys/product-feed-mergado": "20.0.x-dev",
-        "shopsys/product-feed-heureka": "20.0.x-dev",
-        "shopsys/product-feed-heureka-delivery": "20.0.x-dev",
-        "shopsys/product-feed-luigis-box": "20.0.x-dev",
-        "shopsys/product-feed-zbozi": "20.0.x-dev",
-        "shopsys/article-feed-luigis-box": "20.0.x-dev",
-        "shopsys/luigis-box": "20.0.x-dev",
-        "shopsys/mcp": "20.0.x-dev",
-        "shopsys/mcp-attributes": "20.0.x-dev",
-        "shopsys/s3-bridge": "20.0.x-dev",
+        "shopsys/form-types-bundle": "21.0.x-dev",
+        "shopsys/framework": "21.0.x-dev",
+        "shopsys/frontend-api": "21.0.x-dev",
+        "shopsys/administration": "21.0.x-dev",
+        "shopsys/migrations": "21.0.x-dev",
+        "shopsys/plugin-interface": "21.0.x-dev",
+        "shopsys/brand-feed-luigis-box": "21.0.x-dev",
+        "shopsys/category-feed-luigis-box": "21.0.x-dev",
+        "shopsys/product-feed-google": "21.0.x-dev",
+        "shopsys/product-feed-mergado": "21.0.x-dev",
+        "shopsys/product-feed-heureka": "21.0.x-dev",
+        "shopsys/product-feed-heureka-delivery": "21.0.x-dev",
+        "shopsys/product-feed-luigis-box": "21.0.x-dev",
+        "shopsys/product-feed-zbozi": "21.0.x-dev",
+        "shopsys/article-feed-luigis-box": "21.0.x-dev",
+        "shopsys/luigis-box": "21.0.x-dev",
+        "shopsys/mcp": "21.0.x-dev",
+        "shopsys/mcp-attributes": "21.0.x-dev",
+        "shopsys/s3-bridge": "21.0.x-dev",
         "snc/redis-bundle": "^4.8.0",
         "stof/doctrine-extensions-bundle": "^1.15",
         "symfony-cmf/routing": "^3.0.3",
@@ -124,10 +123,10 @@
         "phpunit/phpunit": "^12.5",
         "psr/event-dispatcher": "^1.0.0",
         "shipmonk/dead-code-detector": "^1.3",
-        "shopsys/biome-config": "20.0.x-dev",
-        "shopsys/coding-standards": "20.0.x-dev",
-        "shopsys/http-smoke-testing": "20.0.x-dev",
-        "shopsys/maker": "20.0.x-dev",
+        "shopsys/biome-config": "21.0.x-dev",
+        "shopsys/coding-standards": "21.0.x-dev",
+        "shopsys/http-smoke-testing": "21.0.x-dev",
+        "shopsys/maker": "21.0.x-dev",
         "sspooky13/yaml-standards": "^9.0",
         "symfony/browser-kit": "^7.4",
         "symfony/debug-bundle": "^7.4",
@@ -165,7 +164,7 @@
             "shopsys:domains-urls:configure": "symfony-cmd",
             "ckeditor:install --clear=skip --release=full --tag=4.22.1": "symfony-cmd"
         },
-        "security-check": "security-checker security:check"
+        "security-check": "@composer audit --locked"
     },
     "config": {
         "process-timeout": 1200,
@@ -182,6 +181,13 @@
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
+        },
+        "policy": {
+            "abandoned": {
+                "ignore": {
+                    "doctrine/common": "required by prezent/doctrine-translatable"
+                }
+            }
         }
     },
     "extra": {

@@ -86,7 +86,7 @@ Framework reference (read-only): `vendor/shopsys/*/src/`.
 
 ## Quick analysis before implementing
 
-1. **Find the precedent** — how is a similar thing already done in `app/src/` and in `vendor/shopsys/`? Copy the established pattern (`.agents/skills/codebase-pattern-finder/SKILL.md`).
+1. **Find the precedent** — how is a similar thing already done in `app/src/` and in `vendor/shopsys/`? Copy the established pattern (`.agents/skills/codebase-pattern-finder/SKILL.md`). For a new relation or stored structure, look for the same shape elsewhere in the model (e.g. `OrderItem::$relatedItems`) before adding a column or a JSON field — see *Design conventions* in `.agents/skills/coding-conventions/SKILL.md`.
 2. **Standard extension?** (new entity field, attribute, API field, admin grid) → check the Cookbook / Extensibility page for the concrete steps.
 3. **Unknown package API?** → read the source in `vendor/shopsys/`.
 4. Only then implement. Don't study ahead of need — pull only what the current change requires.

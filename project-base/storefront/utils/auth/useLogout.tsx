@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useProductLists } from 'components/providers/ProductListsProvider';
 import { useLogoutMutation } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
 import { usePersistStore } from 'store/usePersistStore';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
@@ -8,6 +9,7 @@ import { clearOrderConfirmationContext } from 'utils/order/orderConfirmationCont
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const useLogout = () => {
+    const { invalidateSession } = useProductLists();
     const [, logoutMutation] = useLogoutMutation();
 
     const resetContactInformation = usePersistStore((s) => s.resetContactInformation);
@@ -19,12 +21,13 @@ export const useLogout = () => {
         const logoutResult = await logoutMutation({}, { fetch: getAuthMutationFetcher(domainConfig) });
 
         if (logoutResult.data?.Logout) {
+            invalidateSession();
+            dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
             resetContactInformation();
             clearOrderConfirmationContext();
             updateProductListUuids({});
             storeAuthNotification(domainConfig.domainId, 'logout');
 
-            dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
             performAuthHardNavigation();
         }
     };

@@ -9,7 +9,7 @@ const handleVisibilityChange = () => {
     }
 };
 
-export const useRefetchOnTabFocus = (refetch: () => void): void => {
+export const useRefetchOnTabFocus = (refetch: () => void, includeWindowFocus = false): void => {
     const callbackRef = useRef(refetch);
 
     useEffect(() => {
@@ -21,9 +21,22 @@ export const useRefetchOnTabFocus = (refetch: () => void): void => {
             return undefined;
         }
 
+        let timeout: ReturnType<typeof setTimeout> | undefined;
         const callback = () => {
-            callbackRef.current();
+            if (!includeWindowFocus) {
+                callbackRef.current();
+                return;
+            }
+            // Browsers may emit both visibilitychange and focus on the same return.
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                if (!document.hidden) callbackRef.current();
+            }, 0);
         };
+        const onWindowFocus = () => {
+            if (!document.hidden) callback();
+        };
+        if (includeWindowFocus) window.addEventListener('focus', onWindowFocus);
 
         if (callbacks.size === 0) {
             document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -32,11 +45,13 @@ export const useRefetchOnTabFocus = (refetch: () => void): void => {
         callbacks.add(callback);
 
         return () => {
+            clearTimeout(timeout);
+            window.removeEventListener('focus', onWindowFocus);
             callbacks.delete(callback);
 
             if (callbacks.size === 0) {
                 document.removeEventListener('visibilitychange', handleVisibilityChange);
             }
         };
-    }, []);
+    }, [includeWindowFocus]);
 };

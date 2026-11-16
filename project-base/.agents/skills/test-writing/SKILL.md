@@ -35,6 +35,8 @@ or line-coverage percentage is not evidence of duplication.
 - Prefer test-first for reproducible bugs and well-defined logic: derive the expected result from the requirement or a concrete example, observe a meaningful failure, implement the change, then refactor with the test passing. An import/setup error is not proof of reproducing the bug.
 - When a red run is impractical or prohibited, explain the limitation and provide the reproduction scenario. Never claim red/green evidence from an unexecuted test or overwrite unrelated work to recreate it.
 - Assert observable behavior or boundary contracts. Do not compute the expected result with the same implementation being tested or mock away the behavior the test claims to cover.
+- A unit test that needs many stubs just to run is a warning sign: check whether a functional or GraphQL test already covers the behavior through the real services, and prefer extending that one. Keep a stub-heavy unit test only for logic the higher layer cannot reach (e.g. stock allocation across several rows) — and keep it small.
+- A scenario test must **show its starting state**: assert the preconditions the scenario relies on (e.g. that the gift is in the cart before the test removes it), so a reader — and a changed fixture — can't make the test pass vacuously.
 - Do not add a test per changed file or chase test counts/coverage percentages. Keep tests at multiple layers only when they protect distinct risks.
 - If a test fails, determine whether the implementation, expectation or requirement is wrong before editing it. Do not weaken assertions or regenerate snapshots merely to obtain a pass.
 

@@ -25,3 +25,5 @@ jobs:
                     tools: composer
             -   name: Install Composer dependencies
                 run: composer install --optimize-autoloader --no-interaction
+            -   name: Run PHPUnit
+                run: php vendor/bin/phpunit tests

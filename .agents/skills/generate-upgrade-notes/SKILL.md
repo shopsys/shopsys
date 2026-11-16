@@ -255,6 +255,7 @@ This command uses two specialized subagents (via general-purpose agent with deta
 - Manual actions invisible in any diff (granting new admin roles/permissions, data setup) always get a bullet
 - Use FQCN (Fully Qualified Class Names) everywhere
 - Before writing each line, ask: "Does the developer need to change their code because of this?" — if NO, omit it
+- **Verify against the final code, every time the code changes afterwards.** Before saving (and again after any later edit to the branch), `git grep` every `Class::method()` named in the notes — a method removed or renamed since the notes were written must not stay in them — and compare the changed signatures and behavior of overridable methods in `git diff <base>...HEAD` with the bullets, so no BC change is missing and none is stale.
 
 ## Example Real-World Patterns
 

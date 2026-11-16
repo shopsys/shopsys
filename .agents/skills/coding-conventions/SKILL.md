@@ -1,6 +1,6 @@
 ---
 name: coding-conventions
-description: Coding principles and conventions for the Shopsys monorepo — DRY/KISS/reuse, comment and docblock quality, test-code rules, the per-folder visibility/typing rules (packages vs project-base vs utils), and documentation best practices. Read it before writing or modifying PHP so your code matches the codebase.
+description: Coding principles and conventions for the Shopsys monorepo — DRY/KISS/reuse, design conventions (data model, API, simplicity), comment and docblock quality, test-code rules, the per-folder visibility/typing rules (packages vs project-base vs utils), and documentation best practices. Read it before planning or writing PHP so your design and code match the codebase.
 ---
 
 # coding-conventions (monorepo)
@@ -16,7 +16,7 @@ Then apply the monorepo delta (`.agents/skills/monorepo-vs-project/SKILL.md`). T
   - do **not** use typehints/return types in entities and data objects (no parameter, return, or property types);
   - do **not** use `final` — except FormType classes, where `final` is required.
 
-Everything else (DRY/KISS, comments, docblocks, `{@inheritdoc}`, `@inject` test rule) is identical to the canonical.
+Everything else (DRY/KISS, the design conventions, comments, docblocks, `{@inheritdoc}`, `@inject` test rule) is identical to the canonical.
 
 ## Dead code and the exemption config
 

@@ -172,6 +172,8 @@ Once aligned on approach:
 
 2. **Get feedback on structure** before writing details
 
+3. **Agree on the costly decisions first.** When the change touches the database schema, the public API (GraphQL schema, mutation inputs, public methods other code overrides) or the data model, present the viable options with a recommendation and get the user's choice *before* writing the detailed plan. These are the decisions that are expensive to change once code, generated files and the storefront depend on them.
+
 ### Step 4: Pattern Verification
 
 Before writing the detailed plan:
@@ -189,6 +191,8 @@ Before writing the detailed plan:
    - Use verified method signatures and parameter names
    - Follow established configuration patterns
    - This prevents implementation errors by validating patterns before detailed planning
+
+3. **Check the design against the conventions** in `.agents/skills/coding-conventions/SKILL.md` → *Design conventions* (data model, API, simplicity). For every rule that applies to this change the plan must say how it is satisfied — which existing concept is reused instead of a new structure, who consumes each new API field or argument, why no extra guard or parallel flow is needed, which hot path gets a new loop and how its queries are bounded. Record this under *Design decisions* in the plan.
 
 ### Step 5: Detailed Plan Writing
 
@@ -224,6 +228,10 @@ After structure approval and pattern verification:
 ## Implementation Approach
 
 [High-level strategy and reasoning]
+
+### Design decisions
+
+[How the design conventions apply here: reused existing concepts, consumers of new API fields, sibling patterns followed, hot-path query cost. One line per decision, with the reason.]
 
 ## Phase 1: [Descriptive Name]
 

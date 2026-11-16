@@ -17,7 +17,7 @@ final class FrameworkBundleVersionFileManipulator
     /**
      * @var string
      */
-    private const string FRAMEWORK_BUNDLE_VERSION_PATTERN = "/public const VERSION = '(.+)';/";
+    private const string FRAMEWORK_BUNDLE_VERSION_PATTERN = "/public const (?:string )?VERSION = '(.+)';/";
 
     public function updateFrameworkBundleVersion(string $content, Version $version): string
     {

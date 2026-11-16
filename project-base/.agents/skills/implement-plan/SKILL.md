@@ -14,6 +14,7 @@ You are tasked with implementing an approved technical plan from `docs/plans/`. 
 When given a plan path:
 - Read the plan completely and check for any existing checkmarks (- [x])
 - Read the original ticket and all files mentioned in the plan
+- Read `.agents/skills/coding-conventions/SKILL.md`, in particular *Design conventions*, before your first edit
 - **Read files fully** - never use limit/offset parameters, you need complete context
 - Think deeply about how the pieces fit together
 - Create a todo list to track your progress
@@ -28,6 +29,8 @@ Plans are carefully designed, but reality can be messy. Your job is to:
 - Implement each phase fully before moving to the next
 - Verify your work makes sense in the broader codebase context
 - Update checkboxes in the plan as you complete sections
+
+Apply the design conventions **while you write the code**, not afterwards: reuse the existing concept the plan names, add no field or argument without a consumer, add no guard for a state nobody can create, and keep new loops on request hot paths cheap. Review is the second line of defense, not the first.
 
 When things don't match the plan exactly, think about why and communicate clearly. The plan is your guide, but your judgment matters too.
 
@@ -57,7 +60,7 @@ Use the plan's own success criteria. Separate automated from manual checks:
 
 **Automated (run in the container / on host)**:
 - Unit tests: `docker compose exec php-fpm php phing tests-unit` (only if relevant tests exist)
-- Static analysis + standards: `docker compose exec php-fpm php phing phpstan standards-fix`
+- Static analysis + standards: `docker compose exec php-fpm php phing phpstan standards-fix` — PHPStan must also pass on the **changed test files**, not only on `src/`
 - Storefront: `docker compose exec storefront pnpm run check--fix`
 - GraphQL in sync (after schema changes): `make generate-schema`
 
@@ -65,6 +68,10 @@ Use the plan's own success criteria. Separate automated from manual checks:
 - Full manual testing of the implemented feature in admin / storefront
 - Check related functionality for regressions
 - Verify the feature meets acceptance criteria from the original plan
+
+## Before You Report the Work Done
+
+When all phases are implemented and the automated checks pass, run `.agents/skills/self-review/SKILL.md` on your own diff, apply what is real, and mention the result (fixed / rejected / open questions) in the handoff. Do this before committing or proposing commits.
 
 ## If You Get Stuck
 

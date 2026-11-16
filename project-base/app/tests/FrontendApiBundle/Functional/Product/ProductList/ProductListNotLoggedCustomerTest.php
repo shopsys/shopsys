@@ -16,6 +16,7 @@ use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\UnknownProductListTypeException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
@@ -193,7 +194,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'productUuid' => $productToAdd->getUuid(),
             'type' => $productListType,
         ]);
-        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-already-in-list'));
+        $this->assertUserError($response, ExtendedClassNameResolver::resolve(ProductListUserErrorCodeHelper::class)::getUserErrorCode($productListType, 'product-already-in-list'));
     }
 
     /**
@@ -231,7 +232,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-not-in-list'));
+        $this->assertUserError($response, ExtendedClassNameResolver::resolve(ProductListUserErrorCodeHelper::class)::getUserErrorCode($productListType, 'product-not-in-list'));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -243,7 +244,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'type' => $productListType,
         ]);
 
-        $this->assertUserError($response, ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-list-not-found'));
+        $this->assertUserError($response, ExtendedClassNameResolver::resolve(ProductListUserErrorCodeHelper::class)::getUserErrorCode($productListType, 'product-list-not-found'));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -272,6 +273,21 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         $this->assertSame($productListUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
         $this->assertSame([$product1->getId()], array_column($data['products'], 'id'));
+
+        $repeatedResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
+            'productListUuid' => $productListUuid,
+            'productUuid' => $product2->getUuid(),
+            'type' => $productListType,
+        ]);
+        $this->assertUserError($repeatedResponse, ExtendedClassNameResolver::resolve(ProductListUserErrorCodeHelper::class)::getUserErrorCode($productListType, 'product-not-in-list'));
+
+        $remainingResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListQuery.graphql', [
+            'uuid' => $productListUuid,
+            'type' => $productListType,
+        ]);
+        $remainingList = $this->getResponseDataForGraphQlType($remainingResponse, 'productList');
+        $this->assertSame($productListUuid, $remainingList['uuid']);
+        $this->assertSame([$product1->getId()], array_column($remainingList['products'], 'id'));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
