@@ -86,7 +86,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                     onMouseUp={onProductClick}
                 >
                     <div className="col-start-1 row-start-1 row-end-6 flex items-center justify-center xl:relative xl:block xl:min-h-0">
-                        <div className="flex items-center justify-center xl:absolute xl:inset-0">
+                        <div className="flex w-full items-center justify-center xl:absolute xl:inset-0">
                             <ProductListItemImage
                                 product={product}
                                 size="extraSmall"
