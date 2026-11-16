@@ -36,7 +36,8 @@
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~3.0.0",
         "@urql/exchange-graphcache": "~9.0.2",
-        "cookies-next": "~4.3.0",
+        "cookie": "~1.1.1",
+        "cookies-next": "~6.1.1",
         "framer-motion": "^13.4.6",
         "google-map-react": "^2.2.5",
         "graphql": "~16.14.2",
@@ -57,7 +58,7 @@
         "react-remove-scroll": "^2.7.2",
         "react-swipeable": "~7.0.2",
         "react-toastify": "~11.1.0",
-        "redis": "~4.7.1",
+        "redis": "~6.3.1",
         "supercluster": "^9.1.0",
         "tailwind-merge": "~3.7.0",
         "urql": "5.0.4",
@@ -65,7 +66,7 @@
         "uuid": "~14.0.2",
         "wonka": "~6.3.6",
         "yup": "~1.7.1",
-        "zustand": "~4.4.7"
+        "zustand": "~5.1.0"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.5.15",

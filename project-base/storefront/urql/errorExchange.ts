@@ -19,7 +19,7 @@ import { logException } from 'utils/errors/logException';
 import { mapGraphqlErrorForDevelopment } from 'utils/errors/mapGraphqlErrorForDevelopment';
 import { isClient } from 'utils/isClient';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
-import { pipe, tap } from 'wonka';
+import { fromPromise, fromValue, mergeMap, pipe, tap } from 'wonka';
 
 type MutationErrorConfig = {
     errorType: FlashMessageKeys;
@@ -74,6 +74,23 @@ export const getErrorExchange =
             return pipe(
                 operations$,
                 forward,
+                mergeMap((result) => {
+                    if (
+                        context &&
+                        (result.operation.kind === 'query' || result.operation.kind === 'mutation') &&
+                        result.error &&
+                        result.error.response?.status !== 503 &&
+                        isAuthError(result.error)
+                    ) {
+                        return fromPromise(
+                            removeTokensFromCookies(domainConfig, context)
+                                .catch(logException)
+                                .then(() => result),
+                        );
+                    }
+
+                    return fromValue(result);
+                }),
                 tap(({ error, operation }) => {
                     if ((operation.kind !== 'query' && operation.kind !== 'mutation') || !error) {
                         return;
@@ -85,9 +102,7 @@ export const getErrorExchange =
                     }
 
                     if (isAuthError(error)) {
-                        if (context) {
-                            removeTokensFromCookies(domainConfig, context);
-                        } else {
+                        if (!context) {
                             removeAccessTokenFromCookies(domainConfig);
                             void clearAuthCookies(domainConfig).catch(logException);
                         }

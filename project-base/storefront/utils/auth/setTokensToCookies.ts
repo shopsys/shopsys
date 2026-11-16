@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
-import { setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next/server';
 import {
     ACCESS_TOKEN_COOKIE_NAME,
     REFRESH_TOKEN_COOKIE_MAX_AGE,
@@ -14,13 +14,13 @@ type AuthServerContext = {
     res?: ServerResponse;
 };
 
-export const setTokensToCookies = (
+export const setTokensToCookies = async (
     accessToken: string,
     refreshToken: string,
     domainConfig: DomainConfigType,
     context: AuthServerContext,
-): void => {
-    setCookie(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), accessToken, {
+): Promise<void> => {
+    await setCookie(getCookieName(ACCESS_TOKEN_COOKIE_NAME, domainConfig.domainId), accessToken, {
         httpOnly: false,
         req: context?.req,
         res: context?.res,
@@ -28,7 +28,7 @@ export const setTokensToCookies = (
         sameSite: 'lax',
         secure: domainConfig.url.startsWith('https'),
     });
-    setCookie(getCookieName(REFRESH_TOKEN_COOKIE_NAME, domainConfig.domainId), refreshToken, {
+    await setCookie(getCookieName(REFRESH_TOKEN_COOKIE_NAME, domainConfig.domainId), refreshToken, {
         httpOnly: true,
         req: context?.req,
         res: context?.res,
@@ -37,7 +37,7 @@ export const setTokensToCookies = (
         sameSite: 'lax',
         secure: domainConfig.url.startsWith('https'),
     });
-    setCookie(getCookieName(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig.domainId), '1', {
+    await setCookie(getCookieName(REFRESH_TOKEN_PRESENT_COOKIE_NAME, domainConfig.domainId), '1', {
         httpOnly: false,
         req: context?.req,
         res: context?.res,
