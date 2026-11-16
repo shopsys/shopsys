@@ -4,13 +4,17 @@ import { CartItemPartialAvailability } from 'components/Blocks/Product/CartItemP
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRestoreCartGiftMutation } from 'graphql/requests/cart/mutations/RestoreCartGiftMutation.generated';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { getGtmMappedCart } from 'gtm/utils/getGtmMappedCart';
 import { useEffect, useRef, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { CartProductGift } from 'utils/cart/groupCartItemsWithGifts';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { CartProductGift, groupCartItemsWithGifts } from 'utils/cart/groupCartItemsWithGifts';
 import { isCartItemPartiallyAvailable } from 'utils/cart/isCartItemPartiallyAvailable';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -34,7 +38,9 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { domainId } = useDomainConfig();
+    const domainConfig = useDomainConfig();
+    const { canSeePrices } = useAuthorization();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const [{ fetching: isRestoringGift }, restoreCartGiftMutation] = useRestoreCartGiftMutation();
 
     const [restoringGiftUuid, setRestoringGiftUuid] = useState<string | null>(null);
@@ -50,9 +56,39 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
         try {
             const result = await restoreCartGiftMutation({ input: { cartUuid, giftProductUuid, mainProductUuid } });
 
-            if (result.data?.RestoreCartGift) {
-                dispatchBroadcastChannel('refetchCart', domainId);
+            const updatedCart = result.data?.RestoreCartGift;
+
+            if (!updatedCart) {
+                return;
             }
+
+            dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
+
+            const restoredGift = groupCartItemsWithGifts(updatedCart.items, [])
+                .find((row) => row.cartItem.product.uuid === mainProductUuid)
+                ?.gifts.find((gift) => gift.state === 'added' && gift.cartItem.product.uuid === giftProductUuid);
+
+            if (restoredGift?.state !== 'added') {
+                return;
+            }
+
+            import('gtm/handlers/onGtmRestoreCartGiftEventHandler').then(({ onGtmRestoreCartGiftEventHandler }) => {
+                onGtmRestoreCartGiftEventHandler(
+                    restoredGift.cartItem,
+                    domainConfig.currencyCode,
+                    restoredGift.listIndex,
+                    GtmProductListNameType.cart,
+                    domainConfig.url,
+                    !canSeePrices,
+                    getGtmMappedCart(
+                        updatedCart,
+                        updatedCart.promoCodes,
+                        isUserLoggedIn,
+                        domainConfig,
+                        updatedCart.uuid,
+                    ),
+                );
+            });
         } finally {
             setRestoringGiftUuid(null);
         }

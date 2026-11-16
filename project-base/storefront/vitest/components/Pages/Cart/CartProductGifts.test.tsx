@@ -2,21 +2,30 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CartProductGifts } from 'components/Pages/Cart/CartProductGifts';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartItemTypeEnum } from 'graphql/types';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { CartProductGift } from 'utils/cart/groupCartItemsWithGifts';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 const restoreCartGiftMutation = vi.hoisted(() => vi.fn());
+const onGtmRestoreCartGiftEventHandler = vi.hoisted(() => vi.fn());
 
 vi.mock('components/Basic/Image/Image', () => ({ Image: () => null }));
 vi.mock('components/Blocks/Product/ProductAvailability', () => ({ ProductAvailability: () => null }));
 vi.mock('components/Pages/Cart/CartItemPrice', () => ({ CartItemPrice: () => null }));
-vi.mock('components/providers/DomainConfigProvider', () => ({ useDomainConfig: () => ({ domainId: 1 }) }));
+vi.mock('components/providers/AuthorizationProvider', () => ({ useAuthorization: () => ({ canSeePrices: true }) }));
+vi.mock('components/providers/DomainConfigProvider', () => ({
+    useDomainConfig: () => ({ domainId: 1, url: 'https://example.com', currencyCode: 'EUR' }),
+}));
 vi.mock('graphql/requests/cart/mutations/RestoreCartGiftMutation.generated', () => ({
     useRestoreCartGiftMutation: () => [{ fetching: false }, restoreCartGiftMutation],
 }));
+vi.mock('gtm/handlers/onGtmRestoreCartGiftEventHandler', () => ({ onGtmRestoreCartGiftEventHandler }));
+vi.mock('gtm/utils/getGtmMappedCart', () => ({ getGtmMappedCart: () => null }));
 vi.mock('store/usePersistStore', () => ({
     usePersistStore: (selector: (state: { cartUuid: string }) => unknown) => selector({ cartUuid: 'cart' }),
 }));
+vi.mock('utils/auth/useIsUserLoggedIn', () => ({ useIsUserLoggedIn: () => false }));
 vi.mock('utils/formatting/useFormatPrice', () => ({ useFormatPrice: () => (price: string | number) => `€${price}` }));
 vi.mock('utils/i18n/useTranslationWrapper', () => ({ default: () => ({ t: (key: string) => key }) }));
 vi.mock('utils/useBroadcastChannel', () => ({ dispatchBroadcastChannel: vi.fn() }));
@@ -57,7 +66,7 @@ const removedGift: CartProductGift = {
 const deferredRestore = (success = true) => {
     let complete: () => void = () => undefined;
     const request = new Promise((resolve) => {
-        complete = () => resolve({ data: success ? { RestoreCartGift: { uuid: 'cart' } } : null });
+        complete = () => resolve({ data: success ? { RestoreCartGift: { uuid: 'cart', items: [] } } : null });
     });
     restoreCartGiftMutation.mockReturnValueOnce(request);
 
@@ -67,6 +76,7 @@ const deferredRestore = (success = true) => {
 describe('CartProductGifts', () => {
     beforeEach(() => {
         restoreCartGiftMutation.mockReset();
+        onGtmRestoreCartGiftEventHandler.mockReset();
     });
 
     test.each([{ unitName: 'pcs' }, { unitName: 'm²' }])(
@@ -101,7 +111,7 @@ describe('CartProductGifts', () => {
     );
 
     test('restores only the selected parent and gift pair', async () => {
-        restoreCartGiftMutation.mockResolvedValue({ data: { RestoreCartGift: { uuid: 'cart' } } });
+        restoreCartGiftMutation.mockResolvedValue({ data: { RestoreCartGift: { uuid: 'cart', items: [] } } });
         render(
             <CartProductGifts
                 gifts={[removedGift]}
@@ -116,6 +126,60 @@ describe('CartProductGifts', () => {
         expect(restoreCartGiftMutation).toHaveBeenCalledWith({
             input: { cartUuid: 'cart', giftProductUuid: product.uuid, mainProductUuid: 'parent-product' },
         });
+    });
+
+    test('reports the restored gift of the selected parent to GTM', async () => {
+        const restoredGiftCartItem = {
+            uuid: 'restored-gift-cart-item',
+            type: TypeCartItemTypeEnum.ProductGift,
+            quantity: 2,
+            product,
+            relatedItems: [],
+        };
+        const otherParentGiftCartItem = { ...restoredGiftCartItem, uuid: 'other-parent-gift-cart-item' };
+        const createParentCartItem = (productUuid: string, giftCartItemUuid: string) => ({
+            uuid: `${productUuid}-cart-item`,
+            type: TypeCartItemTypeEnum.Product,
+            quantity: 2,
+            product: { uuid: productUuid, fullName: productUuid },
+            relatedItems: [{ uuid: giftCartItemUuid }],
+        });
+        restoreCartGiftMutation.mockResolvedValue({
+            data: {
+                RestoreCartGift: {
+                    uuid: 'cart',
+                    promoCodes: [],
+                    items: [
+                        createParentCartItem('other-parent-product', otherParentGiftCartItem.uuid),
+                        otherParentGiftCartItem,
+                        createParentCartItem('parent-product', restoredGiftCartItem.uuid),
+                        restoredGiftCartItem,
+                    ],
+                },
+            },
+        });
+        render(
+            <CartProductGifts
+                gifts={[removedGift]}
+                isRemovingGift={false}
+                parentCartItemUuid="parent"
+                onRemoveGift={vi.fn()}
+            />,
+        );
+
+        await userEvent.click(screen.getByRole('checkbox', { name: product.fullName }));
+
+        await vi.waitFor(() =>
+            expect(onGtmRestoreCartGiftEventHandler).toHaveBeenCalledExactlyOnceWith(
+                restoredGiftCartItem,
+                'EUR',
+                3,
+                GtmProductListNameType.cart,
+                'https://example.com',
+                false,
+                null,
+            ),
+        );
     });
 
     test('restores keyboard focus after removing the gift', async () => {

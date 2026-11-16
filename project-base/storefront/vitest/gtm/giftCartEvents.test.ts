@@ -6,6 +6,7 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmChangeCartItemEventHandler } from 'gtm/handlers/onGtmChangeCartItemEventHandler';
 import { onGtmRemoveFromCartEventHandler } from 'gtm/handlers/onGtmRemoveFromCartEventHandler';
+import { onGtmRestoreCartGiftEventHandler } from 'gtm/handlers/onGtmRestoreCartGiftEventHandler';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { describe, expect, test, vi } from 'vitest';
@@ -163,4 +164,44 @@ describe('gift cart events', () => {
             }),
         );
     });
+
+    test.each([
+        { withoutVat: '0', withVat: '0', totalWithoutVat: 0, totalWithVat: 0 },
+        { withoutVat: '10', withVat: '12.1', totalWithoutVat: 20, totalWithVat: 24.2 },
+        { withoutVat: '***', withVat: '***', totalWithoutVat: null, totalWithVat: null },
+    ])(
+        'reports a restored gift as added using its actual price $withVat',
+        ({ withoutVat, withVat, totalWithoutVat, totalWithVat }) => {
+            const gift = createCartItem('gift', 2, TypeCartItemTypeEnum.ProductGift);
+            gift.product.giftPrice.priceWithoutVat = withoutVat;
+            gift.product.giftPrice.priceWithVat = withVat;
+
+            onGtmRestoreCartGiftEventHandler(
+                gift,
+                'EUR',
+                1,
+                GtmProductListNameType.cart,
+                'https://example.com',
+                withVat === '***',
+            );
+
+            expect(gtmSafePushEvent).toHaveBeenLastCalledWith(
+                expect.objectContaining({
+                    event: GtmEventType.add_to_cart,
+                    ecommerce: expect.objectContaining({
+                        valueWithoutVat: totalWithoutVat,
+                        valueWithVat: totalWithVat,
+                        products: [
+                            expect.objectContaining({
+                                id: 'gift-1',
+                                sku: 'gift-SKU-1',
+                                productType: 'gift',
+                                quantity: 2,
+                            }),
+                        ],
+                    }),
+                }),
+            );
+        },
+    );
 });
