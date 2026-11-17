@@ -10031,20 +10031,40 @@ Number of category parameters shown in the sidebar; all parameters remain availa
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong id="productlist.itemscount">itemsCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong id="productlist.products">products</strong></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
-Count of products in the list that are visible on the current domain
+Paginated products of the list that are visible on the current domain, in the order of the list
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="productlist.products">products</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="productlist.productuuids">productUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
 <td>
 
-An array of the products in the list
+All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain
 
 </td>
 </tr>
@@ -16292,6 +16312,14 @@ Order by name ascending
 <td>
 
 Order by name descending
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>POSITION</strong></td>
+<td>
+
+Order by the position in the product list
 
 </td>
 </tr>

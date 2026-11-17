@@ -3120,14 +3120,22 @@ export type TypeProductFilterOptions = {
 
 export type TypeProductList = {
   __typename?: 'ProductList';
-  /** Count of products in the list that are visible on the current domain */
-  itemsCount: Scalars['Int']['output'];
-  /** An array of the products in the list */
-  products: Array<TypeProduct>;
+  /** All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain */
+  productUuids: Array<Scalars['Uuid']['output']>;
+  /** Paginated products of the list that are visible on the current domain, in the order of the list */
+  products: TypeProductConnection;
   /** Product list type */
   type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid: Scalars['Uuid']['output'];
+};
+
+
+export type TypeProductListProductsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type TypeProductListInput = {
@@ -3183,6 +3191,8 @@ export enum TypeProductOrderingModeEnum {
   NameAsc = 'NAME_ASC',
   /** Order by name descending */
   NameDesc = 'NAME_DESC',
+  /** Order by the position in the product list */
+  Position = 'POSITION',
   /** Order by price ascending */
   PriceAsc = 'PRICE_ASC',
   /** Order by price descending */
