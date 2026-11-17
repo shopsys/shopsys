@@ -108,4 +108,14 @@ class PaginatedProductsTest extends GraphQlTestCase
             }
         ';
     }
+
+    public function testOrderingByPositionIsRejectedOutsideProductList(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/ProductsQuery.graphql', [
+            'first' => 1,
+            'orderingMode' => 'POSITION',
+        ]);
+
+        $this->assertUserError($response, 'invalid-argument');
+    }
 }

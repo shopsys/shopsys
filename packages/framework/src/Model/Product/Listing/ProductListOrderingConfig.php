@@ -12,6 +12,7 @@ class ProductListOrderingConfig
     public const string ORDER_BY_NAME_DESC = 'name_desc';
     public const string ORDER_BY_RELEVANCE = 'relevance';
     public const string ORDER_BY_NAME_ASC = 'name_asc';
+    public const string ORDER_BY_POSITION = 'position';
 
     /**
      * @param string[] $supportedOrderingModesNamesById
