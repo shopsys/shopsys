@@ -149,6 +149,8 @@ class AdministratorMcpToken
 
 `false` means: this entity was reviewed deliberately and must not be exposed.
 
+The `exposed` argument defaults to `true`, so `#[AsMcpTable]` and `#[AsMcpColumn]` without an argument mean exposed, which is the short form the platform's own entities use.
+
 ### Column exposure
 
 Expose a mapped property:
@@ -166,6 +168,15 @@ protected $secretValue;
 ```
 
 Again, `false` means explicit opt-out after review.
+
+The join table of a many-to-many association is a table without an entity of its own, so it is exposed by `#[AsMcpColumn]` on the owning-side property of the association (the one without `mappedBy`). Both join columns of the table become queryable, `exposed: false` keeps the join table hidden. The inverse side is not annotated.
+
+```php
+#[AsMcpColumn(exposed: true)]
+#[ORM\JoinTable(name: 'gift_plan_main_products')]
+#[ORM\ManyToMany(targetEntity: Product::class)]
+protected $mainProducts;
+```
 
 For inherited fields that are mapped on a parent class and cannot be annotated directly on the local property, use `AsMcpInheritedColumn` on the entity class:
 
@@ -197,7 +208,7 @@ The explicit configuration described above is enforced automatically by the cust
 The rule checks ORM entities in the `App\\` and `Shopsys\\` namespaces and requires:
 
 - `#[AsMcpTable(exposed: bool)]` on every checked Doctrine entity
-- `#[AsMcpColumn(exposed: bool)]` on every mapped scalar field, embedded field, and relevant owning-side association of an exposed entity
+- `#[AsMcpColumn(exposed: bool)]` on every mapped scalar field, embedded field, and relevant owning-side association (including a many-to-many one, which decides about its join table) of an exposed entity
 - `#[AsMcpInheritedColumn(fieldName: '...', exposed: bool)]` for inherited mapped fields that need explicit MCP exposure on the entity class
 
 ## How SQL execution stays bounded
