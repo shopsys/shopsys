@@ -93,7 +93,7 @@ class ProductsQuery extends AbstractQuery
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $batchLoadDataId = Uuid::uuid4()->toString();
-        $orderingMode = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $orderingMode = ProductListOrderingConfig::ORDER_BY_POSITION;
 
         return $this->productConnectionFactory->createConnectionPromiseForProductList(
             function ($offset, $limit) use ($productList, $orderingMode, $batchLoadDataId) {

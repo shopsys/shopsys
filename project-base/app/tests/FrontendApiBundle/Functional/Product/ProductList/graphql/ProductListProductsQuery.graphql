@@ -3,6 +3,8 @@ query ProductListProductsQuery($uuid: Uuid, $type: ProductListTypeEnum!, $first:
         productUuids
         products(first: $first, after: $after) {
             totalCount
+            orderingMode
+            defaultOrderingMode
             pageInfo {
                 hasNextPage
                 endCursor

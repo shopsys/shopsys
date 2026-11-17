@@ -22,3 +22,6 @@ ProductOrderingModeEnumDecorator:
             RELEVANCE:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_RELEVANCE")'
                 description: "Order by relevance"
+            POSITION:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_POSITION")'
+                description: "Order by the position in the product list"

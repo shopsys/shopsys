@@ -53,6 +53,8 @@ final class ProductListProductsTest extends GraphQlTestCase
         $firstPage = $this->getProductsConnectionData($productListType, $productListUuid, 1);
 
         $this->assertSame($this->getProductUuids(self::PRODUCT_IDS), $firstPage['productUuids']);
+        $this->assertSame('POSITION', $firstPage['products']['orderingMode']);
+        $this->assertSame('POSITION', $firstPage['products']['defaultOrderingMode']);
 
         $this->assertSame([self::PRODUCT_IDS[0]], $this->getProductIds($firstPage));
         $this->assertSame(count(self::PRODUCT_IDS), $firstPage['products']['totalCount']);
