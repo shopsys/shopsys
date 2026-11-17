@@ -1,16 +1,18 @@
 import { act, renderHook } from '@testing-library/react';
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { ReactElement } from 'react';
 import { useComparisonPage } from 'utils/productLists/comparison/useComparisonPage';
 import { beforeEach, expect, test, vi } from 'vitest';
+
+type ListMock = { uuid: string; productUuids: string[]; products: { uuid: string; fullName: string }[] };
 
 const mocks = vi.hoisted(() => ({
     callbacks: {} as {
         onProductRemoved: (uuid: string) => void;
         onProductRemoveError: (uuid: string) => void;
-        onProductAdded: (uuid: string, list: TypeProductListFragment) => void;
+        onProductAdded: (uuid: string, list: ListMock) => void;
     },
-    comparison: null as TypeProductListFragment | null,
+    comparison: null as ListMock | null,
     move: vi.fn(),
     toggle: vi.fn(),
     success: vi.fn(),
@@ -36,7 +38,7 @@ vi.mock('gtm/utils/pageReadyEvents/productList/useGtmSliderProductListViewEvent'
 }));
 
 const list = (uuids: string[], uuid = 'list') =>
-    ({ uuid, products: uuids.map((uuid) => ({ uuid, fullName: uuid })) }) as TypeProductListFragment;
+    ({ uuid, productUuids: uuids, products: uuids.map((uuid) => ({ uuid, fullName: uuid })) }) as ListMock;
 
 beforeEach(() => {
     vi.clearAllMocks();
@@ -130,9 +132,7 @@ test('uses the displayed position when a product is removed before the reordered
     mocks.comparison = list(['b', 'a']);
     const { result } = renderHook(() => useComparisonPage());
 
-    act(() =>
-        result.current.handleRemove({ uuid: 'b', fullName: 'b' } as TypeProductListFragment['products'][number], 1),
-    );
+    act(() => result.current.handleRemove({ uuid: 'b', fullName: 'b' } as TypeProductInProductListFragment, 1));
     act(() => mocks.callbacks.onProductRemoved('b'));
     mocks.comparison = list(['a']);
 

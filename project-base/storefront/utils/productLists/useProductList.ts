@@ -210,7 +210,7 @@ export const useProductList = (
             return false;
         }
 
-        return !!currentProductList?.products.find((product) => product.uuid === productUuid);
+        return !!currentProductList?.productUuids.includes(productUuid);
     };
 
     const toggleProductInList = (productUuid: string) => {

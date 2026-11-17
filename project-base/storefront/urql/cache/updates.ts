@@ -316,7 +316,11 @@ const manuallyUpdateProductListQuery = (input: TypeProductListInput, result: Typ
     const queryInput = { type: input.type, uuid };
     const countData = {
         __typename: 'Query' as const,
-        productList: { __typename: 'ProductList' as const, uuid, itemsCount: result.products.length },
+        productList: {
+            __typename: 'ProductList' as const,
+            uuid,
+            products: { totalCount: result.products.totalCount },
+        },
     };
 
     cache.updateQuery<TypeProductListQuery, TypeProductListQueryVariables>(

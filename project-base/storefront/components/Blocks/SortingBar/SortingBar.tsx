@@ -51,6 +51,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
         [TypeProductOrderingModeEnum.Relevance]: t('Relevance'),
         [TypeProductOrderingModeEnum.NameAsc]: t('Name ascending'),
         [TypeProductOrderingModeEnum.NameDesc]: t('Name descending'),
+        [TypeProductOrderingModeEnum.Position]: t('Position'),
     };
 
     const sortOptions = (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>

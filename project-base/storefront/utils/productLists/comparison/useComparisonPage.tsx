@@ -88,9 +88,9 @@ export const useComparisonPage = () => {
                   });
             if (!list) return false;
             // The added product lands on top; move it back after the product that preceded it
-            const others = list.products.filter((item) => item.uuid !== product.uuid);
-            const afterProduct = others[Math.min(index, others.length) - 1];
-            return afterProduct ? await moveProduct(product.uuid, afterProduct.uuid, list.uuid) : true;
+            const others = list.productUuids.filter((uuid) => uuid !== product.uuid);
+            const afterProductUuid = others[Math.min(index, others.length) - 1];
+            return afterProductUuid ? await moveProduct(product.uuid, afterProductUuid, list.uuid) : true;
         } finally {
             setRestoringProduct(null);
         }
