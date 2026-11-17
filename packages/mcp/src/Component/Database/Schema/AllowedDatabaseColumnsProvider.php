@@ -32,6 +32,10 @@ class AllowedDatabaseColumnsProvider
                 $classMetadata,
                 $classMetadata->getReflectionClass()->getProperties(),
             );
+
+            foreach ($this->getAllowedJoinTableColumnsSetIndexedByTableNames($classMetadata) as $joinTableName => $columnsSet) {
+                $allowedColumnsSetIndexedByTableNames[$joinTableName] = $columnsSet;
+            }
         }
 
         ksort($allowedColumnsSetIndexedByTableNames);
@@ -61,6 +65,41 @@ class AllowedDatabaseColumnsProvider
         ksort($allowedColumnsSetIndexedByColumnNames);
 
         return $allowedColumnsSetIndexedByColumnNames;
+    }
+
+    /**
+     * Join table of a many-to-many association has no entity to declare the exposure on,
+     * so it is exposed (with both of its join columns) like a column of the owning side property of the association
+     *
+     * @return array<string, array<string, bool>>
+     */
+    protected function getAllowedJoinTableColumnsSetIndexedByTableNames(ClassMetadata $classMetadata): array
+    {
+        $classLevelColumnExposureByFieldNames = $this->getClassLevelColumnExposureByFieldNames($classMetadata);
+        $allowedColumnsSetIndexedByJoinTableNames = [];
+
+        foreach ($classMetadata->getReflectionClass()->getProperties() as $property) {
+            if (!$classMetadata->hasAssociation($property->getName())) {
+                continue;
+            }
+
+            $associationMapping = $classMetadata->getAssociationMapping($property->getName());
+
+            if (!$associationMapping->isManyToManyOwningSide() || !$this->isColumnExposed($property, $classLevelColumnExposureByFieldNames)) {
+                continue;
+            }
+
+            $joinTable = $associationMapping->joinTable;
+            $joinTableName = $this->schemaNameNormalizer->normalizeTableNameFromString($joinTable->name);
+
+            foreach ([...$joinTable->joinColumns, ...$joinTable->inverseJoinColumns] as $joinColumn) {
+                $allowedColumnsSetIndexedByJoinTableNames[$joinTableName][$this->normalizeColumnName($joinColumn->name)] = true;
+            }
+
+            ksort($allowedColumnsSetIndexedByJoinTableNames[$joinTableName]);
+        }
+
+        return $allowedColumnsSetIndexedByJoinTableNames;
     }
 
     /**

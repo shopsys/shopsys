@@ -40,6 +40,8 @@ class ExposedSchemaProviderTest extends AbstractDatabaseSchemaFunctionalTestCase
         $this->assertArrayHasKey(InheritedQueryableEntity::TABLE_NAME, $exposedSchema);
         $this->assertArrayHasKey(ParentAttributedQueryableEntity::TABLE_NAME, $exposedSchema);
         $this->assertArrayNotHasKey(EmptyQueryableEntity::TABLE_NAME, $exposedSchema);
+        $this->assertArrayHasKey(QueryableRelationEntity::EXPOSED_JOIN_TABLE_NAME, $exposedSchema);
+        $this->assertArrayNotHasKey(QueryableRelationEntity::HIDDEN_JOIN_TABLE_NAME, $exposedSchema);
         $this->assertArrayNotHasKey(NonQueryableRelationEntity::TABLE_NAME, $exposedSchema);
 
         $queryableEntityTableSchema = $exposedSchema[QueryableEntity::TABLE_NAME];
