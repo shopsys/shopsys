@@ -1,0 +1,8 @@
+ProductListProductConnectionDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of products visible on the current domain"
