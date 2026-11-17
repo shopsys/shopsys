@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilt
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
@@ -22,6 +24,7 @@ class ProductElasticsearchBatchProvider
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly EntityNameResolver $entityNameResolver,
         protected readonly CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade,
+        protected readonly ProductListFacade $productListFacade,
     ) {
     }
 
@@ -103,6 +106,7 @@ class ProductElasticsearchBatchProvider
             $entity instanceof Category => $this->getFilterQueryForCategory($productBatchLoadByEntityData),
             $entity instanceof Flag => $this->getFilterQueryForFilterData($productBatchLoadByEntityData),
             $entity instanceof Brand => $this->getFilterQueryForBrand($productBatchLoadByEntityData),
+            $entity instanceof ProductList => $this->getFilterQueryForProductList($productBatchLoadByEntityData),
             default => throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', get_class($entity))),
         };
 
@@ -147,6 +151,15 @@ class ProductElasticsearchBatchProvider
             $productBatchLoadByEntityData->getLimit(),
             $productBatchLoadByEntityData->getEntity($this->entityNameResolver->resolve(Brand::class)),
         );
+    }
+
+    protected function getFilterQueryForProductList(
+        ProductBatchLoadByEntityData $productBatchLoadByEntityData,
+    ): FilterQuery {
+        $productIds = $this->productListFacade->getProductIdsByProductList($productBatchLoadByEntityData->getEntity());
+
+        return $this->filterQueryFactory->createVisibleProductsByProductIdsFilter($productIds)
+            ->setLimit($productBatchLoadByEntityData->getLimit());
     }
 
     protected function getSellableByProductsIdsInCategoryFilterQuery(

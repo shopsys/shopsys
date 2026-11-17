@@ -3,7 +3,11 @@ mutation RemoveProductFromListMutation($productUuid: Uuid!, $productListUuid: Uu
         uuid
         type
         products {
-            id
+            edges {
+                node {
+                    id
+                }
+            }
         }
     }
 }

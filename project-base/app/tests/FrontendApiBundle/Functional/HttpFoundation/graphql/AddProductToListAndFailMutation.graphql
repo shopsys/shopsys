@@ -3,7 +3,11 @@ mutation AddProductToListAndFailMutation($productUuid: Uuid!, $notExistingProduc
         uuid
         type
         products {
-            id
+            edges {
+                node {
+                    id
+                }
+            }
         }
     }
     RemoveProductFromList(input: {productUuid: $notExistingProductUuid, productListInput: {type: $type, uuid: $productListUuid}}) {

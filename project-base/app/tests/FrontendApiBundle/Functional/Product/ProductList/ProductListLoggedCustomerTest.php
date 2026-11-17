@@ -18,6 +18,8 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 {
+    use ProductListProductIdsTrait;
+
     /**
      * @param string[] $expectedProductIds
      */
@@ -34,7 +36,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 
         $this->assertSame($expectedUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
+        $this->assertSame($expectedProductIds, $this->getProductIds($data));
     }
 
     /**
@@ -54,7 +56,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 
         $this->assertSame($expectedUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
+        $this->assertSame($expectedProductIds, $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -93,7 +95,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         $productListData = $data[0];
         $this->assertSame($expectedUuid, $productListData['uuid']);
         $this->assertSame($productListType, $productListData['type']);
-        $this->assertSame($expectedProductIds, array_column($productListData['products'], 'id'));
+        $this->assertSame($expectedProductIds, $this->getProductIds($productListData));
     }
 
     /**
@@ -116,7 +118,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 
         $this->assertSame($expectedUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
+        $this->assertSame($expectedProductIds, $this->getProductIds($data));
     }
 
     /**
@@ -137,7 +139,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 
         $this->assertSame($newUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+        $this->assertSame([$productToAddId], $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -156,7 +158,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 
         $this->assertNotSame($anonymousProductListUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+        $this->assertSame([$productToAddId], $this->getProductIds($data));
     }
 
     #[DataProvider('productListDataProvider')]

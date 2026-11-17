@@ -9,11 +9,12 @@ ProductListDecorator:
             type:
                 type: "ProductListTypeEnum!"
                 description: "Product list type"
-            itemsCount:
-                type: "Int!"
-                description: "Count of products in the list that are visible on the current domain"
-                resolve: '@=query("productsCountByProductListQuery", value)'
+            productUuids:
+                type: "[Uuid!]!"
+                description: "All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain"
+                resolve: '@=query("productUuidsByProductListQuery", value)'
             products:
-                type: "[Product!]!"
-                description: "An array of the products in the list"
-                resolve: '@=query("productsByProductListQuery", value)'
+                type: "ProductConnection!"
+                description: "Paginated products of the list that are visible on the current domain, in the order of the list"
+                argsBuilder: "Relay::Connection"
+                resolve: '@=query("productsByProductListQuery", value, args)'

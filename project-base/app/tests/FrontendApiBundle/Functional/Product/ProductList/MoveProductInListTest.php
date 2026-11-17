@@ -11,6 +11,8 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 final class MoveProductInListTest extends GraphQlTestCase
 {
+    use ProductListProductIdsTrait;
+
     private const string LIST_UUID = ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID;
 
     public function testProductMovedAfterAnotherProductKeepsItsPositionInList(): void
@@ -18,7 +20,7 @@ final class MoveProductInListTest extends GraphQlTestCase
         $response = $this->moveProduct(self::LIST_UUID, 3, 2);
 
         $data = $this->getResponseDataForGraphQlType($response, 'MoveProductInList');
-        $this->assertSame([2, 3], array_column($data['products'], 'id'));
+        $this->assertSame([2, 3], $this->getProductIds($data));
         $this->assertSame([2, 3], $this->getListProductIds());
     }
 
@@ -27,7 +29,7 @@ final class MoveProductInListTest extends GraphQlTestCase
         $response = $this->moveProduct(self::LIST_UUID, 2, null);
 
         $data = $this->getResponseDataForGraphQlType($response, 'MoveProductInList');
-        $this->assertSame([2, 3], array_column($data['products'], 'id'));
+        $this->assertSame([2, 3], $this->getProductIds($data));
     }
 
     public function testAddedProductIsPlacedOnTop(): void
@@ -44,7 +46,7 @@ final class MoveProductInListTest extends GraphQlTestCase
         $response = $this->moveProduct(self::LIST_UUID, 2, 69);
 
         $data = $this->getResponseDataForGraphQlType($response, 'MoveProductInList');
-        $this->assertSame([69, 2, 3], array_column($data['products'], 'id'));
+        $this->assertSame([69, 2, 3], $this->getProductIds($data));
     }
 
     public function testProductMovedDownIsPlacedRightAfterAnotherProduct(): void
@@ -54,7 +56,7 @@ final class MoveProductInListTest extends GraphQlTestCase
         $response = $this->moveProduct(self::LIST_UUID, 69, 3);
 
         $data = $this->getResponseDataForGraphQlType($response, 'MoveProductInList');
-        $this->assertSame([3, 69, 2], array_column($data['products'], 'id'));
+        $this->assertSame([3, 69, 2], $this->getProductIds($data));
     }
 
     public function testProductMovedAfterRemovalIsPlacedRightAfterAnotherProduct(): void
@@ -69,7 +71,7 @@ final class MoveProductInListTest extends GraphQlTestCase
         $response = $this->moveProduct(self::LIST_UUID, 69, 2);
 
         $data = $this->getResponseDataForGraphQlType($response, 'MoveProductInList');
-        $this->assertSame([2, 69], array_column($data['products'], 'id'));
+        $this->assertSame([2, 69], $this->getProductIds($data));
     }
 
     public function testMovingProductOutsideTheListIsRejected(): void
@@ -122,7 +124,7 @@ final class MoveProductInListTest extends GraphQlTestCase
             'type' => 'COMPARISON',
         ]);
 
-        return array_column($this->getResponseDataForGraphQlType($response, 'productList')['products'], 'id');
+        return $this->getProductIds($this->getResponseDataForGraphQlType($response, 'productList'));
     }
 
     private function getProductUuid(int $productId): string

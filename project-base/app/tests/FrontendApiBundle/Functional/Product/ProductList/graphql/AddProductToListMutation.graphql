@@ -3,7 +3,11 @@ mutation AddProductToListMutation($productUuid: Uuid!, $productListUuid: Uuid, $
         uuid
         type
         products {
-            id
+            edges {
+                node {
+                    id
+                }
+            }
         }
     }
 }
