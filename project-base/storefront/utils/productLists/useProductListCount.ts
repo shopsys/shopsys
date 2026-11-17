@@ -36,5 +36,5 @@ export const useProductListCount = (productListType: TypeProductListTypeEnum): n
         updatePageLoadingState({ isProductListHydrated: true });
     }, [updatePageLoadingState]);
 
-    return data?.productList?.itemsCount ?? 0;
+    return data?.productList?.products.totalCount ?? 0;
 };

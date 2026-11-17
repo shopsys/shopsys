@@ -4,6 +4,7 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { ProductInterfaceType } from 'types/product';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 import { useProductList } from 'utils/productLists/useProductList';
 import { useProductListGtmEvent } from 'utils/productLists/useProductListGtmEvent';
 import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductListUuid';
@@ -80,7 +81,10 @@ export const useComparison = ({
     };
 
     return {
-        comparison: productListData?.productList,
+        comparison: productListData?.productList && {
+            ...productListData.productList,
+            products: mapConnectionEdges(productListData.productList.products.edges) ?? [],
+        },
         isProductListFetching,
         isProductInComparison: isProductInList,
         toggleProductInComparison,
