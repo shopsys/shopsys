@@ -49,7 +49,7 @@ export const showMessage = (
     const toastId = options?.toastId ?? message;
 
     if (type === 'error') {
-        if (isWithToastAndConsoleErrorDebugging) {
+        if (isWithToastAndConsoleErrorDebugging && !options?.action) {
             const errorIdentifier = getErrorIdentifierFromMessage(message);
 
             if (isErrorIgnored(errorIdentifier)) {
@@ -75,11 +75,15 @@ export const showMessage = (
                 },
             );
         } else {
-            toast.error(() => <ToastMessageContent message={message} tid={TIDs.toast_error} />, {
-                toastId,
-                closeOnClick: true,
-                icon: <RejectedIcon className="p-1" />,
-            });
+            toast.error(
+                () => <ToastMessageContent message={message} tid={TIDs.toast_error} action={options?.action} />,
+                {
+                    toastId,
+                    closeOnClick: !options?.action,
+                    ...(options?.action && { autoClose: false }),
+                    icon: <RejectedIcon className="p-1" />,
+                },
+            );
         }
     } else if (type === 'info') {
         toast.info(() => <ToastMessageContent message={message} tid={TIDs.toast_info} />, {

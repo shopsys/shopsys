@@ -6,6 +6,7 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { useEffect, useState } from 'react';
+import { useLogoutStore } from 'store/useLogoutStore';
 import { twJoin } from 'tailwind-merge';
 import { getAccessTokenFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
@@ -19,6 +20,7 @@ export const NotificationBars: FC = () => {
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const logout = useLogout();
     const domainConfig = useDomainConfig();
+    const isLoggingOut = useLogoutStore((s) => s.logoutDeadlineByDomain[domainConfig.domainId] !== undefined);
 
     useEffect(() => {
         const encodedAccessToken = getAccessTokenFromCookies(domainConfig);
@@ -79,6 +81,8 @@ export const NotificationBars: FC = () => {
                                             style={{ marginLeft: '10px' }}
                                             type="button"
                                             variant="inverted"
+                                            disabled={isLoggingOut}
+                                            aria-busy={isLoggingOut || undefined}
                                             onClick={logout}
                                         />
                                     ),

@@ -18,6 +18,7 @@ import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { usePathname } from 'next/navigation';
 import { useRef } from 'react';
+import { useLogoutStore } from 'store/useLogoutStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
@@ -44,7 +45,8 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
 
     const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
         useAuthorization();
-    const { url } = useDomainConfig();
+    const { url, domainId } = useDomainConfig();
+    const isLoggingOut = useLogoutStore((s) => s.logoutDeadlineByDomain[domainId] !== undefined);
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
     const [
@@ -207,10 +209,11 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                         <MenuIconicSubItemLink
                             tid={TIDs.user_menu_logout}
                             title={t('Logout')}
+                            disabled={isLoggingOut}
                             onClick={logoutAndCloseUserMenu}
                         >
                             <ExitIcon className="size-6" />
-                            {t('Logout')}
+                            {isLoggingOut ? t('Logging out...') : t('Logout')}
                         </MenuIconicSubItemLink>
                     </MenuIconicItemUserAuthenticatedContentListItem>
                 </ul>
