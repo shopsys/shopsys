@@ -15,25 +15,20 @@ use Shopsys\AdministrationBundle\Controller\ProductReviewController;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use stdClass;
 use Symfony\Bundle\SecurityBundle\Security;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
-/**
- * The configuration of a datagrid takes its domain control from the CRUD definition, unless the caller gives it
- * explicitly.
- */
 final class DatagridFactoryTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
     public function testDomainControlFollowsTheCrudDefinition(): void
@@ -70,7 +65,7 @@ final class DatagridFactoryTest extends TestCase
             'roleConstant' => 'ROLE_CRUD_TEST',
         ])->getConfig();
 
-        $this->assertNull($config->domainControlConfig);
+        $this->assertFalse($config->domainControlConfig->isEnabled());
     }
 
     private function createFactory(): DatagridFactory

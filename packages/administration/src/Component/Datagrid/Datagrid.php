@@ -7,7 +7,6 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid;
 use Doctrine\Common\Collections\ArrayCollection;
 use InvalidArgumentException;
 use LogicException;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Crud\Definition;
@@ -18,6 +17,8 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSour
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\GuessedFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\HiddenFieldFilterGuard;
 use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -249,7 +250,7 @@ final class Datagrid
      *       role?: string|null,
      *       permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
      *       class?: string|null,
-     *       searchable?: bool,
+     *       searchable?: bool|\Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable,
      *       filterable?: bool
      *   } $options
      * @phpstan-param FieldOptions $options
@@ -262,7 +263,12 @@ final class Datagrid
             throw new InvalidArgumentException(sprintf('Field with name "%s" already exists.', $name));
         }
 
-        $this->fields->set($name, new FieldDescriptor($name, $options));
+        $field = new FieldDescriptor($name, $options);
+        $this->fields->set($name, $field);
+
+        if ($field->isFilterable()) {
+            $this->addGuessedFilter($field);
+        }
 
         return $this;
     }
@@ -282,7 +288,7 @@ final class Datagrid
      *      role?: string|null,
      *      permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
      *      class?: string|null,
-     *      searchable?: bool,
+     *      searchable?: bool|\Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable,
      *      filterable?: bool
      *  } $options
      * @phpstan-param FieldOptions $options
@@ -295,7 +301,16 @@ final class Datagrid
             throw new InvalidArgumentException(sprintf('Field with name "%s" does not exist.', $name));
         }
 
-        $this->fields->get($name)->update($options);
+        $field = $this->fields->get($name);
+        $field->update($options);
+
+        // only the option itself switches the filter, so a filter removed by filters()->remove() stays removed
+        // when another option of the field changes
+        if (($options['filterable'] ?? null) === true) {
+            $this->addGuessedFilter($field);
+        } elseif (($options['filterable'] ?? null) === false) {
+            $this->removeGuessedFilter($field);
+        }
 
         return $this;
     }
@@ -318,19 +333,21 @@ final class Datagrid
             ));
         }
 
+        $this->removeGuessedFilter($this->fields->get($name));
         $this->fields->remove($name);
 
         return $this;
     }
 
     /**
-     * The filters the administrator composes rules from, declared explicitly —
-     * `$datagrid->filters()->add(TextFilter::new('name'))`.
+     * The filters the administrator composes rules from — `$datagrid->filters()->add(TextFilter::new('name'))`:
      *
-     * A field declared `'filterable' => true` gets a filter picked by the kind of value its path leads to; a filter
-     * declared here under the name of that field (see `FieldDescriptor::getFilterName()`) replaces the picked one.
-     * The filters are offered in the alphabetical order of their labels. Declare them while configuring the datagrid,
-     * they are adapted to the adapter when the state of the datagrid is created (see `DatagridStateFactory`).
+     * - a field declared `'filterable' => true` adds a `GuessedFilter` under its filter name (see
+     *   `FieldDescriptor::getFilterName()`), the filter is picked by the kind of value the path of the field leads to;
+     * - a filter added here under that name replaces the `GuessedFilter`, and `remove()` removes either;
+     * - the filters are offered in the alphabetical order of their labels.
+     *
+     * They are resolved against the adapter when the state of the datagrid is created (see `DatagridStateFactory`).
      */
     public function filters(): FilterCollection
     {
@@ -467,26 +484,54 @@ final class Datagrid
     }
 
     /**
-     * The declared filters the current administrator is allowed to use — a filter declared under the name of a field
-     * hidden from the administrator, or over a path overlapping one of its properties (the property itself, a path
-     * under it or the association it lies under), would tell what the field holds.
+     * A filter declared under the name of the field takes precedence, whether it was declared before the field
+     * or after it (see `FilterCollection::add()`).
+     */
+    private function addGuessedFilter(FieldDescriptor $field): void
+    {
+        $filterName = $field->getFilterName();
+        $filter = $this->filters->has($filterName) ? $this->filters->get($filterName) : null;
+
+        if ($filter instanceof GuessedFilter && $filter->field !== $field) {
+            throw new InvalidArgumentException(sprintf(
+                'Fields "%s" and "%s" cannot both be filterable, the name of their filter "%s" is the same. Declare the filter of one of them by filters()->add() under another name.',
+                $filter->field->getName(),
+                $field->getName(),
+                $filterName,
+            ));
+        }
+
+        if ($filter === null) {
+            $this->filters->add(new GuessedFilter($field));
+        }
+    }
+
+    /**
+     * A filter declared under the name of the field stays.
+     */
+    private function removeGuessedFilter(FieldDescriptor $field): void
+    {
+        $filterName = $field->getFilterName();
+        $filter = $this->filters->has($filterName) ? $this->filters->get($filterName) : null;
+
+        if ($filter instanceof GuessedFilter && $filter->field === $field) {
+            $this->filters->remove($filterName);
+        }
+    }
+
+    /**
+     * The filters the current administrator is allowed to use, see `HiddenFieldFilterGuard`.
      */
     private function getAccessibleFilters(): FilterCollection
     {
-        $hiddenFilterNames = [];
-        $hiddenPaths = [];
-
-        foreach ($this->fields as $field) {
-            if ($this->isAccessible($field) === false) {
-                $hiddenFilterNames[] = $field->getFilterName();
-                array_push($hiddenPaths, ...$field->getProperties());
-            }
-        }
-
+        $hiddenFieldFilterGuard = new HiddenFieldFilterGuard(array_filter(
+            $this->fields->getValues(),
+            fn (FieldDescriptor $field): bool => $this->isAccessible($field) === false,
+        ));
         $accessibleFilters = new FilterCollection();
 
         foreach ($this->filters as $filter) {
-            if (in_array($filter->getName(), $hiddenFilterNames, true) === false && $this->overlapsAnyPath($filter->getPath(), $hiddenPaths) === false) {
+            if ($hiddenFieldFilterGuard->hides($filter) === false) {
                 $accessibleFilters->add($filter);
             }
         }
@@ -495,25 +540,8 @@ final class Datagrid
     }
 
     /**
-     * Whether the path is one of the paths, leads under one of them or lies above one of them, by whole segments.
-     *
-     * @param string[] $paths
-     */
-    private function overlapsAnyPath(string $path, array $paths): bool
-    {
-        foreach ($paths as $otherPath) {
-            if ($path === $otherPath || str_starts_with($path, $otherPath . '.') || str_starts_with($otherPath, $path . '.')) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * The fields displayed on behalf of the features narrowing the datagrid — a field declared on the datagrid takes
-     * precedence, even one the administrator is not allowed to see, and a restricted field is displayed only to
-     * the administrator allowed to see it.
+     * The fields the state adds to the listing (see `DatagridStateEvent::addField()`). A field declared on the datagrid
+     * under the same name wins, even one the administrator is not allowed to see.
      *
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[]
      */
@@ -525,11 +553,7 @@ final class Datagrid
         ));
     }
 
-    /**
-     * The domain control of a CRUD datagrid follows its configuration unless given explicitly; a datagrid outside
-     * CRUD has none.
-     */
-    private function getDomainControlConfig(): ?DomainControlConfig
+    private function getDomainControlConfig(): DomainControlConfig
     {
         if ($this->options['domainControl'] !== null) {
             return $this->options['domainControl'];
@@ -538,7 +562,7 @@ final class Datagrid
         /** @var \Shopsys\AdministrationBundle\Component\Crud\Definition|null $crudDefinition */
         $crudDefinition = $this->options['crudDefinition'];
 
-        return $crudDefinition?->getConfig()->getDomainControlConfig();
+        return $crudDefinition?->getConfig()->getDomainControlConfig() ?? new DomainControlConfig();
     }
 
     private function assertNotFrozen(): void

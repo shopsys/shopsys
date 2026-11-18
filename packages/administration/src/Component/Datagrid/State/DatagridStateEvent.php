@@ -34,7 +34,7 @@ final class DatagridStateEvent extends Event
     private bool $invalid = false;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request|null $request Null when the datagrid is built outside a request (a command, a test) — the declarations are validated even then, but no form is built; a datagrid with a domain control needs a request of a logged-in administrator
+     * @param \Symfony\Component\HttpFoundation\Request|null $request Null when the datagrid is built outside a request (a command, a test), no form is submitted then
      */
     public function __construct(
         public readonly DatagridConfig $config,
@@ -42,15 +42,10 @@ final class DatagridStateEvent extends Event
     ) {
     }
 
-    public function isInRequest(): bool
-    {
-        return $this->request !== null;
-    }
-
     /**
-     * The query of a GET form of the datagrid. The forms are submitted from the query by hand — `handleRequest()`
-     * ignores a GET form during a POST request (symfony/symfony#12244), which is what happens when a live component
-     * on the page re-renders.
+     * The query of a GET form of the datagrid. The forms are submitted from the query by hand, as `handleRequest()`
+     * ignores a GET form during a POST request (symfony/symfony#12244). A live component on the page re-renders
+     * by a POST request.
      *
      * @return array<string, mixed>|null Null when the request does not carry the form
      */
@@ -64,7 +59,8 @@ final class DatagridStateEvent extends Event
     }
 
     /**
-     * @throws \LogicException When a part of the same class was already added
+     * A part of the same class can be added only once. A feature is changed in a project by replacing its subscriber,
+     * not by adding another one.
      */
     public function addPart(object $part): void
     {
@@ -76,10 +72,9 @@ final class DatagridStateEvent extends Event
     }
 
     /**
-     * Displays one more field in the datagrid — it narrows nothing, a field of the same name declared on the datagrid
-     * takes precedence, and it is displayed only to an administrator allowed to see it, as any other field.
-     *
-     * @throws \LogicException When a field of the same name was already added
+     * Displays one more field in the datagrid, a field of each name only once. The field narrows nothing. A field
+     * of the same name declared on the datagrid takes precedence. The field is displayed only to an administrator
+     * allowed to see it, as any other field.
      */
     public function addField(FieldDescriptor $field): void
     {

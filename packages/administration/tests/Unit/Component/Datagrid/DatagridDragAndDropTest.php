@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid;
 
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
@@ -19,30 +20,29 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Security\AccessControl\AccessCheckerInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Symfony\Bundle\SecurityBundle\Security;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\OrderableDummy;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 /**
- * Saving the order renumbers the listed records, so the records narrowed by the administrator are only listed
- * in their order — reordering a part of them would mix up the positions of the rest.
+ * Saving the order renumbers the listed records, so reordering only the searched or filtered ones would mix up
+ * the positions of the rest.
  */
 final class DatagridDragAndDropTest extends TestCase
 {
     private ?DataSourceInterface $gridDataSource = null;
 
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
-    public function testWholeListIsReorderedByDragAndDrop(): void
+    public function testDragAndDropIsEnabledWhenTheListIsNotNarrowed(): void
     {
         $gridMock = $this->createGridMock();
         $gridMock->expects($this->once())->method('enableDragAndDrop')->with(OrderableDummy::class, 'position');
@@ -51,27 +51,32 @@ final class DatagridDragAndDropTest extends TestCase
         $datagrid->createView($this->createState($datagrid));
     }
 
-    public function testSearchedRecordsAreListedByTheirPositionWithoutDragAndDrop(): void
-    {
-        $gridMock = $this->createGridMock();
-        $gridMock->expects($this->never())->method('enableDragAndDrop');
-        $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition());
-
-        $datagrid->createView($this->createState($datagrid, ['text' => 'hrnek']));
-        $this->gridDataSource?->getPaginatedRows();
-    }
-
-    public function testFilteredRecordsAreListedByTheirPositionWithoutDragAndDrop(): void
-    {
+    /**
+     * @param array<string, mixed>|null $quickSearchQuery
+     * @param array<string, mixed>|null $filterQuery
+     */
+    #[DataProvider('provideNarrowingQueries')]
+    public function testNarrowedRecordsAreListedByTheirPositionWithoutDragAndDrop(
+        ?array $quickSearchQuery,
+        ?array $filterQuery,
+    ): void {
         $gridMock = $this->createGridMock();
         $gridMock->expects($this->never())->method('enableDragAndDrop');
         $datagrid = $this->createDatagrid($gridMock, $this->createDataSourceExpectingOrderByPosition());
         $datagrid->filters()->add(TextFilter::new('name'));
 
-        $datagrid->createView($this->createState($datagrid, null, [
-            'groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'hrnek']]]],
-        ]));
+        $datagrid->createView($this->createState($datagrid, $quickSearchQuery, $filterQuery));
         $this->gridDataSource?->getPaginatedRows();
+    }
+
+    /**
+     * @return iterable<string, array{array<string, mixed>|null, array<string, mixed>|null}>
+     */
+    public static function provideNarrowingQueries(): iterable
+    {
+        yield 'searched' => [['text' => 'hrnek'], null];
+
+        yield 'filtered' => [null, ['groups' => [['rules' => [['filter' => 'name', 'operator' => 'contains', 'value' => 'hrnek']]]]]];
     }
 
     private function createGridMock(): Grid&MockObject

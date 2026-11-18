@@ -30,7 +30,6 @@ final class DatagridStateEventTest extends TestCase
             ],
         ]));
 
-        $this->assertTrue($event->isInRequest());
         $this->assertSame(['text' => 'hrnek'], $event->getQuery('ProductReview_search'));
         $this->assertNull($event->getQuery('ProductReview_filter'));
     }
@@ -39,7 +38,6 @@ final class DatagridStateEventTest extends TestCase
     {
         $event = $this->createEvent(null);
 
-        $this->assertFalse($event->isInRequest());
         $this->assertNull($event->getQuery('ProductReview_search'));
     }
 

@@ -30,10 +30,6 @@ class DatagridStateFactory
 
     /**
      * The state is read from the main request, the one the framework grid reads its page and order from.
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
      */
     public function create(DatagridConfig $config): DatagridState
     {
@@ -102,12 +98,12 @@ class DatagridStateFactory
             }
         }
 
-        return array_values($activeSearches)[0] ?? null;
+        return array_first($activeSearches);
     }
 
     /**
-     * Any composed filter outranks the quick search — an invalid one narrows nothing and shows its errors instead
-     * of quietly listing what the quick search asked for.
+     * Any composed filter outranks the quick search, as an invalid filter shows its errors instead of quietly listing
+     * what the quick search asked for.
      *
      * @return list<class-string<\Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterface>>
      */
@@ -117,14 +113,14 @@ class DatagridStateFactory
     }
 
     /**
-     * The domain control limits what the administrator may list at all, so a datagrid with a domain control is never
-     * listed without it — not even when its subscriber is replaced by one that forgets to add it.
+     * The domain control limits what the administrator may list at all. A datagrid with a domain control is therefore
+     * never listed without it, not even when its subscriber is replaced by one that forgets to add it.
      *
      * @param array<class-string, object> $parts
      */
     protected function assertDomainControlIsApplied(DatagridConfig $config, array $parts): void
     {
-        if ($config->domainControlConfig?->isEnabled() === true && array_key_exists(DomainControlScope::class, $parts) === false) {
+        if ($config->domainControlConfig->isEnabled() && array_key_exists(DomainControlScope::class, $parts) === false) {
             throw new LogicException(sprintf('The datagrid "%s" has a domain control, but no part of its state limits it to the domains - a subscriber adding "%s" has to be registered.', $config->gridId, DomainControlScope::class));
         }
     }

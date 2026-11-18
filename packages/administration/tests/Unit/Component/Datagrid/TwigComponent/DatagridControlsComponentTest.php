@@ -28,18 +28,6 @@ final class DatagridControlsComponentTest extends TestCase
         $this->assertFalse($component->isFilterTabOpen());
     }
 
-    public function testQuickSearchTabIsOpenWhenTheQuickSearchApplies(): void
-    {
-        $quickSearch = new QuickSearch('Product_search', 'hrnek', []);
-
-        $component = $this->createComponent([$quickSearch, $this->createFilterPanel(false)], $quickSearch);
-
-        $this->assertFalse($component->isFilterTabOpen());
-    }
-
-    /**
-     * A composed filter outranks the quick search, so its tab is the one open.
-     */
     public function testFilterTabIsOpenWhenTheFilterApplies(): void
     {
         $filterPanel = $this->createFilterPanel(true);

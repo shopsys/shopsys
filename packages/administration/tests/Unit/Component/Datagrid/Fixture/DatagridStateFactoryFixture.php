@@ -44,12 +44,13 @@ final class DatagridStateFactoryFixture
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request|null $request Null creates the state outside a request
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope|null $domainControlScope The domain control of the datagrid, instead of the one its configuration resolves to in the application
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope|null $domainControlScope Used instead of the scope the application resolves
      */
-    public static function create(
+    public static function createState(
+        Datagrid|DatagridConfig $datagrid,
         ?Request $request = null,
         ?DomainControlScope $domainControlScope = null,
-    ): DatagridStateFactory {
+    ): DatagridState {
         $formFactory = self::createFormFactory();
 
         $eventDispatcher = new EventDispatcher();
@@ -69,23 +70,10 @@ final class DatagridStateFactoryFixture
             $requestStack->push($request);
         }
 
-        return new DatagridStateFactory($eventDispatcher, $requestStack);
+        return new DatagridStateFactory($eventDispatcher, $requestStack)->create($datagrid instanceof Datagrid ? $datagrid->getConfig() : $datagrid);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request|null $request Null creates the state outside a request
-     */
-    public static function createState(
-        Datagrid|DatagridConfig $datagrid,
-        ?Request $request = null,
-        ?DomainControlScope $domainControlScope = null,
-    ): DatagridState {
-        return self::create($request, $domainControlScope)->create($datagrid instanceof Datagrid ? $datagrid->getConfig() : $datagrid);
-    }
-
-    /**
-     * A request carrying the forms of the datagrid named `GRID_ID`.
-     *
      * @param array<string, mixed>|null $quickSearchQuery
      * @param array<string, mixed>|null $filterQuery
      */

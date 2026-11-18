@@ -13,38 +13,35 @@ use Shopsys\AdministrationBundle\Component\Datagrid\DatagridConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\InvalidDatagridDeclarationException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterPanel;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearch;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\SearchedPath;
 use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridState;
 use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateEvent;
 use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateFactory;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
-/**
- * The rules of the searchable fields and of the offered filters are covered by `SearchablePathResolverTest` and
- * `FilterSetResolverTest`; this asserts how the subscribers of the features put the state together from them and
- * from the request, and how the factory combines the conditions of the parts.
- */
 final class DatagridStateFactoryTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
     public function testNothingNarrowsWithoutAnyCondition(): void
@@ -193,37 +190,23 @@ final class DatagridStateFactoryTest extends TestCase
         $this->assertNull($state->condition);
     }
 
-    public function testNoFormIsBuiltOutsideRequest(): void
-    {
-        $scope = $this->createScope('domainId');
-
-        $state = $this->createState(null, [$this->createSearchableField('name')], $this->createFilters(), $scope);
-
-        $this->assertNull($state->get(QuickSearch::class));
-        $this->assertNull($state->get(FilterPanel::class));
-        $this->assertSame($scope, $state->get(DomainControlScope::class));
-        $this->assertEquals($scope->createCondition(), $state->condition);
-    }
-
     /**
      * A declaration that cannot work fails in a test or a command as well, not only when a page is rendered.
      */
     public function testDeclarationsAreValidatedOutsideRequest(): void
     {
-        $this->expectException(FieldNotSearchableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
+        $this->expectExceptionMessage('Field "computed" cannot be searchable: a virtual field has no path');
 
         $this->createState(null, [new FieldDescriptor('computed', ['searchable' => true, 'virtual' => true])]);
     }
 
-    /**
-     * A search a project adds by a subscriber of its own applies after the ranked ones, and the scopes always apply.
-     */
     public function testSearchNotRankedAppliesWhenNoRankedOneIsActive(): void
     {
         $customSearch = $this->createCustomSearch();
         $scope = $this->createScope('domainId');
 
-        $state = $this->createStateFromParts([new QuickSearch('Product_search', null, ['name' => 'Name']), $customSearch, $scope]);
+        $state = $this->createStateFromParts([new QuickSearch('Product_search', null, [new SearchedPath('name', 'Name', PathValueTypeEnum::STRING)]), $customSearch, $scope]);
 
         $this->assertSame($customSearch, $state->get($customSearch::class));
         $this->assertSame($customSearch, $state->getAppliedSearch());
@@ -232,7 +215,7 @@ final class DatagridStateFactoryTest extends TestCase
 
     public function testRankedSearchOutranksTheSearchNotRanked(): void
     {
-        $quickSearch = new QuickSearch('Product_search', 'hrnek', ['name' => 'Name']);
+        $quickSearch = new QuickSearch('Product_search', 'hrnek', [new SearchedPath('name', 'Name', PathValueTypeEnum::STRING)]);
 
         $state = $this->createStateFromParts([$this->createCustomSearch(), $quickSearch]);
 

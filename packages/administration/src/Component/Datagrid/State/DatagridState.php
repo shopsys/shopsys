@@ -9,20 +9,16 @@ use Shopsys\AdministrationBundle\Component\Datagrid\DatagridConfig;
 use Webmozart\Assert\Assert;
 
 /**
- * The state of one datagrid in the current request — the parts the features narrowing the datagrid added
+ * The state of one datagrid in the current request. It holds the parts the features narrowing the datagrid added
  * (`DomainControlScope`, `QuickSearch`, `FilterPanel`, …) and the single condition they combine into.
- *
- * Created by `DatagridStateFactory`; `Datagrid::createView()` lists the records by it and the components of
- * the features render their parts.
  */
 final readonly class DatagridState
 {
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DatagridConfig $config Kept private — the state is rendered by components, and the configuration holds the adapter, which is none of their business
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DatagridConfig $config The configuration the state was created for, see `isCreatedFor()`
      * @param array<class-string, object> $parts
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface|null $condition Null lists every record
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $additionalFields Fields displayed on behalf of the features, see `DatagridStateEvent::addField()`
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterface|null $appliedSearch The search whose condition applies, see `DatagridStateFactory::pickSearch()`
      */
     public function __construct(
         private DatagridConfig $config,

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Field;
 
 use Closure;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\AbstractFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *     role?: string|null,
  *     permission?: \Shopsys\FrameworkBundle\Component\Security\Role\Permission|null,
  *     class?: string|null,
- *     searchable?: bool,
+ *     searchable?: bool|\Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable,
  *     filterable?: bool
  * }
  */
@@ -77,7 +79,7 @@ final class FieldDescriptor
         $optionsResolver->setAllowedTypes('role', ['string', 'null']);
         $optionsResolver->setAllowedTypes('permission', [Permission::class, 'null']);
         $optionsResolver->setAllowedTypes('class', ['string', 'null']);
-        $optionsResolver->setAllowedTypes('searchable', 'bool');
+        $optionsResolver->setAllowedTypes('searchable', ['bool', Searchable::class]);
         $optionsResolver->setAllowedTypes('filterable', 'bool');
 
         return $optionsResolver->resolve($options);
@@ -123,31 +125,27 @@ final class FieldDescriptor
     }
 
     /**
-     * Whether the quick search of the datagrid searches in this field. The field has to have a path of its
-     * own (see `getSelectProperties()`) leading to text, a combined field is searched in those of its properties
-     * leading to text; the datagrid refuses any other.
+     * Where the quick search looks for the text in this field (see `Searchable`), null when it does not search in it.
      */
-    public function isSearchable(): bool
+    public function getSearchable(): ?Searchable
     {
-        return $this->options['searchable'];
+        $searchable = $this->options['searchable'];
+
+        if ($searchable instanceof Searchable) {
+            return $searchable;
+        }
+
+        return $searchable ? new Searchable() : null;
     }
 
-    /**
-     * Whether the datagrid offers a filter over this field, picked by the kind of value its path leads to.
-     * A filter declared by `Datagrid::filters()` under the same name (see `getFilterName()`) takes precedence.
-     */
     public function isFilterable(): bool
     {
         return $this->options['filterable'];
     }
 
-    /**
-     * The name of the filter of this field — the name of the field, with the dots of a path replaced the
-     * same way a filter derives its name from its path, as a form name cannot contain a dot.
-     */
     public function getFilterName(): string
     {
-        return str_replace('.', '_', $this->name);
+        return AbstractFilter::createNameFromPath($this->name);
     }
 
     public function getHelp(): ?string

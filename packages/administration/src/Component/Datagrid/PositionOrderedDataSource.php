@@ -9,15 +9,18 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 /**
- * Lists the records of a datagrid ordered by drag-and-drop by their position whenever the grid asks for no order of
- * its own. The grid orders them so only while they can be dragged, while the order holds when they cannot — for
- * an administrator without the permission to edit them, or over records narrowed by the administrator.
+ * Orders the records of a drag-and-drop datagrid by their position whenever the grid asks for no order of its own.
+ *
+ * The grid orders by the position only while the rows can be dragged. The order holds even when they cannot:
+ *
+ * - for an administrator without the permission to edit the records;
+ * - for records narrowed by the administrator.
  */
-class PositionOrderedDataSource implements DataSourceInterface
+final readonly class PositionOrderedDataSource implements DataSourceInterface
 {
     public function __construct(
-        protected readonly DataSourceInterface $innerDataSource,
-        protected readonly string $positionSourceColumnName,
+        private DataSourceInterface $innerDataSource,
+        private string $positionSourceColumnName,
     ) {
     }
 

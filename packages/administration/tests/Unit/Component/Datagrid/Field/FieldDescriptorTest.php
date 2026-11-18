@@ -7,6 +7,7 @@ namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Field;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable;
 use Shopsys\FrameworkBundle\Component\Security\Role\Permission;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
@@ -99,20 +100,32 @@ class FieldDescriptorTest extends TestCase
         new FieldDescriptor('name', ['property' => []]);
     }
 
-    public function testFieldIsNotSearchableByDefault(): void
-    {
-        $this->assertFalse((new FieldDescriptor('name'))->isSearchable());
+    /**
+     * @param mixed[] $options
+     */
+    #[DataProvider('searchableDataProvider')]
+    public function testSearchableOptionSaysWhereTheFieldIsSearchedIn(
+        array $options,
+        ?Searchable $expectedSearchable,
+    ): void {
+        $this->assertEquals($expectedSearchable, new FieldDescriptor('reviewer', $options)->getSearchable());
     }
 
-    public function testSearchableFieldKeepsItsPathAsTheSearchedOne(): void
+    /**
+     * @return iterable<string, array{mixed[], \Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable|null}>
+     */
+    public static function searchableDataProvider(): iterable
     {
-        $field = new FieldDescriptor('brandName', [
-            'searchable' => true,
-            'property' => 'brand.name',
-        ]);
+        yield 'not searched in by default' => [[], null];
 
-        $this->assertTrue($field->isSearchable());
-        $this->assertSame(['brand.name'], $field->getSelectProperties());
+        yield 'not searched in when switched off' => [['searchable' => false], null];
+
+        yield 'true searches in every property under the label of the field' => [['searchable' => true], new Searchable()];
+
+        yield 'searchable picks the properties and the label' => [
+            ['property' => ['lastName', 'firstName', 'customerUser.id'], 'searchable' => new Searchable(paths: ['lastName', 'firstName'], label: 'Reviewer name')],
+            new Searchable(paths: ['lastName', 'firstName'], label: 'Reviewer name'),
+        ];
     }
 
     public function testSearchableCanBeSwitchedOnByUpdate(): void
@@ -121,14 +134,13 @@ class FieldDescriptorTest extends TestCase
 
         $field->update(['searchable' => true]);
 
-        $this->assertTrue($field->isSearchable());
+        $this->assertEquals(new Searchable(), $field->getSearchable());
     }
 
-    public function testSearchableIsRefusedWhenNotBoolean(): void
+    public function testSearchableIsRefusedWhenNeitherBooleanNorSearchable(): void
     {
         $this->expectException(InvalidOptionsException::class);
 
-        // the static analysis refuses this as well, which is the first line of defence
         /** @phpstan-ignore argument.type */
         new FieldDescriptor('name', ['searchable' => 'yes']);
     }
