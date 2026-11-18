@@ -28,6 +28,7 @@ type RangeSliderProps = {
     setMaxValueCallback: (value: number) => void;
     isDisabled?: boolean;
     title: string;
+    idPrefix?: string;
 };
 
 const DELIMITER_REGEXP = /[,.]/;
@@ -49,6 +50,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     setMaxValueCallback,
     isDisabled,
     title,
+    idPrefix = '',
 }) => {
     const { t } = useTranslation();
     const step = getStep(min, max);
@@ -217,7 +219,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                             filterName: title,
                         })}
                         disabled={isDisabled}
-                        id={`${title} - from`}
+                        id={`${idPrefix}${title} - from`}
                         label={t('from')}
                         type="number"
                         value={minValueInput}
@@ -233,7 +235,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                             filterName: title,
                         })}
                         disabled={isDisabled}
-                        id={`${title} - to`}
+                        id={`${idPrefix}${title} - to`}
                         label={t('to')}
                         type="number"
                         value={maxValueInput}

@@ -63,6 +63,11 @@ class AggregationResultToProductFilterCountDataTransformer
     {
         $countData = $this->translateAbsoluteNumbers($aggregationResult);
         $countData->countByParameterIdAndValueId = $this->getParametersCount($aggregationResult);
+        $countData->countByParameterId = [];
+
+        foreach ($aggregationResult['aggregations']['parameters']['by_parameters']['buckets'] as $parameterBucket) {
+            $countData->countByParameterId[$parameterBucket['key']] = $parameterBucket['products']['doc_count'];
+        }
 
         return $countData;
     }

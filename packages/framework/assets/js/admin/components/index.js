@@ -53,4 +53,5 @@ import './PinnedMenuItem';
 import './Statistics';
 import './StatusDescription';
 import './StoreCoordinates';
+import './VisibleFilterParametersLimit';
 import './ImportPriceList';

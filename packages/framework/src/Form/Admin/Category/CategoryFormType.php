@@ -191,14 +191,47 @@ final class CategoryFormType extends AbstractType
         FormBuilderInterface $builder,
         ?Category $category,
     ): void {
-        if ($category === null) {
+        $parametersFilterBuilder = $builder->create('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
+        $parametersFilterBuilder->add('visibleFilterParametersCount', IntegerType::class, [
+            'label' => 'Number of filter parameters displayed in the sidebar',
+            'help' => t('The first parameters in the category order are shown. Enter 0 to show parameters only in the All filters popup.'),
+            'required' => true,
+            'attr' => [
+                'min' => 0,
+                'data-bs-toggle' => 'number-input',
+                'data-bs-decrement-label' => t('Decrease'),
+                'data-bs-increment-label' => t('Increase'),
+                'data-visible-filter-parameters-count' => true,
+            ],
+            'constraints' => [
+                new Constraints\NotBlank(),
+                new Constraints\GreaterThanOrEqual(value: 0),
+            ],
+        ]);
+
+        $parametersUsedByProductsInCategory = $category === null
+            ? []
+            : $this->parameterRepository->getParametersUsedByProductsInCategory($category, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+
+        if ($parametersUsedByProductsInCategory === []) {
+            $missingParametersInfo = t('Assign products with parameters to the category first.');
+
+            $parametersFilterBuilder->add('parametersPosition', DisplayOnlyType::class, [
+                'label' => 'Parameters order in category',
+                'data' => $missingParametersInfo,
+            ]);
+
+            $parametersFilterBuilder->add('parametersCollapsed', DisplayOnlyType::class, [
+                'label' => 'Filter parameters closed by default',
+                'data' => $missingParametersInfo,
+            ]);
+
+            $builder->add($parametersFilterBuilder);
+
             return;
         }
-        $parametersFilterBuilder = $builder->create('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
 
         $parameterNamesById = [];
-
-        $parametersUsedByProductsInCategory = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
 
         foreach ($parametersUsedByProductsInCategory as $parameter) {
             $parameterNamesById[$parameter->getId()] = $parameter->getName();
@@ -208,7 +241,11 @@ final class CategoryFormType extends AbstractType
             'entry_type' => IntegerType::class,
             'labels_by_value' => $parameterNamesById,
             'label' => 'Parameters order in category',
+            'help' => t('Parameters above the highlighted line are displayed in the sidebar.'),
             'required' => false,
+            'attr' => [
+                'data-visible-filter-parameters-order' => true,
+            ],
         ]);
 
         $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [

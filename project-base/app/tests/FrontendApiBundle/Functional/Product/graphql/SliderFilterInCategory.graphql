@@ -8,6 +8,7 @@ query category($urlSlug: String!, $filter: ProductFilter) {
                         minimalValue
                         maximalValue
                         isSelectable
+                        singleValueCount
                     }
                 }
             }

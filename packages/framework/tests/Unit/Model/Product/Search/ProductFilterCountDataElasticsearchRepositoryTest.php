@@ -51,6 +51,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
         $expectedCountInStock = 4;
         $expectedCountByFlagId = [self::OTHER_FLAG_ID => 6];
         $expectedCountByBrandId = [self::OTHER_BRAND_ID => 4];
+        $expectedCountByParameterId = [self::PARAMETER_ID => 4];
         $expectedCountByParameterIdAndValueId = [
             self::PARAMETER_ID => [self::OTHER_PARAMETER_VALUE_ID => 8],
             self::SECOND_PARAMETER_ID => [self::SECOND_PARAMETER_OTHER_VALUE_ID => 5],
@@ -78,6 +79,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
                             self::OTHER_PARAMETER_VALUE_ID => self::COUNT_THAT_MUST_NOT_LEAK,
                         ],
                     ],
+                    $expectedCountByParameterId,
                 ),
                 'flags_plus_numbers' => $this->createAbsoluteNumbersResponse($expectedCountByFlagId, [], 0),
                 'brands_plus_numbers' => $this->createAbsoluteNumbersResponse([], $expectedCountByBrandId, 0),
@@ -91,6 +93,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
         $this->assertSame($expectedCountByFlagId, $countData->countByFlagId);
         $this->assertSame($expectedCountByBrandId, $countData->countByBrandId);
         $this->assertSame($expectedCountByParameterIdAndValueId, $countData->countByParameterIdAndValueId);
+        $this->assertSame($expectedCountByParameterId, $countData->countByParameterId);
     }
 
     public function testCountDataWithoutSelectedFiltersIsTakenFromAbsoluteNumbersOnly(): void
@@ -99,6 +102,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
         $expectedCountByFlagId = [self::SELECTED_FLAG_ID => 2];
         $expectedCountByBrandId = [self::SELECTED_BRAND_ID => 3];
         $expectedCountByParameterIdAndValueId = [self::PARAMETER_ID => [self::SELECTED_PARAMETER_VALUE_ID => 1]];
+        $expectedCountByParameterId = [self::PARAMETER_ID => 1];
 
         $repository = $this->createRepository();
         $productFilterData = new ProductFilterData();
@@ -118,6 +122,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
                     $expectedCountByBrandId,
                     $expectedCountInStock,
                     $expectedCountByParameterIdAndValueId,
+                    $expectedCountByParameterId,
                 ),
             ],
             true,
@@ -127,6 +132,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
         $this->assertSame($expectedCountByFlagId, $countData->countByFlagId);
         $this->assertSame($expectedCountByBrandId, $countData->countByBrandId);
         $this->assertSame($expectedCountByParameterIdAndValueId, $countData->countByParameterIdAndValueId);
+        $this->assertSame($expectedCountByParameterId, $countData->countByParameterId);
     }
 
     public function testSearchQueriesAndCountDataOfSearchIgnoreParameters(): void
@@ -301,6 +307,7 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
      * @param array<int, int> $countByFlagId
      * @param array<int, int> $countByBrandId
      * @param array<int, array<int, int>> $countByParameterIdAndValueId
+     * @param array<int, int> $countByParameterId
      * @return array<string, mixed>
      */
     private function createAbsoluteNumbersResponse(
@@ -308,12 +315,14 @@ class ProductFilterCountDataElasticsearchRepositoryTest extends TestCase
         array $countByBrandId,
         int $countInStock,
         array $countByParameterIdAndValueId = [],
+        array $countByParameterId = [],
     ): array {
         $parameterBuckets = [];
 
         foreach ($countByParameterIdAndValueId as $parameterId => $countByValueId) {
             $parameterBuckets[] = [
                 'key' => $parameterId,
+                'products' => ['doc_count' => $countByParameterId[$parameterId]],
                 'by_value' => ['buckets' => $this->createBuckets($countByValueId)],
             ];
         }

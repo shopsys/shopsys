@@ -1,4 +1,5 @@
 export enum TIDs {
+    all_filters_button = 'all_filters_button',
     // Layout & Header
     header = 'header',
     fixed_header = 'fixed_header',

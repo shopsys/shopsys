@@ -13,6 +13,8 @@ class ParameterFilterOption
 
     public ?float $maximalValue = null;
 
+    public ?int $singleValueCount = null;
+
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $values
      */
