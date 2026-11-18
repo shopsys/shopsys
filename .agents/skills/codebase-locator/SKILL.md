@@ -1,7 +1,6 @@
 ---
 name: codebase-locator
-description: Locates files, directories, and components relevant to a feature or task. Call `codebase-locator` with human language prompt describing what you're looking for. Basically a "Super Grep/Glob/LS tool" — Use it if you find yourself desiring to use one of these tools more than once.
-tools: Grep, Glob, LS
+description: Locates files, directories, and components relevant to a feature or task in the Shopsys monorepo. Use it with a plain-language description of what you're looking for, whenever you'd otherwise run Grep/Glob/LS more than once.
 ---
 
 # codebase-locator (monorepo)

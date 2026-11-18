@@ -5,7 +5,7 @@ description: Generates a Czech sprint summary article from Jira sprint data (Jir
 
 # Sprint Summary
 
-Generates a sprint summary from Jira sprint data. Prefer Jira MCP as the primary source; use a Jira CSV export only as a fallback when MCP is unavailable or missing required data. Creates a structured article in Czech suitable for Confluence. If Playwright MCP is available, it can optionally prepare screenshots/videos for relevant UI/UX tasks as side attachments.
+Generates a sprint summary from Jira sprint data. Prefer Jira MCP as the primary source; use a Jira CSV export only as a fallback when MCP is unavailable or missing required data. Creates a structured article in Czech suitable for Confluence. If Playwright MCP is available, it prepares screenshots/videos for relevant UI/UX tasks as side attachments.
 
 ## Initial Setup
 
@@ -107,7 +107,7 @@ Split tasks into categories based on name, description, and prefixes:
 
 ### Step 3: Fetch PR Details (Optional)
 
-For key tasks (new features, major changes), use Task tool with pr-diff-fetcher subagent to get PR descriptions:
+For key tasks (new features, major changes), get the PR title and description with the `pr-diff-fetcher` skill or `gh pr view <n> --json title,body`:
 
 ```
 Fetch PR descriptions for these GitHub PRs from shopsys/shopsys:
@@ -196,7 +196,7 @@ For each task:
      - What was adjusted technically or behaviorally, not just that it was fixed
      - Why it changed (if relevant)
      - Impact on users/developers
-   - Max 3-5 bullet points per task
+   - As few bullets as that takes
 
 Additional rules:
 - Avoid vague one-line bug summaries such as "Fixed broken page" or "Fixed font loading". For fixes, include the cause and the concrete correction when the information is available from Jira, PR body, PR diff, commits, or comments.
@@ -210,15 +210,13 @@ Additional rules:
 2. Keep the markdown article clean and copy-friendly
 3. Do not automatically embed screenshots into the markdown
 
-### Step 7: Offer Visual Attachments (Optional)
+### Step 7: Visual Attachments
 
 After the markdown is generated, check whether Playwright MCP/browser tools are available and whether the application is reachable.
 
 **Required:** when Playwright MCP is available, generate screenshots for UX-relevant tickets as part of the workflow (do not wait for a separate prompt). The default target URL is the production environment - https://cz.ssfwcc.prod.shopsys.cloud/. If production demo data turn out to be non-standard (missing demo products, changed transports), switch to the Odin review environment of the current release branch (e.g. `https://cz.20-0.odin.shopsys.cloud`, SK domain `https://20-0.odin.shopsys.cloud/sk`, admin `https://20-0.odin.shopsys.cloud/admin/`).
 
-If yes, explicitly ask the user whether they want visual attachments for relevant tasks:
-- The user may name concrete Jira tickets
-- Or the user may let the agent choose relevant tasks
+Use the tickets the user names; otherwise choose the UX-relevant tasks yourself.
 
 When choosing tasks automatically, prefer:
 - Storefront/Admin UX changes
@@ -400,7 +398,7 @@ Only prepare the handoff; do not send it to marketing automatically.
 
 1. **Write in Czech** - the entire article including technical terms (where it makes sense)
 2. **Use bullet points** - not paragraphs
-3. **Be concise** - max 1-2 sentences per bullet point
+3. **Be concise** - each bullet is a short, scannable statement
 4. **Focus on impact** - what it means for users/developers
 5. **Omit internal details** - implementation details only if relevant
 6. **Keep technical terms** - do not translate GraphQL, API, Docker, etc.

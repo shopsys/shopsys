@@ -95,7 +95,7 @@ Ceremonial or already-verified prompts. Press Enter without asking.
 
 - `BeHappyReleaseWorker` — after-release final step. Auto-press.
 - `CheckCopyrightYearReleaseWorker` — *if* you've already verified the year (Phase 4 side-task). Otherwise surface.
-- `CheckLatestVersionOfReleaserReleaseWorker` — compares `utils/releaser/` on `<initial-branch>` against the latest supported release branch (e.g. when releasing `14.5`, diff against the most recent `19.0`-style branch, NOT against `<initial-branch>`). *Auto-press only if* `git diff origin/<latest-branch> origin/<initial-branch> -- utils/releaser/` is empty. Otherwise surface so the operator can backport the latest releaser changes first.
+- `CheckLatestVersionOfReleaserReleaseWorker` — compares `utils/releaser/` on `<initial-branch>` against the latest supported release branch (e.g. when releasing `14.5`, diff against the newest `X.Y` branch, NOT against `<initial-branch>`). *Auto-press only if* `git diff origin/<latest-branch> origin/<initial-branch> -- utils/releaser/` is empty. Otherwise surface so the operator can backport the latest releaser changes first.
 - `ResolveDocsTodoReleaseWorker` — *if* `grep -rln '<!--- TODO' --include='*.md' .` returns nothing. Otherwise surface.
 
 Never auto-press the fallback `confirm("Continue when \"…\" is satisfied")` printed by `waitFor()` after MAX_WAIT_SECONDS — that one means polling gave up. Surface it.
@@ -137,7 +137,7 @@ Call `AskUserQuestion` with options `Done — press Enter` / `Pause — exit and
 These are the safe checks the skill runs locally while the releaser is between prompts or during a long `waitFor()`:
 
 - Copyright year: `grep -rE "Copyright[^0-9]{0,20}[0-9]{4}" LICENSE` and compare to `date +%Y`. (Note: the Shopsys License document carries a `version YYYY-MM-DD` line, not a copyright year — there may be nothing to verify; that's fine, the worker just wants acknowledgement.)
-- Releaser parity: `git diff --stat origin/<latest-branch> origin/<initial-branch> -- utils/releaser/` where `<latest-branch>` is the most recent supported release branch (e.g. `19.0` at the moment). The point is to bring the latest releaser changes onto older release branches, so always diff against the newest branch, not against `<initial-branch>` itself.
+- Releaser parity: `git diff --stat origin/<latest-branch> origin/<initial-branch> -- utils/releaser/` where `<latest-branch>` is the most recent supported release branch (the highest `X.Y` branch on origin). The point is to bring the latest releaser changes onto older release branches, so always diff against the newest branch, not against `<initial-branch>` itself.
 - Docs TODOs: `grep -rln '<!--- TODO' --include='*.md' docs/`.
 - Last tag date (for blog-draft input): `git log -1 --format=%cI $(git describe --tags --abbrev=0 origin/<initial-branch>)`.
 - **Packages on Packagist missing CI workflows**: `for p in packages/*/; do [ ! -f "$p/.github/workflows/run-checks-tests.yaml" ] && echo "no CI: $(basename $p)"; done`. Any such package that's on Packagist appears in `GithubActionsStatusReporter` as "still pending" forever — the GH-Actions polling check at step 5 will stall until the 2h timeout. Verify each one is listed in `GithubActionsStatusReporter::IGNORED_PACKAGES`; if not, add it before launching.
@@ -198,6 +198,6 @@ Spawn a single Agent (subagent_type `general-purpose`) with this prompt, substit
 > - `EnableMergingReleaseWorker` — announce that the freeze on `<initial-branch>` is lifted and merging is allowed again.
 > - `PostInfoToSlackReleaseWorker` — announce the release: include the version, a link to `https://github.com/shopsys/shopsys/releases/tag/<version>`, a one-line summary of the headline change (use `gh pr list --base <initial-branch> --state merged --search 'merged:>=<last-tag-date>'` to find it), and a link to `UPGRADE-<initial-branch>.md`.
 >
-> Keep it short — two to four lines. Plain text only, no code fences, no preamble, no trailing notes. Output the message body and nothing else.
+> Keep it short enough to read at a glance in the channel. Plain text only, no code fences, no preamble, no trailing notes. Output the message body and nothing else.
 
 Print the agent's output verbatim to chat, then use the standard category-B confirm — operator pastes the message to Slack and presses "Done — press Enter".

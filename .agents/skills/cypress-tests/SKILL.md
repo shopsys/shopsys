@@ -5,7 +5,7 @@ description: 'Write, fix, and review Cypress acceptance tests for Shopsys storef
 
 # Cypress Test Writing for Shopsys Storefront
 
-You are an expert Cypress test writer for the Shopsys Platform storefront. Follow these conventions EXACTLY when writing, reviewing, or fixing tests.
+You are an expert Cypress test writer for the Shopsys Platform storefront. Follow these conventions when writing, reviewing, or fixing tests.
 
 ## Choose coverage before writing a spec
 
@@ -47,10 +47,10 @@ project-base/storefront/cypress/
 | Directory            | Tests                                                                        | Support File                  |
 | -------------------- | ---------------------------------------------------------------------------- | ----------------------------- |
 | authentication/      | login, registration                                                          | authenticationSupport.ts      |
-| b2b/                 | accountantViewOnly, editProfileB2b, orderWithdrawal                          | b2bSupport.ts                 |
+| b2bComplaints/       | complaints                                                                   | complaintsSupport.ts          |
+| b2bUser/             | accountantViewOnly, editProfileB2b, orderWithdrawal                          | b2bSupport.ts                 |
 | cart/                | cartInHeader, cartLogin, cartPage, productAddToCart                          | cartSupport.ts                |
 | comparison/          | productComparison                                                            | comparisonSupport.ts          |
-| complaints/          | complaints                                                                   | complaintsSupport.ts          |
 | customerUsers/       | customerUsers                                                                | customerUsersSupport.ts       |
 | deliveryOptions/     | deliveryOptionsPopup                                                         | deliveryOptionsSupport.ts     |
 | filterAndSort/       | categoryDetailFilterAndSort, parameterFilter                                 | —                             |
@@ -61,11 +61,13 @@ project-base/storefront/cypress/
 | limitedUser/         | limitedUser                                                                  | limitedUserSupport.ts         |
 | matrix/              | matrixTest                                                                   | —                             |
 | order/               | contactInformation, createOrder, createOrderWithDeliveryAddress, orderRepeat | orderSupport.ts               |
+| productLists/        | comparisonRaceCondition, wishlistRaceCondition                               | —                             |
 | seoCategory/         | seoCategory                                                                  | —                             |
 | ssr/                 | serverSideRendering                                                          | —                             |
 | stores/              | stores                                                                       | storesSupport.ts              |
 | transportAndPayment/ | lastOrderTransportAndPayment, paymentSelect, transportSelect                 | transportAndPaymentSupport.ts |
-| visits/              | repeatedVisits, simpleVisitsWithScreenshots                                  | visitsSupport.ts              |
+| visits/              | blogArticle, fixedHeader, repeatedVisits, simpleVisitsWithScreenshots        | visitsSupport.ts              |
+| watchdog/            | watchdog                                                                     | —                             |
 
 ## Running Tests
 
@@ -146,9 +148,9 @@ navigation, and assertions — rather than copying only its primary action.
   section; mounted enabled radios alone do not prove that the animated list has expanded for a screenshot.
 - Add a new interaction pattern only when no project pattern fits, and model it on the closest verified flow.
 
-## CRITICAL RULE: Always Use cy.getByTID()
+## Use cy.getByTID()
 
-Every element interaction MUST use `cy.getByTID()` or scope via TIDs. This is the single most important convention.
+Locate elements with `cy.getByTID()`, or scope from a TID with `.find()`; form-library IDs are the one exception (see below). Raw `data-tid`, text, title or aria-label selectors drift with markup and translations.
 
 ### How getByTID works
 
@@ -396,9 +398,9 @@ This does not authorize baseline regeneration or automatic acceptance of diffs.
 - Dynamic images: `product_list_item_image`, `comparison_product_image`, `stores_map`, `store_opening_status`, `category_bestseller_image`
 - Use `zIndex` option when blackout needs to cover overlapping elements
 
-### IMPORTANT: Always blackout product images and transport/payment icons
+### Blackout product images and transport/payment icons
 
-When taking snapshots, NEVER forget to blackout images and icons that may differ between environments:
+When taking snapshots, blackout images and icons, because they differ between environments:
 
 **Product images by page:**
 
@@ -1134,9 +1136,8 @@ describe('Product Comparison Tests (SSP-1719)', { retries: { runMode: 0 } }, () 
 
 ## Keeping This Skill Up-to-Date
 
-**IMPORTANT**: When you make changes to the Cypress test infrastructure, update this skill file (`.agents/skills/cypress-tests/SKILL.md`) where its guidance is affected. Cross-layer ownership stays in the canonical `storefront-tests` skill. Specifically:
+When you change the Cypress test infrastructure, update this skill file (`.agents/skills/cypress-tests/SKILL.md`) where its guidance is affected. Cross-layer ownership stays in the canonical `storefront-tests` skill. Specifically:
 
-- **New SNAPSHOT_GROUP value** → Update the `SNAPSHOT_GROUP values` enum listing in this file
 - **New custom command** → Add it to the Custom Commands Reference tables
 - **New static data** (products, users, URLs) → Add to the Static Test Data section
 - **New TID patterns** (new section/category of TIDs) → No action needed (skill references `tids.ts` directly)

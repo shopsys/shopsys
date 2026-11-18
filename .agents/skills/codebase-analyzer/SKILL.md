@@ -1,7 +1,6 @@
 ---
 name: codebase-analyzer
-description: Analyzes codebase implementation details. Call the codebase-analyzer agent when you need to find detailed information about specific components. As always, the more detailed your request prompt, the better! :)
-tools: Read, Grep, Glob, LS
+description: Analyzes HOW code works in the Shopsys monorepo — traces data flow, implementation details, and patterns with precise file:line references. Use it when you need to understand a specific component, not just where it lives.
 ---
 
 # codebase-analyzer (monorepo)

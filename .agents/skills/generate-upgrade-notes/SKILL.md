@@ -1,6 +1,6 @@
 ---
 name: generate-upgrade-notes
-description: Generates structured upgrade notes for a pull request based on diff analysis.
+description: Generates structured upgrade notes for a pull request based on diff analysis. Use when the user asks to generate or write upgrade notes for a PR or the current branch, or invokes /generate-upgrade-notes.
 ---
 
 # Generate Upgrade Notes
@@ -14,7 +14,7 @@ Never ask the user for the pull request or the scope — resolve both automatica
 1. **Pull request** — in this order, stop at the first hit:
     - a PR URL or number given in the command arguments
     - the PR of the current branch: `gh pr view --json number,url,title,baseRefName` (exit code 0 means a PR exists)
-    - no PR yet: analyze the current branch against the repository default branch (`gh repo view --json defaultBranchRef -q .defaultBranchRef.name`, fallback `git symbolic-ref refs/remotes/origin/HEAD`), use the subject of the first commit on the branch as the title, and put `XXXX` in place of the PR number in the heading (`([#XXXX](https://github.com/shopsys/shopsys/pull/XXXX))`) — tell the user to replace it once the PR exists
+    - no PR yet: analyze the current branch against the repository default branch (`gh repo view --json defaultBranchRef -q .defaultBranchRef.name`, fallback `git symbolic-ref refs/remotes/origin/HEAD`), use the subject of the first commit on the branch as the title, and keep the `{pullRequestId}` placeholder from `upgrade-notes/_template.md` in the heading; adhoc-pr replaces it once the PR exists
 2. **Scope** — take it from the command arguments when given, otherwise infer it from the changed paths:
     - `packages/` or `project-base/app/` → backend
     - `project-base/storefront/` → storefront
@@ -29,8 +29,6 @@ Ask the user only when neither source yields an answer (for example outside a gi
 
 ## Workflow
 
-Use TodoWrite to track: fetching PR data → analyzing changes → generating files → user review
-
 ### Step 1: Resolve Inputs
 
 Resolve the PR identifier and scope as described in **Initial Setup** — from the command arguments first, then automatically. Do not stop to ask.
@@ -39,7 +37,7 @@ Resolve the PR identifier and scope as described in **Initial Setup** — from t
 
 **Launch the pr-diff-fetcher subagent:**
 
-Use the Task tool with general-purpose agent:
+Launch a general-purpose subagent:
 
 ```
 Description: "Fetch PR diff and metadata"
@@ -61,7 +59,7 @@ If the subagent asks for the base branch, answer with the PR's `baseRefName` or 
 
 **Launch the upgrade-notes-analyzer subagent:**
 
-Use the Task tool with general-purpose agent:
+Launch a general-purpose subagent:
 
 ```
 Description: "Analyze BC breaks and movements"
@@ -248,7 +246,6 @@ This command uses two specialized subagents (via general-purpose agent with deta
 - Drop speculative "if you customize Y" warnings when the PR did not touch Y
 - Never list new features, additions, or descriptions unless they require developer action
 - Focus exclusively on breaking changes requiring manual action
-- Avoid documenting changes caught by static analysis
 - Always include `#project-base-diff` phrase when project-base changes
 - **Anything visible in the project-base diff is covered by that single line** — config registrations (middlewares, dataloaders), GraphQL type files in project config, wiring: no bullet, no config snippet
 - Renames/removals of public methods/classes get a one-line bullet ("X was renamed to Y"); purely ADDITIVE interface changes (new optional parameters, new methods, new enum values) never do

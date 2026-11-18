@@ -9,11 +9,11 @@ version: 1.0.0
 
 # Deep Code Review Command
 
-**MINDSET: You are a senior reviewer seeing this code for the FIRST TIME. Forget all prior context. Read every line as if you've never seen it before. Question everything. Trust nothing.**
+Review as a first-time reader: verify each claim against the code rather than prior context.
 
-**CRITICAL: Files to review:** `$ARGUMENTS`
+**Files to review:** `$ARGUMENTS`
 
-**If files are specified above - STOP and read ONLY those files. Do NOT run git status. Do NOT check other files. Review ONLY the files listed above.**
+If files are specified above, review those files (and read whatever surrounding context verifies them); don't widen the review to other changes.
 
 If no files specified above (empty) - then review all uncommitted changes.
 
@@ -172,7 +172,7 @@ For EVERY changed file, verify each of these with zero assumptions:
 
 - **FRESH EYES**: Pretend you have never seen this code before. Re-read everything.
 - **VERIFY, DON'T ASSUME**: If something looks right, prove it by checking the actual implementation/types/schema.
-- **ZERO TOLERANCE**: No mistakes accepted. Flag anything that is even slightly suspicious.
+- Report issues you can substantiate.
 - Be specific - reference exact files and line numbers
 - Provide exact solutions, not just problems
 - When reviewing diffs, also check surrounding context for integration issues

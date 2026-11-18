@@ -1,7 +1,6 @@
 ---
 name: review-server-logs
 description: Connects to the Odin review server via SSH and searches Docker container logs for errors, exceptions, and 5xx responses on a given review branch.
-tools: Bash
 user_invocable: true
 ---
 

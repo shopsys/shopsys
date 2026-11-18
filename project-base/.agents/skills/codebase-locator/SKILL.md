@@ -1,7 +1,6 @@
 ---
 name: codebase-locator
-description: Locates files, directories, and components relevant to a feature or task in this Shopsys project. Call it with a human-language description of what you're looking for. A "super Grep/Glob/LS" — reach for it whenever you'd otherwise run those tools more than once.
-tools: Grep, Glob, LS
+description: Locates files, directories, and components relevant to a feature or task in this Shopsys project. Use it with a plain-language description of what you're looking for, whenever you'd otherwise run Grep/Glob/LS more than once.
 ---
 
 > **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
