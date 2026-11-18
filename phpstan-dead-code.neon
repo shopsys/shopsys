@@ -144,6 +144,10 @@ parameters:
             path: packages/http-smoke-testing/src/RouteInfo.php
         # individual members
         -
+            identifier: shipmonk.deadMethod
+            message: '#^Unused\ Shopsys\\AdministrationBundle\\Component\\Datagrid\\Path\\PathDescription::withValueType\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
+            path: packages/administration/src/Component/Datagrid/Path/PathDescription.php
+        -
             identifier: shipmonk.deadProperty.neverRead
             message: '#^Property\ Shopsys\\AdministrationBundle\\Component\\Security\\AccessControl\\RouteAccessControlData::\$routeName\ is\ never\ read\ \(all\ usages\ excluded\ by\ tests\ excluder\)$#'
             path: packages/administration/src/Component/Security/AccessControl/RouteAccessControlData.php
