@@ -97,6 +97,16 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         $this->assertItemsOfDeletedOrderAreExcluded();
     }
 
+    public function testSearchOrderItemsRejectsPageSizeOverMaximumAllowedLimit(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/SearchOrderItemsQuery.graphql',
+            ['first' => 101, ...SearchInputTestUtils::createSearchInputQueryVariables('')],
+        );
+
+        $this->assertUserError($response, 'max-allowed-limit');
+    }
+
     public static function getOrderItemsDataProvider(): iterable
     {
         // last 4 order items

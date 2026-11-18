@@ -31,6 +31,8 @@ class OrderItemsSearchQuery extends AbstractQuery
 
     public function orderItemsSearchQuery(Argument $argument): ConnectionInterface|Promise
     {
+        $this->pageSizeValidator->checkMaxPageSize($argument);
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $searchInput = $argument['searchInput']['search'];
