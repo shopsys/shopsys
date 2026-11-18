@@ -139,7 +139,7 @@ abstract class AbstractCrudController extends AdminBaseController
         ]);
 
         // the forms of the datagrid are rendered by its components, so the status is not set by render() itself
-        if ($datagridState->isInvalid() && $response->getStatusCode() === Response::HTTP_OK) {
+        if ($datagridState->isInvalid()) {
             $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 

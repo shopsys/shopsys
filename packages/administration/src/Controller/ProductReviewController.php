@@ -16,6 +16,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ChoiceFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ProductFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable;
 use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
@@ -95,14 +96,13 @@ class ProductReviewController extends AbstractCrudController
                 'label' => t('Product'),
                 'property' => ['productName', 'catnum', 'product.id'],
                 'template' => '@ShopsysAdministration/content/productReview/grid/product.html.twig',
-                // the name and the catalog number are searched in, the identifier is skipped as it is no text
-                'searchable' => true,
+                'searchable' => new Searchable(paths: ['productName', 'catnum'], label: t('Product name or catalog number')),
             ])
             ->add('reviewer', [
                 'label' => t('Reviewer'),
                 'property' => ['lastName', 'firstName', 'customerUser.id'],
                 'template' => '@ShopsysAdministration/content/productReview/grid/reviewer.html.twig',
-                'searchable' => true,
+                'searchable' => new Searchable(paths: ['lastName', 'firstName'], label: t('Reviewer name')),
             ])
             ->add('rating', [
                 'label' => t('Rating'),
@@ -126,13 +126,13 @@ class ProductReviewController extends AbstractCrudController
                 'label' => t('Text review'),
                 'virtual' => true,
                 'property' => 'hasTextReview',
+            ])
+            ->add('uuid', [
+                'label' => t('UUID'),
+                'visible' => false,
+                'searchable' => true,
             ]);
 
-        $this->configureFilters($datagrid);
-    }
-
-    protected function configureFilters(Datagrid $datagrid): void
-    {
         $datagrid->filters()
             ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->productReviewStatusEnum->getAllIndexedByTranslations()))
             ->add(ChoiceFilter::new('rating', t('Rating'))->setChoices(array_combine(range(1, 5), range(1, 5))))
