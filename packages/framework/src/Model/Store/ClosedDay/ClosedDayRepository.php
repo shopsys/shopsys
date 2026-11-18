@@ -28,7 +28,7 @@ class ClosedDayRepository
         $closedDay = $this->getClosedDayRepository()->find($closedDayId);
 
         if ($closedDay === null) {
-            throw new ClosedDayNotFoundException(sprintf('Holiday / internal day with ID %s not found.', $closedDay));
+            throw new ClosedDayNotFoundException(sprintf('Holiday / internal day with ID %s not found.', $closedDayId));
         }
 
         return $closedDay;
