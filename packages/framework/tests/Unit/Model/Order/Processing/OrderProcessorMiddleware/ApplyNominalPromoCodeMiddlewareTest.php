@@ -7,7 +7,9 @@ namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddle
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyNominalPromoCodeMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation;
@@ -149,6 +151,52 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         $this->assertSame([], $additionalServiceItemData->relatedOrderItemsData);
     }
 
+    public function testDiscountIsCalculatedOnlyWithPromotionsOfValidProducts(): void
+    {
+        $this->setTranslator();
+
+        $orderProcessingData = $this->createOrderProcessingData();
+        $orderData = $orderProcessingData->orderData;
+
+        $promoCodeData = new PromoCodeData();
+        $promoCodeData->code = 'promoCode';
+        $promoCodeData->discountType = PromoCodeTypeEnum::DISCOUNT_TYPE_NOMINAL;
+        $promoCode = new PromoCode($promoCodeData);
+
+        $orderProcessingData->orderInput->addPromoCode($promoCode);
+
+        $validProductPrice = new Price(Money::create(1000), Money::create(1210));
+        $validProductItemData = $this->addProductItemToOrderData($orderData, $validProductPrice, 1, 'product 1', 1);
+        $orderData->addTotalPrice($validProductPrice, OrderItemTypeEnum::TYPE_PRODUCT);
+        $this->addPromotionItemToOrderData(
+            $orderData,
+            $validProductItemData,
+            new Price(Money::create(-200), Money::create(-242)),
+        );
+
+        $otherProductPrice = new Price(Money::create(500), Money::create(605));
+        $otherProductItemData = $this->addProductItemToOrderData($orderData, $otherProductPrice, 1, 'product 2', 2);
+        $orderData->addTotalPrice($otherProductPrice, OrderItemTypeEnum::TYPE_PRODUCT);
+        $this->addPromotionItemToOrderData(
+            $orderData,
+            $otherProductItemData,
+            new Price(Money::create(-500), Money::create(-605)),
+        );
+
+        $applyNominalPromoCodeMiddleware = $this->createApplyNominalPromoCodeMiddleware(
+            new Price(Money::create(100), Money::create(121)),
+            new Price(Money::create(800), Money::create(968)),
+        );
+
+        $result = $applyNominalPromoCodeMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
+
+        $actualDiscountItems = $result->orderData->getItemsByType(OrderItemTypeEnum::TYPE_DISCOUNT);
+
+        $this->assertCount(1, $actualDiscountItems);
+        $this->assertContains($actualDiscountItems[0], $validProductItemData->relatedOrderItemsData);
+        $this->assertNotContains($actualDiscountItems[0], $otherProductItemData->relatedOrderItemsData);
+    }
+
     public static function discountableItemTypesDataProvider(): iterable
     {
         yield 'only products are discountable by default' => [
@@ -229,6 +277,25 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         $applyNominalPromoCodeMiddleware->discountableItemTypes = $discountableItemTypes;
 
         return $applyNominalPromoCodeMiddleware;
+    }
+
+    private function addPromotionItemToOrderData(
+        OrderData $orderData,
+        OrderItemData $productItemData,
+        Price $price,
+    ): void {
+        $promotionItemData = new OrderItemData();
+        $promotionItemData->type = OrderItemTypeEnum::TYPE_PROMOTION;
+        $promotionItemData->name = 'promotion';
+        $promotionItemData->setUnitPrice($price);
+        $promotionItemData->setTotalPrice($price);
+        $promotionItemData->vatPercent = '21';
+        $promotionItemData->quantity = 1;
+
+        $productItemData->relatedOrderItemsData[] = $promotionItemData;
+
+        $orderData->addItem($promotionItemData);
+        $orderData->addTotalPrice($price, OrderItemTypeEnum::TYPE_PROMOTION);
     }
 
     private function createCurrencyStub(): Currency
