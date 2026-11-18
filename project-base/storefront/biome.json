@@ -115,7 +115,7 @@
                         "patterns": [
                             {
                                 "group": ["../*", "../../*", "../../../*", "../../../../*", "../../../../../*"],
-                                "message": "Please use same-folder imports or absolute imports from the storefront baseUrl instead."
+                                "message": "Please use same-folder imports or absolute imports from the storefront root instead."
                             }
                         ]
                     }

@@ -43,8 +43,7 @@ You can read more about the config options in the [Vitest docs](https://vitest.d
 
 ```js
 export default defineConfig({
-    // tsConfigPaths allows us to test our codebase which uses absolute imports based on the TS basePath
-    plugins: [react(), tsconfigPaths()],
+    plugins: [react()],
     test: {
         environment: 'jsdom',
         rootDir: './',
@@ -55,6 +54,8 @@ export default defineConfig({
         restoreMocks: true,
     },
     resolve: {
+        // tsconfigPaths allows us to test our codebase which uses absolute imports based on the paths mapping in tsconfig.json
+        tsconfigPaths: true,
         // these are the directories which are loaded for our tests
         // all directories which are included (even indirectly) in our tests should be added here
         moduleDirectories: [
