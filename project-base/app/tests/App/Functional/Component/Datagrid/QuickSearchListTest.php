@@ -4,26 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Datagrid;
 
-use App\DataFixtures\Demo\AdministratorDataFixture;
-use App\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\ProductReview\ProductReview;
-use Symfony\Component\DomCrawler\Crawler;
-use Tests\App\Test\Client;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-/**
- * The quick search of a CRUD list from the URL down to the rows — the searched text arrives in the form
- * named after the datagrid, narrows the listed product reviews and stays in the rendered input.
- */
 class QuickSearchListTest extends TransactionFunctionalTestCase
 {
-    private const string LIST_ROUTE = 'admin_crud_product_review_list';
+    use ProductReviewListTrait;
 
-    /**
-     * The datagrid of a CRUD controller is named after its entity, so its quick search form is `ProductReview_search`.
-     */
     private const string SEARCH_PARAMETER = 'ProductReview_search';
 
     public function testTypedTextNarrowsTheListedReviewsIgnoringCase(): void
@@ -48,6 +36,51 @@ class QuickSearchListTest extends TransactionFunctionalTestCase
         $this->assertSame('hrnek', $crawler->filter(sprintf('input[name="%s[text]"]', self::SEARCH_PARAMETER))->attr('value'));
     }
 
+    public function testReviewIsFoundByItsUuid(): void
+    {
+        $client = $this->createLoggedInClient();
+        $review = $this->getFirstDomainReview();
+
+        $foundRows = $this->listRows($client, [self::SEARCH_PARAMETER => ['text' => mb_strtoupper($review->getUuid())]]);
+
+        $this->assertCount(1, $foundRows);
+        $this->assertCount(1, $foundRows->filter(sprintf('a[href="%s"]', $this->generateEditPath($client, $review))));
+    }
+
+    /**
+     * A part of a UUID is no UUID, so the database is never asked to compare it with one.
+     */
+    public function testPartOfUuidFindsNothing(): void
+    {
+        $client = $this->createLoggedInClient();
+        $review = $this->getFirstDomainReview();
+
+        $foundRows = $this->listRows($client, [self::SEARCH_PARAMETER => ['text' => substr($review->getUuid(), 0, 13)]]);
+
+        $this->assertCount(0, $foundRows);
+    }
+
+    public function testPlaceholderNamesWhatIsSearchedIn(): void
+    {
+        $client = $this->createLoggedInClient();
+
+        $crawler = $client->request('GET', $this->generateListPath($client));
+
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertSame(
+            'Search in: Product name or catalog number, Reviewer name, UUID',
+            $crawler->filter(sprintf('input[name="%s[text]"]', self::SEARCH_PARAMETER))->attr('placeholder'),
+        );
+    }
+
+    private function getFirstDomainReview(): ProductReview
+    {
+        $review = $this->em->getRepository(ProductReview::class)->findOneBy(['domainId' => Domain::FIRST_DOMAIN_ID]);
+        $this->assertNotNull($review, 'The demo data have to contain a review on the first domain.');
+
+        return $review;
+    }
+
     /**
      * A catalogue number carried by some of the demo reviews, not by all of them, so that a search by it narrows the list.
      */
@@ -66,38 +99,5 @@ class QuickSearchListTest extends TransactionFunctionalTestCase
         $this->assertGreaterThan(1, count($reviewCountsByCatnum), 'The demo data have to contain reviews of several products.');
 
         return (string)array_key_first($reviewCountsByCatnum);
-    }
-
-    /**
-     * @param array<string, mixed> $query
-     */
-    private function listRows(Client $client, array $query): Crawler
-    {
-        $crawler = $client->request('GET', $this->generateListPath($client), $query);
-        $this->assertResponseStatusCodeSame(200);
-
-        return $crawler->filter('tr.js-grid-row');
-    }
-
-    private function createLoggedInClient(): Client
-    {
-        self::ensureKernelShutdown();
-        $client = static::createClient([], ['HTTP_HOST' => '127.0.0.1:8000']);
-        $client->catchExceptions(false);
-
-        $administrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR, Administrator::class);
-        $administrator = $client->getContainer()->get(AdministratorFacade::class)->getById($administrator->getId());
-        $client->getContainer()->get(AdministratorActivityFacade::class)->create($administrator, '127.0.0.1');
-        $client->loginUser($administrator, 'administration');
-
-        return $client;
-    }
-
-    private function generateListPath(Client $client): string
-    {
-        /** @var \Symfony\Component\Routing\RouterInterface $router */
-        $router = $client->getContainer()->get('router');
-
-        return $router->generate(self::LIST_ROUTE);
     }
 }

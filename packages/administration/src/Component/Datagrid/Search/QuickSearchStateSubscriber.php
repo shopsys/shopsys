@@ -35,14 +35,11 @@ class QuickSearchStateSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotSearchableException
-     */
     public function onDatagridState(DatagridStateEvent $event): void
     {
-        $labelsByPath = $this->searchablePathResolver->resolve($event->config->adapter, $event->config->fields);
+        $searchedPaths = $this->searchablePathResolver->resolve($event->config->adapter, $event->config->fields);
 
-        if ($labelsByPath === [] || $event->isInRequest() === false) {
+        if ($searchedPaths === []) {
             return;
         }
 
@@ -52,7 +49,7 @@ class QuickSearchStateSubscriber implements EventSubscriberInterface
         $event->addPart(new QuickSearch(
             $formName,
             $query === null ? null : $this->quickSearchFormFactory->getTerm($formName, $query),
-            $labelsByPath,
+            $searchedPaths,
         ));
     }
 }

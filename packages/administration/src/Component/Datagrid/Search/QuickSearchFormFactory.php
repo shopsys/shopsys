@@ -20,9 +20,6 @@ class QuickSearchFormFactory
     ) {
     }
 
-    /**
-     * @param string|null $term The text the form is filled with
-     */
     public function createForm(string $formName, ?string $term = null): FormInterface
     {
         $data = new QuickSearchFormData();
@@ -34,21 +31,14 @@ class QuickSearchFormFactory
     /**
      * The form is submitted from the query by hand, see `DatagridStateEvent::getQuery()`.
      *
-     * @param array<string, mixed> $query The query of the form
+     * @param array<string, mixed> $query
      * @return string|null The searched text, null when nothing was searched for
      */
     public function getTerm(string $formName, array $query): ?string
     {
         $form = $this->createForm($formName);
         $form->submit($query);
-        $data = $form->getData();
 
-        if ($data instanceof QuickSearchFormData === false || $data->text === null) {
-            return null;
-        }
-
-        $term = trim($data->text);
-
-        return $term === '' ? null : $term;
+        return $form->getData()->text;
     }
 }

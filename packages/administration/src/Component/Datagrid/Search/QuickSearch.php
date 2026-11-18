@@ -5,29 +5,25 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Search;
 
 use Override;
-use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Comparison;
+use Ramsey\Uuid\Uuid;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterface;
 
 /**
- * The quick search of one datagrid — one text searched in every field declared `searchable`.
- *
- * A part of the state of the datagrid added by `QuickSearchStateSubscriber`; the component builds the form from it,
- * the condition narrows the records. The searched paths are validated against the adapter by
- * `SearchablePathResolver`, so a search over a date or a number is refused before any query exists.
+ * The quick search of one datagrid, one text searched in every field declared `searchable`.
  */
 final readonly class QuickSearch implements DatagridSearchInterface
 {
     /**
-     * @param string $formName The name of the GET form the text is searched by, unique for the datagrid
      * @param string|null $term The submitted text, null when nothing was searched for
-     * @param array<string, string> $labelsByPath Labels of the searched fields by the paths searched in
+     * @param list<\Shopsys\AdministrationBundle\Component\Datagrid\Search\SearchedPath> $searchedPaths
      */
     public function __construct(
         public string $formName,
         public ?string $term,
-        public array $labelsByPath,
+        public array $searchedPaths,
     ) {
     }
 
@@ -38,18 +34,21 @@ final readonly class QuickSearch implements DatagridSearchInterface
     }
 
     /**
-     * The labels of the searched fields for the placeholder of the input, each once — a field combining several
-     * properties is searched in every one of them leading to text.
+     * The labels of the searched fields for the placeholder of the input. A field searched in several paths is named
+     * once.
      *
      * @return string[]
      */
     public function getLabels(): array
     {
-        return array_values(array_unique($this->labelsByPath));
+        return array_values(array_unique(array_map(
+            static fn (SearchedPath $searchedPath): string => $searchedPath->label,
+            $this->searchedPaths,
+        )));
     }
 
     /**
-     * Some searched field contains the term; null when nothing was searched for.
+     * Some searched path matches the term, see `createComparison()`. With no path left, nothing is found.
      */
     #[Override]
     public function createCondition(): ?ConditionInterface
@@ -58,9 +57,37 @@ final readonly class QuickSearch implements DatagridSearchInterface
             return null;
         }
 
-        return Condition::orX(...array_map(
-            fn (string $path): Comparison => Condition::contains($path, $this->term),
-            array_keys($this->labelsByPath),
-        ));
+        $comparisons = [];
+
+        foreach ($this->searchedPaths as $searchedPath) {
+            $comparison = $this->createComparison($searchedPath, $this->term);
+
+            if ($comparison !== null) {
+                $comparisons[] = $comparison;
+            }
+        }
+
+        return Condition::orX(...$comparisons);
+    }
+
+    /**
+     * Null skips the path:
+     *
+     * - a path leading to a UUID equals the term;
+     * - a path leading to a UUID is skipped when the term is no UUID, as the database refuses to compare the two;
+     * - any other path contains the term.
+     */
+    private function createComparison(SearchedPath $searchedPath, string $term): ?ConditionInterface
+    {
+        if ($searchedPath->valueType !== PathValueTypeEnum::GUID) {
+            return Condition::contains($searchedPath->path, $term);
+        }
+
+        if (Uuid::isValid($term) === false) {
+            return null;
+        }
+
+        // the canonical form, as the database refuses a prefix like "urn:uuid:" that the validation accepts
+        return Condition::equals($searchedPath->path, Uuid::fromString($term)->toString());
     }
 }
