@@ -87,9 +87,9 @@ class DateFilter extends AbstractFilter
     }
 
     /**
-     * A day is a single comparison of a range, never two comparisons of its bounds — over a collection each
-     * comparison would be matched by a related row of its own, so the end of one day and the start of another
-     * would make a day nobody picked.
+     * A day is one `between` comparison, never two comparisons of its bounds.
+     * Over a collection each of two comparisons would be matched by a related row of its own — orders on 11.5.
+     * and 13.5. would match "is 12.5.".
      *
      * {@inheritdoc}
      */
@@ -111,7 +111,7 @@ class DateFilter extends AbstractFilter
 
     /**
      * A column holding a date without time is compared with the picked day as it is; a column holding
-     * a date and time (or a column the medium cannot describe) by the bounds of the day.
+     * a date and time (or a column the adapter cannot describe) by the bounds of the day.
      */
     protected function isDateOnly(): bool
     {
@@ -124,8 +124,8 @@ class DateFilter extends AbstractFilter
     }
 
     /**
-     * The last moment a medium tells apart before the next day — a database storing whole seconds drops the
-     * fraction, so the day ends with its last second there.
+     * The last microsecond before the next day — 12.5. → 12.5. 23:59:59.999999.
+     * A database storing whole seconds drops the fraction, so the day ends with its last second there.
      */
     protected function endOfDay(DateTimeInterface $day): DateTimeImmutable
     {

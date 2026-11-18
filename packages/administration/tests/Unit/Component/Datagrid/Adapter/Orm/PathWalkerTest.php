@@ -85,9 +85,6 @@ final class PathWalkerTest extends TestCase
         $this->createPathWalker()->walk(DummyProduct::class, 'currency.unknown');
     }
 
-    /**
-     * A filter holds an entered integer within the range of its column, beyond which the query would fail.
-     */
     public function testIntegerIsBoundedByTheRangeOfItsColumn(): void
     {
         $pathWalker = $this->createPathWalker();

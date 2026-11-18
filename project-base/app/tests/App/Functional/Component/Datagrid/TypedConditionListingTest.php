@@ -16,8 +16,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 /**
- * A condition comparing a value of a type of its own — money, a date of either class — narrows the listed records
- * and their count alike. The count is a native query of its own, which has to bind the value by its type as well.
+ * The count is a native query, which has to bind a value of a custom type (money, a date of either class) by its type
+ * as well.
  */
 class TypedConditionListingTest extends TransactionFunctionalTestCase
 {
@@ -27,8 +27,7 @@ class TypedConditionListingTest extends TransactionFunctionalTestCase
     private OrmAdapterFactory $ormAdapterFactory;
 
     /**
-     * The adapter resolves the locale of the translated fields from the current request, the same way it
-     * does when a listing is rendered.
+     * The adapter resolves the locale of the translated fields from the current request.
      */
     #[Override]
     protected function setUp(): void

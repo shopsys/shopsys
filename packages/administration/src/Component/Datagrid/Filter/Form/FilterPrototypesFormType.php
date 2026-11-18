@@ -14,12 +14,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * The prototypes of the rules of the filter form — `prototypes[<filter>][<arity>]` is a rule of the filter starting
- * with the first operation of that arity, holding the operation select and the value input the page swaps in when
+ * The prototypes of the rules of the filter form. `prototypes[<filter>][<arity>]` is a rule of the filter starting
+ * with the first operation of that arity. The page swaps its operation select and value input in when
  * the administrator changes the filter or the operation of a rule.
  *
- * A form of its own named as the filter form, so that a prototype is renamed into a rule by its path alone, and
- * never submitted — the composed rules never touch it.
+ * It is a form of its own, named as the filter form:
+ *
+ * - a prototype becomes a rule by renaming its path alone — `<form>[prototypes][<filter>][<arity>]` →
+ *   `<form>[groups][<group>][rules][<rule>]`;
+ * - it is never submitted, so the composed rules never touch it.
  */
 final class FilterPrototypesFormType extends AbstractType
 {

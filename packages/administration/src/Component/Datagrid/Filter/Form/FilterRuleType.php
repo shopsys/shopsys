@@ -18,9 +18,13 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * One rule of the filter form: the filter, its operation and the value. The operation and the value depend
- * on the chosen filter (and the value on the arity of the operation), so they are added once the filter is
- * known — from the data when the form is built, from the request when it is submitted.
+ * One rule of the filter form: the filter, its operation and the value.
+ *
+ * The operation and the value depend on the chosen filter (and the value on the arity of the operation), so they
+ * are added once the filter is known:
+ *
+ * - from the data when the form is built;
+ * - from the request when it is submitted.
  */
 final class FilterRuleType extends AbstractType
 {

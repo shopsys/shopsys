@@ -83,8 +83,7 @@ final class FilterPanelTest extends TestCase
     }
 
     /**
-     * A form never submitted is only the starting point it offers, so it is never asked whether it is valid — it never
-     * is unless submitted.
+     * Symfony throws when a form that was never submitted is asked whether it is valid.
      */
     public function testUnsubmittedFormHasNoRules(): void
     {

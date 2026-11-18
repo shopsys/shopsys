@@ -11,8 +11,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 
 /**
- * What a filter needs to know about the datagrid it is declared on before it offers anything to the
- * administrator — the medium, the rules of the vocabulary and the time zone of the administration.
+ * What a filter needs to know about the datagrid it is declared on before it offers anything to the administrator.
  */
 final readonly class FilterEnvironment
 {

@@ -36,9 +36,6 @@ final class ProxyQuery
 
     private const string PARAMETER_NAME_PREFIX = 'dgexpr_';
 
-    /**
-     * Doctrine types converting a mutable date only.
-     */
     private const array MUTABLE_DATE_TYPES = [
         DateType::class,
         DateTimeType::class,
@@ -47,9 +44,6 @@ final class ProxyQuery
         TimeType::class,
     ];
 
-    /**
-     * Doctrine types converting an immutable date only.
-     */
     private const array IMMUTABLE_DATE_TYPES = [
         DateImmutableType::class,
         DateTimeImmutableType::class,
@@ -58,9 +52,6 @@ final class ProxyQuery
         TimeImmutableType::class,
     ];
 
-    /**
-     * Doctrine types writing the time as it is, without its zone, and reading it in the default time zone.
-     */
     private const array ZONELESS_DATETIME_TYPES = [
         DateTimeType::class,
         DateTimeImmutableType::class,
@@ -126,8 +117,6 @@ final class ProxyQuery
     }
 
     /**
-     * Registers a value of an expression under a name of its own.
-     *
      * @param string|null $type Doctrine type the value is converted by, typically the type of the compared field
      * @return string Name of the parameter, to be used as `:name` in the expression
      */
@@ -167,9 +156,6 @@ final class ProxyQuery
         return sprintf('EXISTS(%s)', $subqueryBuilder->getDQL());
     }
 
-    /**
-     * Narrows the query by an expression built for it.
-     */
     public function applyExpression(Stringable|string $expression): void
     {
         $this->queryBuilder->andWhere($expression);
@@ -181,9 +167,12 @@ final class ProxyQuery
     }
 
     /**
-     * Doctrine converts a date only of the class its type declares and writes it as it is, without its time zone,
-     * while a condition holds a date of either class in any time zone. The date is converted to the class of the
-     * type, and to the default time zone the stored date and time is read in, so it means the same moment.
+     * Converts a date of a condition, which may be of either class and in any time zone, to what the Doctrine type
+     * of the field takes:
+     *
+     * - to the class the type declares, Doctrine converts no other one;
+     * - for `datetime` and `datetime_immutable`, to the default time zone, as the type writes the time without its
+     *   zone and reads it in the default one — with UTC as default, `2024-05-12 00:00 +02:00` → `2024-05-11 22:00`.
      */
     private function normalizeDate(mixed $value, ?string $type): mixed
     {

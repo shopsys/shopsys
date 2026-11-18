@@ -105,8 +105,8 @@ final class DatagridStateFactoryTest extends TestCase
     }
 
     /**
-     * The filter and the quick search are two ways of asking the same question, so a composed filter wins and the
-     * quick search is not applied, while its form still shows what was searched for.
+     * The filter and the quick search ask the same question, so only one of them applies. The form of the quick
+     * search still shows what was searched for.
      */
     public function testComposedFilterOutranksTheQuickSearch(): void
     {
@@ -133,8 +133,8 @@ final class DatagridStateFactoryTest extends TestCase
     }
 
     /**
-     * An invalid filter narrows nothing and shows its errors, instead of quietly listing more than the
-     * administrator asked for; the quick search stays outranked.
+     * The errors are shown instead of quietly listing more than the administrator asked for. The quick search stays
+     * outranked.
      */
     public function testInvalidFilterNarrowsNothing(): void
     {

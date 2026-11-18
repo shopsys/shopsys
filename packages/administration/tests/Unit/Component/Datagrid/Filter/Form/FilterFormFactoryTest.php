@@ -31,10 +31,6 @@ final class FilterFormFactoryTest extends TestCase
         $this->assertSame('x', $form->getData()->groups[0]->rules[0]->value);
     }
 
-    /**
-     * A filter with no rule composed — never submitted, or submitted empty — is shown as the starting point,
-     * one group with one rule, and counts as not submitted.
-     */
     public function testFilterFormStartsWithOneGroupAndOneRuleUntilSomeRuleIsComposed(): void
     {
         $filters = $this->createFilters();

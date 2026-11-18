@@ -170,8 +170,8 @@ class DatagridTest extends TestCase
     }
 
     /**
-     * The state is created from the configuration frozen once, so a field changed afterwards — restricted by a role,
-     * for one — would keep narrowing the records as it was; the change is refused instead.
+     * The state is created from the frozen configuration, so a later change (a role restricting the field)
+     * would never apply.
      */
     public function testFieldsCannotBeChangedOnceTheConfigurationIsFrozen(): void
     {
@@ -204,9 +204,6 @@ class DatagridTest extends TestCase
         $this->assertSame($datagrid->getConfig(), $datagrid->getConfig());
     }
 
-    /**
-     * A field displayed on behalf of a feature narrowing the datagrid obeys the permissions as any other field.
-     */
     public function testRestrictedAdditionalFieldIsNotDisplayedWithoutPermission(): void
     {
         $datagrid = $this->createDatagrid([['ROLE_SECRET', Permission::VIEW, false]]);

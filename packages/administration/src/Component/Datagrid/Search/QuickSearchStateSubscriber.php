@@ -10,9 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Adds the quick search to the state of a datagrid with any field declared `searchable`.
- *
- * The searchable fields are validated even outside a request, so that a declaration that cannot work fails
- * in a test or a command as well; only the form needs the request.
  */
 class QuickSearchStateSubscriber implements EventSubscriberInterface
 {

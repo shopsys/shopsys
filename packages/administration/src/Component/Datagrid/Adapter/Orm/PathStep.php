@@ -7,7 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 /**
  * One segment of a walked path with everything a query needs to reproduce it.
  *
- * @internal this class is not intended to be used directly by other developers
+ * @internal model of the ORM adapter, may change without upgrade notes — implement `PathWalkerInterface`, typically by decorating `PathWalker`, and change only the `PathDescription` of the walked path instead
  */
 final readonly class PathStep
 {

@@ -13,7 +13,6 @@ enum PathCardinalityEnum
 
     /**
      * The path leads through an association with many rows, so it leads to several values of a record.
-     * A medium has to match such a path without multiplying the record by its related rows.
      */
     case TO_MANY;
 }

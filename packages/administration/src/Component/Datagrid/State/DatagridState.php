@@ -30,10 +30,6 @@ final readonly class DatagridState
     ) {
     }
 
-    /**
-     * Whether the state was created from the given configuration, so that a datagrid is never listed by the state
-     * of another one.
-     */
     public function isCreatedFor(DatagridConfig $config): bool
     {
         return $this->config === $config;
@@ -53,8 +49,7 @@ final readonly class DatagridState
     }
 
     /**
-     * The search whose condition narrows the records, null when the administrator searched for nothing — the page
-     * shows it as the one in use.
+     * The search whose condition narrows the records, null when the administrator searched for nothing.
      */
     public function getAppliedSearch(): ?DatagridSearchInterface
     {
@@ -62,17 +57,14 @@ final readonly class DatagridState
     }
 
     /**
-     * Whether the administrator narrowed the records by searching or filtering — the domain control is the scope
-     * of the listing rather than a narrowing of it.
+     * Whether the administrator narrowed the records by searching or filtering. The domain control is not counted,
+     * as it is the scope of the listing rather than a narrowing of it.
      */
     public function isNarrowedByAdministrator(): bool
     {
         return $this->appliedSearch !== null;
     }
 
-    /**
-     * Whether what the administrator asked for cannot be applied — the page answers 422 then.
-     */
     public function isInvalid(): bool
     {
         return $this->invalid;

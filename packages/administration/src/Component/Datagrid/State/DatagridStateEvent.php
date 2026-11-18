@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Collects the state of one datagrid in the current request — dispatched by `DatagridStateFactory` once the datagrid
- * is configured. Every feature narrowing the datagrid (the domain control, the quick search, the filter) listens to
- * it, validates its own declarations, reads its own part of the request and adds its part of the state.
+ * Collects the state of one datagrid in the current request. `DatagridStateFactory` dispatches it once the datagrid
+ * is configured. Every feature narrowing the datagrid (the domain control, the quick search, the filter) listens to it,
+ * validates its own declarations, reads its own part of the request and adds its part of the state.
  *
- * The listeners of the features never read each other's parts, so their order does not matter. A feature is changed
- * in a project by replacing its subscriber, not by adding another one — a part of the same class can be added only
- * once.
+ * The order of the listeners matters in two cases:
+ *
+ * - only one search applies: the filter, then the quick search, then the searches of a project in the order
+ *   of their listeners, see `DatagridStateFactory::pickSearch()`;
+ * - the fields added by `addField()` are displayed in the order of their listeners.
  */
 final class DatagridStateEvent extends Event
 {
@@ -86,7 +88,7 @@ final class DatagridStateEvent extends Event
     }
 
     /**
-     * What the administrator asked for cannot be applied — the page answers 422.
+     * What the administrator asked for cannot be applied. The page answers 422.
      */
     public function markInvalid(): void
     {

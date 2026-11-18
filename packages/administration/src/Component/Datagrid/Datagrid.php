@@ -94,9 +94,8 @@ final class Datagrid
     }
 
     /**
-     * The configuration as the current administrator sees it, frozen on the first call — ask once the datagrid
-     * is configured; the fields and the filters cannot be changed after that, the change would never reach
-     * the state created from the configuration (see `DatagridStateFactory`).
+     * The configuration as the current administrator sees it, frozen on the first call — call it once the datagrid
+     * is configured, a later change of the fields or the filters fails.
      */
     public function getConfig(): DatagridConfig
     {
@@ -395,9 +394,10 @@ final class Datagrid
         $this->addColumns($grid, $visibleFields);
 
         if ($this->dragAndDropEntityClass !== null && $this->defaultOrder !== null) {
-            // Pagination is intentionally left disabled - reordering and saving positions must work
-            // over the whole list, not just the current page. Saving renumbers the listed records, so the records
-            // narrowed by the administrator are only listed in their order, a part of them is never reordered.
+            // saving the order renumbers the positions of the listed records from zero:
+            // - pagination stays disabled, so the whole list is renumbered, not just one page;
+            // - a list narrowed by a search or a filter is only listed in its order, renumbering a part of the records
+            //   would clash with the positions of the rest
             if ($state->isNarrowedByAdministrator() === false) {
                 $grid->enableDragAndDrop($this->dragAndDropEntityClass, $this->defaultOrder['field']);
             }
@@ -473,8 +473,8 @@ final class Datagrid
     }
 
     /**
-     * The fields the current administrator is allowed to see — only those are fetched, displayed and narrowed by,
-     * so that neither the quick search nor a filter can tell what a field hidden from the administrator holds.
+     * The fields the current administrator is allowed to see. Only those are fetched, displayed and narrowed by,
+     * so neither the quick search nor a filter can tell what a hidden field holds.
      *
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[]
      */

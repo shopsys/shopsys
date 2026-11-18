@@ -49,10 +49,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(new Comparison('customerUser.email', ExpressionOperatorEnum::IS_NULL, null))($row));
     }
 
-    /**
-     * An association that is not there has no value below it, which is what a query says as well through
-     * its outer join.
-     */
     public function testValueBehindAnAbsentAssociationIsNull(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -103,10 +99,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(new Comparison('domains.domainId', ExpressionOperatorEnum::IN, [1]))($row));
     }
 
-    /**
-     * The same rule the `NORMALIZED()` function of the database applies — "hrnicek" finds "Hrníček" and the
-     * other way round.
-     */
     public function testTextIsMatchedRegardlessOfCaseAndDiacritics(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -170,10 +162,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertTrue($expressionBuilder->compile(new Comparison('catnum', ExpressionOperatorEnum::LESS_THAN, '1'))($row));
     }
 
-    /**
-     * Negating a whole expression asks something else than the negating operation of that expression,
-     * once the path leads through a collection.
-     */
     public function testNegatingAnExpressionOverCollectionDiffersFromTheNegatingOperation(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -231,9 +219,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(new Comparison('items', ExpressionOperatorEnum::IS_NOT_EMPTY, null))(['items' => []]));
     }
 
-    /**
-     * A related row missing the value has none to count — an order whose only item has no product has no product.
-     */
     public function testRelatedRowWithoutValueDoesNotMakeCollectionNonEmpty(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -273,10 +258,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(Condition::orX())([]));
     }
 
-    /**
-     * A record without a value never matches a comparison, but always matches its negation — the same answer
-     * the query of the ORM adapter gives.
-     */
     public function testMissingValueMatchesEveryNegationButNoComparison(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();

@@ -51,18 +51,12 @@ class ExpressionOperatorEnum extends AbstractEnum
      * An empty list matches everything.
      */
     public const string NOT_IN = 'notIn';
-
-    /**
-     * Matches a record whose single value is missing. Over a path leading through a to-many association it is
-     * refused — a collection has no null to test, use `IS_EMPTY` instead. The same holds for `IS_NOT_NULL`.
-     */
     public const string IS_NULL = 'isNull';
     public const string IS_NOT_NULL = 'isNotNull';
 
     /**
-     * Matches a record with no value on the given to-many path — no related row, or none holding the value:
-     * "products without any image". Refused on any other path, use `IS_NULL` for a single value. The same holds
-     * for `IS_NOT_EMPTY`.
+     * Matches a record with no value on a to-many path — no related row, or none holding the value:
+     * "products without any image".
      */
     public const string IS_EMPTY = 'isEmpty';
     public const string IS_NOT_EMPTY = 'isNotEmpty';

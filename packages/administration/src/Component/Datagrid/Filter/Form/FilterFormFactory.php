@@ -9,10 +9,6 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormD
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
-/**
- * Builds the forms of the filter of a datagrid — the only place they are built, so that whoever renders the filter
- * builds them the same way.
- */
 class FilterFormFactory
 {
     public function __construct(
@@ -42,9 +38,6 @@ class FilterFormFactory
         return $this->createFormWithData($filters, $formName, FilterFormData::createStartingPoint());
     }
 
-    /**
-     * The prototypes of the rules the page swaps in, named as the filter form and never submitted.
-     */
     public function createPrototypesForm(FilterCollection $filters, string $formName): FormInterface
     {
         return $this->formFactory->createNamed(

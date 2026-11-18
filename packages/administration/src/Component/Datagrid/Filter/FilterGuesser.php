@@ -74,9 +74,6 @@ class FilterGuesser
         };
     }
 
-    /**
-     * The catalogue is too large for a select, so a product is picked in the product picker.
-     */
     protected function leadsToProduct(PathDescription $pathDescription): bool
     {
         return $pathDescription->targetEntityClass !== null && is_a($pathDescription->targetEntityClass, Product::class, true);

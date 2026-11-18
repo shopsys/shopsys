@@ -11,12 +11,11 @@ use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
- * Renders the filter of a datagrid — the composed groups of rules, and the prototypes the page swaps in
- * when the administrator adds a rule or changes its filter or operation. Sent by GET, so the composed
- * filter lives in the URL; the order and the limit of the grid travel along, the page starts over.
+ * Renders the filter of a datagrid: the composed groups of rules, and the prototypes the page swaps in
+ * when the administrator adds a rule or changes its filter or operation.
  *
  * The form of the rules is the one submitted while the state of the datagrid was created, so that its errors
- * are rendered; the prototypes decide nothing, so the component builds them itself.
+ * are rendered. The prototypes decide nothing, so the component builds them itself.
  */
 #[AsTwigComponent(
     name: 'Admin:Grid:Filters',

@@ -10,12 +10,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
- * Renders the domain control of a datagrid — either its own domain filter or the domain switcher
+ * Renders the domain control of a datagrid, either its own domain filter or the domain switcher
  * of the whole administration.
- *
- * The scope is resolved per request, because both the available domains and the selection come from
- * the environment. Once this becomes a live component, the scope must be resolved on every render
- * as well and never dehydrated as a live property.
  */
 #[AsTwigComponent(
     name: 'Admin:Grid:DomainControl',

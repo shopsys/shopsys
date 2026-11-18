@@ -152,8 +152,8 @@ final class DqlExpressionBuilderTest extends TestCase
     }
 
     /**
-     * A date and time is written without its time zone and read back in the default one, so a moment given in
-     * another time zone is converted to the default one first — it means the same moment it does in memory.
+     * A date and time is stored without its time zone and read back in the default one. A moment in another time
+     * zone is therefore converted to the default one first, so it stays the same moment.
      */
     public function testDateAndTimeIsBoundAsTheSameMomentInTheDefaultTimeZone(): void
     {
@@ -199,9 +199,6 @@ final class DqlExpressionBuilderTest extends TestCase
         ];
     }
 
-    /**
-     * A value the administrator typed is always taken literally, so the wildcards of LIKE are escaped.
-     */
     #[DataProvider('likeValueDataProvider')]
     public function testWildcardsOfTheSearchedValueAreEscaped(string $value, string $expectedPattern): void
     {

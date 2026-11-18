@@ -13,11 +13,11 @@ use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Adds the domain control to the state of a datagrid — the domains the datagrid works with, limiting the records
- * to them, and the domain of every record when the administrator works with several domains at once.
+ * Adds the domain control to the state of a datagrid. It limits the records to the domains the datagrid works with.
+ * When the administrator works with several domains at once, it displays the domain of every record as well.
  *
- * The scope reads the domains of the logged-in administrator and the selection remembered in the session, so the state
- * of a datagrid with a domain control can be created only in a request of a logged-in administrator.
+ * The scope reads the domains of the logged-in administrator and the selection remembered in the session. The state
+ * of a datagrid with a domain control can therefore be created only in a request of a logged-in administrator.
  */
 class DomainControlStateSubscriber implements EventSubscriberInterface
 {

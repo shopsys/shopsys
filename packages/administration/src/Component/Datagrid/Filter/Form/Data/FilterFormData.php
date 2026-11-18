@@ -35,9 +35,6 @@ final class FilterFormData
         return $data;
     }
 
-    /**
-     * Whether any rule was composed at all — the filter counts as used only then.
-     */
     public function hasRules(): bool
     {
         foreach ($this->groups as $group) {

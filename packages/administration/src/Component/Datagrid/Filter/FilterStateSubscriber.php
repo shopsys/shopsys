@@ -10,12 +10,10 @@ use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Adds the filter to the state of a datagrid offering any filter — those picked for the fields declared `filterable`
- * and the declared ones.
+ * Adds the filter to the state of a datagrid offering any filter, either picked for a field declared `filterable`
+ * or declared.
  *
- * The filters are validated even outside a request, so that a declaration that cannot work fails in a test
- * or a command as well; only the form needs the request. The form is submitted here, once — the records are narrowed
- * by it before they are loaded, and the component renders the very same form with its errors.
+ * The form is submitted here, once, as the records are narrowed by it before they are loaded.
  */
 class FilterStateSubscriber implements EventSubscriberInterface
 {

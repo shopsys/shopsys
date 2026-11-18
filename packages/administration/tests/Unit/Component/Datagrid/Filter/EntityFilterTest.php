@@ -48,9 +48,6 @@ final class EntityFilterTest extends TestCase
         $this->assertEquals(Condition::isNull('author.publisher'), $filter->buildCondition($this->createRule(ExpressionOperatorEnum::IS_NULL, null)));
     }
 
-    /**
-     * A single association is tested for being filled, a collection for having any related entity.
-     */
     public function testMissingRelationIsOfferedByTheCardinalityOfThePath(): void
     {
         $toOneFilter = $this->resolve(EntityFilter::new('author.publisher'));
@@ -98,8 +95,7 @@ final class EntityFilterTest extends TestCase
     }
 
     /**
-     * A submitted identifier is looked up among the offered entities by the value of the choice, never by a query
-     * of its own — an identifier beyond the range of its column would fail that query.
+     * A query of its own would fail on an identifier beyond the range of its column (`2147483648`).
      */
     public function testSubmittedIdentifierIsLookedUpAmongTheOfferedEntities(): void
     {

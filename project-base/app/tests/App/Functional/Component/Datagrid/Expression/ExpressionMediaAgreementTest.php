@@ -22,11 +22,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 /**
- * The two media have to answer the same question the same way — a datagrid must list the same records
- * whether they are loaded by a query or filtered in memory.
- *
- * Every condition is compiled by both media: the query is executed against the database, the callback is run
- * over the very same orders read into arrays. The two sets of matched identifiers have to be equal.
+ * A datagrid must list the same records whether they are loaded by a query or filtered in memory.
  */
 class ExpressionMediaAgreementTest extends TransactionFunctionalTestCase
 {
@@ -155,8 +151,7 @@ class ExpressionMediaAgreementTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * The orders are read into the very same shape the paths of the expressions address, so that both
-     * media work with the same data.
+     * The orders are read into the shape the paths of the expressions address.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -186,8 +181,7 @@ class ExpressionMediaAgreementTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * The product is read as it is stored — the getter refuses an item of another type (transport, payment), which
-     * is exactly the item without any product.
+     * The product is read from the mapping, because the getter throws on an item of another type (transport, payment).
      *
      * @return array<string, mixed>
      */

@@ -62,8 +62,6 @@ final class PathWalker implements PathWalkerInterface
             $partPath = implode('.', array_slice($parts, 0, $index + 1));
             $isLast = $index === $lastIndex;
 
-            // the translations of the entity are addressable explicitly, which is the only way to reach
-            // a translated field shadowed by a field of the entity itself
             if ($field === self::TRANSLATIONS_ASSOCIATION && !$isLast && $classMetadata->hasAssociation($field)) {
                 $steps[] = new PathStep(PathStepKind::TRANSLATIONS, $field, $partPath, null);
                 $classMetadata = $this->getTargetClassMetadata($classMetadata, $field);
@@ -196,9 +194,14 @@ final class PathWalker implements PathWalkerInterface
     }
 
     /**
-     * An own type of a project extends a type of Doctrine, so it is read by the type it extends — an own type storing
-     * text is text as well — and so is a type only a newer Doctrine knows by its name (a date and time stored in UTC).
-     * A GUID extends the string type too, but a database stores it in a column of its own type no text function takes.
+     * Classifies a type by its class:
+     *
+     * - an own type of a project extending a string, text, GUID, small float or UTC date and time type gets
+     *   the value type of its parent;
+     * - an own type extending any other type (an integer, a decimal, a boolean, a date) is UNKNOWN;
+     * - the UTC date and time types exist only since DBAL 4.5, so they are matched by `instanceof`, not by a `Types`
+     *   constant;
+     * - `GuidType` extends `StringType`, so it is matched first.
      */
     private function toValueTypeByClass(?string $doctrineType): PathValueTypeEnum
     {

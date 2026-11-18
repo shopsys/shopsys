@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Creates the state of a configured datagrid in the current request — the features narrowing the datagrid add
- * their parts by listening to `DatagridStateEvent`, the factory then combines their conditions.
+ * Creates the state of a configured datagrid in the current request. The features narrowing the datagrid add their
+ * parts by listening to `DatagridStateEvent`, the factory then combines their conditions.
  *
  * Extend the service in a project to combine them differently, for example to change which search outranks which.
  */
@@ -51,8 +51,6 @@ class DatagridStateFactory
     }
 
     /**
-     * Every scope combined by AND with the search that applies.
-     *
      * @param array<class-string, object> $parts
      */
     protected function createCondition(array $parts, ?DatagridSearchInterface $appliedSearch): ?ConditionInterface
@@ -76,9 +74,9 @@ class DatagridStateFactory
     }
 
     /**
-     * The searches are several ways of asking the same question, so only one of the active ones applies — the first
-     * one by `getSearchPrecedence()`. A search not ranked there comes after the ranked ones; among those, the one
-     * added first (by the listener of the higher priority) applies.
+     * Only one of the active searches applies, as they are several ways of asking the same question. It is the first
+     * one by `getSearchPrecedence()`. A search not ranked there comes after the ranked ones. Among such searches,
+     * the one added first applies, which is the one added by the listener of the higher priority.
      *
      * @param array<class-string, object> $parts
      */

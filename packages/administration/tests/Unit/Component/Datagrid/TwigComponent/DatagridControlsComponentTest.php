@@ -57,9 +57,6 @@ final class DatagridControlsComponentTest extends TestCase
         $this->assertTrue($component->isFilterTabOpen());
     }
 
-    /**
-     * The domain control displays nothing without a choice, the domain condition applies anyway.
-     */
     public function testDomainChoiceIsOfferedOnlyWithSeveralDomains(): void
     {
         $this->assertTrue($this->createComponent([$this->createScope([1, 2])])->hasDomainChoice());

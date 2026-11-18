@@ -42,7 +42,6 @@ abstract class AbstractEntityIdToEntityTransformer implements DataTransformerInt
             return null;
         }
 
-        // an identifier out of the range of the column (edited by hand) is no entity
         if ($entityId < 0 || $entityId > static::MAXIMUM_ENTITY_ID) {
             throw new TransformationFailedException(sprintf('No entity can be identified by "%s".', $submittedEntityId));
         }

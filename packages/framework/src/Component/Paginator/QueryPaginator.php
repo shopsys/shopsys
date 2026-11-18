@@ -102,8 +102,8 @@ class QueryPaginator
 
         $query = $totalQueryBuilder->getQuery();
 
-        // every parameter is flattened as a whole, so that the native query binds its value by the type it was set
-        // with — a value of a type of its own (money) cannot be bound as it is
+        // pass whole Parameter objects, so the count query keeps the type of each value:
+        // Money cannot be bound without its `money` type
         $parametersAssoc = [];
 
         foreach ($query->getParameters() as $parameter) {

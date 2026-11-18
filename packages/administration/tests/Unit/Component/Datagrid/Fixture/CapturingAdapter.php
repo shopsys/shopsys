@@ -14,8 +14,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 
 /**
- * Records every request a datagrid sends, so that a test asserts on what the datagrid asked for. Describes
- * every path as a single text value unless told otherwise.
+ * Describes every path as a single text value unless told otherwise.
  */
 final class CapturingAdapter implements PathDescribingAdapterInterface
 {
@@ -36,9 +35,6 @@ final class CapturingAdapter implements PathDescribingAdapterInterface
     }
 
     /**
-     * The paths the tests declare their filters over — a price is a decimal number, being in stock or a verified
-     * purchase a yes or no.
-     *
      * @return array<string, \Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription>
      */
     public static function getFilterPathDescriptions(): array

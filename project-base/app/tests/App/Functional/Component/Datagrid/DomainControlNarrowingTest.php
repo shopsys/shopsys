@@ -21,10 +21,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-/**
- * The domain control of a listing has to reach the database — the domain selected in the session of the
- * administrator narrows the listing, and a listing restricted to some domains never lists a record of another one.
- */
 class DomainControlNarrowingTest extends TransactionFunctionalTestCase
 {
     private const int FIRST_DOMAIN_ID = 1;
@@ -53,8 +49,7 @@ class DomainControlNarrowingTest extends TransactionFunctionalTestCase
     private TokenStorageInterface $tokenStorage;
 
     /**
-     * The adapter resolves the locale of the translated fields from the current request, the same way it
-     * does when a listing is rendered.
+     * The adapter resolves the locale of the translated fields from the current request.
      */
     #[Override]
     protected function setUp(): void
@@ -91,8 +86,7 @@ class DomainControlNarrowingTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * A selection outside the domains the listing is restricted to is cleared, the listing then covers every domain
-     * it is restricted to and none other.
+     * The domain selected in the session lies outside the restriction, so the selection is cleared.
      */
     public function testListingRestrictedToDomainsNeverListsAnotherOne(): void
     {

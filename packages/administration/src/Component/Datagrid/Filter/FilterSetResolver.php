@@ -11,11 +11,12 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 
 /**
- * Makes the filters offered to the administrator — those picked for the fields declared `filterable` merged with
- * the declared ones — and adapts them to the medium of the datagrid.
+ * Makes the filters offered to the administrator from the filters of a datagrid:
  *
- * The declared filters stay untouched: the offered ones are their copies, so one declaration can serve several
- * datagrids over different media.
+ * - replaces each `GuessedFilter` by the filter `FilterGuesser` picks for its field;
+ * - copies every other filter, so the declared one stays untouched and can serve several datagrids;
+ * - sorts the filters by their labels;
+ * - resolves each of them against the adapter (see `FilterInterface::resolveFor()`).
  */
 class FilterSetResolver
 {

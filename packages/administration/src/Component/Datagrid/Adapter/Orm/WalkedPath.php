@@ -7,7 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 
 /**
- * @internal this class is not intended to be used directly by other developers
+ * A dot notation path walked through the entity mapping: the steps a query joins and the description of the path.
  */
 final readonly class WalkedPath
 {

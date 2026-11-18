@@ -55,10 +55,6 @@ final class DomainControlConfigTest extends TestCase
         $this->assertSame('crud_shared', $domainControlConfig->filterNamespace);
     }
 
-    /**
-     * An entity related to a domain in another way than by implementing `DomainSeparatedEntityInterface` is limited
-     * by the path to its domain.
-     */
     public function testPathToTheDomainIsStored(): void
     {
         $crudConfig = new CrudConfig('Blog article', null, stdClass::class, 'BlogArticleController');

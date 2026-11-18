@@ -102,8 +102,8 @@ final class DatagridFilterTest extends TestCase
     }
 
     /**
-     * A filter over a path under a property of a hidden field, or over the association the property lies under,
-     * compares what the field holds as well — only a filter over another branch of the association is offered.
+     * A filter under a hidden property (`customerUser.email`) or above it (`address`) reads what the field holds.
+     * A filter over another branch of the association (`address.city`) does not.
      */
     public function testFilterOverPathOverlappingRestrictedFieldIsNotOfferedWithoutPermission(): void
     {

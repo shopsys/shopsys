@@ -51,8 +51,8 @@ final class DateFilterTest extends TestCase
     }
 
     /**
-     * Over a collection every comparison is matched by a related row of its own, so a day compared by its two bounds
-     * would match an order from the start of the month and another one from its end.
+     * Over a collection each comparison can be matched by another related row, so a day compared by two separate
+     * bounds would match an order from the start of the month and another one from its end.
      */
     public function testDayOverCollectionIsSingleComparison(): void
     {

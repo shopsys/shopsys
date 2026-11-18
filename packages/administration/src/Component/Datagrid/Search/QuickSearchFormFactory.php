@@ -10,8 +10,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Builds the quick search form of a datagrid — the quick search form of the administration, only named per datagrid —
- * and reads the searched text through it, so that it is trimmed the way the form trims it.
+ * Builds the quick search form of a datagrid. It is the quick search form of the administration, named per datagrid.
+ * The searched text is read through the form, which trims it.
  */
 class QuickSearchFormFactory
 {

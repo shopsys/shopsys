@@ -129,7 +129,7 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
     }
 
     /**
-     * A missing value is tested by `isNull`, a list holding it would match it in one medium and nothing in another.
+     * A list holding null fails, as a missing value matches no comparison.
      */
     protected function assertList(string $operator, mixed $value): void
     {
@@ -139,7 +139,7 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
     }
 
     /**
-     * A missing bound would match nothing in one medium and fail in another, so a range is always complete.
+     * A range open on one side is `greaterThanOrEqual` or `lessThanOrEqual`.
      */
     protected function assertRange(string $operator, mixed $value): void
     {

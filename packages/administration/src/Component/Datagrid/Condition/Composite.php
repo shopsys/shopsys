@@ -7,8 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Condition;
 use Webmozart\Assert\Assert;
 
 /**
- * Conditions combined by `AND` or `OR`. A group of filter rules the administrator composed is a composite,
- * and so is a quick search over several fields.
+ * Conditions combined by `AND` or `OR`.
  */
 final readonly class Composite implements ConditionInterface
 {

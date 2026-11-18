@@ -366,10 +366,6 @@ final class CrudConfig
         return $this;
     }
 
-    /**
-     * The domain filter of a list remembers its selection per controller unless the controller names
-     * the namespace itself to share the selection with another list.
-     */
     private function getDefaultFilterNamespace(): string
     {
         Assert::notNull($this->controllerName, 'The domain filter of a CRUD list requires the controller name to derive its namespace from.');

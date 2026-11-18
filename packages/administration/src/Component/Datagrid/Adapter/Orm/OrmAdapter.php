@@ -62,9 +62,11 @@ final class OrmAdapter implements EntityClassAwareAdapterInterface, PathDescribi
     }
 
     /**
-     * The query built in the constructor is only a prototype — every request composes the selects and the
-     * condition on its own copy, so that the same request builds the very same query and the prototype is
-     * never touched by the joins and the parameters a condition needs.
+     * The query built in the constructor is a prototype, every request composes the selects and the condition
+     * on its own copy:
+     *
+     * - the same request builds the same query;
+     * - the joins and the parameters of a condition never reach the prototype.
      */
     #[Override]
     public function getDatasource(DatasourceRequest $request): DataSourceInterface

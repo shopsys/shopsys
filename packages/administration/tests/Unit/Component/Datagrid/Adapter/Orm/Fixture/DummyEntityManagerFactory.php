@@ -9,9 +9,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Shopsys\FrameworkBundle\Component\Doctrine\NormalizedFunction;
 
-/**
- * The entity manager over the entities of this directory, the way the application configures one.
- */
 final class DummyEntityManagerFactory
 {
     public static function create(): EntityManager

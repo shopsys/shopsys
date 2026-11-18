@@ -60,9 +60,6 @@ final class ArrayAdapterTest extends TestCase
         $this->assertSame([3], array_column($capturedData, 'id'));
     }
 
-    /**
-     * The adapter keeps no state between the requests — a condition of one listing never leaks into another.
-     */
     public function testEveryRequestIsAnsweredOnItsOwn(): void
     {
         $capturedData = null;

@@ -31,8 +31,7 @@ class QueryPaginatorTest extends TestCase
     }
 
     /**
-     * The count query is executed natively, so a value of a type of its own (money) is bound by its type there
-     * as well — as it is, it cannot be bound at all.
+     * The count query is a native query, where a value of a custom type (money) cannot be bound without its type.
      */
     public function testCountQueryBindsParametersByTheirTypes(): void
     {
@@ -53,9 +52,6 @@ class QueryPaginatorTest extends TestCase
         $this->assertFalse($parameters[1]->typeWasSpecified());
     }
 
-    /**
-     * The values follow the order of their placeholders in the query, a parameter used twice is bound twice.
-     */
     public function testCountQueryBindsParametersInTheOrderOfTheQuery(): void
     {
         $queryBuilder = $this->createQueryBuilder()

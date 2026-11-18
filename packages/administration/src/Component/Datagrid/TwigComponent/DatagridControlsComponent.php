@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
- * Renders the controls of a datagrid above it — the quick search and the filter as tabs of one card, and the domain
- * control — each by the component of its feature, from the part of the state of the datagrid the feature added.
+ * Renders the controls of a datagrid above it: the quick search and the filter as tabs of one card, and the domain
+ * control. Each control is rendered by the component of its feature from the part of the state the feature added.
  */
 #[AsTwigComponent(
     name: 'Admin:Grid:Controls',
@@ -23,9 +23,6 @@ final class DatagridControlsComponent
 {
     public DatagridState $state;
 
-    /**
-     * The view of the datagrid — the forms carry its order and limit along.
-     */
     public GridView $gridView;
 
     public function getQuickSearch(): ?QuickSearch
@@ -44,7 +41,8 @@ final class DatagridControlsComponent
     }
 
     /**
-     * The tab of the search narrowing the records is the one open — the quick search unless the filter applies.
+     * The tab of the search narrowing the records is the one open. Without such a search, the tab of the quick search
+     * is open when the datagrid has one.
      */
     public function isFilterTabOpen(): bool
     {
@@ -58,7 +56,7 @@ final class DatagridControlsComponent
     }
 
     /**
-     * The domain control displays nothing without a choice, the domain condition applies anyway.
+     * The domain control displays nothing without a choice. The domain condition applies anyway.
      */
     public function hasDomainChoice(): bool
     {

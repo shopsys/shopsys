@@ -7,7 +7,7 @@ namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Identified by two fields, so that the identifier of an association leading to it is never read as a single column.
+ * Identified by two fields, so that an association leading to it is refused.
  */
 #[ORM\Entity]
 final class DummyShelf

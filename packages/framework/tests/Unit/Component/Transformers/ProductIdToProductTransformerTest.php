@@ -65,8 +65,7 @@ class ProductIdToProductTransformerTest extends TestCase
     }
 
     /**
-     * The database refuses to look up an identifier its column cannot hold rather than finding nothing, so such
-     * an identifier (edited by hand) is refused right away.
+     * The database fails on an identifier beyond the range of its column instead of finding nothing.
      */
     #[DataProvider('identifierNoProductCanHaveDataProvider')]
     public function testIdentifierNoProductCanHaveIsNeverLookedUp(string $productId): void

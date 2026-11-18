@@ -20,9 +20,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\String\UnicodeString;
 
 /**
- * The common part of a filter: a fluent declaration (`TextFilter::new('author.fullName', t('Author'))`),
- * the operations narrowed to what the medium can evaluate on the path, and the translation of a submitted
- * rule into a `Comparison`. A type of filter says which operations it offers and how its value is entered.
+ * The common part of a filter, declared fluently — `TextFilter::new('author.fullName', t('Author'))`.
+ * A type of filter says which operations it offers and how its value is entered.
  *
  * @phpstan-consistent-constructor
  */
@@ -30,7 +29,10 @@ abstract class AbstractFilter implements FilterInterface
 {
     /**
      * The negating operations by their positive counterparts. Over a collection the filter negates the whole
-     * condition instead — "tags is none of Sale" means no tag is Sale, not that some tag is another one.
+     * positive condition instead, so "item name is not X" means no item is named X, not that some item is named
+     * otherwise:
+     *
+     *     items.name notEquals 'X'  →  Condition::not(Condition::equals('items.name', 'X'))
      *
      * @var array<string, string>
      */

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Path;
 
 /**
- * The kind of value a path leads to, independent of the medium storing it. It decides which operations make
- * sense on the path — text is searched, numbers and dates are compared, an association is tested for presence.
+ * The kind of value a path leads to, independent of the adapter storing it.
  */
 enum PathValueTypeEnum
 {

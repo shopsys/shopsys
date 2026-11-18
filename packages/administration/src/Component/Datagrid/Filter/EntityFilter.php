@@ -23,11 +23,16 @@ use Webmozart\Assert\Assert;
  *
  *     EntityFilter::new('author.publisher', t('Publisher'))
  *
- * Every related entity is offered in a select, loaded whenever the list is displayed, so the filter suits
- * a small table only (a status, a unit, a flag) — the catalogue is filtered by `ProductFilter` and its picker.
- * The class is learnt from the medium, or given by `setEntityClass()` when the medium has no schema.
- * The condition compares the identifier of the association, so no join is needed. A missing relation is
- * tested by "is (not) filled" on a single association and by "has none / has some" on a collection.
+ * - The select offers every row of the related entity, loaded whenever the list is displayed. The filter suits
+ *   a small table only (a status, a unit, a flag), products are filtered by `ProductFilter` and its picker.
+ * - The entity class comes from the description of the path, or from `setEntityClass()` when the adapter does not
+ *   describe its paths.
+ * - A missing relation is tested by "is (not) filled" on a to-one association and by "has none / has some" on
+ *   a collection.
+ *
+ * The offer does not depend on the domain of the list. For an entity that depends on the domain, limit the offer
+ * by `setValueFormOptions(['query_builder' => ...])` or by overriding `createChoicesQueryBuilder()`. The limit
+ * narrows the accepted values as well.
  */
 class EntityFilter extends AbstractFilter
 {
@@ -95,8 +100,8 @@ class EntityFilter extends AbstractFilter
     }
 
     /**
-     * The offered entities together with their translations, which a translated name is read from — fetched by
-     * the same query instead of a query for every entity.
+     * Loads the offered entities together with their translations by one query, so reading a translated name
+     * needs no query for every entity.
      */
     protected function createChoicesQueryBuilder(EntityRepository $repository): QueryBuilder
     {
@@ -139,8 +144,8 @@ class EntityFilter extends AbstractFilter
     }
 
     /**
-     * A related entity is compared by its identifier on the association itself; a missing relation is
-     * tested on the association as well.
+     * A related entity is compared by its identifier — `author.publisher in [3]` → `author.publisher.id in [3]`.
+     * A missing relation is tested on the association itself — `author.publisher isNull`.
      */
     #[Override]
     protected function createComparison(string $operator, mixed $value): ?ConditionInterface

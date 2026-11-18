@@ -87,10 +87,11 @@ abstract class AbstractCrudController extends AdminBaseController
     }
 
     /**
-     * Shapes the query of the list statically — a fixed scope, a default join, an ordering. It runs once when
-     * the adapter is created, before the datagrid reads what the administrator searched for or filtered by, so
-     * a condition driven by the administrator never belongs here: it belongs to a searchable field or a filter
-     * of the datagrid, see `configureDatagrid()`.
+     * Shapes the base query of the list: fixed conditions, joins, computed columns and the ordering.
+     * A condition derived from the context of the list belongs here as well, e.g. a limit to the selected domain
+     * that the path of the domain control cannot express.
+     * Declare what the administrator searches for and filters by as searchable fields and filters instead,
+     * see `configureDatagrid()`.
      */
     protected function configureQuery(QueryBuilder $queryBuilder): void
     {

@@ -50,9 +50,7 @@ final readonly class DomainControlScope implements DatagridScopeInterface
     }
 
     /**
-     * Returns the condition limiting the datagrid to the domains of this scope, or null when the listed
-     * entity does not belong to a domain. An administrator without any domain gets an empty list, which
-     * matches nothing.
+     * An administrator without any domain gets an empty list, which matches nothing.
      */
     #[Override]
     public function createCondition(): ?ConditionInterface

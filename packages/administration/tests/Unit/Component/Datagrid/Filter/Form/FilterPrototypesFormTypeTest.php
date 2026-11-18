@@ -48,8 +48,7 @@ final class FilterPrototypesFormTypeTest extends TestCase
     }
 
     /**
-     * A prototype is a rule of its filter starting with the first operation of its arity, named as a rule of the
-     * filter form apart from its path, which is what the page renames.
+     * A prototype is named as a rule of the filter form apart from its path, which the page renames.
      */
     public function testPrototypeIsRuleStartingWithTheFirstOperationOfItsArity(): void
     {

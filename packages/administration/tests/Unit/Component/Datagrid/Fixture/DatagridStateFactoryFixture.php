@@ -34,9 +34,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Validation;
 
 /**
- * Builds the state of a datagrid the way the container does, with the subscribers of all the features, real forms
- * and no container — the filters are offered in the order of the Czech alphabet and their dates are picked
- * in the time zone of Prague.
+ * Wires the subscribers of all the features with real forms, the way the container does. The filters are sorted
+ * by the Czech alphabet and their dates are picked in the time zone of Prague.
  */
 final class DatagridStateFactoryFixture
 {
@@ -130,7 +129,7 @@ final class DatagridStateFactoryFixture
     }
 
     /**
-     * The subscriber of the application adding the given scope — the scope is resolved from the session there.
+     * Adds the given scope instead of the one the application resolves from the session.
      */
     private static function createDomainControlStateSubscriber(
         ?DomainControlScope $domainControlScope,

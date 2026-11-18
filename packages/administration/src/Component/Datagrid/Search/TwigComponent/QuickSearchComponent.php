@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\Component\Form\FormView;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-/**
- * Renders the quick search of a datagrid — a GET form named after the datagrid, filled with the searched text,
- * carrying the order and the limit of the grid along so that a search never loses them, and starting from
- * the first page.
- */
 #[AsTwigComponent(
     name: 'Admin:Grid:QuickSearch',
     template: '@ShopsysAdministration/components/grid/quick_search.html.twig',
