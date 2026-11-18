@@ -47,7 +47,7 @@ Service registration needs nothing from you: `packages/administration/config/ser
 
 ## Conventions that replace the canonical's project rules
 
-Package code follows `.agents/skills/coding-conventions/SKILL.md`, which inverts the canonical's `final` / `private` / full-typehint rules:
+Package code follows `.agents/skills/coding-conventions/SKILL.md`, which inverts the canonical's `final` / `private` / full-typehint rules (except the components in `packages/administration/src/Component/` — see `coding-conventions`):
 
 - Controller and handler classes are **not `final`**, constructor properties and helper methods are **`protected`** (`protected readonly Facade $facade`), so projects can extend them. The FormType stays `final` (Symfony requirement) — projects override it via `getExtendedTypes()` or the form-extension mechanism, and its option name follows the existing admin FormTypes (`'transportGroup' => $entity`).
 - Mark every overridden `configure*()` and handler method with `#[Override]`; handler methods carry a `{@inheritdoc}` docblock plus a *why* line when the method does more than delegate (see `ProductReviewEditHandler`).
@@ -55,7 +55,7 @@ Package code follows `.agents/skills/coding-conventions/SKILL.md`, which inverts
 
 ## Docs, translations, upgrade notes — you own them here
 
-- **Documentation is local** — `docs/administration/crud-controller/` (getting-started + reference), `docs/administration/datagrid/` (`fields.md`, `narrowing.md` for the domain control, the quick search and the condition tree, `filters.md` for the filter types and how to write one), `docs/administration/admin-rights.md`, `docs/administration/administration-menu.md`. Search it with `.agents/skills/docs-researcher/SKILL.md` instead of docs.shopsys.com. When you change the CRUD component itself (`AbstractCrudController`, `CrudConfig`, handler or hook interfaces, `Datagrid`), update the matching reference page in the same PR.
+- **Documentation is local** — `docs/administration/crud-controller/` (getting-started + reference), `docs/administration/datagrid/` (`fields.md`, `narrowing.md` for where a condition belongs, the quick search and the condition tree, `filters.md` for the filter types and how to write one; the domain control is in `crud-controller/reference/crud-controller.md`), `docs/administration/admin-rights.md`, `docs/administration/administration-menu.md`. Search it with `.agents/skills/docs-researcher/SKILL.md` instead of docs.shopsys.com. When you change the CRUD component itself (`AbstractCrudController`, `CrudConfig`, handler or hook interfaces, `Datagrid`), update the matching reference page in the same PR.
 - **Translations**: `php phing translations-dump` (php-fpm container, `.agents/skills/shopsys-commands/SKILL.md`) writes the new `t()` keys and the auto-generated entity names into `packages/*/translations/*.po` — those `.po` changes are part of the package and belong in the commit (commit message conventions in `.agents/skills/commit-conventions/SKILL.md`).
 - **Upgrade notes** (`upgrade-notes/_template.md`, `/generate-upgrade-notes`) whenever a project has to react: a new CRUD controller that replaces a legacy `packages/framework/src/Controller/Admin/*Controller.php` (list the removed routes, templates and menu items; keep the old `AdminRoleConstant` role via `#[ForRole]` so administrator permissions survive), a new `ROLE_CRUD_*` role, or any signature change in the CRUD component. Note the `{pullRequestId}` placeholder is backfilled by `/adhoc-pr`.
 
