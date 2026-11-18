@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 final class ArrayAdapter implements AdapterInterface
 {
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface<\Closure> $expressionBuilder The builder of the in-memory medium, whose expression decides a single row
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface<\Closure> $expressionBuilder
      */
     public function __construct(
         private readonly array $data,

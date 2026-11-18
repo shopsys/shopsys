@@ -4,25 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression;
 
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundInRowException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Traversable;
 
-/**
- * Reads the values a dot notation path leads to in one row of in-memory data.
- */
 final class PhpPathAccessor
 {
     /**
-     * A path crossing a collection leads to several values, which is how the medium matches what a query
-     * matches by a subquery — a record matches when at least one of the values does.
+     * Returns every value the path leads to:
      *
-     * A path reaching through a value that is not there yields a single null, so that a missing association
-     * is matched by `IS_NULL` the same way a stored null is. An empty collection on the way yields no value
-     * at all, so that a record with no related row is never matched. A path that addresses nothing at all
-     * throws, because that is a mistake in the code — a query refuses such a path as well.
-     *
-     * A row may hold the value of a related record under the whole dot notation key (`customerUser.email`), the
-     * way a row of a query or of a grid does, which is read before the nested arrays.
+     * - a path crossing a collection returns a value for each related row — `items.name` of an order with
+     *   two items returns two names;
+     * - a path reaching through a missing value returns a single null — `customerUser.email` of an order
+     *   without a customer;
+     * - a path crossing an empty collection returns no value at all;
+     * - a value stored under the whole dot notation key (`customerUser.email`) is read before the nested arrays;
+     * - a path addressing nothing in the row is a mistake in the code and fails.
      *
      * @param array<string, mixed> $row
      * @return list<mixed>
@@ -38,13 +34,12 @@ final class PhpPathAccessor
      */
     private function readSegments(mixed $value, array $segments, string $path): array
     {
-        // the value the path reaches through is not there, so neither is anything below it
         if ($value === null) {
             return [null];
         }
 
         if (is_array($value) === false) {
-            throw new PathNotFoundInRowException($path, $segments[0], []);
+            throw UnsupportedConditionException::pathNotFoundInRow($path, $segments[0], []);
         }
 
         $remainingPath = implode('.', $segments);
@@ -56,7 +51,7 @@ final class PhpPathAccessor
         $segment = array_shift($segments);
 
         if (array_key_exists($segment, $value) === false) {
-            throw new PathNotFoundInRowException($path, $segment, array_keys($value));
+            throw UnsupportedConditionException::pathNotFoundInRow($path, $segment, array_keys($value));
         }
 
         if ($segments === []) {

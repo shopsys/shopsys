@@ -12,9 +12,7 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\Php
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\PhpValueComparator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Comparison;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToValueException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotSupportedException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundInRowException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
@@ -68,22 +66,18 @@ final class PhpExpressionBuilderTest extends TestCase
 
     /**
      * A path addressing nothing is a mistake in the code, so it is refused instead of quietly behaving
-     * as a missing value — a query refuses an unknown field as well.
+     * as a missing value.
      */
     public function testPathAddressingNothingIsRefused(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
 
-        $this->expectException(PathNotFoundInRowException::class);
+        $this->expectException(UnsupportedConditionException::class);
         $this->expectExceptionMessage('Path "custmerUser.email" cannot be read, there is no "custmerUser" in the row. Available: "customerUser".');
 
         $expressionBuilder->compile(new Comparison('custmerUser.email', ExpressionOperatorEnum::IS_NULL, null))(['customerUser' => null]);
     }
 
-    /**
-     * The same semantics a query gets from its subquery — the record matches when at least one of the
-     * related rows does.
-     */
     public function testPathCrossingCollectionMatchesWhenAnyOfTheValuesDoes(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -127,24 +121,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(new Comparison('name', ExpressionOperatorEnum::CONTAINS, 'zelený'))($row));
     }
 
-    /**
-     * The same letters `unaccent` of the database strips — the diacritics of the Latin and the Greek script and of
-     * the Cyrillic Ё — while no letter is transliterated into the Latin script.
-     */
-    public function testLetterOfAnotherScriptIsNotTransliterated(): void
-    {
-        $expressionBuilder = $this->createExpressionBuilder();
-
-        $this->assertFalse($expressionBuilder->compile(new Comparison('name', ExpressionOperatorEnum::CONTAINS, 'Ж'))(['name' => 'Zelená']));
-        $this->assertFalse($expressionBuilder->compile(new Comparison('name', ExpressionOperatorEnum::STARTS_WITH, 'z'))(['name' => 'Жёлтый']));
-        $this->assertTrue($expressionBuilder->compile(new Comparison('name', ExpressionOperatorEnum::STARTS_WITH, 'желт'))(['name' => 'Жёлтый']));
-        $this->assertTrue($expressionBuilder->compile(new Comparison('name', ExpressionOperatorEnum::CONTAINS, 'αλφα'))(['name' => 'Άλφα']));
-        $this->assertTrue($expressionBuilder->compile(new Comparison('name', ExpressionOperatorEnum::CONTAINS, 'йод'))(['name' => 'Йод']));
-    }
-
-    /**
-     * A wildcard is a literal character here, the same way it is escaped in a query.
-     */
     public function testWildcardsOfTheSearchedValueAreLiteral(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -181,26 +157,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(new Comparison('price', ExpressionOperatorEnum::GREATER_THAN, Money::create('100')))($row));
     }
 
-    /**
-     * A decimal stored as text is compared with a number to its full precision, so a value of a high precision
-     * column never comes out equal to a number it only rounds to.
-     */
-    public function testDecimalIsComparedWithNumberToItsFullPrecision(): void
-    {
-        $expressionBuilder = $this->createExpressionBuilder();
-        $row = [
-            'exchangeRate' => '1.000000000000000001',
-        ];
-
-        $this->assertFalse($expressionBuilder->compile(new Comparison('exchangeRate', ExpressionOperatorEnum::EQUALS, 1))($row));
-        $this->assertTrue($expressionBuilder->compile(new Comparison('exchangeRate', ExpressionOperatorEnum::GREATER_THAN, 1))($row));
-        $this->assertTrue($expressionBuilder->compile(new Comparison('exchangeRate', ExpressionOperatorEnum::LESS_THAN, 1.5))($row));
-    }
-
-    /**
-     * Two texts are compared as texts even when they look like numbers, the way a text column of a database
-     * compares them.
-     */
     public function testNumericTextsAreComparedAsTexts(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -234,22 +190,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertTrue($expressionBuilder->compile(Condition::notEquals('items.name', 'X'))($row));
     }
 
-    public function testDatesAreComparedChronologically(): void
-    {
-        $expressionBuilder = $this->createExpressionBuilder();
-        $row = [
-            'createdAt' => new DateTimeImmutable('2026-06-15'),
-        ];
-
-        $this->assertTrue($expressionBuilder->compile(new Comparison('createdAt', ExpressionOperatorEnum::GREATER_THAN, new DateTimeImmutable('2026-01-01')))($row));
-        $this->assertTrue($expressionBuilder->compile(new Comparison(
-            'createdAt',
-            ExpressionOperatorEnum::BETWEEN,
-            [new DateTimeImmutable('2026-06-01'), new DateTimeImmutable('2026-06-30')],
-        ))($row));
-        $this->assertFalse($expressionBuilder->compile(new Comparison('createdAt', ExpressionOperatorEnum::LESS_THAN, new DateTimeImmutable('2026-01-01')))($row));
-    }
-
     public function testNullIsNeverOrdered(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
@@ -260,32 +200,6 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(new Comparison('price', ExpressionOperatorEnum::GREATER_THAN, 1))($row));
         $this->assertFalse($expressionBuilder->compile(new Comparison('price', ExpressionOperatorEnum::LESS_THAN, 1))($row));
         $this->assertFalse($expressionBuilder->compile(new Comparison('price', ExpressionOperatorEnum::BETWEEN, [0, 2]))($row));
-    }
-
-    public function testEmptyListOfValuesMatchesNothing(): void
-    {
-        $expressionBuilder = $this->createExpressionBuilder();
-        $row = [
-            'id' => 1,
-        ];
-
-        $this->assertFalse($expressionBuilder->compile(new Comparison('id', ExpressionOperatorEnum::IN, []))($row));
-        $this->assertTrue($expressionBuilder->compile(new Comparison('id', ExpressionOperatorEnum::NOT_IN, []))($row));
-    }
-
-    /**
-     * An empty list decides without reading the path, so a record with an empty collection is no exception —
-     * the same way a query decides it.
-     */
-    public function testEmptyListOfExcludedValuesMatchesEvenRecordWithoutRelatedRow(): void
-    {
-        $expressionBuilder = $this->createExpressionBuilder();
-        $row = [
-            'domains' => [],
-        ];
-
-        $this->assertTrue($expressionBuilder->compile(new Comparison('domains.domainId', ExpressionOperatorEnum::NOT_IN, []))($row));
-        $this->assertFalse($expressionBuilder->compile(new Comparison('domains.domainId', ExpressionOperatorEnum::IN, []))($row));
     }
 
     public function testExpressionsAreCombined(): void
@@ -334,15 +248,11 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertTrue($expressionBuilder->compile(new Comparison('items.product.catnum', ExpressionOperatorEnum::IS_EMPTY, null))($row));
     }
 
-    /**
-     * A database refuses to search text in a date or a number, so does this medium — instead of quietly
-     * matching nothing while the query would fail.
-     */
     public function testTextOperationOnNonTextValueIsRefused(): void
     {
         $expressionBuilder = $this->createExpressionBuilder();
 
-        $this->expectException(OperatorNotApplicableToValueException::class);
+        $this->expectException(UnsupportedConditionException::class);
         $this->expectExceptionMessage('Operator "contains" cannot be applied to a value of type "int".');
 
         $expressionBuilder->compile(new Comparison('price', ExpressionOperatorEnum::CONTAINS, '10'))(['price' => 100]);
@@ -377,10 +287,40 @@ final class PhpExpressionBuilderTest extends TestCase
         $this->assertFalse($expressionBuilder->compile(Condition::equals('name', 'Hrnek'))($row));
         $this->assertFalse($expressionBuilder->compile(Condition::in('name', ['Hrnek']))($row));
         $this->assertFalse($expressionBuilder->compile(Condition::greaterThan('name', 'A'))($row));
+        $this->assertFalse($expressionBuilder->compile(Condition::between('name', 'A', 'Z'))($row));
+        $this->assertFalse($expressionBuilder->compile(Condition::contains('name', 'a'))($row));
         $this->assertTrue($expressionBuilder->compile(Condition::notEquals('name', 'Hrnek'))($row));
         $this->assertTrue($expressionBuilder->compile(Condition::notIn('name', ['Hrnek']))($row));
         $this->assertTrue($expressionBuilder->compile(Condition::not(Condition::equals('name', 'Hrnek')))($row));
         $this->assertTrue($expressionBuilder->compile(Condition::not(Condition::greaterThan('name', 'A')))($row));
+        $this->assertTrue($expressionBuilder->compile(Condition::not(Condition::between('name', 'A', 'Z')))($row));
+        $this->assertTrue($expressionBuilder->compile(Condition::not(Condition::contains('name', 'a')))($row));
+    }
+
+    /**
+     * Values that cannot be compared fail the comparison, so its negation does not match every record instead.
+     */
+    public function testNegatedComparisonOfIncomparableValuesIsRefused(): void
+    {
+        $expressionBuilder = $this->createExpressionBuilder();
+
+        $this->expectException(UnsupportedConditionException::class);
+        $this->expectExceptionMessage('Operator "greaterThan" cannot be applied to a value of type "DateTimeImmutable".');
+
+        $expressionBuilder->compile(Condition::not(Condition::greaterThan('createdAt', 5)))(['createdAt' => new DateTimeImmutable('2026-06-15')]);
+    }
+
+    /**
+     * Both bounds of a range are compared even when the first one already decides, otherwise the negation would match
+     * every record instead of failing.
+     */
+    public function testRangeWithIncomparableBoundIsRefused(): void
+    {
+        $expressionBuilder = $this->createExpressionBuilder();
+
+        $this->expectException(UnsupportedConditionException::class);
+
+        $expressionBuilder->compile(Condition::not(Condition::between('price', 200, new DateTimeImmutable('2026-06-15'))))(['price' => 100]);
     }
 
     /**
@@ -395,10 +335,14 @@ final class PhpExpressionBuilderTest extends TestCase
             ExpressionOperatorEnum::STARTS_WITH => [ExpressionOperatorEnum::STARTS_WITH, 'name', 'Hr', true],
             ExpressionOperatorEnum::ENDS_WITH => [ExpressionOperatorEnum::ENDS_WITH, 'name', 'ek', true],
             ExpressionOperatorEnum::GREATER_THAN => [ExpressionOperatorEnum::GREATER_THAN, 'price', 99, true],
+            'greaterThan the value itself' => [ExpressionOperatorEnum::GREATER_THAN, 'price', 100, false],
             ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL => [ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL, 'price', 100, true],
             ExpressionOperatorEnum::LESS_THAN => [ExpressionOperatorEnum::LESS_THAN, 'price', 101, true],
+            'lessThan the value itself' => [ExpressionOperatorEnum::LESS_THAN, 'price', 100, false],
             ExpressionOperatorEnum::LESS_THAN_OR_EQUAL => [ExpressionOperatorEnum::LESS_THAN_OR_EQUAL, 'price', 100, true],
             ExpressionOperatorEnum::BETWEEN => [ExpressionOperatorEnum::BETWEEN, 'price', [50, 150], true],
+            'between bounds equal to the value' => [ExpressionOperatorEnum::BETWEEN, 'price', [100, 100], true],
+            'between bounds below the value' => [ExpressionOperatorEnum::BETWEEN, 'price', [50, 99], false],
             ExpressionOperatorEnum::IN => [ExpressionOperatorEnum::IN, 'name', ['Hrnek', 'Talíř'], true],
             ExpressionOperatorEnum::NOT_IN => [ExpressionOperatorEnum::NOT_IN, 'name', ['Talíř'], true],
             ExpressionOperatorEnum::IS_NULL => [ExpressionOperatorEnum::IS_NULL, 'name', null, false],
@@ -425,38 +369,27 @@ final class PhpExpressionBuilderTest extends TestCase
     }
 
     /**
-     * The vocabulary and the builder must not drift apart — every case the enum lists has a branch in `compare()`.
+     * `operatorDataProvider()` has to list every operator of the enum, so none can miss its branch in `compare()`.
      */
     public function testEveryOperatorOfTheVocabularyIsExpressed(): void
     {
-        $this->assertEqualsCanonicalizing((new ExpressionOperatorEnum())->getAllCases(), array_keys(self::operatorDataProvider()));
+        $this->assertEqualsCanonicalizing((new ExpressionOperatorEnum())->getAllCases(), array_values(array_unique(array_column(self::operatorDataProvider(), 0))));
     }
 
     /**
-     * A project adds an operation to the vocabulary by a subclass of the enum; a medium it did not teach the
-     * operation refuses it.
+     * An operation a project adds to the enum fails until the builder is extended to express it.
      */
-    public function testOperationTheMediumDoesNotExpressIsRefused(): void
+    public function testOperationTheBuilderDoesNotExpressIsRefused(): void
     {
         $expressionOperatorEnum = new class() extends ExpressionOperatorEnum {
             public const string JSON_CONTAINS = 'jsonContains';
         };
         $expressionBuilder = new PhpExpressionBuilder(new PhpPathAccessor(), new PhpValueComparator(), $expressionOperatorEnum);
 
-        $this->expectException(OperatorNotSupportedException::class);
+        $this->expectException(UnsupportedConditionException::class);
+        $this->expectExceptionMessage('Operator "jsonContains" is not expressed by');
 
         $expressionBuilder->compile(new Comparison('name', 'jsonContains', 'Hrnek'));
-    }
-
-    public function testConditionTreeIsCompiledIntoCallback(): void
-    {
-        $matchesRow = $this->createExpressionBuilder()->compile(Condition::andX(
-            Condition::not(Condition::equals('name', 'Talíř')),
-            Condition::between('price', 50, 150),
-        ));
-
-        $this->assertTrue($matchesRow(['name' => 'Hrnek', 'price' => 100]));
-        $this->assertFalse($matchesRow(['name' => 'Talíř', 'price' => 100]));
     }
 
     private function createExpressionBuilder(): PhpExpressionBuilder

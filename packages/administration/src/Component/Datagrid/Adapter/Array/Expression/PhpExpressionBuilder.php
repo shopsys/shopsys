@@ -7,18 +7,13 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expressi
 use Closure;
 use DateTimeInterface;
 use Override;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ExpressionFromForeignMediumException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotSupportedException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\AbstractExpressionBuilder;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 /**
- * Builds the expressions of data already in memory as callbacks deciding a single row. A missing value never
- * matches a comparison and always matches its negation, the same way the query of the ORM adapter decides it.
- *
- * A project teaching the medium an operation of its own extends the builder, expresses the operation in `compare()`
- * and hands every other one to `parent::compare()`.
+ * Builds the expressions of data already in memory as callbacks deciding a single row.
  *
  * @extends \Shopsys\AdministrationBundle\Component\Datagrid\Expression\AbstractExpressionBuilder<\Closure>
  */
@@ -38,25 +33,30 @@ class PhpExpressionBuilder extends AbstractExpressionBuilder
     #[Override]
     protected function compare(string $path, string $operator, mixed $value): Closure
     {
+        $isEqual = fn (mixed $fieldValue): bool => $this->phpValueComparator->equals($fieldValue, $value, $operator);
+        $isListed = fn (mixed $fieldValue): bool => array_any(
+            $value,
+            fn (mixed $listedValue): bool => $this->phpValueComparator->equals($fieldValue, $listedValue, $operator),
+        );
+
         return match ($operator) {
-            ExpressionOperatorEnum::EQUALS => $this->buildEvaluator($path, fn (mixed $fieldValue): bool => $this->phpValueComparator->equals($fieldValue, $value)),
-            ExpressionOperatorEnum::NOT_EQUALS => $this->buildEvaluator($path, fn (mixed $fieldValue): bool => $this->phpValueComparator->equals($fieldValue, $value) === false),
+            ExpressionOperatorEnum::EQUALS => $this->buildEvaluator($path, $isEqual),
+            ExpressionOperatorEnum::NOT_EQUALS => $this->buildEvaluator($path, static fn (mixed $fieldValue): bool => $isEqual($fieldValue) === false, matchesMissingValue: true),
             ExpressionOperatorEnum::CONTAINS => $this->buildTextSearch($path, $value, $this->phpValueComparator->contains(...)),
             ExpressionOperatorEnum::STARTS_WITH => $this->buildTextSearch($path, $value, $this->phpValueComparator->startsWith(...)),
             ExpressionOperatorEnum::ENDS_WITH => $this->buildTextSearch($path, $value, $this->phpValueComparator->endsWith(...)),
-            ExpressionOperatorEnum::GREATER_THAN => $this->buildComparison($path, $value, static fn (int $comparison): bool => $comparison > 0),
-            ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL => $this->buildComparison($path, $value, static fn (int $comparison): bool => $comparison >= 0),
-            ExpressionOperatorEnum::LESS_THAN => $this->buildComparison($path, $value, static fn (int $comparison): bool => $comparison < 0),
-            ExpressionOperatorEnum::LESS_THAN_OR_EQUAL => $this->buildComparison($path, $value, static fn (int $comparison): bool => $comparison <= 0),
+            ExpressionOperatorEnum::GREATER_THAN => $this->buildComparison($operator, $path, $value, static fn (int $comparison): bool => $comparison > 0),
+            ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL => $this->buildComparison($operator, $path, $value, static fn (int $comparison): bool => $comparison >= 0),
+            ExpressionOperatorEnum::LESS_THAN => $this->buildComparison($operator, $path, $value, static fn (int $comparison): bool => $comparison < 0),
+            ExpressionOperatorEnum::LESS_THAN_OR_EQUAL => $this->buildComparison($operator, $path, $value, static fn (int $comparison): bool => $comparison <= 0),
             ExpressionOperatorEnum::BETWEEN => $this->buildBetween($path, $value[0], $value[1]),
-            // an empty list matches nothing, resp. everything, whatever the path leads to — over a collection as well
-            ExpressionOperatorEnum::IN => $value === [] ? static fn (array $row): bool => false : $this->buildEvaluator($path, fn (mixed $fieldValue): bool => $this->isInList($fieldValue, $value)),
-            ExpressionOperatorEnum::NOT_IN => $value === [] ? static fn (array $row): bool => true : $this->buildEvaluator($path, fn (mixed $fieldValue): bool => $this->isInList($fieldValue, $value) === false),
-            ExpressionOperatorEnum::IS_NULL => $this->buildEvaluator($path, static fn (mixed $fieldValue): bool => $fieldValue === null),
-            ExpressionOperatorEnum::IS_NOT_NULL => $this->buildEvaluator($path, static fn (mixed $fieldValue): bool => $fieldValue !== null),
-            ExpressionOperatorEnum::IS_EMPTY => fn (array $row): bool => $this->readPresentValues($row, $path) === [],
-            ExpressionOperatorEnum::IS_NOT_EMPTY => fn (array $row): bool => $this->readPresentValues($row, $path) !== [],
-            default => throw new OperatorNotSupportedException($operator, static::class),
+            ExpressionOperatorEnum::IN => $this->buildEvaluator($path, $isListed),
+            ExpressionOperatorEnum::NOT_IN => $this->buildEvaluator($path, static fn (mixed $fieldValue): bool => $isListed($fieldValue) === false, matchesMissingValue: true),
+            // only a missing value matches
+            ExpressionOperatorEnum::IS_NULL => $this->buildEvaluator($path, static fn (): bool => false, matchesMissingValue: true),
+            ExpressionOperatorEnum::IS_NOT_NULL, ExpressionOperatorEnum::IS_NOT_EMPTY => $this->buildEvaluator($path, static fn (): bool => true),
+            ExpressionOperatorEnum::IS_EMPTY => $this->not($this->buildEvaluator($path, static fn (): bool => true)),
+            default => throw UnsupportedConditionException::operatorNotSupported($operator, static::class),
         };
     }
 
@@ -75,15 +75,7 @@ class PhpExpressionBuilder extends AbstractExpressionBuilder
     #[Override]
     protected function andX(object ...$expressions): Closure
     {
-        return static function (array $row) use ($expressions): bool {
-            foreach ($expressions as $evaluator) {
-                if ($evaluator($row) === false) {
-                    return false;
-                }
-            }
-
-            return true;
-        };
+        return static fn (array $row): bool => array_all($expressions, static fn (Closure $evaluator): bool => $evaluator($row));
     }
 
     /**
@@ -92,20 +84,10 @@ class PhpExpressionBuilder extends AbstractExpressionBuilder
     #[Override]
     protected function orX(object ...$expressions): Closure
     {
-        return static function (array $row) use ($expressions): bool {
-            foreach ($expressions as $evaluator) {
-                if ($evaluator($row)) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
+        return static fn (array $row): bool => array_any($expressions, static fn (Closure $evaluator): bool => $evaluator($row));
     }
 
     /**
-     * The searched text is normalized once, not for every record it is matched against.
-     *
      * @param \Closure(mixed, string): bool $matchesText Decides whether the value of the record matches the normalized text
      */
     protected function buildTextSearch(string $path, string $text, Closure $matchesText): Closure
@@ -116,18 +98,15 @@ class PhpExpressionBuilder extends AbstractExpressionBuilder
     }
 
     /**
-     * @param \Closure(int): bool $matchesComparison Decides the result of comparing the value of the record with the value of the expression
+     * @param \Closure(int): bool $matchesComparison
      */
     protected function buildComparison(
+        string $operator,
         string $path,
         string|int|float|DateTimeInterface|Money $value,
         Closure $matchesComparison,
     ): Closure {
-        return $this->buildEvaluator($path, function (mixed $fieldValue) use ($value, $matchesComparison): bool {
-            $comparison = $this->phpValueComparator->compare($fieldValue, $value);
-
-            return $comparison !== null && $matchesComparison($comparison);
-        });
+        return $this->buildEvaluator($path, fn (mixed $fieldValue): bool => $matchesComparison($this->phpValueComparator->compare($fieldValue, $value, $operator)));
     }
 
     protected function buildBetween(
@@ -136,72 +115,25 @@ class PhpExpressionBuilder extends AbstractExpressionBuilder
         string|int|float|DateTimeInterface|Money $to,
     ): Closure {
         return $this->buildEvaluator($path, function (mixed $fieldValue) use ($from, $to): bool {
-            $fromComparison = $this->phpValueComparator->compare($fieldValue, $from);
-            $toComparison = $this->phpValueComparator->compare($fieldValue, $to);
+            $fromComparison = $this->phpValueComparator->compare($fieldValue, $from, ExpressionOperatorEnum::BETWEEN);
+            $toComparison = $this->phpValueComparator->compare($fieldValue, $to, ExpressionOperatorEnum::BETWEEN);
 
-            return $fromComparison !== null && $toComparison !== null && $fromComparison >= 0 && $toComparison <= 0;
+            return $fromComparison >= 0 && $toComparison <= 0;
         });
     }
 
     /**
-     * @param list<string|int|float|bool|\DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money> $values
-     */
-    protected function isInList(mixed $fieldValue, array $values): bool
-    {
-        foreach ($values as $value) {
-            if ($this->phpValueComparator->equals($fieldValue, $value)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * A path crossing a collection leads to several values and the row matches when at least one of them
-     * does, which is the same semantics a query gets from its subquery.
+     * A path crossing a collection leads to several values and the row matches when at least one of them does.
      *
-     * @param \Closure(mixed): bool $matchesValue Decides a single value the path leads to
+     * @param \Closure(mixed): bool $matchesValue Decides a single value the path leads to, never a missing one
+     * @param bool $matchesMissingValue Whether a missing value matches as well, as for `notEquals`, `notIn` and `isNull`
      * @return \Closure(array<string, mixed> $row): bool
      */
-    protected function buildEvaluator(string $path, Closure $matchesValue): Closure
+    protected function buildEvaluator(string $path, Closure $matchesValue, bool $matchesMissingValue = false): Closure
     {
-        return function (array $row) use ($path, $matchesValue): bool {
-            foreach ($this->phpPathAccessor->read($row, $path) as $fieldValue) {
-                if ($matchesValue($fieldValue)) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
-    }
-
-    /**
-     * An empty collection yields no value at all, and a related row missing the value (an order item without
-     * a product) has none to count either — the same way a query decides it.
-     *
-     * @param array<string, mixed> $row
-     * @return list<mixed>
-     */
-    protected function readPresentValues(array $row, string $path): array
-    {
-        return array_values(array_filter(
+        return fn (array $row): bool => array_any(
             $this->phpPathAccessor->read($row, $path),
-            static fn (mixed $fieldValue): bool => $fieldValue !== null,
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    protected function assertExpression(object $expression): Closure
-    {
-        if ($expression instanceof Closure === false) {
-            throw new ExpressionFromForeignMediumException(Closure::class, $expression, static::class);
-        }
-
-        return $expression;
+            static fn (mixed $fieldValue): bool => $fieldValue === null ? $matchesMissingValue : $matchesValue($fieldValue),
+        );
     }
 }

@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Array;
 
-use DateTimeImmutable;
-use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\ArrayAdapter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\PhpExpressionBuilder;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\PhpPathAccessor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\PhpValueComparator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Condition\DqlCondition;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
-use Shopsys\AdministrationBundle\Component\Datagrid\Condition\MediumSpecificConditionInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ExpressionFromForeignMediumException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSource;
@@ -33,7 +32,7 @@ final class ArrayAdapterTest extends TestCase
         $capturedData = null;
         $arrayAdapter = $this->createArrayAdapter($capturedData);
 
-        $arrayAdapter->getDatasource(new DatasourceRequest('id', []));
+        $arrayAdapter->getDatasource(new DatasourceRequest('id', [], null));
 
         $this->assertSame(self::DATA, $capturedData);
     }
@@ -72,30 +71,22 @@ final class ArrayAdapterTest extends TestCase
         $arrayAdapter->getDatasource(new DatasourceRequest('id', [], Condition::in('domainId', [1])));
         $this->assertSame([1], array_column($capturedData, 'id'));
 
-        $arrayAdapter->getDatasource(new DatasourceRequest('id', []));
+        $arrayAdapter->getDatasource(new DatasourceRequest('id', [], null));
         $this->assertSame(self::DATA, $capturedData);
     }
 
-    public function testExpressionOfAnotherMediumIsRefused(): void
+    public function testDqlConditionIsRefused(): void
     {
         $capturedData = null;
         $arrayAdapter = $this->createArrayAdapter($capturedData);
-        $conditionOfAnotherMedium = new class() implements MediumSpecificConditionInterface {
-            #[Override]
-            public function compile(ExpressionBuilderInterface $expressionBuilder): object
-            {
-                return new DateTimeImmutable();
-            }
-        };
+        $dqlCondition = new DqlCondition(static fn (ProxyQuery $proxyQuery): string => 'SIZE(o.tags) > 3');
 
-        $this->expectException(ExpressionFromForeignMediumException::class);
+        $this->expectException(UnsupportedConditionException::class);
+        $this->expectExceptionMessage(sprintf('Condition "%s" cannot be compiled', DqlCondition::class));
 
-        $arrayAdapter->getDatasource(new DatasourceRequest('id', [], $conditionOfAnotherMedium));
+        $arrayAdapter->getDatasource(new DatasourceRequest('id', [], $dqlCondition));
     }
 
-    /**
-     * The medium is replaceable in the DI container — the adapter narrows by whatever builder it is given.
-     */
     public function testDataAreNarrowedByTheGivenBuilder(): void
     {
         $expressionBuilderStub = $this->createStub(ExpressionBuilderInterface::class);

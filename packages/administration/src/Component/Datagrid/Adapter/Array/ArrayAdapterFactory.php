@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSourceFactory;
 final class ArrayAdapterFactory
 {
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface<\Closure> $expressionBuilder The builder of the in-memory medium, whose expression decides a single row
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface<\Closure> $expressionBuilder
      */
     public function __construct(
         private readonly ArrayWithPaginationDataSourceFactory $arrayWithPaginationDataSourceFactory,

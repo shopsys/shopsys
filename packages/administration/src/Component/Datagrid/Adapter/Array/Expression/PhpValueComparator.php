@@ -7,118 +7,95 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expressi
 use Brick\Math\BigDecimal;
 use Brick\Math\Exception\MathException;
 use DateTimeInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToValueException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Stringable;
 use Transliterator;
 
 /**
- * Compares the value of a record with the value of an expression the way a database does, so that the
- * in-memory medium answers the same as a query — a number stored as a string is still a number once it is
- * compared with a number, money is compared by its amount, and text is matched regardless of case and diacritics.
+ * Evaluates the operations of the vocabulary on values held in memory:
+ *
+ * - text is searched regardless of case and diacritics — "hrnicek" finds "Hrníček";
+ * - a number is compared with a number or with a number stored as text by its value — "100" equals 100;
+ * - money is compared as a number, by its amount;
+ * - two texts are compared as texts, even when they look like numbers — "0123" is not "123";
+ * - two dates are compared chronologically;
+ * - a boolean equals only the same boolean;
+ * - any other pair of values cannot be compared and the operation fails.
+ *
+ * Every value of a record given here is present — a missing value (null) is decided by the caller.
  */
 final class PhpValueComparator
 {
     /**
-     * The in-memory counterpart of the `NORMALIZED()` function of the database (lower case, no diacritics),
-     * so that both media match the same text: `unaccent` strips the diacritics of the Latin and the Greek script
-     * and of the Cyrillic Ё, and keeps every other letter — nothing is transliterated into the Latin script.
+     * Lower case without the diacritics of the Latin and the Greek script and of the Cyrillic Ё; no letter
+     * is transliterated into the Latin script — "Hrníček" → "hrnicek", "Жёлтый" → "желтый".
      */
     private const string NORMALIZATION_RULES = ':: [[:Greek:]] NFD; :: [:Mn:] Remove; :: NFC; ё > е; Ё > Е; :: Latin-ASCII; :: Lower;';
 
     private ?Transliterator $transliterator = null;
 
-    public function equals(mixed $fieldValue, mixed $value): bool
+    /**
+     * @param string $operator The operation the values are compared for, named when they cannot be compared
+     */
+    public function equals(mixed $fieldValue, mixed $value, string $operator): bool
     {
-        $comparison = $this->compare($fieldValue, $value);
-
-        if ($comparison !== null) {
-            return $comparison === 0;
+        if (is_bool($fieldValue) && is_bool($value)) {
+            return $fieldValue === $value;
         }
 
-        return $fieldValue === $value;
+        return $this->compare($fieldValue, $value, $operator) === 0;
     }
 
     /**
-     * @return int|null Null when the values cannot be ordered, in which case nothing matches
+     * @param string $operator The operation the values are compared for, named when they cannot be compared
+     * @return int Negative, zero or positive as the value of the record is less than, equal to or greater than the given value
      */
-    public function compare(mixed $fieldValue, mixed $value): ?int
+    public function compare(mixed $fieldValue, mixed $value, string $operator): int
     {
-        if ($fieldValue === null || $value === null) {
-            return null;
-        }
-
-        if ($fieldValue instanceof Money || $value instanceof Money) {
-            return $this->compareNumbers($this->toNumber($fieldValue), $this->toNumber($value));
-        }
-
         if ($fieldValue instanceof DateTimeInterface && $value instanceof DateTimeInterface) {
             return $fieldValue <=> $value;
         }
 
-        // two texts are compared as texts even when they look like numbers — "0123" is not "123" in a text column
-        if (($this->isNumber($fieldValue) || $this->isNumber($value)) && is_numeric($fieldValue) && is_numeric($value)) {
-            return $this->compareNumbers($this->toNumber($fieldValue), $this->toNumber($value));
+        if ($this->isNumber($fieldValue) || $this->isNumber($value)) {
+            return $this->toDecimal($fieldValue, $operator)->compareTo($this->toDecimal($value, $operator));
         }
 
-        // the spaceship operator of PHP compares two numeric texts as numbers, a database never does
+        // not by <=>, which compares two numeric texts as numbers
         if (is_string($fieldValue) && is_string($value)) {
             return strcmp($fieldValue, $value) <=> 0;
         }
 
-        return null;
+        throw UnsupportedConditionException::operatorNotApplicableToValue($operator, $fieldValue);
     }
 
     /**
-     * @param string $normalizedText The searched text, normalized by `normalize()` once for all the records
+     * @param string $normalizedText The searched text, already normalized by `normalize()`
      */
     public function contains(mixed $fieldValue, string $normalizedText): bool
     {
-        $text = $this->toComparableText($fieldValue, ExpressionOperatorEnum::CONTAINS);
-
-        return $text !== null && str_contains($text, $normalizedText);
+        return str_contains($this->toComparableText($fieldValue, ExpressionOperatorEnum::CONTAINS), $normalizedText);
     }
 
     /**
-     * @param string $normalizedText The searched text, normalized by `normalize()` once for all the records
+     * @param string $normalizedText The searched text, already normalized by `normalize()`
      */
     public function startsWith(mixed $fieldValue, string $normalizedText): bool
     {
-        $text = $this->toComparableText($fieldValue, ExpressionOperatorEnum::STARTS_WITH);
-
-        return $text !== null && str_starts_with($text, $normalizedText);
+        return str_starts_with($this->toComparableText($fieldValue, ExpressionOperatorEnum::STARTS_WITH), $normalizedText);
     }
 
     /**
-     * @param string $normalizedText The searched text, normalized by `normalize()` once for all the records
+     * @param string $normalizedText The searched text, already normalized by `normalize()`
      */
     public function endsWith(mixed $fieldValue, string $normalizedText): bool
     {
-        $text = $this->toComparableText($fieldValue, ExpressionOperatorEnum::ENDS_WITH);
-
-        return $text !== null && str_ends_with($text, $normalizedText);
+        return str_ends_with($this->toComparableText($fieldValue, ExpressionOperatorEnum::ENDS_WITH), $normalizedText);
     }
 
     /**
-     * Text is searched in text only — a database refuses to search a date or a number, so does this medium,
-     * instead of quietly matching nothing.
-     */
-    private function toComparableText(mixed $fieldValue, string $operator): ?string
-    {
-        if ($fieldValue === null) {
-            return null;
-        }
-
-        if (is_string($fieldValue) || $fieldValue instanceof Stringable) {
-            return $this->normalize((string)$fieldValue);
-        }
-
-        throw new OperatorNotApplicableToValueException($operator, $fieldValue);
-    }
-
-    /**
-     * Text the way both media match it — in lower case and without diacritics.
+     * Text in the form the text operations match it — "Hrníček Modrý" → "hrnicek modry".
      */
     public function normalize(string $text): string
     {
@@ -128,29 +105,36 @@ final class PhpValueComparator
     }
 
     /**
-     * A decimal is compared to its full precision, the way the database does it — casting it to a float
-     * would make two different values of a high precision column equal.
+     * Text is searched in text only, a date or a number fails instead of matching nothing.
      */
-    private function compareNumbers(?BigDecimal $fieldNumber, ?BigDecimal $number): ?int
+    private function toComparableText(mixed $fieldValue, string $operator): string
     {
-        return $fieldNumber !== null && $number !== null ? $fieldNumber->compareTo($number) : null;
+        if (is_string($fieldValue) || $fieldValue instanceof Stringable) {
+            return $this->normalize((string)$fieldValue);
+        }
+
+        throw UnsupportedConditionException::operatorNotApplicableToValue($operator, $fieldValue);
     }
 
     private function isNumber(mixed $value): bool
     {
-        return is_int($value) || is_float($value);
+        return is_int($value) || is_float($value) || $value instanceof Money;
     }
 
-    private function toNumber(mixed $value): ?BigDecimal
+    /**
+     * A decimal keeps the full precision — as floats, "1.000000000000000001" and 1 would be equal.
+     */
+    private function toDecimal(mixed $value, string $operator): BigDecimal
     {
         try {
-            if ($value instanceof Money) {
-                return BigDecimal::of($value->getAmount());
-            }
-
-            return is_numeric($value) ? BigDecimal::of((string)$value) : null;
+            return match (true) {
+                $value instanceof Money => BigDecimal::of($value->getAmount()),
+                is_int($value), is_float($value), is_string($value) => BigDecimal::of((string)$value),
+                default => throw UnsupportedConditionException::operatorNotApplicableToValue($operator, $value),
+            };
         } catch (MathException) {
-            return null;
+            // a text that is no number, or one PHP reads as a number but a decimal does not (" 1", an infinite float)
+            throw UnsupportedConditionException::operatorNotApplicableToValue($operator, $value);
         }
     }
 }
