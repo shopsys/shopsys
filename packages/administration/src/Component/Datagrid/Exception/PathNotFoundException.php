@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Exception;
 
-use Exception;
+use LogicException;
 
 /**
  * A path addressing something the mapping does not have is a mistake in the code, so it is refused right away.
  */
-class PathNotFoundException extends Exception
+final class PathNotFoundException extends LogicException
 {
     /**
      * @param class-string $entityClass
