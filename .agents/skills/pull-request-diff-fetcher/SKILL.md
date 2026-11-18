@@ -33,7 +33,7 @@ Fetch complete PR data using the best available method and return structured inf
 
 **Step 2: Fetch PR data using gh**
 
-1. **Extract PR metadata and BASE branch** (CRITICAL):
+1. **Extract PR metadata and BASE branch** (later steps diff against it):
    ```bash
    gh pr view {PR_NUMBER} --json baseRefName,title,body,labels
    ```
@@ -44,7 +44,7 @@ Fetch complete PR data using the best available method and return structured inf
    ```bash
    gh pr diff {PR_NUMBER}
    ```
-   - **⚠️ CRITICAL: Verify the diff is COMPLETE before proceeding!**
+   - Verify the diff is complete before proceeding; a truncated diff means missed changes.
    - No size limits with gh CLI
 
 3. **Get commits** (for movement detection):
@@ -113,10 +113,9 @@ Then use: `git diff {base_branch}...HEAD`
    git branch --show-current
    ```
 
-2. Return to main command with request:
-   - "No PR provided. Current branch is {branch}. Please ask user for base branch."
+2. Resolve the base branch: `gh repo view --json defaultBranchRef -q .defaultBranchRef.name` (fallback `git symbolic-ref refs/remotes/origin/HEAD`), then `git fetch origin <base>` and use `origin/<base>` as `{base_branch}`.
 
-3. After receiving base branch from main command:
+3. Collect the history and diff:
    ```bash
    git log {base_branch}...HEAD --oneline
    git diff {base_branch}...HEAD
@@ -162,7 +161,7 @@ Always return a structured summary in this format:
 
 ### Diff Content
 {First 100 lines of diff as preview}
-[Full diff available in metadata]
+[Full diff saved to <scratchpad path> — pass this path to the caller]
 
 ### Commit Messages
 {List of commit messages with movement indicators highlighted}
@@ -170,7 +169,7 @@ Always return a structured summary in this format:
 
 ## Important Notes
 
-- **ALWAYS extract and store the BASE branch** - never assume it's "main" or hardcode branch names
+- **Extract and store the BASE branch** - never assume it's "main" or hardcode branch names
 - **Verify diff completeness** - incomplete diff = missed changes
 - **Check commits for movement keywords** BEFORE returning
 - **Prefer gh CLI** - it has no size limits and is most reliable

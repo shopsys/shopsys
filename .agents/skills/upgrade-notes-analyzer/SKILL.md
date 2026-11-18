@@ -14,9 +14,11 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 - PR metadata (title, base branch, labels)
 - User-specified scope (optional: backend|storefront|both)
 
-## Analysis Order (CRITICAL)
+## Analysis Order
 
-### ⚠️ STEP 1: MOVEMENTS FIRST
+Check movements before deletions, because a project-base deletion paired with a packages addition is a move, not a removal.
+
+### STEP 1: MOVEMENTS FIRST
 
 **A deletion in `/project-base/` + addition in `/packages/` = MOVEMENT, not removal!**
 
@@ -48,7 +50,7 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 
 ### STEP 3: MODIFICATIONS
 
-**Constructor Changes (CRITICAL RULE):**
+**Constructor Changes:**
 - ❌ **SKIP** autowired services (facades, repositories, factories) - DI handles automatically
 - ✅ **INCLUDE** manually instantiated classes (with `new`): FilterQuery, DataObject, form types, validators
 
@@ -213,7 +215,6 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
 ```markdown
 #### Grids ordering by administrator language ([#4135](https://github.com/shopsys/shopsys/pull/4135))
 
-- added new factories for all DataSource types to ensure consistent instantiation
 - if you are using custom grid implementations with direct DataSource instantiation, use the new factory classes for consistent collation behavior
 - see #project-base-diff to update your project
 ```
@@ -273,7 +274,6 @@ Analyzes PR diffs to identify breaking changes, feature movements, and scope.
     - Instead of `getStoresByDomainId` method, use `getFilteredStores` method
     - Instead of `getStoresCountByDomainId` method, use `getFilteredStoresCount` method
 - attribute `Store::$contactInfo` was removed. If you still want to use it, you need to implement it by yourself
-- new attributes `Store::$email`, `Store::$phone` and `Store::$directions` were introduced
 - `StoreFormType` form was refactored into multiple groups. Look into the `StoreFormType` class to see the changes
 - see #project-base-diff to update your project
 ```
