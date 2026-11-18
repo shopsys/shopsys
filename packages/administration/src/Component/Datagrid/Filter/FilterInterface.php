@@ -5,20 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter;
 
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
 
 /**
- * A filter the administrator composes rules from — one path of the records, the operations offered on it,
- * the form of the value, and the translation of a submitted rule into a condition.
+ * A filter the administrator composes rules from:
  *
- * A filter is a declaration: it never touches the adapter or a query. Whatever it cannot say through the
- * condition tree is not a filter but a `DqlCondition` returned from `buildCondition()`, with the datagrid
- * bound to the ORM adapter as the price.
+ * - one path of the records;
+ * - the operations offered on it;
+ * - the form of the value;
+ * - the translation of a submitted rule into a condition.
+ *
+ * A filter never builds a query, it returns a condition. What the operations cannot express, `buildCondition()`
+ * may return as a `DqlCondition`, which works with the ORM adapter only.
  */
 interface FilterInterface
 {
     /**
-     * The key of the filter in the request and in a saved state — stable and explicit, never a label.
+     * The key of the filter in the request — stable and explicit, never a label.
      */
     public function getName(): string;
 
@@ -30,40 +34,38 @@ interface FilterInterface
      * The operations offered to the administrator, in the order they are offered — after `resolveFor()`
      * only those applicable to the path.
      *
-     * @return string[] Cases of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum
+     * @return string[] Usually constants of `ExpressionOperatorEnum`, a filter may add its own (`BooleanFilter::OPERATOR_YES`)
      */
     public function getOperators(): array;
 
     public function getOperatorLabel(string $operator): string;
 
     /**
-     * The shape of the value the operation takes — usually the arity of the operation in the vocabulary,
-     * but a filter may offer operations of its own that carry their value in themselves ("is yes").
-     *
-     * @return string One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum
+     * The shape of the value the operation takes, usually its arity in `ExpressionOperatorEnum`.
+     * An operation of the filter itself may carry its value in itself ("yes" of `BooleanFilter`).
      */
-    public function getValueArity(string $operator): string;
+    public function getValueArity(string $operator): ExpressionValueArityEnum;
 
     /**
-     * The form type of the value of the operations of the arity — for a pair of bounds the type of one bound,
-     * the form wraps it into a range itself. Not asked for the arity without a value.
+     * The form type of the value of the operations of the arity.
+     * For a pair of bounds it is the type of one bound, the form wraps it into a range.
+     * It is never asked for the arity `NONE`.
      *
-     * @param string $arity One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum
      * @return class-string<\Symfony\Component\Form\FormTypeInterface>
      */
-    public function getValueFormType(string $arity): string;
+    public function getValueFormType(ExpressionValueArityEnum $arity): string;
 
     /**
-     * @param string $arity One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum
      * @return array<string, mixed>
      */
-    public function getValueFormOptions(string $arity): array;
+    public function getValueFormOptions(ExpressionValueArityEnum $arity): array;
 
     /**
-     * Adapts the filter to the datagrid it is declared on: learns the path, keeps only the operations the
-     * medium can evaluate on it, and refuses a declaration that cannot work at all.
+     * Resolves the filter against the adapter of its datagrid:
      *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     * - describes the path, when the adapter can;
+     * - keeps only the operations applicable to the path;
+     * - fails when the filter cannot work over the path.
      */
     public function resolveFor(FilterEnvironment $environment): void;
 

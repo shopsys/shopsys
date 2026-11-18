@@ -8,7 +8,7 @@ use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\InvalidDatagridDeclarationException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\AbstractFilter;
@@ -17,8 +17,10 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\DateFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\MoneyFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\IntegerRange;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
@@ -67,9 +69,15 @@ final class AbstractFilterTest extends TestCase
             'items.quantity' => new PathDescription('items.quantity', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::INTEGER),
         ]));
 
-        $this->assertNotContains(ExpressionOperatorEnum::IS_NULL, $filter->getOperators());
-        $this->assertNotContains(ExpressionOperatorEnum::IS_NOT_NULL, $filter->getOperators());
-        $this->assertContains(ExpressionOperatorEnum::BETWEEN, $filter->getOperators());
+        $this->assertSame([
+            ExpressionOperatorEnum::EQUALS,
+            ExpressionOperatorEnum::NOT_EQUALS,
+            ExpressionOperatorEnum::GREATER_THAN,
+            ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL,
+            ExpressionOperatorEnum::LESS_THAN,
+            ExpressionOperatorEnum::LESS_THAN_OR_EQUAL,
+            ExpressionOperatorEnum::BETWEEN,
+        ], $filter->getOperators());
         $this->assertSame(IntegerType::class, $filter->getValueFormType(ExpressionValueArityEnum::SINGLE));
     }
 
@@ -87,7 +95,7 @@ final class AbstractFilterTest extends TestCase
      */
     public function testOperationNotOfferedByTheTypeCannotBeSet(): void
     {
-        $this->expectException(FilterNotApplicableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
         $this->expectExceptionMessage('"isEmpty" cannot be set');
 
         TextFilter::new('name')->setOperators([ExpressionOperatorEnum::EQUALS, ExpressionOperatorEnum::IS_EMPTY]);
@@ -101,6 +109,7 @@ final class AbstractFilterTest extends TestCase
         return [
             'text filter over a number' => [TextFilter::new('value'), PathValueTypeEnum::DECIMAL],
             'numeric filter over money' => [NumericFilter::new('value'), PathValueTypeEnum::MONEY],
+            'money filter over a number' => [MoneyFilter::new('value'), PathValueTypeEnum::DECIMAL],
             'numeric filter over a text' => [NumericFilter::new('value'), PathValueTypeEnum::STRING],
             'date filter over a text' => [DateFilter::new('value'), PathValueTypeEnum::STRING],
             'boolean filter over a number' => [BooleanFilter::new('value'), PathValueTypeEnum::INTEGER],
@@ -108,13 +117,12 @@ final class AbstractFilterTest extends TestCase
     }
 
     /**
-     * A value entered for another kind of value would fail to convert in the database or quietly match nonsense,
-     * so the declaration is refused when the datagrid is built.
+     * A value entered for another kind of value would fail to convert in the database or quietly match nonsense.
      */
     #[DataProvider('filterOverOtherKindOfValueDataProvider')]
     public function testFilterOverOtherKindOfValueIsRefused(AbstractFilter $filter, PathValueTypeEnum $valueType): void
     {
-        $this->expectException(FilterNotApplicableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
         $this->expectExceptionMessage(sprintf('the path "value" leads to %s', $valueType->name));
 
         $filter->resolveFor($this->createEnvironment([
@@ -122,15 +130,11 @@ final class AbstractFilterTest extends TestCase
         ]));
     }
 
-    /**
-     * An integer beyond the range of its column fails the query, so the value is held within the bounds the medium
-     * tells, whatever else the declaration constrains it by.
-     */
     public function testIntegerIsHeldWithinTheRangeOfItsColumn(): void
     {
         $filter = NumericFilter::new('rating')->setValueFormOptions(['constraints' => [new NotBlank()]]);
         $filter->resolveFor($this->createEnvironment([
-            'rating' => new PathDescription('rating', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::INTEGER, null, -32768, 32767),
+            'rating' => new PathDescription('rating', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::INTEGER, integerRange: new IntegerRange(-32768, 32767)),
         ]));
 
         $constraints = $filter->getValueFormOptions(ExpressionValueArityEnum::SINGLE)['constraints'];
@@ -141,12 +145,13 @@ final class AbstractFilterTest extends TestCase
 
     public function testFilterWithNoApplicableOperationIsRefused(): void
     {
-        $filter = TextFilter::new('items')->setOperators([ExpressionOperatorEnum::CONTAINS]);
+        $filter = TextFilter::new('items.name')->setOperators([ExpressionOperatorEnum::IS_NULL]);
 
-        $this->expectException(FilterNotApplicableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
+        $this->expectExceptionMessage('Filter "items_name" cannot be applied: none of its operations is applicable');
 
         $filter->resolveFor($this->createEnvironment([
-            'items' => new PathDescription('items', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::ASSOCIATION),
+            'items.name' => new PathDescription('items.name', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::STRING),
         ]));
     }
 
@@ -154,8 +159,8 @@ final class AbstractFilterTest extends TestCase
     {
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class), [], false);
 
-        $this->expectException(FilterNotApplicableException::class);
-        $this->expectExceptionMessage('nope');
+        $this->expectException(InvalidDatagridDeclarationException::class);
+        $this->expectExceptionMessage('Filter "nope" cannot be applied: Path "nope" cannot be resolved');
 
         TextFilter::new('nope')->resolveFor(new FilterEnvironment($adapter, new ExpressionOperatorEnum(), new DateTimeZone('UTC')));
     }

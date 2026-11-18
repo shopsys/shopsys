@@ -9,14 +9,15 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
-use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 
 /**
  * A filter over a yes/no value — `BooleanFilter::new('isVerifiedPurchase', t('Verified purchase'))`.
  *
- * The value is the operation itself: the administrator picks "yes" or "no" and there is nothing more to
- * enter, so the rule reads "Verified purchase — yes". Both operations compare by `equals` in the vocabulary.
+ * The value is the operation itself: the administrator picks "yes" or "no" and enters nothing more, so the rule
+ * reads "Verified purchase — yes". Both operations compare by `equals`:
+ *
+ *     yes  →  Condition::equals('isVerifiedPurchase', true)
  */
 class BooleanFilter extends AbstractFilter
 {
@@ -52,7 +53,7 @@ class BooleanFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueArity(string $operator): string
+    public function getValueArity(string $operator): ExpressionValueArityEnum
     {
         return ExpressionValueArityEnum::NONE;
     }
@@ -67,25 +68,21 @@ class BooleanFilter extends AbstractFilter
     }
 
     /**
-     * Both operations compare by equality, so its applicability decides — "yes" and "no" are no operations of
-     * the vocabulary.
+     * "yes" and "no" are no operations of `ExpressionOperatorEnum`, so the applicability of `equals` decides
+     * for both.
      */
     #[Override]
-    protected function isOperatorApplicable(string $operator, FilterEnvironment $environment): bool
+    protected function isOperatorApplicable(string $operator): bool
     {
-        return parent::isOperatorApplicable(ExpressionOperatorEnum::EQUALS, $environment);
+        return parent::isOperatorApplicable(ExpressionOperatorEnum::EQUALS);
     }
 
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function buildCondition(FilterRuleData $rule): ?ConditionInterface
+    protected function createComparison(string $operator, mixed $value): ?ConditionInterface
     {
-        if (in_array($rule->operator, $this->getOperators(), true) === false) {
-            return null;
-        }
-
-        return Condition::equals($this->path, $rule->operator === self::OPERATOR_YES);
+        return Condition::equals($this->path, $operator === self::OPERATOR_YES);
     }
 }

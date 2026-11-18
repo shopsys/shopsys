@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data;
 
 /**
- * One rule the administrator composed — which filter, which operation, compared with what.
+ * One rule the administrator composed.
  */
-class FilterRuleData
+final class FilterRuleData
 {
     /**
      * @var string|null
@@ -15,7 +15,7 @@ class FilterRuleData
     public $filter;
 
     /**
-     * @var string|null One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum
+     * @var string|null An operation of the filter, usually a constant of `ExpressionOperatorEnum` — a filter may add its own (`BooleanFilter::OPERATOR_YES`)
      */
     public $operator;
 

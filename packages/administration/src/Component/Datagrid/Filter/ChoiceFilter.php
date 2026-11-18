@@ -50,18 +50,16 @@ class ChoiceFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormType(string $arity): string
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
     {
         return ChoiceType::class;
     }
 
     /**
-     * A list of values is picked from a multiple select, a single value from a plain one.
-     *
      * {@inheritdoc}
      */
     #[Override]
-    protected function getDefaultValueFormOptions(string $arity): array
+    protected function getDefaultValueFormOptions(ExpressionValueArityEnum $arity): array
     {
         return [
             'choices' => $this->choices,

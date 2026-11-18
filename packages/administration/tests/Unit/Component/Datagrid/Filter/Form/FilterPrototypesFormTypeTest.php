@@ -16,24 +16,24 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterRuleType;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Form\FormInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class FilterPrototypesFormTypeTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
     /**
-     * The page swaps the operation and the value of a rule from these, so every filter has one per arity of its
-     * operations — in the order of the operations: equals ... (single), between (range), isNull (none).
+     * The page swaps the operation and the value of a rule from these. They follow the order of the operations:
+     * equals ... (single), between (range), isNull (none).
      */
     public function testEveryFilterHasPrototypeForEveryArityOfItsOperations(): void
     {

@@ -102,7 +102,7 @@ final class FilterRuleType extends AbstractType
             'choices' => $operators,
             'choice_label' => $filter->getOperatorLabel(...),
             'choice_attr' => static fn (string $operator): array => [
-                'data-arity' => $filter->getValueArity($operator),
+                'data-arity' => $filter->getValueArity($operator)->value,
             ],
             'placeholder' => false,
             'label' => false,

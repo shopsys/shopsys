@@ -15,18 +15,18 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterFormFactor
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TwigComponent\FiltersComponent;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class FiltersComponentTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
     /**
@@ -43,7 +43,7 @@ final class FiltersComponentTest extends TestCase
         $component = new FiltersComponent($filterFormFactory);
         $component->filter = new FilterPanel($form, $filters);
 
-        $this->assertTrue($component->isActive());
+        $this->assertTrue($component->filter->isActive());
         $this->assertFalse($component->getFormView()->vars['valid']);
     }
 
@@ -58,7 +58,7 @@ final class FiltersComponentTest extends TestCase
         $component = new FiltersComponent($filterFormFactory);
         $component->filter = new FilterPanel($filterFormFactory->createForm($filters, 'Product_filter', null), $filters);
 
-        $this->assertFalse($component->isActive());
+        $this->assertFalse($component->filter->isActive());
         $this->assertSame('Product_filter', $component->getPrototypesFormView()->vars['full_name']);
     }
 

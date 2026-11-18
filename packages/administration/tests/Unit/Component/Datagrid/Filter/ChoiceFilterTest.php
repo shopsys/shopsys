@@ -11,12 +11,13 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ChoiceFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
-use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 
 final class ChoiceFilterTest extends TestCase
 {
+    use FilterRuleTrait;
+
     public function testChoiceFilterOffersItsChoicesAsMultipleSelectForList(): void
     {
         $filter = ChoiceFilter::new('status')->setChoices([
@@ -37,14 +38,5 @@ final class ChoiceFilterTest extends TestCase
             new ExpressionOperatorEnum(),
             new DateTimeZone('Europe/Prague'),
         );
-    }
-
-    private function createRule(string $operator, mixed $value): FilterRuleData
-    {
-        $rule = new FilterRuleData();
-        $rule->operator = $operator;
-        $rule->value = $value;
-
-        return $rule;
     }
 }

@@ -76,7 +76,7 @@ final class FilterPrototypesFormType extends AbstractType
         $firstOperatorsByArity = [];
 
         foreach ($filter->getOperators() as $operator) {
-            $firstOperatorsByArity[$filter->getValueArity($operator)] ??= $operator;
+            $firstOperatorsByArity[$filter->getValueArity($operator)->value] ??= $operator;
         }
 
         return $firstOperatorsByArity;

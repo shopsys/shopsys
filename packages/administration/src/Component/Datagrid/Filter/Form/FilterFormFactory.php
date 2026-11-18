@@ -22,10 +22,9 @@ class FilterFormFactory
 
     /**
      * The form is submitted from the query by hand, see `DatagridStateEvent::getQuery()`. A filter with no rule
-     * composed — never submitted, or submitted empty — is shown as the starting point, one group with one rule,
-     * so the administrator never faces an empty panel.
+     * composed is shown as the starting point, so the administrator never faces an empty panel.
      *
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection $filters The filters offered, already adapted to the medium of the datagrid
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection $filters The filters offered, already resolved against the adapter of the datagrid
      * @param array<string, mixed>|null $query The query of the form, null when the request does not carry it
      * @return \Symfony\Component\Form\FormInterface<\Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData>
      */

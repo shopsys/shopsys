@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Comparison;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\InvalidDatagridDeclarationException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
@@ -69,7 +69,7 @@ class EntityFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormType(string $arity): string
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
     {
         return EntityType::class;
     }
@@ -78,16 +78,16 @@ class EntityFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    protected function getDefaultValueFormOptions(string $arity): array
+    protected function getDefaultValueFormOptions(ExpressionValueArityEnum $arity): array
     {
         return [
             'class' => $this->getEntityClass(),
             'query_builder' => $this->createChoicesQueryBuilder(...),
             'choice_label' => $this->describeEntity(...),
-            // a submitted identifier is looked up among the offered entities rather than by a query of its own,
-            // which an identifier beyond the range of its column (an address edited by hand) would fail; the choice
-            // lists are then built for every select of the page anew, the entities are still loaded by one query
-            // shared by the selects
+            // a submitted identifier is looked up among the offered entities, not by a query of its own:
+            // - such a query fails for an identifier outside the range of its column (an address edited by hand);
+            // - the choice lists are then built anew for every select of the page, but the entities are still loaded
+            //   by one query shared by the selects
             'choice_value' => $this->getChoiceValue(...),
             'multiple' => $arity === ExpressionValueArityEnum::LIST,
             'placeholder' => false,
@@ -119,14 +119,14 @@ class EntityFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    protected function assertApplicable(FilterEnvironment $environment): void
+    protected function assertApplicable(): void
     {
         if ($this->pathDescription !== null && $this->pathDescription->valueType !== PathValueTypeEnum::ASSOCIATION) {
-            throw new FilterNotApplicableException($this->getName(), sprintf('the path "%s" has to end with an association, it leads to %s.', $this->path, $this->pathDescription->valueType->name));
+            throw InvalidDatagridDeclarationException::filterNotApplicable($this->getName(), sprintf('the path "%s" has to end with an association, it leads to %s.', $this->path, $this->pathDescription->valueType->name));
         }
 
         if ($this->getEntityClass() === null) {
-            throw new FilterNotApplicableException($this->getName(), 'the adapter does not tell which entity the path leads to, set it by setEntityClass().');
+            throw InvalidDatagridDeclarationException::filterNotApplicable($this->getName(), 'the adapter does not tell which entity the path leads to, set it by setEntityClass().');
         }
     }
 

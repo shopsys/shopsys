@@ -9,8 +9,7 @@ use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Comparison;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\InvalidDatagridDeclarationException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
@@ -77,6 +76,15 @@ abstract class AbstractFilter implements FilterInterface
     }
 
     /**
+     * The name of a filter not named otherwise — `customerUser.email` → `customerUser_email`. A form name cannot
+     * contain a dot.
+     */
+    public static function createNameFromPath(string $path): string
+    {
+        return str_replace('.', '_', $path);
+    }
+
+    /**
      * @return string[]
      */
     abstract protected function getDefaultOperators(): array;
@@ -108,7 +116,6 @@ abstract class AbstractFilter implements FilterInterface
      * translate only those.
      *
      * @param string[] $operators
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
      * @return $this
      */
     public function setOperators(array $operators): static
@@ -116,7 +123,7 @@ abstract class AbstractFilter implements FilterInterface
         $unknownOperators = array_diff($operators, $this->getDefaultOperators());
 
         if ($unknownOperators !== []) {
-            throw new FilterNotApplicableException($this->getName(), sprintf(
+            throw InvalidDatagridDeclarationException::filterNotApplicable($this->getName(), sprintf(
                 'it offers only "%s", so "%s" cannot be set.',
                 implode('", "', $this->getDefaultOperators()),
                 implode('", "', $unknownOperators),
@@ -147,7 +154,7 @@ abstract class AbstractFilter implements FilterInterface
     #[Override]
     public function getName(): string
     {
-        return $this->name ?? str_replace('.', '_', $this->path);
+        return $this->name ?? self::createNameFromPath($this->path);
     }
 
     /**
@@ -196,7 +203,7 @@ abstract class AbstractFilter implements FilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormType(string $arity): string
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
     {
         return TextType::class;
     }
@@ -205,16 +212,15 @@ abstract class AbstractFilter implements FilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormOptions(string $arity): array
+    public function getValueFormOptions(ExpressionValueArityEnum $arity): array
     {
         return array_replace(['required' => false], $this->getDefaultValueFormOptions($arity), $this->valueFormOptions);
     }
 
     /**
-     * @param string $arity One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum
      * @return array<string, mixed>
      */
-    protected function getDefaultValueFormOptions(string $arity): array
+    protected function getDefaultValueFormOptions(ExpressionValueArityEnum $arity): array
     {
         return [];
     }
@@ -230,18 +236,18 @@ abstract class AbstractFilter implements FilterInterface
         try {
             $this->pathDescription = $environment->describePath($this->path);
         } catch (PathNotFoundException $exception) {
-            throw new FilterNotApplicableException($this->getName(), $exception->getMessage(), $exception);
+            throw InvalidDatagridDeclarationException::filterNotApplicable($this->getName(), $exception->getMessage(), $exception);
         }
 
-        $this->assertApplicable($environment);
+        $this->assertApplicable();
 
         $this->resolvedOperators = array_values(array_filter(
             $this->operators ?? $this->getDefaultOperators(),
-            fn (string $operator): bool => $this->isOperatorApplicable($operator, $environment),
+            $this->isOperatorApplicable(...),
         ));
 
         if ($this->resolvedOperators === []) {
-            throw new FilterNotApplicableException($this->getName(), sprintf('none of its operations is applicable to the path "%s".', $this->path));
+            throw InvalidDatagridDeclarationException::filterNotApplicable($this->getName(), sprintf('none of its operations is applicable to the path "%s".', $this->path));
         }
     }
 
@@ -256,12 +262,10 @@ abstract class AbstractFilter implements FilterInterface
     }
 
     /**
-     * A type of filter refuses a path it cannot work with — a numeric filter needs a number, an entity filter
-     * an association, ... A path the medium does not describe is left to the declaration.
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
+     * Fails when the path leads to a value the type of filter does not work with (see `getApplicableValueTypes()`).
+     * A path the adapter does not describe is not checked.
      */
-    protected function assertApplicable(FilterEnvironment $environment): void
+    protected function assertApplicable(): void
     {
         $valueTypes = $this->getApplicableValueTypes();
 
@@ -269,7 +273,7 @@ abstract class AbstractFilter implements FilterInterface
             return;
         }
 
-        throw new FilterNotApplicableException($this->getName(), sprintf(
+        throw InvalidDatagridDeclarationException::filterNotApplicable($this->getName(), sprintf(
             'the path "%s" leads to %s, the filter works with %s only.',
             $this->path,
             $this->pathDescription->valueType->name,
@@ -277,19 +281,10 @@ abstract class AbstractFilter implements FilterInterface
         ));
     }
 
-    protected function isOperatorApplicable(string $operator, FilterEnvironment $environment): bool
+    protected function isOperatorApplicable(string $operator): bool
     {
-        if ($this->pathDescription === null) {
-            return true;
-        }
-
-        try {
-            $environment->expressionOperatorEnum->assertApplicable($operator, $this->pathDescription);
-        } catch (OperatorNotApplicableToPathException) {
-            return false;
-        }
-
-        return true;
+        return $this->pathDescription === null
+            || $this->getEnvironment()->expressionOperatorEnum->findReasonOfInapplicability($operator, $this->pathDescription) === null;
     }
 
     /**
@@ -342,7 +337,7 @@ abstract class AbstractFilter implements FilterInterface
             ExpressionValueArityEnum::NONE => null,
             ExpressionValueArityEnum::LIST => $this->normalizeList($value),
             ExpressionValueArityEnum::RANGE => $this->normalizeRange($value),
-            default => $this->normalizeSingleValue($value),
+            ExpressionValueArityEnum::SINGLE => $this->normalizeSingleValue($value),
         };
     }
 
@@ -391,7 +386,7 @@ abstract class AbstractFilter implements FilterInterface
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueArity(string $operator): string
+    public function getValueArity(string $operator): ExpressionValueArityEnum
     {
         return $this->getEnvironment()->expressionOperatorEnum->getValueArity($operator);
     }

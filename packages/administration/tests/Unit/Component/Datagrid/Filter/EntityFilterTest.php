@@ -8,12 +8,11 @@ use DateTimeZone;
 use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\InvalidDatagridDeclarationException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\EntityFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
-use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ProductFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
@@ -25,10 +24,14 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyArticle;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyEntityManagerFactory;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyTag;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\QueryAssertionTrait;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 
 final class EntityFilterTest extends TestCase
 {
+    use FilterRuleTrait;
+    use QueryAssertionTrait;
+
     public function testRelatedEntitiesAreComparedByTheirIdentifiers(): void
     {
         $filter = $this->resolve(EntityFilter::new('author.publisher'));
@@ -66,7 +69,7 @@ final class EntityFilterTest extends TestCase
         );
     }
 
-    public function testEntityClassIsLearntFromTheMedium(): void
+    public function testEntityClassIsLearntFromTheAdapter(): void
     {
         $filter = $this->resolve(EntityFilter::new('author.publisher'));
 
@@ -76,7 +79,8 @@ final class EntityFilterTest extends TestCase
 
     public function testPathNotEndingWithAnAssociationIsRefused(): void
     {
-        $this->expectException(FilterNotApplicableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
+        $this->expectExceptionMessage('Filter "name" cannot be applied: the path "name" has to end with an association');
 
         EntityFilter::new('name')->resolveFor($this->createEnvironment([
             'name' => new PathDescription('name', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING),
@@ -85,7 +89,8 @@ final class EntityFilterTest extends TestCase
 
     public function testUnknownEntityClassIsRefused(): void
     {
-        $this->expectException(FilterNotApplicableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
+        $this->expectExceptionMessage('Filter "author_publisher" cannot be applied: the adapter does not tell which entity');
 
         EntityFilter::new('author.publisher')->resolveFor($this->createEnvironment([
             'author.publisher' => new PathDescription('author.publisher', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::ASSOCIATION),
@@ -120,8 +125,8 @@ final class EntityFilterTest extends TestCase
         $translatableQueryBuilder = $createQueryBuilder($entityManager->getRepository(DummyArticle::class));
         $plainQueryBuilder = $createQueryBuilder($entityManager->getRepository(DummyTag::class));
 
-        $this->assertSame('SELECT entity, translation FROM ' . DummyArticle::class . ' entity LEFT JOIN entity.translations translation', $translatableQueryBuilder->getDQL());
-        $this->assertSame('SELECT entity FROM ' . DummyTag::class . ' entity', $plainQueryBuilder->getDQL());
+        $this->assertQuery('SELECT entity, translation FROM ' . DummyArticle::class . ' entity LEFT JOIN entity.translations translation', $translatableQueryBuilder);
+        $this->assertQuery('SELECT entity FROM ' . DummyTag::class . ' entity', $plainQueryBuilder);
     }
 
     public function testProductFilterComparesTheSinglePickedProduct(): void
@@ -136,7 +141,7 @@ final class EntityFilterTest extends TestCase
      */
     public function testProductFilterOverAnotherEntityIsRefused(): void
     {
-        $this->expectException(FilterNotApplicableException::class);
+        $this->expectException(InvalidDatagridDeclarationException::class);
         $this->expectExceptionMessage('has to lead to a product');
 
         $this->resolve(ProductFilter::new('category'), 'category');
@@ -167,14 +172,5 @@ final class EntityFilterTest extends TestCase
             new ExpressionOperatorEnum(),
             new DateTimeZone('Europe/Prague'),
         );
-    }
-
-    private function createRule(string $operator, mixed $value): FilterRuleData
-    {
-        $rule = new FilterRuleData();
-        $rule->operator = $operator;
-        $rule->value = $value;
-
-        return $rule;
     }
 }

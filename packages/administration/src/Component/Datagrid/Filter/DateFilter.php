@@ -10,14 +10,18 @@ use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 
 /**
- * A filter over a date — a day picked in the calendar of the administration. Over a date and time the day
- * is a range in the time zone of the administration: "is 12.5." means from its midnight to the last moment
- * before the midnight after, "before 12.5." means before its midnight, "after 12.5." means from the midnight
- * after. The medium compares the moment, whatever time zone it stores the time in.
+ * A filter over a date — a day picked in the calendar of the administration.
+ *
+ * Over a date and time the day is a range in the time zone of the administration:
+ *
+ * - "is 12.5." → between 12.5. 00:00 and 12.5. 23:59:59.999999;
+ * - "before 12.5." → less than 12.5. 00:00;
+ * - "after 12.5." → greater than or equal to 13.5. 00:00.
  */
 class DateFilter extends AbstractFilter
 {
@@ -54,7 +58,7 @@ class DateFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormType(string $arity): string
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
     {
         return DatePickerType::class;
     }
@@ -66,7 +70,7 @@ class DateFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    protected function getDefaultValueFormOptions(string $arity): array
+    protected function getDefaultValueFormOptions(ExpressionValueArityEnum $arity): array
     {
         return [
             'model_timezone' => $this->getEnvironment()->displayTimeZone->getName(),

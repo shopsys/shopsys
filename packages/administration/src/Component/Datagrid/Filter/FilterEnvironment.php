@@ -24,9 +24,8 @@ final readonly class FilterEnvironment
     }
 
     /**
-     * Null when the medium has no schema to describe the path by.
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException
+     * Null when the adapter does not describe its paths.
+     * Throws `PathNotFoundException` when the path leads nowhere.
      */
     public function describePath(string $path): ?PathDescription
     {

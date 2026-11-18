@@ -11,14 +11,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 
-/**
- * A group of rules of the filter form and the logical operator combining them.
- */
 final class FilterGroupType extends AbstractType
 {
     public const string RULE_PROTOTYPE_NAME = '__rule__';
+
+    public const int MAX_RULES = 10;
 
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -42,7 +44,11 @@ final class FilterGroupType extends AbstractType
                 'prototype' => true,
                 'prototype_name' => self::RULE_PROTOTYPE_NAME,
                 'label' => false,
-            ]);
+                'constraints' => [
+                    new Count(max: self::MAX_RULES, maxMessage: 'A group of rules can have at most {{ limit }} rules.'),
+                ],
+            ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->limitSubmittedRules(...));
     }
 
     #[Override]
@@ -55,5 +61,20 @@ final class FilterGroupType extends AbstractType
                 'data_class' => FilterGroupData::class,
                 'label' => false,
             ]);
+    }
+
+    /**
+     * The rules are cut down the way `DatagridFilterFormType` cuts down the groups.
+     */
+    private function limitSubmittedRules(FormEvent $event): void
+    {
+        $data = $event->getData();
+
+        if (is_array($data) === false || is_array($data['rules'] ?? null) === false) {
+            return;
+        }
+
+        $data['rules'] = array_slice($data['rules'], 0, self::MAX_RULES + 1, true);
+        $event->setData($data);
     }
 }

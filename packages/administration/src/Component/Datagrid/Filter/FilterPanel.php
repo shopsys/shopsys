@@ -12,17 +12,14 @@ use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterfac
 use Symfony\Component\Form\FormInterface;
 
 /**
- * The filter of one datagrid — the filters offered to the administrator and the form of the groups of rules composed
- * from them.
- *
- * A part of the state of the datagrid added by `FilterStateSubscriber`, which submits the form once — the condition
- * narrows the records before they are loaded, the component renders the very same form with its errors.
+ * The filter of one datagrid: the filters offered to the administrator and the form of the groups of rules composed
+ * from them, already submitted.
  */
 final readonly class FilterPanel implements DatagridSearchInterface
 {
     /**
      * @param \Symfony\Component\Form\FormInterface<\Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterFormData> $form
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection $filters The filters offered, already adapted to the medium of the datagrid
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterCollection $filters The filters offered, already resolved against the adapter of the datagrid
      */
     public function __construct(
         public FormInterface $form,
@@ -31,41 +28,36 @@ final readonly class FilterPanel implements DatagridSearchInterface
     }
 
     /**
-     * Whether the administrator composed any rule — a form never submitted, or submitted empty, is only the starting
+     * Whether the administrator composed any rule. A form never submitted, or submitted empty, is only the starting
      * point it offers.
      */
-    public function hasRules(): bool
+    #[Override]
+    public function isActive(): bool
     {
         return $this->form->isSubmitted() && $this->form->getData()->hasRules();
     }
 
     /**
-     * Any composed rule outranks the quick search, even an invalid one.
-     */
-    #[Override]
-    public function isActive(): bool
-    {
-        return $this->hasRules();
-    }
-
-    /**
-     * Whether the composed rules cannot be applied — the form is never valid unless submitted.
+     * `isActive()` goes first, as `isValid()` throws for a form never submitted.
      */
     public function isInvalid(): bool
     {
-        return $this->hasRules() && $this->form->isValid() === false;
+        return $this->isActive() && $this->form->isValid() === false;
     }
 
     /**
-     * The condition of everything the administrator composed: the rules of a group combined by the operator of
-     * the group, the groups by the operator of the form. An invalid form narrows nothing and shows its errors
-     * instead of quietly listing more than the administrator asked for; a rule of an unknown filter or without
-     * a value narrows nothing either. Null when nothing narrows at all.
+     * The condition of everything the administrator composed, null when nothing narrows at all:
+     *
+     * - the rules of a group are combined by the operator of the group;
+     * - the groups are combined by the operator of the form;
+     * - a rule without a filter or without a value is skipped;
+     * - an invalid form narrows nothing, so it shows its errors instead of quietly listing more than
+     *   the administrator asked for.
      */
     #[Override]
     public function createCondition(): ?ConditionInterface
     {
-        if ($this->hasRules() === false || $this->form->isValid() === false) {
+        if ($this->isActive() === false || $this->form->isValid() === false) {
             return null;
         }
 
@@ -76,7 +68,7 @@ final readonly class FilterPanel implements DatagridSearchInterface
             $ruleConditions = [];
 
             foreach ($group->rules as $rule) {
-                if ($rule->filter === null || $this->filters->has($rule->filter) === false) {
+                if ($rule->filter === null) {
                     continue;
                 }
 

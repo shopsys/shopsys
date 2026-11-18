@@ -13,29 +13,26 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\DateFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
-use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class DateFilterTest extends TestCase
 {
+    use FilterRuleTrait;
+    use SetTranslatorTrait;
+
     private const string DISPLAY_TIME_ZONE = 'Europe/Prague';
 
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
-    /**
-     * The bounds are moments — a medium storing the time in another time zone converts them, see `DqlExpressionBuilderTest`.
-     */
     public function testDayOverDateAndTimeIsTheRangeOfTheDayInTheTimeZoneOfTheAdministration(): void
     {
         $filter = $this->resolve(PathValueTypeEnum::DATETIME);
@@ -141,14 +138,5 @@ final class DateFilterTest extends TestCase
     private function day(string $date): DateTimeImmutable
     {
         return new DateTimeImmutable($date . ' 00:00:00', new DateTimeZone(self::DISPLAY_TIME_ZONE));
-    }
-
-    private function createRule(string $operator, mixed $value): FilterRuleData
-    {
-        $rule = new FilterRuleData();
-        $rule->operator = $operator;
-        $rule->value = $value;
-
-        return $rule;
     }
 }

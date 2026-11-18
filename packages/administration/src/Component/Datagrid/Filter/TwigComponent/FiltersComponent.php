@@ -53,12 +53,4 @@ final class FiltersComponent
             ->createPrototypesForm($this->filter->filters, $this->filter->form->getName())
             ->createView();
     }
-
-    /**
-     * Whether any rule was composed — the panel is then marked as active.
-     */
-    public function isActive(): bool
-    {
-        return $this->filter->isActive();
-    }
 }

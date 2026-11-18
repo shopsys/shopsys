@@ -34,7 +34,6 @@ final class FilterPanelTest extends TestCase
             ]],
         ]));
 
-        $this->assertTrue($filterPanel->hasRules());
         $this->assertTrue($filterPanel->isActive());
         $this->assertFalse($filterPanel->isInvalid());
         $this->assertEquals(
@@ -46,17 +45,17 @@ final class FilterPanelTest extends TestCase
         );
     }
 
-    public function testRulesWithoutValueAndOfUnknownFiltersNarrowNothing(): void
+    public function testRulesWithoutValueOrFilterNarrowNothing(): void
     {
         $filterPanel = $this->createFilterPanel($this->createFormData(FilterGroupData::OPERATOR_AND, [
             [FilterGroupData::OPERATOR_AND, [
                 $this->createRule('name', ExpressionOperatorEnum::CONTAINS, '   '),
-                $this->createRule('somethingElse', ExpressionOperatorEnum::EQUALS, 'x'),
+                $this->createRule(null, ExpressionOperatorEnum::EQUALS, 'x'),
                 $this->createRule('price', ExpressionOperatorEnum::BETWEEN, ['from' => 1, 'to' => null]),
             ]],
         ]));
 
-        $this->assertTrue($filterPanel->hasRules());
+        $this->assertTrue($filterPanel->isActive());
         $this->assertNull($filterPanel->createCondition());
     }
 
@@ -106,7 +105,7 @@ final class FilterPanelTest extends TestCase
             [FilterGroupData::OPERATOR_AND, []],
         ]));
 
-        $this->assertFalse($filterPanel->hasRules());
+        $this->assertFalse($filterPanel->isActive());
         $this->assertNull($filterPanel->createCondition());
     }
 
@@ -155,7 +154,7 @@ final class FilterPanelTest extends TestCase
         return $data;
     }
 
-    private function createRule(string $filter, string $operator, mixed $value): FilterRuleData
+    private function createRule(?string $filter, string $operator, mixed $value): FilterRuleData
     {
         $rule = new FilterRuleData();
         $rule->filter = $filter;

@@ -6,14 +6,14 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter;
 
 use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraints\Range;
 
 /**
- * A filter over a number — an integer or a decimal, decided by the medium when it knows the path. Money is
- * no plain number, it is compared by a filter entering money.
+ * A filter over a number. Money is filtered by `MoneyFilter`.
  */
 class NumericFilter extends AbstractFilter
 {
@@ -40,31 +40,31 @@ class NumericFilter extends AbstractFilter
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormType(string $arity): string
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
     {
         return $this->pathDescription?->valueType === PathValueTypeEnum::INTEGER ? IntegerType::class : NumberType::class;
     }
 
     /**
-     * An integer beyond the range of its column fails the query, so the value is held within the bounds the medium
-     * tells, on top of whatever else the declaration constrains it by.
+     * Adds a `Range` constraint for the integer range of the path to the declared constraints.
+     * An integer outside the range of its column would fail the query.
      *
      * {@inheritdoc}
      */
     #[Override]
-    public function getValueFormOptions(string $arity): array
+    public function getValueFormOptions(ExpressionValueArityEnum $arity): array
     {
         $options = parent::getValueFormOptions($arity);
-        $pathDescription = $this->pathDescription;
+        $integerRange = $this->pathDescription?->integerRange;
 
-        if ($pathDescription === null || ($pathDescription->minimumValue === null && $pathDescription->maximumValue === null)) {
+        if ($integerRange === null) {
             return $options;
         }
 
         $constraints = $options['constraints'] ?? [];
         $options['constraints'] = [
             ...(is_array($constraints) ? $constraints : [$constraints]),
-            new Range(min: $pathDescription->minimumValue, max: $pathDescription->maximumValue),
+            new Range(min: $integerRange->minimum, max: $integerRange->maximum),
         ];
 
         return $options;

@@ -61,7 +61,7 @@
         {% if not embedded %}
             <div class="card-header card-header-no-bg d-flex align-items-center gap-2">
                 <h2 class="card-title text-secondary">{{ 'Filter'|trans }}</h2>
-                {% if this.active %}
+                {% if this.filter.active %}
                     <span class="badge bg-blue-lt text-blue-lt-fg">{{ 'Active'|trans }}</span>
                 {% endif %}
             </div>
@@ -100,7 +100,6 @@
         {{ gridView.renderHiddenInputs('page') }}
     </form>
 
-    {# the prototypes are kept out of the form, so they are never submitted #}
     <template data-datagrid-filter-target="groupTemplate">{{ _self.group(form.groups.vars.prototype) }}</template>
     <template data-datagrid-filter-target="ruleTemplate">{{ _self.rule(form.groups.vars.prototype.rules.vars.prototype) }}</template>
     {% for filterPrototypes in this.prototypesFormView.prototypes %}

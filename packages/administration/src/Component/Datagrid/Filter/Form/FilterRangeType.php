@@ -21,11 +21,9 @@ final class FilterRangeType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $entryOptions = array_replace($options['entry_options'], ['required' => false]);
-
         $builder
-            ->add('from', $options['entry_type'], array_replace($entryOptions, ['label' => t('From')]))
-            ->add('to', $options['entry_type'], array_replace($entryOptions, ['label' => t('To')]));
+            ->add('from', $options['entry_type'], array_replace($options['entry_options'], ['label' => t('From')]))
+            ->add('to', $options['entry_type'], array_replace($options['entry_options'], ['label' => t('To')]));
     }
 
     #[Override]

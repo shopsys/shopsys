@@ -30,18 +30,22 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\DatagridFilterFo
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Form\FormInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyEntityManagerFactory;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyProduct;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\QueryAssertionTrait;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 /**
- * The filters over the paths of a real mapping, down to the query on the PostgreSQL platform — a value a filter
- * makes has to be one its column takes, whatever the column is.
+ * A value a filter makes has to be one its column takes, so the filters are tested over a real mapping down to
+ * the query on the PostgreSQL platform.
  */
 final class FilterQueryTest extends TestCase
 {
+    use QueryAssertionTrait;
+    use SetTranslatorTrait;
+
     private const string DISPLAY_TIME_ZONE = 'Europe/Prague';
 
     private EntityManager $entityManager;
@@ -51,9 +55,7 @@ final class FilterQueryTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
 
         $this->entityManager = DummyEntityManagerFactory::create();
         $this->pathWalker = new PathWalker($this->entityManager);
@@ -66,6 +68,7 @@ final class FilterQueryTest extends TestCase
     {
         $queryBuilder = $this->createFilteredQuery(DateFilter::new('updatedAt'), ExpressionOperatorEnum::EQUALS, $this->day('2026-05-15'));
 
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o WHERE o.updatedAt BETWEEN :dgexpr_0 AND :dgexpr_1', $queryBuilder);
         $from = $queryBuilder->getParameter('dgexpr_0')->getValue();
         $to = $queryBuilder->getParameter('dgexpr_1')->getValue();
         $this->assertInstanceOf(DateTime::class, $from);
@@ -73,35 +76,39 @@ final class FilterQueryTest extends TestCase
         $this->assertSame(date_default_timezone_get(), $from->getTimezone()->getName());
         $this->assertEquals($this->day('2026-05-15'), $from);
         $this->assertEquals(new DateTimeImmutable('2026-05-15 23:59:59.999999', new DateTimeZone(self::DISPLAY_TIME_ZONE)), $to);
-        $this->assertStringContainsString('BETWEEN', $queryBuilder->getQuery()->getSQL());
     }
 
     public function testDayWithoutTimeIsComparedAsTheSameDay(): void
     {
         $queryBuilder = $this->createFilteredQuery(DateFilter::new('releasedOn'), ExpressionOperatorEnum::EQUALS, $this->day('2026-05-15'));
 
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o WHERE o.releasedOn = :dgexpr_0', $queryBuilder);
         $day = $queryBuilder->getParameter('dgexpr_0')->getValue();
         $this->assertInstanceOf(DateTime::class, $day);
         $this->assertSame('2026-05-15', $day->format('Y-m-d'));
-        $this->assertStringContainsString('SELECT', $queryBuilder->getQuery()->getSQL());
     }
 
     public function testYesOrNoIsBoundAsBoolean(): void
     {
         $queryBuilder = $this->createFilteredQuery(BooleanFilter::new('isActive'), BooleanFilter::OPERATOR_NO, null);
 
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o WHERE o.isActive = :dgexpr_0', $queryBuilder);
         $this->assertFalse($queryBuilder->getParameter('dgexpr_0')->getValue());
         $this->assertSame('boolean', $queryBuilder->getParameter('dgexpr_0')->getType());
-        $this->assertStringContainsString('SELECT', $queryBuilder->getQuery()->getSQL());
     }
 
     public function testRelatedEntitiesAreComparedInSubqueryOfTheCollection(): void
     {
         $queryBuilder = $this->createFilteredQuery(EntityFilter::new('tags'), ExpressionOperatorEnum::IN, [new TestEntity(3)]);
 
-        $this->assertStringContainsString('dgsub_0_tags_join.id IN (:dgexpr_0)', (string)$queryBuilder->getDQLPart('where'));
+        $this->assertQuery(
+            'SELECT o.id AS id FROM ' . DummyProduct::class . ' o'
+            . ' WHERE EXISTS(SELECT 1 FROM ' . DummyProduct::class . ' dgsub_0'
+            . ' INNER JOIN dgsub_0.tags dgsub_0_tags_join'
+            . ' WHERE dgsub_0.id = o.id AND dgsub_0_tags_join.id IN (:dgexpr_0))',
+            $queryBuilder,
+        );
         $this->assertSame(3, $queryBuilder->getParameter('dgexpr_0')->getValue());
-        $this->assertStringContainsString('EXISTS', $queryBuilder->getQuery()->getSQL());
     }
 
     /**

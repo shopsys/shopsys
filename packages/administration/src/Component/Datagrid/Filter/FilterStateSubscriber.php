@@ -38,15 +38,11 @@ class FilterStateSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
-     */
     public function onDatagridState(DatagridStateEvent $event): void
     {
-        $filters = $this->filterSetResolver->resolve($event->config->adapter, $event->config->fields, $event->config->filters);
+        $filters = $this->filterSetResolver->resolve($event->config->adapter, $event->config->filters);
 
-        if ($filters->isEmpty() || $event->isInRequest() === false) {
+        if ($filters->isEmpty()) {
             return;
         }
 

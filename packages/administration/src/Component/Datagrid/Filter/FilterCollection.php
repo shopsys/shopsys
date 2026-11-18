@@ -8,13 +8,9 @@ use ArrayIterator;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Override;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotFoundException;
 use Traversable;
 
 /**
- * A set of filters by their names — those declared on a datagrid by
- * `$datagrid->filters()->add(TextFilter::new('author.fullName'))`, or those offered to the administrator.
- *
  * @implements \IteratorAggregate<string, \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface>
  */
 final class FilterCollection implements IteratorAggregate
@@ -25,11 +21,14 @@ final class FilterCollection implements IteratorAggregate
     private array $filters = [];
 
     /**
+     * Replaces a `GuessedFilter` of the same name, so a declared filter takes precedence over the one picked for
+     * a field. Fails for any other filter of the same name.
+     *
      * @return $this
      */
     public function add(FilterInterface $filter): self
     {
-        if (array_key_exists($filter->getName(), $this->filters)) {
+        if ($this->has($filter->getName()) && $this->filters[$filter->getName()] instanceof GuessedFilter === false) {
             throw new InvalidArgumentException(sprintf('Filter with name "%s" already exists, give one of them another name by setName().', $filter->getName()));
         }
 
@@ -54,12 +53,9 @@ final class FilterCollection implements IteratorAggregate
         return array_key_exists($name, $this->filters);
     }
 
-    /**
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotFoundException
-     */
     public function get(string $name): FilterInterface
     {
-        return $this->filters[$name] ?? throw new FilterNotFoundException($name);
+        return $this->filters[$name] ?? throw new InvalidArgumentException(sprintf('Filter "%s" is not declared on the datagrid.', $name));
     }
 
     public function first(): ?FilterInterface

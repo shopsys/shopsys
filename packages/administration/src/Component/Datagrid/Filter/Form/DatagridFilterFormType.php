@@ -12,7 +12,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 
 /**
  * The filter form of a datagrid — groups of rules composed by the administrator, sent by GET so that the
@@ -22,6 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class DatagridFilterFormType extends AbstractType
 {
     public const string GROUP_PROTOTYPE_NAME = '__group__';
+
+    public const int MAX_GROUPS = 10;
 
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -49,7 +54,11 @@ final class DatagridFilterFormType extends AbstractType
                 'prototype' => true,
                 'prototype_name' => self::GROUP_PROTOTYPE_NAME,
                 'label' => false,
-            ]);
+                'constraints' => [
+                    new Count(max: self::MAX_GROUPS, maxMessage: 'The filter can have at most {{ limit }} groups of rules.'),
+                ],
+            ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->limitSubmittedGroups(...));
     }
 
     #[Override]
@@ -66,5 +75,22 @@ final class DatagridFilterFormType extends AbstractType
                 ],
                 'label' => false,
             ]);
+    }
+
+    /**
+     * A collection builds a form for every submitted entry, so the groups are cut down before their forms are built.
+     * One entry over the limit is kept, so that the administrator gets the error of the limit instead of a quietly
+     * shortened filter.
+     */
+    private function limitSubmittedGroups(FormEvent $event): void
+    {
+        $data = $event->getData();
+
+        if (is_array($data) === false || is_array($data['groups'] ?? null) === false) {
+            return;
+        }
+
+        $data['groups'] = array_slice($data['groups'], 0, self::MAX_GROUPS + 1, true);
+        $event->setData($data);
     }
 }

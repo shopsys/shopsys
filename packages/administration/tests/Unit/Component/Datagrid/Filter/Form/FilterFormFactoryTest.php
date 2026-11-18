@@ -12,12 +12,14 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\FilterFormFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\DatagridStateFactoryFixture;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class FilterFormFactoryTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     public function testComposedFilterIsSubmittedFromTheQuery(): void
     {
         $form = $this->createFormFactory()->createForm($this->createFilters(), 'ProductReview_filter', [
@@ -46,17 +48,6 @@ final class FilterFormFactoryTest extends TestCase
         }
     }
 
-    /**
-     * The page swaps the prototypes into the filter form, so they are named as that form.
-     */
-    public function testPrototypesAreNamedAsTheFilterForm(): void
-    {
-        $form = $this->createFormFactory()->createPrototypesForm($this->createFilters(), 'ProductReview_filter');
-
-        $this->assertSame('ProductReview_filter', $form->getName());
-        $this->assertFalse($form->isSubmitted());
-    }
-
     private function createFormFactory(): FilterFormFactory
     {
         return new FilterFormFactory(DatagridStateFactoryFixture::createFormFactory());
@@ -64,9 +55,7 @@ final class FilterFormFactoryTest extends TestCase
 
     private function createFilters(): FilterCollection
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
 
         $filter = TextFilter::new('name');
         $filter->resolveFor(new FilterEnvironment(

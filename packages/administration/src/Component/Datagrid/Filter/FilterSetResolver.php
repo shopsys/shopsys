@@ -27,65 +27,44 @@ class FilterSetResolver
     ) {
     }
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $fields
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FilterNotApplicableException
-     */
-    public function resolve(
-        AdapterInterface $adapter,
-        array $fields,
-        FilterCollection $declaredFilters,
-    ): FilterCollection {
+    public function resolve(AdapterInterface $adapter, FilterCollection $filters): FilterCollection
+    {
         $environment = new FilterEnvironment(
             $adapter,
             $this->expressionOperatorEnum,
             $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
         );
-        $filters = new FilterCollection();
+        $resolvedFilters = new FilterCollection();
 
-        foreach ($this->sort($this->collect($fields, $declaredFilters, $environment)) as $filter) {
+        foreach ($this->sort($this->collect($filters, $environment)) as $filter) {
             $filter->resolveFor($environment);
-            $filters->add($filter);
+            $resolvedFilters->add($filter);
         }
 
-        return $filters;
+        return $resolvedFilters;
     }
 
     /**
-     * A filter declared under the name of a field replaces the picked one, so a field is only guessed for when
-     * nothing was declared for it — and a field whose filter cannot be guessed can still be declared explicitly.
-     *
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor[] $fields
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\FieldNotFilterableException
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface[]
      */
-    protected function collect(array $fields, FilterCollection $declaredFilters, FilterEnvironment $environment): array
+    protected function collect(FilterCollection $filters, FilterEnvironment $environment): array
     {
-        $filtersByName = [];
+        $collectedFilters = [];
 
-        foreach ($fields as $field) {
-            if ($field->isFilterable() === false) {
-                continue;
-            }
-
-            $filterName = $field->getFilterName();
-            $filtersByName[$filterName] = $declaredFilters->has($filterName)
-                ? clone $declaredFilters->get($filterName)
-                : $this->filterGuesser->guess($field, $environment);
+        foreach ($filters as $filter) {
+            $collectedFilters[] = $filter instanceof GuessedFilter
+                ? $this->filterGuesser->guess($filter->field, $environment)
+                : clone $filter;
         }
 
-        foreach ($declaredFilters as $filter) {
-            $filtersByName[$filter->getName()] ??= clone $filter;
-        }
-
-        return array_values($filtersByName);
+        return $collectedFilters;
     }
 
     /**
-     * The alphabetical order of the labels in the language of the administration — the administrator looks a filter
-     * up by its name, and the order then does not depend on where the field or the filter was declared (a controller
-     * or an extension).
+     * Sorts the filters alphabetically by their labels in the language of the administration:
+     *
+     * - the administrator looks a filter up by its name;
+     * - the order does not depend on where the field or the filter was declared (a controller or an extension).
      *
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface[] $filters
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterInterface[]

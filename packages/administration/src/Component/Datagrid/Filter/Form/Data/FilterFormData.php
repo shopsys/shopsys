@@ -6,9 +6,9 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data;
 
 /**
  * Everything the administrator composed in the filter form — groups of rules, and the logical operator
- * between the groups. The form always reads into this class, a class extension of it is never used.
+ * between the groups.
  */
-class FilterFormData
+final class FilterFormData
 {
     /**
      * @var string

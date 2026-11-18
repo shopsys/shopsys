@@ -11,12 +11,13 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperato
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\BooleanFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\FilterEnvironment;
-use Shopsys\AdministrationBundle\Component\Datagrid\Filter\Form\Data\FilterRuleData;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
 
 final class BooleanFilterTest extends TestCase
 {
+    use FilterRuleTrait;
+
     public function testBooleanFilterIsDecidedByItsOperationWithoutValue(): void
     {
         $filter = BooleanFilter::new('isVerifiedPurchase');
@@ -36,14 +37,5 @@ final class BooleanFilterTest extends TestCase
             new ExpressionOperatorEnum(),
             new DateTimeZone('Europe/Prague'),
         );
-    }
-
-    private function createRule(string $operator, mixed $value): FilterRuleData
-    {
-        $rule = new FilterRuleData();
-        $rule->operator = $operator;
-        $rule->value = $value;
-
-        return $rule;
     }
 }
