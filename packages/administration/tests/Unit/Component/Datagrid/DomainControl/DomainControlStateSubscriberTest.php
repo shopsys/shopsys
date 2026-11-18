@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\DomainControl;
 
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridConfig;
@@ -22,18 +23,17 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Fixture\CapturingAdapter;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class DomainControlStateSubscriberTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
     public function testScopeOfTheConfiguredDomainControlIsAdded(): void
@@ -48,15 +48,12 @@ final class DomainControlStateSubscriberTest extends TestCase
 
     public function testNothingIsAddedWithoutDomainControl(): void
     {
-        $event = $this->dispatch($this->createConfig(null), null);
+        $event = $this->dispatch($this->createConfig(new DomainControlConfig()), null);
 
         $this->assertSame([], $event->getParts());
         $this->assertSame([], $event->getAdditionalFields());
     }
 
-    /**
-     * The administrator works with several domains at once, so the domain of every record is displayed.
-     */
     public function testDomainIsDisplayedWhenAllDomainsAreSelected(): void
     {
         $event = $this->dispatch($this->createConfig(new DomainControlConfig(DomainControlType::FILTER, null, 'crud_test', 'domainId')), null);
@@ -67,9 +64,32 @@ final class DomainControlStateSubscriberTest extends TestCase
         $this->assertSame('@ShopsysAdministration/datagrid/cell/domain_icon.html.twig', $fields[0]->getTemplate());
     }
 
+    #[DataProvider('provideDomainControlsDecidingWhetherTheDomainIsDisplayed')]
+    public function testDomainIsDisplayedOnlyWhenWorthDisplaying(
+        DomainControlConfig $domainControlConfig,
+        int $selectedDomainId,
+        bool $isDomainDisplayed,
+    ): void {
+        $event = $this->dispatch($this->createConfig($domainControlConfig), $selectedDomainId);
+
+        $this->assertArrayHasKey(DomainControlScope::class, $event->getParts());
+        $this->assertCount($isDomainDisplayed ? 1 : 0, $event->getAdditionalFields());
+    }
+
     /**
-     * A record related to several domains has no single domain to display.
+     * @return iterable<string, array{\Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig, int, bool}>
      */
+    public static function provideDomainControlsDecidingWhetherTheDomainIsDisplayed(): iterable
+    {
+        yield 'filter with one of several domains selected' => [new DomainControlConfig(DomainControlType::FILTER, null, 'crud_test', 'domainId'), 2, true];
+
+        yield 'filter of a single domain' => [new DomainControlConfig(DomainControlType::FILTER, [1], 'crud_test', 'domainId'), 1, false];
+
+        yield 'switcher, which always selects one domain' => [new DomainControlConfig(DomainControlType::SWITCHER, null, null, 'domainId'), 2, false];
+
+        yield 'entity without domain' => [new DomainControlConfig(DomainControlType::FILTER, null, 'crud_test'), 2, false];
+    }
+
     public function testDomainOfRecordRelatedToSeveralDomainsIsNotDisplayed(): void
     {
         $adapter = new CapturingAdapter($this->createStub(DataSourceInterface::class), [
@@ -99,7 +119,7 @@ final class DomainControlStateSubscriberTest extends TestCase
     }
 
     private function createConfig(
-        ?DomainControlConfig $domainControlConfig,
+        DomainControlConfig $domainControlConfig,
         ?CapturingAdapter $adapter = null,
     ): DatagridConfig {
         return new DatagridConfig(

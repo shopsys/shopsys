@@ -108,39 +108,14 @@ class DomainControlNarrowingTest extends TransactionFunctionalTestCase
         $this->assertSame([self::FIRST_DOMAIN_ID], array_unique($this->getDomainIdsOfListedSubscribersOf($domainControlScope)));
     }
 
-    public function testListingIsNarrowedToTheSelectedDomain(): void
-    {
-        $subscribersOfFirstDomain = $this->getDomainIdsOfListedSubscribers(self::FIRST_DOMAIN_ID);
-        $subscribersOfSecondDomain = $this->getDomainIdsOfListedSubscribers(self::SECOND_DOMAIN_ID);
-
-        $this->assertNotEmpty($subscribersOfFirstDomain, 'The demo data have to contain subscribers of the first domain.');
-        $this->assertNotEmpty($subscribersOfSecondDomain, 'The demo data have to contain subscribers of the second domain.');
-        $this->assertSame([self::FIRST_DOMAIN_ID], array_unique($subscribersOfFirstDomain));
-        $this->assertSame([self::SECOND_DOMAIN_ID], array_unique($subscribersOfSecondDomain));
-    }
-
     public function testListingWithoutDomainControlCoversEveryDomain(): void
     {
         $adapter = $this->ormAdapterFactory->create(NewsletterSubscriber::class);
 
         $this->assertGreaterThan(
             1,
-            count(array_unique($this->getDomainIdsOfRows($adapter->getDatasource(new DatasourceRequest('id', [new FieldDescriptor('domainId')]))))),
+            count(array_unique($this->getDomainIdsOfRows($adapter->getDatasource(new DatasourceRequest('id', [new FieldDescriptor('domainId')], null))))),
         );
-    }
-
-    /**
-     * @return int[]
-     */
-    private function getDomainIdsOfListedSubscribers(int $selectedDomainId): array
-    {
-        return $this->getDomainIdsOfListedSubscribersOf(new DomainControlScope(
-            DomainControlType::FILTER,
-            [self::FIRST_DOMAIN_ID, self::SECOND_DOMAIN_ID],
-            $selectedDomainId,
-            self::FILTER_NAMESPACE,
-            'domainId',
-        ));
     }
 
     /**

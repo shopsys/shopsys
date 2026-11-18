@@ -6,16 +6,12 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid\DomainControl;
 
 use Webmozart\Assert\Assert;
 
-/**
- * Configuration of the domain control of a datagrid, resolved into a
- * `\Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlScope` per request.
- */
 final readonly class DomainControlConfig
 {
     /**
      * @param int[]|null $allowedDomainIds Domain IDs available in the filter. Null allows all domains available to the administrator.
      * @param string|null $filterNamespace The namespace the filter remembers its selection under, required by the filter. Pass the same value in two datagrids to share the selection between them.
-     * @param string|null $domainIdPath Path to the domain ID the records are limited by, for an entity related to a domain in another way than by implementing `DomainSeparatedEntityInterface` — `domains.domainId`. Null takes `domainId` of an entity implementing it.
+     * @param string|null $domainIdPath Path to the domain ID the records are limited by, for an entity related to a domain in another way than by implementing `DomainSeparatedEntityInterface` (for example `domains.domainId`). Null takes `domainId` of an entity implementing it.
      */
     public function __construct(
         public DomainControlType $type = DomainControlType::NONE,

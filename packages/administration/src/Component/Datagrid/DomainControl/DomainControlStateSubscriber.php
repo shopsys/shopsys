@@ -55,15 +55,8 @@ class DomainControlStateSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * Null when the datagrid has no domain control.
-     */
     protected function createScope(DatagridConfig $config): ?DomainControlScope
     {
-        if ($config->domainControlConfig === null) {
-            return null;
-        }
-
         return $this->domainControlScopeFactory->create(
             $config->domainControlConfig,
             $config->adapter instanceof EntityClassAwareAdapterInterface ? $config->adapter->getEntityClass() : null,
@@ -71,19 +64,25 @@ class DomainControlStateSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Displaying the domain and limiting the records to the domains of the control are independent — hiding
-     * or removing the field never widens the listed records. A record related to several domains (the path leads
-     * through a collection) has no single domain to display.
+     * The domain of a record is not worth displaying:
+     *
+     * - when the listed entity does not belong to a domain;
+     * - when the whole datagrid works with a single domain anyway — a single domain is available, or the domain
+     *   switcher selects one;
+     * - for a record related to several domains (the path leads through a collection), it has no single domain.
+     *
+     * Displaying the domain and limiting the records to the domains of the control are independent. Hiding
+     * or removing the field never widens the listed records.
      *
      * @phpstan-assert-if-true !null $scope->domainIdPath
      */
     protected function isDomainWorthDisplaying(DomainControlScope $scope, DatagridConfig $config): bool
     {
-        if ($scope->isDomainWorthDisplaying() === false || $scope->domainIdPath === null) {
+        if ($scope->domainIdPath === null || $scope->isFilter() === false || $scope->offersChoice() === false) {
             return false;
         }
 
         return $config->adapter instanceof PathDescribingAdapterInterface === false
-            || $config->adapter->describePath($scope->domainIdPath)->isToMany() === false;
+            || $config->adapter->describePath($scope->domainIdPath)->isToOne();
     }
 }

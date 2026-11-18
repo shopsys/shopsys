@@ -24,9 +24,7 @@ final readonly class DomainControlScopeFactory
     }
 
     /**
-     * Returns null when the datagrid displays no domain control.
-     *
-     * @param class-string|null $listedEntityClass Decides how the datagrid relates to a domain
+     * @param class-string|null $listedEntityClass
      */
     public function create(DomainControlConfig $config, ?string $listedEntityClass = null): ?DomainControlScope
     {
@@ -37,23 +35,11 @@ final readonly class DomainControlScopeFactory
         $domainIds = $this->getDomainIds($config->allowedDomainIds);
         $domainIdPath = $config->domainIdPath ?? $this->getDomainIdPath($listedEntityClass);
 
-        if ($config->type === DomainControlType::SWITCHER) {
-            return new DomainControlScope(
-                $config->type,
-                $domainIds,
-                $this->adminDomainTabsFacade->getSelectedDomainId(),
-                null,
-                $domainIdPath,
-            );
-        }
+        $selectedDomainId = $config->type === DomainControlType::SWITCHER
+            ? $this->adminDomainTabsFacade->getSelectedDomainId()
+            : $this->adminDomainFilterTabsFacade->getSelectedDomainId($config->filterNamespace, $domainIds);
 
-        return new DomainControlScope(
-            $config->type,
-            $domainIds,
-            $this->adminDomainFilterTabsFacade->getSelectedDomainId($config->filterNamespace, $domainIds),
-            $config->filterNamespace,
-            $domainIdPath,
-        );
+        return new DomainControlScope($config->type, $domainIds, $selectedDomainId, $config->filterNamespace, $domainIdPath);
     }
 
     /**

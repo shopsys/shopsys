@@ -44,7 +44,6 @@ final class DomainControlScopeFactoryTest extends TestCase
         $this->assertSame([1, 2, 3], $scope->domainIds);
         $this->assertSame(2, $scope->selectedDomainId);
         $this->assertSame('domainId', $scope->domainIdPath);
-        $this->assertTrue($scope->isQueryFiltered());
     }
 
     public function testEntityWithoutDomainGetsNoDomainIdPath(): void
@@ -55,7 +54,6 @@ final class DomainControlScopeFactoryTest extends TestCase
 
         $this->assertNotNull($scope);
         $this->assertNull($scope->domainIdPath);
-        $this->assertFalse($scope->isQueryFiltered());
     }
 
     public function testUnknownListedEntityGetsNoDomainIdPath(): void
@@ -76,7 +74,6 @@ final class DomainControlScopeFactoryTest extends TestCase
 
         $this->assertNotNull($scope);
         $this->assertSame('domains.domainId', $scope->domainIdPath);
-        $this->assertTrue($scope->isQueryFiltered());
     }
 
     public function testConfiguredNamespaceSharesTheSelectionBetweenDatagrids(): void

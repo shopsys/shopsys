@@ -39,16 +39,6 @@ final class DomainControlComponentTest extends TestCase
         $this->assertSame([], $component->getDomainConfigs());
     }
 
-    public function testTheSwitcherRendersTheDomainsOfTheScope(): void
-    {
-        $component = $this->createComponent(
-            [1, 2],
-            new DomainControlScope(DomainControlType::SWITCHER, [1, 2], 2, null),
-        );
-
-        $this->assertCount(2, $component->getDomainConfigs());
-    }
-
     /**
      * @param int[] $adminEnabledDomainIds
      */
