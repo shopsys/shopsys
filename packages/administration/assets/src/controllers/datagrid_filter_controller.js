@@ -22,16 +22,15 @@ export default class extends Controller {
     ];
 
     static values = {
-        groupPrototypeName: { type: String, default: '__group__' },
-        rulePrototypeName: { type: String, default: '__rule__' },
-        prototypesName: { type: String, default: 'prototypes' },
+        groupPrototypeName: String,
+        rulePrototypeName: String,
+        prototypesName: String,
     };
 
     connect() {
         this.ruleTargets.forEach(rule => {
             this.markValueArity(rule);
         });
-        this.updateGroupsOperatorVisibility();
     }
 
     addGroup() {
@@ -70,11 +69,6 @@ export default class extends Controller {
     changeFilter(event) {
         const rule = event.currentTarget.closest('[data-datagrid-filter-target~="rule"]');
         const prototype = this.findPrototype(event.currentTarget.value, null);
-
-        if (prototype === null) {
-            return;
-        }
-
         const ruleFields = rule.querySelector('[data-datagrid-filter-target~="ruleFields"]');
         this.disposeContent(ruleFields);
         ruleFields.innerHTML = this.renamePrototype(prototype, rule);
@@ -154,9 +148,7 @@ export default class extends Controller {
         const operatorSelect = rule.querySelector('[data-datagrid-filter-target~="operatorSelect"]');
         const value = rule.querySelector('[data-datagrid-filter-target~="value"]');
 
-        if (operatorSelect && value) {
-            value.dataset.arity = operatorSelect.selectedOptions[0]?.dataset.arity ?? '';
-        }
+        value.dataset.arity = operatorSelect.selectedOptions[0]?.dataset.arity ?? '';
     }
 
     indexOf(element, pattern) {
@@ -173,9 +165,7 @@ export default class extends Controller {
     }
 
     updateGroupsOperatorVisibility() {
-        if (this.hasGroupsOperatorTarget) {
-            this.groupsOperatorTarget.hidden = this.groupTargets.length < 2;
-        }
+        this.groupsOperatorTarget.hidden = this.groupTargets.length < 2;
     }
 
     createElement(html) {
