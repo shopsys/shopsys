@@ -17,7 +17,7 @@ const isSentryBuildPluginEnabled =
 const nextConfig = {
     experimental: {
         scrollRestoration: true,
-        middlewarePrefetch: 'strict',
+        proxyPrefetch: 'strict',
     },
     reactCompiler: true,
     reactStrictMode: true,

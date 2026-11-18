@@ -158,7 +158,7 @@ The repo convention is QueryBuilder/DQL with `setParameter()`, and native querie
 ### J. Next.js / React storefront (A01/A05)
 
 - **Server Action / route handler missing authz or validation** — a `'use server'` function or `app/**/route.ts` doing a mutation without an early auth + permission check and a runtime validator (types are not enforced at runtime). **CWE-862, CWE-20.**
-- **Auth relied on only in `middleware.ts`** (CVE-2025-29927 lets middleware be skipped) — re-check in the handler/data layer; verify the Next.js version in `package.json` is patched. **CWE-285.**
+- **Auth relied on only in `proxy.ts` (formerly `middleware.ts`)** (CVE-2025-29927 lets middleware be skipped) — re-check in the handler/data layer; verify the Next.js version in `package.json` is patched. **CWE-285.**
 - **SSRF via server `fetch(userUrl)` or the image optimizer** — `next.config` `images.remotePatterns` with wildcard hosts; proxy/"fetch this URL" handlers. **CWE-918.**
 - **Open redirect** — `redirect(searchParams.x)` / `NextResponse.redirect(userValue)` without an allowlist (a `startsWith('/')` check is bypassable via `//evil.com`). **CWE-601.**
 - **Insecure/auth cookies** — session/refresh cookie set without `httpOnly`+`secure`+`SameSite`. In this repo `setTokensToCookies.ts` sets httpOnly+secure domain-scoped cookies — flag regressions. **CWE-1004, CWE-614, CWE-1275.**
