@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
 class SeoPageDataFactory
@@ -44,15 +45,24 @@ class SeoPageDataFactory
         foreach ($this->domain->getAll() as $domain) {
             $domainId = $domain->getId();
 
-            $seoPageData->pageSlugsIndexedByDomainId[$domainId] = $seoPage->getPageSlug($domainId);
+            try {
+                $seoPageData->pageSlugsIndexedByDomainId[$domainId] = $seoPage->getPageSlug($domainId);
+            } catch (SeoPageDomainNotFoundException) {
+                $seoPageData->pageSlugsIndexedByDomainId[$domainId] = null;
+                $seoPageData->seoOgTitlesIndexedByDomainId[$domainId] = null;
+                $seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId] = null;
+
+                continue;
+            }
+
             $seoPageData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
                 $seoPage->getSeoAttributes($domainId),
             );
             $seoPageData->seoOgTitlesIndexedByDomainId[$domainId] = $seoPage->getSeoOgTitle($domainId);
             $seoPageData->seoOgDescriptionsIndexedByDomainId[$domainId] = $seoPage->getSeoOgDescription($domainId);
-            $seoPageData->seoOgImage = $this->imageUploadDataFactory->createFromEntityAndType($seoPage, SeoPageFacade::IMAGE_TYPE_OG);
         }
 
+        $seoPageData->seoOgImage = $this->imageUploadDataFactory->createFromEntityAndType($seoPage, SeoPageFacade::IMAGE_TYPE_OG);
         $seoPageData->defaultPage = $seoPage->isDefaultPage();
     }
 }

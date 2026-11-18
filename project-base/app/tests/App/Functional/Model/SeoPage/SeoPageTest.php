@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\SeoPage;
 
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoMetaRobotsEnum;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -101,5 +102,57 @@ class SeoPageTest extends TransactionFunctionalTestCase
         $this->assertSame($proposedPageName, $updatedSeoPageName);
         $this->assertSame($proposedPageSlug, $updatedSeoPageSlug);
         $this->assertSame($proposedSeoPageTitle, $updatedSeoPageTitle);
+    }
+
+    public function testSeoPageWithMissingDomainCanBeEditedAndTheDomainIsRestoredOnSave(): void
+    {
+        $domainId = $this->domain->getId();
+
+        $this->em->createQueryBuilder()
+            ->delete(SeoPageDomain::class, 'spd')
+            ->where('spd.seoPage = :seoPageId')
+            ->andWhere('spd.domainId = :domainId')
+            ->setParameter('seoPageId', self::HOMEPAGE_SEO_PAGE_ID)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->execute();
+        $this->em->clear();
+
+        $seoPage = $this->seoPageFacade->getById(self::HOMEPAGE_SEO_PAGE_ID);
+        $seoPageData = $this->seoPageDataFactory->createFromSeoPage($seoPage);
+
+        $this->assertNull($seoPageData->pageSlugsIndexedByDomainId[$domainId]);
+        $this->assertNull($seoPageData->seo[$domainId]->title);
+
+        $this->seoPageFacade->edit($seoPage->getId(), $seoPageData);
+        $this->em->clear();
+
+        $this->assertSame(0, $this->countSeoPageDomains(self::HOMEPAGE_SEO_PAGE_ID, $domainId));
+
+        $seoPage = $this->seoPageFacade->getById(self::HOMEPAGE_SEO_PAGE_ID);
+        $seoPageData = $this->seoPageDataFactory->createFromSeoPage($seoPage);
+        $seoPageData->pageSlugsIndexedByDomainId[$domainId] = 'restored-homepage-slug';
+        $seoPageData->seo[$domainId]->title = 'restored homepage title';
+
+        $this->seoPageFacade->edit($seoPage->getId(), $seoPageData);
+        $this->em->clear();
+
+        $restoredSeoPage = $this->seoPageFacade->getById(self::HOMEPAGE_SEO_PAGE_ID);
+
+        $this->assertSame('restored-homepage-slug', $restoredSeoPage->getPageSlug($domainId));
+        $this->assertSame('restored homepage title', $restoredSeoPage->getSeoAttributes($domainId)->getTitle());
+    }
+
+    private function countSeoPageDomains(int $seoPageId, int $domainId): int
+    {
+        return (int)$this->em->createQueryBuilder()
+            ->select('COUNT(spd.id)')
+            ->from(SeoPageDomain::class, 'spd')
+            ->where('spd.seoPage = :seoPageId')
+            ->andWhere('spd.domainId = :domainId')
+            ->setParameter('seoPageId', $seoPageId)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
