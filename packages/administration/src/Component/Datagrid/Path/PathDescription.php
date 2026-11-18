@@ -5,28 +5,40 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Path;
 
 /**
- * What a dot notation path leads to, described without touching any query — the answer a declaration needs
- * before anything is built.
+ * What a dot notation path leads to, described without building any query.
  */
 final readonly class PathDescription
 {
     /**
+     * The segment reaching the translated fields of a translatable entity — `translations.name`.
+     */
+    public const string TRANSLATIONS_SEGMENT = 'translations';
+
+    /**
      * @param class-string|null $targetEntityClass The entity a path ending with an association leads to, null for a value
-     * @param int|null $minimumValue The least integer the medium stores on the path, null for any other value or when the medium sets no bound
-     * @param int|null $maximumValue The greatest integer the medium stores on the path, null for any other value or when the medium sets no bound
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\Path\IntegerRange|null $integerRange The integers the adapter stores on the path, null for any other value or when the adapter sets no bound
      */
     public function __construct(
         public string $path,
         public PathCardinalityEnum $cardinality,
         public PathValueTypeEnum $valueType,
         public ?string $targetEntityClass = null,
-        public ?int $minimumValue = null,
-        public ?int $maximumValue = null,
+        public ?IntegerRange $integerRange = null,
     ) {
     }
 
     public function isToMany(): bool
     {
         return $this->cardinality === PathCardinalityEnum::TO_MANY;
+    }
+
+    public function isToOne(): bool
+    {
+        return $this->cardinality === PathCardinalityEnum::TO_ONE;
+    }
+
+    public function withValueType(PathValueTypeEnum $valueType): self
+    {
+        return new self($this->path, $this->cardinality, $valueType, $this->targetEntityClass, $this->integerRange);
     }
 }

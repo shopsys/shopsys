@@ -26,8 +26,8 @@ final class OrmAdapterFactory
     }
 
     /**
-     * @param class-string $entityClass FQCN of entity. Entity class will be resolved by EntityNameResolver inside the adapter.
-     * @param null|\Closure(\Doctrine\ORM\QueryBuilder): void $configureQuery Static shaping of the query (a fixed scope, a default join) — never a condition driven by the administrator, those arrive in the `DatasourceRequest`
+     * @param class-string $entityClass
+     * @param null|\Closure(\Doctrine\ORM\QueryBuilder): void $configureQuery shapes the base query — fixed conditions, joins, computed columns, ordering
      */
     public function create(string $entityClass, ?Closure $configureQuery = null): OrmAdapter
     {

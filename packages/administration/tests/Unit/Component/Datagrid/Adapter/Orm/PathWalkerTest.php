@@ -5,72 +5,77 @@ declare(strict_types=1);
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm;
 
 use Doctrine\DBAL\Types\Type;
+use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathStepKind;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalker;
 use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\IntegerRange;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyCurrency;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyDocument;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyEntityManagerFactory;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyProduct;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyTag;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyTextType;
 
-/**
- * How a path is joined into a query is covered by `ProxyQueryTest`; this asserts how the walk describes the path.
- */
 final class PathWalkerTest extends TestCase
 {
     /**
-     * @return array<string, array{string, \Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum, \Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum}>
+     * @return array<string, array{\Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription}>
      */
     public static function pathDescriptionDataProvider(): array
     {
+        $toOne = PathCardinalityEnum::TO_ONE;
+        $toMany = PathCardinalityEnum::TO_MANY;
+        $integerRange = new IntegerRange(-2147483648, 2147483647);
+
         return [
-            'own field' => ['name', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING],
-            'date field' => ['createdAt', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::DATETIME],
-            'field through a to-one association' => ['currency.code', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING],
-            'identifier of a to-one association' => ['currency.id', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::INTEGER],
-            'field of an identifier of several fields' => ['shelf.number', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::INTEGER],
-            'field through an association to an entity identified by several fields' => ['shelf.label', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING],
-            'field of an embeddable through a to-one association' => ['warehouse.address.country', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING],
-            'to-one association itself' => ['currency', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::ASSOCIATION],
-            'field through the inverse side of a one-to-one association' => ['detail.note', PathCardinalityEnum::TO_ONE, PathValueTypeEnum::STRING],
-            'field through a to-many association' => ['domains.domainId', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::INTEGER],
-            'to-many association itself' => ['tags', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::ASSOCIATION],
-            'translated field through a to-many association' => ['labels.name', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::STRING],
+            'own field' => [new PathDescription('name', $toOne, PathValueTypeEnum::STRING)],
+            'date field' => [new PathDescription('releasedOn', $toOne, PathValueTypeEnum::DATE)],
+            'date and time field' => [new PathDescription('createdAt', $toOne, PathValueTypeEnum::DATETIME)],
+            'field through a to-one association' => [new PathDescription('currency.code', $toOne, PathValueTypeEnum::STRING)],
+            'identifier of a to-one association' => [new PathDescription('currency.id', $toOne, PathValueTypeEnum::INTEGER, null, $integerRange)],
+            'field of an embeddable through a to-one association' => [new PathDescription('warehouse.address.country', $toOne, PathValueTypeEnum::STRING)],
+            'to-one association itself' => [new PathDescription('currency', $toOne, PathValueTypeEnum::ASSOCIATION, DummyCurrency::class)],
+            'field through the inverse side of a one-to-one association' => [new PathDescription('detail.note', $toOne, PathValueTypeEnum::STRING)],
+            'field through a to-many association' => [new PathDescription('domains.domainId', $toMany, PathValueTypeEnum::INTEGER, null, $integerRange)],
+            'to-many association itself' => [new PathDescription('tags', $toMany, PathValueTypeEnum::ASSOCIATION, DummyTag::class)],
+            'translated field through a to-many association' => [new PathDescription('labels.name', $toMany, PathValueTypeEnum::STRING)],
         ];
     }
 
     #[DataProvider('pathDescriptionDataProvider')]
-    public function testPathIsDescribedByItsCardinalityAndValueType(
-        string $path,
-        PathCardinalityEnum $expectedCardinality,
-        PathValueTypeEnum $expectedValueType,
-    ): void {
-        $pathDescription = $this->createPathWalker()->walk(DummyProduct::class, $path)->description;
-
-        $this->assertSame($path, $pathDescription->path);
-        $this->assertSame($expectedCardinality, $pathDescription->cardinality);
-        $this->assertSame($expectedValueType, $pathDescription->valueType);
+    public function testPathIsDescribedByWhatItLeadsTo(PathDescription $expectedPathDescription): void
+    {
+        $this->assertEquals(
+            $expectedPathDescription,
+            $this->createPathWalker()->walk(DummyProduct::class, $expectedPathDescription->path)->description,
+        );
     }
 
     /**
-     * An own type of a project extending a text type is text, a GUID is not, although it extends the string type —
-     * a text function of the database refuses it.
+     * @return array<string, array{string, \Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum}>
      */
-    public function testValueTypeOfDoctrineTypeIsReadFromItsClass(): void
+    public static function doctrineTypeDataProvider(): array
+    {
+        return [
+            'own type extending the text type is STRING' => ['title', PathValueTypeEnum::STRING],
+            'guid is GUID, although its type extends the string type' => ['uuid', PathValueTypeEnum::GUID],
+            'json is UNKNOWN' => ['payload', PathValueTypeEnum::UNKNOWN],
+        ];
+    }
+
+    #[DataProvider('doctrineTypeDataProvider')]
+    public function testValueTypeIsReadFromDoctrineType(string $path, PathValueTypeEnum $expectedValueType): void
     {
         if (Type::hasType(DummyTextType::NAME) === false) {
             Type::addType(DummyTextType::NAME, DummyTextType::class);
         }
 
-        $pathWalker = $this->createPathWalker();
-
-        $this->assertSame(PathValueTypeEnum::STRING, $pathWalker->walk(DummyDocument::class, 'title')->description->valueType);
-        $this->assertSame(PathValueTypeEnum::UNKNOWN, $pathWalker->walk(DummyDocument::class, 'uuid')->description->valueType);
-        $this->assertSame(PathValueTypeEnum::UNKNOWN, $pathWalker->walk(DummyDocument::class, 'payload')->description->valueType);
+        $this->assertSame($expectedValueType, $this->createPathWalker()->walk(DummyDocument::class, $path)->description->valueType);
     }
 
     public function testUnknownPathIsRefused(): void
@@ -92,10 +97,10 @@ final class PathWalkerTest extends TestCase
         $bigIntegerDescription = $pathWalker->walk(DummyProduct::class, 'viewCount')->description;
         $textDescription = $pathWalker->walk(DummyProduct::class, 'name')->description;
 
-        $this->assertSame([-32768, 32767], [$smallIntegerDescription->minimumValue, $smallIntegerDescription->maximumValue]);
-        $this->assertSame([-2147483648, 2147483647], [$integerDescription->minimumValue, $integerDescription->maximumValue]);
-        $this->assertSame([null, null], [$bigIntegerDescription->minimumValue, $bigIntegerDescription->maximumValue]);
-        $this->assertSame([null, null], [$textDescription->minimumValue, $textDescription->maximumValue]);
+        $this->assertEquals(new IntegerRange(-32768, 32767), $smallIntegerDescription->integerRange);
+        $this->assertEquals(new IntegerRange(-2147483648, 2147483647), $integerDescription->integerRange);
+        $this->assertNull($bigIntegerDescription->integerRange);
+        $this->assertNull($textDescription->integerRange);
     }
 
     /**
@@ -110,20 +115,28 @@ final class PathWalkerTest extends TestCase
     }
 
     /**
-     * The identifier of an association is read without a join by the field only when it spans several fields —
-     * IDENTITY() reads the first column otherwise.
+     * @return iterable<string, array{string}>
      */
-    public function testIdentifierOfAssociationIsReadByTheFieldOnlyWhenItSpansSeveralFields(): void
+    public static function getPathsThroughCompositeIdentifier(): iterable
     {
-        $pathWalker = $this->createPathWalker();
+        yield 'field of the identifier' => ['shelf.number'];
 
-        $severalFieldsStep = $pathWalker->walk(DummyProduct::class, 'shelf.number')->steps[0];
-        $singleFieldStep = $pathWalker->walk(DummyProduct::class, 'currency.id')->steps[0];
+        yield 'another field of the entity' => ['shelf.label'];
 
-        $this->assertSame(PathStepKind::IDENTITY, $severalFieldsStep->kind);
-        $this->assertSame('number', $severalFieldsStep->identifierField);
-        $this->assertSame(PathStepKind::IDENTITY, $singleFieldStep->kind);
-        $this->assertNull($singleFieldStep->identifierField);
+        yield 'the association itself' => ['shelf'];
+    }
+
+    /**
+     * DQL cannot compare the association with the joined entity, and IDENTITY() would read only the first column
+     * of the identifier.
+     */
+    #[DataProvider('getPathsThroughCompositeIdentifier')]
+    public function testAssociationToEntityIdentifiedBySeveralFieldsIsRefused(string $path): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('identified by several fields');
+
+        $this->createPathWalker()->walk(DummyProduct::class, $path);
     }
 
     private function createPathWalker(): PathWalker

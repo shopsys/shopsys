@@ -9,49 +9,36 @@ use DateTimeInterface;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\Query\Expr\Orx;
 use Override;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Condition\DqlCondition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathResolution;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ExpressionFromForeignMediumException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotSupportedException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\AbstractExpressionBuilder;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Stringable;
 
 /**
- * Builds the expressions of a Doctrine query. The builder is bound to the query it builds for, because
- * an expression on a path leading through an association needs that association joined.
+ * Builds the DQL expressions of one Doctrine query:
  *
- * A value is registered as a parameter of the query right away, so an expression that is built and then
- * thrown away leaves an unused parameter behind and Doctrine refuses such a query. That is the behaviour
- * of `QueryBuilder::expr()` with `setParameter()` as well — build only the expressions you apply, which the
- * adapter guarantees by compiling the condition on demand.
- *
- * SQL evaluates a comparison with a missing value as unknown and leaves the record out even when the comparison
- * is negated, so a negation tests the missing value explicitly — a record without a value is "not X" in every
- * medium.
- *
- * A project teaching the medium an operation of its own extends the builder, expresses the operation in `compare()`
- * and hands every other one to `parent::compare()`.
+ * - The builder is bound to its query, because a path through an association needs that association joined.
+ * - A value becomes a parameter of the query right away, so build only the expressions you apply. Doctrine refuses
+ *   a query with an unused parameter, the same as with `QueryBuilder::expr()` and `setParameter()`.
+ * - SQL evaluates a comparison with NULL as unknown, and `NOT` keeps it unknown. A negation therefore tests
+ *   the missing value explicitly — `notEquals` → `(o.name <> :dgexpr_0 OR o.name IS NULL)`.
  *
  * @extends \Shopsys\AdministrationBundle\Component\Datagrid\Expression\AbstractExpressionBuilder<\Stringable>
+ * @phpstan-import-type ScalarValue from \Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition
  */
-class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpressionBuilderInterface
+class DqlExpressionBuilder extends AbstractExpressionBuilder
 {
     /**
-     * The character PostgreSQL escapes the wildcards of a `LIKE` pattern by. The expression names no `ESCAPE`
-     * character (Doctrine would quote it through a connection to the database), so it relies on the default
-     * of the database — a builder escaping by another character names it in its own `buildLike()` as well.
+     * The default escape character of a PostgreSQL `LIKE` pattern — `50%` is searched as `50\%`.
+     * The expression names no `ESCAPE` character, as Doctrine would need a database connection to quote it,
+     * so the character is fixed.
      */
     protected const string LIKE_ESCAPE_CHARACTER = '\\';
-
-    /**
-     * DQL has no boolean literal, so the predicates matching everything and nothing are expressed
-     * by a comparison that is always true, resp. always false.
-     */
-    protected const string MATCHES_EVERYTHING = '1 = 1';
-
-    protected const string MATCHES_NOTHING = '1 = 0';
 
     public function __construct(
         protected readonly ProxyQuery $proxyQuery,
@@ -61,12 +48,16 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
     }
 
     /**
-     * {@inheritdoc}
+     * A `DqlCondition` builds its predicate from the query of this builder, at any depth of the tree.
      */
     #[Override]
-    public function dql(Closure $buildPredicate): Stringable
+    public function compile(ConditionInterface $condition): Stringable
     {
-        return $this->toExpression($buildPredicate($this->proxyQuery));
+        if ($condition instanceof DqlCondition) {
+            return $this->toExpression(($condition->buildPredicate)($this->proxyQuery));
+        }
+
+        return parent::compile($condition);
     }
 
     /**
@@ -75,9 +66,11 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
     #[Override]
     protected function compare(string $path, string $operator, mixed $value): Stringable
     {
+        $isNotNull = static fn (PathResolution $pathResolution): string => $pathResolution->dqlExpression . ' IS NOT NULL';
+
         return match ($operator) {
             ExpressionOperatorEnum::EQUALS => $this->buildComparison($operator, $path, '=', $value),
-            ExpressionOperatorEnum::NOT_EQUALS => $this->buildComparison($operator, $path, '<>', $value, true),
+            ExpressionOperatorEnum::NOT_EQUALS => $this->buildComparison($operator, $path, '<>', $value, matchesMissingValue: true),
             ExpressionOperatorEnum::CONTAINS => $this->buildLike($operator, $path, '%' . $this->escapeLikeValue($value) . '%'),
             ExpressionOperatorEnum::STARTS_WITH => $this->buildLike($operator, $path, $this->escapeLikeValue($value) . '%'),
             ExpressionOperatorEnum::ENDS_WITH => $this->buildLike($operator, $path, '%' . $this->escapeLikeValue($value)),
@@ -86,21 +79,21 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
             ExpressionOperatorEnum::LESS_THAN => $this->buildComparison($operator, $path, '<', $value),
             ExpressionOperatorEnum::LESS_THAN_OR_EQUAL => $this->buildComparison($operator, $path, '<=', $value),
             ExpressionOperatorEnum::BETWEEN => $this->buildBetween($path, $value[0], $value[1]),
-            // an empty list matches nothing, resp. everything, which SQL `IN ()` cannot express
-            ExpressionOperatorEnum::IN => $this->buildList($operator, $path, 'IN', $value, static::MATCHES_NOTHING),
-            ExpressionOperatorEnum::NOT_IN => $this->buildList($operator, $path, 'NOT IN', $value, static::MATCHES_EVERYTHING, true),
+            ExpressionOperatorEnum::IN => $this->buildList($operator, $path, 'IN', $value),
+            ExpressionOperatorEnum::NOT_IN => $this->buildList($operator, $path, 'NOT IN', $value, matchesMissingValue: true),
             ExpressionOperatorEnum::IS_NULL => $this->buildPredicate($operator, $path, static fn (PathResolution $pathResolution): string => $pathResolution->dqlExpression . ' IS NULL'),
-            ExpressionOperatorEnum::IS_NOT_NULL => $this->buildPredicate($operator, $path, static fn (PathResolution $pathResolution): string => $pathResolution->dqlExpression . ' IS NOT NULL'),
-            // the subquery never evaluates as unknown, so a plain negation is enough
-            ExpressionOperatorEnum::IS_EMPTY => $this->toExpression(sprintf('NOT (%s)', $this->buildExistsPredicate($operator, $path))),
-            ExpressionOperatorEnum::IS_NOT_EMPTY => $this->toExpression($this->buildExistsPredicate($operator, $path)),
-            default => throw new OperatorNotSupportedException($operator, static::class),
+            ExpressionOperatorEnum::IS_NOT_NULL, ExpressionOperatorEnum::IS_NOT_EMPTY => $this->buildPredicate($operator, $path, $isNotNull),
+            // - a related row counts only with a value on the path — `items.product isEmpty` requires no row with
+            //   `dgsub_0_items__product_join IS NOT NULL`; the subquery joins a to-one association by `LEFT JOIN`, so
+            //   an order item without a product would count otherwise
+            // - the subquery never evaluates as unknown, so a plain negation is enough
+            ExpressionOperatorEnum::IS_EMPTY => $this->toExpression(sprintf('NOT (%s)', $this->buildPredicate($operator, $path, $isNotNull))),
+            default => throw UnsupportedConditionException::operatorNotSupported($operator, static::class),
         };
     }
 
     /**
-     * A plain `NOT` of an expression evaluated as unknown is unknown as well, so the expression is first turned
-     * into a number that is never unknown.
+     * The negation compares a number, which is never unknown — `CASE WHEN (o.name = :dgexpr_0) THEN 1 ELSE 0 END = 0`.
      */
     #[Override]
     protected function not(object $expression): Stringable
@@ -115,7 +108,8 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
     protected function andX(object ...$expressions): Stringable
     {
         if ($expressions === []) {
-            return $this->toExpression(static::MATCHES_EVERYTHING);
+            // a DQL condition cannot be a bare TRUE literal
+            return $this->toExpression('1 = 1');
         }
 
         return new Andx($expressions);
@@ -128,28 +122,13 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
     protected function orX(object ...$expressions): Stringable
     {
         if ($expressions === []) {
-            return $this->toExpression(static::MATCHES_NOTHING);
+            // a DQL condition cannot be a bare FALSE literal
+            return $this->toExpression('1 = 0');
         }
 
         return new Orx($expressions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[Override]
-    protected function assertExpression(object $expression): Stringable
-    {
-        if ($expression instanceof Stringable === false) {
-            throw new ExpressionFromForeignMediumException(Stringable::class, $expression, static::class);
-        }
-
-        return $expression;
-    }
-
-    /**
-     * @param bool $matchesMissingValue Whether a record without a value matches as well, which a negation does
-     */
     protected function buildComparison(
         string $operator,
         string $path,
@@ -157,16 +136,17 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
         string|int|float|bool|DateTimeInterface|Money $value,
         bool $matchesMissingValue = false,
     ): Stringable {
-        return $this->buildPredicate($operator, $path, fn (PathResolution $pathResolution): string => $this->orMissing(
-            sprintf(
+        return $this->buildPredicate(
+            $operator,
+            $path,
+            fn (PathResolution $pathResolution): string => sprintf(
                 '%s %s :%s',
                 $pathResolution->dqlExpression,
                 $comparisonOperator,
                 $this->proxyQuery->addParameter($value, $pathResolution->fieldType),
             ),
-            $pathResolution,
-            $matchesMissingValue,
-        ));
+            matchesMissingValue: $matchesMissingValue,
+        );
     }
 
     protected function buildBetween(
@@ -183,27 +163,23 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
     }
 
     /**
-     * Every value gets a parameter of its own bound with the type of the compared field — a list parameter
-     * of Doctrine binds only integers and strings, so a boolean, a date or money would never match.
+     * Every value gets a parameter of its own, bound with the type of the compared field —
+     * `o.status IN (:dgexpr_0, :dgexpr_1)`. A list parameter of Doctrine binds only integers and strings, so
+     * a boolean, a date or money would never match.
      *
-     * @param list<string|int|float|bool|\DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money> $values
-     * @param string $matchesEmptyList The predicate an empty list stands for
-     * @param bool $matchesMissingValue Whether a record without a value matches as well, which a negation does
+     * @param list<ScalarValue> $values
      */
     protected function buildList(
         string $operator,
         string $path,
         string $listOperator,
         array $values,
-        string $matchesEmptyList,
         bool $matchesMissingValue = false,
     ): Stringable {
-        if ($values === []) {
-            return $this->toExpression($matchesEmptyList);
-        }
-
-        return $this->buildPredicate($operator, $path, fn (PathResolution $pathResolution): string => $this->orMissing(
-            sprintf(
+        return $this->buildPredicate(
+            $operator,
+            $path,
+            fn (PathResolution $pathResolution): string => sprintf(
                 '%s %s (%s)',
                 $pathResolution->dqlExpression,
                 $listOperator,
@@ -212,21 +188,13 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
                     $values,
                 )),
             ),
-            $pathResolution,
-            $matchesMissingValue,
-        ));
-    }
-
-    protected function orMissing(string $predicate, PathResolution $pathResolution, bool $matchesMissingValue): string
-    {
-        return $matchesMissingValue ? sprintf('(%s OR %s IS NULL)', $predicate, $pathResolution->dqlExpression) : $predicate;
+            matchesMissingValue: $matchesMissingValue,
+        );
     }
 
     /**
-     * Both sides go through the `NORMALIZED()` function of the database (lower case, no diacritics), so that
-     * the administrator never has to guess the case or the accents of the stored value — "hrnicek" finds
-     * "Hrníček", the same way the quick search of the administration always did. Normalizing the value in
-     * the database rather than in PHP keeps both sides of the comparison under one definition.
+     * Both sides go through the `NORMALIZED()` database function (lower case, no diacritics), so they follow one
+     * definition and "hrnicek" finds "Hrníček" — `NORMALIZED(o.name) LIKE NORMALIZED(:dgexpr_0)`.
      */
     protected function buildLike(string $operator, string $path, string $pattern): Stringable
     {
@@ -238,40 +206,35 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
     }
 
     /**
-     * The applicability of the operation is checked on the resolved path first, so that an operation which
-     * would fail in the database or quietly match nothing is refused with a readable reason instead.
-     *
-     * A path leading through a to-many association is matched by a correlated subquery, so that the listed
-     * record is never multiplied by the number of its related rows.
+     * The operation is checked to be applicable to the path first, so a wrong operation fails with a readable
+     * reason rather than in the database.
      *
      * @param \Closure(\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathResolution): string $buildPredicate
+     * @param bool $matchesMissingValue Whether a record without a value matches as well, as for `notEquals` and `notIn`
      */
-    protected function buildPredicate(string $operator, string $path, Closure $buildPredicate): Stringable
-    {
+    protected function buildPredicate(
+        string $operator,
+        string $path,
+        Closure $buildPredicate,
+        bool $matchesMissingValue = false,
+    ): Stringable {
         $pathResolution = $this->proxyQuery->resolvePath($path);
         $this->expressionOperatorEnum->assertApplicable($operator, $pathResolution->description);
 
+        $buildMatchingPredicate = $matchesMissingValue
+            ? static fn (PathResolution $pathResolution): string => sprintf('(%s OR %s IS NULL)', $buildPredicate($pathResolution), $pathResolution->dqlExpression)
+            : $buildPredicate;
+
         if ($pathResolution->isToMany()) {
-            return $this->toExpression($this->proxyQuery->exists($path, $buildPredicate));
+            return $this->toExpression($this->proxyQuery->exists($path, $buildMatchingPredicate));
         }
 
-        return $this->toExpression($buildPredicate($pathResolution));
+        return $this->toExpression($buildMatchingPredicate($pathResolution));
     }
 
     /**
-     * A related row counts only with the value of the path — the subquery joins a to-one association on the way
-     * outwardly, and an order item without a product is no product of the order.
-     */
-    protected function buildExistsPredicate(string $operator, string $path): string
-    {
-        $this->expressionOperatorEnum->assertApplicable($operator, $this->proxyQuery->resolvePath($path)->description);
-
-        return $this->proxyQuery->exists($path, static fn (PathResolution $pathResolution): string => $pathResolution->dqlExpression . ' IS NOT NULL');
-    }
-
-    /**
-     * Doctrine expresses some predicates as a plain string, so every predicate is wrapped in a composite
-     * of a single part — it renders as the bare predicate and gives the medium one expression type.
+     * Wraps a predicate in an `Andx` of a single part, which renders as the bare predicate.
+     * Doctrine expresses some predicates as a plain string, the wrapper gives the builder one expression type.
      */
     protected function toExpression(string $dql): Stringable
     {
@@ -280,7 +243,7 @@ class DqlExpressionBuilder extends AbstractExpressionBuilder implements DqlExpre
 
     protected function escapeLikeValue(string $value): string
     {
-        $escapeCharacter = static::LIKE_ESCAPE_CHARACTER;
+        $escapeCharacter = self::LIKE_ESCAPE_CHARACTER;
 
         return str_replace(
             [$escapeCharacter, '%', '_'],

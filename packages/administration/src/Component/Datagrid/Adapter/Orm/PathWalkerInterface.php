@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 
 /**
- * Walks a dot notation path through the entity mapping without touching any query — the single place
- * knowing how a path of the ORM adapter is read and what it leads to.
+ * Walks a dot notation path through the entity mapping without building any query.
  *
- * It is the seam a project uses to read a path differently (a value type of an own Doctrine type, ...) —
- * an own implementation replaces this service in the DI container.
+ * A project reads a path differently (for example the value type of its own Doctrine type) by its own implementation
+ * registered in place of `PathWalker`, typically decorating it.
  */
 interface PathWalkerInterface
 {
     /**
+     * Throws `PathNotFoundException` when the mapping has no field or association on the path.
+     *
      * @param class-string $entityClass
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException
      */
     public function walk(string $entityClass, string $path): WalkedPath;
 }

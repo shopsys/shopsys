@@ -19,4 +19,12 @@ final readonly class WalkedPath
         public PathDescription $description,
     ) {
     }
+
+    /**
+     * The Doctrine type of the value the path leads to, null when the path ends with an association.
+     */
+    public function getFieldType(): ?string
+    {
+        return $this->steps[array_key_last($this->steps)]->fieldType;
+    }
 }

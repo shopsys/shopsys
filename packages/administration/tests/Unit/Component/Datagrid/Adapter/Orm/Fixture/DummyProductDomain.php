@@ -19,7 +19,4 @@ final class DummyProductDomain
 
     #[ORM\Column(type: 'integer')]
     public int $domainId;
-
-    #[ORM\Column(type: 'integer')]
-    public int $priority;
 }

@@ -19,7 +19,7 @@ final class DqlExpressionBuilderFactory implements DqlExpressionBuilderFactoryIn
      * {@inheritdoc}
      */
     #[Override]
-    public function create(ProxyQuery $proxyQuery): DqlExpressionBuilderInterface
+    public function create(ProxyQuery $proxyQuery): DqlExpressionBuilder
     {
         return new DqlExpressionBuilder($proxyQuery, $this->expressionOperatorEnum);
     }

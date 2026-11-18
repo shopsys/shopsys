@@ -13,24 +13,22 @@ use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\AssociationMapping;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\InverseSideMapping;
+use LogicException;
 use Override;
 use Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\IntegerRange;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 
 /**
- * Walks a dot notation path through the entity mapping without touching any query.
+ * Reads a path by these rules:
  *
- * It is the single place knowing how a path is read — the shadowing of a translated field by an own one, the
- * explicit `translations` segment, the identifier of an association available without a join. Describing a
- * path and building a query for it both consume the same walk, so they can never disagree.
- *
- * It is a stateless service — the ORM adapter describes a path and its query resolves the path by the very same
- * instance.
+ * - a field of the entity shadows a translated field of the same name;
+ * - the explicit `translations` segment reaches the translated field — `translations.name`;
+ * - the identifier of an owning to-one association is read without a join — `currency.id`.
  */
 final class PathWalker implements PathWalkerInterface
 {
@@ -38,23 +36,9 @@ final class PathWalker implements PathWalkerInterface
      * The association holding the translations of a translatable entity. It is a to-many association, but
      * joined with the current locale it leads to a single row, so it behaves as a to-one one.
      */
-    public const string TRANSLATIONS_ASSOCIATION = 'translations';
+    public const string TRANSLATIONS_ASSOCIATION = PathDescription::TRANSLATIONS_SEGMENT;
 
-    /**
-     * The Doctrine type of the money column, registered by the application.
-     */
     private const string MONEY_TYPE = 'money';
-
-    /**
-     * The integers a column of the type holds — a greater one fails the query instead of matching nothing. A big
-     * integer holds every integer of PHP.
-     *
-     * @var array<string, array{int, int}>
-     */
-    private const array INTEGER_RANGES = [
-        Types::SMALLINT => [-32768, 32767],
-        Types::INTEGER => [-2147483648, 2147483647],
-    ];
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
@@ -71,7 +55,6 @@ final class PathWalker implements PathWalkerInterface
         $lastIndex = count($parts) - 1;
         $classMetadata = $this->entityManager->getClassMetadata($entityClass);
         $steps = [];
-        $crossesToMany = false;
 
         // a field of an embeddable spans several segments, so the index moves to the last one of the field it reads
         for ($index = 0; $index <= $lastIndex; $index++) {
@@ -89,20 +72,18 @@ final class PathWalker implements PathWalkerInterface
             }
 
             if ($isLast && $classMetadata->hasField($field)) {
-                $fieldType = $classMetadata->getTypeOfField($field);
-                $steps[] = new PathStep(PathStepKind::FIELD, $field, $partPath, $fieldType);
+                $steps[] = new PathStep(PathStepKind::FIELD, $field, $partPath, $classMetadata->getTypeOfField($field));
 
-                return $this->finish($path, $steps, $crossesToMany, $this->toValueType($fieldType), fieldType: $fieldType);
+                return $this->finish($path, $steps);
             }
 
             if ($isLast && $classMetadata->hasAssociation($field) === false) {
                 $translationClassMetadata = $this->getTranslationClassMetadata($classMetadata);
 
                 if ($translationClassMetadata?->hasField($field) === true) {
-                    $fieldType = $translationClassMetadata->getTypeOfField($field);
-                    $steps[] = new PathStep(PathStepKind::TRANSLATED_FIELD, $field, $partPath, $fieldType);
+                    $steps[] = new PathStep(PathStepKind::TRANSLATED_FIELD, $field, $partPath, $translationClassMetadata->getTypeOfField($field));
 
-                    return $this->finish($path, $steps, $crossesToMany, $this->toValueType($fieldType), fieldType: $fieldType);
+                    return $this->finish($path, $steps);
                 }
             }
 
@@ -112,18 +93,18 @@ final class PathWalker implements PathWalkerInterface
 
             $associationMapping = $classMetadata->getAssociationMapping($field);
             $isToMany = $associationMapping->isToMany();
-            $crossesToMany = $crossesToMany || $isToMany;
             $targetClassMetadata = $this->getTargetClassMetadata($classMetadata, $field);
+            $isOwningToOne = !$isToMany && $associationMapping->isOwningSide();
 
-            // the identifier of a to-one association is available without joining it, unless the association is owned
-            // by the entity it leads to (the inverse side of a one-to-one), which holds the column of the identifier;
-            // an identifier of several fields is read by the field, IDENTITY() reads the first column otherwise
-            if (!$isToMany && $associationMapping->isOwningSide() && $index === $lastIndex - 1 && $this->isIdentifierField($targetClassMetadata, $parts[$lastIndex])) {
-                $identifierType = $targetClassMetadata->getTypeOfField($parts[$lastIndex]);
-                $identifierField = $targetClassMetadata->isIdentifierComposite ? $parts[$lastIndex] : null;
-                $steps[] = new PathStep(PathStepKind::IDENTITY, $field, $partPath, $identifierType, identifierField: $identifierField);
+            if ($isOwningToOne) {
+                $this->assertIdentifierIsNotComposite($path, $field, $classMetadata, $targetClassMetadata);
+            }
 
-                return $this->finish($path, $steps, $crossesToMany, $this->toValueType($identifierType), fieldType: $identifierType);
+            // only the owning side holds the column of the identifier, the inverse side of a one-to-one is joined
+            if ($isOwningToOne && $index === $lastIndex - 1 && $this->isIdentifierField($targetClassMetadata, $parts[$lastIndex])) {
+                $steps[] = new PathStep(PathStepKind::IDENTITY, $field, $partPath, $targetClassMetadata->getTypeOfField($parts[$lastIndex]));
+
+                return $this->finish($path, $steps);
             }
 
             $steps[] = new PathStep(
@@ -133,13 +114,12 @@ final class PathWalker implements PathWalkerInterface
                 null,
                 $targetClassMetadata->getName(),
                 $associationMapping instanceof InverseSideMapping ? $associationMapping->mappedBy : null,
-                $this->getComparedIdentifierFields($associationMapping, $targetClassMetadata),
-                isToMany: $isToMany,
+                $isToMany,
             );
             $classMetadata = $targetClassMetadata;
 
             if ($isLast) {
-                return $this->finish($path, $steps, $crossesToMany, PathValueTypeEnum::ASSOCIATION, $classMetadata->getName());
+                return $this->finish($path, $steps);
             }
         }
 
@@ -147,34 +127,64 @@ final class PathWalker implements PathWalkerInterface
     }
 
     /**
-     * @param list<\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathStep> $steps
-     * @param class-string|null $targetEntityClass
-     * @param string|null $fieldType Doctrine type of the terminal field, which bounds an integer
+     * An owning to-one association to an entity identified by several fields is refused:
+     *
+     * - DQL cannot compare it with the joined entity as a whole;
+     * - `IDENTITY()` reads only the first column of the identifier.
      */
-    private function finish(
+    private function assertIdentifierIsNotComposite(
         string $path,
-        array $steps,
-        bool $crossesToMany,
-        PathValueTypeEnum $valueType,
-        ?string $targetEntityClass = null,
-        ?string $fieldType = null,
-    ): WalkedPath {
-        $integerRange = self::INTEGER_RANGES[$fieldType ?? ''] ?? null;
+        string $field,
+        ClassMetadata $classMetadata,
+        ClassMetadata $targetClassMetadata,
+    ): void {
+        if ($targetClassMetadata->isIdentifierComposite === false) {
+            return;
+        }
+
+        throw new LogicException(sprintf(
+            'Path "%s" cannot be resolved, association "%s" of entity "%s" leads to entity "%s" identified by several fields. Join the entity in configureQuery() and display its value by a virtual field instead.',
+            $path,
+            $field,
+            $classMetadata->getName(),
+            $targetClassMetadata->getName(),
+        ));
+    }
+
+    /**
+     * @param non-empty-list<\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathStep> $steps
+     */
+    private function finish(string $path, array $steps): WalkedPath
+    {
+        $lastStep = $steps[array_key_last($steps)];
 
         return new WalkedPath($steps, new PathDescription(
             $path,
-            $crossesToMany ? PathCardinalityEnum::TO_MANY : PathCardinalityEnum::TO_ONE,
-            $valueType,
-            $targetEntityClass,
-            $integerRange[0] ?? null,
-            $integerRange[1] ?? null,
+            array_any($steps, static fn (PathStep $step): bool => $step->isToMany) ? PathCardinalityEnum::TO_MANY : PathCardinalityEnum::TO_ONE,
+            $lastStep->kind === PathStepKind::ASSOCIATION ? PathValueTypeEnum::ASSOCIATION : $this->toValueType($lastStep->fieldType),
+            $lastStep->targetEntityClass,
+            $this->getIntegerRange($lastStep->fieldType),
         ));
+    }
+
+    /**
+     * A value outside the range of the column fails the query instead of matching nothing.
+     * A big integer column holds every PHP integer, so it has no range.
+     */
+    private function getIntegerRange(?string $fieldType): ?IntegerRange
+    {
+        return match ($fieldType) {
+            Types::SMALLINT => new IntegerRange(-32768, 32767),
+            Types::INTEGER => new IntegerRange(-2147483648, 2147483647),
+            default => null,
+        };
     }
 
     private function toValueType(?string $doctrineType): PathValueTypeEnum
     {
         return match ($doctrineType) {
             Types::STRING, Types::TEXT, Types::ASCII_STRING => PathValueTypeEnum::STRING,
+            Types::GUID => PathValueTypeEnum::GUID,
             Types::INTEGER, Types::SMALLINT, Types::BIGINT => PathValueTypeEnum::INTEGER,
             Types::DECIMAL, Types::FLOAT => PathValueTypeEnum::DECIMAL,
             Types::BOOLEAN => PathValueTypeEnum::BOOLEAN,
@@ -199,7 +209,8 @@ final class PathWalker implements PathWalkerInterface
         $type = Type::getType($doctrineType);
 
         return match (true) {
-            ($type instanceof StringType || $type instanceof TextType) && $type instanceof GuidType === false => PathValueTypeEnum::STRING,
+            $type instanceof GuidType => PathValueTypeEnum::GUID,
+            $type instanceof StringType || $type instanceof TextType => PathValueTypeEnum::STRING,
             $type instanceof DateTimeUtcType || $type instanceof DateTimeUtcImmutableType => PathValueTypeEnum::DATETIME,
             $type instanceof SmallFloatType => PathValueTypeEnum::DECIMAL,
             default => PathValueTypeEnum::UNKNOWN,
@@ -227,25 +238,6 @@ final class PathWalker implements PathWalkerInterface
         }
 
         return [$field, $index];
-    }
-
-    /**
-     * The identifier fields an owning association to an entity identified by several fields is compared by, each
-     * read by IDENTITY() — an identifier that is an association itself has no column to be read so.
-     *
-     * @return string[]
-     */
-    private function getComparedIdentifierFields(
-        AssociationMapping $associationMapping,
-        ClassMetadata $targetClassMetadata,
-    ): array {
-        if ($associationMapping->isOwningSide() === false || $targetClassMetadata->isIdentifierComposite === false) {
-            return [];
-        }
-
-        $identifierFields = $targetClassMetadata->getIdentifierFieldNames();
-
-        return array_filter($identifierFields, $targetClassMetadata->hasField(...)) === $identifierFields ? $identifierFields : [];
     }
 
     /**

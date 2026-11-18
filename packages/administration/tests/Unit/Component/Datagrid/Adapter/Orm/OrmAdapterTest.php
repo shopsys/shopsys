@@ -4,26 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm;
 
-use DateTimeImmutable;
+use Closure;
 use Doctrine\ORM\Query\Expr\Andx;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Shopsys\AdministrationBundle\Component\Crud\Helper\CrudEntityIdentifierExtractor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\DatasourceRequest;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Condition\DqlCondition;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\DatagridDataSource;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilder;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactoryInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalker;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
-use Shopsys\AdministrationBundle\Component\Datagrid\Condition\MediumSpecificConditionInterface;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ExpressionFromForeignMediumException;
-use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
@@ -31,73 +28,69 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\HintsHelper;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyCurrency;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyEntityManagerFactory;
 use Tests\AdministrationBundle\Unit\Component\Datagrid\Adapter\Orm\Fixture\DummyProduct;
 
 final class OrmAdapterTest extends TestCase
 {
-    public function testQueryBuiltInTheConstructorIsOnlyPrototype(): void
+    use QueryAssertionTrait;
+
+    public function testTheSameRequestBuildsTheSameQuery(): void
     {
         $ormAdapter = $this->createOrmAdapter();
         $request = new DatasourceRequest('id', [new FieldDescriptor('name')], Condition::equals('id', 1));
 
-        $firstDql = $this->getDql($ormAdapter->getDatasource($request));
-        $secondDql = $this->getDql($ormAdapter->getDatasource($request));
+        $firstDataSource = $ormAdapter->getDatasource($request);
+        $secondDataSource = $ormAdapter->getDatasource($request);
 
-        $this->assertSame($firstDql, $secondDql);
-        $this->assertSame(1, substr_count($firstDql, 'o.id = :dgexpr_0'));
+        $expectedDql = 'SELECT o.id AS id, o.name AS name FROM ' . DummyProduct::class . ' o WHERE o.id = :dgexpr_0';
+        $this->assertQuery($expectedDql, $this->getQueryBuilder($firstDataSource));
+        $this->assertQuery($expectedDql, $this->getQueryBuilder($secondDataSource));
     }
 
-    public function testDatasourceIsNotNarrowedWithoutCondition(): void
-    {
-        $ormAdapter = $this->createOrmAdapter();
-
-        $this->assertStringNotContainsString('WHERE', $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', []))));
-    }
-
-    /**
-     * The adapter keeps no state between the requests — a condition of one listing never leaks into another.
-     */
     public function testEveryRequestIsAnsweredOnItsOwn(): void
     {
         $ormAdapter = $this->createOrmAdapter();
 
-        $narrowedDql = $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::equals('id', 1))));
-        $plainDql = $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', [])));
+        $narrowedDataSource = $ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::equals('id', 1)));
+        $plainDataSource = $ormAdapter->getDatasource(new DatasourceRequest('id', [], null));
 
-        $this->assertStringContainsString('WHERE', $narrowedDql);
-        $this->assertStringNotContainsString('WHERE', $plainDql);
+        $this->assertQuery(
+            'SELECT o.id AS id FROM ' . DummyProduct::class . ' o'
+            . ' WHERE o.id = :dgexpr_0',
+            $this->getQueryBuilder($narrowedDataSource),
+        );
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o', $this->getQueryBuilder($plainDataSource));
     }
 
-    public function testComposedConditionIsCompiledIntoOneWhereClause(): void
-    {
-        $ormAdapter = $this->createOrmAdapter();
-
-        $dql = $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::andX(
-            Condition::equals('id', 1),
-            Condition::contains('name', 'Hrnek'),
-        ))));
-
-        $this->assertStringContainsString('WHERE o.id = :dgexpr_0 AND NORMALIZED(o.name) LIKE NORMALIZED(:dgexpr_1)', $dql);
-    }
-
-    /**
-     * The join a condition needs is added to the copy the data source is built from, so a field of the same
-     * path is selected through the very same join.
-     */
     public function testConditionSharesItsJoinWithSelectedField(): void
     {
         $ormAdapter = $this->createOrmAdapter();
 
-        $dql = $this->getDql($ormAdapter->getDatasource(new DatasourceRequest(
+        $dataSource = $ormAdapter->getDatasource(new DatasourceRequest(
             'id',
             [new FieldDescriptor('currency.code')],
             Condition::equals('currency.code', 'CZK'),
-        )));
+        ));
 
-        $this->assertSame(1, substr_count($dql, 'LEFT JOIN'));
-        $this->assertStringContainsString('currency_join.code AS currency__code', $dql);
-        $this->assertStringContainsString('currency_join.code = :dgexpr_0', $dql);
+        $this->assertQuery(
+            'SELECT o.id AS id, currency_join.code AS currency__code FROM ' . DummyProduct::class . ' o'
+            . ' LEFT JOIN ' . DummyCurrency::class . ' currency_join WITH o.currency = currency_join'
+            . ' WHERE currency_join.code = :dgexpr_0',
+            $this->getQueryBuilder($dataSource),
+        );
+    }
+
+    public function testQueryIsConfiguredByConfigureQuery(): void
+    {
+        $ormAdapter = $this->createOrmAdapter(configureQuery: static function (QueryBuilder $queryBuilder): void {
+            $queryBuilder->andWhere('o.isActive = true');
+        });
+
+        $dataSource = $ormAdapter->getDatasource(new DatasourceRequest('id', [], null));
+
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o WHERE o.isActive = true', $this->getQueryBuilder($dataSource));
     }
 
     public function testPathIsDescribedWithoutTouchingThePrototypeQuery(): void
@@ -105,64 +98,45 @@ final class OrmAdapterTest extends TestCase
         $ormAdapter = $this->createOrmAdapter();
 
         $pathDescription = $ormAdapter->describePath('currency.code');
+        $dataSource = $ormAdapter->getDatasource(new DatasourceRequest('id', [], null));
 
         $this->assertSame(PathCardinalityEnum::TO_ONE, $pathDescription->cardinality);
         $this->assertSame(PathValueTypeEnum::STRING, $pathDescription->valueType);
-        // describing must not join the association into every query built afterwards
-        $this->assertStringNotContainsString('JOIN', $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', []))));
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o', $this->getQueryBuilder($dataSource));
     }
 
-    /**
-     * What the vocabulary cannot say is said in DQL directly, composed with the rest of the condition
-     * and compiled on the very same copy of the query.
-     */
     public function testDqlConditionIsCompiledTogetherWithTheVocabulary(): void
     {
         $ormAdapter = $this->createOrmAdapter();
 
-        $dql = $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::andX(
+        $dataSource = $ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::andX(
             Condition::equals('id', 1),
             new DqlCondition(
                 static fn (ProxyQuery $proxyQuery): string => sprintf('SIZE(%s.tags) > :%s', ProxyQuery::DEFAULT_ALIAS, $proxyQuery->addParameter(3)),
             ),
-        ))));
+        )));
 
-        $this->assertStringContainsString('WHERE o.id = :dgexpr_0 AND SIZE(o.tags) > :dgexpr_1', $dql);
+        $this->assertQuery(
+            'SELECT o.id AS id FROM ' . DummyProduct::class . ' o'
+            . ' WHERE o.id = :dgexpr_0 AND SIZE(o.tags) > :dgexpr_1',
+            $this->getQueryBuilder($dataSource),
+        );
     }
 
-    public function testExpressionOfAnotherMediumIsRefused(): void
-    {
-        $ormAdapter = $this->createOrmAdapter();
-        $conditionOfAnotherMedium = new class() implements MediumSpecificConditionInterface {
-            #[Override]
-            public function compile(ExpressionBuilderInterface $expressionBuilder): object
-            {
-                return new DateTimeImmutable();
-            }
-        };
-
-        $this->expectException(ExpressionFromForeignMediumException::class);
-
-        $ormAdapter->getDatasource(new DatasourceRequest('id', [], $conditionOfAnotherMedium));
-    }
-
-    /**
-     * The medium is replaceable in the DI container — the adapter builds by whatever factory it is given.
-     */
     public function testExpressionsAreBuiltByTheGivenFactory(): void
     {
-        $expressionBuilderStub = $this->createStub(DqlExpressionBuilderInterface::class);
+        $expressionBuilderStub = $this->createStub(DqlExpressionBuilder::class);
         $expressionBuilderStub->method('compile')->willReturn(new Andx(['o.id = 42']));
         $expressionBuilderFactoryStub = $this->createStub(DqlExpressionBuilderFactoryInterface::class);
         $expressionBuilderFactoryStub->method('create')->willReturn($expressionBuilderStub);
 
         $ormAdapter = $this->createOrmAdapter($expressionBuilderFactoryStub);
-        $dql = $this->getDql($ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::equals('id', 1))));
+        $dataSource = $ormAdapter->getDatasource(new DatasourceRequest('id', [], Condition::equals('id', 1)));
 
-        $this->assertStringContainsString('WHERE o.id = 42', $dql);
+        $this->assertQuery('SELECT o.id AS id FROM ' . DummyProduct::class . ' o WHERE o.id = 42', $this->getQueryBuilder($dataSource));
     }
 
-    private function getDql(DataSourceInterface $dataSource): string
+    private function getQueryBuilder(DataSourceInterface $dataSource): QueryBuilder
     {
         $this->assertInstanceOf(DatagridDataSource::class, $dataSource);
 
@@ -170,11 +144,12 @@ final class OrmAdapterTest extends TestCase
         /** @var \Doctrine\ORM\QueryBuilder $queryBuilder */
         $queryBuilder = $reflectionProperty->getValue($dataSource);
 
-        return $queryBuilder->getDQL();
+        return $queryBuilder;
     }
 
     private function createOrmAdapter(
         ?DqlExpressionBuilderFactoryInterface $dqlExpressionBuilderFactory = null,
+        ?Closure $configureQuery = null,
     ): OrmAdapter {
         $entityManager = DummyEntityManagerFactory::create();
         $managerRegistryStub = $this->createStub(ManagerRegistry::class);
@@ -190,7 +165,7 @@ final class OrmAdapterTest extends TestCase
             new CrudEntityIdentifierExtractor($managerRegistryStub),
             $dqlExpressionBuilderFactory ?? new DqlExpressionBuilderFactory(new ExpressionOperatorEnum()),
             new PathWalker($entityManager),
-            null,
+            $configureQuery,
         );
     }
 }

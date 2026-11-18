@@ -22,12 +22,11 @@ use Doctrine\DBAL\Types\TimeType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ToManySelectNotSupportedException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Stringable;
 
 /**
- * Owns the query of a datagrid and translates dot notation paths into it — the selects, the parameters and the
- * correlated subqueries the paths need. The joins a path needs are added by `PathJoiner`.
+ * Owns the query of a datagrid and adds the selects, the parameters and the `EXISTS` subqueries its paths need.
  */
 final class ProxyQuery
 {
@@ -90,7 +89,7 @@ final class ProxyQuery
         private readonly string $locale,
     ) {
         $this->queryBuilder = $this->createQueryBuilder(self::DEFAULT_ALIAS);
-        $this->pathJoiner = new PathJoiner($this->queryBuilder, self::DEFAULT_ALIAS, $locale, JoinStyle::LISTING);
+        $this->pathJoiner = new PathJoiner($this->queryBuilder, self::DEFAULT_ALIAS, $locale, correlated: false);
     }
 
     public function __clone()
@@ -108,7 +107,7 @@ final class ProxyQuery
         $pathResolution = $this->resolvePath($select);
 
         if ($pathResolution->isToMany()) {
-            throw new ToManySelectNotSupportedException($select);
+            throw UnsupportedConditionException::toManySelectNotSupported($select);
         }
 
         $this->selects[$select] = $pathResolution->selectAlias;
@@ -116,13 +115,10 @@ final class ProxyQuery
     }
 
     /**
-     * Resolves a dot notation path against the query, joining every association on the way.
+     * Resolves a dot notation path against the query, joining every association on the way —
+     * `currency.code` → `LEFT JOIN App\Currency currency_join WITH o.currency = currency_join`, `currency_join.code`.
      *
-     * A path through a to-many association is never joined into the query, it would multiply the listed record —
-     * such a path is returned without a DQL expression, so that each role can handle it on its own (a condition
-     * matches it by `exists()`, a select is not supported).
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException
+     * A path through a to-many association is returned without a DQL expression, match it by `exists()`.
      */
     public function resolvePath(string $path): PathResolution
     {
@@ -144,13 +140,12 @@ final class ProxyQuery
     }
 
     /**
-     * Builds a predicate matching a record with a related row on the given path, by a correlated subquery over the
-     * same entity — it reaches the related rows of a to-many association without multiplying the listed record.
+     * Builds an `EXISTS` subquery matching a record with a related row on the path:
+     * `EXISTS(SELECT 1 FROM App\Product dgsub_0 INNER JOIN dgsub_0.domains dgsub_0_domains_join WHERE dgsub_0.id = o.id AND dgsub_0_domains_join.domainId = :dgexpr_0)`.
      *
-     * @param (\Closure(\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathResolution): string)|null $buildPredicate Builds the predicate the related row has to match, from the path resolved in the subquery. Null matches any related row, even one missing a to-one association on the rest of the path — test the value in the predicate to require it.
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\PathNotFoundException
+     * @param \Closure(\Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathResolution): string $buildPredicate Builds the predicate the related row has to match, from the path resolved in the subquery
      */
-    public function exists(string $path, ?Closure $buildPredicate = null): string
+    public function exists(string $path, Closure $buildPredicate): string
     {
         $subqueryAlias = self::SUBQUERY_ALIAS_PREFIX . $this->subqueryCounter++;
         $identifierField = $this->entityManager->getClassMetadata($this->entityClass)->getSingleIdentifierFieldName();
@@ -159,12 +154,9 @@ final class ProxyQuery
             ->where(sprintf('%s.%s = %s.%s', $subqueryAlias, $identifierField, self::DEFAULT_ALIAS, $identifierField));
 
         // the joins may narrow the related rows by conditions of their own, added after the correlation
-        $subqueryPathJoiner = new PathJoiner($subqueryBuilder, $subqueryAlias, $this->locale, JoinStyle::CORRELATED);
+        $subqueryPathJoiner = new PathJoiner($subqueryBuilder, $subqueryAlias, $this->locale, correlated: true);
         $pathResolution = $subqueryPathJoiner->resolve($this->pathWalker->walk($this->entityClass, $path));
-
-        if ($buildPredicate !== null) {
-            $subqueryBuilder->andWhere($buildPredicate($pathResolution));
-        }
+        $subqueryBuilder->andWhere($buildPredicate($pathResolution));
 
         // the subquery is embedded as plain DQL, so the parameters of its own joins have to be carried
         // over to the query that is actually executed
@@ -221,13 +213,7 @@ final class ProxyQuery
      */
     private function isOfAny(object $object, array $classes): bool
     {
-        foreach ($classes as $class) {
-            if ($object instanceof $class) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($classes, static fn (string $class): bool => $object instanceof $class);
     }
 
     private function createQueryBuilder(string $alias): QueryBuilder

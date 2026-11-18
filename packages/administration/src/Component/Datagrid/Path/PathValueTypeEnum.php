@@ -19,13 +19,18 @@ enum PathValueTypeEnum
     case MONEY;
 
     /**
+     * A UUID. A database stores it in a column of its own type, so it is compared, but never searched as text.
+     */
+    case GUID;
+
+    /**
      * The path ends with an association, so it leads to a related record rather than a value.
      */
     case ASSOCIATION;
 
     /**
-     * The medium stores the value in a type this vocabulary does not know — a GUID, a JSON document, an own type
-     * of a project. It is compared, but never searched as text, which a database refuses on a value of another type.
+     * The adapter stores the value in a type this vocabulary does not know — a JSON document, an own type
+     * of a project the adapter does not recognize.
      */
     case UNKNOWN;
 }
