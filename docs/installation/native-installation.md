@@ -89,4 +89,10 @@ You can also login into the administration section on [http://127.0.0.1:8000/adm
 - Username: `admin` or `superadmin` (the latter has access to advanced options)
 - Password: `admin123`
 
+Demo data also contains these administrators (password `admin123` as well):
+
+- `supervisor` – another superadmin
+- `operator` – another administrator with full access
+- `viewer` – administrator with full access in view-only mode
+
 _And now you can [start building your application](../introduction/start-building-your-application.md)._

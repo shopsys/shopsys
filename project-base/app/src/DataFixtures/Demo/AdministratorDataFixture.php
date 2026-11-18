@@ -21,6 +21,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     public const string SUPERVISOR = 'administrator_supervisor';
     public const string ADMINISTRATOR = 'administrator_administrator';
     public const string OPERATOR = 'administrator_operator';
+    public const string VIEWER = 'administrator_viewer';
 
     private const string DEFAULT_PASSWORD = 'admin123';
 
@@ -49,6 +50,10 @@ class AdministratorDataFixture extends AbstractReferenceFixture
         $operatorData = $this->createAdministratorData('operator', 'Operator', 'operator@example.com');
         $operatorData->roleGroup = $this->administratorRoleGroupFacade->getSystemManagedRoleGroup(SystemRole::ALL);
         $this->createAdministrator($operatorData, self::OPERATOR);
+
+        $viewerData = $this->createAdministratorData('viewer', 'Viewer', 'viewer@example.com');
+        $viewerData->roleGroup = $this->administratorRoleGroupFacade->getSystemManagedRoleGroup(SystemRole::ALL_VIEW);
+        $this->createAdministrator($viewerData, self::VIEWER);
     }
 
     private function createAdministratorData(string $username, string $realName, string $email): AdministratorData
