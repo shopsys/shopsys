@@ -19,7 +19,7 @@
         "cypress": "16.1.1",
         "cypress-real-events": "1.15.1",
         "cypress-visual-regression": "6.0.1",
-        "glob": "^13.0.6",
+        "glob": "^14.0.3",
         "inquirer": "^14.2.3",
         "pixelmatch": "7.2.0",
         "typescript": "~5.9.3",
