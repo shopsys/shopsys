@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "A group of rules can have at most {{ limit }} rules."
+msgstr ""
+
 msgid "Fill in both bounds of the range."
 msgstr ""
 
@@ -14,6 +17,9 @@ msgid "Refund amount must be greater than zero."
 msgstr ""
 
 msgid "Refunded amount cannot be negative."
+msgstr ""
+
+msgid "The filter can have at most {{ limit }} groups of rules."
 msgstr ""
 
 msgid "You can refund only %refundableAmount%."

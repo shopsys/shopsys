@@ -1840,6 +1840,9 @@ msgstr "Zboží"
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr "Produkt v této poptávce není již dostupný v katalogu."
 
+msgid "Product name or catalog number"
+msgstr "Název produktu nebo katalogové číslo"
+
 msgid "Product not in e-shop."
 msgstr "Zboží se nenachází v eshopu."
 
@@ -2001,6 +2004,9 @@ msgstr "Recenzovaný produkt"
 
 msgid "Reviewer"
 msgstr "Recenzent"
+
+msgid "Reviewer name"
+msgstr "Jméno recenzenta"
 
 msgid "Reviews are not enabled on this domain"
 msgstr "Recenze nejsou na této doméně povolené"
@@ -2544,6 +2550,9 @@ msgstr "URL adresy"
 
 msgid "URL will be deleted after saving."
 msgstr "Po uložení bude url smazána"
+
+msgid "UUID"
+msgstr "UUID"
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"

@@ -1840,6 +1840,9 @@ msgstr ""
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr ""
 
+msgid "Product name or catalog number"
+msgstr ""
+
 msgid "Product not in e-shop."
 msgstr ""
 
@@ -2000,6 +2003,9 @@ msgid "Reviewed product"
 msgstr ""
 
 msgid "Reviewer"
+msgstr ""
+
+msgid "Reviewer name"
 msgstr ""
 
 msgid "Reviews are not enabled on this domain"
@@ -2543,6 +2549,9 @@ msgid "URL addresses"
 msgstr ""
 
 msgid "URL will be deleted after saving."
+msgstr ""
+
+msgid "UUID"
 msgstr ""
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"

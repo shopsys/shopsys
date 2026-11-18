@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
+msgid "A group of rules can have at most {{ limit }} rules."
+msgstr "Skupina pravidiel môže mať najviac {{ limit }} pravidiel."
+
 msgid "Fill in both bounds of the range."
 msgstr "Vyplňte obe hranice rozsahu."
 
@@ -15,6 +18,9 @@ msgstr "Čiastka refundácie musí byt väčšia než nula."
 
 msgid "Refunded amount cannot be negative."
 msgstr "Refundovaná čiastka nemôže byt záporná."
+
+msgid "The filter can have at most {{ limit }} groups of rules."
+msgstr "Filter môže mať najviac {{ limit }} skupín pravidiel."
 
 msgid "You can refund only %refundableAmount%."
 msgstr "Môžete refundovať iba %refundableAmount%."
