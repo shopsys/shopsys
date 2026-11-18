@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\Phpstan;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Embedded;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Override;
@@ -40,6 +41,7 @@ class McpEntityExposureAttributeRule implements Rule
     protected const string ORM_EMBEDDED_ATTRIBUTE_CLASS = Embedded::class;
     protected const string ORM_ONE_TO_ONE_ATTRIBUTE_CLASS = OneToOne::class;
     protected const string ORM_MANY_TO_ONE_ATTRIBUTE_CLASS = ManyToOne::class;
+    protected const string ORM_MANY_TO_MANY_ATTRIBUTE_CLASS = ManyToMany::class;
     protected const string PREZENT_TRANSLATABLE_ATTRIBUTE_CLASS = Translatable::class;
 
     /**
@@ -221,15 +223,24 @@ class McpEntityExposureAttributeRule implements Rule
             return true;
         }
 
-        $oneToOneAttribute = $this->getAttributeByClassName($attributes, static::ORM_ONE_TO_ONE_ATTRIBUTE_CLASS);
+        return $this->isOwningSideOfAssociation($attributes, static::ORM_ONE_TO_ONE_ATTRIBUTE_CLASS)
+            || $this->isOwningSideOfAssociation($attributes, static::ORM_MANY_TO_MANY_ATTRIBUTE_CLASS);
+    }
 
-        if ($oneToOneAttribute === null) {
+    /**
+     * @param array<\ReflectionAttribute<object>> $attributes
+     */
+    protected function isOwningSideOfAssociation(array $attributes, string $associationAttributeClassName): bool
+    {
+        $associationAttribute = $this->getAttributeByClassName($attributes, $associationAttributeClassName);
+
+        if ($associationAttribute === null) {
             return false;
         }
 
-        $oneToOneMapping = $oneToOneAttribute->newInstance();
+        $associationMapping = $associationAttribute->newInstance();
 
-        return !property_exists($oneToOneMapping, 'mappedBy') || $oneToOneMapping->mappedBy === null;
+        return !property_exists($associationMapping, 'mappedBy') || $associationMapping->mappedBy === null;
     }
 
     /**

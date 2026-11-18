@@ -7,6 +7,7 @@ namespace Shopsys\McpBundle\Component\Database\Schema;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Name\Identifier;
 use Doctrine\DBAL\Schema\Name\OptionallyQualifiedName;
+use Doctrine\DBAL\Schema\Name\Parsers;
 use Doctrine\DBAL\Schema\Name\UnqualifiedName;
 
 class SchemaNameNormalizer
@@ -24,6 +25,11 @@ class SchemaNameNormalizer
     public function normalizeTableName(OptionallyQualifiedName $name): string
     {
         return $this->normalizeIdentifier($name->getUnqualifiedName());
+    }
+
+    public function normalizeTableNameFromString(string $tableName): string
+    {
+        return $this->normalizeTableName(Parsers::getOptionallyQualifiedNameParser()->parse($tableName));
     }
 
     protected function normalizeIdentifier(Identifier $identifier): string

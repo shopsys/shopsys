@@ -75,6 +75,7 @@ class Cart
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
      */
+    #[AsMcpColumn]
     #[ORM\JoinTable(name: 'cart_promo_codes')]
     #[ORM\ManyToMany(targetEntity: PromoCode::class)]
     #[ORM\OrderBy(['id' => SortDirection::Descending])]
@@ -83,6 +84,7 @@ class Cart
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\GiftVoucher\GiftVoucher>
      */
+    #[AsMcpColumn]
     #[ORM\JoinTable(name: 'cart_gift_vouchers')]
     #[ORM\ManyToMany(targetEntity: GiftVoucher::class)]
     #[ORM\OrderBy(['id' => SortDirection::Ascending])]

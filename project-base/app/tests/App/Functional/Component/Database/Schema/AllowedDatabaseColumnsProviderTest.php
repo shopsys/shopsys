@@ -37,6 +37,20 @@ class AllowedDatabaseColumnsProviderTest extends AbstractDatabaseSchemaFunctiona
         $this->assertArrayNotHasKey('hidden_embedded_note_text', $queryableEntityAllowedColumnsSetIndexedByColumnNames);
     }
 
+    public function testGetAllAllowedColumnsSetIndexedByTableNamesIncludesJoinTablesOfExposedManyToManyAssociations(): void
+    {
+        $allowedColumnsSetIndexedByTableNames = $this->allowedDatabaseColumnsProvider->getAllAllowedColumnsSetIndexedByTableNames();
+
+        $this->assertSame(
+            [
+                'linked_relation_id' => true,
+                'relation_id' => true,
+            ],
+            $allowedColumnsSetIndexedByTableNames[QueryableRelationEntity::EXPOSED_JOIN_TABLE_NAME],
+        );
+        $this->assertArrayNotHasKey(QueryableRelationEntity::HIDDEN_JOIN_TABLE_NAME, $allowedColumnsSetIndexedByTableNames);
+    }
+
     public function testGetAllAllowedColumnsSetIndexedByTableNamesIncludesColumnsInheritedFromMappedSuperclassWithPropertyLevelMcpAttributes(): void
     {
         $allowedColumnsSetIndexedByTableNames = $this->allowedDatabaseColumnsProvider->getAllAllowedColumnsSetIndexedByTableNames();
