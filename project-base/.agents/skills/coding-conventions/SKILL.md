@@ -44,6 +44,12 @@ Follow these whenever you write or modify code in this project.
 - **Only** add comments that provide real value. Write self-documenting code with clear names.
 - Explain **why**, not **what**; focus on business logic, complex algorithms, non-obvious decisions.
 - A comment must be **true and verified**. Never describe a hypothetical scenario you haven't confirmed ("…deleted meanwhile", "…may happen when…") — if you can't point at the code path that creates it, don't write the comment. If the code is self-describing, write none.
+- **Plain language, one reason per sentence.** Several reasons or cases become a list. Use the technical term, not a paraphrase: `LEFT JOIN`, not "joined outwardly"; "`EXISTS` subquery", not "reached without multiplying the rows".
+- **Show the result.** A comment explaining a transformation gives one example of the input and the output (the resulting DQL, the normalized value).
+- **Describe this class only.** A docblock states the contract of its own class or method: what it returns, what must hold, when it fails. It does not explain why a caller needs it, how another implementation behaves, or that two layers agree — when two layers must agree, a test enforces it and the comment may name that test.
+- **No `@throws` tags.** The codebase almost never documents exceptions in docblocks. Mention an exception in the description only when callers are expected to catch it.
+- **No bare `@internal`.** Use the tag only with the reason and the alternative (`@internal model of the ORM adapter, may change without upgrade notes — implement PathWalkerInterface instead`), never with the boilerplate "not intended to be used directly by other developers".
+- **A comment on one of several similar places is noise.** Either the rule is visible in the code (preferred), or it is stated once where it is implemented — not next to one arbitrary usage.
 
 ```php
 // GOOD
@@ -109,6 +115,14 @@ public function findById(int $id): ?User { /* ... */ }
  */
 public function transform(mixed $value): array { /* ... */ }
 ```
+
+## Documentation — pages in `docs/`
+
+- **Write for the developer who uses or extends the feature**: the options, a minimal example that works when copied, what the user sees, the extension points. Implementation details (which service compiles what, the bundle's own service wiring, form prototypes, why a class is stateless) stay in class docblocks.
+- **Start a feature page with a quick start** — at most about ten lines of code that cover the common case.
+- **State each fact on one page** and link to it from the others.
+- **Everything a page names exists.** Every class, method, option and template variable in the text and in the examples exists in the code at the time you write it (`git grep`). A class the reader is supposed to write is introduced as their own (`App\…`) and does not share the name of a built-in or planned class, unless it extends the platform class of that name.
+- **No absolute rule that an example breaks.** Before writing "never" or "always", check the examples on the same pages.
 
 ## Design conventions — apply while designing, not only in review
 

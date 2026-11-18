@@ -53,6 +53,8 @@ For EVERY changed file, verify each of these with zero assumptions:
 - Do error messages accurately describe the error condition?
 - Are all magic numbers/strings explained or extracted to constants?
 - Do commit messages and PR descriptions match what the code actually does?
+- Does every class, method, option and template variable named in `docs/`, upgrade notes, the PR description and the commit messages exist in the reviewed state (`git grep`)?
+- Are comments and docblocks readable — see `.agents/skills/coding-conventions/SKILL.md` → *Comments* (one reason per sentence, the technical term instead of a paraphrase, only the class's own contract, no `@throws`, no bare `@internal`)?
 
 ### Design conventions
 - Apply `.agents/skills/coding-conventions/SKILL.md` → *Design conventions* (data model, API, simplicity): is an existing concept reused, does every API field have a consumer, are names consistent across PHP/GraphQL/storefront/tests, is there a guard for a state nobody can create, a parallel flow next to an existing one, or a loop on a request hot path that adds queries?
@@ -87,7 +89,7 @@ For EVERY changed file, verify each of these with zero assumptions:
 - DRY - is there duplicated logic?
 - KISS - is there unnecessary complexity?
 - Clear naming and structure
-- Proper visibility (`protected` in packages, `private` in project-base)
+- Proper visibility (`protected` in packages — except the components in `packages/administration/src/Component/`, see `.agents/skills/coding-conventions/SKILL.md`; `private` in project-base)
 - Correct typehints and docblocks (arrays must specify contents, callables must specify signatures)
 
 ### Performance

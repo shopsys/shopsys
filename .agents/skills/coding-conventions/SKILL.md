@@ -15,6 +15,11 @@ Then apply the monorepo delta (`.agents/skills/monorepo-vs-project/SKILL.md`). T
   - use `protected` (not `private`);
   - do **not** use typehints/return types in entities and data objects (no parameter, return, or property types);
   - do **not** use `final` — except FormType classes, where `final` is required.
+- **The components of the administration bundle** (`packages/administration/src/Component/` — the CRUD, the Datagrid and the other components) are the exception to the rule above. They are deliberately hard to override:
+  - classes are `final` with `private` members (some components, such as `OrderDetail`, are still open classes);
+  - a project changes a part by its own implementation of an interface registered in place of the original service, not by extending the class — so a replaceable service gets an interface even with a single implementation;
+  - a class is left open only where inheritance is the designed extension point (the datagrid filters extending `AbstractFilter`, an expression builder taught a new operation). Before removing a `final` or an interface there, ask the author.
+- The controllers of the administration bundle (`packages/administration/src/Controller/`, `AbstractCrudController` included) and the CRUD handlers (`packages/administration/src/Model/`) are not components — they follow the `packages/` rule: open classes with `protected` members, so a project can extend them.
 
 Everything else (DRY/KISS, the design conventions, comments, docblocks, `{@inheritdoc}`, `@inject` test rule) is identical to the canonical.
 

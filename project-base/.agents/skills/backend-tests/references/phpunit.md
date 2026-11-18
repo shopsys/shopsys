@@ -60,6 +60,20 @@ $mailerMock->expects($this->atLeastOnce())->method('send');
 // because PHPUnit replaces the method with a stub regardless.
 ```
 
+### Assert the whole output, not fragments
+
+When the code under test generates text — DQL, SQL, a URL, a rendered string — compare all of it with `assertSame()`. `assertStringContainsString()` still passes when the output gains an extra join or is broken elsewhere, so it does not tell you the result is valid. This does not apply to exception messages — matching a part of the message by `expectExceptionMessage()` is fine.
+
+For a query built by a Doctrine `QueryBuilder`, also call `$queryBuilder->getQuery()->getSQL()`: it runs the Doctrine parser against the metadata and throws on invalid DQL, without a database. Put both into one helper and use it in every test that builds a query, instead of one standalone "the query is valid" test.
+
+```php
+private function assertQuery(string $expectedDql, QueryBuilder $queryBuilder): void
+{
+    $this->assertSame($expectedDql, $queryBuilder->getDQL());
+    $queryBuilder->getQuery()->getSQL();
+}
+```
+
 ### Preferred: assert observable state
 
 ```php
