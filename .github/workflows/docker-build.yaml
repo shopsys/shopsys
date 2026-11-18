@@ -837,7 +837,7 @@ jobs:
             -   name: Set up Node for snapshot comparison
                 uses: actions/setup-node@v7
                 with:
-                    node-version: '24.14.0'
+                    node-version: '24.22.3'
                     package-manager-cache: false
             -   name: Install locked snapshot comparison dependencies without Cypress binary
                 working-directory: project-base/storefront/cypress
