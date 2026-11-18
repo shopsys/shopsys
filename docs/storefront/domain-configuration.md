@@ -96,33 +96,26 @@ export type DomainConfigType = {
 
 ### Configuration Example
 
-```javascript
-// next.config.js
-publicRuntimeConfig: {
-    domains: [
-        {
-            url: 'http://127.0.0.1:8000',
-            defaultLocale: 'en',
-            domainId: 1,
-            currencyCode: 'EUR',
-            // ... other config
-        },
-        {
-            url: 'http://127.0.0.2:8000', // Base domain without locale
-            defaultLocale: 'cs',
-            domainId: 2,
-            currencyCode: 'CZK',
-            // ... other config
-        },
-        {
-            url: 'http://127.0.0.1:8000/sk', // Locale in path
-            defaultLocale: 'sk',
-            domainId: 3,
-            currencyCode: 'EUR',
-            // ... other config
-        },
-    ];
-}
+Domain URLs come from environment variables (`project-base/storefront/.env`), the rest of each domain's settings is defined in `buildPublicEnvConfig.ts`:
+
+```dotenv
+DOMAIN_HOSTNAME_1=http://127.0.0.1:8000/
+DOMAIN_HOSTNAME_2=http://127.0.0.2:8000/ # Base domain without locale
+DOMAIN_HOSTNAME_3=http://127.0.0.1:8000/sk/ # Locale in path
+```
+
+```typescript
+// buildPublicEnvConfig.ts
+domains: [
+    {
+        url: domainUrl1, // DOMAIN_HOSTNAME_1
+        defaultLocale: 'en',
+        domainId: 1,
+        currencyCode: 'EUR',
+        // ... other config
+    },
+    // ... domains 2 (cs, CZK) and 3 (sk, EUR)
+],
 ```
 
 ## Cookie Isolation Strategy
@@ -389,7 +382,7 @@ getBaseUrlWithLocale(baseUrl, 'sk'); // 'http://127.0.0.1:8000/sk'
 | ------------------------------------ | -------------------------------- | ------------------------------------------------------------------------ |
 | Users logged into wrong domain       | Cookies not properly isolated    | Verify cookie names include domain ID                                    |
 | Lost locale after redirect           | Middleware not preserving locale | Check `getBaseUrlWithLocale` usage                                       |
-| Domain not found errors              | Missing configuration            | Verify domain config in `next.config.js`                                 |
+| Domain not found errors              | Missing configuration            | Verify `DOMAIN_HOSTNAME_*` variables and `buildPublicEnvConfig.ts`       |
 | Cookies visible across domains       | Using same cookie names          | Implement `getCookieName` utility                                        |
 | Unexpected fallback redirect         | No exact domain match found      | Check domain configuration covers all expected URLs                      |
 | Paths treated as locales             | Misunderstanding domain matching | Remember: only exact domain matches work, other paths are regular routes |
