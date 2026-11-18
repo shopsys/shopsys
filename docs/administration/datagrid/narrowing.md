@@ -1,120 +1,70 @@
 # Narrowing the records
 
-A datagrid lists the records its adapter loads. Everything that narrows them — the domain control, a quick
-search, a filter — does so through a **condition**: a small tree of plain data every adapter understands and
-compiles into its own medium. The code narrowing a datagrid never sees a `QueryBuilder`, so the same code
-works over a Doctrine query and over records already in memory.
+The domain control, the quick search and the filters narrow the records a datagrid lists.
+The second half of this page is for authors of filters and adapters.
 
-## Asking the adapter to narrow
+## Quick start
 
 ```php
-$dataSource = $adapter->getDatasource(new DatasourceRequest(
-    'id',
-    $fields,
-    Condition::contains('customerUser.email', 'novak'),
-));
-```
+protected function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('number', ['label' => t('Order Nr.'), 'searchable' => true])   // the quick search looks here
+        ->add('createdAt', ['label' => t('Created'), 'filterable' => true]); // the filter offers a DateFilter
 
-`AdapterInterface::getDatasource()` takes everything one listing asks for as a `DatasourceRequest` — the
-identification name, the fields and an optional condition. The adapter keeps no state between requests, which
-is what makes the contract safe and simple:
+    $datagrid->filters()->add(TextFilter::new('customerUser.email', t('Customer e-mail')));
+}
 
-- what belongs to the medium itself (a fixed scope, a default join) is given to the adapter once when it is
-  created — the closure passed to `OrmAdapterFactory::create()`, `configureQuery()` of a CRUD controller; what
-  one listing asks for arrives in its request, so a datagrid renders its view any number of times and two
-  datagrids can share one adapter,
-- the condition is compiled by the builder of the adapter while the data source is built — never sooner —
-  so an expression can never come from a foreign medium, and preparing the medium for it (joining an
-  association, registering a parameter) happens only for conditions that are actually applied,
-- a request without a condition lists every record, and an adapter applies the condition of every request — it
-  carries the limit of the domain control as well, so an adapter ignoring it lists the records of every domain.
-
-`Datagrid::createView()` sends such a request itself. Its condition is the one of the state of the datagrid —
-everything that narrows the datagrid in the current request (the domain control, and the quick search or the filter)
-combined by `Condition::andX()`, see [Configuration, state and components](#configuration-state-and-components).
-
-A fixed scope the administrator neither sees nor switches off ("only records that are not deleted") is not a
-condition of the request but a part of the query itself, so it belongs to `configureQuery()` of the CRUD
-controller:
-
-```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
 {
-    $queryBuilder
-        ->andWhere('o.deleted = :deleted')
-        ->setParameter('deleted', false);
+    $queryBuilder->andWhere('o.deleted = :deleted')->setParameter('deleted', false); // a fixed condition
 }
 ```
 
+## Where a condition belongs
+
+| The condition depends on | Declare it in |
+|---|---|
+| the selected domain | the [domain control](../crud-controller/reference/crud-controller.md#list-domain-control) |
+| a text the administrator types | a `searchable` field, see [Quick search](#quick-search) |
+| rules the administrator composes | [filters](./filters.md) |
+| a rule the operations cannot express (an aggregate, a computed value) | a filter returning a [`DqlCondition`](./filters.md#a-condition-in-dql) |
+
+Any other condition of the list belongs to [`configureQuery()`](../crud-controller/reference/crud-controller.md#configurequeryquerybuilder-querybuilder-void) of the CRUD controller, or outside of it to the closure passed to `OrmAdapterFactory::create()`.
+
 ## Quick search
 
-Declaring a field `searchable` is all it takes:
+Declare a field `searchable`. The datagrid renders a text input above the records and lists the records in which any searchable field contains the typed text, ignoring case and diacritics. The text is taken literally and travels in the URL, so a link to the searched list can be shared.
 
 ```php
+use Shopsys\AdministrationBundle\Component\Datagrid\Search\Searchable;
+
 $datagrid
-    ->add('catnum', ['label' => t('Catalog number'), 'searchable' => true])
-    ->add('name', ['label' => t('Name'), 'searchable' => true]);
+    ->add('email', ['label' => t('E-mail'), 'searchable' => true])
+    ->add('customer', [
+        'label' => t('Customer'),
+        'property' => ['lastName', 'firstName', 'customerUser.id'],
+        'searchable' => new Searchable(paths: ['lastName', 'firstName'], label: t('Customer name')),
+    ])
+    ->add('uuid', ['label' => t('UUID'), 'visible' => false, 'searchable' => true]);
 ```
 
-The datagrid renders a text input above the records (the `Admin:Grid:QuickSearch` component, rendered by
-the `Admin:Grid:Controls` component in the `datagrid_controls` block of the CRUD list template; next to a filter it
-becomes a tab of the same card) and narrows the records by `Condition::orX()` of
-`contains` over every searchable field. The searched text travels in a GET form named `<gridId>_search`,
-so the pager keeps it and the URL can be shared; the order and the limit of the grid travel with the search
-and the page starts over.
+- `'searchable' => true` searches in every property of the field. Each of them has to lead to text or to a UUID, otherwise `InvalidDatagridDeclarationException` is thrown when the state of the datagrid is created.
+- `new Searchable(paths: [...], label: ...)` searches in the listed properties of the field only and names the field in the placeholder "Search in: …" of the input.
+- A UUID (a Doctrine `guid` column) is matched for equality, and only when the typed text is a valid UUID.
+- A virtual field, a number, a date or money cannot be searched — offer a [filter](./filters.md) of it instead.
 
-A searchable field is validated when the quick search is built from the fields: it has to have a path of
-its own (a virtual field has none) and the path has to lead to text (asked through
-`PathDescribingAdapterInterface::describePath()`), otherwise `FieldNotSearchableException` says which field
-and why. An adapter that cannot describe its paths (records in memory) cannot be asked, so every property of
-a searchable field is searched and has to hold text — a number or an enum fails only when something is searched,
-by `OperatorNotApplicableToValueException`. A field hidden by `visible: false` can still be searchable.
+`ProductReviewController::configureDatagrid()` shows all of it on a shipped list.
 
-The quick search is the `QuickSearch` part of the state of the datagrid — `$datagridState->get(QuickSearch::class)`,
-null when no field is searchable or the state is created outside a request. It carries the name of its form, the
-searched term and the searched fields; the component builds the form from it.
+## A datagrid outside the CRUD controller
 
-## Filters
-
-Rules the administrator composes — grouped, combined by `AND` or `OR` — are declared as filters on the datagrid
-and rendered as a form above the records; see [Filters](./filters.md). A composed filter outranks the quick search:
-once the administrator composed a rule (`FilterPanel::isActive()`), the filter narrows the records and the
-searched term is not applied.
-
-## Configuration, state and components
-
-A datagrid is listed in three steps, each of them knowing as little about the others as possible:
-
-1. **Configuration.** The datagrid is configured — fields, filters, the domain control — and
-   `Datagrid::getConfig()` freezes it into a read-only `DatagridConfig`: the ID of the datagrid, its adapter,
-   the fields the administrator is allowed to see and the declared filters the administrator is allowed to use
-   (those not declared under the name of a field hidden from the administrator or over a path overlapping one of its
-   properties — the property itself, a path under it or the association it lies under). A field or a filter changed
-   afterwards would never reach the state — a field restricted by a role would keep
-   being searched in — so `add()`, `update()`, `remove()` and `filters()` refuse to change the datagrid then.
-2. **State.** `DatagridStateFactory::create($config)` dispatches a `DatagridStateEvent` and every feature narrowing
-   the datagrid adds its part of the state by a subscriber of its own — `DomainControlStateSubscriber` adds
-   the `DomainControlScope`, `QuickSearchStateSubscriber` the `QuickSearch` and `FilterStateSubscriber`
-   the `FilterPanel`. The quick search and the filter validate their declarations even outside a request (a test or
-   a command fails on a field that cannot be searched as well), the domain control needs a request of a logged-in
-   administrator, whose domains and selection it reads. Each of them reads its own part of the main request; a GET
-   form is submitted from the query by hand, once. The factory then combines the conditions of the parts into the one of the
-   `DatagridState`: every scope (`DatagridScopeInterface`, the domain control) by `AND` with the one search
-   (`DatagridSearchInterface`) that applies (`DatagridState::getAppliedSearch()`) — the filter whenever any rule was
-   composed, the quick search otherwise.
-3. **View and components.** `Datagrid::createView($datagridState)` lists the records by the condition of the state,
-   and the `Admin:Grid:Controls` component renders the part of every feature by the component of that feature —
-   the tab of the applied search is the open one.
-   A state of something the administrator asked for that cannot be applied — an invalid filter — is
-   `isInvalid()`, the page answers 422 then.
-
-The CRUD list does all of it in `listAction()`. A page of your own lists a datagrid the same way:
+The CRUD list does all of this in `listAction()`. A page of your own lists a datagrid the same way:
 
 ```php
 $datagrid = $this->datagridFactory->create($adapter, [
     'name' => 'order',
     'roleConstant' => 'ROLE_MY',
-    // optional - the domain control of a CRUD datagrid follows the configuration of the CRUD controller
+    // optional - a datagrid outside the CRUD controller has no domain control otherwise
     'domainControl' => new DomainControlConfig(DomainControlType::SWITCHER),
 ]);
 $datagrid->add('number', ['label' => t('Number'), 'searchable' => true]);
@@ -137,202 +87,263 @@ return $response;
 {{ grid.render }}
 ```
 
-The state is required by `createView()` and the factory refuses to create the state of a datagrid with a domain
-control when no subscriber limited it to the domains, so the domain control is never left out by mistake.
+- The state holds what narrows the datagrid in the current request — the selected domain, the searched text and the composed filter. `isInvalid()` is true when the composed filter cannot be applied.
+- `getConfig()` freezes the configuration, so `add()`, `update()`, `remove()` and `filters()` throw afterwards.
+- To render the filter alone, pass `$datagridState->get(FilterPanel::class)` to the template and render `component('Admin:Grid:Filters', { filter: filterPanel, gridView: grid })`.
+- Outside a request (a command, a test), the state validates the searchable fields and the filters as well, and nothing is searched or filtered. A datagrid with a domain control needs a logged-in administrator.
 
-### Changing what narrows the datagrid
+## For authors of filters and adapters
 
-- **which search outranks which** — extend `DatagridStateFactory` and override `getSearchPrecedence()` (or
-  `createCondition()` to combine the parts differently), then alias the service to your class;
-- **how a feature reads the request** — extend its subscriber (`QuickSearchStateSubscriber`, …) and alias the
-  service to your class; a part of the same class can be added only once, so a second subscriber adding it fails
-  instead of silently competing with the first one;
-- **a new way of narrowing** (filters saved by the administrator, for one) — add a subscriber of
-  `DatagridStateEvent` adding a part of its own implementing `DatagridSearchInterface` (or `DatagridScopeInterface`
-  for a scope that always applies) and render it by a component of your own, in the `datagrid_controls` block
-  of the list template next to the built-in controls (`{{ parent() }}`). A search not ranked by
-  `getSearchPrecedence()` applies when no ranked one is active; among such searches the one added first — by
-  the listener of the higher priority — applies. A field displayed on behalf of the feature is added by
-  `DatagridStateEvent::addField()` and obeys the `role` and `permission` options as any other field.
+### The condition tree
 
-The smaller services the subscribers use are replaceable as well — `SearchablePathResolver` finds the paths
-of the `searchable` fields and refuses a field that cannot be searched, `FilterSetResolver` merges the filters
-picked for the `filterable` fields (by `FilterGuesser`) with the declared ones, sorts them by label and adapts copies
-of them to the adapter, so a declaration is never changed, and `QuickSearchFormFactory` and `FilterFormFactory` build
-the forms.
-
-## The condition tree
-
-A condition is built by the named constructors of `Condition`, one per operation of the vocabulary:
+Everything that narrows a datagrid becomes a condition — plain data every adapter compiles in its own way (DQL for `OrmAdapter`, a callback for `ArrayAdapter`):
 
 ```php
+// orders of the domains 1 and 2 whose number or e-mail contains "novak" and which have some item
 Condition::andX(
     Condition::in('domainId', [1, 2]),
     Condition::orX(
-        Condition::contains('name', 'hrnek'),
-        Condition::contains('catnum', 'hrnek'),
+        Condition::contains('number', 'novak'),
+        Condition::contains('email', 'novak'),
     ),
-    Condition::not(Condition::isEmpty('images')),
+    Condition::not(Condition::isEmpty('items')),
 )
 ```
 
-The tree has three kinds of nodes — `Comparison` (one operation on one path), `Composite` (`AND` / `OR`) and
-`Negation`. When the operation is only known at runtime — an administrator chose it in a filter and it
-arrived as a string — build the comparison directly as `new Comparison($path, $operator, $value)`. Being
-data, a condition can be composed, inspected, serialized and asserted on without any medium at hand.
+`Condition` has a named constructor for every operation of the vocabulary, and `andX()`, `orX()` and `not()` compose the conditions.
+The tree has three kinds of nodes: `Comparison` (one operation on one path), `Composite` (`AND` / `OR`) and `Negation`. A [`DqlCondition`](./filters.md#a-condition-in-dql) is a fourth one, understood by the ORM adapter only.
+An operation known only at runtime (one chosen in a filter) is built as `new Comparison($path, $operator, $value)`.
 
-## The vocabulary
+A filter returns such a tree from `buildCondition()`. An adapter receives the combined condition as `DatasourceRequest::$condition`; null lists every record. The condition carries the limit of the domain control as well, so an adapter ignoring it lists the records of every domain.
 
-The operations are the cases of `ExpressionOperatorEnum`, which also knows everything about each of them that
-does not depend on the medium — the shape of its value (`getValueArity()`), the paths it makes sense on
-(`assertApplicable()`) and how it reads in the filter form (`getLabel()`). Every medium expresses every one of
-them:
+### The vocabulary
+
+The operations are the constants of `ExpressionOperatorEnum`. The enum also knows the shape of the value of each operation (`getValueArity()`), the paths it makes sense on (`findReasonOfInapplicability()`) and its label in the filter form (`getLabel()`).
 
 | Operation | Meaning |
 |---|---|
 | `equals`, `notEquals` | the value is (not) the given one |
-| `contains`, `startsWith`, `endsWith` | the text contains / starts with / ends with the given one, ignoring case and diacritics (`NORMALIZED()` in the database, the same rule in memory); wildcards are escaped, the value is taken literally |
-| `greaterThan`, `greaterThanOrEqual`, `lessThan`, `lessThanOrEqual`, `between` | ordering of numbers, dates and money |
+| `contains`, `startsWith`, `endsWith` | the text contains / starts with / ends with the given one, ignoring case and diacritics; the given text is taken literally |
+| `greaterThan`, `greaterThanOrEqual`, `lessThan`, `lessThanOrEqual`, `between` | ordering of numbers, dates and money; `between` includes both bounds |
 | `in`, `notIn` | the value is (not) one of the given ones; an empty list matches nothing, resp. everything |
 | `isNull`, `isNotNull` | a single value is (not) missing |
-| `isEmpty`, `isNotEmpty` | a record has no / some value on a to-many path — a related row without the value (an order item without a product for `items.product`) counts as none |
-| `not`, `andX`, `orX` | composition |
+| `isEmpty`, `isNotEmpty` | a record has no / some value on a to-many path |
 
-A record whose value is missing never matches a comparison, but always matches its negation — `notEquals`,
-`notIn` and `not()`: an order without a customer is "not Novák". SQL alone would leave such a record out even
-from a negation, so the ORM medium tests the missing value explicitly; the medium over records in memory decides
-the same way.
+A record whose value is missing matches no comparison except `isNull`, so it matches the negation of any other one — `notEquals`, `notIn` and `not()`. An order without a customer is "not Novák".
 
-Values are typed — `string|int|float|bool|DateTimeInterface|Money` — and a builder binds them with the type of
-the compared field, so a date or money compares correctly. A date of either class compares with a column of either
-class, and a date and time given in any time zone means the same moment — the ORM medium converts it to the default
-time zone the stored time is read in; a date without time is a day of the calendar and stays as it is. The shape of
-the value of a comparison is given by the arity of its operator (`ExpressionValueArityEnum`: none, a single value,
-a list, a pair of bounds) and is validated when the condition is compiled. Every value of a list is bound on its own,
-so a list of booleans or dates compares correctly as well; a missing value is tested by `isNull`, never put in a list
-or used as a bound.
+Values are typed — `string|int|float|bool|DateTimeInterface|Money` — and their shape follows the operation (`ExpressionValueArityEnum`: none, a single value, a list, a pair of bounds). The ORM adapter binds each value with the type of the compared column, so dates and money compare correctly.
 
-### Paths
+### Paths and collections
 
-A path is the same dot notation the fields of the datagrid use: `email`, `customerUser.email`,
-`customerUser.billingAddress.city`, `items.name`. In the ORM medium the associations on the way are joined
-outwardly (`LEFT JOIN`), so a record without the association never disappears from the listing only because a
-condition mentions it; a field may select the associated entity itself (`$datagrid->add('currency')`). A path leading through a to-many association (`items.name`) is matched by a correlated
-`EXISTS` subquery, so the listed record is never multiplied by its related rows. Inside the subquery a to-one
-association is joined outwardly as well — an order item without a product has a missing value in
-`items.product.catnum`, which a negation matches the way it matches a listed record without the association — while
-an empty collection has no related row at all. A field of the entity shadows a translated field of the same name;
-the translation is reachable explicitly as `translations.name`. A field of a Doctrine embeddable is addressed
-through the embeddable, `author.address.country`.
+A path is the dot notation the fields use: `email`, `customerUser.email`, `customerUser.billingAddress.city`, `items.name`.
 
-### Two things worth knowing about collections
+- The ORM adapter joins the associations on the way by `LEFT JOIN`, so a record without the association stays in the list.
+- A path through a to-many association (`items.name`) is matched by an `EXISTS` subquery, so the listed record is not multiplied by its related rows. An order item without a product has a missing value in `items.product.catnum`.
+- A translated field is reached by its name (`name`). When the entity has a field of the same name, the translated one is `translations.name`.
+- A field of a Doctrine embeddable is addressed through the embeddable: `author.address.country`.
 
-`Condition::isNull('items.name')` is refused — a collection has no single value to be missing. The question
-an administrator means, "products without any image", is `Condition::isEmpty('images')`.
+A collection has no single value, so `Condition::isNull('items.name')` is refused by the ORM adapter. "Orders without any item" is `Condition::isEmpty('items')`.
 
-Negating a whole condition is not the negating operation of that condition once the path leads through a
-collection:
+Over a collection, negating a whole condition is not the same as the negating operation:
 
 ```php
 Condition::not(Condition::equals('items.name', 'X'));   // no related row is named X
 Condition::notEquals('items.name', 'X');                // some related row is not named X
 ```
 
-A record with items named X and Y matches the second one and not the first. Pick knowingly — a filter offering
-"is not" or "is none of" on a collection negates the whole condition, which is what the administrator means.
+An order with items named X and Y matches the second condition only. What a filter offers over a collection is described in [The built-in filters](./filters.md#the-built-in-filters).
 
-## Asking before building
+### Describing a path
 
-A declaration — a searchable field, a filter offering operators — has to know what it can offer before any
-query exists. An adapter implementing the optional `PathDescribingAdapterInterface` describes a path by
-`describePath($path)` — its cardinality (`TO_ONE` / `TO_MANY`), the kind of value it leads to
-(`PathValueTypeEnum`: `STRING`, `INTEGER`, `DECIMAL`, `BOOLEAN`, `DATE`, `DATETIME`, `MONEY`, `ASSOCIATION`,
-`UNKNOWN`) and, for an integer, the range its column holds — without touching the query. `OrmAdapter` implements it and reads an own Doctrine type of a project
-extending a text type as text; a GUID, a JSON document or any other type is `UNKNOWN`. An adapter over records
-in memory has no schema to describe and does not implement it.
+An adapter implementing `PathDescribingAdapterInterface` describes a path by `describePath($path)` without building a query: its cardinality (`PathCardinalityEnum`), the kind of value it leads to (`PathValueTypeEnum`, `GUID` and `MONEY` included), the entity an association leads to and the range of an integer column. The searchable fields and the filters use it to refuse a wrong declaration when the state of the datagrid is created. `OrmAdapter` implements it and reads an own Doctrine type extending a text type as text; `ArrayAdapter` has no schema to describe.
 
-`ExpressionOperatorEnum::assertApplicable($operator, $pathDescription)` holds the rules saying which
-operation makes sense on which path — a text search on a text value only (never on an `UNKNOWN` one, which
-a text function of the database may refuse), a null test on a single value only, an emptiness test on
-a collection only. The ORM builder applies them itself before building, a declaration applies them before
-offering an operation.
+`ExpressionOperatorEnum::findReasonOfInapplicability($operator, $pathDescription)` holds the rules and returns `null` for an operation that applies: a text operation on text only, `isNull` / `isNotNull` on a single value only, `isEmpty` / `isNotEmpty` on a collection only.
 
-## How a condition becomes an expression
+### Beyond the vocabulary
 
-`ExpressionBuilderInterface` has a single method, `compile($condition)`. Every builder extends
-`AbstractExpressionBuilder`, which walks the tree — `Comparison` becomes the protected `compare()` of its
-operator, `Composite` becomes `andX()` / `orX()`, `Negation` becomes `not()` and
-a `MediumSpecificConditionInterface` compiles itself. Every adapter calls it on its own builder while building
-the data source, so the walk is shared by every medium and the shape of every value is validated in one place,
-before the medium is asked. A medium only expresses each operation in `compare()` and composes the expressions.
+A condition the operations cannot express is written in DQL by a filter of your own, see [A condition in DQL](./filters.md#a-condition-in-dql).
 
-Both built-in media are proven to agree: the functional test `ExpressionMediaAgreementTest` runs the same
-conditions against the database and against the same records in memory and requires the same result.
+### Differences between the adapters
 
-## Beyond the vocabulary
+`ArrayAdapter` evaluates the same conditions over records in memory (`ExpressionMediaAgreementTest` in the project compares the two adapters on the same orders). It differs from the ORM adapter in these cases:
 
-The vocabulary is closed on purpose — it is what every medium has to understand. An aggregate of the related
-rows ("orders with more than three items") or a computed value is said to the Doctrine query directly by a
-`DqlCondition`, a `MediumSpecificConditionInterface` only the ORM medium compiles. It is a predicate of the `WHERE`
-clause — the listing has no grouping a `HAVING` clause could narrow:
+- The rules of `findReasonOfInapplicability()` are not checked in advance — `isNull` over a collection passes, while the ORM adapter refuses it.
+- A value of a wrong kind fails only when the first record is compared, by `UnsupportedConditionException` — a text operation on a number, a date compared with a number, a boolean or a text that is no number compared with a number or money.
+- A value is compared by its PHP type, not by the type of its column. A number stored as text is compared as a number (the database compares text). A date column compared with a date and time is compared as a moment (the database drops the time).
+- Text is ordered byte by byte (`strcmp()`), the database orders it by its collation.
+- A filter's "is not" and "is none of" on a collection mean "some related row is not X" (see [Paths and collections](#paths-and-collections)). The adapter does not describe the path as a collection, so the filter does not negate the whole condition.
+
+## Extending
+
+The parts of the state, the Twig components rendering them (`Admin:Grid:*`) and the services of the ORM adapter are final. A project adds a part of its own, or registers its own implementation of an interface in place of a service. These classes are open to be extended:
+
+- the filters, `FilterGuesser`, `FilterSetResolver` and `FilterFormFactory`;
+- `SearchablePathResolver` and `QuickSearchFormFactory`;
+- the expression builders and `ExpressionOperatorEnum`;
+- `DatagridStateFactory` and the subscribers adding the parts.
+
+### A search or a scope of your own
+
+The domain control, the quick search and the filter are parts of the state of the datagrid — `DomainControlScope`, `QuickSearch` and `FilterPanel` — each added by its subscriber of `DatagridStateEvent`. A part of your own is added by a subscriber of your own:
+
+- a search the administrator asks for implements `DatagridSearchInterface`;
+- a scope that always applies implements `DatagridScopeInterface`. Its condition is combined with the others by `AND`.
+
+A search by an EAN scanned by a barcode reader:
 
 ```php
-new DqlCondition(
-    static fn (ProxyQuery $proxyQuery): string
-        => sprintf('SIZE(%s.items) > :%s', ProxyQuery::DEFAULT_ALIAS, $proxyQuery->addParameter(3)),
-)
+namespace App\Component\Datagrid;
+
+use Override;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridSearchInterface;
+
+final readonly class EanSearch implements DatagridSearchInterface
+{
+    public function __construct(
+        public string $formName,
+        public ?string $ean,
+    ) {
+    }
+
+    #[Override]
+    public function isActive(): bool
+    {
+        return $this->ean !== null;
+    }
+
+    #[Override]
+    public function createCondition(): ?ConditionInterface
+    {
+        return $this->ean === null ? null : Condition::equals('ean', $this->ean);
+    }
+}
 ```
 
-The closure returns a DQL predicate and runs when the data source is built, on the very query it is built
-from. It composes with the rest of the tree — it may sit in an `OR` group next to ordinary conditions — but
-the datagrid then works with the ORM adapter only; given the builder of another medium the condition throws
-`ConditionNotSupportedException`. Use `ProxyQuery::addParameter()` for every value and
-`ProxyQuery::resolvePath()` for every path, so the query stays parameterized and the joins stay shared with
-the rest of the datagrid. A path leading through a collection is never joined, it would multiply the listed
-record — `ProxyQuery::exists($path, $buildPredicate)` matches a related row by a correlated subquery instead.
-The root entity of the query is aliased `ProxyQuery::DEFAULT_ALIAS` and the query builder itself is at hand
-through `ProxyQuery::getQueryBuilder()`.
+```php
+namespace App\Component\Datagrid;
 
-`AbstractCrudController::configureQuery()` is something else: it shapes the query statically when the adapter
-is created — a fixed scope, a default join, a computed column — before the datagrid reads what the administrator
-searched for or filtered by. A condition driven by the administrator never belongs there; a `DqlCondition` is what
-a filter returns when its rule needs DQL.
+use Override;
+use Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-## Extending the vocabulary in a project
+final class EanSearchStateSubscriber implements EventSubscriberInterface
+{
+    /**
+     * @return array<string, string>
+     */
+    #[Override]
+    public static function getSubscribedEvents(): array
+    {
+        return [DatagridStateEvent::class => 'onDatagridState'];
+    }
 
-- **a new operation** (`jsonContains`, a project collation for `contains`) — subclass `ExpressionOperatorEnum`:
-  add the public constant and override `getValueArity()`, `getReasonOfInapplicability()` and `getLabels()` for
-  it, falling back to the parent for every other operation, and register the subclass in place of
-  `ExpressionOperatorEnum`. Then teach every medium you use the operation: extend its builder
-  (`DqlExpressionBuilder`, `PhpExpressionBuilder`), express the new operator in `compare()` and hand every other
-  one to `parent::compare()`. A medium you do not teach refuses the operation by `OperatorNotSupportedException`
-  when it compiles a condition using it. Register the builders in place of the default ones: the ORM adapter
-  creates a builder for every query, so alias `DqlExpressionBuilderFactoryInterface` to a factory of your own
-  creating your builder; the array adapter uses one stateless builder, so alias `ExpressionBuilderInterface` to
-  your builder (see the registration below);
-- **a new kind of node** — a node bound to one medium implements `MediumSpecificConditionInterface` and
-  compiles itself, the way `DqlCondition` does; a node every medium of yours understands is compiled by
-  overriding `compile()` of your builder, handing every other condition to `parent::compile()`;
-- **a different reading of a path** (the value type of an own Doctrine type of the project not extending a type
-  of Doctrine) — alias `PathWalkerInterface` to a walker of your own, which wraps the final `PathWalker` and
-  adjusts the `PathDescription` of the walked path;
-- **a new medium** — implement `AdapterInterface` with a builder of your own extending
-  `AbstractExpressionBuilder` and call its `compile()` on the condition of every request; wrap the native
-  expression of the medium in an object if it is not one (a search engine clause is an array).
+    public function onDatagridState(DatagridStateEvent $event): void
+    {
+        // the datagrid of a CRUD controller is named after its entity
+        if ($event->config->gridId !== 'Product') {
+            return;
+        }
 
-The `services.yaml` of the project registers a new operation like this — the enum and the factory are services
-of the project by their names already, the builder of the array adapter is registered explicitly:
+        $formName = $event->config->createFormName('_ean');
+        $ean = $event->getQuery($formName)['ean'] ?? null;
+
+        $event->addPart(new EanSearch($formName, is_string($ean) && $ean !== '' ? $ean : null));
+    }
+}
+```
+
+The built-in components render the built-in parts only. Render yours in the `datagrid_controls` block of the [list template](../crud-controller/reference/crud-controller.md#templates-and-parameters):
+
+```twig
+{% extends '@ShopsysAdministration/crud/list.html.twig' %}
+
+{% block datagrid_controls %}
+    {% set eanSearch = datagridState.get('App\\Component\\Datagrid\\EanSearch') %}
+    <form method="get" class="mb-3">
+        <input type="search" name="{{ eanSearch.formName }}[ean]" value="{{ eanSearch.ean }}" class="form-control" placeholder="EAN">
+    </form>
+    {{ parent() }}
+{% endblock %}
+```
+
+- Only one search applies, see [What the administrator sees](./filters.md#what-the-administrator-sees) for the filter and the quick search. A search of your own follows those ranked by `DatagridStateFactory::getSearchPrecedence()`, in the order of the listeners, so the EAN search applies when neither the filter nor the quick search is active. To rank it, extend `DatagridStateFactory` and override `getSearchPrecedence()`, or `createCondition()` to combine the parts differently.
+- A part of the same class can be added only once.
+- An exact match on one field needs no code of your own — a [filter](./filters.md) of the field offers the operation "is".
+
+### Changing a built-in part
+
+The subscribers are open. To build a built-in part differently (other searched paths, for one), extend its subscriber — `QuickSearchStateSubscriber`, `FilterStateSubscriber` or `DomainControlStateSubscriber` — and register your class in place of it:
 
 ```yaml
-services:
+Shopsys\AdministrationBundle\Component\Datagrid\Search\QuickSearchStateSubscriber:
+    alias: App\Component\Datagrid\QuickSearchStateSubscriber
+```
+
+A subscriber adding a part of your own instead of the built-in one leaves the built-in control out, so render your part as shown above. A datagrid with a domain control fails when no `DomainControlScope` is added.
+
+### Other extension points
+
+- **A field displayed on behalf of a part** — `DatagridStateEvent::addField()`. The fields are added in the order of the listeners, a field declared on the datagrid takes precedence, and the `role` and `permission` options apply.
+- **The look of the controls** — override the templates of the `Admin:Grid:*` components, `@ShopsysAdministration/components/grid/*.html.twig`, in `templates/bundles/ShopsysAdministrationBundle/components/grid/` of the project.
+- **The filters** — see [Filters](./filters.md).
+- **A new operation** — extend `ExpressionOperatorEnum` (the constant, `getValueArity()`, `findReasonOfInapplicability()`, `getLabels()`) and teach it every adapter your project uses. Express the operation in `compare()` of a builder extending `DqlExpressionBuilder` and hand every other one to `parent::compare()`. The ORM adapter creates a builder for every query, so return yours from `create()` of your implementation of `DqlExpressionBuilderFactoryInterface`. Extend `PhpExpressionBuilder` the same way when the project uses `ArrayAdapter`. An adapter you do not teach throws `UnsupportedConditionException`.
+
+    ```yaml
     Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum:
         alias: App\Component\Datagrid\Expression\ExpressionOperatorEnum
 
     Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactoryInterface:
-        alias: App\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactory
+        alias: App\Component\Datagrid\Expression\ProjectDqlExpressionBuilderFactory
 
-    App\Component\Datagrid\Adapter\Array\Expression\PhpExpressionBuilder: ~
+    App\Component\Datagrid\Expression\PhpExpressionBuilder: ~
 
-    Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface:
-        alias: App\Component\Datagrid\Adapter\Array\Expression\PhpExpressionBuilder
-```
+    Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\PhpExpressionBuilder:
+        alias: App\Component\Datagrid\Expression\PhpExpressionBuilder
+    ```
+
+- **A new kind of node** — implement `ConditionInterface` and compile the node in `compile()` of your builder, as `DqlExpressionBuilder` compiles `DqlCondition`. Hand every other node to `parent::compile()`.
+- **A value type of an own Doctrine type** — a type extending a string, text, GUID, small float or UTC date and time type is recognized, any other is `UNKNOWN`. To recognize it, implement `PathWalkerInterface` by decorating `PathWalker` and change only the value type of the walked path:
+
+    ```php
+    namespace App\Component\Datagrid;
+
+    use App\Component\Doctrine\EanType;
+    use Override;
+    use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalker;
+    use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalkerInterface;
+    use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\WalkedPath;
+    use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
+
+    final readonly class EanAwarePathWalker implements PathWalkerInterface
+    {
+        public function __construct(
+            private PathWalker $pathWalker,
+        ) {
+        }
+
+        #[Override]
+        public function walk(string $entityClass, string $path): WalkedPath
+        {
+            $walkedPath = $this->pathWalker->walk($entityClass, $path);
+
+            if ($walkedPath->getFieldType() !== EanType::NAME) {
+                return $walkedPath;
+            }
+
+            return new WalkedPath($walkedPath->steps, $walkedPath->description->withValueType(PathValueTypeEnum::STRING));
+        }
+    }
+    ```
+
+    ```yaml
+    App\Component\Datagrid\EanAwarePathWalker: ~
+
+    Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PathWalkerInterface:
+        alias: App\Component\Datagrid\EanAwarePathWalker
+    ```
+
+- **A new adapter** — implement `AdapterInterface` and compile `$request->condition` by a builder extending `AbstractExpressionBuilder`. It walks the tree and validates the values, your builder implements `compare()` for an operation, `andX()`, `orX()` and `not()` for the composition.
+
+The aliases belong to `config/services.yaml` of the project. A class of the project whose name does not end with a suffix registered there automatically (`Subscriber`, `Factory`, `Enum`, …) is registered explicitly by `~`.

@@ -112,31 +112,9 @@ protected function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-The same method declares everything that narrows the list for the administrator:
-
-- a field with `'searchable' => true` joins the **quick search** — a text input above the datagrid searching in every such field ([Quick search](../../datagrid/narrowing.md#quick-search)),
-- `$datagrid->filters()->add(TextFilter::new('author.fullName', t('Author name')))` declares a **filter** the administrator composes rules from ([Filters](../../datagrid/filters.md)).
-
-A fixed condition the administrator neither sees nor switches off belongs to [`configureQuery()`](#configurequeryquerybuilder-querybuilder-void).
-
-```php
-protected function configureDatagrid(Datagrid $datagrid): void
-{
-    $datagrid
-        ->add('number', ['label' => t('Order Nr.'), 'searchable' => true])
-        ->add('email', ['label' => t('E-mail'), 'searchable' => true]);
-
-    $datagrid->filters()
-        ->add(EntityFilter::new('status', t('Status')))
-        ->add(DateFilter::new('createdAt', t('Created')));
-}
-```
-
 ### `configureQuery(QueryBuilder $queryBuilder): void`
 
-Shape the query used to fetch entities for the list page **statically** — a fixed condition the administrator neither sees nor switches off, a default join, a computed column, an ordering. It runs once when the adapter is created and works with Doctrine only. Keep the conditions parameterized.
-
-A condition the administrator drives (a search, a filter) never belongs here: declare a [filter](../../datagrid/filters.md) or a searchable field instead.
+Shape the base query of the list page — fixed conditions, joins, computed columns, an ordering — including conditions derived from the context of the list, such as the selected domain. The root entity is aliased `o`. Keep the conditions parameterized.
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
@@ -146,6 +124,32 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
         ->setParameter('deleted', false);
 }
 ```
+
+The text the administrator searches for and the filter rules they compose are declared as [searchable fields](../../datagrid/narrowing.md#quick-search) and [filters](../../datagrid/filters.md) in `configureDatagrid()` instead. Only those are known to the datagrid: it answers 422 for an invalid filter and turns drag-and-drop ordering off while they narrow the list.
+
+`configureQuery()` runs when the adapter is created, before the datagrid reads the request, so the state of the datagrid is not available there. Read the selected domain yourself — for a list with the domain switcher (`DomainControlType::SWITCHER`) from `AdminDomainTabsFacade`, e.g. to list only the transports enabled on the selected domain:
+
+```php
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDomain;
+
+public function __construct(
+    protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+) {
+}
+
+protected function configureQuery(QueryBuilder $queryBuilder): void
+{
+    $queryBuilder
+        ->andWhere(sprintf(
+            'EXISTS (SELECT 1 FROM %s td WHERE td.transport = o AND td.domainId = :domainId AND td.enabled = true)',
+            TransportDomain::class,
+        ))
+        ->setParameter('domainId', $this->adminDomainTabsFacade->getSelectedDomainId());
+}
+```
+
+For a list with the domain filter, resolve the scope by `DomainControlScopeFactory`, see [Showing per-domain values in a column](#showing-per-domain-values-in-a-column).
 
 ### List domain control
 
@@ -205,15 +209,24 @@ public function configure(CrudConfig $config): void
 }
 ```
 
-Enabled without the path, the control only offers the domain choice and nothing is applied to the list query.
+Enabled without the path, the control only offers the domain choice and nothing is applied to the list query. A condition of your own on the selected domain then belongs to [`configureQuery()`](#configurequeryquerybuilder-querybuilder-void).
 
-**Showing per-domain values in a column** (status, publish date, …) — select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected. Inject `DomainControlScopeFactory` into your controller to resolve the same scope the datagrid works with:
+#### Showing per-domain values in a column
+
+To show a per-domain value (status, publish date, …), select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected. Inject `DomainControlScopeFactory` into your controller to resolve the same scope the datagrid works with:
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
 {
-    // the list enables the domain control in configure(), so there is a scope
-    $domainControlScope = $this->domainControlScopeFactory->create($this->definition->getConfig()->getDomainControlConfig());
+    $domainControlScope = $this->domainControlScopeFactory->create(
+        $this->definition->getConfig()->getDomainControlConfig(),
+        $this->definition->entityClass,
+    );
+
+    // null when the list has no domain control
+    if ($domainControlScope === null) {
+        return;
+    }
 
     $queryBuilder
         ->addSelect(sprintf(
@@ -224,8 +237,8 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 }
 ```
 
-`getEffectiveDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
-A subselect is used instead of a join to keep one row per entity, and each subselect needs its own DQL alias, as aliases are unique within the whole query.
+The scope holds `$selectedDomainId` (null when "All domains" is selected), `$filterNamespace` and `$domainIds`. `getEffectiveDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
+A subselect is used instead of a join to keep one row per entity.
 
 Such a value does not map to a property of the listed entity, so display it with a `virtual` datagrid field whose `transform` reads it from the row:
 

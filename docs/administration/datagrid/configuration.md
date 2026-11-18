@@ -8,11 +8,11 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 - `name` (optional, string) - The name of the datagrid
 - `crudDefinition` (optional, `Shopsys\AdministrationBundle\Component\Crud\Definition`) - Crud Definition provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
 - `pagination` (optional, bool) - Enable or disable pagination. Default is `true`. With pagination enabled, the page size chosen by the logged-in administrator is remembered per datagrid `name` and restored on the next visit
-- `domainControl` (optional, `Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig`) - The domain control of the datagrid - the domains it works with and the way the administrator picks among them. For a datagrid of a Crud Controller it follows the configuration of the controller (`crudDefinition`) automatically, so pass it only for a standalone datagrid. When the listed records relate to a domain (`domainId` of an entity implementing `DomainSeparatedEntityInterface`, or the `domainIdPath` of the configuration), the datagrid is limited to the selected domains and displays the domain of every record when the domain filter offers several domains. See [List domain control](../crud-controller/reference/crud-controller.md#list-domain-control)
+- `domainControl` (optional, `Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlConfig`) - The domain control of the datagrid - the domains it works with and the way the administrator picks among them. For a datagrid of a Crud Controller it follows the configuration of the controller (`crudDefinition`) automatically, so pass it only for a standalone datagrid. The domain filter requires the namespace it remembers its selection under (`new DomainControlConfig(DomainControlType::FILTER, filterNamespace: 'my_list')`), the domain switcher takes none (`new DomainControlConfig(DomainControlType::SWITCHER)`). When the listed records relate to a domain (`domainId` of an entity implementing `DomainSeparatedEntityInterface`, or the `domainIdPath` of the configuration), the datagrid is limited to the selected domains and displays the domain of every record when the domain filter offers several domains. See [List domain control](../crud-controller/reference/crud-controller.md#list-domain-control)
 
 ## Configuration and state
 
-The datagrid itself reads nothing from its surroundings. Once it is configured, `Datagrid::getConfig()` freezes the configuration and `DatagridStateFactory::create($datagrid->getConfig())` creates the state of the datagrid in the current request - everything the administrator narrows the records by: the domain control, the quick search and the filters declared by `filters()`. `Datagrid::createView($datagridState)` lists the records by it. Outside a request (a command, a test) the state validates the declarations but builds no form - except that a datagrid with a domain control needs a request of a logged-in administrator, whose domains and selection it reads. A fixed scope of the records belongs to the query of the adapter (`configureQuery()` of a Crud Controller). See [Narrowing the records](./narrowing.md#configuration-state-and-components).
+The datagrid itself does not read from the request what narrows the records. Once it is configured, `Datagrid::getConfig()` freezes the configuration and `DatagridStateFactory::create($datagrid->getConfig())` creates the state of the datagrid in the current request - the domain control, the quick search and the filter. `Datagrid::createView($datagridState)` lists the records by it. The Crud Controller does all of it for you, see [A datagrid outside the CRUD controller](./narrowing.md#a-datagrid-outside-the-crud-controller) for a page of your own.
 
 ## Methods Configuration
 
@@ -52,7 +52,7 @@ $datagrid->update('name', [
 $datagrid->remove('name');
 
 // Access to row actions configuration. More information in the "Row actions" section
-$actions = $datagrid->rowActions();
+$actions = $datagrid->actions();
 
 ```
 

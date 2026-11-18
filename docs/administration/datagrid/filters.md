@@ -1,9 +1,59 @@
 # Filters
 
-A filter lets the administrator compose rules over the listed records — "status is one of pending, approved",
-"rating is greater than 3", "product is the one picked in the window" — grouped and combined by `AND` or `OR`.
-The filters are declared on the datagrid, the form is rendered above the records, and the composed rules
-travel in the URL, so a filtered list can be shared by its link.
+A filter lets the administrator compose rules over the listed records — "status is one of pending, approved", "rating is greater than 3", "product is the one picked in the window" — grouped and combined by `AND` or `OR`.
+The rules travel in the URL, so a filtered list can be shared by its link.
+
+## Quick start
+
+```php
+$datagrid
+    ->add('createdAt', ['label' => t('Created'), 'filterable' => true])             // a DateFilter is picked
+    ->add('totalPriceWithVat', ['label' => t('Total price'), 'filterable' => true]); // a MoneyFilter is picked
+
+$datagrid->filters()
+    ->add(TextFilter::new('customerUser.email', t('Customer e-mail')))
+    ->add(EntityFilter::new('status', t('Status')));
+```
+
+A field declared `'filterable' => true` gets a filter picked by the value its path leads to. `$datagrid->filters()->add()` declares a filter over any path of the records.
+
+## Filters of the fields
+
+| The path of the field leads to | Filter |
+|---|---|
+| text | `TextFilter` |
+| an integer or a decimal number | `NumericFilter` |
+| money | `MoneyFilter` |
+| a date, a date and time | `DateFilter` |
+| a boolean | `BooleanFilter` |
+| a product | `ProductFilter` |
+
+The filter takes the label of the field. Its name in the URL is the name of the field with the dots replaced by underscores (`customerUser.email` → `customerUser_email`).
+
+`InvalidDatagridDeclarationException` is thrown when the state of the datagrid is created for:
+
+- a virtual field and a field combining several properties — there is no single path to filter by,
+- a path that does not exist, or one the adapter cannot describe (`ArrayAdapter`),
+- any other value — a UUID, an unknown type, an association to another entity than a product.
+
+Declare the filter of such a field by `filters()->add()`, for example an [`EntityFilter`](#the-built-in-filters) for an association to a small table.
+
+The `filterable` option puts a `GuessedFilter` into `$datagrid->filters()` under the name of the filter of the field. The filter itself is picked only when the state of the datagrid is created. Therefore:
+
+- `$datagrid->filters()->remove('rating')` removes the filter of a field, whether it was picked or declared. `$datagrid->update('rating', ['filterable' => false])` removes only a picked one. An extension switches the filter on by `update()` with `'filterable' => true`.
+- A filter declared under the same name replaces it, whether it is declared before the field or after it. That is how a field gets a filter configured in detail.
+- `filters()->get('rating')->setOperators()` cannot configure a picked filter — declare the filter instead:
+
+```php
+$datagrid->add('rating', ['label' => t('Rating'), 'filterable' => true]);
+
+// replaces the NumericFilter picked for the field and offers two of its operations only
+$datagrid->filters()->add(
+    NumericFilter::new('rating', t('Rating'))->setOperators([ExpressionOperatorEnum::EQUALS, ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL]),
+);
+```
+
+To pick the filters differently in a project, replace the `FilterGuesser` service and override its `createFilter()`.
 
 ## Declaring filters
 
@@ -12,88 +62,35 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Filter\BooleanFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ChoiceFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\DateFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\EntityFilter;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\MoneyFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\NumericFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\ProductFilter;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\TextFilter;
 
-protected function configureDatagrid(Datagrid $datagrid): void
-{
-    // ... fields
-
-    $datagrid->filters()
-        // 'author' is an association of the Book entity, the path is the same dot notation the fields use
-        ->add(TextFilter::new('author.fullName', t('Author name')))
-        // 'address' is a Doctrine embeddable inside the Author entity, its fields are addressed through it
-        ->add(TextFilter::new('author.address.country', t('Author country')))
-        // an EntityFilter path ends with an association instead of a property; it offers every publisher in a select
-        ->add(EntityFilter::new('author.publisher', t('Publisher')))
-        ->add(DateFilter::new('createdAt', t('Created')))
-        ->add(NumericFilter::new('rating', t('Rating')))
-        ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->statusEnum->getAllIndexedByTranslations()))
-        ->add(BooleanFilter::new('isVerifiedPurchase', t('Verified purchase')))
-        ->add(ProductFilter::new('product', t('Product')));
-}
+$datagrid->filters()
+    // 'author' is an association of the Book entity, the path is the same dot notation the fields use
+    ->add(TextFilter::new('author.fullName', t('Author name')))
+    // 'address' is a Doctrine embeddable inside the Author entity, its fields are addressed through it
+    ->add(TextFilter::new('author.address.country', t('Author country')))
+    // the path of an EntityFilter ends with an association, every publisher is offered in a select
+    ->add(EntityFilter::new('author.publisher', t('Publisher')))
+    ->add(DateFilter::new('createdAt', t('Created')))
+    ->add(NumericFilter::new('rating', t('Rating')))
+    ->add(MoneyFilter::new('price', t('Price')))
+    ->add(ChoiceFilter::new('status', t('Status'))->setChoices($this->statusEnum->getAllIndexedByTranslations()))
+    ->add(BooleanFilter::new('isVerifiedPurchase', t('Verified purchase')))
+    ->add(ProductFilter::new('product', t('Product')));
 ```
 
-Every filter takes the path and an optional label (derived from the last part of the path otherwise) and offers:
+Every filter takes the path and an optional label, derived from the last part of the path otherwise. It offers:
 
-- `setName()` — the key of the filter in the URL, derived from the path (`author_fullName`) by default; keep it stable, a renamed filter breaks bookmarked links,
-- `setOperators()` — a subset of the operations the type offers, in the order they are offered; an operation the type does not offer is refused,
+- `setName()` — the key of the filter in the URL, derived from the path (`author_fullName`) by default. Set it when two filters share a path. Keep it stable, a renamed filter breaks bookmarked links.
+- `setOperators()` — a subset of the operations the filter offers, in the order they are offered. Any other operation is refused.
 - `setValueFormOptions()` — options merged into the value form type (`choices`, `query_builder`, `attr`, ...).
 
-## Filters of the fields
+Two filters of the same name throw an exception. To replace a declared filter in an extension, remove it first: `$datagrid->filters()->remove('status')->add(...)`.
 
-A field of the datagrid becomes filterable by a single option, and the datagrid picks the filter by the value
-its path leads to:
-
-```php
-$datagrid
-    ->add('number', ['label' => t('Order Nr.'), 'searchable' => true, 'filterable' => true]) // TextFilter
-    ->add('createdAt', ['label' => t('Created'), 'filterable' => true])                     // DateFilter
-    ->add('paid', ['label' => t('Paid'), 'filterable' => true]);                            // BooleanFilter
-```
-
-| The path leads to | Filter |
-|---|---|
-| text | `TextFilter` |
-| an integer or a decimal number | `NumericFilter` |
-| a date, a date and time | `DateFilter` |
-| a boolean | `BooleanFilter` |
-| a product | `ProductFilter` |
-| any other entity | none — declare an `EntityFilter` when the table is small |
-
-The filter takes the label of the field, the path of the field (its `property`, or its name) and the name of the
-field as its name in the URL, the dots replaced by underscores (`customerUser.email` → `customerUser_email`).
-A field without a path of its own (a virtual one), a path the adapter cannot describe or a value
-no filter is known for (money, for one) is refused by `FieldNotFilterableException` when the datagrid is built.
-So is an association to any other entity than a product: the select of an `EntityFilter` loads every related
-entity whenever the list is displayed, which only the declaration can tell to be cheap.
-
-A filter declared by `filters()->add()` always takes precedence: declared under the name of a filterable field,
-it replaces the picked one, which is how a field gets a filter configured in detail or a filter the datagrid
-cannot pick. Any other declared filter is offered next to those of the fields:
-
-```php
-$datagrid
-    ->add('status', ['label' => t('Status'), 'filterable' => true])
-    ->add('totalPriceWithVat', ['label' => t('Total price'), 'filterable' => true]);
-
-$datagrid->filters()
-    // an association is never picked, so the field "status" gets a select of the few statuses, offering only
-    // "is one of" and "is none of"
-    ->add(EntityFilter::new('status', t('Status'))->setOperators([ExpressionOperatorEnum::IN, ExpressionOperatorEnum::NOT_IN]))
-    // no filter is known for money, so the field "totalPriceWithVat" needs a declared one (see Writing your own filter)
-    ->add(MoneyFilter::new('totalPriceWithVat', t('Total price')))
-    // a filter over a path that is not a field
-    ->add(TextFilter::new('items.catnum', t('Item catalog number')));
-```
-
-The filters are offered in the alphabetical order of their labels in the language of the administration, so the
-order does not depend on whether a filter was declared by a field, by `filters()->add()` or by an extension. An extension switches the filter of a field on or off by
-`$datagrid->update('email', ['filterable' => true])`.
-
-To pick the filters differently in a project — a filter of the project for money, say — replace the
-`FilterGuesser` service and override its `createFilter()`.
+The filters are offered in the alphabetical order of their labels in the language of the administration, wherever they were declared.
 
 ## The built-in filters
 
@@ -101,136 +98,167 @@ To pick the filters differently in a project — a filter of the project for mon
 |---|---|---|---|
 | `TextFilter` | text | contains, starts with, ends with, is, is not, is (not) filled | text |
 | `NumericFilter` | an integer or a decimal number | is, is not, greater / less than (or equal), between, is (not) filled | integer or decimal by the path, an integer within the range of its column |
+| `MoneyFilter` | money | is, is not, greater / less than (or equal), between, is (not) filled | an amount with up to six decimal places, without a currency |
 | `DateFilter` | a date, a date and time | is, is before, is after, between, is (not) filled | a day from the date picker |
 | `BooleanFilter` | a boolean | yes, no | none, the choice is the operation itself |
 | `ChoiceFilter` | any value | is one of, is none of, is, is not | one or several of `setChoices()` |
 | `EntityFilter` | an association | is one of, is none of, is (not) filled; has none / has some on a to-many path | related entities in a select, compared by their identifier |
 | `ProductFilter` | an association to a product | is, is not | a product picked in the product picker window |
 
-The operations of a filter are narrowed to those applicable to its path — `PathDescribingAdapterInterface::describePath()` tells the kind of value, `ExpressionOperatorEnum::assertApplicable()` the rules — so a text search is never offered on a number. A filter whose path does not exist, leads to another kind of value than the filter works with (a `NumericFilter` on money, an `EntityFilter` on a property) or keeps no operation at all is refused by `FilterNotApplicableException` when the datagrid is built. Over an adapter that cannot describe its paths (records in memory) the declaration is taken as it is — a text operation over a value that is not text (a number, an enum) then fails only when the records are filtered, by `OperatorNotApplicableToValueException`.
+The operations of a filter are narrowed to those applicable to its path, so a text search is never offered on a number. `InvalidDatagridDeclarationException` is thrown when the state of the datagrid is created for a filter whose path does not exist, leads to another kind of value (a `NumericFilter` on money, an `EntityFilter` on a property) or keeps no operation. An adapter that cannot describe its paths takes the declaration as it is, see [Differences between the adapters](./narrowing.md#differences-between-the-adapters).
 
-An `EntityFilter` offers every related entity in a select, loaded with its translations by one query shared by the selects of the page whenever the list is displayed — the prototypes of the rules hold the select even when no rule uses it. Declare it for a small table (a status, a unit, a flag); the catalogue is filtered by the `ProductFilter` and its picker.
+`MoneyFilter` compares the amount regardless of the currency. Narrow a list with prices in several currencies to one of them first, by a domain for example.
 
-Over a collection, "is not" and "is none of" negate the whole condition: "tags is none of Sale" lists the records without the tag Sale, not the records having some other tag. A record whose value is missing is "not X" as well (see [the vocabulary](./narrowing.md#the-vocabulary)).
+`EntityFilter` offers every row of the related entity in a select, loaded whenever the list is displayed. Declare it for a small table (a status, a unit, a flag); the catalogue is filtered by `ProductFilter` and its picker. The select ignores the domain of the list. For an entity that depends on the domain, limit the offer by `setValueFormOptions(['query_builder' => ...])` or by overriding `createChoicesQueryBuilder()`. The limit narrows the accepted values as well. Your own `query_builder` replaces the default query, the join of the translations included.
 
-A `DateFilter` over a date and time treats the picked day as a range in the time zone of the administration: "is 12.5." means from its midnight to the last moment before the midnight after, "is before 12.5." means before its midnight, "is after 12.5." means from the midnight after. The day is a single `between` comparison, so over a collection both of its bounds hold for the same related row. Over a date without time the day is compared as it is.
+`DateFilter` over a date and time treats the picked day as a range in the time zone of the administration: "is 12.5." means from its midnight to the last moment before the next midnight, "is before 12.5." means before its midnight, "is after 12.5." means from the next midnight. A date without time is compared as it is.
 
-## How a composed filter is applied
+Over a collection, "is not" and "is none of" negate the whole condition — "tags is none of Sale" lists the records without the tag Sale, see [Paths and collections](./narrowing.md#paths-and-collections).
 
-The form starts with one group holding one empty rule, so the first rule is one click away; a submission without any rule shows the same starting point. The composed rules arrive in a GET form named `<gridId>_filter` — groups of rules, each group with its own `AND`/`OR`, and an `AND`/`OR` between the groups. `FilterPanel::createCondition()` turns them into the [condition tree](./narrowing.md#the-condition-tree) and the datagrid sends it to the adapter together with the condition of the domain control. The rules of an unknown filter or without a value narrow nothing; a range with only one of its bounds filled is an error.
+## What the administrator sees
 
-The filter and the quick search are two ways of asking the same question, so only one of them applies: the filter whenever any rule was composed, the quick search otherwise. Submitting one form drops the parameters of the other.
+- The form starts with one group holding one empty rule. Each group combines its rules by `AND` or `OR`, and the groups are combined by `AND` or `OR` as well.
+- A rule without a value narrows nothing. A range with only one of its bounds filled is an error.
+- The quick search and the filter share one card as tabs. Only one of them applies: the filter whenever a rule is composed, the quick search otherwise. Submitting one form drops the parameters of the other.
+- The domain control moves into a card beside them as a compact select.
+- An invalid filter narrows nothing and shows its errors, and the page answers 422. A filter is invalid when a value is malformed, an operation is not offered, or it has more than 10 groups or more than 10 rules in a group.
 
-An invalid filter (a malformed number, an operation the filter does not offer) narrows nothing and shows its errors instead of quietly listing more than the administrator asked for.
+A datagrid outside the CRUD controller renders the filter by the same component, see [A datagrid outside the CRUD controller](./narrowing.md#a-datagrid-outside-the-crud-controller).
 
-## The form on the page
+## The advanced search of the older lists
 
-The `Admin:Grid:Filters` component renders the form; the `Admin:Grid:Controls` component renders it in the `datagrid_controls` block of the CRUD list template from the `FilterPanel` part of the state of the datagrid (`$datagridState->get(FilterPanel::class)`, null when no filter is offered or the state is created outside a request). The form is the one `FilterStateSubscriber` submitted while creating the state — once, before the records are loaded — so its errors are rendered. When the list offers the quick search as well, the two share one card as tabs — the tab of a composed filter is the open one — and the domain control moves into a card beside them as a compact select. Besides the composed groups the component renders a prototype of the operation select and the value input for every filter and every arity of its operations (`prototypes[<filter>][<arity>]`); the `datagrid-filter` Stimulus controller clones them when the administrator adds a rule or changes its filter or operation, so no request is needed until the filter is applied. The prototypes are a form of their own (`FilterPrototypesFormType`) the component builds by `FilterFormFactory` and names as the filter form, so a prototype becomes a rule by renaming its path, and they are never submitted.
-
-Outside the CRUD controller render the controls of the datagrid by `component('Admin:Grid:Controls', { state: datagridState, gridView: gridView })`, or the filter alone by `component('Admin:Grid:Filters', { filter: filterPanel, gridView: gridView })` — rendered in a card of its own, the panel marks a composed filter by the "Active" badge. The page answers 422 when the composed filter is invalid only if the controller says so — `$datagridState->isInvalid()`, see [Configuration, state and components](./narrowing.md#configuration-state-and-components).
+The older lists of orders, products, customers and complaints keep their advanced search (`Shopsys\FrameworkBundle\Model\AdvancedSearch`). The filters described here serve the lists built on the datagrid, such as the lists of CRUD controllers. The quick search of a datagrid takes the text literally, while the quick search of the older lists reads `*` and `?` as wildcards.
 
 ## Writing your own filter
 
-A filter type answers four questions: which operations it offers, how its value is entered, whether it can work on the path it was declared on, and how a submitted rule becomes a condition. `AbstractFilter` answers all four with sensible defaults, so a new type overrides only what differs.
+Filters are not services, so they are extended by inheritance — `class MyFilter extends ChoiceFilter`. `ChoiceFilter::new()` always creates the filter it names, the [static service access](../../extensibility/static-service-access.md) does not apply to filters.
 
-Filters are not services, so they are extended by inheritance — `MyFilter extends ChoiceFilter` — and the [static service access](../../extensibility/static-service-access.md) through `ExtendedClassNameResolver` does not apply to them: `ChoiceFilter::new()` always creates the filter it names.
-
-### 1. Name the operations and the value input
-
-Extend `AbstractFilter` (or the closest built-in filter) and list the operations of the [vocabulary](narrowing.md#the-vocabulary) the filter offers, in the order the administrator sees them, and the form type entering the value (a text input unless overridden):
+A filter the platform does not offer — "created in the last N days":
 
 ```php
 namespace App\Component\Datagrid\Filter;
 
+use DateTimeImmutable;
+use Override;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Condition;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Filter\AbstractFilter;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\Positive;
 
-final class MoneyFilter extends AbstractFilter
+class LastDaysFilter extends AbstractFilter
 {
+    #[Override]
     protected function getDefaultOperators(): array
     {
-        return [
-            ExpressionOperatorEnum::EQUALS,
-            ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL,
-            ExpressionOperatorEnum::LESS_THAN_OR_EQUAL,
-            ExpressionOperatorEnum::BETWEEN,
-        ];
+        return [ExpressionOperatorEnum::GREATER_THAN_OR_EQUAL];
     }
 
-    public function getValueFormType(string $arity): string
+    #[Override]
+    public function getOperatorLabel(string $operator): string
     {
-        return MoneyType::class;
+        return t('in the last (days)');
+    }
+
+    #[Override]
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
+    {
+        return IntegerType::class;
+    }
+
+    #[Override]
+    protected function getDefaultValueFormOptions(ExpressionValueArityEnum $arity): array
+    {
+        return ['constraints' => [new Positive()]];
+    }
+
+    #[Override]
+    protected function getApplicableValueTypes(): array
+    {
+        return [PathValueTypeEnum::DATE, PathValueTypeEnum::DATETIME];
+    }
+
+    #[Override]
+    protected function createComparison(string $operator, mixed $value): ?ConditionInterface
+    {
+        // "in the last 7 days" counts today as one of them
+        $since = new DateTimeImmutable('today', $this->getEnvironment()->displayTimeZone)->modify(sprintf('-%d days', $value - 1));
+
+        return Condition::greaterThanOrEqual($this->path, $since);
     }
 }
 ```
 
-That is already a complete filter. `resolveFor()` keeps only the operations applicable to the path (a filter left with none is refused when the datagrid is built), the form renders the money input for a single value or a pair of bounds for `between`, and `buildCondition()` turns a rule into a `Comparison` on the path. `setOperators()` on the declaration narrows the list further, never widens it.
-
-The name of the filter in the URL is derived from the path (`price`, `author_fullName` for `author.fullName`). Keep it stable — a renamed filter breaks bookmarked links — and call `setName()` only when two filters share a path.
-
-### 2. Shape the value form
-
-`getDefaultValueFormOptions()` returns the options of the value form type for the arity of the operation (`single`, `list`, or `range` for one of the bounds — `EntityFilter` turns a `list` into a multiple select); the options passed to `setValueFormOptions()` on the declaration are merged on top, so the declaration always wins. The `FilterEnvironment` the filter was resolved for is at hand through `getEnvironment()` — it carries the adapter, the vocabulary, the applicability rules and the time zone of the administration, which is how `DateFilter` keeps the picked day in that time zone:
-
 ```php
-protected function getDefaultValueFormOptions(string $arity): array
-{
-    return [
-        'model_timezone' => $this->getEnvironment()->displayTimeZone->getName(),
-    ];
-}
+// a second filter over the path of another filter needs a name of its own
+$datagrid->filters()->add(LastDaysFilter::new('createdAt', t('Created recently'))->setName('createdRecently'));
 ```
 
-`$this->pathDescription` (null when the adapter has no schema to describe the path from) tells the cardinality of the path, the kind of value it leads to, the entity class of an association and the range of integers the column of an integer holds. `NumericFilter` picks `IntegerType` over `NumberType` by it and holds an integer within the range of its column (a greater one would fail the query), `EntityFilter` takes the entity class of the select from it.
+The methods of `AbstractFilter` a filter overrides:
 
-### 3. Refuse a path the filter cannot work with
+- `getDefaultOperators()` — the operations of the [vocabulary](./narrowing.md#the-vocabulary) the filter offers, in the order the administrator sees them.
+- `getOperatorLabel()` — how an operation reads; the label of `ExpressionOperatorEnum` otherwise.
+- `getValueFormType()` and `getDefaultValueFormOptions()` — the form type of the value and its options, for the arity of the operation (`ExpressionValueArityEnum::SINGLE`, `LIST`, or `RANGE` for one of the bounds). The default is a text input. The options of `setValueFormOptions()` are merged on top. `getEnvironment()` gives the time zone of the administration, `$this->pathDescription` describes the path (null when the adapter cannot describe it).
+- `getApplicableValueTypes()` — the kinds of value the filter works with; a declaration over any other is refused when the state of the datagrid is created. Override `assertApplicable()` for another requirement (`ProductFilter` requires a product) and `isOperatorApplicable()` for a single operation.
+- `createComparison()` — turns the operation and the value (a single value, a list, or `[from, to]` for a range) into a condition of the [condition tree](./narrowing.md#the-condition-tree). Returning null narrows nothing. What the vocabulary cannot express is a [`DqlCondition`](#a-condition-in-dql).
 
-Override `getApplicableValueTypes()` when the type works with particular kinds of value only, so that a wrong declaration fails when the datagrid is built, not when the administrator submits it:
+Compare a range by one `between`, never by two comparisons of its bounds — over a collection each comparison is matched by a related row of its own.
 
-```php
-protected function getApplicableValueTypes(): array
-{
-    return [PathValueTypeEnum::MONEY];
-}
-```
+A filter is a plain object, so its unit test needs neither Doctrine nor a request: call `resolveFor()` with a `FilterEnvironment` over an adapter describing the path, then assert the operations and the condition `buildCondition()` builds from a `FilterRuleData`. `DateFilterTest` in `packages/administration/tests/Unit/Component/Datagrid/Filter/` shows the setup. A functional test requests the list with the rules in the URL — the form is named after the datagrid (`ProductReview_filter` for the product reviews), see `FilterListTest` in the project.
 
-Override `assertApplicable()` for anything else a path has to meet — `ProductFilter` checks that its association leads to a product. `isOperatorApplicable()` is the per-operation counterpart — `BooleanFilter` overrides it because its `yes` and `no` are not operators of the vocabulary and the applicability rules would not know them.
+### A condition in DQL
 
-### 4. Translate the rule when a plain comparison is not enough
-
-`createComparison()` receives the operation and the normalized value (a single value, a list, or `[from, to]` for a range) and returns any condition of the [condition tree](narrowing.md#the-condition-tree):
-
-- `EntityFilter` compares the identifier of the association instead of the association itself,
-- `DateFilter` turns "is 12.5." into the range of the day,
-- `BooleanFilter` offers operations of its own that carry the value in themselves — it says through `getValueArity()` that `yes` and `no` take no value and translates them to `equals` in `buildCondition()`.
+Every adapter has to understand every operation of the [vocabulary](./narrowing.md#the-vocabulary). A one-off condition over the ORM adapter that the operations cannot express — an aggregate of the related rows, a computed value — is a `DqlCondition` returned by `createComparison()`. Orders with more items than the given number:
 
 ```php
-protected function createComparison(string $operator, mixed $value): ?ConditionInterface
+namespace App\Component\Datagrid\Filter;
+
+use Override;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Condition\DqlCondition;
+use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\ProxyQuery;
+use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
+use Shopsys\AdministrationBundle\Component\Datagrid\Filter\AbstractFilter;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
+class ItemCountFilter extends AbstractFilter
 {
-    if ($operator === ExpressionOperatorEnum::EQUALS) {
-        // the input cannot express the stored precision (six decimal places), so "is" means "rounds to"
-        return Condition::between(
+    #[Override]
+    protected function getDefaultOperators(): array
+    {
+        return [ExpressionOperatorEnum::GREATER_THAN];
+    }
+
+    #[Override]
+    public function getValueFormType(ExpressionValueArityEnum $arity): string
+    {
+        return IntegerType::class;
+    }
+
+    #[Override]
+    protected function createComparison(string $operator, mixed $value): ?ConditionInterface
+    {
+        // the path is a collection of the listed entity: SIZE(o.items) > :dgexpr_0
+        return new DqlCondition(fn (ProxyQuery $proxyQuery): string => sprintf(
+            'SIZE(%s.%s) > :%s',
+            ProxyQuery::DEFAULT_ALIAS,
             $this->path,
-            $value->subtract(Money::create('0.005')),
-            $value->add(Money::create('0.004999')),
-        );
+            $proxyQuery->addParameter($value),
+        ));
     }
-
-    return parent::createComparison($operator, $value);
 }
 ```
 
-A range is one comparison, never two comparisons of its bounds — over a collection every comparison is matched by a related row of its own, so "rounds to 100" would match an order with one item for 50 and another one for 150.
-
-Returning `null` means the rule narrows nothing. What the vocabulary cannot express at all (an aggregate, a computed value) is a [`DqlCondition`](narrowing.md#beyond-the-vocabulary) returned from here — the price is that the datagrid then works with the ORM adapter only, say so in the docblock of the filter.
-
-Override `getOperatorLabel()` when an operation reads better in another word for the kind of value (`DateFilter` says "is before" instead of "is less than").
-
-### 5. Declare it and test it
-
 ```php
-$datagrid->filters()->add(MoneyFilter::new('price', t('Price')));
+$datagrid->filters()->add(ItemCountFilter::new('items', t('Number of items')));
 ```
 
-A filter is a plain object, so its unit test needs neither Doctrine nor a request: resolve it for a `FilterEnvironment` over an adapter describing the path, then assert the operations it offers and the condition `buildCondition()` builds from a `FilterRuleData`. `DateFilterTest` and `EntityFilterTest` in `packages/administration/tests/Unit/Component/Datagrid/Filter/` show the setup. A functional test of the list with the filter in the URL (see `FilterListTest` in the project) proves the whole path down to the rows.
+- The closure returns a predicate of the `WHERE` clause and composes with the rest of the tree.
+- The datagrid then works with the ORM adapter only. Any other adapter throws `UnsupportedConditionException`.
+- `ProxyQuery::addParameter()` registers a value and returns the name of its parameter.
+- `ProxyQuery::resolvePath($path)->dqlExpression` is the DQL of a path, joined the same way the datagrid joins it. A path through a collection is never joined — `ProxyQuery::exists($path, $buildPredicate)` builds an `EXISTS` subquery instead.
+- The root entity is aliased `ProxyQuery::DEFAULT_ALIAS` (`o`).

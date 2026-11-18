@@ -41,7 +41,7 @@ Read the source first — the docblocks are complete and the code is short. Docs
 | Hook interfaces (before/after/onError) | `vendor/shopsys/administration/src/Component/Crud/Extension/` | same page, section *Hooks System* |
 | Form configurator (FormType vs builder) | `vendor/shopsys/administration/src/Component/Crud/Form/CrudFormConfigurator.php` | *configureForm* section of the configuration reference |
 | Datagrid, fields, row actions | `vendor/shopsys/administration/src/Component/Datagrid/` | [Datagrid](https://docs.shopsys.com/en/latest/administration/datagrid/), [Fields](https://docs.shopsys.com/en/latest/administration/datagrid/fields/), [Row actions](https://docs.shopsys.com/en/latest/administration/datagrid/row-actions/) |
-| Domain control, quick search, the state of the datagrid, the condition tree | `vendor/shopsys/administration/src/Component/Datagrid/State/`, `.../Datagrid/Condition/`, `.../Datagrid/DomainControl/` | [Narrowing the records](https://docs.shopsys.com/en/latest/administration/datagrid/narrowing/) |
+| Domain control, quick search, the state of the datagrid, the condition tree | `vendor/shopsys/administration/src/Component/Datagrid/State/`, `.../Datagrid/Condition/`, `.../Datagrid/DomainControl/` | [Narrowing the records](https://docs.shopsys.com/en/latest/administration/datagrid/narrowing/), [List domain control](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/crud-controller/#list-domain-control) |
 | Filters: built-in types, writing your own | `vendor/shopsys/administration/src/Component/Datagrid/Filter/` | [Filters](https://docs.shopsys.com/en/latest/administration/datagrid/filters/) |
 | Top actions (`Action`, `ActionsConfig`) | `vendor/shopsys/administration/src/Component/Action/`, `.../Component/Config/ActionsConfig.php` | [Actions](https://docs.shopsys.com/en/latest/administration/crud-controller/reference/actions/) |
 | Extending an existing CRUD controller | `vendor/shopsys/administration/src/Controller/AbstractCrudControllerExtension.php` | [Extending](https://docs.shopsys.com/en/latest/administration/crud-controller/getting-started/extending-existing-crud-controller/) |
@@ -53,14 +53,14 @@ Working examples shipped with the platform (`vendor/shopsys/administration/src/`
 
 - `Controller/TransportGroupController.php` + `Model/Transport/TransportGroupCrudHandler.php` — the minimal full CRUD: FormType, one column, drag-and-drop ordering, `#[ForRole]`, menu positioning.
 - `Controller/BlogArticleAuthorController.php` — full CRUD plus a custom edit template with an extra grid (`setTemplate(ActionType::EDIT, …)` / `configureTemplateParameters()`).
-- `Controller/ProductReviewController.php` + `Model/ProductReview/ProductReviewEditHandler.php` — edit-only handler, `configureQuery()` with computed columns, templates per column, domain filter, searchable fields, filters (`ChoiceFilter`, `ProductFilter`, `BooleanFilter`), `disable()` by feature flag.
+- `Controller/ProductReviewController.php` + `Model/ProductReview/ProductReviewEditHandler.php` — edit-only handler, `configureQuery()` with computed columns, templates per column, domain filter, searchable fields (`new Searchable(paths: …, label: …)` on combined fields, a hidden searchable `uuid`), filters (`ChoiceFilter`, `ProductFilter`, `BooleanFilter`), `disable()` by feature flag.
 
 ## What you get and how it fits together
 
 ```
 #[CrudController(Entity::class)]  Controller  ── configure(CrudConfig)         menu, names, route prefix, role section, handlers, domain control
                                               ── configureDatagrid(Datagrid)  list columns, ordering, drag&drop, row actions, searchable fields, filters()
-                                              ── configureQuery(QueryBuilder) list DQL (root alias is `o`), fixed conditions
+                                              ── configureQuery(QueryBuilder) list DQL (root alias is `o`), fixed and domain-derived conditions
                                               ── configureForm(...)           create/edit form: useFormType() OR useBuilder()
                                               ── configureActions(...)        top buttons per page (ActionType::LIST/EDIT/…)
                                               ── configureTemplateParameters(...)  extra variables for a template replaced via $config->setTemplate()
@@ -194,9 +194,9 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 }
 ```
 
-Field options: `label`, `visible`, `sortable`, `searchable` (text paths only; a combined field is
-searched in its text paths), `filterable` (filter picked by the path; not for combined or
-virtual fields), `virtual` (not selected from the entity — pair with `property` or
+Field options: `label`, `visible`, `sortable`, `searchable` (`true` searches in every property of
+the field, each has to lead to text or a UUID; `new Searchable(paths: [...], label: ...)` picks some of
+them), `filterable` (filter picked by the path; not for combined or virtual fields), `virtual` (not selected from the entity — pair with `property` or
 `transform`), `property` (DQL path, e.g. `product.id`, or an array of
 paths — all are fetched, the template gets them as `value.<path>`, the column sorts by all of
 them and without a template they are joined with a space; prefer this over hidden helper
@@ -215,22 +215,31 @@ search and the filter add their parts and their conditions are combined) and lis
 **Narrowing the list** — pick by who drives the condition:
 
 - `'searchable' => true` on a field — the administrator types a text, it is looked for in
-  every searchable field (diacritics-insensitive). Only paths leading to text.
+  every searchable field (diacritics-insensitive). Only paths leading to text or a UUID (a UUID
+  is matched exactly, only when the typed text is a valid UUID); a combined field with other
+  properties needs `new Searchable(paths: [...])`. Money, numbers and dates are filtered, not searched.
 - `'filterable' => true` on a field — the datagrid picks the filter by the value of the path
-  (text, number, date, boolean, product; money, another entity and virtual fields have none —
-  declare an `EntityFilter` for a small table, its select loads every related entity).
+  (text, number, money, date, boolean, product; another entity, combined and virtual fields have
+  none — declare an `EntityFilter` for a small table, its select loads every related entity).
+  The field adds a `GuessedFilter` to `filters()` under its filter name (`customerUser.email` field →
+  `customerUser_email`): an extension removes it by `filters()->remove('customerUser_email')` (works for a declared filter
+  as well); to configure it, declare the filter under the same name.
 - `$datagrid->filters()->add(TextFilter::new('author.fullName', t('Author')))` — the
   administrator composes rules from the declared filters (AND/OR groups, operators per type).
-  Always takes precedence: declared under the name of a `filterable` field it replaces the
-  picked filter (`customerUser.email` field → filter name `customerUser_email`).
+  Declared under the name of a `filterable` field it replaces the picked filter, in any order.
   Filters are offered sorted by label in the administration language.
-  Built-in: `TextFilter`, `NumericFilter`, `DateFilter`, `BooleanFilter`, `ChoiceFilter`,
+  Built-in: `TextFilter`, `NumericFilter`, `MoneyFilter`, `DateFilter`, `BooleanFilter`, `ChoiceFilter`,
   `EntityFilter`, `ProductFilter`; a filter over another kind of value (`NumericFilter` over money)
   is refused when the datagrid is built; own type = extend `AbstractFilter`, see the Filters docs.
   A filter outranks the quick search: when filter rules are submitted, the search text is ignored.
   Over a collection "is not" / "is none of" negate the whole condition, a missing value is "not X".
-- a fixed condition nobody switches off (`o.deleted = :deleted`) goes to `configureQuery()`
-  as a parameterized `andWhere()`, next to the computed columns and joins of the list.
+- a condition of the list itself goes to `configureQuery()` as a parameterized `andWhere()`, next
+  to the computed columns and joins — a fixed one (`o.deleted = :deleted`) or one derived from the
+  selected domain (`AdminDomainTabsFacade::getSelectedDomainId()` for the switcher,
+  `DomainControlScopeFactory::create($this->definition->getConfig()->getDomainControlConfig(),
+  $this->definition->entityClass)` for the filter; the state of the datagrid does not exist yet there).
+  The searched text and the filter rules belong to searchable fields and filters, not there: only
+  those make the list answer 422 for an invalid filter and turn drag-and-drop off while they narrow it.
 
 Both the quick search and the filters are switched by tabs above the datagrid; when the list
 also has a domain filter, it moves to a select on the right of them.

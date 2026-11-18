@@ -8,6 +8,7 @@ This component is built on top of the [Grid](../internal-grid/index.md) componen
   - [Fields](./fields.md)
   - [Row actions](./row-actions.md)
   - [Filters](./filters.md)
+- [Narrowing the records](./narrowing.md) — the quick search, where a condition belongs and the datagrid outside the CRUD controller
 
 ## Architecture
 
@@ -24,7 +25,7 @@ There are currently two adapters available:
 
 You can also create your own adapter by implementing the `Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface`.
 
-Every adapter narrows its records by the condition of the `DatasourceRequest` it is given — a tree of plain data, which the adapter compiles into its own medium through its `ExpressionBuilderInterface`, so the same code works over any medium. Optional abilities are declared by extending interfaces the adapter may implement: `EntityClassAwareAdapterInterface` (the adapter knows its entity class) and `PathDescribingAdapterInterface` (the adapter describes a path before any query is built). See [Narrowing the records](./narrowing.md).
+Every adapter narrows its records by the condition of the `DatasourceRequest` it is given, see [Narrowing the records](./narrowing.md#the-condition-tree). An adapter may implement `EntityClassAwareAdapterInterface` (it knows its entity class) and `PathDescribingAdapterInterface` (it describes a path before any query is built).
 
 ### Datagrid class
 
@@ -39,7 +40,7 @@ For detailed information about automatic permission controls, see [Grid Permissi
 
 ## Define Datagrid
 
-To define a datagrid that is prepared for configuration you need to do two steps:
+To define a datagrid that is prepared for configuration follow these steps:
 
 1. Create your adapter via Factory:
 
@@ -72,41 +73,12 @@ class MyController extends AbstractController
 }
 ```
 
-2. Create Datagrid instance via Factory:
+2. Create Datagrid instance via `DatagridFactory`:
 
 ```php
-class MyController extends AbstractController
-{
-    /**
-    * ...
-    * @param Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory $datagridFactory
-    * @param Shopsys\AdministrationBundle\Component\Datagrid\State\DatagridStateFactory $datagridStateFactory
-    */
-    public function __construct(
-        // ...
-        private readonly DatagridFactory $datagridFactory,
-        private readonly DatagridStateFactory $datagridStateFactory,
-    ) {
-    }
-    
-    public function myAction(): Response
-    {
-        // ...
-
-        $datagrid = $this->datagridFactory->create($adapter, [
-            'roleConstant' => 'ROLE_MY', // required - enables permission-based features
-        ]);
-        
-        // ... configure the datagrid, then create its state - what narrows it in the current request
-        $datagridState = $this->datagridStateFactory->create($datagrid->getConfig());
-        
-        // In template use {{ datagrid.render }} method to render the datagrid, its quick search, filter and domain
-        // control are rendered by the Admin:Grid:Controls component, see narrowing.md
-        return $this->render('my_template.html.twig', [
-            'datagrid' => $datagrid->createView($datagridState),
-        ]);
-    }
-}
+$datagrid = $this->datagridFactory->create($adapter, [
+    'roleConstant' => 'ROLE_MY', // required - enables permission-based features
+]);
 ```
 
 3. Configure Datagrid:
@@ -114,3 +86,5 @@ class MyController extends AbstractController
 The next step is to configure Datagrid by using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
 
 More information about configuration can be found in the [Configuration](./configuration.md) section.
+
+4. Create the state of the datagrid and render it — see [A datagrid outside the CRUD controller](./narrowing.md#a-datagrid-outside-the-crud-controller).
