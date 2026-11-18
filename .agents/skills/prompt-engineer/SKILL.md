@@ -26,8 +26,8 @@ When invoked with content, I will:
 4. **Output complete structured prompt** - Ready-to-use prompt following the template format
 
 ## Template Sections Applied
-- **Always Include**: Task Context, Tone Context, Detailed Task Description, Immediate Request, Thinking Instructions, Output Formatting
-- **Include When Relevant**: Background Data, Examples, Conversation History, Prefilled Response
+- **Always Include**: Task Context, Tone Context, Detailed Task Description, Immediate Request, Output Formatting
+- **Include When Relevant**: Background Data, Examples, Conversation History
 
 ## Example Usage
 ```bash
@@ -58,10 +58,7 @@ The command outputs a complete structured prompt following this pattern:
 ## 6. Immediate Task Description
 <question>{{CONTENT_RESTATED}}</question>
 
-## 7. Thinking Step by Step
-[Systematic processing instructions]
-
-## 8. Output Formatting
+## 7. Output Formatting
 [Desired response structure]
 ```
 
