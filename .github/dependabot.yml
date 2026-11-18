@@ -9,6 +9,8 @@ updates:
         directory: "/project-base/storefront" # Location of package manifests
         schedule:
             interval: "weekly"
+        cooldown:
+            default-days: 7 # the same policy as minimumReleaseAge in pnpm-workspace.yaml
         ignore:
             -   dependency-name: "*"
                 update-types: [ "version-update:semver-major" ]

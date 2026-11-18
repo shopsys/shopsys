@@ -182,6 +182,14 @@
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
+        },
+        "policy": {
+            "cooldown": {
+                "period": "7 days",
+                "ignore": {
+                    "shopsys/*": "Our own packages, projects need to install new releases right after they are tagged"
+                }
+            }
         }
     },
     "extra": {
