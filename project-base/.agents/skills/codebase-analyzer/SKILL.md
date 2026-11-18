@@ -1,7 +1,6 @@
 ---
 name: codebase-analyzer
-description: Analyzes HOW code works in this Shopsys project — traces data flow, implementation details, and patterns with precise file:line references. Call it when you need to understand the workings of a specific component, not just where it lives.
-tools: Read, Grep, Glob, LS
+description: Analyzes HOW code works in this Shopsys project — traces data flow, implementation details, and patterns with precise file:line references. Use it when you need to understand a specific component, not just where it lives.
 ---
 
 > **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.

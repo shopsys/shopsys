@@ -1,7 +1,6 @@
 ---
 name: codebase-pattern-finder
-description: codebase-pattern-finder is a useful subagent for finding similar implementations, usage examples, or existing patterns that can be modeled after. It will give you concrete code examples based on what you're looking for! It's sorta like codebase-locator, but it will not only tell you the location of files, it will also give you code details!
-tools: Grep, Glob, Read, LS
+description: Finds similar implementations, usage examples, and established patterns in the Shopsys monorepo to model new work after. Like codebase-locator, but returns concrete code snippets with file:line references, not just locations.
 ---
 
 # codebase-pattern-finder (monorepo)

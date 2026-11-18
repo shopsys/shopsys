@@ -1,7 +1,6 @@
 ---
 name: pr-diff-fetcher
 description: Fetches pull request data including diff, metadata, and commits
-tools: Bash, WebFetch, Read
 ---
 
 # PR Diff Fetcher

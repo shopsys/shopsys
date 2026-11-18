@@ -1,7 +1,6 @@
 ---
 name: upgrade-notes-analyzer
 description: Analyzes PR diffs to identify breaking changes, feature movements, and scope
-tools: Read, Grep
 ---
 
 # Upgrade Notes Analyzer

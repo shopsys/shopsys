@@ -1,7 +1,6 @@
 ---
 name: codebase-pattern-finder
-description: Finds similar implementations, usage examples, and established patterns in this Shopsys project that you can model new work after. Like codebase-locator, but it also returns concrete code snippets with file:line references, not just locations.
-tools: Grep, Glob, Read, LS
+description: Finds similar implementations, usage examples, and established patterns in this Shopsys project to model new work after. Like codebase-locator, but returns concrete code snippets with file:line references, not just locations.
 ---
 
 > **Monorepo note:** if the repository has top-level `packages/` and `project-base/` directories (the shopsys/shopsys monorepo layout, not a standalone project), also read `.agents/skills/monorepo-vs-project/SKILL.md` and apply its delta (package-first + path/role remap) on top of this skill.
