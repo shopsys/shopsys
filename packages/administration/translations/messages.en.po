@@ -64,6 +64,9 @@ msgstr ""
 msgid "Add country"
 msgstr ""
 
+msgid "Add group of rules"
+msgstr ""
+
 msgid "Add item"
 msgstr ""
 
@@ -77,6 +80,9 @@ msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
+msgstr ""
+
+msgid "Add rule"
 msgstr ""
 
 msgid "Additional service"
@@ -167,6 +173,9 @@ msgid "Applicable variables for Content"
 msgstr ""
 
 msgid "Applicable variables for Subject"
+msgstr ""
+
+msgid "Apply filter"
 msgstr ""
 
 msgid "Approve review"
@@ -1063,6 +1072,9 @@ msgstr ""
 msgid "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 msgstr "Fill in the withdrawal data and save this form to change the order status to withdrawn. Closing the window will keep the current status."
 
+msgid "Filter"
+msgstr ""
+
 msgid "First name"
 msgstr ""
 
@@ -1088,6 +1100,9 @@ msgid "Free transport and payment"
 msgstr ""
 
 msgid "Friday"
+msgstr ""
+
+msgid "From"
 msgstr ""
 
 msgid "From (with VAT)"
@@ -1945,6 +1960,9 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
+msgid "Remove group"
+msgstr ""
+
 msgid "Remove rule"
 msgstr ""
 
@@ -2123,6 +2141,9 @@ msgid "Search in transfers"
 msgstr ""
 
 msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Search in: %fields%"
 msgstr ""
 
 msgid "Search navigation"
@@ -2431,6 +2452,9 @@ msgstr ""
 msgid "Thursday"
 msgstr ""
 
+msgid "To"
+msgstr ""
+
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr ""
 
@@ -2722,7 +2746,19 @@ msgstr ""
 msgid "administrators"
 msgstr ""
 
+msgid "all of the groups match"
+msgstr ""
+
+msgid "all of the rules match"
+msgstr ""
+
 msgid "and %count% more"
+msgstr ""
+
+msgid "any of the groups matches"
+msgstr ""
+
+msgid "any of the rules matches"
 msgstr ""
 
 msgid "articles"
@@ -2741,6 +2777,9 @@ msgid "complaint statuses"
 msgstr ""
 
 msgid "complaints"
+msgstr ""
+
+msgid "contains"
 msgstr ""
 
 msgid "countries"
@@ -2764,6 +2803,9 @@ msgstr ""
 msgid "empty"
 msgstr ""
 
+msgid "ends with"
+msgstr ""
+
 msgid "files"
 msgstr ""
 
@@ -2782,7 +2824,52 @@ msgstr ""
 msgid "gift plans"
 msgstr ""
 
+msgid "has none"
+msgstr ""
+
+msgid "has some"
+msgstr ""
+
 msgid "inquiries"
+msgstr ""
+
+msgid "is"
+msgstr ""
+
+msgid "is after"
+msgstr ""
+
+msgid "is before"
+msgstr ""
+
+msgid "is between"
+msgstr ""
+
+msgid "is filled"
+msgstr ""
+
+msgid "is greater or equal to"
+msgstr ""
+
+msgid "is greater than"
+msgstr ""
+
+msgid "is less or equal to"
+msgstr ""
+
+msgid "is less than"
+msgstr ""
+
+msgid "is none of"
+msgstr ""
+
+msgid "is not"
+msgstr ""
+
+msgid "is not filled"
+msgstr ""
+
+msgid "is one of"
 msgstr ""
 
 msgid "or"
@@ -2810,6 +2897,9 @@ msgid "ready category seo mixes"
 msgstr ""
 
 msgid "records"
+msgstr ""
+
+msgid "starts with"
 msgstr ""
 
 msgid "subscribers"

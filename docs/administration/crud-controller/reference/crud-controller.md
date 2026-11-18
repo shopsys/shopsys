@@ -93,7 +93,7 @@ protected function configureActions(ActionsConfig $actions): void
 
 ### `configureDatagrid(Datagrid $datagrid): void`
 
-Configure the datagrid for the list page. See [Configuring List Page](../getting-started/configure-list-page.md) for examples.
+Configure the datagrid for the list page. See [Configuring List Page](../getting-started/configure-list-page.md) for examples and the [Datagrid](../../datagrid/index.md) documentation for everything the datagrid offers: [fields](../../datagrid/fields.md), [row actions](../../datagrid/row-actions.md), the quick search, the [filters](../../datagrid/filters.md) and the [conditions narrowing the records](../../datagrid/narrowing.md).
 
 ```php
 protected function configureDatagrid(Datagrid $datagrid): void
@@ -112,9 +112,31 @@ protected function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
+The same method declares everything that narrows the list for the administrator:
+
+- a field with `'searchable' => true` joins the **quick search** — a text input above the datagrid searching in every such field ([Quick search](../../datagrid/narrowing.md#quick-search)),
+- `$datagrid->filters()->add(TextFilter::new('author.fullName', t('Author name')))` declares a **filter** the administrator composes rules from ([Filters](../../datagrid/filters.md)).
+
+A fixed condition the administrator neither sees nor switches off belongs to [`configureQuery()`](#configurequeryquerybuilder-querybuilder-void).
+
+```php
+protected function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('number', ['label' => t('Order Nr.'), 'searchable' => true])
+        ->add('email', ['label' => t('E-mail'), 'searchable' => true]);
+
+    $datagrid->filters()
+        ->add(EntityFilter::new('status', t('Status')))
+        ->add(DateFilter::new('createdAt', t('Created')));
+}
+```
+
 ### `configureQuery(QueryBuilder $queryBuilder): void`
 
-Modify the query used to fetch entities for the list page.
+Shape the query used to fetch entities for the list page **statically** — a fixed condition the administrator neither sees nor switches off, a default join, a computed column, an ordering. It runs once when the adapter is created and works with Doctrine only. Keep the conditions parameterized.
+
+A condition the administrator drives (a search, a filter) never belongs here: declare a [filter](../../datagrid/filters.md) or a searchable field instead.
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
@@ -127,62 +149,82 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 
 ### List domain control
 
-Use `setListDomainControl()` in `configure()` to display a domain control above the datagrid.
+A list of an entity implementing `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface` displays the **domain filter** above the datagrid and filters the list query by the selected domain **automatically** — no `configure()` or `configureQuery()` code is needed.
+
+A selected domain limits the list to that domain, and the "All domains" option limits it to the domains available to the administrator.
+The filter remembers its selection under a namespace generated from the controller name, and hides itself when only one domain is available.
+It is rendered as a row of domain tabs above the datagrid; a list offering a quick search or a filter renders it as a compact select in a card beside them.
+
+Use `setListDomainControl()` in `configure()` to change the default:
 
 ```php
-use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
+use Shopsys\AdministrationBundle\Component\Datagrid\DomainControl\DomainControlType;
 
 public function configure(CrudConfig $config): void
 {
-    $config->setListDomainControl(CrudListDomainControl::QUICK_FILTER, [1, 3]);
+    $config->setListDomainControl(DomainControlType::FILTER, [1, 3], 'crud_shared_selection');
 }
 ```
 
-- `CrudListDomainControl::QUICK_FILTER` displays a per-list filter with an "All domains" option.
-  The filter stores its selection under a namespace generated from the controller name.
+- `DomainControlType::FILTER` displays a per-list filter with an "All domains" option.
   The optional `$allowedDomainIds` argument restricts the filter to the specified domain IDs; the list is always intersected with the domains available to the administrator.
-- `CrudListDomainControl::SWITCHER` displays the global administration domain switcher.
-  It always returns one selected domain ID and does not support `$allowedDomainIds`.
+  The optional `$filterNamespace` argument overrides the generated namespace — pass the same value in two controllers to share the selection between their lists.
+- `DomainControlType::SWITCHER` displays the global administration domain switcher.
+  It always returns one selected domain ID and supports neither `$allowedDomainIds` nor `$filterNamespace`.
+  Use it on lists whose create and edit actions are bound to the globally selected domain.
+- Both take the optional `$domainIdPath` — the path to the domain ID the list is limited by, for an entity related to a domain in another way than by implementing `DomainSeparatedEntityInterface` (see below).
+- `DomainControlType::NONE` displays no domain control and applies no domain condition. Use it to opt an entity belonging to a domain out of the automatic filtering.
 
-When the entity implements `\Shopsys\FrameworkBundle\Component\Domain\Entity\DomainSeparatedEntityInterface`, the domain condition is applied to the list query automatically (no `configureQuery()` code is needed).
-A selected domain limits the list to that domain, and the "All domains" option of a quick filter limits it to the domains available to the administrator (intersected with the configured allowed domain IDs).
+The domain condition is applied whenever the control is enabled, even when only one domain is available — a list must never show records of a domain the administrator has no access to.
+
+#### Automatic domain field
+
+When the domain filter offers more than one domain, a field displaying the domain of every record is added to the datagrid automatically as the last one. A path leading through a collection (`domains.domainId`) has no single domain to display, so no field is added for it.
+
+Adding the field yourself takes precedence over the automatic one, which is the way to change its label, position or visibility:
+
+```php
+protected function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('name', ['label' => t('Name')])
+        ->add('domainId', ['label' => t('Shop')]);
+}
+```
+
+Displaying the domain and filtering by it are independent — hiding the field (`'visible' => false`) never widens the listed records. Use `DomainControlType::NONE` to turn the filtering off as well.
 
 #### Entities without `DomainSeparatedEntityInterface`
 
-When the entity is related to a domain in another way (e.g. through a joined entity), nothing is applied to the list query automatically.
-Decide first what the domain control should affect on your list — the two cases need different code and can be combined.
-
-**Limiting which entities are listed** — apply the condition in `configureQuery()` using `addListDomainIdsCondition()` with the DQL field holding the domain ID:
+Such an entity displays no domain control and no domain condition. When the entity is related to a domain in another way, enable the control with the path to its domain ID — a path through a collection matches a record related to any of the selected domains:
 
 ```php
-protected function configureQuery(QueryBuilder $queryBuilder): void
+public function configure(CrudConfig $config): void
 {
-    $queryBuilder->join('o.domains', 'od');
-    $this->addListDomainIdsCondition($queryBuilder, 'od.domainId');
+    $config->setListDomainControl(DomainControlType::FILTER, domainIdPath: 'domains.domainId');
 }
 ```
 
-The condition respects the selected domain (or all domains available to the list when "All domains" is selected in a quick filter) and matches nothing when no domain is available to the administrator.
-It excludes an entity only when the entity has no row for the given domain — joined entities that are created for every domain are never excluded.
+Enabled without the path, the control only offers the domain choice and nothing is applied to the list query.
 
-The join lists the entity once per matching domain, so use it only where a single domain is always selected (`SWITCHER`).
-With "All domains" selected, an entity related to three domains is listed three times.
-
-**Showing per-domain values in a column** (status, publish date, …) — select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected:
+**Showing per-domain values in a column** (status, publish date, …) — select the value for the selected domain, or aggregate it over the domains of the list when "All domains" is selected. Inject `DomainControlScopeFactory` into your controller to resolve the same scope the datagrid works with:
 
 ```php
 protected function configureQuery(QueryBuilder $queryBuilder): void
 {
+    // the list enables the domain control in configure(), so there is a scope
+    $domainControlScope = $this->domainControlScopeFactory->create($this->definition->getConfig()->getDomainControlConfig());
+
     $queryBuilder
         ->addSelect(sprintf(
             '(SELECT MIN(bad.status) FROM %s bad WHERE bad.blogArticle = o AND bad.domainId IN (:domainIds)) AS domainStatus',
             BlogArticleDomain::class,
         ))
-        ->setParameter('domainIds', $this->getEffectiveListDomainIds());
+        ->setParameter('domainIds', $domainControlScope->getEffectiveDomainIds());
 }
 ```
 
-`getEffectiveListDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
+`getEffectiveDomainIds()` returns the selected domain, or the domains of the list when "All domains" is selected.
 A subselect is used instead of a join to keep one row per entity, and each subselect needs its own DQL alias, as aliases are unique within the whole query.
 
 Such a value does not map to a property of the listed entity, so display it with a `virtual` datagrid field whose `transform` reads it from the row:
@@ -194,8 +236,6 @@ $datagrid->add('status', [
     'transform' => fn (mixed $value, array $row): mixed => $row['domainStatus'] ?? null,
 ]);
 ```
-
-For fully custom conditions, use `getSelectedListDomainId()` and `getEffectiveListDomainIds()`.
 
 ### `configureForm(CrudFormConfigurator $formConfigurator, ?Presentable $entity = null): void`
 
@@ -251,7 +291,7 @@ The templates define empty blocks around the main content, so the extending temp
 | Template | Blocks (in order) |
 |---|---|
 | `new.html.twig`, `edit.html.twig` | `before_form`, `form`, `after_form` (+ `entity_log` on the edit page, see below) |
-| `list.html.twig` | `domain_control`, `before_grid`, `grid`, `after_grid` |
+| `list.html.twig` | `datagrid_controls`, `before_grid`, `grid`, `after_grid` |
 
 ```twig
 {% extends '@ShopsysAdministration/crud/edit.html.twig' %}
@@ -261,7 +301,7 @@ The templates define empty blocks around the main content, so the extending temp
 {% endblock %}
 ```
 
-The edit page passes the displayed record to the template as `entity`. Other variables the template needs are provided by [`configureTemplateParameters()`](#template-parameters) described below.
+The edit page passes the displayed record to the template as `entity`. The list page passes the view of the datagrid as `grid` and its state as `datagridState` — the `datagrid_controls` block renders the domain control, the quick search and the filter from it by `component('Admin:Grid:Controls', { state: datagridState, gridView: grid })`. Other variables the template needs are provided by [`configureTemplateParameters()`](#template-parameters) described below.
 
 ### Template parameters
 

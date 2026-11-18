@@ -71,7 +71,47 @@ public function configureDatagrid(Datagrid $datagrid): void
 }
 ```
 
-## 3. Configure list actions
+## 3. Enable quick search
+
+Mark the fields the administrator may search in with the `searchable` option. A text input appears above the datagrid and the typed text is looked for in every searchable field.
+
+```php
+public function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('number', [
+            'label' => t('Order Nr.'),
+            'searchable' => true,
+        ])
+        ->add('email', [
+            'label' => t('E-mail'),
+            'searchable' => true,
+        ]);
+}
+```
+
+Only a field leading to text can be searchable — see [Quick search](../../datagrid/narrowing.md#quick-search).
+
+## 4. Declare filters
+
+Let the administrator compose rules over the records. The simplest way is to mark a field `filterable` — the datagrid picks a filter by the value the field leads to. A filter declared by `filters()->add()` under the name of the field replaces the picked one, any other declared filter is offered next to them.
+
+```php
+public function configureDatagrid(Datagrid $datagrid): void
+{
+    $datagrid
+        ->add('number', ['label' => t('Order Nr.'), 'filterable' => true])
+        ->add('createdAt', ['label' => t('Created'), 'filterable' => true]);
+
+    $datagrid->filters()
+        ->add(EntityFilter::new('status', t('Status')))
+        ->add(TextFilter::new('customerUser.email', t('Customer e-mail')));
+}
+```
+
+The built-in filters and the rules of composing them are described in [Filters](../../datagrid/filters.md).
+
+## 5. Configure list actions
 
 Sometimes you may want to add some actions on the list page. You can do that by using the `configureActions` method. This method is also used for configuring actions on other pages, so you can use the `ActionsConfig` object to define the actions that will be displayed on the list page.
 

@@ -24,6 +24,13 @@ services:
         arguments:
             $customRoleConstants: '%shopsys.admin.crud_role_constants%'
 
+    # the builders of the datagrid media, replaceable by a project in its own services.yaml
+    Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactoryInterface:
+        alias: Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\Expression\DqlExpressionBuilderFactory
+
+    Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface:
+        alias: Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Array\Expression\PhpExpressionBuilder
+
     Shopsys\AdministrationBundle\Component\Menu\CrudMenuSubscriber:
         tags:
             - { name: kernel.event_subscriber }
