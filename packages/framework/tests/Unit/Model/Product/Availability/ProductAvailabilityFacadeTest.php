@@ -11,17 +11,23 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\DomainFactory;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\CurrentAdministrator;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellableVariantsProvider;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Tests\FrameworkBundle\Test\DomainConfigHelper;
 
@@ -44,7 +50,23 @@ final class ProductAvailabilityFacadeTest extends TestCase
             ->willReturnCallback(
                 static fn (string $id, array $parameters = []): string => strtr($id, $parameters),
             );
-        Translator::injectSelf($translatorStub);
+        ExtendedClassNameResolver::resolve(Translator::class)::injectSelf($translatorStub);
+    }
+
+    public function testPickupStockMustCoverSumOfSeparateRowsOfSameProduct(): void
+    {
+        $product = $this->createProduct(null);
+        $stock = $this->createStub(Stock::class);
+        $stock->method('getId')->willReturn(1);
+        $stock->method('isEnabled')->willReturn(true);
+        $store = $this->createStub(Store::class);
+        $store->method('getStock')->willReturn($stock);
+        $productStockFacade = $this->createStub(ProductStockFacade::class);
+        $productStockFacade->method('getStockQuantitiesByProductsIndexedByProductIdAndStockId')->willReturn([1 => [1 => 1]]);
+        $facade = $this->createProductAvailabilityFacade(true, '2026-07-12', 'UTC', $productStockFacade);
+
+        self::assertFalse($facade->isTransferToStoreNeeded([new QuantifiedProduct($product, 1)], $store, 1));
+        self::assertTrue($facade->isTransferToStoreNeeded([new QuantifiedProduct($product, 1), new QuantifiedProduct($product, 1)], $store, 1));
     }
 
     /**
@@ -445,12 +467,15 @@ final class ProductAvailabilityFacadeTest extends TestCase
         bool $isProductAvailableOnDomain,
         string $now,
         string $displayTimezone = 'UTC',
+        ?ProductStockFacade $productStockFacade = null,
     ): ProductAvailabilityFacade {
         $settingStub = $this->createStub(Setting::class);
         $settingStub->method('getForDomain')->willReturn(self::FEED_DELIVERY_DAYS_SETTING);
 
-        $productStockFacadeStub = $this->createStub(ProductStockFacade::class);
-        $productStockFacadeStub->method('isProductAvailableOnDomain')->willReturn($isProductAvailableOnDomain);
+        if ($productStockFacade === null) {
+            $productStockFacade = $this->createStub(ProductStockFacade::class);
+            $productStockFacade->method('isProductAvailableOnDomain')->willReturn($isProductAvailableOnDomain);
+        }
 
         $clockStub = $this->createStub(ClockInterface::class);
         $clockStub->method('now')->willReturn($this->createDate($now));
@@ -464,7 +489,7 @@ final class ProductAvailabilityFacadeTest extends TestCase
 
         return new ProductAvailabilityFacade(
             $settingStub,
-            $productStockFacadeStub,
+            $productStockFacade,
             $this->createStub(StoreFacade::class),
             $this->createDomain(),
             new InMemoryCache(),
@@ -554,10 +579,10 @@ final class ProductAvailabilityFacadeTest extends TestCase
 
     private function createDomain(): Domain
     {
-        return new Domain(
-            [DomainConfigHelper::getDomainConfig()],
-            $this->createStub(Setting::class),
-            $this->createStub(CurrentAdministrator::class),
-        );
+        $loader = $this->createStub(DomainsConfigLoader::class);
+        $loader->method('loadDomainConfigsFromYaml')->willReturn([DomainConfigHelper::getDomainConfig()]);
+
+        return (new DomainFactory($loader, $this->createStub(Setting::class), $this->createStub(CurrentAdministrator::class)))
+            ->create('domains.yaml', 'domains_urls.yaml');
     }
 }

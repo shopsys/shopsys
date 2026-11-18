@@ -17,13 +17,14 @@ export const checkGiftIsDisplayedInAddToCartPopup = () => {
 };
 
 export const checkGiftIsDisplayedInCart = () => {
-    cy.getByTID([[TIDs.pages_cart_list_item_, staticData.products.giftTicket100czk.catnum]])
-        .should('be.visible')
-        .then(($el) => {
-            t('Gift').then((translatedText) => {
-                cy.wrap($el).should('contain.text', translatedText);
-            });
-        });
+    cy.getByTID([
+        [TIDs.pages_cart_list_item_, staticData.products.delonghi.catnum],
+        [TIDs.pages_cart_gift_, staticData.products.giftTicket100czk.uuid],
+    ])
+        .should('have.length', 1)
+        .and('be.visible')
+        .find('input[type="checkbox"]')
+        .should('be.checked');
 };
 
 export const checkGiftIsDisplayedInOrderSummary = () => {

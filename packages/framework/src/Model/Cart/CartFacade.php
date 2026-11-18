@@ -33,6 +33,7 @@ class CartFacade
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly GiftCartFacade $giftCartFacade,
         protected readonly AdditionalServicePriceCalculation $additionalServicePriceCalculation,
+        protected readonly CartRemovedProductGiftFactory $cartRemovedProductGiftFactory,
     ) {
     }
 
@@ -150,6 +151,14 @@ class CartFacade
     public function removeItemFromExistingCartByUuid(string $cartItemUuid, Cart $cart): Cart
     {
         $cartItemToRemove = $cart->getItemByUuid($cartItemUuid);
+
+        $parentItem = $cartItemToRemove->isProductGift() ? $cart->findParentItem($cartItemToRemove) : null;
+
+        if ($parentItem !== null) {
+            $cart->addRemovedProductGift(
+                $this->cartRemovedProductGiftFactory->create($cart, $parentItem->getProduct(), $cartItemToRemove->getProduct()),
+            );
+        }
 
         $cart->removeItemById($cartItemToRemove->getId());
 

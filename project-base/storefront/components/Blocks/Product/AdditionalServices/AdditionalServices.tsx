@@ -1,5 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { WrenchIcon } from 'components/Basic/Icon/WrenchIcon';
 import { AdditionalServiceItem } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceItem';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
@@ -25,6 +26,7 @@ type AdditionalServicesProps = {
     unitName: string;
     quantity?: number;
     isInCartList?: boolean;
+    hasTopBorder?: boolean;
     isDisabled?: boolean;
     showSelectedServiceTotalPrice?: boolean;
     className?: string;
@@ -38,6 +40,7 @@ export const AdditionalServices: FC<AdditionalServicesProps> = ({
     quantity,
     unitName,
     isInCartList,
+    hasTopBorder = true,
     isDisabled,
     showSelectedServiceTotalPrice,
     className,
@@ -135,10 +138,12 @@ export const AdditionalServices: FC<AdditionalServicesProps> = ({
         >
             <span
                 className={twMergeCustom(
-                    'font-semibold text-sm',
-                    isInCartList && 'vl:col-start-1 vl:mt-2 mb-2 vl:pl-22.5',
+                    'flex items-center gap-2 font-secondary font-semibold text-sm text-text-less',
+                    isInCartList && 'vl:col-span-full vl:mb-3 vl:pl-22.5',
+                    isInCartList && (hasTopBorder ? 'vl:mt-4 border-border-less border-t pt-4' : 'vl:mt-6'),
                 )}
             >
+                <WrenchIcon aria-hidden="true" className="size-4 shrink-0 text-text-less" />
                 {t('Additional services')}
             </span>
 

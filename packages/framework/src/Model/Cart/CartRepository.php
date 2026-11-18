@@ -39,6 +39,7 @@ class CartRepository
 
         if ($cart !== null) {
             $this->loadItemsWithAdditionalServices($cart);
+            $this->loadItemsWithRelatedItems($cart);
         }
 
         return $cart;
@@ -50,6 +51,16 @@ class CartRepository
             ->select('ci', 'a')
             ->from(CartItem::class, 'ci')
             ->leftJoin('ci.additionalServices', 'a')
+            ->where('ci.cart = :cart')->setParameter('cart', $cart)
+            ->getQuery()->getResult();
+    }
+
+    protected function loadItemsWithRelatedItems(Cart $cart): void
+    {
+        $this->em->createQueryBuilder()
+            ->select('ci', 'ri')
+            ->from(CartItem::class, 'ci')
+            ->leftJoin('ci.relatedItems', 'ri')
             ->where('ci.cart = :cart')->setParameter('cart', $cart)
             ->getQuery()->getResult();
     }
