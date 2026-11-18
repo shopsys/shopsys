@@ -3,13 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "analyze": "ANALYZE=true next build",
-        "build": "next build",
+        "analyze": "ANALYZE=true next build --webpack",
+        "build": "next build --webpack",
         "check": "concurrently \"pnpm run typecheck\" \"pnpm run lint\"",
         "check--fix": "concurrently \"pnpm run typecheck\" \"pnpm run lint--fix\"",
         "compile-tailwind-for-admin": "tailwindcss -i styles/globals.css -o ./public/tailwind-for-admin/style.css --minify",
-        "dev": "next dev",
-        "dev:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9229' next dev",
+        "dev": "next dev --webpack",
+        "dev:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9229' next dev --webpack",
         "format": "biome format --write .",
         "format-check": "biome format .",
         "gql": "pnpm run gql:docs && pnpm run gql:codegen && node schema-compress.js",
@@ -20,7 +20,7 @@
         "lint--fix-unsafe": "biome check --write --unsafe .",
         "start": "next start",
         "translate": "i18next --config config/i18next-parser.config.js",
-        "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
+        "typecheck": "next typegen && tsc --pretty --noEmit --project tsconfig.json",
         "test": "vitest",
         "test--update": "vitest -u",
         "test--no-watch": "vitest run",
@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "~5.9.1",
-        "@next/bundle-analyzer": "~15.5.18",
+        "@next/bundle-analyzer": "~16.4.6",
         "@radix-ui/react-popover": "^1.1.23",
         "@radix-ui/react-tooltip": "^1.2.16",
         "@sentry/nextjs": "~11.1.0",
@@ -45,7 +45,7 @@
         "js-base64": "~3.9.4",
         "jwt-decode": "~4.0.0",
         "lz-string": "~1.5.0",
-        "next": "~15.5.29",
+        "next": "~16.4.6",
         "next-translate": "~3.2.0",
         "next-translate-plugin": "~3.2.0",
         "nprogress": "~0.2.0",
@@ -127,7 +127,6 @@
             "glob@>=9.0.0 <14.0.2": "~14.0.3"
         },
         "patchedDependencies": {
-            "next@15.5.29": "patches/next@15.5.29.patch",
             "glob@7.2.3": "patches/glob@7.2.3.patch",
             "matcher-collection@2.0.1": "patches/matcher-collection@2.0.1.patch"
         }
