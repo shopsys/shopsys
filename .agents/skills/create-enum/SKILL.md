@@ -181,7 +181,7 @@ Reference: `packages/framework/src/Model/Transport/AbstractTransportTypeEnum.php
 
 - ❌ `enum FooEnum: string { case BAR = 'bar'; }` — native PHP enum is `final`, breaks extensibility.
 - ❌ `final class FooEnum extends AbstractEnum` — same problem.
-- ❌ `private const` or non-typed constants — they won't be visible to `ReflectionHelper::getAllPublicClassConstants()`.
+- ❌ `private const` — invisible to `ReflectionHelper::getAllPublicClassConstants()`, so `getAllCases()` drops it.
 - ❌ Constants with computed values (`public const FOO = self::BAR . '_x'`) — values must be literals so they can be embedded in YAML/SQL/config.
 - ❌ A class name not ending in `Enum` — it won't be auto-registered as a service.
 - ❌ Storing enum instances in entity properties — store the constant *value* (string/int) instead. Persistence layers shouldn't know about the enum class.

@@ -78,7 +78,7 @@ These are managed externally and must not be lost.
 Ask the user if they want to apply the description (and title if suggested), then:
 
 ```bash
-gh pr edit {PR_NUMBER} --body "{description}"
+gh pr edit {PR_NUMBER} --body-file <path>  # body written with the Write tool; never inline it, bodies contain backticks
 gh pr edit {PR_NUMBER} --title "{new_title}"  # only if user confirms
 ```
 

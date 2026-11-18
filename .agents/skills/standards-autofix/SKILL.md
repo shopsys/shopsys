@@ -1,10 +1,10 @@
 ---
 name: standards-autofix
 description: >
-  Finishes a failed coding-standards check: the pipeline has already run `phing standards-fix`,
-  so this fixes by hand what the fixer could not (phpstan, phplint, twig-lint, leftover ecs, and
-  the storefront's tsc, biome and knip), then packages everything as fixup! commits targeting the
-  PR commits that introduced each violation. Used by CI when the "Check standards" or
+  Fixes the violations reported by a failed coding-standards check (ecs, phpstan, phplint,
+  twig-lint, markdown, yaml, and the storefront's tsc, biome and knip) by editing the source from
+  the check's log, then packages the fixes as fixup! commits targeting the PR commits that
+  introduced each violation. Used by CI when the "Check standards" or
   "Check Storefront standards" job fails on a pull request; can also be run locally on a branch.
   It never rewrites existing history — it only appends commits for the author to review and
   autosquash.

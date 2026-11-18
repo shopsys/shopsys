@@ -73,15 +73,22 @@ _Advisory review of the PR diff against OWASP Top 10 / CWE — not a merge gate.
 
 Keep it as one comment across re-runs so the record isn't duplicated. Find the previous summary by its `<!-- claude-security-audit -->` marker and update it in place; create it only when no marked comment exists:
 
-```bash
-COMMENT_ID=$(gh api "repos/<owner>/<repo>/issues/<pr-number>/comments" --paginate \
-    --jq '[.[] | select(.body | startswith("<!-- claude-security-audit -->"))][0].id')
-if [ -n "$COMMENT_ID" ] && [ "$COMMENT_ID" != "null" ]; then
-    gh api -X PATCH "repos/<owner>/<repo>/issues/comments/$COMMENT_ID" -f body="<the markdown above>"
-else
-    gh pr comment <pr-number> --repo <owner>/<repo> --body "<the markdown above>"
-fi
-```
+1. Look up the marked comment's id:
+   ```bash
+   gh api "repos/<owner>/<repo>/issues/<pr-number>/comments" --paginate --jq '[.[] | select(.body | startswith("<!-- claude-security-audit -->"))][0].id'
+   ```
+2. Pass the report on stdin through a quoted heredoc, never inside a shell string — reports contain backticks the shell would execute. If step 1 printed an id, update that comment, substituting the literal id:
+   ```bash
+   gh api -X PATCH "repos/<owner>/<repo>/issues/comments/<id>" -F body=@- <<'EOF'
+   <the markdown above>
+   EOF
+   ```
+   Otherwise create it:
+   ```bash
+   gh pr comment <pr-number> --repo <owner>/<repo> --body-file - <<'EOF'
+   <the markdown above>
+   EOF
+   ```
 
 Never use `gh pr comment --edit-last` — it edits the current user's most recent comment on the PR regardless of which workflow or tool created it, so it can overwrite an unrelated comment posted by the same bot account.
 
