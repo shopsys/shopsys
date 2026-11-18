@@ -1,5 +1,7 @@
 # Using Form Types
 
+[TOC]
+
 In this article we will show what types you can use when creating or editing forms, what options they have and what they do.
 
 We use two types of naming for form types:

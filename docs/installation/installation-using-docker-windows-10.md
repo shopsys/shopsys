@@ -1,5 +1,7 @@
 # Installation Using Docker on Windows 10
 
+[TOC]
+
 **Expected installation time:** less than 1 hour.
 
 This guide covers building new projects based on Shopsys Platform.

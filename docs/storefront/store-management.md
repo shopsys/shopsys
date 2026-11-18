@@ -1,5 +1,7 @@
 # Store Management
 
+[TOC]
+
 For storing various data all over the app, we use [Zustand](https://github.com/pmndrs/zustand). Since we don't rely on some heavy storing data logic, Zustand's simple API is the perfect fit for our needs.
 
 Zustand allows us to create multiple stores. Each store consists of `slices`, which you can understand as one part of the store.

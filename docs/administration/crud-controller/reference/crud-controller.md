@@ -1,5 +1,7 @@
 # CRUD Controller
 
+[TOC]
+
 ## Actions
 
 The five main actions of the CRUD Controller are:

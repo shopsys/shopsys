@@ -1,5 +1,7 @@
 # Behavior of Product Variants
 
+[TOC]
+
 Product variants are specific type of products, and this article describes their specific behavior.
 Variants are used for products that are suitable to associate.
 These are products that vary for example, by size, pattern, color, etc.
