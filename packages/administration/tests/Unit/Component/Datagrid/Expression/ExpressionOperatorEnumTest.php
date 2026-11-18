@@ -7,23 +7,23 @@ namespace Tests\AdministrationBundle\Unit\Component\Datagrid\Expression;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathCardinalityEnum;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Enum\InvalidEnumCaseException;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 final class ExpressionOperatorEnumTest extends TestCase
 {
+    use SetTranslatorTrait;
+
     #[Override]
     protected function setUp(): void
     {
-        $translatorStub = $this->createStub(Translator::class);
-        $translatorStub->method('trans')->willReturnArgument(0);
-        Translator::injectSelf($translatorStub);
+        $this->setTranslator();
     }
 
     /**
@@ -56,26 +56,21 @@ final class ExpressionOperatorEnumTest extends TestCase
     ): void {
         $pathDescription = new PathDescription('path', $cardinality, $valueType);
 
-        if ($expectedApplicable === false) {
-            $this->expectException(OperatorNotApplicableToPathException::class);
-        }
-
-        (new ExpressionOperatorEnum())->assertApplicable($operator, $pathDescription);
-        $this->addToAssertionCount(1);
+        $this->assertSame($expectedApplicable, (new ExpressionOperatorEnum())->findReasonOfInapplicability($operator, $pathDescription) === null);
     }
 
     public function testInapplicableOperatorIsRefusedWithTheReason(): void
     {
         $pathDescription = new PathDescription('items.name', PathCardinalityEnum::TO_MANY, PathValueTypeEnum::STRING);
 
-        $this->expectException(OperatorNotApplicableToPathException::class);
+        $this->expectException(UnsupportedConditionException::class);
         $this->expectExceptionMessage('Operator "isNull" cannot be applied to path "items.name": a collection has no null to test');
 
         (new ExpressionOperatorEnum())->assertApplicable(ExpressionOperatorEnum::IS_NULL, $pathDescription);
     }
 
     /**
-     * @return array<string, array{string, string}>
+     * @return array<string, array{string, \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum}>
      */
     public static function valueArityDataProvider(): array
     {
@@ -90,8 +85,10 @@ final class ExpressionOperatorEnumTest extends TestCase
     }
 
     #[DataProvider('valueArityDataProvider')]
-    public function testOperatorComparesValueOfItsArity(string $operator, string $expectedArity): void
-    {
+    public function testOperatorComparesValueOfItsArity(
+        string $operator,
+        ExpressionValueArityEnum $expectedArity,
+    ): void {
         $this->assertSame($expectedArity, (new ExpressionOperatorEnum())->getValueArity($operator));
     }
 

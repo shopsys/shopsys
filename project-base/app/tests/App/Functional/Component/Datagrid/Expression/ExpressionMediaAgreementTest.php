@@ -91,7 +91,7 @@ class ExpressionMediaAgreementTest extends TransactionFunctionalTestCase
     }
 
     #[DataProvider('conditionProvider')]
-    public function testBothMediaMatchTheSameOrders(ConditionInterface $condition): void
+    public function testBothBuildersMatchTheSameOrders(ConditionInterface $condition): void
     {
         $orderRows = $this->getOrderRows();
         $this->assertNotEmpty($orderRows, 'The demo data have to contain orders for the comparison to mean anything.');
@@ -103,11 +103,10 @@ class ExpressionMediaAgreementTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * A moment given in another time zone than the one the database stores the time in is the same moment in both
-     * media. The boundary is a second before the creation of an order, given in a time zone 14 hours ahead — compared
-     * as written, the order would fall behind it.
+     * The boundary is a second before the creation of an order, given in a time zone 14 hours ahead. Compared
+     * as written, without converting the time zone, the order would fall behind it.
      */
-    public function testMomentInAnotherTimeZoneIsTheSameMomentInBothMedia(): void
+    public function testMomentInAnotherTimeZoneIsTheSameMomentInBothBuilders(): void
     {
         $orderRows = $this->getOrderRows();
         $creations = array_map(static fn (array $row): DateTimeImmutable => DateTimeImmutable::createFromInterface($row['createdAt']), $orderRows);

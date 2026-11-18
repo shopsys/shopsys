@@ -9,19 +9,19 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Comparison;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Composite;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\ConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\LogicalOperatorEnum;
-use Shopsys\AdministrationBundle\Component\Datagrid\Condition\MediumSpecificConditionInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Condition\Negation;
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\ConditionNotSupportedException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Webmozart\Assert\Assert;
 
 /**
- * The common part of every builder: it compiles a condition tree into the expression of its medium, so that
- * the tree is turned into DQL, a callback or a search clause by the same walk and the shape of every value is
- * validated in one place. A medium only says how it expresses each operation and how it composes expressions.
+ * The common part of every builder:
  *
- * The semantics are the same for every medium: a record whose value is missing never matches a comparison, but
- * always matches its negation — `notEquals`, `notIn` and `not()` — which is what the administrator asks for by
- * "is not".
+ * - it walks the condition tree;
+ * - it checks the shape of every value against the arity of its operator;
+ * - it leaves to the concrete builder how it expresses each operation (`compare()`) and how it composes expressions
+ *   (`not()`, `andX()`, `orX()`).
+ *
+ * The meaning of the operations is described on `ExpressionOperatorEnum`.
  *
  * @template TExpression of object
  * @implements \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface<TExpression>
@@ -35,21 +35,20 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
 
     /**
      * Expresses one operation of the vocabulary on one path.
+     * `in` and `notIn` never get an empty list: an empty `in` matches nothing and is compiled into `orX()`, an empty
+     * `notIn` matches everything and is compiled into `andX()`.
      *
-     * @param string $path Dot notation path, the same one datagrid fields use — `email`, `customerUser.email`
+     * To express an operation of a project, extend the concrete builder (`DqlExpressionBuilder`,
+     * `PhpExpressionBuilder`), express the operation here and hand every other one to `parent::compare()`.
+     *
      * @param string $operator One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionOperatorEnum
      * @param mixed $value Already validated against the arity of the operator — null, a single value, a list, or a pair of bounds `[from, to]`
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotSupportedException When the medium does not express the operation
      * @return TExpression
      */
     abstract protected function compare(string $path, string $operator, mixed $value): object;
 
     /**
-     * Negates a whole expression, which over a path leading through a to-many association means something
-     * else than the negating operation of that expression, and both are legitimate questions:
-     *
-     *     not(compare('items.name', EQUALS, 'X'))  — no related row is named X
-     *     compare('items.name', NOT_EQUALS, 'X')   — some related row is not named X
+     * Negates a whole expression, see `Negation`.
      *
      * @param TExpression $expression
      * @return TExpression
@@ -69,14 +68,6 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
     abstract protected function orX(object ...$expressions): object;
 
     /**
-     * Refuses an expression a medium-specific condition built for another medium.
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\ExpressionFromForeignMediumException
-     * @return TExpression
-     */
-    abstract protected function assertExpression(object $expression): object;
-
-    /**
      * {@inheritdoc}
      */
     #[Override]
@@ -86,8 +77,7 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
             $condition instanceof Comparison => $this->compileComparison($condition),
             $condition instanceof Composite => $this->compileComposite($condition),
             $condition instanceof Negation => $this->not($this->compile($condition->condition)),
-            $condition instanceof MediumSpecificConditionInterface => $this->assertExpression($condition->compile($this)),
-            default => throw new ConditionNotSupportedException($condition::class, static::class),
+            default => throw UnsupportedConditionException::conditionNotSupported($condition::class, static::class),
         };
     }
 
@@ -111,10 +101,13 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
     {
         $operator = $comparison->operator;
 
-        $this->expressionOperatorEnum->validateCase($operator);
         $this->assertValueMatchesArity($operator, $comparison->value);
 
-        return $this->compare($comparison->path, $operator, $comparison->value);
+        return match (true) {
+            $operator === ExpressionOperatorEnum::IN && $comparison->value === [] => $this->orX(),
+            $operator === ExpressionOperatorEnum::NOT_IN && $comparison->value === [] => $this->andX(),
+            default => $this->compare($comparison->path, $operator, $comparison->value),
+        };
     }
 
     protected function assertValueMatchesArity(string $operator, mixed $value): void
@@ -123,7 +116,7 @@ abstract class AbstractExpressionBuilder implements ExpressionBuilderInterface
             ExpressionValueArityEnum::NONE => Assert::null($value, sprintf('Operator "%s" compares nothing, so it takes no value.', $operator)),
             ExpressionValueArityEnum::LIST => $this->assertList($operator, $value),
             ExpressionValueArityEnum::RANGE => $this->assertRange($operator, $value),
-            default => $this->assertSingleValue($operator, $value),
+            ExpressionValueArityEnum::SINGLE => $this->assertSingleValue($operator, $value),
         };
     }
 

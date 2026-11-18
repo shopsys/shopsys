@@ -4,30 +4,29 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Expression;
 
-use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
-
 /**
  * How many values an operation compares the field with, which decides the shape of the value it is given.
+ * The value names the arity in the filter form and in its `data-arity` attribute.
  */
-class ExpressionValueArityEnum extends AbstractEnum
+enum ExpressionValueArityEnum: string
 {
     /**
      * The operation compares nothing, the value is null — `isNull`.
      */
-    public const string NONE = 'none';
+    case NONE = 'none';
 
     /**
      * The operation compares a single value — `equals`, `contains`, `greaterThan`.
      */
-    public const string SINGLE = 'single';
+    case SINGLE = 'single';
 
     /**
      * The operation compares a list of values — `in`, `notIn`.
      */
-    public const string LIST = 'list';
+    case LIST = 'list';
 
     /**
      * The operation compares a pair of bounds, given as a list of exactly two values — `between`.
      */
-    public const string RANGE = 'range';
+    case RANGE = 'range';
 }

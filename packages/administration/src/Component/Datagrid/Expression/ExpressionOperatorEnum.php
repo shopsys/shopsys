@@ -4,32 +4,31 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Expression;
 
-use Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException;
+use Shopsys\AdministrationBundle\Component\Datagrid\Exception\UnsupportedConditionException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathDescription;
 use Shopsys\AdministrationBundle\Component\Datagrid\Path\PathValueTypeEnum;
 use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
 
 /**
- * The operations an expression builder is able to express, and everything that is known about each of them
- * regardless of the medium — the shape of the value it compares (`getValueArity()`), the paths it makes sense
- * on (`assertApplicable()`) and how it reads in the filter form (`getLabel()`).
+ * The operations of the condition vocabulary and what is known about each of them regardless of the builder:
+ * the shape of its value (`getValueArity()`), the paths it applies to (`findReasonOfInapplicability()`) and its
+ * label (`getLabel()`).
  *
- * The vocabulary is shared by every medium and every builder expresses every case in its `compare()`. A project
- * extends the vocabulary by a subclass of this enum adding the case together with its arity, applicability and
- * label, and by a builder of every medium it uses extending `AbstractExpressionBuilder` that expresses it.
+ * Every adapter evaluates the operations with the same meaning:
+ *
+ * - `contains`, `startsWith` and `endsWith` match text literally (a builder escapes its own wildcards),
+ *   regardless of case and diacritics — "Hrníček" contains "hrnicek"; the other operations compare text exactly;
+ * - a missing value (null) matches no comparison but `isNull`, so it matches every negation — `notEquals`,
+ *   `notIn` and `not()`;
+ * - over a path through a to-many association, a comparison matches when some related row matches.
+ *
+ * A project adds an operation by a subclass of this enum, giving the operation its arity, applicability and
+ * label, and by extending every builder it uses (see `AbstractExpressionBuilder::compare()`).
  */
 class ExpressionOperatorEnum extends AbstractEnum
 {
     public const string EQUALS = 'equals';
     public const string NOT_EQUALS = 'notEquals';
-
-    /**
-     * Matches a text containing the given one, ignoring case. Escaping the wildcards of the medium is the
-     * builder's job, so that a value the administrator typed is always taken literally.
-     *
-     * Applicable to a text path only — a medium knowing the type of the path refuses any other. The same
-     * holds for `STARTS_WITH` and `ENDS_WITH`.
-     */
     public const string CONTAINS = 'contains';
     public const string STARTS_WITH = 'startsWith';
     public const string ENDS_WITH = 'endsWith';
@@ -93,10 +92,7 @@ class ExpressionOperatorEnum extends AbstractEnum
         self::IS_NOT_EMPTY,
     ];
 
-    /**
-     * @return string One of \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionValueArityEnum
-     */
-    public function getValueArity(string $operator): string
+    public function getValueArity(string $operator): ExpressionValueArityEnum
     {
         $this->validateCase($operator);
 
@@ -109,34 +105,25 @@ class ExpressionOperatorEnum extends AbstractEnum
     }
 
     /**
-     * The rules saying which operations make sense on which path. They exist to prevent wrong answers, not to
-     * enforce style: a text search on a date fails in the database, and a null test on a collection would ask
-     * about some related row, while the question meant is whether the collection has any.
-     *
-     * A medium knowing its schema applies them before building; a declaration applies them before offering
-     * an operation to the administrator.
-     *
-     * @throws \Shopsys\AdministrationBundle\Component\Datagrid\Exception\OperatorNotApplicableToPathException
+     * Fails when the operation would give a wrong answer on the path (see `findReasonOfInapplicability()`).
      */
     public function assertApplicable(string $operator, PathDescription $pathDescription): void
     {
-        $reason = $this->getReasonOfInapplicability($operator, $pathDescription);
+        $reason = $this->findReasonOfInapplicability($operator, $pathDescription);
 
         if ($reason !== null) {
-            throw new OperatorNotApplicableToPathException($operator, $pathDescription, $reason);
+            throw UnsupportedConditionException::operatorNotApplicableToPath($operator, $pathDescription, $reason);
         }
     }
 
     /**
-     * How the operation reads in the filter form. A filter with a better word for its kind of value (a date
-     * is "before" rather than "less than") overrides `FilterInterface::getOperatorLabel()`.
+     * Why the operation would give a wrong answer on the path, null when it is applicable:
+     *
+     * - a text search on a value other than text fails in the database;
+     * - a null test on a collection asks about some related row, not whether the collection has any;
+     * - an emptiness test on a single value has no collection to test.
      */
-    public function getLabel(string $operator): string
-    {
-        return $this->getLabels()[$operator] ?? $operator;
-    }
-
-    protected function getReasonOfInapplicability(string $operator, PathDescription $pathDescription): ?string
+    public function findReasonOfInapplicability(string $operator, PathDescription $pathDescription): ?string
     {
         if (in_array($operator, static::TEXT_OPERATORS, true) && $this->isText($pathDescription) === false) {
             return sprintf('text can only be searched in a text value, the path leads to %s.', $pathDescription->valueType->name);
@@ -146,7 +133,7 @@ class ExpressionOperatorEnum extends AbstractEnum
             return 'a collection has no null to test, use isEmpty or isNotEmpty to test whether it has any related row.';
         }
 
-        if (in_array($operator, static::EMPTINESS_OPERATORS, true) && $pathDescription->isToMany() === false) {
+        if (in_array($operator, static::EMPTINESS_OPERATORS, true) && $pathDescription->isToOne()) {
             return 'only a collection can be empty, use isNull or isNotNull to test a single value.';
         }
 
@@ -154,8 +141,15 @@ class ExpressionOperatorEnum extends AbstractEnum
     }
 
     /**
-     * Only a value known to be text is searched — a database refuses a text function on a value of another type,
-     * and a value of an unknown type (a GUID, a JSON document) may well be one.
+     * How the operation reads in the filter form.
+     */
+    public function getLabel(string $operator): string
+    {
+        return $this->getLabels()[$operator] ?? $operator;
+    }
+
+    /**
+     * Only a value known to be text is searched — a value of an unknown type may be a JSON document.
      */
     protected function isText(PathDescription $pathDescription): bool
     {

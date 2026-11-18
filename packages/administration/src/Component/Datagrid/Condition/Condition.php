@@ -18,8 +18,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
  *
  * A comparison whose operator is only known at runtime is built directly as `new Comparison(...)`.
  *
- * @phpstan-import-type ScalarValue from \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface
- * @phpstan-import-type ComparableValue from \Shopsys\AdministrationBundle\Component\Datagrid\Expression\ExpressionBuilderInterface
+ * @phpstan-type ScalarValue string|int|float|bool|\DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money
+ * @phpstan-type ComparableValue string|int|float|\DateTimeInterface|\Shopsys\FrameworkBundle\Component\Money\Money
  */
 final class Condition
 {
@@ -101,7 +101,7 @@ final class Condition
     }
 
     /**
-     * @param list<ScalarValue> $values An empty list matches nothing
+     * @param list<ScalarValue> $values
      */
     public static function in(string $path, array $values): Comparison
     {
@@ -109,7 +109,7 @@ final class Condition
     }
 
     /**
-     * @param list<ScalarValue> $values An empty list matches everything
+     * @param list<ScalarValue> $values
      */
     public static function notIn(string $path, array $values): Comparison
     {
