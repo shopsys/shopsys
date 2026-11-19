@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Transport\TransportGroup;
@@ -41,12 +42,13 @@ final class TransportGroupFormType extends AbstractType
                 'file_constraints' => [
                     new Constraints\File(
                         maxSize: '2M',
+                        extensions: [...ImageProcessor::SUPPORTED_EXTENSIONS, ImageProcessor::EXTENSION_SVG],
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
                 'entity' => $options['transportGroup'],
-                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF, SVG'),
             ])
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_crud_transport_group_list',

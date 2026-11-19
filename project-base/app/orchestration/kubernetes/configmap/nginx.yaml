@@ -73,6 +73,16 @@ data:
             ~^/_next/static/ "*";
         }
 
+        map $image_extension $image_resize_args {
+            default $is_args;
+            svg "";
+        }
+
+        map $uri $uploaded_svg_content_security_policy {
+            default "";
+            ~^/(?:[^/]+/)?content(?:-test)?/images/.+\.svg$ "sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:";
+        }
+
         map $uri $uploaded_file_content_disposition {
             default "";
             ~^/(?:[^/]+/)?content(?:-test)?/uploadedFiles/ "attachment";
@@ -145,6 +155,7 @@ data:
             add_header X-XSS-Protection "0" always;
             add_header Permissions-Policy "camera=(), geolocation=(self), microphone=(), payment=(), usb=()" always;
             add_header Content-Disposition $uploaded_file_content_disposition always;
+            add_header Content-Security-Policy $uploaded_svg_content_security_policy always;
 
             set $request_host $http_host;
             if ($http_originalhost) {
@@ -235,14 +246,14 @@ data:
             }
 
             # location for images, strip image name and serve image by its ID (send to imageResizer if there are width/height args)
-            location ~ ^/(?:[^/]+/)?(content(?:-test)?/images/.+)/(?<image_name>([\w\-]+_)?(?<image_id>\d+))\.(?<image_extension>jpe?g|png|gif) {
+            location ~ ^/(?:[^/]+/)?(content(?:-test)?/images/.+)/(?<image_name>([\w\-]+_)?(?<image_id>\d+))\.(?<image_extension>jpe?g|png|gif|svg)$ {
                 expires 1y;
 
                 error_page              403 404 = $custom_error_target;
                 # this needs to be repeated here because of nginx error_page inheritance rules
                 error_page              468 = @imageResizer;
 
-                if ($is_args != '') {
+                if ($image_resize_args != '') {
                     return 468; # send to @imageResizer
                 }
 
