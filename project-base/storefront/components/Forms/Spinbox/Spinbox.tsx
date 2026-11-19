@@ -297,7 +297,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             <div
                 aria-busy={hasPendingLook}
                 className={twMergeCustom(
-                    'inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-background-default outline outline-gray-400 -outline-offset-1',
+                    'inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-input-bg-default outline outline-input-border-default -outline-offset-1',
                     className,
                 )}
             >
@@ -307,7 +307,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                             ? minValueDecreaseAriaLabel
                             : (decreaseAriaLabel ?? t('Decrease quantity', { ns: 'accessibility' }))
                     }
-                    className="bg-gray-300 hover:bg-gray-500"
+                    className="text-button-tertiary-text-default hover:bg-button-tertiary-bg-hovered hover:text-button-tertiary-text-hovered"
                     disabled={isDecreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
@@ -346,7 +346,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'w-13 text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden',
+                        'w-13 self-stretch text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden focus-keyboard:bg-focus-background',
                     )}
                     onBlur={handleBlur}
                     onInput={handleInput}

@@ -207,7 +207,7 @@ describe('Select combobox label', () => {
             />,
         );
 
-        expect(screen.getByText('Color')).toHaveClass('top-2.25', 'text-sm');
+        expect(screen.getByText('Color')).toHaveClass('top-1', 'text-xs');
     });
 });
 

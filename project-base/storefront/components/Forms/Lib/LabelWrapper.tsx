@@ -1,4 +1,5 @@
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { FieldSize } from 'components/Forms/Lib/fieldUtils';
 import { LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
@@ -10,7 +11,7 @@ type LabelWrapperProps = NativeProps & {
     count?: number;
     isCountAbsolute?: boolean;
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'radio' | 'selectbox';
-    inputSize?: 'small' | 'default';
+    inputSize?: FieldSize;
     required?: boolean;
     checked?: boolean;
     disabled?: boolean;
@@ -39,9 +40,10 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 className={twMergeCustom(
                     inputType === 'text-input' && [
                         'pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:font-normal',
+                        // The label sits above the value inside the field, which is 40px (small) or 44/48px (default) high.
                         inputSize === 'small'
-                            ? 'top-1.5 text-xs peer-focus:top-1.5 peer-focus:text-xs'
-                            : 'top-2 text-sm peer-focus:top-2 peer-focus:text-sm',
+                            ? 'top-0.5 text-xs peer-focus:top-0.5 peer-focus:text-xs'
+                            : 'top-1 vl:top-1.5 text-xs peer-focus:top-1 vl:peer-focus:top-1.5 peer-focus:text-xs',
                     ],
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         'peer-focus:translate-none absolute left-3 z-2 block transform-none text-input-placeholder-default peer-placeholder-shown:-translate-y-1/2 peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled motion-safe:transition-all',
@@ -60,7 +62,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         disabled && 'text-input-placeholder-disabled!',
                     ],
                     inputType === 'textarea' &&
-                        'top-1 bg-background-default pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:top-1 peer-focus:font-normal peer-focus:text-sm',
+                        'top-1 bg-background-default pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:top-1 peer-focus-keyboard:bg-focus-background peer-focus:font-normal peer-focus:text-sm peer-disabled:bg-input-bg-disabled',
                     disabled && 'text-input-text-disabled',
                     className,
                 )}

@@ -79,7 +79,7 @@ export const SelectedParametersListItem: FC<{ onClick: () => void; ariaLabel: st
 }) => (
     <Tag
         ariaLabel={ariaLabel}
-        className="group bg-background-accent-less text-text-default last-of-type:mr-6"
+        className="group rounded-tag border border-tag-border-default bg-tag-bg-default py-1.25 text-tag-text-default last-of-type:mr-6 hover:bg-tag-bg-hovered hover:text-tag-text-hovered"
         onClick={onClick}
     >
         {children}

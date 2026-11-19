@@ -1,6 +1,7 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
+import { getSortingTabClassName } from 'components/Blocks/SortingBar/sortingBarUtils';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductReviewOrderingModeEnum } from 'graphql/types';
 import { useEffect, useId, useRef, useState } from 'react';
@@ -76,12 +77,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                             <button
                                 key={option.value}
                                 aria-pressed={isActive}
-                                className={twJoin(
-                                    'relative min-h-11 cursor-pointer rounded-sm px-1 font-secondary text-sm transition-colors after:absolute after:right-1 after:bottom-0 after:left-1 after:h-0.5 after:rounded-full after:transition-colors',
-                                    isActive
-                                        ? 'font-bold text-text-default after:bg-link-default'
-                                        : 'font-semibold text-text-less after:bg-transparent hover:text-text-default',
-                                )}
+                                className={getSortingTabClassName({ isActive })}
                                 type="button"
                                 onClick={() => handleOrderingModeChange(option.value)}
                             >

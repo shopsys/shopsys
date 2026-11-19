@@ -3,6 +3,14 @@ import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { IconButton } from 'components/Forms/Button/IconButton';
+import {
+    FIELD_FLOATING_LABEL_CLASS_NAME,
+    FIELD_KEYBOARD_FOCUS_WITHIN_CLASS_NAME,
+    FIELD_OPEN_CLASS_NAME,
+    FIELD_VALUE_PADDING_CLASS_NAME,
+    getFieldHeightClassName,
+    getFieldStateClassName,
+} from 'components/Forms/Lib/fieldUtils';
 import { SelectList } from 'components/Forms/Select/SelectList';
 import { ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -112,11 +120,13 @@ export function MultiSelect<T extends string | number = string>({
             <div className={twMergeCustom('relative w-full', inputWrapperClassName)} ref={ref}>
                 <div
                     className={twMergeCustom(
-                        'group flex h-14 justify-between rounded-md border-2 border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered',
-                        isOpen && 'justify-between rounded-b-none border-input-border-active',
+                        'group flex justify-between rounded-input',
+                        getFieldStateClassName({ hasError }),
+                        getFieldHeightClassName(),
+                        FIELD_KEYBOARD_FOCUS_WITHIN_CLASS_NAME,
+                        isOpen && FIELD_OPEN_CLASS_NAME,
                         (isDisabled || isLoading) &&
                             'pointer-events-none cursor-no-drop border-input-border-disabled bg-input-bg-disabled text-input-text-disabled',
-                        hasError && 'border-input-border-error hover:border-input-border-error',
                         inputClassName,
                     )}
                 >
@@ -140,7 +150,7 @@ export function MultiSelect<T extends string | number = string>({
                                 className={twJoin(
                                     'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || comboBoxConfig.searchValue || selectedOptions.length > 0
-                                        ? 'top-2.25 text-sm'
+                                        ? FIELD_FLOATING_LABEL_CLASS_NAME
                                         : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
@@ -150,7 +160,10 @@ export function MultiSelect<T extends string | number = string>({
                         </>
                     ) : (
                         <button
-                            className="w-full cursor-pointer px-3 pt-5 text-left outline-hidden"
+                            className={twJoin(
+                                'w-full cursor-pointer px-3 text-left outline-hidden',
+                                FIELD_VALUE_PADDING_CLASS_NAME,
+                            )}
                             data-tid={tid}
                             disabled={isDisabled}
                             tabIndex={-1}
@@ -161,7 +174,7 @@ export function MultiSelect<T extends string | number = string>({
                                 className={twJoin(
                                     'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || selectedOptions.length > 0
-                                        ? 'top-2.25 text-sm'
+                                        ? FIELD_FLOATING_LABEL_CLASS_NAME
                                         : 'top-1/2 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >

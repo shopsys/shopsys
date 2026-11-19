@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { type SortOptionsLabels } from './SortingBar';
-import { SortingBarItem } from './SortingBarItem';
+import { SortingBarItem, SortingBarItemVariant } from './SortingBarItem';
 
 type SortingBarOptionsProps = {
-    itemRole: 'menuitem' | 'option';
+    variant: SortingBarItemVariant;
     selectedSortOption: TypeProductOrderingModeEnum;
     sortOptions: TypeProductOrderingModeEnum[];
     sortOptionsLabels: SortOptionsLabels;
@@ -15,7 +15,7 @@ type SortingBarOptionsProps = {
 };
 
 export const SortingBarOptions: FC<SortingBarOptionsProps> = ({
-    itemRole,
+    variant,
     selectedSortOption,
     sortOptions,
     sortOptionsLabels,
@@ -41,8 +41,8 @@ export const SortingBarOptions: FC<SortingBarOptionsProps> = ({
                         key={sortOption}
                         href={sortHref}
                         isActive={isSelectedSortOption}
-                        role={itemRole}
                         tid={`${TIDs.blocks_sortingbar_option_}${sortOption}`}
+                        variant={variant}
                         ariaLabel={
                             isSelectedSortOption
                                 ? t('Sorted by {{ sortOption }}', {

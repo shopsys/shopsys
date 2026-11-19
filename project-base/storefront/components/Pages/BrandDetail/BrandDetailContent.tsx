@@ -27,7 +27,12 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
 
     return (
         <VerticalStack gap="md">
-            <CollapsibleDescription currentPage={currentPage} description={brand.description} heading={heading} />
+            <CollapsibleDescription
+                currentPage={currentPage}
+                description={brand.description}
+                heading={heading}
+                productsCount={brand.products.totalCount}
+            />
 
             <FilteredProductsWrapper>
                 <DeferredFilterPanel

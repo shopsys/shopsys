@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic';
 import 'nprogress/nprogress.css';
 import { ReactElement, useEffect } from 'react';
 import 'styles/globals.css';
+import { useFocusSource } from 'utils/accessibility/useFocusSource';
 import { isWithErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logErrorBoundary } from 'utils/errors/logErrorBoundary';
 import { logException } from 'utils/errors/logException';
@@ -63,6 +64,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     const domainConfig = pageProps.domainConfig;
     const defaultLocale = domainConfig?.defaultLocale ?? 'en';
     initIntlDateTimeFormatterLocale(defaultLocale);
+    useFocusSource();
 
     useEffect(() => {
         document.body.setAttribute('data-hydrated', 'true');

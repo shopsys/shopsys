@@ -11,7 +11,8 @@ export const ProductListViewModeToggle: FC = () => {
     const setCookiesStoreState = useCookiesStore((store) => store.setCookiesStoreState);
 
     return (
-        <fieldset className="flex items-center">
+        // An outline instead of a border, so the frame does not add to the 44px (36px from vl) height of the buttons.
+        <fieldset className="flex items-center overflow-hidden rounded-button outline outline-input-border-default -outline-offset-1">
             <legend className="sr-only">{t('Product list view mode', { ns: 'accessibility' })}</legend>
 
             <ProductListViewModeToggleButton
@@ -56,6 +57,8 @@ const ProductListViewModeToggleButton: FC<ProductListViewModeToggleButtonProps> 
         Icon={Icon}
         aria-pressed={isActive}
         ariaLabel={ariaLabel}
+        // The pressed option is marked by the background only, the group border frames both options.
+        className="size-11 vl:size-9 rounded-none aria-pressed:bg-background-accent-less aria-pressed:text-link-default"
         shape="rounded"
         size="small"
         tid={tid}

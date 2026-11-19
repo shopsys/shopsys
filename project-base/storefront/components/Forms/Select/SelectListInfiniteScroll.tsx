@@ -19,7 +19,7 @@ export const SelectListInfiniteScroll: FC<SelectListInfiniteScrollProps> = ({
 }) => {
     return (
         <AnimateCollapseDiv
-            className="block! absolute right-0 left-0 z-above rounded-b-md border-2 border-input-border-default border-t-0 bg-background-default hover:border-input-border-hovered"
+            className="block! absolute right-0 left-0 z-above mt-1 overflow-hidden rounded-input border border-input-border-default bg-background-default shadow-lg"
             keyName={tid}
         >
             <InfiniteScroll

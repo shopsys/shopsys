@@ -2,6 +2,7 @@ import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapp
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
+import { ProductsCount } from 'components/Blocks/Product/ProductsList/ProductsCount';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -25,8 +26,11 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
 
     return (
         <VerticalStack gap="md">
-            <Webline>
+            <Webline className="flex flex-wrap items-baseline gap-x-3">
                 <h1>{heading}</h1>
+
+                {/* Below vl the product count moves here from the sorting bar, so the bar fits one row. */}
+                <ProductsCount className="vl:hidden" totalCount={flag.products.totalCount} />
             </Webline>
 
             <FilteredProductsWrapper>
