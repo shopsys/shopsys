@@ -27,7 +27,7 @@
         }
     },
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "shopsys/framework": "21.0.x-dev",
         "shopsys/frontend-api": "21.0.x-dev",
         "shopsys/article-feed-luigis-box": "21.0.x-dev",

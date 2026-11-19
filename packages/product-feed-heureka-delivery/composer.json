@@ -28,7 +28,7 @@
         }
     },
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "doctrine/orm": "^3.7",
         "shopsys/framework": "21.0.x-dev",
         "symfony/config": "^7.4",

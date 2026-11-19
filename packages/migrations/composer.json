@@ -28,7 +28,7 @@
         }
     },
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "doctrine/dbal": "^4.4",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/migrations": "^3.4.1",

@@ -494,7 +494,7 @@ https://github.com/nodejs/docker-node/blob/main/LICENSE
 
 ### Php
 
-Image: `php:8.5-fpm-alpine`  
+Image: `php:8.6-fpm-alpine`  
 License: The PHP License  
 http://php.net/license/
 
