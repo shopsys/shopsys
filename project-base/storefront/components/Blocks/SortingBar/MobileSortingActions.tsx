@@ -5,7 +5,7 @@ import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import { useRef } from 'react';
+import { MouseEvent, useEffect, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useKeypress } from 'utils/useKeyPress';
@@ -17,6 +17,7 @@ type MobileSortingActionsProps = {
     selectedSortOption: TypeProductOrderingModeEnum;
     sortOptions: TypeProductOrderingModeEnum[];
     sortOptionsLabels: SortOptionsLabels;
+    sortOptionsShortLabels: SortOptionsLabels;
     onChangeSort: (sortOption: TypeProductOrderingModeEnum) => void;
     onSortMenuClose: () => void;
     onSortMenuToggle: () => void;
@@ -27,33 +28,51 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
     selectedSortOption,
     sortOptions,
     sortOptionsLabels,
+    sortOptionsShortLabels,
     onChangeSort,
     onSortMenuClose,
     onSortMenuToggle,
 }) => {
     const { t } = useTranslation();
     const sortButtonRef = useRef<HTMLButtonElement | null>(null);
-    const selectedSortOptionLabel = sortOptionsLabels[selectedSortOption] || t('Sort');
+    const sortDropdownRef = useRef<HTMLElement>(null);
+    // The button shows a short label (e.g. "Cheapest"), so a long translation does not stretch it; the list shows the full one.
+    const selectedSortOptionShortLabel = sortOptionsShortLabels[selectedSortOption];
 
-    useKeypress('Escape', () => {
+    useEffect(() => {
+        if (isSortMenuOpen) {
+            sortDropdownRef.current?.querySelector<HTMLAnchorElement>('[aria-current="true"]')?.focus();
+        }
+    }, [isSortMenuOpen]);
+
+    const closeSortMenuAndReturnFocus = () => {
         if (isSortMenuOpen) {
             onSortMenuClose();
             sortButtonRef.current?.focus();
         }
-    });
+    };
+
+    useKeypress('Escape', closeSortMenuAndReturnFocus);
+
+    const handleSortButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+        sortButtonRef.current = event.currentTarget;
+        onSortMenuToggle();
+    };
+
+    // The chosen option is hidden together with the list, so focus would otherwise fall back to the page.
+    const changeSortAndReturnFocus = (sortOption: TypeProductOrderingModeEnum) => {
+        onChangeSort(sortOption);
+        sortButtonRef.current?.focus({ preventScroll: true });
+    };
 
     return (
         <>
             <div
-                className={twJoin(
-                    'relative vl:hidden w-full flex-1 sm:w-auto sm:max-w-80',
-                    isSortMenuOpen && 'z-aboveOverlay',
-                )}
+                className={twJoin('relative vl:hidden min-w-0 flex-1 sm:max-w-80', isSortMenuOpen && 'z-aboveOverlay')}
             >
                 <Button
                     aria-controls="sort-dropdown"
                     aria-expanded={isSortMenuOpen}
-                    aria-haspopup="menu"
                     variant="outline"
                     aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
                         ns: 'accessibility',
@@ -66,15 +85,16 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     )}
                     size="large"
                     title={t('Sort')}
-                    onClick={(event) => {
-                        sortButtonRef.current = event.currentTarget;
-                        onSortMenuToggle();
-                    }}
+                    onClick={handleSortButtonClick}
                 >
                     <span className="flex min-w-0 items-center gap-2">
                         <SortIcon aria-hidden="true" className="size-5 shrink-0" />
 
-                        <span className="truncate text-left">{selectedSortOptionLabel}</span>
+                        <span className="truncate text-left">
+                            {/* On the narrowest screens the prefix would truncate the chosen option, the icon stands for it. */}
+                            <span className="font-normal max-xs:sr-only">{t('Sort')}:</span>{' '}
+                            <span className="font-bold">{selectedSortOptionShortLabel}</span>
+                        </span>
                     </span>
 
                     <ArrowIcon
@@ -83,23 +103,23 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     />
                 </Button>
 
-                <div
+                <nav
                     aria-label={t('Sort options', { ns: 'accessibility' })}
                     id="sort-dropdown"
-                    role="menu"
+                    ref={sortDropdownRef}
                     className={twJoin(
-                        'absolute top-full left-0 mt-2 w-full flex-col divide-y divide-border-less overflow-hidden rounded-md border border-border-less bg-background-default shadow-lg',
+                        'absolute top-full left-0 mt-1 w-full flex-col divide-y divide-border-less overflow-hidden rounded-input border border-border-less bg-background-default shadow-lg',
                         isSortMenuOpen ? 'flex' : 'hidden',
                     )}
                 >
                     <SortingBarOptions
-                        itemRole="menuitem"
+                        variant="dropdown"
                         selectedSortOption={selectedSortOption}
                         sortOptions={sortOptions}
                         sortOptionsLabels={sortOptionsLabels}
-                        onChangeSort={onChangeSort}
+                        onChangeSort={changeSortAndReturnFocus}
                     />
-                </div>
+                </nav>
             </div>
 
             <Overlay isActive={isSortMenuOpen} onClick={onSortMenuClose} />

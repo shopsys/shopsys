@@ -1,53 +1,61 @@
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
-import { AriaRole, MouseEventHandler } from 'react';
-import { twMergeCustom } from 'utils/twMerge';
+import { MouseEventHandler } from 'react';
+import { twJoin } from 'tailwind-merge';
+import { getSortingTabClassName } from './sortingBarUtils';
+
+export type SortingBarItemVariant = 'tab' | 'dropdown';
 
 type SortingBarItemProps = {
+    variant: SortingBarItemVariant;
     isActive: boolean;
-    href?: string;
-    onClick?: () => void;
+    href: string;
     ariaLabel: string;
-    role?: AriaRole;
     tid?: string;
+    onClick: () => void;
 };
 
 export const SortingBarItem: FC<SortingBarItemProps> = ({
     children,
+    variant,
     isActive,
     href,
-    onClick,
     ariaLabel,
-    role = 'option',
     tid,
+    onClick,
 }) => {
-    const isMobileMenuItem = role === 'menuitem';
+    const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+        // Keep the browser behaviour for opening the sorted list in a new tab or window.
+        const isOpeningInNewContext =
+            event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
 
-    const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        e.preventDefault();
-        onClick?.();
+        if (isOpeningInNewContext) {
+            return;
+        }
+
+        event.preventDefault();
+        onClick();
     };
+
+    const itemClassName =
+        variant === 'tab'
+            ? getSortingTabClassName({ isActive })
+            : twJoin(
+                  'flex min-h-12 w-full items-center justify-between gap-3 rounded-none px-4 py-3 text-left font-secondary text-sm text-text-default no-underline hover:bg-background-more hover:text-text-default hover:no-underline',
+                  isActive ? 'bg-background-accent-less font-bold' : 'font-semibold',
+              );
 
     return (
         <a
+            aria-current={isActive ? 'true' : undefined}
             aria-label={ariaLabel}
-            aria-selected={role === 'option' ? isActive : undefined}
             data-tid={tid}
             href={href}
-            role={role}
-            className={twMergeCustom(
-                isMobileMenuItem
-                    ? 'flex min-h-12 w-full items-center justify-between gap-3 rounded-none px-4 py-3 text-left font-secondary font-semibold text-sm text-text-default no-underline hover:bg-background-more'
-                    : 'vl:relative vl:rounded-t-xl vl:rounded-b-none vl:bg-background-more vl:px-5 py-4 vl:py-2.5 text-left vl:text-center font-bold font-secondary text-link-default text-xs uppercase underline hover:text-link-hovered',
-                isActive &&
-                    (isMobileMenuItem
-                        ? 'bg-background-more'
-                        : 'vl:border vl:border-border-less vl:bg-background-default font-semibold text-text-default no-underline vl:after:absolute vl:after:bottom-[-2px] vl:after:left-0 vl:after:h-[2px] vl:after:w-full vl:after:bg-background-default'),
-            )}
-            onClick={handleOnClick}
+            className={itemClassName}
+            onClick={handleClick}
         >
             {children}
 
-            {isMobileMenuItem && isActive && <CheckmarkIcon aria-hidden className="size-4 shrink-0" />}
+            {variant === 'dropdown' && isActive && <CheckmarkIcon aria-hidden className="size-4 shrink-0" />}
         </a>
     );
 };

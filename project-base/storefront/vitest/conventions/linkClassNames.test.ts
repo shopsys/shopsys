@@ -37,7 +37,7 @@ const OWN_LINK_STYLE_PATHS = new Set([
     // own interactive families with a selected state: sorting tabs, blog category pills, calendar days, accordions
     'components/Blocks/BlogSignpost/BlogSignpostCategoryLink.tsx',
     'components/Blocks/PromoCode/PromoCode.tsx',
-    'components/Blocks/SortingBar/SortingBarItem.tsx',
+    'components/Blocks/SortingBar/SortingBarTabs.tsx',
     'components/Forms/DatePicker/datePickerUtils.ts',
     'components/Pages/ProductDetail/ProductDetailGallery/ProductDetailGalleryThumbnails.tsx',
 

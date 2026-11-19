@@ -43,7 +43,12 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
     return (
         <VerticalStack gap="md">
-            <CollapsibleDescription currentPage={currentPage} description={category.description} heading={heading} />
+            <CollapsibleDescription
+                currentPage={currentPage}
+                description={category.description}
+                heading={heading}
+                productsCount={category.products.totalCount}
+            />
 
             <SimpleNavigation
                 isWithoutSlider

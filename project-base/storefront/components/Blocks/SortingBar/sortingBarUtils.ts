@@ -1,6 +1,44 @@
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
+import { twJoin } from 'tailwind-merge';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
+
+/**
+ * A fixed limit instead of measuring the available width, so the bar does not shift after hydration.
+ */
+const MAX_VISIBLE_SORT_TABS = 4;
+
+/**
+    twJoin(
+        'relative inline-flex min-h-11 cursor-pointer items-center rounded-detail px-1 font-secondary text-md no-underline transition-colors hover:no-underline',
+        isActive ? 'font-bold text-text-default' : 'font-semibold text-text-less hover:text-text-default',
+    );
+
+/**
+ * Splits the options into the visible tabs and the rest shown under "More".
+ * The selected option always stays visible, it takes the place of the last visible tab.
+ */
+export const splitSortOptions = (
+    sortOptions: TypeProductOrderingModeEnum[],
+    selectedSortOption: TypeProductOrderingModeEnum,
+) => {
+    if (sortOptions.length <= MAX_VISIBLE_SORT_TABS) {
+        return { visibleSortOptions: sortOptions, moreSortOptions: [] };
+    }
+
+    const visibleSortOptions = sortOptions.slice(0, MAX_VISIBLE_SORT_TABS);
+    const isSelectedSortOptionHidden =
+        sortOptions.includes(selectedSortOption) && !visibleSortOptions.includes(selectedSortOption);
+
+    if (isSelectedSortOptionHidden) {
+        visibleSortOptions[MAX_VISIBLE_SORT_TABS - 1] = selectedSortOption;
+    }
+
+    return {
+        visibleSortOptions,
+        moreSortOptions: sortOptions.filter((sortOption) => !visibleSortOptions.includes(sortOption)),
+    };
+};
 
 export const getIsPriceRelatedSortOption = (sortOption: TypeProductOrderingModeEnum) =>
     sortOption === TypeProductOrderingModeEnum.PriceAsc || sortOption === TypeProductOrderingModeEnum.PriceDesc;

@@ -11,7 +11,9 @@ export const ProductListViewModeToggle: FC = () => {
     const setCookiesStoreState = useCookiesStore((store) => store.setCookiesStoreState);
 
     return (
-        <fieldset className="flex items-center">
+        // A segmented control: the pressed option is a raised surface inside a muted track, so no border has to frame
+        // both options. The 2px track padding keeps the group 44px high (36px from vl) like the sort button next to it.
+        <fieldset className="m-0 flex min-w-0 items-center gap-0.5 rounded-button border-0 bg-background-more p-0.5">
             <legend className="sr-only">{t('Product list view mode', { ns: 'accessibility' })}</legend>
 
             <ProductListViewModeToggleButton
@@ -56,6 +58,7 @@ const ProductListViewModeToggleButton: FC<ProductListViewModeToggleButtonProps> 
         Icon={Icon}
         aria-pressed={isActive}
         ariaLabel={ariaLabel}
+        className="size-10 vl:size-8 rounded-detail text-text-less hover:bg-background-most hover:text-text-default aria-pressed:bg-background-default aria-pressed:text-link-default aria-pressed:shadow-xs"
         shape="rounded"
         size="small"
         tid={tid}

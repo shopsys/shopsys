@@ -2,6 +2,7 @@ import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapp
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { DeferredFilterSelectedParameters } from 'components/Blocks/Product/Filter/DeferredFilterSelectedParameters';
 import { PRODUCT_LIST_HEADING_ELEMENT_ID } from 'components/Blocks/Product/Filter/filterElementIds';
+import { ProductsCount } from 'components/Blocks/Product/ProductsList/ProductsCount';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -35,10 +36,13 @@ export const SearchProducts: FC<SearchProductsProps> = ({ searchProductsDataFrom
 
     return (
         <div>
-            <Webline>
-                <p className="h5 mb-2 scroll-mt-fixed-header" id={PRODUCT_LIST_HEADING_ELEMENT_ID}>
+            <Webline className="mb-2 flex flex-wrap items-baseline gap-x-3">
+                <p className="h5 scroll-mt-fixed-header" id={PRODUCT_LIST_HEADING_ELEMENT_ID}>
                     {t('Found products')}
                 </p>
+
+                {/* Below vl the product count moves here from the sorting bar, so the bar fits one row. */}
+                <ProductsCount className="vl:hidden" totalCount={searchProductsData.totalCount} />
             </Webline>
 
             <FilteredProductsWrapper>

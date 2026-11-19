@@ -2,22 +2,19 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleFilterAndSortingBar: FC = () => (
     <>
-        {/* Mirrors the loaded mobile bar: the sort button and the product count with the view toggle. */}
-        <div className="flex vl:hidden flex-col justify-between gap-2.5 sm:flex-row sm:items-center">
-            <Skeleton className="h-11 w-full sm:w-80" />
-            <Skeleton className="h-8 w-full sm:w-33" />
+        {/* Mirrors the loaded mobile bar: the sort button and the view toggle in one row, the count is next to the heading. */}
+        <div className="flex vl:hidden items-center gap-2">
+            <Skeleton className="h-11 min-w-0 flex-1 sm:max-w-80" />
+            <Skeleton className="ml-auto h-11 w-22" />
         </div>
 
-        <div className="vl:flex hidden w-full items-center justify-between gap-2">
-            <div className="flex gap-4">
-                <Skeleton className="h-9 w-32" />
-                <Skeleton className="h-9 w-32" />
-                <Skeleton className="h-9 w-32" />
-            </div>
+        <div className="vl:flex hidden h-11 w-full items-center gap-5">
+            <Skeleton className="h-5 w-24 rounded-detail" />
+            <Skeleton className="h-5 w-24 rounded-detail" />
+            <Skeleton className="h-5 w-24 rounded-detail" />
 
             <Skeleton className="ml-auto h-4 w-20 rounded-detail" />
-            <Skeleton className="m-1.5 size-5 rounded-detail" />
-            <Skeleton className="m-1.5 size-5 rounded-detail" />
+            <Skeleton className="h-9 w-18" />
         </div>
     </>
 );
