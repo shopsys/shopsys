@@ -275,7 +275,7 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton>{t('Send review')}</SubmitButton>
+                            <SubmitButton size="large">{t('Send review')}</SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>

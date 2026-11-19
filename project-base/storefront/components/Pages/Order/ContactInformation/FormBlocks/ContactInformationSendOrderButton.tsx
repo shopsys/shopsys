@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockAgreements } from 'components/Forms/Form/Form';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -67,7 +67,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                                     target="_blank"
                                 />
                             ) : (
-                                <span className={linkPlaceholderTwClass} />
+                                <span />
                             ),
                             lnk2: privacyPolicyArticleUrl ? (
                                 <Link
@@ -77,7 +77,7 @@ export const ContactInformationSendOrderButton: FC = () => {
                                     target="_blank"
                                 />
                             ) : (
-                                <span className={linkPlaceholderTwClass} />
+                                <span />
                             ),
                         }}
                     />

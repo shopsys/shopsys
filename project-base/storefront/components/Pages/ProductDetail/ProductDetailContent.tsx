@@ -108,7 +108,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                     {isWatchdogButtonVisible && (
                                         <WatchDogButton
                                             className={twJoin(
-                                                'h-auto min-h-10 w-full text-balance sm:min-h-14',
+                                                'w-full text-balance',
                                                 areMultiplePurchaseActionsVisible
                                                     ? 'min-w-max flex-1 whitespace-nowrap'
                                                     : 'sm:max-w-60',

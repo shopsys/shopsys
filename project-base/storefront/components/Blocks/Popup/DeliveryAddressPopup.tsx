@@ -221,6 +221,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
 
                         <FormButtonWrapper>
                             <SubmitButton
+                                size="large"
                                 aria-label={t('Save. Save delivery address', { ns: 'accessibility' })}
                                 tid={TIDs.delivery_address_form_submit_button}
                             >

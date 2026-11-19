@@ -1,5 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { GiftVouchersExceedPayableAmountWarning } from 'components/Pages/Order/GiftVouchersExceedPayableAmountWarning';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
@@ -16,6 +17,7 @@ import { AnimatePresence } from 'framer-motion';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { TypePaymentTypeEnum } from 'graphql/types';
 import { KeyboardEvent, MouseEvent, useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -432,7 +434,7 @@ type ResetButtonProps = { text: string; onClick: () => void; tid: string; disabl
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid, disabled }) => (
     <button
-        className="cursor-pointer font-secondary font-semibold text-sm underline hover:no-underline"
+        className={twJoin(getLinkClassName(), 'font-secondary font-semibold text-sm')}
         data-tid={tid}
         disabled={disabled}
         tabIndex={0}

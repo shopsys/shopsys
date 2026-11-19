@@ -76,7 +76,7 @@ export const PageHero: FC<PageHeroProps> = ({
             )}
 
             {actionHref && actionTitle && (
-                <LinkButton className="self-center" href={actionHref} skeletonType={actionSkeletonType}>
+                <LinkButton className="self-center" href={actionHref} size="large" skeletonType={actionSkeletonType}>
                     {actionTitle}
                 </LinkButton>
             )}

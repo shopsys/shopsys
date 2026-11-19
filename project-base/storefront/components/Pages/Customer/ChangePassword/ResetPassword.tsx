@@ -27,7 +27,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ email }) => {
     };
 
     return (
-        <Button disabled={fetching} hasDisabledLook={fetching} size="small" onClick={onResetPasswordHandler}>
+        <Button disabled={fetching} hasDisabledLook={fetching} size="medium" onClick={onResetPasswordHandler}>
             {t('Send me a link to set a new password')}
         </Button>
     );

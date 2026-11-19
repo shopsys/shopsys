@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -60,7 +60,7 @@ export const useContactFormMeta = (): FormMeta<ContactFormType, { error: string;
                         lnk1: privacyPolicyUrl ? (
                             <Link className="inline text-sm" href={privacyPolicyUrl} target="_blank" />
                         ) : (
-                            <span className={linkPlaceholderTwClass} />
+                            <span />
                         ),
                     }}
                 />

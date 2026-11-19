@@ -1,4 +1,5 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { m, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -137,7 +138,8 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, textClassName 
                 aria-expanded={showFullDescription}
                 type="button"
                 className={twJoin(
-                    'group flex cursor-pointer items-center gap-2 font-secondary font-semibold text-link-default text-sm no-underline hover:text-link-hovered',
+                    getLinkClassName(),
+                    'group flex items-center gap-2 font-secondary font-semibold text-sm',
                     !shouldShowButton && 'invisible',
                 )}
                 onClick={handleButtonClick}

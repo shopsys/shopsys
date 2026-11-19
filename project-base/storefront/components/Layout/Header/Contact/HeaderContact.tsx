@@ -19,7 +19,7 @@ export const HeaderContact: FC = () => {
                             phone,
                             openingHours,
                         })}
-                        className="rounded-md font-bold text-text-inverted no-underline hover:text-text-inverted focus-visible:ring-1"
+                        className="rounded-md font-bold text-link-inverted-default no-underline hover:text-link-inverted-hovered hover:no-underline focus-visible:ring-1 active:text-link-inverted-hovered"
                         href={`tel:${cleanPhone}`}
                         tid={TIDs.simple_header_contact}
                     >

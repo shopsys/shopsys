@@ -110,7 +110,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                     <Button
                         aria-haspopup="dialog"
                         className="w-full md:w-auto"
-                        size="small"
+                        size="medium"
                         variant="secondary"
                         onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
                     >

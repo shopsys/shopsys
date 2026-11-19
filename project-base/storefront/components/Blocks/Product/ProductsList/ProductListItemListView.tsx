@@ -184,7 +184,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                             product={product}
                             productActionClassName="w-40 shrink-0 sm:w-44"
                             shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
-                            skeletonClassName="h-9 w-40 shrink-0 sm:w-44"
+                            skeletonClassName="w-40 shrink-0 sm:w-44"
                         />
                     )}
                 </div>

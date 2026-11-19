@@ -28,7 +28,7 @@ const ErrorPageNavigationLink: FC<{ item: ErrorPageNavigationItem }> = ({ item }
             </span>
 
             <span className="min-w-0 flex-1">
-                <span className="block font-secondary font-semibold text-sm">{item.title}</span>
+                <span className="block font-secondary font-semibold text-sm group-hover:underline">{item.title}</span>
                 <span className="mt-1 block text-sm text-text-less leading-relaxed">{item.description}</span>
             </span>
         </ExtendedNextLink>

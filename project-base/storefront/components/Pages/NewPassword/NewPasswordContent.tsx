@@ -8,7 +8,7 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
-import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
 import { getAuthMutationFetcher } from 'utils/auth/authMutationFetcher';
@@ -36,10 +36,6 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta();
     const handleError = useErrorHandler({ form: formProviderMethods });
-    const {
-        fieldState: { error },
-        field: { value: newPasswordValue },
-    } = useController({ name: formMeta.fields.newPasswordConfirm.name, control: formProviderMethods.control });
 
     const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (newPasswordFormData) => {
         const newPasswordResult = await newPassword(
@@ -119,9 +115,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                             </FormBlockWrapper>
 
                             <FormButtonWrapper>
-                                <SubmitButton hasDisabledCursor={!!error || newPasswordValue.length === 0}>
-                                    {t('Set new password')}
-                                </SubmitButton>
+                                <SubmitButton size="large">{t('Set new password')}</SubmitButton>
                             </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>

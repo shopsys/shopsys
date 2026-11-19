@@ -154,6 +154,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
                 <div className="vl:static sticky bottom-0 z-10 order-last vl:order-0 -mx-5 vl:mx-0 flex items-center justify-between gap-4 bg-background-default px-5 vl:px-0 vl:py-0 pt-3 pb-5 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] vl:shadow-none">
                     <Button
                         aria-label={t('Go back to shop', { ns: 'accessibility' })}
+                        size="large"
                         variant="tertiary"
                         onClick={handleClosePopup}
                     >

@@ -1,5 +1,6 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
@@ -142,7 +143,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
 
                             {isFirstStep && (
                                 <button
-                                    className="cursor-pointer text-link-default text-xs underline hover:text-link-hovered hover:no-underline"
+                                    className={twJoin(getLinkClassName(), 'text-xs')}
                                     data-tid={TIDs.blocks_promocode_remove_button}
                                     tabIndex={0}
                                     aria-label={t('Remove promo code {{ promoCode }}', {
@@ -219,7 +220,10 @@ export const CartPreview: FC<CartPreviewProps> = ({
 
                             {isFirstStep && (
                                 <button
-                                    className="col-start-1 row-start-2 cursor-pointer justify-self-start text-link-default text-xs underline hover:text-link-hovered hover:no-underline"
+                                    className={twJoin(
+                                        getLinkClassName(),
+                                        'col-start-1 row-start-2 justify-self-start text-xs',
+                                    )}
                                     data-tid={TIDs.blocks_promocode_giftvoucher_remove_button}
                                     tabIndex={0}
                                     aria-label={t('Remove gift voucher {{ giftVoucherCode }}', {

@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
@@ -53,7 +53,7 @@ export const useWatchdogFormMeta = (): FormMeta<WatchdogFormType, { error: strin
                                 target="_blank"
                             />
                         ) : (
-                            <span className={linkPlaceholderTwClass} />
+                            <span />
                         ),
                     }}
                 />

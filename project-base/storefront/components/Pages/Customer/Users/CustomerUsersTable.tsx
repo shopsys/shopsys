@@ -90,7 +90,7 @@ export const CustomerUsersTable: FC = () => {
                 aria-haspopup="dialog"
                 className="w-fit self-center"
                 tid={TIDs.customer_users_add_button}
-                size="small"
+                size="medium"
                 onClick={() => openManageCustomerUserPopup()}
             >
                 <PlusIcon aria-hidden="true" className="size-4" />

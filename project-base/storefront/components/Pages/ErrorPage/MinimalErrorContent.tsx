@@ -1,3 +1,4 @@
+import { getButtonClassName } from 'components/Forms/Button/buttonUtils';
 import { ErrorPageBody } from 'components/Pages/ErrorPage/ErrorPageBody';
 import Head from 'next/head';
 import { twMergeCustom } from 'utils/twMerge';
@@ -51,10 +52,7 @@ export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, 
                             <a
                                 href="/"
                                 className={twMergeCustom(
-                                    'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button px-3 py-2.5 text-center font-bold font-secondary text-xs outline-2 -outline-offset-2 transition-all sm:px-4 sm:py-2 sm:text-sm',
-                                    'bg-button-primary-bg-default text-button-primary-text-default outline-button-primary-border-default',
-                                    'hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered hover:no-underline hover:outline-button-primary-border-hovered',
-                                    'active:bg-button-primary-bg-active active:text-button-primary-text-active active:outline-button-primary-border-active',
+                                    getButtonClassName('primary', 'medium', false),
                                     'no-underline',
                                 )}
                             >
