@@ -3,15 +3,10 @@ import { ButtonBaseProps } from 'components/Forms/Button/Button';
 import { getButtonClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
 import { AnchorHTMLAttributes } from 'react';
-import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { addRelNoopenerWhenTargetIsBlank } from 'utils/links/addRelNoopenerWhenTargetIsBlank';
 import { twMergeCustom } from 'utils/twMerge';
 
-type NativePropsAnchor = ExtractNativePropsFromDefault<
-    AnchorHTMLAttributes<HTMLAnchorElement>,
-    'href',
-    'rel' | 'target'
->;
+type NativePropsAnchor = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'type'> & { href: string };
 
 type LinkProps = NativePropsAnchor & {
     isExternal?: boolean;
@@ -45,6 +40,8 @@ export const Link: FC<LinkProps> = ({
     tid,
     size = 'small',
     buttonVariant,
+    tabIndex = 0,
+    ...nativeProps
 }) => {
     const classNameTwClass = twMergeCustom(
         isButton
@@ -54,11 +51,12 @@ export const Link: FC<LinkProps> = ({
     );
 
     const props = {
+        ...nativeProps,
         className: classNameTwClass,
         href: isExternal ? href : undefined,
         rel: addRelNoopenerWhenTargetIsBlank(rel, target),
         target,
-        tabIndex: 0,
+        tabIndex,
     };
 
     if (isExternal) {
