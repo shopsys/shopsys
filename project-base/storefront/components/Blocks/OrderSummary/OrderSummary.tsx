@@ -9,6 +9,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapCartItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
+import { useTransportExpectedDeliveryDate } from 'utils/transport/useTransportExpectedDeliveryDate';
 
 type OrderSummaryProps = {
     activeStep: number;
@@ -18,7 +19,8 @@ type OrderSummaryProps = {
 export const OrderSummary: FC<OrderSummaryProps> = ({ activeStep, isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
+    const { cart, isCartFetchingOrUnavailable, transport, pickupPlace } = useCurrentCart();
+    const expectedDeliveryDate = useTransportExpectedDeliveryDate(transport, pickupPlace);
 
     if (isCartFetchingOrUnavailable) {
         return <CartLoading />;
@@ -32,9 +34,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ activeStep, isTransportOrP
         <div className="vl:sticky vl:top-2 vl:col-span-1 flex flex-col gap-2 vl:self-start">
             <span className="h4">{t('Your order')}</span>
 
-            {activeStep >= 3 && (
-                <ExpectedDeliveryDateSummary expectedDeliveryDate={cart.transport?.expectedDeliveryDate} />
-            )}
+            {activeStep >= 3 && <ExpectedDeliveryDateSummary expectedDeliveryDate={expectedDeliveryDate} />}
 
             <div className="relative">
                 <ul
