@@ -739,6 +739,7 @@
     "The payment is being processed": "The payment is being processed",
     "The payment you selected is no longer available.": "The payment you selected is no longer available.",
     "The pickup date cannot be determined": "The pickup date cannot be determined",
+    "The pickup place you selected is no longer available. Please select another one in the Transport and payment step.": "The pickup place you selected is no longer available. Please select another one in the Transport and payment step.",
     "The price of item {{ itemName }} has changed.": "The price of item {{ itemName }} has changed.",
     "The price of some additional services of item {{ itemName }} has changed.": "The price of some additional services of item {{ itemName }} has changed.",
     "The price of the payment you selected has changed.": "The price of the payment you selected has changed.",

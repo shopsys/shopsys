@@ -779,6 +779,7 @@
     "The payment is being processed": "Probíhá zpracování platby",
     "The payment you selected is no longer available.": "Platba, kterou jste si zvolili, již není dostupná.",
     "The pickup date cannot be determined": "Termín vyzvednutí nelze určit",
+    "The pickup place you selected is no longer available. Please select another one in the Transport and payment step.": "Odběrné místo, které jste si zvolili, již není dostupné. Vyberte prosím jiné v kroku Doprava a platba.",
     "The price of item {{ itemName }} has changed.": "Cena položky {{ itemName }} se změnila.",
     "The price of some additional services of item {{ itemName }} has changed.": "Cena některých doplňkových služeb položky {{ itemName }} se změnila.",
     "The price of the payment you selected has changed.": "Cena platby, kterou jste si zvolili, se změnila.",

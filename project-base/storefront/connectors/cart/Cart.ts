@@ -68,6 +68,13 @@ const handleCartTransportModifications = (
             ),
         );
     }
+    if (transportModifications.personalPickupStoreUnavailable) {
+        messages.push(
+            t(
+                'The pickup place you selected is no longer available. Please select another one in the Transport and payment step.',
+            ),
+        );
+    }
 
     return messages;
 };
