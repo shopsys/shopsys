@@ -49,9 +49,9 @@ export const useComplaintForm = (
             files: validateImageFile(t),
             deliveryAddressUuid: Yup.string().nullable(),
             email: validateEmail(t),
-            resolution: validateResolution(t),
-            bankAccountNumber: Yup.string().when('resolution', {
-                is: (resolution: SelectOptionType) => isResolutionMoneyReturn(resolution),
+            preferredResolution: validateResolution(t),
+            bankAccountNumber: Yup.string().when('preferredResolution', {
+                is: (preferredResolution: SelectOptionType) => isResolutionMoneyReturn(preferredResolution),
                 then: () => validateBankAccountNumber(t),
                 otherwise: (schema) => schema,
             }),
@@ -130,7 +130,7 @@ export const useComplaintForm = (
         manualDocumentNumber: '',
         manualComplaintItemName: '',
         manualComplaintItemCatnum: '',
-        resolution: {
+        preferredResolution: {
             label: '',
             value: '',
         },
@@ -167,7 +167,7 @@ export const useComplaintFormMeta = (): FormMeta<ComplaintFormType, { error: str
             manualDocumentNumber: t('Order or document number'),
             manualComplaintItemName: t('Item name'),
             manualComplaintItemCatnum: t('Catalog number'),
-            resolution: t('Resolution'),
+            preferredResolution: t('Resolution'),
             bankAccountNumber: t('Bank account number'),
         }),
     };

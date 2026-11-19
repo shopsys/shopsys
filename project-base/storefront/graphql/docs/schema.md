@@ -4982,11 +4982,11 @@ Order for which the complaint was created
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="complaint.resolution">resolution</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.preferredresolution">preferredResolution</strong></td>
 <td valign="top"><a href="#complaintresolution">ComplaintResolution</a>!</td>
 <td>
 
-Resolution of the complaint
+Resolution of the complaint preferred by the customer
 
 </td>
 </tr>
@@ -13780,7 +13780,7 @@ UUID of the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="complaintinput.resolution">resolution</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.preferredresolution">preferredResolution</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 

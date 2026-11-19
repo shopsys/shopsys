@@ -22,7 +22,7 @@ export type TypeComplaintInput = {
   /** UUID of the order */
   orderUuid?: string | null | undefined;
   /** Chosen resolution from complaintResolutionQuery */
-  resolution: string;
+  preferredResolution: string;
 };
 
 export type TypeComplaintItemInput = {
