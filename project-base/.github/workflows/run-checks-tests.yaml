@@ -151,7 +151,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.5'
+                    php-version: '8.6'
             -   name: Download Shopsys CLI
                 run: |
                     CLI_VERSION=$(grep '"shopsys/framework"' app/composer.json | grep -oE '[0-9]+\.[0-9]+' | head -1)
@@ -223,7 +223,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.5'
+                    php-version: '8.6'
             -   name: Download Shopsys CLI
                 run: |
                     CLI_VERSION=$(grep '"shopsys/framework"' app/composer.json | grep -oE '[0-9]+\.[0-9]+' | head -1)

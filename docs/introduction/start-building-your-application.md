@@ -177,7 +177,7 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
          "preferred-install": "dist",
 -        "component-dir": "project-base/web/components",
 -        "platform": {
--            "php": "8.5"
+-            "php": "8.6"
 -        }
 +        "component-dir": "project-base/web/components"
      },
@@ -186,7 +186,7 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
 Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by Shopsys Platform).
 Then commit the changed `composer.json` and `composer.lock` so all the devs can share the same configuration.
 
-If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-83-platform-in-the-composer-config).
+If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-86-platform-in-the-composer-config).
 
 ---
 
@@ -197,17 +197,17 @@ After all, your production server is the one that matters the most.
 First, run `php -v` on your server to find our the exact version, for example:
 
 ```no-highlight
-PHP 8.5.3 (cli)
+PHP 8.6.0 (cli)
 Copyright (c) The PHP Group
-Zend Engine v4.5.3, Copyright (c) Zend Technologies
-    with Zend OPcache v8.5.3, Copyright (c), by Zend Technologies
+Zend Engine v4.6.0, Copyright (c) Zend Technologies
+    with Zend OPcache v8.6.0, Copyright (c), by Zend Technologies
 ```
 
 Then change the version in your `docker/php-fpm/Dockerfile`:
 
 ```diff
-- FROM php:8.5-fpm-alpine as base
-+ FROM php:8.5.3-fpm-alpine as base
+- FROM php:8.6-fpm-alpine as base
++ FROM php:8.6.0-fpm-alpine as base
 ```
 
 After running `docker compose up -d --build` you'll have the application running on the same PHP.
@@ -216,8 +216,8 @@ Now you can modify the version in your `composer.json` as well so all packages w
 
 ```diff
          "platform": {
--            "php": "8.5"
-+            "php": "8.5.3"
+-            "php": "8.6"
++            "php": "8.6.0"
          }
 ```
 

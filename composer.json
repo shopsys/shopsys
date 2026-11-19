@@ -70,7 +70,7 @@
         }
     },
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "ext-amqp": "*",
         "ext-bcmath": "*",
         "ext-calendar": "*",
@@ -264,7 +264,7 @@
         "component-dir": "project-base/app/web/components",
         "sort-packages": true,
         "platform": {
-            "php": "8.5.0"
+            "php": "8.6.0"
         },
         "allow-plugins": {
             "cweagans/composer-patches": true,
