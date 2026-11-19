@@ -1,3 +1,4 @@
+import { CartModificationsBox } from 'components/Blocks/CartModificationsBox/CartModificationsBox';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -19,7 +20,10 @@ export const OrderContentWrapper: FC<OrderContentWrapperProps> = ({
             <CartSteps activeStep={activeStep} domainUrl={url} />
 
             <section className="grid vl:grid-cols-3 vl:gap-10">
-                <div className="vl:col-span-2">{children}</div>
+                <div className="vl:col-span-2">
+                    <CartModificationsBox className="mb-5" />
+                    {children}
+                </div>
 
                 <OrderSummary activeStep={activeStep} isTransportOrPaymentLoading={isTransportOrPaymentLoading} />
             </section>

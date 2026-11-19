@@ -4,35 +4,57 @@ import { TypeCartModificationsFragment } from 'graphql/requests/cart/fragments/C
 import { TypeCartPaymentModificationsFragment } from 'graphql/requests/cart/fragments/CartPaymentModificationsFragment.generated';
 import { TypeCartPromoCodeModificationsFragment } from 'graphql/requests/cart/fragments/CartPromoCodeModificationsFragment.generated';
 import { TypeCartTransportModificationsFragment } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
-import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 
-export const handleCartModifications = (
+export const getCartModificationMessages = (
     cartModifications: TypeCartModificationsFragment,
     t: Translate,
-    changePaymentInCart: ChangePaymentInCart,
-): void => {
-    const allMessages = [
-        ...handleRemovedProductFromEshopModifications(cartModifications.someProductWasRemovedFromEshop, t),
-        ...handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart),
-        ...handleCartPaymentModifications(cartModifications.paymentModifications, t),
-        ...handleCartItemModifications(cartModifications.itemModifications, t),
-        ...handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t),
-        ...handleCartGiftVoucherModifications(cartModifications.giftVoucherModifications, t),
+): string[] => [
+    ...getRemovedProductFromEshopMessages(cartModifications.someProductWasRemovedFromEshop, t),
+    ...getCartTransportModificationMessages(cartModifications.transportModifications, t),
+    ...getCartPaymentModificationMessages(cartModifications.paymentModifications, t),
+    ...getCartItemModificationMessages(cartModifications.itemModifications, t),
+    ...getCartPromoCodeModificationMessages(cartModifications.promoCodeModifications, t),
+    ...getCartGiftVoucherModificationMessages(cartModifications.giftVoucherModifications, t),
+];
+
+export const hasCartModifications = ({
+    someProductWasRemovedFromEshop,
+    itemModifications,
+    transportModifications,
+    paymentModifications,
+    promoCodeModifications,
+    giftVoucherModifications,
+}: TypeCartModificationsFragment): boolean => {
+    const modifiedItemLists = [
+        itemModifications.noLongerListableCartItems,
+        itemModifications.cartItemsWithModifiedPrice,
+        itemModifications.cartItemsWithChangedQuantity,
+        itemModifications.cartItemsWithRemovedAdditionalServices,
+        itemModifications.cartItemsWithModifiedAdditionalServicePrices,
+        promoCodeModifications.noLongerApplicablePromoCode,
+        giftVoucherModifications.noLongerApplicableGiftVouchers,
     ];
 
-    if (allMessages.length > 0) {
-        const combinedMessage = allMessages.join(' ');
-        showInfoMessage(combinedMessage, GtmMessageOriginType.cart);
-    }
+    return (
+        someProductWasRemovedFromEshop ||
+        transportModifications.transportPriceChanged ||
+        transportModifications.transportUnavailable ||
+        transportModifications.transportWeightLimitExceeded ||
+        transportModifications.personalPickupStoreUnavailable ||
+        paymentModifications.paymentPriceChanged ||
+        paymentModifications.paymentUnavailable ||
+        modifiedItemLists.some((modifiedItems) => modifiedItems.length > 0)
+    );
 };
 
-const handleRemovedProductFromEshopModifications = (
-    someProductWasRemovedFromEshop: boolean,
-    t: Translate,
-): string[] => {
+// The API removes only the transport, so the payment selected for it has to be removed by the storefront
+export const isPaymentResetRequiredByCartModifications = ({
+    transportModifications,
+}: TypeCartModificationsFragment): boolean =>
+    transportModifications.transportUnavailable || transportModifications.transportWeightLimitExceeded;
+
+const getRemovedProductFromEshopMessages = (someProductWasRemovedFromEshop: boolean, t: Translate): string[] => {
     const messages: string[] = [];
 
     if (someProductWasRemovedFromEshop) {
@@ -42,10 +64,9 @@ const handleRemovedProductFromEshopModifications = (
     return messages;
 };
 
-const handleCartTransportModifications = (
+const getCartTransportModificationMessages = (
     transportModifications: TypeCartTransportModificationsFragment,
     t: Translate,
-    changePaymentInCart: ChangePaymentInCart,
 ): string[] => {
     const messages: string[] = [];
 
@@ -53,7 +74,6 @@ const handleCartTransportModifications = (
         messages.push(t('The price of the transport you selected has changed.'));
     }
     if (transportModifications.transportUnavailable) {
-        changePaymentInCart(null, null);
         messages.push(
             t(
                 'The transport you selected is no longer available. Your transport and payment selection has been removed.',
@@ -61,7 +81,6 @@ const handleCartTransportModifications = (
         );
     }
     if (transportModifications.transportWeightLimitExceeded) {
-        changePaymentInCart(null, null);
         messages.push(
             t(
                 'You have exceeded the weight limit of the selected transport. Your transport and payment selection has been removed.',
@@ -79,7 +98,7 @@ const handleCartTransportModifications = (
     return messages;
 };
 
-const handleCartPaymentModifications = (
+const getCartPaymentModificationMessages = (
     paymentModifications: TypeCartPaymentModificationsFragment,
     t: Translate,
 ): string[] => {
@@ -95,7 +114,10 @@ const handleCartPaymentModifications = (
     return messages;
 };
 
-const handleCartItemModifications = (itemModifications: TypeCartItemModificationsFragment, t: Translate): string[] => {
+const getCartItemModificationMessages = (
+    itemModifications: TypeCartItemModificationsFragment,
+    t: Translate,
+): string[] => {
     const messages: string[] = [];
 
     for (const cartItemWithModifiedPrice of itemModifications.cartItemsWithModifiedPrice) {
@@ -139,7 +161,7 @@ const handleCartItemModifications = (itemModifications: TypeCartItemModification
     return messages;
 };
 
-const handleCartPromoCodeModifications = (
+const getCartPromoCodeModificationMessages = (
     promoCodeModifications: TypeCartPromoCodeModificationsFragment,
     t: Translate,
 ): string[] => {
@@ -154,7 +176,7 @@ const handleCartPromoCodeModifications = (
     return messages;
 };
 
-const handleCartGiftVoucherModifications = (
+const getCartGiftVoucherModificationMessages = (
     giftVoucherModifications: TypeCartGiftVoucherModificationsFragment,
     t: Translate,
 ): string[] => {

@@ -5,6 +5,7 @@ import { Translate } from 'next-translate';
 import { ClientOptions, fetchExchange, SSRExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
 import { cache } from 'urql/cache/cacheExchange';
+import { cartModificationsExchange } from 'urql/cartModificationsExchange';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { isClient } from 'utils/isClient';
 import { isServerTimingEnabled } from 'utils/serverSide/serverTiming';
@@ -29,6 +30,8 @@ export const getUrqlExchanges = (
     ...(isClient ? [cache] : []),
     getErrorExchange(t, domainConfig, context),
     ssrExchange,
+    // Below the cache and the SSR exchange, so it receives only network responses. The cart is loaded only on the client.
+    ...(isClient ? [cartModificationsExchange] : []),
     authExchange(getAuthExchangeOptions(domainConfig, context)),
     operationNameExchange,
     fetchExchange,
