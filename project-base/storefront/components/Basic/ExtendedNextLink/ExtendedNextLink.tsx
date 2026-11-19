@@ -73,6 +73,13 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
         if (isWithoutOpeningInNewTab) {
             onClick?.(e);
 
+            // A cancelled click or a download does not navigate, so no page load starts.
+            const isNavigationSkipped = e.defaultPrevented || e.currentTarget.hasAttribute('download');
+
+            if (isNavigationSkipped) {
+                return;
+            }
+
             const isLinkExternal = isHrefExternal(href, url);
             updatePageLoadingState({
                 isPageLoading: !!type || !isLinkExternal,
