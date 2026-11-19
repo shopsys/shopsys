@@ -20,7 +20,7 @@ jobs:
             -   name: Install PHP, extensions and tools
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.5'
+                    php-version: '8.6'
                     tools: composer
             -   name: Install Composer dependencies
                 run: composer install --optimize-autoloader --no-interaction
