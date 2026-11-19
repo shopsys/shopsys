@@ -46,7 +46,7 @@ export const MobileBottomSearchWithOverlay: FC<MobileBottomSearchWithOverlayProp
                 <div className="pointer-events-auto w-full max-w-xl">
                     <AutocompleteSearch
                         inputRef={searchInputRef}
-                        inputClassName="h-14 rounded-xl border-2 pl-12 text-base shadow-[0_12px_32px_rgba(0,0,0,0.24)]"
+                        inputClassName="h-14 pl-12 text-base shadow-[0_12px_32px_rgba(0,0,0,0.24)]"
                         popupClassName="left-1/2 w-[calc(100vw-40px)] max-w-214 -translate-x-1/2"
                         shouldOpenPopupOnMount
                         shouldRenderResultsOverlay={false}

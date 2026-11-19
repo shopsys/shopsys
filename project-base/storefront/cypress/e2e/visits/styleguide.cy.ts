@@ -47,8 +47,8 @@ const ICON_BUTTON_DIMENSIONS: Record<(typeof ICON_BUTTON_SIZES)[number], number>
     medium: 40,
     large: 48,
 };
-const INPUT_PAIRED_DIMENSIONS: ButtonDimensions = { height: 48, fontSize: 16 };
-const INPUT_PAIRED_INPUT_HEIGHT = 48;
+const INPUT_PAIRED_DIMENSIONS: ButtonDimensions = { height: 56, fontSize: 16 };
+const INPUT_PAIRED_INPUT_HEIGHT = 56;
 
 const setTouchEmulation = (isEnabled: boolean) =>
     Cypress.automation('remote:debugger:protocol', {
@@ -100,7 +100,7 @@ const assertInputPairedButton = (viewportWidth: number) => {
     cy.getByTID([TIDs.styleguide_input_paired_button]).should(($button) =>
         checkDimensions($button[0], INPUT_PAIRED_DIMENSIONS, context),
     );
-    cy.getByTID([TIDs.styleguide_input_pair])
+    cy.getByTID([TIDs.styleguide_input_button_pair])
         .find('input')
         .should(($input) =>
             expect($input[0].getBoundingClientRect().height, `paired input at ${viewportWidth}px`).to.equal(
@@ -167,6 +167,10 @@ const assertContentLinkHover = (tid: TIDs) => {
     assertHoverUnderlinesLink(tid, { shouldShiftColor: true });
 };
 
+const assertFieldHeight = ($field: JQuery<HTMLElement>, height: number) => {
+    expect($field[0].getBoundingClientRect().height).to.equal(height);
+};
+
 const assertFocusKeepsLinkButtonHeight = ($button: JQuery<HTMLElement>) => {
     const height = $button[0].getBoundingClientRect().height;
 
@@ -177,14 +181,41 @@ const assertFocusKeepsLinkButtonHeight = ($button: JQuery<HTMLElement>) => {
         .and(($focusedButton) => expect($focusedButton[0].getBoundingClientRect().height).to.equal(height));
 };
 
-describe('Styleguide Tests (SSP-4301)', () => {
-    beforeEach(() => {
-        initializePersistStoreInLocalStorageToDefaultValues();
-        cy.visit('/styleguide');
-        // The loading example is intentionally persistent, so global "no loaders" readiness does not apply.
-        cy.waitForHydration();
-        cy.getByTID([[TIDs.styleguide_button_, 'small']]).should('be.visible');
+const visitStyleguide = () => {
+    initializePersistStoreInLocalStorageToDefaultValues();
+    cy.visit('/styleguide');
+    // The loading example is intentionally persistent, so global "no loaders" readiness does not apply.
+    cy.waitForHydration();
+    cy.getByTID([[TIDs.styleguide_button_, 'small']]).should('be.visible');
+};
+
+describe('Styleguide form field Tests (SSP-4077)', () => {
+    beforeEach(visitStyleguide);
+
+    it('[Field height] should keep the default field at 56px and the small one as high as a medium button', () => {
+        cy.getByTID([TIDs.styleguide_input_button_pair])
+            .find('input')
+            .should(($input) => assertFieldHeight($input, 56));
+        cy.getByTID([TIDs.styleguide_field_small])
+            .find('input')
+            .should(($input) => assertFieldHeight($input, 40));
     });
+
+    it('[Field focus] should fill a text field on keyboard focus but not after a click', () => {
+        cy.getByTID([TIDs.styleguide_field_default]).find('input').as('field');
+
+        cy.get('@field').focus();
+        cy.realPress(['Shift', 'Tab']);
+        cy.realPress('Tab');
+        cy.get('@field').should('be.focused').and('have.css', 'background-color', FOCUS_BACKGROUND_COLOR);
+
+        cy.get('@field').realClick();
+        cy.get('@field').should('be.focused').and('not.have.css', 'background-color', FOCUS_BACKGROUND_COLOR);
+    });
+});
+
+describe('Styleguide Tests (SSP-4301)', () => {
+    beforeEach(visitStyleguide);
 
     // Disabling touch also resets desktop pointer media, so clean up only after the final touch test.
     after(() => {

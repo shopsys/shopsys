@@ -374,11 +374,12 @@
     --color-input-fill-hovered: var(--color-primary-700);
     --color-input-bg-default: var(--color-background-default);
     --color-input-bg-hovered: var(--color-background-default);
+    --color-input-bg-disabled: var(--color-background-more);
     --color-input-border-default: var(--color-border-default);
     --color-input-border-hovered: var(--color-border-active);
     --color-input-border-active: var(--color-primary-500);
     --color-input-border-disabled: var(--color-border-disabled);
-    --color-input-border-warning: var(--color-orange-500);
+    --color-input-border-warning: var(--color-orange-700);
     --color-input-border-error: var(--color-border-error);
     --color-input-text-default: var(--color-text-default);
     --color-input-text-hovered: var(--color-text-default);

@@ -64,9 +64,8 @@ export const NewsletterForm: FC = () => {
                                         'aria-label': t('To sign up for newsletter, enter', {
                                             ns: 'accessibility',
                                         }),
-                                        className:
-                                            'border-white bg-input-bg-default text-input-text-default aria-invalid:border-input-border-error',
-                                        inputSize: 'small',
+                                        // the field colors come from the field itself; the class also reaches the label
+                                        className: 'border-white aria-invalid:border-input-border-error',
                                         label: formMeta.fields.email.label,
                                         required: true,
                                         type: 'email',
@@ -78,7 +77,7 @@ export const NewsletterForm: FC = () => {
                             <SubmitButton
                                 size="large"
                                 aria-label={t('Send. Sign up for newsletter', { ns: 'accessibility' })}
-                                className="min-h-12"
+                                className="min-h-14"
                                 title={t('Sign up')}
                                 variant="inverted"
                             >

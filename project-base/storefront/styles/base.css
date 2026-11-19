@@ -1,3 +1,8 @@
+/* Matches a focused element only while the customer navigates with the keyboard (see utils/accessibility/useFocusSource.ts). */
+@custom-variant focus-keyboard (html[data-focus-source="keyboard"] &:focus);
+/* The same for an element that contains the focused one, e.g. a select focused through its button or search input. */
+@custom-variant focus-within-keyboard (html[data-focus-source="keyboard"] &:focus-within);
+
 @layer base {
     /* Keep SSR content visible when JavaScript is disabled (Tailwind v4 + React streaming). */
     @media (scripting: none) {

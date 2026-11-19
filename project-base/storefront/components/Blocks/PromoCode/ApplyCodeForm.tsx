@@ -42,7 +42,6 @@ export const ApplyCodeForm: FC<ApplyCodeFormProps> = ({ isContentVisible }) => {
                             formName={formMeta.formName}
                             name={formMeta.fields.code.name}
                             textInputProps={{
-                                inputSize: 'small',
                                 label: formMeta.fields.code.label,
                                 required: true,
                             }}
@@ -51,7 +50,7 @@ export const ApplyCodeForm: FC<ApplyCodeFormProps> = ({ isContentVisible }) => {
 
                     <SubmitButton
                         aria-label={t('Apply discount coupon or gift voucher code', { ns: 'accessibility' })}
-                        className="min-h-12 w-full whitespace-nowrap sm:w-auto"
+                        className="min-h-14 w-full whitespace-nowrap sm:w-auto"
                         size="large"
                         tid={TIDs.blocks_promocode_apply_button}
                     >

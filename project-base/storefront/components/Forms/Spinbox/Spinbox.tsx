@@ -298,7 +298,11 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             <div
                 aria-busy={hasPendingLook}
                 className={twMergeCustom(
-                    'inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-background-default outline outline-gray-400 -outline-offset-1',
+                    'relative inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-input-bg-default',
+                    // The border is an overlay above the buttons, so a hovered button never covers it. Like the other
+                    // fields: hover darkens the border and typing into the value thickens it to 2px inside.
+                    'after:pointer-events-none after:absolute after:inset-0 after:z-above after:rounded-counter after:border after:border-input-border-default after:transition after:content-[""]',
+                    'hover:after:border-input-border-hovered has-[input:focus]:after:border-2 has-[input:focus]:after:border-input-border-hovered',
                     className,
                 )}
             >
@@ -347,7 +351,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'w-13 text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden',
+                        'w-13 self-stretch text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden focus-keyboard:bg-focus-background',
                     )}
                     onBlur={handleBlur}
                     onInput={handleInput}

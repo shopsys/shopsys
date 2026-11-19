@@ -2,6 +2,7 @@ import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
+import { getFieldStateClassName } from 'components/Forms/Lib/fieldUtils';
 import { TIDs } from 'cypress/tids';
 import { InputHTMLAttributes, KeyboardEventHandler, RefObject } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -73,10 +74,12 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded-input border-2 border-input-border-default bg-input-bg-default pr-20 pl-11 text-input-text-default placeholder:text-input-placeholder-default',
+                    'peer mb-0 h-12 w-full rounded-input pr-20 pl-11 placeholder:text-input-placeholder-default',
+                    // Same border, hover and focus as other fields; without a floating label it stays 48px high.
+                    getFieldStateClassName(),
                     '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
                     '[&:-webkit-autofill]:hover:bg-input-bg-hovered! [&:-webkit-autofill]:hover:shadow-inner!',
-                    '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
+                    '[&:-webkit-autofill]:focus:bg-input-bg-default! [&:-webkit-autofill]:focus:shadow-inner!',
                     '[&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
                     'focus:outline-hidden',
                     shouldShowClearButton ? 'pr-10' : 'pr-4',

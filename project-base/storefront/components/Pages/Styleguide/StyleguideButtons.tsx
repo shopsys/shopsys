@@ -167,19 +167,18 @@ export const StyleguideButtons: FC = () => {
                     </StyleguideSpecimen>
 
                     <StyleguideSpecimen
-                        hint="Keeps the input height (min-h-12) and aligns to the top, so validation messages do not stretch it."
+                        hint="A default field is 56 px high. The large button next to it gets min-h-14 and aligns to the top, so validation messages do not stretch it."
                         label="Paired with an input"
                     >
-                        <div className="flex items-start gap-2" data-tid={TIDs.styleguide_input_pair}>
+                        <div className="flex items-start gap-2" data-tid={TIDs.styleguide_input_button_pair}>
                             <TextInput
                                 id="styleguide-email"
-                                inputSize="small"
                                 label="Your email"
                                 type="email"
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
                             />
-                            <Button className="min-h-12" size="large" tid={TIDs.styleguide_input_paired_button}>
+                            <Button className="min-h-14" size="large" tid={TIDs.styleguide_input_paired_button}>
                                 Send
                             </Button>
                         </div>

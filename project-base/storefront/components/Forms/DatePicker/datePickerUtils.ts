@@ -27,7 +27,8 @@ export const datePickerClassNames = {
     selected:
         '[&_button]:bg-link-default [&_button]:text-text-inverted [&_button]:hover:bg-link-hovered [&_button]:hover:text-text-inverted',
     today: '[&_button]:ring-2 [&_button]:ring-link-default [&_button]:ring-inset',
-    outside: 'text-input-placeholder-default opacity-50',
+    // days of the neighbouring months are muted by color and weight, an opacity would drop them below the text contrast
+    outside: '[&_button]:font-normal [&_button]:text-text-less',
     disabled: 'pointer-events-none opacity-40',
 };
 
