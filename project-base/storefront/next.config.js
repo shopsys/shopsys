@@ -16,10 +16,10 @@ const isSentryBuildPluginEnabled =
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
-        reactCompiler: true,
         scrollRestoration: true,
-        middlewarePrefetch: 'strict',
+        proxyPrefetch: 'strict',
     },
+    reactCompiler: true,
     reactStrictMode: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     images: {
@@ -43,6 +43,7 @@ const nextConfig = {
         reactRemoveProperties: process.env.CYPRESS_KEEP_TID === '1' ? false : { properties: ['^data-tid$'] },
     },
 
+    // Next.js 16 bundles with Turbopack by default, which does not support this function (a plain `next build` stops with an error), so the package.json scripts pass `--webpack`.
     // FE build error fix: "ModuleNotFoundError: Module not found: Error: Can't resolve 'net' in '/app/node_modules/@node-redis/client/dist/lib/client'"
     // https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-761853289
     webpack: (config, { isServer }) => {

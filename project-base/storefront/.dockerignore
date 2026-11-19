@@ -1,6 +1,7 @@
 docs
 cypress
 !cypress/tids.ts
+vitest
 
 node_modules
 

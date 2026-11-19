@@ -19,7 +19,7 @@ The Shopsys storefront supports multi-domain configurations with flexible locale
 - **URL Structure**: `/sk/products`, `/sk/categories`, `/sk/cart`
 - **Locale**: Extracted from URL path segment
 - **Cookie Naming**: Uses domain ID for isolation (same as standard domains)
-- **Special Handling**: Middleware preserves locale prefix in all URLs
+- **Special Handling**: Proxy preserves locale prefix in all URLs
 
 ## Fallback Domain Redirection
 
@@ -65,7 +65,7 @@ The system parses the `Accept-Language` header to extract user preferences:
 The redirection logic is implemented in:
 
 - **`getHostAndDomainFromRequest`**: Domain resolution with redirect flag
-- **`middleware.ts`**: HTTP redirect handling with 308 status code
+- **`proxy.ts`**: HTTP redirect handling with 308 status code
 - **Browser locale parsing**: Automatic `Accept-Language` header processing
 
 ## Core Configuration
@@ -96,33 +96,26 @@ export type DomainConfigType = {
 
 ### Configuration Example
 
-```javascript
-// next.config.js
-publicRuntimeConfig: {
-    domains: [
-        {
-            url: 'http://127.0.0.1:8000',
-            defaultLocale: 'en',
-            domainId: 1,
-            currencyCode: 'EUR',
-            // ... other config
-        },
-        {
-            url: 'http://127.0.0.2:8000', // Base domain without locale
-            defaultLocale: 'cs',
-            domainId: 2,
-            currencyCode: 'CZK',
-            // ... other config
-        },
-        {
-            url: 'http://127.0.0.1:8000/sk', // Locale in path
-            defaultLocale: 'sk',
-            domainId: 3,
-            currencyCode: 'EUR',
-            // ... other config
-        },
-    ];
-}
+Domain URLs come from environment variables (`project-base/storefront/.env`), the rest of each domain's settings is defined in `buildPublicEnvConfig.ts`:
+
+```dotenv
+DOMAIN_HOSTNAME_1=http://127.0.0.1:8000/
+DOMAIN_HOSTNAME_2=http://127.0.0.2:8000/ # Base domain without locale
+DOMAIN_HOSTNAME_3=http://127.0.0.1:8000/sk/ # Locale in path
+```
+
+```typescript
+// buildPublicEnvConfig.ts
+domains: [
+    {
+        url: domainUrl1, // DOMAIN_HOSTNAME_1
+        defaultLocale: 'en',
+        domainId: 1,
+        currencyCode: 'EUR',
+        // ... other config
+    },
+    // ... domains 2 (cs, CZK) and 3 (sk, EUR)
+],
 ```
 
 ## Cookie Isolation Strategy
@@ -354,11 +347,11 @@ import { getDomainConfig } from 'utils/domain/domainConfig';
 const domainConfig = getDomainConfig(context);
 ```
 
-## Middleware and Routing
+## Proxy and Routing
 
 ### How Locale-in-Path Works
 
-The Next.js middleware (`middleware.ts`) handles locale-in-path domains by:
+The Next.js proxy (`proxy.ts`, called middleware before Next.js 16) handles locale-in-path domains by:
 
 1. **Extracting locale from request**: Parses the URL to identify domain and locale
 2. **Rewriting URLs**: Maps public URLs to internal Next.js pages
@@ -366,7 +359,7 @@ The Next.js middleware (`middleware.ts`) handles locale-in-path domains by:
 
 Example flow for `http://127.0.0.1:8000/sk/products`:
 
-1. Middleware extracts: `domainId: 3`, `locale: 'sk'`
+1. Proxy extracts: `domainId: 3`, `locale: 'sk'`
 2. Rewrites to internal route: `/products` (Next.js page)
 3. Domain context preserved throughout request
 
@@ -388,8 +381,8 @@ getBaseUrlWithLocale(baseUrl, 'sk'); // 'http://127.0.0.1:8000/sk'
 | Issue                                | Cause                            | Solution                                                                 |
 | ------------------------------------ | -------------------------------- | ------------------------------------------------------------------------ |
 | Users logged into wrong domain       | Cookies not properly isolated    | Verify cookie names include domain ID                                    |
-| Lost locale after redirect           | Middleware not preserving locale | Check `getBaseUrlWithLocale` usage                                       |
-| Domain not found errors              | Missing configuration            | Verify domain config in `next.config.js`                                 |
+| Lost locale after redirect           | Proxy not preserving locale      | Check `getBaseUrlWithLocale` usage                                       |
+| Domain not found errors              | Missing configuration            | Verify `DOMAIN_HOSTNAME_*` variables and `buildPublicEnvConfig.ts`       |
 | Cookies visible across domains       | Using same cookie names          | Implement `getCookieName` utility                                        |
 | Unexpected fallback redirect         | No exact domain match found      | Check domain configuration covers all expected URLs                      |
 | Paths treated as locales             | Misunderstanding domain matching | Remember: only exact domain matches work, other paths are regular routes |
@@ -405,7 +398,7 @@ The Shopsys storefront domain configuration system provides:
 - **Fallback redirection** for edge cases with orphaned base URLs
 - **Complete cookie isolation** between domains sharing the same host
 - **Consistent API** for cookie operations across client and server
-- **Automatic locale handling** in middleware and routing
+- **Automatic locale handling** in proxy and routing
 - **Type-safe configuration** with TypeScript support
 
 The name-based cookie isolation strategy ensures reliable authentication and state management across all domain configurations, eliminating race conditions and providing a seamless user experience.

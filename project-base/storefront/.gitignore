@@ -40,3 +40,4 @@ yarn-error.log*
 /schema.graphql
 schema.graphql.json
 *.tsbuildinfo
+next-env.d.ts

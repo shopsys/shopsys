@@ -12,6 +12,7 @@
             "!pnpm-lock.yaml",
             "!tsconfig.json",
             "!.next",
+            "!next-env.d.ts",
             "!.pnpm-store",
             "!cypress",
             "!graphql/docs",
