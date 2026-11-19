@@ -76,7 +76,7 @@ export const BlogSignpostPanel: FC<BlogSignpostPanelProps> = ({
                 {!isRoot && parentPanelUuid && (
                     <>
                         <button
-                            className="group flex w-fit cursor-pointer items-center gap-1 px-2 py-1 font-secondary text-sm text-text-less transition-colors hover:text-link-hovered"
+                            className="group flex w-fit cursor-pointer items-center gap-1 px-2 py-1 font-secondary text-sm text-text-less transition-colors hover:text-link-hovered hover:underline"
                             type="button"
                             onClick={() => onPanelChange(parentPanelUuid)}
                         >

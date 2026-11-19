@@ -117,7 +117,7 @@ export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUui
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton>{t('Send')}</SubmitButton>
+                            <SubmitButton size="large">{t('Send')}</SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>

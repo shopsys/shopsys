@@ -168,7 +168,12 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
 
             <div className="relative z-above col-span-2 col-start-1 row-start-8 w-full max-w-60 md:col-start-2 md:row-start-7">
                 {shouldShowProductActionSkeleton ? (
-                    <ProductActionSkeleton className="w-full" isWithAddToCart isWithProductListButtons={false} />
+                    <ProductActionSkeleton
+                        buttonSize="large"
+                        className="w-full"
+                        isWithAddToCart
+                        isWithProductListButtons={false}
+                    />
                 ) : (
                     <ProductAction
                         currentCart={{ cart, isCartFetchingOrUnavailable }}

@@ -100,7 +100,9 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     }
 
     if (isCartFetchingOrUnavailable) {
-        return <SkeletonModuleProductDetailAddToCart size={buttonSize} />;
+        return (
+            <SkeletonModuleProductDetailAddToCart isInPurchaseActionsRow={isInPurchaseActionsRow} size={buttonSize} />
+        );
     }
 
     const additionalServicesElement = shouldDisplayAdditionalServices ? (
@@ -151,9 +153,6 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
                     className={twJoin(
                         'h-auto w-full text-balance',
                         isInPurchaseActionsRow ? 'whitespace-nowrap' : 'whitespace-normal',
-                        buttonSize !== 'xlarge' && 'min-h-9',
-                        buttonSize === 'large' && 'sm:min-h-10',
-                        buttonSize === 'xlarge' && 'min-h-10 sm:min-h-14',
                     )}
                     disabled={isAddToCartPending}
                     hasDisabledLook={isAddToCartPending}

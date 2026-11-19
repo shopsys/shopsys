@@ -5,6 +5,7 @@ import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -155,7 +156,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                         <div className="flex flex-col gap-2">
                             {orderItem.product?.isVisible ? (
                                 <ExtendedNextLink
-                                    className="vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
+                                    className={twMergeCustom(
+                                        getLinkClassName({ variant: 'navigation' }),
+                                        'vl:w-fit w-full text-sm',
+                                    )}
                                     href={orderItem.product.slug}
                                     skeletonType="product"
                                     aria-label={t('Go to product {{ productName }}', {
@@ -172,7 +176,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                             {showComplaintButton && (
                                 <button
                                     aria-haspopup="dialog"
-                                    className="inline-flex cursor-pointer items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
+                                    className={twMergeCustom(
+                                        getLinkClassName(),
+                                        'inline-flex items-center self-baseline whitespace-nowrap text-sm outline-hidden',
+                                    )}
                                     data-tid={TIDs.order_detail_create_complaint_button}
                                     tabIndex={0}
                                     aria-label={t('Create complaint for product {{ productName }}', {
@@ -188,7 +195,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
 
                             {showWriteReviewButton && (
                                 <ExtendedNextLink
-                                    className="inline-flex items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm hover:text-link-hovered"
+                                    className={twMergeCustom(
+                                        getLinkClassName(),
+                                        'inline-flex items-center self-baseline whitespace-nowrap text-sm',
+                                    )}
                                     href={getWriteReviewUrl()}
                                     tid={TIDs.order_detail_write_review_button}
                                     skeletonType="product"

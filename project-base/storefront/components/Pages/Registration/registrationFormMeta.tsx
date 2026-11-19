@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import {
     validateCity,
     validateCompanyNameRequired,
@@ -130,7 +130,7 @@ export const useRegistrationFormMeta = (): FormMeta<RegistrationFormType, { erro
                                 target="_blank"
                             />
                         ) : (
-                            <span className={linkPlaceholderTwClass} />
+                            <span />
                         ),
                     }}
                 />

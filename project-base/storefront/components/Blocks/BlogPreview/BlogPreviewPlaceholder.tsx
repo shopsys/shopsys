@@ -1,9 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { BlogPreviewProps } from './BlogPreview';
 import { BlogPreviewMain } from './BlogPreviewMain';
@@ -27,7 +29,10 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        className="group flex items-center gap-2 font-secondary font-semibold text-sm text-text-inverted tracking-wide no-underline hover:text-text-inverted hover:underline"
+                        className={twMergeCustom(
+                            getLinkClassName({ variant: 'navigation', isInverted: true }),
+                            'group flex items-center gap-2 font-secondary font-semibold text-sm tracking-wide',
+                        )}
                         href={blogUrl}
                         type="blogCategory"
                     >

@@ -1,3 +1,4 @@
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
@@ -11,6 +12,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
+import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDebounce } from 'utils/useDebounce';
@@ -79,7 +81,7 @@ export const ContactInformationPersonalInformation: FC = () => {
                         <span>{t('This email is already registered')}</span>{' '}
                         <button
                             aria-haspopup="dialog"
-                            className="cursor-pointer text-sm underline hover:no-underline"
+                            className={twJoin(getLinkClassName(), 'text-sm')}
                             data-tid={TIDs.login_in_order_button}
                             tabIndex={0}
                             type="button"

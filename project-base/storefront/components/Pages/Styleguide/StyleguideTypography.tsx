@@ -1,5 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { StyleguideSection } from './StyleguideElements';
+import { Link } from 'components/Basic/Link/Link';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { TIDs } from 'cypress/tids';
+import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 
 export const StyleguideTypography: FC = () => {
     return (
@@ -21,8 +24,48 @@ export const StyleguideTypography: FC = () => {
                 soluta temporibus corrupti, alias velit nobis.
             </p>
 
-            <a href="/styleguide">Simple anchor link</a>
-            <ExtendedNextLink href="/styleguide">ExtendedNextLink</ExtendedNextLink>
+            <StyleguideSubSection className="flex flex-col items-start gap-4" title="Links and text actions">
+                <p className="text-sm">
+                    One rule for every text link: placement decides the default underline, hover is the same everywhere.
+                    A link inside text is always underlined; a standalone link (navigation, footer, card title) starts
+                    without an underline. On hover every link is underlined, and colored links also shift their color.
+                    Cards underline only their title. The header (main menu, phone and icon menu) is the only exception
+                    and responds with color only. Focus keeps the existing orange background.
+                </p>
+                <Link href="/styleguide" tid={TIDs.styleguide_content_link}>
+                    Content link
+                </Link>
+                <button className={getLinkClassName()} data-tid={TIDs.styleguide_text_action} type="button">
+                    Edit details
+                </button>
+                <ExtendedNextLink
+                    className={getLinkClassName({ variant: 'navigation' })}
+                    href="/styleguide"
+                    tid={TIDs.styleguide_navigation_link}
+                >
+                    About us
+                </ExtendedNextLink>
+                <div className="rounded-lg bg-background-brand p-4">
+                    <Link
+                        className={getLinkClassName({ isInverted: true })}
+                        href="/styleguide"
+                        tid={TIDs.styleguide_inverted_link}
+                    >
+                        Personal data processing
+                    </Link>
+                </div>
+                <ExtendedNextLink
+                    className="group rounded-lg bg-background-more p-4 text-text-default no-underline hover:text-text-default hover:no-underline"
+                    href="/styleguide"
+                    tid={TIDs.styleguide_card_link}
+                >
+                    <span className="font-semibold group-hover:underline" data-tid={TIDs.styleguide_card_title}>
+                        Product title
+                    </span>
+                    <p data-tid={TIDs.styleguide_card_text}>Supporting card text keeps its decoration.</p>
+                </ExtendedNextLink>
+                <span>Consent text without a destination stays ordinary text.</span>
+            </StyleguideSubSection>
         </StyleguideSection>
     );
 };

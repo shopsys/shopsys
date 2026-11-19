@@ -1,4 +1,5 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { type MouseEvent, useEffect, useState } from 'react';
@@ -24,8 +25,9 @@ const ArticleAnchorNavigationLink: FC<ArticleAnchorNavigationLinkProps> = ({ hre
             data-tid={`${TIDs.blog_article_anchor_navigation_link_}${href.slice(1)}`}
             href={href}
             className={twMergeCustom(
-                'flex items-center gap-1 rounded-sm font-secondary font-semibold text-sm text-text-default no-underline hover:text-link-hovered',
-                isActive && 'text-link-default no-underline',
+                getLinkClassName({ variant: 'navigation' }),
+                'flex items-center gap-1 font-secondary font-semibold text-sm',
+                isActive && 'text-link-default hover:text-link-default active:text-link-default',
             )}
             onClick={onClick}
         >

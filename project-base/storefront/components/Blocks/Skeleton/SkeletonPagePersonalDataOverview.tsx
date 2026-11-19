@@ -8,7 +8,7 @@ export const SkeletonPagePersonalDataOverview: FC = () => (
     <Webline>
         <VerticalStack gap="sm">
             <Skeleton className="h-8 w-72 lg:h-10" />
-            <Skeleton className="h-9 w-36" />
+            <Skeleton className="h-10 w-36" />
 
             <Skeleton className="h-8 w-72 lg:h-10" />
             <SkeletonModuleCustomerOrders />

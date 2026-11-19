@@ -75,7 +75,7 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
                                         <Tooltip label={previewTooltipLabel}>
                                             <a
                                                 aria-label={previewAccessibleLabel}
-                                                className="h4 no-underline"
+                                                className="h4 no-underline hover:underline"
                                                 href={file.viewUrl}
                                                 rel="noopener noreferrer"
                                                 target="_blank"

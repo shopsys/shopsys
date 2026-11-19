@@ -103,7 +103,10 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton aria-label={t('Send. Submit watchdog request', { ns: 'accessibility' })}>
+                            <SubmitButton
+                                size="large"
+                                aria-label={t('Send. Submit watchdog request', { ns: 'accessibility' })}
+                            >
                                 {t('Send')}
                             </SubmitButton>
                         </FormButtonWrapper>

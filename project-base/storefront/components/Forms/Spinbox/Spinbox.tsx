@@ -427,10 +427,11 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({
             tabIndex={disabled ? -1 : 0}
             className={twMergeCustom([
                 'relative flex cursor-pointer items-center justify-center rounded-input border-none',
+                // Same heights as buttons of the same size, so the controls replace the add-to-cart button without a jump.
                 size === 'small' && 'size-9',
-                size === 'medium' && 'size-9',
-                size === 'large' && 'size-9 sm:size-10',
-                size === 'xlarge' && 'size-10 sm:size-14',
+                size === 'medium' && 'size-10',
+                size === 'large' && 'size-11 vl:size-12',
+                size === 'xlarge' && 'size-11 vl:size-14',
                 className,
                 hasPendingLook && 'opacity-70',
                 disabled && 'pointer-events-none',

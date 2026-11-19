@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { ButtonBaseProps } from 'components/Forms/Button/Button';
 import { getButtonClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
@@ -22,10 +23,7 @@ type LinkProps = NativePropsAnchor & {
           }
     );
 
-const linkPlaceholderTwClassSegments = [
-    'inline-flex cursor-pointer items-center text-link-default hover:text-link-hovered rounded-sm',
-    'underline hover:underline',
-];
+const linkPlaceholderTwClassSegments = ['inline-flex items-center', getLinkClassName()];
 
 export const linkPlaceholderTwClass = linkPlaceholderTwClassSegments.join(' ');
 
@@ -45,7 +43,7 @@ export const Link: FC<LinkProps> = ({
 }) => {
     const classNameTwClass = twMergeCustom(
         isButton
-            ? [getButtonClassName(buttonVariant, size, false, false), 'no-underline hover:no-underline']
+            ? [getButtonClassName(buttonVariant, size, false), 'no-underline hover:no-underline']
             : linkPlaceholderTwClassSegments,
         className,
     );

@@ -1,4 +1,22 @@
 export enum TIDs {
+    // Styleguide interaction contracts
+    styleguide_button_ = 'styleguide_button_',
+    styleguide_link_button_ = 'styleguide_link_button_',
+    styleguide_submit_button_ = 'styleguide_submit_button_',
+    styleguide_icon_button_ = 'styleguide_icon_button_',
+    styleguide_wrapping_button = 'styleguide_wrapping_button',
+    styleguide_loading_button = 'styleguide_loading_button',
+    styleguide_disabled_button = 'styleguide_disabled_button',
+    styleguide_cms_button = 'styleguide_cms_button',
+    styleguide_input_paired_button = 'styleguide_input_paired_button',
+    styleguide_content_link = 'styleguide_content_link',
+    styleguide_navigation_link = 'styleguide_navigation_link',
+    styleguide_text_action = 'styleguide_text_action',
+    styleguide_inverted_link = 'styleguide_inverted_link',
+    styleguide_card_link = 'styleguide_card_link',
+    styleguide_card_title = 'styleguide_card_title',
+    styleguide_card_text = 'styleguide_card_text',
+
     // Layout & Header
     header = 'header',
     fixed_header = 'fixed_header',

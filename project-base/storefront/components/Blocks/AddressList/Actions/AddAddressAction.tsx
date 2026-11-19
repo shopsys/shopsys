@@ -30,7 +30,7 @@ export const AddAddressAction: FC = () => {
         <Button
             aria-haspopup="dialog"
             className="self-start"
-            size="small"
+            size="medium"
             tid={TIDs.blocks_addresslist_add_address_button}
             variant="secondary"
             onClick={openAddDeliveryAddressPopup}

@@ -1,6 +1,7 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { twJoin } from 'tailwind-merge';
 
@@ -19,7 +20,7 @@ export const FilterGroupTitle: FC<{
             aria-controls={contentId}
             aria-expanded={isOpen}
             aria-label={ariaLabel}
-            className="flex w-full cursor-pointer items-center justify-between rounded-sm font-secondary font-semibold text-text-default uppercase"
+            className="flex w-full cursor-pointer items-center justify-between rounded-sm font-secondary font-semibold text-text-default uppercase transition hover:text-text-accent"
             tabIndex={0}
             type="button"
             onClick={onClick}
@@ -54,11 +55,7 @@ export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyN
 export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
     <button
         tabIndex={0}
-        className={twJoin(
-            'w-fit cursor-pointer rounded-sm border-none bg-none p-0 text-sm underline outline-hidden hover:bg-none hover:no-underline',
-            'text-link-default',
-            'hover:text-link-hovered',
-        )}
+        className={twJoin(getLinkClassName(), 'w-fit border-none bg-none p-0 text-sm outline-hidden hover:bg-none')}
         onClick={onClick}
     >
         {children}

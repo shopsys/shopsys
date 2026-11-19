@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CustomerRecordRowInfo } from 'components/Pages/Customer/CustomerRecordElements';
@@ -41,7 +42,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
     const complaintItemTotalPrice = complaintItem.orderItem?.totalPrice;
     const productLink = complaintItem.product?.isVisible ? (
         <ExtendedNextLink
-            className="wrap-break-word vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
+            className={twJoin(getLinkClassName({ variant: 'navigation' }), 'wrap-break-word vl:w-fit w-full text-sm')}
             href={complaintItem.product.slug}
             skeletonType="product"
             type="product"

@@ -475,7 +475,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton data-tid={TIDs.complaint_create_submit_button}>
+                            <SubmitButton size="large" data-tid={TIDs.complaint_create_submit_button}>
                                 {t('Send complaint')}
                             </SubmitButton>
                         </FormButtonWrapper>

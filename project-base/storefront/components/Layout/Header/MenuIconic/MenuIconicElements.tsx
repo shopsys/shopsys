@@ -37,7 +37,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     ariaLabel,
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
-        'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:no-underline',
+        'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:underline',
         isActive && 'text-text-accent!',
     );
 

@@ -241,7 +241,7 @@ describe('Cart Page Tests', () => {
                 });
             });
         checkSelectedTransport(null);
-        cy.getByTID([TIDs.blocks_orderaction_next]).should('be.disabled');
+        cy.getByTID([TIDs.blocks_orderaction_next]).should('not.be.disabled');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(7),

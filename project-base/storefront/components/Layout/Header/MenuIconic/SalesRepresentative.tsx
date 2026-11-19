@@ -1,6 +1,7 @@
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeSalesRepresentativeFragment } from 'graphql/requests/customer/fragments/SalesRepresentativeFragment.generated';
 import { twJoin } from 'tailwind-merge';
@@ -50,7 +51,7 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                     <PhoneIcon className="size-6" />
                     <a
                         aria-label={t('Call sales representative', { ns: 'accessibility' })}
-                        className="rounded-md font-semibold text-sm text-text-default no-underline"
+                        className={twJoin(getLinkClassName({ variant: 'navigation' }), 'font-semibold text-sm')}
                         href={`tel:${telephone}`}
                         tabIndex={0}
                         onClick={onContactClick}
@@ -69,7 +70,8 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                         tabIndex={0}
                         onClick={onContactClick}
                         className={twJoin(
-                            'max-w-64 overflow-x-auto whitespace-nowrap rounded-md font-semibold text-sm text-text-default no-underline',
+                            getLinkClassName({ variant: 'navigation' }),
+                            'max-w-64 overflow-x-auto whitespace-nowrap font-semibold text-sm',
                             '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                         )}
                     >

@@ -125,7 +125,9 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                         </FormBlockWrapper>
 
                         <FormButtonWrapper className="mt-0 pb-6">
-                            <SubmitButton hasDisabledLook={isSubmitting}>{t('Change password')}</SubmitButton>
+                            <SubmitButton size="large" hasDisabledLook={isSubmitting}>
+                                {t('Change password')}
+                            </SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>
