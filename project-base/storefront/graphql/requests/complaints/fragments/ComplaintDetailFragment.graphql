@@ -14,7 +14,7 @@ fragment ComplaintDetailFragment on Complaint {
         ...CountryFragment
     }
     bankAccountNumber
-    resolution {
+    preferredResolution {
         ...ComplaintResolutionFragment
     }
     status

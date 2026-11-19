@@ -945,8 +945,8 @@ export type TypeComplaint = {
   number: Scalars['String']['output'];
   /** Order for which the complaint was created */
   order: Maybe<TypeOrder>;
-  /** Resolution of the complaint */
-  resolution: TypeComplaintResolution;
+  /** Resolution of the complaint preferred by the customer */
+  preferredResolution: TypeComplaintResolution;
   /** Status of the complaint */
   status: Scalars['String']['output'];
   /** UUID */
@@ -999,7 +999,7 @@ export type TypeComplaintInput = {
   /** UUID of the order */
   orderUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Chosen resolution from complaintResolutionQuery */
-  resolution: Scalars['String']['input'];
+  preferredResolution: Scalars['String']['input'];
 };
 
 export type TypeComplaintItem = {
