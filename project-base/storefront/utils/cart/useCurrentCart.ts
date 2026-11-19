@@ -50,6 +50,5 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         promoCodes: cart?.promoCodes ?? [],
         giftVouchers: cart?.giftVouchers ?? [],
         roundingPrice: cart?.roundingPrice ?? null,
-        modifications: cart?.modifications ?? null,
     };
 };

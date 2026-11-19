@@ -122,6 +122,12 @@ export const applyCodeOnCartPage = (code: string) => {
     cy.getByTID([TIDs.blocks_promocode_apply_button]).click();
 };
 
+export const checkAndDismissCartModifications = (text: string) => {
+    cy.getByTID([TIDs.cart_modifications_box]).should('contain.text', text);
+    cy.getByTID([TIDs.cart_modifications_box_close_button]).click();
+    cy.getByTID([TIDs.cart_modifications_box]).should('not.exist');
+};
+
 export const removePromoCodeOnCartPage = () => {
     cy.getByTID([TIDs.blocks_promocode_remove_button]).click();
 };

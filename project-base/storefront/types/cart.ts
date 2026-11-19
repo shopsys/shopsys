@@ -1,5 +1,4 @@
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
-import { TypeCartModificationsFragment } from 'graphql/requests/cart/fragments/CartModificationsFragment.generated';
 import { TypePromoCodeFragment } from 'graphql/requests/cart/fragments/PromoCodeFragment.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
@@ -19,7 +18,6 @@ export type CurrentCartType = {
     promoCodes: TypePromoCodeFragment[];
     giftVouchers: AppliedGiftVoucherType[];
     isCartFetchingOrUnavailable: boolean;
-    modifications: Maybe<TypeCartModificationsFragment>;
     roundingPrice: Maybe<TypePriceFragment>;
     fetchCart: UseQueryExecute;
 };
