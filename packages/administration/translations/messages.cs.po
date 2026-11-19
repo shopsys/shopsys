@@ -2377,6 +2377,9 @@ msgstr "Produkt už není v katalogu."
 msgid "The selected country is not valid."
 msgstr "Zvolená země není platná."
 
+msgid "The type of this status can't be changed. This is automatically assigned status to all new complaints."
+msgstr "Typ tohoto stavu není možné změnit. Jde o stav, který je automaticky přiřazen všem novým reklamacím."
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr "Hodnota se používá pro: <ul> <li> nastavení <a href=\"https://napoveda.zbozi.cz/xml-feed/specifikace/#DELIVERY_DATE\">DELIVERY_DATE</a> v XML feedu Zbozi.cz</li> <li> nastavení <a href=\"https://www.mergado.cz/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-4.pdf\">DELIVERY_DAYS</a> v XML feedu Mergado</li> </ul> Hodnota se použije pouze u produktů, které nemají vyplněné \"Předpokládané datum naskladnění\". Jinak se počet dní odvozuje z tohoto data."
 
@@ -2403,9 +2406,6 @@ msgstr "Toto je poslední zákaznický účet. Odstraní všechna související 
 
 msgid "This phone number may not be valid. Please verify it."
 msgstr "Toto telefonní číslo nemusí být platné. Prosím ověřte ho."
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
-msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje reklamace, které nebyly úspěšně vyřízeny."
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."

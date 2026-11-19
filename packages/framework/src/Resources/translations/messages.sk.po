@@ -979,6 +979,9 @@ msgstr "Dni do doručenia"
 msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
 msgstr "Vážený zákazník, <br /><br />Vaša sťažnosť č. {complaint_number} z objednávky č. {order_number} vytvorená {date} s preferovaným riešením {complaint_resolution} bola dokončená. Pre viac informácií navštívte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail sťažnosti</a>.<br /><br />Potrebujete ešte niečo? Navštívte náš <a href=\"{url}\" tabindex=\"0\">web</a>."
 
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been rejected. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
+msgstr "Vážený zákazník, <br /><br />Vaša sťažnosť č. {complaint_number} z objednávky č. {order_number} vytvorená {date} s preferovaným riešením {complaint_resolution} bola zamietnutá. Pre viac informácií navštívte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail sťažnosti</a>.<br /><br />Potrebujete ešte niečo? Navštívte náš <a href=\"{url}\" tabindex=\"0\">web</a>."
+
 msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
 msgstr "Vážený zákazník, <br /><br />Vaša sťažnosť č. {complaint_number} z objednávky č. {order_number} vytvorená {date} s preferovaným riešením {complaint_resolution} sa spracováva. Pre viac informácií navštívte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail sťažnosti</a>.<br /><br />Potrebujete ešte niečo? Navštívte náš <a href=\"{url}\" tabindex=\"0\">web</a>."
 
@@ -2851,6 +2854,9 @@ msgstr "Produkty"
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr "Produkty vylúčené z predaja nemôžu byť zobrazené v zoznamoch a nemôžu byť vyhľadávané. Detail produktu je dostupný priamym prístupom z URL, ale nie je možné pridať produkt do košíka."
 
+msgid "Products of complaints in the statuses \"In Progress\" and \"Resolved, the products cannot be complained about again\" (e.g. money return) stay claimed. Products of complaints in the status \"Resolved, the products can be complained about again\" (e.g. rejection or fix) can be claimed in new complaints."
+msgstr "Produkty z reklamácií v stavoch „Prebieha“ a „Vybavená, produkty už nie je možné znova reklamovať“ (napr. vrátenie peňazí) zostávajú uplatnené. Produkty z reklamácií v stave „Vybavená, produkty je možné znova reklamovať“ (napr. zamietnutie alebo oprava) je možné uplatniť v nových reklamáciách."
+
 msgid "Products overview"
 msgstr "Prehľad Products"
 
@@ -3003,6 +3009,12 @@ msgstr "Žiadosť o resetovanie hesla bola odoslaná na adresu <strong>{{ email 
 
 msgid "Resolved"
 msgstr "Vyriezená"
+
+msgid "Resolved, the products can be complained about again"
+msgstr "Vybavená, produkty je možné znova reklamovať"
+
+msgid "Resolved, the products cannot be complained about again"
+msgstr "Vybavená, produkty už nie je možné znova reklamovať"
 
 msgid "Response published on %date%"
 msgstr "Reakcia zverejnená %date%"

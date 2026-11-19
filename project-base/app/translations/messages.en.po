@@ -25,6 +25,9 @@ msgstr ""
 msgid "Optional variables"
 msgstr ""
 
+msgid "Rejected"
+msgstr ""
+
 msgid "Save"
 msgstr ""
 
