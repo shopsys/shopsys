@@ -1,4 +1,6 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { getFieldHeightClassName } from 'components/Forms/Lib/fieldUtils';
+import { twJoin } from 'tailwind-merge';
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
 import { SkeletonModuleCustomerOrders } from './SkeletonModuleCustomerOrders';
 import { SkeletonModulePageHero } from './SkeletonModulePageHero';
@@ -9,9 +11,9 @@ export const SkeletonModuleCustomerOrderList: FC = () => (
 
         <div className="rounded-xl bg-skeleton-less p-4">
             <div className="grid vl:grid-cols-2 gap-3 xl:grid-cols-[2fr_1fr_1fr]">
-                <Skeleton className="h-14 rounded-input" />
-                <Skeleton className="h-14 rounded-input" />
-                <Skeleton className="h-14 rounded-input" />
+                <Skeleton className={twJoin('rounded-input', getFieldHeightClassName())} />
+                <Skeleton className={twJoin('rounded-input', getFieldHeightClassName())} />
+                <Skeleton className={twJoin('rounded-input', getFieldHeightClassName())} />
             </div>
         </div>
 

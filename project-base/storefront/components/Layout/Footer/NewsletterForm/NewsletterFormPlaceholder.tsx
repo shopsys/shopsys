@@ -1,5 +1,8 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { getButtonHeightClassName } from 'components/Forms/Button/buttonUtils';
+import { getFieldHeightClassName } from 'components/Forms/Lib/fieldUtils';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
+import { twJoin } from 'tailwind-merge';
 
 export const NewsletterFormPlaceholder: FC = () => (
     <FooterContainer className="border-t-0!">
@@ -11,8 +14,15 @@ export const NewsletterFormPlaceholder: FC = () => (
 
             <div className="flex w-full flex-col gap-2 lg:gap-3">
                 <div className="flex items-start gap-2 lg:gap-3">
-                    <Skeleton className="h-12 min-w-0 flex-1 rounded-lg bg-white-alpha-100" />
-                    <Skeleton className="h-12 w-16 shrink-0 rounded-lg bg-white-alpha-100" />
+                    <Skeleton
+                        className={twJoin('min-w-0 flex-1 rounded-input bg-white-alpha-100', getFieldHeightClassName())}
+                    />
+                    <Skeleton
+                        className={twJoin(
+                            'w-16 shrink-0 rounded-button bg-white-alpha-100',
+                            getButtonHeightClassName('large'),
+                        )}
+                    />
                 </div>
                 <Skeleton className="h-4 w-64 bg-white-alpha-200" />
             </div>

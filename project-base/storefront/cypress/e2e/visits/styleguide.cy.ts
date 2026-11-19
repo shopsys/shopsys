@@ -44,6 +44,10 @@ const assertContentLinkHover = (tid: TIDs) => {
     assertHoverUnderlinesLink(tid, { shouldShiftColor: true });
 };
 
+const assertFieldHeight = ($field: JQuery<HTMLElement>, height: number) => {
+    expect($field[0].getBoundingClientRect().height).to.equal(height);
+};
+
 const assertFocusKeepsLinkButtonHeight = ($button: JQuery<HTMLElement>) => {
     const height = $button[0].getBoundingClientRect().height;
 
@@ -98,5 +102,24 @@ describe('Styleguide Tests (SSP-4301)', () => {
 
         cy.getByTID([TIDs.styleguide_disabled_button]).should('be.disabled');
         cy.getByTID([TIDs.styleguide_loading_button]).should('be.disabled');
+    });
+
+    it('[Field height] should make a field as high as a button of the matching size', () => {
+        cy.getByTID([TIDs.styleguide_input_button_pair])
+            .find('input')
+            .should(($input) => assertFieldHeight($input, 48));
+        cy.get('#styleguide-field-small').should(($input) => assertFieldHeight($input, 40));
+    });
+
+    it('[Field focus] should fill a text field on keyboard focus but not after a click', () => {
+        cy.getByTID([TIDs.styleguide_field_default]).find('input').as('field');
+
+        cy.get('@field').focus();
+        cy.realPress(['Shift', 'Tab']);
+        cy.realPress('Tab');
+        cy.get('@field').should('be.focused').and('have.css', 'background-color', FOCUS_BACKGROUND_COLOR);
+
+        cy.get('@field').realClick();
+        cy.get('@field').should('be.focused').and('not.have.css', 'background-color', FOCUS_BACKGROUND_COLOR);
     });
 });

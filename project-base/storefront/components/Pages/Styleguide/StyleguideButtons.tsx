@@ -93,23 +93,22 @@ export const StyleguideButtons: FC = () => {
                 <SubmitButton disabled shouldShowSpinner size="large" tid={TIDs.styleguide_loading_button}>
                     Saving changes
                 </SubmitButton>
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2" data-tid={TIDs.styleguide_input_button_pair}>
                     <TextInput
                         id="styleguide-email"
-                        inputSize="small"
                         label="Your email"
                         type="email"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                     />
-                    <Button className="min-h-12" size="large" tid={TIDs.styleguide_input_paired_button}>
+                    <Button size="large" tid={TIDs.styleguide_input_paired_button}>
                         Send
                     </Button>
                 </div>
                 <p className="text-sm">
-                    A button paired with an input keeps the input height (min-h-12) and aligns to the top, so validation
-                    messages do not stretch it. IconButton keeps its existing scale on every pointer type. Check target
-                    size and spacing in context.
+                    A default input is as high as a large button, so they line up without overrides. Align the pair to
+                    the top, so validation messages do not stretch the button. IconButton keeps its existing scale on
+                    every pointer type. Check target size and spacing in context.
                 </p>
             </StyleguideSubSection>
 

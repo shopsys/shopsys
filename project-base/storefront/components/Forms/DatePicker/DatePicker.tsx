@@ -8,6 +8,13 @@ import {
     getDatePickerLabels,
     parseDatePickerValue,
 } from 'components/Forms/DatePicker/datePickerUtils';
+import {
+    FIELD_FLOATING_LABEL_CLASS_NAME,
+    FIELD_OPEN_CLASS_NAME,
+    FIELD_VALUE_PADDING_CLASS_NAME,
+    getFieldHeightClassName,
+    getFieldStateClassName,
+} from 'components/Forms/Lib/fieldUtils';
 import { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { twJoin } from 'tailwind-merge';
@@ -48,8 +55,11 @@ export const DatePicker: FC<DatePickerProps> = ({ id, label, name, value, onChan
                     <button
                         aria-label={label}
                         className={twMergeCustom(
-                            'group flex h-14 w-full cursor-pointer items-center rounded-input border-2 border-input-border-default bg-input-bg-default px-3 pt-5 text-left font-semibold text-input-text-default transition hover:border-input-border-hovered hover:text-input-text-hovered focus:border-input-border-active focus:text-input-text-active focus:outline-hidden',
-                            isOpen && 'border-input-border-active text-input-text-active',
+                            'group flex w-full cursor-pointer items-center rounded-input px-3 text-left font-medium focus:outline-hidden',
+                            FIELD_VALUE_PADDING_CLASS_NAME,
+                            getFieldStateClassName(),
+                            getFieldHeightClassName(),
+                            isOpen && FIELD_OPEN_CLASS_NAME,
                         )}
                         id={id}
                         name={name}
@@ -59,7 +69,7 @@ export const DatePicker: FC<DatePickerProps> = ({ id, label, name, value, onChan
                             className={twJoin(
                                 'pointer-events-none absolute left-3 block max-w-[calc(100%-3rem)] truncate text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered group-focus:text-input-placeholder-active',
                                 isOpen || value !== ''
-                                    ? 'top-2 text-sm'
+                                    ? FIELD_FLOATING_LABEL_CLASS_NAME
                                     : 'top-1/2 -translate-y-1/2 font-semibold text-base',
                             )}
                         >

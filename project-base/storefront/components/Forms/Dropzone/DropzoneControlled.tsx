@@ -139,7 +139,7 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
     };
 
     const wrapperTwClass = twMergeCustom(
-        'group flex cursor-pointer flex-col items-center justify-center gap-3 rounded-md border-2 border-dashed p-10 text-center outline-hidden transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 motion-reduce:transition-none',
+        'group flex cursor-pointer flex-col items-center justify-center gap-3 rounded-input border-2 border-dashed p-10 text-center outline-hidden transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 motion-reduce:transition-none',
         !isDragActive &&
             'border-input-border-default bg-input-bg-default hover:border-input-border-hovered hover:bg-background-accent-less',
         error && 'border-input-border-error',

@@ -9,6 +9,8 @@ export enum TIDs {
     styleguide_disabled_button = 'styleguide_disabled_button',
     styleguide_cms_button = 'styleguide_cms_button',
     styleguide_input_paired_button = 'styleguide_input_paired_button',
+    styleguide_input_button_pair = 'styleguide_input_button_pair',
+    styleguide_field_default = 'styleguide_field_default',
     styleguide_content_link = 'styleguide_content_link',
     styleguide_navigation_link = 'styleguide_navigation_link',
     styleguide_text_action = 'styleguide_text_action',

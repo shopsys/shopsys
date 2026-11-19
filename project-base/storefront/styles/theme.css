@@ -10,12 +10,12 @@
     --radius-3xl: 24px;
     --radius-4xl: 32px;
     --radius-full: 9999px;
-    --radius-button: var(--radius-md);
-    --radius-checkbox: var(--radius-sm);
-    --radius-counter: var(--radius-md);
+    --radius-button: 10px;
+    --radius-checkbox: var(--radius-md);
+    --radius-counter: var(--radius-input);
     --radius-flag: var(--radius-sm);
-    --radius-input: var(--radius-md);
-    --radius-tag: var(--radius-full);
+    --radius-input: var(--radius-button);
+    --radius-tag: var(--radius-input);
     --radius-toast: var(--radius-md);
     --radius-product-card: var(--radius-xl);
 
@@ -398,6 +398,7 @@
     --color-input-fill: var(--color-fill-brand);
     --color-input-bg-active: var(--color-background-default);
     --color-input-bg-default: var(--color-background-default);
+    --color-input-bg-disabled: var(--color-background-more);
     --color-input-bg-error: var(--color-background-default);
     --color-input-bg-hovered: var(--color-background-default);
     --color-input-border-active: var(--color-primary-500);
@@ -405,7 +406,7 @@
     --color-input-border-disabled: var(--color-border-disabled);
     --color-input-border-error: var(--color-border-error);
     --color-input-border-hovered: var(--color-border-active);
-    --color-input-border-warning: var(--color-orange-500);
+    --color-input-border-warning: var(--color-orange-600);
     --color-input-glow-active: var(--color-secondary-200);
     --color-input-glow-hovered: var(--color-secondary-100);
     --color-input-placeholder-active: var(--color-text-less);
@@ -449,15 +450,15 @@
     --color-tag-bg-active: var(--color-secondary-500);
     --color-tag-bg-default: var(--color-secondary-100);
     --color-tag-bg-disabled: var(--color-secondary-300);
-    --color-tag-bg-hovered: var(--color-secondary-500);
+    --color-tag-bg-hovered: var(--color-secondary-200);
     --color-tag-border-active: var(--color-base-transparent);
-    --color-tag-border-default: var(--color-base-transparent);
+    --color-tag-border-default: var(--color-secondary-400);
     --color-tag-border-disabled: var(--color-base-transparent);
     --color-tag-border-hovered: var(--color-base-transparent);
     --color-tag-text-active: var(--color-text-inverted);
     --color-tag-text-default: var(--color-text-default);
     --color-tag-text-disabled: var(--color-white-alpha-100);
-    --color-tag-text-hovered: var(--color-text-inverted);
+    --color-tag-text-hovered: var(--color-text-default);
 
     --color-text-accent: var(--color-brand-700);
     --color-text-default: var(--color-gray-900);

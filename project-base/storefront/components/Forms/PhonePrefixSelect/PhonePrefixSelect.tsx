@@ -169,7 +169,7 @@ export const PhonePrefixSelect: FC<PhonePrefixSelectProps> = ({
             listClassName="right-auto min-w-full w-max [&_li>div]:whitespace-nowrap"
             options={selectOptions}
             // overflow-hidden clips the flag glyph's line when the host lacks an emoji font
-            // (e.g. Cypress Linux Chrome) that would otherwise push "+420" below h-14.
+            // (e.g. Cypress Linux Chrome) that would otherwise push "+420" below the field height.
             selectClassName={twMergeCustom('overflow-hidden [&_button>span]:whitespace-nowrap', selectClassName)}
             tid={tid}
             comboBoxConfig={comboBoxConfig}

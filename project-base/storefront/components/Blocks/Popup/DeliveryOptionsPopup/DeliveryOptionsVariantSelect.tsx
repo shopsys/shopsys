@@ -30,7 +30,7 @@ export const DeliveryOptionsVariantSelect: FC<DeliveryOptionsVariantSelectProps>
             label={t('Choose a variant')}
             options={options}
             renderValue={({ value }) => <DeliveryOptionsVariantContent product={value} />}
-            selectClassName="h-auto min-h-14"
+            selectClassName="h-auto vl:h-auto min-h-14"
             tid={TIDs.delivery_options_variant_select}
             renderOption={({ value }) => (
                 <DeliveryOptionsVariantContent

@@ -3,6 +3,7 @@ import { EyeIcon } from 'components/Basic/Icon/EyeIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { FormLine, FormLineWidth } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
+import { FieldSize } from 'components/Forms/Lib/fieldUtils';
 import { InputHTMLAttributes, ReactElement, ReactNode, useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -14,7 +15,7 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 
 type PasswordInputProps = NativeProps & {
     label: ReactNode;
-    inputSize?: 'small' | 'default';
+    inputSize?: FieldSize;
     'aria-describedby'?: string;
     'aria-label'?: string;
     'aria-labelledby'?: string;
