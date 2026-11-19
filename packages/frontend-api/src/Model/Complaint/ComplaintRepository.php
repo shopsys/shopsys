@@ -9,7 +9,6 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -21,7 +20,6 @@ class ComplaintRepository
         protected readonly EntityManagerInterface $em,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
         protected readonly ComplaintStatusTypeEnum $complaintStatusTypeEnum,
-        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -173,10 +171,9 @@ class ComplaintRepository
             ->join('ci.complaint', 'c')
             ->join('c.status', 'cs')
             ->where('ci.orderItem IN (:orderItems)')
-            ->andWhere('cs.statusType NOT IN (:statusTypesReleasingClaimedQuantity) OR c.resolution IN (:resolutionsKeepingClaimedQuantity)')
+            ->andWhere('cs.statusType NOT IN (:statusTypesReleasingClaimedQuantity)')
             ->setParameter('orderItems', $orderItems)
             ->setParameter('statusTypesReleasingClaimedQuantity', $this->complaintStatusTypeEnum->getStatusTypesReleasingClaimedQuantity())
-            ->setParameter('resolutionsKeepingClaimedQuantity', $this->complaintResolutionEnum->getResolutionsKeepingClaimedQuantity())
             ->groupBy('ci.orderItem')
             ->getQuery()
             ->getArrayResult();

@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Complaint;
 
-use App\DataFixtures\Demo\ComplaintStatusDataFixture;
+use App\DataFixtures\Demo\ComplaintDataFixture;
 use App\DataFixtures\Demo\OrderDataFixture;
-use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
@@ -19,21 +16,6 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
 {
-    /**
-     * @inject
-     */
-    private EntityManagerInterface $entityManager;
-
-    /**
-     * @inject
-     */
-    private ComplaintFacade $complaintFacade;
-
-    /**
-     * @inject
-     */
-    private ComplaintDataFactory $complaintDataFactory;
-
     public function testRemainingQuantityCanBeClaimedAcrossMultipleComplaints(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
@@ -65,38 +47,27 @@ final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
         $this->assertUserError($response, 'invalid-quantity');
     }
 
-    public function testResolvedMoneyReturnComplaintKeepsClaimedQuantity(): void
+    public function testComplaintInResolvedStatusKeepsClaimedQuantity(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2, Order::class);
-        $orderItem = $order->getProductItems()[0];
+        $complaint = $this->getReference(ComplaintDataFixture::COMPLAINT_RESOLVED_MONEY_RETURN, Complaint::class);
+        $this->assertSame(ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED, $complaint->getStatus()->getStatusType());
+        $orderItem = $complaint->getItems()[0]->getOrderItem();
 
-        $response = $this->createComplaintForQuantities($order, $orderItem, [$orderItem->getQuantity()]);
+        $response = $this->createComplaintForQuantities($complaint->getOrder(), $orderItem, [$orderItem->getQuantity()]);
 
         $this->assertUserError($response, 'invalid-quantity');
     }
 
-    public function testResolvedFixComplaintReleasesClaimedQuantity(): void
+    public function testComplaintInClaimableAgainStatusReleasesClaimedQuantity(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 3, Order::class);
-        $orderItem = $order->getProductItems()[0];
+        $complaint = $this->getReference(ComplaintDataFixture::COMPLAINT_REJECTED, Complaint::class);
+        $this->assertSame(ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED_CLAIMABLE_AGAIN, $complaint->getStatus()->getStatusType());
+        $orderItem = $complaint->getItems()[0]->getOrderItem();
 
-        $firstResponse = $this->createComplaintForQuantities($order, $orderItem, [$orderItem->getQuantity()]);
-        $firstComplaint = $this->getResponseDataForGraphQlType($firstResponse, 'CreateComplaint');
-        $this->resolveComplaint($firstComplaint['number']);
+        $response = $this->createComplaintForQuantities($complaint->getOrder(), $orderItem, [$orderItem->getQuantity()]);
+        $newComplaint = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');
 
-        $secondResponse = $this->createComplaintForQuantities($order, $orderItem, [$orderItem->getQuantity()]);
-        $secondComplaint = $this->getResponseDataForGraphQlType($secondResponse, 'CreateComplaint');
-
-        $this->assertSame(0, $secondComplaint['items'][0]['orderItem']['remainingComplaintQuantity']);
-    }
-
-    private function resolveComplaint(string $complaintNumber): void
-    {
-        $complaint = $this->entityManager->getRepository(Complaint::class)->findOneBy(['number' => $complaintNumber]);
-        $complaintData = $this->complaintDataFactory->createFromComplaint($complaint);
-        $complaintData->status = $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED, ComplaintStatus::class);
-
-        $this->complaintFacade->edit($complaint->getId(), $complaintData);
+        $this->assertSame(0, $newComplaint['items'][0]['orderItem']['remainingComplaintQuantity']);
     }
 
     /**

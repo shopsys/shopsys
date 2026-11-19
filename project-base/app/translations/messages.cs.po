@@ -25,6 +25,9 @@ msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastave
 msgid "Optional variables"
 msgstr "Volitelné proměnné"
 
+msgid "Rejected"
+msgstr "Zamítnuto"
+
 msgid "Save"
 msgstr "Uložit"
 

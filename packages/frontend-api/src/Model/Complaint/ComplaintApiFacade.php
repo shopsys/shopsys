@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -270,7 +271,9 @@ class ComplaintApiFacade
     {
         return [
             'code' => $complaintStatus->getCode(),
-            'type' => $complaintStatus->getStatusType(),
+            'type' => $complaintStatus->getStatusType() === ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED_CLAIMABLE_AGAIN
+                ? ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED
+                : $complaintStatus->getStatusType(),
             'name' => $complaintStatus->getName($locale),
         ];
     }
