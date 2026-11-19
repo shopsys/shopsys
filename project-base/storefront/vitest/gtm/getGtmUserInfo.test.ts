@@ -1,7 +1,8 @@
 import { TypeLoginTypeEnum } from 'graphql/types';
+import { GtmUserType } from 'gtm/enums/GtmUserType';
 import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation, defaultContactInformationState } from 'store/slices/createContactInformationSlice';
-import { CurrentCustomerType } from 'types/customer';
+import { CurrentCustomerType, CustomerTypeEnum } from 'types/customer';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { describe, expect, test } from 'vitest';
 
@@ -281,6 +282,25 @@ describe('getGtmUserInfo', () => {
 
         expect(userInfo.companyName).toBe('Entered Delivery Company');
     });
+
+    test.each([
+        { sourceMode: 'account' as const, expectedType: GtmUserType.b2b },
+        { sourceMode: 'order' as const, expectedType: GtmUserType.b2c },
+    ])(
+        'should report $expectedType for a company account with a private person contact in $sourceMode mode',
+        ({ sourceMode, expectedType }) => {
+            const userInfo = getGtmUserInfo(
+                currentCustomer,
+                { ...contactInformation, customer: CustomerTypeEnum.CommonCustomer },
+                null,
+                undefined,
+                sourceMode,
+            );
+
+            expect(currentCustomer.companyCustomer).toBe(true);
+            expect(userInfo.type).toBe(expectedType);
+        },
+    );
 
     test('should use newsletter subscription value from submitted contact information', () => {
         const userInfo = getGtmUserInfo(currentCustomer, {

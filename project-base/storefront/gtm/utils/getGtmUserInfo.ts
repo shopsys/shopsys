@@ -39,7 +39,7 @@ export const getGtmUserInfo = (
     );
 
     if (currentSignedInCustomer) {
-        overwriteGtmUserInfoWithLoggedCustomer(userInfo, currentSignedInCustomer);
+        overwriteGtmUserInfoWithLoggedCustomer(userInfo, currentSignedInCustomer, sourceMode);
     }
 
     return userInfo;
@@ -222,6 +222,7 @@ const getGtmUserType = (customerType: CustomerTypeEnum | undefined): GtmUserType
 const overwriteGtmUserInfoWithLoggedCustomer = (
     userInfo: GtmUserInfoType,
     currentSignedInCustomer: CurrentCustomerType,
+    sourceMode: GtmUserInfoSourceMode,
 ) => {
     userInfo.status = GtmUserStatus.customer;
     userInfo.id = currentSignedInCustomer.uuid;
@@ -233,7 +234,10 @@ const overwriteGtmUserInfoWithLoggedCustomer = (
         userInfo.externalId = currentSignedInCustomer.loginInfo.externalId;
     }
 
-    if (userInfo.type !== undefined) {
+    // only an order keeps the customer type chosen in its contact information, the account type describes the customer otherwise
+    const isOrderCustomerTypeChosen = sourceMode === 'order' && userInfo.type !== undefined;
+
+    if (isOrderCustomerTypeChosen) {
         return;
     }
 
