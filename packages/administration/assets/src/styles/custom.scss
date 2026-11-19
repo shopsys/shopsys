@@ -16,6 +16,24 @@
         flex-basis: 100%;
         overflow: hidden;
 
+        // keep the identifier on the same line as the name on narrow screens, only the name is truncated
+        // and an identifier longer than the whole line wraps
+        @include media-breakpoint-down(sm) {
+            display: flex;
+            gap: 0.25rem;
+
+            > * {
+                flex-shrink: 0;
+                max-width: calc(100% - 0.25rem);
+                word-break: break-all;
+            }
+
+            > .text-truncate {
+                flex-shrink: 1;
+                min-width: 0;
+            }
+        }
+
         @include media-breakpoint-up(xl) {
             flex-basis: auto;
         }
@@ -23,6 +41,27 @@
 
     .unsaved-changes-container {
         width: 100%;
+
+        @include media-breakpoint-down(sm) {
+            // an empty container would add a second gap above the buttons
+            &:empty {
+                display: none;
+            }
+
+            // the unsaved changes info is highlighted as a strip across the bar
+            > * {
+                justify-content: center;
+                padding: 0.25rem 0.5rem;
+                border-radius: var(--tblr-border-radius);
+                background-color: var(--tblr-warning-lt);
+                color: var(--tblr-warning);
+                font-weight: var(--tblr-font-weight-semibold);
+            }
+
+            .icon-wrapper > svg {
+                --tblr-icon-size: 1rem;
+            }
+        }
 
         @include media-breakpoint-up(sm) {
             width: auto;
@@ -33,9 +72,30 @@
         width: 100%;
         justify-content: space-between;
 
+        // on narrow screens two buttons share a row in equal widths and a remaining button takes the whole row,
+        // a button with a label longer than half of the row moves to its own row and a label longer than the row wraps
+        @include media-breakpoint-down(sm) {
+            gap: 0.5rem;
+
+            > .btn {
+                --tblr-btn-padding-x: 0.75rem;
+                flex: 1 1 calc(50% - 0.5rem);
+                min-width: fit-content;
+                white-space: normal;
+            }
+        }
+
         @include media-breakpoint-up(sm) {
             width: auto;
         }
+    }
+}
+
+// the action bar takes more rows on narrow screens, so the end of the page needs room of its height
+// (measured by ActionBar.js) on top of the default page padding to be scrolled above the bar
+.page-body:has(.action-bar-bottom) {
+    @include media-breakpoint-down(sm) {
+        padding-bottom: calc(var(--admin-action-bar-height, 5rem) + 1.7rem);
     }
 }
 
