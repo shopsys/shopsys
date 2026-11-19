@@ -4,6 +4,7 @@ import {
     scrollToProductListControls,
 } from 'components/Blocks/Product/Filter/filterElementIds';
 import { ProductListViewModeToggle } from 'components/Blocks/Product/ProductsList/ProductListViewModeToggle';
+import { ProductsCount } from 'components/Blocks/Product/ProductsList/ProductsCount';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
@@ -15,7 +16,7 @@ import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
 import { MobileFilterAction, MobileSortingActions } from './MobileSortingActions';
-import { SortingBarOptions } from './SortingBarOptions';
+import { SortingBarTabs } from './SortingBarTabs';
 import { getActiveFilterCount, getIsPriceRelatedSortOption } from './sortingBarUtils';
 
 export type SortingBarProps = {
@@ -53,9 +54,17 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
         [TypeProductOrderingModeEnum.NameDesc]: t('Name descending'),
     };
 
+    const sortOptionsShortLabels = {
+        ...sortOptionsLabels,
+        [TypeProductOrderingModeEnum.PriceAsc]: t('Cheapest'),
+        [TypeProductOrderingModeEnum.PriceDesc]: t('Most expensive'),
+    };
+
     const sortOptions = (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>
         !canSeePrices ? !getIsPriceRelatedSortOption(sortOption) : true,
     );
+    // With a single option there is nothing to choose, the bar keeps only the product count and the view toggle.
+    const hasSortChoice = sortOptions.length > 1;
 
     const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
     const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
@@ -78,18 +87,21 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
 
     return (
         <div
-            className="relative flex scroll-mt-fixed-header flex-col gap-2.5 vl:border-border-less vl:border-b sm:flex-row sm:items-center sm:justify-between"
+            className="relative flex scroll-mt-fixed-header items-center gap-2 vl:gap-4"
             id={PRODUCT_LIST_CONTROLS_ELEMENT_ID}
         >
-            <MobileSortingActions
-                isSortMenuOpen={isSortMenuOpen}
-                selectedSortOption={selectedSortOption}
-                sortOptions={sortOptions}
-                sortOptionsLabels={sortOptionsLabels}
-                onChangeSort={handleChangeSort}
-                onSortMenuClose={() => setIsSortMenuOpen(false)}
-                onSortMenuToggle={() => setIsSortMenuOpen(!isSortMenuOpen)}
-            />
+            {hasSortChoice && (
+                <MobileSortingActions
+                    isSortMenuOpen={isSortMenuOpen}
+                    selectedSortOption={selectedSortOption}
+                    sortOptions={sortOptions}
+                    sortOptionsLabels={sortOptionsLabels}
+                    sortOptionsShortLabels={sortOptionsShortLabels}
+                    onChangeSort={handleChangeSort}
+                    onSortMenuClose={() => setIsSortMenuOpen(false)}
+                    onSortMenuToggle={() => setIsSortMenuOpen(!isSortMenuOpen)}
+                />
+            )}
 
             {portalElement &&
                 createPortal(
@@ -101,24 +113,18 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     portalElement,
                 )}
 
-            <div
-                aria-label={t('Sort options', { ns: 'accessibility' })}
-                role="listbox"
-                className="vl:flex hidden vl:flex-row vl:gap-2.5 rounded-xl bg-background-default"
-            >
-                <SortingBarOptions
-                    itemRole="option"
+            {hasSortChoice && (
+                <SortingBarTabs
                     selectedSortOption={selectedSortOption}
                     sortOptions={sortOptions}
                     sortOptionsLabels={sortOptionsLabels}
                     onChangeSort={handleChangeSort}
                 />
-            </div>
+            )}
 
-            <div className="flex w-full items-center justify-between gap-2 sm:w-auto md:ml-auto">
-                <div className="font-secondary text-input-placeholder-default text-xs">
-                    {totalCount} {t('products count', { count: totalCount })}
-                </div>
+            <div className="ml-auto flex shrink-0 items-center gap-4">
+                {/* Below vl the count is shown next to the page heading, so the bar fits one row. */}
+                <ProductsCount className="vl:block hidden" totalCount={totalCount} />
 
                 <ProductListViewModeToggle />
             </div>

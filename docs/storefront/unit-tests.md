@@ -498,7 +498,6 @@ Essential functions for testing keyboard accessibility and navigation patterns:
 ```tsx
 // Basic navigation actions
 await navigateWithTab(targetElement);
-await navigateWithArrows(elementArray, 'ArrowDown');
 await pressEnterKey();
 await pressSpaceKey();
 await pressEscapeKey();
@@ -573,9 +572,8 @@ describe('Component accessibility', () => {
             expect(element).toHaveFocus();
         }
 
-        // Arrow key navigation (for grouped elements)
-        const checkboxes = screen.getAllByRole('checkbox');
-        await navigateWithArrows(checkboxes, 'ArrowDown');
+        // Arrow key navigation (for grouped elements such as radio buttons)
+        await userEvent.keyboard('{ArrowDown}');
 
         // Action keys
         await pressSpaceKey(); // Toggle selection
@@ -679,18 +677,18 @@ describe('SortingBar', () => {
     test('should provide complete keyboard dropdown navigation', async () => {
         renderComponent();
 
-        const trigger = screen.getByRole('button');
+        const trigger = screen.getByRole('button', { name: /Sort products/ });
 
-        // Open dropdown
-        await pressEnterKey(trigger);
+        // Open the disclosure, focus moves to the active option
+        trigger.focus();
+        await pressEnterKey();
 
-        const options = screen.getAllByRole('link');
+        const sortDropdown = document.getElementById('sort-dropdown')!;
+        const activeOption = within(sortDropdown).getByRole('link', { current: true });
+        expect(activeOption).toHaveFocus();
 
-        // Navigate options
-        await navigateWithArrows(options, 'ArrowDown');
-        expect(options[1]).toHaveFocus();
-
-        // Select option
+        // Move to the next option and select it
+        await navigateWithTab();
         await pressEnterKey();
 
         expect(mockUpdateSortQuery).toHaveBeenCalled();

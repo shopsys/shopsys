@@ -79,6 +79,7 @@ export enum TIDs {
     blocks_product_addtocart = 'blocks_product_addtocart',
     blocks_product_watchdog_button = 'blocks_product_watchdog_button',
     blocks_product_slider_promoted_products = 'blocks_product_slider_promoted_products',
+    blocks_sortingbar_more_button = 'blocks_sortingbar_more_button',
     blocks_sortingbar_option_ = 'blocks_sortingbar_option_',
     blocks_simplenavigation_ = 'blocks_simplenavigation_',
     product_detail_main_image = 'product_detail_main_image',
