@@ -26,6 +26,7 @@ export const ContactInformationContent: FC = () => {
     const { createOrder } = useCreateOrder(formProviderMethods, formMeta);
     const router = useRouter();
     const isOrderRejectedByCartModifications = useSessionStore((s) => s.isOrderRejectedByCartModifications);
+    const isOrderBeingCreated = useSessionStore((s) => s.isOrderBeingCreated);
     const setIsOrderRejectedByCartModifications = useSessionStore((s) => s.setIsOrderRejectedByCartModifications);
     const { cart } = useCurrentCart();
     const giftVouchersExceedPayableAmount = !!cart?.giftVouchersExceedPayableAmount;
@@ -79,7 +80,8 @@ export const ContactInformationContent: FC = () => {
                             buttonNext={t('Submit order')}
                             hasDisabledCursor={!formProviderMethods.formState.isValid}
                             hasDisabledLook={!formProviderMethods.formState.isValid || giftVouchersExceedPayableAmount}
-                            isDisabled={giftVouchersExceedPayableAmount}
+                            isDisabled={giftVouchersExceedPayableAmount || isOrderBeingCreated}
+                            shouldShowSpinnerOnNextStepButton={isOrderBeingCreated}
                         />
                     </FormContentWrapper>
                 </Form>

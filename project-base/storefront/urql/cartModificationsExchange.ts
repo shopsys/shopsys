@@ -60,7 +60,7 @@ const receiveCartModifications = (responseData: unknown) => {
  *
  * Responses of requests sent before an order was created belong to the ordered cart, so their modifications
  * are ignored. The requests are told apart by the order in which they were sent, because the cart of
- * a logged-in customer has no UUID.
+ * a logged-in customer has no UUID. (Two orders are never created at once, see useCreateOrder.)
  */
 export const cartModificationsExchange: Exchange = ({ forward }) => {
     let lastRequestNumber = 0;

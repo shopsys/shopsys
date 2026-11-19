@@ -68,6 +68,11 @@ export const useCreateOrder = (
     const handleCreateOrderResult = useHandleCreateOrderResult(formProviderMethods, formMeta);
 
     const createOrder: SubmitHandler<ContactInformation> = async (formValues) => {
+        // A second order must never be created from the same cart, not even after leaving and returning to the page
+        if (useSessionStore.getState().isOrderBeingCreated) {
+            return;
+        }
+
         // The page shows a skeleton meanwhile, so the customer may leave it before the API answers
         let hasCustomerLeftPage = false;
         const markCustomerLeftPage = () => {
@@ -75,7 +80,11 @@ export const useCreateOrder = (
         };
 
         setIsOrderRejectedByCartModifications(false);
-        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-confirmation' });
+        updatePageLoadingState({
+            isOrderBeingCreated: true,
+            isPageLoading: true,
+            redirectPageType: 'order-confirmation',
+        });
         router.events.on('routeChangeStart', markCustomerLeftPage);
 
         let createOrderResult: OperationResult<TypeCreateOrderMutation, TypeCreateOrderMutationVariables>;
@@ -92,6 +101,7 @@ export const useCreateOrder = (
             );
         } finally {
             router.events.off('routeChangeStart', markCustomerLeftPage);
+            updatePageLoadingState({ isOrderBeingCreated: false });
         }
 
         handleCreateOrderResult(createOrderResult, formValues, hasCustomerLeftPage);
