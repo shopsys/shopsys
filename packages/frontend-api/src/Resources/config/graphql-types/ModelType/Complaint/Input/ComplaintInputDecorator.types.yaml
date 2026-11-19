@@ -43,7 +43,7 @@ ComplaintInputDecorator:
                     -   Length:
                             max: 255
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
-            resolution:
+            preferredResolution:
                 type: "String!"
                 description: "Chosen resolution from complaintResolutionQuery"
                 validation:

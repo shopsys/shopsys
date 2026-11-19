@@ -788,8 +788,8 @@ type Complaint {
   number: String!
   "Order for which the complaint was created"
   order: Order
-  "Resolution of the complaint"
-  resolution: ComplaintResolution!
+  "Resolution of the complaint preferred by the customer"
+  preferredResolution: ComplaintResolution!
   "Status of the complaint"
   status: String!
   "UUID"
@@ -840,7 +840,7 @@ input ComplaintInput {
   "UUID of the order"
   orderUuid: Uuid = null
   "Chosen resolution from complaintResolutionQuery"
-  resolution: String!
+  preferredResolution: String!
 }
 
 type ComplaintItem {

@@ -42,7 +42,7 @@ class ComplaintHelper
         CustomerUser $customerUser,
         ?Order $order,
         ComplaintStatus $status,
-        string $resolution,
+        string $preferredResolution,
         array $items,
         ?string $manualDocumentNumber = null,
         ?string $bankAccountNumber = null,
@@ -70,7 +70,7 @@ class ComplaintHelper
         $complaintData->deliveryTelephone = $deliveryAddress?->getTelephoneData();
         $complaintData->deliveryCompanyName = $deliveryAddress?->getCompanyName();
 
-        $complaintData->resolution = $resolution;
+        $complaintData->preferredResolution = $preferredResolution;
         $complaintData->bankAccountNumber = $bankAccountNumber;
 
         return $this->complaintApiFacade->create($complaintData);

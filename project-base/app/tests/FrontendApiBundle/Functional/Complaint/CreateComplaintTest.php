@@ -79,8 +79,8 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $this->assertArrayHasKey('email', $responseData);
         $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
 
-        $this->assertArrayHasKey('resolution', $responseData);
-        $this->assertSame($this->complaintResolutionEnum::FIX, $responseData['resolution']['value']);
+        $this->assertArrayHasKey('preferredResolution', $responseData);
+        $this->assertSame($this->complaintResolutionEnum::FIX, $responseData['preferredResolution']['value']);
 
         $this->assertArrayHasKey('bankAccountNumber', $responseData);
         $this->assertNull($responseData['bankAccountNumber']);
@@ -168,8 +168,8 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
 
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertArrayHasKey('input.resolution', $violations);
-        $this->assertSame(ComplaintResolution::SELECTED_COMPLAINT_RESOLUTION_NOT_SUPPORTED_ERROR, $violations['input.resolution']['0']['code']);
+        self::assertArrayHasKey('input.preferredResolution', $violations);
+        $this->assertSame(ComplaintResolution::SELECTED_COMPLAINT_RESOLUTION_NOT_SUPPORTED_ERROR, $violations['input.preferredResolution']['0']['code']);
     }
 
     /**
@@ -181,7 +181,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         OrderItem $orderItemProduct1,
         int $complaintItemQuantity2,
         OrderItem $orderItemProduct2,
-        string $resolution,
+        string $preferredResolution,
         ?string $bankAccountNumber = null,
     ): array {
         return $this->getResponseContentForGql(
@@ -213,7 +213,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                         'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
-                    'resolution' => $resolution,
+                    'preferredResolution' => $preferredResolution,
                     'bankAccountNumber' => $bankAccountNumber,
                 ],
             ],
@@ -240,7 +240,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             [
                 'input' => [
                     'manualDocumentNumber' => $manualDocumentNumber,
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [
@@ -290,7 +290,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             [
                 'input' => [
                     'manualDocumentNumber' => $manualDocumentNumber,
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [
@@ -333,7 +333,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             [
                 'input' => [
                     'email' => self::COMPLAINT_EMAIL,
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'items' => [
                         [
                             'quantity' => 1,
@@ -439,7 +439,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                         'telephone' => new PhoneData('CZ', '+420', '123456789'),
                         'country' => 'CZ',
                     ],
-                    'resolution' => $this->complaintResolutionEnum::FIX,
+                    'preferredResolution' => $this->complaintResolutionEnum::FIX,
                 ],
             ],
             [
@@ -460,7 +460,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             [
                 'input' => [
                     'manualDocumentNumber' => 'Whatever132',
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [

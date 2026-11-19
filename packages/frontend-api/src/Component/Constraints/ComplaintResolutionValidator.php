@@ -27,16 +27,16 @@ class ComplaintResolutionValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, ComplaintResolution::class);
         }
 
-        $resolution = $value->resolution;
+        $preferredResolution = $value->preferredResolution;
 
-        if (!in_array($resolution, $this->complaintResolutionEnum->getAllCases(), true)) {
+        if (!in_array($preferredResolution, $this->complaintResolutionEnum->getAllCases(), true)) {
             $this->context->buildViolation($constraint->selectedComplaintResolutionNotSupportedMessage)
                 ->setCode($constraint::SELECTED_COMPLAINT_RESOLUTION_NOT_SUPPORTED_ERROR)
-                ->atPath('resolution')
+                ->atPath('preferredResolution')
                 ->addViolation();
         }
 
-        if ($this->complaintResolutionEnum->isMoneyReturn($resolution) && ($value->bankAccountNumber === null || $value->bankAccountNumber === '')) {
+        if ($this->complaintResolutionEnum->isMoneyReturn($preferredResolution) && ($value->bankAccountNumber === null || $value->bankAccountNumber === '')) {
             $this->context->buildViolation($constraint->selectedComplaintResolutionRequiresBankAccountFilledMessage)
                 ->setCode($constraint::SELECTED_COMPLAINT_RESOLUTION_REQUIRES_BANK_ACCOUNT_NUMBER_FILLED_ERROR)
                 ->atPath('bankAccountNumber')

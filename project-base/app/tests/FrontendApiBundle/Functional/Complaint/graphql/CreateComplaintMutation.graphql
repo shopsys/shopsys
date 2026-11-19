@@ -21,7 +21,7 @@ mutation CreateComplaint($input: ComplaintInput!) {
         order {
             uuid
         }
-        resolution {
+        preferredResolution {
             name
             value
         }
