@@ -10,6 +10,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\DaysOfWeekType;
@@ -236,12 +237,13 @@ final class TransportFormType extends AbstractType
                 'file_constraints' => [
                     new Constraints\File(
                         maxSize: '2M',
+                        extensions: [...ImageProcessor::SUPPORTED_EXTENSIONS, ImageProcessor::EXTENSION_SVG],
                         maxSizeMessage: 'Uploaded image is too large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
                 'entity' => $transport,
-                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF, SVG'),
             ]);
 
         $builderPackageTrackingGroup = $builder->create('packageTracking', GroupType::class, [

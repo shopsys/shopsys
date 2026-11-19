@@ -3922,6 +3922,9 @@ msgstr ""
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr ""
 
+msgid "You can upload following formats: PNG, JPG, GIF, SVG"
+msgstr ""
+
 msgid "You can't delete yourself."
 msgstr ""
 
