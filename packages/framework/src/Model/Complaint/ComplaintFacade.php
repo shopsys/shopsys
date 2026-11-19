@@ -35,7 +35,7 @@ class ComplaintFacade
         $complaint = $this->getById($id);
         $statusBefore = $complaint->getStatus();
 
-        if (!$this->complaintResolutionEnum->isMoneyReturn($complaintData->resolution)) {
+        if (!$this->complaintResolutionEnum->isMoneyReturn($complaintData->preferredResolution)) {
             $complaintData->bankAccountNumber = null;
         }
 

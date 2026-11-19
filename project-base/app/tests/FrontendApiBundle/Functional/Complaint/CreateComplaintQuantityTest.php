@@ -126,7 +126,7 @@ final class CreateComplaintQuantityTest extends GraphQlWithLoginTestCase
                 'input' => [
                     'orderUuid' => $order->getUuid(),
                     'email' => self::DEFAULT_USER_EMAIL,
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'items' => $items,
                     'deliveryAddress' => [
                         'firstName' => 'Jiří',

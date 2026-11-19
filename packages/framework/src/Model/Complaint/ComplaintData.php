@@ -99,7 +99,7 @@ class ComplaintData
     /**
      * @var string|null
      */
-    public $resolution;
+    public $preferredResolution;
 
     /**
      * @var string|null
