@@ -1,6 +1,8 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Link } from 'components/Basic/Link/Link';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
+import type { MouseEvent } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, test, vi } from 'vitest';
 import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
 
@@ -19,9 +21,68 @@ const renderLink = (props: Parameters<typeof Link>[0]) =>
         <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
             <Link {...props} />
         </DomainConfigProvider>,
-    ).container.querySelector('a');
+    ).getByRole('link');
 
 describe('Link', () => {
+    test.each([false, true])('preserves native link attributes and events (external: %s)', (isExternal) => {
+        const onClick = vi.fn((event: MouseEvent<HTMLAnchorElement>) => event.preventDefault());
+        const link = renderLink({
+            href: isExternal ? 'https://example.com' : '/test-href',
+            isExternal,
+            children: 'link text',
+            'aria-label': 'Read the privacy policy',
+            'aria-describedby': 'privacy-description',
+            title: 'Privacy policy',
+            onClick,
+        });
+
+        expect(link).toHaveAccessibleName('Read the privacy policy');
+        expect(link).toHaveAttribute('aria-describedby', 'privacy-description');
+        expect(link).toHaveAttribute('title', 'Privacy policy');
+
+        fireEvent.click(link);
+
+        expect(onClick).toHaveBeenCalledOnce();
+    });
+
+    test('internal link cancelled by its click handler does not start page loading', () => {
+        useSessionStore.setState({ isPageLoading: false });
+        const link = renderLink({
+            href: '/test-href',
+            children: 'link text',
+            onClick: (event) => event.preventDefault(),
+        });
+
+        fireEvent.click(link);
+
+        expect(useSessionStore.getState().isPageLoading).toBe(false);
+    });
+
+    test('internal download link does not start page loading', () => {
+        useSessionStore.setState({ isPageLoading: false });
+        const link = renderLink({ href: '/files/manual.pdf', children: 'Download manual', download: true });
+
+        fireEvent.click(link);
+
+        expect(useSessionStore.getState().isPageLoading).toBe(false);
+    });
+
+    test.each([
+        ['Shift', { shiftKey: true }],
+        ['Alt', { altKey: true }],
+        ['Ctrl', { ctrlKey: true }],
+        ['Meta', { metaKey: true }],
+    ])('internal link clicked with %s opens elsewhere and does not start page loading', (_, modifierKey) => {
+        useSessionStore.setState({ isPageLoading: false });
+        const onClick = vi.fn();
+        const link = renderLink({ href: '/test-href', children: 'link text', onClick });
+
+        fireEvent.click(link, modifierKey);
+
+        expect(onClick).toHaveBeenCalledOnce();
+        expect(useSessionStore.getState().isPageLoading).toBe(false);
+    });
+
     test.each([
         [undefined, 'noopener'],
         ['nofollow', 'nofollow noopener'],

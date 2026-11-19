@@ -59,10 +59,6 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
         : localHref;
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        const mouseWheelClick = e.button === 1;
-        const isTargetBlank = target === '_blank';
-        const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick && !isTargetBlank;
-
         if (preventRedirectOnTextSelection && isTextSelected()) {
             e.preventDefault();
             e.stopPropagation();
@@ -70,15 +66,24 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
             return;
         }
 
-        if (isWithoutOpeningInNewTab) {
-            onClick?.(e);
+        onClick?.(e);
 
-            const isLinkExternal = isHrefExternal(href, url);
-            updatePageLoadingState({
-                isPageLoading: !!type || !isLinkExternal,
-                redirectPageType: type ?? skeletonType,
-            });
+        // The same clicks Next.js leaves to the browser (new tab or window, download, other target) keep this page.
+        const isOpeningElsewhere =
+            e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0 || (!!target && target !== '_self');
+        // A cancelled click or a download does not navigate, so no page load starts.
+        const isNavigationSkipped =
+            isOpeningElsewhere || e.defaultPrevented || e.currentTarget.hasAttribute('download');
+
+        if (isNavigationSkipped) {
+            return;
         }
+
+        const isLinkExternal = isHrefExternal(href, url);
+        updatePageLoadingState({
+            isPageLoading: !!type || !isLinkExternal,
+            redirectPageType: type ?? skeletonType,
+        });
     };
 
     return (

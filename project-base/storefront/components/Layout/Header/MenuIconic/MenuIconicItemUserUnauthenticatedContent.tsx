@@ -69,7 +69,7 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registr
                 skeletonType="registration"
                 tid={TIDs.login_popup_register_button}
                 variant="secondary"
-                onClick={onMenuClose}
+                onNavigate={onMenuClose}
             >
                 {t('Create account')}
             </LinkButton>
@@ -110,7 +110,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnau
                     href={registrationUrl}
                     skeletonType="registration"
                     tid={TIDs.login_popup_register_link}
-                    onClick={onMenuClose}
+                    onNavigate={onMenuClose}
                 >
                     {t('Register')}
                 </ExtendedNextLink>

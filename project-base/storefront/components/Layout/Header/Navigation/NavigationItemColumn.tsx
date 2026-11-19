@@ -47,7 +47,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                 )}
                                 href={columnCategory.slug}
                                 skeletonType={skeletonType}
-                                onClick={onLinkClick}
+                                onNavigate={onLinkClick}
                             >
                                 {hasMainImage && (
                                     <div className="flex size-12 w-auto items-center justify-center" aria-hidden="true">
@@ -72,7 +72,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                                 className="inline-block max-w-full self-start rounded-sm font-secondary font-semibold text-sm text-text-default no-underline hover:underline"
                                                 href={columnCategoryChild.slug}
                                                 skeletonType={skeletonType}
-                                                onClick={onLinkClick}
+                                                onNavigate={onLinkClick}
                                             >
                                                 {columnCategoryChild.name}
                                             </ExtendedNextLink>

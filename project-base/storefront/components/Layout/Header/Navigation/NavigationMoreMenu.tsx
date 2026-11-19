@@ -53,7 +53,7 @@ export const NavigationMoreMenu: FC<NavigationMoreMenuProps> = ({
                                 rel={isExternalLink ? 'nofollow noreferrer noopener' : undefined}
                                 skeletonType={getNavigationItemSkeletonType(navigationItem, catalogUrl)}
                                 target={isExternalLink ? '_blank' : undefined}
-                                onClick={onLinkClick}
+                                onNavigate={onLinkClick}
                             >
                                 {content}
                             </ExtendedNextLink>

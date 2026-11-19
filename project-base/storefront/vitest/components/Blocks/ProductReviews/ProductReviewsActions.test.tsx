@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { ProductReviewsActions } from 'components/Blocks/ProductReviews/ProductReviewsActions';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
-import { type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import { type ComponentPropsWithoutRef, type MouseEvent, type ReactNode } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
@@ -23,18 +23,19 @@ vi.mock('components/Basic/Link/Link', () => ({
 }));
 
 vi.mock('next/link', () => ({
-    default: ({ children, href, onClick, prefetch: _prefetch, ...props }: NextLinkMockProps) => (
-        <a
-            {...props}
-            href={href}
-            onClick={(event) => {
-                event.preventDefault();
-                onClick?.(event);
-            }}
-        >
-            {children}
-        </a>
-    ),
+    default: ({ children, href, onClick, prefetch: _prefetch, ...props }: NextLinkMockProps) => {
+        // Like next/link, run the caller's handler first and only then stop the browser navigation.
+        const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+            onClick?.(event);
+            event.preventDefault();
+        };
+
+        return (
+            <a {...props} href={href} onClick={handleClick}>
+                {children}
+            </a>
+        );
+    },
 }));
 
 describe('ProductReviewsActions', () => {
