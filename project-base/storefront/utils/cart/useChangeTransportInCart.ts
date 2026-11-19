@@ -3,6 +3,7 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { usePersistStore } from 'store/usePersistStore';
+import { mapPickupPlaceOpeningHoursToInput } from 'utils/packetery/mapPickupPlaceOpeningHoursToInput';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { useLatest } from 'utils/ui/useLatest';
 
@@ -26,6 +27,7 @@ export const useChangeTransportInCart = () => {
                 input: {
                     transportUuid: newTransportUuid,
                     pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
+                    pickupPlaceOpeningHours: mapPickupPlaceOpeningHoursToInput(newPickupPlace),
                     cartUuid,
                 },
             },
