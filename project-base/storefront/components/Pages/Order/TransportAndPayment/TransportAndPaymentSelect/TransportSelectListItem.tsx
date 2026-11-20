@@ -9,7 +9,6 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { isPickupPlaceTransport } from 'utils/transport';
-import { useTransportExpectedDeliveryDate } from 'utils/transport/useTransportExpectedDeliveryDate';
 import { TransportAndPaymentItemLabel } from './TransportAndPaymentItemLabel';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportUnavailabilityInfo } from './TransportUnavailabilityInfo';
@@ -42,7 +41,6 @@ export const TransportListItem: FC<TransportListItemProps> = ({
 }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const expectedDeliveryDate = useTransportExpectedDeliveryDate(transport, isActive ? pickupPlace : null);
     const isUnavailable = transport.productsBlockingSelectionInCart.length > 0;
 
     const ariaLabel = isPriceVisible(transport.price.priceWithVat)
@@ -76,7 +74,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                 label={
                     <TransportAndPaymentItemLabel
                         description={transport.description}
-                        expectedDeliveryDate={expectedDeliveryDate}
+                        expectedDeliveryDate={transport.expectedDeliveryDate}
                         disabled={isUnavailable}
                         image={transport.mainImage}
                         isActive={isActive}
