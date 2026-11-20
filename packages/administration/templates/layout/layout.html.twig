@@ -145,6 +145,9 @@
                                 <div class="d-none d-xl-block ps-2">
                                     {{ app.user.realName }}
                                 </div>
+                                {% if getAdminDropdownMenuBadgeCount() > 0 %}
+                                    <span class="badge badge-notification bg-red text-red-fg"></span>
+                                {% endif %}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                 {{ renderAdminDropdownMenuItems() }}

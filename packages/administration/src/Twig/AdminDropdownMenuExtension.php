@@ -28,6 +28,10 @@ class AdminDropdownMenuExtension extends AbstractExtension
                 $this->adminDropdownMenuItemsRenderer->render(...),
                 ['is_safe' => ['html']],
             ),
+            new TwigFunction(
+                'getAdminDropdownMenuBadgeCount',
+                $this->adminDropdownMenuItemsRenderer->getBadgeCountSum(...),
+            ),
         ];
     }
 }
