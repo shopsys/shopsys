@@ -58,6 +58,17 @@ describe('mapPickupPlaceOpeningHoursToInput', () => {
         expect(pickupPlaceOpeningHours!.exceptionDays).toStrictEqual([]);
     });
 
+    test('maps a day with empty opening hours of a Packeta point as closed', () => {
+        const pickupPlaceOpeningHours = mapPickupPlaceOpeningHoursToInput(
+            createPacketeryPoint({ monday: '08:00–17:00', sunday: '' }),
+        );
+
+        expect(sortByDayOfWeek(pickupPlaceOpeningHours!.openingHoursOfDays)).toStrictEqual([
+            { dayOfWeek: 1, openingHoursRanges: [{ openingTime: '08:00', closingTime: '17:00' }] },
+            { dayOfWeek: 7, openingHoursRanges: [] },
+        ]);
+    });
+
     test('maps the exception days of a Packeta point', () => {
         const pickupPlaceOpeningHours = mapPickupPlaceOpeningHoursToInput(
             createPacketeryPoint({ monday: '08:00–17:00' }, [
