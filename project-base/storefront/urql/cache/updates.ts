@@ -124,8 +124,16 @@ export const cacheUpdates: UpdatesConfig = {
         ) {
             manuallyUpdateCurrentCustomerUserDeliveryAddresses(cache, result.DeleteDeliveryAddress);
         },
-        CreateOrder(_result: TypeCreateOrderMutation, _args: TypeCreateOrderMutationVariables, cache) {
+        CreateOrder(result: TypeCreateOrderMutation, _args: TypeCreateOrderMutationVariables, cache) {
             invalidateFields(cache, ['currentCustomerUser']);
+
+            // A refused order returns the modified cart, which a logged-in customer's cart (without UUID) does not
+            // get through normalization, and the checkout decides from it whether it can stay on the current step
+            const modifiedCart = result.CreateOrder.cart;
+
+            if (!result.CreateOrder.orderCreated && modifiedCart) {
+                manuallyUpdateCartQuery(cache, modifiedCart, modifiedCart.uuid);
+            }
         },
         CreateDeliveryAddress(
             result: TypeCreateDeliveryAddressMutation,

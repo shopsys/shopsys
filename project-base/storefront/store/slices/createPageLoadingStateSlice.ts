@@ -8,6 +8,8 @@ export type PageLoadingStateSlice = {
     hadClientSideNavigation: boolean;
     isCartHydrated: boolean;
     isPageLoading: boolean;
+    // Kept outside the contact information page, which unmounts and can be visited again while the order is created
+    isOrderBeingCreated: boolean;
     isProductListHydrated: boolean;
     redirectPageType: PageType | undefined;
 
@@ -18,6 +20,7 @@ export const createPageLoadingStateSlice: StateCreator<PageLoadingStateSlice> = 
     hadClientSideNavigation: false,
     isCartHydrated: false,
     isPageLoading: false,
+    isOrderBeingCreated: false,
     isProductListHydrated: false,
     redirectPageType: undefined,
 

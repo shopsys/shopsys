@@ -1,4 +1,5 @@
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
+import { CartModificationsBox } from 'components/Blocks/CartModificationsBox/CartModificationsBox';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
@@ -26,6 +27,8 @@ export const CartContent: FC<CartContentProps> = ({ cart, cartPreviewRef }) => {
 
             <Webline width="xl">
                 <CartSteps activeStep={1} domainUrl={url} />
+
+                <CartModificationsBox className="mb-5" />
 
                 <CartList items={cart.items} />
 

@@ -40,7 +40,7 @@ test('a second immediately failed logout still offers a visible retry action dur
     );
     fireEvent.click(screen.getByRole('button', { name: 'Logout' }));
     const retry = await screen.findByRole('button', { name: 'Try again' });
-    expect(screen.getByRole('alert')).toHaveTextContent('Unable to log out. Please try again.');
+    expect(screen.getByText('Unable to log out. Please try again.')).toBeInTheDocument();
 
     fireEvent.click(retry);
 

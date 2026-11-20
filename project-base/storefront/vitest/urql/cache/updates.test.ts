@@ -25,4 +25,24 @@ describe('cacheUpdates', () => {
         expect(invalidateMock).toHaveBeenNthCalledWith(1, 'Query', 'currentCustomerUserProductReviews');
         expect(invalidateMock).toHaveBeenNthCalledWith(2, 'Query', 'order({"urlHash":"order-url-hash"})');
     });
+
+    test.each([
+        ['an anonymous', 'cart-1'],
+        ['a logged-in customer', null],
+    ])('writes the cart of a refused order into the cart query of %s cart', (_, cartUuid) => {
+        const updateQueryMock = vi.fn();
+        const cache = { inspectFields: vi.fn().mockReturnValue([]), invalidate: vi.fn(), updateQuery: updateQueryMock };
+        const createOrderUpdater = cacheUpdates.Mutation?.CreateOrder;
+
+        if (createOrderUpdater === undefined) {
+            throw new Error('CreateOrder cache updater is not configured.');
+        }
+
+        const refusedOrder = { CreateOrder: { orderCreated: false, order: null, cart: { uuid: cartUuid } } };
+        createOrderUpdater(refusedOrder as never, {} as never, cache as unknown as Cache, {} as never);
+
+        expect(updateQueryMock).toHaveBeenCalledOnce();
+        expect(updateQueryMock.mock.calls[0][0].variables).toEqual({ cartUuid });
+        expect(updateQueryMock.mock.calls[0][1]().cart).toBe(refusedOrder.CreateOrder.cart);
+    });
 });

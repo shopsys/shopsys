@@ -1,4 +1,5 @@
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
+import { CartModificationsBox } from 'components/Blocks/CartModificationsBox/CartModificationsBox';
 import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
@@ -9,6 +10,8 @@ export const EmptyCart: FC = () => {
 
     return (
         <Webline className="mt-8" width="lg">
+            <CartModificationsBox className="mb-5" />
+
             <PageHero
                 actionHref="/"
                 actionSkeletonType="homepage"

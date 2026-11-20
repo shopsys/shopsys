@@ -70,7 +70,6 @@ export const showMessage = (
                 {
                     toastId,
                     autoClose: false,
-                    closeOnClick: false,
                     style: { width: '100%' },
                 },
             );
@@ -79,7 +78,6 @@ export const showMessage = (
                 () => <ToastMessageContent message={message} tid={TIDs.toast_error} action={options?.action} />,
                 {
                     toastId,
-                    closeOnClick: !options?.action,
                     ...(options?.action && { autoClose: false }),
                     icon: <RejectedIcon className="p-1" />,
                 },
@@ -88,14 +86,12 @@ export const showMessage = (
     } else if (type === 'info') {
         toast.info(() => <ToastMessageContent message={message} tid={TIDs.toast_info} />, {
             toastId,
-            closeOnClick: true,
             icon: <WarningIcon />,
         });
     } else {
         const content = <ToastMessageContent message={message} tid={TIDs.toast_success} action={options?.action} />;
         const successOptions = {
             toastId,
-            closeOnClick: !options?.action,
             icon: <CheckmarkIcon />,
             ...(options?.autoClose !== undefined && { autoClose: options.autoClose }),
         };

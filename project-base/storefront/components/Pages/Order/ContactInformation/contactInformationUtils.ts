@@ -1,6 +1,6 @@
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { handleCartModifications } from 'connectors/cart/Cart';
+import { hasCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     TypeCreateOrderMutation,
@@ -22,10 +22,8 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCustomerType } from 'types/customer';
 import { OperationResult } from 'urql';
-import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { saveOrderConfirmationContext } from 'utils/order/orderConfirmationContextStorage';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
@@ -64,23 +62,49 @@ export const useCreateOrder = (
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const currentCart = useCurrentCart(false);
     const user = useCurrentCustomerData();
+    const router = useRouter();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const setIsOrderRejectedByCartModifications = useSessionStore((s) => s.setIsOrderRejectedByCartModifications);
     const handleCreateOrderResult = useHandleCreateOrderResult(formProviderMethods, formMeta);
 
     const createOrder: SubmitHandler<ContactInformation> = async (formValues) => {
-        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-confirmation' });
+        // A second order must never be created from the same cart, not even after leaving and returning to the page
+        if (useSessionStore.getState().isOrderBeingCreated) {
+            return;
+        }
 
-        const createOrderResult = await createOrderMutation(
-            getCreateOrderMutationVariables(
-                cartUuid,
-                { ...formValues, email: user?.email ?? formValues.email },
-                currentCart.pickupPlace,
-                user,
-                isPacketeryTransport(currentCart.transport?.transportTypeCode),
-            ),
-        );
+        // The page shows a skeleton meanwhile, so the customer may leave it before the API answers
+        let hasCustomerLeftPage = false;
+        const markCustomerLeftPage = () => {
+            hasCustomerLeftPage = true;
+        };
 
-        handleCreateOrderResult(createOrderResult, formValues);
+        setIsOrderRejectedByCartModifications(false);
+        updatePageLoadingState({
+            isOrderBeingCreated: true,
+            isPageLoading: true,
+            redirectPageType: 'order-confirmation',
+        });
+        router.events.on('routeChangeStart', markCustomerLeftPage);
+
+        let createOrderResult: OperationResult<TypeCreateOrderMutation, TypeCreateOrderMutationVariables>;
+
+        try {
+            createOrderResult = await createOrderMutation(
+                getCreateOrderMutationVariables(
+                    cartUuid,
+                    { ...formValues, email: user?.email ?? formValues.email },
+                    currentCart.pickupPlace,
+                    user,
+                    isPacketeryTransport(currentCart.transport?.transportTypeCode),
+                ),
+            );
+        } finally {
+            router.events.off('routeChangeStart', markCustomerLeftPage);
+            updatePageLoadingState({ isOrderBeingCreated: false });
+        }
+
+        handleCreateOrderResult(createOrderResult, formValues, hasCustomerLeftPage);
     };
 
     return { createOrder };
@@ -136,14 +160,30 @@ const getCreateOrderMutationVariables = (
     };
 };
 
+/**
+ * The alert belongs to the contact information page. When the refused order lost its items, transport or payment,
+ * the checkout redirects to an earlier step and the cart modifications box there explains the change.
+ */
+export const getShouldShowOrderNotSubmittedAlert = (createOrderData: TypeCreateOrderMutation | undefined): boolean => {
+    const modifiedCart = createOrderData?.CreateOrder.cart;
+
+    if (!modifiedCart || createOrderData.CreateOrder.orderCreated) {
+        return false;
+    }
+
+    const staysOnContactInformationPage =
+        modifiedCart.items.length > 0 && !!modifiedCart.transport && !!modifiedCart.payment;
+
+    return staysOnContactInformationPage && hasCartModifications(modifiedCart.modifications);
+};
+
 const useHandleCreateOrderResult = (
     formProviderMethods: UseFormReturn<ContactInformation>,
     formMeta: ContactInformationFormMetaType,
 ) => {
-    const { t } = useTranslation();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const setIsOrderRejectedByCartModifications = useSessionStore((s) => s.setIsOrderRejectedByCartModifications);
     const domainConfig = useDomainConfig();
-    const { changePaymentInCart } = useChangePaymentInCart();
     const router = useRouter();
     const handleEventsAfterOrderCreation = useHandleEventsAfterOrderCreation();
     const handleError = useErrorHandler({
@@ -155,10 +195,10 @@ const useHandleCreateOrderResult = (
     const handleCreateOrderResult = (
         createOrderResult: OperationResult<TypeCreateOrderMutation, TypeCreateOrderMutationVariables>,
         formValues: ContactInformation,
+        hasCustomerLeftPage: boolean,
     ) => {
         const wasOrderCreated = createOrderResult.data?.CreateOrder.orderCreated;
         const createdOrder = createOrderResult.data?.CreateOrder.order;
-        const modifiedCartAfterUnsuccessfulOrderCreation = createOrderResult.data?.CreateOrder.cart;
 
         if (wasOrderCreated && createdOrder) {
             saveOrderConfirmationContext(createdOrder.urlHash, domainConfig.url);
@@ -173,9 +213,10 @@ const useHandleCreateOrderResult = (
         }
 
         updatePageLoadingState({ isPageLoading: false });
-        if (!wasOrderCreated && modifiedCartAfterUnsuccessfulOrderCreation) {
-            handleCartModifications(modifiedCartAfterUnsuccessfulOrderCreation.modifications, t, changePaymentInCart);
-        }
+        // The modifications themselves reach the cart modifications box through the network response
+        setIsOrderRejectedByCartModifications(
+            !hasCustomerLeftPage && getShouldShowOrderNotSubmittedAlert(createOrderResult.data),
+        );
 
         handleError(createOrderResult.error);
     };
