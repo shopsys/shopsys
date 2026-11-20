@@ -20,13 +20,13 @@ describe('cart modifications slice', () => {
         });
     });
 
-    test('forgets the refused order when the customer dismisses the modifications', () => {
+    test('keeps the refused order when the customer dismisses the modifications', () => {
         receive('cart-1');
         useSessionStore.getState().setIsOrderRejectedByCartModifications(true);
 
         useSessionStore.getState().dismissCartModifications();
 
-        expect(useSessionStore.getState().isOrderRejectedByCartModifications).toBe(false);
+        expect(useSessionStore.getState().isOrderRejectedByCartModifications).toBe(true);
     });
 
     test('keeps modifications of the same cart until the customer dismisses them', () => {

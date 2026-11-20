@@ -1,7 +1,10 @@
 import { Alert } from 'components/Basic/Alert/Alert';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { linkPlaceholderTwClass } from 'components/Basic/Link/Link';
-import { CART_MODIFICATIONS_ID } from 'components/Blocks/CartModificationsBox/CartModificationsBox';
+import {
+    CART_MODIFICATIONS_ID,
+    useCartModificationMessages,
+} from 'components/Blocks/CartModificationsBox/CartModificationsBox';
 import { TIDs } from 'cypress/tids';
 import { useEffect, useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -11,9 +14,11 @@ const focusCartModifications = () => document.getElementById(CART_MODIFICATIONS_
 /**
  * Shown next to the submit button after the API refused the order because the cart changed.
  * The details are in the cart modifications box at the top of the page, which can be far away on mobile.
+ * The alert outlives a dismissed box, because the order still has to be submitted again.
  */
 export const OrderNotSubmittedAlert: FC = () => {
     const { t } = useTranslation();
+    const hasCartModifications = useCartModificationMessages().length > 0;
     const alertRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => alertRef.current?.focus(), []);
@@ -27,11 +32,16 @@ export const OrderNotSubmittedAlert: FC = () => {
                 variant="error"
             >
                 <span className="text-text-less">
-                    {t('Your cart changed in the meantime. Check the changes and submit the order again.')}{' '}
-                    {/* A button, because the contact form blocks Enter on everything except buttons */}
-                    <button className={linkPlaceholderTwClass} type="button" onClick={focusCartModifications}>
-                        {t('Show changes')}
-                    </button>
+                    {t('Your cart changed in the meantime. Check the changes and submit the order again.')}
+                    {hasCartModifications && (
+                        <>
+                            {' '}
+                            {/* A button, because the contact form blocks Enter on everything except buttons */}
+                            <button className={linkPlaceholderTwClass} type="button" onClick={focusCartModifications}>
+                                {t('Show changes')}
+                            </button>
+                        </>
+                    )}
                 </span>
             </Alert>
         </div>

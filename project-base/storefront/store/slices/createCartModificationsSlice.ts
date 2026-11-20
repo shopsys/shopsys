@@ -16,7 +16,8 @@ export type CartModificationsBatch = {
 export type CartModificationsSlice = {
     cartModificationsBatches: CartModificationsBatch[];
     unhandledCartModificationsBatches: CartModificationsBatch[];
-    // The contact information page unmounts while the order is being created, so the refusal is kept here
+    // The contact information page unmounts while the order is being created, so the refusal is kept here.
+    // Dismissing the modifications keeps it, because the order still has to be submitted again.
     isOrderRejectedByCartModifications: boolean;
     receiveCartModifications: (batch: CartModificationsBatch) => void;
     takeUnhandledCartModificationsBatches: () => CartModificationsBatch[];
@@ -51,7 +52,7 @@ export const createCartModificationsSlice: StateCreator<CartModificationsSlice> 
         return unhandledCartModificationsBatches;
     },
 
-    dismissCartModifications: () => set({ cartModificationsBatches: [], isOrderRejectedByCartModifications: false }),
+    dismissCartModifications: () => set({ cartModificationsBatches: [] }),
 
     clearCartModifications: () =>
         set({
