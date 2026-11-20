@@ -56,15 +56,15 @@ const setTouchEmulation = (isEnabled: boolean) =>
         params: { enabled: isEnabled, maxTouchPoints: 1 },
     });
 
-const assertPointerType = (pointerType: 'fine' | 'coarse') => {
+const assertCoarsePointer = (isCoarse: boolean) => {
     cy.window().should((win) =>
-        expect(win.matchMedia(`(pointer: ${pointerType})`).matches, `${pointerType} pointer`).to.equal(true),
+        expect(win.matchMedia('(pointer: coarse)').matches, 'coarse pointer').to.equal(isCoarse),
     );
 };
 
 const emulateCoarsePointer = () => {
     cy.then(() => setTouchEmulation(true));
-    assertPointerType('coarse');
+    assertCoarsePointer(true);
 };
 
 // Buttons animate size changes (transition-all), so callers assert through retried should() callbacks
@@ -145,16 +145,17 @@ const assertButtonScalesAcrossViewports = (viewportScales: typeof VIEWPORT_SCALE
 };
 
 const assertHoverUnderlinesLink = (tid: TIDs, { shouldShiftColor }: { shouldShiftColor: boolean }) => {
-    const checkHoveredLink = ($link: JQuery<HTMLElement>) => {
+    const hoverAndCheckLink = ($link: JQuery<HTMLElement>) => {
         const defaultColor = $link.css('color');
 
+        cy.wrap($link).realHover();
+        // realHover is not a query, so a fresh query keeps the hover assertions retried.
         cy.getByTID([tid])
-            .realHover()
             .should('have.css', 'text-decoration-line', 'underline')
             .and(shouldShiftColor ? 'not.have.css' : 'have.css', 'color', defaultColor);
     };
 
-    cy.getByTID([tid]).then(checkHoveredLink);
+    cy.getByTID([tid]).then(hoverAndCheckLink);
 };
 
 const assertContentLinkHover = (tid: TIDs) => {
@@ -186,7 +187,8 @@ describe('Styleguide Tests (SSP-4301)', () => {
     });
 
     it('[Button sizes] should use the text button scale below and from the vl breakpoint and keep the icon button scale', () => {
-        assertPointerType('fine');
+        // Headless Linux CI browsers match (pointer: none), so the default run only rules out touch input.
+        assertCoarsePointer(false);
         assertButtonScalesAcrossViewports(VIEWPORT_SCALES);
     });
 
