@@ -27,6 +27,7 @@ use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RouteConfig;
 use Shopsys\HttpSmokeTesting\RouteConfigCustomizer;
 use Shopsys\HttpSmokeTesting\RouteInfo;
+use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RouteConfigCustomization
@@ -34,6 +35,12 @@ class RouteConfigCustomization
     protected const DEFAULT_ID_VALUE = 1;
     protected const array SUPERADMIN_MCP_REDIRECTING_ACTION_ROUTE_NAMES = [
         'admin_superadmin_mcp_token_revoke',
+    ];
+
+    protected const array SUPERADMIN_MCP_CHANGE_REQUEST_ACTION_ROUTE_NAMES = [
+        McpRouteName::ADMIN_MCP_CHANGE_REQUEST_APPROVE,
+        McpRouteName::ADMIN_MCP_CHANGE_REQUEST_REFRESH,
+        McpRouteName::ADMIN_MCP_CHANGE_REQUEST_DISCARD,
     ];
 
     private ContainerInterface $container;
@@ -173,7 +180,7 @@ class RouteConfigCustomization
                         $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
                             ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                             ->setExpectedStatusCode(302);
-                    } else {
+                    } elseif (!in_array($info->getRouteName(), self::SUPERADMIN_MCP_CHANGE_REQUEST_ACTION_ROUTE_NAMES, true)) {
                         $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
                             ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                             ->setExpectedStatusCode(200);
@@ -287,6 +294,12 @@ class RouteConfigCustomization
                     ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
                     ->setParameter('id', $review->getId())
                     ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName(self::SUPERADMIN_MCP_CHANGE_REQUEST_ACTION_ROUTE_NAMES, function (RouteConfig $config): void {
+                $config->addExtraRequestDataSet('Demo data contain no MCP change request, so the action returns 404 when logged in as "superadmin".')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->addCallDuringTestExecution($this->createAddCsrfTokenDuringTestExecutionCallback())
+                    ->setExpectedStatusCode(404);
             })
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config): void {
                 $config->skipRoute('Deleting pricing group is not necessary.');

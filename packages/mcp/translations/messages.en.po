@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "%count% changed field|%count% changed fields"
+msgstr ""
+
 msgid "1 day"
 msgstr ""
 
@@ -23,6 +26,9 @@ msgid "Add the server once, then authenticate it in Claude Code when prompted."
 msgstr ""
 
 msgid "Allow access"
+msgstr ""
+
+msgid "Approve"
 msgstr ""
 
 msgid "Approve MCP access"
@@ -67,6 +73,9 @@ msgstr ""
 msgid "Deny access"
 msgstr ""
 
+msgid "Discard"
+msgstr ""
+
 msgid "Do you really want to revoke this MCP token?"
 msgstr ""
 
@@ -91,6 +100,9 @@ msgstr ""
 msgid "Export the manual token in your current shell, then add the MCP server once."
 msgstr ""
 
+msgid "Failed"
+msgstr ""
+
 msgid "Generate manual token"
 msgstr ""
 
@@ -107,6 +119,12 @@ msgid "Label"
 msgstr ""
 
 msgid "Last used at"
+msgstr ""
+
+msgid "MCP change requests"
+msgstr ""
+
+msgid "MCP server"
 msgstr ""
 
 msgid "MCP token \"%tokenLabel%\" revoked"
@@ -154,19 +172,61 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+msgid "Show change"
+msgstr ""
+
 msgid "Start Claude Code and run /mcp."
 msgstr ""
 
 msgid "Status"
 msgstr ""
 
+msgid "The action no longer exists."
+msgstr ""
+
+msgid "The change can no longer be applied, discard it."
+msgstr ""
+
+msgid "The change could not be applied."
+msgstr ""
+
+msgid "The change could not be approved: {{ errorMessage }}"
+msgstr ""
+
+msgid "The change request could not be updated: {{ errorMessage }}"
+msgstr ""
+
+msgid "The change request failed, update it according to the current data or discard it."
+msgstr ""
+
+msgid "The change request has already been resolved."
+msgstr ""
+
+msgid "The change request was updated according to the current data, check it and approve it again."
+msgstr ""
+
+msgid "The change was approved and applied."
+msgstr ""
+
+msgid "The change was discarded."
+msgstr ""
+
+msgid "The data has changed since the request was created."
+msgstr ""
+
 msgid "The requested active MCP token was not found."
+msgstr ""
+
+msgid "There are no MCP change requests waiting for your approval."
 msgstr ""
 
 msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
 msgstr ""
 
 msgid "Type"
+msgstr ""
+
+msgid "Update according to current data"
 msgstr ""
 
 msgid "Use a manual token for clients such as Codex CLI."

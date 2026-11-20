@@ -60,6 +60,8 @@ services:
             $databaseUser: '%env(DATABASE_USER)%'
             $mcpDatabaseUser: '%env(MCP_DATABASE_USER)%'
 
+    Shopsys\McpBundle\Component\WriteTool\McpChangeDiffCalculator: ~
+
     Shopsys\McpBundle\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
@@ -80,3 +82,5 @@ services:
     Shopsys\McpBundle\Model\OAuth\McpOAuthClientRegistrationStorage:
         arguments:
             $cacheItemPool: '@mcp_oauth_cache'
+
+    Shopsys\McpBundle\Twig\McpChangeDiffExtension: ~

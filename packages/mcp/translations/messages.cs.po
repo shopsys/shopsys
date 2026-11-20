@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "%count% changed field|%count% changed fields"
+msgstr "%count% změněné pole|%count% změněná pole|%count% změněných polí"
+
 msgid "1 day"
 msgstr "1 den"
 
@@ -24,6 +27,9 @@ msgstr "Přidejte server jednou a poté jej v Claude Code na vyzvání ověřte.
 
 msgid "Allow access"
 msgstr "Povolit přístup"
+
+msgid "Approve"
+msgstr "Schválit"
 
 msgid "Approve MCP access"
 msgstr "Schválit přístup MCP"
@@ -67,6 +73,9 @@ msgstr "Vlastní"
 msgid "Deny access"
 msgstr "Odepřít přístup"
 
+msgid "Discard"
+msgstr "Zahodit"
+
 msgid "Do you really want to revoke this MCP token?"
 msgstr "Opravdu chcete zneplatnit tento MCP token?"
 
@@ -91,6 +100,9 @@ msgstr "Vyprší dne"
 msgid "Export the manual token in your current shell, then add the MCP server once."
 msgstr "Exportujte manuální token v aktuálním shellu a poté jednou přidejte MCP server."
 
+msgid "Failed"
+msgstr "Selhalo"
+
 msgid "Generate manual token"
 msgstr "Vygenerovat manuální token"
 
@@ -108,6 +120,12 @@ msgstr "Popisek"
 
 msgid "Last used at"
 msgstr "Naposledy použito"
+
+msgid "MCP change requests"
+msgstr "Požadavky MCP ke schválení"
+
+msgid "MCP server"
+msgstr "MCP server"
 
 msgid "MCP token \"%tokenLabel%\" revoked"
 msgstr "MCP token \"%tokenLabel%\" byl zneplatněn"
@@ -154,20 +172,62 @@ msgstr "U Shopsys MCP serveru zvolte Authenticate."
 msgid "Settings"
 msgstr "Nastavení"
 
+msgid "Show change"
+msgstr "Zobrazit změnu"
+
 msgid "Start Claude Code and run /mcp."
 msgstr "Spusťte Claude Code a zadejte /mcp."
 
 msgid "Status"
 msgstr "Stav"
 
+msgid "The action no longer exists."
+msgstr "Akce již neexistuje."
+
+msgid "The change can no longer be applied, discard it."
+msgstr "Změnu už nelze provést, zahoďte ji."
+
+msgid "The change could not be applied."
+msgstr "Změnu se nepodařilo provést."
+
+msgid "The change could not be approved: {{ errorMessage }}"
+msgstr "Změnu se nepodařilo schválit: {{ errorMessage }}"
+
+msgid "The change request could not be updated: {{ errorMessage }}"
+msgstr "Požadavek se nepodařilo aktualizovat: {{ errorMessage }}"
+
+msgid "The change request failed, update it according to the current data or discard it."
+msgstr "Požadavek selhal, aktualizujte ho podle současných dat, nebo ho zahoďte."
+
+msgid "The change request has already been resolved."
+msgstr "Požadavek už byl vyřízen."
+
+msgid "The change request was updated according to the current data, check it and approve it again."
+msgstr "Požadavek byl aktualizován podle současných dat, zkontrolujte ho a schvalte znovu."
+
+msgid "The change was approved and applied."
+msgstr "Změna byla schválena a provedena."
+
+msgid "The change was discarded."
+msgstr "Změna byla zahozena."
+
+msgid "The data has changed since the request was created."
+msgstr "Data se od vytvoření požadavku změnila."
+
 msgid "The requested active MCP token was not found."
 msgstr "Požadovaný aktivní MCP token nebyl nalezen."
+
+msgid "There are no MCP change requests waiting for your approval."
+msgstr "Žádné požadavky MCP nečekají na vaše schválení."
 
 msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
 msgstr "Tento klient požaduje přístup k Shopsys MCP serveru pod vaším administrátorským účtem."
 
 msgid "Type"
 msgstr "Typ"
+
+msgid "Update according to current data"
+msgstr "Aktualizovat podle současných dat"
 
 msgid "Use a manual token for clients such as Codex CLI."
 msgstr "Pro klienty jako je Codex CLI použijte manuální token."
