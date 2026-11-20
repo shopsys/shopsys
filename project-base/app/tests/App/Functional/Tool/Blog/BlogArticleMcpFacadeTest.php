@@ -40,6 +40,14 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
 
+    public function testCreatedArticleIsDraftOnAllDomains(): void
+    {
+        $blogArticle = $this->blogArticleMcpFacade->create([$this->getFirstDomainLocale() => 'New article']);
+
+        $this->assertSame('New article', $blogArticle->getName($this->getFirstDomainLocale()));
+        $this->assertTrue($blogArticle->isDraftOnAllDomains());
+    }
+
     public function testDescribeEditListsOnlyChangedFields(): void
     {
         $blogArticle = $this->getPublishedBlogArticle();
