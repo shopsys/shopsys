@@ -1,0 +1,18 @@
+query DashboardComplaintsQuery {
+    complaints(first: 3) {
+        edges {
+            node {
+                number
+                date: createdAt
+                status
+            }
+        }
+    }
+    complaintStatusCounts {
+        status {
+            code
+            type
+        }
+        count
+    }
+}

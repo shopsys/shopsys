@@ -50,6 +50,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const areProductReviewsEnabled = settingsData?.settings?.productReviewsEnabled === true;
     const [
+        customerDashboardUrl,
         customerOrdersUrl,
         customerComplaintsUrl,
         customerMyReviewsUrl,
@@ -59,6 +60,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
         customerUsersUrl,
     ] = getInternationalizedStaticUrls(
         [
+            '/customer',
             '/customer/orders',
             '/customer/complaints',
             '/customer/my-reviews',
@@ -100,6 +102,17 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
 
             <nav aria-label={t('User account navigation', { ns: 'accessibility' })}>
                 <ul className="flex max-h-[87dvh] flex-col gap-2">
+                    <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerDashboardUrl}>
+                        <MenuIconicSubItemLink
+                            href={customerDashboardUrl}
+                            isActive={pathname === customerDashboardUrl}
+                            onClick={closeUserMenu}
+                        >
+                            <UserIcon className="size-6" />
+                            {t('Account overview')}
+                        </MenuIconicSubItemLink>
+                    </MenuIconicItemUserAuthenticatedContentListItem>
+
                     {(canCreateOrder || canViewCompanyOrders) && (
                         <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerOrdersUrl}>
                             <MenuIconicSubItemLink

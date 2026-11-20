@@ -1,0 +1,19 @@
+query DashboardOrdersQuery {
+    orders(first: 3) {
+        edges {
+            node {
+                uuid
+                number
+                date: creationDate
+                status
+            }
+        }
+    }
+    orderStatusCounts {
+        status {
+            code
+            type
+        }
+        count
+    }
+}
