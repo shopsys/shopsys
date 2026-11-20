@@ -9,8 +9,10 @@ use Mcp\Exception\ToolCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\McpBundle\Tool\Blog\BlogArticleChangeLabel;
 use Shopsys\McpBundle\Tool\Blog\BlogArticleMcpFacade;
 use Shopsys\McpBundle\Tool\Blog\EditBlogArticleArguments;
+use Shopsys\McpBundle\Tool\Blog\EditPublishedBlogArticleTool;
 use Shopsys\McpBundle\Tool\Blog\EditUnpublishedBlogArticleTool;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -26,12 +28,84 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
+    private EditPublishedBlogArticleTool $editPublishedBlogArticleTool;
+
+    /**
+     * @inject
+     */
     private EditUnpublishedBlogArticleTool $editUnpublishedBlogArticleTool;
 
     /**
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
+
+    public function testDescribeEditListsOnlyChangedFields(): void
+    {
+        $blogArticle = $this->getPublishedBlogArticle();
+        $locale = $this->getFirstDomainLocale();
+        $currentName = $blogArticle->getName($locale);
+
+        $change = $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+            blogArticleId: $blogArticle->getId(),
+            names: [$locale => $currentName],
+            perexes: [$locale => 'New perex'],
+        ))->toArray();
+
+        $this->assertCount(1, $change['fields']);
+        $this->assertSame(BlogArticleChangeLabel::PEREX, $change['fields'][0]['label']);
+        $this->assertSame(['%locale%' => $locale], $change['fields'][0]['labelParameters']);
+        $this->assertSame('New perex', $change['fields'][0]['after']);
+    }
+
+    public function testDescribeEditFailsWhenInputDoesNotChangeArticle(): void
+    {
+        $blogArticle = $this->getPublishedBlogArticle();
+        $locale = $this->getFirstDomainLocale();
+
+        $this->expectException(ToolCallException::class);
+        $this->expectExceptionMessage('The input does not change the blog article.');
+
+        $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+            blogArticleId: $blogArticle->getId(),
+            names: [$locale => $blogArticle->getName($locale)],
+        ));
+    }
+
+    public function testDescribeEditShowsSlugChange(): void
+    {
+        $blogArticle = $this->getPublishedBlogArticle();
+        $currentSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(Domain::FIRST_DOMAIN_ID, 'front_blogarticle_detail', $blogArticle->getId());
+
+        $change = $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+            blogArticleId: $blogArticle->getId(),
+            slugsByDomainId: [Domain::FIRST_DOMAIN_ID => 'new-slug'],
+        ))->toArray();
+
+        $this->assertSame(BlogArticleChangeLabel::SLUG, $change['fields'][0]['label']);
+        $this->assertSame($currentSlug, $change['fields'][0]['before']);
+        $this->assertSame('new-slug', $change['fields'][0]['after']);
+    }
+
+    public function testDescribeEditShowsReplacementWithItsContext(): void
+    {
+        $blogArticle = $this->getPublishedBlogArticleWithDescription();
+        $locale = $this->getFirstDomainLocale();
+
+        $change = $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+            blogArticleId: $blogArticle->getId(),
+            descriptionReplacements: [$locale => [['find' => '<p>Old sentence.</p>', 'replace' => '<p>New sentence.</p>']]],
+        ))->toArray();
+
+        $this->assertSame([
+            'label' => BlogArticleChangeLabel::CONTENT,
+            'labelParameters' => ['%locale%' => $locale],
+            'before' => '<p>Old sentence.</p>',
+            'after' => '<p>New sentence.</p>',
+            'contextBefore' => '<p>Intro sentence.</p>',
+            'contextAfter' => '<p>Outro.</p>',
+        ], $change['fields'][0]);
+    }
 
     public function testEditReplacesOnlyGivenPartsOfDescriptionInOrder(): void
     {
@@ -144,6 +218,19 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $this->blogArticleMcpFacade->edit(new EditBlogArticleArguments(
             blogArticleId: $this->getPublishedBlogArticle()->getId(),
             slugsByDomainId: [Domain::FIRST_DOMAIN_ID => 'Nový článek'],
+        ));
+    }
+
+    public function testEditPublishedToolRejectsDraftArticle(): void
+    {
+        $blogArticle = $this->getReference(BlogArticleDataFixture::BLOG_ARTICLE_DRAFT, BlogArticle::class);
+
+        $this->expectException(ToolCallException::class);
+        $this->expectExceptionMessage('edit it with the tool editUnpublishedBlogArticle');
+
+        $this->editPublishedBlogArticleTool->describeChange(new EditBlogArticleArguments(
+            blogArticleId: $blogArticle->getId(),
+            perexes: [$this->getFirstDomainLocale() => 'New perex'],
         ));
     }
 

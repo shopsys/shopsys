@@ -43,6 +43,12 @@ msgstr "Autorizační hlavička"
 msgid "Authorize MCP client"
 msgstr "Autorizovat MCP klienta"
 
+msgid "Blog article #%id% \"%name%\""
+msgstr "Článek blogu #%id% \"%name%\""
+
+msgid "Categories (domain %domainId%)"
+msgstr "Kategorie (doména %domainId%)"
+
 msgid "Claude Code client setup"
 msgstr "Nastavení klienta Claude Code"
 
@@ -54,6 +60,9 @@ msgstr "Zavřít"
 
 msgid "Complete the browser login and approve MCP access in Shopsys administration."
 msgstr "Dokončete přihlášení v prohlížeči a v administraci Shopsysu schvalte přístup MCP."
+
+msgid "Content (%locale%)"
+msgstr "Obsah (%locale%)"
 
 msgid "Copy command"
 msgstr "Zkopírovat příkaz"
@@ -139,6 +148,9 @@ msgstr "Můj MCP server"
 msgid "My MCP tokens"
 msgstr "Moje MCP tokeny"
 
+msgid "Name (%locale%)"
+msgstr "Název (%locale%)"
+
 msgid "Never used"
 msgstr "Nikdy nepoužito"
 
@@ -157,6 +169,9 @@ msgstr "Ostatní MCP klienti"
 msgid "Per-shell token command"
 msgstr "Příkaz pro token v shellu"
 
+msgid "Perex (%locale%)"
+msgstr "Perex (%locale%)"
+
 msgid "Revoke access"
 msgstr "Zneplatnit přístup"
 
@@ -166,6 +181,15 @@ msgstr "Zneplatněn"
 msgid "Run the command above once in the shell where you use Claude Code."
 msgstr "Výše uvedený příkaz spusťte jednou v shellu, kde používáte Claude Code."
 
+msgid "SEO H1 (domain %domainId%)"
+msgstr "SEO nadpis H1 (doména %domainId%)"
+
+msgid "SEO meta description (domain %domainId%)"
+msgstr "SEO meta popis (doména %domainId%)"
+
+msgid "SEO title (domain %domainId%)"
+msgstr "SEO titulek (doména %domainId%)"
+
 msgid "Select Authenticate for the Shopsys MCP server."
 msgstr "U Shopsys MCP serveru zvolte Authenticate."
 
@@ -174,6 +198,9 @@ msgstr "Nastavení"
 
 msgid "Show change"
 msgstr "Zobrazit změnu"
+
+msgid "Slug (domain %domainId%)"
+msgstr "Slug (doména %domainId%)"
 
 msgid "Start Claude Code and run /mcp."
 msgstr "Spusťte Claude Code a zadejte /mcp."
