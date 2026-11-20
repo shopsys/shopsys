@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Database\Schema\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\McpAttributes\Attribute\AsMcpColumn;
@@ -30,28 +29,22 @@ final class QueryableRelationEntity
     private string $name = '';
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\Component\Database\Schema\Model\QueryableRelationEntity>
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\Component\Database\Schema\Model\QueryableRelationEntity>|null
      */
     #[AsMcpColumn]
     #[ORM\JoinTable(name: self::EXPOSED_JOIN_TABLE_NAME)]
     #[ORM\JoinColumn(name: 'relation_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'linked_relation_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: self::class)]
-    private Collection $linkedRelations;
+    private ?Collection $linkedRelations = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\Component\Database\Schema\Model\QueryableRelationEntity>
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\Component\Database\Schema\Model\QueryableRelationEntity>|null
      */
     #[AsMcpColumn(exposed: false)]
     #[ORM\JoinTable(name: self::HIDDEN_JOIN_TABLE_NAME)]
     #[ORM\JoinColumn(name: 'relation_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'hidden_relation_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: self::class)]
-    private Collection $hiddenLinkedRelations;
-
-    public function __construct()
-    {
-        $this->linkedRelations = new ArrayCollection();
-        $this->hiddenLinkedRelations = new ArrayCollection();
-    }
+    private ?Collection $hiddenLinkedRelations = null;
 }
