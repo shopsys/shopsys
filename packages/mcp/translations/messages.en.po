@@ -43,6 +43,12 @@ msgstr ""
 msgid "Authorize MCP client"
 msgstr ""
 
+msgid "Blog article #%id% \"%name%\""
+msgstr ""
+
+msgid "Categories (domain %domainId%)"
+msgstr ""
+
 msgid "Claude Code client setup"
 msgstr ""
 
@@ -53,6 +59,9 @@ msgid "Close"
 msgstr ""
 
 msgid "Complete the browser login and approve MCP access in Shopsys administration."
+msgstr ""
+
+msgid "Content (%locale%)"
 msgstr ""
 
 msgid "Copy command"
@@ -139,6 +148,9 @@ msgstr ""
 msgid "My MCP tokens"
 msgstr ""
 
+msgid "Name (%locale%)"
+msgstr ""
+
 msgid "Never used"
 msgstr ""
 
@@ -157,6 +169,9 @@ msgstr ""
 msgid "Per-shell token command"
 msgstr ""
 
+msgid "Perex (%locale%)"
+msgstr ""
+
 msgid "Revoke access"
 msgstr ""
 
@@ -166,6 +181,15 @@ msgstr ""
 msgid "Run the command above once in the shell where you use Claude Code."
 msgstr ""
 
+msgid "SEO H1 (domain %domainId%)"
+msgstr ""
+
+msgid "SEO meta description (domain %domainId%)"
+msgstr ""
+
+msgid "SEO title (domain %domainId%)"
+msgstr ""
+
 msgid "Select Authenticate for the Shopsys MCP server."
 msgstr ""
 
@@ -173,6 +197,9 @@ msgid "Settings"
 msgstr ""
 
 msgid "Show change"
+msgstr ""
+
+msgid "Slug (domain %domainId%)"
 msgstr ""
 
 msgid "Start Claude Code and run /mcp."

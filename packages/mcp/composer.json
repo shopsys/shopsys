@@ -27,6 +27,7 @@
     "require": {
         "php": "^8.5",
         "ext-pg_query": "*",
+        "jms/translation-bundle": "^2.2.1",
         "shopsys/administration": "21.0.x-dev",
         "shopsys/framework": "21.0.x-dev",
         "shopsys/mcp-attributes": "21.0.x-dev",
