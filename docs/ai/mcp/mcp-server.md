@@ -2,7 +2,7 @@
 
 Shopsys Platform includes a production MCP server for external AI clients such as Claude Code or Codex CLI.
 
-In practice, this gives a project team a controlled way to let an AI client read selected project data.
+In practice, this gives a project team a controlled way to let an AI client read selected project data and make changes through dedicated tools.
 
 [TOC]
 
@@ -13,6 +13,7 @@ For administrators, it means:
 - an AI client can connect to the project over MCP
 - it can inspect only the schema that the application explicitly exposes
 - it can run validated read-only SQL over that exposed schema
+- it can change data only through write tools, and the changes made by some of them wait for the approval of the administrator who owns the token
 - access can be granted either through browser-based OAuth or through manually generated tokens
 
 For developers, it means:
@@ -20,16 +21,17 @@ For developers, it means:
 - MCP exposure must be configured explicitly in code
 - the AI client never gets automatic access to the whole database
 - SQL access is intentionally limited to a validated read-only subset
+- every write is a PHP class that decides what can be changed and how
 
 The MCP server does not:
 
 - it does not expose the whole database automatically
-- it does not allow write queries
+- it does not allow writing SQL queries
 - it does not include any built-in AI orchestration or agent workflow
 
 ## What an AI client can do
 
-The MCP server exposes three tools:
+The MCP server exposes three read tools:
 
 1. `getDatabaseTableNames`
    Returns the list of database tables that are intentionally exposed to MCP clients.
@@ -39,6 +41,13 @@ The MCP server exposes three tools:
    Executes a validated read-only SQL query against the exposed schema.
 
 For an end user, this means the AI client can answer questions about the project’s data model and query selected business data, but only within the boundaries explicitly allowed by the application.
+
+The AI client can also change data, but only through write tools that the application provides.
+Shopsys Platform ships with tools that create a blog article as a draft and edit blog articles.
+Some write tools do not change the data right away.
+They wait until the administrator who owns the MCP token approves the change in administration, in the user menu under "MCP change requests".
+The edit of a published blog article is such a tool.
+A project can add its own write tools, see [Adding a write tool](#adding-a-write-tool).
 
 ## How users authenticate
 
@@ -263,10 +272,135 @@ It can be also generated manually by running:
 php bin/console shopsys:mcp:generate-schema
 ```
 
+## Adding a write tool
+
+The AI client cannot change data over SQL.
+Each change it is allowed to make is a write tool, a method marked with the MCP SDK attribute `#[McpTool]` that changes the data through the usual facades, so the same business rules apply as in administration.
+It is registered automatically like any other MCP tool, and the AI client gets its input schema generated from the method parameters.
+
+```php
+use Mcp\Capability\Attribute\McpTool;
+use Mcp\Capability\Attribute\Schema;
+
+class RenameBrandTool
+{
+    public function __construct(
+        protected readonly BrandMcpFacade $brandMcpFacade,
+    ) {
+    }
+
+    /**
+     * @param array<string, string> $descriptions
+     * @return array{brandId: int}
+     */
+    #[McpTool(name: 'renameBrand', description: 'Renames a brand and replaces its descriptions.')]
+    public function renameBrand(
+        #[Schema(minimum: 1)]
+        int $brandId,
+        #[Schema(minLength: 1, maxLength: 255)]
+        string $name,
+        #[Schema(type: 'object', description: 'Descriptions indexed by locale.', additionalProperties: ['type' => 'string'])]
+        array $descriptions = [],
+    ): array {
+        return [
+            'brandId' => $this->brandMcpFacade->rename($brandId, $name, $descriptions)->getId(),
+        ];
+    }
+}
+```
+
+- The arguments are validated against the generated schema before the method runs, so put the input constraints into `#[Schema]`.
+- Maps (arrays indexed by locale or domain ID) need `#[Schema(type: 'object', ...)]`, otherwise the AI client sees them as lists.
+- When the input is valid but cannot be applied, throw `Mcp\Exception\ToolCallException`. Its message goes back to the AI client, so tell the client what to do instead.
+- The returned array goes back to the AI client as well, typically with the ID of the changed entity.
+
+### Changes that need approval
+
+When a change must not be applied before an administrator sees it, the tool extends `AbstractMcpApprovableTool`.
+Its MCP method collects the input into an arguments class and only stores it as a change request with `requestApproval()`:
+
+```php
+class EditBrandArguments
+{
+    public function __construct(
+        public readonly int $brandId,
+        public readonly string $name,
+    ) {
+    }
+}
+```
+
+```php
+/**
+ * @extends \Shopsys\McpBundle\Component\WriteTool\AbstractMcpApprovableTool<\App\Mcp\EditBrandArguments>
+ */
+class EditBrandTool extends AbstractMcpApprovableTool
+{
+    public function __construct(
+        protected readonly BrandMcpFacade $brandMcpFacade,
+        protected readonly UrlGeneratorInterface $urlGenerator,
+    ) {
+    }
+
+    /**
+     * @return array{status: string, changeRequestId: int, message: string}
+     */
+    #[McpTool(name: 'editBrand', description: 'Renames a brand after the administrator approves it.')]
+    public function editBrand(int $brandId, string $name): array
+    {
+        return $this->requestApproval(new EditBrandArguments(brandId: $brandId, name: $name));
+    }
+
+    public static function getToolName(): string
+    {
+        return 'editBrand';
+    }
+
+    /**
+     * @param \App\Mcp\EditBrandArguments $arguments
+     */
+    public function describeChange(object $arguments): McpChange
+    {
+        $brand = $this->brandMcpFacade->getById($arguments->brandId);
+
+        return new McpChange(
+            'Brand #%id% "%name%"',
+            ['%id%' => $brand->getId(), '%name%' => $brand->getName()],
+            $this->urlGenerator->generate('admin_brand_edit', ['id' => $brand->getId()]),
+        )
+            ->addField('Name', $brand->getName(), $arguments->name);
+    }
+
+    /**
+     * @param \App\Mcp\EditBrandArguments $arguments
+     */
+    public function apply(object $arguments): void
+    {
+        $this->brandMcpFacade->rename($arguments->brandId, $arguments->name);
+    }
+}
+```
+
+The arguments are stored as JSON together with the name of their class and are restored with the Symfony Serializer before `describeChange()` and `apply()`, so keep the arguments class a plain object whose constructor parameters match its public properties.
+Renaming the arguments class or its properties makes the pending change requests fail on approval.
+
+The change request belongs to the administrator who owns the MCP token.
+`apply()` runs after the approval in a database transaction, and only when `describeChange()` still returns the same change, so the administrator never approves outdated data.
+Therefore, build the change from the current data and the arguments only.
+For a long text, describe only the changed part and pass the text around it as `contextBefore` and `contextAfter` of `addField()`.
+
+`McpChange` names the changed entity and links its administration page, so the administrator can check its current state before the approval.
+The subject and the field labels are translation messages with parameters, translated when the change is shown.
+Do not translate them in the tool, the change would differ in another locale and could not be approved.
+List the messages in a class implementing `TranslationContainerInterface` (see `BlogArticleChangeLabel`), so that the translation dump keeps them.
+
+When `describeChange()` or `apply()` throws `ToolCallException` during the approval, the change can no longer be applied and the administrator can only discard it.
+When the data only changed, the administrator can update the change request according to the current data and approve it again.
+
 ## Operational notes
 
 - MCP access tokens are stored hashed in the database.
 - Both manual and OAuth-issued tokens expire.
 - Query limits and statement timeout are configured through bundle configuration.
 - Public MCP entrypoints are rate-limited as baseline abuse protection. Dynamic client registration and token exchange are limited by client IP. MCP runtime requests always consume an IP-based limit and also consume a token-public-ID limit when the bearer token has the generated token shape.
-- MCP requests are logged to the dedicated `mcp` Monolog channel.
+- MCP requests, write tool calls and approvals of their changes are logged to the dedicated `mcp` Monolog channel.
