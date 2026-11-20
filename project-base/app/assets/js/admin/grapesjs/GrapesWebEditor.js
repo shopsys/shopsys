@@ -11,11 +11,20 @@ export default class GrapesWebEditor {
     static openGrapesEditor(_event, frontendUrl, textareaId, elfinderUrl, allowProducts) {
         GrapesWebEditor.setupBodyForGrapesJsEditor();
 
-        const content = $.get({
-            url: frontendUrl,
-            async: false,
-            crossDomain: true,
-        }).responseText;
+        const templateDocument = new DOMParser().parseFromString(
+            $.get({
+                url: frontendUrl,
+                async: false,
+                crossDomain: true,
+            }).responseText,
+            'text/html',
+        );
+        const templateStyles = [...templateDocument.querySelectorAll('style')].map(style => {
+            style.remove();
+
+            return style.textContent;
+        });
+        const content = templateDocument.documentElement.outerHTML;
 
         const plugins = [
             webPagePlugin,
@@ -173,6 +182,13 @@ export default class GrapesWebEditor {
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
             editor.Panels.removeButton('views', 'open-sm');
+
+            const canvasDocument = editor.Canvas.getDocument();
+            templateStyles.forEach(templateStyle => {
+                const style = canvasDocument.createElement('style');
+                style.textContent = templateStyle;
+                canvasDocument.head.append(style);
+            });
 
             const editableContent = $(`#${textareaId}`).val();
             const $gjsEditable = editor.getWrapper().find('.gjs-editable')[0];
