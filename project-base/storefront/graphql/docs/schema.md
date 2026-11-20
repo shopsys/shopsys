@@ -169,6 +169,10 @@
     * [ParameterFilter](#parameterfilter)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [PhoneDataInput](#phonedatainput)
+    * [PickupPlaceExceptionDayInput](#pickupplaceexceptiondayinput)
+    * [PickupPlaceOpeningHoursInput](#pickupplaceopeninghoursinput)
+    * [PickupPlaceOpeningHoursOfDayInput](#pickupplaceopeninghoursofdayinput)
+    * [PickupPlaceOpeningHoursRangeInput](#pickupplaceopeninghoursrangeinput)
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
     * [ProductListMoveProductInput](#productlistmoveproductinput)
@@ -12148,7 +12152,7 @@ Localized transport description (domain dependent)
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
-Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead.
+Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. For a Packeta transport the date is postponed to the first day the pickup point selected in the cart is open. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead.
 
 </td>
 </tr>
@@ -13553,6 +13557,15 @@ The identifier of selected personal pickup place
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="changetransportincartinput.pickupplaceopeninghours">pickupPlaceOpeningHours</strong></td>
+<td valign="top"><a href="#pickupplaceopeninghoursinput">PickupPlaceOpeningHoursInput</a></td>
+<td>
+
+Opening hours of the selected Packeta pickup point; the expected delivery date is postponed to the first day the point is open
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="changetransportincartinput.transportuuid">transportUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
@@ -14795,6 +14808,151 @@ Phone number without prefix
 <td>
 
 Phone prefix (eg. +420)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PickupPlaceExceptionDayInput
+
+Period when the opening hours of a pickup place differ from the regular ones
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceexceptiondayinput.from">from</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First day of the period in the YYYY-MM-DD format
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceexceptiondayinput.openinghoursranges">openingHoursRanges</strong></td>
+<td valign="top">[<a href="#pickupplaceopeninghoursrangeinput">PickupPlaceOpeningHoursRangeInput</a>!]!</td>
+<td>
+
+Time periods when the pickup place is open during the period; empty when it is closed
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceexceptiondayinput.to">to</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last day of the period in the YYYY-MM-DD format; null when the period is the first day only
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PickupPlaceOpeningHoursInput
+
+Opening hours of a pickup place that is not managed by the application (e.g. a Packeta pickup point)
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceopeninghoursinput.exceptiondays">exceptionDays</strong></td>
+<td valign="top">[<a href="#pickupplaceexceptiondayinput">PickupPlaceExceptionDayInput</a>!]!</td>
+<td>
+
+Periods with opening hours different from the regular ones
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceopeninghoursinput.openinghoursofdays">openingHoursOfDays</strong></td>
+<td valign="top">[<a href="#pickupplaceopeninghoursofdayinput">PickupPlaceOpeningHoursOfDayInput</a>!]!</td>
+<td>
+
+Regular opening hours of the days of the week; a day that is not listed is closed
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PickupPlaceOpeningHoursOfDayInput
+
+Regular opening hours of a pickup place on a day of the week
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceopeninghoursofdayinput.dayofweek">dayOfWeek</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ISO-8601 day of the week (1 for Monday through 7 for Sunday)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceopeninghoursofdayinput.openinghoursranges">openingHoursRanges</strong></td>
+<td valign="top">[<a href="#pickupplaceopeninghoursrangeinput">PickupPlaceOpeningHoursRangeInput</a>!]!</td>
+<td>
+
+Time periods when the pickup place is open on the day
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PickupPlaceOpeningHoursRangeInput
+
+Time period when a pickup place is open
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceopeninghoursrangeinput.closingtime">closingTime</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Closing time in the HH:mm format
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pickupplaceopeninghoursrangeinput.openingtime">openingTime</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Opening time in the HH:mm format
 
 </td>
 </tr>

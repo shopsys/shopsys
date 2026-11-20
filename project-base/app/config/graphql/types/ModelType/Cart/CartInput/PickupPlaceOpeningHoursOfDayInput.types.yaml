@@ -1,0 +1,4 @@
+PickupPlaceOpeningHoursOfDayInput:
+    type: input-object
+    inherits:
+        - 'PickupPlaceOpeningHoursOfDayInputDecorator'

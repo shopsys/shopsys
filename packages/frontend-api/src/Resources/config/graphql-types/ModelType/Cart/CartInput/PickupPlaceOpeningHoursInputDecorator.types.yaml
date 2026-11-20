@@ -1,0 +1,16 @@
+PickupPlaceOpeningHoursInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Opening hours of a pickup place that is not managed by the application (e.g. a Packeta pickup point)"
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PickupPlaceOpeningHoursSize: ~
+        fields:
+            openingHoursOfDays:
+                type: "[PickupPlaceOpeningHoursOfDayInput!]!"
+                description: "Regular opening hours of the days of the week; a day that is not listed is closed"
+                validation: cascade
+            exceptionDays:
+                type: "[PickupPlaceExceptionDayInput!]!"
+                description: "Periods with opening hours different from the regular ones"
+                validation: cascade

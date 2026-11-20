@@ -16,3 +16,8 @@ ChangeTransportInCartInputDecorator:
                 type: "String"
                 defaultValue: null
                 description: "The identifier of selected personal pickup place"
+            pickupPlaceOpeningHours:
+                type: "PickupPlaceOpeningHoursInput"
+                defaultValue: null
+                description: "Opening hours of the selected Packeta pickup point; the expected delivery date is postponed to the first day the point is open"
+                validation: cascade

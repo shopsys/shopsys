@@ -1,0 +1,18 @@
+PickupPlaceOpeningHoursOfDayInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Regular opening hours of a pickup place on a day of the week"
+        fields:
+            dayOfWeek:
+                type: "Int!"
+                description: "ISO-8601 day of the week (1 for Monday through 7 for Sunday)"
+                validation:
+                    -   Range:
+                            min: 1
+                            max: 7
+                            notInRangeMessage: "Day of the week must be between {{ min }} and {{ max }}"
+            openingHoursRanges:
+                type: "[PickupPlaceOpeningHoursRangeInput!]!"
+                description: "Time periods when the pickup place is open on the day"
+                validation: cascade
