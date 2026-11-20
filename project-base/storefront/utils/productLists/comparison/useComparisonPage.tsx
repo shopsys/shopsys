@@ -84,7 +84,13 @@ export const useComparisonPage = () => {
                 ? actions.comparison
                 : await new Promise<TypeProductListFragment | null | undefined>((resolve) => {
                       undoRequests.current.set(product.uuid, resolve);
-                      actions.toggleProductInComparison(product, GtmProductListNameType.product_comparison_page);
+                      if (
+                          actions.toggleProductInComparison(product, GtmProductListNameType.product_comparison_page) ===
+                          false
+                      ) {
+                          undoRequests.current.delete(product.uuid);
+                          resolve(null);
+                      }
                   });
             if (!list) return false;
             // The added product lands on top; move it back after the product that preceded it
@@ -101,6 +107,10 @@ export const useComparisonPage = () => {
         removedProducts.current.delete(productUuid);
         const index = removedProduct?.index ?? products.findIndex((item) => item.uuid === productUuid);
         const product = removedProduct?.product ?? products[index];
+        if (product?.__typename === 'MainVariant') {
+            showSuccessMessage(t('{{ productName }} was removed from comparison.', { productName: product.fullName }));
+            return;
+        }
         if (product) {
             showSuccessMessage(t('{{ productName }} was removed from comparison.', { productName: product.fullName }), {
                 toastId: COMPARISON_UNDO_TOAST_ID,
@@ -113,7 +123,8 @@ export const useComparisonPage = () => {
 
     const handleRemove = (product: TypeProductInProductListFragment, index: number) => {
         focusEmptyStateAfterRemoval.current =
-            products.length === 1 && !!document.activeElement?.closest('[data-comparison-product]');
+            products.length === 1 &&
+            !!document.activeElement?.closest('[data-comparison-product], [data-comparison-variant-group]');
         removedProducts.current.set(product.uuid, { product, index });
         toggleProductInComparison(
             product,

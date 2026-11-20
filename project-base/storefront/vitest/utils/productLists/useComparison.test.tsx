@@ -7,15 +7,18 @@ import { ProductInterfaceType } from 'types/product';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+vi.mock('components/Blocks/Popup/ProductVariantsPopup', () => ({ ProductVariantsPopup: () => null }));
+
 type ProductListCallbacks = {
     addProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
     removeProductSuccess: (updatedProductList: undefined, productUuid: string) => void;
     removeProductError: (productUuid: string) => void;
 };
 
-const { productListCallbacksRef, toggleProductInListWithGtmMock } = vi.hoisted(() => ({
+const { productListCallbacksRef, toggleProductInListWithGtmMock, inList } = vi.hoisted(() => ({
     productListCallbacksRef: { current: undefined as ProductListCallbacks | undefined },
     toggleProductInListWithGtmMock: vi.fn(),
+    inList: new Set<string>(),
 }));
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -27,7 +30,7 @@ vi.mock('utils/productLists/useProductList', () => ({
         productListCallbacksRef.current = callbacks;
 
         return {
-            isProductInList: vi.fn(),
+            isProductInList: (uuid: string) => inList.has(uuid),
             isProductListFetching: false,
             productListData: undefined,
             removeList: vi.fn(),
@@ -53,8 +56,9 @@ describe('useComparison', () => {
     beforeEach(() => {
         vi.useFakeTimers();
         productListCallbacksRef.current = undefined;
+        inList.clear();
         toggleProductInListWithGtmMock.mockClear();
-        useSessionStore.setState({ storedFocusElement: null });
+        useSessionStore.setState({ storedFocusElement: null, portalContent: null });
     });
 
     afterEach(() => {
@@ -63,7 +67,7 @@ describe('useComparison', () => {
             vi.runOnlyPendingTimers();
         });
         vi.useRealTimers();
-        useSessionStore.setState({ storedFocusElement: null });
+        useSessionStore.setState({ storedFocusElement: null, portalContent: null });
     });
 
     test('notifies about removals only after success, keeping the previous notification on failure', () => {
@@ -119,5 +123,49 @@ describe('useComparison', () => {
         });
 
         expect(document.activeElement).toBe(wishlistButton);
+    });
+    test('opens a selector for a product group and migrates it only after a confirmed variant selection', () => {
+        const group = {
+            __typename: 'MainVariant',
+            uuid: 'family',
+            slug: '/family',
+            fullName: 'Family',
+        } as ProductInterfaceType;
+        const { result } = renderHook(() => useComparison());
+
+        act(() => result.current.toggleProductInComparison(group, GtmProductListNameType.product_detail));
+
+        expect(toggleProductInListWithGtmMock).not.toHaveBeenCalled();
+        expect(useSessionStore.getState().portalContent?.props).toEqual(
+            expect.objectContaining({ productUuid: 'family', onVariantCompared: expect.any(Function) }),
+        );
+
+        inList.add('family');
+        act(() => result.current.chooseVariantForComparison(group, GtmProductListNameType.product_comparison_page, 2));
+        expect(toggleProductInListWithGtmMock).not.toHaveBeenCalled();
+        const selection = useSessionStore.getState().portalContent!.props as { onVariantCompared: () => void };
+        act(() => selection.onVariantCompared());
+        expect(toggleProductInListWithGtmMock).toHaveBeenCalledWith(
+            group,
+            GtmProductListNameType.product_comparison_page,
+            2,
+            expect.any(Function),
+        );
+    });
+
+    test('allows an existing group to be removed without opening a selector', () => {
+        const group = { __typename: 'MainVariant', uuid: 'family' } as ProductInterfaceType;
+        inList.add('family');
+        const { result } = renderHook(() => useComparison());
+
+        act(() => result.current.toggleProductInComparison(group, GtmProductListNameType.product_comparison_page));
+
+        expect(toggleProductInListWithGtmMock).toHaveBeenCalledWith(
+            group,
+            GtmProductListNameType.product_comparison_page,
+            undefined,
+            expect.any(Function),
+        );
+        expect(useSessionStore.getState().portalContent).toBeNull();
     });
 });

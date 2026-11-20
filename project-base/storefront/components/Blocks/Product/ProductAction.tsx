@@ -1,7 +1,7 @@
 import { AddToCart, AddToCartContent } from 'components/Blocks/Product/AddToCart';
 import { ProductInquiryButton } from 'components/Blocks/Product/ProductInquiryButton';
+import { ProductVariantsButton } from 'components/Blocks/Product/ProductVariantsButton';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
-import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -11,7 +11,6 @@ import { FunctionComponentProps } from 'types/globals';
 import { OnProductAddedToCart } from 'utils/cart/useAddToCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showWatchdogButton } from 'utils/product/showWatchdogButton';
-import { PRODUCT_VARIANTS_ID } from './productActionConstants';
 
 type PurchaseAction = 'sellingDenied' | 'outOfStock' | 'inquiry' | 'chooseVariant' | 'addToCart' | 'none';
 
@@ -49,6 +48,7 @@ type ProductActionProps = {
     skipKeyboardNavigation?: boolean;
     currentCart?: Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
     onProductAddedToCart?: OnProductAddedToCart;
+    onAddToCartFlowStateChange?: (isPending: boolean) => void;
 } & FunctionComponentProps;
 
 export const ProductAction: FC<ProductActionProps> = ({
@@ -61,6 +61,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     isWatchdogButtonShownWithPurchaseAction = false,
     skipKeyboardNavigation = false,
     onProductAddedToCart,
+    onAddToCartFlowStateChange,
 }) => {
     const { t } = useTranslation();
     const { canCreateOrder } = useAuthorization();
@@ -87,6 +88,7 @@ export const ProductAction: FC<ProductActionProps> = ({
         productUuid: product.uuid,
         tabIndex: skipKeyboardNavigation ? -1 : 0,
         onProductAddedToCart,
+        onAddToCartFlowStateChange,
     };
 
     return (
@@ -109,18 +111,16 @@ export const ProductAction: FC<ProductActionProps> = ({
             )}
 
             {purchaseAction === 'chooseVariant' && (
-                <LinkButton
-                    className="w-full"
-                    href={`${product.slug}#${PRODUCT_VARIANTS_ID}`}
-                    tabIndex={skipKeyboardNavigation ? -1 : 0}
-                    type="productMainVariant"
-                    aria-label={t('Go to page with product variants of {{ productName }}', {
-                        ns: 'accessibility',
-                        productName: product.fullName,
-                    })}
-                >
-                    {t('Choose')}
-                </LinkButton>
+                <ProductVariantsButton
+                    buttonSize={buttonSize}
+                    gtmMessageOrigin={gtmMessageOrigin}
+                    gtmProductListName={gtmProductListName}
+                    listIndex={listIndex}
+                    productName={product.fullName}
+                    productSlug={product.slug}
+                    productUuid={product.uuid}
+                    skipKeyboardNavigation={skipKeyboardNavigation}
+                />
             )}
 
             {purchaseAction === 'addToCart' &&
