@@ -28,6 +28,12 @@ context('Smoke tests', () => {
     const filteredRoutes: Record<string, RoutesForSmokeTestsType> = {
         // static routes
         ['/api/health']: { skip: true },
+        ['/customer']: {
+            logged: true,
+            test: () => {
+                checktHeadlineText('Account overview');
+            },
+        },
         ['/customer/change-password']: {
             skip: false,
             logged: true,
