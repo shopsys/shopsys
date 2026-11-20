@@ -64,7 +64,7 @@ const ComplaintsPage: FC = () => {
                 <div className="flex justify-center gap-2">
                     <LinkButton
                         aria-label={t('Go to new complaint page', { ns: 'accessibility' })}
-                        size="small"
+                        size="large"
                         type="complaintNew"
                         href={{
                             pathname: customerComplaintsNewUrl,
@@ -75,7 +75,7 @@ const ComplaintsPage: FC = () => {
 
                     <CreateComplaintPopupButton
                         label={t('Create complaint manually')}
-                        size="small"
+                        size="large"
                         variant="secondary"
                         tid={TIDs.complaints_list_create_complaint_manually_button}
                     />

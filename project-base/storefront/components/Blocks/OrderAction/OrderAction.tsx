@@ -7,8 +7,6 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 type OrderActionProps = {
     buttonBack: string;
     buttonNext: string;
-    hasDisabledCursor?: boolean;
-    hasDisabledLook?: boolean;
     isDisabled?: boolean;
     backStepClickHandler?: () => void;
     nextStepClickHandler?: () => void;
@@ -20,8 +18,6 @@ export const OrderAction: FC<OrderActionProps> = ({
     buttonBack,
     buttonNext,
     isDisabled,
-    hasDisabledCursor,
-    hasDisabledLook,
     backStepClickHandler,
     nextStepClickHandler,
     shouldShowSpinnerOnNextStepButton,
@@ -33,7 +29,7 @@ export const OrderAction: FC<OrderActionProps> = ({
         <div className="my-5 flex flex-wrap-reverse items-center justify-between gap-4 md:my-10">
             <Button
                 aria-label={t('Go to previous step', { ns: 'accessibility' })}
-                size="large"
+                size="xlarge"
                 tid={TIDs.blocks_orderaction_back}
                 variant="tertiary"
                 onClick={backStepClickHandler}
@@ -45,8 +41,7 @@ export const OrderAction: FC<OrderActionProps> = ({
             <SubmitButton
                 aria-label={ariaLabelNextStep}
                 disabled={isDisabled}
-                hasDisabledCursor={hasDisabledCursor}
-                hasDisabledLook={isDisabled || hasDisabledLook}
+                hasDisabledLook={isDisabled}
                 shouldShowSpinner={shouldShowSpinnerOnNextStepButton}
                 size="xlarge"
                 tid={TIDs.blocks_orderaction_next}

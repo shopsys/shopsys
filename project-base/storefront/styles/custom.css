@@ -7,6 +7,24 @@
     }
 }
 
+/*
+ * Hover of a checkbox/radio indicator: its own label (`group`), or any label of a choice
+ * split into more labels for one input (e.g. image and name), marked by `data-choice-hover-scope`.
+ */
+@custom-variant choice-hover {
+    @media (hover: hover) {
+        &:is(:where(.group):hover *, :where([data-choice-hover-scope]):has(label:hover) *) {
+            @slot;
+        }
+    }
+}
+
+/*
+ * Keyboard focus of a visually hidden choice input (`peer`) shown on an element inside its label,
+ * e.g. the color swatch, which gets a ring instead of the orange fill.
+ */
+@custom-variant choice-focus-visible (.peer:focus-visible ~ label &);
+
 @theme {
     --radius-sm: 0.1875rem;
     --text-zero: [0, 0];

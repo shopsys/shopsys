@@ -22,7 +22,7 @@ export const FilterGroupTitle: FC<{
             aria-controls={contentId}
             aria-expanded={isOpen}
             aria-label={ariaLabel}
-            className="flex w-full cursor-pointer items-center justify-between rounded-sm font-secondary font-semibold text-text-default uppercase"
+            className="flex w-full cursor-pointer items-center justify-between rounded-sm font-secondary font-semibold text-text-default uppercase transition hover:text-text-accent"
             tabIndex={0}
             type="button"
             onClick={onClick}
@@ -63,20 +63,6 @@ export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyN
     <AnimateCollapseDiv className="flex! flex-col gap-2.5" keyName={keyName}>
         {children}
     </AnimateCollapseDiv>
-);
-
-export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <button
-        tabIndex={0}
-        className={twJoin(
-            'w-fit cursor-pointer rounded-sm border-none bg-none p-0 text-sm underline outline-hidden hover:bg-none hover:no-underline',
-            'text-link-default',
-            'hover:text-link-hovered',
-        )}
-        onClick={onClick}
-    >
-        {children}
-    </button>
 );
 
 export const SelectedParametersName: FC = ({ children }) => (

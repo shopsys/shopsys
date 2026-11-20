@@ -96,7 +96,7 @@ export const FilterPanelDesktopContent: FC<{ groups: FilterPanelGroup[] }> = ({ 
                                     ? 'hover:bg-background-more'
                                     : 'cursor-not-allowed text-input-text-disabled opacity-50',
                                 isSelected && 'bg-background-accent-less',
-                                isSelected && isAvailable && 'text-link-default hover:bg-background-accent-less',
+                                isSelected && isAvailable && 'text-text-accent hover:bg-background-accent-less',
                             )}
                             onClick={() => isAvailable && setSelectedGroupId(group.id)}
                             onKeyDown={(event) => handleGroupKeyDown(event, index)}

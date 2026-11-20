@@ -68,15 +68,18 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <span
                         className={twMergeCustom(
-                            'flex size-5 min-w-5 border border-input-border-default bg-input-bg-default p-0.75 transition group-hover:bg-fill-accent-less',
+                            'flex size-5 min-w-5 border border-input-border-default bg-input-bg-default p-0.75 transition',
                             inputType === 'checkbox' ? 'rounded-checkbox' : 'rounded-full p-1.25',
-                            'active:scale-90',
-                            checked
-                                ? 'border-input-border-active bg-input-fill group-hover:bg-input-fill'
-                                : 'border-2 group-hover:border-input-fill group-active:border-input-fill',
-                            disabled &&
-                                'border-input-border-disabled group-hover:border-input-border-disabled group-hover:bg-input-bg-disabled group-active:border-input-border-disabled',
-                            disabled && checked && 'bg-input-border-disabled group-hover:bg-input-border-disabled',
+                            checked ? 'border-input-border-active bg-input-fill' : 'border-2',
+                            !disabled && [
+                                // the halo keeps the hover readable on a checked indicator, where the fill only darkens a little
+                                'choice-hover:ring-4 choice-hover:ring-input-glow-active active:scale-90',
+                                checked
+                                    ? 'choice-hover:border-input-fill-hovered choice-hover:bg-input-fill-hovered'
+                                    : 'choice-hover:border-input-fill choice-hover:bg-fill-accent-less group-active:border-input-fill',
+                            ],
+                            disabled && 'border-input-border-disabled',
+                            disabled && checked && 'bg-input-border-disabled',
                         )}
                     >
                         {inputType === 'checkbox' ? (

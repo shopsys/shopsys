@@ -1,6 +1,6 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
+import { Link } from 'components/Basic/Link/Link';
 import { ExpectedDeliveryDateSummary } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateSummary';
 import { useCurrentCustomerUserReviewedProductUuids } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
 import { Button } from 'components/Forms/Button/Button';
@@ -146,17 +146,17 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 <div>
                                     {t('Tracking package')}
                                     {' - '}
-                                    <ExtendedNextLink
+                                    <Link
+                                        isExternal
                                         href={order.trackingUrl}
                                         target="_blank"
-                                        className="text-sm"
                                         aria-label={t('Go to tracking package {{ trackingNumber }}', {
                                             ns: 'accessibility',
                                             trackingNumber: order.trackingNumber,
                                         })}
                                     >
                                         {order.trackingNumber}
-                                    </ExtendedNextLink>
+                                    </Link>
                                 </div>
                             )}
                         </div>

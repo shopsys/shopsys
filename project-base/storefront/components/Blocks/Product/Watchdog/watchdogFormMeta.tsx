@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
@@ -48,12 +48,11 @@ export const useWatchdogFormMeta = (): FormMeta<WatchdogFormType, { error: strin
                         lnk1: privacyPolicyArticleUrl ? (
                             <Link
                                 aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                className="inline text-sm"
                                 href={privacyPolicyArticleUrl}
                                 target="_blank"
                             />
                         ) : (
-                            <span className={linkPlaceholderTwClass} />
+                            <span />
                         ),
                     }}
                 />

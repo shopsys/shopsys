@@ -422,14 +422,20 @@ describe('AdditionalServices', () => {
             />,
         );
 
-        expect(screen.getByRole('button', { name: '+ 2 additional services' })).toBeInTheDocument();
+        const showMoreButton = screen.getByRole('button', { name: '+ 2 additional services' });
+        expect(showMoreButton).toHaveAttribute('type', 'button');
+        expect(showMoreButton).toHaveAttribute('aria-expanded', 'false');
         expect(screen.queryByText('Service 5')).not.toBeInTheDocument();
 
-        fireEvent.click(screen.getByRole('button', { name: '+ 2 additional services' }));
+        fireEvent.click(showMoreButton);
 
         expect(screen.getByText('Service 5')).toBeInTheDocument();
         expect(screen.getByText('Service 6')).toBeInTheDocument();
         expect(screen.getByText('Service 5').closest('ul')).toHaveClass('gap-4', 'pt-4', 'md:gap-2', 'md:pt-2');
+        expect(document.getElementById(showMoreButton.getAttribute('aria-controls') ?? '')).toContainElement(
+            screen.getByText('Service 5'),
+        );
+        expect(screen.getByRole('button', { name: 'Show less' })).toHaveAttribute('aria-expanded', 'true');
     });
 
     test('keeps selected services visible and excludes them from the hidden count', () => {

@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
@@ -51,14 +52,13 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     const [areAdditionalServicesShown, setAreAdditionalServicesShown] = useState(false);
 
     const additionalServicesToggle = hasAdditionalServices ? (
-        <button
-            aria-expanded={areAdditionalServicesShown}
-            className="w-fit cursor-pointer text-left font-secondary text-link-default text-xs outline-hidden hover:text-link-hovered hover:underline"
-            type="button"
+        <ShowMoreButton
+            className="text-left"
+            isExpanded={areAdditionalServicesShown}
             onClick={() => setAreAdditionalServicesShown((isShown) => !isShown)}
         >
             {t('+ {{ count }} additional services', { count: cartItem.additionalServices.length })}
-        </button>
+        </ShowMoreButton>
     ) : null;
 
     return (

@@ -76,9 +76,9 @@ export const NewsletterForm: FC = () => {
                             </div>
 
                             <SubmitButton
+                                size="large"
                                 aria-label={t('Send. Sign up for newsletter', { ns: 'accessibility' })}
-                                className="h-12 py-0"
-                                hasDisabledCursor={!formProviderMethods.formState.isValid}
+                                className="min-h-12"
                                 title={t('Sign up')}
                                 variant="inverted"
                             >

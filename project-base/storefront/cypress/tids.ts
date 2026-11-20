@@ -1,5 +1,26 @@
 export enum TIDs {
     all_filters_button = 'all_filters_button',
+
+    // Styleguide interaction contracts
+    styleguide_button_ = 'styleguide_button_',
+    styleguide_link_button_ = 'styleguide_link_button_',
+    styleguide_submit_button_ = 'styleguide_submit_button_',
+    styleguide_button_with_icon_ = 'styleguide_button_with_icon_',
+    styleguide_icon_button_ = 'styleguide_icon_button_',
+    styleguide_wrapping_button = 'styleguide_wrapping_button',
+    styleguide_loading_button = 'styleguide_loading_button',
+    styleguide_disabled_button = 'styleguide_disabled_button',
+    styleguide_cms_button = 'styleguide_cms_button',
+    styleguide_input_pair = 'styleguide_input_pair',
+    styleguide_input_paired_button = 'styleguide_input_paired_button',
+    styleguide_content_link = 'styleguide_content_link',
+    styleguide_navigation_link = 'styleguide_navigation_link',
+    styleguide_text_action = 'styleguide_text_action',
+    styleguide_inverted_link = 'styleguide_inverted_link',
+    styleguide_card_link = 'styleguide_card_link',
+    styleguide_card_title = 'styleguide_card_title',
+    styleguide_card_text = 'styleguide_card_text',
+
     // Layout & Header
     header = 'header',
     fixed_header = 'fixed_header',
@@ -29,6 +50,7 @@ export enum TIDs {
     // Login & Registration
     layout_header_menuiconic_login_link_popup = 'layout_header_menuiconic_login_link_popup',
     layout_popup = 'layout_popup',
+    error_popup_message = 'error_popup_message',
     login_form = 'login_form',
     login_method_web = 'login_method_web',
     login_form_submit_button = 'login_form_submit_button',

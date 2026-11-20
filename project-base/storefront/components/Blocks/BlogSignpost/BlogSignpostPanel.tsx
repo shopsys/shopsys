@@ -1,4 +1,5 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { useEffect, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
@@ -75,14 +76,14 @@ export const BlogSignpostPanel: FC<BlogSignpostPanelProps> = ({
             >
                 {!isRoot && parentPanelUuid && (
                     <>
-                        <button
-                            className="group flex w-fit cursor-pointer items-center gap-1 px-2 py-1 font-secondary text-sm text-text-less transition-colors hover:text-link-hovered"
-                            type="button"
+                        <TextButton
+                            placement="list"
+                            className="group flex w-fit items-center gap-1 px-2 py-1 font-secondary text-sm transition-colors"
                             onClick={() => onPanelChange(parentPanelUuid)}
                         >
                             <ArrowIcon className="size-4 rotate-90 transition-transform group-hover:-translate-x-0.5" />
                             {t('Back')}
-                        </button>
+                        </TextButton>
 
                         <span className="min-w-0 truncate px-3 pt-1 font-secondary font-semibold text-text-less text-xs uppercase">
                             {blogCategory.name}

@@ -56,6 +56,7 @@ export const AdditionalServiceLabel: FC<AdditionalServiceLabelProps> = ({
                 <label
                     className={twMergeCustom(
                         'wrap-break-words w-fit max-w-full cursor-pointer font-semibold',
+                        !isDisabled && 'choice-hover:underline',
                         isDisabled && 'cursor-no-drop opacity-50',
                     )}
                     data-tid={TIDs.additional_services_checkbox_ + tidPrefix + additionalService.catnum}

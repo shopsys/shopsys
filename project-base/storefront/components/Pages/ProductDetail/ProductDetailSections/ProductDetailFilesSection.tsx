@@ -1,10 +1,12 @@
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { ExternalLinkIcon } from 'components/Basic/Icon/ExternalLinkIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { RefObject } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { formatBytes } from 'utils/formaters/formatBytes';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
@@ -75,7 +77,7 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
                                         <Tooltip label={previewTooltipLabel}>
                                             <a
                                                 aria-label={previewAccessibleLabel}
-                                                className="h4 no-underline"
+                                                className={twJoin(getLinkClassName({ placement: 'list' }), 'h4')}
                                                 href={file.viewUrl}
                                                 rel="noopener noreferrer"
                                                 target="_blank"

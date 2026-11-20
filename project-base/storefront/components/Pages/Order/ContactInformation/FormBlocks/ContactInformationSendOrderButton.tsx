@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockAgreements } from 'components/Forms/Form/Form';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -62,22 +62,20 @@ export const ContactInformationSendOrderButton: FC = () => {
                             lnk1: termsAndConditionsArticleUrl ? (
                                 <Link
                                     aria-label={t('Go to terms and conditions article', { ns: 'accessibility' })}
-                                    className="inline font-secondary font-semibold text-sm"
                                     href={termsAndConditionsArticleUrl}
                                     target="_blank"
                                 />
                             ) : (
-                                <span className={linkPlaceholderTwClass} />
+                                <span />
                             ),
                             lnk2: privacyPolicyArticleUrl ? (
                                 <Link
                                     aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                    className="inline font-secondary font-semibold text-sm"
                                     href={privacyPolicyArticleUrl}
                                     target="_blank"
                                 />
                             ) : (
-                                <span className={linkPlaceholderTwClass} />
+                                <span />
                             ),
                         }}
                     />

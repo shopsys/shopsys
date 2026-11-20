@@ -1,6 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { MenuItem } from './MobileMenuContent';
 
@@ -38,7 +40,10 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ isHidden, navi
     if (navigationItem.isViewAllLink) {
         return (
             <ExtendedNextLink
-                className="mt-2 inline-flex w-full items-center gap-1.5 rounded-none border-border-less border-t px-2 pt-4 font-secondary font-semibold text-link-default text-sm no-underline hover:underline"
+                className={twJoin(
+                    getLinkClassName({ placement: 'list', tone: 'accent' }),
+                    'mt-2 inline-flex w-full items-center gap-1.5 rounded-none border-border-less border-t px-2 pt-4 font-secondary font-semibold text-sm',
+                )}
                 href={navigationItem.link}
                 skeletonType={DEFAULT_SKELETON_TYPE}
                 tabIndex={isHidden ? -1 : undefined}

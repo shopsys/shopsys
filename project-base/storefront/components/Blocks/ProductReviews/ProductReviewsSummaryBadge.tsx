@@ -1,3 +1,4 @@
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { formatAverageRating } from 'components/Blocks/ProductReviews/productReviewUtils';
 import { ReviewStars } from 'components/Blocks/ProductReviews/ReviewStars';
 import { PRODUCT_DETAIL_SECTIONS_IDS } from 'components/Pages/ProductDetail/ProductDetailSections/productDetailSectionsConstants';
@@ -33,7 +34,7 @@ export const ProductReviewsSummaryBadge: FC<ProductReviewsSummaryBadgeProps> = (
                     averageRating: formattedAverageRating,
                     count: reviewsSummary.totalCount,
                 })}
-                className="text-link-default text-sm no-underline hover:text-link-hovered hover:underline"
+                className={getLinkClassName({ placement: 'standalone' })}
                 href={`#${PRODUCT_DETAIL_SECTIONS_IDS.reviews}`}
             >
                 {t('{{ count }} reviews', { count: reviewsSummary.totalCount })}

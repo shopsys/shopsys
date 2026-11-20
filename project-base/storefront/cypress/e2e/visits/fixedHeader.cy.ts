@@ -53,6 +53,15 @@ const showFixedHeader = () => {
     cy.getByTID([TIDs.fixed_header]).should('be.visible');
 };
 
+const focusLastNavigationMenuLink = (navigationMenuId: string) => {
+    const getMenuLinks = () => cy.getByTID([TIDs.fixed_header]).find(`#${navigationMenuId} a[href]`);
+
+    // ArrowDown focuses the first link after rendering the menu; wait before moving focus again.
+    getMenuLinks().first().should('be.focused');
+    getMenuLinks().last().focus();
+    getMenuLinks().last().should('be.focused');
+};
+
 describe('Fixed Header Tests', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
@@ -115,13 +124,7 @@ describe('Fixed Header Tests', { retries: { runMode: 0 } }, () => {
             .should('have.attr', 'aria-expanded', 'true')
             .invoke('attr', 'aria-controls')
             .should('be.a', 'string')
-            .then((navigationMenuId) => {
-                cy.getByTID([TIDs.fixed_header])
-                    .find(`#${navigationMenuId}`)
-                    .find('a[href]')
-                    .last()
-                    .focus();
-            });
+            .then(focusLastNavigationMenuLink);
 
         cy.window().then((ownerWindow) => {
             const scrollYBeforeTab = ownerWindow.scrollY;

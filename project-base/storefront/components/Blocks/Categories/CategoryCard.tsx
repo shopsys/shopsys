@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { ChevronEmptyDotIcon } from 'components/Basic/Icon/ChevronEmptyDotIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { getLinkType } from 'components/Blocks/SimpleNavigation/simpleNavigationUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
@@ -81,7 +82,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
             {imageContent}
 
             <div className={twJoin(isLarge && 'vl:min-w-0')}>
-                <h3 className="h5 line-clamp-2">{category.name}</h3>
+                <h3 className="h5 line-clamp-2 group-hover/category-card:underline">{category.name}</h3>
                 {variant === 'homepage' && isLarge && (
                     <p className="mt-2 vl:block hidden font-secondary font-semibold text-sm text-text-less">
                         {t('Our most popular category')}
@@ -99,7 +100,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 type={linkType}
                 onClick={() => promotion && onGtmPromotionClickEventHandler(promotion, href)}
                 className={twMergeCustom(
-                    'flex aspect-square size-full max-h-37.5 cursor-pointer flex-col items-center justify-center gap-0 rounded-xl px-5 py-2.5 text-center no-underline transition-[box-shadow,border-color,background-color,color] duration-300 ease-in-out',
+                    'group/category-card flex aspect-square size-full max-h-37.5 cursor-pointer flex-col items-center justify-center gap-0 rounded-xl px-5 py-2.5 text-center no-underline transition-[box-shadow,border-color,background-color,color] duration-300 ease-in-out',
                     'border border-background-more bg-background-more text-text-default',
                     'group-hover:border-border-less group-hover:bg-background-default group-hover:text-text-default group-hover:no-underline',
                     'pointer-fine:group-hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
@@ -119,7 +120,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'flex h-full cursor-pointer flex-col items-center gap-4 rounded-xl border border-background-more bg-background-more p-5 text-center text-text-default no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
+                    'group/category-card flex h-full cursor-pointer flex-col items-center gap-4 rounded-xl border border-background-more bg-background-more p-5 text-center text-text-default no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
                     'hover:border-border-less hover:bg-background-default hover:text-text-default',
                     'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 )}
@@ -140,7 +141,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
         >
             <ExtendedNextLink
                 aria-label={primaryAriaLabel}
-                className="flex cursor-pointer flex-col items-center gap-4 rounded-lg text-center text-text-default no-underline transition hover:no-underline"
+                className="group/category-card flex cursor-pointer flex-col items-center gap-4 rounded-lg text-center text-text-default no-underline transition hover:no-underline"
                 href={href}
                 type={linkType}
             >
@@ -152,7 +153,10 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                     <li key={child.slug}>
                         {index > 0 && <ChevronEmptyDotIcon className="mr-2 size-1 text-icon-accent" />}
                         <ExtendedNextLink
-                            className="rounded-sm font-secondary font-semibold text-text-default text-xs no-underline hover:text-text-default hover:underline"
+                            className={twJoin(
+                                getLinkClassName({ placement: 'list' }),
+                                'font-secondary font-semibold text-xs',
+                            )}
                             href={`${getStringWithoutTrailingSlash(child.slug)}/`}
                             type={getLinkType(child.__typename)}
                         >
@@ -164,7 +168,10 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                     <li className="inline">
                         <ChevronEmptyDotIcon className="mr-2 size-1 text-icon-accent" />
                         <ExtendedNextLink
-                            className="inline-flex items-center gap-1 rounded-sm font-secondary font-semibold text-text-default text-xs no-underline hover:text-text-default hover:underline"
+                            className={twJoin(
+                                getLinkClassName({ placement: 'list' }),
+                                'inline-flex items-center gap-1 font-secondary font-semibold text-xs',
+                            )}
                             href={href}
                             type={linkType}
                         >

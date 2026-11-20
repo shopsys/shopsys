@@ -1,11 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { usePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'utils/twMerge';
 import { PromotedCategoriesContent } from './PromotedCategoriesContent';
 
 export const PromotedCategories: FC = () => {
@@ -32,7 +34,10 @@ export const PromotedCategories: FC = () => {
                 <h2 className="h3">{t('Shop by category')}</h2>
 
                 <ExtendedNextLink
-                    className="group vl:flex hidden shrink-0 items-center gap-2 font-secondary font-semibold text-link-default text-sm no-underline hover:text-link-hovered"
+                    className={twMergeCustom(
+                        getLinkClassName({ placement: 'list', tone: 'accent' }),
+                        'group vl:flex hidden shrink-0 items-center gap-2 font-secondary font-semibold text-sm',
+                    )}
                     href={catalogUrl}
                     type="catalog"
                 >

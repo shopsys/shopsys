@@ -118,7 +118,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
                     {canManagePersonalData && (
                         <FormButtonWrapper>
-                            <SubmitButton data-tid={TIDs.edit_profile_save_button} hasDisabledLook={isSubmitting}>
+                            <SubmitButton
+                                size="large"
+                                data-tid={TIDs.edit_profile_save_button}
+                                hasDisabledLook={isSubmitting}
+                            >
                                 {t('Save profile')}
                             </SubmitButton>
                         </FormButtonWrapper>

@@ -226,7 +226,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton data-tid={TIDs.customer_users_manage_submit_button}>
+                            <SubmitButton size="large" data-tid={TIDs.customer_users_manage_submit_button}>
                                 {mode === 'edit' ? t('Save user') : t('Add user')}
                             </SubmitButton>
                         </FormButtonWrapper>

@@ -1,6 +1,7 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { AnimatePresence } from 'framer-motion';
 import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 import { useState } from 'react';
@@ -86,7 +87,10 @@ const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ it
 
     return (
         <ExtendedNextLink
-            className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
+            className={twMergeCustom(
+                getLinkClassName({ placement: 'list' }),
+                'block font-secondary font-semibold text-sm tracking-wider',
+            )}
             href={isArticleSite ? item.slug : item.url}
             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
             skeletonType={isArticleSite ? 'article' : undefined}

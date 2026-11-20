@@ -1,8 +1,10 @@
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeSalesRepresentativeFragment } from 'graphql/requests/customer/fragments/SalesRepresentativeFragment.generated';
+import { twJoin } from 'tailwind-merge';
 import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getImageAlt } from 'utils/imageAltText';
@@ -49,7 +51,7 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                     <PhoneIcon className="size-6" />
                     <a
                         aria-label={t('Call sales representative', { ns: 'accessibility' })}
-                        className="rounded-md font-semibold text-sm text-text-default no-underline"
+                        className={twJoin(getLinkClassName({ placement: 'list' }), 'font-semibold text-sm')}
                         href={`tel:${telephone}`}
                         tabIndex={0}
                         onClick={onContactClick}
@@ -64,7 +66,10 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                     <MailIcon className="size-6" />
                     <a
                         aria-label={t('Send email to sales representative', { ns: 'accessibility' })}
-                        className="thin-scrollbar max-w-64 overflow-x-auto whitespace-nowrap rounded-md font-semibold text-sm text-text-default no-underline"
+                        className={twJoin(
+                            getLinkClassName({ placement: 'list' }),
+                            'thin-scrollbar max-w-64 overflow-x-auto whitespace-nowrap font-semibold text-sm',
+                        )}
                         href={`mailto:${email}`}
                         tabIndex={0}
                         onClick={onContactClick}

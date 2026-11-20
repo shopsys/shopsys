@@ -1,11 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
@@ -34,7 +36,10 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogName, blog
                 {!!blogUrl && (
                     <ExtendedNextLink
                         aria-label={t('Go to all articles page', { ns: 'accessibility' })}
-                        className="group flex items-center gap-2 font-secondary font-semibold text-sm text-text-inverted tracking-wide no-underline hover:text-text-inverted"
+                        className={twMergeCustom(
+                            getLinkClassName({ placement: 'list', tone: 'inverted' }),
+                            'group flex items-center gap-2 font-secondary font-semibold text-sm tracking-wide',
+                        )}
                         href={blogUrl}
                         type="blogCategory"
                     >

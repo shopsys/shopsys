@@ -58,8 +58,6 @@ export const ContactInformationContent: FC = () => {
                             backStepClickHandler={goToPreviousStepFromContactInformationPage}
                             buttonBack={t('Back')}
                             buttonNext={t('Submit order')}
-                            hasDisabledCursor={!formProviderMethods.formState.isValid}
-                            hasDisabledLook={!formProviderMethods.formState.isValid || giftVouchersExceedPayableAmount}
                             isDisabled={giftVouchersExceedPayableAmount}
                         />
                     </FormContentWrapper>

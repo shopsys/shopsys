@@ -10,7 +10,6 @@ import { getTransportAndPaymentValidationMessages } from 'utils/cart/getTranspor
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isEmailTransport } from 'utils/packetery';
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
@@ -79,7 +78,8 @@ export const TransportAndPaymentContent: FC = () => {
     const { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage } =
         useTransportAndPaymentPageNavigation(validationMessages);
 
-    const isDisabled = hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInCart;
+    // An incomplete selection keeps the button enabled; its click shows what is missing.
+    const isDisabled = isChangingTransportInCart || isChangingPaymentInCart;
 
     return (
         <OrderLayout

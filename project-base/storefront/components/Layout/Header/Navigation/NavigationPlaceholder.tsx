@@ -1,8 +1,10 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { NavigationItemContent } from 'components/Layout/Header/Navigation/NavigationItemContent';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { getPageTypeKey } from 'utils/page/getPageTypeKey';
+import { twMergeCustom } from 'utils/twMerge';
 import type { NavigationProps } from './Navigation';
 import { isNavigationItemLink, isNavigationItemWithCategories } from './navigationUtils';
 
@@ -28,8 +30,12 @@ export const NavigationPlaceholder: FC<NavigationPlaceholderProps> = ({ navigati
                           const isDropdownTrigger = isNavigationItemWithCategories(navigationItem);
                           const isExternalLink =
                               link !== null && (link.startsWith('http://') || link.startsWith('https://'));
-                          const navigationItemClassName =
-                              'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-link-inverted-default text-sm vl:text-base no-underline hover:text-link-inverted-hovered hover:no-underline active:text-link-inverted-hovered disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0 group-hover:text-link-inverted-hovered group-hover:no-underline';
+                          const navigationItemClassName = twMergeCustom(
+                              getLinkClassName({ placement: 'list', tone: 'inverted' }),
+                              'relative m-0 flex items-center whitespace-nowrap border-0 bg-transparent p-5 font-secondary font-semibold text-sm vl:text-base disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0',
+                              // The main menu signals hover by color only, without an underline.
+                              'hover:no-underline group-hover:no-underline',
+                          );
                           const content = (
                               <NavigationItemContent
                                   isDropdownTrigger={isDropdownTrigger}

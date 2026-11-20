@@ -1,4 +1,5 @@
 import { Link } from 'components/Basic/Link/Link';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { validateEmail } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
@@ -11,8 +12,7 @@ import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
-const newsletterAgreementLinkTwClass =
-    'text-link-inverted-default text-sm underline hover:text-link-inverted-default hover:underline';
+const newsletterAgreementLinkTwClass = `${getLinkClassName({ tone: 'inverted' })} text-sm`;
 const newsletterAgreementTextTwClass = 'text-text-inverted text-sm';
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {

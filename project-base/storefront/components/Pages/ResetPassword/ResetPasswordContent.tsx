@@ -10,7 +10,7 @@ import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/m
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import { useState } from 'react';
-import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import { blurInput } from 'utils/forms/blurInput';
@@ -25,11 +25,6 @@ export const ResetPasswordContent: FC = () => {
     const formMeta = usePasswordResetFormMeta();
     const [isSuccess, setIsSuccess] = useState(false);
     const handleError = useErrorHandler({ form: formProviderMethods });
-
-    const {
-        fieldState: { error },
-        field: { value },
-    } = useController({ name: formMeta.fields.email.name, control: formProviderMethods.control });
 
     const onResetPasswordHandler: SubmitHandler<PasswordResetFormType> = async (passwordResetFormData) => {
         blurInput();
@@ -84,9 +79,7 @@ export const ResetPasswordContent: FC = () => {
                                 </FormBlockWrapper>
 
                                 <FormButtonWrapper>
-                                    <SubmitButton hasDisabledCursor={!!error || value.length === 0}>
-                                        {t('Reset password')}
-                                    </SubmitButton>
+                                    <SubmitButton size="large">{t('Reset password')}</SubmitButton>
                                 </FormButtonWrapper>
                             </FormContentWrapper>
                         </Form>

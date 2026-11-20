@@ -1,4 +1,5 @@
 import { Popup } from 'components/Layout/Popup/Popup';
+import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmMessageType } from 'gtm/enums/GtmMessageType';
 import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
@@ -57,7 +58,9 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, errors, gtmMessageOrig
         <li key={field.name} className="mb-2 border-border-default border-b pb-2 last:mb-0 last:border-none last:pb-0">
             {field.label}
             <br />
-            <span className="text-text-error">{getErrorMessage(fieldName, field, errors)}</span>
+            <span className="text-text-error" data-tid={TIDs.error_popup_message}>
+                {getErrorMessage(fieldName, field, errors)}
+            </span>
         </li>
     ));
 

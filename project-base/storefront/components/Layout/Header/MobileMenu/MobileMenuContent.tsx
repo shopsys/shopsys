@@ -1,6 +1,7 @@
 import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { AnimationSequence, useAnimate, useReducedMotion } from 'framer-motion';
@@ -177,7 +178,10 @@ const MenuItems: FC<{
                 {viewAllItem?.link && (
                     <ExtendedNextLink
                         aria-label={viewAllItem.name}
-                        className="inline-flex shrink-0 items-center gap-1 rounded-md py-1 font-secondary font-semibold text-link-default text-xs no-underline hover:underline"
+                        className={twJoin(
+                            getLinkClassName({ placement: 'list', tone: 'accent' }),
+                            'inline-flex shrink-0 items-center gap-1 rounded-md py-1 font-secondary font-semibold text-xs',
+                        )}
                         href={viewAllItem.link}
                         skeletonType={DEFAULT_SKELETON_TYPE}
                         tabIndex={isHidden ? -1 : undefined}

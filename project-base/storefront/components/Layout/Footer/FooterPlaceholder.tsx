@@ -1,7 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -33,7 +35,10 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                         {item.items.map((article) => (
                                             <li key={article.uuid}>
                                                 <ExtendedNextLink
-                                                    className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
+                                                    className={twJoin(
+                                                        getLinkClassName({ placement: 'list' }),
+                                                        'block font-secondary font-semibold text-sm tracking-wider',
+                                                    )}
                                                     rel={article.external ? 'nofollow noreferrer noopener' : undefined}
                                                     target={article.external ? '_blank' : undefined}
                                                     href={

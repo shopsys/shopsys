@@ -35,7 +35,7 @@ export const SkeletonModuleProductListItem: FC<SkeletonModuleProductListItemProp
 
             <div className="flex min-w-0 flex-col items-end justify-center gap-2">
                 <Skeleton className="h-7 w-24" />
-                <Skeleton className="h-9 w-40 sm:w-44" />
+                <Skeleton className="h-10 w-40 sm:w-44" />
             </div>
         </div>
     ) : (
@@ -115,6 +115,6 @@ const SkeletonModuleProductGridListItem: FC<SkeletonModuleProductGridListItemPro
             </div>
         )}
 
-        {(visibleItemsConfig === undefined || visibleItemsConfig.addToCart) && <Skeleton className="h-9 w-full" />}
+        {(visibleItemsConfig === undefined || visibleItemsConfig.addToCart) && <Skeleton className="h-10 w-full" />}
     </div>
 );

@@ -301,6 +301,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                                 minValueDecreaseTitle={t('Remove product from cart')}
                                 ref={spinboxRef}
                                 className="vl:col-start-2 vl:w-35 w-40"
+                                size="medium"
                                 step={1}
                                 onChangeValueCallback={(requestedQuantity) => {
                                     setVisibleQuantity(requestedQuantity);

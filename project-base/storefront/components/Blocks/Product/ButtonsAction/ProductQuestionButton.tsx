@@ -65,7 +65,7 @@ export const ProductQuestionButton: FC<ProductQuestionButtonProps> = ({
             tabIndex={tabIndex}
             title={title}
             className={twMergeCustom(
-                'flex cursor-pointer items-center gap-2 text-icon-less hover:text-icon-accent',
+                'flex cursor-pointer items-center gap-2 text-icon-less hover:text-icon-accent hover:underline',
                 'rounded-sm outline-hidden',
                 className,
             )}

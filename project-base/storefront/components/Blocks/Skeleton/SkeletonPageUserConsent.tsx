@@ -24,9 +24,9 @@ export const SkeletonPageUserConsent: FC = () => (
                     </div>
 
                     <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
-                        <Skeleton className="h-9 w-full sm:w-24" />
-                        <Skeleton className="h-9 w-full sm:w-24" />
-                        <Skeleton className="h-9 w-full sm:w-24" />
+                        <Skeleton className="h-10 w-full sm:w-24" />
+                        <Skeleton className="h-10 w-full sm:w-24" />
+                        <Skeleton className="h-10 w-full sm:w-24" />
                     </div>
                 </div>
             </VerticalStack>

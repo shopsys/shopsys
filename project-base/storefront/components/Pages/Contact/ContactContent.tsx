@@ -140,10 +140,7 @@ export const ContactContent: FC = () => {
                                     </FormBlockWrapper>
 
                                     <FormButtonWrapper>
-                                        <SubmitButton
-                                            data-tid={TIDs.contact_form_submit_button}
-                                            hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                        >
+                                        <SubmitButton size="large" data-tid={TIDs.contact_form_submit_button}>
                                             {t('Send message')}
                                         </SubmitButton>
                                     </FormButtonWrapper>
