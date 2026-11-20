@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import type { MouseEventHandler } from 'react';
 
 const mobileBottomNavigationItemClassName =
     'flex min-h-14 w-full flex-col items-center justify-center gap-1 rounded-md px-1 text-xs text-text-inverted no-underline';
@@ -28,7 +29,9 @@ type MobileBottomNavigationButtonProps = {
     icon: SvgFC;
     isExpanded: boolean;
     label: string;
-    onClick: () => void;
+    ariaHaspopup?: 'dialog';
+    name?: string;
+    onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const MobileBottomNavigationButton: FC<MobileBottomNavigationButtonProps> = ({
@@ -36,12 +39,16 @@ export const MobileBottomNavigationButton: FC<MobileBottomNavigationButtonProps>
     icon: Icon,
     isExpanded,
     label,
+    ariaHaspopup,
+    name,
     onClick,
 }) => (
     <li>
         <button
             aria-expanded={isExpanded}
+            aria-haspopup={ariaHaspopup}
             className={mobileBottomNavigationItemClassName}
+            name={name}
             type="button"
             onClick={onClick}
         >

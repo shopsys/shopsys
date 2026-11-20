@@ -98,7 +98,7 @@ describe('Cart In Header Tests', () => {
         ]).should('not.exist');
     });
 
-    it('[Cart Header Hover] should switch between cart and customer menu popovers', () => {
+    it('[Cart Header Hover] should close the cart before opening the account dialog on click', () => {
         getHeaderElementByTID(TIDs.header_cart)
             .should('be.visible')
             .realHover({ scrollBehavior: false })
@@ -108,9 +108,13 @@ describe('Cart In Header Tests', () => {
         getHeaderElementByTID(TIDs.my_account_link)
             .should('be.visible')
             .realHover({ scrollBehavior: false })
-            .should('have.attr', 'aria-expanded', 'true');
+            .should('have.attr', 'aria-expanded', 'false');
         getHeaderElementByTID(TIDs.header_cart).should('have.attr', 'aria-expanded', 'false');
-        cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.login_form]).filter(':visible').should('exist');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+        getHeaderElementByTID(TIDs.my_account_link).click({ scrollBehavior: false });
+        cy.getByTID([TIDs.layout_popup, TIDs.login_form]).should('be.visible');
+        cy.realPress('{esc}');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
 
         getHeaderElementByTID(TIDs.header_cart)
             .realHover({ scrollBehavior: false })

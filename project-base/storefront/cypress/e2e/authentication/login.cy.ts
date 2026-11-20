@@ -10,6 +10,7 @@ import {
 } from './authenticationSupport';
 import { PERSIST_STORE_NAME, staticData, url } from 'fixtures/demodata';
 import {
+    checkAndHideErrorToast,
     checkAndHideSuccessToast,
     checkIsUserLoggedIn,
     checkIsUserLoggedOut,
@@ -81,6 +82,17 @@ describe('Login Tests', () => {
         cy.waitForStableAndInteractiveDOM();
         checkIsUserLoggedIn();
 
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).realHover().should('have.attr', 'aria-expanded', 'false');
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).click().should('have.attr', 'aria-expanded', 'true');
+        cy.getByTID([TIDs.overlay]).should('be.visible').realHover({ position: 'topLeft' });
+        cy.getByTID([TIDs.header, TIDs.user_menu_my_orders_link]).should('be.visible');
+        cy.realPress('Escape');
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).should('have.attr', 'aria-expanded', 'false').and('be.focused');
+        cy.getByTID([TIDs.overlay]).should('not.exist');
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).click();
+        cy.getByTID([TIDs.overlay]).click('topLeft');
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).should('have.attr', 'aria-expanded', 'false');
+
         logoutFromHeader();
         checkAndHideSuccessToast(translations.toast.success.loggedOut);
         checkUrl('/');
@@ -88,7 +100,54 @@ describe('Login Tests', () => {
         checkIsUserLoggedOut();
     });
 
-    it('[Header Email Draft] should preserve email in the login flyout until navigating to another page', () => {
+    it('[Header Dialog] should stay open after leaving the trigger and after a failed login', () => {
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        cy.getByTID([TIDs.header, TIDs.my_account_link])
+            .realHover()
+            .should('have.attr', 'aria-expanded', 'false');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+
+        fillInHeaderLoginForm(staticData.customer1.emailRegistered, 'invalid-password');
+        cy.getByTID([TIDs.overlay]).realHover({ position: 'topLeft' });
+        cy.getByTID([TIDs.layout_popup]).should('have.length', 1).and('be.visible');
+        submitLoginForm();
+        checkAndHideErrorToast(translations.toast.error.invalidCredentials);
+        cy.getByTID([TIDs.layout_popup, TIDs.login_form]).should('be.visible');
+        cy.viewport(320, 568);
+        cy.getByTID([TIDs.layout_popup]).children().last().should(($content) => {
+            expect($content[0].scrollWidth).to.equal($content[0].clientWidth);
+        });
+        cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_link]).scrollIntoView().should('be.visible');
+        cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_button]).should('not.be.visible');
+        cy.getByTID([TIDs.layout_popup]).find('button').first().focus();
+        cy.realPress(['Shift', 'Tab']);
+        cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_link]).should('be.focused');
+        cy.realPress('Tab');
+        cy.getByTID([TIDs.layout_popup]).find('button').first().should('be.focused');
+        cy.realPress('Escape');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+        cy.focused().should('be.visible').and('have.attr', 'name', 'account-login');
+
+        cy.realPress('Enter');
+        cy.getByTID([TIDs.layout_popup]).should('be.visible');
+        cy.viewport(1600, 720);
+        closeHeaderLoginForm();
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).should('be.focused');
+
+        cy.realPress('Enter');
+        cy.getByTID([TIDs.layout_popup]).should('be.visible');
+        cy.focused().should(($focused) => {
+            expect($focused.closest('[role="dialog"]')).to.have.length(1);
+        });
+        cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_button]).focus();
+        cy.realPress('Tab');
+        cy.getByTID([TIDs.layout_popup]).find('button').first().should('be.focused');
+        cy.realPress(['Shift', 'Tab']);
+        cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_button]).should('be.focused');
+        closeHeaderLoginForm();
+    });
+
+    it('[Header Email Draft] should preserve email in the login dialog until navigating to another page', () => {
         const emailDraft = 'unfinished-login@shopsys.com';
 
         cy.visitAndWaitForStableAndInteractiveDOM('/');

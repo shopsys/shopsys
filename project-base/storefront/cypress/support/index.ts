@@ -225,7 +225,7 @@ export const checkIsUserLoggedOut = () => {
 
 export const goToEditProfileFromHeader = () => {
     openHeaderUserMenu();
-    cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.user_menu_edit_profile_link])
+    cy.getByTID([TIDs.header, TIDs.user_menu_edit_profile_link])
         .filter(':visible')
         .first()
         .should('be.visible')

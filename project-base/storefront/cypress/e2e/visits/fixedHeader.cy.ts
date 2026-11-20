@@ -10,21 +10,21 @@ const BLOG_CATEGORY_PATH = '/blog';
 const PRODUCT_PATH = '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma';
 const CATEGORY_PATH = '/tv-audio';
 
-const checkAccountPopoverAriaReferences = (headerTid: TIDs.header | TIDs.fixed_header, loginFormName: string) => {
+const checkAccountDialogAriaReferences = (loginFormName: string) => {
     const descriptionId = `${loginFormName}-description`;
     const benefitsTitleId = `${loginFormName}-registration-benefits-title`;
     const benefitsListId = `${loginFormName}-registration-benefits-list`;
 
     cy.get(`#${descriptionId}`).should('have.length', 1);
-    cy.getByTID([headerTid, TIDs.my_account_link, TIDs.login_form])
+    cy.getByTID([TIDs.layout_popup, TIDs.login_form])
         .find('input[type="email"]')
         .should('have.attr', 'aria-describedby', descriptionId);
     cy.get(`#${benefitsTitleId}`).should('have.length', 1);
-    cy.getByTID([headerTid, TIDs.my_account_link])
+    cy.getByTID([TIDs.layout_popup])
         .find(`section[aria-labelledby="${benefitsTitleId}"]`)
         .should('exist');
     cy.get(`#${benefitsListId}`).should('have.length', 1);
-    cy.getByTID([headerTid, TIDs.my_account_link, TIDs.login_popup_register_button])
+    cy.getByTID([TIDs.layout_popup, TIDs.login_popup_register_button])
         .should('have.attr', 'aria-describedby', benefitsListId);
 };
 
@@ -135,23 +135,21 @@ describe('Fixed Header Tests', { retries: { runMode: 0 } }, () => {
         });
     });
 
-    it('[Account Popovers] should keep ARIA references unique across the regular and fixed headers', () => {
+    it('[Account Dialog] should open one dialog from either header with unique ARIA references', () => {
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).click();
+        cy.getByTID([TIDs.layout_popup]).should('have.length', 1).and('be.visible');
+        checkAccountDialogAriaReferences('header-login-form');
+        cy.realPress('{esc}');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+        cy.getByTID([TIDs.header, TIDs.my_account_link]).should('be.focused');
+
         showFixedHeader();
-
-        cy.getByTID([TIDs.header, TIDs.my_account_link]).trigger('mouseover', {
-            force: true,
-            scrollBehavior: false,
-        });
-        cy.getByTID([TIDs.header, TIDs.my_account_link, TIDs.login_form]).should('exist');
-
-        cy.getByTID([TIDs.fixed_header, TIDs.my_account_link]).trigger('mouseover', {
-            force: true,
-            scrollBehavior: false,
-        });
-        cy.getByTID([TIDs.fixed_header, TIDs.my_account_link, TIDs.login_form]).should('be.visible');
-
-        checkAccountPopoverAriaReferences(TIDs.header, 'header-login-form');
-        checkAccountPopoverAriaReferences(TIDs.fixed_header, 'fixed-header-login-form');
+        cy.getByTID([TIDs.fixed_header, TIDs.my_account_link]).click({ scrollBehavior: false });
+        cy.getByTID([TIDs.layout_popup]).should('have.length', 1).and('be.visible');
+        checkAccountDialogAriaReferences('fixed-header-login-form');
+        cy.realPress('{esc}');
+        cy.getByTID([TIDs.layout_popup]).should('not.exist');
+        cy.getByTID([TIDs.fixed_header, TIDs.my_account_link]).should('be.focused');
     });
 
     it('[Article Anchor] should place a clicked article heading below the fixed header', () => {

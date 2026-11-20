@@ -3,6 +3,7 @@ import { HomeIcon } from 'components/Basic/Icon/HomeIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { AccountLoginPopup } from 'components/Blocks/Popup/AccountLoginPopup';
 import { CartCount } from 'components/Layout/Header/Cart/CartCount';
 import {
     MobileBottomNavigationButton,
@@ -13,14 +14,13 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { useSessionStore } from 'store/useSessionStore';
+import { MobileNavigationPanelEnum } from 'types/mobileNavigation';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useKeypress } from 'utils/useKeyPress';
-
-type OpenPanel = 'catalog' | 'cart' | 'search' | 'account' | null;
-type Panel = Exclude<OpenPanel, null>;
 
 const MobileBottomAccountDrawer = dynamic(
     () => import('./MobileBottomAccountDrawer').then((component) => component.MobileBottomAccountDrawer),
@@ -42,17 +42,19 @@ export const MobileBottomNavigation: FC = () => {
     const { url } = useDomainConfig();
     const { cart } = useCurrentCart();
     const isUserLoggedIn = useIsUserLoggedIn();
+    const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
+    const isLoginPopupOpen = useSessionStore((store) => store.portalContent?.type === AccountLoginPopup);
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const openedPanelsRef = useRef(new Set<Panel>());
-    const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
+    const openedPanelsRef = useRef(new Set<MobileNavigationPanelEnum>());
+    const [openPanel, setOpenPanel] = useState<MobileNavigationPanelEnum | null>(null);
     const [homeUrl] = getInternationalizedStaticUrls(['/'], url);
 
     const closeOpenPanel = () => setOpenPanel(null);
 
-    const togglePanel = (panel: Panel) => {
+    const togglePanel = (panel: MobileNavigationPanelEnum) => {
         const shouldOpenPanel = openPanel !== panel;
 
-        if (panel === 'search') {
+        if (panel === MobileNavigationPanelEnum.Search) {
             flushSync(() => {
                 setOpenPanel(shouldOpenPanel ? panel : null);
             });
@@ -72,7 +74,7 @@ export const MobileBottomNavigation: FC = () => {
     };
 
     useKeypress('Escape', () => {
-        if (openPanel === 'search') {
+        if (openPanel === MobileNavigationPanelEnum.Search) {
             closeOpenPanel();
         }
     });
@@ -87,10 +89,25 @@ export const MobileBottomNavigation: FC = () => {
                     <MobileBottomNavigationLink href={homeUrl} icon={HomeIcon} label={t('Home')} />
 
                     <MobileBottomNavigationButton
+                        ariaHaspopup="dialog"
                         icon={UserIcon}
-                        isExpanded={openPanel === 'account'}
+                        isExpanded={isUserLoggedIn ? openPanel === MobileNavigationPanelEnum.Account : isLoginPopupOpen}
                         label={t('Account')}
-                        onClick={() => togglePanel('account')}
+                        name="account-login"
+                        onClick={(event) => {
+                            if (isUserLoggedIn) {
+                                togglePanel(MobileNavigationPanelEnum.Account);
+                                return;
+                            }
+
+                            // Finish the drawer focus cleanup before the popup captures its return target.
+                            flushSync(closeOpenPanel);
+                            // Safari does not focus buttons on pointer clicks; preserve the popup's return target.
+                            event.currentTarget.focus({ preventScroll: true });
+                            updatePortalContent(
+                                <AccountLoginPopup loginFormName="mobile-bottom-navigation-login-form" />,
+                            );
+                        }}
                     >
                         {isUserLoggedIn && (
                             <span
@@ -102,56 +119,54 @@ export const MobileBottomNavigation: FC = () => {
 
                     <MobileBottomNavigationButton
                         icon={CartIcon}
-                        isExpanded={openPanel === 'cart'}
+                        isExpanded={openPanel === MobileNavigationPanelEnum.Cart}
                         label={t('Cart')}
-                        onClick={() => togglePanel('cart')}
+                        onClick={() => togglePanel(MobileNavigationPanelEnum.Cart)}
                     >
                         <CartCount>{cart?.items.length ?? 0}</CartCount>
                     </MobileBottomNavigationButton>
 
                     <MobileBottomNavigationButton
                         icon={SearchIcon}
-                        isExpanded={openPanel === 'search'}
+                        isExpanded={openPanel === MobileNavigationPanelEnum.Search}
                         label={t('Search')}
-                        onClick={() => togglePanel('search')}
+                        onClick={() => togglePanel(MobileNavigationPanelEnum.Search)}
                     />
 
                     <MobileBottomNavigationButton
                         icon={MenuIcon}
-                        isExpanded={openPanel === 'catalog'}
+                        isExpanded={openPanel === MobileNavigationPanelEnum.Catalog}
                         label={t('Menu')}
-                        onClick={() => togglePanel('catalog')}
+                        onClick={() => togglePanel(MobileNavigationPanelEnum.Catalog)}
                     />
                 </ul>
             </nav>
 
-            {openedPanelsRef.current.has('catalog') && (
+            {openedPanelsRef.current.has(MobileNavigationPanelEnum.Catalog) && (
                 <MobileMenu
-                    isMenuOpened={openPanel === 'catalog'}
+                    isMenuOpened={openPanel === MobileNavigationPanelEnum.Catalog}
                     shouldRenderTrigger={false}
-                    onMenuToggle={() => togglePanel('catalog')}
+                    onMenuToggle={() => togglePanel(MobileNavigationPanelEnum.Catalog)}
                 />
             )}
 
-            {openedPanelsRef.current.has('cart') && (
+            {openedPanelsRef.current.has(MobileNavigationPanelEnum.Cart) && (
                 <MobileBottomCartDrawer
-                    isActive={openPanel === 'cart'}
-                    setIsActive={(isActive) => setOpenPanel(isActive ? 'cart' : null)}
+                    isActive={openPanel === MobileNavigationPanelEnum.Cart}
+                    setIsActive={(isActive) => setOpenPanel(isActive ? MobileNavigationPanelEnum.Cart : null)}
                     title={t('Cart')}
                 />
             )}
 
-            {openPanel === 'search' && (
+            {openPanel === MobileNavigationPanelEnum.Search && (
                 <MobileBottomSearchWithOverlay searchInputRef={searchInputRef} onClose={closeOpenPanel} />
             )}
 
-            {openedPanelsRef.current.has('account') && (
+            {isUserLoggedIn && openedPanelsRef.current.has(MobileNavigationPanelEnum.Account) && (
                 <MobileBottomAccountDrawer
-                    isActive={openPanel === 'account'}
-                    isUserLoggedIn={isUserLoggedIn}
-                    setIsActive={(isActive) => setOpenPanel(isActive ? 'account' : null)}
+                    isActive={openPanel === MobileNavigationPanelEnum.Account}
+                    setIsActive={(isActive) => setOpenPanel(isActive ? MobileNavigationPanelEnum.Account : null)}
                     title={t('My account')}
-                    onClose={closeOpenPanel}
                 />
             )}
         </>
