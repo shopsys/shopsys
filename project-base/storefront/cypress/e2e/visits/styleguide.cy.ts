@@ -56,15 +56,19 @@ const setTouchEmulation = (isEnabled: boolean) =>
         params: { enabled: isEnabled, maxTouchPoints: 1 },
     });
 
-const assertCoarsePointer = (isCoarse: boolean) => {
-    cy.window().should((win) =>
-        expect(win.matchMedia('(pointer: coarse)').matches, 'coarse pointer').to.equal(isCoarse),
-    );
+const assertPointerMedia = (query: string) => {
+    cy.window().should((win) => expect(win.matchMedia(query).matches, query).to.equal(true));
+};
+
+// cypress.config.ts declares a desktop mouse for headless Chromium.
+const assertDesktopPointer = () => {
+    assertPointerMedia('(pointer: fine)');
+    assertPointerMedia('(hover: hover)');
 };
 
 const emulateCoarsePointer = () => {
     cy.then(() => setTouchEmulation(true));
-    assertCoarsePointer(true);
+    assertPointerMedia('(pointer: coarse)');
 };
 
 // Buttons animate size changes (transition-all), so callers assert through retried should() callbacks
@@ -187,17 +191,12 @@ describe('Styleguide Tests (SSP-4301)', () => {
     });
 
     it('[Button sizes] should use the text button scale below and from the vl breakpoint and keep the icon button scale', () => {
-        // Headless Linux CI browsers match (pointer: none), so the default run only rules out touch input.
-        assertCoarsePointer(false);
+        assertDesktopPointer();
         assertButtonScalesAcrossViewports(VIEWPORT_SCALES);
     });
 
-    it('[Coarse pointer] should keep the same text and icon button sizes for touch input', () => {
-        emulateCoarsePointer();
-        assertButtonScalesAcrossViewports(COARSE_POINTER_VIEWPORT_SCALES);
-    });
-
     it('[Link hover] should keep content underlines and add navigation and card title underlines on hover', () => {
+        assertDesktopPointer();
         [TIDs.styleguide_content_link, TIDs.styleguide_text_action, TIDs.styleguide_inverted_link].forEach(
             assertContentLinkHover,
         );
@@ -222,5 +221,12 @@ describe('Styleguide Tests (SSP-4301)', () => {
 
         cy.getByTID([TIDs.styleguide_disabled_button]).should('be.disabled');
         cy.getByTID([TIDs.styleguide_loading_button]).should('be.disabled');
+    });
+
+    // Keep this test last: after touch emulation is disabled, the pointer stays (pointer: none) until a top-level
+    // navigation, and cy.visit navigates only the application frame. Cypress opens a new tab for the next spec.
+    it('[Coarse pointer] should keep the same text and icon button sizes for touch input', () => {
+        emulateCoarsePointer();
+        assertButtonScalesAcrossViewports(COARSE_POINTER_VIEWPORT_SCALES);
     });
 });
