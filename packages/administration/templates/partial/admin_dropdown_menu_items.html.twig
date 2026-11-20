@@ -5,5 +5,9 @@
     {% endif %}
     <a href="{{ item.link }}" class="dropdown-item" title="{{ item.title }}">
         {{ ux_icon(item.icon, {class: 'icon dropdown-item-icon'}) }} {{ item.title }}
+
+        {% if item.badgeCount is not null %}
+            <span class="badge bg-red text-red-fg ms-auto">{{ item.badgeCount }}</span>
+        {% endif %}
     </a>
 {% endfor %}
