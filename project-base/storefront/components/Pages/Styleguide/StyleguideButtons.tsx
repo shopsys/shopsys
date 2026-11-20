@@ -26,7 +26,7 @@ const ButtonSizeRow: FC<{ size: (typeof BUTTON_SIZES)[number] }> = ({ size }) =>
                 Continue
             </SubmitButton>
         </form>
-        <Button size={size} tid={`${TIDs.styleguide_icon_button_}${size}`}>
+        <Button size={size} tid={`${TIDs.styleguide_button_with_icon_}${size}`}>
             <CartIcon aria-hidden className={getButtonIconClassName(size)} />
             Continue
         </Button>
@@ -93,7 +93,7 @@ export const StyleguideButtons: FC = () => {
                 <SubmitButton disabled shouldShowSpinner size="large" tid={TIDs.styleguide_loading_button}>
                     Saving changes
                 </SubmitButton>
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2" data-tid={TIDs.styleguide_input_pair}>
                     <TextInput
                         id="styleguide-email"
                         inputSize="small"
@@ -128,10 +128,25 @@ export const StyleguideButtons: FC = () => {
             </StyleguideSubSection>
 
             <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Icon button sizes">
-                <IconButton Icon={CloseIcon} size="compact" title="Compact icon button" />
-                <IconButton Icon={CloseIcon} size="small" title="Small icon button" />
-                <IconButton Icon={CloseIcon} title="Medium icon button" />
-                <IconButton Icon={CloseIcon} size="large" title="Large icon button" />
+                <IconButton
+                    Icon={CloseIcon}
+                    size="compact"
+                    tid={`${TIDs.styleguide_icon_button_}compact`}
+                    title="Compact icon button"
+                />
+                <IconButton
+                    Icon={CloseIcon}
+                    size="small"
+                    tid={`${TIDs.styleguide_icon_button_}small`}
+                    title="Small icon button"
+                />
+                <IconButton Icon={CloseIcon} tid={`${TIDs.styleguide_icon_button_}medium`} title="Medium icon button" />
+                <IconButton
+                    Icon={CloseIcon}
+                    size="large"
+                    tid={`${TIDs.styleguide_icon_button_}large`}
+                    title="Large icon button"
+                />
             </StyleguideSubSection>
 
             <StyleguideSubSection className="flex flex-wrap gap-3" title="Disabled">
