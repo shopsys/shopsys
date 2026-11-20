@@ -1,0 +1,59 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\McpBundle\Component\WriteTool;
+
+class McpChange
+{
+    /**
+     * @var array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null, contextBefore: string|null, contextAfter: string|null}>
+     */
+    protected array $fields = [];
+
+    /**
+     * @param array<string, string|int> $subjectParameters
+     */
+    public function __construct(
+        protected readonly string $subject,
+        protected readonly array $subjectParameters = [],
+        protected readonly ?string $subjectUrl = null,
+    ) {
+    }
+
+    /**
+     * @param array<string, string|int> $labelParameters
+     */
+    public function addField(
+        string $label,
+        ?string $before,
+        ?string $after,
+        array $labelParameters = [],
+        ?string $contextBefore = null,
+        ?string $contextAfter = null,
+    ): static {
+        $this->fields[] = [
+            'label' => $label,
+            'labelParameters' => $labelParameters,
+            'before' => $before,
+            'after' => $after,
+            'contextBefore' => $contextBefore,
+            'contextAfter' => $contextAfter,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * @return array{subject: string, subjectParameters: array<string, string|int>, subjectUrl: string|null, fields: array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null, contextBefore: string|null, contextAfter: string|null}>}
+     */
+    public function toArray(): array
+    {
+        return [
+            'subject' => $this->subject,
+            'subjectParameters' => $this->subjectParameters,
+            'subjectUrl' => $this->subjectUrl,
+            'fields' => $this->fields,
+        ];
+    }
+}

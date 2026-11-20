@@ -34,6 +34,12 @@ class AdminMenuSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $event->getMenu()->addChild('mcp_change_requests', [
+            'route' => McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST,
+            'label' => t('MCP change requests'),
+            'display' => false,
+        ]);
+
         $mcpServerMenu = $event->getMenu()->addChild('mcp_server', [
             'route' => McpRouteName::ADMIN_MCP_TOKEN,
             'label' => t('My MCP server'),
