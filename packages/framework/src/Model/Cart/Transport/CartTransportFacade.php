@@ -16,10 +16,17 @@ class CartTransportFacade
     ) {
     }
 
-    public function updateTransportInCart(Cart $cart, ?string $transportUuid, ?string $pickupPlaceIdentifier): void
-    {
+    /**
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null $pickupPlaceOpeningHours
+     */
+    public function updateTransportInCart(
+        Cart $cart,
+        ?string $transportUuid,
+        ?string $pickupPlaceIdentifier,
+        ?array $pickupPlaceOpeningHours = null,
+    ): void {
         if ($transportUuid !== null) {
-            $cartTransportData = $this->cartTransportDataFactory->create($cart, $transportUuid, $pickupPlaceIdentifier);
+            $cartTransportData = $this->cartTransportDataFactory->create($cart, $transportUuid, $pickupPlaceIdentifier, $pickupPlaceOpeningHours);
             $cart->editCartTransport($cartTransportData);
         } else {
             $cart->unsetCartTransport();

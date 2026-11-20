@@ -13,6 +13,7 @@ use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -120,6 +121,93 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
         $this->assertSame(TransportInCart::UNAVAILABLE_TRANSPORT_ERROR, $validationErrors['input'][0]['code']);
+    }
+
+    /**
+     * @return iterable<string, array{pickupPlaceOpeningHours: array<string, mixed>, violationPath: string}>
+     */
+    public static function getInvalidPickupPlaceOpeningHoursData(): iterable
+    {
+        $openingHoursRanges = [['openingTime' => '08:00', 'closingTime' => '18:00']];
+
+        yield 'closing time in an unknown format' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => [
+                    ['dayOfWeek' => 1, 'openingHoursRanges' => [['openingTime' => '08:00', 'closingTime' => '6 pm']]],
+                ],
+                'exceptionDays' => [],
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.openingHoursOfDays[0].openingHoursRanges[0].closingTime',
+        ];
+
+        yield 'day of the week out of range' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => [['dayOfWeek' => 8, 'openingHoursRanges' => $openingHoursRanges]],
+                'exceptionDays' => [],
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.openingHoursOfDays[0].dayOfWeek',
+        ];
+
+        yield 'more days than a week has' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => array_fill(0, 8, ['dayOfWeek' => 1, 'openingHoursRanges' => $openingHoursRanges]),
+                'exceptionDays' => [],
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.openingHoursOfDays',
+        ];
+
+        yield 'more exception days than the limit' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => [],
+                'exceptionDays' => array_fill(0, 101, ['from' => '2026-12-24', 'to' => null, 'openingHoursRanges' => []]),
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.exceptionDays',
+        ];
+
+        yield 'more opening hours ranges of a day than the limit' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => [['dayOfWeek' => 1, 'openingHoursRanges' => array_fill(0, 11, $openingHoursRanges[0])]],
+                'exceptionDays' => [],
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.openingHoursOfDays[0].openingHoursRanges',
+        ];
+
+        yield 'more opening hours ranges of an exception day than the limit' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => [],
+                'exceptionDays' => [
+                    ['from' => '2026-12-24', 'to' => null, 'openingHoursRanges' => array_fill(0, 11, $openingHoursRanges[0])],
+                ],
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.exceptionDays[0].openingHoursRanges',
+        ];
+
+        yield 'exception day that is not a date' => [
+            'pickupPlaceOpeningHours' => [
+                'openingHoursOfDays' => [],
+                'exceptionDays' => [['from' => 'tomorrow', 'to' => null, 'openingHoursRanges' => []]],
+            ],
+            'violationPath' => 'input.pickupPlaceOpeningHours.exceptionDays[0].from',
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $pickupPlaceOpeningHours
+     */
+    #[DataProvider('getInvalidPickupPlaceOpeningHoursData')]
+    public function testInvalidPickupPlaceOpeningHours(array $pickupPlaceOpeningHours, string $violationPath): void
+    {
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PACKETERY, Transport::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'transportUuid' => $transport->getUuid(),
+            'pickupPlaceIdentifier' => '26145',
+            'pickupPlaceOpeningHours' => $pickupPlaceOpeningHours,
+        ]);
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $this->assertArrayHasKey($violationPath, $this->getErrorsExtensionValidationFromResponse($response));
     }
 
     private function addNonExistingTransportToDemoCart(): array

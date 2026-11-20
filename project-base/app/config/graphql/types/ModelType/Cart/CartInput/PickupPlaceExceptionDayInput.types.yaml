@@ -1,0 +1,4 @@
+PickupPlaceExceptionDayInput:
+    type: input-object
+    inherits:
+        - 'PickupPlaceExceptionDayInputDecorator'

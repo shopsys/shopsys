@@ -30,6 +30,8 @@ export type TypeChangeTransportInCartInput = {
   cartUuid?: string | null | undefined;
   /** The identifier of selected personal pickup place */
   pickupPlaceIdentifier?: string | null | undefined;
+  /** Opening hours of the selected Packeta pickup point; the expected delivery date is postponed to the first day the point is open */
+  pickupPlaceOpeningHours?: TypePickupPlaceOpeningHoursInput | null | undefined;
   /** UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart */
   transportUuid?: string | null | undefined;
 };
@@ -46,6 +48,40 @@ export type TypePaymentTypeEnum =
   | 'basic'
   | 'giftVoucher'
   | 'goPay';
+
+/** Period when the opening hours of a pickup place differ from the regular ones */
+export type TypePickupPlaceExceptionDayInput = {
+  /** First day of the period in the YYYY-MM-DD format */
+  from: string;
+  /** Time periods when the pickup place is open during the period; empty when it is closed */
+  openingHoursRanges: Array<TypePickupPlaceOpeningHoursRangeInput>;
+  /** Last day of the period in the YYYY-MM-DD format; null when the period is the first day only */
+  to?: string | null | undefined;
+};
+
+/** Opening hours of a pickup place that is not managed by the application (e.g. a Packeta pickup point) */
+export type TypePickupPlaceOpeningHoursInput = {
+  /** Periods with opening hours different from the regular ones */
+  exceptionDays: Array<TypePickupPlaceExceptionDayInput>;
+  /** Regular opening hours of the days of the week; a day that is not listed is closed */
+  openingHoursOfDays: Array<TypePickupPlaceOpeningHoursOfDayInput>;
+};
+
+/** Regular opening hours of a pickup place on a day of the week */
+export type TypePickupPlaceOpeningHoursOfDayInput = {
+  /** ISO-8601 day of the week (1 for Monday through 7 for Sunday) */
+  dayOfWeek: number;
+  /** Time periods when the pickup place is open on the day */
+  openingHoursRanges: Array<TypePickupPlaceOpeningHoursRangeInput>;
+};
+
+/** Time period when a pickup place is open */
+export type TypePickupPlaceOpeningHoursRangeInput = {
+  /** Closing time in the HH:mm format */
+  closingTime: string;
+  /** Opening time in the HH:mm format */
+  openingTime: string;
+};
 
 /** One of possible product types */
 export type TypeProductTypeEnum =
