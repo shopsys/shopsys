@@ -76,7 +76,6 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             value={
                                 <ExtendedNextLink
                                     type="orderDetail"
-                                    className="text-sm"
                                     href={{
                                         pathname: customerOrderDetailUrl,
                                         query: { orderNumber: orderedItem.order.number },

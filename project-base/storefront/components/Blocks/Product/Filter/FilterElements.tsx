@@ -1,7 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Tag } from 'components/Basic/Tag/Tag';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
@@ -64,16 +63,6 @@ export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyN
     <AnimateCollapseDiv className="flex! flex-col gap-2.5" keyName={keyName}>
         {children}
     </AnimateCollapseDiv>
-);
-
-export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <button
-        tabIndex={0}
-        className={twJoin(getLinkClassName(), 'w-fit border-none bg-none p-0 text-sm outline-hidden hover:bg-none')}
-        onClick={onClick}
-    >
-        {children}
-    </button>
 );
 
 export const SelectedParametersName: FC = ({ children }) => (

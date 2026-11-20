@@ -26,7 +26,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                     href={`mailto:${complaint.email}`}
                     className={twJoin(
                         getLinkClassName(),
-                        'overflow-x-auto whitespace-nowrap text-sm',
+                        'overflow-x-auto whitespace-nowrap',
                         '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                     )}
                 >

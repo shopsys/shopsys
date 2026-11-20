@@ -261,12 +261,7 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                                 {productReviewPolicyArticleUrl && (
                                     <>
                                         {' '}
-                                        <Link
-                                            href={productReviewPolicyArticleUrl}
-                                            size="small"
-                                            target="_blank"
-                                            className="text-sm"
-                                        >
+                                        <Link href={productReviewPolicyArticleUrl} target="_blank">
                                             {t('How we work with reviews')}
                                         </Link>
                                     </>

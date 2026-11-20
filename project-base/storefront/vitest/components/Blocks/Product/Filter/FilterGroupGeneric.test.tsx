@@ -306,7 +306,11 @@ describe('FilterGroupGeneric', () => {
             render(<FilterGroupGeneric {...defaultProps} />);
 
             const showMoreButton = screen.getByRole('button', { name: /Show more/i });
-            expect(showMoreButton).toBeInTheDocument();
+            expect(showMoreButton).toHaveAttribute('type', 'button');
+            expect(showMoreButton).toHaveAttribute('aria-expanded', 'false');
+            expect(document.getElementById(showMoreButton.getAttribute('aria-controls') ?? '')).toContainElement(
+                showMoreButton,
+            );
         });
 
         test('show less button is properly rendered', () => {
@@ -315,7 +319,7 @@ describe('FilterGroupGeneric', () => {
             render(<FilterGroupGeneric {...defaultProps} />);
 
             const showLessButton = screen.getByRole('button', { name: /Show less/i });
-            expect(showLessButton).toBeInTheDocument();
+            expect(showLessButton).toHaveAttribute('aria-expanded', 'true');
         });
     });
 

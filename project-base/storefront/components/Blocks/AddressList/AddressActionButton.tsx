@@ -14,10 +14,7 @@ export const AddressActionButton: FC<AddressActionButtonProps> = ({ ariaLabel, c
         <button
             aria-haspopup="dialog"
             aria-label={ariaLabel}
-            className={twJoin(
-                getLinkClassName(),
-                'flex items-center gap-2 self-start pr-1 font-secondary font-semibold text-sm',
-            )}
+            className={twJoin(getLinkClassName({ placement: 'standalone' }), 'flex self-start pr-1')}
             tabIndex={0}
             type="button"
             onClick={onClick}

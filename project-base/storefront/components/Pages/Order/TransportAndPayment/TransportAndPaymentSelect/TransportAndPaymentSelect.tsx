@@ -17,7 +17,6 @@ import { AnimatePresence } from 'framer-motion';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { TypePaymentTypeEnum } from 'graphql/types';
 import { KeyboardEvent, MouseEvent, useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
-import { twJoin } from 'tailwind-merge';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -434,7 +433,7 @@ type ResetButtonProps = { text: string; onClick: () => void; tid: string; disabl
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid, disabled }) => (
     <button
-        className={twJoin(getLinkClassName(), 'font-secondary font-semibold text-sm')}
+        className={getLinkClassName({ placement: 'standalone' })}
         data-tid={tid}
         disabled={disabled}
         tabIndex={0}

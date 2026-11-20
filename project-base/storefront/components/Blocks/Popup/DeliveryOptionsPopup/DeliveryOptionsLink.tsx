@@ -1,4 +1,5 @@
 import { TruckClockIcon } from 'components/Basic/Icon/TruckClockIcon';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { DeliveryOptionsProduct } from './deliveryOptionsPopupTypes';
@@ -14,16 +15,15 @@ export const DeliveryOptionsLink: FC<DeliveryOptionsLinkProps> = ({ products, pr
     const openDeliveryOptionsPopup = useOpenDeliveryOptionsPopup();
 
     return (
-        <button
+        <TextButton
             aria-haspopup="dialog"
-            className="group flex w-fit cursor-pointer items-center gap-1 rounded-md text-sm text-text-less hover:text-link-default"
-            data-tid={TIDs.product_detail_delivery_options_link}
-            type="button"
+            className="w-fit"
+            tid={TIDs.product_detail_delivery_options_link}
+            tone="subtle"
             onClick={() => openDeliveryOptionsPopup(products, preselectedProductUuid)}
         >
-            <TruckClockIcon className="size-6 shrink-0" />
-
-            <span className="underline">{t('Delivery & pickup')}</span>
-        </button>
+            <TruckClockIcon aria-hidden="true" className="size-4 shrink-0" />
+            {t('Delivery & pickup')}
+        </TextButton>
     );
 };

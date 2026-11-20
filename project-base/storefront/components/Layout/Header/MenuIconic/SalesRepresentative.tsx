@@ -51,7 +51,7 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                     <PhoneIcon className="size-6" />
                     <a
                         aria-label={t('Call sales representative', { ns: 'accessibility' })}
-                        className={twJoin(getLinkClassName({ variant: 'navigation' }), 'font-semibold text-sm')}
+                        className={twJoin(getLinkClassName({ placement: 'list' }), 'font-semibold text-sm')}
                         href={`tel:${telephone}`}
                         tabIndex={0}
                         onClick={onContactClick}
@@ -67,7 +67,7 @@ export const SalesRepresentative: FC<SalesRepresentativeProps> = ({ onContactCli
                     <a
                         aria-label={t('Send email to sales representative', { ns: 'accessibility' })}
                         className={twJoin(
-                            getLinkClassName({ variant: 'navigation' }),
+                            getLinkClassName({ placement: 'list' }),
                             'thin-scrollbar max-w-64 overflow-x-auto whitespace-nowrap font-semibold text-sm',
                         )}
                         href={`mailto:${email}`}

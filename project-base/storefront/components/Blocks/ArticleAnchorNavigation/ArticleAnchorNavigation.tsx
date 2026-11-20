@@ -25,13 +25,13 @@ const ArticleAnchorNavigationLink: FC<ArticleAnchorNavigationLinkProps> = ({ hre
             data-tid={`${TIDs.blog_article_anchor_navigation_link_}${href.slice(1)}`}
             href={href}
             className={twMergeCustom(
-                getLinkClassName({ variant: 'navigation' }),
+                getLinkClassName({ placement: 'list' }),
                 'flex items-center gap-1 font-secondary font-semibold text-sm',
-                isActive && 'text-link-default hover:text-link-default active:text-link-default',
+                isActive && 'text-text-accent hover:text-text-accent active:text-text-accent',
             )}
             onClick={onClick}
         >
-            {isActive && <ArrowIcon className="rotate-90 text-link-default transition" />}
+            {isActive && <ArrowIcon className="rotate-90 text-icon-accent transition" />}
             {title}
         </a>
     </li>

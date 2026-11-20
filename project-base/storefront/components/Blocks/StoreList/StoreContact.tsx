@@ -1,5 +1,7 @@
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
 
@@ -11,8 +13,10 @@ type StoreContactItemProps = {
 export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
     const cleanPhone = removeSpaces(phone ?? '');
     const { t } = useTranslation();
-    const linkClassName =
-        'inline-flex items-center rounded-md font-semibold text-sm text-text-default no-underline hover:underline gap-1';
+    const linkClassName = twJoin(
+        getLinkClassName({ placement: 'list' }),
+        'inline-flex items-center gap-1 rounded-md font-semibold text-sm',
+    );
 
     return (
         <div className="inline-flex flex-col gap-2">

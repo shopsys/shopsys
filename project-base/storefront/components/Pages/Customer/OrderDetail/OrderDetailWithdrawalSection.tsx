@@ -129,7 +129,6 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                                 lnk: (
                                     <ExtendedNextLink
                                         aria-label={t('Go to create complaint page', { ns: 'accessibility' })}
-                                        className="inline font-secondary font-semibold text-sm"
                                         href={newComplaintUrl}
                                         type="complaintNew"
                                     />

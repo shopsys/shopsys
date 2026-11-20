@@ -43,7 +43,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                         >
                             <ExtendedNextLink
                                 className={twJoin(
-                                    getLinkClassName({ variant: 'navigation' }),
+                                    getLinkClassName({ placement: 'list' }),
                                     'grid min-h-10 max-w-full items-center gap-3 font-bold font-secondary',
                                     hasMainImage ? 'grid-cols-[40px_1fr]' : 'ml-13 w-fit',
                                 )}
@@ -72,7 +72,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                         <li key={columnCategoryChild.name} className="group/child-category">
                                             <ExtendedNextLink
                                                 className={twJoin(
-                                                    getLinkClassName({ variant: 'navigation' }),
+                                                    getLinkClassName({ placement: 'list' }),
                                                     'inline-block max-w-full self-start font-secondary font-semibold text-sm',
                                                 )}
                                                 href={columnCategoryChild.slug}

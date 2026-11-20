@@ -35,7 +35,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             className={twMergeCustom(
                 'group relative flex w-full cursor-pointer items-center gap-2 font-semibold text-input-text-default text-sm',
                 disabled && 'cursor-no-drop text-input-text-disabled opacity-60',
-                'rounded-sm outline-hidden peer-focus-visible:bg-orange-500',
+                'rounded-sm outline-hidden',
             )}
         >
             <ColorPreview
@@ -44,9 +44,12 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                 imageUrl={imageUrl}
                 isDecorative
                 rgbHex={bgColor}
+                // hover shows the same halo as a checkbox; the selected outline has a gap so it stays visible on dark swatches
                 className={twMergeCustom(
-                    'size-7 border border-icon-default bg-input-bg-default transition',
-                    disabled && 'outline-0 active:scale-100 group-active:outline-0',
+                    'size-7 border border-icon-default bg-input-bg-default outline-offset-2 transition',
+                    checked && 'outline-2 outline-text-default',
+                    !disabled && 'choice-hover:ring-4 choice-hover:ring-input-glow-active',
+                    'choice-focus-visible:shadow-[0_0_0_2px_var(--color-focus-inner-ring)] choice-focus-visible:outline-2 choice-focus-visible:outline-focus-ring',
                 )}
             >
                 {imageUrl && (

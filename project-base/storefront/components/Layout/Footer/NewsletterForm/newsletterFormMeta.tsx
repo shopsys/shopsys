@@ -12,7 +12,7 @@ import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
-const newsletterAgreementLinkTwClass = `${getLinkClassName({ isInverted: true })} text-sm`;
+const newsletterAgreementLinkTwClass = `${getLinkClassName({ tone: 'inverted' })} text-sm`;
 const newsletterAgreementTextTwClass = 'text-text-inverted text-sm';
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {

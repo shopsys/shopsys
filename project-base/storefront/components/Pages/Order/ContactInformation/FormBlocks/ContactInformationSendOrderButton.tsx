@@ -62,7 +62,6 @@ export const ContactInformationSendOrderButton: FC = () => {
                             lnk1: termsAndConditionsArticleUrl ? (
                                 <Link
                                     aria-label={t('Go to terms and conditions article', { ns: 'accessibility' })}
-                                    className="inline font-secondary font-semibold text-sm"
                                     href={termsAndConditionsArticleUrl}
                                     target="_blank"
                                 />
@@ -72,7 +71,6 @@ export const ContactInformationSendOrderButton: FC = () => {
                             lnk2: privacyPolicyArticleUrl ? (
                                 <Link
                                     aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                    className="inline font-secondary font-semibold text-sm"
                                     href={privacyPolicyArticleUrl}
                                     target="_blank"
                                 />

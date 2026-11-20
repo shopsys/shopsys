@@ -1,4 +1,4 @@
-import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
@@ -12,7 +12,6 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useDebounce } from 'utils/useDebounce';
@@ -79,16 +78,14 @@ export const ContactInformationPersonalInformation: FC = () => {
                 {isEmailAlreadyRegistered && (
                     <div className="-mt-2 rounded-b-md bg-input-warning-message-bg px-2.5 pt-3 pb-1.5 text-sm">
                         <span>{t('This email is already registered')}</span>{' '}
-                        <button
+                        <TextButton
                             aria-haspopup="dialog"
-                            className={twJoin(getLinkClassName(), 'text-sm')}
-                            data-tid={TIDs.login_in_order_button}
-                            tabIndex={0}
-                            type="button"
+                            placement="inline"
+                            tid={TIDs.login_in_order_button}
                             onClick={openLoginPopup}
                         >
                             {t('Log in')}
-                        </button>
+                        </TextButton>
                     </div>
                 )}
             </div>

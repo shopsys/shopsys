@@ -125,7 +125,6 @@ export const useRegistrationFormMeta = (): FormMeta<RegistrationFormType, { erro
                         lnk1: privacyPolicyArticleUrl ? (
                             <Link
                                 aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                className="inline text-sm"
                                 href={privacyPolicyArticleUrl}
                                 target="_blank"
                             />

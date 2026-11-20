@@ -42,7 +42,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
     const complaintItemTotalPrice = complaintItem.orderItem?.totalPrice;
     const productLink = complaintItem.product?.isVisible ? (
         <ExtendedNextLink
-            className={twJoin(getLinkClassName({ variant: 'navigation' }), 'wrap-break-word vl:w-fit w-full text-sm')}
+            className={twJoin(getLinkClassName({ placement: 'list' }), 'wrap-break-word vl:w-fit w-full text-sm')}
             href={complaintItem.product.slug}
             skeletonType="product"
             type="product"

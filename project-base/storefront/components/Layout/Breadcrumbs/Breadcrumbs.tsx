@@ -76,7 +76,7 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey; skeleton
 }) => (
     <ExtendedNextLink
         className={twMergeCustom(
-            getLinkClassName({ variant: 'navigation', isColored: true }),
+            getLinkClassName({ placement: 'list', tone: 'accent' }),
             'hidden font-secondary font-semibold text-xs last-of-type:inline lg:inline',
         )}
         href={href}

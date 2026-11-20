@@ -1,5 +1,6 @@
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { AnimatePresence } from 'framer-motion';
 import { forwardRef, TouchEvent as ReactTouchEvent } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
@@ -39,7 +40,8 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     disabled,
 }) => {
     const menuIconicSubItemLinkTwClass = twJoin(
-        'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:underline',
+        getLinkClassName({ placement: 'list' }),
+        'flex w-full items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm',
         isActive && 'text-text-accent!',
     );
 

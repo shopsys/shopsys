@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Link } from 'components/Basic/Link/Link';
-import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { TIDs } from 'cypress/tids';
 import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 
@@ -26,40 +27,52 @@ export const StyleguideTypography: FC = () => {
 
             <StyleguideSubSection className="flex flex-col items-start gap-4" title="Links and text actions">
                 <p className="text-sm">
-                    One rule for every text link: placement decides the default underline, hover is the same everywhere.
-                    A link inside text is always underlined; a standalone link (navigation, footer, card title) starts
-                    without an underline. On hover every link is underlined, and colored links also shift their color.
-                    Cards underline only their title. The header (main menu, phone and icon menu) is the only exception
-                    and responds with color only. Focus keeps the existing orange background.
+                    Pick the component by two questions: does it navigate (Link, LinkButton) or run an action (Button,
+                    TextButton, IconButton), and should it look like a button or like text? Text links and text actions
+                    share two props. Placement: inline (inside a sentence, keeps the font of the text, always
+                    underlined), standalone (a text action on its own, one fixed typography and a 16px trailing icon,
+                    always underlined) or list (among similar links in a menu, footer column or breadcrumbs, underlined
+                    on hover). Tone: accent, default, subtle (always underlined) or inverted. Cards underline only their
+                    title through a named group. Exceptions: the main menu in the header responds with color only, and
+                    the icon actions on a product (wishlist, compare, ask a question) stay muted until hover. Focus
+                    keeps the orange background. Do not style links with underline or text-link classes by hand.
                 </p>
-                <Link href="/styleguide" tid={TIDs.styleguide_content_link}>
-                    Content link
+                <p>
+                    By submitting, you agree with the{' '}
+                    <Link href="/styleguide" tid={TIDs.styleguide_content_link}>
+                        terms and conditions
+                    </Link>{' '}
+                    and the{' '}
+                    <Link href="/styleguide" target="_blank">
+                        privacy policy
+                    </Link>
+                    .
+                </p>
+                <TextButton tid={TIDs.styleguide_text_action}>Edit details (standalone text action)</TextButton>
+                <ShowMoreButton isExpanded={false}>Show 2 more products</ShowMoreButton>
+                <Link href="/styleguide" placement="standalone" target="_blank" tone="subtle">
+                    How we process and verify reviews
                 </Link>
-                <button className={getLinkClassName()} data-tid={TIDs.styleguide_text_action} type="button">
-                    Edit details
-                </button>
-                <ExtendedNextLink
-                    className={getLinkClassName({ variant: 'navigation' })}
-                    href="/styleguide"
-                    tid={TIDs.styleguide_navigation_link}
-                >
-                    About us
-                </ExtendedNextLink>
+                <Link href="/styleguide" placement="list" tid={TIDs.styleguide_navigation_link}>
+                    About us (list link)
+                </Link>
+                <Link href="/styleguide" placement="list" tone="accent">
+                    All categories (accent list link)
+                </Link>
                 <div className="rounded-lg bg-background-brand p-4">
-                    <Link
-                        className={getLinkClassName({ isInverted: true })}
-                        href="/styleguide"
-                        tid={TIDs.styleguide_inverted_link}
-                    >
+                    <Link href="/styleguide" tid={TIDs.styleguide_inverted_link} tone="inverted">
                         Personal data processing
                     </Link>
                 </div>
                 <ExtendedNextLink
-                    className="group rounded-lg bg-background-more p-4 text-text-default no-underline hover:text-text-default hover:no-underline"
+                    className="group/card-link rounded-lg bg-background-more p-4 text-text-default no-underline hover:text-text-default hover:no-underline"
                     href="/styleguide"
                     tid={TIDs.styleguide_card_link}
                 >
-                    <span className="font-semibold group-hover:underline" data-tid={TIDs.styleguide_card_title}>
+                    <span
+                        className="font-semibold group-hover/card-link:underline"
+                        data-tid={TIDs.styleguide_card_title}
+                    >
                         Product title
                     </span>
                     <p data-tid={TIDs.styleguide_card_text}>Supporting card text keeps its decoration.</p>

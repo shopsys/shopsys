@@ -43,11 +43,7 @@ export const useRegistrationAfterOrderFormMeta = (): FormMeta<RegistrationAfterO
                     defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
                     i18nKey="I agree with terms and conditions and privacy policy"
                     components={{
-                        lnk1: termsAndConditionUrl ? (
-                            <Link className="inline text-sm" href={termsAndConditionUrl} target="_blank" />
-                        ) : (
-                            <span />
-                        ),
+                        lnk1: termsAndConditionUrl ? <Link href={termsAndConditionUrl} target="_blank" /> : <span />,
                     }}
                 />
             ),

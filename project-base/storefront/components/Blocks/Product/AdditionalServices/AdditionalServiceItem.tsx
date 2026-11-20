@@ -109,6 +109,8 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
 
     return (
         <li
+            // the checkbox, image, name and delivery extension are separate labels of one checkbox
+            data-choice-hover-scope
             className={twMergeCustom(
                 'relative grid min-w-0 grid-cols-[auto_auto_minmax(0,1fr)] items-center gap-x-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-3',
                 isSelectedInCart && 'vl:contents',

@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { ChevronEmptyDotIcon } from 'components/Basic/Icon/ChevronEmptyDotIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { getLinkType } from 'components/Blocks/SimpleNavigation/simpleNavigationUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
@@ -152,7 +153,10 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                     <li key={child.slug}>
                         {index > 0 && <ChevronEmptyDotIcon className="mr-2 size-1 text-icon-accent" />}
                         <ExtendedNextLink
-                            className="rounded-sm font-secondary font-semibold text-text-default text-xs no-underline hover:text-text-default hover:underline"
+                            className={twJoin(
+                                getLinkClassName({ placement: 'list' }),
+                                'font-secondary font-semibold text-xs',
+                            )}
                             href={`${getStringWithoutTrailingSlash(child.slug)}/`}
                             type={getLinkType(child.__typename)}
                         >
@@ -164,7 +168,10 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                     <li className="inline">
                         <ChevronEmptyDotIcon className="mr-2 size-1 text-icon-accent" />
                         <ExtendedNextLink
-                            className="inline-flex items-center gap-1 rounded-sm font-secondary font-semibold text-text-default text-xs no-underline hover:text-text-default hover:underline"
+                            className={twJoin(
+                                getLinkClassName({ placement: 'list' }),
+                                'inline-flex items-center gap-1 font-secondary font-semibold text-xs',
+                            )}
                             href={href}
                             type={linkType}
                         >

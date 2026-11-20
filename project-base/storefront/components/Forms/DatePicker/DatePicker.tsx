@@ -1,4 +1,5 @@
 import * as Popover from '@radix-ui/react-popover';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { DatePickerChevron } from 'components/Forms/DatePicker/DatePickerChevron';
 import {
     datePickerClassNames,
@@ -94,28 +95,26 @@ export const DatePicker: FC<DatePickerProps> = ({ id, label, name, value, onChan
 
                     <div className="flex items-center justify-between gap-4">
                         {value !== '' && (
-                            <button
-                                className="cursor-pointer rounded-button px-2 py-1 font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
-                                type="button"
+                            <TextButton
+                                className="rounded-button px-2 py-1"
                                 onClick={() => {
                                     onChange('');
                                     setIsOpen(false);
                                 }}
                             >
                                 {t('Clear')}
-                            </button>
+                            </TextButton>
                         )}
 
-                        <button
-                            className="ml-auto cursor-pointer rounded-button px-2 py-1 font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
-                            type="button"
+                        <TextButton
+                            className="ml-auto rounded-button px-2 py-1"
                             onClick={() => {
                                 onChange(formatDatePickerValue(new Date()));
                                 setIsOpen(false);
                             }}
                         >
                             {t('Today')}
-                        </button>
+                        </TextButton>
                     </div>
                 </Popover.Content>
             </Popover.Portal>

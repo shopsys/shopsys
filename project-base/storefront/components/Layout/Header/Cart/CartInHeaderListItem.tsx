@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftBadge } from 'components/Basic/GiftBadge/GiftBadge';
 import { Image } from 'components/Basic/Image/Image';
-import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
@@ -11,7 +11,6 @@ import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { MouseEventHandler, useState } from 'react';
-import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { mapCartItemAdditionalServiceSummaryLines } from 'utils/mappers/additionalServices';
@@ -53,14 +52,13 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     const [areAdditionalServicesShown, setAreAdditionalServicesShown] = useState(false);
 
     const additionalServicesToggle = hasAdditionalServices ? (
-        <button
-            aria-expanded={areAdditionalServicesShown}
-            className={twJoin(getLinkClassName(), 'w-fit text-left font-secondary text-xs outline-hidden')}
-            type="button"
+        <ShowMoreButton
+            className="text-left"
+            isExpanded={areAdditionalServicesShown}
             onClick={() => setAreAdditionalServicesShown((isShown) => !isShown)}
         >
             {t('+ {{ count }} additional services', { count: cartItem.additionalServices.length })}
-        </button>
+        </ShowMoreButton>
     ) : null;
 
     return (

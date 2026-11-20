@@ -88,7 +88,7 @@ const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ it
     return (
         <ExtendedNextLink
             className={twMergeCustom(
-                getLinkClassName({ variant: 'navigation' }),
+                getLinkClassName({ placement: 'list' }),
                 'block font-secondary font-semibold text-sm tracking-wider',
             )}
             href={isArticleSite ? item.slug : item.url}

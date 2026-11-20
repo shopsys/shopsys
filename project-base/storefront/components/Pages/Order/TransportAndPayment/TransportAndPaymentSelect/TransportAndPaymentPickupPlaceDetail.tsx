@@ -35,8 +35,8 @@ const TransportAndPaymentPickupPlaceDetailActionButton: FC<TransportAndPaymentPi
 }) => (
     <button
         className={twJoin(
-            getLinkClassName(),
-            'group flex items-center gap-1 text-left text-sm disabled:pointer-events-none disabled:opacity-50',
+            getLinkClassName({ placement: 'standalone' }),
+            'group flex text-left disabled:pointer-events-none disabled:opacity-50',
             className,
         )}
         type={type}
@@ -104,7 +104,7 @@ export const TransportAndPaymentPickupPlaceDetail: FC<TransportAndPaymentPickupP
                             <ArrowIcon
                                 aria-hidden="true"
                                 className={twJoin(
-                                    'size-4 min-w-4 text-link-default transition group-hover:text-link-hovered motion-reduce:transition-none',
+                                    'size-4 min-w-4 transition motion-reduce:transition-none',
                                     areOpeningHoursExpanded && 'rotate-180',
                                 )}
                             />

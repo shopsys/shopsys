@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
 import { Button } from 'components/Forms/Button/Button';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
@@ -48,7 +49,7 @@ export const FooterCopyright: FC = () => {
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
                     <ExtendedNextLink
                         aria-label={t('Update your consent. Go to user consent update page', { ns: 'accessibility' })}
-                        className="text-sm leading-6"
+                        className={getLinkClassName({ placement: 'standalone', tone: 'subtle' })}
                         href={userConsentUrl}
                         skeletonType="user-consent"
                         title={t('User consent page')}

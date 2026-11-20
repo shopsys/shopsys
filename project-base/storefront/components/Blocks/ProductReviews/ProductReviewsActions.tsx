@@ -28,11 +28,7 @@ export const ProductReviewsActions: FC<ProductReviewsActionsProps> = ({
     return (
         <>
             {policyArticleUrl && (
-                <Link
-                    className="mx-auto gap-1 text-text-less text-xs no-underline hover:underline"
-                    href={policyArticleUrl}
-                    target="_blank"
-                >
+                <Link className="mx-auto" href={policyArticleUrl} placement="standalone" target="_blank" tone="subtle">
                     {t('How we process and verify reviews')}
                 </Link>
             )}
@@ -50,7 +46,7 @@ export const ProductReviewsActions: FC<ProductReviewsActionsProps> = ({
                 <p className="text-center text-sm text-text-less lg:text-left">
                     {reviewedProductReviewUrl ? (
                         <ExtendedNextLink
-                            className={`${linkPlaceholderTwClass} text-sm`}
+                            className={linkPlaceholderTwClass}
                             href={reviewedProductReviewUrl}
                             skeletonType="myReviews"
                         >

@@ -36,7 +36,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                             <li key={article.uuid}>
                                                 <ExtendedNextLink
                                                     className={twJoin(
-                                                        getLinkClassName({ variant: 'navigation' }),
+                                                        getLinkClassName({ placement: 'list' }),
                                                         'block font-secondary font-semibold text-sm tracking-wider',
                                                     )}
                                                     rel={article.external ? 'nofollow noreferrer noopener' : undefined}

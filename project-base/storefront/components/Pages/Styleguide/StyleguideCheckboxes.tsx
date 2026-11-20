@@ -1,11 +1,42 @@
+import { AdditionalServices } from 'components/Blocks/Product/AdditionalServices/AdditionalServices';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
+import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
 import { useState } from 'react';
-import { StyleguideSection } from './StyleguideElements';
+import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
+
+const createStyleguideAdditionalService = (index: number): TypeAdditionalServiceFragment => ({
+    __typename: 'AdditionalService',
+    id: index,
+    uuid: `styleguide-additional-service-${index}`,
+    name: `Additional service ${index}`,
+    catnum: `STYLEGUIDE-${index}`,
+    description: index === 1 ? 'The description opens separately from the checkbox.' : null,
+    deliveryDaysExtension: index === 1 ? 2 : null,
+    price: { __typename: 'Price', priceWithVat: `${index * 100}`, priceWithoutVat: `${index * 80}`, vatAmount: '0' },
+    mainImage: index === 1 ? { __typename: 'Image', name: null, url: '/images/noimage.webp' } : null,
+});
+
+// one more than the initially visible services, so the "show more" text action is shown
+const STYLEGUIDE_ADDITIONAL_SERVICES = Array.from({ length: 5 }, (_, index) =>
+    createStyleguideAdditionalService(index + 1),
+);
 
 export const StyleguideCheckboxes: FC = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [isChecked2, setIsChecked2] = useState(false);
     const [isChecked3, setIsChecked3] = useState(true);
+    const [isChecked4, setIsChecked4] = useState(true);
+    const [isColorChecked, setIsColorChecked] = useState(false);
+    const [isColorChecked2, setIsColorChecked2] = useState(true);
+    const [selectedServiceUuids, setSelectedServiceUuids] = useState<string[]>([]);
+
+    const toggleAdditionalService = (additionalService: TypeAdditionalServiceFragment, isSelected: boolean) =>
+        setSelectedServiceUuids((currentUuids) =>
+            isSelected
+                ? [...currentUuids, additionalService.uuid]
+                : currentUuids.filter((uuid) => uuid !== additionalService.uuid),
+        );
 
     return (
         <StyleguideSection className="flex flex-col gap-3" title="Checkboxes">
@@ -15,6 +46,13 @@ export const StyleguideCheckboxes: FC = () => {
                 name="Regular checkbox"
                 value={isChecked}
                 onChange={() => setIsChecked((currentChecked) => !currentChecked)}
+            />
+            <Checkbox
+                id="checkboxChecked"
+                label="Checked checkbox"
+                name="Checked checkbox"
+                value={isChecked4}
+                onChange={() => setIsChecked4((currentChecked) => !currentChecked)}
             />
             <Checkbox
                 count={2}
@@ -40,6 +78,44 @@ export const StyleguideCheckboxes: FC = () => {
                 value={isChecked3}
                 onChange={() => setIsChecked3((currentChecked) => !currentChecked)}
             />
+
+            <StyleguideSubSection className="flex flex-col gap-3" title="Color checkboxes">
+                <CheckboxColor
+                    bgColor="#e11d48"
+                    id="checkboxColorRegular"
+                    label="Red"
+                    name="Red"
+                    value={isColorChecked}
+                    onChange={() => setIsColorChecked((currentChecked) => !currentChecked)}
+                />
+                <CheckboxColor
+                    bgColor="#2563eb"
+                    id="checkboxColorChecked"
+                    label="Blue"
+                    name="Blue"
+                    value={isColorChecked2}
+                    onChange={() => setIsColorChecked2((currentChecked) => !currentChecked)}
+                />
+                <CheckboxColor
+                    disabled
+                    bgColor="#16a34a"
+                    id="checkboxColorDisabled"
+                    label="Disabled green"
+                    name="Disabled green"
+                    value={false}
+                    onChange={() => null}
+                />
+            </StyleguideSubSection>
+
+            <StyleguideSubSection title="Additional services">
+                <AdditionalServices
+                    additionalServices={STYLEGUIDE_ADDITIONAL_SERVICES}
+                    selectedServiceUuids={selectedServiceUuids}
+                    tidDiscriminator="styleguide"
+                    unitName="pcs"
+                    onToggleService={toggleAdditionalService}
+                />
+            </StyleguideSubSection>
         </StyleguideSection>
     );
 };

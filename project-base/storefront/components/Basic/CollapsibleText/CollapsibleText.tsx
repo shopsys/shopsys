@@ -1,5 +1,4 @@
-import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { m, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -134,24 +133,13 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, textClassName 
                 />
             </m.div>
 
-            <button
-                aria-expanded={showFullDescription}
-                type="button"
-                className={twJoin(
-                    getLinkClassName(),
-                    'group flex items-center gap-2 font-secondary font-semibold text-sm',
-                    !shouldShowButton && 'invisible',
-                )}
+            <ShowMoreButton
+                className={twJoin(!shouldShowButton && 'invisible')}
+                isExpanded={showFullDescription}
                 onClick={handleButtonClick}
             >
                 {showFullDescription ? t('Close full description') : t('Open full description')}
-                <ArrowSecondaryIcon
-                    className={twJoin(
-                        'size-3 transition-transform',
-                        showFullDescription ? 'rotate-180 group-hover:-translate-y-0.5' : 'group-hover:translate-y-0.5',
-                    )}
-                />
-            </button>
+            </ShowMoreButton>
         </div>
     );
 };

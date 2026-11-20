@@ -1,4 +1,5 @@
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { AnimatePresence } from 'framer-motion';
@@ -16,7 +17,6 @@ import {
     FilterGroupHiddenItems,
     FilterGroupTitle,
     FilterGroupWrapper,
-    ShowAllButton,
 } from './FilterElements';
 
 type FilterGroupParametersProps = {
@@ -125,9 +125,13 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 </AnimatePresence>
 
                                 {!!hiddenOptions.length && (
-                                    <ShowAllButton onClick={() => setIsWithAllItemsShown((prev) => !prev)}>
+                                    <ShowMoreButton
+                                        controlsId={contentId}
+                                        isExpanded={isWithAllItemsShown}
+                                        onClick={() => setIsWithAllItemsShown((prev) => !prev)}
+                                    >
                                         {isWithAllItemsShown ? t('Show less') : t('Show more')}
-                                    </ShowAllButton>
+                                    </ShowMoreButton>
                                 )}
                             </>
                         )}
