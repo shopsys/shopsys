@@ -25,7 +25,7 @@ class ComplaintStatusFacade
     {
         $complaintStatus = $this->complaintStatusFactory->create(
             $complaintStatusData,
-            ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS,
+            $complaintStatusData->statusType,
             $this->createUniqueCode($complaintStatusData),
         );
         $this->em->persist($complaintStatus);
@@ -96,6 +96,11 @@ class ComplaintStatusFacade
     public function getAllByCodes(array $codes): array
     {
         return $this->complaintStatusRepository->getAllByCodes($codes);
+    }
+
+    public function findByCode(string $code): ?ComplaintStatus
+    {
+        return $this->complaintStatusRepository->findByCode($code);
     }
 
     public function getDefault(): ComplaintStatus

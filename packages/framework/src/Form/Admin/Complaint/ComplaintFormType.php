@@ -89,7 +89,7 @@ final class ComplaintFormType extends AbstractType
                     /** @var \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData */
                     $complaintData = $form->getData();
 
-                    if ($complaintData->resolution === $this->complaintResolutionEnum::MONEY_RETURN) {
+                    if ($complaintData->preferredResolution === $this->complaintResolutionEnum::MONEY_RETURN) {
                         $validationGroups[] = static::VALIDATION_GROUP_TYPE_MONEY_RETURN;
                     }
 
@@ -137,14 +137,14 @@ final class ComplaintFormType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ])
-            ->add('resolution', ChoiceType::class, [
-                'label' => 'Resolution',
+            ->add('preferredResolution', ChoiceType::class, [
+                'label' => 'Preferred resolution',
                 'required' => true,
                 'choices' => $this->complaintResolutionEnum->getAllIndexedByTranslations(),
                 'multiple' => false,
                 'expanded' => false,
                 'attr' => [
-                    'class' => 'js-complaint-resolution',
+                    'class' => 'js-complaint-preferred-resolution',
                 ],
             ])
             ->add('bankAccountNumber', TextType::class, [

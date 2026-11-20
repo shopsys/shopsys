@@ -979,6 +979,9 @@ msgstr "Dní do doručení"
 msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
 msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} s preferovaným způsobem vyřešení {complaint_resolution} byla vyřízena. Pro více informací navštivte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail reklamace</a>.<br /><br />Potřebujete cokoliv jiného? Navštivte naše <a href=\"{url}\" tabindex=\"0\">webové stránky</a>."
 
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been rejected. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
+msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} s preferovaným způsobem vyřešení {complaint_resolution} byla zamítnuta. Pro více informací navštivte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail reklamace</a>.<br /><br />Potřebujete cokoliv jiného? Navštivte naše <a href=\"{url}\" tabindex=\"0\">webové stránky</a>."
+
 msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\" tabindex=\"0\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\" tabindex=\"0\">website</a>."
 msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} s preferovaným způsobem vyřešení {complaint_resolution} se zpracovává. Pro více informací navštivte <a href=\"{complaint_detail_url}\" tabindex=\"0\">detail reklamace</a>.<br /><br />Potřebujete cokoliv jiného? Navštivte naše <a href=\"{url}\" tabindex=\"0\">webové stránky</a>."
 
@@ -2722,6 +2725,9 @@ msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to zn
 msgid "Postcode"
 msgstr "PSČ"
 
+msgid "Preferred resolution"
+msgstr "Preferovaný způsob řešení"
+
 msgid "Prefix"
 msgstr "Prefix"
 
@@ -2847,6 +2853,9 @@ msgstr "Zboží"
 
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhledat. Detail tohoto zboží je dostupný přímým přístupem z URL, zboží ale nelze vložit do košíku."
+
+msgid "Products of complaints in the statuses \"In Progress\" and \"Resolved, the products cannot be complained about again\" (e.g. money return) stay claimed. Products of complaints in the status \"Resolved, the products can be complained about again\" (e.g. rejection or fix) can be claimed in new complaints."
+msgstr "Produkty z reklamací ve stavech „Vyřizuje se“ a „Vyřízena, produkty již nelze znovu reklamovat“ (např. vrácení peněz) zůstávají uplatněné. Produkty z reklamací ve stavu „Vyřízena, produkty lze znovu reklamovat“ (např. zamítnutí nebo oprava) lze uplatnit v nových reklamacích."
 
 msgid "Products overview"
 msgstr "Přehled zboží"
@@ -2998,11 +3007,14 @@ msgstr "Povinné, pokud je recenze zamítnutá."
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
 
-msgid "Resolution"
-msgstr "Způsob vyřešení"
-
 msgid "Resolved"
 msgstr "Vyřízena"
+
+msgid "Resolved, the products can be complained about again"
+msgstr "Vyřízena, produkty lze znovu reklamovat"
+
+msgid "Resolved, the products cannot be complained about again"
+msgstr "Vyřízena, produkty již nelze znovu reklamovat"
 
 msgid "Response published on %date%"
 msgstr "Reakce zveřejněna %date%"

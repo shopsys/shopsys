@@ -2,15 +2,15 @@ import Register from '../../common/utils/Register';
 
 export default class Complaint {
     constructor($container) {
-        this.$complaintResolutionInput = $container.find('.js-complaint-resolution');
+        this.$complaintPreferredResolutionInput = $container.find('.js-complaint-preferred-resolution');
         this.$bankAccountNumberRow = $container.find('[data-js-complaint-bank-account-number]');
 
-        this.$complaintResolutionInput.on('change', () => this.handleResolutionChange());
-        this.handleResolutionChange();
+        this.$complaintPreferredResolutionInput.on('change', () => this.handlePreferredResolutionChange());
+        this.handlePreferredResolutionChange();
     }
 
-    handleResolutionChange() {
-        if (this.$complaintResolutionInput.val() === 'money_return') {
+    handlePreferredResolutionChange() {
+        if (this.$complaintPreferredResolutionInput.val() === 'money_return') {
             this.$bankAccountNumberRow.show();
         } else {
             this.$bankAccountNumberRow.hide();
@@ -18,7 +18,7 @@ export default class Complaint {
     }
 
     static init($container) {
-        const $complaintForm = $container.filterAllNodes('.js-complaint-resolution');
+        const $complaintForm = $container.filterAllNodes('.js-complaint-preferred-resolution');
 
         if ($complaintForm.length > 0) {
             // eslint-disable-next-line no-new

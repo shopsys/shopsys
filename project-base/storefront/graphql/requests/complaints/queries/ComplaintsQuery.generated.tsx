@@ -39,7 +39,7 @@ export type TypeComplaintsQueryVariables = Exact<{
 }>;
 
 
-export type TypeComplaintsQuery = { complaints: { totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { uuid: string, number: string, createdAt: string, status: string, resolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
+export type TypeComplaintsQuery = { complaints: { totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ cursor: string, node: { uuid: string, number: string, createdAt: string, status: string, preferredResolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
             | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
             | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
             | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }

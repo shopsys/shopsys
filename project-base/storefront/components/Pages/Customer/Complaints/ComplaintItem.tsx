@@ -52,7 +52,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                     <CustomerRecordColumnInfo title={t('Status')}>{complaintItem.status}</CustomerRecordColumnInfo>
 
                     <CustomerRecordColumnInfo title={t('Resolution')}>
-                        {complaintItem.resolution.name}
+                        {complaintItem.preferredResolution.name}
                     </CustomerRecordColumnInfo>
                 </div>
 

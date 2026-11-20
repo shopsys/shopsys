@@ -368,7 +368,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             [
                 'input' => [
                     'orderUuid' => $anotherUserOrder->getUuid(),
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'email' => 'no-reply@shopsys.com',
                     'items' => [
                         [

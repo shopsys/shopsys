@@ -51,5 +51,6 @@ class ComplaintStatusDataFactory
             $names[$translate->getLocale()] = $translate->getName();
         }
         $complaintStatusData->name = $names;
+        $complaintStatusData->statusType = $complaintStatus->getStatusType();
     }
 }

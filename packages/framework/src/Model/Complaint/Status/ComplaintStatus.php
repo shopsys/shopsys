@@ -64,6 +64,10 @@ class ComplaintStatus extends AbstractTranslatableEntity
 
     public function edit(ComplaintStatusData $complaintStatusData): void
     {
+        if ($this->statusType !== ComplaintStatusTypeEnum::STATUS_TYPE_NEW) {
+            $this->statusType = $complaintStatusData->statusType;
+        }
+
         $this->setData($complaintStatusData);
     }
 
@@ -124,7 +128,7 @@ class ComplaintStatus extends AbstractTranslatableEntity
 
     public function checkForDelete(): void
     {
-        if ($this->statusType !== ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS) {
+        if ($this->statusType === ComplaintStatusTypeEnum::STATUS_TYPE_NEW) {
             throw new ComplaintStatusDeletionForbiddenException($this);
         }
     }

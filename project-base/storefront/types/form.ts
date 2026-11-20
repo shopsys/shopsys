@@ -140,7 +140,7 @@ export type ComplaintFormType = {
     street: string;
     city: string;
     postcode: string;
-    resolution: SelectOptionType;
+    preferredResolution: SelectOptionType;
     country: SelectOptionType;
 };
 

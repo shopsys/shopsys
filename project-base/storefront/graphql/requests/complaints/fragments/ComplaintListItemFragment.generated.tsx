@@ -4,7 +4,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeComplaintListItemFragment = { uuid: string, number: string, createdAt: string, status: string, resolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
+export type TypeComplaintListItemFragment = { uuid: string, number: string, createdAt: string, status: string, preferredResolution: { name: string }, items: Array<{ uuid: string, quantity: number, productName: string, product:
       | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
       | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
       | { slug: string, isVisible: boolean, mainImage: { name: string | null, url: string } | null }
@@ -16,7 +16,7 @@ export const ComplaintListItemFragment = gql`
   number
   createdAt
   status
-  resolution {
+  preferredResolution {
     name
   }
   items {

@@ -2377,6 +2377,9 @@ msgstr "Produkt už nie je v katalógu."
 msgid "The selected country is not valid."
 msgstr "Vybraná krajina nie je platná."
 
+msgid "The type of this status can't be changed. This is automatically assigned status to all new complaints."
+msgstr "Typ tohto stavu nie je možné zmeniť. Ide o stav, ktorý je automaticky priradený všetkým novým reklamáciám."
+
 msgid "The value is used for: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> setting in Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> setting in Mergado XML feed </li> </ul> The value applies only to products without the \"Expected restocking date\" filled. Otherwise, the number of days is derived from that date."
 msgstr "Hodnota sa používa pre: <ul> <li> <a href=\"https://napoveda.zbozi.cz/en/xml-feed-2/specification/#DELIVERY_DATE\">DELIVERY_DATE</a> nastavenie v Zbozi.cz XML feed </li> <li> <a href=\"https://www.mergado.com/sites/default/files/users/documents/shopsystems/mergado-product-xml-1-10-en.pdf\">DELIVERY_DAYS</a> nastavenie v Mergado XML feed </li> </ul> Hodnota sa použije iba pri produktoch, ktoré nemajú vyplnený \"Predpokladaný dátum naskladnenia\". Inak sa počet dní odvodzuje z tohto dátumu."
 
@@ -2403,9 +2406,6 @@ msgstr "Toto je posledný používateľ zákazníka. Odstráni to všetky súvis
 
 msgid "This phone number may not be valid. Please verify it."
 msgstr "Toto telefónne číslo nemusí byť platné. Prosím overte ho."
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
-msgstr "Tento stav nemôže byť odstránený, pretože je naň naviazaná funkcionalita - identifikuje reklámacie, ktoré boli úspešne spracované."
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav nemôže byť odstránený, pretože je naň naviazaná funkcionalita - identifikuje objednávky, ktoré neboli úspešne spracované."

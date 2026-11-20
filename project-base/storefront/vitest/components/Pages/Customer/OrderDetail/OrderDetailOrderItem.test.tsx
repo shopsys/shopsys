@@ -57,6 +57,7 @@ const orderItem = {
     name: 'Product',
     catnum: 'CAT-1',
     quantity: 1,
+    remainingComplaintQuantity: 1,
     unit: 'pcs',
     type: TypeOrderItemTypeEnum.Product,
     totalPrice: {

@@ -32,7 +32,7 @@ query GetComplaintsQuery (
                         uuid
                     }
                 }
-                resolution {
+                preferredResolution {
                     name
                     value
                 }

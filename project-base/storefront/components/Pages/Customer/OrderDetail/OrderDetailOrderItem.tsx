@@ -83,6 +83,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
             : [];
     const showComplaintButton =
         canCreateComplaint &&
+        orderItem.remainingComplaintQuantity > 0 &&
         isUserLoggedIn &&
         isOrderFromRegisteredCustomer &&
         orderItem.order.withdrawalRequest === null &&

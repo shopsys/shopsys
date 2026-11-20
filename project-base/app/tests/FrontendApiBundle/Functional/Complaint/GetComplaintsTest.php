@@ -59,7 +59,7 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
     public static function getComplaintsDataProvider(): iterable
     {
         // first 2 complaints
-        yield [['first' => 2], [2, 1]];
+        yield [['first' => 2], [3, 2]];
 
         // last 1 complaint
         yield [['last' => 1], [1]];
@@ -106,7 +106,7 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
                         ->format(DateTimeInterface::ATOM),
                 ],
             ],
-            [2, 1],
+            [3, 2, 1],
         ];
 
         // filter by complaint created before date
@@ -131,6 +131,18 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
                 ],
             ],
             [2],
+        ];
+
+        // filter by complaint status that releases the claimed quantity
+        yield [
+            [
+                'filter' => [
+                    'statusCodes' => [
+                        self::createComplaintStatusCodeAccessor(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED_CLAIMABLE_AGAIN),
+                    ],
+                ],
+            ],
+            [3],
         ];
 
         // filter by multiple complaint statuses
@@ -190,6 +202,7 @@ class GetComplaintsTest extends GraphQlWithLoginTestCase
                 ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW => 1,
                 ComplaintStatusDataFixture::COMPLAINT_STATUS_IN_PROGRESS => 0,
                 ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED => 1,
+                ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED_CLAIMABLE_AGAIN => 1,
             ],
         ];
 

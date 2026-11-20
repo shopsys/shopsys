@@ -7,13 +7,19 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Complaint\Status;
 use Override;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 final class ComplaintStatusFormType extends AbstractType
 {
+    public function __construct(private readonly ComplaintStatusTypeEnum $complaintStatusTypeEnum)
+    {
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,6 +38,16 @@ final class ComplaintStatusFormType extends AbstractType
                     ],
                 ],
             ]);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData */
+        $complaintStatusData = $options['data'];
+
+        if ($complaintStatusData->statusType !== ComplaintStatusTypeEnum::STATUS_TYPE_NEW) {
+            $builder->add('statusType', ChoiceType::class, [
+                'label' => t('Type'),
+                'choices' => $this->complaintStatusTypeEnum->getAssignableIndexedByTranslations(),
+            ]);
+        }
     }
 
     /**

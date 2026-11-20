@@ -179,7 +179,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
             [
                 'input' => [
                     'orderUuid' => $order->getUuid(),
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [

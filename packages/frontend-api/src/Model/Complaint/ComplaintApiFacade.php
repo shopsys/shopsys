@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -55,6 +56,7 @@ class ComplaintApiFacade
     {
         if ($complaintData->order !== null) {
             $this->checkOrderHasNoWithdrawalRequest($complaintData->order);
+            $this->validateComplaintQuantities($complaintData);
         }
 
         $complaintItemsData = [];
@@ -84,6 +86,32 @@ class ComplaintApiFacade
         return $complaint;
     }
 
+    protected function validateComplaintQuantities(ComplaintData $complaintData): void
+    {
+        $orderItems = [];
+
+        foreach ($complaintData->complaintItems as $complaintItemData) {
+            if ($complaintItemData->orderItem !== null) {
+                $orderItems[$complaintItemData->orderItem->getUuid()] = $complaintItemData->orderItem;
+            }
+        }
+
+        $remainingQuantities = $this->orderItemApiFacade->getRemainingComplaintQuantities($orderItems);
+
+        foreach ($complaintData->complaintItems as $complaintItemData) {
+            if ($complaintItemData->orderItem === null) {
+                continue;
+            }
+
+            $orderItemUuid = $complaintItemData->orderItem->getUuid();
+            $remainingQuantities[$orderItemUuid] -= $complaintItemData->quantity;
+
+            if ($remainingQuantities[$orderItemUuid] < 0) {
+                throw new InvalidQuantityUserError('Complaint item quantity exceeds the remaining quantity available for complaint');
+            }
+        }
+    }
+
     public function createFromComplaintInputArgument(Argument $argument): Complaint
     {
         $input = $argument['input'];
@@ -106,7 +134,7 @@ class ComplaintApiFacade
             $number,
             $order,
             $complaintItemsData,
-            $input['resolution'],
+            $input['preferredResolution'],
             $input['bankAccountNumber'],
             $customerUser,
         );
@@ -136,14 +164,10 @@ class ComplaintApiFacade
         return $complaintItemsData;
     }
 
-    protected function validateComplaintItem(OrderItem $orderItem, Order $order, array $complaintItemInputData): void
+    protected function validateComplaintItem(OrderItem $orderItem, Order $order): void
     {
         if ($orderItem->getOrder() !== $order) {
             throw new InvalidAccessUserError('You are not allowed to create complaint for this order item');
-        }
-
-        if ($complaintItemInputData['quantity'] > $orderItem->getQuantity()) {
-            throw new InvalidQuantityUserError('Complaint item quantity is higher than order item quantity');
         }
     }
 
@@ -247,7 +271,9 @@ class ComplaintApiFacade
     {
         return [
             'code' => $complaintStatus->getCode(),
-            'type' => $complaintStatus->getStatusType(),
+            'type' => $complaintStatus->getStatusType() === ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED_CLAIMABLE_AGAIN
+                ? ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED
+                : $complaintStatus->getStatusType(),
             'name' => $complaintStatus->getName($locale),
         ];
     }
@@ -285,7 +311,7 @@ class ComplaintApiFacade
 
             $orderItem = $orderItems[$orderItemUuid];
 
-            $this->validateComplaintItem($orderItem, $order, $item);
+            $this->validateComplaintItem($orderItem, $order);
 
             $complaintItemsData[] = $this->complaintItemDataApiFactory->createFromComplaintItemInput($item, $orderItem);
         }
