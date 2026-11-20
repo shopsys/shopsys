@@ -158,7 +158,7 @@ The various capabilities of this resolver are best described in its unit test `\
 
 Entities are created by factories. If any part of the framework creates an entity, it uses a factory.
 So, in the project, we can change the factory to produce extended entities instead of the original, and the whole system will create extended entities.
-We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/ObjectIsCreatedByFactorySniff.php).
+We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/General/ObjectIsCreatedByFactorySniff.php).
 
 The only exceptions are [translation entities](../model/entities.md#translation-entity) (named `*Translation`) and [domain entities](../model/entities.md#domain-entity) (named `*Domain`).
 They are created by their owner entity.
