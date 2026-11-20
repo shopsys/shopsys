@@ -398,6 +398,17 @@ class BlogArticle extends AbstractTranslatableEntity
         return $this->getDomain($domainId)->getPublishDate();
     }
 
+    public function isDraftOnAllDomains(): bool
+    {
+        foreach ($this->domains as $blogArticleDomain) {
+            if ($blogArticleDomain->getStatus() !== BlogArticleStatusEnum::STATUS_DRAFT) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function isAccessibleOnStorefront(int $domainId): bool
     {
         return $this->getDomain($domainId)->isAccessibleOnStorefront();

@@ -1,0 +1,107 @@
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %} - {{ 'MCP change requests'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'MCP server'|trans }}{% endblock %}
+{% block h1 %}{{ 'MCP change requests'|trans }}{% endblock %}
+
+{% block main_content %}
+    {# @var mcpChangeRequests \Shopsys\McpBundle\Model\ChangeRequest\McpChangeRequest[] #}
+    <div class="card">
+        {% if mcpChangeRequests is empty %}
+            <div class="card-body text-secondary">
+                {{ 'There are no MCP change requests waiting for your approval.'|trans }}
+            </div>
+        {% else %}
+            <div class="list-group list-group-flush">
+                {% for mcpChangeRequest in mcpChangeRequests %}
+                    {% set change = mcpChangeRequest.change %}
+                    {% set detailId = 'mcp-change-request-' ~ mcpChangeRequest.id %}
+                    {% set changedFieldCount = change.fields|reduce((labels, field) => field.label|trans(field.labelParameters) in labels ? labels : labels|merge([field.label|trans(field.labelParameters)]), [])|length %}
+                    <div class="list-group-item">
+                        <div class="row g-2 align-items-center">
+                            <div class="col-auto">
+                                <button
+                                    type="button"
+                                    class="btn btn-ghost-secondary btn-icon btn-sm{% if mcpChangeRequest.pending %} collapsed{% endif %}"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#{{ detailId }}"
+                                    aria-expanded="{{ mcpChangeRequest.pending ? 'false' : 'true' }}"
+                                    aria-controls="{{ detailId }}"
+                                    title="{{ 'Show change'|trans }}"
+                                >
+                                    {{ ux_icon('chevron-down', {class: 'icon icon-sm'}) }}
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-azure-lt text-azure-lt-fg font-monospace">{{ mcpChangeRequest.toolName }}</span>
+                            </div>
+                            <div class="col text-truncate">
+                                {% if change.subjectUrl %}
+                                    <a href="{{ change.subjectUrl }}" target="_blank" rel="noopener" class="fw-medium">
+                                        {{ change.subject|trans(change.subjectParameters) }}
+                                        {{ ux_icon('forward-page', {class: 'icon icon-sm'}) }}
+                                    </a>
+                                {% else %}
+                                    <span class="fw-medium">{{ change.subject|trans(change.subjectParameters) }}</span>
+                                {% endif %}
+                                <div class="text-secondary small">
+                                    {{ '%count% changed field|%count% changed fields'|trans({'%count%': changedFieldCount}) }}
+                                    · {{ mcpChangeRequest.createdAt|formatDateTime }}
+                                </div>
+                            </div>
+                            {% if not mcpChangeRequest.pending %}
+                                <div class="col-auto">
+                                    <span class="badge bg-red-lt text-red-lt-fg">{{ 'Failed'|trans }}</span>
+                                </div>
+                            {% endif %}
+                            <div class="col-auto d-flex gap-2">
+                                <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_discard', {id: mcpChangeRequest.id}) }}" class="btn btn-outline-danger btn-sm">
+                                    {{ 'Discard'|trans }}
+                                </a>
+                                {% if mcpChangeRequest.pending %}
+                                    <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_approve', {id: mcpChangeRequest.id}) }}" class="btn btn-primary btn-sm">
+                                        {{ 'Approve'|trans }}
+                                    </a>
+                                {% elseif mcpChangeRequest.refreshable %}
+                                    <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_refresh', {id: mcpChangeRequest.id}) }}" class="btn btn-primary btn-sm">
+                                        {{ 'Update according to current data'|trans }}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="collapse{% if not mcpChangeRequest.pending %} show{% endif %}" id="{{ detailId }}">
+                            <div class="pt-3">
+                                {% if not mcpChangeRequest.pending %}
+                                    <div class="alert alert-danger mb-3">{{ mcpChangeRequest.errorMessage }}</div>
+                                {% endif %}
+                                {% for field in change.fields %}
+                                    {% set previousField = loop.first ? null : change.fields[loop.index0 - 1] %}
+                                    {% set isSameFieldAsPrevious = previousField is not null and previousField.label == field.label and previousField.labelParameters == field.labelParameters %}
+                                    {% if not isSameFieldAsPrevious %}
+                                        <div class="small fw-medium text-secondary{% if not loop.first %} mt-3{% endif %} mb-1">{{ field.label|trans(field.labelParameters) }}</div>
+                                    {% endif %}
+                                    <div class="text-break border rounded px-2 py-1 mb-1 overflow-auto" style="white-space: pre-wrap; max-height: 20rem">
+                                        {%- if field.contextBefore ?? null -%}<span class="text-secondary">{{ field.contextBefore }}</span>{%- endif -%}
+                                        {%- set segments = mcpChangeDiff(field.before, field.after) -%}
+                                        {%- set segmentDisplayClass = segments|filter(segment => segment.type == 'equal') is empty ? ' d-block' : '' -%}
+                                        {%- for segment in segments -%}
+                                            {%- if segment.type == 'deleted' -%}
+                                                <del class="bg-red-lt text-red-lt-fg{{ segmentDisplayClass }}">{{ segment.text }}</del>
+                                            {%- elseif segment.type == 'inserted' -%}
+                                                <ins class="bg-green-lt text-green-lt-fg text-decoration-none{{ segmentDisplayClass }}">{{ segment.text }}</ins>
+                                            {%- else -%}
+                                                {{ segment.text }}
+                                            {%- endif -%}
+                                        {%- endfor -%}
+                                        {%- if field.contextAfter ?? null -%}<span class="text-secondary">{{ field.contextAfter }}</span>{%- endif -%}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
