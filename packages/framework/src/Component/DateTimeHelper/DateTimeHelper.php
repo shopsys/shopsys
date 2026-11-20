@@ -58,6 +58,13 @@ class DateTimeHelper
         )->format('N');
     }
 
+    public function getCurrentTime(int $domainId): string
+    {
+        return $this->clock->now()->setTimezone(
+            $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId),
+        )->format('H:i');
+    }
+
     public function createUtcDateTimeByTimeZoneAndString(
         string $dateTimeString,
         DateTimeZone $dateTimeZone,

@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDelive
 
 class SetExpectedDeliveryDateMiddleware implements OrderProcessorMiddlewareInterface
 {
+    public const string ADDITIONAL_DATA_PICKUP_PLACE_OPENING_HOURS = 'pickupPlaceOpeningHours';
+
     public function __construct(
         protected readonly TransportExpectedDeliveryDateCalculation $transportExpectedDeliveryDateCalculation,
     ) {
@@ -34,6 +36,7 @@ class SetExpectedDeliveryDateMiddleware implements OrderProcessorMiddlewareInter
                 $orderInput->getQuantifiedProducts(),
                 $orderProcessingData->getDomainId(),
                 $orderInput->findAdditionalData(PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER),
+                $orderInput->findAdditionalData(static::ADDITIONAL_DATA_PICKUP_PLACE_OPENING_HOURS),
             );
 
         return $orderProcessingStack->processNext($orderProcessingData);

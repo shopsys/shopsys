@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\Exception\TransportIsNotPersonalPickupException;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\TransportExpectedDeliveryDateCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\PickupPlace\PickupPlaceOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Symfony\Component\Clock\DatePoint;
 
@@ -616,6 +617,156 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
                 [],
                 Domain::FIRST_DOMAIN_ID,
                 'selected-store-uuid',
+            );
+
+        $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
+    }
+
+    /**
+     * @return iterable<string, array{daysUntilDelivery: int, pickupPlaceOpeningHours: array<string, mixed>, expectedDeliveryDate: string}>
+     */
+    public static function getPacketeryPickupPlaceOpeningHoursData(): iterable
+    {
+        $workingDays = [1 => '18:00', 2 => '18:00', 3 => '18:00', 4 => '18:00', 5 => '18:00'];
+        $everyDay = [...$workingDays, 6 => '18:00', 7 => '18:00'];
+
+        yield 'Saturday delivery is postponed to Monday when the point opens on working days only' => [
+            'daysUntilDelivery' => 2,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours($workingDays),
+            'expectedDeliveryDate' => '2026-07-20 00:00:00',
+        ];
+
+        yield 'today is kept while the point is still open' => [
+            'daysUntilDelivery' => 0,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours($everyDay),
+            'expectedDeliveryDate' => '2026-07-16 00:00:00',
+        ];
+
+        yield 'today is postponed when the point has already closed' => [
+            'daysUntilDelivery' => 0,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours([...$everyDay, 4 => '11:00']),
+            'expectedDeliveryDate' => '2026-07-17 00:00:00',
+        ];
+
+        yield 'exception days without opening hours close the point' => [
+            'daysUntilDelivery' => 1,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours(
+                $everyDay,
+                [['from' => '2026-07-17', 'to' => '2026-07-18', 'closingTime' => null]],
+            ),
+            'expectedDeliveryDate' => '2026-07-19 00:00:00',
+        ];
+
+        yield 'exception day with opening hours opens the regularly closed point' => [
+            'daysUntilDelivery' => 2,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours(
+                $workingDays,
+                [['from' => '2026-07-18', 'to' => null, 'closingTime' => '12:00']],
+            ),
+            'expectedDeliveryDate' => '2026-07-18 00:00:00',
+        ];
+
+        yield 'exception day without the last day applies to its first day only' => [
+            'daysUntilDelivery' => 1,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours(
+                $everyDay,
+                [['from' => '2026-07-17', 'to' => null, 'closingTime' => null]],
+            ),
+            'expectedDeliveryDate' => '2026-07-18 00:00:00',
+        ];
+
+        yield 'delivery date is kept when the point never opens' => [
+            'daysUntilDelivery' => 2,
+            'pickupPlaceOpeningHours' => self::createPickupPlaceOpeningHours([]),
+            'expectedDeliveryDate' => '2026-07-18 00:00:00',
+        ];
+    }
+
+    /**
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>} $pickupPlaceOpeningHours
+     */
+    #[DataProvider('getPacketeryPickupPlaceOpeningHoursData')]
+    public function testPacketeryDeliveryDateIsPostponedToTheFirstDayThePickupPlaceIsOpen(
+        int $daysUntilDelivery,
+        array $pickupPlaceOpeningHours,
+        string $expectedDeliveryDate,
+    ): void {
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()
+            ->calculateExpectedDeliveryDateForQuantifiedProducts(
+                $this->createPacketeryTransportStub($daysUntilDelivery),
+                [],
+                Domain::FIRST_DOMAIN_ID,
+                '2317',
+                $pickupPlaceOpeningHours,
+            );
+
+        $this->assertDeliveryDateSame($expectedDeliveryDate, $deliveryDate);
+    }
+
+    public function testPacketeryDeliveryDateIsPostponedToTheDayTheTransportDeliversAndThePickupPlaceIsOpen(): void
+    {
+        $transportStub = $this->createStub(Transport::class);
+        $transportStub->method('getDaysUntilDelivery')->willReturn(1);
+        $transportStub->method('isPacketery')->willReturn(true);
+        $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::WORKING_DAYS_OF_WEEK);
+
+        $pickupPlaceOpeningHours = self::createPickupPlaceOpeningHours(
+            [1 => '18:00', 2 => '18:00', 3 => '18:00', 4 => '18:00', 5 => '18:00', 6 => '18:00', 7 => '18:00'],
+            [['from' => '2026-07-17', 'to' => null, 'closingTime' => null]],
+        );
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()
+            ->calculateExpectedDeliveryDateForQuantifiedProducts(
+                $transportStub,
+                [],
+                Domain::FIRST_DOMAIN_ID,
+                '2317',
+                $pickupPlaceOpeningHours,
+            );
+
+        $this->assertDeliveryDateSame('2026-07-20 00:00:00', $deliveryDate);
+    }
+
+    public function testPickupPlaceOpeningHoursSelectedInCartDriveThePacketeryDeliveryDate(): void
+    {
+        $transportStub = $this->createPacketeryTransportStub(2);
+
+        $cartStub = $this->createStub(Cart::class);
+        $cartStub->method('getQuantifiedProducts')->willReturn([]);
+        $cartStub->method('getTransport')->willReturn($transportStub);
+        $cartStub->method('getPickupPlaceOpeningHours')->willReturn(self::createPickupPlaceOpeningHours([1 => '18:00']));
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()
+            ->calculateExpectedDeliveryDate($transportStub, $cartStub, Domain::FIRST_DOMAIN_ID);
+
+        $this->assertDeliveryDateSame('2026-07-20 00:00:00', $deliveryDate);
+    }
+
+    public function testPickupPlaceOpeningHoursSelectedInCartForAnotherTransportAreIgnored(): void
+    {
+        $anotherTransportStub = $this->createStub(Transport::class);
+        $anotherTransportStub->method('getId')->willReturn(2);
+
+        $cartStub = $this->createStub(Cart::class);
+        $cartStub->method('getQuantifiedProducts')->willReturn([]);
+        $cartStub->method('getTransport')->willReturn($anotherTransportStub);
+        $cartStub->method('getPickupPlaceOpeningHours')->willReturn(self::createPickupPlaceOpeningHours([1 => '18:00']));
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()
+            ->calculateExpectedDeliveryDate($this->createPacketeryTransportStub(2), $cartStub, Domain::FIRST_DOMAIN_ID);
+
+        $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
+    }
+
+    public function testPickupPlaceOpeningHoursAreIgnoredForTransportOtherThanPacketery(): void
+    {
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()
+            ->calculateExpectedDeliveryDateForQuantifiedProducts(
+                $this->createTransportStubDeliveringAnyDay(2),
+                [],
+                Domain::FIRST_DOMAIN_ID,
+                null,
+                self::createPickupPlaceOpeningHours([1 => '18:00']),
             );
 
         $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
@@ -1318,7 +1469,53 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             new InMemoryCache(),
             new StoreOpeningHoursProvider($this->createStub(ClosedDayFacade::class), new InMemoryCache()),
             new AdditionalServicesDeliveryDaysExtensionCalculation(),
+            new PickupPlaceOpeningHoursProvider(),
+            new DateTimeHelper($displayTimeZoneProviderStub, $clockStub),
         );
+    }
+
+    private function createPacketeryTransportStub(int $daysUntilDelivery): Transport
+    {
+        $transportStub = $this->createStub(Transport::class);
+        $transportStub->method('getId')->willReturn(1);
+        $transportStub->method('getDaysUntilDelivery')->willReturn($daysUntilDelivery);
+        $transportStub->method('isPacketery')->willReturn(true);
+        $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::ALL_DAYS_OF_WEEK);
+
+        return $transportStub;
+    }
+
+    /**
+     * @param array<int, string> $closingTimesByDayOfWeek
+     * @param array<int, array{from: string, to: string|null, closingTime: string|null}> $exceptionDays
+     * @return array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}
+     */
+    private static function createPickupPlaceOpeningHours(
+        array $closingTimesByDayOfWeek,
+        array $exceptionDays = [],
+    ): array {
+        $openingHoursOfDays = [];
+
+        foreach ($closingTimesByDayOfWeek as $dayOfWeek => $closingTime) {
+            $openingHoursOfDays[] = [
+                'dayOfWeek' => $dayOfWeek,
+                'openingHoursRanges' => [['openingTime' => '08:00', 'closingTime' => $closingTime]],
+            ];
+        }
+
+        return [
+            'openingHoursOfDays' => $openingHoursOfDays,
+            'exceptionDays' => array_map(
+                static fn (array $exceptionDay): array => [
+                    'from' => $exceptionDay['from'],
+                    'to' => $exceptionDay['to'],
+                    'openingHoursRanges' => $exceptionDay['closingTime'] === null
+                        ? []
+                        : [['openingTime' => '08:00', 'closingTime' => $exceptionDay['closingTime']]],
+                ],
+                $exceptionDays,
+            ),
+        ];
     }
 
     private function createTransportStubDeliveringAnyDay(

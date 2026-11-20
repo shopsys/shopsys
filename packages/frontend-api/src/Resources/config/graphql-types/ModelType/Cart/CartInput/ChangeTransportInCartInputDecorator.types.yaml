@@ -16,3 +16,8 @@ ChangeTransportInCartInputDecorator:
                 type: "String"
                 defaultValue: null
                 description: "The identifier of selected personal pickup place"
+            pickupPlaceOpeningHours:
+                type: "PickupPlaceOpeningHoursInput"
+                defaultValue: null
+                description: "Opening hours of the selected pickup place that is not managed by the application; the expected delivery date is postponed to the first day the pickup place is open"
+                validation: cascade

@@ -1,0 +1,20 @@
+PickupPlaceOpeningHoursRangeInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Time period when a pickup place is open"
+        fields:
+            openingTime:
+                type: "String!"
+                description: "Opening time in the HH:mm format"
+                validation:
+                    -   Regex:
+                            pattern: '/^([01]\d|2[0-3]):[0-5]\d$/'
+                            message: "Opening time must be in the HH:mm format"
+            closingTime:
+                type: "String!"
+                description: "Closing time in the HH:mm format"
+                validation:
+                    -   Regex:
+                            pattern: '/^([01]\d|2[0-3]):[0-5]\d$/'
+                            message: "Closing time must be in the HH:mm format"

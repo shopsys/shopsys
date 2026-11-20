@@ -857,6 +857,8 @@ export type TypeChangeTransportInCartInput = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** The identifier of selected personal pickup place */
   pickupPlaceIdentifier?: InputMaybe<Scalars['String']['input']>;
+  /** Opening hours of the selected pickup place that is not managed by the application; the expected delivery date is postponed to the first day the pickup place is open */
+  pickupPlaceOpeningHours?: InputMaybe<TypePickupPlaceOpeningHoursInput>;
   /** UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart */
   transportUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
@@ -2850,6 +2852,40 @@ export type TypePhonePrefix = {
   flagEmoji: Scalars['String']['output'];
 };
 
+/** Period when the opening hours of a pickup place differ from the regular ones */
+export type TypePickupPlaceExceptionDayInput = {
+  /** First day of the period in the YYYY-MM-DD format */
+  from: Scalars['String']['input'];
+  /** Time periods when the pickup place is open during the period; empty when it is closed */
+  openingHoursRanges: Array<TypePickupPlaceOpeningHoursRangeInput>;
+  /** Last day of the period in the YYYY-MM-DD format; null when the period is the first day only */
+  to?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Opening hours of a pickup place that is not managed by the application */
+export type TypePickupPlaceOpeningHoursInput = {
+  /** Periods with opening hours different from the regular ones */
+  exceptionDays: Array<TypePickupPlaceExceptionDayInput>;
+  /** Regular opening hours of the days of the week; a day that is not listed is closed */
+  openingHoursOfDays: Array<TypePickupPlaceOpeningHoursOfDayInput>;
+};
+
+/** Regular opening hours of a pickup place on a day of the week */
+export type TypePickupPlaceOpeningHoursOfDayInput = {
+  /** ISO-8601 day of the week (1 for Monday through 7 for Sunday) */
+  dayOfWeek: Scalars['Int']['input'];
+  /** Time periods when the pickup place is open on the day */
+  openingHoursRanges: Array<TypePickupPlaceOpeningHoursRangeInput>;
+};
+
+/** Time period when a pickup place is open */
+export type TypePickupPlaceOpeningHoursRangeInput = {
+  /** Closing time in the HH:mm format */
+  closingTime: Scalars['String']['input'];
+  /** Opening time in the HH:mm format */
+  openingTime: Scalars['String']['input'];
+};
+
 /** Represents the price */
 export type TypePrice = {
   __typename?: 'Price';
@@ -4373,7 +4409,7 @@ export type TypeTransport = {
   __typename?: 'Transport';
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
-  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead. */
+  /** Expected delivery date of an order placed today. When a cart is provided, the expected restocking dates of its items are taken into account. For a personal pickup transport the date of the store selected in the cart is used, otherwise the best possible date across all stores. When the cart contains the opening hours of the selected pickup place, the date is postponed to the first day the pickup place is open. Null when no delivery date can be promised. For a single piece of a product independently of any cart, use the productDeliveryOptions query instead. */
   expectedDeliveryDate: Maybe<Scalars['DateTime']['output']>;
   /** Transport group */
   group: Maybe<TypeTransportGroup>;

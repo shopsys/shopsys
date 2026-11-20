@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput as BaseOrderInput;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetExpectedDeliveryDateMiddleware;
 use Shopsys\FrameworkBundle\Model\Order\Processing\Preloader\OrderInputPreloaderFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -40,6 +41,7 @@ class OrderInputFactory
         $orderInput->setTransport($cart->getTransport());
 
         $orderInput->addAdditionalData(PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER, $cart->getPickupPlaceIdentifier());
+        $orderInput->addAdditionalData(SetExpectedDeliveryDateMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_OPENING_HOURS, $cart->getPickupPlaceOpeningHours());
         $orderInput->addAdditionalData(AddPaymentMiddleware::ADDITIONAL_DATA_GOPAY_BANK_SWIFT, $cart->getPaymentGoPayBankSwift());
         $orderInput->addAdditionalData(AddTransportMiddleware::ADDITIONAL_DATA_CART_TOTAL_WEIGHT, $cart->getTotalWeight());
 
