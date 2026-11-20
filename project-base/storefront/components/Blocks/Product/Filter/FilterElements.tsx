@@ -60,7 +60,7 @@ export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, 
 );
 
 export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyName }) => (
-    <AnimateCollapseDiv className="flex! flex-col gap-2.5" keyName={keyName}>
+    <AnimateCollapseDiv className="flex! w-full min-w-0 flex-col gap-2.5" keyName={keyName}>
         {children}
     </AnimateCollapseDiv>
 );
