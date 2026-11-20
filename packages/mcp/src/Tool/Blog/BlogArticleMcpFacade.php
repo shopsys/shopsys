@@ -35,6 +35,30 @@ class BlogArticleMcpFacade
     ) {
     }
 
+    /**
+     * @param array<string, string> $names
+     * @param array<string, string> $perexes
+     * @param array<string, string> $descriptions
+     * @param array<int, int[]> $blogCategoryIdsByDomainId
+     * @param array<int, array{title?: string|null, metaDescription?: string|null, h1?: string|null}> $seoByDomainId
+     */
+    public function create(
+        array $names,
+        array $perexes = [],
+        array $descriptions = [],
+        array $blogCategoryIdsByDomainId = [],
+        array $seoByDomainId = [],
+    ): BlogArticle {
+        if ($names === []) {
+            throw new ToolCallException('At least one name of the blog article must be given.');
+        }
+
+        $blogArticleData = $this->blogArticleDataFactory->create();
+        $this->applyInput($blogArticleData, $names, $perexes, $descriptions, $blogCategoryIdsByDomainId, $seoByDomainId);
+
+        return $this->blogArticleFacade->create($blogArticleData);
+    }
+
     public function edit(EditBlogArticleArguments $arguments): BlogArticle
     {
         $blogArticle = $this->getById($arguments->blogArticleId);
