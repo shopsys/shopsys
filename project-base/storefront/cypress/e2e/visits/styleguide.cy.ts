@@ -186,7 +186,8 @@ describe('Styleguide Tests (SSP-4301)', () => {
         cy.getByTID([[TIDs.styleguide_button_, 'small']]).should('be.visible');
     });
 
-    afterEach(() => {
+    // Disabling touch also resets desktop pointer media, so clean up only after the final touch test.
+    after(() => {
         cy.then(() => setTouchEmulation(false));
     });
 
