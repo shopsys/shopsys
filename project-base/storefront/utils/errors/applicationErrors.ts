@@ -48,7 +48,6 @@ const ApplicationErrors = {
 
     // No-flash-message codes (logged but no toast shown to user)
     'advert-position-without-category': 'no-flash-message',
-    'article-not-found': 'no-flash-message',
     'article-not-found-privacy-policy': 'no-flash-message',
     'article-not-found-product-review-policy': 'no-flash-message',
     'article-not-found-terms-and-conditions': 'no-flash-message',
@@ -87,6 +86,7 @@ const ApplicationErrors = {
     'WISHLIST-product-list-not-found': 'no-flash-message',
 
     // No-log codes (expected errors, handled by specific code)
+    'article-not-found': 'no-log',
     'blog-category-not-found': 'no-log',
     'COMPARISON-product-already-in-list': 'no-log',
     'COMPARISON-product-not-in-list': 'no-log',
