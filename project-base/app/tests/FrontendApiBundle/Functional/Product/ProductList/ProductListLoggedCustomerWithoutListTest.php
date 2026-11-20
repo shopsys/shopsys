@@ -13,6 +13,8 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 {
+    use ProductListProductIdsTrait;
+
     public const string DEFAULT_USER_EMAIL = 'no-reply.3@shopsys.com';
     public const string DEFAULT_USER_PASSWORD = 'no-reply.3';
 
@@ -50,7 +52,7 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'AddProductToList');
 
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+        $this->assertSame([$productToAddId], $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -86,7 +88,7 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 
         $this->assertSame($productListUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$product1->getId()], array_column($data['products'], 'id'));
+        $this->assertSame([$product1->getId()], $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]

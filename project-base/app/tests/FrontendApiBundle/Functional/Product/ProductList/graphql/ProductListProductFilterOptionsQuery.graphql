@@ -1,0 +1,9 @@
+query ProductListProductFilterOptionsQuery($uuid: Uuid, $type: ProductListTypeEnum!) {
+    productList(input: {uuid: $uuid, type: $type}) {
+        products {
+            productFilterOptions {
+                inStock
+            }
+        }
+    }
+}

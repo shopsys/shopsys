@@ -43,6 +43,8 @@ export type TypeProductOrderingModeEnum =
   | 'NAME_ASC'
   /** Order by name descending */
   | 'NAME_DESC'
+  /** Order by the position in the product list */
+  | 'POSITION'
   /** Order by price ascending */
   | 'PRICE_ASC'
   /** Order by price descending */

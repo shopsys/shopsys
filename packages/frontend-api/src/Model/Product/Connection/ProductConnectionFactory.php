@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader;
+use Shopsys\FrontendApiBundle\Model\Product\Connection\Exception\ProductFilterOptionsNotSupportedUserError;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFacade;
 
 class ProductConnectionFactory
@@ -155,6 +156,19 @@ class ProductConnectionFactory
                 );
             }),
         );
+    }
+
+    public function createConnectionPromiseForProductList(
+        Closure $retrieveProductClosure,
+        Argument $argument,
+        string $orderingMode,
+        string $batchLoadDataId,
+    ): Promise {
+        $productFilterOptionsClosure = static function (): never {
+            throw new ProductFilterOptionsNotSupportedUserError('Product filter options are not supported for product lists.');
+        };
+
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $orderingMode);
     }
 
     public function createConnectionPromiseForFlag(

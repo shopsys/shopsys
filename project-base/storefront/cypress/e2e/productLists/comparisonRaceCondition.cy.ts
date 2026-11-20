@@ -1,10 +1,11 @@
-import { staticData } from 'fixtures/demodata';
+import { staticData, url } from 'fixtures/demodata';
 import {
     checkNumberOfApiRequestsTriggeredByActions,
     initializePersistStoreInLocalStorageToDefaultValues,
 } from 'support';
 import { visitEntityByUuid } from 'support/navigation';
 import { TIDs } from 'tids';
+import { checkQueuedProductAdditions } from './productListsSupport';
 
 describe('Comparison Race Condition Tests', () => {
     beforeEach(() => {
@@ -46,26 +47,9 @@ describe('Comparison Race Condition Tests', () => {
         );
     });
 
-    it('[Comparison Add - Different Products Rapid Click] should send only one AddProductToList request when no list exists yet', () => {
+    it('[Comparison Add - Different Products Rapid Click] should add both products to the same new list', () => {
         visitEntityByUuid('category', staticData.categories.electronics.uuid);
 
-        checkNumberOfApiRequestsTriggeredByActions(
-            () => {
-                cy.getByTID([
-                    [TIDs.blocks_product_list_listeditem_, staticData.products.helloKitty.catnum],
-                    TIDs.product_compare_button,
-                ])
-                    .should('be.visible')
-                    .click();
-                cy.getByTID([
-                    [TIDs.blocks_product_list_listeditem_, staticData.products.philips32PFL4308.catnum],
-                    TIDs.product_compare_button,
-                ])
-                    .should('be.visible')
-                    .click();
-            },
-            1,
-            'AddProductToListMutation',
-        );
+        checkQueuedProductAdditions(TIDs.product_compare_button, url.productComparison, TIDs.comparison_product_);
     });
 });

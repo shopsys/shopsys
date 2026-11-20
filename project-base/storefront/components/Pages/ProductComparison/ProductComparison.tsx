@@ -1,3 +1,4 @@
+import { Alert } from 'components/Basic/Alert/Alert';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { TrashCanIcon } from 'components/Basic/Icon/TrashCanIcon';
 import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonModuleComparison';
@@ -12,7 +13,8 @@ import { ProductComparisonContent } from './ProductComparisonContent';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();
-    const { products, isLoading, emptyStateRef, handleRemove, handleRemoveAll, moveProduct } = useComparisonPage();
+    const { products, isLoading, hasProductListError, emptyStateRef, handleRemove, handleRemoveAll, moveProduct } =
+        useComparisonPage();
     const title = `${t('Product comparison')}${products.length ? ` (${products.length})` : ''}`;
 
     return (
@@ -52,6 +54,10 @@ export const ProductComparison: FC = () => {
                         onRemove={handleRemove}
                         onMoveProduct={moveProduct}
                     />
+                ) : hasProductListError ? (
+                    <Alert title={t('Something went wrong.')} variant="error">
+                        {t('Please try again later or contact us.')}
+                    </Alert>
                 ) : (
                     <div data-tid={TIDs.comparison_empty_state} ref={emptyStateRef} tabIndex={-1}>
                         <PageHero
