@@ -26,13 +26,13 @@ To see the failed batches, you can use the `messenger:failed:show` command to se
 php ./bin/console messenger:failed:show
 
 There are 3 messages pending in the failure transport.
- ---- --------------------------------------------------------------------------------- --------------------- ----------------------------------------------------------
-  Id   Class                                                                             Failed at             Error
- ---- --------------------------------------------------------------------------------- --------------------- ----------------------------------------------------------
-  36   Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage   2023-12-27 13:43:15   Product visibility was not found for product with ID #1.
-  37   Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage   2023-12-27 13:43:15   Product visibility was not found for product with ID #1.
-  38   Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage   2023-12-27 13:43:15   Product visibility was not found for product with ID #1.
- ---- --------------------------------------------------------------------------------- --------------------- ----------------------------------------------------------
+ ---- ------------------------------------------------------------------------------------------------ --------------------- ----------------------------------------------------------
+  Id   Class                                                                                            Failed at             Error
+ ---- ------------------------------------------------------------------------------------------------ --------------------- ----------------------------------------------------------
+  36   Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage   2023-12-27 13:43:15   Product visibility was not found for product with ID #1.
+  37   Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage   2023-12-27 13:43:15   Product visibility was not found for product with ID #1.
+  38   Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage   2023-12-27 13:43:15   Product visibility was not found for product with ID #1.
+ ---- ------------------------------------------------------------------------------------------------ --------------------- ----------------------------------------------------------
 
  // Run messenger:failed:show {id} --transport=failed -vv to see message details.
 ```

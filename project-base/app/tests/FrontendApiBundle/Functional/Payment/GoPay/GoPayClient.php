@@ -6,11 +6,14 @@ namespace Tests\FrontendApiBundle\Functional\Payment\GoPay;
 
 use GoPay\Http\Response;
 use Override;
+use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayClient as BaseGoPayClient;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayClient extends BaseGoPayClient
 {
+    public const string PAYMENT_ID_WITH_API_FAILURE = 'gopay-api-failure';
+
     /**
      * @var array<string, mixed>|null
      */
@@ -36,6 +39,13 @@ class GoPayClient extends BaseGoPayClient
     #[Override]
     public function getStatus(string $id): Response
     {
+        if ($id === self::PAYMENT_ID_WITH_API_FAILURE) {
+            $failedResponse = new Response();
+            $failedResponse->statusCode = 500;
+
+            throw new GoPayPaymentDownloadException('payments/payment/' . $id, 'GET', 200, null, $failedResponse);
+        }
+
         $response = new Response();
         $response->json = [
             'state' => 'PAID',

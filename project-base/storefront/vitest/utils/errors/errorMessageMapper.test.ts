@@ -196,6 +196,7 @@ describe('getErrorMessage', () => {
             ['register-by-order-is-not-possible', 'It was not possible to create register new user from the order'],
             ['store-not-found', 'Store not found.'],
             ['too-many-code-application-attempts', 'Too many attempts to apply a code. Try again later.'],
+            ['too-many-customer-registration-attempts', 'Too many registration attempts. Try again later.'],
             ['too-many-login-attempts', 'Too many login attempts. Try again later.'],
             ['too-many-password-recovery-attempts', 'Too many password recovery attempts. Try again later.'],
             ['too-many-store-search-attempts', 'Too many store search attempts. Try again later.'],

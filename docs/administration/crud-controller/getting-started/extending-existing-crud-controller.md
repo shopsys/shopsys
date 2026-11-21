@@ -2,7 +2,7 @@
 
 This guide will show you how to extend an existing CRUD Controller in your project.
 
-Prerequisite is an existing CrudController class defined for example in `Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController`.
+Prerequisite is an existing CrudController class defined for example in `Shopsys\AdministrationBundle\Controller\StoreController`.
 
 ## Create extension class
 
@@ -18,23 +18,23 @@ namespace App\Controller\Admin;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
-use Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController;
+use Shopsys\AdministrationBundle\Controller\StoreController;
 
-#[CrudControllerExtension(crudController: OrderCrudController::class)]
-class OrderControllerExtension extends AbstractCrudControllerExtension
+#[CrudControllerExtension(crudController: StoreController::class)]
+class StoreControllerExtension extends AbstractCrudControllerExtension
 {
 
 }
 ```
 
-Class will be automatically registered as a service and will be used as an extension for the `OrderCrudController`.
+Class will be automatically registered as a service and will be used as an extension for the `StoreController`.
 
 ## Override CRUD controller
 
 That's it! Now you can override methods defined in `AbstractCrudControllerExtension` that copies the methods from the original Crud Controller.
 
 ```php
-// OrderControllerExtension.php
+// StoreControllerExtension.php
 
 public function configure(CrudConfig $config): void
 {
@@ -46,7 +46,7 @@ public function configure(CrudConfig $config): void
 public function configureDatagrid(Datagrid $datagrid): void
 {
     $datagrid
-        ->remove('number')
+        ->remove('stock')
         ->add('city', [
             'label' => t('City'),
         ])
@@ -58,8 +58,10 @@ public function configureDatagrid(Datagrid $datagrid): void
 
 Extensions can add fields to forms using the `configureForm()` method. This works **only when the original controller uses the builder mode** (`useBuilder()`). When the controller uses `useFormType()`, the form is fully defined by the FormType class and extensions cannot add fields via the builder.
 
+`StoreController` uses `useFormType()`, so the following example applies to an extension of a CRUD Controller in the builder mode, e.g. one defined in your project.
+
 ```php
-// OrderControllerExtension.php
+// MyEntityControllerExtension.php
 
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
@@ -90,24 +92,24 @@ Extensions are called after the original controller, so they can read its variab
     Extend the controller's template (e.g. `@ShopsysAdministration/content/blogArticleAuthor/edit.html.twig`) rather than `@ShopsysAdministration/crud/…`, otherwise the content the controller adds to the page disappears.
 
 ```php
-// OrderControllerExtension.php
+// StoreControllerExtension.php
 
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Crud\Template\CrudTemplateParameters;
-use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 public function configure(CrudConfig $config): void
 {
-    $config->setTemplate(ActionType::EDIT, 'Admin/Order/edit.html.twig');
+    $config->setTemplate(ActionType::EDIT, 'Admin/Store/edit.html.twig');
 }
 
 public function configureTemplateParameters(CrudTemplateParameters $templateParameters): void
 {
     if ($templateParameters->isAction(ActionType::EDIT)) {
         $templateParameters->set(
-            'orderItemsGridView',
-            $this->createOrderItemsGrid($templateParameters->getEntity(Order::class))->createView(),
+            'stock',
+            $templateParameters->getEntity(Store::class)->getStock(),
         );
     }
 }
@@ -131,12 +133,12 @@ use Shopsys\AdministrationBundle\Component\Attributes\CrudControllerExtension;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudEditHookExtensionInterface;
 use Shopsys\AdministrationBundle\Component\Crud\Extension\CrudCreateHookExtensionInterface;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudControllerExtension;
+use Shopsys\AdministrationBundle\Controller\StoreController;
 use Shopsys\FrameworkBundle\Component\Utils\Presentable;
-use Shopsys\FrameworkBundle\Controller\Admin\OrderCrudController;
 use Throwable;
 
-#[CrudControllerExtension(crudController: OrderCrudController::class)]
-class OrderControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface, CrudCreateHookExtensionInterface
+#[CrudControllerExtension(crudController: StoreController::class)]
+class StoreControllerExtension extends AbstractCrudControllerExtension implements CrudEditHookExtensionInterface, CrudCreateHookExtensionInterface
 {
     public function beforeEdit(Presentable $entity, object $data): void
     {
@@ -185,9 +187,9 @@ A higher priority value means that the extension will be executed later. The def
 An extension can override the [role constant](../reference/crud-controller.md#role-constant) of the extended controller by declaring the `#[ForRole]` attribute on the extension class:
 
 ```php
-#[CrudControllerExtension(crudController: OrderCrudController::class)]
-#[ForRole(CustomRoleConstant::ROLE_ORDER_MANAGER)]
-class OrderCrudControllerExtension extends AbstractCrudControllerExtension
+#[CrudControllerExtension(crudController: StoreController::class)]
+#[ForRole(CustomRoleConstant::ROLE_STORE_MANAGER)]
+class StoreControllerExtension extends AbstractCrudControllerExtension
 ```
 
 When multiple extensions declare the attribute, the one executed last (the highest priority) wins.

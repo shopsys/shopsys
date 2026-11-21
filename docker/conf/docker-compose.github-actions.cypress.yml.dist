@@ -21,7 +21,7 @@ services:
             retries: 15
 
     webserver:
-        image: nginx:1.29-alpine
+        image: nginx:1.31-alpine
         container_name: shopsys-framework-webserver
         depends_on:
             - php-fpm
@@ -44,7 +44,7 @@ services:
         container_name: shopsys-framework-php-fpm
         volumes:
             - web-volume:/var/www/html/project-base/app/web
-            - ./project-base/gitlab/cypress-rate-limiter.yaml:/var/www/html/project-base/app/config/packages/zz_cypress_rate_limiter.yaml:ro
+            - ./project-base/gitlab/cypress-rate-limiter.yaml:/var/www/html/project-base/app/config/packages/zz_cypress_rate_limiter.yaml
 
     php-consumer:
         restart: always
