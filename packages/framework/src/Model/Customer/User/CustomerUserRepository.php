@@ -85,7 +85,17 @@ class CustomerUserRepository
     public function getOneByUuid(string $uuid): CustomerUser
     {
         /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser */
-        $customerUser = $this->getCustomerUserRepository()->findOneBy(['uuid' => $uuid]);
+        $customerUser = $this->getCustomerUserRepository()->createQueryBuilder('cu')
+            // the customer user is loaded by its UUID for every authenticated request,
+            // the relations are fetched along so they are not lazy loaded one by one afterwards
+            ->addSelect('c, pg, rg, rgt')
+            ->join('cu.customer', 'c')
+            ->join('cu.pricingGroup', 'pg')
+            ->join('cu.roleGroup', 'rg')
+            ->leftJoin('rg.translations', 'rgt')
+            ->where('cu.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->getQuery()->getOneOrNullResult();
 
         if ($customerUser === null) {
             throw new CustomerUserNotFoundException('Customer with UUID ' . $uuid . ' does not exist.');
@@ -133,7 +143,10 @@ class CustomerUserRepository
         array $salesRepresentativeIds,
         int $emailsLimit,
     ): array {
-        $summariesIndexedBySalesRepresentativeId = array_fill_keys($salesRepresentativeIds, ['count' => 0, 'emails' => []]);
+        $summariesIndexedBySalesRepresentativeId = array_fill_keys($salesRepresentativeIds, [
+            'count' => 0,
+            'emails' => [],
+        ]);
 
         if ($salesRepresentativeIds === []) {
             return $summariesIndexedBySalesRepresentativeId;
