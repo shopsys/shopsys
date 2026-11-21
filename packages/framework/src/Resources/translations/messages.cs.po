@@ -3904,6 +3904,9 @@ msgstr "Můžete nahrávat formáty: PNG, JPG"
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr "Můžete nahrávat formáty: PNG, JPG a GIF"
 
+msgid "You can upload following formats: PNG, JPG, GIF, SVG"
+msgstr "Můžete nahrávat formáty: PNG, JPG, GIF a SVG"
+
 msgid "You can't delete yourself."
 msgstr "Nemůžete smazat sami sebe."
 
