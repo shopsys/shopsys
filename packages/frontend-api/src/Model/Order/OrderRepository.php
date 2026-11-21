@@ -69,12 +69,16 @@ class OrderRepository
             $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
         }
 
-        return $queryBuilder
+        $orders = $queryBuilder
             ->orderBy('o.createdAt', SortDirection::Descending)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
+
+        $this->preloadRelationsOfListedOrders($orders);
+
+        return $orders;
     }
 
     public function getCustomerUserOrderCount(CustomerUser $customerUser, OrderFilter $filter): int
@@ -149,7 +153,60 @@ class OrderRepository
 
         $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
 
-        return $queryBuilder->getQuery()->getResult();
+        $orders = $queryBuilder->getQuery()->getResult();
+
+        $this->preloadRelationsOfListedOrders($orders);
+
+        return $orders;
+    }
+
+    /**
+     * Initializes the relations the order list reads from every order (items with their related items and the
+     * translated payment and transport, payment transactions and the translated status) by a fixed number of queries,
+     * so they are not lazy loaded order by order. The relations are loaded by separate queries, because fetch joining
+     * collections into the paginated list would break the pagination and joining them all at once would multiply the rows.
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order[] $orders
+     */
+    protected function preloadRelationsOfListedOrders(array $orders): void
+    {
+        if ($orders === []) {
+            return;
+        }
+
+        // the payment and the transport belong to different items, so their translations do not multiply each other
+        $this->createListedOrdersQueryBuilder($orders)
+            ->addSelect('oi, ori, p, pt, t, tt')
+            ->leftJoin('o.items', 'oi')
+            ->leftJoin('oi.relatedItems', 'ori')
+            ->leftJoin('oi.payment', 'p')
+            ->leftJoin('p.translations', 'pt')
+            ->leftJoin('oi.transport', 't')
+            ->leftJoin('t.translations', 'tt')
+            ->getQuery()->getResult();
+
+        $this->createListedOrdersQueryBuilder($orders)
+            ->addSelect('opt')
+            ->leftJoin('o.paymentTransactions', 'opt')
+            ->getQuery()->getResult();
+
+        $this->createListedOrdersQueryBuilder($orders)
+            ->addSelect('os, ost')
+            ->leftJoin('o.status', 'os')
+            ->leftJoin('os.translations', 'ost')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order[] $orders
+     */
+    protected function createListedOrdersQueryBuilder(array $orders): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('o')
+            ->from(Order::class, 'o')
+            ->where('o IN (:orders)')
+            ->setParameter('orders', $orders);
     }
 
     public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int
