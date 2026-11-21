@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Cache;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Cache\Exception\NamespaceCacheKeyNotFoundException;
+use Shopsys\FrameworkBundle\Component\Cache\Exception\ValueCacheKeyNotFoundException;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 
 class InMemoryCacheTest extends TestCase
@@ -114,6 +116,44 @@ class InMemoryCacheTest extends TestCase
         $inMemoryCache->reset();
 
         $this->assertFalse($inMemoryCache->hasItem($namespace, $key));
+    }
+
+    public function testNullValueIsFoundAndNotComputedAgain(): void
+    {
+        $inMemoryCache = new InMemoryCache();
+        $inMemoryCache->save('test', null, 'key');
+
+        $this->assertTrue($inMemoryCache->hasItem('test', 'key'));
+        $this->assertNull($inMemoryCache->getOrSaveValue('test', fn () => 'computed', 'key'));
+    }
+
+    public function testValueIsFoundUnderKeyAndNamespaceWithNotAllowedCharacters(): void
+    {
+        $inMemoryCache = new InMemoryCache();
+        $inMemoryCache->save('App\\Model{namespace}', 'value', 'App\\Model\\Product', '15:1');
+
+        $this->assertSame('value', $inMemoryCache->getItem('App\\Model{namespace}', 'App\\Model\\Product', '15:1'));
+        $this->assertSame('value', $inMemoryCache->getItem('App~Model~namespace~', 'App~Model~Product~15~1'));
+        $this->assertSame(
+            ['App~Model~Product~15~1' => 'value'],
+            $inMemoryCache->getValuesByNamespace('App\\Model{namespace}'),
+        );
+    }
+
+    public function testMissingNamespaceAndMissingValueAreReportedByExceptions(): void
+    {
+        $inMemoryCache = new InMemoryCache();
+
+        try {
+            $inMemoryCache->getItem('test', 'key');
+            $this->fail('Exception for a missing namespace was expected.');
+        } catch (NamespaceCacheKeyNotFoundException) {
+            $inMemoryCache->save('test', 'value', 'other key');
+        }
+
+        $this->expectException(ValueCacheKeyNotFoundException::class);
+
+        $inMemoryCache->getItem('test', 'key');
     }
 
     public function testDeleteAllItemsInNamespace(): void

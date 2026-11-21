@@ -20,6 +20,8 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderRepository as BaseOrderRepository
  * @method \App\Model\Order\Order getByOrderNumberAndCustomer(string $orderNumber, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  * @method \Doctrine\ORM\QueryBuilder createCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method array<int, int> getCustomerUserOrderStatusCounts(\App\Model\Customer\User\CustomerUser $customerUser, \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter)
+ * @method void preloadRelationsOfListedOrders(\App\Model\Order\Order[] $orders)
+ * @method \Doctrine\ORM\QueryBuilder createListedOrdersQueryBuilder(\App\Model\Order\Order[] $orders)
  */
 class OrderRepository extends BaseOrderRepository
 {

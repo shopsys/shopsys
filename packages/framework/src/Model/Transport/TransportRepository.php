@@ -191,8 +191,14 @@ class TransportRepository
         $queryBuilder = $this->getQueryBuilderForAll()
             ->addSelect('td')
             ->addSelect('tt')
+            ->addSelect('tdv')
+            ->addSelect('tg')
+            ->addSelect('tgt')
             ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
+            ->join('td.vat', 'tdv')
+            ->leftJoin('t.group', 'tg')
+            ->leftJoin('tg.translations', 'tgt')
             ->setParameter('domainId', $domainConfig->getId())
             ->setParameter('locale', $domainConfig->getLocale());
 

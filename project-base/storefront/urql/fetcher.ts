@@ -256,7 +256,7 @@ export const fetcher =
 
             const res = await result.json();
 
-            if (res.data !== undefined && res.error === undefined) {
+            if (res.data !== undefined && res.errors === undefined) {
                 try {
                     await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
                 } catch (error) {

@@ -247,6 +247,26 @@ describe('fetcher test', () => {
         );
     });
 
+    test('using fetcher on a cached query should not save a response with GraphQL errors to Redis', async () => {
+        isClientGetter.mockImplementation(() => false);
+        vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
+        const responseWithErrors = { data: TEST_RESPONSE_BODY, errors: [{ message: 'Internal server Error' }] };
+        mockFetch.mockImplementation(() =>
+            Promise.resolve({
+                headers: new Headers({
+                    'content-type': 'application/json',
+                }),
+                json: () => Promise.resolve(responseWithErrors),
+            }),
+        );
+
+        const testFetcher = fetcher(mockRedisClient);
+        const response = await (await testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE)).json();
+
+        expect(mockRedisClient.set).not.toBeCalled();
+        expect(response).toStrictEqual(responseWithErrors);
+    });
+
     test('using fetcher on StoresQuery should use operation name in Redis cache key', async () => {
         isClientGetter.mockImplementation(() => false);
         vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');

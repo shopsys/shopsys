@@ -239,6 +239,7 @@
         <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="install"/>
             <arg value="--no-dev"/>
+            <arg value="--optimize-autoloader"/>
         </exec>
     </target>
 

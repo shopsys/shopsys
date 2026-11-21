@@ -23,10 +23,27 @@ class EnabledModuleRepository
 
     public function findByName(string $moduleName): ?EnabledModule
     {
+        $this->checkModuleIsSupported($moduleName);
+
+        return $this->getEnabledModuleRepository()->find($moduleName);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllNames(): array
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('em.name')
+            ->from(EnabledModule::class, 'em');
+
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'name');
+    }
+
+    public function checkModuleIsSupported(string $moduleName): void
+    {
         if (!in_array($moduleName, $this->moduleList->getNames(), true)) {
             throw new UnsupportedModuleException($moduleName);
         }
-
-        return $this->getEnabledModuleRepository()->find($moduleName);
     }
 }

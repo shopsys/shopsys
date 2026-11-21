@@ -379,6 +379,15 @@ services:
             - '%shopsys.image_dir%'
             - '%shopsys.domain_images_dir%'
 
+    # adapter for chained cache pools that answers repeated reads of the same key from the memory of the process,
+    # limited in size so it does not grow in long-running processes
+    shopsys.cache.adapter.in_memory:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        abstract: true
+        autoconfigure: false
+        # positional arguments are required by the cache pool compiler pass: default lifetime, store serialized, max lifetime, max items
+        arguments: [0, false, 0, 10000]
+
     Shopsys\FrameworkBundle\Component\Image\ImageDeleteDoctrineListener:
         tags:
             - { name: doctrine.event_listener, event: preRemove }
@@ -560,9 +569,8 @@ services:
 
     Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
 
-    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
-        arguments:
-            $resettableServices: !tagged_iterator kernel.reset
+    # $resettableServices is set in Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterResettableServicesCompilerPass
+    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter: ~
 
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:

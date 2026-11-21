@@ -209,6 +209,29 @@ class CategoryRepository extends NestedTreeRepository
         return $category;
     }
 
+    /**
+     * Loads the category together with its domains and translations by a single query,
+     * unlike getById() that leaves them to be lazy loaded by separate queries
+     */
+    public function getByIdWithDomainsAndTranslations(int $categoryId): Category
+    {
+        $category = $this->getAllQueryBuilder()
+            ->addSelect('cd, ct')
+            ->leftJoin('c.domains', 'cd')
+            ->leftJoin('c.translations', 'ct')
+            ->andWhere('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()->getOneOrNullResult();
+
+        if ($category === null) {
+            $message = 'Category with ID ' . $categoryId . ' not found.';
+
+            throw new CategoryNotFoundException($message);
+        }
+
+        return $category;
+    }
+
     public function getOneByUuid(string $uuid): Category
     {
         $category = $this->getCategoryRepository()->findOneBy(['uuid' => $uuid]);
