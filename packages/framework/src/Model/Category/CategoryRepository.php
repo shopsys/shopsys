@@ -210,14 +210,15 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * Loads the category together with its domains by a single query,
-     * unlike getById() that leaves them to be lazy loaded by a separate query
+     * Loads the category together with its domains and translations by a single query,
+     * unlike getById() that leaves them to be lazy loaded by separate queries
      */
-    public function getByIdWithDomains(int $categoryId): Category
+    public function getByIdWithDomainsAndTranslations(int $categoryId): Category
     {
         $category = $this->getAllQueryBuilder()
-            ->addSelect('cd')
+            ->addSelect('cd, ct')
             ->leftJoin('c.domains', 'cd')
+            ->leftJoin('c.translations', 'ct')
             ->andWhere('c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
             ->getQuery()->getOneOrNullResult();

@@ -320,7 +320,7 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         int $domainId,
         int $categoryId,
     ): Category {
-        $category = $this->categoryRepository->getByIdWithDomains($categoryId);
+        $category = $this->categoryRepository->getByIdWithDomainsAndTranslations($categoryId);
 
         if (!$category->isVisible($domainId)) {
             $message = 'Category ID ' . $categoryId . ' is not visible on domain ID ' . $domainId;
