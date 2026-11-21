@@ -67,7 +67,10 @@ class AdditionalServiceRepository
             ->setParameter('productIds', $productIds)
             ->getQuery()->getResult();
 
-        return $this->indexAdditionalServicesByProductId($productAdditionalServiceDomains);
+        $additionalServicesIndexedByProductId = $this->indexAdditionalServicesByProductId($productAdditionalServiceDomains);
+        $this->preloadDomains(array_merge(...array_values($additionalServicesIndexedByProductId)));
+
+        return $additionalServicesIndexedByProductId;
     }
 
     /**
@@ -84,7 +87,7 @@ class AdditionalServiceRepository
      */
     public function getEnabledByIds(array $additionalServiceIds, int $domainId): array
     {
-        return $this->em->createQueryBuilder()
+        $additionalServices = $this->em->createQueryBuilder()
             ->select('ads, at')
             ->from(AdditionalService::class, 'ads')
             ->leftJoin('ads.translations', 'at')
@@ -101,6 +104,10 @@ class AdditionalServiceRepository
             ->setParameter('additionalServiceIds', $additionalServiceIds)
             ->setParameter('domainId', $domainId)
             ->getQuery()->getResult();
+
+        $this->preloadDomains($additionalServices);
+
+        return $additionalServices;
     }
 
     protected function createEnabledByProductQueryBuilder(int $domainId): QueryBuilder
@@ -135,7 +142,40 @@ class AdditionalServiceRepository
             ->setParameter('productIds', $productIds)
             ->getQuery()->getResult();
 
-        return $this->indexAdditionalServicesByProductId($productAdditionalServiceDomains);
+        $additionalServicesIndexedByProductId = $this->indexAdditionalServicesByProductId($productAdditionalServiceDomains);
+        $this->preloadDomains(array_merge(...array_values($additionalServicesIndexedByProductId)));
+
+        return $additionalServicesIndexedByProductId;
+    }
+
+    /**
+     * The queries above join the domains filtered by a domain ID, so they cannot fetch them without leaving
+     * the collection partially initialized. A separate query initializes the collection (and the VAT used for
+     * the price calculation) for all the additional services at once instead of a lazy load per additional service.
+     *
+     * @param \Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService[] $additionalServices
+     */
+    protected function preloadDomains(array $additionalServices): void
+    {
+        if ($additionalServices === []) {
+            return;
+        }
+
+        // the same additional service is usually offered for many of the products
+        $uniqueAdditionalServices = [];
+
+        foreach ($additionalServices as $additionalService) {
+            $uniqueAdditionalServices[$additionalService->getId()] = $additionalService;
+        }
+
+        $this->em->createQueryBuilder()
+            ->select('ads, asd, v')
+            ->from(AdditionalService::class, 'ads')
+            ->join('ads.domains', 'asd')
+            ->leftJoin('asd.vat', 'v')
+            ->where('ads IN (:additionalServices)')
+            ->setParameter('additionalServices', array_values($uniqueAdditionalServices))
+            ->getQuery()->getResult();
     }
 
     public function useProductVatRateWhereVatIsMissing(int $domainId): void
