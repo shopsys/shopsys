@@ -1,9 +1,11 @@
 framework:
     cache:
         pools:
+            # the in-memory adapter in front of Redis answers repeated reads of the same key within one request
             main_friendly_url_slug_cache:
-                adapter: cache.adapter.redis
-                provider: snc_redis.main_friendly_url_slugs
+                adapters:
+                    - shopsys.cache.adapter.in_memory
+                    - { name: cache.adapter.redis, provider: snc_redis.main_friendly_url_slugs }
             bestselling_product_cache:
                 adapter: cache.adapter.redis
                 provider: snc_redis.bestselling_products
@@ -19,8 +21,9 @@ framework:
             doctrine.query_cache_pool:
                 adapter: cache.adapter.system
             image_cache:
-                adapter: cache.adapter.redis
-                provider: snc_redis.image
+                adapters:
+                    - shopsys.cache.adapter.in_memory
+                    - { name: cache.adapter.redis, provider: snc_redis.image }
                 default_lifetime: 43200
             mcp_oauth_cache:
                 adapter: cache.adapter.redis
