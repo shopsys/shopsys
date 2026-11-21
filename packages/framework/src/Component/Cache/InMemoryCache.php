@@ -7,40 +7,52 @@ namespace Shopsys\FrameworkBundle\Component\Cache;
 use Override;
 use Shopsys\FrameworkBundle\Component\Cache\Exception\NamespaceCacheKeyNotFoundException;
 use Shopsys\FrameworkBundle\Component\Cache\Exception\ValueCacheKeyNotFoundException;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\ResettableInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
+/**
+ * The cache is read many times in a single request, so the values are kept in plain arrays
+ * (a read is two array lookups instead of several cache item instances and expiration checks of a cache adapter).
+ */
 class InMemoryCache implements ResettableInterface
 {
     protected const string NOT_ALLOWED_CHARS = ItemInterface::RESERVED_CHARACTERS . '".';
 
-    protected ArrayAdapter $namespacesCache;
+    /**
+     * @var array<string, array<string, mixed>>
+     */
+    protected array $valuesByNamespace = [];
+
+    /**
+     * @var string[]
+     */
+    protected array $notAllowedChars;
 
     public function __construct()
     {
-        $this->namespacesCache = new ArrayAdapter(0, false);
+        $this->notAllowedChars = str_split(static::NOT_ALLOWED_CHARS);
     }
 
     public function getItem(string $namespace, mixed ...$keyParts): mixed
     {
-        $key = $this->generateKey($keyParts);
-
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
 
         if (!$this->hasNamespaceCache($namespace)) {
             throw new NamespaceCacheKeyNotFoundException($namespace);
         }
 
-        $key = $this->replaceNotAllowedCharactersInKey($key);
+        $key = $this->generateKey($keyParts);
 
-        if (!$this->hasItem($namespace, $key)) {
+        if (!array_key_exists($key, $this->valuesByNamespace[$namespace])) {
             throw new ValueCacheKeyNotFoundException($namespace, $key);
         }
 
-        return $this->getNamespaceCache($namespace)->getItem($key)->get();
+        return $this->valuesByNamespace[$namespace][$key];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getValuesByNamespace(string $namespace): array
     {
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
@@ -49,53 +61,37 @@ class InMemoryCache implements ResettableInterface
             throw new NamespaceCacheKeyNotFoundException($namespace);
         }
 
-        return $this->getNamespaceCache($namespace)->getValues();
-    }
-
-    protected function getNamespaceCache(string $namespace): ArrayAdapter
-    {
-        return $this->namespacesCache->getItem($namespace)->get();
+        return $this->valuesByNamespace[$namespace];
     }
 
     public function hasItem(string $namespace, mixed ...$keyParts): bool
     {
-        $key = $this->generateKey($keyParts);
-
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
 
-        if ($this->hasNamespaceCache($namespace)) {
-            $key = $this->replaceNotAllowedCharactersInKey($key);
-
-            return $this->getNamespaceCache($namespace)->hasItem($key);
-        }
-
-        return false;
+        return $this->hasNamespaceCache($namespace)
+            && array_key_exists($this->generateKey($keyParts), $this->valuesByNamespace[$namespace]);
     }
 
     protected function hasNamespaceCache(string $namespace): bool
     {
-        return $this->namespacesCache->hasItem($namespace);
+        return array_key_exists($namespace, $this->valuesByNamespace);
     }
 
     #[Override]
     public function reset(): void
     {
-        $this->namespacesCache->reset();
+        $this->valuesByNamespace = [];
     }
 
     public function deleteItem(string $namespace, mixed ...$keyParts): void
     {
-        $key = $this->generateKey($keyParts);
-
         $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
 
         if (!$this->hasNamespaceCache($namespace)) {
             return;
         }
 
-        $key = $this->replaceNotAllowedCharactersInKey($key);
-        $namespaceCache = $this->getNamespaceCache($namespace);
-        $namespaceCache->deleteItem($key);
+        unset($this->valuesByNamespace[$namespace][$this->generateKey($keyParts)]);
     }
 
     public function deleteAllItemsInNamespace(string $namespace): void
@@ -106,42 +102,32 @@ class InMemoryCache implements ResettableInterface
             return;
         }
 
-        $namespaceCache = $this->getNamespaceCache($namespace);
-        $namespaceCache->clear();
+        $this->valuesByNamespace[$namespace] = [];
     }
 
     public function save(string $namespace, mixed $value, mixed ...$keyParts): void
     {
+        $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
         $key = $this->generateKey($keyParts);
 
-        $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
-        $key = $this->replaceNotAllowedCharactersInKey($key);
-        $namespaceCacheItem = $this->namespacesCache->getItem($namespace);
-
         if (!$this->hasNamespaceCache($namespace)) {
-            $namespaceCacheItem->set(new ArrayAdapter(0, false));
-            $this->namespacesCache->save($namespaceCacheItem);
+            $this->valuesByNamespace[$namespace] = [];
         }
-
-        /** @var \Symfony\Component\Cache\Adapter\ArrayAdapter $namespaceCache */
-        $namespaceCache = $namespaceCacheItem->get();
-        $valueItem = $namespaceCache->getItem($key);
 
         if (is_callable($value)) {
             $value = $value();
         }
 
-        $valueItem->set($value);
-        $namespaceCache->save($valueItem);
+        $this->valuesByNamespace[$namespace][$key] = $value;
     }
 
     protected function replaceNotAllowedCharactersInKey(string $key): string
     {
-        foreach (str_split(static::NOT_ALLOWED_CHARS) as $char) {
-            $key = str_replace($char, '~', $key);
+        if (strpbrk($key, static::NOT_ALLOWED_CHARS) === false) {
+            return $key;
         }
 
-        return $key;
+        return str_replace($this->notAllowedChars, '~', $key);
     }
 
     /**
@@ -151,26 +137,25 @@ class InMemoryCache implements ResettableInterface
      */
     public function getOrSaveValue(string $namespace, mixed $value, mixed ...$keyParts): mixed
     {
+        $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
         $key = $this->generateKey($keyParts);
 
-        if ($this->hasItem($namespace, $key)) {
-            return $this->getItem($namespace, $key);
+        if ($this->hasNamespaceCache($namespace) && array_key_exists($key, $this->valuesByNamespace[$namespace])) {
+            return $this->valuesByNamespace[$namespace][$key];
         }
 
         if (is_callable($value)) {
             $value = $value();
         }
 
-        $this->save($namespace, $value, $key);
+        $this->valuesByNamespace[$namespace][$key] = $value;
 
         return $value;
     }
 
     protected function generateKey(array $keyParts): string
     {
-        $key = implode('~', $keyParts);
-
-        return $this->replaceNotAllowedCharactersInKey($key);
+        return $this->replaceNotAllowedCharactersInKey(implode('~', $keyParts));
     }
 
     public function getKey(mixed ...$keyParts): string
