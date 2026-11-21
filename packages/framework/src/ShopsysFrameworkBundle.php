@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterImageEntitiesCo
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterResettableServicesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterRoleProviderCompilerPass;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Symfony\Component\Config\Resource\DirectoryResource;
@@ -46,6 +47,8 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new RegisterRoleProviderCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 140);
         $container->addCompilerPass(new RegisterImageEntitiesCompilerPass());
         $container->addCompilerPass(new RegisterExtendedClassNamesCompilerPass());
+        // the same priority as ResettableServicePass of Symfony, so the services tagged by other compiler passes are not missed
+        $container->addCompilerPass(new RegisterResettableServicesCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -32);
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
         $container->registerForAutoconfiguration(ProductExportDataProviderInterface::class)->addTag('shopsys.product_export_data_provider');

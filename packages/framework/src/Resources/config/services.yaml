@@ -560,9 +560,8 @@ services:
 
     Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
 
-    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
-        arguments:
-            $resettableServices: !tagged_iterator kernel.reset
+    # $resettableServices is set in Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterResettableServicesCompilerPass
+    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter: ~
 
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:

@@ -145,9 +145,6 @@
         "symfony/var-dumper": "^7.4",
         "symfony/yaml": "^7.4"
     },
-    "conflict": {
-        "scheb/2fa-bundle": "7.15.0"
-    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
