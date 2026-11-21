@@ -12,11 +12,12 @@ framework:
                 adapter: cache.adapter.redis
                 provider: snc_redis.store_search_coordinates
                 default_lifetime: 604800
+            # Doctrine metadata and parsed queries are static for a build, so they are kept in local PHP files
+            # (served from OPcache memory) instead of being unserialized from disk or fetched from Redis on every request
             doctrine.metadata_cache_pool:
-                adapter: cache.adapter.filesystem
+                adapter: cache.adapter.system
             doctrine.query_cache_pool:
-                adapter: cache.adapter.redis
-                provider: snc_redis.doctrine_query
+                adapter: cache.adapter.system
             image_cache:
                 adapter: cache.adapter.redis
                 provider: snc_redis.image

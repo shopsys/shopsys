@@ -28,15 +28,6 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'
                 connection_timeout: 2
                 read_write_timeout: 5
-        doctrine_query:
-            type: 'phpredis'
-            alias: 'doctrine_query'
-            dsn: 'redis://%env(REDIS_HOST)%'
-            logging: false
-            options:
-                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
-                connection_timeout: 2
-                read_write_timeout: 5
         form_spam_protection_rate_limiter:
             type: 'phpredis'
             alias: 'form_spam_protection_rate_limiter'
