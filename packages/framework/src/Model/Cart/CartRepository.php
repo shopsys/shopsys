@@ -47,9 +47,10 @@ class CartRepository
     protected function loadItemsWithAdditionalServices(Cart $cart): void
     {
         $this->em->createQueryBuilder()
-            ->select('ci', 'a')
+            ->select('ci', 'a', 'p')
             ->from(CartItem::class, 'ci')
             ->leftJoin('ci.additionalServices', 'a')
+            ->leftJoin('ci.product', 'p')
             ->where('ci.cart = :cart')->setParameter('cart', $cart)
             ->getQuery()->getResult();
     }
