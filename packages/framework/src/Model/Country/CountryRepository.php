@@ -76,6 +76,26 @@ class CountryRepository
     }
 
     /**
+     * The translations cannot be fetched by the queries selecting the countries, because they join them filtered by a locale.
+     * This query initializes them for all the countries at once instead of a lazy load per country.
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
+     */
+    public function preloadTranslations(array $countries): void
+    {
+        if ($countries === []) {
+            return;
+        }
+
+        $this->getCountryRepository()->createQueryBuilder('c')
+            ->addSelect('ct')
+            ->leftJoin('c.translations', 'ct')
+            ->where('c IN (:countries)')
+            ->setParameter('countries', $countries)
+            ->getQuery()->getResult();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
     public function getAllByDomainIdWithLocale(int $domainId, string $locale): array

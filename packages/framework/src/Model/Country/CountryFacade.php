@@ -73,10 +73,14 @@ class CountryFacade
      */
     public function getAllEnabledOnCurrentDomain(): array
     {
-        return $this->countryRepository->getAllEnabledByDomainIdWithLocale(
+        $countries = $this->countryRepository->getAllEnabledByDomainIdWithLocale(
             $this->domain->getId(),
             $this->domain->getLocale(),
         );
+
+        $this->countryRepository->preloadTranslations($countries);
+
+        return $countries;
     }
 
     public function findByCode(string $countryCode): ?Country
