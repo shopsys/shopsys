@@ -369,8 +369,10 @@ class ParameterRepository
     public function getVisibleParametersByIds(array $parameterIds, string $locale): array
     {
         $parametersQueryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
-            ->select('p, pt')
+            ->select('p, pt, u, ut')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->leftJoin('p.unit', 'u')
+            ->leftJoin('u.translations', 'ut')
             ->where('p.id IN (:parameterIds)')
             ->setParameter('parameterIds', $parameterIds)
             ->setParameter('locale', $locale)
