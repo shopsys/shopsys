@@ -38,6 +38,17 @@ class SeoPageTest extends GraphQlTestCase
         self::assertEquals($seoPage->getSeoOgDescription($domainId), $data['ogDescription']);
     }
 
+    public function testCustomerDashboardSeoPage(): void
+    {
+        $response = $this->getResponseContentForGql(self::GRAPHQL_QUERY_PATH, [
+            'pageSlug' => in_array($this->getLocaleForFirstDomain(), ['cs', 'sk'], true) ? '/zakaznik' : '/customer',
+        ]);
+
+        $data = $this->getResponseDataForGraphQlType($response, 'seoPage');
+
+        self::assertSame('noindex', $data['seo']['metaRobots']);
+    }
+
     public function testSeoPageNotFound(): void
     {
         $response = $this->getResponseContentForGql(self::GRAPHQL_QUERY_PATH, [
