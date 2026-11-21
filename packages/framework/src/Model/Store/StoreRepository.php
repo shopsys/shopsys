@@ -108,6 +108,9 @@ class StoreRepository
     public function findByUuidAndDomainId(string $uuid, int $domainId): ?Store
     {
         return $this->getStoresByDomainIdQueryBuilder($domainId)
+            ->addSelect('oh, ohr')
+            ->leftJoin('s.openingHours', 'oh')
+            ->leftJoin('oh.openingHoursRanges', 'ohr')
             ->andWhere('s.uuid = :uuid')
             ->setParameter('uuid', $uuid)
             ->getQuery()
@@ -128,6 +131,9 @@ class StoreRepository
     public function getByIdAndDomainId(int $id, int $domainId): Store
     {
         $store = $this->getStoresByDomainIdQueryBuilder($domainId)
+            ->addSelect('oh, ohr')
+            ->leftJoin('s.openingHours', 'oh')
+            ->leftJoin('oh.openingHoursRanges', 'ohr')
             ->andWhere('s.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
