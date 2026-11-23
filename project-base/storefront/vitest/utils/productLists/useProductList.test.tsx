@@ -954,7 +954,11 @@ describe('wishlist server ranges', () => {
         fetch.mockClear();
 
         act(() => setPage(1, 1));
+        expect(result.current.page?.isLoadingMoreProducts).toBe(true);
+        expect(result.current.page?.isProductListFetching).toBe(false);
+        expect(result.current.page?.wishlist?.products).toHaveLength(30);
         await waitFor(() => expect(result.current.page?.wishlist?.products).toHaveLength(60));
+        expect(result.current.page?.isLoadingMoreProducts).toBe(false);
         act(() => setPage(1, 2));
         await waitFor(() => expect(result.current.page?.wishlist?.products).toHaveLength(90));
         act(() => setPage(1, 3));

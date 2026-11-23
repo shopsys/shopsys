@@ -207,14 +207,14 @@ export const useWishlistPage = (requestedPage: number, requestedLoadMore: number
         totalCount: metadata.count,
         page: range.page,
         loadMore: range.loadMore,
-        isProductListFetching:
-            metadata.fetching ||
-            (hasProducts &&
-                (result.fetching ||
-                    (extraPageCount > 0 &&
-                        !result.error &&
-                        !metadata.error &&
-                        (!currentAdditionalPages || currentAdditionalPages.fetching)))),
+        isProductListFetching: metadata.fetching || (hasProducts && result.fetching),
+        // Already displayed products stay visible while the additional pages are loaded
+        isLoadingMoreProducts:
+            hasProducts &&
+            extraPageCount > 0 &&
+            !result.error &&
+            !metadata.error &&
+            (!currentAdditionalPages || currentAdditionalPages.fetching),
         hasProductListError:
             metadata.error || !!result.error || (extraPageCount > 0 && !!currentAdditionalPages?.error),
     };

@@ -41,21 +41,24 @@ export const Wishlist: FC = () => {
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const router = useRouter();
-    const { wishlist, totalCount, page, loadMore, isProductListFetching, hasProductListError } = useWishlistPage(
-        currentPage,
-        currentLoadMore,
-    );
+    const { wishlist, totalCount, page, loadMore, isProductListFetching, isLoadingMoreProducts, hasProductListError } =
+        useWishlistPage(currentPage, currentLoadMore);
     const offset = getWishlistPageRange(page, loadMore).offset;
 
+    // The URL asks for a range that does not exist (anymore), e.g. after the last products were removed
+    const isUrlRangeOutdated = currentPage !== page || currentLoadMore !== loadMore;
+    const shouldNormalizeUrlRange =
+        !isProductListFetching && !isLoadingMoreProducts && !hasProductListError && isUrlRangeOutdated;
+
     useEffect(() => {
-        if (!isProductListFetching && !hasProductListError && (currentPage !== page || currentLoadMore !== loadMore)) {
+        if (shouldNormalizeUrlRange) {
             pushQueries(router, {
                 ...router.query,
                 [PAGE_QUERY_PARAMETER_NAME]: page > 1 ? page.toString() : undefined,
                 [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
             });
         }
-    }, [isProductListFetching, hasProductListError, currentPage, page, currentLoadMore, loadMore, router]);
+    }, [shouldNormalizeUrlRange, page, router]);
 
     const handleRemoveAllClick = () => {
         updatePortalContent(
@@ -104,6 +107,7 @@ export const Wishlist: FC = () => {
                             areProductsFetching={isProductListFetching}
                             gtmMessageOrigin={GtmMessageOriginType.other}
                             gtmProductListName={GtmProductListNameType.wishlist}
+                            isLoadingMoreProducts={isLoadingMoreProducts}
                             products={wishlist?.products}
                         />
 

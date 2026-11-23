@@ -12,6 +12,7 @@ const mocks = vi.hoisted(() => ({
     replace: vi.fn(),
     productCount: 12,
     isProductListFetching: false,
+    isLoadingMoreProducts: false,
     hasProductListError: false,
     partialProductCount: undefined as number | undefined,
 }));
@@ -47,11 +48,18 @@ vi.mock('components/Blocks/Product/ProductsList/ProductListViewModeToggle', () =
 }));
 
 vi.mock('components/Blocks/Product/ProductsList/ProductsList', () => ({
-    ProductsList: ({ products }: { products: { uuid: string }[] }) => (
+    ProductsList: ({
+        products,
+        isLoadingMoreProducts,
+    }: {
+        products: { uuid: string }[];
+        isLoadingMoreProducts?: boolean;
+    }) => (
         <ul data-testid="products-list">
             {products.map((product) => (
                 <li key={product.uuid}>{product.uuid}</li>
             ))}
+            {isLoadingMoreProducts && <li>loading more</li>}
         </ul>
     ),
 }));
@@ -114,6 +122,7 @@ vi.mock('utils/productLists/wishlist/useWishlist', () => ({
             ...range,
             totalCount: mocks.productCount,
             isProductListFetching: mocks.isProductListFetching,
+            isLoadingMoreProducts: mocks.isLoadingMoreProducts,
             hasProductListError: mocks.hasProductListError,
             wishlist:
                 mocks.hasProductListError && mocks.partialProductCount === undefined
@@ -135,6 +144,7 @@ describe('Wishlist', () => {
         mocks.query = {};
         mocks.productCount = 12;
         mocks.isProductListFetching = false;
+        mocks.isLoadingMoreProducts = false;
         mocks.hasProductListError = false;
         mocks.partialProductCount = undefined;
     });
@@ -276,6 +286,20 @@ describe('Wishlist', () => {
             { pathname: '/wishlist', query: { page: '3' } },
             { shallow: true },
         );
+    });
+
+    test('keeps the displayed products while more products are loaded', () => {
+        mocks.productCount = 65;
+        mocks.query = { [LOAD_MORE_QUERY_PARAMETER_NAME]: '1' };
+        mocks.partialProductCount = 30;
+        mocks.isLoadingMoreProducts = true;
+
+        render(<Wishlist />);
+
+        expect(screen.getByText('product-29')).toBeInTheDocument();
+        expect(screen.getByText('loading more')).toBeInTheDocument();
+        expect(screen.getByText('65 products count')).toBeInTheDocument();
+        expect(mocks.replace).not.toHaveBeenCalled();
     });
 
     test('does not change the requested page while the wishlist is loading', () => {
