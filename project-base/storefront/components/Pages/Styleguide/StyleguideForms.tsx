@@ -8,13 +8,13 @@ import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
-import { StyleguideSection } from './StyleguideElements';
+import { StyleguidePreview } from './StyleguideElements';
 
 export const StyleguideForms: FC = () => {
     return (
-        <StyleguideSection className="flex max-w-96 flex-col gap-3" title="Forms">
+        <StyleguidePreview className="max-w-xl">
             <StyleguideFormExample />
-        </StyleguideSection>
+        </StyleguidePreview>
     );
 };
 

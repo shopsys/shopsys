@@ -212,7 +212,8 @@ describe('Styleguide Tests (SSP-4301)', () => {
     });
 
     it('[Keyboard focus] should keep the orange focus without changing layout and keep native disabled states', () => {
-        cy.getByTID([TIDs.styleguide_content_link]).focus();
+        // the subtle link is the last focusable element before the text action
+        cy.getByTID([TIDs.styleguide_subtle_link]).focus();
         cy.realPress('Tab');
         cy.getByTID([TIDs.styleguide_text_action])
             .should('be.focused')

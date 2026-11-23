@@ -3,7 +3,7 @@ import { Select } from 'components/Forms/Select/Select';
 import { useState } from 'react';
 import { SelectOptionType } from 'types/selectOptions';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { StyleguideSection } from './StyleguideElements';
+import { StyleguidePreview } from './StyleguideElements';
 
 const COMBO_BOX_PAGE_SIZE = 5;
 
@@ -42,7 +42,7 @@ export const StyleguideSelects: FC = () => {
     const [infiniteOptions, setInfiniteOptions] = useState<ColourOption[]>(generateInfiniteOptions(1));
 
     return (
-        <StyleguideSection className="flex max-w-96 flex-col gap-3" title="Selects">
+        <StyleguidePreview className="grid items-start gap-4 md:grid-cols-2">
             <Select
                 activeOption={selectedBasicOption}
                 ariaLabel={t('Select basic', { ns: 'accessibility' })}
@@ -75,7 +75,7 @@ export const StyleguideSelects: FC = () => {
             <Select
                 activeOption={selectedComboBoxOption}
                 ariaLabel={t('Select combobox', { ns: 'accessibility' })}
-                label="ComboBox select"
+                label="Select with search"
                 options={colourOptions}
                 placeholder={selectedComboBoxOption?.label || t('Search')}
                 tid="styleguide-selects-combobox-select"
@@ -118,6 +118,7 @@ export const StyleguideSelects: FC = () => {
             />
 
             <MultiSelect
+                label="Multiselect with search"
                 options={colourOptions}
                 selectedOptions={selectedMultiOptionsWithCombobox}
                 tid="styleguide-multiselect-with-combobox"
@@ -128,7 +129,7 @@ export const StyleguideSelects: FC = () => {
                 }}
                 onChange={setSelectedMultiOptionsWithCombobox}
             />
-        </StyleguideSection>
+        </StyleguidePreview>
     );
 };
 

@@ -3,7 +3,7 @@ import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
 import { useState } from 'react';
-import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
+import { StyleguidePreview, StyleguideSubSection } from './StyleguideElements';
 
 const createStyleguideAdditionalService = (index: number): TypeAdditionalServiceFragment => ({
     __typename: 'AdditionalService',
@@ -39,83 +39,94 @@ export const StyleguideCheckboxes: FC = () => {
         );
 
     return (
-        <StyleguideSection className="flex flex-col gap-3" title="Checkboxes">
-            <Checkbox
-                id="checkboxRegular"
-                label="Regular checkbox"
-                name="Regular checkbox"
-                value={isChecked}
-                onChange={() => setIsChecked((currentChecked) => !currentChecked)}
-            />
-            <Checkbox
-                id="checkboxChecked"
-                label="Checked checkbox"
-                name="Checked checkbox"
-                value={isChecked4}
-                onChange={() => setIsChecked4((currentChecked) => !currentChecked)}
-            />
-            <Checkbox
-                count={2}
-                id="checkboxWithCount"
-                label="Checkbox with count"
-                name="Checkbox with count"
-                value={isChecked2}
-                onChange={() => setIsChecked2((currentChecked) => !currentChecked)}
-            />
-            <Checkbox
-                disabled
-                id="checkboxDisabled"
-                label="Disabled checkbox"
-                name="Disabled checkbox"
-                value={false}
-                onChange={() => null}
-            />
-            <Checkbox
-                disabled
-                id="checkboxDisabled"
-                label="Disabled checkbox"
-                name="Disabled checked checkbox"
-                value={isChecked3}
-                onChange={() => setIsChecked3((currentChecked) => !currentChecked)}
-            />
-
-            <StyleguideSubSection className="flex flex-col gap-3" title="Color checkboxes">
-                <CheckboxColor
-                    bgColor="#e11d48"
-                    id="checkboxColorRegular"
-                    label="Red"
-                    name="Red"
-                    value={isColorChecked}
-                    onChange={() => setIsColorChecked((currentChecked) => !currentChecked)}
-                />
-                <CheckboxColor
-                    bgColor="#2563eb"
-                    id="checkboxColorChecked"
-                    label="Blue"
-                    name="Blue"
-                    value={isColorChecked2}
-                    onChange={() => setIsColorChecked2((currentChecked) => !currentChecked)}
-                />
-                <CheckboxColor
-                    disabled
-                    bgColor="#16a34a"
-                    id="checkboxColorDisabled"
-                    label="Disabled green"
-                    name="Disabled green"
-                    value={false}
-                    onChange={() => null}
-                />
+        <>
+            <StyleguideSubSection title="Regular checkboxes">
+                <StyleguidePreview className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <Checkbox
+                        id="checkboxRegular"
+                        label="Regular checkbox"
+                        name="Regular checkbox"
+                        value={isChecked}
+                        onChange={() => setIsChecked((currentChecked) => !currentChecked)}
+                    />
+                    <Checkbox
+                        id="checkboxChecked"
+                        label="Checked checkbox"
+                        name="Checked checkbox"
+                        value={isChecked4}
+                        onChange={() => setIsChecked4((currentChecked) => !currentChecked)}
+                    />
+                    <Checkbox
+                        count={2}
+                        id="checkboxWithCount"
+                        label="Checkbox with count"
+                        name="Checkbox with count"
+                        value={isChecked2}
+                        onChange={() => setIsChecked2((currentChecked) => !currentChecked)}
+                    />
+                    <Checkbox
+                        disabled
+                        id="checkboxDisabled"
+                        label="Disabled checkbox"
+                        name="Disabled checkbox"
+                        value={false}
+                        onChange={() => null}
+                    />
+                    <Checkbox
+                        disabled
+                        id="checkboxDisabledChecked"
+                        label="Disabled checked checkbox"
+                        name="Disabled checked checkbox"
+                        value={isChecked3}
+                        onChange={() => setIsChecked3((currentChecked) => !currentChecked)}
+                    />
+                </StyleguidePreview>
             </StyleguideSubSection>
 
-            <StyleguideSubSection title="Additional services">
-                <AdditionalServices
-                    additionalServices={STYLEGUIDE_ADDITIONAL_SERVICES}
-                    selectedServiceUuids={selectedServiceUuids}
-                    tidDiscriminator="styleguide"
-                    unitName="pcs"
-                    onToggleService={toggleAdditionalService}
-                />
+            <StyleguideSubSection title="Color checkboxes">
+                <StyleguidePreview className="flex flex-col gap-3">
+                    <CheckboxColor
+                        bgColor="#e11d48"
+                        id="checkboxColorRegular"
+                        label="Red"
+                        name="Red"
+                        value={isColorChecked}
+                        onChange={() => setIsColorChecked((currentChecked) => !currentChecked)}
+                    />
+                    <CheckboxColor
+                        bgColor="#2563eb"
+                        id="checkboxColorChecked"
+                        label="Blue"
+                        name="Blue"
+                        value={isColorChecked2}
+                        onChange={() => setIsColorChecked2((currentChecked) => !currentChecked)}
+                    />
+                    <CheckboxColor
+                        disabled
+                        bgColor="#16a34a"
+                        id="checkboxColorDisabled"
+                        label="Disabled green"
+                        name="Disabled green"
+                        value={false}
+                        onChange={() => null}
+                    />
+                </StyleguidePreview>
             </StyleguideSubSection>
-        </StyleguideSection>
+
+            <StyleguideSubSection
+                description="Five services, one more than the initially visible ones, so the show more action is shown."
+                title="Additional services"
+            >
+                <StyleguidePreview className="max-w-xl">
+                    <AdditionalServices
+                        additionalServices={STYLEGUIDE_ADDITIONAL_SERVICES}
+                        selectedServiceUuids={selectedServiceUuids}
+                        tidDiscriminator="styleguide"
+                        unitName="pcs"
+                        onToggleService={toggleAdditionalService}
+                    />
+                </StyleguidePreview>
+            </StyleguideSubSection>
+        </>
     );
 };

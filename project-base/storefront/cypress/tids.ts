@@ -14,6 +14,7 @@ export enum TIDs {
     styleguide_input_paired_button = 'styleguide_input_paired_button',
     styleguide_content_link = 'styleguide_content_link',
     styleguide_navigation_link = 'styleguide_navigation_link',
+    styleguide_subtle_link = 'styleguide_subtle_link',
     styleguide_text_action = 'styleguide_text_action',
     styleguide_inverted_link = 'styleguide_inverted_link',
     styleguide_card_link = 'styleguide_card_link',

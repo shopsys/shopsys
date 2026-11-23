@@ -1,9 +1,9 @@
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
-import { StyleguideSection } from './StyleguideElements';
+import { StyleguidePreview } from './StyleguideElements';
 
 export const StyleguideTooltips: FC = () => {
     return (
-        <StyleguideSection className="flex flex-wrap gap-3" title="Tooltips">
+        <StyleguidePreview className="flex flex-wrap gap-3">
             <TooltipBox label="Top">Top tooltip</TooltipBox>
 
             <TooltipBox label="Right" placement="right">
@@ -17,7 +17,7 @@ export const StyleguideTooltips: FC = () => {
             <TooltipBox label="Left" placement="left">
                 Left tooltip
             </TooltipBox>
-        </StyleguideSection>
+        </StyleguidePreview>
     );
 };
 

@@ -1,10 +1,10 @@
 import { Infobox } from 'components/Basic/Infobox/Infobox';
-import { StyleguideSection } from './StyleguideElements';
+import { StyleguidePreview } from './StyleguideElements';
 
 export const StyleguideInfobox: FC = () => {
     return (
-        <StyleguideSection title="Infobox">
+        <StyleguidePreview>
             <Infobox message="Example message" />
-        </StyleguideSection>
+        </StyleguidePreview>
     );
 };

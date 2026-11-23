@@ -3,7 +3,6 @@
  * To regenerate this file, run: make generate-icons-for-styleguide
  */
 
-import { StyleguideSection } from './StyleguideElements';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { BellIcon } from 'components/Basic/Icon/BellIcon';
@@ -83,316 +82,314 @@ import { WriteIcon } from 'components/Basic/Icon/WriteIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 
 export const StyleguideIcons = () => (
-    <StyleguideSection title="Icons">
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ArrowIcon className="size-10" />
-                <span className="text-center text-xs break-all">ArrowIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ArrowSecondaryIcon className="size-10" />
-                <span className="text-center text-xs break-all">ArrowSecondaryIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <BellIcon className="size-10" />
-                <span className="text-center text-xs break-all">BellIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <BillingAddressIcon className="size-10" />
-                <span className="text-center text-xs break-all">BillingAddressIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CartIcon className="size-10" />
-                <span className="text-center text-xs break-all">CartIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ChatIcon className="size-10" />
-                <span className="text-center text-xs break-all">ChatIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CheckmarkBadgeIcon className="size-10" />
-                <span className="text-center text-xs break-all">CheckmarkBadgeIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CheckmarkDoneIcon className="size-10" />
-                <span className="text-center text-xs break-all">CheckmarkDoneIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CheckmarkIcon className="size-10" />
-                <span className="text-center text-xs break-all">CheckmarkIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ChevronEmptyDotIcon className="size-10" />
-                <span className="text-center text-xs break-all">ChevronEmptyDotIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ClockIcon className="size-10" />
-                <span className="text-center text-xs break-all">ClockIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CloseIcon className="size-10" />
-                <span className="text-center text-xs break-all">CloseIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CompareFilledIcon className="size-10" />
-                <span className="text-center text-xs break-all">CompareFilledIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <CompareIcon className="size-10" />
-                <span className="text-center text-xs break-all">CompareIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ContactInformationsIcon className="size-10" />
-                <span className="text-center text-xs break-all">ContactInformationsIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <DeliveryAddressIcon className="size-10" />
-                <span className="text-center text-xs break-all">DeliveryAddressIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <DocumentIcon className="size-10" />
-                <span className="text-center text-xs break-all">DocumentIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <DownloadIcon className="size-10" />
-                <span className="text-center text-xs break-all">DownloadIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <DragHandleIcon className="size-10" />
-                <span className="text-center text-xs break-all">DragHandleIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ExitIcon className="size-10" />
-                <span className="text-center text-xs break-all">ExitIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ExternalLinkIcon className="size-10" />
-                <span className="text-center text-xs break-all">ExternalLinkIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <EyeCrossedIcon className="size-10" />
-                <span className="text-center text-xs break-all">EyeCrossedIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <EyeIcon className="size-10" />
-                <span className="text-center text-xs break-all">EyeIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <FacebookIcon className="size-10" />
-                <span className="text-center text-xs break-all">FacebookIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <FacebookSimpleIcon className="size-10" />
-                <span className="text-center text-xs break-all">FacebookSimpleIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <FillIcon className="size-10" />
-                <span className="text-center text-xs break-all">FillIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <FilterIcon className="size-10" />
-                <span className="text-center text-xs break-all">FilterIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <GiftIcon className="size-10" />
-                <span className="text-center text-xs break-all">GiftIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <GoogleIcon className="size-10" />
-                <span className="text-center text-xs break-all">GoogleIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <GoogleMapMarkerIcon className="size-10" />
-                <span className="text-center text-xs break-all">GoogleMapMarkerIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <GoogleMapSearchMarkerIcon className="size-10" />
-                <span className="text-center text-xs break-all">GoogleMapSearchMarkerIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <GridIcon className="size-10" />
-                <span className="text-center text-xs break-all">GridIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <HeartFilledIcon className="size-10" />
-                <span className="text-center text-xs break-all">HeartFilledIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <HeartIcon className="size-10" />
-                <span className="text-center text-xs break-all">HeartIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <HomeIcon className="size-10" />
-                <span className="text-center text-xs break-all">HomeIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <InfoIcon className="size-10" />
-                <span className="text-center text-xs break-all">InfoIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <InstagramIcon className="size-10" />
-                <span className="text-center text-xs break-all">InstagramIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ListIcon className="size-10" />
-                <span className="text-center text-xs break-all">ListIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <LockCheckIcon className="size-10" />
-                <span className="text-center text-xs break-all">LockCheckIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <LockCrossIcon className="size-10" />
-                <span className="text-center text-xs break-all">LockCrossIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <LockIcon className="size-10" />
-                <span className="text-center text-xs break-all">LockIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <MailIcon className="size-10" />
-                <span className="text-center text-xs break-all">MailIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <MenuIcon className="size-10" />
-                <span className="text-center text-xs break-all">MenuIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <MinusIcon className="size-10" />
-                <span className="text-center text-xs break-all">MinusIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <OrderIcon className="size-10" />
-                <span className="text-center text-xs break-all">OrderIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <PackageDeliveredIcon className="size-10" />
-                <span className="text-center text-xs break-all">PackageDeliveredIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <PackageUnavailableIcon className="size-10" />
-                <span className="text-center text-xs break-all">PackageUnavailableIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <PhoneIcon className="size-10" />
-                <span className="text-center text-xs break-all">PhoneIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <PlayIcon className="size-10" />
-                <span className="text-center text-xs break-all">PlayIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <PlusIcon className="size-10" />
-                <span className="text-center text-xs break-all">PlusIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <RejectedIcon className="size-10" />
-                <span className="text-center text-xs break-all">RejectedIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <SearchIcon className="size-10" />
-                <span className="text-center text-xs break-all">SearchIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <SeznamIcon className="size-10" />
-                <span className="text-center text-xs break-all">SeznamIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <SortIcon className="size-10" />
-                <span className="text-center text-xs break-all">SortIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <SpinnerIcon className="size-10" />
-                <span className="text-center text-xs break-all">SpinnerIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <StarIcon className="size-10" />
-                <span className="text-center text-xs break-all">StarIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <StoreIcon className="size-10" />
-                <span className="text-center text-xs break-all">StoreIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <TagIcon className="size-10" />
-                <span className="text-center text-xs break-all">TagIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <ThumbUpIcon className="size-10" />
-                <span className="text-center text-xs break-all">ThumbUpIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <TrashCanIcon className="size-10" />
-                <span className="text-center text-xs break-all">TrashCanIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <TruckClockIcon className="size-10" />
-                <span className="text-center text-xs break-all">TruckClockIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UndoIcon className="size-10" />
-                <span className="text-center text-xs break-all">UndoIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UploadIcon className="size-10" />
-                <span className="text-center text-xs break-all">UploadIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UserEditIcon className="size-10" />
-                <span className="text-center text-xs break-all">UserEditIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UserIcon className="size-10" />
-                <span className="text-center text-xs break-all">UserIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UspFifthIcon className="size-10" />
-                <span className="text-center text-xs break-all">UspFifthIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UspFirstIcon className="size-10" />
-                <span className="text-center text-xs break-all">UspFirstIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UspFourthIcon className="size-10" />
-                <span className="text-center text-xs break-all">UspFourthIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UspSecondIcon className="size-10" />
-                <span className="text-center text-xs break-all">UspSecondIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <UspThirdIcon className="size-10" />
-                <span className="text-center text-xs break-all">UspThirdIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <VariantIcon className="size-10" />
-                <span className="text-center text-xs break-all">VariantIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WalletIcon className="size-10" />
-                <span className="text-center text-xs break-all">WalletIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WarningIcon className="size-10" />
-                <span className="text-center text-xs break-all">WarningIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WithdrawalIcon className="size-10" />
-                <span className="text-center text-xs break-all">WithdrawalIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WrenchIcon className="size-10" />
-                <span className="text-center text-xs break-all">WrenchIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <WriteIcon className="size-10" />
-                <span className="text-center text-xs break-all">WriteIcon</span>
-            </div>
-            <div className="border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md">
-                <YoutubeIcon className="size-10" />
-                <span className="text-center text-xs break-all">YoutubeIcon</span>
-            </div>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ArrowIcon className="size-8" />
+            <code className="text-center text-xs break-all">ArrowIcon</code>
         </div>
-    </StyleguideSection>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ArrowSecondaryIcon className="size-8" />
+            <code className="text-center text-xs break-all">ArrowSecondaryIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <BellIcon className="size-8" />
+            <code className="text-center text-xs break-all">BellIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <BillingAddressIcon className="size-8" />
+            <code className="text-center text-xs break-all">BillingAddressIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CartIcon className="size-8" />
+            <code className="text-center text-xs break-all">CartIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ChatIcon className="size-8" />
+            <code className="text-center text-xs break-all">ChatIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CheckmarkBadgeIcon className="size-8" />
+            <code className="text-center text-xs break-all">CheckmarkBadgeIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CheckmarkDoneIcon className="size-8" />
+            <code className="text-center text-xs break-all">CheckmarkDoneIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CheckmarkIcon className="size-8" />
+            <code className="text-center text-xs break-all">CheckmarkIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ChevronEmptyDotIcon className="size-8" />
+            <code className="text-center text-xs break-all">ChevronEmptyDotIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ClockIcon className="size-8" />
+            <code className="text-center text-xs break-all">ClockIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CloseIcon className="size-8" />
+            <code className="text-center text-xs break-all">CloseIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CompareFilledIcon className="size-8" />
+            <code className="text-center text-xs break-all">CompareFilledIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CompareIcon className="size-8" />
+            <code className="text-center text-xs break-all">CompareIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ContactInformationsIcon className="size-8" />
+            <code className="text-center text-xs break-all">ContactInformationsIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <DeliveryAddressIcon className="size-8" />
+            <code className="text-center text-xs break-all">DeliveryAddressIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <DocumentIcon className="size-8" />
+            <code className="text-center text-xs break-all">DocumentIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <DownloadIcon className="size-8" />
+            <code className="text-center text-xs break-all">DownloadIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <DragHandleIcon className="size-8" />
+            <code className="text-center text-xs break-all">DragHandleIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ExitIcon className="size-8" />
+            <code className="text-center text-xs break-all">ExitIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ExternalLinkIcon className="size-8" />
+            <code className="text-center text-xs break-all">ExternalLinkIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <EyeCrossedIcon className="size-8" />
+            <code className="text-center text-xs break-all">EyeCrossedIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <EyeIcon className="size-8" />
+            <code className="text-center text-xs break-all">EyeIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <FacebookIcon className="size-8" />
+            <code className="text-center text-xs break-all">FacebookIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <FacebookSimpleIcon className="size-8" />
+            <code className="text-center text-xs break-all">FacebookSimpleIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <FillIcon className="size-8" />
+            <code className="text-center text-xs break-all">FillIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <FilterIcon className="size-8" />
+            <code className="text-center text-xs break-all">FilterIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <GiftIcon className="size-8" />
+            <code className="text-center text-xs break-all">GiftIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <GoogleIcon className="size-8" />
+            <code className="text-center text-xs break-all">GoogleIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <GoogleMapMarkerIcon className="size-8" />
+            <code className="text-center text-xs break-all">GoogleMapMarkerIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <GoogleMapSearchMarkerIcon className="size-8" />
+            <code className="text-center text-xs break-all">GoogleMapSearchMarkerIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <GridIcon className="size-8" />
+            <code className="text-center text-xs break-all">GridIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <HeartFilledIcon className="size-8" />
+            <code className="text-center text-xs break-all">HeartFilledIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <HeartIcon className="size-8" />
+            <code className="text-center text-xs break-all">HeartIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <HomeIcon className="size-8" />
+            <code className="text-center text-xs break-all">HomeIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <InfoIcon className="size-8" />
+            <code className="text-center text-xs break-all">InfoIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <InstagramIcon className="size-8" />
+            <code className="text-center text-xs break-all">InstagramIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ListIcon className="size-8" />
+            <code className="text-center text-xs break-all">ListIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <LockCheckIcon className="size-8" />
+            <code className="text-center text-xs break-all">LockCheckIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <LockCrossIcon className="size-8" />
+            <code className="text-center text-xs break-all">LockCrossIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <LockIcon className="size-8" />
+            <code className="text-center text-xs break-all">LockIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <MailIcon className="size-8" />
+            <code className="text-center text-xs break-all">MailIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <MenuIcon className="size-8" />
+            <code className="text-center text-xs break-all">MenuIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <MinusIcon className="size-8" />
+            <code className="text-center text-xs break-all">MinusIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <OrderIcon className="size-8" />
+            <code className="text-center text-xs break-all">OrderIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <PackageDeliveredIcon className="size-8" />
+            <code className="text-center text-xs break-all">PackageDeliveredIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <PackageUnavailableIcon className="size-8" />
+            <code className="text-center text-xs break-all">PackageUnavailableIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <PhoneIcon className="size-8" />
+            <code className="text-center text-xs break-all">PhoneIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <PlayIcon className="size-8" />
+            <code className="text-center text-xs break-all">PlayIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <PlusIcon className="size-8" />
+            <code className="text-center text-xs break-all">PlusIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <RejectedIcon className="size-8" />
+            <code className="text-center text-xs break-all">RejectedIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <SearchIcon className="size-8" />
+            <code className="text-center text-xs break-all">SearchIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <SeznamIcon className="size-8" />
+            <code className="text-center text-xs break-all">SeznamIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <SortIcon className="size-8" />
+            <code className="text-center text-xs break-all">SortIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <SpinnerIcon className="size-8" />
+            <code className="text-center text-xs break-all">SpinnerIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <StarIcon className="size-8" />
+            <code className="text-center text-xs break-all">StarIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <StoreIcon className="size-8" />
+            <code className="text-center text-xs break-all">StoreIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <TagIcon className="size-8" />
+            <code className="text-center text-xs break-all">TagIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <ThumbUpIcon className="size-8" />
+            <code className="text-center text-xs break-all">ThumbUpIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <TrashCanIcon className="size-8" />
+            <code className="text-center text-xs break-all">TrashCanIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <TruckClockIcon className="size-8" />
+            <code className="text-center text-xs break-all">TruckClockIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UndoIcon className="size-8" />
+            <code className="text-center text-xs break-all">UndoIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UploadIcon className="size-8" />
+            <code className="text-center text-xs break-all">UploadIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UserEditIcon className="size-8" />
+            <code className="text-center text-xs break-all">UserEditIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UserIcon className="size-8" />
+            <code className="text-center text-xs break-all">UserIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UspFifthIcon className="size-8" />
+            <code className="text-center text-xs break-all">UspFifthIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UspFirstIcon className="size-8" />
+            <code className="text-center text-xs break-all">UspFirstIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UspFourthIcon className="size-8" />
+            <code className="text-center text-xs break-all">UspFourthIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UspSecondIcon className="size-8" />
+            <code className="text-center text-xs break-all">UspSecondIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <UspThirdIcon className="size-8" />
+            <code className="text-center text-xs break-all">UspThirdIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <VariantIcon className="size-8" />
+            <code className="text-center text-xs break-all">VariantIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <WalletIcon className="size-8" />
+            <code className="text-center text-xs break-all">WalletIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <WarningIcon className="size-8" />
+            <code className="text-center text-xs break-all">WarningIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <WithdrawalIcon className="size-8" />
+            <code className="text-center text-xs break-all">WithdrawalIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <WrenchIcon className="size-8" />
+            <code className="text-center text-xs break-all">WrenchIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <WriteIcon className="size-8" />
+            <code className="text-center text-xs break-all">WriteIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <YoutubeIcon className="size-8" />
+            <code className="text-center text-xs break-all">YoutubeIcon</code>
+        </div>
+    </div>
 );
