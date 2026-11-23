@@ -62,6 +62,7 @@ services:
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY}"
+            MAILER_DSN: smtp://${BRANCH_NAME_ESCAPED}-mailpit:1025?verify_peer=false
             MCP_DATABASE_USER: shopsys_mcp
             MCP_DATABASE_PASSWORD: shopsys_mcp
         networks:
@@ -108,6 +109,7 @@ services:
             GOOGLE_MAP_API_KEY : "${GOOGLE_MAP_API_KEY}"
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
+            MAILER_DSN: smtp://${BRANCH_NAME_ESCAPED}-mailpit:1025?verify_peer=false
         networks:
             - default
             - services-network
@@ -148,6 +150,26 @@ services:
         environment:
             IMGPROXY_AUTO_WEBP: true
             IMGPROXY_ENFORCE_WEBP: true
+
+    mailpit:
+        restart: always
+        image: axllent/mailpit:v1.34
+        container_name: ${BRANCH_NAME_ESCAPED}-mailpit
+        environment:
+            MP_SMTP_RELAY_HOST: smtp-server
+            MP_SMTP_RELAY_PORT: 25
+            MP_SMTP_RELAY_ALL: true
+        labels:
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}-mailpit.rule=${TRAEFIK_MAILPIT_HOSTS}
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}-mailpit.entrypoints=http,https
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}-mailpit.tls.certresolver=letsencrypt
+            - traefik.http.services.${BRANCH_NAME_ESCAPED}-mailpit.loadbalancer.server.port=8025
+            - traefik.docker.network=github-runner_traefik-network
+            - traefik.enable=true
+        networks:
+            - default
+            - services-network
+            - github-runner_traefik-network
 
     review-redis:
         restart: always
