@@ -66,6 +66,7 @@ const setup = (
     let listUuid = 'list-uuid';
     let mutationGate: Promise<void> | null = null;
     let queryGate: Promise<void> | null = null;
+    let pageGate: { cursor: string; gate: Promise<void> } | null = null;
     const list = () =>
         products.length
             ? {
@@ -138,7 +139,7 @@ const setup = (
             throw new TypeError('Page unavailable');
         const current = variables.input.type === productListType ? list() : null;
         const value =
-            current && query.includes('query WishlistPageQuery')
+            current && variables.pageSize !== undefined
                 ? {
                       __typename: current.__typename,
                       uuid: current.uuid,
@@ -152,6 +153,7 @@ const setup = (
                       },
                   }
                 : current;
+        if (pageGate && variables.endCursor === pageGate.cursor) await pageGate.gate;
         if (queryGate) {
             const gate = queryGate;
             queryGate = null;
@@ -204,7 +206,12 @@ const setup = (
         };
     };
     const usePagedLists = () => ({ ...useLists(), page: useWishlistPage(pageInputs.page, pageInputs.loadMore) });
-    const useDetailedLists = () => ({ ...useLists(), comparison: useComparisonDetails() });
+    const comparisonRenders: number[] = [];
+    const useDetailedLists = () => {
+        const comparison = useComparisonDetails();
+        comparisonRenders.push(comparison.comparison?.products.length ?? -1);
+        return { ...useLists(), comparison };
+    };
     const hook = renderHook(mode === 'page' ? usePagedLists : mode === 'full' ? useDetailedLists : useLists, {
         wrapper,
         reactStrictMode: strictMode,
@@ -213,6 +220,7 @@ const setup = (
         ...hook,
         callbacks,
         client,
+        comparisonRenders,
         fetch,
         setPage: (page: number, loadMore = 0) => {
             pageInputs.page = page;
@@ -230,6 +238,9 @@ const setup = (
         },
         deferNextQuery: (gate: Promise<void>) => {
             queryGate = gate;
+        },
+        deferPage: (cursor: string, gate: Promise<void>) => {
+            pageGate = { cursor, gate };
         },
         failPage: (cursor: string | undefined) => {
             failedPageCursor = cursor;
@@ -851,6 +862,67 @@ describe('wishlist server ranges', () => {
         } finally {
             channel.close();
         }
+    });
+
+    test('loads every page of a comparison larger than one page', async () => {
+        userStore.setState({ ...defaultUserState, productListUuids: { COMPARISON: 'list-uuid' } });
+        const { result, fetch, setProducts } = setup(TypeProductListTypeEnum.Comparison, { mode: 'full' });
+        await waitFor(() => expect(result.current.comparison?.comparison?.products).toHaveLength(3));
+        setProducts(Array.from({ length: 45 }, (_, i) => `product-${i}`));
+        fetch.mockClear();
+        act(() => result.current.refresh());
+        await waitFor(() => expect(result.current.comparison?.comparison?.products).toHaveLength(45));
+        expect(result.current.comparison?.comparison?.products.map((product) => product.uuid)).toEqual(
+            Array.from({ length: 45 }, (_, i) => `product-${i}`),
+        );
+        expect(result.current.comparison?.isProductListFetching).toBe(false);
+        const pages = fetch.mock.calls
+            .map(([, options]) => JSON.parse(options?.body as string))
+            .filter((operation) => operation.query.includes('query ProductListQuery('));
+        expect(pages.map((operation) => operation.variables.endCursor)).toEqual([
+            '',
+            getEndCursor(2, 0, 20),
+            getEndCursor(3, 0, 20),
+        ]);
+    });
+
+    test('keeps every comparison product displayed while a product moves to another page', async () => {
+        userStore.setState({ ...defaultUserState, productListUuids: { COMPARISON: 'list-uuid' } });
+        const { result, setProducts, comparisonRenders, deferPage, fetch } = setup(TypeProductListTypeEnum.Comparison, {
+            mode: 'full',
+        });
+        await waitFor(() => expect(result.current.comparison?.comparison?.products).toHaveLength(3));
+        setProducts(Array.from({ length: 25 }, (_, i) => `product-${i}`));
+        act(() => result.current.refresh());
+        await waitFor(() => expect(result.current.comparison?.comparison?.products).toHaveLength(25));
+        let releaseSecondPage!: () => void;
+        deferPage(
+            getEndCursor(2, 0, 20),
+            new Promise<void>((resolve) => {
+                releaseSecondPage = resolve;
+            }),
+        );
+        const firstPageRequests = () =>
+            fetch.mock.calls.filter(([, options]) => {
+                const { query, variables } = JSON.parse(options?.body as string);
+                return query.includes('query ProductListQuery(') && variables.endCursor === '';
+            }).length;
+        const before = firstPageRequests();
+        comparisonRenders.length = 0;
+        await act(async () => {
+            await result.current.list.moveProduct('product-19', 'product-20');
+        });
+        // The first page is refreshed while the second one is still on its way
+        await waitFor(() => expect(firstPageRequests()).toBeGreaterThan(before));
+        await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, 20));
+        });
+        await act(async () => {
+            releaseSecondPage();
+        });
+        await waitFor(() => expect(result.current.comparison?.comparison?.products).toHaveLength(25));
+        await waitFor(() => expect(result.current.comparison?.isProductListFetching).toBe(false));
+        expect(Math.min(...comparisonRenders)).toBe(25);
     });
 
     test('requests only the selected range while keeping complete membership and total', async () => {

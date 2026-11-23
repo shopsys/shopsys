@@ -54,11 +54,7 @@ export const ProductComparison: FC = () => {
                         onRemove={handleRemove}
                         onMoveProduct={moveProduct}
                     />
-                ) : hasProductListError ? (
-                    <Alert title={t('Something went wrong.')} variant="error">
-                        {t('Please try again later or contact us.')}
-                    </Alert>
-                ) : (
+                ) : hasProductListError ? null : (
                     <div data-tid={TIDs.comparison_empty_state} ref={emptyStateRef} tabIndex={-1}>
                         <PageHero
                             actionHref="/"
@@ -72,6 +68,12 @@ export const ProductComparison: FC = () => {
                             )}
                         />
                     </div>
+                )}
+
+                {!isLoading && hasProductListError && (
+                    <Alert title={t('Something went wrong.')} variant="error">
+                        {t('Please try again later or contact us.')}
+                    </Alert>
                 )}
             </Webline>
         </VerticalStack>

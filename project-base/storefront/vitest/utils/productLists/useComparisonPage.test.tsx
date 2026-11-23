@@ -13,6 +13,7 @@ const mocks = vi.hoisted(() => ({
     },
     summary: undefined as TypeProductListSummaryFragment | undefined,
     comparison: null as (TypeProductListFragment & TypeProductListSummaryFragment) | null,
+    hasProductListError: false,
     move: vi.fn(),
     toggle: vi.fn(),
     success: vi.fn(),
@@ -21,7 +22,7 @@ vi.mock('utils/productLists/comparison/useComparison', () => ({
     useComparisonDetails: () => ({
         comparison: mocks.comparison,
         isProductListFetching: false,
-        hasProductListError: false,
+        hasProductListError: mocks.hasProductListError,
     }),
     useComparison: (callbacks: typeof mocks.callbacks) => {
         mocks.callbacks = callbacks;
@@ -70,6 +71,7 @@ const deferAdd = () => {
 beforeEach(() => {
     vi.clearAllMocks();
     mocks.summary = undefined;
+    mocks.hasProductListError = false;
     mocks.comparison = list(['a', 'b', 'c']);
     mocks.move.mockResolvedValue({ data: { MoveProductInList: list(['a', 'b', 'c']) } });
 });
@@ -223,4 +225,19 @@ test.each(['rejected', 'cancelled'])('settles Undo when adding is %s', async (ou
     });
     expect(mocks.move).not.toHaveBeenCalled();
     expect(result.current.products.map((product) => product.uuid)).toEqual(['a', 'c']);
+});
+
+test.each([
+    [3, false],
+    [25, true],
+])('reports a failed load of a comparison with %i products only when some of them are missing', (totalCount, error) => {
+    mocks.hasProductListError = true;
+    mocks.summary = {
+        ...list(['a', 'b', 'c']),
+        products: { totalCount },
+    } as unknown as TypeProductListSummaryFragment;
+    const { result } = renderHook(() => useComparisonPage());
+
+    expect(result.current.products).toHaveLength(3);
+    expect(result.current.hasProductListError).toBe(error);
 });

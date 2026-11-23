@@ -144,7 +144,10 @@ export const useComparisonPage = () => {
         moveProduct,
         products,
         isLoading: isProductListFetching && !comparison,
-        hasProductListError: hasProductListError && !comparison,
+        // A failed refresh keeps the confirmed comparison, but products missing from it must not disappear silently
+        hasProductListError:
+            hasProductListError &&
+            (!comparison || comparison.products.length < (comparisonSummary?.products.totalCount ?? 0)),
         emptyStateRef,
         handleRemove,
         handleRemoveAll,

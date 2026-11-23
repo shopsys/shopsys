@@ -6,6 +6,8 @@ export const DEFAULT_BLOG_PAGE_SIZE = 6;
 export const DEFAULT_SORT = TypeProductOrderingModeEnum.Priority as const;
 // Align PRODUCT_LIST_LIMIT with the API limit
 export const PRODUCT_LIST_LIMIT = 100;
+// A larger page of the heavy comparison product fragment would exceed the Frontend API complexity limit
+export const COMPARISON_PAGE_SIZE = 20;
 
 /**
  * For those that are set to "true", we optimistically navigate out from a SEO category when a value of that type is changed
