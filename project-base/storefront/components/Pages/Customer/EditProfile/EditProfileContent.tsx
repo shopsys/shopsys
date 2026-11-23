@@ -40,7 +40,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         },
     });
     const formMeta = useCustomerChangeProfileFormMeta();
-    const isSubmitting = formProviderMethods.formState.isSubmitting;
     const handleError = useErrorHandler({
         form: formProviderMethods,
         customMessage: formMeta.messages.error,
@@ -118,7 +117,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
                     {canManagePersonalData && (
                         <FormButtonWrapper>
-                            <SubmitButton data-tid={TIDs.edit_profile_save_button} hasDisabledLook={isSubmitting}>
+                            <SubmitButton size="large" data-tid={TIDs.edit_profile_save_button}>
                                 {t('Save profile')}
                             </SubmitButton>
                         </FormButtonWrapper>

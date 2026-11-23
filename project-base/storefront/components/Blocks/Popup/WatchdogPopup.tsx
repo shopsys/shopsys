@@ -103,7 +103,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
                         </FormBlockWrapper>
 
                         <FormButtonWrapper>
-                            <SubmitButton>{t('Notify me')}</SubmitButton>
+                            <SubmitButton size="large">{t('Notify me')}</SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>

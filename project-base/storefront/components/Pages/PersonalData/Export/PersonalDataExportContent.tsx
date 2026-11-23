@@ -98,6 +98,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
 
                                     <FormButtonWrapper>
                                         <SubmitButton
+                                            size="large"
                                             aria-label={t('Send. Submit personal data export request', {
                                                 ns: 'accessibility',
                                             })}

@@ -4,7 +4,6 @@ import { getButtonClassName } from './buttonUtils';
 
 export type ButtonBaseProps = {
     hasDisabledLook?: boolean;
-    hasDisabledCursor?: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'inverted';
     shouldShowSpinner?: boolean;
@@ -20,7 +19,6 @@ export const Button: FC<ButtonProps> = forwardRef(
             className,
             disabled,
             hasDisabledLook,
-            hasDisabledCursor,
             size = 'medium',
             variant = 'primary',
             type = 'button',
@@ -34,10 +32,7 @@ export const Button: FC<ButtonProps> = forwardRef(
                 disabled={disabled}
                 tabIndex={0}
                 type={type}
-                className={twMergeCustom(
-                    getButtonClassName(variant, size, hasDisabledLook, hasDisabledCursor),
-                    className,
-                )}
+                className={twMergeCustom(getButtonClassName(variant, size, hasDisabledLook), className)}
                 {...props}
             >
                 {children}

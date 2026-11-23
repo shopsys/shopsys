@@ -112,7 +112,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                                 <a
                                     href={`#${PRODUCT_VARIANTS_ID}`}
                                     className={twMergeCustom(
-                                        getButtonClassName('primary', 'large', false, false),
+                                        getButtonClassName('primary', 'large', false),
                                         'w-full no-underline hover:no-underline sm:max-w-60',
                                     )}
                                     onClick={scrollToVariants}

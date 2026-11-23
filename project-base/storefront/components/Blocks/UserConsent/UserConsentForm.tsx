@@ -99,20 +99,20 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ layout = 'default', 
                 </div>
 
                 <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
-                    <Button className="w-full sm:w-auto" size="small" variant="tertiary" onClick={rejectUserConsent}>
+                    <Button className="w-full sm:w-auto" size="medium" variant="tertiary" onClick={rejectUserConsent}>
                         {t('Reject all')}
                     </Button>
 
                     <Button
                         className="w-full sm:w-auto"
-                        size="small"
+                        size="medium"
                         variant="secondary"
                         onClick={saveUserConsentChoices}
                     >
                         {t('Save choices')}
                     </Button>
 
-                    <Button className="w-full sm:w-auto" size="small" onClick={giveFullUserConsent}>
+                    <Button className="w-full sm:w-auto" size="medium" onClick={giveFullUserConsent}>
                         {t('Accept all')}
                     </Button>
                 </div>
@@ -131,7 +131,7 @@ type ToggleContentProps = {
 const ToggleContent: FC<ToggleContentProps> = ({ isCompact, name, toggleSwitch, toggleSwitchId }) => (
     <label
         className={twMergeCustom(
-            'flex cursor-pointer items-center justify-between gap-4 px-4 font-secondary font-semibold text-sm transition-colors hover:bg-background-default',
+            'group flex cursor-pointer items-center justify-between gap-4 px-4 font-secondary font-semibold text-sm transition-colors hover:bg-background-default',
             isCompact ? 'min-h-13 py-2.5' : 'min-h-16 py-3',
         )}
         htmlFor={toggleSwitchId}

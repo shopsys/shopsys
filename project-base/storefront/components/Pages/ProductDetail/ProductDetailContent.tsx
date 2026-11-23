@@ -103,10 +103,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             {(isWatchdogButtonVisible || isPurchaseActionVisible) && (
                                 <div className="flex w-full min-w-0 max-w-80 flex-col gap-3">
                                     {isWatchdogButtonVisible && (
-                                        <WatchDogButton
-                                            className="h-auto min-h-14 w-full text-balance"
-                                            product={product}
-                                        />
+                                        <WatchDogButton className="w-full text-balance" product={product} />
                                     )}
 
                                     {isPurchaseActionVisible && (

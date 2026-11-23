@@ -76,7 +76,6 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             value={
                                 <ExtendedNextLink
                                     type="orderDetail"
-                                    className="text-sm"
                                     href={{
                                         pathname: customerOrderDetailUrl,
                                         query: { orderNumber: orderedItem.order.number },
@@ -111,7 +110,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         <Button
                             aria-haspopup="dialog"
                             className="w-full md:w-auto"
-                            size="small"
+                            size="medium"
                             variant="secondary"
                             onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
                         >

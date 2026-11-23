@@ -1,6 +1,7 @@
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
+import { getButtonHeightClassName } from 'components/Forms/Button/buttonUtils';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
 import {
@@ -427,10 +428,9 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({
             tabIndex={disabled ? -1 : 0}
             className={twMergeCustom([
                 'relative flex cursor-pointer items-center justify-center rounded-input border-none',
-                size === 'small' && 'size-9',
-                size === 'medium' && 'size-9',
-                size === 'large' && 'size-9 sm:size-10',
-                size === 'xlarge' && 'size-10 sm:size-14',
+                // Same heights as buttons of the same size, so the controls replace the add-to-cart button without a jump.
+                getButtonHeightClassName(size),
+                'aspect-square shrink-0',
                 className,
                 hasPendingLook && 'opacity-70',
                 disabled && 'pointer-events-none',

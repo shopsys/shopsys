@@ -1,5 +1,18 @@
 export enum TIDs {
     all_filters_button = 'all_filters_button',
+
+    // Styleguide interaction contracts
+    styleguide_button_ = 'styleguide_button_',
+    styleguide_link_button_ = 'styleguide_link_button_',
+    styleguide_submit_button_ = 'styleguide_submit_button_',
+    styleguide_button_with_icon_ = 'styleguide_button_with_icon_',
+    styleguide_icon_button_ = 'styleguide_icon_button_',
+    styleguide_wrapping_button = 'styleguide_wrapping_button',
+    styleguide_loading_button = 'styleguide_loading_button',
+    styleguide_disabled_button = 'styleguide_disabled_button',
+    styleguide_cms_button = 'styleguide_cms_button',
+    styleguide_input_paired_button = 'styleguide_input_paired_button',
+
     // Layout & Header
     header = 'header',
     fixed_header = 'fixed_header',
@@ -32,6 +45,7 @@ export enum TIDs {
     product_variants_button = 'product_variants_button',
     product_variants_popup_loading = 'product_variants_popup_loading',
     product_variants_popup_list = 'product_variants_popup_list',
+    error_popup_message = 'error_popup_message',
     login_form = 'login_form',
     login_method_web = 'login_method_web',
     login_form_submit_button = 'login_form_submit_button',

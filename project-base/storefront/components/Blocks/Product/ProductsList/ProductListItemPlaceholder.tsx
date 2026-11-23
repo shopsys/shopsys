@@ -91,7 +91,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
 
                     {visibleItemsConfig.addToCart && (
                         <ProductActionSkeleton
-                            className="h-9 w-40 shrink-0 sm:w-44"
+                            className="w-40 shrink-0 sm:w-44"
                             isWithAddToCart
                             isWithProductListButtons={false}
                         />

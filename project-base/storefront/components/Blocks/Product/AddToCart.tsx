@@ -3,7 +3,7 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
 import { Button } from 'components/Forms/Button/Button';
-import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
+import { getButtonHeightClassName, getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -88,7 +88,7 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
     });
 
     if (isCartFetchingOrUnavailable) {
-        return <Skeleton className={twMergeCustom('h-9 w-1/2', className)} />;
+        return <Skeleton className={twMergeCustom('w-full', getButtonHeightClassName(buttonSize), className)} />;
     }
 
     if (cartItem) {
