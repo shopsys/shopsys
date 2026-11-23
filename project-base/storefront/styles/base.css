@@ -225,6 +225,12 @@
         opacity: 1 !important;
     }
 
+    /* The timer animation closes the message, so it must not run while the focus is inside the message,
+       whatever resumes the library timer (Escape, pointer leave, window focus, end of the enter animation). */
+    .Toastify__toast:focus-within .Toastify__progress-bar {
+        animation-play-state: paused !important;
+    }
+
     /* fix gallery video start width and hide dummy image */
     .lg-outer .lg-video-cont .lg-object.lg-video-poster {
         @apply w-auto!;

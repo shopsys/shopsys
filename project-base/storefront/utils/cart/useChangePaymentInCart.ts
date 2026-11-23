@@ -8,6 +8,8 @@ import { useLatest } from 'utils/ui/useLatest';
 export type ChangePaymentInCart = (
     newPaymentUuid: string | null,
     newGoPayBankSwift: string | null,
+    // A change that reacts to an API response targets the cart of that response instead of the current one
+    targetCartUuid?: string | null,
 ) => Promise<TypeCartFragment | undefined | null>;
 
 export const useChangePaymentInCart = () => {
@@ -18,10 +20,14 @@ export const useChangePaymentInCart = () => {
 
     const gtmCart = useLatest(gtmCartInfo);
 
-    const changePaymentInCart: ChangePaymentInCart = async (newPaymentUuid, newGoPayBankSwift) => {
+    const changePaymentInCart: ChangePaymentInCart = async (newPaymentUuid, newGoPayBankSwift, targetCartUuid) => {
         const changePaymentResult = await changePaymentInCartMutation(
             {
-                input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
+                input: {
+                    paymentUuid: newPaymentUuid,
+                    paymentGoPayBankSwift: newGoPayBankSwift,
+                    cartUuid: targetCartUuid === undefined ? cartUuid : targetCartUuid,
+                },
             },
             { additionalTypenames: ['dedup'] },
         );

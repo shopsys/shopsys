@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { CartModificationsSlice, createCartModificationsSlice } from './slices/createCartModificationsSlice';
 import { CartStaleSlice, createCartStaleSlice } from './slices/createCartStaleSlice';
 import { createFilterPanelSlice, FilterPanelSlice } from './slices/createFilterPanelSlice';
 import { createFocusManagementSlice, FocusManagementSlice } from './slices/createFocusManagementSlice';
@@ -10,6 +11,7 @@ import { createSeoCategorySlice, SeoCategorySlice } from './slices/createSeoCate
 import { createUserMenuSlice, UserMenuSlice } from './slices/createUserMenuSlice';
 
 type SessionStore = CartStaleSlice &
+    CartModificationsSlice &
     SeoCategorySlice &
     PageLoadingStateSlice &
     PortalSlice &
@@ -21,6 +23,7 @@ type SessionStore = CartStaleSlice &
 
 export const useSessionStore = create<SessionStore>()((...store) => ({
     ...createCartStaleSlice(...store),
+    ...createCartModificationsSlice(...store),
     ...createSeoCategorySlice(...store),
     ...createPageLoadingStateSlice(...store),
     ...createPortalSlice(...store),

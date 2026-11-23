@@ -1,4 +1,7 @@
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { IconButton } from 'components/Forms/Button/IconButton';
 import { ReactNode } from 'react';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
 export type AlertVariant = 'error' | 'info' | 'success' | 'warning';
@@ -9,9 +12,22 @@ type AlertProps = {
     variant: AlertVariant;
     tid?: string;
     children?: ReactNode;
+    onClose?: () => void;
+    closeButtonTid?: string;
 };
 
-export const Alert: FC<AlertProps> = ({ icon: Icon, title, variant, tid, children, className }) => {
+export const Alert: FC<AlertProps> = ({
+    icon: Icon,
+    title,
+    variant,
+    tid,
+    children,
+    className,
+    onClose,
+    closeButtonTid,
+}) => {
+    const { t } = useTranslation();
+
     const alertVariantClasses: Record<AlertVariant, string> = {
         error: 'border-alert-border-error bg-alert-bg-error text-alert-text-error',
         info: 'border-alert-border-info bg-alert-bg-info text-alert-text-info',
@@ -49,6 +65,19 @@ export const Alert: FC<AlertProps> = ({ icon: Icon, title, variant, tid, childre
                 {title && <span className="font-semibold">{title}</span>}
                 {children}
             </div>
+
+            {onClose && (
+                <IconButton
+                    className="ml-auto shrink-0"
+                    Icon={CloseIcon}
+                    shape="rounded"
+                    size="small"
+                    tid={closeButtonTid}
+                    title={t('Close')}
+                    variant="ghost"
+                    onClick={onClose}
+                />
+            )}
         </div>
     );
 };

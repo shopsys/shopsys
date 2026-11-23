@@ -53,7 +53,6 @@ export const useLogout = () => {
         try {
             toast.loading(t<string>('Logging out...'), {
                 toastId: progressToastId,
-                role: 'status',
                 closeButton: false,
                 closeOnClick: false,
                 draggable: false,
