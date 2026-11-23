@@ -108,6 +108,7 @@ export const Wishlist: FC = () => {
                             gtmMessageOrigin={GtmMessageOriginType.other}
                             gtmProductListName={GtmProductListNameType.wishlist}
                             isLoadingMoreProducts={isLoadingMoreProducts}
+                            totalCount={totalCount}
                             products={wishlist?.products}
                         />
 

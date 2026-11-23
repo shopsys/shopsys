@@ -31,6 +31,7 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
                 gtmProductListName={GtmProductListNameType.brand_detail}
                 isLoadingMoreProducts={isLoadingMoreProducts}
                 products={listedBrandProducts}
+                totalCount={brand.products.totalCount}
             />
             <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={brand.products.totalCount} />
         </>

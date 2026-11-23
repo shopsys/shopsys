@@ -52,6 +52,7 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
                             gtmProductListName={GtmProductListNameType.search_results}
                             isLoadingMoreProducts={isLoadingMoreSearchProducts}
                             products={searchResultProducts}
+                            totalCount={searchProductsData.totalCount}
                         />
                     )}
 

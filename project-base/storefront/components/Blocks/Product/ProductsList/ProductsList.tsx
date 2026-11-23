@@ -11,6 +11,7 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { ProductItemProps, ProductListViewModeType } from './ProductListItem';
 import { ProductsListContent } from './ProductsListContent';
 import { productListTwClass, productListViewModeListTwClass } from './productsListConstants';
@@ -21,6 +22,7 @@ type ProductsListProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     areProductsFetching?: boolean;
     isLoadingMoreProducts?: boolean;
+    totalCount?: number;
     category?: TypeCategoryDetailFragment;
     productItemProps?: Partial<ProductItemProps>;
 };
@@ -28,19 +30,35 @@ type ProductsListProps = {
 const getProductListTwClass = (productListViewMode: ProductListViewModeType) =>
     productListViewMode === 'list' ? productListViewModeListTwClass : productListTwClass;
 
+// Only as many skeletons as products remain to be loaded, so the page does not shrink after the load
+const getRemainingProductsCount = (
+    totalCount: number,
+    currentPage: number,
+    currentLoadMore: number,
+    loadedProductsCount: number,
+) =>
+    Math.min(calculatePageSize(currentLoadMore), totalCount - (currentPage - 1) * DEFAULT_PAGE_SIZE) -
+    loadedProductsCount;
+
 export const ProductsList: FC<ProductsListProps> = ({
     products,
     gtmProductListName,
     areProductsFetching,
     isLoadingMoreProducts,
+    totalCount,
     category,
     gtmMessageOrigin = GtmMessageOriginType.other,
     productItemProps,
 }) => {
     const { t } = useTranslation();
     const currentLoadMore = useCurrentLoadMoreQuery();
+    const currentPage = useCurrentPageQuery();
     const productListViewMode = useCookiesStore((store) => store.productListViewMode);
     const currentProductListTwClass = getProductListTwClass(productListViewMode);
+    const loadingMoreProductsCount =
+        totalCount === undefined
+            ? DEFAULT_PAGE_SIZE
+            : getRemainingProductsCount(totalCount, currentPage, currentLoadMore, products?.length ?? 0);
 
     if (!products?.length && !areProductsFetching) {
         return <CategoryDetailContentMessage />;
@@ -67,9 +85,9 @@ export const ProductsList: FC<ProductsListProps> = ({
                     )}
                 </ProductsListContent>
 
-                {isLoadingMoreProducts && (
+                {isLoadingMoreProducts && loadingMoreProductsCount > 0 && (
                     <div className={currentProductListTwClass}>
-                        {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
+                        {createEmptyArray(loadingMoreProductsCount).map((_, index) => (
                             <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
                         ))}
                     </div>

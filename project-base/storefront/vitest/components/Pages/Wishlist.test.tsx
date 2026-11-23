@@ -51,15 +51,17 @@ vi.mock('components/Blocks/Product/ProductsList/ProductsList', () => ({
     ProductsList: ({
         products,
         isLoadingMoreProducts,
+        totalCount,
     }: {
         products: { uuid: string }[];
         isLoadingMoreProducts?: boolean;
+        totalCount?: number;
     }) => (
         <ul data-testid="products-list">
             {products.map((product) => (
                 <li key={product.uuid}>{product.uuid}</li>
             ))}
-            {isLoadingMoreProducts && <li>loading more</li>}
+            {isLoadingMoreProducts && <li>loading more of {totalCount}</li>}
         </ul>
     ),
 }));
@@ -297,7 +299,7 @@ describe('Wishlist', () => {
         render(<Wishlist />);
 
         expect(screen.getByText('product-29')).toBeInTheDocument();
-        expect(screen.getByText('loading more')).toBeInTheDocument();
+        expect(screen.getByText('loading more of 65')).toBeInTheDocument();
         expect(screen.getByText('65 products count')).toBeInTheDocument();
         expect(mocks.replace).not.toHaveBeenCalled();
     });

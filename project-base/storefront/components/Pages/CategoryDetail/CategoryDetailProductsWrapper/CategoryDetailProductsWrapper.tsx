@@ -36,6 +36,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
                 gtmProductListName={gtmProductListName}
                 isLoadingMoreProducts={isLoadingMoreProducts}
                 products={products}
+                totalCount={category.products.totalCount}
             />
             <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={category.products.totalCount} />
         </>
