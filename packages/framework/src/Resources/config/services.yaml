@@ -560,10 +560,6 @@ services:
 
     Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
 
-    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
-        arguments:
-            $resettableServices: !tagged_iterator kernel.reset
-
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator }

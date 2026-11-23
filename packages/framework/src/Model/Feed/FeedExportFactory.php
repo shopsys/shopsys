@@ -10,7 +10,6 @@ use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
-use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExportFactory
@@ -22,7 +21,6 @@ class FeedExportFactory
         protected readonly FeedPathProvider $feedPathProvider,
         protected readonly Filesystem $localFilesystem,
         protected readonly MountManager $mountManager,
-        protected readonly ServicesResetter $servicesResetter,
         protected readonly TransformStringHelper $transformStringHelper,
         protected readonly LoggerInterface $logger,
     ) {
@@ -45,7 +43,6 @@ class FeedExportFactory
             $this->transformStringHelper,
             $feedFilepath,
             $feedLocalFilepath,
-            $this->servicesResetter,
             $this->logger,
             $lastSeekId,
         );
