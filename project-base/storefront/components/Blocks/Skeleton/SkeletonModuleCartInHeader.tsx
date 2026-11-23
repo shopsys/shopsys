@@ -12,7 +12,7 @@ export const SkeletonModuleCartInHeader: FC = () => {
                     <CartIcon className="size-6" />
                     <CartCount>0</CartCount>
                 </span>
-                <span className="hidden font-bold font-secondary text-sm lg:block">{t('Empty')}</span>
+                <span className="hidden font-secondary font-semibold text-sm lg:block">{t('Empty')}</span>
             </div>
             <div className="relative vl:hidden">
                 <div

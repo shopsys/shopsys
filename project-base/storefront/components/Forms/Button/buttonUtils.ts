@@ -26,7 +26,7 @@ export const getButtonClassName = (
     hasDisabledLook: ButtonBaseProps['hasDisabledLook'],
 ) => {
     return twJoin(
-        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-secondary font-semibold transition-all hover:no-underline',
+        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-action font-secondary transition-all hover:no-underline',
         // the neutral outline button is framed by a 1px line, the other variants keep their 2px outline
         variant === 'outline' ? 'outline-1 -outline-offset-1' : 'outline-2 -outline-offset-2',
         size === 'small' && 'px-3 py-2 text-sm',

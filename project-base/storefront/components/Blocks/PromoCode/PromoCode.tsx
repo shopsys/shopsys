@@ -33,7 +33,7 @@ export const PromoCode: FC = () => {
                 aria-controls="apply-code-form"
                 aria-label={t('Toggle promo code', { ns: 'accessibility' })}
                 className={twJoin(
-                    'flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-secondary font-semibold text-sm text-text-default outline-hidden transition-colors hover:text-link-default focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:-outline-offset-2',
+                    'flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-ui text-sm text-text-default outline-hidden transition-colors hover:text-link-default focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:-outline-offset-2',
                     isContentVisible ? 'rounded-t-card' : 'rounded-card',
                 )}
                 data-tid={TIDs.blocks_promocode_add_button}

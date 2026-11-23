@@ -148,7 +148,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
         >
             <div
                 className={twJoin(
-                    'flex w-full cursor-pointer items-center justify-between gap-2 p-3 font-secondary hover:bg-fill-accent-less hover:text-input-text-hovered',
+                    'flex w-full cursor-pointer items-center justify-between gap-2 p-3 hover:bg-fill-accent-less hover:text-input-text-hovered',
                     option.value === activeOption?.value && 'text-input-text-active',
                     option.isDisabled && 'text-input-text-disabled',
                 )}
@@ -158,9 +158,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 {renderOption ? renderOption(option) : option.label}
 
                 {option.count !== undefined && (
-                    <span className="whitespace-nowrap font-secondary text-input-placeholder-default">
-                        ({option.count})
-                    </span>
+                    <span className="whitespace-nowrap text-input-placeholder-default">({option.count})</span>
                 )}
 
                 {option.value === activeOption?.value && (

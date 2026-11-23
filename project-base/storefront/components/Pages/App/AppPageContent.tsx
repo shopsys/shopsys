@@ -4,13 +4,12 @@ import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserC
 import { DeferredGtmHeadScript } from 'gtm/DeferredGtmHeadScript';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
-import { twJoin } from 'tailwind-merge';
 import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { DeferredLoaders } from './DeferredLoaders';
 import { DeferredSecondaryLoaders } from './DeferredSecondaryLoaders';
 import { DeferredTertiaryLoaders } from './DeferredTertiaryLoaders';
-import { Fonts, ralewayFont } from './Fonts';
+import { Fonts } from './Fonts';
 import { PageHeadScripts } from './PageHeadScripts';
 
 const Error503Content = dynamic(
@@ -51,7 +50,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     }
 
     return (
-        <div className={twJoin('h-full min-h-screen', ralewayFont.variable)}>
+        <div className="h-full min-h-screen">
             <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />

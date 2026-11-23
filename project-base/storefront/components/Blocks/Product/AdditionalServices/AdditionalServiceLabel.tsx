@@ -51,11 +51,11 @@ export const AdditionalServiceLabel: FC<AdditionalServiceLabelProps> = ({
     const { t } = useTranslation();
 
     return (
-        <span className="col-start-3 flex min-w-0 flex-1 flex-col items-start justify-center font-secondary text-sm md:col-auto">
+        <span className="col-start-3 flex min-w-0 flex-1 flex-col items-start justify-center text-sm md:col-auto">
             <span className="flex w-fit min-w-0 max-w-full items-center gap-2">
                 <label
                     className={twMergeCustom(
-                        'wrap-break-words w-fit max-w-full cursor-pointer font-semibold',
+                        'wrap-break-words w-fit max-w-full cursor-pointer font-ui',
                         !isDisabled && 'choice-hover:underline',
                         isDisabled && 'cursor-no-drop opacity-50',
                     )}

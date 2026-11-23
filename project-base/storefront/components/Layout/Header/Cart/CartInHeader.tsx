@@ -123,7 +123,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     </span>
 
                     {isPriceVisibleOrEmtpyCart && (
-                        <span className={twJoin('vl:block hidden font-bold font-secondary text-sm')}>
+                        <span className={twJoin('vl:block hidden font-secondary font-semibold text-sm')}>
                             {cart?.items.length
                                 ? formatPrice(cart.totalItemsPrice.priceWithVat, {
                                       explicitZero: true,

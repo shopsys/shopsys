@@ -51,7 +51,7 @@ export const CartStep: FC<CartStepProps> = ({
 
                 <span
                     className={twJoin(
-                        'font-secondary font-semibold text-xs lg:text-lg',
+                        'font-semibold text-xs lg:text-lg',
                         !isDisabled && 'group-hover:text-link-hovered',
                         step === activeStep ? 'text-text-accent' : '',
                     )}

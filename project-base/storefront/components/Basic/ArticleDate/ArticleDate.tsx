@@ -26,11 +26,7 @@ export const ArticleDate: FC<ArticleDate> = ({ date, tid, className }) => {
     const displayDate = formatDate(date);
 
     return (
-        <time
-            className={twJoin('font-secondary font-semibold text-sm text-text-less', className)}
-            data-tid={tid}
-            dateTime={isoDateTime}
-        >
+        <time className={twJoin('text-sm text-text-less', className)} data-tid={tid} dateTime={isoDateTime}>
             {displayDate}
         </time>
     );

@@ -42,7 +42,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                 <span
                     id={id}
                     role="alert"
-                    className={twJoin('font-secondary text-sm text-text-error', isCheckbox && 'block pr-6')}
+                    className={twJoin('text-sm text-text-error', isCheckbox && 'block pr-6')}
                     data-tid={TIDs.form_line_error}
                 >
                     {error.message}

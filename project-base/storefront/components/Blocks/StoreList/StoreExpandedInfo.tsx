@@ -35,9 +35,7 @@ export const StoreExpandedInfo: FC<StoreExpandedInfoProps> = ({
                 {store.phone || store.email ? <StoreContact email={store.email} phone={store.phone} /> : null}
 
                 <div className="flex flex-col gap-2">
-                    <p className="font-secondary font-semibold text-text-default">
-                        {t('Opening hours', { ns: 'accessibility' })}
-                    </p>
+                    <p className="font-semibold text-text-default">{t('Opening hours', { ns: 'accessibility' })}</p>
 
                     <OpeningHours
                         openingHours={store.openingHours}

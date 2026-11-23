@@ -91,7 +91,7 @@ export const FilterPanelDesktopContent: FC<{ groups: FilterPanelGroup[] }> = ({ 
                             tabIndex={isSelected ? 0 : -1}
                             type="button"
                             className={twMergeCustom(
-                                'flex min-h-10 shrink-0 items-center justify-between gap-3 rounded-control px-3 py-2.5 text-left font-secondary font-semibold text-sm transition-colors',
+                                'flex min-h-10 shrink-0 items-center justify-between gap-3 rounded-control px-3 py-2.5 text-left font-semibold text-sm transition-colors',
                                 isAvailable
                                     ? 'hover:bg-background-more'
                                     : 'cursor-not-allowed text-input-text-disabled opacity-50',

@@ -40,7 +40,7 @@ export const NewsletterForm: FC = () => {
         <FooterContainer className="border-t-0! bg-background-brand text-text-inverted">
             <div className="grid grid-cols-1 vl:grid-cols-[minmax(20rem,28rem)_minmax(0,32rem)] items-center vl:justify-center gap-4 vl:gap-12">
                 <div className="flex flex-col gap-1.5">
-                    <span className="font-secondary font-semibold text-text-inverted text-xs uppercase tracking-widest">
+                    <span className="font-semibold text-text-inverted text-xs uppercase tracking-widest">
                         {t('Newsletter')}
                     </span>
                     <h2 className="text-balance font-secondary font-semibold text-text-inverted text-xl leading-tight tracking-tight lg:text-2xl">

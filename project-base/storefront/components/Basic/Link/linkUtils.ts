@@ -20,7 +20,7 @@ const LINK_VARIANT_CLASS_NAMES: Record<LinkVariant, string> = {
     // keeps the font and size of the text it is part of
     text: '',
     // one typography for every text action; a trailing 16px icon sits 4px after the text
-    action: 'inline-flex items-center gap-1 font-semibold text-sm',
+    action: 'inline-flex items-center gap-1 font-ui text-sm',
     // typography comes from the menu or list the link belongs to
     navigation: '',
 };
@@ -30,7 +30,7 @@ const LINK_VARIANT_CLASS_NAMES: Record<LinkVariant, string> = {
  * Pick the variant by asking what the link does:
  * - `text`: a link in the content of the page, inside a sentence or a single link next to text (a policy under a
  *   button, the consent link in the footer). It keeps the font of the text, is always underlined. Default tone `accent`.
- * - `action`: a text action (show more, open description, edit, clear filters, review count). Inter 600 14px,
+ * - `action`: a text action (show more, open description, edit, clear filters, review count). Inter 500 14px,
  *   always underlined. Default tone `accent`, `subtle` for secondary actions.
  * - `navigation`: a link among similar links (menu, footer column, breadcrumbs). Underlined on hover.
  *   Default tone `default`.

@@ -192,7 +192,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             </div>
 
             <h3
-                className="w-fit max-w-full font-secondary font-semibold text-sm lg:text-sm"
+                className="w-fit max-w-full font-default font-product-name text-sm lg:text-sm"
                 data-tid={TIDs.pages_cart_list_item_name}
                 id={`product-${uuid}-name`}
             >
@@ -317,14 +317,14 @@ export const CartListItem: FC<CartListItemProps> = ({
                         )}
 
                         {isProduct && isPriceVisible(product.price.priceWithVat) && (
-                            <div className="vl:col-start-3 whitespace-nowrap font-secondary xl:w-40">
+                            <div className="vl:col-start-3 whitespace-nowrap tabular-nums xl:w-40">
                                 <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
                                 <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                             </div>
                         )}
 
                         {isProductGift && isPriceVisible(product.giftPrice.priceWithVat) && (
-                            <div className="vl:col-start-3 whitespace-nowrap font-secondary xl:w-40">
+                            <div className="vl:col-start-3 whitespace-nowrap tabular-nums xl:w-40">
                                 <span className="font-semibold">{formatPrice(product.giftPrice.priceWithVat)}</span>
                                 <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                             </div>

@@ -90,24 +90,24 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         />
                     </div>
 
-                    <div className="wrap-break-word min-w-0 font-secondary font-semibold text-sm">{productLink}</div>
+                    <div className="wrap-break-word min-w-0 font-product-name text-sm">{productLink}</div>
                 </div>
 
                 {complaintItem.catnum && (
                     <SelectableCode
-                        className="vl:w-auto w-full font-secondary font-semibold text-sm text-text-less"
+                        className="vl:w-auto w-full text-sm text-text-less"
                         label={t('Code')}
                         value={complaintItem.catnum}
                     />
                 )}
 
-                <span className="vl:text-left text-right font-secondary font-semibold">
+                <span className="vl:text-left text-right">
                     {complaintItem.quantity}
                     {complaintItemUnit && ` ${complaintItemUnit}`}
                 </span>
 
                 {complaintItemTotalPrice && isPriceVisible(complaintItemTotalPrice.priceWithVat) && (
-                    <span className="text-right font-bold font-secondary">
+                    <span className="text-right font-price tabular-nums">
                         {formatPrice(complaintItemTotalPrice.priceWithVat)}
                     </span>
                 )}
@@ -116,7 +116,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
             <AdditionalServiceSummaryList className="vl:pl-25" services={additionalServiceLines} />
 
             <CustomerRecordRowInfo className="items-start" title={t('Description')}>
-                <span className="font-secondary font-semibold">{complaintItem.description}</span>
+                <span>{complaintItem.description}</span>
             </CustomerRecordRowInfo>
 
             {!!complaintItem.files?.length && (

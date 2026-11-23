@@ -19,7 +19,7 @@ export const ProductGift: FC<ProductGiftProps> = ({ gifts }) => {
     }
 
     return (
-        <div className="flex min-w-0 flex-col gap-3 font-secondary">
+        <div className="flex min-w-0 flex-col gap-3">
             <p className="flex items-center gap-2 font-semibold text-sm text-text-less">
                 <GiftIcon aria-hidden="true" className="size-4 shrink-0" />
                 {t('Gift with purchase')}
@@ -41,11 +41,11 @@ export const ProductGift: FC<ProductGiftProps> = ({ gifts }) => {
                                 width={64}
                             />
                         </div>
-                        <p className="wrap-break-words col-start-2 min-w-0 self-end font-semibold leading-snug sm:self-center">
+                        <p className="wrap-break-words col-start-2 min-w-0 self-end font-product-name leading-snug sm:self-center">
                             {gift.fullName}
                         </p>
                         {isPriceVisible(gift.giftPrice.priceWithVat) && (
-                            <p className="col-start-2 self-start whitespace-nowrap font-bold text-price-default sm:col-start-3 sm:self-center">
+                            <p className="col-start-2 self-start whitespace-nowrap font-price text-price-default sm:col-start-3 sm:self-center">
                                 {formatPrice(gift.giftPrice.priceWithVat)}
                             </p>
                         )}

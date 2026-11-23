@@ -131,10 +131,7 @@ export const OpeningHours: FC<{
                         >
                             <span
                                 aria-hidden="true"
-                                className={twMergeCustom(
-                                    'font-secondary font-semibold',
-                                    isCompact ? 'w-36 text-xs' : 'h6 w-44',
-                                )}
+                                className={twMergeCustom('font-semibold', isCompact ? 'w-36 text-xs' : 'h6 w-44')}
                             >
                                 {dayLabel}
                             </span>

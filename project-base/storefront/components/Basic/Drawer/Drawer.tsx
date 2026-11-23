@@ -126,9 +126,7 @@ export const Drawer: FC<DrawerProps> = ({
                             (headerContent ?? (
                                 <div className="mb-5 grid grid-cols-[2.25rem_1fr_2.25rem] items-center">
                                     <span aria-hidden="true" />
-                                    <span className="min-w-0 truncate text-center font-secondary font-semibold">
-                                        {title}
-                                    </span>
+                                    <span className="min-w-0 truncate text-center font-semibold">{title}</span>
 
                                     <DrawerCloseButton onClick={closeDrawer} />
                                 </div>

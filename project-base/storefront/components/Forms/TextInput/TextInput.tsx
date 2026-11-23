@@ -93,7 +93,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer w-full rounded-input px-3 font-medium [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
+                    'peer w-full rounded-input px-3 [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
                     getFieldStateClassName({ hasError, hasWarning }),
                     '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
                     '[&:-webkit-autofill]:hover:bg-input-bg-hovered! [&:-webkit-autofill]:hover:shadow-inner!',

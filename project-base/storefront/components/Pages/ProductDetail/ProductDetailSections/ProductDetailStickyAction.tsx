@@ -34,7 +34,7 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
             />
 
             <div className="min-w-0 vl:max-w-44 flex-1 vl:flex-none">
-                <p className="truncate font-secondary font-semibold text-sm">{product.fullName}</p>
+                <p className="truncate font-product-name text-sm">{product.fullName}</p>
 
                 <div className="vl:block hidden">
                     <ProductAvailability

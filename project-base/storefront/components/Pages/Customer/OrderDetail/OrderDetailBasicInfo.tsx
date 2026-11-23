@@ -162,7 +162,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         </div>
 
                         {isPriceVisible(order.totalPrice.priceWithVat) && (
-                            <span className="font-bold">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
+                            <span className="font-price">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
@@ -182,7 +182,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         />
 
                         {isPriceVisible(orderPayment.totalPrice.priceWithVat) && (
-                            <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
+                            <span className="font-price">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
@@ -190,7 +190,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
             {orderRounding && isPriceVisible(orderRounding.totalPrice.priceWithVat) && (
                 <OrderDetailRowInfo title={t('Rounding')}>
-                    <span className="block w-full text-right font-bold">
+                    <span className="block w-full text-right font-price">
                         {formatPrice(orderRounding.totalPrice.priceWithVat)}
                     </span>
                 </OrderDetailRowInfo>
@@ -217,7 +217,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     ))}
                 </div>
 
-                <div className="mt-8 flex flex-col gap-2 font-secondary font-semibold text-sm">
+                <div className="mt-8 flex flex-col gap-2 text-sm">
                     <span className="text-lg">{t('Order summary')}</span>
 
                     {order.promoCode && (

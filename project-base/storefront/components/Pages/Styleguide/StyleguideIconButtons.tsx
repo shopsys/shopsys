@@ -47,9 +47,7 @@ export const StyleguideIconButtons: FC = () => (
                 </StyleguideSpecimen>
                 <StyleguideSpecimen hint='shape="inset", inside a field' label="ghost">
                     <div className="flex h-14 w-64 items-center justify-between rounded-input border-2 border-input-border-default pr-1 pl-3">
-                        <span className="font-secondary font-semibold text-input-placeholder-default">
-                            Choose a country
-                        </span>
+                        <span className="text-input-placeholder-default">Choose a country</span>
                         <IconButton Icon={ArrowIcon} shape="inset" title="Open" variant="ghost" />
                     </div>
                 </StyleguideSpecimen>

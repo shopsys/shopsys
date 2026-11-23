@@ -75,7 +75,7 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
         <div
             data-tid={TIDs.transport_and_payment_price}
             className={twJoin(
-                'ml-auto font-secondary font-semibold text-sm text-text-default',
+                'ml-auto font-semibold text-sm text-text-default tabular-nums',
                 isPriceNextToDeliveryDateOnSmallScreen &&
                     'max-sm:col-start-3 max-sm:row-start-2 max-sm:whitespace-nowrap',
             )}

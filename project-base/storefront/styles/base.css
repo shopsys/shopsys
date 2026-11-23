@@ -52,15 +52,19 @@
     h2,
     h3,
     h4,
-    h5,
-    h6,
     .h1,
     .h2,
     .h3,
-    .h4,
+    .h4 {
+        @apply font-secondary font-heading;
+    }
+
+    /* small headings stay in the UI font, Raleway is for headings from 18px */
+    h5,
+    h6,
     .h5,
     .h6 {
-        @apply font-secondary font-semibold;
+        @apply font-default font-heading;
     }
 
     h1,
@@ -121,7 +125,7 @@
 
     b,
     strong {
-        @apply font-bold;
+        @apply font-semibold;
     }
 
     input::-webkit-outer-spin-button,

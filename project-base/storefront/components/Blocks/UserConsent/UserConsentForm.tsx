@@ -131,7 +131,7 @@ type ToggleContentProps = {
 const ToggleContent: FC<ToggleContentProps> = ({ isCompact, name, toggleSwitch, toggleSwitchId }) => (
     <label
         className={twMergeCustom(
-            'group flex cursor-pointer items-center justify-between gap-4 px-4 font-secondary font-semibold text-sm transition-colors hover:bg-background-default',
+            'group flex cursor-pointer items-center justify-between gap-4 px-4 font-semibold text-sm transition-colors hover:bg-background-default',
             isCompact ? 'min-h-13 py-2.5' : 'min-h-16 py-3',
         )}
         htmlFor={toggleSwitchId}

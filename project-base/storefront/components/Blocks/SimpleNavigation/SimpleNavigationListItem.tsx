@@ -53,7 +53,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({ li
 
             {icon}
 
-            <div className="z-above font-semibold text-sm">{listedItem.name}</div>
+            <div className="z-above font-ui text-sm">{listedItem.name}</div>
             {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
                 <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
             )}

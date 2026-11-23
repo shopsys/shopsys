@@ -129,7 +129,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
                     <h3
                         className={twJoin(
-                            'wrap-break-word row-start-3 mt-2.5 overflow-hidden font-secondary font-semibold group-hover/product-link:text-text-default',
+                            'wrap-break-word row-start-3 mt-2.5 overflow-hidden font-default font-product-name group-hover/product-link:text-text-default',
                             textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                         )}
                     >
@@ -139,7 +139,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
-                        <div className="row-start-4 mt-2.5 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                        <div className="row-start-4 mt-2.5 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 text-xs group-hover:text-text-default">
                             <VariantIcon className="size-4 text-text-accent" fill="currentColor" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>

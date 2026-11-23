@@ -110,18 +110,18 @@ export const CustomerUsersTable: FC = () => {
                             <Cell
                                 isHead
                                 scope="col"
-                                className="w-1/2 py-3 text-left font-medium text-text-less text-xs"
+                                className="w-1/2 py-3 text-left font-semibold text-text-less text-xs"
                             >
                                 {t('User')}
                             </Cell>
-                            <Cell isHead scope="col" className="py-3 text-left font-medium text-text-less text-xs">
+                            <Cell isHead scope="col" className="py-3 text-left font-semibold text-text-less text-xs">
                                 {t('Role group')}
                             </Cell>
                             <Cell
                                 isHead
                                 scope="col"
                                 align="right"
-                                className="w-28 py-3 font-medium text-text-less text-xs"
+                                className="w-28 py-3 font-semibold text-text-less text-xs"
                             >
                                 {t('Actions')}
                             </Cell>

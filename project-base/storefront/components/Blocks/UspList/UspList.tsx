@@ -22,46 +22,36 @@ export const UspList: FC = () => {
             <UspListItem>
                 <UspFirstIcon className="size-14 text-icon-accent" />
                 <div className="flex flex-col items-center gap-0.5">
-                    <span className="font-secondary font-semibold text-sm leading-5">
-                        {t('Trusted Czech retailer')}
-                    </span>
-                    <span className="font-secondary text-text-less text-xs leading-4">
-                        {t('Reliable shopping you can count on')}
-                    </span>
+                    <span className="font-ui text-sm leading-5">{t('Trusted Czech retailer')}</span>
+                    <span className="text-text-less text-xs leading-4">{t('Reliable shopping you can count on')}</span>
                 </div>
             </UspListItem>
             <UspListItem>
                 <UspSecondIcon className="size-14 text-icon-accent" />
                 <div className="flex flex-col items-center gap-0.5">
-                    <span className="font-secondary font-semibold text-sm leading-5">{t('Fast delivery')}</span>
-                    <span className="font-secondary text-text-less text-xs leading-4">
-                        {t('In-stock orders dispatched today')}
-                    </span>
+                    <span className="font-ui text-sm leading-5">{t('Fast delivery')}</span>
+                    <span className="text-text-less text-xs leading-4">{t('In-stock orders dispatched today')}</span>
                 </div>
             </UspListItem>
             <UspListItem>
                 <UspThirdIcon className="size-14 text-icon-accent" />
                 <div className="flex flex-col items-center gap-0.5">
-                    <span className="font-secondary font-semibold text-sm leading-5">{t('Customer support')}</span>
-                    <span className="font-secondary text-text-less text-xs leading-4">
-                        {t('Here when you need us')}
-                    </span>
+                    <span className="font-ui text-sm leading-5">{t('Customer support')}</span>
+                    <span className="text-text-less text-xs leading-4">{t('Here when you need us')}</span>
                 </div>
             </UspListItem>
             <UspListItem>
                 <UspFourthIcon className="size-14 text-icon-accent" />
                 <div className="flex flex-col items-center gap-0.5">
-                    <span className="font-secondary font-semibold text-sm leading-5">{t('98% in stock')}</span>
-                    <span className="font-secondary text-text-less text-xs leading-4">
-                        {t('Thousands of products ready to ship')}
-                    </span>
+                    <span className="font-ui text-sm leading-5">{t('98% in stock')}</span>
+                    <span className="text-text-less text-xs leading-4">{t('Thousands of products ready to ship')}</span>
                 </div>
             </UspListItem>
             <UspListItem>
                 <UspFifthIcon className="size-14 text-icon-accent" />
                 <div className="flex flex-col items-center gap-0.5">
-                    <span className="font-secondary font-semibold text-sm leading-5">{t('Pickup across Czechia')}</span>
-                    <span className="font-secondary text-text-less text-xs leading-4">
+                    <span className="font-ui text-sm leading-5">{t('Pickup across Czechia')}</span>
+                    <span className="text-text-less text-xs leading-4">
                         {t('Stores and collection points nationwide')}
                     </span>
                 </div>

@@ -83,11 +83,9 @@ export const CategoryCard: FC<CategoryCardProps> = ({
             {imageContent}
 
             <div className={twJoin(isLarge && 'vl:min-w-0')}>
-                <Heading className="h5 line-clamp-2">{category.name}</Heading>
+                <Heading className="h5 line-clamp-2 font-ui">{category.name}</Heading>
                 {variant === 'homepage' && isLarge && (
-                    <p className="mt-2 vl:block hidden font-secondary font-semibold text-sm text-text-less">
-                        {t('Our most popular category')}
-                    </p>
+                    <p className="mt-2 vl:block hidden text-sm text-text-less">{t('Our most popular category')}</p>
                 )}
             </div>
         </>
@@ -154,10 +152,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                     <li key={child.slug}>
                         {index > 0 && <ChevronEmptyDotIcon className="mr-2 size-1 text-icon-accent" />}
                         <ExtendedNextLink
-                            className={twJoin(
-                                getLinkClassName({ variant: 'navigation' }),
-                                'font-secondary font-semibold text-xs',
-                            )}
+                            className={twJoin(getLinkClassName({ variant: 'navigation' }), 'font-semibold text-xs')}
                             href={`${getStringWithoutTrailingSlash(child.slug)}/`}
                             type={getLinkType(child.__typename)}
                         >
@@ -171,7 +166,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                         <ExtendedNextLink
                             className={twJoin(
                                 getLinkClassName({ variant: 'navigation' }),
-                                'inline-flex items-center gap-1 font-secondary font-semibold text-xs',
+                                'inline-flex items-center gap-1 font-semibold text-xs',
                             )}
                             href={href}
                             type={linkType}

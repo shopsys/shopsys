@@ -120,10 +120,10 @@ export const TransportGroupListItem: FC<TransportGroupListItemProps> = ({
                     <TransportGroupIcon group={group} isOnGreyBackground={!isSelected} />
 
                     <span className="flex min-w-0 flex-col text-left">
-                        <span className="font-secondary font-semibold text-base text-text-default">{group.name}</span>
+                        <span className="font-semibold text-base text-text-default">{group.name}</span>
 
                         {groupPrice !== null && (
-                            <span className="font-secondary font-semibold text-sm text-text-less">
+                            <span className="text-sm text-text-less">
                                 {groupPrice.shouldDisplayFromPrefix && `${t('from')} `}
                                 {formatPrice(groupPrice.price, { explicitZero: groupPrice.shouldDisplayFromPrefix })}
                             </span>

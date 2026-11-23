@@ -70,7 +70,7 @@ const DeliveryOptionsVariantContent: FC<{ product: DeliveryOptionsProduct; tid?:
             </span>
 
             {isPriceVisible(product.price.priceWithVat) && (
-                <span className="ml-auto shrink-0 pr-2 font-secondary font-semibold text-sm">
+                <span className="ml-auto shrink-0 pr-2 font-semibold text-sm tabular-nums">
                     {formatPrice(product.price.priceWithVat)}
                 </span>
             )}

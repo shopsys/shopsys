@@ -77,7 +77,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
 };
 
 const FooterMenuItemTitle: FC<{ title: string }> = ({ title }) => {
-    return <span className="font-secondary font-semibold text-xs uppercase tracking-wider">{title}</span>;
+    return <span className="font-semibold text-xs uppercase tracking-wider">{title}</span>;
 };
 
 const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ item }) => {
@@ -87,10 +87,7 @@ const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ it
 
     return (
         <ExtendedNextLink
-            className={twMergeCustom(
-                getLinkClassName({ variant: 'navigation' }),
-                'block font-secondary font-semibold text-sm tracking-wider',
-            )}
+            className={twMergeCustom(getLinkClassName({ variant: 'navigation' }), 'block text-sm tracking-wider')}
             href={isArticleSite ? item.slug : item.url}
             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
             skeletonType={isArticleSite ? 'article' : undefined}

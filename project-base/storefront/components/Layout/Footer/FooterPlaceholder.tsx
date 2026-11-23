@@ -27,7 +27,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                         <div className="flex flex-1 flex-col gap-1.5 lg:flex-row lg:gap-6">
                             {footerArticles.map((item) => (
                                 <div key={item.title} className="hidden lg:flex lg:flex-1 lg:flex-col lg:gap-6">
-                                    <h3 className="font-secondary font-semibold text-xs uppercase tracking-wider">
+                                    <h3 className="font-default font-semibold text-xs uppercase tracking-wider">
                                         {item.title}
                                     </h3>
 
@@ -37,7 +37,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                                 <ExtendedNextLink
                                                     className={twJoin(
                                                         getLinkClassName({ variant: 'navigation' }),
-                                                        'block font-secondary font-semibold text-sm tracking-wider',
+                                                        'block text-sm tracking-wider',
                                                     )}
                                                     rel={article.external ? 'nofollow noreferrer noopener' : undefined}
                                                     target={article.external ? '_blank' : undefined}

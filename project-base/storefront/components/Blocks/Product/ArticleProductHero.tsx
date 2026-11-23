@@ -111,14 +111,14 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                         />
                     </div>
 
-                    <h3 className="wrap-break-word col-span-2 col-start-1 row-start-2 mb-2 overflow-hidden font-secondary font-semibold text-lg leading-tight group-hover/product-link:text-text-default sm:text-xl">
+                    <h3 className="wrap-break-word col-span-2 col-start-1 row-start-2 mb-2 overflow-hidden font-default font-product-name text-lg leading-tight group-hover/product-link:text-text-default sm:text-xl">
                         <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
-                        <div className="col-span-2 col-start-1 row-start-4 mb-2 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                        <div className="col-span-2 col-start-1 row-start-4 mb-2 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 text-xs group-hover:text-text-default">
                             <VariantIcon className="size-3 text-text-accent" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>

@@ -23,7 +23,7 @@ export const FreeTransportRange: FC = () => {
 
     return (
         <div className="flex w-full flex-col gap-2.5 lg:gap-1" data-tid={testIdentifier}>
-            <span className="font-secondary font-semibold text-sm">
+            <span className="text-sm">
                 {totalPriceRemaining > 0
                     ? t('Buy for {{ amount }} and get free shipping!', { amount: amountFormatted })
                     : t('Your delivery and payment is now free of charge!')}

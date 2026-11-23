@@ -52,7 +52,7 @@ export const ContactInformationSendOrderButton: FC = () => {
             <div className="mx-5 vl:mx-20 border-border-default border-b" />
 
             <FormBlockAgreements className="pb-0">
-                <div className="font-secondary font-semibold text-sm">
+                <div className="text-sm">
                     <Trans
                         defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
                         i18nKey="ContactInformationInfo"

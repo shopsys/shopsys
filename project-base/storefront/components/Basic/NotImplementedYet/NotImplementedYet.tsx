@@ -11,7 +11,7 @@ export const notImplementedYetHandler = (e: SyntheticEvent): void => {
 };
 
 const notImplementedTagTwClass =
-    'whitespace-nowrap rounded-full bg-background-error px-3 py-1 text-center text-xs font-medium leading-4 text-text-inverted';
+    'whitespace-nowrap rounded-full bg-background-error px-3 py-1 text-center text-xs font-semibold leading-4 text-text-inverted';
 const notImplementedTagPositionedTwClass = twJoin(
     notImplementedTagTwClass,
     'absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2',

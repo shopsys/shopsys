@@ -119,7 +119,7 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
             className="vl:col-span-full mt-4 vl:grid vl:grid-cols-subgrid border-border-less border-t pt-4"
         >
             <h4
-                className="vl:col-span-full mb-3 flex items-center gap-2 vl:pl-22.5 font-secondary font-semibold text-sm text-text-less"
+                className="vl:col-span-full mb-3 flex items-center gap-2 vl:pl-22.5 font-semibold text-sm text-text-less"
                 id={`product-gifts-${parentCartItemUuid}-heading`}
             >
                 <GiftIcon aria-hidden="true" className="size-4 shrink-0 text-text-less" />
@@ -184,12 +184,12 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
                                         width={56}
                                     />
                                 </label>
-                                <div className="min-w-0 font-secondary text-sm">
+                                <div className="min-w-0 text-sm">
                                     <label
                                         data-tid={TIDs.pages_cart_gift_checkbox_label}
                                         htmlFor={checkboxId}
                                         className={twMergeCustom(
-                                            'wrap-break-words block w-fit max-w-full cursor-pointer font-semibold',
+                                            'wrap-break-words block w-fit max-w-full cursor-pointer font-product-name',
                                             isDisabled && 'cursor-no-drop opacity-50',
                                         )}
                                     >
@@ -250,7 +250,7 @@ export const CartProductGifts: FC<CartProductGiftsProps> = ({
                                         </span>
                                     </div>
                                     {showUnitPrice && (
-                                        <div className="vl:col-start-3 vl:block hidden whitespace-nowrap font-secondary">
+                                        <div className="vl:col-start-3 vl:block hidden whitespace-nowrap">
                                             <span className="font-semibold">
                                                 {formatPrice(gift.giftPrice.priceWithVat)}
                                             </span>

@@ -78,7 +78,7 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({
                     onClick={changePayment}
                 />
             ) : (
-                <div className="w-full px-4 vl:px-5 py-4 font-secondary font-semibold text-sm">{paymentLabel}</div>
+                <div className="w-full px-4 vl:px-5 py-4 text-sm">{paymentLabel}</div>
             )}
         </TransportAndPaymentListItem>
     );

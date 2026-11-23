@@ -36,7 +36,7 @@ export const PromotedCategories: FC = () => {
                 <ExtendedNextLink
                     className={twMergeCustom(
                         getLinkClassName({ variant: 'navigation', tone: 'accent' }),
-                        'group vl:flex hidden shrink-0 items-center gap-2 font-secondary font-semibold text-sm',
+                        'group vl:flex hidden shrink-0 items-center gap-2 font-semibold text-sm',
                     )}
                     href={catalogUrl}
                     type="catalog"

@@ -11,4 +11,12 @@ describe('twMergeCustom', () => {
     test('keeps a radius of one side next to a theme radius token', () => {
         expect(twMergeCustom('rounded-input', 'rounded-b-none')).toBe('rounded-input rounded-b-none');
     });
+
+    test('treats the font weight roles as font weights, not as font families', () => {
+        expect(twMergeCustom('font-semibold', 'font-heading')).toBe('font-heading');
+        expect(twMergeCustom('font-action', 'font-bold')).toBe('font-bold');
+        expect(twMergeCustom('font-default', 'font-heading')).toBe('font-default font-heading');
+        expect(twMergeCustom('font-semibold', 'font-ui')).toBe('font-ui');
+        expect(twMergeCustom('font-secondary', 'font-price')).toBe('font-secondary font-price');
+    });
 });

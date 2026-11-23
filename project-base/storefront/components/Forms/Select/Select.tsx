@@ -169,7 +169,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 role="combobox"
                                 value={comboBoxConfig.searchValue}
                                 className={twMergeCustom(
-                                    'h-full w-full min-w-0 bg-transparent px-3 font-secondary font-semibold text-md! outline-hidden',
+                                    'h-full w-full min-w-0 bg-transparent px-3 text-md! outline-hidden',
                                     label && FIELD_VALUE_PADDING_CLASS_NAME,
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
@@ -181,7 +181,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             {label && (
                                 <span
                                     className={twJoin(
-                                        'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                        'pointer-events-none absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                         isOpen || comboBoxConfig.searchValue || activeOption || placeholder
                                             ? twJoin(FIELD_FLOATING_LABEL_CLASS_NAME, 'left-3')
                                             : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
@@ -228,7 +228,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 <>
                                     <span
                                         className={twJoin(
-                                            'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                            'absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                             isOpen || activeOption
                                                 ? FIELD_FLOATING_LABEL_CLASS_NAME
                                                 : 'top-1/2 -translate-y-1/2 font-semibold text-md',
@@ -242,7 +242,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                     {activeOption?.label && (
                                         <span
                                             className={twJoin(
-                                                'block truncate font-medium font-secondary',
+                                                'block truncate',
                                                 isDisabled ? 'text-input-text-disabled' : 'text-input-text-default',
                                             )}
                                         >

@@ -35,7 +35,7 @@ export const AccessibleLink: FC<AccessibleLinkProps> = ({ title, href, className
             href={href}
             tabIndex={0}
             className={twMergeCustom(
-                'absolute top-0 left-0 z-aboveOverlay w-full translate-x-[-200vw] rounded-control bg-background-warning p-2 text-center font-secondary font-semibold text-text-default no-underline transition-transform',
+                'absolute top-0 left-0 z-aboveOverlay w-full translate-x-[-200vw] rounded-control bg-background-warning p-2 text-center font-semibold text-text-default no-underline transition-transform',
                 'focus:translate-x-0 focus-visible:translate-x-0',
                 className,
             )}

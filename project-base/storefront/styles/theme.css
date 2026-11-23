@@ -89,15 +89,21 @@
     --font-letter-spacing-wider: 0.8px;
     --font-letter-spacing-widest: 1.6px;
 
-    --font-weight-black: 900;
-    --font-weight-bold: 700;
-    --font-weight-extrabold: 800;
-    --font-weight-extralight: 200;
-    --font-weight-light: 300;
-    --font-weight-medium: 500;
+    /* Only the weights loaded in components/Pages/App/Fonts.tsx exist, so an unloaded weight cannot be used by mistake. */
+    --font-weight-*: initial;
     --font-weight-normal: 400;
+    --font-weight-medium: 500;
     --font-weight-semibold: 600;
-    --font-weight-thin: 100;
+    --font-weight-bold: 700;
+
+    /* Weights by role: components use font-heading, font-action, font-ui, font-product-name and font-price, so a project tunes a role in one place. */
+    /* 400 carries text, 500 the interface (menu, tabs, chips, product and category names), 600 headings and actions, 700 prices only. */
+    /* A role on Raleway (headings, buttons) needs its weight loaded in Fonts.tsx too. */
+    --font-weight-heading: var(--font-weight-semibold);
+    --font-weight-action: var(--font-weight-semibold);
+    --font-weight-ui: var(--font-weight-medium);
+    --font-weight-product-name: var(--font-weight-medium);
+    --font-weight-price: var(--font-weight-bold);
 
     --leading-none: 0px;
     --leading-3: 12px;

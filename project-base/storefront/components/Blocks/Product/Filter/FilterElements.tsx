@@ -22,7 +22,7 @@ export const FilterGroupTitle: FC<{
             aria-controls={contentId}
             aria-expanded={isOpen}
             aria-label={ariaLabel}
-            className="flex w-full cursor-pointer items-center justify-between rounded-detail font-secondary font-semibold text-text-default uppercase transition hover:text-text-accent"
+            className="flex w-full cursor-pointer items-center justify-between rounded-detail font-semibold text-text-default uppercase transition hover:text-text-accent"
             tabIndex={0}
             type="button"
             onClick={onClick}
@@ -66,7 +66,7 @@ export const FilterGroupHiddenItems: FC<{ keyName: string }> = ({ children, keyN
 );
 
 export const SelectedParametersName: FC = ({ children }) => (
-    <p className="font-secondary font-semibold text-input-placeholder-default text-xs">{children}</p>
+    <p className="font-semibold text-input-placeholder-default text-xs">{children}</p>
 );
 
 export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, keyName }) => (

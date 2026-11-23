@@ -50,7 +50,7 @@ export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({
             <div className="flex flex-col gap-0.5 text-right">
                 <div
                     className={twMergeCustom(
-                        'whitespace-nowrap font-bold font-secondary text-price-default',
+                        'whitespace-nowrap font-price text-price-default tabular-nums',
                         isLowerPriceApplied && 'font-semibold text-price-before text-xs line-through',
                     )}
                 >
@@ -58,7 +58,7 @@ export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({
                 </div>
 
                 {isLowerPriceApplied && (
-                    <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
+                    <div className="whitespace-nowrap font-price text-price-discounted tabular-nums">
                         {formatPrice(
                             mapPriceForCalculations(productPrice.priceWithVat) * (quantity - (freeQuantity || 0)),
                         )}

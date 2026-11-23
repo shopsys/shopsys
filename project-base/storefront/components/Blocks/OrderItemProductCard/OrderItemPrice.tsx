@@ -28,7 +28,7 @@ export const OrderItemPrice: FC<OrderItemPriceProps> = ({
                     </div>
                 ))}
             {isPriceVisible(totalPrice) && (
-                <span className="ml-auto whitespace-nowrap font-bold font-secondary text-price-default">
+                <span className="ml-auto whitespace-nowrap font-price text-price-default">
                     {formatPrice(totalPrice)}
                 </span>
             )}

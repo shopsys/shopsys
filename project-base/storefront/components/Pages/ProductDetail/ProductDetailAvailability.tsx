@@ -56,7 +56,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 productAvailability
             )}
             {canOrderUnavailableProduct && (
-                <p className="font-secondary text-sm text-text-less">
+                <p className="text-sm text-text-less">
                     {product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock
                         ? t("You can order this item now. We'll ship it once it's back in stock.")
                         : t('You can order this item now. The restock date is not yet known.')}

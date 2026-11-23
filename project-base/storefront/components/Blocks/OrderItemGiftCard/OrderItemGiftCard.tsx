@@ -60,12 +60,12 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
         <li
             data-tid={tid}
             className={twMergeCustom(
-                'flex min-w-0 flex-col gap-3 rounded-card bg-background-more p-4 font-secondary',
+                'flex min-w-0 flex-col gap-3 rounded-card bg-background-more p-4',
                 isNested && 'bg-transparent p-0',
                 className,
             )}
         >
-            <div className="flex items-center gap-2 font-secondary font-semibold text-sm text-text-less">
+            <div className="flex items-center gap-2 font-semibold text-sm text-text-less">
                 <GiftIcon aria-hidden="true" className="size-4 shrink-0 text-text-less" />
                 {t('Gift with purchase')}
             </div>
@@ -92,13 +92,13 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                             skeletonType="product"
                             className={twMergeCustom(
                                 getLinkClassName({ variant: 'navigation' }),
-                                'wrap-break-words font-semibold text-sm',
+                                'wrap-break-words font-product-name text-sm',
                             )}
                         >
                             {fullName}
                         </ExtendedNextLink>
                     ) : (
-                        <span className="wrap-break-words font-semibold text-sm">{fullName}</span>
+                        <span className="wrap-break-words font-product-name text-sm">{fullName}</span>
                     )}
                     {availability && (
                         <ProductAvailability

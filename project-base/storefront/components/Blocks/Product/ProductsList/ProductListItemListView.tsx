@@ -106,14 +106,14 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                         />
                     </div>
 
-                    <h3 className="wrap-break-word col-start-2 row-start-2 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover/product-link:text-text-default xl:max-w-70">
+                    <h3 className="wrap-break-word col-start-2 row-start-2 mt-1.5 overflow-hidden font-default font-product-name text-sm group-hover/product-link:text-text-default xl:max-w-70">
                         <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
-                        <div className="col-start-2 row-start-5 mt-1 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                        <div className="col-start-2 row-start-5 mt-1 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 text-xs group-hover:text-text-default">
                             <VariantIcon className="size-3 text-text-accent" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>

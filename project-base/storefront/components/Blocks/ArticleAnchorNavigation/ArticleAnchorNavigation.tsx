@@ -26,8 +26,8 @@ const ArticleAnchorNavigationLink: FC<ArticleAnchorNavigationLinkProps> = ({ hre
             href={href}
             className={twMergeCustom(
                 getLinkClassName({ variant: 'navigation' }),
-                'flex items-center gap-1 font-secondary font-semibold text-sm',
-                isActive && 'text-text-accent hover:text-text-accent active:text-text-accent',
+                'flex items-center gap-1 text-sm',
+                isActive && 'font-semibold text-text-accent hover:text-text-accent active:text-text-accent',
             )}
             onClick={onClick}
         >
@@ -101,7 +101,7 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
                 className="flex flex-col gap-2.5"
                 data-tid={TIDs.blog_article_anchor_navigation}
             >
-                <p className="font-secondary font-semibold">{t('Article content')}</p>
+                <p className="font-semibold">{t('Article content')}</p>
 
                 <ul className="flex flex-col gap-2.5 rounded-card bg-background-more p-5">
                     <ArticleAnchorNavigationLink

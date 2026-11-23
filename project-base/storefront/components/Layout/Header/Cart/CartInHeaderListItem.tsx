@@ -130,7 +130,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                                 />
                             </div>
 
-                            <span className="min-w-0 flex-1 font-secondary font-semibold text-sm group-focus-visible/product-link:underline">
+                            <span className="min-w-0 flex-1 font-product-name text-sm group-focus-visible/product-link:underline">
                                 {product.fullName}
                             </span>
                         </ExtendedNextLink>
@@ -154,9 +154,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                         </div>
 
                         <div className="flex flex-1 flex-col items-start gap-1">
-                            <span className="font-secondary font-semibold text-sm text-text-default">
-                                {product.fullName}
-                            </span>
+                            <span className="font-product-name text-sm text-text-default">{product.fullName}</span>
 
                             {additionalServicesToggle}
                         </div>
@@ -212,11 +210,11 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                         />
                     </div>
                 ) : (
-                    <div className="font-secondary font-semibold text-sm">{`${quantity} ${product.unit.name}`}</div>
+                    <div className="text-sm">{`${quantity} ${product.unit.name}`}</div>
                 )}
 
                 {isProduct && isPriceVisible(product.price.priceWithVat) && (
-                    <div className="wrap-break-word w-28 text-right font-bold font-secondary text-price-default">
+                    <div className="wrap-break-word w-28 text-right font-price text-price-default tabular-nums">
                         {formatPrice(productLinePrice)}
                     </div>
                 )}

@@ -131,7 +131,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                                 key={option.value}
                                 aria-pressed={isActive}
                                 className={twJoin(
-                                    'flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-secondary font-semibold text-sm hover:bg-background-more',
+                                    'flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-semibold text-sm hover:bg-background-more',
                                     isActive && 'bg-background-more text-text-default',
                                 )}
                                 type="button"

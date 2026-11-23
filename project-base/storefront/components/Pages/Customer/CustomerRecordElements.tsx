@@ -35,7 +35,7 @@ export const CustomerRecordElementWithImage: FC<CustomerRecordElementWithImagePr
     imageAlt,
     tid,
 }) => (
-    <div className="flex items-center gap-4 font-secondary font-semibold">
+    <div className="flex items-center gap-4 font-semibold">
         <div
             className="flex h-12 w-20 shrink-0 items-center justify-center rounded-control bg-background-default"
             data-tid={tid}
@@ -68,7 +68,7 @@ export const CustomerRecordColumnInfo: FC<CustomerRecordColumnInfoProps> = ({
     valueClassName,
     tid,
 }) => (
-    <div className={twMergeCustom('flex min-w-25 flex-col gap-1 font-secondary font-semibold text-sm', className)}>
+    <div className={twMergeCustom('flex min-w-25 flex-col gap-1 text-sm', className)}>
         <span className="text-text-less">{title}</span>
         <span className={valueClassName} data-tid={tid}>
             {children}
@@ -95,9 +95,7 @@ export const CustomerRecordRowInfo: FC<CustomerRecordRowInfoProps> = ({
         className={twMergeCustom('flex vl:flex-row flex-col vl:items-center gap-1 vl:gap-3 text-sm', className)}
         data-tid={tid}
     >
-        <span className={twMergeCustom('min-w-25 font-secondary font-semibold text-text-less', titleClassName)}>
-            {title}
-        </span>
+        <span className={twMergeCustom('min-w-25 text-text-less', titleClassName)}>{title}</span>
         {children}
     </div>
 );

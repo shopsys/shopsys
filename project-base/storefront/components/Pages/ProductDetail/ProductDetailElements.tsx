@@ -5,7 +5,7 @@ type ProductDetailHeadingProps = {
     nameSuffix: string | null;
 };
 
-const ProductDetailPrefix: FC = ({ children }) => <div className="mb-1 font-secondary text-text-less">{children}</div>;
+const ProductDetailPrefix: FC = ({ children }) => <div className="mb-1 text-text-less">{children}</div>;
 
 const ProductDetailH1: FC = ({ children }) => <h1 className="wrap-anywhere">{children}</h1>;
 

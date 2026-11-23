@@ -99,7 +99,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             <OrderedItemColumnInfo
                                 title={t('Price')}
                                 value={formatPrice(orderedItem.totalPrice.priceWithVat)}
-                                valueClassName="text-price-default"
+                                valueClassName="font-price text-price-default"
                                 wrapperClassName="min-w-20"
                             />
                         )}
@@ -140,8 +140,8 @@ const OrderedItemColumnInfo: FC<OrderedItemColumnInfoProps> = ({
 }) => {
     return (
         <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
-            <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold', valueClassName)} data-tid={tid}>
+            <span className="text-sm text-text-less">{title}</span>
+            <span className={twMergeCustom('font-ui', valueClassName)} data-tid={tid}>
                 {value}
             </span>
         </div>

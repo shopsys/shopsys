@@ -29,7 +29,7 @@ export const AdditionalServiceAddOnPrice: FC<AdditionalServiceAddOnPriceProps> =
     const displayedPrice = quantity === undefined ? priceWithVat : mapPriceForCalculations(priceWithVat) * quantity;
 
     return (
-        <span className="inline-flex items-baseline gap-1 whitespace-nowrap font-secondary text-sm">
+        <span className="inline-flex items-baseline gap-1 whitespace-nowrap text-sm tabular-nums">
             <span className={twMergeCustom('font-semibold text-text-default', isHighlighted && 'text-price-default')}>
                 {showAddSign && '+ '}
                 {formatPrice(displayedPrice)}
@@ -60,7 +60,7 @@ export const AdditionalServiceCartPrice: FC<AdditionalServiceCartPriceProps> = (
 
     return (
         <>
-            <span className="flex vl:hidden w-full items-baseline justify-between whitespace-nowrap font-secondary md:w-auto md:flex-col md:items-end">
+            <span className="flex vl:hidden w-full items-baseline justify-between whitespace-nowrap tabular-nums md:w-auto md:flex-col md:items-end">
                 <span className="inline-flex items-baseline gap-1 text-sm">
                     <span className="font-semibold text-text-default">
                         {quantity} × {formatPrice(priceWithVat)}
@@ -74,13 +74,13 @@ export const AdditionalServiceCartPrice: FC<AdditionalServiceCartPriceProps> = (
 
             <span className="vl:col-start-2 vl:block hidden min-w-35 text-center">{quantity}</span>
 
-            <span className="vl:col-start-3 vl:block hidden whitespace-nowrap font-secondary">
+            <span className="vl:col-start-3 vl:block hidden whitespace-nowrap tabular-nums">
                 <span className="font-semibold">{formatPrice(priceWithVat)}</span>
                 <span className="text-sm text-text-less">&nbsp;/&nbsp;{unitName}</span>
             </span>
 
             <span className="vl:col-start-4 vl:flex hidden items-center justify-end">
-                <span className="whitespace-nowrap text-right font-bold font-secondary text-price-default">
+                <span className="whitespace-nowrap text-right font-price text-price-default tabular-nums">
                     {formatPrice(displayedPrice)}
                 </span>
             </span>

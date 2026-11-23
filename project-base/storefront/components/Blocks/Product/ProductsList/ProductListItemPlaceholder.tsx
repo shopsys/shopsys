@@ -59,7 +59,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                             visibleItemsConfig={visibleItemsConfig}
                         />
 
-                        <div className="wrap-break-word overflow-hidden font-secondary font-semibold text-sm group-hover:text-text-default xl:max-w-70">
+                        <div className="wrap-break-word overflow-hidden font-product-name text-sm group-hover:text-text-default xl:max-w-70">
                             {product.fullName}
                         </div>
 
@@ -118,7 +118,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
             >
                 <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                <div className="line-clamp-3 min-h-15 font-secondary font-semibold text-sm group-hover:text-text-default">
+                <div className="line-clamp-3 min-h-15 font-product-name text-sm group-hover:text-text-default">
                     {product.fullName}
                 </div>
 

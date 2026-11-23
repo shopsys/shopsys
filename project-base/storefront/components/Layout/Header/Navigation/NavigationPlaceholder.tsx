@@ -32,7 +32,7 @@ export const NavigationPlaceholder: FC<NavigationPlaceholderProps> = ({ navigati
                               link !== null && (link.startsWith('http://') || link.startsWith('https://'));
                           const navigationItemClassName = twMergeCustom(
                               getLinkClassName({ variant: 'navigation', tone: 'inverted' }),
-                              'relative m-0 flex items-center whitespace-nowrap border-0 bg-transparent p-5 font-secondary font-semibold text-sm vl:text-base disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0',
+                              'relative m-0 flex items-center whitespace-nowrap border-0 bg-transparent p-5 font-ui text-sm vl:text-base disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0',
                               // The main menu signals hover by color only, without an underline.
                               'hover:no-underline group-hover:no-underline',
                           );

@@ -25,7 +25,7 @@ export const ExpectedDeliveryDateInfo: FC<ExpectedDeliveryDateInfoProps> = ({
     if (expectedDeliveryDateMessage !== null) {
         return (
             <div
-                className={twMergeCustom('font-secondary font-semibold text-sm text-text-success', className)}
+                className={twMergeCustom('text-sm text-text-success', className)}
                 data-tid={TIDs.expected_delivery_date_message}
             >
                 {expectedDeliveryDateMessage}

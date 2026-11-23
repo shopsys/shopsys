@@ -119,7 +119,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
                     <span aria-hidden="true" />
                 )}
 
-                <span className="min-w-0 truncate text-center font-secondary font-semibold">{t('Menu')}</span>
+                <span className="min-w-0 truncate text-center font-semibold">{t('Menu')}</span>
 
                 <DrawerCloseButton onClick={onMenuToggleHandler} />
             </div>
@@ -168,7 +168,7 @@ const MenuItems: FC<{
                 <p
                     aria-hidden={!title}
                     className={twJoin(
-                        'min-w-0 truncate font-secondary font-semibold text-text-less text-xs uppercase',
+                        'min-w-0 truncate font-semibold text-text-less text-xs uppercase',
                         !title && 'invisible',
                     )}
                 >
@@ -180,7 +180,7 @@ const MenuItems: FC<{
                         aria-label={viewAllItem.name}
                         className={twJoin(
                             getLinkClassName({ variant: 'navigation', tone: 'accent' }),
-                            'inline-flex shrink-0 items-center gap-1 rounded-detail py-1 font-secondary font-semibold text-xs',
+                            'inline-flex shrink-0 items-center gap-1 rounded-detail py-1 font-semibold text-xs',
                         )}
                         href={viewAllItem.link}
                         skeletonType={DEFAULT_SKELETON_TYPE}

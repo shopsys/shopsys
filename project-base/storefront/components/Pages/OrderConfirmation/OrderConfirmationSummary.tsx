@@ -44,7 +44,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
         mapPriceForCalculations(totalDiscountPrice.priceWithVat) > 0;
 
     return (
-        <div className="flex flex-col gap-4 rounded-surface bg-background-more p-8 font-secondary font-semibold text-sm">
+        <div className="flex flex-col gap-4 rounded-surface bg-background-more p-8 text-sm tabular-nums">
             <div className="flex items-center justify-between gap-4">
                 {t('Transport')}
                 {transport.name ? (
@@ -107,7 +107,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
                 <div className="flex items-center justify-between gap-4 border-border-less border-t-3 pt-4">
                     <span>{t('Total')}</span>
                     <div className="flex flex-col gap-2">
-                        <span className="font-bold text-lg text-price-default">
+                        <span className="font-price text-lg text-price-default">
                             {formatPrice(totalPrice.priceWithVat)}
                         </span>
                         <span className="whitespace-nowrap font-semibold text-sm text-text-less tracking-wide">
@@ -142,7 +142,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
                         <div className="flex items-baseline justify-between gap-4 border-border-less border-t-[3px] pt-4">
                             <span className="text-lg">{t('Remaining to pay')}</span>
 
-                            <span className="whitespace-nowrap font-bold text-lg text-price-default">
+                            <span className="whitespace-nowrap font-price text-lg text-price-default">
                                 {formatPrice(remainingAmountToPay, { explicitZero: true })}
                             </span>
                         </div>

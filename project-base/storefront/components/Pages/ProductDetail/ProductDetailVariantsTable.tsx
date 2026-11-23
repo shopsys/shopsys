@@ -121,7 +121,7 @@ const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvail
                     />
                 </div>
 
-                <div className="wrap-break-word line-clamp-2 min-h-10 min-w-0 text-center font-secondary font-semibold text-sm lg:line-clamp-none lg:min-h-fit lg:text-left">
+                <div className="wrap-break-word line-clamp-2 min-h-10 min-w-0 text-center font-product-name text-sm lg:line-clamp-none lg:min-h-fit lg:text-left">
                     {variant.fullName}
                 </div>
 

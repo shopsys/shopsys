@@ -149,7 +149,7 @@ export function MultiSelect<T extends string | number = string>({
                             />
                             <span
                                 className={twJoin(
-                                    'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                    'pointer-events-none absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen ||
                                         comboBoxConfig.searchValue ||
                                         comboBoxConfig.placeholder ||
@@ -176,7 +176,7 @@ export function MultiSelect<T extends string | number = string>({
                         >
                             <span
                                 className={twJoin(
-                                    'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                    'absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                     isOpen || selectedOptions.length > 0
                                         ? FIELD_FLOATING_LABEL_CLASS_NAME
                                         : 'top-1/2 -translate-y-1/2 font-semibold text-md',
@@ -187,7 +187,7 @@ export function MultiSelect<T extends string | number = string>({
                             </span>
 
                             {selectedOptions.length > 0 && (
-                                <span className="whitespace-nowrap font-secondary font-semibold text-input-text-default">
+                                <span className="whitespace-nowrap text-input-text-default">
                                     {`${selectedOptions.length} selected`}
                                 </span>
                             )}

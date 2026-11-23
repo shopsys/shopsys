@@ -140,7 +140,7 @@ export const AdditionalServices: FC<AdditionalServicesProps> = ({
         >
             <span
                 className={twMergeCustom(
-                    'flex items-center gap-2 font-secondary font-semibold text-sm text-text-less',
+                    'flex items-center gap-2 font-semibold text-sm text-text-less',
                     isInCartList && 'vl:col-span-full vl:mb-3 vl:pl-22.5',
                     isInCartList && (hasTopBorder ? 'vl:mt-4 border-border-less border-t pt-4' : 'vl:mt-6'),
                 )}

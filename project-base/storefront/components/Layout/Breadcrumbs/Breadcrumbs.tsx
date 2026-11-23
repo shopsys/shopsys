@@ -51,10 +51,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                     </Fragment>
                 ))}
 
-                <span
-                    className="hidden font-secondary font-semibold text-xs lg:inline-block"
-                    data-tid={TIDs.breadcrumbs_tail}
-                >
+                <span className="hidden text-xs lg:inline-block" data-tid={TIDs.breadcrumbs_tail}>
                     {lastBreadcrumb.name}
                 </span>
             </nav>
@@ -77,7 +74,7 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey; skeleton
     <ExtendedNextLink
         className={twMergeCustom(
             getLinkClassName({ variant: 'navigation', tone: 'accent' }),
-            'hidden font-secondary font-semibold text-xs last-of-type:inline lg:inline',
+            'hidden text-xs last-of-type:inline lg:inline',
         )}
         href={href}
         skeletonType={skeletonType}

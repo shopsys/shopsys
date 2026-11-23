@@ -40,7 +40,7 @@ export const SortingBarItem: FC<SortingBarItemProps> = ({
         variant === 'tab'
             ? getSortingTabClassName({ isActive })
             : twJoin(
-                  'flex min-h-12 w-full items-center justify-between gap-3 rounded-none px-4 py-3 text-left font-secondary text-sm text-text-default no-underline hover:bg-background-more hover:text-text-default hover:no-underline',
+                  'flex min-h-12 w-full items-center justify-between gap-3 rounded-none px-4 py-3 text-left text-sm text-text-default no-underline hover:bg-background-more hover:text-text-default hover:no-underline',
                   isActive ? 'bg-background-accent-less font-bold' : 'font-semibold',
               );
 

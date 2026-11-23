@@ -351,7 +351,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'w-13 self-stretch text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden focus-keyboard:bg-focus-background',
+                        'w-13 self-stretch text-center text-input-text-default text-lg outline-hidden focus-keyboard:bg-focus-background',
                     )}
                     onBlur={handleBlur}
                     onInput={handleInput}

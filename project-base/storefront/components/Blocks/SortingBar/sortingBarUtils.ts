@@ -9,9 +9,14 @@ import { FilterOptionsUrlQueryType } from 'types/productFilter';
 const MAX_VISIBLE_SORT_TABS = 4;
 
 /**
+ * Tabs shared by the product list sorting and the review sorting, so they look the same: the active option has
+ * a darker text and the row's TabIndicator under it, hover only darkens the text. Both states keep one weight, so
+ * switching the active tab never changes the width of the row.
+ */
+export const getSortingTabClassName = ({ isActive }: { isActive: boolean }) =>
     twJoin(
-        'relative inline-flex min-h-11 cursor-pointer items-center rounded-detail px-1 font-secondary text-md no-underline transition-colors hover:no-underline',
-        isActive ? 'font-bold text-text-default' : 'font-semibold text-text-less hover:text-text-default',
+        'relative inline-flex min-h-11 cursor-pointer items-center rounded-detail px-1 font-ui text-md no-underline transition-colors hover:no-underline',
+        isActive ? 'text-text-default' : 'text-text-less hover:text-text-default',
     );
 
 /**

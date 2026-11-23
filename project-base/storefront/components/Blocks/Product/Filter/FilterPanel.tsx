@@ -254,9 +254,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             >
                 <div className="grid grid-cols-[2.25rem_1fr_2.25rem] items-center p-5">
                     <span aria-hidden="true" />
-                    <span className="min-w-0 truncate text-center font-secondary font-semibold">
-                        {t('Product filter')}
-                    </span>
+                    <span className="min-w-0 truncate text-center font-semibold">{t('Product filter')}</span>
                     <DrawerCloseButton
                         aria-label={t('Close filter panel', { ns: 'accessibility' })}
                         title={t('Close filter panel')}

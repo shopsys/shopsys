@@ -16,7 +16,6 @@ import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/O
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeOrderItemTypeEnum, TypeProductTypeEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -117,7 +116,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                 <span className="font-semibold text-sm">{orderItem.name}</span>
 
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
+                    <div className="whitespace-nowrap font-price text-price-discounted tabular-nums">
                         {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
                     </div>
                 )}
@@ -146,12 +145,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     }
 
     return (
-        <div
-            className={twJoin(
-                'font-secondary font-semibold first:border-none',
-                'border-t border-t-border-default py-5 first:pt-0 last:pb-0',
-            )}
-        >
+        <div className="border-t border-t-border-default py-5 first:border-none first:pt-0 last:pb-0">
             <div className="relative flex flex-col gap-3">
                 <div
                     className={twMergeCustom(
@@ -250,7 +244,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     </span>
 
                     {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                        <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                        <span className="text-right font-price">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
                     )}
                 </div>
 

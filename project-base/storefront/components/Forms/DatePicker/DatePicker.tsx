@@ -59,14 +59,14 @@ export const DatePicker: FC<DatePickerProps> = ({ id, label, name, value, onChan
 
     return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-            <div className={twMergeCustom('relative w-full font-secondary', className)}>
+            <div className={twMergeCustom('relative w-full', className)}>
                 <input name={name} type="hidden" value={value} />
 
                 <Popover.Trigger asChild>
                     <button
                         aria-label={label}
                         className={twMergeCustom(
-                            'group flex w-full cursor-pointer items-center rounded-input px-3 text-left font-medium focus:outline-hidden',
+                            'group flex w-full cursor-pointer items-center rounded-input px-3 text-left focus:outline-hidden',
                             FIELD_VALUE_PADDING_CLASS_NAME,
                             getFieldStateClassName(),
                             getFieldHeightClassName(),

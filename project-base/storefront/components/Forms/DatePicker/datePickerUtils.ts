@@ -3,7 +3,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isDateQueryValid } from 'utils/parsing/getDateTimeFromDateQuery';
 
 export const datePickerClassNames = {
-    root: 'font-secondary text-input-text-default',
+    root: 'text-input-text-default',
     months: 'flex',
     month: 'space-y-3',
     month_caption: 'flex items-center justify-center px-9',

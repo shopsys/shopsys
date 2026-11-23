@@ -10,7 +10,7 @@ export const FooterContact: FC<FooterContactProps> = ({ icon, title, subtitle, h
     return (
         <a
             aria-label={ariaLabel}
-            className="group flex cursor-pointer gap-4 text-nowrap rounded-card bg-background-default p-4 font-secondary font-semibold text-text-accent no-underline hover:text-text-accent hover:no-underline active:text-text-accent"
+            className="group flex cursor-pointer gap-4 text-nowrap rounded-card bg-background-default p-4 font-semibold text-text-accent no-underline hover:text-text-accent hover:no-underline active:text-text-accent"
             href={href}
             tabIndex={0}
             title={title}

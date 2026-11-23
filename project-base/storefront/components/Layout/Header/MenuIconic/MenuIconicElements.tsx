@@ -99,7 +99,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         _,
     ) => {
         const menuIconicItemLinkTwClass =
-            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-detail font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-detail text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-ui';
 
         if (href) {
             return (

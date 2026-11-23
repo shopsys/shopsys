@@ -31,7 +31,7 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
                     <ExtendedNextLink
                         className={twMergeCustom(
                             getLinkClassName({ variant: 'navigation', tone: 'inverted' }),
-                            'group flex items-center gap-2 font-secondary font-semibold text-sm tracking-wide',
+                            'group flex items-center gap-2 font-semibold text-sm tracking-wide',
                         )}
                         href={blogUrl}
                         type="blogCategory"

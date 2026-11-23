@@ -92,8 +92,8 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
 
                         <span className="truncate text-left">
                             {/* On the narrowest screens the prefix would truncate the chosen option, the icon stands for it. */}
-                            <span className="font-normal max-xs:sr-only">{t('Sort')}:</span>{' '}
-                            <span className="font-bold">{selectedSortOptionShortLabel}</span>
+                            <span className="font-default font-normal max-xs:sr-only">{t('Sort')}:</span>{' '}
+                            <span>{selectedSortOptionShortLabel}</span>
                         </span>
                     </span>
 
@@ -153,7 +153,7 @@ export const MobileFilterAction: FC<MobileFilterActionProps> = ({
         >
             <FilterIcon aria-hidden="true" className="size-5 shrink-0" />
 
-            <span className="font-secondary font-semibold text-sm">{t('Filter')}</span>
+            <span className="text-sm">{t('Filter')}</span>
 
             {activeFilterCount > 0 && (
                 <CountBadge

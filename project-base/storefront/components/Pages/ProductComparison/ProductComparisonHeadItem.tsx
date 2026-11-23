@@ -168,7 +168,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                     />
                 </div>
                 <span
-                    className="row-start-3 mb-3 line-clamp-3 font-secondary font-semibold text-sm leading-6 md:line-clamp-2"
+                    className="row-start-3 mb-3 line-clamp-3 font-product-name text-sm leading-6 md:line-clamp-2"
                     id={stickyTriggerId}
                 >
                     <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">

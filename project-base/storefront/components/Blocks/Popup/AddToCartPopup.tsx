@@ -112,7 +112,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                                 </div>
 
                                 <h3
-                                    className="col-start-2 row-start-1 self-end font-secondary font-semibold text-sm tracking-wide lg:text-sm"
+                                    className="col-start-2 row-start-1 self-end font-default font-product-name text-sm tracking-wide lg:text-sm"
                                     data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                                     id={`added-product-${product.uuid}-name`}
                                 >
@@ -130,7 +130,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                         </div>
 
                         <div className="flex flex-1 items-center justify-between gap-4 vl:gap-6 md:justify-end">
-                            <div className="font-secondary">
+                            <div className="">
                                 <span className="font-semibold" data-tid={TIDs.add_to_cart_popup_quantity}>
                                     {quantity}
                                 </span>
@@ -139,7 +139,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
 
                             {isPriceVisible(product.price.priceWithVat) && (
                                 <div className="flex flex-col items-end vl:gap-6 gap-y-1 sm:flex-row sm:items-center sm:gap-4">
-                                    <div className="whitespace-nowrap font-secondary">
+                                    <div className="whitespace-nowrap tabular-nums">
                                         <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
                                         <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                                     </div>

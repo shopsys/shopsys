@@ -47,11 +47,9 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
                 </span>
 
                 <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="font-secondary font-semibold text-text-default">{title}</span>
+                    <span className="font-semibold text-text-default">{title}</span>
 
-                    {summary !== null && (
-                        <span className="font-secondary font-semibold text-sm text-text-less">{summary}</span>
-                    )}
+                    {summary !== null && <span className="text-sm text-text-less">{summary}</span>}
                 </span>
 
                 <ArrowIcon

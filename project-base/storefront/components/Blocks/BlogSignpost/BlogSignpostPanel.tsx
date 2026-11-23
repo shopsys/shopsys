@@ -78,14 +78,14 @@ export const BlogSignpostPanel: FC<BlogSignpostPanelProps> = ({
                     <>
                         <TextButton
                             variant="navigation"
-                            className="group flex w-fit items-center gap-1 px-2 py-1 font-secondary text-sm transition-colors"
+                            className="group flex w-fit items-center gap-1 px-2 py-1 text-sm transition-colors"
                             onClick={() => onPanelChange(parentPanelUuid)}
                         >
                             <ArrowIcon className="size-4 rotate-90 transition-transform group-hover:-translate-x-0.5" />
                             {t('Back')}
                         </TextButton>
 
-                        <span className="min-w-0 truncate px-3 pt-1 font-secondary font-semibold text-text-less text-xs uppercase">
+                        <span className="min-w-0 truncate px-3 pt-1 font-semibold text-text-less text-xs uppercase">
                             {blogCategory.name}
                         </span>
                     </>

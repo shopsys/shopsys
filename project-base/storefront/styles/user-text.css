@@ -23,6 +23,12 @@
             }
         }
 
+        /* small headings stay in the text font, Raleway is for headings from 18px */
+        h5,
+        h6 {
+            @apply font-default;
+        }
+
         h2 {
             @apply text-3xl;
             @apply mt-10 mb-5 lg:mt-12 lg:mb-6;
@@ -74,7 +80,7 @@
 
         strong,
         b {
-            @apply font-bold;
+            @apply font-semibold;
         }
 
         em,

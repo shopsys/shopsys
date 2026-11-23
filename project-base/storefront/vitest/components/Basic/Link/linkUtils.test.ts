@@ -18,10 +18,10 @@ describe('getLinkClassName', () => {
         expect(classes.some((className) => /^text-(xs|sm|md|lg)$/.test(className))).toBe(false);
     });
 
-    test('gives a text action the Inter semibold typography, an icon gap and a permanent underline', () => {
+    test('gives a text action the Inter interface typography, an icon gap and a permanent underline', () => {
         const classes = getClasses({ variant: 'action' });
 
-        expect(classes).toEqual(expect.arrayContaining(['inline-flex', 'gap-1', 'font-semibold', 'text-sm']));
+        expect(classes).toEqual(expect.arrayContaining(['inline-flex', 'gap-1', 'font-ui', 'text-sm']));
         expect(classes).not.toContain('font-secondary');
         expect(classes).toEqual(expect.arrayContaining(['underline', 'text-link-default']));
     });

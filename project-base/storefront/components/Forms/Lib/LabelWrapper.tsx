@@ -30,7 +30,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     children,
     className,
 }) => (
-    <div className="relative w-full select-none font-secondary">
+    <div className="relative w-full select-none">
         {children}
         {!!label && (
             <label
@@ -39,7 +39,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 // see https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state
                 className={twMergeCustom(
                     inputType === 'text-input' && [
-                        'pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:font-normal',
+                        'pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-md',
                         // The label sits above the value inside the field, which is 40px (small) or 56px (default) high.
                         inputSize === 'small'
                             ? 'top-0.5 text-xs peer-focus:top-0.5 peer-focus:text-xs'
@@ -48,7 +48,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         'peer-focus:translate-none absolute left-3 z-2 block transform-none text-input-placeholder-default peer-placeholder-shown:-translate-y-1/2 peer-hover:text-input-placeholder-hovered peer-focus:text-input-placeholder-active peer-disabled:text-input-placeholder-disabled motion-safe:transition-all',
                     (inputType === 'checkbox' || inputType === 'radio') && [
-                        'group relative flex w-full cursor-pointer items-center gap-2 font-semibold text-sm',
+                        'group relative flex w-full cursor-pointer items-center gap-2 text-sm',
                         checked
                             ? 'text-link-default hover:text-link-hovered'
                             : 'text-input-text-default hover:text-input-text-hovered',
@@ -62,7 +62,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         disabled && 'text-input-placeholder-disabled!',
                     ],
                     inputType === 'textarea' &&
-                        'top-1 bg-background-default pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:font-semibold peer-placeholder-shown:text-md peer-focus:top-1 peer-focus-keyboard:bg-focus-background peer-focus:font-normal peer-focus:text-sm peer-disabled:bg-input-bg-disabled',
+                        'top-1 bg-background-default pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-md peer-focus:top-1 peer-focus-keyboard:bg-focus-background peer-focus:text-sm peer-disabled:bg-input-bg-disabled',
                     disabled && 'text-input-text-disabled',
                     className,
                 )}

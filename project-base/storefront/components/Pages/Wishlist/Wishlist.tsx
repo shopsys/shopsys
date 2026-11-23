@@ -95,7 +95,7 @@ export const Wishlist: FC = () => {
                             </div>
 
                             <div className="flex items-center justify-between gap-2 sm:justify-end">
-                                <div className="font-secondary text-input-placeholder-default text-xs">
+                                <div className="text-input-placeholder-default text-xs">
                                     {totalCount} {t('products count', { count: totalCount })}
                                 </div>
 

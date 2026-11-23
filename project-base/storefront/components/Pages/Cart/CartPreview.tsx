@@ -61,7 +61,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
     return (
         <div
             className={twJoin(
-                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-surface bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
+                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-surface bg-background-more px-4 py-6 tabular-nums sm:p-8',
                 !isFirstStep && 'text-sm',
             )}
         >
@@ -183,12 +183,12 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             'border-border-less border-t-3 pt-4',
                     )}
                 >
-                    <span>{t('Total')}</span>
+                    <span className="font-semibold">{t('Total')}</span>
 
                     <div className="flex flex-col gap-2">
                         <span
                             className={twJoin(
-                                'whitespace-nowrap text-price-default',
+                                'whitespace-nowrap font-price text-price-default',
                                 isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg',
                             )}
                         >
@@ -243,13 +243,13 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             className="flex items-baseline justify-between gap-2 border-border-less border-t-[3px] pt-4"
                             data-tid={TIDs.cart_preview_remaining_amount_to_pay}
                         >
-                            <span className={twJoin(isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg')}>
+                            <span className={twJoin('font-semibold', isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg')}>
                                 {t('Remaining to pay')}
                             </span>
 
                             <span
                                 className={twJoin(
-                                    'whitespace-nowrap text-price-default',
+                                    'whitespace-nowrap font-price text-price-default',
                                     isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg',
                                 )}
                             >
