@@ -41,32 +41,9 @@ class BlogArticleVisibilityRepository
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE blog_article_domains AS bad
-                SET visible = CASE
-                    WHEN (
-                        bad.status IN (:statusPublished, :statusPreview)
-                        AND EXISTS (
-                            SELECT 1
-                            FROM blog_article_translations AS bat
-                            WHERE bat.translatable_id = bad.blog_article_id
-                                AND bat.locale = :locale
-                                AND bat.name IS NOT NULL
-                        )
-                        AND EXISTS (
-                            SELECT 1
-                            FROM blog_article_blog_category_domains AS babcd
-                            JOIN blog_category_domains AS bcd ON bcd.blog_category_id = babcd.blog_category_id
-                                AND bcd.domain_id = babcd.domain_id
-                            WHERE babcd.blog_article_id = ba.id
-                                AND babcd.domain_id = bad.domain_id
-                                AND bcd.visible = TRUE
-                        )
-                    )
-                    THEN TRUE
-                    ELSE FALSE
-                END
-            FROM blog_articles AS ba
-            WHERE ba.id = bad.blog_article_id
-                AND bad.domain_id = :domainId',
+            SET visible = NOT bad.visible
+            WHERE bad.domain_id = :domainId
+                AND bad.visible IS DISTINCT FROM COALESCE((' . $this->getBlogArticleVisibilityConditionSql() . '), FALSE)',
             [
                 'locale' => $domainConfig->getLocale(),
                 'domainId' => $domainConfig->getId(),
@@ -80,5 +57,26 @@ class BlogArticleVisibilityRepository
                 'statusPreview' => Types::STRING,
             ],
         );
+    }
+
+    protected function getBlogArticleVisibilityConditionSql(): string
+    {
+        return 'bad.status IN (:statusPublished, :statusPreview)
+            AND EXISTS (
+                SELECT 1
+                FROM blog_article_translations AS bat
+                WHERE bat.translatable_id = bad.blog_article_id
+                    AND bat.locale = :locale
+                    AND bat.name IS NOT NULL
+            )
+            AND EXISTS (
+                SELECT 1
+                FROM blog_article_blog_category_domains AS babcd
+                JOIN blog_category_domains AS bcd ON bcd.blog_category_id = babcd.blog_category_id
+                    AND bcd.domain_id = babcd.domain_id
+                WHERE babcd.blog_article_id = bad.blog_article_id
+                    AND babcd.domain_id = bad.domain_id
+                    AND bcd.visible = TRUE
+            )';
     }
 }

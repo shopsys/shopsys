@@ -40,9 +40,9 @@ class PromotionFlagFacadeTest extends TestCase
             ->method('setFlags')
             ->with([self::DOMAIN_ID => [$regularFlag]]);
 
-        $promotionFlagFacade = $this->createPromotionFlagFacade($productMock);
+        $promotionFlagFacade = $this->createPromotionFlagFacade();
 
-        $promotionFlagFacade->updatePromotionFlags(1);
+        $promotionFlagFacade->updatePromotionFlagsForProducts([$productMock]);
     }
 
     public function testRemovePromotionFlagsWhenProductIsNotSellable(): void
@@ -63,9 +63,9 @@ class PromotionFlagFacadeTest extends TestCase
             ->method('setFlags')
             ->with([self::DOMAIN_ID => [$regularFlag]]);
 
-        $promotionFlagFacade = $this->createPromotionFlagFacade($productMock);
+        $promotionFlagFacade = $this->createPromotionFlagFacade();
 
-        $promotionFlagFacade->updatePromotionFlags(1);
+        $promotionFlagFacade->updatePromotionFlagsForProducts([$productMock]);
     }
 
     public function testAddCorrectPromotionFlagWhenProductHasPromotionAndIsSellable(): void
@@ -86,9 +86,9 @@ class PromotionFlagFacadeTest extends TestCase
             ->method('setFlags')
             ->with([self::DOMAIN_ID => [$regularFlag, $correctPromotionFlag]]);
 
-        $promotionFlagFacade = $this->createPromotionFlagFacade($productMock, $correctPromotionFlag);
+        $promotionFlagFacade = $this->createPromotionFlagFacade($correctPromotionFlag);
 
-        $promotionFlagFacade->updatePromotionFlags(1);
+        $promotionFlagFacade->updatePromotionFlagsForProducts([$productMock]);
     }
 
     public function testReplaceWrongPromotionFlagWithCorrectOne(): void
@@ -110,9 +110,9 @@ class PromotionFlagFacadeTest extends TestCase
             ->method('setFlags')
             ->with([self::DOMAIN_ID => [$regularFlag, $correctPromotionFlag]]);
 
-        $promotionFlagFacade = $this->createPromotionFlagFacade($productMock, $correctPromotionFlag);
+        $promotionFlagFacade = $this->createPromotionFlagFacade($correctPromotionFlag);
 
-        $promotionFlagFacade->updatePromotionFlags(1);
+        $promotionFlagFacade->updatePromotionFlagsForProducts([$productMock]);
     }
 
     public function testNoFlushWhenNoChangesOnProductWithoutPromotion(): void
@@ -134,13 +134,12 @@ class PromotionFlagFacadeTest extends TestCase
         $emMock->expects($this->never())
             ->method('flush');
 
-        $promotionFlagFacade = $this->createPromotionFlagFacade($productMock, null, $emMock);
+        $promotionFlagFacade = $this->createPromotionFlagFacade(null, $emMock);
 
-        $promotionFlagFacade->updatePromotionFlags(1);
+        $promotionFlagFacade->updatePromotionFlagsForProducts([$productMock]);
     }
 
     private function createPromotionFlagFacade(
-        Product|MockObject $productMock,
         ?Flag $promotionFlagToReturn = null,
         EntityManagerInterface|MockObject|null $emMock = null,
     ): PromotionFlagFacade {
@@ -161,10 +160,6 @@ class PromotionFlagFacadeTest extends TestCase
         $productPromotionXyFactoryStub = $this->createStub(ProductPromotionXyFactory::class);
         $productPromotionXyDataFactoryStub = $this->createStub(ProductPromotionXyDataFactory::class);
 
-        $productFacadeMock = $this->createMock(ProductFacade::class);
-        $productFacadeMock->expects($this->any())->method('getById')
-            ->with(1)->willReturn($productMock);
-
         return new PromotionFlagFacade(
             $flagFacadeStub,
             $emMock ?? $this->createStub(EntityManagerInterface::class),
@@ -173,7 +168,7 @@ class PromotionFlagFacadeTest extends TestCase
             $productPromotionXyRepositoryStub,
             $productPromotionXyFactoryStub,
             $productPromotionXyDataFactoryStub,
-            $productFacadeMock,
+            $this->createStub(ProductFacade::class),
         );
     }
 
@@ -184,9 +179,11 @@ class PromotionFlagFacadeTest extends TestCase
     {
         $productMock = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getFlags', 'getPromotionXy', 'isCalculatedSellingDenied', 'setFlags'])
+            ->onlyMethods(['getId', 'getFlags', 'getPromotionXy', 'isCalculatedSellingDenied', 'setFlags'])
             ->getMock();
 
+        $productMock->expects($this->any())->method('getId')
+            ->willReturn(1);
         $productMock->expects($this->any())->method('getFlags')
             ->willReturn($initialFlags);
 

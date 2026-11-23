@@ -25,7 +25,8 @@ class ProductMassActionRepository
         $updateQueryBuilder = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
             ->set('p.hidden', ':value')->setParameter('value', $hidden)
-            ->where('p.id IN (:productIds)')->setParameter('productIds', $selectedProductIds);
+            ->where('p.id IN (:productIds)')->setParameter('productIds', $selectedProductIds)
+            ->andWhere('p.hidden != :value');
 
         $updateQueryBuilder->getQuery()->execute();
     }

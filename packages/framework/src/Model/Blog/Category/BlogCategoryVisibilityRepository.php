@@ -58,6 +58,7 @@ class BlogCategoryVisibilityRepository
             WHERE bc.id = bcd.blog_category_id
                 AND bcd.domain_id = :domainId
                 AND bc.parent_id IS NULL
+                AND bcd.visible = FALSE
             ',
             [
                 'domainId' => $domainConfig->getId(),
@@ -85,13 +86,7 @@ class BlogCategoryVisibilityRepository
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE blog_category_domains AS bcd
-                SET visible = (
-                    bcd.enabled = TRUE
-                    AND
-                    bct.name IS NOT NULL
-                    AND
-                    parent_bcd.visible = TRUE
-                )
+                SET visible = NOT bcd.visible
 
             FROM blog_categories AS bc
             LEFT JOIN blog_category_translations bct ON bct.translatable_id = bc.id AND bct.locale = :locale
@@ -99,6 +94,7 @@ class BlogCategoryVisibilityRepository
             WHERE bc.id = bcd.blog_category_id
                 AND bcd.domain_id = :domainId
                 AND bc.level = :level
+                AND bcd.visible IS DISTINCT FROM COALESCE((' . $this->getBlogCategoryVisibilityConditionSql() . '), FALSE)
             ',
             [
                 'domainId' => $domainConfig->getId(),
@@ -111,5 +107,12 @@ class BlogCategoryVisibilityRepository
                 'level' => Types::INTEGER,
             ],
         );
+    }
+
+    protected function getBlogCategoryVisibilityConditionSql(): string
+    {
+        return 'bcd.enabled = TRUE
+            AND bct.name IS NOT NULL
+            AND parent_bcd.visible = TRUE';
     }
 }

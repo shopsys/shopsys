@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Doctrine\NestedSetValuesRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
@@ -36,6 +37,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
         protected readonly Domain $domain,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly NestedSetValuesRepository $nestedSetValuesRepository,
     ) {
     }
 
@@ -324,20 +326,24 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
     {
         $rootCategoryId = $this->getRootBlogCategory()->getId();
 
-        $query = $this->em->createQuery('
-            UPDATE ' . BlogCategory::class . ' bc 
-            SET bc.parent = :parent, bc.level = :level, bc.lft = :lft, bc.rgt = :rgt 
-            WHERE bc.id = :id
-        ');
+        $nestedSetValuesIndexedByBlogCategoryId = [];
 
         foreach ($blogCategoriesOrderingData as $categoryOrderingData) {
-            $query->execute([
-                'id' => (int)$categoryOrderingData['id'],
+            $nestedSetValuesIndexedByBlogCategoryId[(int)$categoryOrderingData['id']] = [
                 'parent' => (int)$categoryOrderingData['id'] === $rootCategoryId ? null : ($categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId),
                 'level' => $categoryOrderingData['depth'],
                 'lft' => $categoryOrderingData['left'],
                 'rgt' => $categoryOrderingData['right'],
-            ]);
+            ];
+        }
+
+        $changedBlogCategoriesCount = $this->nestedSetValuesRepository->updateNestedSetValues(
+            BlogCategory::class,
+            $nestedSetValuesIndexedByBlogCategoryId,
+        );
+
+        if ($changedBlogCategoriesCount === 0) {
+            return;
         }
 
         foreach ($this->domain->getAllIds() as $domainId) {

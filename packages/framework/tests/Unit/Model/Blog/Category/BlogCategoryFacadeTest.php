@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\Doctrine\NestedSetValuesRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
@@ -88,6 +89,7 @@ class BlogCategoryFacadeTest extends TestCase
             $this->createStub(Domain::class),
             $this->createStub(CleanStorefrontCacheFacade::class),
             new InMemoryCache(),
+            $this->createStub(NestedSetValuesRepository::class),
         );
     }
 }
