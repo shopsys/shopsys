@@ -94,7 +94,7 @@ describe('AdditionalServices', () => {
         uuid: `service-${index}`,
     });
 
-    test('toggles the service from the checkbox, image, name, and delivery extension only', () => {
+    test('labels the checkbox only by the service name stretched over the item', () => {
         const additionalService = createAdditionalService(1);
         const onToggleService = vi.fn();
 
@@ -110,34 +110,40 @@ describe('AdditionalServices', () => {
         const descriptionButton = screen.getByRole('button', { name: 'Show description of Service 1' });
         expect(descriptionButton).toHaveAttribute('data-tooltip-label', 'Show additional service description');
 
-        const checkbox = screen.getByRole('checkbox', { name: /Service 1/ });
-        expect(checkbox).toHaveAccessibleDescription('Price: €10');
-        const checkboxLabel = checkbox.parentElement?.querySelector('label');
-        const checkboxVisual = checkboxLabel?.children[0];
+        const checkbox = screen.getByRole('checkbox', { name: 'Service 1' });
+        expect(checkbox).toHaveAccessibleDescription('Price: €10 Extends delivery by 1 working days');
+        const checkboxVisual = checkbox.nextElementSibling;
         const serviceName = screen.getByText('Service 1');
         const serviceNameLabel = serviceName.closest('label');
-        const deliveryExtensionLabel = screen.getByText('Extends delivery by 1 working days').closest('label');
-        const serviceContent = serviceName.closest('label')?.parentElement?.parentElement;
+        const deliveryExtension = screen.getByText('Extends delivery by 1 working days');
+        const serviceContent = serviceNameLabel?.parentElement?.parentElement;
         const serviceImage = screen.getByTestId('/service-1.jpg');
         expect(checkbox.closest('li')).not.toHaveClass('py-2');
         expect(checkbox.closest('li')).toHaveClass(
+            'relative',
             'grid-cols-[auto_auto_minmax(0,1fr)]',
             'gap-x-2',
             'md:grid-cols-[minmax(0,1fr)_auto]',
             'md:gap-3',
         );
         expect(checkbox.closest('ul')).not.toHaveClass('gap-2');
-        expect(checkbox.parentElement?.parentElement).toHaveClass('contents', 'md:flex', 'md:col-start-1');
-        expect(checkboxLabel).toHaveClass('w-fit', 'gap-0', 'md:min-h-10');
+        expect(checkbox.parentElement).toHaveClass('md:min-h-10');
+        expect(checkbox.parentElement?.parentElement).toHaveClass(
+            'contents',
+            'md:relative',
+            'md:flex',
+            'md:col-start-1',
+        );
         expect(serviceContent).toHaveClass('col-start-3', 'md:col-auto');
         expect(checkboxVisual).toHaveClass('size-5', 'border-input-border-default', 'rounded-checkbox');
         expect(serviceImage).toHaveClass('size-8', 'shrink-0', 'object-contain', 'mix-blend-multiply');
-        expect(serviceImage.closest('label')).toHaveAttribute('for', checkbox.id);
-        expect(serviceNameLabel).toHaveAttribute('for', checkbox.id);
-        expect(serviceNameLabel).toHaveClass('w-fit', 'max-w-full');
+        expect(Array.from((checkbox as HTMLInputElement).labels ?? [])).toEqual([serviceNameLabel]);
+        expect(serviceNameLabel).toHaveClass('w-fit', 'max-w-full', 'after:absolute', 'after:inset-0');
         expect(serviceNameLabel?.parentElement).toHaveClass('w-fit', 'max-w-full');
-        expect(deliveryExtensionLabel).toHaveAttribute('for', checkbox.id);
-        expect(deliveryExtensionLabel).toHaveClass('w-fit', 'max-w-full');
+        expect(serviceImage.closest('label')).toBeNull();
+        expect(deliveryExtension.closest('label')).toBeNull();
+        expect(deliveryExtension).toHaveClass('w-fit', 'max-w-full');
+        expect(descriptionButton).toHaveClass('relative', 'z-above');
         expect(descriptionButton.parentElement).toContainElement(serviceName);
 
         fireEvent.click(checkbox);
@@ -146,16 +152,8 @@ describe('AdditionalServices', () => {
         expect(checkboxVisual).toHaveClass('border-input-border-active', 'bg-input-fill');
 
         onToggleService.mockClear();
-        fireEvent.click(screen.getByText('Service 1'));
+        fireEvent.click(serviceName);
         expect(onToggleService).toHaveBeenCalledWith(additionalService, false);
-
-        onToggleService.mockClear();
-        fireEvent.click(serviceImage);
-        fireEvent.click(screen.getByText('Extends delivery by 1 working days'));
-
-        expect(onToggleService).toHaveBeenCalledTimes(2);
-        expect(onToggleService).toHaveBeenNthCalledWith(1, additionalService, true);
-        expect(onToggleService).toHaveBeenNthCalledWith(2, additionalService, false);
 
         onToggleService.mockClear();
         const addOnPrices = screen.getAllByText('+ €10');
@@ -315,7 +313,9 @@ describe('AdditionalServices', () => {
         expect(prices).toHaveLength(2);
         expect(prices[0]).toHaveClass('font-semibold', 'text-text-default');
         expect(screen.getAllByText('/ pcs')).toHaveLength(2);
-        expect(screen.getByRole('checkbox', { name: /Service 1/ })).toHaveAccessibleDescription('Price: €10 / pcs');
+        expect(screen.getByRole('checkbox', { name: /Service 1/ })).toHaveAccessibleDescription(
+            'Price: €10 / pcs Extends delivery by 1 working days',
+        );
         expect(prices[0].closest('label')).toBeNull();
         expect(screen.queryByText('+ €30')).not.toBeInTheDocument();
         expect(screen.queryByText('€10 / pcs')).not.toBeInTheDocument();
@@ -337,16 +337,11 @@ describe('AdditionalServices', () => {
 
         expect(screen.queryByText('(€10)')).not.toBeInTheDocument();
         const checkbox = screen.getByRole('checkbox', { name: /Service 1/ });
-        expect(checkbox).toHaveAccessibleDescription('Price: 3 × €10 / pcs, €30');
-        const checkboxVisual = checkbox.parentElement?.querySelector('label')?.children[0];
+        expect(checkbox).toHaveAccessibleDescription('Price: 3 × €10 / pcs, €30 Extends delivery by 1 working days');
+        const checkboxVisual = checkbox.nextElementSibling;
         expect(checkbox).toBeChecked();
         expect(checkboxVisual).toHaveClass('size-5', 'border-input-border-active', 'bg-input-fill');
-        expect(checkbox.parentElement?.parentElement).toHaveClass(
-            '[&>div]:row-span-2',
-            '[&>label]:row-span-2',
-            'md:[&>div]:row-span-1',
-            'md:[&>label]:row-span-1',
-        );
+        expect(checkbox.parentElement?.parentElement).toHaveClass('[&>div]:row-span-2', 'md:[&>div]:row-span-1');
         expect(checkbox.parentElement?.querySelector('[data-service-selection-state]')).not.toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Show description of Service 1' }).parentElement).toContainElement(
             screen.getByText('Service 1'),

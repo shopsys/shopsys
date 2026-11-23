@@ -1,7 +1,8 @@
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import {
-    AdditionalServiceImageLabel,
+    AdditionalServiceImage,
     AdditionalServiceLabel,
+    hasDeliveryExtension,
 } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceLabel';
 import {
     AdditionalServiceAccessiblePrice,
@@ -9,7 +10,7 @@ import {
     AdditionalServiceCartPrice,
 } from 'components/Blocks/Product/AdditionalServices/AdditionalServicePrice';
 import { IconButton } from 'components/Forms/Button/IconButton';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { ChoiceIndicator } from 'components/Forms/Lib/ChoiceIndicator';
 import { TIDs } from 'cypress/tids';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -42,7 +43,8 @@ const AdditionalServiceDescriptionButton: FC<AdditionalServiceDescriptionButtonP
                 ns: 'accessibility',
                 serviceName: additionalService.name,
             })}
-            className="align-middle"
+            // above the stretched label of the service
+            className="relative z-above align-middle"
             size="compact"
             tid={TIDs.additional_services_info_button_ + tidPrefix + additionalService.catnum}
             title={tooltipLabel}
@@ -83,6 +85,11 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
     const priceWithVat = additionalService.price.priceWithVat;
     const checkboxId = `additional-service-${checkboxInstanceId}-${additionalService.uuid}`;
     const priceDescriptionId = `${checkboxId}-price`;
+    const deliveryExtensionId = `${checkboxId}-delivery`;
+    const checkboxDescriptionIds = [
+        isPriceVisible(priceWithVat) && priceDescriptionId,
+        hasDeliveryExtension(additionalService) && deliveryExtensionId,
+    ].filter(Boolean);
     const isSelectedInCart = isInCartList === true && isSelected && quantity !== undefined;
     const isTotalPriceShown = showSelectedServiceTotalPrice === true && isSelected;
     const isUnitShown = isSelected
@@ -111,7 +118,7 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
 
     return (
         <li
-            // the checkbox, image, name and delivery extension are separate labels of one checkbox
+            // the name is the only label of the checkbox, the item is the hover scope of its indicator
             data-choice-hover-scope
             className={twMergeCustom(
                 'relative grid min-w-0 grid-cols-[auto_auto_minmax(0,1fr)] items-center gap-x-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-3',
@@ -121,22 +128,30 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
         >
             <div
                 className={twMergeCustom(
-                    'contents md:col-span-1 md:col-start-1 md:flex md:min-w-0 md:gap-2 [&>div]:w-fit [&>div]:min-w-0 [&>div]:max-w-full [&>div]:self-stretch md:[&>div]:self-auto',
-                    isSelectedInCart &&
-                        '[&>div]:row-span-2 md:[&>div]:row-span-1 [&>label]:row-span-2 md:[&>label]:row-span-1',
+                    // positions the stretched label on desktop, where the item may be display: contents
+                    'contents md:relative md:col-span-1 md:col-start-1 md:flex md:min-w-0 md:gap-2',
+                    isSelectedInCart && '[&>div]:row-span-2 md:[&>div]:row-span-1',
                     isInCartList && 'vl:col-start-1 vl:pl-22.5',
                 )}
             >
-                <Checkbox
-                    aria-describedby={isPriceVisible(priceWithVat) ? priceDescriptionId : undefined}
-                    disabled={isDisabled}
-                    id={checkboxId}
-                    label={<span aria-hidden="true" />}
-                    labelWrapperClassName="h-full w-fit items-center gap-0 font-normal text-text-default hover:text-text-default md:min-h-10"
-                    name={checkboxId}
-                    value={isSelected}
-                    onChange={() => onToggleService(additionalService, !isSelected)}
-                />
+                <div className="flex items-center self-stretch md:min-h-10 md:self-auto">
+                    <input
+                        aria-describedby={checkboxDescriptionIds.join(' ') || undefined}
+                        checked={isSelected}
+                        className="peer sr-only"
+                        disabled={isDisabled}
+                        id={checkboxId}
+                        name={checkboxId}
+                        type="checkbox"
+                        onChange={() => onToggleService(additionalService, !isSelected)}
+                    />
+                    <ChoiceIndicator
+                        checked={isSelected}
+                        className="peer-focus-visible:bg-focus-background! peer-focus-visible:[&_svg]:text-text-default!"
+                        disabled={isDisabled}
+                        inputType="checkbox"
+                    />
+                </div>
 
                 <AdditionalServiceAccessiblePrice
                     id={priceDescriptionId}
@@ -148,15 +163,12 @@ export const AdditionalServiceItem: FC<AdditionalServiceItemProps> = ({
                     unitName={unitName}
                 />
 
-                <AdditionalServiceImageLabel
-                    additionalService={additionalService}
-                    checkboxId={checkboxId}
-                    isDisabled={isDisabled}
-                />
+                <AdditionalServiceImage additionalService={additionalService} isDisabled={isDisabled} />
 
                 <AdditionalServiceLabel
                     additionalService={additionalService}
                     checkboxId={checkboxId}
+                    deliveryExtensionId={deliveryExtensionId}
                     descriptionButton={
                         <AdditionalServiceDescriptionButton
                             additionalService={additionalService}

@@ -8,8 +8,8 @@
 }
 
 /*
- * Hover of a checkbox/radio indicator: its own label (`group`), or any label of a choice
- * split into more labels for one input (e.g. image and name), marked by `data-choice-hover-scope`.
+ * Hover of a checkbox/radio indicator: its own label (`group`), or a label outside the indicator
+ * (e.g. a stretched name label), within the element marked by `data-choice-hover-scope`.
  */
 @custom-variant choice-hover {
     @media (hover: hover) {
