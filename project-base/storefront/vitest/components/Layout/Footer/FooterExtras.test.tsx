@@ -37,9 +37,9 @@ describe('FooterExtras', () => {
     test('uses distinct demo destinations for social links', () => {
         renderWithTooltipProvider(<FooterExtras />);
 
-        const instagramLink = screen.getByRole('link', { name: 'Go to Instagram' });
-        const facebookLink = screen.getByRole('link', { name: 'Go to Facebook' });
-        const youtubeLink = screen.getByRole('link', { name: 'Go to Youtube' });
+        const instagramLink = screen.getByRole('link', { name: 'Go to Instagram (Open in new tab)' });
+        const facebookLink = screen.getByRole('link', { name: 'Go to Facebook (Open in new tab)' });
+        const youtubeLink = screen.getByRole('link', { name: 'Go to Youtube (Open in new tab)' });
         const destinations = [instagramLink, facebookLink, youtubeLink].map((link) => link.getAttribute('href'));
 
         expect(instagramLink).toHaveAttribute('href', 'https://example.com/demo-shop/instagram');

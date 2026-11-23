@@ -192,11 +192,11 @@ export const CartListItem: FC<CartListItemProps> = ({
             </div>
 
             <h3
-                className="w-fit max-w-full font-secondary font-semibold text-sm group-hover/product-link:underline lg:text-sm"
+                className="w-fit max-w-full font-secondary font-semibold text-sm lg:text-sm"
                 data-tid={TIDs.pages_cart_list_item_name}
                 id={`product-${uuid}-name`}
             >
-                <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
                     {product.fullName}
                 </span>
             </h3>

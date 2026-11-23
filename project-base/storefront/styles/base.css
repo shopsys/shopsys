@@ -110,7 +110,8 @@
     }
 
     a {
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline hover:underline lg:text-md;
+        /* an unstyled link is an inline link (see getLinkClassName): it takes the size of the text it is part of */
+        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm underline hover:underline;
     }
 
     b,

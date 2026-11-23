@@ -29,7 +29,6 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
         <ProductAvailability
             availability={product.availability}
             availableStoresCount={product.availableStoresCount}
-            className={isInteractive ? 'transition-colors group-hover/availability:text-link-hovered' : undefined}
             isPersonalPickupOnly={product.isPersonalPickupOnly}
             displayMode="detail"
             isInquiryType={product.isInquiryType}

@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
@@ -54,14 +55,13 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     const [areAdditionalServicesShown, setAreAdditionalServicesShown] = useState(false);
 
     const additionalServicesToggle = hasAdditionalServices ? (
-        <button
-            aria-expanded={areAdditionalServicesShown}
-            className="w-fit cursor-pointer text-left font-secondary text-link-default text-xs outline-hidden hover:text-link-hovered hover:underline"
-            type="button"
+        <ShowMoreButton
+            className="text-left"
+            isExpanded={areAdditionalServicesShown}
             onClick={() => setAreAdditionalServicesShown((isShown) => !isShown)}
         >
             {t('+ {{ count }} additional services', { count: cartItem.additionalServices.length })}
-        </button>
+        </ShowMoreButton>
     ) : null;
 
     const renderGift = (gift: TypeCartItemFragment, relatedProductNames?: string[], isNested = false) => (
@@ -130,7 +130,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                                 />
                             </div>
 
-                            <span className="min-w-0 flex-1 font-secondary font-semibold text-sm group-hover/product-link:underline group-focus-visible/product-link:underline">
+                            <span className="min-w-0 flex-1 font-secondary font-semibold text-sm group-focus-visible/product-link:underline">
                                 {product.fullName}
                             </span>
                         </ExtendedNextLink>

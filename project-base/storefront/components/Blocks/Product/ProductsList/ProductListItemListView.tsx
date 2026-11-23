@@ -106,7 +106,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                         />
                     </div>
 
-                    <h3 className="wrap-break-word col-start-2 row-start-2 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover:text-text-default group-hover:underline xl:max-w-70">
+                    <h3 className="wrap-break-word col-start-2 row-start-2 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover/product-link:text-text-default xl:max-w-70">
                         <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
@@ -188,7 +188,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                             product={product}
                             productActionClassName="w-40 shrink-0 sm:w-44"
                             shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
-                            skeletonClassName="h-9 w-40 shrink-0 sm:w-44"
+                            skeletonClassName="w-40 shrink-0 sm:w-44"
                         />
                     )}
                 </div>

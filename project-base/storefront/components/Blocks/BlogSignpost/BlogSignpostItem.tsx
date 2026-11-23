@@ -29,7 +29,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     className={twMergeCustom(
                         'group flex w-full cursor-pointer items-center justify-between rounded-md bg-background-more px-3 py-2 text-left font-secondary font-semibold text-sm text-text-default transition-colors hover:bg-background-most focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 active:bg-background-most',
                         isInActivePath &&
-                            'bg-background-accent-less text-link-default hover:bg-background-accent-less active:bg-background-accent-less',
+                            'bg-background-accent-less text-text-accent hover:bg-background-accent-less active:bg-background-accent-less',
                     )}
                     type="button"
                     onClick={() => onPanelChange(blogCategory.uuid)}

@@ -72,7 +72,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h3 className="h4 text-text-inverted group-hover:underline">
+                        <h3 className="h4 text-text-inverted">
                             <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-orange-500 group-focus-visible:text-text-default!">
                                 {article.name}
                             </span>

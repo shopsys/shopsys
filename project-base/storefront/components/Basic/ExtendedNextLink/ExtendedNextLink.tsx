@@ -1,4 +1,5 @@
 import { UrlObject } from 'node:url';
+import { NewTabHint, useGetNewTabAriaLabel } from 'components/Basic/Link/NewTabHint';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 // biome-ignore lint/style/noRestrictedImports: This component is the single approved wrapper around next/link.
 import NextLink, { LinkProps } from 'next/link';
@@ -41,6 +42,9 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
 }) => {
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const { url } = useDomainConfig();
+    const getNewTabAriaLabel = useGetNewTabAriaLabel();
+
+    const isOpeningInNewTab = target === '_blank';
 
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
     const localHref = getLocalHref(href, url);
@@ -99,8 +103,10 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
             target={target}
             onClick={handleOnClick}
             {...props}
+            aria-label={getNewTabAriaLabel(props['aria-label'], target)}
         >
             {children}
+            {isOpeningInNewTab && <NewTabHint />}
         </NextLink>
     );
 };

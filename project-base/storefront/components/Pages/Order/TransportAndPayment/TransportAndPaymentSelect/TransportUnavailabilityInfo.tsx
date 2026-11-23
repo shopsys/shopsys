@@ -1,5 +1,6 @@
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { TIDs } from 'cypress/tids';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { useState } from 'react';
@@ -57,15 +58,15 @@ export const TransportUnavailabilityInfo: FC<TransportUnavailabilityInfoProps> =
             </ul>
 
             {hiddenProductsCount > 0 && (
-                <button
-                    className="ml-6 w-fit cursor-pointer rounded-sm text-text-less hover:underline"
-                    type="button"
+                <TextButton
+                    tone="subtle"
+                    className="ml-6 w-fit"
                     onClick={() => setAreAllProductsShown((previousValue) => !previousValue)}
                 >
                     {areAllProductsShown
                         ? t('Show less')
                         : t('+ show {{ count }} more', { count: hiddenProductsCount })}
-                </button>
+                </TextButton>
             )}
         </div>
     );

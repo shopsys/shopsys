@@ -1,5 +1,6 @@
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { AnimatePresence } from 'framer-motion';
 import { forwardRef, type MouseEventHandler, TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
@@ -39,8 +40,10 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     ariaLabel,
     disabled,
 }) => {
-    const menuIconicSubItemLinkTwClass = twJoin(
-        'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:no-underline',
+    const menuIconicSubItemLinkTwClass = twMergeCustom(
+        getLinkClassName({ variant: 'navigation' }),
+        // the whole row is the card, its list item reacts to hover by the surface, so the label is not underlined
+        'flex w-full items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm hover:no-underline',
         isActive && 'text-text-accent!',
     );
 

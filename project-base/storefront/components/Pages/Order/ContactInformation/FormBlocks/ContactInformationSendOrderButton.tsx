@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockAgreements } from 'components/Forms/Form/Form';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -8,10 +8,8 @@ import Trans from 'next-translate/Trans';
 import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 export const ContactInformationSendOrderButton: FC = () => {
-    const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { canManagePersonalData } = useAuthorization();
@@ -60,24 +58,14 @@ export const ContactInformationSendOrderButton: FC = () => {
                         i18nKey="ContactInformationInfo"
                         components={{
                             lnk1: termsAndConditionsArticleUrl ? (
-                                <Link
-                                    aria-label={t('Go to terms and conditions article', { ns: 'accessibility' })}
-                                    className="inline font-secondary font-semibold text-sm"
-                                    href={termsAndConditionsArticleUrl}
-                                    target="_blank"
-                                />
+                                <Link href={termsAndConditionsArticleUrl} target="_blank" />
                             ) : (
-                                <span className={linkPlaceholderTwClass} />
+                                <span />
                             ),
                             lnk2: privacyPolicyArticleUrl ? (
-                                <Link
-                                    aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                    className="inline font-secondary font-semibold text-sm"
-                                    href={privacyPolicyArticleUrl}
-                                    target="_blank"
-                                />
+                                <Link href={privacyPolicyArticleUrl} target="_blank" />
                             ) : (
-                                <span className={linkPlaceholderTwClass} />
+                                <span />
                             ),
                         }}
                     />

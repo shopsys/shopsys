@@ -1,5 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { GiftVouchersExceedPayableAmountWarning } from 'components/Pages/Order/GiftVouchersExceedPayableAmountWarning';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
@@ -432,7 +433,7 @@ type ResetButtonProps = { text: string; onClick: () => void; tid: string; disabl
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid, disabled }) => (
     <button
-        className="cursor-pointer font-secondary font-semibold text-sm underline hover:no-underline"
+        className={getLinkClassName({ variant: 'action' })}
         data-tid={tid}
         disabled={disabled}
         tabIndex={0}

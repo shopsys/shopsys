@@ -57,7 +57,7 @@ export const MyReviewItem: FC<MyReviewItemProps> = ({ productReview }) => {
 
                     <p className="m-0 text-text-less text-xs">
                         {t('If you have any comments or questions about reviews, contact us at')}{' '}
-                        <Link isExternal href={`mailto:${productReviewContactEmail}`} className="text-xs">
+                        <Link isExternal href={`mailto:${productReviewContactEmail}`}>
                             {productReviewContactEmail}
                         </Link>
                         .

@@ -113,20 +113,19 @@ describe('Product detail accessibility', () => {
     test('includes the PDF format and file size in file link names', () => {
         renderWithTooltipProvider(<ProductDetailFilesSection files={[file]} sectionRef={createRef()} />);
 
-        expect(screen.getByRole('link', { name: 'View Example manual (1 KB PDF)' })).toHaveAttribute(
+        expect(screen.getByRole('link', { name: 'View Example manual (1 KB PDF) (Open in new tab)' })).toHaveAttribute(
             'href',
             '/file/view/example.pdf',
         );
-        expect(screen.getByRole('link', { name: 'Download Example manual (1 KB PDF)' })).toHaveAttribute(
-            'href',
-            '/file/example.pdf',
-        );
+        expect(
+            screen.getByRole('link', { name: 'Download Example manual (1 KB PDF) (Open in new tab)' }),
+        ).toHaveAttribute('href', '/file/example.pdf');
     });
 
     test('uses concise tooltips for file preview and download links', () => {
         renderWithTooltipProvider(<ProductDetailFilesSection files={[file]} sectionRef={createRef()} />);
-        const previewLink = screen.getByRole('link', { name: 'View Example manual (1 KB PDF)' });
-        const downloadLink = screen.getByRole('link', { name: 'Download Example manual (1 KB PDF)' });
+        const previewLink = screen.getByRole('link', { name: 'View Example manual (1 KB PDF) (Open in new tab)' });
+        const downloadLink = screen.getByRole('link', { name: 'Download Example manual (1 KB PDF) (Open in new tab)' });
 
         fireEvent.focus(previewLink);
 

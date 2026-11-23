@@ -30,7 +30,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({ li
             title={t('Go to category')}
             type={linkType}
             className={twMergeCustom(
-                'relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border border-background-more bg-background-more px-5 py-2.5 no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
+                'group relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border border-background-more bg-background-more px-5 py-2.5 no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
                 'text-text-default hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
                 'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 'lg:justify-start lg:gap-3 lg:px-3 lg:py-2',

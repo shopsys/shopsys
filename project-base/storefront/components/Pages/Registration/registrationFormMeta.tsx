@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import {
     validateCity,
     validateCompanyNameRequired,
@@ -123,14 +123,9 @@ export const useRegistrationFormMeta = (): FormMeta<RegistrationFormType, { erro
                     i18nKey="GdprAgreementCheckbox"
                     components={{
                         lnk1: privacyPolicyArticleUrl ? (
-                            <Link
-                                aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                                className="inline text-sm"
-                                href={privacyPolicyArticleUrl}
-                                target="_blank"
-                            />
+                            <Link href={privacyPolicyArticleUrl} target="_blank" />
                         ) : (
-                            <span className={linkPlaceholderTwClass} />
+                            <span />
                         ),
                     }}
                 />

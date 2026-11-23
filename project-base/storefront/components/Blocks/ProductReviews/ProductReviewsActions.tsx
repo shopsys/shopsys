@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { WriteIcon } from 'components/Basic/Icon/WriteIcon';
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Button } from 'components/Forms/Button/Button';
 import { getButtonIconClassName } from 'components/Forms/Button/buttonUtils';
@@ -28,11 +29,7 @@ export const ProductReviewsActions: FC<ProductReviewsActionsProps> = ({
     return (
         <>
             {policyArticleUrl && (
-                <Link
-                    className="mx-auto gap-1 text-text-less text-xs no-underline hover:underline"
-                    href={policyArticleUrl}
-                    target="_blank"
-                >
+                <Link className="mx-auto text-sm" href={policyArticleUrl} target="_blank" tone="subtle">
                     {t('How we process and verify reviews')}
                 </Link>
             )}
@@ -50,7 +47,7 @@ export const ProductReviewsActions: FC<ProductReviewsActionsProps> = ({
                 <p className="text-center text-sm text-text-less lg:text-left">
                     {reviewedProductReviewUrl ? (
                         <ExtendedNextLink
-                            className={`${linkPlaceholderTwClass} text-sm`}
+                            className={getLinkClassName()}
                             href={reviewedProductReviewUrl}
                             skeletonType="myReviews"
                         >

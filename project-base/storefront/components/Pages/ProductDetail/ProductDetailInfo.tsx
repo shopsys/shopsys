@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { ProductReviewsSummaryBadge } from 'components/Blocks/ProductReviews/ProductReviewsSummaryBadge';
 import { TypeProductReviewsSummaryFragment } from 'graphql/requests/productReviews/fragments/ProductReviewsSummaryFragment.generated';
@@ -30,7 +31,7 @@ export const ProductDetailInfo: FC<ProductDetailInfoProps> = ({
                         <span className="text-text-less">{t('Brand')}: </span>
 
                         <ExtendedNextLink
-                            className="font-semibold text-sm text-text-less no-underline hover:underline"
+                            className={getLinkClassName({ tone: 'subtle' })}
                             href={brand.slug}
                             title={t('Go to brand page')}
                             type="brand"

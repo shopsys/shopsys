@@ -8,6 +8,7 @@ const TEXT_BUTTON_WRAPPERS = [
     TIDs.styleguide_submit_button_,
     TIDs.styleguide_button_with_icon_,
 ];
+const FOCUS_BACKGROUND_COLOR = 'rgb(252, 189, 70)';
 const VIEWPORT_HEIGHT = 720;
 
 type TextButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
@@ -147,6 +148,25 @@ const assertButtonScalesAcrossViewports = (viewportScales: typeof VIEWPORT_SCALE
     }
 };
 
+const assertHoverUnderlinesLink = (tid: TIDs, { shouldShiftColor }: { shouldShiftColor: boolean }) => {
+    const hoverAndCheckLink = ($link: JQuery<HTMLElement>) => {
+        const defaultColor = $link.css('color');
+
+        cy.wrap($link).realHover();
+        // realHover is not a query, so a fresh query keeps the hover assertions retried.
+        cy.getByTID([tid])
+            .should('have.css', 'text-decoration-line', 'underline')
+            .and(shouldShiftColor ? 'not.have.css' : 'have.css', 'color', defaultColor);
+    };
+
+    cy.getByTID([tid]).then(hoverAndCheckLink);
+};
+
+const assertContentLinkHover = (tid: TIDs) => {
+    cy.getByTID([tid]).should('have.css', 'text-decoration-line', 'underline');
+    assertHoverUnderlinesLink(tid, { shouldShiftColor: true });
+};
+
 const assertFocusKeepsLinkButtonHeight = ($button: JQuery<HTMLElement>) => {
     const height = $button[0].getBoundingClientRect().height;
 
@@ -176,7 +196,28 @@ describe('Styleguide Tests (SSP-4301)', () => {
         assertButtonScalesAcrossViewports(VIEWPORT_SCALES);
     });
 
-    it('[Keyboard focus] should keep the button height on focus and keep native disabled states', () => {
+    it('[Link hover] should keep content underlines, add navigation underlines on hover and never underline cards', () => {
+        assertDesktopPointer();
+        [TIDs.styleguide_content_link, TIDs.styleguide_text_action, TIDs.styleguide_inverted_link].forEach(
+            assertContentLinkHover,
+        );
+
+        cy.getByTID([TIDs.styleguide_navigation_link]).should('have.css', 'text-decoration-line', 'none');
+        assertHoverUnderlinesLink(TIDs.styleguide_navigation_link, { shouldShiftColor: false });
+
+        cy.getByTID([TIDs.styleguide_card_title]).should('have.css', 'text-decoration-line', 'none');
+        cy.getByTID([TIDs.styleguide_card_link]).realHover();
+        cy.getByTID([TIDs.styleguide_card_title]).should('have.css', 'text-decoration-line', 'none');
+        cy.getByTID([TIDs.styleguide_card_text]).should('have.css', 'text-decoration-line', 'none');
+    });
+
+    it('[Keyboard focus] should keep the orange focus without changing layout and keep native disabled states', () => {
+        cy.getByTID([TIDs.styleguide_content_link]).focus();
+        cy.realPress('Tab');
+        cy.getByTID([TIDs.styleguide_text_action])
+            .should('be.focused')
+            .and('have.css', 'background-color', FOCUS_BACKGROUND_COLOR);
+
         cy.getByTID([[TIDs.styleguide_link_button_, 'small']]).then(assertFocusKeepsLinkButtonHeight);
 
         cy.getByTID([TIDs.styleguide_disabled_button]).should('be.disabled');

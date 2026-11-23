@@ -19,7 +19,6 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
 
 vi.mock('components/Basic/Link/Link', () => ({
     Link: ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>,
-    linkPlaceholderTwClass: 'link-placeholder',
 }));
 
 vi.mock('next/link', () => ({

@@ -1,3 +1,4 @@
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { DatePicker } from 'components/Forms/DatePicker/DatePicker';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { ComplaintsStatusTabs } from 'components/Pages/Customer/Complaints/ComplaintsStatusTabs';
@@ -125,13 +126,9 @@ export const ComplaintsFilter: FC<ComplaintsFilterProps> = ({ complaintStatusCou
                 </div>
 
                 {hasActiveFilters && (
-                    <button
-                        className="shrink-0 cursor-pointer rounded-sm font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
-                        type="button"
-                        onClick={clearFilters}
-                    >
+                    <TextButton className="shrink-0" onClick={clearFilters}>
                         {t('Clear filters')}
-                    </button>
+                    </TextButton>
                 )}
             </div>
         </>

@@ -1,10 +1,12 @@
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
-import { ExternalLinkIcon } from 'components/Basic/Icon/ExternalLinkIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
+import { useGetNewTabAriaLabel } from 'components/Basic/Link/NewTabHint';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { RefObject } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { formatBytes } from 'utils/formaters/formatBytes';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
@@ -17,6 +19,7 @@ type ProductDetailFilesSectionProps = {
 
 export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFilesSectionProps) => {
     const { t, lang } = useTranslation();
+    const getNewTabAriaLabel = useGetNewTabAriaLabel();
     const downloadTooltipLabel = t('Download');
     const previewTooltipLabel = t('Open in new tab');
 
@@ -74,18 +77,13 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
                                     {file.viewUrl ? (
                                         <Tooltip label={previewTooltipLabel}>
                                             <a
-                                                aria-label={previewAccessibleLabel}
-                                                className="h4 no-underline"
+                                                aria-label={getNewTabAriaLabel(previewAccessibleLabel, '_blank')}
+                                                className={twJoin(getLinkClassName({ variant: 'navigation' }), 'h4')}
                                                 href={file.viewUrl}
                                                 rel="noopener noreferrer"
                                                 target="_blank"
                                             >
                                                 {file.anchorText}
-
-                                                <ExternalLinkIcon
-                                                    className="ml-1.5 size-4 -align-1"
-                                                    strokeWidth="2.5"
-                                                />
                                             </a>
                                         </Tooltip>
                                     ) : (
@@ -97,7 +95,7 @@ export const ProductDetailFilesSection = ({ files, sectionRef }: ProductDetailFi
 
                                 <Tooltip label={downloadTooltipLabel}>
                                     <a
-                                        aria-label={downloadAccessibleLabel}
+                                        aria-label={getNewTabAriaLabel(downloadAccessibleLabel, '_blank')}
                                         href={file.url}
                                         rel="noopener noreferrer"
                                         target="_blank"

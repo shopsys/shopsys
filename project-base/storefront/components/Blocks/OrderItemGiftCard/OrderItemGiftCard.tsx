@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GiftIcon } from 'components/Basic/Icon/GiftIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { OrderItemPrice } from 'components/Blocks/OrderItemProductCard/OrderItemPrice';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
@@ -89,7 +90,10 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
                         <ExtendedNextLink
                             href={productUrl}
                             skeletonType="product"
-                            className="wrap-break-words font-semibold text-sm text-text-default no-underline hover:underline"
+                            className={twMergeCustom(
+                                getLinkClassName({ variant: 'navigation' }),
+                                'wrap-break-words font-semibold text-sm',
+                            )}
                         >
                             {fullName}
                         </ExtendedNextLink>

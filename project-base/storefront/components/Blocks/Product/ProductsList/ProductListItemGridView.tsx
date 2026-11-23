@@ -129,7 +129,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
                     <h3
                         className={twJoin(
-                            'wrap-break-word row-start-3 mt-2.5 overflow-hidden font-secondary font-semibold group-hover:text-text-default group-hover:underline',
+                            'wrap-break-word row-start-3 mt-2.5 overflow-hidden font-secondary font-semibold group-hover/product-link:text-text-default',
                             textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                         )}
                     >

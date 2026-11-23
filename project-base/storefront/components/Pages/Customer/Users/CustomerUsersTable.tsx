@@ -1,4 +1,5 @@
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { StatusBadge } from 'components/Basic/StatusBadge/StatusBadge';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { SkeletonCustomerUsersTable } from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
@@ -10,6 +11,7 @@ import { useRemoveCustomerUserMutation } from 'graphql/requests/customer/mutatio
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+import { twJoin } from 'tailwind-merge';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -141,7 +143,10 @@ export const CustomerUsersTable: FC = () => {
                                     )}
                                 </div>
                                 <a
-                                    className="wrap-anywhere mt-1 inline-block text-text-less text-xs no-underline hover:text-link-hovered hover:underline focus-visible:outline-2 focus-visible:outline-border-active"
+                                    className={twJoin(
+                                        getLinkClassName({ tone: 'subtle' }),
+                                        'wrap-anywhere mt-1 inline-block text-xs',
+                                    )}
                                     href={`mailto:${user.email}`}
                                 >
                                     {user.email}

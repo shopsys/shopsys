@@ -41,12 +41,12 @@ export const PromoCode: FC = () => {
                 onClick={toggleContentVisibility}
             >
                 <span className="flex min-w-0 items-center gap-2">
-                    <TagIcon aria-hidden className="size-4 shrink-0 text-link-default" />
+                    <TagIcon aria-hidden className="size-4 shrink-0 text-icon-accent" />
                     <span>{t('Discount coupon or gift voucher')}</span>
                 </span>
                 <PlusIcon
                     className={twJoin(
-                        'size-3.5 shrink-0 text-link-default transition-transform duration-200',
+                        'size-3.5 shrink-0 text-icon-accent transition-transform duration-200',
                         isContentVisible && 'rotate-45',
                     )}
                 />

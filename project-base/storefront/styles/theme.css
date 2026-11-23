@@ -365,12 +365,12 @@
     --color-icon-button-default-icon-default: var(--color-icon-default);
     --color-icon-button-default-icon-disabled: var(--color-icon-disabled);
     --color-icon-button-default-icon-hovered: var(--color-icon-accent);
-    --color-icon-button-ghost-bg-active: var(--color-background-most);
-    --color-icon-button-ghost-bg-hovered: var(--color-background-more);
-    --color-icon-button-ghost-icon-active: var(--color-icon-default);
+    --color-icon-button-ghost-bg-active: var(--color-gray-300);
+    --color-icon-button-ghost-bg-hovered: var(--color-background-most);
+    --color-icon-button-ghost-icon-active: var(--color-icon-accent);
     --color-icon-button-ghost-icon-default: var(--color-icon-less);
     --color-icon-button-ghost-icon-disabled: var(--color-icon-disabled);
-    --color-icon-button-ghost-icon-hovered: var(--color-icon-default);
+    --color-icon-button-ghost-icon-hovered: var(--color-icon-accent);
 
     --color-fill-accent: var(--color-brand-600);
     --color-fill-brand: var(--color-brand-700);
@@ -396,6 +396,7 @@
     --color-icon-accent-brand-less: var(--color-brand-500);
 
     --color-input-fill: var(--color-fill-brand);
+    --color-input-fill-hovered: var(--color-brand-800);
     --color-input-bg-active: var(--color-background-default);
     --color-input-bg-default: var(--color-background-default);
     --color-input-bg-error: var(--color-background-default);
@@ -425,7 +426,7 @@
     --color-link-active: var(--color-brand-900);
     --color-link-default: var(--color-text-accent);
     --color-link-disabled: var(--color-secondary-400);
-    --color-link-hovered: var(--color-brand-800);
+    --color-link-hovered: var(--color-brand-900);
     --color-link-visited: var(--color-brand-900);
     --color-link-inverted-default: var(--color-text-inverted);
     --color-link-inverted-disabled: var(--color-text-disabled);

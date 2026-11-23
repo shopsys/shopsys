@@ -2,6 +2,7 @@ import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { useGetNewTabAriaLabel } from 'components/Basic/Link/NewTabHint';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
@@ -12,6 +13,7 @@ import { getImageAlt } from 'utils/imageAltText';
 
 export const FooterExtras = () => {
     const { t } = useTranslation();
+    const getNewTabAriaLabel = useGetNewTabAriaLabel();
     const [{ data: transportsImages, fetching: areTransportsImagesFetching }] = useTransportsImage();
 
     const transportsWithImages = transportsImages?.transports.filter((transport) => transport.mainImage) || [];
@@ -48,7 +50,7 @@ export const FooterExtras = () => {
                 <div className="flex gap-4 lg:ml-auto" data-tid={TIDs.footer_social_links}>
                     <Tooltip label="Instagram">
                         <a
-                            aria-label={t('Go to Instagram', { ns: 'accessibility' })}
+                            aria-label={getNewTabAriaLabel(t('Go to Instagram', { ns: 'accessibility' }), '_blank')}
                             href="https://example.com/demo-shop/instagram"
                             rel="noopener"
                             tabIndex={0}
@@ -59,7 +61,7 @@ export const FooterExtras = () => {
                     </Tooltip>
                     <Tooltip label="Facebook">
                         <a
-                            aria-label={t('Go to Facebook', { ns: 'accessibility' })}
+                            aria-label={getNewTabAriaLabel(t('Go to Facebook', { ns: 'accessibility' }), '_blank')}
                             href="https://example.com/demo-shop/facebook"
                             rel="noopener"
                             tabIndex={0}
@@ -70,7 +72,7 @@ export const FooterExtras = () => {
                     </Tooltip>
                     <Tooltip label="Youtube">
                         <a
-                            aria-label={t('Go to Youtube', { ns: 'accessibility' })}
+                            aria-label={getNewTabAriaLabel(t('Go to Youtube', { ns: 'accessibility' }), '_blank')}
                             href="https://example.com/demo-shop/youtube"
                             rel="noopener"
                             tabIndex={0}

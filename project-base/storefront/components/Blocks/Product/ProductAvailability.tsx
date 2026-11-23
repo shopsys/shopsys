@@ -88,7 +88,10 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                                 className={twMergeCustom(
                                     // indented under the name, past the icon
                                     'pl-5 font-secondary text-text-less',
-                                    isDetailDisplay ? 'underline hover:text-link-default' : 'text-xs',
+                                    // only the details are the link, the availability name above stays a status
+                                    isDetailDisplay
+                                        ? 'underline group-hover/availability:text-link-default'
+                                        : 'text-xs',
                                     isInlineDisplay && 'relative pl-0',
                                     detailsClassName,
                                 )}

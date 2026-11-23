@@ -4,7 +4,9 @@ import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -174,7 +176,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                         <div className="flex flex-col gap-2">
                             {orderItem.product?.isVisible ? (
                                 <ExtendedNextLink
-                                    className="vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
+                                    className={twMergeCustom(
+                                        getLinkClassName({ variant: 'navigation' }),
+                                        'vl:w-fit w-full text-sm',
+                                    )}
                                     href={orderItem.product.slug}
                                     skeletonType="product"
                                     aria-label={t('Go to product {{ productName }}', {
@@ -189,25 +194,27 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                             )}
 
                             {showComplaintButton && (
-                                <button
+                                <TextButton
                                     aria-haspopup="dialog"
-                                    className="inline-flex cursor-pointer items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
-                                    data-tid={TIDs.order_detail_create_complaint_button}
-                                    tabIndex={0}
+                                    className="self-baseline whitespace-nowrap"
+                                    tid={TIDs.order_detail_create_complaint_button}
                                     aria-label={t('Create complaint for product {{ productName }}', {
                                         ns: 'accessibility',
                                         productName: orderItem.name,
                                     })}
                                     onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
                                 >
-                                    <FillIcon className="mr-1 size-5" />
+                                    <FillIcon aria-hidden="true" className="size-4" />
                                     {t('Create complaint')}
-                                </button>
+                                </TextButton>
                             )}
 
                             {showWriteReviewButton && (
                                 <ExtendedNextLink
-                                    className="inline-flex items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm hover:text-link-hovered"
+                                    className={twMergeCustom(
+                                        getLinkClassName({ variant: 'action' }),
+                                        'self-baseline whitespace-nowrap',
+                                    )}
                                     href={getWriteReviewUrl()}
                                     tid={TIDs.order_detail_write_review_button}
                                     skeletonType="product"
@@ -216,7 +223,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                                         productName: orderItem.name,
                                     })}
                                 >
-                                    <StarIcon className="mr-1 size-5" />
+                                    <StarIcon aria-hidden="true" className="size-4" />
                                     {t('Write a review')}
                                 </ExtendedNextLink>
                             )}

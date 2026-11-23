@@ -266,7 +266,13 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...p
     const msBgClass =
         '[&::-ms-thumb]:bg-input-bg-default hover:[&::-ms-thumb]:bg-input-fill [&::-ms-thumb]:border-2 [&::-ms-thumb]:border-input-fill [&::-ms-thumb]:border-solid';
 
-    let bgClass = twJoin(mozBgClass, msBgClass, webkitBgClass);
+    // the same hover ring as checkboxes, radio buttons and switches, a little wider while the thumb is dragged
+    const ringClass = twJoin(
+        '[&::-webkit-slider-thumb]:transition-shadow hover:[&::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-input-glow-hovered)] active:[&::-webkit-slider-thumb]:shadow-[0_0_0_6px_var(--color-input-glow-hovered)]',
+        '[&::-moz-range-thumb]:transition-shadow hover:[&::-moz-range-thumb]:shadow-[0_0_0_4px_var(--color-input-glow-hovered)] active:[&::-moz-range-thumb]:shadow-[0_0_0_6px_var(--color-input-glow-hovered)]',
+    );
+
+    let bgClass = twJoin(mozBgClass, msBgClass, webkitBgClass, ringClass);
 
     if (disabled) {
         bgClass =

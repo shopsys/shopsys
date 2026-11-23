@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -74,7 +75,10 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey; skeleton
     children,
 }) => (
     <ExtendedNextLink
-        className="hidden font-secondary font-semibold text-xs no-underline last-of-type:inline hover:no-underline lg:inline"
+        className={twMergeCustom(
+            getLinkClassName({ variant: 'navigation', tone: 'accent' }),
+            'hidden font-secondary font-semibold text-xs last-of-type:inline lg:inline',
+        )}
         href={href}
         skeletonType={skeletonType}
         type={type}

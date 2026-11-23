@@ -112,11 +112,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                                 </div>
 
                                 <h3
-                                    className="col-start-2 row-start-1 self-end font-secondary font-semibold text-sm tracking-wide group-hover/product-link:underline lg:text-sm"
+                                    className="col-start-2 row-start-1 self-end font-secondary font-semibold text-sm tracking-wide lg:text-sm"
                                     data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                                     id={`added-product-${product.uuid}-name`}
                                 >
-                                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
                                         {product.fullName}
                                     </span>
                                 </h3>

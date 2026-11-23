@@ -49,7 +49,6 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     >
                         {complaintOrder && hasAccessToOrder ? (
                             <ExtendedNextLink
-                                className="text-sm"
                                 type="orderDetail"
                                 href={{
                                     pathname: customerOrderDetailUrl,

@@ -83,6 +83,36 @@ describe('Link', () => {
         expect(useSessionStore.getState().isPageLoading).toBe(false);
     });
 
+    test.each([false, true])(
+        'link opening in a new tab tells it in its accessible name (external: %s)',
+        (isExternal) => {
+            const link = renderLink({
+                href: isExternal ? 'https://example.com' : '/test-href',
+                isExternal,
+                target: '_blank',
+                children: 'Privacy policy',
+            });
+
+            // jsdom joins the hidden hint without the space a browser keeps
+            expect(link).toHaveAccessibleName(/^Privacy policy ?\(Open in new tab\)$/);
+        },
+    );
+
+    test.each([false, true])(
+        'link with an aria-label opening in a new tab adds the hint to the label (external: %s)',
+        (isExternal) => {
+            const link = renderLink({
+                href: isExternal ? 'https://example.com' : '/test-href',
+                isExternal,
+                target: '_blank',
+                children: '123456',
+                'aria-label': 'Go to tracking package 123456',
+            });
+
+            expect(link).toHaveAccessibleName('Go to tracking package 123456 (Open in new tab)');
+        },
+    );
+
     test.each([
         [undefined, 'noopener'],
         ['nofollow', 'nofollow noopener'],
