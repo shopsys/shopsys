@@ -130,6 +130,7 @@ export function MultiSelect<T extends string | number = string>({
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
                                     'size-full bg-transparent px-3 text-md! outline-hidden',
+                                    label && 'pt-5',
                                     'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
@@ -139,8 +140,11 @@ export function MultiSelect<T extends string | number = string>({
                             <span
                                 className={twJoin(
                                     'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
-                                    isOpen || comboBoxConfig.searchValue || selectedOptions.length > 0
-                                        ? 'top-2.25 text-sm'
+                                    isOpen ||
+                                        comboBoxConfig.searchValue ||
+                                        comboBoxConfig.placeholder ||
+                                        selectedOptions.length > 0
+                                        ? 'top-2.25 left-3 text-sm'
                                         : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                 )}
                             >
@@ -185,6 +189,7 @@ export function MultiSelect<T extends string | number = string>({
 
                     <IconButton
                         Icon={ArrowIcon}
+                        className="self-center"
                         disabled={isDisabled}
                         iconClassName={isOpen ? 'rotate-180' : 'rotate-0'}
                         shape="rounded"
