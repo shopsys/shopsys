@@ -43,7 +43,7 @@ const ToastMessageContent: FC<ToastMessageContentProps> = ({ message, tid, actio
 
 export const showMessage = (
     message: string,
-    type: 'info' | 'error' | 'success',
+    type: 'warning' | 'error' | 'success',
     options?: ShowMessageOptions,
 ): void => {
     const toastId = options?.toastId ?? message;
@@ -85,8 +85,8 @@ export const showMessage = (
                 },
             );
         }
-    } else if (type === 'info') {
-        toast.info(() => <ToastMessageContent message={message} tid={TIDs.toast_info} />, {
+    } else if (type === 'warning') {
+        toast.warning(() => <ToastMessageContent message={message} tid={TIDs.toast_warning} />, {
             toastId,
             closeOnClick: true,
             icon: <WarningIcon />,

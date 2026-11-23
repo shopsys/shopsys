@@ -10,7 +10,7 @@ import { checkEmptyCartTextIsVisible, fillEmailInThirdStep } from 'e2e/order/ord
 import { staticData, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
-    checkAndHideInfoToast,
+    checkAndHideWarningToast,
     checkAndHideSuccessToast,
     checkIsUserLoggedOut,
     checkPopupIsVisible,
@@ -117,7 +117,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         checkCartContents([{ product: staticData.products.a4techMouse, quantity: 1 }]);
         loginFromHeader(registrationInput.email, staticData.user.password);
         checkAndHideSuccessToast(translations.toast.success.loggedIn);
-        checkAndHideInfoToast(translations.toast.info.cartModified);
+        checkAndHideWarningToast(translations.toast.info.cartModified);
         cy.waitForHydration();
 
         checkCartContents([

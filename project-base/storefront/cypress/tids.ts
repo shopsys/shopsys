@@ -248,7 +248,7 @@ export enum TIDs {
     overlay = 'overlay',
     toast_success = 'toast_success',
     toast_error = 'toast_error',
-    toast_info = 'toast_info',
+    toast_warning = 'toast_warning',
     toast_close_button = 'toast_close_button',
 
     // Stores

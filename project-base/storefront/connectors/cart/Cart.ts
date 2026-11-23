@@ -7,7 +7,7 @@ import { TypeCartTransportModificationsFragment } from 'graphql/requests/cart/fr
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
+import { showWarningMessage } from 'utils/toasts/showWarningMessage';
 
 export const handleCartModifications = (
     cartModifications: TypeCartModificationsFragment,
@@ -25,7 +25,7 @@ export const handleCartModifications = (
 
     if (allMessages.length > 0) {
         const combinedMessage = allMessages.join(' ');
-        showInfoMessage(combinedMessage, GtmMessageOriginType.cart);
+        showWarningMessage(combinedMessage, GtmMessageOriginType.cart);
     }
 };
 

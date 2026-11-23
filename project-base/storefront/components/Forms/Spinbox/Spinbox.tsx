@@ -16,7 +16,7 @@ import {
 } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
+import { showWarningMessage } from 'utils/toasts/showWarningMessage';
 import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 import { useDebounce } from 'utils/useDebounce';
@@ -143,7 +143,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 setValue(resolvedMax);
                 setLastValidValue(resolvedMax);
 
-                showInfoMessage(
+                showWarningMessage(
                     t('Maximum available quantity is {{ quantity }}. The quantity was adjusted.', {
                         quantity: resolvedMax,
                     }),

@@ -173,7 +173,7 @@
         }
     }
 
-    .Toastify__toast--info {
+    .Toastify__toast--warning {
         @apply bg-toast-bg-warning! border-toast-border-warning! text-toast-text-warning!;
 
         svg {
@@ -219,6 +219,11 @@
         svg {
             @apply size-6!;
         }
+    }
+
+    /* The timer sits inside the toast above its bottom border, so the border stays the same on every side. */
+    .Toastify__progress-bar--wrp {
+        @apply right-4! bottom-1.5! left-4! h-0.75! w-auto! overflow-hidden! rounded-full!;
     }
 
     /* Keep the visual timer visible while it remains hidden from assistive technologies. */

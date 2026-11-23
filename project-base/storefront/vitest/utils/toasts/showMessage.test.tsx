@@ -16,7 +16,7 @@ describe('showMessage', () => {
         render(<ToastContainerWrapper />);
 
         act(() => {
-            showMessage(maliciousMessage, 'info');
+            showMessage(maliciousMessage, 'warning');
         });
 
         expect(await screen.findByText(maliciousMessage)).toBeInTheDocument();

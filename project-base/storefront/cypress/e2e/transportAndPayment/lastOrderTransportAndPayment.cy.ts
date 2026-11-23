@@ -99,7 +99,7 @@ describe('Last Order Transport Overweight Tests', { retries: { runMode: 0 } }, (
     it('[Last Order Overweight] should show no toast and keep Czech post unavailable when restored transport exceeds weight limit', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        cy.getByTID([TIDs.toast_info]).should('not.exist');
+        cy.getByTID([TIDs.toast_warning]).should('not.exist');
         cy.getByTID([TIDs.toast_error]).should('not.exist');
         openTransportGroupByName(translations.transportGroup.deliveryToAddress);
         cy.getByTID([TIDs.transport_group_panel, TIDs.pages_order_selectitem_label_name])

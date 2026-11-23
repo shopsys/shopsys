@@ -29,7 +29,7 @@ import {
 } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import {
-    checkAndHideInfoToast,
+    checkAndHideWarningToast,
     checkAndHideSuccessToast,
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
@@ -332,7 +332,7 @@ describe('Cart Page Tests', () => {
         cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', 'test');
 
         removeProductFromCartPage(staticData.products.helloKitty.catnum);
-        checkAndHideInfoToast(translations.toast.info.promoCodeNotApplicable.replace('{{ promoCode }}', 'test'));
+        checkAndHideWarningToast(translations.toast.info.promoCodeNotApplicable.replace('{{ promoCode }}', 'test'));
         cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('not.exist');
         checkCartContents([{ product: staticData.products.philips32PFL4308, quantity: 1 }]);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(11), 'after removing product that allows promocode', {

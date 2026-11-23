@@ -5,9 +5,9 @@ import { onGtmShowMessageEventHandler } from 'gtm/handlers/onGtmShowMessageEvent
 import { isClient } from 'utils/isClient';
 import { showMessage } from './showMessage';
 
-export const showInfoMessage = (message: string, gtmMessageOrigin?: GtmMessageOriginType): void => {
+export const showWarningMessage = (message: string, gtmMessageOrigin?: GtmMessageOriginType): void => {
     if (isClient) {
-        showMessage(message, 'info');
+        showMessage(message, 'warning');
         onGtmShowMessageEventHandler(
             GtmMessageType.information,
             message,

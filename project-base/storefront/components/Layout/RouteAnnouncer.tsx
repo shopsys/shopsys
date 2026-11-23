@@ -111,7 +111,7 @@ export const RouteAnnouncer: FC = () => {
 
     const onInitialAnnounce = useEffectEvent(() => {
         const toastTextElement = document.querySelector(
-            '[data-tid="toast_success"], [data-tid="toast_error"], [data-tid="toast_info"]',
+            '[data-tid="toast_success"], [data-tid="toast_error"], [data-tid="toast_warning"]',
         );
 
         if (toastTextElement instanceof HTMLElement) {
