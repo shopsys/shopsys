@@ -5,7 +5,7 @@ import { getButtonClassName } from './buttonUtils';
 export type ButtonBaseProps = {
     hasDisabledLook?: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'inverted';
+    variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'inverted';
     shouldShowSpinner?: boolean;
 };
 

@@ -112,7 +112,7 @@ export const MobileBottomNavigation: FC = () => {
                         {isUserLoggedIn && (
                             <span
                                 aria-hidden="true"
-                                className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-green-400 shadow-sm"
+                                className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-icon-success-inverted shadow-sm"
                             />
                         )}
                     </MobileBottomNavigationButton>

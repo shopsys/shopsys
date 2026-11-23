@@ -19,7 +19,7 @@ export const StyleguideNotImplementedYet: FC = () => {
                     <Button size="small" type="button" onClick={notImplementedYetHandler}>
                         Not implemented onClick
                     </Button>
-                    <Button size="small" type="button" variant="secondary" onMouseEnter={notImplementedYetHandler}>
+                    <Button size="small" type="button" variant="outline" onMouseEnter={notImplementedYetHandler}>
                         Not implemented onMouseEnter
                     </Button>
                 </StyleguidePreview>

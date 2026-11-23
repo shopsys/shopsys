@@ -54,7 +54,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     aria-controls="sort-dropdown"
                     aria-expanded={isSortMenuOpen}
                     aria-haspopup="menu"
-                    variant="secondary"
+                    variant="outline"
                     aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
                         ns: 'accessibility',
                         currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
@@ -62,7 +62,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     className={twJoin(
                         'w-full justify-between',
                         isSortMenuOpen &&
-                            'bg-button-secondary-bg-active text-button-secondary-text-active outline-button-secondary-border-active',
+                            'bg-button-outline-bg-active text-button-outline-text-active outline-button-outline-border-active',
                     )}
                     size="large"
                     title={t('Sort')}
@@ -128,7 +128,7 @@ export const MobileFilterAction: FC<MobileFilterActionProps> = ({
             className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-floatingAction flex vl:hidden min-h-12 items-center gap-1 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.24)]"
             size="large"
             title={t('Filter')}
-            variant="secondary"
+            variant="outline"
             onClick={onFilterPanelOpen}
         >
             <FilterIcon aria-hidden="true" className="size-5 shrink-0" />

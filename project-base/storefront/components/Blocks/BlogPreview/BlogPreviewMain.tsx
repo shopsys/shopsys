@@ -52,7 +52,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <ArticleDate
-                                        className="mr-3.5 text-secondary-300!"
+                                        className="mr-3.5 text-neutral-300!"
                                         date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
                                     />
@@ -73,7 +73,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                         </div>
 
                         <h3 className="h4 text-text-inverted">
-                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-orange-500 group-focus-visible:text-text-default!">
+                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-focus-background group-focus-visible:text-text-default!">
                                 {article.name}
                             </span>
                         </h3>

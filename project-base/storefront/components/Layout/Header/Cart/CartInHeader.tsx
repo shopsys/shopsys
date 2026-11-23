@@ -109,7 +109,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     tid={TIDs.header_cart_link}
                     className={twJoin(
                         'vl:flex hidden cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg',
-                        'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
+                        'group-focus-visible:bg-focus-background group-focus-visible:text-text-default',
                         isCompact ? 'h-10' : 'h-11',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
@@ -145,7 +145,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                         isActiveDelayed &&
                             'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
                         'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
-                        'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
+                        'group-focus-visible:bg-focus-background group-focus-visible:text-text-default',
                     )}
                     type="button"
                     onClick={() => setIsActive(!isActive)}

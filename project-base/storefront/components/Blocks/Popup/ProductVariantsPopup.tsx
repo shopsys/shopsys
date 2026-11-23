@@ -58,7 +58,7 @@ export const ProductVariantsPopup: FC<ProductVariantsPopupProps> = ({
                 <LinkButton
                     className="group shrink-0"
                     href={`${productSlug}#${PRODUCT_VARIANTS_ID}`}
-                    variant="tertiary"
+                    variant="ghost"
                     onClick={closePortalContent}
                     aria-label={t('Go to page with product variants of {{ productName }}', {
                         ns: 'accessibility',

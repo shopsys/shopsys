@@ -89,7 +89,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                     />
                 }
                 labelWrapperClassName={twJoin(
-                    'rounded-xl px-4 vl:px-5 py-4 transition peer-focus-visible:bg-orange-500 peer-focus-visible:outline-hidden [&>span:first-child]:hidden',
+                    'rounded-xl px-4 vl:px-5 py-4 transition peer-focus-visible:bg-focus-background peer-focus-visible:outline-hidden [&>span:first-child]:hidden',
                 )}
                 onClick={changeTransport}
             />

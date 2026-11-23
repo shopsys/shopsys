@@ -87,7 +87,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                 <p className="mx-auto max-w-130 text-balance text-center text-sm">
                     {t('You can withdraw from this order within 14 days of delivery.')}
                 </p>
-                <LinkButton href={withdrawalFormUrl} size="medium" type="order-withdrawal" variant="secondary">
+                <LinkButton href={withdrawalFormUrl} size="medium" type="order-withdrawal" variant="outline">
                     {t('Request withdrawal')}
                 </LinkButton>
             </div>

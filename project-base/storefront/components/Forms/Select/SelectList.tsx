@@ -140,7 +140,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 'list-none font-semibold outline-hidden hover:bg-input-bg-hovered',
                 option.value === activeOption?.value && 'bg-fill-accent-less',
                 option.isDisabled && 'pointer-events-none cursor-no-drop bg-input-bg-disabled text-input-text-disabled',
-                'focus-visible:bg-orange-500 focus-visible:text-text-default',
+                'focus-visible:bg-focus-background focus-visible:text-text-default',
             )}
             onClick={!option.isDisabled ? (e) => onSelectOption(option, e) : undefined}
             onFocus={() => setFocusedIndex(index)}

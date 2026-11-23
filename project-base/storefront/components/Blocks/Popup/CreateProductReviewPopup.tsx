@@ -146,7 +146,8 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                                 render={({ fieldState: { error }, field }) => (
                                     <FormLine>
                                         <span className="mb-1 block font-semibold text-sm">
-                                            {formMeta.fields.rating.label} <span className="text-text-error">*</span>
+                                            {formMeta.fields.rating.label}{' '}
+                                            <span className="text-input-required-star">*</span>
                                         </span>
 
                                         <StarRatingPicker

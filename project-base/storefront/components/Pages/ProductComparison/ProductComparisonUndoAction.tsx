@@ -66,7 +66,7 @@ export const ProductComparisonUndoAction: FC<{ onUndo: () => Promise<boolean> }>
                 disabled={pending}
                 size="small"
                 tid={TIDs.comparison_undo_button}
-                variant="tertiary"
+                variant="ghost"
                 onClick={handleUndo}
             >
                 {pending ? (

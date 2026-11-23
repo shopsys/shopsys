@@ -31,7 +31,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                 aria-label={t('Go to previous step', { ns: 'accessibility' })}
                 size="xlarge"
                 tid={TIDs.blocks_orderaction_back}
-                variant="tertiary"
+                variant="ghost"
                 onClick={backStepClickHandler}
             >
                 <ArrowSecondaryIcon className="size-3 rotate-90" />

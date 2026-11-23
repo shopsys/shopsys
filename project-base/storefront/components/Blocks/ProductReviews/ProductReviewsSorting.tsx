@@ -98,7 +98,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                     aria-expanded={isMobileMenuOpen}
                     className="w-full justify-between"
                     size="large"
-                    variant="secondary"
+                    variant="outline"
                     onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
                 >
                     <span className="flex min-w-0 items-center gap-2">

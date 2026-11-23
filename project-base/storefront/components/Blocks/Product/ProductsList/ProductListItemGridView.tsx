@@ -70,7 +70,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                 'group relative flex select-text flex-col rounded-xl border border-background-more bg-background-more px-2.5 pt-4 pb-2.5 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)] sm:px-5 sm:pb-5',
                 size === 'small' && 'pb-4 sm:pb-4',
                 'hover:border-border-less hover:bg-background-default',
-                highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
+                highlightBadgeText && 'bg-background-accent/20 hover:border-border-active',
                 className,
             )}
         >
@@ -133,7 +133,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
                             textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                         )}
                     >
-                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>

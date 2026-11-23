@@ -60,7 +60,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                 'group relative grid select-text gap-2 rounded-xl border border-background-more bg-background-more p-3 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)]',
                 'hover:border-border-less hover:bg-background-default',
                 'sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center',
-                highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
+                highlightBadgeText && 'bg-background-accent/20 hover:border-border-active',
                 className,
             )}
         >
@@ -107,7 +107,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                     </div>
 
                     <h3 className="wrap-break-word col-start-2 row-start-2 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover/product-link:text-text-default xl:max-w-70">
-                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>

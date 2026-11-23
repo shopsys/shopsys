@@ -76,10 +76,10 @@ export const StarRatingPicker: FC<StarRatingPickerProps> = ({ id, value, onChang
                         <StarIcon
                             fill={rating <= displayedRating ? 'currentColor' : 'none'}
                             className={twMergeCustom(
-                                'size-8 text-gray-700',
-                                rating <= displayedRating && 'text-orange-500',
-                                isDisabled && 'text-gray-300',
-                                isDisabled && rating <= displayedRating && 'text-orange-500',
+                                'size-8 text-icon-less',
+                                rating <= displayedRating && 'text-rating-fill',
+                                isDisabled && 'text-icon-disabled',
+                                isDisabled && rating <= displayedRating && 'text-rating-fill',
                             )}
                         />
                     </button>

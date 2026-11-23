@@ -149,7 +149,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
                 >
                     {ignoreButtonTextMap[ignoreButtonState]}
                 </button>
-                <Button size="small" variant="secondary" onClick={handleCopy}>
+                <Button size="small" variant="outline" onClick={handleCopy}>
                     {copyButtonTextMap[copyButtonState]}
                 </Button>
             </div>

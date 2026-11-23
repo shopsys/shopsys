@@ -62,7 +62,7 @@ export const FooterCopyright: FC = () => {
                 <Button
                     aria-label={t('Go to top of the page', { ns: 'accessibility' })}
                     className="vl:hidden w-auto"
-                    variant="tertiary"
+                    variant="ghost"
                     onClick={handleBackToTop}
                 >
                     {t('Back to top')}

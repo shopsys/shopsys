@@ -178,7 +178,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 >
                                     {label}
 
-                                    {isRequired && <span className="ml-1 text-text-error">*</span>}
+                                    {isRequired && <span className="ml-1 text-input-required-star">*</span>}
                                 </span>
                             )}
 
@@ -225,7 +225,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                     >
                                         {label}
 
-                                        {isRequired && <span className="ml-1 text-text-error">*</span>}
+                                        {isRequired && <span className="ml-1 text-input-required-star">*</span>}
                                     </span>
 
                                     {activeOption?.label && (

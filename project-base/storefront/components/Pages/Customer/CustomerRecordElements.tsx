@@ -134,7 +134,7 @@ export const CustomerRecordProductImage: FC<CustomerRecordProductImageProps> = (
     const productImage = (
         <div
             className={twJoin(
-                'relative size-16 shrink-0 rounded-xl border border-transparent bg-base-white p-2 transition-all',
+                'relative size-16 shrink-0 rounded-xl border border-transparent bg-background-default p-2 transition-all',
                 isVisible && 'hover:border-border-less',
             )}
             data-tid={tid}

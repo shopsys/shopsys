@@ -86,7 +86,7 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
                 >
                     <div className="relative">
                         <UserIcon className="size-6" />
-                        <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-green-400 shadow-sm" />
+                        <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-icon-success-inverted shadow-sm" />
                     </div>
                     {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
                 </MenuIconicItemLink>

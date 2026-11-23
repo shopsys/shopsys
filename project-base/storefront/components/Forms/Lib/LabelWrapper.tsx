@@ -53,7 +53,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         disabled && 'cursor-no-drop text-input-text-disabled opacity-50 hover:text-input-text-disabled',
                     ],
                     inputType === 'checkbox' && [
-                        '[&>a]:text-link-default [&>a]:hover:text-link-hovered [&>a]:focus:text-link-hovered [&>a]:active:text-link-hovered',
+                        '[&>a]:text-link-default [&>a]:hover:text-link-hovered [&>a]:focus:text-link-hovered [&>a]:active:text-link-active',
                     ],
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',
@@ -73,7 +73,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                             checked ? 'border-input-border-active bg-input-fill' : 'border-2',
                             !disabled && [
                                 // the halo keeps the hover readable on a checked indicator, where the fill only darkens a little
-                                'choice-hover:ring-4 choice-hover:ring-input-glow-active active:scale-90',
+                                'choice-hover:ring-4 choice-hover:ring-input-glow-hovered active:scale-90',
                                 checked
                                     ? 'choice-hover:border-input-fill-hovered choice-hover:bg-input-fill-hovered'
                                     : 'choice-hover:border-input-fill choice-hover:bg-fill-accent-less group-active:border-input-fill',
@@ -112,7 +112,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     >
                         {label}
                         {required && (
-                            <span aria-hidden="true" className="ml-1 text-text-error">
+                            <span aria-hidden="true" className="ml-1 text-input-required-star">
                                 *
                             </span>
                         )}

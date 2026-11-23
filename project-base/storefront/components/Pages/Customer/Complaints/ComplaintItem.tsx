@@ -71,7 +71,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         ns: 'accessibility',
                         complaintNumber: complaintItem.number,
                     })}
-                    variant="secondary"
+                    variant="outline"
                     href={complaintDetailLink}
                 >
                     {t('Detail')}

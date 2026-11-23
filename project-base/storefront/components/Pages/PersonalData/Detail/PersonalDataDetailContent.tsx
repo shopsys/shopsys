@@ -29,7 +29,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
             <VerticalStack gap="sm">
                 <h1>{t('Personal data')}</h1>
 
-                <LinkButton href={exportLink} size="medium" variant="secondary">
+                <LinkButton href={exportLink} size="medium" variant="outline">
                     {t('Download as XML')}
                 </LinkButton>
 

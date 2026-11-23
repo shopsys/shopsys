@@ -86,7 +86,7 @@ export const Wishlist: FC = () => {
                                     aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
                                     size="small"
                                     title={t('Remove all from wishlist')}
-                                    variant="tertiary"
+                                    variant="ghost"
                                     onClick={handleRemoveAllClick}
                                 >
                                     <TrashCanIcon className="size-4" />

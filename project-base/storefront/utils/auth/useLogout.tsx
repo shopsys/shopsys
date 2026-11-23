@@ -45,7 +45,7 @@ export const useLogout = () => {
             showErrorMessage(t('Unable to log out. Please try again.'), undefined, {
                 toastId: errorToastId,
                 action: (
-                    <Button size="small" variant="tertiary" onClick={retryLogout}>
+                    <Button size="small" variant="ghost" onClick={retryLogout}>
                         {t('Try again')}
                     </Button>
                 ),

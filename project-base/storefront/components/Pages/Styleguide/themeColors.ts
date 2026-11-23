@@ -11,7 +11,7 @@ const DEFAULT_BLOCK_TITLE = 'Colors';
 const PROPERTY_SEGMENTS = ['bg', 'border', 'text', 'icon'];
 
 /**
- * Names a family by the name segments its colors share (gray-50 … gray-900 → gray). A single color or a shared
+ * Names a family by the name segments its colors share (neutral-50 … neutral-900 → neutral). A single color or a shared
  * property drops its last segment (flag-text → flag, table-bg-* → table), and colors without a shared start
  * are listed by their first segments.
  */

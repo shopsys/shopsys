@@ -68,7 +68,7 @@ export const ProductReviewItem: FC<ProductReviewItemProps> = ({
                         <div className="row-span-2">{leadingContent}</div>
 
                         <span className="w-fit min-w-0 font-semibold">
-                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                                 {reviewTitle}
                             </span>
                         </span>

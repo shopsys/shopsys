@@ -48,11 +48,11 @@ export const Tag: FC<TagProps> = ({
 }) => {
     const TagTwClassName = twMergeCustom(
         'flex cursor-pointer select-none items-center justify-center gap-1 rounded-2xl px-3.5 py-1.5 font-secondary font-semibold text-sm no-underline transition-all',
-        'focus-visible:bg-orange-500 focus-visible:text-text-default focus-visible:outline-hidden',
+        'focus-visible:bg-focus-background focus-visible:text-text-default focus-visible:outline-hidden',
         isActive
-            ? 'bg-background-brand-less text-text-inverted'
-            : 'bg-background-more text-text-default hover:bg-background-most hover:no-underline',
-        isDisabled && 'pointer-events-none opacity-50',
+            ? 'bg-tag-bg-active text-tag-text-active'
+            : 'bg-tag-bg-default text-tag-text-default hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:no-underline',
+        isDisabled && 'pointer-events-none bg-tag-bg-disabled text-tag-text-disabled',
         className,
     );
 

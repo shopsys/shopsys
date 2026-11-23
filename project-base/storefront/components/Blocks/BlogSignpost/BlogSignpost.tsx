@@ -70,7 +70,7 @@ export const BlogSignpost: FC<BlogSignpostProps> = ({ blogCategoryItems, activeI
                     <Button
                         aria-controls="blog-signpost-navigation"
                         aria-expanded={isBlogSignpostOpen}
-                        variant="secondary"
+                        variant="outline"
                         className={twJoin(
                             'relative w-full justify-between text-md!',
                             'xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:text-text-default xl:outline-hidden',

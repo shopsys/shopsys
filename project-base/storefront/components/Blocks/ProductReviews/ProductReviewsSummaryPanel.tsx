@@ -41,12 +41,16 @@ export const ProductReviewsSummaryPanel: FC<ProductReviewsSummaryPanelProps> = (
                         <li key={ratingCount.rating} className="flex items-center gap-3 text-sm">
                             <span className="flex w-8 shrink-0 items-center justify-end gap-1 whitespace-nowrap">
                                 {ratingCount.rating}
-                                <StarIcon aria-hidden="true" className="size-3.5 text-orange-500" fill="currentColor" />
+                                <StarIcon
+                                    aria-hidden="true"
+                                    className="size-3.5 text-rating-fill"
+                                    fill="currentColor"
+                                />
                             </span>
 
                             <span className="h-2 flex-1 overflow-hidden rounded-full bg-background-most">
                                 <span
-                                    className="block h-full rounded-full bg-orange-500"
+                                    className="block h-full rounded-full bg-rating-fill"
                                     style={{
                                         width:
                                             summary.totalCount > 0

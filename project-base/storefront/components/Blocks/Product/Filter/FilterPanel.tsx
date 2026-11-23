@@ -232,7 +232,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                     size="large"
                     tid={TIDs.clear_all_filters_button}
-                    variant="tertiary"
+                    variant="ghost"
                     onClick={handleClearAllFiltersClick}
                 >
                     {t('Clear all')}

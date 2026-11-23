@@ -166,7 +166,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     href={orderLink}
                     tid={TIDs.my_orders_link_ + listIndex}
                     type="orderDetail"
-                    variant="secondary"
+                    variant="outline"
                     aria-label={t('Go to order detail number {{ orderNumber }}', {
                         ns: 'accessibility',
                         orderNumber: order.number,

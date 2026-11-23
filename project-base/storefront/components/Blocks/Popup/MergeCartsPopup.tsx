@@ -28,7 +28,7 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
             <div className="flex justify-between">
                 <Button
                     tid={TIDs.repeat_order_dont_merge_carts_button}
-                    variant="secondary"
+                    variant="outline"
                     onClick={() =>
                         mergeOrderItemsWithCurrentCart(
                             orderForPrefillingUuidRef.current,

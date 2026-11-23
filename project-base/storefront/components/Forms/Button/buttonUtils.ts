@@ -27,8 +27,8 @@ export const getButtonClassName = (
 ) => {
     return twJoin(
         'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-secondary font-semibold transition-all hover:no-underline',
-        // the neutral secondary button is framed by a 1px line, the filled variants keep their 2px outline
-        variant === 'secondary' ? 'outline-1 -outline-offset-1' : 'outline-2 -outline-offset-2',
+        // the neutral outline button is framed by a 1px line, the other variants keep their 2px outline
+        variant === 'outline' ? 'outline-1 -outline-offset-1' : 'outline-2 -outline-offset-2',
         size === 'small' && 'px-3 py-2 text-sm',
         size === 'medium' && 'px-4 py-2.5 text-sm',
         size === 'large' && 'px-4 py-2.5 vl:py-3 text-base',
@@ -51,14 +51,23 @@ export const getButtonClassName = (
             hasDisabledLook &&
                 'bg-button-secondary-bg-disabled text-button-secondary-text-disabled outline-button-secondary-border-disabled',
         ],
-        variant === 'tertiary' && [
-            'bg-button-tertiary-bg-default text-button-tertiary-text-default outline-button-tertiary-border-default',
+        variant === 'outline' && [
+            'bg-button-outline-bg-default text-button-outline-text-default outline-button-outline-border-default',
             !hasDisabledLook &&
-                'hover:bg-button-tertiary-bg-hovered hover:text-button-tertiary-text-hovered hover:outline-button-tertiary-border-hovered',
+                'hover:bg-button-outline-bg-hovered hover:text-button-outline-text-hovered hover:outline-button-outline-border-hovered',
             !hasDisabledLook &&
-                'active:bg-button-tertiary-bg-active active:text-button-tertiary-text-active active:outline-button-tertiary-border-active',
+                'active:bg-button-outline-bg-active active:text-button-outline-text-active active:outline-button-outline-border-active',
             hasDisabledLook &&
-                'bg-button-tertiary-bg-disabled text-button-tertiary-text-disabled outline-button-tertiary-border-disabled',
+                'bg-button-outline-bg-disabled text-button-outline-text-disabled outline-button-outline-border-disabled',
+        ],
+        variant === 'ghost' && [
+            'bg-button-ghost-bg-default text-button-ghost-text-default outline-button-ghost-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-ghost-bg-hovered hover:text-button-ghost-text-hovered hover:outline-button-ghost-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-ghost-bg-active active:text-button-ghost-text-active active:outline-button-ghost-border-active',
+            hasDisabledLook &&
+                'bg-button-ghost-bg-disabled text-button-ghost-text-disabled outline-button-ghost-border-disabled',
         ],
         variant === 'danger' && [
             'bg-button-danger-bg-default text-button-danger-text-default outline-button-danger-border-default',

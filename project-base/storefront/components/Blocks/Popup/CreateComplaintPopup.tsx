@@ -339,7 +339,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     <Button
                                         className="self-start"
                                         size="small"
-                                        variant="secondary"
+                                        variant="outline"
                                         onClick={handleShowNewAddressForm}
                                     >
                                         {t('Add different delivery address')}
@@ -353,7 +353,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <Button
                                             className="self-start"
                                             size="small"
-                                            variant="secondary"
+                                            variant="outline"
                                             onClick={() => {
                                                 setShowNewAddressForm(false);
                                                 setValue(

@@ -24,7 +24,7 @@ const PopupActions: FC<PopupActionsProps> = ({ cancelLabel, confirmLabel, confir
 
     return (
         <div className="flex flex-col justify-end gap-3 sm:flex-row">
-            <Button className="w-full sm:w-auto" variant="secondary" onClick={closePortalContent}>
+            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
                 {cancelLabel}
             </Button>
             <Button className="w-full sm:w-auto" variant={confirmVariant} onClick={onConfirm}>
@@ -114,17 +114,17 @@ export const StyleguidePopups: FC = () => {
 
             <StyleguidePreview className="flex flex-wrap items-start gap-x-10 gap-y-6">
                 <StyleguideSpecimen hint='size="small", role="alertdialog"' label="Confirmation">
-                    <Button variant="secondary" onClick={() => updatePortalContent(<ConfirmationPopup />)}>
+                    <Button variant="outline" onClick={() => updatePortalContent(<ConfirmationPopup />)}>
                         Open confirmation
                     </Button>
                 </StyleguideSpecimen>
                 <StyleguideSpecimen hint='size="medium" (default)' label="Content with a form">
-                    <Button variant="secondary" onClick={() => updatePortalContent(<FormPopup />)}>
+                    <Button variant="outline" onClick={() => updatePortalContent(<FormPopup />)}>
                         Open form popup
                     </Button>
                 </StyleguideSpecimen>
                 <StyleguideSpecimen hint='size="large", scrolling content' label="Long content">
-                    <Button variant="secondary" onClick={() => updatePortalContent(<LongContentPopup />)}>
+                    <Button variant="outline" onClick={() => updatePortalContent(<LongContentPopup />)}>
                         Open long popup
                     </Button>
                 </StyleguideSpecimen>

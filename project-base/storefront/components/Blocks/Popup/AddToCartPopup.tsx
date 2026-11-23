@@ -116,7 +116,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                                     data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                                     id={`added-product-${product.uuid}-name`}
                                 >
-                                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                                         {product.fullName}
                                     </span>
                                 </h3>
@@ -199,7 +199,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                         <Button
                             className="w-full sm:w-auto"
                             size="large"
-                            variant="tertiary"
+                            variant="ghost"
                             onClick={onChooseAnotherVariant}
                         >
                             {t('Choose another variant')}
@@ -209,7 +209,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                             aria-label={t('Go back to shop', { ns: 'accessibility' })}
                             className="w-full sm:w-auto"
                             size="large"
-                            variant="tertiary"
+                            variant="ghost"
                             onClick={handleClosePopup}
                         >
                             {t('Back to shop')}

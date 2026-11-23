@@ -112,7 +112,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                     </div>
 
                     <h3 className="wrap-break-word col-span-2 col-start-1 row-start-2 mb-2 overflow-hidden font-secondary font-semibold text-lg leading-tight group-hover/product-link:text-text-default sm:text-xl">
-                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>

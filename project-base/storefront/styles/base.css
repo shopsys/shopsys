@@ -111,7 +111,7 @@
 
     a {
         /* an unstyled link is an inline link (see getLinkClassName): it takes the size of the text it is part of */
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm underline hover:underline;
+        @apply text-link-default hover:text-link-hovered active:text-link-active disabled:text-link-disabled cursor-pointer rounded-sm underline hover:underline;
     }
 
     b,
@@ -247,11 +247,11 @@
 
     a:focus-visible:not([data-focus-color='preserve']),
     button:focus-visible {
-        @apply text-text-default! bg-orange-500! outline-hidden!;
+        @apply text-text-default! bg-focus-background! outline-hidden!;
     }
 
     button[data-focus-style='ring']:focus-visible {
-        @apply bg-transparent! ring-2 ring-orange-500 ring-inset;
+        @apply bg-transparent! ring-2 ring-focus-ring ring-inset;
     }
 
     a:focus-visible:not([data-focus-color='preserve']) svg,
@@ -262,7 +262,7 @@
     }
 
     input[type='checkbox']:focus-visible + label > span:first-child {
-        @apply bg-orange-500!;
+        @apply bg-focus-background!;
     }
 
     input[type='checkbox']:focus-visible + label > span:first-child svg {
@@ -270,11 +270,11 @@
     }
 
     input[type='radio']:focus-visible + label > span:first-child {
-        @apply bg-orange-500!;
+        @apply bg-focus-background!;
     }
 
     input[role='switch']:focus-visible + label {
-        @apply bg-orange-500!;
+        @apply bg-focus-background!;
     }
 
     input[role='switch']:focus-visible + label:after {

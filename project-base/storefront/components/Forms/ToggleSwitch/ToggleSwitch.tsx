@@ -37,7 +37,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                     "after:absolute after:top-0.5 after:left-0.5 after:size-5 after:rounded-full after:bg-icon-inverted after:shadow-sm after:transition-transform after:duration-200 after:ease-out after:content-['']",
                     'peer-checked:bg-input-fill peer-checked:after:translate-x-5 peer-active:after:scale-95',
                     // hover keeps the on/off color and adds the shared choice halo, so an off switch never looks on
-                    'choice-hover:ring-4 choice-hover:ring-input-glow-active peer-checked:choice-hover:bg-input-fill-hovered',
+                    'choice-hover:ring-4 choice-hover:ring-input-glow-hovered peer-checked:choice-hover:bg-input-fill-hovered',
                     'peer-focus-visible:bg-focus-background! peer-focus-visible:after:bg-focus-inner-ring',
                 )}
             />

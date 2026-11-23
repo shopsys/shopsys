@@ -28,7 +28,7 @@ export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ descri
                 <p>{description}</p>
 
                 <div className="flex flex-col justify-end gap-3 sm:flex-row">
-                    <Button className="w-full sm:w-auto" variant="secondary" onClick={handleClose}>
+                    <Button className="w-full sm:w-auto" variant="outline" onClick={handleClose}>
                         {t('Cancel')}
                     </Button>
                     <Button

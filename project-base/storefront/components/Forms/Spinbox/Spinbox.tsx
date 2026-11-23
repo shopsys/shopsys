@@ -308,7 +308,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                             ? minValueDecreaseAriaLabel
                             : (decreaseAriaLabel ?? t('Decrease quantity', { ns: 'accessibility' }))
                     }
-                    className="bg-gray-300 hover:bg-gray-500"
+                    className="text-button-ghost-text-default hover:bg-button-ghost-bg-hovered hover:text-button-ghost-text-hovered"
                     disabled={isDecreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}

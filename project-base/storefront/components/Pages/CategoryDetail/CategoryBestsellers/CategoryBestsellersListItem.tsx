@@ -66,7 +66,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 </div>
 
                 <h3 className="wrap-break-word col-start-2 row-start-3 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover/product-link:text-text-default xl:max-w-80">
-                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                         {product.fullName}
                     </span>
                 </h3>

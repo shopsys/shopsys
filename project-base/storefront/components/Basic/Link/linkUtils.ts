@@ -11,9 +11,9 @@ export type LinkStyleOptions = {
 
 const LINK_TONE_CLASS_NAMES: Record<LinkTone, string> = {
     default: 'text-text-default hover:text-text-default active:text-text-default',
-    accent: 'text-link-default hover:text-link-hovered active:text-link-hovered',
-    subtle: 'text-text-less hover:text-link-hovered active:text-link-hovered',
-    inverted: 'text-link-inverted-default hover:text-link-inverted-hovered active:text-link-inverted-hovered',
+    accent: 'text-link-default hover:text-link-hovered active:text-link-active',
+    subtle: 'text-text-less hover:text-link-hovered active:text-link-active',
+    inverted: 'text-link-inverted-default hover:text-link-inverted-hovered active:text-link-inverted-active',
 };
 
 const LINK_VARIANT_CLASS_NAMES: Record<LinkVariant, string> = {

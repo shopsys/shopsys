@@ -99,14 +99,14 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ layout = 'default', 
                 </div>
 
                 <div className="flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
-                    <Button className="w-full sm:w-auto" size="medium" variant="tertiary" onClick={rejectUserConsent}>
+                    <Button className="w-full sm:w-auto" size="medium" variant="ghost" onClick={rejectUserConsent}>
                         {t('Reject all')}
                     </Button>
 
                     <Button
                         className="w-full sm:w-auto"
                         size="medium"
-                        variant="secondary"
+                        variant="outline"
                         onClick={saveUserConsentChoices}
                     >
                         {t('Save choices')}

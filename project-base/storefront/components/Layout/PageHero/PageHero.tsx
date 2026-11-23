@@ -45,9 +45,9 @@ export const PageHero: FC<PageHeroProps> = ({
 }) => {
     const variantClasses: Record<PageHeroVariant, string> = {
         default: 'bg-background-most text-icon-default',
-        error: 'bg-toast-bg-error text-icon-error',
+        error: 'bg-background-error-less text-icon-error',
         info: 'bg-background-accent-less text-icon-accent',
-        success: 'bg-toast-bg-success text-icon-success',
+        success: 'bg-background-success-less text-icon-success',
     };
 
     return (

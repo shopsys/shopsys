@@ -261,7 +261,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                                 key={giftVoucher.pdfUrl}
                                 isButton
                                 isExternal
-                                buttonVariant="tertiary"
+                                buttonVariant="ghost"
                                 href={giftVoucher.pdfUrl}
                                 tid={TIDs.order_detail_download_gift_voucher_button_ + giftVoucherIndex}
                             >

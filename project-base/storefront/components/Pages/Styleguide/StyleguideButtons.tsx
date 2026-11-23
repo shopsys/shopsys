@@ -16,7 +16,14 @@ import {
     StyleguideSubSection,
 } from './StyleguideElements';
 
-const BUTTON_VARIANTS = ['primary', 'secondary', 'tertiary', 'danger'] as const;
+// the variant gives the structure, the theme tokens give the color, so a project restyles a variant in styles/theme.css
+const BUTTON_VARIANTS = [
+    { variant: 'primary', usage: 'The main action of the view, filled with the primary color' },
+    { variant: 'secondary', usage: 'A visible action that does not compete with primary, tonal secondary color' },
+    { variant: 'outline', usage: 'Neutral actions such as repeat, edit or back, white with a 1px line' },
+    { variant: 'ghost', usage: 'Low emphasis actions in toolbars and popups, no surface until hover' },
+    { variant: 'danger', usage: 'Destructive actions' },
+] as const;
 
 type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
 
@@ -30,8 +37,8 @@ const BUTTON_SIZE_SPECIFICATIONS: { size: ButtonSize; usage: string; belowVl: st
 
 const preventSubmit = (event: FormEvent<HTMLFormElement>) => event.preventDefault();
 
-const variantRows = BUTTON_VARIANTS.map((variant) => ({
-    label: <StyleguideMatrixLabel name={variant} />,
+const variantRows = BUTTON_VARIANTS.map(({ usage, variant }) => ({
+    label: <StyleguideMatrixLabel hint={usage} name={variant} />,
     cells: [
         <Button key="default" variant={variant}>
             Continue

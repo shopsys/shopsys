@@ -158,7 +158,7 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
         disabled && 'text-icon-disabled group-hover:text-icon-disabled',
     );
     const listItemTwClass = 'flex my-1 justify-between items-center group';
-    const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-link-hovered transition-colors duration-300';
+    const fileNameTwClass = 'flex-1 text-text-default group-hover:text-link-hovered transition-colors duration-300';
     const legendTwClass = 'text-input-text-disabled text-sm mt-2';
     const legendText =
         legend ??
@@ -183,7 +183,7 @@ export const DropzoneControlled = <TFieldValues extends FieldValues, TTransforme
                             <UploadIcon aria-hidden className={iconTwClass} />
                             <p className={labelTwClass}>
                                 {isDragActive ? t('Drop files here') : label}
-                                {required && !isDragActive && <span className="ml-1 text-text-error">*</span>}
+                                {required && !isDragActive && <span className="ml-1 text-input-required-star">*</span>}
                             </p>
                         </div>
                         {legendText && <p className={legendTwClass}>{legendText}</p>}

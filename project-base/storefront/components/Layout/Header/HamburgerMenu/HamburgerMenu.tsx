@@ -15,7 +15,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isOpen, onClick }) => {
         <IconButton
             Icon={MenuIcon}
             aria-expanded={isOpen}
-            className="text-link-inverted-default hover:bg-white-alpha-700 hover:text-link-inverted-hovered active:bg-white-alpha-500"
+            className="text-link-inverted-default hover:bg-button-inverted-bg-hovered hover:text-link-inverted-hovered active:bg-button-inverted-bg-active"
             shape="rounded"
             title={t('Open menu')}
             variant="ghost"

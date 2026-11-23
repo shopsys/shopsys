@@ -76,7 +76,7 @@ const ComplaintsPage: FC = () => {
                     <CreateComplaintPopupButton
                         label={t('Create complaint manually')}
                         size="medium"
-                        variant="secondary"
+                        variant="outline"
                         tid={TIDs.complaints_list_create_complaint_manually_button}
                     />
                 </div>

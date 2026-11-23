@@ -38,7 +38,7 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({
                     <Button
                         className="w-full sm:w-auto"
                         tid={TIDs.customer_users_delete_cancel_button}
-                        variant="secondary"
+                        variant="outline"
                         onClick={closePortalContent}
                     >
                         {t('Cancel')}

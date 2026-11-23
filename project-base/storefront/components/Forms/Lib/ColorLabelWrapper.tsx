@@ -48,7 +48,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                 className={twMergeCustom(
                     'size-7 border border-icon-default bg-input-bg-default outline-offset-2 transition',
                     checked && 'outline-2 outline-text-default',
-                    !disabled && 'choice-hover:ring-4 choice-hover:ring-input-glow-active',
+                    !disabled && 'choice-hover:ring-4 choice-hover:ring-input-glow-hovered',
                     'choice-focus-visible:shadow-[0_0_0_2px_var(--color-focus-inner-ring)] choice-focus-visible:outline-2 choice-focus-visible:outline-focus-ring',
                 )}
             >

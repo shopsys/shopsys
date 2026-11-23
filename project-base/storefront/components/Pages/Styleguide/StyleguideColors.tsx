@@ -8,7 +8,7 @@ const resolveColorValue = (colorValue: string, colorValues: Record<string, strin
         return colorValue;
     }
 
-    // extract variable name from var(--color-brand-500) to brand-500
+    // extract variable name from var(--color-primary-500) to primary-500
     const variableName = colorValue.replace('var(--color-', '').replace(')', '');
     const referencedColor = colorValues[variableName] as string | undefined;
 
@@ -81,7 +81,65 @@ type StyleguideColorFamilyProps = {
     unusedColorNames: string[];
 };
 
-const StyleguideColorFamily: FC<StyleguideColorFamilyProps> = ({ colorValues, family, unusedColorNames }) => (
+// a palette family is a scale of numbered steps (primary-50 … primary-950), shown as one row like the Tailwind palette
+const PALETTE_STEP_NAME = /^[a-z-]+-(\d{2,3})$/;
+
+const getPaletteSteps = (family: ThemeColorFamily) => {
+    const steps = family.colors.map((color) => color.name.match(PALETTE_STEP_NAME)?.[1]);
+    const isPalette = steps.length > 2 && steps.every((step) => step !== undefined);
+
+    return isPalette ? (steps as string[]) : null;
+};
+
+const StyleguideColorFamily: FC<StyleguideColorFamilyProps> = ({ colorValues, family, unusedColorNames }) => {
+    const paletteSteps = getPaletteSteps(family);
+
+    if (paletteSteps) {
+        return <StyleguidePaletteScale colorValues={colorValues} family={family} steps={paletteSteps} />;
+    }
+
+    return <StyleguideTokenFamily colorValues={colorValues} family={family} unusedColorNames={unusedColorNames} />;
+};
+
+type StyleguidePaletteScaleProps = {
+    family: ThemeColorFamily;
+    colorValues: Record<string, string>;
+    steps: string[];
+};
+
+const StyleguidePaletteScale: FC<StyleguidePaletteScaleProps> = ({ colorValues, family, steps }) => (
+    <div className="flex flex-col gap-2 lg:grid lg:grid-cols-[8rem_minmax(0,1fr)] lg:items-start lg:gap-4">
+        <p className="font-semibold text-sm lg:pt-3">{family.name}</p>
+
+        <div className="grid grid-cols-6 gap-x-2 gap-y-3 sm:grid-cols-11">
+            {family.colors.map((color, index) => {
+                const resolvedValue = resolveColorValue(color.value, colorValues);
+
+                return (
+                    <div key={color.name} className="flex min-w-0 flex-col gap-1.5">
+                        <span
+                            className="aspect-square w-full overflow-hidden rounded-detail ring-1 ring-black/10 ring-inset sm:aspect-[4/3]"
+                            style={{
+                                backgroundImage: isTranslucentColor(resolvedValue)
+                                    ? TRANSLUCENT_SWATCH_BACKDROP
+                                    : undefined,
+                            }}
+                            title={`${color.name} · ${resolvedValue}`}
+                        >
+                            <span className="block size-full" style={{ backgroundColor: resolvedValue }} />
+                        </span>
+                        <span className="flex flex-col text-[11px] leading-4">
+                            <span className="font-semibold">{steps[index]}</span>
+                            <code className="truncate text-text-less">{resolvedValue}</code>
+                        </span>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+);
+
+const StyleguideTokenFamily: FC<StyleguideColorFamilyProps> = ({ colorValues, family, unusedColorNames }) => (
     <div className="flex flex-col gap-2">
         <p className="font-semibold text-text-less text-xs uppercase tracking-wider">{family.name}</p>
 
