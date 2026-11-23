@@ -10,7 +10,7 @@ export const OrderItemDiscountCard: FC<OrderItemDiscountCardProps> = ({ name, pr
     const formatPrice = useFormatPrice();
 
     return (
-        <li className="-mt-5 flex flex-col gap-1 rounded-b-xl bg-background-more px-4 pb-4 font-secondary">
+        <li className="-mt-5 flex flex-col gap-1 rounded-b-card bg-background-more px-4 pb-4 font-secondary">
             <div className="flex items-center justify-between gap-2">
                 <span className="font-semibold text-sm">{name}</span>
 

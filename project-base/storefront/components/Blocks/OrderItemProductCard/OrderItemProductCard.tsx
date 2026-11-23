@@ -41,7 +41,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     areAdditionalServicePricesHighlighted,
 }) => {
     return (
-        <li className="flex flex-col gap-1 rounded-xl bg-background-more p-4 font-secondary">
+        <li className="flex flex-col gap-1 rounded-card bg-background-more p-4 font-secondary">
             <div className="flex items-center gap-2.5">
                 <div
                     className="flex size-20 shrink-0 items-center justify-center"

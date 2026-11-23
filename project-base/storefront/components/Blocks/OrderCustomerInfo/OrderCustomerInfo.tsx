@@ -24,7 +24,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
     const isEmailDeliveryOrder = isEmailTransport(orderTransport?.transport?.transportTypeCode);
 
     return (
-        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-card bg-background-more p-5 lg:grid-cols-2">
             <InformationCard heading={t('Contact information')} icon={<ContactInformationsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}

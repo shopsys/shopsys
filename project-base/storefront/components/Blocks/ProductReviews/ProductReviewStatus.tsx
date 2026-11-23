@@ -20,7 +20,7 @@ export const ProductReviewStatus: FC<ProductReviewStatusProps> = ({ status }) =>
                 label={t('Your review is awaiting approval. Until it is approved, only you can see it.')}
                 placement="top"
             >
-                <button className="cursor-help rounded-lg" type="button">
+                <button className="cursor-help rounded-detail" type="button">
                     <ReviewStatus status={TypeProductReviewStatusEnum.Pending} />
                 </button>
             </Tooltip>

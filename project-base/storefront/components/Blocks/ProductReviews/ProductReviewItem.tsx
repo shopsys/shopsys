@@ -68,7 +68,7 @@ export const ProductReviewItem: FC<ProductReviewItemProps> = ({
                         <div className="row-span-2">{leadingContent}</div>
 
                         <span className="w-fit min-w-0 font-semibold">
-                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
+                            <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                                 {reviewTitle}
                             </span>
                         </span>
@@ -126,7 +126,7 @@ export const ProductReviewItem: FC<ProductReviewItemProps> = ({
                     />
 
                     {productReview.responseText && (
-                        <div className="flex flex-col gap-1 rounded-md bg-background-more p-4">
+                        <div className="flex flex-col gap-1 rounded-card bg-background-more p-4">
                             <div className="flex flex-wrap items-center gap-2 font-semibold text-sm">
                                 <div className="flex items-center gap-1">
                                     <WriteIcon aria-hidden className="size-4" focusable="false" />

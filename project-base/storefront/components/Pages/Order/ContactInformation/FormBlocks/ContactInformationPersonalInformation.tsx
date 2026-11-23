@@ -76,7 +76,7 @@ export const ContactInformationPersonalInformation: FC = () => {
                 />
 
                 {isEmailAlreadyRegistered && (
-                    <div className="-mt-2 rounded-b-md bg-input-warning-message-bg px-2.5 pt-3 pb-1.5 text-sm">
+                    <div className="-mt-2 rounded-b-control bg-input-warning-message-bg px-2.5 pt-3 pb-1.5 text-sm">
                         <span>{t('This email is already registered')}</span>{' '}
                         <TextButton
                             aria-haspopup="dialog"

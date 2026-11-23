@@ -46,7 +46,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
             {isInteractive ? (
                 <button
                     aria-haspopup="dialog"
-                    className="group/availability w-fit cursor-pointer rounded-md"
+                    className="group/availability w-fit cursor-pointer rounded-detail"
                     type="button"
                     onClick={() => openDeliveryOptionsPopup([product], product.uuid)}
                 >

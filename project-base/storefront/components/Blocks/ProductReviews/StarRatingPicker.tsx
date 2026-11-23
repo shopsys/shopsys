@@ -57,7 +57,7 @@ export const StarRatingPicker: FC<StarRatingPickerProps> = ({ id, value, onChang
                     <button
                         key={rating}
                         aria-checked={value === rating}
-                        className="cursor-pointer rounded-sm p-0.5 disabled:cursor-not-allowed"
+                        className="cursor-pointer rounded-detail p-0.5 disabled:cursor-not-allowed"
                         disabled={isDisabled}
                         ref={(element) => {
                             starButtonRefs.current[index] = element;

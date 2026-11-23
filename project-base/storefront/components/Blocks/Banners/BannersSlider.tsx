@@ -118,7 +118,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
             <div {...handlers}>
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="group no-underline! block select-text rounded-t-xl rounded-b-none"
+                    className="group no-underline! block select-text rounded-t-surface rounded-b-none"
                     draggable={false}
                     href={currentBanner.link}
                     id={`banner-link-${bannerSliderState.sliderPosition}`}
@@ -133,7 +133,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     onMouseLeave={startInterval}
                     onClick={() => onGtmPromotionClickEventHandler(currentPromotion, currentBanner.link)}
                 >
-                    <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
+                    <div className="w-full overflow-hidden rounded-surface vl:rounded-b-none">
                         <div
                             className={twJoin(
                                 'flex',

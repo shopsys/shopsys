@@ -58,7 +58,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
         <TransportAndPaymentListItem
             key={transport.uuid}
             className={twJoin(
-                'group mb-3 rounded-xl border border-transparent py-0 transition last:mb-0 last:border-b',
+                'group mb-3 rounded-card border border-transparent py-0 transition last:mb-0 last:border-b',
                 (hasGreyBackground || isActive) && 'bg-background-more',
                 !isActive && !disabled && 'hover:border-border-less hover:bg-background-default',
             )}
@@ -89,7 +89,7 @@ export const TransportListItem: FC<TransportListItemProps> = ({
                     />
                 }
                 labelWrapperClassName={twJoin(
-                    'rounded-xl px-4 vl:px-5 py-4 transition peer-focus-visible:bg-focus-background peer-focus-visible:outline-hidden [&>span:first-child]:hidden',
+                    'rounded-card px-4 vl:px-5 py-4 transition peer-focus-visible:bg-focus-background peer-focus-visible:outline-hidden [&>span:first-child]:hidden',
                 )}
                 onClick={changeTransport}
             />

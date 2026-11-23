@@ -32,10 +32,10 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     const productLinkType = product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant';
 
     return (
-        <div className="group relative grid grid-cols-[80px_minmax(0,1fr)] xxl:grid-cols-[80px_minmax(0,280px)_200px_minmax(240px,1fr)_auto] grid-rows-[1fr_auto_auto_0_1fr_auto_auto] gap-x-5 rounded-md p-3 transition-colors hover:bg-background-default has-[.product-list-reviews]:grid-rows-[1fr_auto_auto_auto_1fr_auto_auto] md:grid-cols-[80px_minmax(0,1fr)_minmax(0,1fr)_auto]">
+        <div className="group relative grid grid-cols-[80px_minmax(0,1fr)] xxl:grid-cols-[80px_minmax(0,280px)_200px_minmax(240px,1fr)_auto] grid-rows-[1fr_auto_auto_0_1fr_auto_auto] gap-x-5 rounded-card p-3 transition-colors hover:bg-background-default has-[.product-list-reviews]:grid-rows-[1fr_auto_auto_auto_1fr_auto_auto] md:grid-cols-[80px_minmax(0,1fr)_minmax(0,1fr)_auto]">
             <ExtendedNextLink
                 preventRedirectOnTextSelection
-                className="group/product-link col-start-1 col-end-3 xxl:col-end-6 row-start-1 row-end-8 grid min-w-0 grid-cols-subgrid grid-rows-subgrid rounded-md text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden md:col-end-5"
+                className="group/product-link col-start-1 col-end-3 xxl:col-end-6 row-start-1 row-end-8 grid min-w-0 grid-cols-subgrid grid-rows-subgrid rounded-card text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden md:col-end-5"
                 data-focus-color="preserve"
                 draggable={false}
                 href={productUrl}
@@ -66,7 +66,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 </div>
 
                 <h3 className="wrap-break-word col-start-2 row-start-3 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover/product-link:text-text-default xl:max-w-80">
-                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
+                    <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                         {product.fullName}
                     </span>
                 </h3>

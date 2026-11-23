@@ -43,7 +43,7 @@ export const getLinkClassName = ({ variant = 'text', tone }: LinkStyleOptions = 
     const resolvedTone = tone ?? (variant === 'navigation' ? 'default' : 'accent');
 
     return twJoin(
-        'cursor-pointer rounded-sm',
+        'cursor-pointer rounded-detail',
         LINK_VARIANT_CLASS_NAMES[variant],
         isAlwaysUnderlined ? 'underline hover:underline' : 'no-underline hover:underline',
         LINK_TONE_CLASS_NAMES[resolvedTone],

@@ -131,7 +131,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({
                 <m.section
                     layoutScroll
                     aria-label={t('Compared products and parameters')}
-                    className="relative overflow-x-auto overscroll-x-contain rounded-lg border border-border-less"
+                    className="relative overflow-x-auto overscroll-x-contain rounded-card border border-border-less"
                     ref={table.scrollRef}
                     onScroll={table.calcMaxMarginLeft}
                 >

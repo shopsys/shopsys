@@ -80,7 +80,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
             <VerticalStack gap={'xs'}>
                 <section
                     aria-labelledby={`added-product-${product.uuid}-name`}
-                    className="relative rounded-xl bg-background-more p-4 vl:p-5"
+                    className="relative rounded-card bg-background-more p-4 vl:p-5"
                 >
                     <div className="flex flex-row flex-wrap items-center gap-4 lg:flex-nowrap">
                         <div className="grid min-w-0 vl:flex-1 basis-full vl:basis-auto grid-cols-[80px_minmax(0,1fr)] grid-rows-[auto_auto] gap-x-2.5 gap-y-2">
@@ -116,7 +116,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                                     data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                                     id={`added-product-${product.uuid}-name`}
                                 >
-                                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
+                                    <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                                         {product.fullName}
                                     </span>
                                 </h3>

@@ -1,3 +1,4 @@
+import { Alert } from 'components/Basic/Alert/Alert';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -49,9 +50,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
 
     if (hasWithdrawalRequested) {
         return (
-            <div className="flex flex-col gap-2.5 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
-                <p className="h4">{t('Withdrawal request was submitted')}</p>
-
+            <Alert title={t('Withdrawal request was submitted')} variant="warning">
                 {!withdrawalRequest.confirmed && (
                     <p className="text-sm">
                         {t(
@@ -77,7 +76,7 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                         <CustomerRecordColumnInfo title={t('Note')}>{withdrawalRequest.note}</CustomerRecordColumnInfo>
                     )}
                 </div>
-            </div>
+            </Alert>
         );
     }
 
@@ -100,21 +99,17 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
 
     if (isWithdrawalBlockedByPurchasedGiftVoucher) {
         return (
-            <div className="flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
-                <InfoIcon className="size-5 text-icon-warning" />
-                <p className="text-sm">
-                    {t(
-                        'Withdrawal is not possible because a gift voucher purchased in this order has already been redeemed.',
-                    )}
-                </p>
-            </div>
+            <Alert icon={InfoIcon} variant="warning">
+                {t(
+                    'Withdrawal is not possible because a gift voucher purchased in this order has already been redeemed.',
+                )}
+            </Alert>
         );
     }
 
     return (
-        <div className="flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
-            <InfoIcon className="size-5 text-icon-warning" />
-            <p className="text-sm">
+        <Alert icon={InfoIcon} variant="warning">
+            <p>
                 {t('Withdrawal deadline expired on {{ date }}', {
                     date: formatDate(withdrawalDeadline!),
                 })}
@@ -138,6 +133,6 @@ export const OrderDetailWithdrawalSection: FC<OrderDetailWithdrawalSectionProps>
                     </>
                 )}
             </p>
-        </div>
+        </Alert>
     );
 };

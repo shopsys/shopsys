@@ -82,7 +82,7 @@ export const FormBlockWrapper: FC = ({ children, className }) => {
     return (
         <fieldset
             className={twMergeCustom(
-                'flex min-w-0 flex-col gap-5 rounded-xl bg-background-more p-5 vl:px-20 py-8',
+                'flex min-w-0 flex-col gap-5 rounded-surface bg-background-more p-5 vl:px-20 py-8',
                 className,
             )}
         >

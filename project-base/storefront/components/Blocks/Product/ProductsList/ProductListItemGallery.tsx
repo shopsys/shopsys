@@ -184,7 +184,7 @@ export const ProductListItemGallery = forwardRef<ProductListItemGalleryHandle, P
                                 width={imageSize}
                             />
                         ) : (
-                            <span className="size-full rounded-lg bg-skeleton-default motion-safe:animate-pulse" />
+                            <span className="size-full rounded-detail bg-skeleton-default motion-safe:animate-pulse" />
                         )
                     }
                 />

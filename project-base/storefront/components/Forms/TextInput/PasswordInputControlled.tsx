@@ -80,7 +80,7 @@ export const PasswordInputControlled = <TFieldValues extends FieldValues, TTrans
                 <IconButton
                     Icon={PasswordVisibilityIcon}
                     className="absolute top-1/2 right-2 -translate-y-1/2"
-                    shape="rounded"
+                    shape="inset"
                     title={passwordVisibilityLabel}
                     tooltipLabel={passwordVisibilityLabel}
                     variant="ghost"

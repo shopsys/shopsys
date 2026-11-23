@@ -62,7 +62,7 @@ export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, 
                             {shouldShowDebugInfo && formattedError && (
                                 <div
                                     className={twMergeCustom(
-                                        'mx-auto w-full max-w-2xl rounded-md border border-border-default bg-background-more p-4 text-left',
+                                        'mx-auto w-full max-w-2xl rounded-card border border-border-default bg-background-more p-4 text-left',
                                         'whitespace-pre-wrap break-all font-mono text-text-less text-xs',
                                     )}
                                 >

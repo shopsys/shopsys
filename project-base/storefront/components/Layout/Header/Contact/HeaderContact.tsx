@@ -23,7 +23,7 @@ export const HeaderContact: FC = () => {
                         })}
                         className={twJoin(
                             getLinkClassName({ variant: 'navigation', tone: 'inverted' }),
-                            'rounded-md font-bold',
+                            'rounded-detail font-bold',
                         )}
                         href={`tel:${cleanPhone}`}
                         tid={TIDs.simple_header_contact}

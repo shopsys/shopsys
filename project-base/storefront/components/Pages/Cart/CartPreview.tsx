@@ -61,12 +61,12 @@ export const CartPreview: FC<CartPreviewProps> = ({
     return (
         <div
             className={twJoin(
-                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-xl bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
+                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-surface bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
                 !isFirstStep && 'text-sm',
             )}
         >
             {(isRemovingCodeFromCart || isTransportOrPaymentLoading) && (
-                <LoaderWithOverlay className="size-5" overlayClassName="rounded-xl" />
+                <LoaderWithOverlay className="size-5" overlayClassName="rounded-surface" />
             )}
 
             {!isFirstStep && (

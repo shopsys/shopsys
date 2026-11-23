@@ -35,7 +35,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                     return (
                         <li
                             key={columnCategory.uuid}
-                            className="group/main-category min-w-0 rounded-lg p-2 transition-colors hover:bg-background-more"
+                            className="group/main-category min-w-0 rounded-control p-2 transition-colors hover:bg-background-more"
                             style={{
                                 gridColumn: columnCategories.columnNumber,
                                 gridRow: columnCategoryIndex + 1,
@@ -55,7 +55,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                     <div className="flex size-12 w-auto items-center justify-center" aria-hidden="true">
                                         <Image
                                             alt=""
-                                            className="h-auto max-h-full w-auto max-w-full rounded-md object-contain mix-blend-multiply"
+                                            className="h-auto max-h-full w-auto max-w-full rounded-detail object-contain mix-blend-multiply"
                                             height={40}
                                             width={40}
                                             src={mainImageUrl}

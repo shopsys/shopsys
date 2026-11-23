@@ -99,7 +99,7 @@ const ProductVariantRow: FC<ProductVariantRowProps> = ({ variant, index, onAvail
 
     return (
         <li
-            className="mx-auto flex w-full max-w-sm flex-col gap-2 rounded-xl bg-background-more p-4 vl:p-5 md:max-w-none"
+            className="mx-auto flex w-full max-w-sm flex-col gap-2 rounded-card bg-background-more p-4 vl:p-5 md:max-w-none"
             data-tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
         >
             <div className="flex w-full flex-col items-center gap-2 lg:grid lg:grid-cols-[4rem_minmax(0,1fr)_minmax(10rem,1fr)_auto] lg:gap-4">
@@ -193,7 +193,7 @@ const ProductVariantAvailability: FC<ProductVariantAvailabilityProps> = ({ onCli
     return (
         <button
             aria-haspopup="dialog"
-            className="cursor-pointer rounded-md text-left lg:justify-self-start"
+            className="cursor-pointer rounded-detail text-left lg:justify-self-start"
             type="button"
             onClick={onClick}
         >

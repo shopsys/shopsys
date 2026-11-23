@@ -24,13 +24,13 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             <div className="flex flex-col gap-4">
                 <Skeleton className="h-8 w-72 lg:h-10" />
 
-                {!isWithoutDescription && <Skeleton className="h-32" />}
+                {!isWithoutDescription && <Skeleton className="h-32 rounded-card" />}
             </div>
 
             {!isWithoutNavigation && (
                 <div className="grid vl:grid-cols-6 gap-3 md:grid-cols-3 lg:grid-cols-4">
                     {createEmptyArray(6).map((_, index) => (
-                        <Skeleton key={index} className="h-20" />
+                        <Skeleton key={index} className="h-20 rounded-card" />
                     ))}
                 </div>
             )}
@@ -40,7 +40,7 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
 
                 <div className="flex-1">
                     <VerticalStack gap="sm">
-                        {!isWithoutBestsellers && <Skeleton className="h-96" />}
+                        {!isWithoutBestsellers && <Skeleton className="h-96 rounded-surface" />}
 
                         <SkeletonModuleFilterAndSortingBar />
 

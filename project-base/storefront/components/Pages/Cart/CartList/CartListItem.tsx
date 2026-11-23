@@ -196,7 +196,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 data-tid={TIDs.pages_cart_list_item_name}
                 id={`product-${uuid}-name`}
             >
-                <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
+                <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                     {product.fullName}
                 </span>
             </h3>
@@ -208,7 +208,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             <section
                 aria-describedby={cartItemDescriptionId}
                 aria-labelledby={`product-${uuid}-name`}
-                className="relative vl:grid vl:grid-cols-[minmax(26rem,1fr)_8.75rem_minmax(7rem,8rem)_minmax(7rem,max-content)_1.5rem] items-center vl:gap-x-4 xxl:gap-x-10 rounded-xl bg-background-more p-4 vl:p-5 xl:grid-cols-[minmax(32rem,1fr)_8.75rem_minmax(8rem,10rem)_minmax(8rem,max-content)_1.5rem] xl:gap-x-8"
+                className="relative vl:grid vl:grid-cols-[minmax(26rem,1fr)_8.75rem_minmax(7rem,8rem)_minmax(7rem,max-content)_1.5rem] items-center vl:gap-x-4 xxl:gap-x-10 rounded-card bg-background-more p-4 vl:p-5 xl:grid-cols-[minmax(32rem,1fr)_8.75rem_minmax(8rem,10rem)_minmax(8rem,max-content)_1.5rem] xl:gap-x-8"
                 data-tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
             >
                 <p className="sr-only" id={cartItemDescriptionId}>

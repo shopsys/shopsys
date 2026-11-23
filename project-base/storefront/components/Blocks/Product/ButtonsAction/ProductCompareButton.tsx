@@ -79,7 +79,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             aria-label={ariaLabel}
             className={twMergeCustom(
                 'flex cursor-pointer items-center justify-center gap-2 text-icon-less hover:text-icon-accent hover:underline',
-                'rounded-sm outline-hidden transition-colors',
+                'rounded-detail outline-hidden transition-colors',
                 className,
             )}
             onClick={toggleProductInComparison}

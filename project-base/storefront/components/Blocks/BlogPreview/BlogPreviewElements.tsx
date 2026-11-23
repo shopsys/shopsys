@@ -23,7 +23,7 @@ export const ArticleLink: FC<ArticleLinkProps> = ({
     <ExtendedNextLink
         preventRedirectOnTextSelection={preventRedirectOnTextSelection}
         aria-label={ariaLabel}
-        className={twJoin('rounded-xl no-underline hover:no-underline focus-visible:outline-hidden', className)}
+        className={twJoin('rounded-card no-underline hover:no-underline focus-visible:outline-hidden', className)}
         data-focus-color="preserve"
         draggable={draggable}
         href={href}

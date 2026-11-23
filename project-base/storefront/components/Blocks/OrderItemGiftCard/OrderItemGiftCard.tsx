@@ -60,7 +60,7 @@ export const OrderItemGiftCard: FC<OrderItemGiftCardProps> = ({
         <li
             data-tid={tid}
             className={twMergeCustom(
-                'flex min-w-0 flex-col gap-3 rounded-xl bg-background-more p-4 font-secondary',
+                'flex min-w-0 flex-col gap-3 rounded-card bg-background-more p-4 font-secondary',
                 isNested && 'bg-transparent p-0',
                 className,
             )}

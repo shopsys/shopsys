@@ -60,7 +60,7 @@ type TransportGroupIconProps = {
 
 const TransportGroupIcon: FC<TransportGroupIconProps> = ({ group, isOnGreyBackground }) => {
     const wrapperClassName = twJoin(
-        'flex h-10 w-14 min-w-14 items-center justify-center rounded-xl text-icon-accent',
+        'flex h-10 w-14 min-w-14 items-center justify-center rounded-control text-icon-accent',
         isOnGreyBackground ? 'bg-background-default' : 'bg-background-more',
     );
 
@@ -100,7 +100,7 @@ export const TransportGroupListItem: FC<TransportGroupListItemProps> = ({
         <li
             key={group.uuid}
             className={twJoin(
-                'group mb-4 overflow-hidden rounded-xl border transition last:mb-0',
+                'group mb-4 overflow-hidden rounded-card border transition last:mb-0',
                 isSelected
                     ? 'border-border-less bg-background-default'
                     : 'border-transparent bg-background-more hover:border-border-less hover:bg-background-default',

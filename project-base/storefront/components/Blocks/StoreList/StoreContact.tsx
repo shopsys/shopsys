@@ -15,7 +15,7 @@ export const StoreContact: FC<StoreContactItemProps> = ({ email, phone }) => {
     const { t } = useTranslation();
     const linkClassName = twJoin(
         getLinkClassName({ variant: 'navigation' }),
-        'inline-flex items-center gap-1 rounded-md font-semibold text-sm',
+        'inline-flex items-center gap-1 rounded-detail font-semibold text-sm',
     );
 
     return (

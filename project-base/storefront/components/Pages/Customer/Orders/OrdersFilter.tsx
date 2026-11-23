@@ -90,7 +90,7 @@ export const OrdersFilter: FC<OrdersFilterProps> = ({ orderStatusCounts }) => {
 
     return (
         <>
-            <div className="rounded-xl bg-background-more p-4">
+            <div className="rounded-card bg-background-more p-4">
                 <div className="grid vl:grid-cols-2 gap-3 xl:grid-cols-[2fr_1fr_1fr]">
                     <TextInput
                         id="order-search"

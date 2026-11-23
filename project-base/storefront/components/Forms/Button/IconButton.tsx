@@ -8,7 +8,8 @@ export type IconButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'chi
     ariaLabel?: string;
     Icon: SvgFC;
     iconClassName?: string;
-    shape?: 'circle' | 'rounded';
+    // circle: a standalone control over content; rounded: next to buttons; inset: inside a field
+    shape?: 'circle' | 'rounded' | 'inset';
     size?: 'compact' | 'small' | 'medium' | 'large';
     tid?: string;
     tooltipLabel?: string;
@@ -79,7 +80,8 @@ const getIconButtonClassName = (
     twJoin(
         'inline-flex shrink-0 cursor-pointer items-center justify-center outline-hidden transition-[background-color,border-color,color,box-shadow,transform] active:scale-95 disabled:pointer-events-none disabled:scale-100 disabled:cursor-no-drop motion-reduce:transition-none',
         shape === 'circle' && 'rounded-full',
-        shape === 'rounded' && 'rounded-md',
+        shape === 'rounded' && 'rounded-button',
+        shape === 'inset' && 'rounded-detail',
         size === 'compact' && 'size-6',
         size === 'small' && 'size-8',
         size === 'medium' && 'size-10',

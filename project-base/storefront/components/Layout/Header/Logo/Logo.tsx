@@ -15,7 +15,7 @@ export const Logo: FC<LogoProps> = ({ imageClassName }) => {
     return (
         <ExtendedNextLink
             aria-label={t('Go to homepage', { ns: 'accessibility' })}
-            className="group order-2 vl:order-1 flex-1 vl:flex-none rounded-md vl:px-0"
+            className="group order-2 vl:order-1 flex-1 vl:flex-none rounded-detail vl:px-0"
             href="/"
             tid={TIDs.header_homepage_link}
             title={t('Homepage')}

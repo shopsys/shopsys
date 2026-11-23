@@ -1,3 +1,4 @@
+import { Alert } from 'components/Basic/Alert/Alert';
 import { TIDs } from 'cypress/tids';
 
 type StoreListErrorProps = {
@@ -5,11 +6,7 @@ type StoreListErrorProps = {
 };
 
 export const StoreListError: FC<StoreListErrorProps> = ({ message }) => (
-    <div
-        className="mt-2.5 rounded-md border border-toast-border-error bg-toast-bg-error px-4 py-3 text-sm text-toast-text-error"
-        data-tid={TIDs.store_list_error}
-        role="alert"
-    >
+    <Alert className="mt-2.5" role="alert" tid={TIDs.store_list_error} variant="error">
         {message}
-    </div>
+    </Alert>
 );

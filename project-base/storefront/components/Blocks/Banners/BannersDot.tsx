@@ -57,9 +57,9 @@ export const BannersDot: FC<BannersDotProps> = ({
             tabIndex={0}
             className={twMergeCustom(
                 'group relative block size-4 cursor-pointer rounded-full bg-icon-less transition',
-                'vl:rounded-none vl:first-of-type:rounded-bl-md vl:last-of-type:rounded-br-md',
+                'vl:rounded-none vl:first-of-type:rounded-bl-surface vl:last-of-type:rounded-br-surface',
                 'vl:flex vl:h-auto vl:w-full vl:bg-background-more vl:px-5 vl:py-2 vl:text-left vl:text-text-default',
-                'vl:after:absolute vl:after:inset-0 vl:after:border-border-less vl:after:border-t vl:after:border-b vl:after:border-l vl:after:content-[""] vl:first-of-type:after:rounded-bl-md vl:last-of-type:after:rounded-br-md vl:last-of-type:after:border-r',
+                'vl:after:absolute vl:after:inset-0 vl:after:border-border-less vl:after:border-t vl:after:border-b vl:after:border-l vl:after:content-[""] vl:first-of-type:after:rounded-bl-surface vl:last-of-type:after:rounded-br-surface vl:last-of-type:after:border-r',
                 isActive && 'bg-text-accent vl:bg-background-default vl:text-text-accent',
                 'hover:bg-background-most',
             )}

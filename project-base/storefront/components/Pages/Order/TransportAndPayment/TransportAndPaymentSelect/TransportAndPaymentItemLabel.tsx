@@ -56,7 +56,7 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
         <div
             data-tid={TIDs.transport_and_payment_list_item_image}
             className={twJoin(
-                'isolate flex h-12 w-20 min-w-20 shrink-0 items-center justify-center rounded-xl',
+                'isolate flex h-12 w-20 min-w-20 shrink-0 items-center justify-center rounded-control',
                 isImageOnWhiteBackground ? 'bg-background-default' : 'bg-background-more',
                 !image && 'hidden',
             )}

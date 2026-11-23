@@ -13,7 +13,7 @@ export const SkeletonPageOrderWithdrawal: FC = () => (
 
                 <Skeleton className="h-6 w-48" />
 
-                <Skeleton className="h-125 rounded-xl" />
+                <Skeleton className="h-125 rounded-card" />
             </VerticalStack>
         </Webline>
     </>

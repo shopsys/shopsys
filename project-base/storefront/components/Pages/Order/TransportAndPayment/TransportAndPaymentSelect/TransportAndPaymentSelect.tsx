@@ -343,7 +343,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         tid={TIDs.pages_order_payment}
                     >
                         {isTransportSelectionLoading && (
-                            <LoaderWithOverlay className="w-8" overlayClassName="rounded-xl" />
+                            <LoaderWithOverlay className="w-8" overlayClassName="rounded-card" />
                         )}
 
                         {hasNoSelectablePayment && <NoAvailablePaymentInfo />}

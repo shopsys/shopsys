@@ -58,7 +58,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
 
                         {/* Contacts skeleton with data for crawlers */}
                         <div className="flex flex-col gap-4">
-                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
+                            <div className="relative flex gap-4 rounded-card bg-background-default p-4">
                                 <a
                                     aria-label={t('Call us at {{ phone }}. {{ openingHours }}', {
                                         ns: 'accessibility',
@@ -77,7 +77,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                 </div>
                             </div>
 
-                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
+                            <div className="relative flex gap-4 rounded-card bg-background-default p-4">
                                 <a
                                     aria-label={t('Write to us at {{ email }}. {{ emailSubtitle }}', {
                                         ns: 'accessibility',
@@ -103,7 +103,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
             {!simpleFooter && (
                 <FooterContainer>
                     <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
-                        <Skeleton className="h-16 w-64 rounded-lg" />
+                        <Skeleton className="h-16 w-64 rounded-card" />
 
                         <div data-tid={TIDs.footer_social_links}>
                             <span className="sr-only">
@@ -117,7 +117,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                     Youtube
                                 </a>
                             </span>
-                            <Skeleton className="h-10 w-32 rounded-lg" />
+                            <Skeleton className="h-10 w-32 rounded-button" />
                         </div>
                     </div>
                 </FooterContainer>

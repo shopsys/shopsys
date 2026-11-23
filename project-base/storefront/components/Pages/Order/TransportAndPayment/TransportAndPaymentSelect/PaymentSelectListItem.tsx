@@ -57,7 +57,7 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({
         <TransportAndPaymentListItem
             key={payment.uuid}
             className={twJoin(
-                'group mb-3 rounded-xl border border-transparent py-0 transition last:mb-0 last:border-b',
+                'group mb-3 rounded-card border border-transparent py-0 transition last:mb-0 last:border-b',
                 'bg-background-more',
                 !isActive && 'hover:border-border-less hover:bg-background-default',
             )}

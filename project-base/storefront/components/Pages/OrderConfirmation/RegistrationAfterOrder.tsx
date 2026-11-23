@@ -92,7 +92,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
     ];
 
     return (
-        <div className="flex flex-col rounded-xl bg-background-more p-5">
+        <div className="flex flex-col rounded-surface bg-background-more p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
             <p className="sr-only" id="registration-after-order-password-label">

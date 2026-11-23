@@ -16,7 +16,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ inStockCount, 
     const isDisabled = inStockCount === 0 && !currentFilter?.onlyInStock;
 
     return (
-        <div className="rounded-md bg-background-more p-5 py-2.5">
+        <div className="rounded-card bg-background-more p-5 py-2.5">
             <Checkbox
                 aria-label={t('Filter by in stock', { ns: 'accessibility' })}
                 count={inStockCount}

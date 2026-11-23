@@ -14,7 +14,7 @@ export const ErrorDebugSettingsContent: FC = () => {
                     {t(
                         'Errors added to this list will not show as toasts. They will only log to console with [Ignored Error] prefix. Clear localStorage key',
                     )}{' '}
-                    <code className="rounded px-1">{IGNORED_ERRORS_KEY}</code> {t('to reset.')}
+                    <code className="rounded-detail px-1">{IGNORED_ERRORS_KEY}</code> {t('to reset.')}
                 </>
             }
         >

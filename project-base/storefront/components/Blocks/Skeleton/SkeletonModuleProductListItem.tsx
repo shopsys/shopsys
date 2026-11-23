@@ -16,7 +16,7 @@ export const SkeletonModuleProductListItem: FC<SkeletonModuleProductListItemProp
     visibleItemsConfig,
 }) =>
     productListViewMode === 'list' ? (
-        <div className="grid w-full gap-4 rounded-xl bg-skeleton-less p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+        <div className="grid w-full gap-4 rounded-card bg-skeleton-less p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <div className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-3 sm:gap-4 xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,280px)] xl:items-center">
                 <div className="flex justify-center">
                     <Skeleton className="size-20" />
@@ -58,7 +58,7 @@ const SkeletonModuleProductGridListItem: FC<SkeletonModuleProductGridListItemPro
 }) => (
     <div
         className={twMergeCustom(
-            'flex h-full w-full flex-col gap-2.5 rounded-xl bg-skeleton-less px-2.5 py-5 sm:p-5',
+            'flex h-full w-full flex-col gap-2.5 rounded-card bg-skeleton-less px-2.5 py-5 sm:p-5',
             size === 'large' && 'border border-transparent pt-4 pb-2.5 sm:pt-4 sm:pb-5',
             size === 'medium' && 'pt-10 pb-2.5 sm:pt-10 sm:pb-5',
             isBasketPopup && 'border border-transparent',

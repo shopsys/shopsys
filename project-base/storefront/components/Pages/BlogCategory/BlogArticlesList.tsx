@@ -24,12 +24,12 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         href={blogArticle.link}
                         type="blogArticle"
                         className={twJoin(
-                            'group flex w-full flex-col gap-y-6 rounded-xl border border-background-more p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
+                            'group flex w-full flex-col gap-y-6 rounded-card border border-background-more p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
                             'bg-background-more no-underline',
                             'hover:border-border-less hover:bg-background-default hover:no-underline',
                         )}
                     >
-                        <div className="w-full overflow-hidden rounded-xl text-center md:w-62.5 lg:w-80">
+                        <div className="w-full overflow-hidden rounded-card text-center md:w-62.5 lg:w-80">
                             <Image
                                 alt={getImageAlt(blogArticle.mainImage?.name, blogArticle.name)}
                                 className="transition-transform duration-300 ease-out group-hover:scale-105"

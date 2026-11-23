@@ -40,7 +40,7 @@ export const OrderItemProducts = ({ items, orderLink }: OrderItemProductsProps) 
 
                 {items.length > 4 && (
                     <ExtendedNextLink
-                        className="flex size-16 items-center justify-center rounded-xl border border-transparent bg-background-default p-2 no-underline transition-all hover:border-border-less"
+                        className="flex size-16 items-center justify-center rounded-control border border-transparent bg-background-default p-2 no-underline transition-all hover:border-border-less"
                         href={orderLink}
                         type="orderDetail"
                     >

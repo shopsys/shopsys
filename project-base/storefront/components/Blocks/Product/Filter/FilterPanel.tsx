@@ -286,7 +286,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 id="filter-sidebar"
             >
                 <AccessibleLink
-                    className="rounded-md"
+                    className="rounded-card"
                     href="#product-list"
                     title={t('Skip filters', { ns: 'accessibility' })}
                 />

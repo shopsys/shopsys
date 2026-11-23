@@ -101,7 +101,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 type={linkType}
                 onClick={() => promotion && onGtmPromotionClickEventHandler(promotion, href)}
                 className={twMergeCustom(
-                    'group/category-card flex aspect-square size-full max-h-37.5 cursor-pointer flex-col items-center justify-center gap-0 rounded-xl px-5 py-2.5 text-center no-underline transition-[box-shadow,border-color,background-color,color] duration-300 ease-in-out',
+                    'group/category-card flex aspect-square size-full max-h-37.5 cursor-pointer flex-col items-center justify-center gap-0 rounded-card px-5 py-2.5 text-center no-underline transition-[box-shadow,border-color,background-color,color] duration-300 ease-in-out',
                     'border border-background-more bg-background-more text-text-default',
                     'group-hover:border-border-less group-hover:bg-background-default group-hover:text-text-default group-hover:no-underline',
                     'pointer-fine:group-hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
@@ -121,7 +121,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'group/category-card flex h-full cursor-pointer flex-col items-center gap-4 rounded-xl border border-background-more bg-background-more p-5 text-center text-text-default no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
+                    'group/category-card flex h-full cursor-pointer flex-col items-center gap-4 rounded-card border border-background-more bg-background-more p-5 text-center text-text-default no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
                     'hover:border-border-less hover:bg-background-default hover:text-text-default',
                     'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 )}
@@ -134,7 +134,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     return (
         <article
             className={twMergeCustom(
-                'flex h-full flex-col rounded-xl border border-background-more bg-background-more p-5 text-text-default transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
+                'flex h-full flex-col rounded-card border border-background-more bg-background-more p-5 text-text-default transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
                 'hover:border-border-less hover:bg-background-default',
                 'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 'justify-start',
@@ -142,7 +142,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
         >
             <ExtendedNextLink
                 aria-label={primaryAriaLabel}
-                className="group/category-card flex cursor-pointer flex-col items-center gap-4 rounded-lg text-center text-text-default no-underline transition hover:no-underline"
+                className="group/category-card flex cursor-pointer flex-col items-center gap-4 rounded-card text-center text-text-default no-underline transition hover:no-underline"
                 href={href}
                 type={linkType}
             >

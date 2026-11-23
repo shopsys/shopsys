@@ -257,7 +257,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             Icon={CloseIcon}
                             ariaLabel={t('Clear selected option', { ns: 'accessibility' })}
                             className="self-center"
-                            shape="rounded"
+                            shape="inset"
                             size="compact"
                             title={t('Clear selected option', { ns: 'accessibility' })}
                             tooltipLabel={t('Clear selected option', { ns: 'accessibility' })}
@@ -278,7 +278,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         className="self-center"
                         disabled={isDisabled}
                         iconClassName={twJoin('transition-transform', isOpen ? 'rotate-180' : 'rotate-0')}
-                        shape="rounded"
+                        shape="inset"
                         title={ariaLabel}
                         variant="ghost"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}

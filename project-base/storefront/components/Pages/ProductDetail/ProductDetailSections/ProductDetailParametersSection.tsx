@@ -41,7 +41,7 @@ type ParameterTableProps = {
 
 const ParameterTable = ({ parameters }: ParameterTableProps) => (
     <Table
-        className="overflow-hidden rounded-xl border border-border-less bg-background-more"
+        className="overflow-hidden rounded-card border border-border-less bg-background-more"
         tableClassName="md:table-fixed"
     >
         {parameters.map((parameter) => (

@@ -8,17 +8,17 @@ export const SkeletonPageTransportAndPayment: FC = () => {
 
     return (
         <Webline width="xl">
-            <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-210 rounded-xl lg:mt-6 lg:mb-10" />
+            <Skeleton className="mx-auto mt-1 mb-5 flex h-16 vl:h-11 w-full max-w-210 rounded-card lg:mt-6 lg:mb-10" />
 
             <div className="grid vl:grid-cols-3 vl:gap-10">
                 <div className="vl:col-span-2">
-                    <Skeleton className="h-80 rounded-xl" />
+                    <Skeleton className="h-80 rounded-surface" />
 
                     <SkeletonModuleOrderAction buttonNext={t('Contact information')} />
                 </div>
 
                 <div className="vl:col-span-1">
-                    <Skeleton className="h-96 rounded-xl" />
+                    <Skeleton className="h-96 rounded-surface" />
                 </div>
             </div>
         </Webline>

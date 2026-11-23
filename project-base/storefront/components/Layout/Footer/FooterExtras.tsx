@@ -23,7 +23,7 @@ export const FooterExtras = () => {
         <FooterContainer>
             <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
                 {shouldShowTransportsImagesSkeleton ? (
-                    <Skeleton className="h-16 w-64 rounded-lg" />
+                    <Skeleton className="h-16 w-64 rounded-card" />
                 ) : (
                     transportsWithImages.length > 0 && (
                         <div

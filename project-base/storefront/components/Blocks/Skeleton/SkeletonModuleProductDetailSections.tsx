@@ -46,7 +46,7 @@ export const SkeletonModuleProductDetailSections: FC = () => (
             <Webline width="vl">
                 <SkeletonSectionHeading />
 
-                <div className="overflow-hidden rounded-xl border border-border-less bg-skeleton-less">
+                <div className="overflow-hidden rounded-card border border-border-less bg-skeleton-less">
                     {createEmptyArray(4).map((_, index) => (
                         <div
                             key={index}
@@ -71,7 +71,7 @@ export const SkeletonModuleProductDetailSections: FC = () => (
                     {createEmptyArray(4).map((_, index) => (
                         <div
                             key={index}
-                            className="flex items-center justify-between gap-5 rounded-xl bg-skeleton-less px-5 py-2.5"
+                            className="flex items-center justify-between gap-5 rounded-card bg-skeleton-less px-5 py-2.5"
                         >
                             <div className="flex w-2/3 flex-col gap-2">
                                 <Skeleton className="h-5 w-3/4" />

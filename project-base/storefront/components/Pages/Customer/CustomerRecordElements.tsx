@@ -14,7 +14,7 @@ type CustomerRecordCardProps = {
 export const CustomerRecordCard: FC<CustomerRecordCardProps> = ({ children, className }) => (
     <div
         className={twMergeCustom(
-            'flex vl:flex-row flex-col flex-wrap justify-between gap-4 rounded-xl bg-background-more p-5',
+            'flex vl:flex-row flex-col flex-wrap justify-between gap-4 rounded-card bg-background-more p-5',
             className,
         )}
     >
@@ -37,7 +37,7 @@ export const CustomerRecordElementWithImage: FC<CustomerRecordElementWithImagePr
 }) => (
     <div className="flex items-center gap-4 font-secondary font-semibold">
         <div
-            className="flex h-12 w-20 shrink-0 items-center justify-center rounded-xl bg-background-default"
+            className="flex h-12 w-20 shrink-0 items-center justify-center rounded-control bg-background-default"
             data-tid={tid}
         >
             <Image
@@ -134,7 +134,7 @@ export const CustomerRecordProductImage: FC<CustomerRecordProductImageProps> = (
     const productImage = (
         <div
             className={twJoin(
-                'relative size-16 shrink-0 rounded-xl border border-transparent bg-background-default p-2 transition-all',
+                'relative size-16 shrink-0 rounded-control border border-transparent bg-background-default p-2 transition-all',
                 isVisible && 'hover:border-border-less',
             )}
             data-tid={tid}

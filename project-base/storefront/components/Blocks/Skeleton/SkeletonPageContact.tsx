@@ -12,7 +12,7 @@ export const SkeletonPageContact: FC = () => (
                 <Skeleton className="h-6 w-2/3" />
             </div>
 
-            <Skeleton className="h-110 rounded-xl" />
+            <Skeleton className="h-110 rounded-card" />
         </VerticalStack>
     </Webline>
 );

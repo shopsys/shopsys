@@ -107,7 +107,7 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
     return (
         <div className={twMergeCustom('relative', className)}>
             {isAddingToCart && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-detail bg-background-more py-2 opacity-50" />
             )}
 
             <Button

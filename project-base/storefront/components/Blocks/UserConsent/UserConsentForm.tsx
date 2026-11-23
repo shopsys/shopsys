@@ -51,7 +51,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ layout = 'default', 
     return (
         <FormProvider {...formProviderMethods}>
             <div className={twMergeCustom('flex flex-col gap-5', isCompact ? 'gap-4' : 'mx-auto w-full max-w-2xl')}>
-                <div className="divide-y divide-border-less overflow-hidden rounded-xl border border-border-less bg-background-more">
+                <div className="divide-y divide-border-less overflow-hidden rounded-card border border-border-less bg-background-more">
                     <ToggleSwitchControlled
                         ariaLabel={t('Toggle marketing consent', { ns: 'accessibility' })}
                         control={formProviderMethods.control}

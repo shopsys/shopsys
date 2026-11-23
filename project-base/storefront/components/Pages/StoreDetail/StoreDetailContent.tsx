@@ -17,7 +17,7 @@ type StoreDetailContentProps = {
 };
 
 const GoogleMapPlaceholder: FC = () => (
-    <div aria-hidden="true" className="h-full w-full rounded-lg bg-background-default" />
+    <div aria-hidden="true" className="h-full w-full rounded-card bg-background-default" />
 );
 
 const GoogleMap = dynamic(
@@ -101,7 +101,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </div>
                     <div className="w-full lg:basis-1/2">
                         <div
-                            className="flex aspect-square w-full rounded-xl bg-background-more p-5"
+                            className="flex aspect-square w-full rounded-card bg-background-more p-5"
                             data-tid={TIDs.stores_map}
                         >
                             <GoogleMap
@@ -137,7 +137,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                     storeName: store.storeName,
                                     imageNumber: index + 1,
                                 })}
-                                className="group m-0.5 flex h-48 w-70 cursor-pointer snap-start justify-center overflow-hidden rounded-xl border-0 bg-transparent p-0"
+                                className="group m-0.5 flex h-48 w-70 cursor-pointer snap-start justify-center overflow-hidden rounded-card border-0 bg-transparent p-0"
                                 data-src={image.url}
                                 tabIndex={0}
                                 title={t('View store image')}

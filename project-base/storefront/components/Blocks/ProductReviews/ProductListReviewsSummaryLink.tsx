@@ -53,7 +53,7 @@ export const ProductListReviewsSummaryLink: FC<ProductListReviewsSummaryLinkProp
                 <span className="font-semibold text-text-default">{formattedAverageRating}</span>
             </span>
 
-            <span className="rounded-sm text-link-default group-hover/reviews-link:text-link-hovered group-hover/reviews-link:underline group-focus-visible/reviews-link:bg-focus-background group-focus-visible/reviews-link:text-text-default">
+            <span className="rounded-detail text-link-default group-hover/reviews-link:text-link-hovered group-hover/reviews-link:underline group-focus-visible/reviews-link:bg-focus-background group-focus-visible/reviews-link:text-text-default">
                 {t('{{ count }} reviews', { count: reviewsSummary.totalCount })}
             </span>
         </>

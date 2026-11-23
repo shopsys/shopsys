@@ -11,8 +11,8 @@ export const SkeletonPageArticle: FC = () => (
         <Webline width="vl">
             <VerticalStack gap="sm">
                 <Skeleton className="h-10 w-1/2" />
-                <Skeleton className="h-5 w-28 rounded-sm" />
-                <Skeleton className="h-96" />
+                <Skeleton className="h-5 w-28 rounded-detail" />
+                <Skeleton className="h-96 rounded-card" />
                 <SkeletonModuleArticleParagraphs />
             </VerticalStack>
         </Webline>

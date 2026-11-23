@@ -11,14 +11,16 @@ export const notImplementedYetHandler = (e: SyntheticEvent): void => {
 };
 
 const notImplementedTagTwClass =
-    'whitespace-nowrap rounded-xs bg-background-error p-1 text-center text-xs font-normal text-text-inverted';
-const notImplementedTagPositionedTwClass =
-    'whitespace-nowrap rounded-xs bg-background-error p-1 text-center text-xs font-normal text-text-inverted absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2';
-const notImplementedBorderTwClass = 'border border-dashed border-border-error';
+    'whitespace-nowrap rounded-full bg-background-error px-3 py-1 text-center text-xs font-medium leading-4 text-text-inverted';
+const notImplementedTagPositionedTwClass = twJoin(
+    notImplementedTagTwClass,
+    'absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2',
+);
+const notImplementedBorderTwClass = 'rounded-card border border-dashed border-border-error';
 
 export const NotImplementedYetWrapper: FC = ({ children }) => {
     return (
-        <div className={twJoin('relative', notImplementedBorderTwClass)}>
+        <div className={twJoin('relative px-3 pt-4 pb-3', notImplementedBorderTwClass)}>
             {children}
             <div className={notImplementedTagPositionedTwClass}>{notImplementedMessage}</div>
         </div>
@@ -33,7 +35,7 @@ export const NotImplementedYetInject: FC = () => {
                 notImplementedBorderTwClass,
             )}
         >
-            <div className={twMergeCustom(notImplementedTagPositionedTwClass, 'top-0 translate-y-0')}>
+            <div className={twMergeCustom(notImplementedTagPositionedTwClass, 'top-2 translate-y-0')}>
                 {notImplementedMessage}
             </div>
         </div>
@@ -42,9 +44,7 @@ export const NotImplementedYetInject: FC = () => {
 
 export const NotImplementedYetTag: FC = () => {
     return (
-        <div
-            className={twJoin('pointer-events-none ml-2 inline-block align-bottom leading-3', notImplementedTagTwClass)}
-        >
+        <div className={twJoin('pointer-events-none ml-2 inline-block align-middle', notImplementedTagTwClass)}>
             {notImplementedMessage}
         </div>
     );
@@ -52,11 +52,11 @@ export const NotImplementedYetTag: FC = () => {
 
 export const NotImplementedTooltip: FC = ({ children, className }) => {
     return (
-        <div className={twMergeCustom('group relative', notImplementedBorderTwClass, className)}>
+        <div className={twMergeCustom('group relative w-fit p-1', notImplementedBorderTwClass, className)}>
             {children}
             <div
                 className={twJoin(
-                    'pointer-events-none invisible absolute -bottom-8 left-1/2 z-tooltip h-6 -translate-x-1/2 leading-4 opacity-0 transition-opacity',
+                    'pointer-events-none invisible absolute -bottom-8 left-1/2 z-tooltip -translate-x-1/2 opacity-0 transition-opacity',
                     'group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100',
                     notImplementedTagTwClass,
                 )}

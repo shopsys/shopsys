@@ -25,7 +25,7 @@ export const SelectableCode: FC<SelectableCodeProps> = ({ value, label, classNam
             {label && `${label}: `}
             <button
                 aria-label={`${t('Select code')}: ${value}`}
-                className="cursor-text select-text rounded-sm text-left text-text-less focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="cursor-text select-text rounded-detail text-left text-text-less focus-visible:outline-2 focus-visible:outline-offset-2"
                 tabIndex={tabIndex}
                 type="button"
                 onClick={selectCode}

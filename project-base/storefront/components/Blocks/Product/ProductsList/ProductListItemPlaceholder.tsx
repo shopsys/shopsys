@@ -31,14 +31,14 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
         return (
             <li
                 className={twMergeCustom(
-                    'group relative grid select-none gap-4 rounded-xl border border-background-more bg-background-more p-3 text-left transition',
+                    'group relative grid select-none gap-4 rounded-card border border-background-more bg-background-more p-3 text-left transition',
                     'hover:border-border-less hover:bg-background',
                     'sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center',
                     className,
                 )}
             >
                 <ExtendedNextLink
-                    className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-3 rounded-xl text-text-default no-underline hover:text-text-default hover:no-underline sm:gap-4 xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,280px)] xl:items-center min-[1380px]:grid-cols-[88px_minmax(0,280px)_max-content]"
+                    className="grid min-w-0 grid-cols-[80px_minmax(0,1fr)] gap-3 rounded-card text-text-default no-underline hover:text-text-default hover:no-underline sm:gap-4 xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,280px)] xl:items-center min-[1380px]:grid-cols-[88px_minmax(0,280px)_max-content]"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -104,7 +104,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
     return (
         <li
             className={twMergeCustom(
-                'group relative flex select-none flex-col gap-2.5 rounded-xl border border-background-more bg-background-more px-2.5 py-5 text-left transition sm:px-5',
+                'group relative flex select-none flex-col gap-2.5 rounded-card border border-background-more bg-background-more px-2.5 py-5 text-left transition sm:px-5',
                 size === 'small' && 'p-5',
                 'hover:border-border-less hover:bg-background',
                 className,

@@ -53,7 +53,7 @@ export const ProductDetailGallerySlide: FC<ProductDetailGallerySlideProps> = ({
                 ns: 'accessibility',
                 productName,
             })}
-            className="relative flex w-full cursor-pointer items-center justify-center rounded-lg"
+            className="relative flex w-full cursor-pointer items-center justify-center rounded-card"
             data-focus-style="ring"
             tabIndex={isSelected ? 0 : -1}
             title={t('View product image')}
@@ -78,7 +78,7 @@ export const ProductDetailGallerySlide: FC<ProductDetailGallerySlideProps> = ({
             {!isLoaded && (
                 <span
                     aria-hidden="true"
-                    className="vl:size-125 h-80 w-full rounded-lg bg-skeleton-default motion-safe:animate-pulse lg:h-125"
+                    className="vl:size-125 h-80 w-full rounded-card bg-skeleton-default motion-safe:animate-pulse lg:h-125"
                 />
             )}
 

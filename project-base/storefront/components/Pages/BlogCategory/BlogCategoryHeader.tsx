@@ -12,7 +12,7 @@ type BlogCategoryHeaderProps = {
 export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ heading, description, image, imageAlt }) => {
     return (
         <Webline>
-            <div className="relative overflow-hidden rounded-xl bg-background-brand after:absolute after:inset-0 after:block after:bg-background-brand/80 after:content-['']">
+            <div className="relative overflow-hidden rounded-card bg-background-brand after:absolute after:inset-0 after:block after:bg-background-brand/80 after:content-['']">
                 {image && <Image fill alt={imageAlt} className="object-cover" sizes="100vw" src={image.url} />}
                 <Webline className="relative z-above px-10 py-14">
                     <h1 className="mb-3 text-text-inverted">{heading}</h1>

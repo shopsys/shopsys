@@ -23,7 +23,7 @@ export const ExpectedDeliveryDateSummary: FC<ExpectedDeliveryDateSummaryProps> =
     return (
         <div
             className={twMergeCustom(
-                'flex items-center justify-between gap-3 rounded-xl bg-background-more p-4 font-secondary text-sm',
+                'flex items-center justify-between gap-3 rounded-card bg-background-more p-4 font-secondary text-sm',
                 className,
             )}
             data-tid={TIDs.expected_delivery_date_summary}

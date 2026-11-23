@@ -6,7 +6,7 @@ export const NewsletterFormPlaceholder: FC = () => (
         <div className="grid grid-cols-1 vl:grid-cols-[minmax(20rem,28rem)_minmax(0,32rem)] items-center vl:justify-center gap-4 vl:gap-12">
             <div className="flex flex-col gap-2">
                 <Skeleton className="h-3 w-24 bg-white-alpha-200" />
-                <Skeleton className="h-12 w-full max-w-md rounded-lg bg-white-alpha-100" />
+                <Skeleton className="h-12 w-full max-w-md rounded-input bg-white-alpha-100" />
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:gap-3">

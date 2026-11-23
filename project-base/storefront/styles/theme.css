@@ -5,19 +5,28 @@
     --radius-md: 6px;
     --radius-lg: 8px;
     --radius-xl: 12px;
-    --radius-xl: 12px;
     --radius-2xl: 16px;
     --radius-3xl: 24px;
     --radius-4xl: 32px;
     --radius-full: 9999px;
-    --radius-button: var(--radius-md);
-    --radius-checkbox: var(--radius-sm);
-    --radius-counter: var(--radius-md);
-    --radius-flag: var(--radius-sm);
-    --radius-input: var(--radius-md);
+
+    /* One radius switch for the whole storefront; the role tokens below are its multiples. */
+    --radius-base: 10px;
+
+    --radius-detail: calc(var(--radius-base) * 0.6);
+    --radius-control: var(--radius-base);
+    --radius-card: calc(var(--radius-base) * 1.2);
+    --radius-surface: calc(var(--radius-base) * 1.6);
+
+    --radius-button: var(--radius-control);
+    --radius-input: var(--radius-control);
+    /* tags are filters and selections, a pill tells them apart from buttons */
     --radius-tag: var(--radius-full);
-    --radius-toast: var(--radius-md);
-    --radius-product-card: var(--radius-xl);
+    --radius-counter: var(--radius-control);
+    --radius-checkbox: var(--radius-detail);
+    --radius-flag: var(--radius-detail);
+    --radius-toast: var(--radius-surface);
+    --radius-product-card: var(--radius-card);
 
     --border-width-0: 0px;
     --border-width-1: 1px;

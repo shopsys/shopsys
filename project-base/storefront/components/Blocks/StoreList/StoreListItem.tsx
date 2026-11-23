@@ -88,7 +88,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
             data-tid={`${TIDs.store_list_item_}${store.identifier}`}
             ref={itemRef}
             className={twMergeCustom(
-                'rounded-xl border border-transparent bg-background-more px-5 py-2.5 text-left transition-colors hover:border-border-brand hover:bg-background-default has-focus-visible:border-border-brand has-focus-visible:bg-background-default',
+                'rounded-card border border-transparent bg-background-more px-5 py-2.5 text-left transition-colors hover:border-border-brand hover:bg-background-default has-focus-visible:border-border-brand has-focus-visible:bg-background-default',
                 isSelected && 'border-border-brand bg-background-default',
                 !isSelected && isExpanded && 'border-border-less',
             )}

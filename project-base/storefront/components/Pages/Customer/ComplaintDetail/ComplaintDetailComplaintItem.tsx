@@ -137,7 +137,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                         aria-label={t('View complaint images in gallery', { ns: 'accessibility' })}
                                         title={t('Open gallery')}
                                         className={twJoin(
-                                            'flex size-16 cursor-pointer items-center justify-center rounded-xl border border-transparent bg-background-default p-2 transition-all hover:border-border-less',
+                                            'flex size-16 cursor-pointer items-center justify-center rounded-control border border-transparent bg-background-default p-2 transition-all hover:border-border-less',
                                             isWithAdditionalImages && 'relative',
                                         )}
                                         type="button"
@@ -153,7 +153,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                         />
 
                                         {isWithAdditionalImages && (
-                                            <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-xl bg-image-overlay font-bold text-lg">
+                                            <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-control bg-image-overlay font-bold text-lg">
                                                 +{galleryAdditionalItemsCount}
                                             </span>
                                         )}

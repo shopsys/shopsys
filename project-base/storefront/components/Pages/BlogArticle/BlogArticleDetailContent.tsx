@@ -36,7 +36,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 headings={headings}
             >
                 {blogArticle.mainImage && (
-                    <div className="flex overflow-hidden rounded-xl">
+                    <div className="flex overflow-hidden rounded-card">
                         <Image
                             priority
                             alt={getImageAlt(blogArticle.mainImage.name, blogArticle.name)}

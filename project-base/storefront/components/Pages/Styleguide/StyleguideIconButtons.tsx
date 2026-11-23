@@ -27,11 +27,11 @@ export const StyleguideIconButtons: FC = () => (
                     over content or media: carousel and gallery arrows, back to top, closing a drawer.
                 </>,
                 <>
-                    <StyleguideCode>variant="ghost"</StyleguideCode> with{' '}
-                    <StyleguideCode>shape="rounded"</StyleguideCode> is a control inside another component: the arrow of
-                    a select, search and password inputs, closing a popup or a toast, removing a cart item. It shows a
-                    surface only on hover, and its corners use the button radius, so it fits the rectangular field
-                    around it.
+                    <StyleguideCode>variant="ghost"</StyleguideCode> is a control inside another component and shows a
+                    surface only on hover. Inside a field (the arrow of a select, search and password inputs) it uses{' '}
+                    <StyleguideCode>shape="inset"</StyleguideCode>, the detail radius, so it follows the corner of the
+                    field around it. Elsewhere (closing a popup or a toast, removing a cart item) it uses{' '}
+                    <StyleguideCode>shape="rounded"</StyleguideCode>, the button radius.
                 </>,
                 'Icon buttons placed side by side share one size. The title is the accessible name.',
             ]}
@@ -40,17 +40,17 @@ export const StyleguideIconButtons: FC = () => (
         <StyleguideSubSection title="Variants in context">
             <StyleguidePreview className="flex flex-wrap items-start gap-10">
                 <StyleguideSpecimen hint="over content or media" label="default">
-                    <div className="flex h-28 w-48 items-center justify-between rounded-lg bg-background-most px-2">
+                    <div className="flex h-28 w-48 items-center justify-between rounded-card bg-background-most px-2">
                         <IconButton Icon={ArrowIcon} iconClassName="rotate-90" title="Previous" />
                         <IconButton Icon={ArrowIcon} iconClassName="-rotate-90" title="Next" />
                     </div>
                 </StyleguideSpecimen>
-                <StyleguideSpecimen hint='shape="rounded", inside a field' label="ghost">
+                <StyleguideSpecimen hint='shape="inset", inside a field' label="ghost">
                     <div className="flex h-14 w-64 items-center justify-between rounded-input border-2 border-input-border-default pr-1 pl-3">
                         <span className="font-secondary font-semibold text-input-placeholder-default">
                             Choose a country
                         </span>
-                        <IconButton Icon={ArrowIcon} shape="rounded" title="Open" variant="ghost" />
+                        <IconButton Icon={ArrowIcon} shape="inset" title="Open" variant="ghost" />
                     </div>
                 </StyleguideSpecimen>
                 <StyleguideSpecimen label="disabled">

@@ -205,7 +205,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     onTouchEnd={handleMaxValueThumbCallback}
                 />
                 <div className="relative w-full">
-                    <div className="absolute z-1 h-0.5 w-full rounded-sm bg-border-less" />
+                    <div className="absolute z-1 h-0.5 w-full rounded-detail bg-border-less" />
                     <div className="relative mx-auto flex w-[calc(100%-32px)]">
                         <div className="absolute z-2 h-0.5 bg-input-fill" ref={range} />
                     </div>

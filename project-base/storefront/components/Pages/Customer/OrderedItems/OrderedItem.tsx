@@ -44,7 +44,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
     };
 
     return (
-        <div className="flex flex-col gap-5 rounded-md bg-background-more p-4 vl:p-6">
+        <div className="flex flex-col gap-5 rounded-card bg-background-more p-4 vl:p-6">
             <div className="flex vl:flex-row flex-col vl:items-start gap-4">
                 <Image
                     priority

@@ -68,7 +68,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     return (
-        <div className="relative rounded-xl bg-background-more p-5">
+        <div className="relative rounded-surface bg-background-more p-5">
             <h2 className="sr-only">{t('Bestsellers')}</h2>
 
             <div className="wrap-break-word mb-3 text-center font-secondary font-semibold text-lg">

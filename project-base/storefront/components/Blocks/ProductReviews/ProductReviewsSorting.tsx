@@ -117,7 +117,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                 <fieldset
                     id={mobileMenuId}
                     className={twJoin(
-                        'absolute top-full right-0 left-0 z-above mt-2 flex-col divide-y divide-border-less overflow-hidden rounded-md border border-border-less bg-background-default shadow-lg',
+                        'absolute top-full right-0 left-0 z-above mt-2 flex-col divide-y divide-border-less overflow-hidden rounded-control border border-border-less bg-background-default shadow-lg',
                         isMobileMenuOpen ? 'flex' : 'hidden',
                     )}
                 >

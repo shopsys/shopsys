@@ -51,7 +51,7 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top', 
 
             <TooltipPrimitive.Portal>
                 <TooltipPrimitive.Content
-                    className="tooltip pointer-events-none z-maximum block origin-(--radix-tooltip-content-transform-origin) scale-100 rounded-md bg-background-dark px-2 py-1 text-text-inverted text-xs leading-4 opacity-100 shadow-sm motion-safe:starting:scale-[0.96] motion-safe:starting:opacity-0 motion-safe:transition-[opacity,scale] motion-safe:duration-140 motion-safe:ease-out"
+                    className="tooltip pointer-events-none z-maximum block origin-(--radix-tooltip-content-transform-origin) scale-100 rounded-detail bg-background-dark px-2 py-1 text-text-inverted text-xs leading-4 opacity-100 shadow-sm motion-safe:starting:scale-[0.96] motion-safe:starting:opacity-0 motion-safe:transition-[opacity,scale] motion-safe:duration-140 motion-safe:ease-out"
                     side={placement}
                     sideOffset={OFFSET}
                 >

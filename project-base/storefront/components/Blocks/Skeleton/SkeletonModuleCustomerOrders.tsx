@@ -6,7 +6,7 @@ export const SkeletonModuleCustomerOrders: FC = () => {
     return (
         <VerticalStack gap="sm">
             {createEmptyArray(3).map((_, index) => (
-                <Skeleton key={index} className="h-115 vl:h-72 rounded-xl" />
+                <Skeleton key={index} className="h-115 vl:h-72 rounded-card" />
             ))}
         </VerticalStack>
     );

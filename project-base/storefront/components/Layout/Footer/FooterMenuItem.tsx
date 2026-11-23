@@ -37,7 +37,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
             </div>
 
             {/* Mobile accordion layout */}
-            <div className="rounded-xl bg-background-default px-5 py-4 lg:hidden">
+            <div className="rounded-card bg-background-default px-5 py-4 lg:hidden">
                 <button
                     aria-controls={contentId}
                     aria-expanded={isExpanded}

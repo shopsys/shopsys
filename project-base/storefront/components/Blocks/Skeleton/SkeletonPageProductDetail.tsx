@@ -38,15 +38,15 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
 
                         <div className="mx-auto flex w-fit max-w-full gap-2 overflow-hidden">
                             {createEmptyArray(6).map((_, index) => (
-                                <Skeleton key={index} className="size-12 shrink-0 rounded-lg sm:size-16" />
+                                <Skeleton key={index} className="size-12 shrink-0 rounded-control sm:size-16" />
                             ))}
                         </div>
                     </div>
 
                     <div className="order-3 vl:col-start-2 vl:row-start-2 flex w-full flex-1 flex-col gap-5">
                         <div className="flex items-center gap-5">
-                            <Skeleton className="h-4 w-20 rounded-sm" />
-                            <Skeleton className="h-4 w-20 rounded-sm" />
+                            <Skeleton className="h-4 w-20 rounded-detail" />
+                            <Skeleton className="h-4 w-20 rounded-detail" />
                         </div>
 
                         {isMainVariant && <Skeleton className="h-5 w-32" />}
@@ -57,13 +57,13 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
                         </div>
 
                         {isMainVariant ? (
-                            <div className="flex flex-col gap-4 rounded-xl bg-skeleton-less p-4 sm:p-5">
+                            <div className="flex flex-col gap-4 rounded-surface bg-skeleton-less p-4 sm:p-5">
                                 <SkeletonModuleProductDetailAddToCart size="large" />
                                 <Skeleton className="h-6 w-40" />
                             </div>
                         ) : (
                             <>
-                                <div className="flex min-w-0 flex-col gap-6 rounded-xl bg-skeleton-less p-4 sm:p-5">
+                                <div className="flex min-w-0 flex-col gap-6 rounded-surface bg-skeleton-less p-4 sm:p-5">
                                     <div className="flex flex-col gap-2">
                                         <Skeleton className="h-8 w-24" />
                                         <Skeleton className="h-5 w-2/5" />
@@ -114,7 +114,7 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
                         {createEmptyArray(5).map((_, index) => (
                             <div
                                 key={index}
-                                className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 rounded-xl bg-skeleton-less p-4 vl:p-5 md:max-w-none lg:grid lg:grid-cols-[4rem_minmax(0,1fr)_minmax(10rem,1fr)_auto] lg:gap-4"
+                                className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 rounded-card bg-skeleton-less p-4 vl:p-5 md:max-w-none lg:grid lg:grid-cols-[4rem_minmax(0,1fr)_minmax(10rem,1fr)_auto] lg:gap-4"
                             >
                                 <Skeleton className="h-48 w-full shrink-0 lg:h-16 lg:w-16" />
 

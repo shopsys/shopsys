@@ -21,7 +21,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ isHidden, navi
         return (
             <button
                 aria-expanded="false"
-                className="flex min-h-12 w-full cursor-pointer items-center justify-between rounded-md bg-background-more px-3 py-3 text-left font-secondary font-semibold text-base text-text-default transition-colors hover:bg-background-most active:bg-background-most"
+                className="flex min-h-12 w-full cursor-pointer items-center justify-between rounded-control bg-background-more px-3 py-3 text-left font-secondary font-semibold text-base text-text-default transition-colors hover:bg-background-most active:bg-background-most"
                 tabIndex={isHidden ? -1 : 0}
                 title={t('Open submenu')}
                 type="button"
@@ -57,7 +57,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ isHidden, navi
 
     return (
         <ExtendedNextLink
-            className="flex min-h-12 w-full items-center rounded-md bg-background-more px-3 py-3 font-secondary font-semibold text-base text-text-default no-underline transition-colors hover:bg-background-most hover:text-text-default hover:no-underline active:bg-background-most"
+            className="flex min-h-12 w-full items-center rounded-control bg-background-more px-3 py-3 font-secondary font-semibold text-base text-text-default no-underline transition-colors hover:bg-background-most hover:text-text-default hover:no-underline active:bg-background-most"
             href={navigationItem.link}
             skeletonType={DEFAULT_SKELETON_TYPE}
             tabIndex={isHidden ? -1 : undefined}

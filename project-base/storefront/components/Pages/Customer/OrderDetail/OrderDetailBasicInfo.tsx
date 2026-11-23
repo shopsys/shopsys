@@ -196,7 +196,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 </OrderDetailRowInfo>
             )}
 
-            <div className="rounded-xl bg-background-more p-5">
+            <div className="rounded-card bg-background-more p-5">
                 <div data-tid={TIDs.order_detail_items}>
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
@@ -303,7 +303,7 @@ type OrderDetailRowInfoProps = {
 
 const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
-        <CustomerRecordRowInfo className="rounded-xl bg-background-more p-5" tid={tid} title={title}>
+        <CustomerRecordRowInfo className="rounded-card bg-background-more p-5" tid={tid} title={title}>
             {children}
         </CustomerRecordRowInfo>
     );

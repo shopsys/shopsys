@@ -44,7 +44,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
         mapPriceForCalculations(totalDiscountPrice.priceWithVat) > 0;
 
     return (
-        <div className="flex flex-col gap-4 rounded-xl bg-background-more p-8 font-secondary font-semibold text-sm">
+        <div className="flex flex-col gap-4 rounded-surface bg-background-more p-8 font-secondary font-semibold text-sm">
             <div className="flex items-center justify-between gap-4">
                 {t('Transport')}
                 {transport.name ? (

@@ -11,7 +11,7 @@ export const datePickerClassNames = {
     dropdowns: 'flex items-center gap-2',
     dropdown_root: 'relative',
     dropdown:
-        'cursor-pointer rounded-md border border-input-border-default bg-input-bg-default px-2 py-1 pr-7 font-semibold text-sm outline-hidden focus:border-input-border-active',
+        'cursor-pointer rounded-detail border border-input-border-default bg-input-bg-default px-2 py-1 pr-7 font-semibold text-sm outline-hidden focus:border-input-border-active',
     nav: 'absolute inset-x-3 top-3 flex items-center justify-between',
     button_previous:
         'inline-flex size-8 cursor-pointer items-center justify-center rounded-button text-icon-default transition hover:bg-fill-accent-less hover:text-icon-accent disabled:pointer-events-none disabled:opacity-40',

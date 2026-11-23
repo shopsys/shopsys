@@ -12,7 +12,7 @@ export const RegistrationCustomer: FC = () => {
     const formMeta = useRegistrationFormMeta();
 
     return (
-        <fieldset className="rounded-t-xl bg-background-more">
+        <fieldset className="rounded-t-surface bg-background-more">
             <div className="mx-5 vl:mx-20 mt-5 vl:mt-8 flex vl:flex-row flex-col vl:items-center gap-2 vl:gap-8 border-border-less border-b pb-5">
                 <FormHeading>{formMeta.fields.customer.label}</FormHeading>
 

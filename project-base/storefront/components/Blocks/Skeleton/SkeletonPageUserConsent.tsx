@@ -13,7 +13,7 @@ export const SkeletonPageUserConsent: FC = () => (
                 <SkeletonModulePageHero />
 
                 <div className="mx-auto flex w-full max-w-2xl flex-col gap-5">
-                    <div className="divide-y divide-border-less overflow-hidden rounded-xl border border-border-less bg-background-more">
+                    <div className="divide-y divide-border-less overflow-hidden rounded-card border border-border-less bg-background-more">
                         {[0, 1, 2].map((index) => (
                             <div className="flex min-h-16 items-center justify-between gap-4 px-4 py-3" key={index}>
                                 <Skeleton className="h-5 w-32" />

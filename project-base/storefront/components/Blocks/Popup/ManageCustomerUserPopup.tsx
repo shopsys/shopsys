@@ -210,7 +210,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
                                 {isRoleGroupsFetching ? (
                                     <div className="flex flex-col gap-2">
                                         {Array.from({ length: 5 }).map((_, index) => (
-                                            <Skeleton key={index} className="h-6 w-1/2 rounded" />
+                                            <Skeleton key={index} className="h-6 w-1/2 rounded-detail" />
                                         ))}
                                     </div>
                                 ) : (

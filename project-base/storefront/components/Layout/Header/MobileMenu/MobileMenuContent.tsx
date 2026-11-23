@@ -180,7 +180,7 @@ const MenuItems: FC<{
                         aria-label={viewAllItem.name}
                         className={twJoin(
                             getLinkClassName({ variant: 'navigation', tone: 'accent' }),
-                            'inline-flex shrink-0 items-center gap-1 rounded-md py-1 font-secondary font-semibold text-xs',
+                            'inline-flex shrink-0 items-center gap-1 rounded-detail py-1 font-secondary font-semibold text-xs',
                         )}
                         href={viewAllItem.link}
                         skeletonType={DEFAULT_SKELETON_TYPE}

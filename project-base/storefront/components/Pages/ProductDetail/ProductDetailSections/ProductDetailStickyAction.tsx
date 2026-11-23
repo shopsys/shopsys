@@ -20,7 +20,7 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
                 'flex min-w-0 items-center gap-1.5 vl:gap-3 xs:gap-2',
                 placement === 'inline' && 'w-auto shrink-0',
                 placement === 'floating' &&
-                    'fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 z-floatingAction mx-auto max-w-120 rounded-xl border border-border-less bg-background-default p-2 shadow-[0_8px_24px_rgba(0,0,0,0.24)]',
+                    'fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] left-4 z-floatingAction mx-auto max-w-120 rounded-card border border-border-less bg-background-default p-2 shadow-[0_8px_24px_rgba(0,0,0,0.24)]',
                 !isVisible && 'hidden',
             )}
             data-tid={TIDs.product_detail_sticky_action}

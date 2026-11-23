@@ -103,7 +103,7 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
             >
                 <p className="font-secondary font-semibold">{t('Article content')}</p>
 
-                <ul className="flex flex-col gap-2.5 rounded-xl bg-background-more p-5">
+                <ul className="flex flex-col gap-2.5 rounded-card bg-background-more p-5">
                     <ArticleAnchorNavigationLink
                         href={`#${ARTICLE_INTRODUCTION_ANCHOR_ID}`}
                         isActive={activeHeadingId === ARTICLE_INTRODUCTION_ANCHOR_ID}

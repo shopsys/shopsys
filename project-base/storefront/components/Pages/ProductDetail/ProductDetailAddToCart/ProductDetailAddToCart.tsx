@@ -111,7 +111,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     return (
         <div className={twJoin('relative flex w-full', !isFullWidth && 'sm:max-w-60')}>
             {isAddToCartPending && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-detail bg-background-more py-2 opacity-50" />
             )}
 
             <Button

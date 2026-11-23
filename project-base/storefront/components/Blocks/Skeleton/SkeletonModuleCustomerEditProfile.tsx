@@ -6,6 +6,6 @@ export const SkeletonModuleCustomerEditProfile: FC = () => (
     <SkeletonModuleCustomer>
         <SkeletonModulePageHero />
 
-        <Skeleton className="h-250 rounded-xl" />
+        <Skeleton className="h-250 rounded-card" />
     </SkeletonModuleCustomer>
 );

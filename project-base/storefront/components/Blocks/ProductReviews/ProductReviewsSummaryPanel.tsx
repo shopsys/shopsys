@@ -17,7 +17,7 @@ export const ProductReviewsSummaryPanel: FC<ProductReviewsSummaryPanelProps> = (
     const formattedAverageRating = formatAverageRating(averageRating, defaultLocale);
 
     return (
-        <div className="rounded-xl bg-background-more px-5 py-5 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:px-10">
+        <div className="rounded-card bg-background-more px-5 py-5 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:px-10">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10 lg:contents">
                 <div className="flex flex-col items-center gap-1">
                     <span className="font-bold font-secondary text-5xl">{formattedAverageRating}</span>

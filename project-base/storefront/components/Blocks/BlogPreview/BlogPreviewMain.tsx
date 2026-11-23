@@ -31,7 +31,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                     key={article.uuid}
                     title={t('Blog article')}
                 >
-                    <div className="relative aspect-video overflow-hidden rounded-xl xl:aspect-16/11">
+                    <div className="relative aspect-video overflow-hidden rounded-card xl:aspect-16/11">
                         <Image
                             fill
                             alt={getImageAlt(article.mainImage?.name, article.name)}
@@ -73,7 +73,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                         </div>
 
                         <h3 className="h4 text-text-inverted">
-                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-focus-background group-focus-visible:text-text-default!">
+                            <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible:bg-focus-background group-focus-visible:text-text-default!">
                                 {article.name}
                             </span>
                         </h3>

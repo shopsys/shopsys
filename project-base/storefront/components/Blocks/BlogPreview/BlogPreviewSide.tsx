@@ -32,7 +32,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                     key={article.uuid}
                     title={t('Blog article')}
                 >
-                    <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-xl xl:h-24 xl:w-36">
+                    <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-card xl:h-24 xl:w-36">
                         <Image
                             fill
                             alt={getImageAlt(article.mainImage?.name, article.name)}
@@ -74,7 +74,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                         </div>
 
                         <h3 className="h5 text-text-inverted">
-                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-focus-background group-focus-visible:text-text-default!">
+                            <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible:bg-focus-background group-focus-visible:text-text-default!">
                                 {article.name}
                             </span>
                         </h3>

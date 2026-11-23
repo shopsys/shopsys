@@ -184,15 +184,15 @@ export const DeliveryOptionsPopup: FC<DeliveryOptionsPopupProps> = ({ products, 
 
 const DeliveryOptionsPanelSkeleton: FC = () => (
     <div className="flex flex-col gap-2.5">
-        <Skeleton className="h-16 w-full" />
-        <Skeleton className="h-16 w-full" />
-        <Skeleton className="h-16 w-full" />
+        <Skeleton className="h-16 w-full rounded-card" />
+        <Skeleton className="h-16 w-full rounded-card" />
+        <Skeleton className="h-16 w-full rounded-card" />
     </div>
 );
 
 const getDeliveryOptionsPanelClassName = (isOpen: boolean): string =>
     twJoin(
-        'flex min-h-0 flex-col overflow-hidden max-lg:rounded-xl max-lg:border max-lg:transition',
+        'flex min-h-0 flex-col overflow-hidden max-lg:rounded-card max-lg:border max-lg:transition',
         isOpen
             ? 'max-lg:border-border-less max-lg:bg-background-default'
             : 'max-lg:border-transparent max-lg:bg-background-more max-lg:hover:border-border-less max-lg:hover:bg-background-default',

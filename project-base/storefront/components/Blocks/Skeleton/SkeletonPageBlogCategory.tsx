@@ -12,7 +12,7 @@ export const SkeletonPageBlogCategory: FC = () => (
 
         <div className="flex flex-col gap-6 xl:gap-10">
             <Webline>
-                <Skeleton className="h-48 rounded-xl" />
+                <Skeleton className="h-48 rounded-card" />
             </Webline>
 
             <Webline>
@@ -25,7 +25,7 @@ export const SkeletonPageBlogCategory: FC = () => (
                         </VerticalStack>
                     </div>
 
-                    <Skeleton className="h-11 vl:h-112.5 rounded-xl xl:w-75" />
+                    <Skeleton className="h-11 vl:h-112.5 rounded-card xl:w-75" />
                 </div>
             </Webline>
         </div>

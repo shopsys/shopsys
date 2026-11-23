@@ -15,9 +15,9 @@ export const SkeletonModuleFilterAndSortingBar: FC = () => (
                 <Skeleton className="h-9 w-32" />
             </div>
 
-            <Skeleton className="ml-auto h-4 w-20 rounded-sm" />
-            <Skeleton className="m-1.5 size-5 rounded-sm" />
-            <Skeleton className="m-1.5 size-5 rounded-sm" />
+            <Skeleton className="ml-auto h-4 w-20 rounded-detail" />
+            <Skeleton className="m-1.5 size-5 rounded-detail" />
+            <Skeleton className="m-1.5 size-5 rounded-detail" />
         </div>
     </>
 );

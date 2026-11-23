@@ -22,7 +22,7 @@ export const FilterGroupTitle: FC<{
             aria-controls={contentId}
             aria-expanded={isOpen}
             aria-label={ariaLabel}
-            className="flex w-full cursor-pointer items-center justify-between rounded-sm font-secondary font-semibold text-text-default uppercase transition hover:text-text-accent"
+            className="flex w-full cursor-pointer items-center justify-between rounded-detail font-secondary font-semibold text-text-default uppercase transition hover:text-text-accent"
             tabIndex={0}
             type="button"
             onClick={onClick}

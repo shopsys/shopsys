@@ -57,7 +57,7 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
             data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
             ref={forwardedRef}
             className={twMergeCustom(
-                'group relative grid select-text gap-2 rounded-xl border border-background-more bg-background-more p-3 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)]',
+                'group relative grid select-text gap-2 rounded-product-card border border-background-more bg-background-more p-3 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)]',
                 'hover:border-border-less hover:bg-background-default',
                 'sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center',
                 highlightBadgeText && 'bg-background-accent/20 hover:border-border-active',
@@ -70,10 +70,10 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                 </div>
             )}
 
-            <div className="grid xxl:w-full min-w-0 grid-cols-[80px_minmax(0,1fr)] xxl:grid-cols-[88px_minmax(0,280px)_200px_minmax(240px,1fr)] grid-rows-[auto_auto_0_auto_auto_auto] content-center gap-x-3 rounded-md has-[.product-list-reviews]:grid-rows-[auto_auto_auto_auto_auto_auto] xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,240px)] min-[1380px]:grid-cols-[88px_minmax(0,280px)_max-content]">
+            <div className="grid xxl:w-full min-w-0 grid-cols-[80px_minmax(0,1fr)] xxl:grid-cols-[88px_minmax(0,280px)_200px_minmax(240px,1fr)] grid-rows-[auto_auto_0_auto_auto_auto] content-center gap-x-3 rounded-product-card has-[.product-list-reviews]:grid-rows-[auto_auto_auto_auto_auto_auto] xl:w-fit xl:grid-cols-[88px_minmax(0,280px)_minmax(0,240px)] min-[1380px]:grid-cols-[88px_minmax(0,280px)_max-content]">
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="group/product-link col-start-1 col-end-3 xxl:col-end-5 row-start-1 row-end-7 grid min-w-0 grid-cols-subgrid grid-rows-subgrid rounded-md text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden xl:col-end-4"
+                    className="group/product-link col-start-1 col-end-3 xxl:col-end-5 row-start-1 row-end-7 grid min-w-0 grid-cols-subgrid grid-rows-subgrid rounded-product-card text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden xl:col-end-4"
                     data-focus-color="preserve"
                     draggable={false}
                     href={product.slug}
@@ -107,13 +107,13 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                     </div>
 
                     <h3 className="wrap-break-word col-start-2 row-start-2 mt-1.5 overflow-hidden font-secondary font-semibold text-sm group-hover/product-link:text-text-default xl:max-w-70">
-                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
+                        <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
-                        <div className="col-start-2 row-start-5 mt-1 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                        <div className="col-start-2 row-start-5 mt-1 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
                             <VariantIcon className="size-3 text-text-accent" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>
