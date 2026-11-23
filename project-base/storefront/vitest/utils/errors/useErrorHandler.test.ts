@@ -28,9 +28,9 @@ describe('useErrorHandler', () => {
         const error = new CombinedError({
             graphQLErrors: [
                 {
-                    message: 'Article not found.',
-                    path: ['article'],
-                    extensions: { userCode: 'article-not-found', code: 404 },
+                    message: 'Privacy policy article is not configured.',
+                    path: ['settings', 'privacyPolicyArticleUrl'],
+                    extensions: { userCode: 'article-not-found-privacy-policy', code: 404 },
                 },
             ],
         });
@@ -41,14 +41,17 @@ describe('useErrorHandler', () => {
         expect(logException).toHaveBeenCalledWith(error, {
             graphQLErrors: expect.any(String),
             networkError: undefined,
-            parsedApplicationError: { type: 'article-not-found', message: 'Article not found.' },
+            parsedApplicationError: {
+                type: 'article-not-found-privacy-policy',
+                message: 'Privacy policy article is not configured.',
+            },
             location: 'useErrorHandler',
         });
         expect(JSON.parse(vi.mocked(logException).mock.calls[0][1]?.graphQLErrors as string)).toEqual([
             {
-                message: 'Article not found.',
-                path: ['article'],
-                extensions: { userCode: 'article-not-found', code: 404 },
+                message: 'Privacy policy article is not configured.',
+                path: ['settings', 'privacyPolicyArticleUrl'],
+                extensions: { userCode: 'article-not-found-privacy-policy', code: 404 },
             },
         ]);
     });
