@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\HttpKernel\Profiler;
 
-use GuzzleHttp\Exception\InvalidArgumentException;
 use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use Override;
 use RuntimeException;
 use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
@@ -73,7 +73,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
         if (str_ends_with($profile->getUrl(), '/graphql/') && $profile->hasCollector('request')) {
             $collector = $profile->getCollector('request');
 
-            if ($collector instanceof RequestDataCollector) {
+            if ($collector instanceof RequestDataCollector && is_string($collector->getContent())) {
                 try {
                     $content = Json::decode($collector->getContent(), true);
 
@@ -82,11 +82,11 @@ class FileProfilerStorage extends BaseFileProfilerStorage
                         $re = '/(?<type>query|mutation)[^{]*{\s*(?<name>[a-zA-Z0-9]+)/m';
                         $matches = [];
 
-                        if (preg_match($re, $queryString, $matches) !== false) {
+                        if (preg_match($re, $queryString, $matches) === 1) {
                             $profile->setUrl($profile->getUrl() . ' - ' . $matches['type'] . ' ' . $matches['name']);
                         }
                     }
-                } catch (InvalidArgumentException) {
+                } catch (JsonException) {
                     return;
                 }
             }
