@@ -45,7 +45,7 @@
         "js-base64": "~3.9.4",
         "jwt-decode": "~4.0.0",
         "lz-string": "~1.5.0",
-        "next": "~15.5.28",
+        "next": "~15.5.29",
         "next-translate": "~3.2.0",
         "next-translate-plugin": "~3.2.0",
         "nprogress": "~0.2.0",
@@ -127,7 +127,7 @@
             "glob@>=9.0.0 <14.0.2": "~14.0.3"
         },
         "patchedDependencies": {
-            "next@15.5.28": "patches/next@15.5.28.patch",
+            "next@15.5.29": "patches/next@15.5.29.patch",
             "glob@7.2.3": "patches/glob@7.2.3.patch",
             "matcher-collection@2.0.1": "patches/matcher-collection@2.0.1.patch"
         }
