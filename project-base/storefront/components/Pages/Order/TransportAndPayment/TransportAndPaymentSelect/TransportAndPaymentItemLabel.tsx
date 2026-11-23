@@ -63,10 +63,10 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
         >
             <Image
                 alt={getImageAlt(image?.name, name)}
-                className="aspect-video h-7 object-contain object-center mix-blend-multiply"
-                height={28}
+                className="aspect-video h-8 object-contain object-center mix-blend-multiply"
+                height={32}
                 src={image?.url}
-                width={60}
+                width={68}
             />
         </div>
     );

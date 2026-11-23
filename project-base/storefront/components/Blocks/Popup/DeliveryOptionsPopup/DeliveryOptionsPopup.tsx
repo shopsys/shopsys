@@ -92,7 +92,7 @@ export const DeliveryOptionsPopup: FC<DeliveryOptionsPopupProps> = ({ products, 
                             data-tid={TIDs.delivery_options_address_panel}
                         >
                             <DeliveryOptionsPanel
-                                icon={<TruckClockIcon className="size-6" />}
+                                icon={<TruckClockIcon className="size-8" />}
                                 isDesktop={isDesktop === true}
                                 isOpen={openCollapsiblePanel === 'address'}
                                 panelId="delivery-options-address-panel-content"
@@ -117,7 +117,7 @@ export const DeliveryOptionsPopup: FC<DeliveryOptionsPopupProps> = ({ products, 
                             data-tid={TIDs.delivery_options_pickup_panel}
                         >
                             <DeliveryOptionsPanel
-                                icon={<StoreIcon className="size-6" />}
+                                icon={<StoreIcon className="size-8" />}
                                 isDesktop={isDesktop === true}
                                 isOpen={openCollapsiblePanel === 'pickup'}
                                 panelId="delivery-options-pickup-panel-content"

@@ -60,7 +60,7 @@ type TransportGroupIconProps = {
 
 const TransportGroupIcon: FC<TransportGroupIconProps> = ({ group, isOnGreyBackground }) => {
     const wrapperClassName = twJoin(
-        'flex h-10 w-14 min-w-14 items-center justify-center rounded-control text-icon-accent',
+        'flex h-12 w-20 min-w-20 items-center justify-center rounded-control text-icon-accent',
         isOnGreyBackground ? 'bg-background-default' : 'bg-background-more',
     );
 
@@ -72,10 +72,10 @@ const TransportGroupIcon: FC<TransportGroupIconProps> = ({ group, isOnGreyBackgr
         <span className={wrapperClassName}>
             <Image
                 alt={getImageAlt(group.mainImage.name, group.name)}
-                className="h-6 object-contain object-center mix-blend-multiply"
-                height={24}
+                className="h-8 object-contain object-center mix-blend-multiply"
+                height={32}
                 src={group.mainImage.url}
-                width={40}
+                width={56}
             />
         </span>
     );

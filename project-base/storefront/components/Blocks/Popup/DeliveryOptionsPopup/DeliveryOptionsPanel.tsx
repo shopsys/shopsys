@@ -39,7 +39,7 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
             >
                 <span
                     className={twJoin(
-                        'flex h-10 w-14 min-w-14 items-center justify-center rounded-control text-icon-accent',
+                        'flex h-12 w-20 min-w-20 items-center justify-center rounded-control text-icon-accent',
                         isOpen ? 'bg-background-more' : 'bg-background-default',
                     )}
                 >
