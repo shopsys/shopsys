@@ -1,4 +1,4 @@
-import { CheckmarkDoneIcon } from 'components/Basic/Icon/CheckmarkDoneIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
 import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { PackageUnavailableIcon } from 'components/Basic/Icon/PackageUnavailableIcon';
@@ -16,7 +16,7 @@ export const ProductAvailabilityIcon: FC<ProductAvailabilityIconProps> = ({ stat
 
 const availabilityIconByStatus: Record<TypeAvailabilityStatusEnum, SvgFC> = {
     [TypeAvailabilityStatusEnum.Digital]: DownloadIcon,
-    [TypeAvailabilityStatusEnum.InStock]: CheckmarkDoneIcon,
+    [TypeAvailabilityStatusEnum.InStock]: CheckmarkRoundIcon,
     [TypeAvailabilityStatusEnum.ExpectedRestock]: ClockIcon,
     [TypeAvailabilityStatusEnum.OutOfStock]: PackageUnavailableIcon,
 };

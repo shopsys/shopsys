@@ -10,11 +10,12 @@ import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
-import { CheckmarkDoneIcon } from 'components/Basic/Icon/CheckmarkDoneIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
 import { ChevronEmptyDotIcon } from 'components/Basic/Icon/ChevronEmptyDotIcon';
 import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { CloseRoundIcon } from 'components/Basic/Icon/CloseRoundIcon';
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
@@ -53,7 +54,6 @@ import { PackageUnavailableIcon } from 'components/Basic/Icon/PackageUnavailable
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
-import { RejectedIcon } from 'components/Basic/Icon/RejectedIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
@@ -112,12 +112,12 @@ export const StyleguideIcons = () => (
             <code className="text-center text-xs break-all">CheckmarkBadgeIcon</code>
         </div>
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
-            <CheckmarkDoneIcon className="size-8" />
-            <code className="text-center text-xs break-all">CheckmarkDoneIcon</code>
-        </div>
-        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
             <CheckmarkIcon className="size-8" />
             <code className="text-center text-xs break-all">CheckmarkIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CheckmarkRoundIcon className="size-8" />
+            <code className="text-center text-xs break-all">CheckmarkRoundIcon</code>
         </div>
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
             <ChevronEmptyDotIcon className="size-8" />
@@ -130,6 +130,10 @@ export const StyleguideIcons = () => (
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
             <CloseIcon className="size-8" />
             <code className="text-center text-xs break-all">CloseIcon</code>
+        </div>
+        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
+            <CloseRoundIcon className="size-8" />
+            <code className="text-center text-xs break-all">CloseRoundIcon</code>
         </div>
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
             <CompareFilledIcon className="size-8" />
@@ -282,10 +286,6 @@ export const StyleguideIcons = () => (
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
             <PlusIcon className="size-8" />
             <code className="text-center text-xs break-all">PlusIcon</code>
-        </div>
-        <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
-            <RejectedIcon className="size-8" />
-            <code className="text-center text-xs break-all">RejectedIcon</code>
         </div>
         <div className="flex flex-col items-center gap-3 rounded-lg border border-border-less p-4">
             <SearchIcon className="size-8" />

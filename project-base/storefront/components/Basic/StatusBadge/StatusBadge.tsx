@@ -25,7 +25,7 @@ export const StatusBadge: FC<StatusBadgeProps> = ({ children, className, icon: I
                 className,
             )}
         >
-            {Icon && <Icon aria-hidden="true" className="size-3 **:stroke-[2.5]" focusable="false" />}
+            {Icon && <Icon aria-hidden="true" className="size-4 **:stroke-[2.5]" focusable="false" />}
             {children}
         </span>
     );

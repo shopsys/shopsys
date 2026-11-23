@@ -1,6 +1,6 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
 import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
-import { RejectedIcon } from 'components/Basic/Icon/RejectedIcon';
+import { CloseRoundIcon } from 'components/Basic/Icon/CloseRoundIcon';
 import { StatusBadge, StatusBadgeVariant } from 'components/Basic/StatusBadge/StatusBadge';
 import { TypeProductReviewStatusEnum } from 'graphql/types';
 import { type ElementType } from 'react';
@@ -27,8 +27,8 @@ export const ReviewStatus: FC<ReviewStatusProps> = ({ status }) => {
 
     const statusIcons: Record<TypeProductReviewStatusEnum, ElementType> = {
         [TypeProductReviewStatusEnum.Pending]: ClockIcon,
-        [TypeProductReviewStatusEnum.Approved]: CheckmarkIcon,
-        [TypeProductReviewStatusEnum.Rejected]: RejectedIcon,
+        [TypeProductReviewStatusEnum.Approved]: CheckmarkRoundIcon,
+        [TypeProductReviewStatusEnum.Rejected]: CloseRoundIcon,
     };
 
     return (
