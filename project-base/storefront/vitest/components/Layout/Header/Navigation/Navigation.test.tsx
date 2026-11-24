@@ -180,7 +180,12 @@ describe('Navigation', () => {
 
         await user.keyboard('{ArrowDown}');
 
-        expect(await screen.findByRole('link', { name: 'Televisions' })).toHaveFocus();
+        const categoryLink = await screen.findByRole('link', { name: 'Televisions' });
+
+        // The menu opens in a transition, so its effect moves focus to the first link after the link is rendered.
+        await waitFor(() => {
+            expect(categoryLink).toHaveFocus();
+        });
         expect(navigationTrigger).toHaveAttribute('aria-expanded', 'true');
 
         await user.keyboard('{Escape}');
