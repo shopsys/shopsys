@@ -25,7 +25,7 @@ For implementation details, see:
     - `frame-ancestors 'self'` blocks clickjacking from other origins
     - `default-src 'self' https: ...` keeps resource loading restrictive while allowing standard HTTPS integrations
     - `script-src` explicitly allows only platform-required script sources
-- Configurable by superadmin in: `Admin > Superadmin > CSP Header Setting`
+- Configurable by superadmin in: `Settings > Superadmin > Content-Security-Policy header`
 - Applied to HTML responses (admin/storefront); not intended as a protection mechanism for static files or API payloads
 
 ### X-Frame-Options

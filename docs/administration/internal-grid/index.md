@@ -100,7 +100,7 @@ class AdministratorInlineEdit extends AbstractGridInlineEdit
 
 - **Display only**
     - When you just need to display some data to the user.
-    - e.g., `Marketing > XML Feeds`
+    - e.g., `Integrations > XML Feeds`
 - **Display with action**
     - When you need to perform some actions on the grid entries, such as deletion.
     - e.g., `Marketing > Email newsletter`
