@@ -14,6 +14,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -45,6 +46,41 @@ class OrderMailTest extends TransactionFunctionalTestCase
      * @inject
      */
     private DateTimeFormatterExtension $dateTimeFormatterExtension;
+
+    /**
+     * @inject
+     */
+    private Environment $twig;
+
+    /**
+     * @inject
+     */
+    private ImageFacade $imageFacade;
+
+    public function testTransportInfoOmitsOnlySvgLogo(): void
+    {
+        $order = $this->getReference('order_1', Order::class);
+        $item = $order->getTransportItem();
+        $transport = $item->getTransport();
+        $this->assertNotNull($transport);
+        $logo = $this->imageFacade->getImageByEntity($transport, null);
+        $this->assertSame('png', $logo->getExtension());
+
+        $variables = [
+            'order' => $order,
+            'orderTransportItem' => $item,
+            'orderLocale' => 'en',
+            'orderTransportTotalPrice' => $this->orderItemPriceCalculation->calculateTotalPrice($item),
+            'displayPrice' => MailDisplayPriceResolver::DISPLAY_PRICE_WITH_VAT,
+        ];
+        $template = $this->twig->load('@ShopsysFramework/Mail/Order/transportInfo.html.twig');
+        $this->assertStringContainsString('<img', $template->render($variables));
+
+        $logo->setFileAsUploaded('image', 'logo.svg');
+        $html = $template->render($variables);
+        $this->assertStringNotContainsString('<img', $html);
+        $this->assertStringContainsString($item->getName(), $html);
+    }
 
     public function testGetMailTemplateNameByStatus(): void
     {

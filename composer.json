@@ -124,6 +124,7 @@
         "heureka/overeno-zakazniky": "^4.0.1",
         "hybridauth/hybridauth": "^3.13.0",
         "jdorn/sql-formatter": "^1.2",
+        "itools/svgsecuritycheck": "^1.0",
         "jms/metadata": "^2.6.1",
         "jms/serializer-bundle": "^5.0",
         "jms/translation-bundle": "^2.2.1",

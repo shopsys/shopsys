@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use League\Flysystem\FilesystemOperator;
 use Override;
+use Shopsys\FrameworkBundle\Component\ClassExtension\ExtendedClassNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Constraints\FileExtensionMaxLength;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -27,8 +31,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class AbstractFileUploadType extends AbstractType implements DataTransformerInterface
 {
-    public function __construct(private readonly FileUpload $fileUpload)
-    {
+    public function __construct(
+        private readonly FileUpload $fileUpload,
+        private readonly FilesystemOperator $filesystem,
+    ) {
     }
 
     #[Override]
@@ -129,6 +135,18 @@ final class AbstractFileUploadType extends AbstractType implements DataTransform
 
             $validator = $context->getValidator();
             $violations = $validator->validate($file, $fileConstraints);
+
+            $field = $context->getObject();
+
+            if (count($violations) === 0
+                && $field instanceof FormInterface
+                && $field->getParent()?->getData() instanceof ImageUploadData
+                && !ExtendedClassNameResolver::resolve(ImageProcessor::class)::isValidImageContent($this->filesystem->read($filepath), $file->getExtension())
+            ) {
+                $context->buildViolation('This file is not a valid image.')
+                    ->atPath('[' . $key . ']')
+                    ->addViolation();
+            }
 
             foreach ($violations as $violation) {
                 $context->buildViolation($violation->getMessageTemplate())

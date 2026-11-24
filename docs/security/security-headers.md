@@ -28,7 +28,7 @@ For implementation details, see:
 - Configurable by superadmin in: `Admin > Superadmin > CSP Header Setting`
 - Applies to HTML responses in the administration and storefront
 
-Administrators can upload SVG logos for transports and transport groups. When nginx serves an uploaded SVG from `content/images/` or `content-test/images/`, including under a domain path prefix, it sends a separate policy:
+Administrators can upload self-contained SVG logos for transports and transport groups. The framework validates SVG content before generating a preview or storing the image and rejects active content and external references. When nginx serves an uploaded SVG from `content/images/` or `content-test/images/`, including under a domain path prefix, it sends a separate policy:
 
 ```http
 Content-Security-Policy: sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:

@@ -64,6 +64,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^13.0",
         "heureka/overeno-zakazniky": "^4.0.1",
+        "itools/svgsecuritycheck": "^1.0",
         "jms/metadata": "^2.6.1",
         "jms/translation-bundle": "^2.2.1",
         "knplabs/knp-menu-bundle": "^3.5",
