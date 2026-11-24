@@ -22,15 +22,8 @@ export const RouteAnnouncer: FC = () => {
     const { t } = useTranslation();
     const router = useRouter();
 
-    const { hadClientSideNavigation, isPageLoading } = useSessionStore(
-        useCallback(
-            (state) => ({
-                hadClientSideNavigation: state.hadClientSideNavigation,
-                isPageLoading: state.isPageLoading,
-            }),
-            [],
-        ),
-    );
+    const hadClientSideNavigation = useSessionStore((state) => state.hadClientSideNavigation);
+    const isPageLoading = useSessionStore((state) => state.isPageLoading);
 
     const [message, setMessage] = useState<string>('');
     const lastAnnouncedRef = useRef<string>('');

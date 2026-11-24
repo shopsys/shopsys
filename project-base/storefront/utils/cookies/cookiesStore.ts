@@ -1,11 +1,12 @@
 import { getPublicConfigProperty } from 'envConfig';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getCookies, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next/client';
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { ProductListViewModeType } from 'types/product';
 import { getCookieName } from 'utils/cookies/cookieNaming';
+import { getCookies } from 'utils/cookies/getCookies';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getIsHttps } from 'utils/requestProtocol';
 import { v4 as uuidV4 } from 'uuid';
@@ -44,7 +45,7 @@ export const getCookiesStoreState = (
 ): CookiesStoreState => {
     const cookiesStoreName = getCookiesStoreName(domainConfig);
 
-    const cookies = getCookies(context) as Record<string, string>;
+    const cookies = getCookies(context);
 
     const cookiesStore = cookies[cookiesStoreName];
     const newState = getDefaultCookiesStoreState();

@@ -33,7 +33,7 @@ const refreshTokens = async (
 
     if (refreshToken === undefined) {
         if (context) {
-            removeTokensFromCookies(domainConfig, context);
+            await removeTokensFromCookies(domainConfig, context);
         } else {
             removeAccessTokenFromCookies(domainConfig);
             await clearAuthCookies(domainConfig, signal);
@@ -68,7 +68,7 @@ const refreshTokens = async (
 
     if (!tokens) {
         if (context) {
-            removeTokensFromCookies(domainConfig, context);
+            await removeTokensFromCookies(domainConfig, context);
         } else {
             removeAccessTokenFromCookies(domainConfig);
         }
@@ -81,7 +81,7 @@ const refreshTokens = async (
     }
 
     if (context) {
-        setTokensToCookies(tokens.accessToken, tokens.refreshToken, domainConfig, context);
+        await setTokensToCookies(tokens.accessToken, tokens.refreshToken, domainConfig, context);
     }
 };
 

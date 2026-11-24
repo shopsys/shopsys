@@ -1,8 +1,8 @@
 import { cleanup, render, waitFor } from '@testing-library/react';
 import gql from 'graphql-tag';
-import { RedisClientType } from 'redis';
 import { Provider, ssrExchange, useQuery } from 'urql';
 import { createClient } from 'urql/createClient';
+import type { AppRedisClient } from 'utils/redis/redisClient';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
 const mockRequestWithFetcher = vi.fn(async () => undefined);
@@ -15,7 +15,7 @@ const mockRedisClientGet = vi.fn((): string | null => null);
 const mockRedisClient = {
     get: mockRedisClientGet,
     set: vi.fn(() => null),
-} as unknown as RedisClientType;
+} as unknown as AppRedisClient;
 
 const QUERY_OBJECT = gql`
     query NotificationBars @redisCache(ttl: 3600) {
