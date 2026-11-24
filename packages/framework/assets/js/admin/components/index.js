@@ -1,3 +1,4 @@
+import './ActionBar';
 import './AdditionalService';
 import './Advert';
 import './AdministratorForm';

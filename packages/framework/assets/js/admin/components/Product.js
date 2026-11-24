@@ -4,10 +4,13 @@ import Register from '../../common/utils/Register';
 export default class Product {
     static defaultHeaderHeight = 100;
 
+    static floatingButtonGapAboveActionBar = 16;
+
     static init($container) {
         Product.initializeSideNavigation($container);
         Product.initBackToTopButton();
         Product.initMobileTOC();
+        Product.initFloatingButtonPosition($container);
     }
 
     static initializeSideNavigation($container) {
@@ -106,26 +109,46 @@ export default class Product {
         });
     }
 
+    static initFloatingButtonPosition($container) {
+        const isFloatingButtonInContainer = $container.filterAllNodes('.js-mobile-toc-button').length > 0;
+        const actionBar = document.querySelector('.js-action-bar-bottom');
+
+        if (!isFloatingButtonInContainer || actionBar === null) return;
+
+        const adjustFloatingButtonPositionAfterActionBarMove = event => {
+            if (event.target === actionBar) {
+                Product.adjustFloatingButtonPosition();
+            }
+        };
+
+        // The action bar wraps into more rows on narrow screens and grows when the unsaved changes info appears
+        new ResizeObserver(() => Product.adjustFloatingButtonPosition()).observe(actionBar);
+        // The action bar slides above the Symfony toolbar with a transition in the dev environment
+        actionBar.addEventListener('transitionend', adjustFloatingButtonPositionAfterActionBarMove);
+    }
+
     static adjustFloatingButtonPosition() {
-        const $floatingButton = $('.js-mobile-toc-button');
+        const floatingButton = document.querySelector('.js-mobile-toc-button');
+        const actionBar = document.querySelector('.js-action-bar-bottom');
 
-        if ($floatingButton.length === 0) return;
+        if (floatingButton === null) return;
 
-        const $sfToolbar = $('[id^="sfToolbarMainContent-"]');
+        if (actionBar === null) {
+            floatingButton.style.bottom = '';
 
-        if ($sfToolbar.length > 0 && $sfToolbar.is(':visible')) {
-            const toolbarHeight = $sfToolbar.outerHeight() || 0;
-            $floatingButton.css('bottom', `${toolbarHeight + 70}px`);
-        } else {
-            $floatingButton.css('bottom', '');
+            return;
         }
+
+        const actionBarBottom = parseFloat(window.getComputedStyle(actionBar).bottom) || 0;
+        const actionBarTop = actionBarBottom + actionBar.offsetHeight;
+
+        floatingButton.style.bottom = `${actionBarTop + Product.floatingButtonGapAboveActionBar}px`;
     }
 
     static initBackToTopButton() {
         const $backToTopButton = $('.js-back-to-top-button');
-        const $mobileTocButton = $('.js-mobile-toc-button');
 
-        if ($backToTopButton.length === 0 && $mobileTocButton.length === 0) return;
+        if ($backToTopButton.length === 0) return;
 
         const headerHeight = Product.defaultHeaderHeight;
 
@@ -153,23 +176,6 @@ export default class Product {
                 $backToTopButton.addClass('d-none');
             }
         });
-
-        // Adjust position when Symfony toolbar is toggled
-        $(document).on('click', '[id^="sfToolbarHideButton-"], [id^="sfToolbarMiniToggler-"]', () => {
-            setTimeout(() => {
-                Product.adjustFloatingButtonPosition();
-            }, 100);
-        });
-
-        // Adjust position on window resize
-        $(window).on('resize', () => {
-            Product.adjustFloatingButtonPosition();
-        });
-
-        // Initial position adjustment
-        setTimeout(() => {
-            Product.adjustFloatingButtonPosition();
-        }, 500);
     }
 }
 
