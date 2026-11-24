@@ -245,7 +245,7 @@ msgid "Bestselling products"
 msgstr "Najpredávanejšie produkty"
 
 msgid "Billing address"
-msgstr "Faktúračná adresa"
+msgstr "Fakturačná adresa"
 
 msgid "Billing details saved."
 msgstr "Fakturačné údaje uložené."
@@ -440,7 +440,7 @@ msgid "Content"
 msgstr "Obsah"
 
 msgid "Content-Security-Policy header"
-msgstr "Content-Security-Policy hlavička"
+msgstr "Hlavička Content-Security-Policy"
 
 msgid "Content-Security-Policy header setting"
 msgstr "Nastavenie Content-Security-Policy hlavičky"
@@ -635,7 +635,7 @@ msgid "Customer user role group"
 msgstr "Skupina rolí používateľa zákazníka"
 
 msgid "Customer user role groups"
-msgstr "Skupiny rolí zákaznických používateľov"
+msgstr "Skupiny práv zákazníkov"
 
 msgid "Customer users"
 msgstr "Zákaznícki používatelia"
@@ -647,7 +647,7 @@ msgid "Customers overview"
 msgstr "Prehľad zákazníkov"
 
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Nástenka"
 
 msgid "Date"
 msgstr "Dátum"
@@ -809,7 +809,7 @@ msgid "E-mail"
 msgstr "E-mail"
 
 msgid "E-mail whitelist"
-msgstr "Whitelist e-mailových adres"
+msgstr "Whitelist e-mailových adries"
 
 msgid "E-mail whitelist settings"
 msgstr "Nastavenia bieleho zoznamu e-mailov"
@@ -944,7 +944,7 @@ msgid "Email allowed recipients (whitelist)"
 msgstr "Povolení príjemcovia e-mailov (whitelist)"
 
 msgid "Email settings"
-msgstr "Nastavenia e-mailu"
+msgstr "Nastavenia e-mailov"
 
 msgid "Email template"
 msgstr "E-mailová šablóna"
@@ -1073,7 +1073,7 @@ msgid "Free from order value"
 msgstr "Zadarmo od hodnoty objednávky"
 
 msgid "Free shipping and payment"
-msgstr "Bezplatná doprava a platba"
+msgstr "Doprava a platba zadarmo"
 
 msgid "Friday"
 msgstr "Piatok"
@@ -1586,7 +1586,7 @@ msgid "Note saved."
 msgstr "Poznámka uložená."
 
 msgid "Notification bar"
-msgstr "Panel s upozorneniami"
+msgstr "Notifikačná lišta"
 
 msgid "Notification bars"
 msgstr "Panely s upozorneniami"
@@ -1628,7 +1628,7 @@ msgid "Order URL address"
 msgstr "URL adresa objednávky"
 
 msgid "Order confirmation page"
-msgstr "Stránka potvrdenia objednávky"
+msgstr "Stránka s potvrdením objednávky"
 
 msgid "Order detail"
 msgstr "Detail objednávky"
@@ -1751,7 +1751,7 @@ msgid "Personal information export"
 msgstr "Export osobných informácií"
 
 msgid "Personal information overview"
-msgstr "Prehľad osobných informácií"
+msgstr "Prehľad osobných údajov"
 
 msgid "Phone"
 msgstr "Telefón"
@@ -1766,7 +1766,7 @@ msgid "Pin"
 msgstr "Pripnúť"
 
 msgid "Please check the correctness of all data filled."
-msgstr "Prosím skontrolujte správnosť všetkých vyplnených údajov."
+msgstr "Prosím, skontrolujte správnosť všetkých vyplnených údajov."
 
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr "Ospravedlňujeme sa za túto chybu, pracujeme na jej oprave. V prípade potreby nás kontaktujte e-mailom alebo telefonicky."
@@ -1856,7 +1856,7 @@ msgid "Promo code"
 msgstr "Promo kód"
 
 msgid "Promo codes"
-msgstr "Promo kódy"
+msgstr "Zľavové kupóny"
 
 msgid "Promo codes - generated batches"
 msgstr "Zľavové kupóny - vygenerované dávky"
@@ -1928,7 +1928,7 @@ msgid "Refundable amount"
 msgstr "Refundovateľná čiastka"
 
 msgid "Refunded amount"
-msgstr "Refundovaná čiastka"
+msgstr "Vrátená suma"
 
 msgid "Refunded amount has been changed."
 msgstr "Refundovaná čiastka bola zmenená."
@@ -2294,7 +2294,7 @@ msgid "Storefront URL:"
 msgstr "URL na storefrontu:"
 
 msgid "Stores"
-msgstr "Obchody"
+msgstr "Predajne"
 
 msgid "Street"
 msgstr "Ulica"
@@ -2312,7 +2312,7 @@ msgid "Sunday"
 msgstr "Nedeľa"
 
 msgid "Super Administrator"
-msgstr "Super Administrator"
+msgstr "Super administrátor"
 
 msgid "Superadmin - URL addresses"
 msgstr "Superadmin - URL adresy"
@@ -2345,7 +2345,7 @@ msgid "Terms and conditions"
 msgstr "Obchodné podmienky"
 
 msgid "Terms and conditions settings"
-msgstr "Nastavenia Terms and conditions"
+msgstr "Nastavenia obchodných podmienok"
 
 msgid "Text"
 msgstr "Text"
@@ -2492,10 +2492,10 @@ msgid "Transfers"
 msgstr "Transfery"
 
 msgid "Transport group"
-msgstr "Skupina dopravy"
+msgstr "Skupina dopráv"
 
 msgid "Transport groups"
-msgstr "Skupiny dopravy"
+msgstr "Skupiny dopráv"
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."
 msgstr "Skúste upraviť svoje vyhľadávanie alebo filter, aby ste našli, čo hľadáte, alebo vytvorte nový záznam, ak je to potrebné."
@@ -2552,7 +2552,7 @@ msgid "Unregistered"
 msgstr "Neregistrovaný"
 
 msgid "Unused friendly URL list"
-msgstr "Zoznam Unused friendly URL"
+msgstr "Zoznam nepoužívaných pekných URL"
 
 msgid "Unused friendly URLs"
 msgstr "Zoznam nepoužívaných pekných URL"
@@ -2561,7 +2561,7 @@ msgid "Upload files"
 msgstr "Nahrať súbory"
 
 msgid "Upon inquiry"
-msgstr "Na dopytovanie"
+msgstr "Na dopyt"
 
 msgid "Upon inquiry [abbreviation]"
 msgstr "?"

@@ -437,7 +437,7 @@ msgid "Bestselling products"
 msgstr "Najpredávanejšie produkty"
 
 msgid "Billing address"
-msgstr "Fúktúračná adresa"
+msgstr "Fakturačná adresa"
 
 msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Fúktúračná adresa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> upravená"
@@ -623,7 +623,7 @@ msgid "City"
 msgstr "Mesto"
 
 msgid "Clean Storefront Cache"
-msgstr "Vymazať cache obchodu"
+msgstr "Vymazať Storefront cache"
 
 msgid "Close"
 msgstr "Zavrieť"
@@ -743,7 +743,7 @@ msgid "Content"
 msgstr "Obsah"
 
 msgid "Content-Security-Policy header"
-msgstr "Content-Security-Policy hlavička"
+msgstr "Hlavička Content-Security-Policy"
 
 msgid "Content-Security-Policy header has been set."
 msgstr "Content-Security-Policy hlavička bola nastavená."
@@ -902,7 +902,7 @@ msgid "Customer user role group <strong>{{ name }}</strong> deleted."
 msgstr "Skupina rolí zákaznického používateľa <strong>{{ name }}</strong> bola odstránená."
 
 msgid "Customer user role groups"
-msgstr "Skupiny rolí zákaznických používateľov"
+msgstr "Skupiny práv zákazníkov"
 
 msgid "Customer with ID %customerId% not found."
 msgstr "Zákazník s ID %customerId% nebol nájdený."
@@ -911,7 +911,7 @@ msgid "Customers"
 msgstr "Zákazníci"
 
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Nástenka"
 
 msgid "Date"
 msgstr "Dátum"
@@ -1124,7 +1124,7 @@ msgid "Do you really want to %action% %count% product?"
 msgstr "Naozaj chcete %action% %count% produkt?"
 
 msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
-msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpojný od príbuzných záznamov."
+msgstr "Naozaj chcete odstrániť tento súbor? Bude trvalo odstránený a odpojený od príbuzných záznamov."
 
 msgid "Do you really want to discard all changes?"
 msgstr "Naozaj chcete zahoidiť všetky zmeny?"
@@ -1253,7 +1253,7 @@ msgid "E-mail addresses whitelist"
 msgstr "Biely zoznam e-mailových adries"
 
 msgid "E-mail whitelist"
-msgstr "Whitelist e-mailových adres"
+msgstr "Whitelist e-mailových adries"
 
 msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
 msgstr "Biely zoznam e-mailov je momentálne vynútený premennou prostredia MAILER_FORCE_WHITELIST. Biely zoznam je vždy aktívny."
@@ -1433,7 +1433,7 @@ msgid "Email name"
 msgstr "Názov e-mailu"
 
 msgid "Email settings"
-msgstr "Nastavenia e-mailu"
+msgstr "Nastavenia e-mailov"
 
 msgid "Email settings modified."
 msgstr "Nastavenia emailu boli upravené."
@@ -1538,7 +1538,7 @@ msgid "Ext."
 msgstr "Ext."
 
 msgid "Extended SEO categories"
-msgstr "Rozšérené SEO kategórie"
+msgstr "Rozšírené SEO kategórie"
 
 msgid "Extended SEO category - category selection"
 msgstr "Rozšírená SEO kategória - výber kategórie"
@@ -1721,7 +1721,7 @@ msgid "Free return shipping"
 msgstr "Vrátenie s dopravou zadarmo"
 
 msgid "Free shipping and payment"
-msgstr "Bezplatná doprava a platba"
+msgstr "Doprava a platba zadarmo"
 
 msgid "Free shipping and payment settings saved"
 msgstr "Nastavenia bezplatného doručovania a platby uložené"
@@ -1754,7 +1754,7 @@ msgid "Generated"
 msgstr "Generované"
 
 msgid "Generated batches"
-msgstr "Generované dávky"
+msgstr "Vygenerované dávky"
 
 msgid "Gift packaging"
 msgstr "Darčekové balenie"
@@ -1931,7 +1931,7 @@ msgid "Input price without VAT"
 msgstr "Vstupná cena bez DPH"
 
 msgid "Inquiries"
-msgstr "Dopyt"
+msgstr "Dopyty"
 
 msgid "Inquiry ID"
 msgstr "ID dopytu"
@@ -2102,7 +2102,7 @@ msgid "Maximal duration from all runs in last seven days"
 msgstr "Maximálne trvanie zo všetkých behov za posledných sedem dní"
 
 msgid "Measurement units"
-msgstr "Merací jednotky"
+msgstr "Merné jednotky"
 
 msgid "Message"
 msgstr "Správa"
@@ -2135,7 +2135,7 @@ msgid "Modifications"
 msgstr "Modifikácie"
 
 msgid "Modules"
-msgstr "Moduly"
+msgstr "Zapínacie moduly"
 
 msgid "Modules configuration modified"
 msgstr "Konfigurácia modulov upravená"
@@ -2204,7 +2204,7 @@ msgid "New administrator role group"
 msgstr "Nová skupina rolí administrátora"
 
 msgid "New blog article"
-msgstr "Nový blogu článok"
+msgstr "Nový blogový článok"
 
 msgid "New blog category"
 msgstr "Nová kategória blogu"
@@ -2366,7 +2366,7 @@ msgid "Order Nr."
 msgstr "Č. objednávky"
 
 msgid "Order confirmation page"
-msgstr "Stránka potvrdenia objednávky"
+msgstr "Stránka s potvrdením objednávky"
 
 msgid "Order confirmation page content modified"
 msgstr "Obsah stránky potvrdenia objednávky upravený"
@@ -2429,7 +2429,7 @@ msgid "Other"
 msgstr "Iné"
 
 msgid "Overwrite Price list"
-msgstr "Zoznam Overwrite Price"
+msgstr "Prepísať cenník"
 
 msgid "PSD2 payment declined"
 msgstr "PSD2 platba zamietnutá"
@@ -2660,7 +2660,7 @@ msgid "Personal information export"
 msgstr "Export osobných informácií"
 
 msgid "Personal information overview"
-msgstr "Prehľad Personal information"
+msgstr "Prehľad osobných údajov"
 
 msgid "Personal pickup"
 msgstr "Osobný odber"
@@ -2726,13 +2726,13 @@ msgid "Price comparison feeds"
 msgstr "Porovnávače tovaru"
 
 msgid "Price including VAT"
-msgstr "Cena including DPH"
+msgstr "Cena vrátane DPH"
 
 msgid "Price including VAT rounding"
 msgstr "Zaokrúhlenie ceny s DPH"
 
 msgid "Price list overview"
-msgstr "Prehľad Price list"
+msgstr "Prehľad cenníkov"
 
 msgid "Prices"
 msgstr "Ceny"
@@ -2969,7 +2969,7 @@ msgid "Replace file"
 msgstr "Nahradiť súbor"
 
 msgid "Requested at"
-msgstr "Dátum žiadosti"
+msgstr "Vyžiadané dňa"
 
 msgid "Required when the photo is rejected."
 msgstr "Povinné pri zamietnutí fotografie."
@@ -3008,7 +3008,7 @@ msgid "Role Group"
 msgstr "Skupina rolí"
 
 msgid "Role Groups"
-msgstr "Skupiny rolí"
+msgstr "Skupiny práv"
 
 msgid "Role group <strong>{{ roleGroupName }}</strong> cannot be deleted, because some customer users are using it"
 msgstr "Skupina rolí <strong>{{ roleGroupName }}</strong> nemôže byť odstránená, pretože ju používajú niečí zákaznícki používatelia"
@@ -3062,7 +3062,7 @@ msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been 
 msgstr "SEO kombinácia kategórie s ID {{ ReadyCategorySeoMixId }} bola odstránená"
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
-msgstr "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was sa nenašli"
+msgstr "SEO kombinácia kategórie s ID {{ ReadyCategorySeoMixId }} nebola odstránená, pretože sa nenašla"
 
 msgid "SEO pages"
 msgstr "SEO stránky"
@@ -3074,7 +3074,7 @@ msgid "Sales"
 msgstr "Predaj"
 
 msgid "Sales including/excluding VAT settings"
-msgstr "Nastavenia Sales including/excluding VAT"
+msgstr "Nastavenie predaja s/bez DPH"
 
 msgid "Sales representative"
 msgstr "Obchodný zástupca"
@@ -3095,7 +3095,7 @@ msgid "Save and close"
 msgstr "Uložiť a zavrieť"
 
 msgid "Save changes"
-msgstr "Uložiť changes"
+msgstr "Uložiť zmeny"
 
 msgid "Save default VAT rate"
 msgstr "Uložiť predvolenú sadzbu DPH"
@@ -3113,7 +3113,7 @@ msgid "Save gift price setting"
 msgstr "Uložiť nastavenie ceny darčeka"
 
 msgid "Save warehouse settings"
-msgstr "Uložiť warehouse settings"
+msgstr "Uložiť nastavenia skladu"
 
 msgid "Schedule"
 msgstr "Rozvrh"
@@ -3338,7 +3338,7 @@ msgid "Show in price comparison feeds"
 msgstr "Zobrazovať vo feedoch pre porovnávače tovaru"
 
 msgid "Show in the category"
-msgstr "Zobraziť in the category"
+msgstr "Zobraziť v rázcestníku"
 
 msgid "Site"
 msgstr "Stránka"
@@ -3368,7 +3368,7 @@ msgid "Status of complaint with number {complaint_number} from order number {ord
 msgstr "Stav reklamac­e s číslom {complaint_number} z objednávky číslo {order_number} vytvorenej dňa {date} sa zmenil"
 
 msgid "Status of complaints"
-msgstr "Stav reklamacía"
+msgstr "Stavy reklamácií"
 
 msgid "Status of complaints <strong>{{ name }}</strong> deleted"
 msgstr "Stav reklámácií <strong>{{ name }}</strong> odstránený"
@@ -3383,7 +3383,7 @@ msgid "Status of order"
 msgstr "Stav objednávky"
 
 msgid "Status of orders"
-msgstr "Stav objednávok"
+msgstr "Stavy objednávok"
 
 msgid "Status of orders <strong>{{ name }}</strong> deleted"
 msgstr "Stav objednávok <strong>{{ name }}</strong> odstránený"
@@ -3401,7 +3401,7 @@ msgid "Storefront queries cache has been cleaned."
 msgstr "Cache dopytov storefront bola vymotáná."
 
 msgid "Stores"
-msgstr "Obchody"
+msgstr "Predajne"
 
 msgid "Street"
 msgstr "Ulica"
@@ -3446,7 +3446,7 @@ msgid "Tax identification number"
 msgstr "DIČ"
 
 msgid "Tax number"
-msgstr "Daň=ové číslo"
+msgstr "DIČ"
 
 msgid "Technical error on issuer's side"
 msgstr "Technická chyba na strane vydavateľa"
@@ -3566,13 +3566,13 @@ msgid "Too many login attempts. Please try again later."
 msgstr "Príliš veľa pokúsov o prihlásenie. Skúste to znovu neskôr."
 
 msgid "Total order price (excluding VAT)"
-msgstr "Celkom order price (excluding VAT)"
+msgstr "Celková cena objednávky (bez DPH)"
 
 msgid "Total order price (including VAT)"
-msgstr "Celkom order price (including VAT)"
+msgstr "Celková cena objednávky (s DPH)"
 
 msgid "Total price"
-msgstr "Celkom price"
+msgstr "Celková cena"
 
 msgid "Tracking URL"
 msgstr "Sledovacé URL"
@@ -3677,7 +3677,7 @@ msgid "Unsupported two factor authentication method"
 msgstr "Nepodporovaná metóda dvojfaktorového overenia"
 
 msgid "Unused friendly URL list"
-msgstr "Zoznam Unused friendly URL"
+msgstr "Zoznam nepoužívaných pekných URL"
 
 msgid "Updated at"
 msgstr "Aktualizované dňa"
@@ -3707,7 +3707,7 @@ msgid "Uploading..."
 msgstr "Nahrávam..."
 
 msgid "Upon inquiry"
-msgstr "Na dopovedanie"
+msgstr "Na dopyt"
 
 msgid "Url address"
 msgstr "URL adresa"
@@ -3824,7 +3824,7 @@ msgid "Watchdog"
 msgstr "Watchdog"
 
 msgid "Watchdog - %name%"
-msgstr "Watchdog - %name%"
+msgstr "Strážny pes - %name%"
 
 msgid "Watchdog detail"
 msgstr "Detail watchdog"
@@ -3833,7 +3833,7 @@ msgid "Watchdog for email <strong>{{ email }}</strong> has been removed"
 msgstr "Watchdog pre e-mail <strong>{{ email }}</strong> bol odstránený"
 
 msgid "Watchdogs"
-msgstr "Watchdogy"
+msgstr "Strážne psy"
 
 msgid "Wednesday"
 msgstr "Streda"
