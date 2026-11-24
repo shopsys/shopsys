@@ -2,7 +2,7 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
+import { mapGtmCartItemType, mergeGtmCartItemsWithSameId } from 'gtm/mappers/mapGtmCartItemType';
 import { mapGtmServiceCartItems } from 'gtm/mappers/mapGtmServiceCartItems';
 import { GtmChangeCartItemEventType } from 'gtm/types/events';
 import { GtmCartInfoType, GtmCartProductOrServiceType } from 'gtm/types/objects';
@@ -54,7 +54,7 @@ const pushCartItemsEvent = (
     }
 
     const products = [
-        ...cartItems.map((item) => mapGtmCartItemType(item, domainConfig.url)),
+        ...mergeGtmCartItemsWithSameId(cartItems.map((item) => mapGtmCartItemType(item, domainConfig.url))),
         ...mapGtmServiceCartItems(cartItems),
     ];
     const event: GtmChangeCartItemEventType = {

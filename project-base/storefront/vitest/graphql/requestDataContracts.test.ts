@@ -38,13 +38,16 @@ describe('operation-owned data contracts', () => {
         );
     });
 
-    test('omits targeting metadata, unused store images and unused gift pricing', () => {
+    test('omits targeting metadata and unused store images', () => {
         const adverts = fieldsAt(AdvertsQueryDocument, ['adverts']);
         expect(adverts).not.toContain('type');
         expect(adverts).not.toContain('categories');
         expect(fieldsAt(StoresQueryDocument, ['stores', 'edges', 'node'])).not.toContain('mainImage');
-        expect(fieldsAt(ProductDetailQueryDocument, ['product', 'gifts'])).not.toContain('giftPrice');
         expect(fieldsAt(CreateProductReviewMutationDocument, ['CreateProductReview'])).toEqual(['__typename', 'uuid']);
+    });
+
+    test('product detail retains gift prices used by the purchase block', () => {
+        expect(fieldsAt(ProductDetailQueryDocument, ['product', 'gifts', 'giftPrice'])).toContain('priceWithVat');
     });
 
     test('full search operations keep identical root arguments for their shared result selection', () => {

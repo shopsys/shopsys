@@ -8,22 +8,10 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class GiftCartItemSetup
 {
-    public function __construct(protected readonly Product $giftProduct, protected int $quantity = 0)
-    {
-    }
-
-    public function getGiftProduct(): Product
-    {
-        return $this->giftProduct;
-    }
-
-    public function getQuantity(): int
-    {
-        return $this->quantity;
-    }
-
-    public function addQuantity(int $quantity): void
-    {
-        $this->quantity += $quantity;
+    public function __construct(
+        public readonly Product $mainProduct,
+        public readonly Product $giftProduct,
+        public readonly int $quantity = 0,
+    ) {
     }
 }

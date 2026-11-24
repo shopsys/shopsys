@@ -5,8 +5,9 @@ import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeCartItemEvent } from 'gtm/factories/getGtmChangeCartItemEvent';
-import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
+import { mapGtmCartItemType, mergeGtmCartItemsWithSameId } from 'gtm/mappers/mapGtmCartItemType';
 import { mapGtmServiceCartItem } from 'gtm/mappers/mapGtmServiceCartItems';
+import { GtmCartItemType } from 'gtm/types/objects';
 import { getGtmMappedCart } from 'gtm/utils/getGtmMappedCart';
 import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
@@ -75,28 +76,33 @@ export const onGtmChangeCartItemEventHandler = (
     const giftSourceItems = quantityDifference < 0 ? previousCartItems : updatedCart.items;
     const giftComparisonItems = quantityDifference < 0 ? updatedCart.items : previousCartItems;
 
-    for (const giftCartItem of giftSourceItems) {
+    const mapChangedGtmGift = (giftCartItem: TypeCartItemFragment): GtmCartItemType[] => {
         if (giftCartItem.type !== TypeCartItemTypeEnum.ProductGift) {
-            continue;
+            return [];
         }
 
         const previousGiftQuantity = giftComparisonItems.find((item) => item.uuid === giftCartItem.uuid)?.quantity ?? 0;
         const changedGiftQuantity = giftCartItem.quantity - previousGiftQuantity;
 
         if (changedGiftQuantity <= 0) {
-            continue;
+            return [];
         }
 
-        const mappedGift = mapGtmCartItemType(giftCartItem, domainConfig.url, listIndex, changedGiftQuantity);
-        event.ecommerce.products = [...(event.ecommerce.products ?? []), mappedGift];
+        return [mapGtmCartItemType(giftCartItem, domainConfig.url, listIndex, changedGiftQuantity)];
+    };
+
+    const changedGifts = mergeGtmCartItemsWithSameId(giftSourceItems.flatMap(mapChangedGtmGift));
+
+    for (const changedGift of changedGifts) {
+        event.ecommerce.products = [...(event.ecommerce.products ?? []), changedGift];
         event.ecommerce.valueWithoutVat =
-            event.ecommerce.valueWithoutVat === null || mappedGift.priceWithoutVat === null
+            event.ecommerce.valueWithoutVat === null || changedGift.priceWithoutVat === null
                 ? null
-                : event.ecommerce.valueWithoutVat + mappedGift.priceWithoutVat * changedGiftQuantity;
+                : event.ecommerce.valueWithoutVat + changedGift.priceWithoutVat * changedGift.quantity;
         event.ecommerce.valueWithVat =
-            event.ecommerce.valueWithVat === null || mappedGift.priceWithVat === null
+            event.ecommerce.valueWithVat === null || changedGift.priceWithVat === null
                 ? null
-                : event.ecommerce.valueWithVat + mappedGift.priceWithVat * changedGiftQuantity;
+                : event.ecommerce.valueWithVat + changedGift.priceWithVat * changedGift.quantity;
     }
 
     gtmSafePushEvent(event);

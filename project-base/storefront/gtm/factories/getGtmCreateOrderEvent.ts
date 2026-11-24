@@ -2,7 +2,7 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { TypePromoCodeFragment } from 'graphql/requests/cart/fragments/PromoCodeFragment.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
+import { mapGtmCartItemType, mergeGtmCartItemsWithSameId } from 'gtm/mappers/mapGtmCartItemType';
 import { mapGtmServiceCartItems } from 'gtm/mappers/mapGtmServiceCartItems';
 import { GtmCreateOrderEventOrderPartType, GtmCreateOrderEventType } from 'gtm/types/events';
 import { GtmReviewConsentsType, GtmUserInfoType } from 'gtm/types/objects';
@@ -64,7 +64,9 @@ export const getGtmCreateOrderEventOrderPart = (
         paymentType: payment.name,
         ...(reviewConsents !== undefined && { reviewConsents }),
         products: [
-            ...cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
+            ...mergeGtmCartItemsWithSameId(
+                cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
+            ),
             ...mapGtmServiceCartItems(cart.items),
         ],
     };

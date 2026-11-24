@@ -13,7 +13,8 @@ import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { isCartItemPartiallyAvailable } from 'utils/cart/isCartItemPartiallyAvailable';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useProductAdditionalServices } from 'utils/cart/useProductAdditionalServices';
@@ -28,6 +29,7 @@ type CartListItemProps = {
     onRemoveFromCart: () => void;
     onAddToCart: AddToCart;
     isRemovingFromCart: boolean;
+    giftsContent?: ReactNode;
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
@@ -37,6 +39,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     onRemoveFromCart,
     onAddToCart,
     isRemovingFromCart,
+    giftsContent,
 }) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
     const confirmedQuantityRef = useRef(quantity);
@@ -363,11 +366,14 @@ export const CartListItem: FC<CartListItemProps> = ({
                     />
                 </div>
 
+                {giftsContent}
+
                 {isProduct && (
                     <AdditionalServices
                         isInCartList
                         additionalServices={product.additionalServices}
-                        className="mt-2 w-full"
+                        className={twJoin('w-full', giftsContent ? 'mt-6' : 'mt-4')}
+                        hasTopBorder={!giftsContent}
                         isDisabled={isSettingAdditionalServices}
                         quantity={quantity}
                         selectedServiceUuids={selectedServiceUuids}

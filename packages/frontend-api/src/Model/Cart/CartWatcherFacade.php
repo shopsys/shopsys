@@ -56,9 +56,9 @@ class CartWatcherFacade
 
         $this->checkRemovedProductsItems($cart);
         $this->checkNotListableItems($cart);
-        $this->checkProductGiftCartItemsValidity($cart);
         $this->checkModifiedPrices($cart);
         $this->checkStockQuantities($cart);
+        $this->checkProductGiftCartItemsValidity($cart);
         $this->checkAdditionalServicesValidity($cart);
         $this->checkPromoCodeValidity($cart);
         $this->checkGiftVoucherValidity($cart);
@@ -67,6 +67,7 @@ class CartWatcherFacade
 
         $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
         $this->setPromoCodes($cart);
+        $this->cartWithModificationsResult->setRemovedProductGifts($this->giftCartFacade->getRestorableRemovedProductGifts($cart, $this->domain->getId()));
 
         return $this->cartWithModificationsResult;
     }
@@ -156,7 +157,7 @@ class CartWatcherFacade
         foreach ($cart->getItems() as $cartItem) {
             $product = $cartItem->getProduct();
 
-            if ($product === null || $product->isAllowedNegativeStock()) {
+            if ($product === null || $cartItem->isProductGift() || $product->isAllowedNegativeStock()) {
                 continue;
             }
 
