@@ -1,5 +1,5 @@
-import { NextIncomingMessage } from 'next/dist/server/request-meta';
+import { IncomingHttpHeaders } from 'node:http';
 
-export const isFullPageRequest = (requestHeaders: NextIncomingMessage['headers']): boolean => {
+export const isFullPageRequest = (requestHeaders: IncomingHttpHeaders): boolean => {
     return requestHeaders['x-nextjs-data'] !== '1';
 };

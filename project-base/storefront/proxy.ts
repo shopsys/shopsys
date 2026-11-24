@@ -1,4 +1,4 @@
-import { NextMiddleware } from 'next/server';
+import { NextProxy } from 'next/server';
 import { getBaseUrlWithLocale } from 'utils/domain/domainUtils';
 import { getHostAndDomainFromRequest } from 'utils/domain/getHostAndDomainFromRequest';
 import { handleDomainRedirect, normalizePathname } from 'utils/middleware/domainHandlers';
@@ -7,7 +7,7 @@ import { handleMiddlewareError } from 'utils/middleware/errorHandlers';
 import { handleFriendlyUrlResolution, handleSlugTypeQueryParam } from 'utils/middleware/friendlyUrlHandlers';
 import { handleStaticRoutes } from 'utils/middleware/staticRouteHandlers';
 
-export const middleware: NextMiddleware = async (request) => {
+export const proxy: NextProxy = async (request) => {
     try {
         const earlyResponse = handleEarlyExitRoutes(request);
 

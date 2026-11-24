@@ -12,6 +12,7 @@
             "!pnpm-lock.yaml",
             "!tsconfig.json",
             "!.next",
+            "!next-env.d.ts",
             "!.pnpm-store",
             "!cypress",
             "!graphql/docs",
@@ -115,7 +116,7 @@
                         "patterns": [
                             {
                                 "group": ["../*", "../../*", "../../../*", "../../../../*", "../../../../../*"],
-                                "message": "Please use same-folder imports or absolute imports from the storefront baseUrl instead."
+                                "message": "Please use same-folder imports or absolute imports from the storefront root instead."
                             }
                         ]
                     }
