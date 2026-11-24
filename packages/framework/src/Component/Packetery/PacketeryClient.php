@@ -21,6 +21,8 @@ use Twig\Error\Error;
 
 class PacketeryClient implements TransferIdentificationInterface
 {
+    protected const string PACKET_ATTRIBUTES_FAULT = 'PacketAttributesFault';
+
     protected TransferLoggerInterface $transferLogger;
 
     public function __construct(
@@ -140,6 +142,20 @@ class PacketeryClient implements TransferIdentificationInterface
         }
         $parsedResponse = new SimpleXMLElement($responseXml->getContent(false));
 
+        if ((string)$parsedResponse->status === 'fault' && (string)$parsedResponse->fault === static::PACKET_ATTRIBUTES_FAULT) {
+            $rejectionReason = $this->getPacketAttributesFaultReason($parsedResponse);
+            $this->orderFacade->updatePacketeryRejectionReason($order, $rejectionReason);
+            $logger->warning(
+                'Packetery rejected the order.',
+                [
+                    'orderNumber' => $order->getNumber(),
+                    'rejectionReason' => $rejectionReason,
+                ],
+            );
+
+            return;
+        }
+
         if ((string)$parsedResponse->status === 'fault') {
             $logger->error(
                 'Response from Packetery fault.',
@@ -152,6 +168,7 @@ class PacketeryClient implements TransferIdentificationInterface
 
             return;
         }
+
         $barcode = (string)$parsedResponse->result->barcode;
         $this->orderFacade->updateTrackingNumber($order, $barcode);
         $logger->info(
@@ -161,6 +178,21 @@ class PacketeryClient implements TransferIdentificationInterface
                 'barcode' => $barcode,
             ],
         );
+    }
+
+    protected function getPacketAttributesFaultReason(SimpleXMLElement $parsedResponse): string
+    {
+        $attributeFaultMessages = [];
+
+        foreach ($parsedResponse->detail->attributes->fault as $attributeFault) {
+            $attributeFaultMessages[] = (string)$attributeFault->fault;
+        }
+
+        if (count($attributeFaultMessages) === 0) {
+            return (string)$parsedResponse->string;
+        }
+
+        return implode(' ', $attributeFaultMessages);
     }
 
     #[Override]

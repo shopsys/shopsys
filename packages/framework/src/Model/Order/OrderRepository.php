@@ -243,6 +243,7 @@ class OrderRepository
             ->join('o.items', 'oi', Join::WITH, 'oi.transport IS NOT NULL')
             ->join('oi.transport', 't')
             ->andWhere('o.trackingNumber IS NULL')
+            ->andWhere('o.packeteryRejectionReason IS NULL')
             ->andWhere('t.type = :transportType')
             ->setParameter('transportType', $transportType);
 
