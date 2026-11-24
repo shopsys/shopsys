@@ -100,6 +100,9 @@ msgstr ""
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
 msgstr ""
 
+msgid "<strong>%count%</strong> promo code has been created|<strong>%count%</strong> promo codes have been created"
+msgstr ""
+
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
@@ -3517,6 +3520,9 @@ msgstr ""
 msgid "The stock quantities are set for the product variants separately."
 msgstr ""
 
+msgid "There is one parameter slider that does not have its numeric values filled in.|There are %count% parameter sliders that do not have their numeric values filled in."
+msgstr ""
+
 msgid "There was an error while saving. The order isn't saved."
 msgstr ""
 
@@ -3937,6 +3943,9 @@ msgstr ""
 msgid "You have unsaved changes, save them first, please."
 msgstr ""
 
+msgid "You must wait 1 second before submitting the form.|You must wait %count% seconds before submitting the form."
+msgstr ""
+
 msgid "Youtube ID"
 msgstr ""
 
@@ -4037,13 +4046,4 @@ msgid "without VAT"
 msgstr ""
 
 msgid "without positioning"
-msgstr ""
-
-msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
-msgstr ""
-
-msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
-msgstr ""
-
-msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr ""

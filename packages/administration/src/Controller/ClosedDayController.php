@@ -133,7 +133,7 @@ class ClosedDayController extends AbstractCrudController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $importedCount = $this->holidaysImportFacade->import($form->getData());
-                $this->addSuccessFlashTwig(t('{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays.', ['%count%' => $importedCount]));
+                $this->addSuccessFlashTwig(t('Imported <strong>%count%</strong> holiday.|Imported <strong>%count%</strong> holidays.', ['%count%' => $importedCount]));
             } catch (InvalidCountry) {
                 $this->addErrorFlash(t('The selected country is not valid.'));
             }

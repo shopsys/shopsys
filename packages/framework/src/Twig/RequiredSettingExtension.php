@@ -278,7 +278,7 @@ class RequiredSettingExtension extends AbstractExtension
         }
 
         $message = t(
-            '{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in.',
+            'There is one parameter slider that does not have its numeric values filled in.|There are %count% parameter sliders that do not have their numeric values filled in.',
             [
                 '%count%' => $countOfSliderParametersWithoutNumericValueSet,
             ],
