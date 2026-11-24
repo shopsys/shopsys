@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Transfer\TransferIdentificationInterface;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface;
 use SimpleXMLElement;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -81,14 +82,28 @@ class PacketeryClient implements TransferIdentificationInterface
             try {
                 $xml = $this->createPacketXml($order);
                 $responseXml = $this->restApiPostRequest($xml);
+
+                if ($responseXml->getStatusCode() >= Response::HTTP_INTERNAL_SERVER_ERROR) {
+                    $logger->warning(
+                        'Packetery API is unavailable, sending of the remaining packets is postponed to the next run.',
+                        [
+                            'statusCode' => $responseXml->getStatusCode(),
+                        ],
+                    );
+
+                    break;
+                }
+
                 $this->saveTrackingNumberFromResponse($responseXml, $order);
             } catch (TransportExceptionInterface $transportException) {
-                $logger->error(
-                    'Transport error - packetery API.',
+                $logger->warning(
+                    'Packetery API is unreachable, sending of the remaining packets is postponed to the next run.',
                     [
                         'msg' => $transportException->getMessage(),
                     ],
                 );
+
+                break;
             } catch (Error $twigError) {
                 $logger->error(
                     'Render error - packetery xml: ',
