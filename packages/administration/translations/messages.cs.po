@@ -784,6 +784,9 @@ msgstr "Opravdu chcete odstranit tento ceník? Speciální ceny pro produkty v t
 msgid "Do you really want to remove this store? This step is irreversible!"
 msgstr "Opravdu si přejete odstranit tuto prodejnu? Tento krok nelze vzít zpět!"
 
+msgid "Do you really want to send the order to Packetery again? Remove the cause of the rejection first, otherwise Packetery will reject it again."
+msgstr "Opravdu chcete objednávku znovu odeslat do Zásilkovny? Nejdříve odstraňte příčinu odmítnutí, jinak ji Zásilkovna znovu odmítne."
+
 msgid "Domain"
 msgstr "Doména"
 
@@ -1645,14 +1648,23 @@ msgstr "URL adresa objednávky"
 msgid "Order confirmation page"
 msgstr "Stránka s potvrzením objednávky"
 
+msgid "Order could not be sent to Packetery."
+msgstr "Objednávku se nepodařilo odeslat do Zásilkovny."
+
 msgid "Order detail"
 msgstr "Detail objednávky"
 
 msgid "Order has been marked as paid."
 msgstr "Objednávka byla označena jako zaplacená."
 
+msgid "Order has been sent to Packetery."
+msgstr "Objednávka byla odeslána do Zásilkovny."
+
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebyla odeslána do GoPay"
+
+msgid "Order is not waiting to be sent to Packetery again."
+msgstr "Objednávka nečeká na opětovné odeslání do Zásilkovny."
 
 msgid "Order items"
 msgstr "Položky objednávky"
@@ -1698,6 +1710,9 @@ msgstr "Původ"
 
 msgid "Overview"
 msgstr "Přehled"
+
+msgid "Packetery rejected the order"
+msgstr "Zásilkovna objednávku odmítla"
 
 msgid "Paid"
 msgstr "Zaplaceno"
@@ -2199,6 +2214,9 @@ msgstr "Prodejný"
 
 msgid "Selling prices"
 msgstr "Prodejní ceny"
+
+msgid "Send again"
+msgstr "Odeslat znovu"
 
 msgid "Send refund"
 msgstr "Odeslat refundaci"

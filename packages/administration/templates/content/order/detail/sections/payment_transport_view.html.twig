@@ -37,6 +37,22 @@
     <div class="text-secondary">
         {{ 'Tracking'|trans }}: {{ order.trackingNumber ?: '-' }}
     </div>
+    {% if order.packeteryRejectionReason is not null %}
+        <div class="alert alert-danger mb-0 my-1" role="alert">
+            <div class="alert-title">{{ 'Packetery rejected the order'|trans }}</div>
+            <div class="text-secondary small">{{ order.packeteryRejectionReason }}</div>
+            {% if canEdit %}
+                <a href="{{ protectedUrl('admin_order_edit_resendtopacketery', {id: order.id}) }}"
+                   class="btn btn-outline-danger btn-sm mt-2"
+                   data-confirm-window
+                   data-confirm-message="{{ 'Do you really want to send the order to Packetery again? Remove the cause of the rejection first, otherwise Packetery will reject it again.'|trans }}"
+                   data-confirm-style="warning"
+                >
+                    {{ 'Send again'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
     <div class="text-secondary">
         {{ 'Expected delivery date'|trans }}: {{ order.expectedDeliveryDate ? order.expectedDeliveryDate|formatDate(null, getDomain().getDomainConfigById(order.domainId).dateTimeZone) : '-' }}
     </div>
