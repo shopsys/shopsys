@@ -36,7 +36,7 @@ class MediaController extends AbstractCrudController
             ->setMenuSection(
                 SideMenuBuilder::ROOT_CMS,
                 null,
-                ['after' => SideMenuBuilder::LIST_ADVERT],
+                ['after' => 'admin_crud_advert_list'],
             )
             ->registerHandler(MediaCrudHandler::class);
     }
