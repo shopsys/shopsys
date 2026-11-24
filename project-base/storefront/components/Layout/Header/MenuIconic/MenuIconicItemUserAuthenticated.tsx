@@ -3,13 +3,13 @@ import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { TIDs } from 'cypress/tids';
-import { useState } from 'react';
-import { RemoveScroll } from 'react-remove-scroll';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { twMergeCustom } from 'utils/twMerge';
+import useClickClosePopup from 'utils/ui/useClickClosePopup';
 import { useMediaMin } from 'utils/ui/useMediaMin';
-import { useDebounce } from 'utils/useDebounce';
+import { useKeypress } from 'utils/useKeyPress';
 import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
 
 type MenuIconicItemUserAuthenticatedProps = {
@@ -29,57 +29,58 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
     const setIsGlobalUserMenuOpen = useSessionStore((s) => s.setIsUserMenuOpen);
     const isUserMenuOpen = shouldUseLocalUserMenuState ? isLocalUserMenuOpen : isGlobalUserMenuOpen;
     const setIsUserMenuOpen = shouldUseLocalUserMenuState ? setIsLocalUserMenuOpen : setIsGlobalUserMenuOpen;
-    const isActiveDelayed = useDebounce(isUserMenuOpen, isUserMenuOpen ? 200 : 0);
     const isDesktop = useMediaMin('vl');
+    const menuRef = useRef<HTMLDivElement>(null);
+    const panelId = useId();
+    const closeUserMenu = () => setIsUserMenuOpen(false);
+
+    useClickClosePopup([menuRef], () => {
+        if (isDesktop && isUserMenuOpen) {
+            closeUserMenu();
+        }
+    });
+
+    useKeypress('Escape', () => {
+        if (isDesktop && isUserMenuOpen) {
+            closeUserMenu();
+            menuRef.current?.querySelector('button')?.focus({ preventScroll: true });
+        }
+    });
+
+    useEffect(() => {
+        const menu = menuRef.current;
+        if (!isDesktop || !isUserMenuOpen || !menu) {
+            return undefined;
+        }
+
+        const handleFocusOut = (event: FocusEvent) => {
+            // Clicking static panel content can focus the surrounding skip-navigation header.
+            if (
+                event.relatedTarget instanceof Node &&
+                !menu.contains(event.relatedTarget) &&
+                !event.relatedTarget.contains(menu)
+            ) {
+                setIsUserMenuOpen(false);
+            }
+        };
+
+        menu.addEventListener('focusout', handleFocusOut);
+        return () => menu.removeEventListener('focusout', handleFocusOut);
+    }, [isDesktop, isUserMenuOpen, setIsUserMenuOpen]);
 
     return (
         <>
-            {/* biome-ignore lint/a11y/useSemanticElements: The wrapper manages hover state for the popover while containing nested navigation controls, so it cannot be replaced with a semantic button. */}
-            <div
-                aria-expanded={isUserMenuOpen}
-                aria-haspopup="menu"
-                aria-label={t('Show logged in user popup')}
-                data-tid={TIDs.my_account_link}
-                role="button"
-                tabIndex={0}
-                className={twMergeCustom(
-                    'group outline-hidden group-has-[[aria-haspopup=menu][aria-expanded=true]]/header:z-aboveOverlay lg:relative lg:flex',
-                )}
-                onMouseEnter={() => isDesktop && setIsUserMenuOpen(true)}
-                onMouseLeave={() => isDesktop && setIsUserMenuOpen(false)}
-                onClick={(e) => {
-                    if (!isDesktop && e.target === e.currentTarget) {
-                        setIsUserMenuOpen(!isUserMenuOpen);
-                    }
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === 'Escape') {
-                        e.preventDefault();
-                        setIsUserMenuOpen(false);
-
-                        return;
-                    }
-
-                    if (e.target !== e.currentTarget) {
-                        return;
-                    }
-
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setIsUserMenuOpen(!isUserMenuOpen);
-                    }
-                }}
-            >
+            <div className={twJoin('relative', isDesktop && isUserMenuOpen && 'z-aboveOverlay')} ref={menuRef}>
                 <MenuIconicItemLink
+                    ariaControls={isDesktop && isUserMenuOpen ? panelId : undefined}
                     ariaExpanded={isUserMenuOpen}
-                    ariaHaspopup="menu"
+                    ariaHaspopup={isDesktop ? undefined : 'dialog'}
                     ariaLabel={t('Show logged in user popup')}
-                    className="cursor-pointer text-nowrap transition-all group-focus-visible:bg-orange-500 group-focus-visible:text-text-default"
-                    tabIndex={-1}
-                    title={t('Go to my account page')}
-                    onClick={() => !isDesktop && setIsUserMenuOpen(!isUserMenuOpen)}
-                    onTouchEnd={(e) => {
-                        e.preventDefault();
+                    className="min-size-12 cursor-pointer text-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
+                    tid={TIDs.my_account_link}
+                    title={t('My account')}
+                    onClick={(event) => {
+                        event.currentTarget.focus({ preventScroll: true });
                         setIsUserMenuOpen(!isUserMenuOpen);
                     }}
                 >
@@ -90,27 +91,16 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
                     {shouldShowLabel && <span className="hidden lg:inline-block">{t('Account')}</span>}
                 </MenuIconicItemLink>
 
-                <Drawer isActive={isUserMenuOpen} setIsActive={setIsUserMenuOpen} title={t('Account')}>
-                    <RemoveScroll>
-                        <UserMenu onMenuClose={() => setIsUserMenuOpen(false)} />
-                    </RemoveScroll>
+                <Drawer isActive={!isDesktop && isUserMenuOpen} setIsActive={setIsUserMenuOpen} title={t('Account')}>
+                    <UserMenu hideFocusTrap onMenuClose={closeUserMenu} />
                 </Drawer>
 
-                <MenuIconicItemUserPopover
-                    isAuthenticated
-                    isHovered={isActiveDelayed}
-                    topClassName={userPopoverTopClassName}
-                >
-                    <UserMenu onMenuClose={() => setIsUserMenuOpen(false)} />
+                <MenuIconicItemUserPopover id={panelId} isOpen={isUserMenuOpen} topClassName={userPopoverTopClassName}>
+                    <UserMenu hideFocusTrap onMenuClose={closeUserMenu} />
                 </MenuIconicItemUserPopover>
             </div>
-
             {isDesktop && (
-                <Overlay
-                    shouldDisablePointerEventsOnExit
-                    isActive={isActiveDelayed}
-                    onClick={() => setIsUserMenuOpen(false)}
-                />
+                <Overlay shouldDisablePointerEventsOnExit isActive={isUserMenuOpen} onClick={closeUserMenu} />
             )}
         </>
     );

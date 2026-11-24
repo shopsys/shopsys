@@ -8,6 +8,7 @@ type SocialNetworkLoginProps = {
     socialNetworks: TypeLoginTypeEnum[];
     shouldOverwriteCustomerUserCart: boolean | undefined;
     lastLoginType: LastLoginType | null;
+    isCompact?: boolean;
 };
 
 export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
@@ -15,6 +16,7 @@ export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
     socialNetworks,
     shouldOverwriteCustomerUserCart,
     lastLoginType,
+    isCompact,
 }) => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const productListUuids: string[] = Object.values(usePersistStore((store) => store.productListUuids));
@@ -37,6 +39,7 @@ export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
                         key={socialNetwork}
                         href={url}
                         isLastUsed={lastLoginType === socialNetwork}
+                        isCompact={isCompact}
                         socialNetwork={socialNetwork}
                     />
                 );

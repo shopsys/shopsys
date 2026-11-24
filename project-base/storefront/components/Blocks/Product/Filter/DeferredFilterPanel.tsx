@@ -27,7 +27,7 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
         return (
             <Drawer
                 ariaLabel={t('Product filters', { ns: 'accessibility' })}
-                className="w-[calc(100vw-2.5rem)] min-w-0 max-w-100 p-0"
+                className="p-0"
                 isActive={isFilterPanelOpen}
                 onClose={scrollToProductListControls}
                 setIsActive={setIsFilterPanelOpen}

@@ -47,6 +47,7 @@ export const useLogin = () => {
 
 export const useHandleActionsAfterLogin = () => {
     const setCartStale = useSessionStore((store) => store.setCartStale);
+    const closePortalContent = useSessionStore((store) => store.closePortalContent);
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateLastLoginType = usePersistStore((store) => store.updateLastLoginType);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -60,6 +61,7 @@ export const useHandleActionsAfterLogin = () => {
     ) => {
         // Clearing the guest identity must not look like an empty cart before the auth reload completes.
         setCartStale(true);
+        closePortalContent();
         updateCartUuid(null);
         updateProductListUuids({});
         clearOrderConfirmationContext();
