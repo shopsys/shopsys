@@ -316,6 +316,9 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
+msgid "Catalog"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -388,6 +391,9 @@ msgstr ""
 msgid "Color parameter values"
 msgstr ""
 
+msgid "Communication"
+msgstr ""
+
 msgid "Company"
 msgstr ""
 
@@ -439,7 +445,7 @@ msgstr ""
 msgid "Contact form settings"
 msgstr ""
 
-msgid "Content Management"
+msgid "Content"
 msgstr ""
 
 msgid "Content-Security-Policy header"
@@ -1207,6 +1213,9 @@ msgstr ""
 msgid "Inquiry by"
 msgstr ""
 
+msgid "Integrations"
+msgstr ""
+
 msgid "Internal ID"
 msgstr ""
 
@@ -1252,7 +1261,7 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
-msgid "Legal & Compliance"
+msgid "Legal"
 msgstr ""
 
 msgid "Legal conditions article setting"
@@ -1319,9 +1328,6 @@ msgid "Manage refund"
 msgstr ""
 
 msgid "Manual correction"
-msgstr ""
-
-msgid "Marketing & Promotions"
 msgstr ""
 
 msgid "Maximum weight of products"
@@ -1448,9 +1454,6 @@ msgid "New value"
 msgstr ""
 
 msgid "New warehouse"
-msgstr ""
-
-msgid "Newsletter"
 msgstr ""
 
 msgid "Newsletter subscribers"
@@ -1678,9 +1681,6 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Orders & Customers"
-msgstr ""
-
 msgid "Orders overview"
 msgstr ""
 
@@ -1804,6 +1804,9 @@ msgstr ""
 msgid "Price lists"
 msgstr ""
 
+msgid "Prices and discounts"
+msgstr ""
+
 msgid "Pricing groups"
 msgstr ""
 
@@ -1847,9 +1850,6 @@ msgid "Product with X + Y free promotion"
 msgstr ""
 
 msgid "Products"
-msgstr ""
-
-msgid "Products & Catalog"
 msgstr ""
 
 msgid "Products overview"
@@ -1996,7 +1996,7 @@ msgstr ""
 msgid "Running"
 msgstr ""
 
-msgid "SEO & Marketing Tools"
+msgid "SEO"
 msgstr ""
 
 msgid "SEO and Open Graph"
@@ -2018,6 +2018,9 @@ msgid "Sale including/excluding VAT"
 msgstr ""
 
 msgid "Sale including/excluding VAT settings"
+msgstr ""
+
+msgid "Sales"
 msgstr ""
 
 msgid "Sales representative"
@@ -2218,9 +2221,6 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-msgid "Settings & Configuration"
-msgstr ""
-
 msgid "Several changes"
 msgstr ""
 
@@ -2234,6 +2234,9 @@ msgid "Shipping methods"
 msgstr ""
 
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
+msgstr ""
+
+msgid "Shipping, payments and stock"
 msgstr ""
 
 msgid "Show all customer orders"
@@ -2318,9 +2321,6 @@ msgid "Switch locale"
 msgstr ""
 
 msgid "System"
-msgstr ""
-
-msgid "System Tools"
 msgstr ""
 
 msgid "Tab content could not be loaded."

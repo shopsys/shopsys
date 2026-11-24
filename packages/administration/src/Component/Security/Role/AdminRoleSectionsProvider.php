@@ -8,31 +8,44 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 use Shopsys\FrameworkBundle\Component\Security\Role\Section\AbstractRoleSectionProvider;
 use Shopsys\FrameworkBundle\Component\Security\Role\Section\RoleSection;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder;
 
+/**
+ * The identifiers have to equal the names of the side menu sections, a CRUD controller without a custom role section
+ * uses the name of its menu section as the role section.
+ */
 class AdminRoleSectionsProvider extends AbstractRoleSectionProvider
 {
     public const string SYSTEM = 'system';
-    public const string ORDERS_CUSTOMERS = 'orders_customers';
-    public const string PRODUCTS_CATALOG = 'products_catalog';
-    public const string MARKETING_PROMOTIONS = 'marketing_promotions';
-    public const string CONTENT_MANAGEMENT = 'content_management';
-    public const string SETTINGS_CONFIGURATION = 'settings_configuration';
-    public const string LEGAL_COMPLIANCE = 'legal_compliance';
-    public const string SEO_MARKETING_TOOLS = 'seo_marketing_tools';
-    public const string SYSTEM_TOOLS = 'system_tools';
+    public const string SALES = SideMenuBuilder::ROOT_SALES;
+    public const string CUSTOMERS = SideMenuBuilder::ROOT_CUSTOMER;
+    public const string CATALOG = SideMenuBuilder::ROOT_PRODUCT;
+    public const string PRICING = SideMenuBuilder::ROOT_PRICING;
+    public const string TRANSPORT_AND_PAYMENT = SideMenuBuilder::ROOT_TRANSPORT_AND_PAYMENT;
+    public const string CONTENT = SideMenuBuilder::ROOT_CMS;
+    public const string LEGAL = SideMenuBuilder::SECTION_LEGAL;
+    public const string SEO = SideMenuBuilder::SECTION_SEO;
+    public const string COMMUNICATION = SideMenuBuilder::SECTION_COMMUNICATION;
+    public const string INTEGRATIONS = SideMenuBuilder::ROOT_INTEGRATIONS;
+    public const string ADMINISTRATORS = SideMenuBuilder::ROOT_ADMINISTRATOR;
+    public const string SETTINGS = SideMenuBuilder::ROOT_SETTING;
 
     #[Override]
     protected function defineSections(): void
     {
         $this->addSection(new RoleSection(self::SYSTEM, t('System'), 10, 'gear'));
-        $this->addSection(new RoleSection(self::ORDERS_CUSTOMERS, t('Orders & Customers'), 20, 'cart'));
-        $this->addSection(new RoleSection(self::PRODUCTS_CATALOG, t('Products & Catalog'), 30, 'tag'));
-        $this->addSection(new RoleSection(self::MARKETING_PROMOTIONS, t('Marketing & Promotions'), 40, 'light-bulb'));
-        $this->addSection(new RoleSection(self::CONTENT_MANAGEMENT, t('Content Management'), 50, 'pencil'));
-        $this->addSection(new RoleSection(self::SETTINGS_CONFIGURATION, t('Settings & Configuration'), 60, 'gear'));
-        $this->addSection(new RoleSection(self::LEGAL_COMPLIANCE, t('Legal & Compliance'), 70, 'info'));
-        $this->addSection(new RoleSection(self::SEO_MARKETING_TOOLS, t('SEO & Marketing Tools'), 80, 'search'));
-        $this->addSection(new RoleSection(self::SYSTEM_TOOLS, t('System Tools'), 90, 'puzzle'));
+        $this->addSection(new RoleSection(self::SALES, t('Sales'), 20, 'document-copy'));
+        $this->addSection(new RoleSection(self::CUSTOMERS, t('Customers'), 30, 'person-public'));
+        $this->addSection(new RoleSection(self::CATALOG, t('Catalog'), 40, 'cart'));
+        $this->addSection(new RoleSection(self::PRICING, t('Prices and discounts'), 50, 'tag'));
+        $this->addSection(new RoleSection(self::TRANSPORT_AND_PAYMENT, t('Shipping, payments and stock'), 60, 'truck'));
+        $this->addSection(new RoleSection(self::CONTENT, t('Content'), 70, 'chart-piece'));
+        $this->addSection(new RoleSection(self::LEGAL, t('Legal'), 80, 'scale'));
+        $this->addSection(new RoleSection(self::SEO, t('SEO'), 90, 'search'));
+        $this->addSection(new RoleSection(self::COMMUNICATION, t('Communication'), 100, 'letter'));
+        $this->addSection(new RoleSection(self::INTEGRATIONS, t('Integrations'), 110, 'puzzle'));
+        $this->addSection(new RoleSection(self::ADMINISTRATORS, t('Administrators'), 120, 'person-door-man'));
+        $this->addSection(new RoleSection(self::SETTINGS, t('Settings'), 130, 'gear'));
     }
 
     /**

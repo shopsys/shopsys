@@ -316,6 +316,9 @@ msgstr "Zrušit"
 msgid "Cancelled"
 msgstr "Stornovaný"
 
+msgid "Catalog"
+msgstr "Katalog"
+
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
@@ -388,6 +391,9 @@ msgstr "Kód nemůže být upraven, protože je spárovaný s existujícím obje
 msgid "Color parameter values"
 msgstr "Hodnoty barevných parametrů"
 
+msgid "Communication"
+msgstr "Komunikace"
+
 msgid "Company"
 msgstr "Firma"
 
@@ -439,8 +445,8 @@ msgstr "Kontaktní formulář"
 msgid "Contact form settings"
 msgstr "Nastavení kontaktní stránky"
 
-msgid "Content Management"
-msgstr "Správa obsahu"
+msgid "Content"
+msgstr "Obsah"
 
 msgid "Content-Security-Policy header"
 msgstr "Hlavička Content-Security-Policy"
@@ -1207,6 +1213,9 @@ msgstr "Přehled poptávek"
 msgid "Inquiry by"
 msgstr "Poptávka od"
 
+msgid "Integrations"
+msgstr "Integrace"
+
 msgid "Internal ID"
 msgstr "Interní ID"
 
@@ -1252,8 +1261,8 @@ msgstr "Příjmení"
 msgid "Last update"
 msgstr "Poslední aktualizace"
 
-msgid "Legal & Compliance"
-msgstr "Právní záležitosti a dodržování předpisů"
+msgid "Legal"
+msgstr "Legislativa"
 
 msgid "Legal conditions article setting"
 msgstr "Obchodní podmínky"
@@ -1320,9 +1329,6 @@ msgstr "Spravovat refundaci"
 
 msgid "Manual correction"
 msgstr "Ruční korekce"
-
-msgid "Marketing & Promotions"
-msgstr "Marketing a propagační akce"
 
 msgid "Maximum weight of products"
 msgstr "Maximální hmotnost produktů"
@@ -1449,9 +1455,6 @@ msgstr "Nová hodnota"
 
 msgid "New warehouse"
 msgstr "Nový sklad"
-
-msgid "Newsletter"
-msgstr "E-maily zpravodaje"
 
 msgid "Newsletter subscribers"
 msgstr "Odběratelé newsletteru"
@@ -1678,9 +1681,6 @@ msgstr "Řazení"
 msgid "Orders"
 msgstr "Objednávky"
 
-msgid "Orders & Customers"
-msgstr "Objednávky a zákazníci"
-
 msgid "Orders overview"
 msgstr "Přehled objednávek"
 
@@ -1804,6 +1804,9 @@ msgstr "Název ceníku"
 msgid "Price lists"
 msgstr "Ceníky"
 
+msgid "Prices and discounts"
+msgstr "Ceny a slevy"
+
 msgid "Pricing groups"
 msgstr "Cenové skupiny"
 
@@ -1848,9 +1851,6 @@ msgstr "Produkt s akcí X + Y zdarma"
 
 msgid "Products"
 msgstr "Zboží"
-
-msgid "Products & Catalog"
-msgstr "Produkty a katalog"
 
 msgid "Products overview"
 msgstr "Přehled zboží"
@@ -1996,8 +1996,8 @@ msgstr "Role"
 msgid "Running"
 msgstr "Probíhá"
 
-msgid "SEO & Marketing Tools"
-msgstr "SEO a marketingové nástroje"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "SEO and Open Graph"
 msgstr "SEO a Open Graph"
@@ -2019,6 +2019,9 @@ msgstr "Prodej s/bez DPH"
 
 msgid "Sale including/excluding VAT settings"
 msgstr "Nastavení prodeje s/bez DPH"
+
+msgid "Sales"
+msgstr "Prodej"
 
 msgid "Sales representative"
 msgstr "Obchodní zástupce"
@@ -2218,9 +2221,6 @@ msgstr "Manuálně nastavené ceny"
 msgid "Settings"
 msgstr "Nastavení"
 
-msgid "Settings & Configuration"
-msgstr "Nastavení a konfigurace"
-
 msgid "Several changes"
 msgstr "Několik změn"
 
@@ -2235,6 +2235,9 @@ msgstr "Způsoby dopravy"
 
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr "Dopravu typu E-mail nelze smazat, vždy musí existovat právě jedna."
+
+msgid "Shipping, payments and stock"
+msgstr "Doprava, platby a sklady"
 
 msgid "Show all customer orders"
 msgstr "Zobrazit všechny objednávky zákazníka"
@@ -2319,9 +2322,6 @@ msgstr "Přepnout jazyk"
 
 msgid "System"
 msgstr "Systém"
-
-msgid "System Tools"
-msgstr "Systémové nástroje"
 
 msgid "Tab content could not be loaded."
 msgstr "Obsah záložky se nepodařilo načíst."
