@@ -14,7 +14,6 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudListDomainControl;
 use Shopsys\AdministrationBundle\Component\Crud\Form\CrudFormConfigurator;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
-use Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider;
 use Shopsys\AdministrationBundle\Model\ProductReview\ProductReviewEditHandler;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
@@ -47,7 +46,6 @@ class ProductReviewController extends AbstractCrudController
         $config
             ->setMenuSection(SideMenuBuilder::ROOT_PRODUCT, null, ['after' => SideMenuBuilder::LIST_PRODUCT])
             ->setListDomainControl(CrudListDomainControl::QUICK_FILTER, $enabledDomainIds)
-            ->setCustomRoleSection(AdminRoleSectionsProvider::PRODUCTS_CATALOG)
             ->registerHandler(ProductReviewEditHandler::class)
             ->setTemplate(ActionType::EDIT, '@ShopsysAdministration/content/productReview/edit.html.twig')
             ->disable(!$this->productReviewEnabledChecker->isEnabledOnAnyDomain());

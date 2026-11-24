@@ -110,7 +110,7 @@ final class TransportFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'label' => 'Transport type',
+                'label' => 'Shipping type',
                 'attr' => [
                     'data-transport-delivery-schedule-target' => 'typeSelect',
                     'data-action' => 'transport-delivery-schedule#updateScheduleFieldsVisibility',
@@ -123,8 +123,8 @@ final class TransportFormType extends AbstractType
                     return $transportGroup->getName() ?? t('Name has not been entered in your current language') . ' (ID: ' . $transportGroup->getId() . ')';
                 },
                 'choice_value' => 'id',
-                'placeholder' => '-- Choose transport group --',
-                'label' => 'Transport group',
+                'placeholder' => '-- Choose shipping group --',
+                'label' => 'Shipping group',
             ]);
 
         $builderDeliveryGroup = $builder->create('delivery', GroupType::class, [
@@ -143,7 +143,7 @@ final class TransportFormType extends AbstractType
                 'help' => t('The number of days between the order dispatch and the delivery. 0 means the goods are delivered on the dispatch day itself.'),
             ])
             ->add('deliveryDaysOfWeek', DaysOfWeekType::class, [
-                'label' => 'Days of the week when the transport delivers',
+                'label' => 'Days of the week when the shipping delivers',
                 'row_attr' => [
                     'data-transport-delivery-schedule-target' => 'carrierSchedule',
                 ],
@@ -294,7 +294,7 @@ final class TransportFormType extends AbstractType
             ->add($builderImageGroup)
             ->add($builderPackageTrackingGroup)
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_transportandpayment_list',
+                'back_route' => 'admin_transport_list',
                 'entity' => $options['transport'],
                 'apply' => true,
             ]);

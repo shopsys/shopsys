@@ -238,7 +238,7 @@ final class PaymentFormType extends AbstractType
             ->add($builderAdditionalInformationGroup)
             ->add($builderImageGroup)
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_transportandpayment_list',
+                'back_route' => 'admin_payment_list',
                 'entity' => $options['payment'],
                 'apply' => true,
             ]);

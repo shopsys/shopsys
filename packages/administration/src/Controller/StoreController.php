@@ -52,9 +52,9 @@ class StoreController extends AbstractCrudController
     {
         $config
             ->setMenuSection(
-                SideMenuBuilder::ROOT_SETTING,
-                SideMenuBuilder::SECTION_LISTS,
-                ['after' => SideMenuBuilder::LIST_PARAMETER_VALUE],
+                SideMenuBuilder::ROOT_TRANSPORT_AND_PAYMENT,
+                null,
+                ['after' => SideMenuBuilder::FREE_TRANSPORT_AND_PAYMENT],
             )
             ->setListDomainControl(CrudListDomainControl::SWITCHER)
             ->registerHandler(StoreCrudHandler::class);

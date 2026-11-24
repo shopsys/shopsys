@@ -18,6 +18,7 @@ class SideMenuBuilder
     public const string ROOT_DASHBOARD = 'dashboard';
     public const string DETAIL_CRON = 'detail';
     public const string LIST_TRANSFER_ISSUE = 'transferIssueList';
+    public const string ROOT_SALES = 'sales';
     public const string LIST_ORDER = 'orders';
     public const string EDIT_ORDER = 'edit';
     public const string EDIT_ORDER_WITHDRAWAL_STATUS = 'edit_withdrawal_status';
@@ -33,6 +34,7 @@ class SideMenuBuilder
     public const string EDIT_DELIVERY_ADDRESS = 'deliverAddressEdit';
     public const string NEW_DELIVER_ADDRESS = 'deliverAddressNew';
     public const string LIST_NEWSLETTER = 'newsletter';
+    public const string SECTION_PROMO_CODES = 'promo_codes_section';
     public const string LIST_PROMO_CODE = 'promo_codes';
     public const string LIST_PROMO_CODE_BATCH = 'admin_promocode_listmassgeneratebatch';
     public const string NEW_PROMO_CODE = 'promo_codes_new';
@@ -90,7 +92,6 @@ class SideMenuBuilder
     public const string PRODUCT_REVIEW_POLICY = 'product_review_policy';
     public const string AUTOCOMPLETE_SETTING = 'autocomplete';
     public const string ROOT_FILE = 'files';
-    public const string LIST_FILE = 'files';
     public const string EDIT_FILE = 'edit';
     public const string NEW_FILE = 'new';
     public const string ROOT_ADMINISTRATOR = 'administrators';
@@ -104,22 +105,23 @@ class SideMenuBuilder
     public const string EDIT_ADMINISTRATOR_ROLE_GROUP = 'edit';
     public const string COPY_ADMINISTRATOR_ROLE_GROUP = 'copy';
     public const string ROOT_SETTING = 'settings';
-    public const string SECTION_IDENTIFICATION = 'identification';
     public const string LIST_DOMAIN = 'domains';
     public const string EDIT_DOMAIN = 'edit';
     public const string SECTION_COMMUNICATION = 'communication';
     public const string MAIL_SETTING = 'mail_settings';
     public const string LIST_MAIL_TEMPLATE = 'mail_templates';
     public const string EDIT_MAIL_TEMPLATE = 'edit_template';
-    public const string SECTION_LISTS = 'lists';
-    public const string LIST_TRANSPORT_AND_PAYMENT = 'transports_and_payments';
+    public const string ROOT_TRANSPORT_AND_PAYMENT = 'transport_and_payment';
+    public const string LIST_TRANSPORT = 'transports';
     public const string NEW_TRANSPORT = 'new_transport';
     public const string EDIT_TRANSPORT = 'edit_transport';
+    public const string LIST_PAYMENT = 'payments';
     public const string NEW_PAYMENT = 'new_payment';
     public const string EDIT_PAYMENT = 'edit_payment';
     public const string LIST_FLAG = 'flags';
     public const string NEW_FLAG = 'flagNew';
     public const string EDIT_FLAG = 'flagEdit';
+    public const string SECTION_PARAMETERS = 'parameters_section';
     public const string LIST_PARAMETER = 'parameters';
     public const string NEW_PARAMETER = 'parameters_new';
     public const string EDIT_PARAMETER = 'parameters_edit';
@@ -150,14 +152,11 @@ class SideMenuBuilder
     public const string NEW_CATEGORY_SEO_FILTERS = 'new_filters';
     public const string NEW_CATEGORY_SEO_COMBINATIONS = 'new_combinations';
     public const string NEW_CATEGORY_SEO_COMBINATION = 'new_combination';
-    public const string SECTION_CONTACT_FORM = 'contact_form_settings';
     public const string CONTACT_FORM_SETTINGS = 'contact_form_settings';
-    public const string SECTION_STOCKS = 'stocks';
     public const string LIST_STOCK = 'stock';
     public const string NEW_STOCK = 'new_stock';
     public const string EDIT_STOCK = 'edit_stock';
     public const string STOCK_SETTINGS = 'stock_settings';
-    public const string SECTION_CONSTANTS = 'constants';
     public const string LIST_CONSTANT = 'constants_list';
     public const string EDIT_CONSTANT = 'constants_edit';
     public const string SECTION_SUPERADMIN = 'superadmin';
@@ -170,7 +169,6 @@ class SideMenuBuilder
     public const string ROOT_INTEGRATIONS = 'integrations';
     public const string LIST_FEED = 'feeds';
     public const string SECTION_HEUREKA = 'heureka';
-    public const string HEUREKA_SETTINGS = 'settings';
     public const string MAIL_ALLOWED_RECIPIENTS = 'mail_whitelist_overview';
     public const string ROOT_PINNED = 'pinned';
 
@@ -189,16 +187,19 @@ class SideMenuBuilder
 
         $menu->addChild($this->createDashboardMenu());
         $menu->addChild($this->createMailAllowedRecipientsMenu());
-        $menu->addChild($this->createOrdersMenu());
-        $menu->addChild($this->createInquiriesMenu());
+        $menu->addChild($this->createSalesMenu());
         $menu->addChild($this->createCustomersMenu());
         $menu->addChild($this->createProductsMenu());
-        $menu->addChild($this->createPricingMenu());
-        $menu->addChild($this->createMarketingMenu());
         $menu->addChild($this->createFilesMenu());
+        $menu->addChild($this->createPricingMenu());
+        $menu->addChild($this->createTransportAndPaymentMenu());
+        $menu->addChild($this->createMarketingMenu());
+        $menu->addChild($this->createLegalMenu());
+        $menu->addChild($this->createSeoMenu());
+        $menu->addChild($this->createCommunicationMenu());
+        $menu->addChild($this->createIntegrationsMenu());
         $menu->addChild($this->createAdministratorsMenu());
         $menu->addChild($this->createSettingsMenu());
-        $menu->addChild($this->createIntegrationsMenu());
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ROOT, $menu);
 
@@ -247,13 +248,38 @@ class SideMenuBuilder
         );
     }
 
+    protected function createSalesMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(static::ROOT_SALES, ['label' => t('Sales')]);
+        $menu->setExtra('icon', 'document-copy');
+
+        $menu->addChild($this->createOrdersMenu());
+        $menu->addChild($this->createInquiriesMenu());
+
+        $complaintsMenu = $menu->addChild(static::LIST_COMPLAINT, [
+            'route' => 'admin_complaint_list',
+            'label' => t('Complaints'),
+        ]);
+        $complaintsMenu->addChild(
+            static::EDIT_COMPLAINT,
+            [
+                'route' => 'admin_complaint_edit',
+                'label' => t('Editing complaint'),
+                'display' => false,
+            ],
+        );
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_SALES, $menu);
+
+        return $menu;
+    }
+
     protected function createOrdersMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem(static::LIST_ORDER, [
             'route' => 'admin_order_list',
             'label' => t('Orders'),
         ]);
-        $menu->setExtra('icon', 'document-copy');
 
         $menu->addChild(static::EDIT_ORDER, [
             'route' => 'admin_order_edit',
@@ -277,7 +303,6 @@ class SideMenuBuilder
             'route' => 'admin_inquiry_list',
             'label' => t('Inquiries'),
         ]);
-        $menu->setExtra('icon', 'letter');
 
         $menu->addChild(static::DETAIL_INQUIRY, [
             'route' => 'admin_inquiry_detail',
@@ -300,9 +325,9 @@ class SideMenuBuilder
         );
         $menu->setExtra('icon', 'person-public');
 
-        $customersOverview = $menu->addChild('' . static::LIST_CUSTOMER, [
+        $customersOverview = $menu->addChild(static::LIST_CUSTOMER, [
             'route' => 'admin_customer_list',
-            'label' => t('Customers overview'),
+            'label' => t('Customers'),
         ]);
         $customersOverview->addChild(static::NEW_CUSTOMER, [
             'route' => 'admin_customer_new',
@@ -343,49 +368,15 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
-        $menu->addChild(static::LIST_NEWSLETTER, [
-            'route' => 'admin_newsletter_list',
-            'label' => t('Email newsletter'),
-        ]);
-
-        $promoCodeMenu = $menu->addChild(static::LIST_PROMO_CODE, [
-            'route' => 'admin_promocode_list',
-            'label' => t('Promo codes'),
-        ]);
-        $promoCodeMenu->addChild(static::LIST_PROMO_CODE_BATCH, [
-            'route' => 'admin_promocode_listmassgeneratebatch',
+        $watchdogMenu = $menu->addChild(static::LIST_WATCHDOG, [
+            'route' => 'admin_watchdog_list',
             'display' => true,
-            'label' => t('Generated batches'),
+            'label' => t('Watchdogs'),
         ]);
-        $promoCodeMenu->addChild(static::NEW_PROMO_CODE, [
-            'route' => 'admin_promocode_new',
+        $watchdogMenu->addChild(static::DETAIL_WATCHDOG, [
+            'route' => 'admin_watchdog_detail',
             'display' => false,
-            'label' => t('New promo code'),
-        ]);
-        $promoCodeMenu->addChild(static::EDIT_PROMO_CODE, [
-            'route' => 'admin_promocode_edit',
-            'display' => false,
-            'label' => t('Editing promo code'),
-        ]);
-        $promoCodeMenu->addChild(static::GENERATE_PROMO_CODE_BATCH, [
-            'route' => 'admin_promocode_newmassgenerate',
-            'label' => t('Bulk creation of promo codes'),
-            'display' => false,
-        ]);
-
-        $giftVoucherMenu = $menu->addChild(static::LIST_GIFT_VOUCHER, [
-            'route' => 'admin_giftvoucher_list',
-            'label' => t('Gift vouchers'),
-        ]);
-        $giftVoucherMenu->addChild(static::NEW_GIFT_VOUCHER, [
-            'route' => 'admin_giftvoucher_new',
-            'display' => false,
-            'label' => t('New gift voucher'),
-        ]);
-        $giftVoucherMenu->addChild(static::EDIT_GIFT_VOUCHER, [
-            'route' => 'admin_giftvoucher_edit',
-            'display' => false,
-            'label' => t('Editing gift voucher'),
+            'label' => t('Watchdog detail'),
         ]);
 
         $roleGroupMenu = $menu->addChild(static::LIST_CUSTOMER_USER_ROLE_GROUP, [
@@ -406,31 +397,6 @@ class SideMenuBuilder
             'label' => t('Editing customer user role group'),
         ]);
 
-        $complaintsMenu = $menu->addChild(static::LIST_COMPLAINT, [
-            'route' => 'admin_complaint_list',
-            'label' => t('Complaints'),
-        ]);
-
-        $complaintsMenu->addChild(
-            static::EDIT_COMPLAINT,
-            [
-                'route' => 'admin_complaint_edit',
-                'label' => t('Editing complaint'),
-                'display' => false,
-            ],
-        );
-
-        $watchdogMenu = $menu->addChild(static::LIST_WATCHDOG, [
-            'route' => 'admin_watchdog_list',
-            'display' => true,
-            'label' => t('Watchdogs'),
-        ]);
-        $watchdogMenu->addChild(static::DETAIL_WATCHDOG, [
-            'route' => 'admin_watchdog_detail',
-            'display' => false,
-            'label' => t('Watchdog detail'),
-        ]);
-
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);
 
         return $menu;
@@ -438,12 +404,12 @@ class SideMenuBuilder
 
     protected function createProductsMenu(): ItemInterface
     {
-        $menu = $this->menuFactory->createItem(static::ROOT_PRODUCT, ['label' => t('Products')]);
+        $menu = $this->menuFactory->createItem(static::ROOT_PRODUCT, ['label' => t('Catalog')]);
         $menu->setExtra('icon', 'cart');
 
         $productsMenu = $menu->addChild(
             static::LIST_PRODUCT,
-            ['route' => 'admin_product_list', 'label' => t('Products overview')],
+            ['route' => 'admin_product_list', 'label' => t('Products')],
         );
         $productsMenu->addChild(
             static::NEW_PRODUCT,
@@ -471,64 +437,28 @@ class SideMenuBuilder
             ['route' => 'admin_category_edit', 'label' => t('Editing category'), 'display' => false],
         );
 
-        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRODUCTS, $menu);
+        $parametersSectionMenu = $menu->addChild(static::SECTION_PARAMETERS, ['label' => t('Parameters')]);
 
-        return $menu;
-    }
+        $parametersMenu = $parametersSectionMenu->addChild(static::LIST_PARAMETER, ['route' => 'admin_parameter_list', 'label' => t('Parameters')]);
+        $parametersMenu->addChild(static::NEW_PARAMETER, ['route' => 'admin_parameter_new', 'display' => false, 'label' => t('New parameter')]);
+        $parametersMenu->addChild(static::EDIT_PARAMETER, ['route' => 'admin_parameter_edit', 'display' => false, 'label' => t('Editing parameter')]);
+        $parametersMenu->addChild(static::EDIT_PARAMETERS_VALUE, ['route' => 'admin_parametervalues_edit', 'display' => false, 'label' => t('Parameter values')]);
 
-    protected function createPricingMenu(): ItemInterface
-    {
-        $menu = $this->menuFactory->createItem(static::ROOT_PRICING, ['label' => t('Pricing')]);
-        $menu->setExtra('icon', 'tag');
+        $parameterValueMenu = $parametersSectionMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Color parameter values')]);
+        $parameterValueMenu->addChild(static::EDIT_PARAMETER_VALUE, ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
 
-        $menu->addChild(static::IMPORT_PRICE_LIST, ['route' => 'admin_crud_price_list_import', 'label' => t('Import price list'), 'display' => false]);
-
-        $menu->addChild(static::LIST_PRICING_GROUP, ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
-        $menu->addChild(static::LIST_VAT, ['route' => 'admin_vat_list', 'label' => t('VAT')]);
-        $menu->addChild(
-            static::FREE_TRANSPORT_AND_PAYMENT,
-            ['route' => 'admin_transportandpayment_freetransportandpaymentlimit', 'label' => t(
-                'Free shipping and payment',
-            )],
+        $brandsMenu = $menu->addChild(static::LIST_BRAND, ['route' => 'admin_brand_list', 'label' => t('Brands')]);
+        $brandsMenu->addChild(static::NEW_BRAND, ['route' => 'admin_brand_new', 'label' => t('New brand'), 'display' => false]);
+        $brandsMenu->addChild(
+            static::EDIT_BRAND,
+            ['route' => 'admin_brand_edit', 'label' => t('Editing brand'), 'display' => false],
         );
 
-        $currenciesMenuItem = $menu->addChild(
-            static::LIST_CURRENCY,
-            ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')],
-        );
-        $currenciesMenuItem->setExtra('superadmin', true);
+        $flagsMenu = $menu->addChild(static::LIST_FLAG, ['route' => 'admin_flag_list', 'label' => t('Flags')]);
+        $flagsMenu->addChild(static::NEW_FLAG, ['route' => 'admin_flag_new', 'label' => t('New flag'), 'display' => false]);
+        $flagsMenu->addChild(static::EDIT_FLAG, ['route' => 'admin_flag_edit', 'label' => t('Editing flag'), 'display' => false]);
 
-        $giftPlansMenu = $menu->addChild(
-            static::GIFT_PLAN_LIST,
-            ['route' => 'admin_giftplan_list', 'label' => t(
-                'Gift plans',
-            )],
-        );
-        $giftPlansMenu->addChild(static::GIFT_PLAN_NEW, ['route' => 'admin_giftplan_new', 'label' => t('New gift plan'), 'display' => false]);
-        $giftPlansMenu->addChild(static::GIFT_PLAN_EDIT, ['route' => 'admin_giftplan_edit', 'label' => t('Editing gift plan'), 'display' => false]);
-
-        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRICING, $menu);
-
-        return $menu;
-    }
-
-    protected function createMarketingMenu(): ItemInterface
-    {
-        $menu = $this->menuFactory->createItem(static::ROOT_CMS, ['label' => t('CMS')]);
-        $menu->setExtra('icon', 'chart-piece');
-
-        $articlesMenu = $menu->addChild(
-            static::LIST_ARTICLE,
-            ['route' => 'admin_article_list', 'label' => t('Articles overview')],
-        );
-        $articlesMenu->addChild(
-            static::NEW_ARTICLE,
-            ['route' => 'admin_article_new', 'label' => t('New article'), 'display' => false],
-        );
-        $articlesMenu->addChild(
-            static::EDIT_ARTICLE,
-            ['route' => 'admin_article_edit', 'label' => t('Editing article'), 'display' => false],
-        );
+        $menu->addChild(static::LIST_UNIT, ['route' => 'admin_unit_list', 'label' => t('Measurement units')]);
 
         $bestsellingProductsMenu = $menu->addChild(
             static::LIST_BESTSELLING_PRODUCT,
@@ -539,48 +469,7 @@ class SideMenuBuilder
             ['route' => 'admin_bestsellingproduct_detail', 'label' => t('Editing bestseller'), 'display' => false],
         );
 
-        $blogMenu = $menu->addChild(static::SECTION_BLOG, ['label' => t('Blog')]);
-
-        $blogCategories = $blogMenu->addChild(static::LIST_BLOG_CATEGORY, ['route' => 'admin_blogcategory_list', 'label' => t('Blog categories')]);
-        $blogCategories->addChild(static::NEW_BLOG_CATEGORY, ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('New blog category')]);
-        $blogCategories->addChild(static::EDIT_BLOG_CATEGORY, ['route' => 'admin_blogcategory_edit', 'display' => false]);
-
-        $blogArticles = $blogMenu->addChild(static::LIST_BLOG_ARTICLE, ['route' => 'admin_blogarticle_list', 'label' => t('Blog articles')]);
-        $blogArticles->addChild(static::NEW_BLOG_ARTICLE, ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
-        $blogArticles->addChild(static::EDIT_BLOG_ARTICLE, ['route' => 'admin_blogarticle_edit', 'display' => false]);
-
-        $homepageMenu = $menu->addChild(static::SECTION_HOMEPAGE, ['label' => t('Home page')]);
-
-        $homepageMenu->addChild(static::LIST_PROMOTED_PRODUCT, ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
-        $homepageMenu->addChild(static::LIST_PROMOTED_CATEGORY, ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
-
-        $menu->addChild(static::AUTOCOMPLETE_SETTING, ['route' => 'admin_autocomplete_setting', 'label' => t('Autocomplete favorites')]);
-
-        $menu->addChild(static::ORDER_CONFIRMATION, ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
-
-        $legalMenu = $menu->addChild(static::SECTION_LEGAL, ['label' => t('Legal conditions')]);
-        $legalMenu->addChild(
-            static::TERMS_AND_CONDITIONS,
-            ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and conditions')],
-        );
-        $legalMenu->addChild(
-            static::PRIVACY_POLICY,
-            ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy policy')],
-        );
-        $legalMenu->addChild(
-            static::PERSONAL_DATA,
-            ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')],
-        );
-        $legalMenu->addChild(static::USER_CONSENT_POLICY, ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
-
-        if ($this->productReviewEnabledChecker->isEnabledOnAnyDomain()) {
-            $legalMenu->addChild(
-                static::PRODUCT_REVIEW_POLICY,
-                ['route' => 'shopsys_administration_productreviewpolicy_setting', 'label' => t('Product review policy')],
-            );
-        }
-
-        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRODUCTS, $menu);
 
         return $menu;
     }
@@ -589,22 +478,292 @@ class SideMenuBuilder
     {
         $menu = $this->menuFactory->createItem(
             static::ROOT_FILE,
-            ['label' => t('Files')],
+            ['route' => 'admin_uploadedfile_list', 'label' => t('Files')],
         );
         $menu->setExtra('icon', 'file-all');
 
-        $filesMenu = $menu->addChild(static::LIST_FILE, ['route' => 'admin_uploadedfile_list', 'label' => t('Files overview')]);
-
-        $filesMenu->addChild(
+        $menu->addChild(
             static::EDIT_FILE,
             ['route' => 'admin_uploadedfile_edit', 'label' => t('Editing file'), 'display' => false],
         );
-        $filesMenu->addChild(
+        $menu->addChild(
             static::NEW_FILE,
             ['route' => 'admin_uploadedfile_new', 'label' => t('Upload files'), 'display' => false],
         );
 
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_FILES, $menu);
+
         return $menu;
+    }
+
+    protected function createPricingMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(static::ROOT_PRICING, ['label' => t('Prices and discounts')]);
+        $menu->setExtra('icon', 'tag');
+
+        $menu->addChild(static::IMPORT_PRICE_LIST, ['route' => 'admin_crud_price_list_import', 'label' => t('Import price list'), 'display' => false]);
+
+        $menu->addChild(static::LIST_PRICING_GROUP, ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
+
+        $promoCodesSectionMenu = $menu->addChild(static::SECTION_PROMO_CODES, ['label' => t('Promo codes')]);
+
+        $promoCodeMenu = $promoCodesSectionMenu->addChild(static::LIST_PROMO_CODE, [
+            'route' => 'admin_promocode_list',
+            'label' => t('Codes'),
+        ]);
+        $promoCodeMenu->addChild(static::NEW_PROMO_CODE, [
+            'route' => 'admin_promocode_new',
+            'display' => false,
+            'label' => t('New promo code'),
+        ]);
+        $promoCodeMenu->addChild(static::EDIT_PROMO_CODE, [
+            'route' => 'admin_promocode_edit',
+            'display' => false,
+            'label' => t('Editing promo code'),
+        ]);
+        $promoCodeMenu->addChild(static::GENERATE_PROMO_CODE_BATCH, [
+            'route' => 'admin_promocode_newmassgenerate',
+            'label' => t('Bulk creation of promo codes'),
+            'display' => false,
+        ]);
+        $promoCodesSectionMenu->addChild(static::LIST_PROMO_CODE_BATCH, [
+            'route' => 'admin_promocode_listmassgeneratebatch',
+            'label' => t('Generated batches'),
+        ]);
+
+        $giftVoucherMenu = $menu->addChild(static::LIST_GIFT_VOUCHER, [
+            'route' => 'admin_giftvoucher_list',
+            'label' => t('Gift vouchers'),
+        ]);
+        $giftVoucherMenu->addChild(static::NEW_GIFT_VOUCHER, [
+            'route' => 'admin_giftvoucher_new',
+            'display' => false,
+            'label' => t('New gift voucher'),
+        ]);
+        $giftVoucherMenu->addChild(static::EDIT_GIFT_VOUCHER, [
+            'route' => 'admin_giftvoucher_edit',
+            'display' => false,
+            'label' => t('Editing gift voucher'),
+        ]);
+
+        $giftPlansMenu = $menu->addChild(
+            static::GIFT_PLAN_LIST,
+            ['route' => 'admin_giftplan_list', 'label' => t(
+                'Gift plans',
+            )],
+        );
+        $giftPlansMenu->addChild(static::GIFT_PLAN_NEW, ['route' => 'admin_giftplan_new', 'label' => t('New gift plan'), 'display' => false]);
+        $giftPlansMenu->addChild(static::GIFT_PLAN_EDIT, ['route' => 'admin_giftplan_edit', 'label' => t('Editing gift plan'), 'display' => false]);
+
+        $menu->addChild(static::LIST_VAT, ['route' => 'admin_vat_list', 'label' => t('VAT')]);
+
+        $currenciesMenuItem = $menu->addChild(
+            static::LIST_CURRENCY,
+            ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')],
+        );
+        $currenciesMenuItem->setExtra('superadmin', true);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRICING, $menu);
+
+        return $menu;
+    }
+
+    protected function createTransportAndPaymentMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(
+            static::ROOT_TRANSPORT_AND_PAYMENT,
+            ['label' => t('Shipping, payments and stock')],
+        );
+        $menu->setExtra('icon', 'truck');
+
+        $transportsMenu = $menu->addChild(
+            static::LIST_TRANSPORT,
+            ['route' => 'admin_transport_list', 'label' => t('Shipping methods')],
+        );
+        $transportsMenu->addChild(
+            static::NEW_TRANSPORT,
+            ['route' => 'admin_transport_new', 'label' => t('New shipping'), 'display' => false],
+        );
+        $transportsMenu->addChild(
+            static::EDIT_TRANSPORT,
+            ['route' => 'admin_transport_edit', 'label' => t('Editing shipping'), 'display' => false],
+        );
+
+        $paymentsMenu = $menu->addChild(
+            static::LIST_PAYMENT,
+            ['route' => 'admin_payment_list', 'label' => t('Payment methods')],
+        );
+        $paymentsMenu->addChild(
+            static::NEW_PAYMENT,
+            ['route' => 'admin_payment_new', 'label' => t('New payment'), 'display' => false],
+        );
+        $paymentsMenu->addChild(
+            static::EDIT_PAYMENT,
+            ['route' => 'admin_payment_edit', 'label' => t('Editing payment'), 'display' => false],
+        );
+
+        $menu->addChild(
+            static::FREE_TRANSPORT_AND_PAYMENT,
+            ['route' => 'admin_transportandpayment_freetransportandpaymentlimit', 'label' => t(
+                'Free shipping and payment',
+            )],
+        );
+
+        $stockListMenu = $menu->addChild(static::LIST_STOCK, ['route' => 'admin_stock_list', 'label' => t('Warehouses')]);
+        $stockListMenu->addChild(static::NEW_STOCK, ['route' => 'admin_stock_new', 'display' => false, 'label' => t('New warehouse')]);
+        $stockListMenu->addChild(static::EDIT_STOCK, ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
+        $menu->addChild(static::STOCK_SETTINGS, ['route' => 'admin_stock_settings', 'label' => t('Warehouse settings')]);
+
+        $menu->addChild(static::HOLIDAYS_IMPORT, ['route' => 'admin_crud_closed_day_holidays_import', 'label' => t('Holidays import'), 'display' => false]);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_TRANSPORT_AND_PAYMENT, $menu);
+
+        return $menu;
+    }
+
+    protected function createMarketingMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(static::ROOT_CMS, ['label' => t('Content')]);
+        $menu->setExtra('icon', 'chart-piece');
+
+        $articlesMenu = $menu->addChild(
+            static::LIST_ARTICLE,
+            ['route' => 'admin_article_list', 'label' => t('Pages')],
+        );
+        $articlesMenu->addChild(
+            static::NEW_ARTICLE,
+            ['route' => 'admin_article_new', 'label' => t('New page'), 'display' => false],
+        );
+        $articlesMenu->addChild(
+            static::EDIT_ARTICLE,
+            ['route' => 'admin_article_edit', 'label' => t('Editing page'), 'display' => false],
+        );
+
+        $blogMenu = $menu->addChild(static::SECTION_BLOG, ['label' => t('Blog')]);
+
+        $blogArticles = $blogMenu->addChild(static::LIST_BLOG_ARTICLE, ['route' => 'admin_blogarticle_list', 'label' => t('Blog articles')]);
+        $blogArticles->addChild(static::NEW_BLOG_ARTICLE, ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
+        $blogArticles->addChild(static::EDIT_BLOG_ARTICLE, ['route' => 'admin_blogarticle_edit', 'display' => false]);
+
+        $blogCategories = $blogMenu->addChild(static::LIST_BLOG_CATEGORY, ['route' => 'admin_blogcategory_list', 'label' => t('Blog categories')]);
+        $blogCategories->addChild(static::NEW_BLOG_CATEGORY, ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('New blog category')]);
+        $blogCategories->addChild(static::EDIT_BLOG_CATEGORY, ['route' => 'admin_blogcategory_edit', 'display' => false]);
+
+        $homepageMenu = $menu->addChild(static::SECTION_HOMEPAGE, ['label' => t('Home page')]);
+
+        $homepageMenu->addChild(static::LIST_PROMOTED_PRODUCT, ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
+        $homepageMenu->addChild(static::LIST_PROMOTED_CATEGORY, ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
+
+        $menu->addChild(static::AUTOCOMPLETE_SETTING, ['route' => 'admin_autocomplete_setting', 'label' => t('Autocomplete favorites')]);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
+
+        return $menu;
+    }
+
+    protected function createLegalMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(static::SECTION_LEGAL, ['label' => t('Legal')]);
+        $menu->setExtra('icon', 'scale');
+
+        $menu->addChild(
+            static::TERMS_AND_CONDITIONS,
+            ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and conditions')],
+        );
+        $menu->addChild(
+            static::PRIVACY_POLICY,
+            ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy policy')],
+        );
+        $menu->addChild(
+            static::PERSONAL_DATA,
+            ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')],
+        );
+        $menu->addChild(static::USER_CONSENT_POLICY, ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
+
+        if ($this->productReviewEnabledChecker->isEnabledOnAnyDomain()) {
+            $menu->addChild(
+                static::PRODUCT_REVIEW_POLICY,
+                ['route' => 'shopsys_administration_productreviewpolicy_setting', 'label' => t('Product review policy')],
+            );
+        }
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_LEGAL, $menu);
+
+        return $menu;
+    }
+
+    protected function createSeoMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(static::SECTION_SEO, ['label' => t('SEO')]);
+        $menu->setExtra('icon', 'search');
+
+        $menu->addChild(static::SEO, ['route' => 'admin_seo_index', 'label' => t('SEO and Open Graph')]);
+        $menu->addChild(static::ROBOTS, ['route' => 'admin_seo_robots', 'label' => t('Robots.txt')]);
+        $menu->addChild(static::HREFLANG, ['route' => 'admin_seo_hreflang', 'label' => t('Alternate language settings')]);
+
+        $seoPageMenu = $menu->addChild(static::LIST_SEO_PAGE, ['route' => 'admin_seopage_list', 'label' => t('SEO pages')]);
+        $seoPageMenu->addChild(static::NEW_SEO_PAGE, ['route' => 'admin_seopage_new', 'label' => t('New SEO page'), 'display' => false]);
+        $seoPageMenu->addChild(static::EDIT_SEO_PAGE, ['route' => 'admin_seopage_edit', 'label' => t('Editing SEO page'), 'display' => false]);
+
+        $categorySeoMenu = $menu->addChild(static::LIST_CATEGORY_SEO, ['route' => 'admin_categoryseo_list', 'label' => t('Extended SEO categories')]);
+        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO, ['route' => 'admin_categoryseo_newcategory', 'label' => t('Extended SEO category - category selection'), 'display' => false]);
+        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO_FILTERS, ['route' => 'admin_categoryseo_newfilters', 'label' => t('Extended SEO category - filters'), 'display' => false]);
+        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO_COMBINATIONS, ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
+        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO_COMBINATION, ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
+
+        $menu->addChild(static::LIST_UNUSED_FRIENDLY_URL, ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_SEO, $menu);
+
+        return $menu;
+    }
+
+    protected function createCommunicationMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(static::SECTION_COMMUNICATION, ['label' => t('Communication')]);
+        $menu->setExtra('icon', 'letter');
+
+        $mailTemplates = $menu->addChild(
+            static::LIST_MAIL_TEMPLATE,
+            ['route' => 'admin_mail_template', 'label' => t('Email templates')],
+        );
+        $mailTemplates->addChild(
+            static::EDIT_MAIL_TEMPLATE,
+            ['route' => 'admin_mail_edit', 'label' => t('Editing email template'), 'display' => false],
+        );
+        $menu->addChild(
+            static::MAIL_SETTING,
+            ['route' => 'admin_mail_setting', 'label' => t('Email settings')],
+        );
+
+        $menu->addChild(static::LIST_NEWSLETTER, [
+            'route' => 'admin_newsletter_list',
+            'label' => t('Newsletter subscribers'),
+        ]);
+
+        $menu->addChild(
+            static::CONTACT_FORM_SETTINGS,
+            ['route' => 'admin_contactformsettings_index', 'label' => t('Contact form')],
+        );
+
+        $menu->addChild(static::ORDER_CONFIRMATION, ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_COMMUNICATION, $menu);
+
+        return $menu;
+    }
+
+    protected function createIntegrationsMenu(): ItemInterface
+    {
+        $integrationsMenu = $this->menuFactory->createItem(static::ROOT_INTEGRATIONS, ['label' => t('Integrations')]);
+        $integrationsMenu->setExtra('icon', 'puzzle');
+
+        $integrationsMenu->addChild(static::LIST_FEED, ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
+        $integrationsMenu->addChild(static::SECTION_HEUREKA, ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INTEGRATIONS, $integrationsMenu);
+
+        return $integrationsMenu;
     }
 
     protected function createAdministratorsMenu(): ItemInterface
@@ -615,7 +774,7 @@ class SideMenuBuilder
         );
         $menu->setExtra('icon', 'person-door-man');
 
-        $administratorViewMenu = $menu->addChild(static::LIST_ADMINISTRATOR, ['route' => 'admin_administrator_list', 'label' => t('Administrators overview')]);
+        $administratorViewMenu = $menu->addChild(static::LIST_ADMINISTRATOR, ['route' => 'admin_administrator_list', 'label' => t('Administrators')]);
 
         $administratorViewMenu->addChild(
             static::NEW_ADMINISTRATOR,
@@ -660,8 +819,7 @@ class SideMenuBuilder
         $menu->setExtra('icon', 'gear');
 
         if ($this->domain->isMultidomain()) {
-            $identificationMenu = $menu->addChild(static::SECTION_IDENTIFICATION, ['label' => t('E-shop identification')]);
-            $domainsMenu = $identificationMenu->addChild(
+            $domainsMenu = $menu->addChild(
                 static::LIST_DOMAIN,
                 ['route' => 'admin_domain_list', 'label' => t('E-shop identification')],
             );
@@ -671,67 +829,15 @@ class SideMenuBuilder
             );
         }
 
-        $communicationMenu = $menu->addChild(static::SECTION_COMMUNICATION, ['label' => t('Communication with customer')]);
-        $communicationMenu->addChild(
-            static::MAIL_SETTING,
-            ['route' => 'admin_mail_setting', 'label' => t('Email settings')],
-        );
-        $mailTemplates = $communicationMenu->addChild(
-            static::LIST_MAIL_TEMPLATE,
-            ['route' => 'admin_mail_template', 'label' => t('Email templates')],
-        );
-        $mailTemplates->addChild(
-            static::EDIT_MAIL_TEMPLATE,
-            ['route' => 'admin_mail_edit', 'label' => t('Editing email template'), 'display' => false],
-        );
-
-        $listsMenu = $menu->addChild(static::SECTION_LISTS, ['label' => t('Lists and nomenclatures')]);
-        $transportsAndPaymentsMenu = $listsMenu->addChild(
-            static::LIST_TRANSPORT_AND_PAYMENT,
-            ['route' => 'admin_transportandpayment_list', 'label' => t('Shippings and payments')],
-        );
-        $transportsAndPaymentsMenu->addChild(
-            static::NEW_TRANSPORT,
-            ['route' => 'admin_transport_new', 'label' => t('New shipping'), 'display' => false],
-        );
-        $transportsAndPaymentsMenu->addChild(
-            static::EDIT_TRANSPORT,
-            ['route' => 'admin_transport_edit', 'label' => t('Editing shipping'), 'display' => false],
-        );
-        $transportsAndPaymentsMenu->addChild(
-            static::NEW_PAYMENT,
-            ['route' => 'admin_payment_new', 'label' => t('New payment'), 'display' => false],
-        );
-        $transportsAndPaymentsMenu->addChild(
-            static::EDIT_PAYMENT,
-            ['route' => 'admin_payment_edit', 'label' => t('Editing payment'), 'display' => false],
-        );
-
-        $flagsMenu = $listsMenu->addChild(static::LIST_FLAG, ['route' => 'admin_flag_list', 'label' => t('Flags')]);
-        $flagsMenu->addChild(static::NEW_FLAG, ['route' => 'admin_flag_new', 'label' => t('New flag'), 'display' => false]);
-        $flagsMenu->addChild(static::EDIT_FLAG, ['route' => 'admin_flag_edit', 'label' => t('Editing flag'), 'display' => false]);
-
-        $parametersMenu = $listsMenu->addChild(static::LIST_PARAMETER, ['route' => 'admin_parameter_list', 'label' => t('Parameters')]);
-        $parametersMenu->addChild(static::NEW_PARAMETER, ['route' => 'admin_parameter_new', 'display' => false, 'label' => t('New parameter')]);
-        $parametersMenu->addChild(static::EDIT_PARAMETER, ['route' => 'admin_parameter_edit', 'display' => false, 'label' => t('Editing parameter')]);
-        $parametersMenu->addChild(static::EDIT_PARAMETERS_VALUE, ['route' => 'admin_parametervalues_edit', 'display' => false, 'label' => t('Parameter values')]);
-
-        $listsMenu->addChild(
+        $menu->addChild(
             static::LIST_ORDER_STATUS,
             ['route' => 'admin_orderstatus_list', 'label' => t('Status of orders')],
         );
-        $listsMenu->addChild(
+        $menu->addChild(
             static::LIST_COMPLAINT_STATUS,
             ['route' => 'admin_complaintstatus_list', 'label' => t('Status of complaints')],
         );
-        $brandsMenu = $listsMenu->addChild(static::LIST_BRAND, ['route' => 'admin_brand_list', 'label' => t('Brands')]);
-        $brandsMenu->addChild(static::NEW_BRAND, ['route' => 'admin_brand_new', 'label' => t('New brand'), 'display' => false]);
-        $brandsMenu->addChild(
-            static::EDIT_BRAND,
-            ['route' => 'admin_brand_edit', 'label' => t('Editing brand'), 'display' => false],
-        );
-        $listsMenu->addChild(static::LIST_UNIT, ['route' => 'admin_unit_list', 'label' => t('Measurement units')]);
-        $countriesMenu = $listsMenu->addChild(
+        $countriesMenu = $menu->addChild(
             static::LIST_COUNTRY,
             ['route' => 'admin_country_list', 'label' => t('Countries')],
         );
@@ -743,46 +849,12 @@ class SideMenuBuilder
             static::EDIT_COUNTRY,
             ['route' => 'admin_country_edit', 'label' => t('Editing country'), 'display' => false],
         );
-        $listsMenu->addChild(
+        $menu->addChild(
             static::LIST_PHONE_PREFIX_SETTINGS,
             ['route' => 'admin_phoneprefix_settings', 'label' => t('Phone prefixes')],
         );
 
-        $parameterValueMenu = $listsMenu->addChild(static::LIST_PARAMETER_VALUE, ['route' => 'admin_parametervalue_list', 'label' => t('Parameter value of type color')]);
-        $parameterValueMenu->addChild(static::EDIT_PARAMETER_VALUE, ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
-
-        $listsMenu->addChild(static::HOLIDAYS_IMPORT, ['route' => 'admin_crud_closed_day_holidays_import', 'label' => t('Holidays import'), 'display' => false]);
-
-        $seoMenu = $menu->addChild(static::SECTION_SEO, ['label' => t('SEO')]);
-        $seoMenu->addChild(static::SEO, ['route' => 'admin_seo_index', 'label' => t('SEO and Open Graph')]);
-        $seoMenu->addChild(static::ROBOTS, ['route' => 'admin_seo_robots', 'label' => t('Robots.txt')]);
-        $seoMenu->addChild(static::HREFLANG, ['route' => 'admin_seo_hreflang', 'label' => t('Alternate language settings')]);
-        $seoMenu->addChild(static::LIST_UNUSED_FRIENDLY_URL, ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
-
-        $seoPageMenu = $seoMenu->addChild(static::LIST_SEO_PAGE, ['route' => 'admin_seopage_list', 'label' => t('SEO pages')]);
-        $seoPageMenu->addChild(static::NEW_SEO_PAGE, ['route' => 'admin_seopage_new', 'label' => t('New SEO page'), 'display' => false]);
-        $seoPageMenu->addChild(static::EDIT_SEO_PAGE, ['route' => 'admin_seopage_edit', 'label' => t('Editing SEO page'), 'display' => false]);
-
-        $categorySeoMenu = $seoMenu->addChild(static::LIST_CATEGORY_SEO, ['route' => 'admin_categoryseo_list', 'label' => t('Extended SEO categories')]);
-        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO, ['route' => 'admin_categoryseo_newcategory', 'label' => t('Extended SEO category - category selection'), 'display' => false]);
-        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO_FILTERS, ['route' => 'admin_categoryseo_newfilters', 'label' => t('Extended SEO category - filters'), 'display' => false]);
-        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO_COMBINATIONS, ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
-        $categorySeoMenu->addChild(static::NEW_CATEGORY_SEO_COMBINATION, ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
-
-        $contactFormSettingsMenu = $menu->addChild(static::SECTION_CONTACT_FORM, ['label' => t('Contact form')]);
-        $contactFormSettingsMenu->addChild(
-            static::CONTACT_FORM_SETTINGS,
-            ['route' => 'admin_contactformsettings_index', 'label' => t('Contact form')],
-        );
-
-        $stockMenu = $menu->addChild(static::SECTION_STOCKS, ['label' => t('Stocking')]);
-        $stockListMenu = $stockMenu->addChild(static::LIST_STOCK, ['route' => 'admin_stock_list', 'label' => t('Warehouses')]);
-        $stockListMenu->addChild(static::NEW_STOCK, ['route' => 'admin_stock_new', 'display' => false, 'label' => t('New warehouse')]);
-        $stockListMenu->addChild(static::EDIT_STOCK, ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
-        $stockMenu->addChild(static::STOCK_SETTINGS, ['route' => 'admin_stock_settings', 'label' => t('Warehouse settings')]);
-
-        $constantsMenu = $menu->addChild(static::SECTION_CONSTANTS, ['label' => t('Language constants')]);
-        $constantsListMenu = $constantsMenu->addChild(static::LIST_CONSTANT, ['route' => 'admin_languageconstant_list', 'label' => t('List of language constants')]);
+        $constantsListMenu = $menu->addChild(static::LIST_CONSTANT, ['route' => 'admin_languageconstant_list', 'label' => t('Language constants')]);
         $constantsListMenu->addChild(static::EDIT_CONSTANT, ['route' => 'admin_languageconstant_edit', 'label' => t('Language constant translation'), 'display' => false]);
 
         $superadminMenu = $menu->addChild(static::SECTION_SUPERADMIN, ['label' => t('Superadmin')]);
@@ -795,7 +867,7 @@ class SideMenuBuilder
         $superadminMenu->addChild(static::LIST_URL, ['route' => 'admin_superadmin_urls', 'label' => t('URL addresses')]);
         $superadminMenu->addChild(
             static::MAIL_WHITELIST,
-            ['route' => 'admin_superadmin_mailwhitelist', 'label' => t('E-mail whitelist settings')],
+            ['route' => 'admin_superadmin_mailwhitelist', 'label' => t('E-mail whitelist')],
         );
         $superadminMenu->addChild(static::CLEAR_STOREFRONT_CACHE, ['route' => 'admin_redis_show', 'label' => t('Clean Storefront Cache')]);
         $superadminMenu->addChild(static::CSP_HEADER, ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
@@ -803,21 +875,6 @@ class SideMenuBuilder
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_SETTINGS, $menu);
 
         return $menu;
-    }
-
-    protected function createIntegrationsMenu(): ItemInterface
-    {
-        $integrationsMenu = $this->menuFactory->createItem(static::ROOT_INTEGRATIONS, ['label' => t('Integrations')]);
-        $integrationsMenu->setExtra('icon', 'puzzle');
-
-        $integrationsMenu->addChild(static::LIST_FEED, ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
-
-        $heurekaMenu = $integrationsMenu->addChild(static::SECTION_HEUREKA, ['label' => t('Heureka')]);
-        $heurekaMenu->addChild(static::HEUREKA_SETTINGS, ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
-
-        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INTEGRATIONS, $integrationsMenu);
-
-        return $integrationsMenu;
     }
 
     protected function buildPinnedSection(ItemInterface $menu): void

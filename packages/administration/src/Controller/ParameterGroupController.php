@@ -31,8 +31,8 @@ class ParameterGroupController extends AbstractCrudController
         $config
             ->setRoutePrefix('/product')
             ->setMenuSection(
-                SideMenuBuilder::ROOT_SETTING,
-                SideMenuBuilder::SECTION_LISTS,
+                SideMenuBuilder::ROOT_PRODUCT,
+                SideMenuBuilder::SECTION_PARAMETERS,
                 ['after' => SideMenuBuilder::LIST_PARAMETER],
             )
             ->registerHandler(ParameterGroupCrudHandler::class);

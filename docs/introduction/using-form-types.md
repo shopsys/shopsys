@@ -482,7 +482,7 @@ When `false`, displays all granular permissions (VIEW, CREATE, EDIT, DELETE).
 #### grouped
 
 Defaults to `true`.  
-When `true`, roles are organized into sections (e.g., "Orders & Customers", "Products & Catalog").
+When `true`, roles are organized into sections (e.g., "Sales", "Catalog").
 When `false`, all roles are displayed in a single ungrouped list.
 
 #### Example Usage

@@ -124,7 +124,7 @@ When you install new project, default currencies are set like this
 - `B2B - SK` _(3rd domain)_: `EUR`
 - administration: `CZK`
 
-You can change default currencies in administration `Pricing > Currencies`, but this change will not last after application rebuild (operation that you do often during development).
+You can change default currencies in administration `Prices and discounts > Currencies and rounding`, but this change will not last after application rebuild (operation that you do often during development).
 
 ### How to set default currency permanently
 

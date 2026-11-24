@@ -97,7 +97,7 @@ final class SeoPageFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'required' => true,
                 'label' => 'Page slug',
-                'help' => t('The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity.'),
+                'help' => t('The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. a content page, the page uses the SEO settings of that entity.'),
                 'options_by_domain_id' => $optionsByDomainId,
                 'entry_options' => [
                     'constraints' => [

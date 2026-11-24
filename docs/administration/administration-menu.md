@@ -64,18 +64,18 @@ class MyMenuSubscriber implements EventSubscriberInterface
 
     public function onConfigureMenu(ConfigureMenuEvent $event): void
     {
-        // Add the item and place it right after the existing "orders" item instead of at the end
+        // Add the item and place it right after the existing "sales" item instead of at the end
         $this->menuItemPositioner->addChild(
             $event->getMenu(),
             'my_item',
             ['route' => 'admin_my_page', 'label' => t('My page')],
-            ['after' => 'orders'],
+            ['after' => 'sales'],
         );
     }
 }
 ```
 
-If the item already exists, call `moveItemToPosition()` directly to move it: `$this->menuItemPositioner->moveItemToPosition($item, ['after' => 'orders'])`.
+If the item already exists, call `moveItemToPosition()` directly to move it: `$this->menuItemPositioner->moveItemToPosition($item, ['after' => 'sales'])`.
 
 ## Routing extension
 

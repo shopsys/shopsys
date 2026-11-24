@@ -23,7 +23,7 @@ provides a signpost of customizations that are easily achievable as well as a li
 - [Extending the application using standard Symfony techniques](https://symfony.com/doc/current/bundles/override.html)
 - [Overriding static methods of framework services](static-service-access.md) such as the friendly URL slug generation
     - E.g. overriding Twig templates, routes, services, ...
-- [Adding a new advert position](../cookbook/adding-a-new-advert-position.md) to be used in the administration section _Marketing > Advertising system_
+- [Adding a new advert position](../cookbook/adding-a-new-advert-position.md) to be used in the administration section _Content > Advertising_
 - Open-box modifications in `project-base`
     - E.g. adding new entities, changing the FE design, customization of FE javascripts, adding new FE pages (routes and controllers), ...
 - [Hiding the existing features and functionality](https://github.com/shopsys/demoshop/pull/13)

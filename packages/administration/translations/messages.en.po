@@ -118,9 +118,6 @@ msgstr ""
 msgid "Advertising"
 msgstr ""
 
-msgid "Advertising system"
-msgstr ""
-
 msgid "Adverts"
 msgstr ""
 
@@ -181,9 +178,6 @@ msgstr ""
 msgid "Area"
 msgstr ""
 
-msgid "Article"
-msgstr ""
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr ""
 
@@ -199,13 +193,7 @@ msgstr ""
 msgid "Article will be visible from %date%."
 msgstr ""
 
-msgid "Articles"
-msgstr ""
-
 msgid "Articles by this author"
-msgstr ""
-
-msgid "Articles overview"
 msgstr ""
 
 msgid "Assigned stores"
@@ -319,6 +307,9 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
+msgid "Catalog"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -391,6 +382,9 @@ msgstr ""
 msgid "Color parameter values"
 msgstr ""
 
+msgid "Communication"
+msgstr ""
+
 msgid "Company"
 msgstr ""
 
@@ -442,7 +436,7 @@ msgstr ""
 msgid "Contact form settings"
 msgstr ""
 
-msgid "Content Management"
+msgid "Content"
 msgstr ""
 
 msgid "Content-Security-Policy header"
@@ -517,9 +511,6 @@ msgstr ""
 msgid "Create new advertising"
 msgstr ""
 
-msgid "Create new article"
-msgstr ""
-
 msgid "Create new banner"
 msgstr ""
 
@@ -560,6 +551,9 @@ msgid "Create new item"
 msgstr ""
 
 msgid "Create new order status"
+msgstr ""
+
+msgid "Create new page"
 msgstr ""
 
 msgid "Create new parameter"
@@ -880,9 +874,6 @@ msgstr ""
 msgid "Editing administrator role group"
 msgstr ""
 
-msgid "Editing article"
-msgstr ""
-
 msgid "Editing blog article"
 msgstr ""
 
@@ -925,6 +916,9 @@ msgstr ""
 msgid "Editing order - Nr. %number%"
 msgstr ""
 
+msgid "Editing page"
+msgstr ""
+
 msgid "Editing parameter of type color"
 msgstr ""
 
@@ -947,9 +941,6 @@ msgid "Email"
 msgstr ""
 
 msgid "Email allowed recipients (whitelist)"
-msgstr ""
-
-msgid "Email newsletter"
 msgstr ""
 
 msgid "Email settings"
@@ -1084,9 +1075,6 @@ msgstr ""
 msgid "Free shipping and payment"
 msgstr ""
 
-msgid "Free transport and payment"
-msgstr ""
-
 msgid "Friday"
 msgstr ""
 
@@ -1213,6 +1201,9 @@ msgstr ""
 msgid "Inquiry by"
 msgstr ""
 
+msgid "Integrations"
+msgstr ""
+
 msgid "Internal ID"
 msgstr ""
 
@@ -1258,10 +1249,10 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
-msgid "Legal & Compliance"
+msgid "Legal"
 msgstr ""
 
-msgid "Legal conditions article setting"
+msgid "Legal conditions page setting"
 msgstr ""
 
 msgid "Link"
@@ -1327,9 +1318,6 @@ msgstr ""
 msgid "Manual correction"
 msgstr ""
 
-msgid "Marketing & Promotions"
-msgstr ""
-
 msgid "Maximum weight of products"
 msgstr ""
 
@@ -1384,9 +1372,6 @@ msgstr ""
 msgid "New administrator role group"
 msgstr ""
 
-msgid "New article"
-msgstr ""
-
 msgid "New blog article"
 msgstr ""
 
@@ -1426,6 +1411,9 @@ msgstr ""
 msgid "New orders"
 msgstr ""
 
+msgid "New page"
+msgstr ""
+
 msgid "New parameter"
 msgstr ""
 
@@ -1456,7 +1444,7 @@ msgstr ""
 msgid "New warehouse"
 msgstr ""
 
-msgid "Newsletter"
+msgid "Newsletter subscribers"
 msgstr ""
 
 msgid "No"
@@ -1469,9 +1457,6 @@ msgid "No URLs so far."
 msgstr ""
 
 msgid "No VAT rate found. You have to create some first."
-msgstr ""
-
-msgid "No articles found on this domain. You have to create some first."
 msgstr ""
 
 msgid "No blog articles found."
@@ -1538,6 +1523,9 @@ msgid "No order found."
 msgstr ""
 
 msgid "No orders status found."
+msgstr ""
+
+msgid "No pages found on this domain. You have to create some first."
 msgstr ""
 
 msgid "No parameters found. You have to create some first."
@@ -1681,9 +1669,6 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Orders & Customers"
-msgstr ""
-
 msgid "Orders overview"
 msgstr ""
 
@@ -1694,6 +1679,15 @@ msgid "Origin"
 msgstr ""
 
 msgid "Overview"
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Pages overview"
 msgstr ""
 
 msgid "Paid"
@@ -1714,9 +1708,6 @@ msgstr ""
 msgid "Parameter value of type color"
 msgstr ""
 
-msgid "Parameter values of type color"
-msgstr ""
-
 msgid "Parameters"
 msgstr ""
 
@@ -1726,13 +1717,16 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
-msgid "Payment & Transport"
+msgid "Payment & Shipping"
 msgstr ""
 
 msgid "Payment instructions"
 msgstr ""
 
 msgid "Payment method"
+msgstr ""
+
+msgid "Payment methods"
 msgstr ""
 
 msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
@@ -1807,13 +1801,16 @@ msgstr ""
 msgid "Price lists"
 msgstr ""
 
+msgid "Prices and discounts"
+msgstr ""
+
 msgid "Pricing groups"
 msgstr ""
 
 msgid "Privacy policy"
 msgstr ""
 
-msgid "Privacy policy article setting"
+msgid "Privacy policy page setting"
 msgstr ""
 
 msgid "Privacy policy settings"
@@ -1834,7 +1831,7 @@ msgstr ""
 msgid "Product review policy"
 msgstr ""
 
-msgid "Product review policy article setting"
+msgid "Product review policy page setting"
 msgstr ""
 
 msgid "Product review policy settings"
@@ -1850,9 +1847,6 @@ msgid "Product with X + Y free promotion"
 msgstr ""
 
 msgid "Products"
-msgstr ""
-
-msgid "Products & Catalog"
 msgstr ""
 
 msgid "Products overview"
@@ -1999,7 +1993,7 @@ msgstr ""
 msgid "Running"
 msgstr ""
 
-msgid "SEO & Marketing Tools"
+msgid "SEO"
 msgstr ""
 
 msgid "SEO and Open Graph"
@@ -2014,13 +2008,16 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. a content page, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
 msgstr ""
 
 msgid "Sale including/excluding VAT"
 msgstr ""
 
 msgid "Sale including/excluding VAT settings"
+msgstr ""
+
+msgid "Sales"
 msgstr ""
 
 msgid "Sales representative"
@@ -2221,25 +2218,31 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-msgid "Settings & Configuration"
-msgstr ""
-
 msgid "Several changes"
 msgstr ""
 
 msgid "Shipping"
 msgstr ""
 
+msgid "Shipping and payment methods"
+msgstr ""
+
+msgid "Shipping group"
+msgstr ""
+
+msgid "Shipping groups"
+msgstr ""
+
 msgid "Shipping instructions"
+msgstr ""
+
+msgid "Shipping methods"
 msgstr ""
 
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr ""
 
-msgid "Shippings"
-msgstr ""
-
-msgid "Shippings and payments"
+msgid "Shipping, payments and stock"
 msgstr ""
 
 msgid "Show all customer orders"
@@ -2326,9 +2329,6 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-msgid "System Tools"
-msgstr ""
-
 msgid "Tab content could not be loaded."
 msgstr ""
 
@@ -2356,7 +2356,7 @@ msgstr ""
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr ""
 
-msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of shippings."
 msgstr ""
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
@@ -2491,16 +2491,10 @@ msgstr ""
 msgid "Transfers"
 msgstr ""
 
-msgid "Transport"
-msgstr ""
-
 msgid "Transport group"
 msgstr ""
 
 msgid "Transport groups"
-msgstr ""
-
-msgid "Transports and payments"
 msgstr ""
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."
@@ -2581,7 +2575,7 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-msgid "User consent policy article setting"
+msgid "User consent policy page setting"
 msgstr ""
 
 msgid "User consent policy settings"
@@ -2704,7 +2698,7 @@ msgstr ""
 msgid "You can drag additional content here."
 msgstr ""
 
-msgid "You can drag articles here."
+msgid "You can drag pages here."
 msgstr ""
 
 msgid "You can't delete yourself."
@@ -2723,9 +2717,6 @@ msgid "administrators"
 msgstr ""
 
 msgid "and %count% more"
-msgstr ""
-
-msgid "articles"
 msgstr ""
 
 msgid "at"
@@ -2792,6 +2783,9 @@ msgid "order statuses"
 msgstr ""
 
 msgid "orders"
+msgstr ""
+
+msgid "pages"
 msgstr ""
 
 msgid "parameter values"

@@ -215,16 +215,16 @@ use Shopsys\FrameworkBundle\Component\Context\AdminContext;
 
 class AdminRoleSectionsProvider extends AbstractRoleSectionProvider
 {
-    public const string ORDERS_CUSTOMERS = 'orders_customers';
-    public const string PRODUCTS_CATALOG = 'products_catalog';
-    public const string MARKETING_PROMOTIONS = 'marketing_promotions';
+    public const string SALES = 'sales';
+    public const string CATALOG = 'products';
+    public const string PRICING = 'pricing';
 
     protected function defineSections(): void
     {
         // Add sections with identifier, translatable name, priority (lower = first), and optional icon
-        $this->addSection(new RoleSection(self::ORDERS_CUSTOMERS, t('Orders & Customers'), 20, 'cart'));
-        $this->addSection(new RoleSection(self::PRODUCTS_CATALOG, t('Products & Catalog'), 30, 'tag'));
-        $this->addSection(new RoleSection(self::MARKETING_PROMOTIONS, t('Marketing & Promotions'), 40, 'light-bulb'));
+        $this->addSection(new RoleSection(self::SALES, t('Sales'), 20, 'document-copy'));
+        $this->addSection(new RoleSection(self::CATALOG, t('Catalog'), 40, 'cart'));
+        $this->addSection(new RoleSection(self::PRICING, t('Prices and discounts'), 50, 'tag'));
     }
 
     public static function getTargetContext(): string
@@ -249,13 +249,13 @@ class CustomRoleProvider implements RoleProviderInterface
             new Role(
                 'ROLE_ORDER',
                 t('Order management'),
-                AdminRoleSectionsProvider::ORDERS_CUSTOMERS, // Assign to section
+                AdminRoleSectionsProvider::SALES, // Assign to section
                 [Permission::FULL]
             ),
             new Role(
                 'ROLE_PRODUCT',
                 t('Product management'),
-                AdminRoleSectionsProvider::PRODUCTS_CATALOG,
+                AdminRoleSectionsProvider::CATALOG,
                 [Permission::VIEW, Permission::EDIT]
             ),
         ];

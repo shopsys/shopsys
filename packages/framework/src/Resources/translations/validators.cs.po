@@ -202,9 +202,6 @@ msgstr "Prosím vyberte reklamní plochu"
 msgid "Please choose advertisement type"
 msgstr "Prosím vyberte typ reklamy"
 
-msgid "Please choose article placement"
-msgstr "Prosím vyberte umístění článku"
-
 msgid "Please choose at least one day"
 msgstr "Vyberte prosím alespoň jeden den"
 
@@ -225,6 +222,9 @@ msgstr "Prosím vyberte dárkový produkt"
 
 msgid "Please choose image"
 msgstr "Prosím vyberte obrázek"
+
+msgid "Please choose page placement"
+msgstr "Prosím vyberte umístění stránky"
 
 msgid "Please choose parameter"
 msgstr "Prosím vyberte parametr"
@@ -282,12 +282,6 @@ msgstr "Vyplňte prosím doplňkový popis pro Zboží.cz."
 
 msgid "Please enter an ID"
 msgstr "Zadejte prosím ID"
-
-msgid "Please enter article content"
-msgstr "Vyplňte prosím text článku"
-
-msgid "Please enter article name"
-msgstr "Vyplňte prosím název článku"
 
 msgid "Please enter at least one discount limit"
 msgstr "Vložte, prosím, alespoň jeden limit se slevou"
@@ -439,6 +433,9 @@ msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"
 msgid "Please enter page URL"
 msgstr "Odkaz musí být platnou URL adresou"
 
+msgid "Please enter page content"
+msgstr "Vyplňte prosím text stránky"
+
 msgid "Please enter page name"
 msgstr "Prosím vyplňte název stránky"
 
@@ -499,6 +496,9 @@ msgstr "Vyplňte prosím název"
 msgid "Please enter selling price type"
 msgstr "Prosím vyplňte typ prodejní ceny"
 
+msgid "Please enter shipping group name"
+msgstr "Vyplňte prosím název skupiny doprav"
+
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 
@@ -537,9 +537,6 @@ msgstr "Vyplňte prosím celkovou cenu s DPH"
 
 msgid "Please enter total price without VAT"
 msgstr "Vyplňte prosím celkovou cenu bez DPH"
-
-msgid "Please enter transport group name"
-msgstr "Vyplňte prosím název skupiny doprav"
 
 msgid "Please enter unit name in all languages"
 msgstr "Vyplňte prosím název jednotky ve všech jazycích"
@@ -682,6 +679,9 @@ msgstr "Stejný doplněk titulku už je používán na jiné doméně"
 msgid "Seo page with slug {{ pageSlug }} already exists"
 msgstr "Seo stránka se slugem {{ pageSlug }} již existuje"
 
+msgid "Shipping group name cannot be longer than {{ limit }} characters"
+msgstr "Název skupiny doprav nesmí být delší než {{ limit }} znaků"
+
 msgid "Slug can contain only letters, numbers, hyphens, underscores and slashes"
 msgstr "Slug může obsahovat pouze písmena, čísla, pomlčky, podtržítka a lomítka"
 
@@ -717,9 +717,6 @@ msgstr "Toto pole musí zůstat prázdné"
 
 msgid "This value is not a valid email address."
 msgstr "Tato hodnota není platnou e-mailovou adresou."
-
-msgid "Transport group name cannot be longer than {{ limit }} characters"
-msgstr "Název skupiny doprav nesmí být delší než {{ limit }} znaků"
 
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr "Název jednotky nesmí být delší než {{ limit }} znaků"
@@ -761,7 +758,7 @@ msgid "Withdrawal deadline must be a positive number."
 msgstr "Lhůta pro odstoupení musí být kladné číslo."
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."
-msgstr "Zadali jste duplicitní zboží. V seznamu nejprodávanějšího zboží musí být každé zboží jen jedenkrát. Prosím chybu opravte a poté znovu uložte."
+msgstr "Zadali jste duplicitní produkt. V seznamu nejprodávanějších produktů musí být každý produkt jen jedenkrát. Prosím chybu opravte a poté znovu uložte."
 
 msgid "You have to select any domain."
 msgstr "Musíte vybrat nějakou doménu."

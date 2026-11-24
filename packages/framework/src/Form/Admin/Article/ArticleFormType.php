@@ -64,7 +64,7 @@ final class ArticleFormType extends AbstractType
         int $domainId,
     ): FormBuilderInterface {
         $builderArticleData = $builder->create('articleData', GroupType::class, [
-            'label' => 'Article data',
+            'label' => 'Page data',
         ]);
 
         if ($article === null) {
@@ -77,9 +77,9 @@ final class ArticleFormType extends AbstractType
                 ->add('placement', ChoiceType::class, [
                     'required' => true,
                     'choices' => $this->articleFacade->getAvailablePlacementChoices(),
-                    'placeholder' => '-- Choose article position --',
+                    'placeholder' => '-- Choose page position --',
                     'constraints' => [
-                        new Constraints\NotBlank(message: 'Please choose article placement'),
+                        new Constraints\NotBlank(message: 'Please choose page placement'),
                     ],
                     'label' => 'Location',
                 ]);
@@ -98,7 +98,7 @@ final class ArticleFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(message: 'Please enter article name'),
+                    new Constraints\NotBlank(message: 'Please enter page name'),
                 ],
                 'label' => 'Name',
             ])
@@ -146,7 +146,7 @@ final class ArticleFormType extends AbstractType
                 'allow_products' => true,
                 'constraints' => [
                     new Constraints\NotBlank(
-                        message: 'Please enter article content',
+                        message: 'Please enter page content',
                         groups: [self::VALIDATION_GROUP_TYPE_SITE],
                     ),
                 ],
@@ -202,7 +202,7 @@ final class ArticleFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ),
                 ],
-                'label' => 'Article image',
+                'label' => 'Page image',
                 'entity' => $article,
                 'image_entity_class' => Article::class,
             ]);

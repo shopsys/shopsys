@@ -1,15 +1,15 @@
 {% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
 
-{% block title %}- {{ 'Articles overview'|trans }}{% endblock %}
+{% block title %}- {{ 'Pages overview'|trans }}{% endblock %}
 
 {% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
-{% block h1 %}{{ 'Articles'|trans }}{% endblock %}
+{% block h1 %}{{ 'Pages'|trans }}{% endblock %}
 
 
 {% block btn %}
     <a href="{{ url('admin_article_new') }}" class="btn btn-primary">
         {{ ux_icon('plus') }}
-        {{ 'Create new article'|trans }}
+        {{ 'Create new page'|trans }}
     </a>
 {% endblock %}
 
@@ -49,7 +49,7 @@
                     <div class="empty-icon">
                         {{ ux_icon('notes-off', { class: 'text-secondary' }) }}
                     </div>
-                    <p class="empty-title">{{ 'No articles found on this domain. You have to create some first.'|trans }}</p>
+                    <p class="empty-title">{{ 'No pages found on this domain. You have to create some first.'|trans }}</p>
                     <p class="empty-subtitle text-secondary">
                         {{ 'Try adjusting your search or filter to find what you’re looking for, or create a new one if needed.'|trans }}
                     </p>

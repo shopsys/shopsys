@@ -39,7 +39,7 @@ class NotificationBarController extends AbstractCrudController
     {
         $config
             ->setMenuTitle(t('Notification bar'))
-            ->setMenuSection(SideMenuBuilder::ROOT_CMS, null, ['after' => SideMenuBuilder::AUTOCOMPLETE_SETTING])
+            ->setMenuSection(SideMenuBuilder::ROOT_CMS)
             ->setListDomainControl(CrudListDomainControl::SWITCHER)
             ->registerHandler(NotificationBarCrudHandler::class);
     }

@@ -23,13 +23,6 @@ class TransportAndPaymentController extends AdminBaseController
     ) {
     }
 
-    #[Route(path: '/transport-and-payment/list/')]
-    #[CanView(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT)]
-    public function listAction(): Response
-    {
-        return $this->render('@ShopsysAdministration/content/transportAndPayment/list.html.twig');
-    }
-
     #[Route(path: '/transport-and-payment/free-transport-and-payment-limit/')]
     #[CanEdit(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, methods: [HttpMethod::POST])]
     #[CanView(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, methods: [HttpMethod::GET])]

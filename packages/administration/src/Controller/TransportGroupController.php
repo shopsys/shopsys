@@ -25,11 +25,13 @@ class TransportGroupController extends AbstractCrudController
     public function configure(CrudConfig $config): void
     {
         $config
+            ->setEntityNameSingular(t('Shipping group'))
+            ->setEntityNamePlural(t('Shipping groups'))
             ->setRoutePrefix('/transport-and-payment')
             ->setMenuSection(
-                SideMenuBuilder::ROOT_SETTING,
-                SideMenuBuilder::SECTION_LISTS,
-                ['after' => SideMenuBuilder::LIST_TRANSPORT_AND_PAYMENT],
+                SideMenuBuilder::ROOT_TRANSPORT_AND_PAYMENT,
+                null,
+                ['after' => SideMenuBuilder::LIST_PAYMENT],
             )
             ->registerHandler(TransportGroupCrudHandler::class);
     }

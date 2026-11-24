@@ -67,7 +67,7 @@ class ArticleController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Article <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                    t('Page <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
                         'name' => $article->getName(),
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
@@ -81,7 +81,7 @@ class ArticleController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing article - %name%', ['%name%' => $article->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing page - %name%', ['%name%' => $article->getName()]));
 
         return $this->render('@ShopsysAdministration/content/article/edit.html.twig', [
             'form' => $form->createView(),
@@ -93,11 +93,11 @@ class ArticleController extends AdminBaseController
     #[CanView]
     public function listAction(): Response
     {
-        $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1, t('Articles in footer') . ' 1');
-        $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2, t('Articles in footer') . ' 2');
-        $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3, t('Articles in footer') . ' 3');
-        $gridFooter4 = $this->getGrid(Article::PLACEMENT_FOOTER_4, t('Articles in footer') . ' 4');
-        $gridNone = $this->getGrid(Article::PLACEMENT_NONE, t('Articles without positioning'));
+        $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1, t('Pages in footer') . ' 1');
+        $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2, t('Pages in footer') . ' 2');
+        $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3, t('Pages in footer') . ' 3');
+        $gridFooter4 = $this->getGrid(Article::PLACEMENT_FOOTER_4, t('Pages in footer') . ' 4');
+        $gridNone = $this->getGrid(Article::PLACEMENT_NONE, t('Pages without positioning'));
         $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
 
         return $this->render('@ShopsysAdministration/content/article/list.html.twig', [
@@ -128,7 +128,7 @@ class ArticleController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Article <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
+                    t('Page <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
                         'name' => $article->getName(),
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
@@ -158,13 +158,13 @@ class ArticleController extends AdminBaseController
             $this->articleFacade->delete($id);
 
             $this->addSuccessFlashTwig(
-                t('Article <strong>{{ name }}</strong> deleted'),
+                t('Page <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ],
             );
         } catch (ArticleNotFoundException $ex) {
-            $this->addErrorFlash(t('Selected article doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected page doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_article_list');
@@ -179,18 +179,18 @@ class ArticleController extends AdminBaseController
 
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
             $message = t(
-                'Article "%name%" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?',
+                'Page "%name%" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?',
             );
         } elseif ($this->userConsentPolicyFacade->isArticleUsedAsUserConsentPolicyArticle($article)) {
             $message = t(
-                'Article "%name%" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?',
+                'Page "%name%" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?',
             );
         } elseif ($this->productReviewPolicyFacade->isArticleUsedAsProductReviewPolicyArticle($article)) {
             $message = t(
-                'Article "%name%" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?',
+                'Page "%name%" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?',
             );
         } else {
-            $message = t('Do you really want to remove this article?');
+            $message = t('Do you really want to remove this page?');
         }
 
         return $this->confirmDeleteResponseFactory->createDeleteResponse(

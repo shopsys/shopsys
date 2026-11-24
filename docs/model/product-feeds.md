@@ -7,13 +7,13 @@ To allow easy installation and removal of product feeds, they are implemented in
 ## Where are the feeds?
 
 The exported files contain a random token generated during the application build, so their URL address is not easily guessed.
-You can see all installed product feeds along with the URLs of their export in the administration section _Marketing > XML Feeds_.
+You can see all installed product feeds along with the URLs of their export in the administration section _Integrations > XML Feeds_.
 
 ## When are they exported?
 
 Product feeds are usually exported using Cron modules.
 The Cron modules are already implemented and registered, all that's needed is to run the [`cron` phing target](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes (can be changed in parameters) on your server and Shopsys Platform takes care of the rest.
-They can be also generated manually in the administration section _Marketing > XML Feeds_, if you're logged in as _superadministrator_.
+They can be also generated manually in the administration section _Integrations > XML Feeds_, if you're logged in as _superadministrator_.
 
 Each feed definition in `services.yaml` includes a `cron` attribute with a standard crontab expression defining when it should be generated.
 

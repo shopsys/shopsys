@@ -79,7 +79,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportCronModule:
         tags:
-            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: export, readableName: "Export articles to Elasticsearch", sentryMonitoring: true, sentryFailureThreshold: 3 }
+            - { name: shopsys.cron, cron: '10 3 * * *', instanceName: export, readableName: "Export pages to Elasticsearch", sentryMonitoring: true, sentryFailureThreshold: 3 }
 
     Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportCronModule:
         tags:

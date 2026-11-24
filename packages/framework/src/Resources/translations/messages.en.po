@@ -25,12 +25,6 @@ msgstr ""
 msgid "-- Choose area --"
 msgstr ""
 
-msgid "-- Choose article --"
-msgstr ""
-
-msgid "-- Choose article position --"
-msgstr ""
-
 msgid "-- Choose brand --"
 msgstr ""
 
@@ -40,10 +34,16 @@ msgstr ""
 msgid "-- Choose group --"
 msgstr ""
 
+msgid "-- Choose page --"
+msgstr ""
+
+msgid "-- Choose page position --"
+msgstr ""
+
 msgid "-- Choose prefix --"
 msgstr ""
 
-msgid "-- Choose transport group --"
+msgid "-- Choose shipping group --"
 msgstr ""
 
 msgid "-- Choose unit --"
@@ -73,10 +73,10 @@ msgstr ""
 msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">Privacy policy page for domain %domainName% is not set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">Product review policy page for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
@@ -88,7 +88,7 @@ msgstr ""
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">Term and conditions article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">Term and conditions page for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
@@ -97,7 +97,7 @@ msgstr ""
 msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">User consent policy page for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
@@ -241,9 +241,6 @@ msgstr ""
 msgid "Administrators"
 msgstr ""
 
-msgid "Administrators overview"
-msgstr ""
-
 msgid "All feeds successfully scheduled."
 msgstr ""
 
@@ -316,33 +313,6 @@ msgstr ""
 msgid "Area"
 msgstr ""
 
-msgid "Article"
-msgstr ""
-
-msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
-msgstr ""
-
-msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
-msgstr ""
-
-msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
-msgstr ""
-
-msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Article <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Article data"
-msgstr ""
-
-msgid "Article image"
-msgstr ""
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr ""
 
@@ -350,15 +320,6 @@ msgid "Article is only visible in administration."
 msgstr ""
 
 msgid "Article is ready to be displayed on the storefront."
-msgstr ""
-
-msgid "Articles in footer"
-msgstr ""
-
-msgid "Articles overview"
-msgstr ""
-
-msgid "Articles without positioning"
 msgstr ""
 
 msgid "Assign product"
@@ -559,16 +520,13 @@ msgstr ""
 msgid "By how many working days the service extends the estimated delivery time of the order."
 msgstr ""
 
-msgid "CMS"
-msgstr ""
-
 msgid "CSV file"
 msgstr ""
 
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr ""
 
-msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day."
+msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the shipping or the store is closed, the date is moved to the nearest allowed day."
 msgstr ""
 
 msgid "Cancel"
@@ -590,6 +548,9 @@ msgid "Cardholder canceled the payment"
 msgstr ""
 
 msgid "Cart manipulation and order creation"
+msgstr ""
+
+msgid "Catalog"
 msgstr ""
 
 msgid "Catalog number"
@@ -628,22 +589,22 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
-msgstr ""
-
-msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
-msgstr ""
-
 msgid "Choose author"
+msgstr ""
+
+msgid "Choose page, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
+msgstr ""
+
+msgid "Choose page, which will serve as terms and conditions with which the customer has to agree when creating order."
 msgstr ""
 
 msgid "Choose product"
 msgstr ""
 
-msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
+msgid "Choose the page that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
 msgstr ""
 
-msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgid "Choose the page that provides information about how user consent is obtained, managed, and withdrawn on this domain."
 msgstr ""
 
 msgid "Chosen payment information (image, name, price)"
@@ -676,6 +637,9 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Codes"
+msgstr ""
+
 msgid "Collapse"
 msgstr ""
 
@@ -685,13 +649,16 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
+msgid "Color parameter values"
+msgstr ""
+
 msgid "Color pattern icon"
 msgstr ""
 
 msgid "Combination of parameters and their values"
 msgstr ""
 
-msgid "Communication with customer"
+msgid "Communication"
 msgstr ""
 
 msgid "Company"
@@ -943,9 +910,6 @@ msgstr ""
 msgid "Customers"
 msgstr ""
 
-msgid "Customers overview"
-msgstr ""
-
 msgid "Dashboard"
 msgstr ""
 
@@ -970,7 +934,7 @@ msgstr ""
 msgid "Days for transfer between warehouses"
 msgstr ""
 
-msgid "Days of the week when the transport delivers"
+msgid "Days of the week when the shipping delivers"
 msgstr ""
 
 msgid "Days until delivery"
@@ -1195,9 +1159,6 @@ msgstr ""
 msgid "Do you really want to remove this administrator?"
 msgstr ""
 
-msgid "Do you really want to remove this article?"
-msgstr ""
-
 msgid "Do you really want to remove this blog article?"
 msgstr ""
 
@@ -1223,6 +1184,9 @@ msgid "Do you really want to remove this gift plan?"
 msgstr ""
 
 msgid "Do you really want to remove this language constant translation?"
+msgstr ""
+
+msgid "Do you really want to remove this page?"
 msgstr ""
 
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and parameters of the extended SEO category where the parameter is assigned. This step is irreversible!"
@@ -1288,10 +1252,10 @@ msgstr ""
 msgid "E-mail addresses whitelist"
 msgstr ""
 
-msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
+msgid "E-mail whitelist"
 msgstr ""
 
-msgid "E-mail whitelist settings"
+msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
 msgstr ""
 
 msgid "E-mail whitelist settings modified"
@@ -1331,12 +1295,6 @@ msgid "Editing administrator role group"
 msgstr ""
 
 msgid "Editing administrator role group - %name%"
-msgstr ""
-
-msgid "Editing article"
-msgstr ""
-
-msgid "Editing article - %name%"
 msgstr ""
 
 msgid "Editing bestseller"
@@ -1423,6 +1381,12 @@ msgstr ""
 msgid "Editing order"
 msgstr ""
 
+msgid "Editing page"
+msgstr ""
+
+msgid "Editing page - %name%"
+msgstr ""
+
 msgid "Editing parameter"
 msgstr ""
 
@@ -1466,9 +1430,6 @@ msgid "Email allowed recipients (whitelist)"
 msgstr ""
 
 msgid "Email name"
-msgstr ""
-
-msgid "Email newsletter"
 msgstr ""
 
 msgid "Email settings"
@@ -1549,10 +1510,10 @@ msgstr ""
 msgid "Excluded from sale"
 msgstr ""
 
-msgid "Excluded stores"
+msgid "Excluded shippings"
 msgstr ""
 
-msgid "Excluded transports"
+msgid "Excluded stores"
 msgstr ""
 
 msgid "Excluding VAT"
@@ -1655,9 +1616,6 @@ msgid "Filename"
 msgstr ""
 
 msgid "Files"
-msgstr ""
-
-msgid "Files overview"
 msgstr ""
 
 msgid "Files uploaded:"
@@ -1766,9 +1724,6 @@ msgid "Free shipping and payment"
 msgstr ""
 
 msgid "Free shipping and payment settings saved"
-msgstr ""
-
-msgid "Free transport and payment"
 msgstr ""
 
 msgid "Frequency"
@@ -1912,7 +1867,7 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-msgid "If enabled, a cart containing this product can only use personal pickup at store transports."
+msgid "If enabled, a cart containing this product can only use personal pickup at store shippings."
 msgstr ""
 
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
@@ -2068,7 +2023,7 @@ msgstr ""
 msgid "Latitude"
 msgstr ""
 
-msgid "Legal conditions"
+msgid "Legal"
 msgstr ""
 
 msgid "Legal conditions settings modified."
@@ -2095,13 +2050,7 @@ msgstr ""
 msgid "LinkedIn URL"
 msgstr ""
 
-msgid "List of language constants"
-msgstr ""
-
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
-
-msgid "Lists and nomenclatures"
 msgstr ""
 
 msgid "Load coordinates by address"
@@ -2254,9 +2203,6 @@ msgstr ""
 msgid "New administrator role group"
 msgstr ""
 
-msgid "New article"
-msgstr ""
-
 msgid "New blog article"
 msgstr ""
 
@@ -2290,6 +2236,9 @@ msgstr ""
 msgid "New gift voucher"
 msgstr ""
 
+msgid "New page"
+msgstr ""
+
 msgid "New parameter"
 msgstr ""
 
@@ -2312,6 +2261,9 @@ msgid "New warehouse"
 msgstr ""
 
 msgid "New withdrawal request for order {orderNumber}"
+msgstr ""
+
+msgid "Newsletter subscribers"
 msgstr ""
 
 msgid "No"
@@ -2491,6 +2443,33 @@ msgstr ""
 msgid "Packetery"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
+msgid "Page \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Page \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Page \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Page <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Page data"
+msgstr ""
+
+msgid "Page image"
+msgstr ""
+
 msgid "Page name"
 msgstr ""
 
@@ -2498,6 +2477,15 @@ msgid "Page slug"
 msgstr ""
 
 msgid "Page title"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Pages in footer"
+msgstr ""
+
+msgid "Pages without positioning"
 msgstr ""
 
 msgid "Paid"
@@ -2519,9 +2507,6 @@ msgid "Parameter value"
 msgstr ""
 
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
-msgstr ""
-
-msgid "Parameter value of type color"
 msgstr ""
 
 msgid "Parameter values"
@@ -2600,6 +2585,9 @@ msgid "Payment made after expiration"
 msgstr ""
 
 msgid "Payment method chosen"
+msgstr ""
+
+msgid "Payment methods"
 msgstr ""
 
 msgid "Payment not completed"
@@ -2752,7 +2740,7 @@ msgstr ""
 msgid "Prices and VAT"
 msgstr ""
 
-msgid "Pricing"
+msgid "Prices and discounts"
 msgstr ""
 
 msgid "Pricing group"
@@ -2830,7 +2818,7 @@ msgstr ""
 msgid "Product review policy"
 msgstr ""
 
-msgid "Product review policy article"
+msgid "Product review policy page"
 msgstr ""
 
 msgid "Product settings on the main page successfully changed"
@@ -2846,9 +2834,6 @@ msgid "Products"
 msgstr ""
 
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
-msgstr ""
-
-msgid "Products overview"
 msgstr ""
 
 msgid "Products parameters of selected category"
@@ -2917,7 +2902,7 @@ msgstr ""
 msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
 msgstr ""
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which shipping delivery setting applies to this day."
 msgstr ""
 
 msgid "Published"
@@ -3085,6 +3070,9 @@ msgstr ""
 msgid "SMS was sent but not delivered yet"
 msgstr ""
 
+msgid "Sales"
+msgstr ""
+
 msgid "Sales including/excluding VAT settings"
 msgstr ""
 
@@ -3166,9 +3154,6 @@ msgstr ""
 msgid "Selected administrator role group doesn't exist."
 msgstr ""
 
-msgid "Selected article doesn't exist."
-msgstr ""
-
 msgid "Selected blog article does not exist."
 msgstr ""
 
@@ -3203,6 +3188,9 @@ msgid "Selected gift plan doesn't exist."
 msgstr ""
 
 msgid "Selected order status doesn't exist."
+msgstr ""
+
+msgid "Selected page doesn't exist."
 msgstr ""
 
 msgid "Selected parameter doesn't exist."
@@ -3301,7 +3289,13 @@ msgstr ""
 msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Shipping group"
+msgstr ""
+
 msgid "Shipping instructions"
+msgstr ""
+
+msgid "Shipping methods"
 msgstr ""
 
 msgid "Shipping of type Email cannot be created, exactly one must always exist."
@@ -3310,10 +3304,13 @@ msgstr ""
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr ""
 
+msgid "Shipping type"
+msgstr ""
+
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
 msgstr ""
 
-msgid "Shippings and payments"
+msgid "Shipping, payments and stock"
 msgstr ""
 
 msgid "Short description"
@@ -3395,9 +3392,6 @@ msgid "Status of orders <strong>{{ name }}</strong> reserved and can't be delete
 msgstr ""
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
-msgstr ""
-
-msgid "Stocking"
 msgstr ""
 
 msgid "Store"
@@ -3499,7 +3493,7 @@ msgstr ""
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
 msgstr ""
 
-msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity."
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. a content page, the page uses the SEO settings of that entity."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."
@@ -3508,7 +3502,7 @@ msgstr ""
 msgid "There was an error while saving. The order isn't saved."
 msgstr ""
 
-msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, articles, brands and stores) use their own image, page title and meta description."
+msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, content pages, brands and stores) use their own image, page title and meta description."
 msgstr ""
 
 msgid "Third column categories"
@@ -3602,12 +3596,6 @@ msgid "Transfer issues overview"
 msgstr ""
 
 msgid "Transfer problem has been marked as resolved"
-msgstr ""
-
-msgid "Transport group"
-msgstr ""
-
-msgid "Transport type"
 msgstr ""
 
 msgid "Tuesday"
@@ -3730,7 +3718,7 @@ msgstr ""
 msgid "User consent policy"
 msgstr ""
 
-msgid "User consent policy article"
+msgid "User consent policy page"
 msgstr ""
 
 msgid "User consent policy settings modified."

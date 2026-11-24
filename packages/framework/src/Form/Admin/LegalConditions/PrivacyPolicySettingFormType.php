@@ -34,9 +34,9 @@ final class PrivacyPolicySettingFormType extends AbstractType
                 'choices' => $articles,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => '-- Choose article --',
+                'placeholder' => '-- Choose page --',
                 'label' => 'Privacy policy',
-                'help' => t('Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user.'),
+                'help' => t('Choose page, which will serve as privacy policy with which the customer has to agree when creating order or registering user.'),
             ]);
 
         $builder

@@ -74,7 +74,7 @@ msgid "Add new customer user to %companyName%"
 msgstr "Přidat nový zákaznický účet do %companyName%"
 
 msgid "Add product"
-msgstr "Přidat zboží"
+msgstr "Přidat produkt"
 
 msgid "Add requirement"
 msgstr "Přidat podmínku"
@@ -118,11 +118,8 @@ msgstr "Reklama"
 msgid "Advertising"
 msgstr "Reklama"
 
-msgid "Advertising system"
-msgstr "Reklamní systém"
-
 msgid "Adverts"
-msgstr "Reklamní systém"
+msgstr "Reklama"
 
 msgid "All"
 msgstr "Vše"
@@ -181,9 +178,6 @@ msgstr "Opravdu?"
 msgid "Area"
 msgstr "Plocha"
 
-msgid "Article"
-msgstr "Článek"
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr "Článek je přístupný pouze přes přímý odkaz, s noindex/nofollow."
 
@@ -199,14 +193,8 @@ msgstr "Článek je publikován, ale není viditelný na eshopu (chybí název n
 msgid "Article will be visible from %date%."
 msgstr "Článek bude viditelný od %date%."
 
-msgid "Articles"
-msgstr "Články"
-
 msgid "Articles by this author"
 msgstr "Články tohoto autora"
-
-msgid "Articles overview"
-msgstr "Přehled článků"
 
 msgid "Assigned stores"
 msgstr "Přiřazené prodejny"
@@ -248,13 +236,13 @@ msgid "Basic price"
 msgstr "Základní cena"
 
 msgid "Bestsellers"
-msgstr "Nejprodávanější zboží"
+msgstr "Nejprodávanější produkty"
 
 msgid "Bestsellers of the category"
-msgstr "Nejprodávanější zboží kategorie"
+msgstr "Nejprodávanější produkty kategorie"
 
 msgid "Bestselling products"
-msgstr "Nejprodávanější zboží"
+msgstr "Nejprodávanější produkty"
 
 msgid "Billing address"
 msgstr "Fakturační adresa"
@@ -318,6 +306,9 @@ msgstr "Zrušit"
 
 msgid "Cancelled"
 msgstr "Stornovaný"
+
+msgid "Catalog"
+msgstr "Katalog"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
@@ -389,7 +380,10 @@ msgid "Code can't be modified because it is used for pairing with existing order
 msgstr "Kód nemůže být upraven, protože je spárovaný s existujícím objednávkami."
 
 msgid "Color parameter values"
-msgstr "Hodnota parametru typu barva"
+msgstr "Hodnoty barevných parametrů"
+
+msgid "Communication"
+msgstr "Komunikace"
 
 msgid "Company"
 msgstr "Firma"
@@ -442,8 +436,8 @@ msgstr "Kontaktní formulář"
 msgid "Contact form settings"
 msgstr "Nastavení kontaktní stránky"
 
-msgid "Content Management"
-msgstr "Správa obsahu"
+msgid "Content"
+msgstr "Obsah"
 
 msgid "Content-Security-Policy header"
 msgstr "Hlavička Content-Security-Policy"
@@ -517,9 +511,6 @@ msgstr "Vytvořit novou skupinu práv pro administrátora"
 msgid "Create new advertising"
 msgstr "Vytvořit novou reklamu"
 
-msgid "Create new article"
-msgstr "Vytvořit nový článek"
-
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
 
@@ -562,6 +553,9 @@ msgstr "Vytvořit novou položku"
 msgid "Create new order status"
 msgstr "Vytvořit nový stav objednávek"
 
+msgid "Create new page"
+msgstr "Vytvořit novou stránku"
+
 msgid "Create new parameter"
 msgstr "Vytvořit nový parametr"
 
@@ -572,7 +566,7 @@ msgid "Create new price list"
 msgstr "Vytvořit nový ceník"
 
 msgid "Create new product"
-msgstr "Vytvořit nové zboží"
+msgstr "Vytvořit nový produkt"
 
 msgid "Create new sales representative"
 msgstr "Vytvořit nového obchodního zástupce"
@@ -641,7 +635,7 @@ msgid "Customer user role group"
 msgstr "Skupina práv"
 
 msgid "Customer user role groups"
-msgstr "Skupina práv"
+msgstr "Skupiny práv zákazníků"
 
 msgid "Customer users"
 msgstr "Uživatelé"
@@ -880,9 +874,6 @@ msgstr "Editace administrátora"
 msgid "Editing administrator role group"
 msgstr "Editace skupiny práv pro administrátora"
 
-msgid "Editing article"
-msgstr "Editace článku"
-
 msgid "Editing blog article"
 msgstr "Editace článku blogu"
 
@@ -925,6 +916,9 @@ msgstr "Editace dárkového poukazu"
 msgid "Editing order - Nr. %number%"
 msgstr "Editace objednávky - č. %number%"
 
+msgid "Editing page"
+msgstr "Editace stránky"
+
 msgid "Editing parameter of type color"
 msgstr "Editace parametru typu barva"
 
@@ -932,7 +926,7 @@ msgid "Editing payment"
 msgstr "Editace platby"
 
 msgid "Editing product"
-msgstr "Editace zboží"
+msgstr "Editace produktu"
 
 msgid "Editing promo code"
 msgstr "Editace slevového kupónu"
@@ -948,9 +942,6 @@ msgstr "E-mail"
 
 msgid "Email allowed recipients (whitelist)"
 msgstr "Povolení příjemci e-mailů (whitelist)"
-
-msgid "Email newsletter"
-msgstr "E-maily zpravodaje"
 
 msgid "Email settings"
 msgstr "Nastavení e-mailů"
@@ -1084,9 +1075,6 @@ msgstr "Zdarma od hodnoty objednávky"
 msgid "Free shipping and payment"
 msgstr "Doprava a platba zdarma"
 
-msgid "Free transport and payment"
-msgstr "Doprava a platba zdarma"
-
 msgid "Friday"
 msgstr "Pátek"
 
@@ -1213,6 +1201,9 @@ msgstr "Přehled poptávek"
 msgid "Inquiry by"
 msgstr "Poptávka od"
 
+msgid "Integrations"
+msgstr "Integrace"
+
 msgid "Internal ID"
 msgstr "Interní ID"
 
@@ -1258,10 +1249,10 @@ msgstr "Příjmení"
 msgid "Last update"
 msgstr "Poslední aktualizace"
 
-msgid "Legal & Compliance"
-msgstr "Právní záležitosti a dodržování předpisů"
+msgid "Legal"
+msgstr "Legislativa"
 
-msgid "Legal conditions article setting"
+msgid "Legal conditions page setting"
 msgstr "Obchodní podmínky"
 
 msgid "Link"
@@ -1327,9 +1318,6 @@ msgstr "Spravovat refundaci"
 msgid "Manual correction"
 msgstr "Ruční korekce"
 
-msgid "Marketing & Promotions"
-msgstr "Marketing a propagační akce"
-
 msgid "Maximum weight of products"
 msgstr "Maximální hmotnost produktů"
 
@@ -1384,9 +1372,6 @@ msgstr "Nový administrátor"
 msgid "New administrator role group"
 msgstr "Nová skupina práv pro administrátora"
 
-msgid "New article"
-msgstr "Nový článek"
-
 msgid "New blog article"
 msgstr "Nový článek blogu"
 
@@ -1426,6 +1411,9 @@ msgstr "Nový dárkový poukaz"
 msgid "New orders"
 msgstr "Nové objednávky"
 
+msgid "New page"
+msgstr "Nová stránka"
+
 msgid "New parameter"
 msgstr "Nový parametr"
 
@@ -1436,7 +1424,7 @@ msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was 
 msgstr "Byl vytvořen nový ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>."
 
 msgid "New product"
-msgstr "Nové zboží"
+msgstr "Nový produkt"
 
 msgid "New promo code"
 msgstr "Nový slevový kupón"
@@ -1456,8 +1444,8 @@ msgstr "Nová hodnota"
 msgid "New warehouse"
 msgstr "Nový sklad"
 
-msgid "Newsletter"
-msgstr "E-maily zpravodaje"
+msgid "Newsletter subscribers"
+msgstr "Odběratelé newsletteru"
 
 msgid "No"
 msgstr "Ne"
@@ -1470,9 +1458,6 @@ msgstr "Doposud nejsou žádné url adresy."
 
 msgid "No VAT rate found. You have to create some first."
 msgstr "Nebyly nalezeny žádné sazby DPH. Nejprve musíte nějakou vytvořit."
-
-msgid "No articles found on this domain. You have to create some first."
-msgstr "Na této doméně nebyly nalezeny žádné články. Nejprve musíte nějaký vytvořit."
 
 msgid "No blog articles found."
 msgstr "Nebyly nalezeny žádné články blogu."
@@ -1540,6 +1525,9 @@ msgstr "Nebyla nalezena žádná objednávka."
 msgid "No orders status found."
 msgstr "Nebyl nalezen žádný stav objednávek."
 
+msgid "No pages found on this domain. You have to create some first."
+msgstr "Na této doméně nebyly nalezeny žádné stránky. Nejprve musíte nějakou vytvořit."
+
 msgid "No parameters found. You have to create some first."
 msgstr "Nebyly nalezeny žádné parametry. Nejprve musíte nějaké vytvořit."
 
@@ -1550,7 +1538,7 @@ msgid "No pricing groups found. You have to create some first."
 msgstr "Nebyly nalezeny žádné cenové skupiny. Nejprve musíte nějakou vytvořit."
 
 msgid "No product found."
-msgstr "Nebylo nalezeno žádné zboží."
+msgstr "Nebyl nalezen žádný produkt."
 
 msgid "No promo codes found. You have to create some first."
 msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytvořit."
@@ -1681,9 +1669,6 @@ msgstr "Řazení"
 msgid "Orders"
 msgstr "Objednávky"
 
-msgid "Orders & Customers"
-msgstr "Objednávky a zákazníci"
-
 msgid "Orders overview"
 msgstr "Přehled objednávek"
 
@@ -1695,6 +1680,15 @@ msgstr "Původ"
 
 msgid "Overview"
 msgstr "Přehled"
+
+msgid "Page"
+msgstr "Stránka"
+
+msgid "Pages"
+msgstr "Stránky"
+
+msgid "Pages overview"
+msgstr "Přehled stránek"
 
 msgid "Paid"
 msgstr "Zaplaceno"
@@ -1714,9 +1708,6 @@ msgstr "Skupiny parametrů"
 msgid "Parameter value of type color"
 msgstr "Hodnota parameteru typu barva"
 
-msgid "Parameter values of type color"
-msgstr "Hodnoty parameteru typu barva"
-
 msgid "Parameters"
 msgstr "Parametry"
 
@@ -1726,7 +1717,7 @@ msgstr "Přehled parametrů"
 msgid "Payment"
 msgstr "Platba"
 
-msgid "Payment & Transport"
+msgid "Payment & Shipping"
 msgstr "Platba a doprava"
 
 msgid "Payment instructions"
@@ -1734,6 +1725,9 @@ msgstr "Pokyny k platbě"
 
 msgid "Payment method"
 msgstr "Platební metoda"
+
+msgid "Payment methods"
+msgstr "Způsoby platby"
 
 msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
 msgstr "Platbu typu Dárkový poukaz nelze smazat, vždy musí existovat právě jedna."
@@ -1807,26 +1801,29 @@ msgstr "Název ceníku"
 msgid "Price lists"
 msgstr "Ceníky"
 
+msgid "Prices and discounts"
+msgstr "Ceny a slevy"
+
 msgid "Pricing groups"
 msgstr "Cenové skupiny"
 
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
-msgid "Privacy policy article setting"
+msgid "Privacy policy page setting"
 msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Privacy policy settings"
 msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Product"
-msgstr "Zboží"
+msgstr "Produkt"
 
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr "Produkt v této poptávce není již dostupný v katalogu."
 
 msgid "Product not in e-shop."
-msgstr "Zboží se nenachází v eshopu."
+msgstr "Produkt se nenachází v eshopu."
 
 msgid "Product review"
 msgstr "Recenze produktu"
@@ -1834,8 +1831,8 @@ msgstr "Recenze produktu"
 msgid "Product review policy"
 msgstr "Zásady recenzí"
 
-msgid "Product review policy article setting"
-msgstr "Nastavení článku se zásadami recenzí"
+msgid "Product review policy page setting"
+msgstr "Nastavení stránky se zásadami recenzí"
 
 msgid "Product review policy settings"
 msgstr "Nastavení zásad recenzí"
@@ -1850,13 +1847,10 @@ msgid "Product with X + Y free promotion"
 msgstr "Produkt s akcí X + Y zdarma"
 
 msgid "Products"
-msgstr "Zboží"
-
-msgid "Products & Catalog"
-msgstr "Produkty a katalog"
+msgstr "Produkty"
 
 msgid "Products overview"
-msgstr "Přehled zboží"
+msgstr "Přehled produktů"
 
 msgid "Promo code"
 msgstr "Slevový kupón"
@@ -1999,8 +1993,8 @@ msgstr "Role"
 msgid "Running"
 msgstr "Probíhá"
 
-msgid "SEO & Marketing Tools"
-msgstr "SEO a marketingové nástroje"
+msgid "SEO"
+msgstr "SEO"
 
 msgid "SEO and Open Graph"
 msgstr "SEO a Open Graph"
@@ -2014,14 +2008,17 @@ msgstr "SEO stránka"
 msgid "SEO pages"
 msgstr "SEO stránky"
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
-msgstr "SEO stránky se používají jen pro statické stránky storefrontu (např. košík, vyhledávání nebo zákaznická sekce). Pokud chcete nastavit SEO konkrétní entity, např. článku, použijte SEO nastavení v administraci dané entity. SEO stránky také určují titulek, popis a obrázek zobrazené při sdílení stránky na sociálních sítích. Bez Open Graph obrázku se použije logo firmy z <a href=\"%seoSettingsUrl%\">nastavení SEO a Open Graph</a>."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. a content page, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
+msgstr "SEO stránky se používají jen pro statické stránky storefrontu (např. košík, vyhledávání nebo zákaznická sekce). Pokud chcete nastavit SEO konkrétní entity, např. obsahové stránky, použijte SEO nastavení v administraci dané entity. SEO stránky také určují titulek, popis a obrázek zobrazené při sdílení stránky na sociálních sítích. Bez Open Graph obrázku se použije logo firmy z <a href=\"%seoSettingsUrl%\">nastavení SEO a Open Graph</a>."
 
 msgid "Sale including/excluding VAT"
 msgstr "Prodej s/bez DPH"
 
 msgid "Sale including/excluding VAT settings"
 msgstr "Nastavení prodeje s/bez DPH"
+
+msgid "Sales"
+msgstr "Prodej"
 
 msgid "Sales representative"
 msgstr "Obchodní zástupce"
@@ -2221,26 +2218,32 @@ msgstr "Manuálně nastavené ceny"
 msgid "Settings"
 msgstr "Nastavení"
 
-msgid "Settings & Configuration"
-msgstr "Nastavení a konfigurace"
-
 msgid "Several changes"
 msgstr "Několik změn"
 
 msgid "Shipping"
 msgstr "Doprava"
 
+msgid "Shipping and payment methods"
+msgstr "Způsoby dopravy a platby"
+
+msgid "Shipping group"
+msgstr "Skupina doprav"
+
+msgid "Shipping groups"
+msgstr "Skupiny doprav"
+
 msgid "Shipping instructions"
 msgstr "Pokyny k dopravě"
+
+msgid "Shipping methods"
+msgstr "Způsoby dopravy"
 
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr "Dopravu typu E-mail nelze smazat, vždy musí existovat právě jedna."
 
-msgid "Shippings"
-msgstr "Dopravy"
-
-msgid "Shippings and payments"
-msgstr "Dopravy a platby"
+msgid "Shipping, payments and stock"
+msgstr "Doprava, platby a sklady"
 
 msgid "Show all customer orders"
 msgstr "Zobrazit všechny objednávky zákazníka"
@@ -2326,9 +2329,6 @@ msgstr "Přepnout jazyk"
 msgid "System"
 msgstr "Systém"
 
-msgid "System Tools"
-msgstr "Systémové nástroje"
-
 msgid "Tab content could not be loaded."
 msgstr "Obsah záložky se nepodařilo načíst."
 
@@ -2356,7 +2356,7 @@ msgstr "Textová recenze"
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/routes.ts\"."
 
-msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of shippings."
 msgstr "Dny se používají k zobrazení správné otevírací doby prodejen, k výpočtu lhůty pro odstoupení od smlouvy u objednávky a k výpočtu předpokládaného data doručení doprav."
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
@@ -2491,17 +2491,11 @@ msgstr "Přehled problémů v přenosech"
 msgid "Transfers"
 msgstr "Přehled chyb v přenosech"
 
-msgid "Transport"
-msgstr "Doprava"
-
 msgid "Transport group"
 msgstr "Skupina doprav"
 
 msgid "Transport groups"
 msgstr "Skupiny doprav"
-
-msgid "Transports and payments"
-msgstr "Dopravy a platby"
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."
 msgstr "Zkuste upravit své hledání nebo filtr, abyste našli, co hledáte, nebo vytvořte nový záznam, pokud je to potřeba."
@@ -2581,8 +2575,8 @@ msgstr "Využito: %currentLength% znaků. Doporučeno max. %recommendedLength%"
 msgid "User"
 msgstr "Uživatel"
 
-msgid "User consent policy article setting"
-msgstr "Správa osobních údajů (nastavení článku)"
+msgid "User consent policy page setting"
+msgstr "Správa osobních údajů (nastavení stránky)"
 
 msgid "User consent policy settings"
 msgstr "Nastavení správy osobních údajů"
@@ -2704,17 +2698,17 @@ msgstr "Nastavení můžete změnit <a href=\"%linkUrl%\">zde</a>."
 msgid "You can drag additional content here."
 msgstr "Zde můžete přetáhnout další obsah."
 
-msgid "You can drag articles here."
-msgstr "Zde můžete přetáhnout články"
+msgid "You can drag pages here."
+msgstr "Zde můžete přetáhnout stránky"
 
 msgid "You can't delete yourself."
 msgstr "Nemůžete smazat sami sebe."
 
 msgid "You cannot choose product that is main variant"
-msgstr "Nelze vybrat zboží, které je hlavní variantou"
+msgstr "Nelze vybrat produkt, který je hlavní variantou"
 
 msgid "You cannot choose product that is variant"
-msgstr "Nelze vybrat zboží, které je variantou"
+msgstr "Nelze vybrat produkt, který je variantou"
 
 msgid "You have unsaved changes. Do you really want to close the editor without saving?"
 msgstr "Máte neuložené změny. Opravdu chcete zavřít editor bez uložení?"
@@ -2724,9 +2718,6 @@ msgstr "administrátorů"
 
 msgid "and %count% more"
 msgstr "[1,4] a %count% další|[5,Inf] a %count% dalších"
-
-msgid "articles"
-msgstr "článků"
 
 msgid "at"
 msgstr "v"
@@ -2794,6 +2785,9 @@ msgstr "stavů objednávek"
 msgid "orders"
 msgstr "objednávek"
 
+msgid "pages"
+msgstr "stránek"
+
 msgid "parameter values"
 msgstr "hodnoty parametru"
 
@@ -2801,7 +2795,7 @@ msgid "parameters"
 msgstr "parametry"
 
 msgid "products"
-msgstr "zboží"
+msgstr "produktů"
 
 msgid "promo codes"
 msgstr "slevové kupóny"
