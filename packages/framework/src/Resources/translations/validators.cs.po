@@ -202,9 +202,6 @@ msgstr "Prosím vyberte reklamní plochu"
 msgid "Please choose advertisement type"
 msgstr "Prosím vyberte typ reklamy"
 
-msgid "Please choose article placement"
-msgstr "Prosím vyberte umístění článku"
-
 msgid "Please choose at least one day"
 msgstr "Vyberte prosím alespoň jeden den"
 
@@ -225,6 +222,9 @@ msgstr "Prosím vyberte dárkový produkt"
 
 msgid "Please choose image"
 msgstr "Prosím vyberte obrázek"
+
+msgid "Please choose page placement"
+msgstr "Prosím vyberte umístění stránky"
 
 msgid "Please choose parameter"
 msgstr "Prosím vyberte parametr"
@@ -282,12 +282,6 @@ msgstr "Vyplňte prosím doplňkový popis pro Zboží.cz."
 
 msgid "Please enter an ID"
 msgstr "Zadejte prosím ID"
-
-msgid "Please enter article content"
-msgstr "Vyplňte prosím text článku"
-
-msgid "Please enter article name"
-msgstr "Vyplňte prosím název článku"
 
 msgid "Please enter at least one discount limit"
 msgstr "Vložte, prosím, alespoň jeden limit se slevou"
@@ -438,6 +432,9 @@ msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"
 
 msgid "Please enter page URL"
 msgstr "Odkaz musí být platnou URL adresou"
+
+msgid "Please enter page content"
+msgstr "Vyplňte prosím text stránky"
 
 msgid "Please enter page name"
 msgstr "Prosím vyplňte název stránky"

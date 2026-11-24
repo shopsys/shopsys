@@ -178,9 +178,6 @@ msgstr "Opravdu?"
 msgid "Area"
 msgstr "Plocha"
 
-msgid "Article"
-msgstr "Článek"
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr "Článek je přístupný pouze přes přímý odkaz, s noindex/nofollow."
 
@@ -196,14 +193,8 @@ msgstr "Článek je publikován, ale není viditelný na eshopu (chybí název n
 msgid "Article will be visible from %date%."
 msgstr "Článek bude viditelný od %date%."
 
-msgid "Articles"
-msgstr "Články"
-
 msgid "Articles by this author"
 msgstr "Články tohoto autora"
-
-msgid "Articles overview"
-msgstr "Přehled článků"
 
 msgid "Assigned stores"
 msgstr "Přiřazené prodejny"
@@ -520,9 +511,6 @@ msgstr "Vytvořit novou skupinu práv pro administrátora"
 msgid "Create new advertising"
 msgstr "Vytvořit novou reklamu"
 
-msgid "Create new article"
-msgstr "Vytvořit nový článek"
-
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
 
@@ -564,6 +552,9 @@ msgstr "Vytvořit novou položku"
 
 msgid "Create new order status"
 msgstr "Vytvořit nový stav objednávek"
+
+msgid "Create new page"
+msgstr "Vytvořit novou stránku"
 
 msgid "Create new parameter"
 msgstr "Vytvořit nový parametr"
@@ -883,9 +874,6 @@ msgstr "Editace administrátora"
 msgid "Editing administrator role group"
 msgstr "Editace skupiny práv pro administrátora"
 
-msgid "Editing article"
-msgstr "Editace článku"
-
 msgid "Editing blog article"
 msgstr "Editace článku blogu"
 
@@ -927,6 +915,9 @@ msgstr "Editace dárkového poukazu"
 
 msgid "Editing order - Nr. %number%"
 msgstr "Editace objednávky - č. %number%"
+
+msgid "Editing page"
+msgstr "Editace stránky"
 
 msgid "Editing parameter of type color"
 msgstr "Editace parametru typu barva"
@@ -1264,7 +1255,7 @@ msgstr "Poslední aktualizace"
 msgid "Legal"
 msgstr "Legislativa"
 
-msgid "Legal conditions article setting"
+msgid "Legal conditions page setting"
 msgstr "Obchodní podmínky"
 
 msgid "Link"
@@ -1384,9 +1375,6 @@ msgstr "Nový administrátor"
 msgid "New administrator role group"
 msgstr "Nová skupina práv pro administrátora"
 
-msgid "New article"
-msgstr "Nový článek"
-
 msgid "New blog article"
 msgstr "Nový článek blogu"
 
@@ -1425,6 +1413,9 @@ msgstr "Nový dárkový poukaz"
 
 msgid "New orders"
 msgstr "Nové objednávky"
+
+msgid "New page"
+msgstr "Nová stránka"
 
 msgid "New parameter"
 msgstr "Nový parametr"
@@ -1470,9 +1461,6 @@ msgstr "Doposud nejsou žádné url adresy."
 
 msgid "No VAT rate found. You have to create some first."
 msgstr "Nebyly nalezeny žádné sazby DPH. Nejprve musíte nějakou vytvořit."
-
-msgid "No articles found on this domain. You have to create some first."
-msgstr "Na této doméně nebyly nalezeny žádné články. Nejprve musíte nějaký vytvořit."
 
 msgid "No blog articles found."
 msgstr "Nebyly nalezeny žádné články blogu."
@@ -1539,6 +1527,9 @@ msgstr "Nebyla nalezena žádná objednávka."
 
 msgid "No orders status found."
 msgstr "Nebyl nalezen žádný stav objednávek."
+
+msgid "No pages found on this domain. You have to create some first."
+msgstr "Na této doméně nebyly nalezeny žádné stránky. Nejprve musíte nějakou vytvořit."
 
 msgid "No parameters found. You have to create some first."
 msgstr "Nebyly nalezeny žádné parametry. Nejprve musíte nějaké vytvořit."
@@ -1693,6 +1684,15 @@ msgstr "Původ"
 msgid "Overview"
 msgstr "Přehled"
 
+msgid "Page"
+msgstr "Stránka"
+
+msgid "Pages"
+msgstr "Stránky"
+
+msgid "Pages overview"
+msgstr "Přehled stránek"
+
 msgid "Paid"
 msgstr "Zaplaceno"
 
@@ -1813,7 +1813,7 @@ msgstr "Cenové skupiny"
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
-msgid "Privacy policy article setting"
+msgid "Privacy policy page setting"
 msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Privacy policy settings"
@@ -1834,8 +1834,8 @@ msgstr "Recenze produktu"
 msgid "Product review policy"
 msgstr "Zásady recenzí"
 
-msgid "Product review policy article setting"
-msgstr "Nastavení článku se zásadami recenzí"
+msgid "Product review policy page setting"
+msgstr "Nastavení stránky se zásadami recenzí"
 
 msgid "Product review policy settings"
 msgstr "Nastavení zásad recenzí"
@@ -2011,8 +2011,8 @@ msgstr "SEO stránka"
 msgid "SEO pages"
 msgstr "SEO stránky"
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
-msgstr "SEO stránky se používají jen pro statické stránky storefrontu (např. košík, vyhledávání nebo zákaznická sekce). Pokud chcete nastavit SEO konkrétní entity, např. článku, použijte SEO nastavení v administraci dané entity. SEO stránky také určují titulek, popis a obrázek zobrazené při sdílení stránky na sociálních sítích. Bez Open Graph obrázku se použije logo firmy z <a href=\"%seoSettingsUrl%\">nastavení SEO a Open Graph</a>."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. a content page, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
+msgstr "SEO stránky se používají jen pro statické stránky storefrontu (např. košík, vyhledávání nebo zákaznická sekce). Pokud chcete nastavit SEO konkrétní entity, např. obsahové stránky, použijte SEO nastavení v administraci dané entity. SEO stránky také určují titulek, popis a obrázek zobrazené při sdílení stránky na sociálních sítích. Bez Open Graph obrázku se použije logo firmy z <a href=\"%seoSettingsUrl%\">nastavení SEO a Open Graph</a>."
 
 msgid "Sale including/excluding VAT"
 msgstr "Prodej s/bez DPH"
@@ -2575,8 +2575,8 @@ msgstr "Využito: %currentLength% znaků. Doporučeno max. %recommendedLength%"
 msgid "User"
 msgstr "Uživatel"
 
-msgid "User consent policy article setting"
-msgstr "Správa osobních údajů (nastavení článku)"
+msgid "User consent policy page setting"
+msgstr "Správa osobních údajů (nastavení stránky)"
 
 msgid "User consent policy settings"
 msgstr "Nastavení správy osobních údajů"
@@ -2698,8 +2698,8 @@ msgstr "Nastavení můžete změnit <a href=\"%linkUrl%\">zde</a>."
 msgid "You can drag additional content here."
 msgstr "Zde můžete přetáhnout další obsah."
 
-msgid "You can drag articles here."
-msgstr "Zde můžete přetáhnout články"
+msgid "You can drag pages here."
+msgstr "Zde můžete přetáhnout stránky"
 
 msgid "You can't delete yourself."
 msgstr "Nemůžete smazat sami sebe."
@@ -2718,9 +2718,6 @@ msgstr "administrátorů"
 
 msgid "and %count% more"
 msgstr "[1,4] a %count% další|[5,Inf] a %count% dalších"
-
-msgid "articles"
-msgstr "článků"
 
 msgid "at"
 msgstr "v"
@@ -2787,6 +2784,9 @@ msgstr "stavů objednávek"
 
 msgid "orders"
 msgstr "objednávek"
+
+msgid "pages"
+msgstr "stránek"
 
 msgid "parameter values"
 msgstr "hodnoty parametru"

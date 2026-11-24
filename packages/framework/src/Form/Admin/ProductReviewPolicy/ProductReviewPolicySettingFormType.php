@@ -41,10 +41,10 @@ final class ProductReviewPolicySettingFormType extends AbstractType
                 'choices' => $articles,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => '-- Choose article --',
-                'label' => 'Product review policy article',
+                'placeholder' => '-- Choose page --',
+                'label' => 'Product review policy page',
                 'help' => t(
-                    'Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews.',
+                    'Choose the page that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews.',
                 ),
             ])
             ->add(self::MINIMAL_AVERAGE_RATING_FOR_LISTING_FIELD_NAME, NumberType::class, [

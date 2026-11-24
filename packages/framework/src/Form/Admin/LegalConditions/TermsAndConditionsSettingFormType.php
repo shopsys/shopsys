@@ -38,9 +38,9 @@ final class TermsAndConditionsSettingFormType extends AbstractType
                 'choices' => $articles,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'placeholder' => '-- Choose article --',
+                'placeholder' => '-- Choose page --',
                 'label' => 'Terms and conditions',
-                'help' => t('Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.'),
+                'help' => t('Choose page, which will serve as terms and conditions with which the customer has to agree when creating order.'),
             ]);
 
         $builderWithdrawalGroup = $builder->create('withdrawal', GroupType::class, [

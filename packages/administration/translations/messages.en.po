@@ -178,9 +178,6 @@ msgstr ""
 msgid "Area"
 msgstr ""
 
-msgid "Article"
-msgstr ""
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr ""
 
@@ -196,13 +193,7 @@ msgstr ""
 msgid "Article will be visible from %date%."
 msgstr ""
 
-msgid "Articles"
-msgstr ""
-
 msgid "Articles by this author"
-msgstr ""
-
-msgid "Articles overview"
 msgstr ""
 
 msgid "Assigned stores"
@@ -520,9 +511,6 @@ msgstr ""
 msgid "Create new advertising"
 msgstr ""
 
-msgid "Create new article"
-msgstr ""
-
 msgid "Create new banner"
 msgstr ""
 
@@ -563,6 +551,9 @@ msgid "Create new item"
 msgstr ""
 
 msgid "Create new order status"
+msgstr ""
+
+msgid "Create new page"
 msgstr ""
 
 msgid "Create new parameter"
@@ -883,9 +874,6 @@ msgstr ""
 msgid "Editing administrator role group"
 msgstr ""
 
-msgid "Editing article"
-msgstr ""
-
 msgid "Editing blog article"
 msgstr ""
 
@@ -926,6 +914,9 @@ msgid "Editing gift voucher"
 msgstr ""
 
 msgid "Editing order - Nr. %number%"
+msgstr ""
+
+msgid "Editing page"
 msgstr ""
 
 msgid "Editing parameter of type color"
@@ -1264,7 +1255,7 @@ msgstr ""
 msgid "Legal"
 msgstr ""
 
-msgid "Legal conditions article setting"
+msgid "Legal conditions page setting"
 msgstr ""
 
 msgid "Link"
@@ -1384,9 +1375,6 @@ msgstr ""
 msgid "New administrator role group"
 msgstr ""
 
-msgid "New article"
-msgstr ""
-
 msgid "New blog article"
 msgstr ""
 
@@ -1424,6 +1412,9 @@ msgid "New gift voucher"
 msgstr ""
 
 msgid "New orders"
+msgstr ""
+
+msgid "New page"
 msgstr ""
 
 msgid "New parameter"
@@ -1469,9 +1460,6 @@ msgid "No URLs so far."
 msgstr ""
 
 msgid "No VAT rate found. You have to create some first."
-msgstr ""
-
-msgid "No articles found on this domain. You have to create some first."
 msgstr ""
 
 msgid "No blog articles found."
@@ -1538,6 +1526,9 @@ msgid "No order found."
 msgstr ""
 
 msgid "No orders status found."
+msgstr ""
+
+msgid "No pages found on this domain. You have to create some first."
 msgstr ""
 
 msgid "No parameters found. You have to create some first."
@@ -1693,6 +1684,15 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Pages overview"
+msgstr ""
+
 msgid "Paid"
 msgstr ""
 
@@ -1813,7 +1813,7 @@ msgstr ""
 msgid "Privacy policy"
 msgstr ""
 
-msgid "Privacy policy article setting"
+msgid "Privacy policy page setting"
 msgstr ""
 
 msgid "Privacy policy settings"
@@ -1834,7 +1834,7 @@ msgstr ""
 msgid "Product review policy"
 msgstr ""
 
-msgid "Product review policy article setting"
+msgid "Product review policy page setting"
 msgstr ""
 
 msgid "Product review policy settings"
@@ -2011,7 +2011,7 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
-msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. an article, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
+msgid "SEO pages apply only to static storefront pages (e.g. cart, search or customer section). To set up SEO of a particular entity, e.g. a content page, use the SEO settings in the administration of that entity. SEO pages also set the title, description and image shown when the page is shared on social networks. Without an Open Graph image, the Organization logo from <a href=\"%seoSettingsUrl%\">SEO and Open Graph</a> is used."
 msgstr ""
 
 msgid "Sale including/excluding VAT"
@@ -2575,7 +2575,7 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-msgid "User consent policy article setting"
+msgid "User consent policy page setting"
 msgstr ""
 
 msgid "User consent policy settings"
@@ -2698,7 +2698,7 @@ msgstr ""
 msgid "You can drag additional content here."
 msgstr ""
 
-msgid "You can drag articles here."
+msgid "You can drag pages here."
 msgstr ""
 
 msgid "You can't delete yourself."
@@ -2717,9 +2717,6 @@ msgid "administrators"
 msgstr ""
 
 msgid "and %count% more"
-msgstr ""
-
-msgid "articles"
 msgstr ""
 
 msgid "at"
@@ -2786,6 +2783,9 @@ msgid "order statuses"
 msgstr ""
 
 msgid "orders"
+msgstr ""
+
+msgid "pages"
 msgstr ""
 
 msgid "parameter values"

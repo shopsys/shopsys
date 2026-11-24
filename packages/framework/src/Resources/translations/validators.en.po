@@ -202,9 +202,6 @@ msgstr ""
 msgid "Please choose advertisement type"
 msgstr ""
 
-msgid "Please choose article placement"
-msgstr ""
-
 msgid "Please choose at least one day"
 msgstr ""
 
@@ -224,6 +221,9 @@ msgid "Please choose gift product"
 msgstr ""
 
 msgid "Please choose image"
+msgstr ""
+
+msgid "Please choose page placement"
 msgstr ""
 
 msgid "Please choose parameter"
@@ -281,12 +281,6 @@ msgid "Please enter additional description for Zboží.cz."
 msgstr ""
 
 msgid "Please enter an ID"
-msgstr ""
-
-msgid "Please enter article content"
-msgstr ""
-
-msgid "Please enter article name"
 msgstr ""
 
 msgid "Please enter at least one discount limit"
@@ -437,6 +431,9 @@ msgid "Please enter order status name in all languages"
 msgstr ""
 
 msgid "Please enter page URL"
+msgstr ""
+
+msgid "Please enter page content"
 msgstr ""
 
 msgid "Please enter page name"

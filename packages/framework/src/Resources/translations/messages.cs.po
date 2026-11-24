@@ -25,12 +25,6 @@ msgstr "-- Vyberte řazení --"
 msgid "-- Choose area --"
 msgstr "-- Vyberte plochu --"
 
-msgid "-- Choose article --"
-msgstr "-- Vyberte článek --"
-
-msgid "-- Choose article position --"
-msgstr "-- Vyberte umístění článku --"
-
 msgid "-- Choose brand --"
 msgstr "-- Vyberte značku --"
 
@@ -39,6 +33,12 @@ msgstr "-- Vyberte výchozí předvolbu --"
 
 msgid "-- Choose group --"
 msgstr "-- Vyberte skupinu parametrů --"
+
+msgid "-- Choose page --"
+msgstr "-- Vyberte stránku --"
+
+msgid "-- Choose page position --"
+msgstr "-- Vyberte umístění stránky --"
 
 msgid "-- Choose prefix --"
 msgstr "-- Vyberte předvolbu --"
@@ -73,11 +73,11 @@ msgstr "<a href=\"%url%\">Doména \"%domainName%\" nemá výchozí sklad.</a>"
 msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr "<a href=\"%url%\">Telefonní předvolby nejsou nakonfigurovány pro doménu %domainName%.</a>"
 
-msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
-msgstr "<a href=\"%url%\">Není nastaven článek zásady ochrany osobních údajů pro doménu %domainName%.</a>"
+msgid "<a href=\"%url%\">Privacy policy page for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Není nastavena stránka zásad ochrany osobních údajů pro doménu %domainName%.</a>"
 
-msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
-msgstr "<a href=\"%url%\">Článek se zásadami recenzí pro doménu %domainName% není nastaven.</a>"
+msgid "<a href=\"%url%\">Product review policy page for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Stránka se zásadami recenzí pro doménu %domainName% není nastavena.</a>"
 
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
 msgstr "<a href=\"%url%\">Státní svátky pro rok %year% nejsou nastaveny.</a>"
@@ -88,8 +88,8 @@ msgstr "<a href=\"%url%\">Doprava nebo platba nejsou nastaveny pro doménu %doma
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"%url%\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
 
-msgid "<a href=\"%url%\">Term and conditions article for domain %domainName% is not set.</a>"
-msgstr "<a href=\"%url%\">Není nastaven článek obchodní podmínky pro doménu %domainName%.</a>"
+msgid "<a href=\"%url%\">Term and conditions page for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Není nastavena stránka obchodních podmínek pro doménu %domainName%.</a>"
 
 msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
 msgstr "<a href=\"%url%\">Neexistují žádné státy, musíte nějaký vytvořit.</a>"
@@ -97,8 +97,8 @@ msgstr "<a href=\"%url%\">Neexistují žádné státy, musíte nějaký vytvoři
 msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr "<a href=\"%url%\">Neexistují žádné sklady, musíte nějaký vytvořit.</a>"
 
-msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
-msgstr "<a href=\"%url%\">Není nastaven článek správa osobních údajů pro doménu %domainName%.</a>"
+msgid "<a href=\"%url%\">User consent policy page for domain %domainName% is not set.</a>"
+msgstr "<a href=\"%url%\">Není nastavena stránka správy osobních údajů pro doménu %domainName%.</a>"
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
@@ -313,33 +313,6 @@ msgstr "Opravdu chcete tomuto uživateli přidělit práva super administrátora
 msgid "Area"
 msgstr "Plocha"
 
-msgid "Article"
-msgstr "Článek"
-
-msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
-msgstr "Článek \"%name%\" je nastaven pro zobrazení právních podmínek. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
-
-msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
-msgstr "Článek \"%name%\" je nastaven pro zobrazení zásad recenzí. Toto nastavení bude ztraceno. Opravdu jej chcete smazat?"
-
-msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
-msgstr "Článek \"%name%\" je nastaven pro zobrazení informací o správě osobních údajů. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
-
-msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Byl vytvořen článek <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Byl upraven článek <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Article <strong>{{ name }}</strong> deleted"
-msgstr "Článek <strong>{{ name }}</strong> byl smazán"
-
-msgid "Article data"
-msgstr "Údaje článku"
-
-msgid "Article image"
-msgstr "Obrázek článku"
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr "Článek je přístupný pouze přes přímý odkaz, s noindex/nofollow."
 
@@ -348,15 +321,6 @@ msgstr "Článek je viditelný pouze v administraci."
 
 msgid "Article is ready to be displayed on the storefront."
 msgstr "Článek je připraven k zobrazení na storefrontu."
-
-msgid "Articles"
-msgstr "Články"
-
-msgid "Articles in footer"
-msgstr "Články v patičce"
-
-msgid "Articles without positioning"
-msgstr "Články bez umístění"
 
 msgid "Assign product"
 msgstr "Přiřadit produkt"
@@ -625,23 +589,23 @@ msgstr "Změnou domény ztratíte neuložené změny. Chcete pokračovat?"
 msgid "Choose"
 msgstr "Vybrat"
 
-msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
-msgstr "Vyberte článek, který bude sloužit jako zásady ochrany osobních údajů, s nimiž musí zákazník souhlasit při vytváření objednávky nebo registraci uživatele."
-
-msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
-msgstr "Vyberte článek, který bude sloužit jako obchodní podmínky, s nimiž musí zákazník souhlasit při vytváření objednávky."
-
 msgid "Choose author"
 msgstr "Vybrat autora"
+
+msgid "Choose page, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
+msgstr "Vyberte stránku, která bude sloužit jako zásady ochrany osobních údajů, s nimiž musí zákazník souhlasit při vytváření objednávky nebo registraci uživatele."
+
+msgid "Choose page, which will serve as terms and conditions with which the customer has to agree when creating order."
+msgstr "Vyberte stránku, která bude sloužit jako obchodní podmínky, s nimiž musí zákazník souhlasit při vytváření objednávky."
 
 msgid "Choose product"
 msgstr "Vyberte produkt"
 
-msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
-msgstr "Vyberte článek, který vysvětluje, jak jsou na této doméně recenze produktů získávány, ověřovány a moderovány. Zákazníci uvidí odkaz na něj u recenzí."
+msgid "Choose the page that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
+msgstr "Vyberte stránku, která vysvětluje, jak jsou na této doméně recenze produktů získávány, ověřovány a moderovány. Zákazníci uvidí odkaz na ni u recenzí."
 
-msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
-msgstr "Vyberte článek, který poskytuje informace o tom, jak je na této doméně získáván, spravován a odvoláván souhlas se správou osobních údajů."
+msgid "Choose the page that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgstr "Vyberte stránku, která poskytuje informace o tom, jak je na této doméně získáván, spravován a odvoláván souhlas se správou osobních údajů."
 
 msgid "Chosen payment information (image, name, price)"
 msgstr "Informace o vybrané platbě (obrázek, název, cena)"
@@ -1195,9 +1159,6 @@ msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
 msgid "Do you really want to remove this administrator?"
 msgstr "Opravdu chcete odstranit tohoto administrátora?"
 
-msgid "Do you really want to remove this article?"
-msgstr "Opravdu chcete odstranit tento článek?"
-
 msgid "Do you really want to remove this blog article?"
 msgstr "Opravdu chcete odebrat tento článek blogu?"
 
@@ -1224,6 +1185,9 @@ msgstr "Opravdu chcete tento dárkový plán odstranit?"
 
 msgid "Do you really want to remove this language constant translation?"
 msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
+
+msgid "Do you really want to remove this page?"
+msgstr "Opravdu chcete odstranit tuto stránku?"
 
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and parameters of the extended SEO category where the parameter is assigned. This step is irreversible!"
 msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u produktů parametrů rozšířených SEO kategorií, do kterých je parametr přiřazen. Tento krok je nevratný!"
@@ -1333,12 +1297,6 @@ msgstr "Editace skupiny práv pro administrátora"
 msgid "Editing administrator role group - %name%"
 msgstr "Editace skupiny práv pro administrátora - %name%"
 
-msgid "Editing article"
-msgstr "Editace článku"
-
-msgid "Editing article - %name%"
-msgstr "Editace článku - %name%"
-
 msgid "Editing bestseller"
 msgstr "Editace nejprodávanějšího zboží"
 
@@ -1422,6 +1380,12 @@ msgstr "Editace dárkového poukazu - %code%"
 
 msgid "Editing order"
 msgstr "Editace objednávky"
+
+msgid "Editing page"
+msgstr "Editace stránky"
+
+msgid "Editing page - %name%"
+msgstr "Editace stránky - %name%"
 
 msgid "Editing parameter"
 msgstr "Editace parametru"
@@ -2242,9 +2206,6 @@ msgstr "Nový administrátor"
 msgid "New administrator role group"
 msgstr "Nová skupina práv pro administrátora"
 
-msgid "New article"
-msgstr "Nový článek"
-
 msgid "New blog article"
 msgstr "Nový článek blogu"
 
@@ -2277,6 +2238,9 @@ msgstr "Nový dárkový plán"
 
 msgid "New gift voucher"
 msgstr "Nový dárkový poukaz"
+
+msgid "New page"
+msgstr "Nová stránka"
 
 msgid "New parameter"
 msgstr "Nový parametr"
@@ -2482,6 +2446,33 @@ msgstr "Sledování zásilky"
 msgid "Packetery"
 msgstr "Zásilkovna"
 
+msgid "Page"
+msgstr "Stránka"
+
+msgid "Page \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
+msgstr "Stránka \"%name%\" je nastavena pro zobrazení právních podmínek. Toto nastavení bude ztraceno. Opravdu si ji přejete smazat?"
+
+msgid "Page \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
+msgstr "Stránka \"%name%\" je nastavena pro zobrazení zásad recenzí. Toto nastavení bude ztraceno. Opravdu ji chcete smazat?"
+
+msgid "Page \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
+msgstr "Stránka \"%name%\" je nastavena pro zobrazení informací o správě osobních údajů. Toto nastavení bude ztraceno. Opravdu si ji přejete smazat?"
+
+msgid "Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Byla vytvořena stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Byla upravena stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Page <strong>{{ name }}</strong> deleted"
+msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
+
+msgid "Page data"
+msgstr "Údaje stránky"
+
+msgid "Page image"
+msgstr "Obrázek stránky"
+
 msgid "Page name"
 msgstr "Název stránky"
 
@@ -2490,6 +2481,15 @@ msgstr "Slug stránky"
 
 msgid "Page title"
 msgstr "Titulek stránky"
+
+msgid "Pages"
+msgstr "Stránky"
+
+msgid "Pages in footer"
+msgstr "Stránky v patičce"
+
+msgid "Pages without positioning"
+msgstr "Stránky bez umístění"
 
 msgid "Paid"
 msgstr "Zaplaceno"
@@ -2821,8 +2821,8 @@ msgstr "Dotaz k produktu odeslaný zákazníkovi"
 msgid "Product review policy"
 msgstr "Zásady recenzí"
 
-msgid "Product review policy article"
-msgstr "Článek se zásadami recenzí"
+msgid "Product review policy page"
+msgstr "Stránka se zásadami recenzí"
 
 msgid "Product settings on the main page successfully changed"
 msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
@@ -3157,9 +3157,6 @@ msgstr "Zvolený administrátor neexistuje."
 msgid "Selected administrator role group doesn't exist."
 msgstr "Vybraná skupina práv pro administrátora neexistuje."
 
-msgid "Selected article doesn't exist."
-msgstr "Zvolený článek neexistuje."
-
 msgid "Selected blog article does not exist."
 msgstr "Vybraný článek blogu neexistuje."
 
@@ -3195,6 +3192,9 @@ msgstr "Vybraný dárkový plán neexistuje."
 
 msgid "Selected order status doesn't exist."
 msgstr "Zvolený stav objednávek neexistuje"
+
+msgid "Selected page doesn't exist."
+msgstr "Zvolená stránka neexistuje."
 
 msgid "Selected parameter doesn't exist."
 msgstr "Zvolený parametr neexistuje."
@@ -3490,8 +3490,8 @@ msgstr "Termíny vyzvednutí se řídí týdenní otevírací dobou <a href=\"%s
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
 msgstr "Vybraná hodnota se vždy použije tak, jak je. \"Výchozí (nenastaveno)\" nechá rozhodnutí na storefrontu, který uplatní svá pravidla pro tuto stránku, např. noindex pro filtrované výpisy, košík nebo objednávku."
 
-msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity."
-msgstr "Slug musí odpovídat konfiguraci stránky na storefrontu, pokud si nejste změnou jisti, poraďte se s vývojářem. Pokud slug patří jiné entitě, např. článku, stránka používá SEO nastavení této entity."
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. a content page, the page uses the SEO settings of that entity."
+msgstr "Slug musí odpovídat konfiguraci stránky na storefrontu, pokud si nejste změnou jisti, poraďte se s vývojářem. Pokud slug patří jiné entitě, např. obsahové stránce, stránka používá SEO nastavení této entity."
 
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
@@ -3499,8 +3499,8 @@ msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 
-msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, articles, brands and stores) use their own image, page title and meta description."
-msgstr "Tyto údaje se zveřejňují jako strukturovaná data na každé stránce storefrontu a doplňují také Open Graph (og) tagy, které čtou sociální sítě při sdílení stránky. Název firmy je názvem webu (og:site_name) u každé sdílené stránky. Logo se použije jako obrázek pro sdílení (og:image) jen tehdy, když stránka nemá vlastní obrázek, např. úvodní stránka bez Open Graph obrázku v její <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO stránce</a>, stránky příznaků nebo produkty a kategorie bez obrázků.<br>Statické stránky (úvodní stránka, košík, vyhledávání…) přebírají titulek, popis a obrázek pro sdílení ze své SEO stránky; entity (např. produkty, kategorie, články, značky a prodejny) používají vlastní obrázek, titulek stránky a meta description."
+msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, content pages, brands and stores) use their own image, page title and meta description."
+msgstr "Tyto údaje se zveřejňují jako strukturovaná data na každé stránce storefrontu a doplňují také Open Graph (og) tagy, které čtou sociální sítě při sdílení stránky. Název firmy je názvem webu (og:site_name) u každé sdílené stránky. Logo se použije jako obrázek pro sdílení (og:image) jen tehdy, když stránka nemá vlastní obrázek, např. úvodní stránka bez Open Graph obrázku v její <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO stránce</a>, stránky příznaků nebo produkty a kategorie bez obrázků.<br>Statické stránky (úvodní stránka, košík, vyhledávání…) přebírají titulek, popis a obrázek pro sdílení ze své SEO stránky; entity (např. produkty, kategorie, obsahové stránky, značky a prodejny) používají vlastní obrázek, titulek stránky a meta description."
 
 msgid "Third column categories"
 msgstr "Kategorie třetího sloupce"
@@ -3721,8 +3721,8 @@ msgstr "Použít sazbu DPH z produktu"
 msgid "User consent policy"
 msgstr "Správa osobních údajů"
 
-msgid "User consent policy article"
-msgstr "Článek o správě osobních údajů"
+msgid "User consent policy page"
+msgstr "Stránka o správě osobních údajů"
 
 msgid "User consent policy settings modified."
 msgstr "Nastavení správy osobních údajů bylo uloženo"

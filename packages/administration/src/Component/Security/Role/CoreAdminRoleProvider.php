@@ -142,7 +142,7 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
     protected function getContentRoles(): array
     {
         return [
-            new Role(AdminRoleConstant::ROLE_ARTICLE, t('Articles'), [Permission::FULL]),
+            new Role(AdminRoleConstant::ROLE_ARTICLE, t('Pages'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_BLOG_ARTICLE, t('Blog article'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_BLOG_CATEGORY, t('Blog category'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_BLOG_ARTICLE_AUTHOR, t('Blog article author'), [Permission::FULL]),
@@ -163,11 +163,11 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
     protected function getLegalRoles(): array
     {
         return [
-            new Role(AdminRoleConstant::ROLE_LEGAL_CONDITIONS, t('Legal conditions article setting'), [Permission::EDIT]),
-            new Role(AdminRoleConstant::ROLE_PRIVACY_POLICY, t('Privacy policy article setting'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_LEGAL_CONDITIONS, t('Legal conditions page setting'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_PRIVACY_POLICY, t('Privacy policy page setting'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_PERSONAL_DATA, t('Personal data access pages setting'), [Permission::EDIT]),
-            new Role(AdminRoleConstant::ROLE_USER_CONSENT_POLICY, t('User consent policy article setting'), [Permission::EDIT]),
-            new Role(AdminRoleConstant::ROLE_PRODUCT_REVIEW_POLICY, t('Product review policy article setting'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_USER_CONSENT_POLICY, t('User consent policy page setting'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_PRODUCT_REVIEW_POLICY, t('Product review policy page setting'), [Permission::EDIT]),
         ];
     }
 

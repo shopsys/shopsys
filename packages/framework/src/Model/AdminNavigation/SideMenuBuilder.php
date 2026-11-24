@@ -628,15 +628,15 @@ class SideMenuBuilder
 
         $articlesMenu = $menu->addChild(
             static::LIST_ARTICLE,
-            ['route' => 'admin_article_list', 'label' => t('Articles')],
+            ['route' => 'admin_article_list', 'label' => t('Pages')],
         );
         $articlesMenu->addChild(
             static::NEW_ARTICLE,
-            ['route' => 'admin_article_new', 'label' => t('New article'), 'display' => false],
+            ['route' => 'admin_article_new', 'label' => t('New page'), 'display' => false],
         );
         $articlesMenu->addChild(
             static::EDIT_ARTICLE,
-            ['route' => 'admin_article_edit', 'label' => t('Editing article'), 'display' => false],
+            ['route' => 'admin_article_edit', 'label' => t('Editing page'), 'display' => false],
         );
 
         $blogMenu = $menu->addChild(static::SECTION_BLOG, ['label' => t('Blog')]);

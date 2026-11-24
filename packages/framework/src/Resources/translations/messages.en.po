@@ -25,12 +25,6 @@ msgstr ""
 msgid "-- Choose area --"
 msgstr ""
 
-msgid "-- Choose article --"
-msgstr ""
-
-msgid "-- Choose article position --"
-msgstr ""
-
 msgid "-- Choose brand --"
 msgstr ""
 
@@ -38,6 +32,12 @@ msgid "-- Choose default prefix --"
 msgstr ""
 
 msgid "-- Choose group --"
+msgstr ""
+
+msgid "-- Choose page --"
+msgstr ""
+
+msgid "-- Choose page position --"
 msgstr ""
 
 msgid "-- Choose prefix --"
@@ -73,10 +73,10 @@ msgstr ""
 msgid "<a href=\"%url%\">Phone prefixes are not configured for domain %domainName%.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">Privacy policy article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">Privacy policy page for domain %domainName% is not set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">Product review policy article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">Product review policy page for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">Public holidays for year %year% are not set.</a>"
@@ -88,7 +88,7 @@ msgstr ""
 msgid "<a href=\"%url%\">Some required email templates are not fully set.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">Term and conditions article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">Term and conditions page for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">There are no countries, you need to create some.</a>"
@@ -97,7 +97,7 @@ msgstr ""
 msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr ""
 
-msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
+msgid "<a href=\"%url%\">User consent policy page for domain %domainName% is not set.</a>"
 msgstr ""
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
@@ -313,33 +313,6 @@ msgstr ""
 msgid "Area"
 msgstr ""
 
-msgid "Article"
-msgstr ""
-
-msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
-msgstr ""
-
-msgid "Article \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
-msgstr ""
-
-msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
-msgstr ""
-
-msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Article <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Article data"
-msgstr ""
-
-msgid "Article image"
-msgstr ""
-
 msgid "Article is accessible via direct URL only, with noindex/nofollow."
 msgstr ""
 
@@ -347,15 +320,6 @@ msgid "Article is only visible in administration."
 msgstr ""
 
 msgid "Article is ready to be displayed on the storefront."
-msgstr ""
-
-msgid "Articles"
-msgstr ""
-
-msgid "Articles in footer"
-msgstr ""
-
-msgid "Articles without positioning"
 msgstr ""
 
 msgid "Assign product"
@@ -625,22 +589,22 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
-msgstr ""
-
-msgid "Choose article, which will serve as terms and conditions with which the customer has to agree when creating order."
-msgstr ""
-
 msgid "Choose author"
+msgstr ""
+
+msgid "Choose page, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
+msgstr ""
+
+msgid "Choose page, which will serve as terms and conditions with which the customer has to agree when creating order."
 msgstr ""
 
 msgid "Choose product"
 msgstr ""
 
-msgid "Choose the article that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
+msgid "Choose the page that explains how product reviews are collected, verified, and moderated on this domain. Customers see a link to it next to the reviews."
 msgstr ""
 
-msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgid "Choose the page that provides information about how user consent is obtained, managed, and withdrawn on this domain."
 msgstr ""
 
 msgid "Chosen payment information (image, name, price)"
@@ -1195,9 +1159,6 @@ msgstr ""
 msgid "Do you really want to remove this administrator?"
 msgstr ""
 
-msgid "Do you really want to remove this article?"
-msgstr ""
-
 msgid "Do you really want to remove this blog article?"
 msgstr ""
 
@@ -1223,6 +1184,9 @@ msgid "Do you really want to remove this gift plan?"
 msgstr ""
 
 msgid "Do you really want to remove this language constant translation?"
+msgstr ""
+
+msgid "Do you really want to remove this page?"
 msgstr ""
 
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and parameters of the extended SEO category where the parameter is assigned. This step is irreversible!"
@@ -1333,12 +1297,6 @@ msgstr ""
 msgid "Editing administrator role group - %name%"
 msgstr ""
 
-msgid "Editing article"
-msgstr ""
-
-msgid "Editing article - %name%"
-msgstr ""
-
 msgid "Editing bestseller"
 msgstr ""
 
@@ -1421,6 +1379,12 @@ msgid "Editing gift voucher - %code%"
 msgstr ""
 
 msgid "Editing order"
+msgstr ""
+
+msgid "Editing page"
+msgstr ""
+
+msgid "Editing page - %name%"
 msgstr ""
 
 msgid "Editing parameter"
@@ -2242,9 +2206,6 @@ msgstr ""
 msgid "New administrator role group"
 msgstr ""
 
-msgid "New article"
-msgstr ""
-
 msgid "New blog article"
 msgstr ""
 
@@ -2276,6 +2237,9 @@ msgid "New gift plan"
 msgstr ""
 
 msgid "New gift voucher"
+msgstr ""
+
+msgid "New page"
 msgstr ""
 
 msgid "New parameter"
@@ -2482,6 +2446,33 @@ msgstr ""
 msgid "Packetery"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
+msgid "Page \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Page \"%name%\" set for displaying product review policy information. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Page \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
+msgstr ""
+
+msgid "Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Page <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Page data"
+msgstr ""
+
+msgid "Page image"
+msgstr ""
+
 msgid "Page name"
 msgstr ""
 
@@ -2489,6 +2480,15 @@ msgid "Page slug"
 msgstr ""
 
 msgid "Page title"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Pages in footer"
+msgstr ""
+
+msgid "Pages without positioning"
 msgstr ""
 
 msgid "Paid"
@@ -2821,7 +2821,7 @@ msgstr ""
 msgid "Product review policy"
 msgstr ""
 
-msgid "Product review policy article"
+msgid "Product review policy page"
 msgstr ""
 
 msgid "Product settings on the main page successfully changed"
@@ -3157,9 +3157,6 @@ msgstr ""
 msgid "Selected administrator role group doesn't exist."
 msgstr ""
 
-msgid "Selected article doesn't exist."
-msgstr ""
-
 msgid "Selected blog article does not exist."
 msgstr ""
 
@@ -3194,6 +3191,9 @@ msgid "Selected gift plan doesn't exist."
 msgstr ""
 
 msgid "Selected order status doesn't exist."
+msgstr ""
+
+msgid "Selected page doesn't exist."
 msgstr ""
 
 msgid "Selected parameter doesn't exist."
@@ -3490,7 +3490,7 @@ msgstr ""
 msgid "The selected value is always used as is. \"Default (not set)\" leaves the decision to the storefront, which applies its own rules for this page, e.g. noindex for filtered listings, cart or checkout."
 msgstr ""
 
-msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. an article, the page uses the SEO settings of that entity."
+msgid "The slug has to match the storefront configuration of the page, consult a developer if you are not sure about a change. If the slug belongs to another entity, e.g. a content page, the page uses the SEO settings of that entity."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."
@@ -3499,7 +3499,7 @@ msgstr ""
 msgid "There was an error while saving. The order isn't saved."
 msgstr ""
 
-msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, articles, brands and stores) use their own image, page title and meta description."
+msgid "These details are published as structured data on every page of the storefront and also fill the Open Graph (og) tags that social networks read when a page is shared. The company name is the site name (og:site_name) of every shared page. The logo is the shared image (og:image) only if the page has no image of its own, e.g. the homepage without an Open Graph image in its <a href=\"%seoPagesUrl%\" target=\"_blank\">SEO page</a>, flag pages, or products and categories without images.<br>Static pages (homepage, cart, search…) take the shared title, description and image from their SEO page; entities (such as products, categories, content pages, brands and stores) use their own image, page title and meta description."
 msgstr ""
 
 msgid "Third column categories"
@@ -3721,7 +3721,7 @@ msgstr ""
 msgid "User consent policy"
 msgstr ""
 
-msgid "User consent policy article"
+msgid "User consent policy page"
 msgstr ""
 
 msgid "User consent policy settings modified."

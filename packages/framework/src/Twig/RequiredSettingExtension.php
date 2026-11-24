@@ -220,7 +220,7 @@ class RequiredSettingExtension extends AbstractExtension
 
             if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->addRequiredSettingsMessage(
-                    t('<a href="%url%">Term and conditions article for domain %domainName% is not set.</a>'),
+                    t('<a href="%url%">Term and conditions page for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_termsandconditions', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -230,7 +230,7 @@ class RequiredSettingExtension extends AbstractExtension
 
             if ($this->setting->getForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->addRequiredSettingsMessage(
-                    t('<a href="%url%">Privacy policy article for domain %domainName% is not set.</a>'),
+                    t('<a href="%url%">Privacy policy page for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_legalconditions_privacypolicy', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -240,7 +240,7 @@ class RequiredSettingExtension extends AbstractExtension
 
             if ($this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->addRequiredSettingsMessage(
-                    t('<a href="%url%">User consent policy article for domain %domainName% is not set.</a>'),
+                    t('<a href="%url%">User consent policy page for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('admin_userconsentpolicy_setting', $domainId),
                         '%domainName%' => $domainConfig->getName(),
@@ -252,7 +252,7 @@ class RequiredSettingExtension extends AbstractExtension
                 && $this->setting->getForDomain(Setting::PRODUCT_REVIEW_POLICY_ARTICLE_ID, $domainConfig->getId()) === null
             ) {
                 $this->addRequiredSettingsMessage(
-                    t('<a href="%url%">Product review policy article for domain %domainName% is not set.</a>'),
+                    t('<a href="%url%">Product review policy page for domain %domainName% is not set.</a>'),
                     [
                         '%url%' => $this->generateUrlWithSelectedDomainTab('shopsys_administration_productreviewpolicy_setting', $domainId),
                         '%domainName%' => $domainConfig->getName(),
