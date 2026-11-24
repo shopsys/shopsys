@@ -46,7 +46,7 @@ class SalesRepresentativeController extends AbstractCrudController
     public function configure(CrudConfig $config): void
     {
         $config
-            ->setMenuSection(SideMenuBuilder::ROOT_CUSTOMER, null, ['after' => SideMenuBuilder::LIST_CUSTOMER])
+            ->setMenuSection(SideMenuBuilder::ROOT_CUSTOMER, null, ['after' => SideMenuBuilder::LIST_WATCHDOG])
             ->registerHandler(SalesRepresentativeCrudHandler::class);
     }
 

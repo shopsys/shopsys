@@ -118,11 +118,8 @@ msgstr "Reklama"
 msgid "Advertising"
 msgstr "Reklama"
 
-msgid "Advertising system"
-msgstr "Reklamní systém"
-
 msgid "Adverts"
-msgstr "Reklamní systém"
+msgstr "Reklama"
 
 msgid "All"
 msgstr "Vše"
@@ -389,7 +386,7 @@ msgid "Code can't be modified because it is used for pairing with existing order
 msgstr "Kód nemůže být upraven, protože je spárovaný s existujícím objednávkami."
 
 msgid "Color parameter values"
-msgstr "Hodnota parametru typu barva"
+msgstr "Hodnoty barevných parametrů"
 
 msgid "Company"
 msgstr "Firma"
@@ -641,7 +638,7 @@ msgid "Customer user role group"
 msgstr "Skupina práv"
 
 msgid "Customer user role groups"
-msgstr "Skupina práv"
+msgstr "Skupiny práv zákazníků"
 
 msgid "Customer users"
 msgstr "Uživatelé"
@@ -948,9 +945,6 @@ msgstr "E-mail"
 
 msgid "Email allowed recipients (whitelist)"
 msgstr "Povolení příjemci e-mailů (whitelist)"
-
-msgid "Email newsletter"
-msgstr "E-maily zpravodaje"
 
 msgid "Email settings"
 msgstr "Nastavení e-mailů"
@@ -1459,6 +1453,9 @@ msgstr "Nový sklad"
 msgid "Newsletter"
 msgstr "E-maily zpravodaje"
 
+msgid "Newsletter subscribers"
+msgstr "Odběratelé newsletteru"
+
 msgid "No"
 msgstr "Ne"
 
@@ -1713,9 +1710,6 @@ msgstr "Skupiny parametrů"
 
 msgid "Parameter value of type color"
 msgstr "Hodnota parameteru typu barva"
-
-msgid "Parameter values of type color"
-msgstr "Hodnoty parameteru typu barva"
 
 msgid "Parameters"
 msgstr "Parametry"

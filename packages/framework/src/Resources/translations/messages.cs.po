@@ -241,9 +241,6 @@ msgstr "Skupina práv <strong>{{ name }}</strong> byla smazána."
 msgid "Administrators"
 msgstr "Administrátoři"
 
-msgid "Administrators overview"
-msgstr "Přehled administrátorů"
-
 msgid "All feeds successfully scheduled."
 msgstr "Všechny feedy byly úspěšně naplánovány."
 
@@ -352,11 +349,11 @@ msgstr "Článek je viditelný pouze v administraci."
 msgid "Article is ready to be displayed on the storefront."
 msgstr "Článek je připraven k zobrazení na storefrontu."
 
+msgid "Articles"
+msgstr "Články"
+
 msgid "Articles in footer"
 msgstr "Články v patičce"
-
-msgid "Articles overview"
-msgstr "Přehled článků"
 
 msgid "Articles without positioning"
 msgstr "Články bez umístění"
@@ -559,9 +556,6 @@ msgstr "Dle příznaku"
 msgid "By how many working days the service extends the estimated delivery time of the order."
 msgstr "O kolik pracovních dní služba prodlouží předpokládaný termín doručení objednávky."
 
-msgid "CMS"
-msgstr "CMS"
-
 msgid "CSV file"
 msgstr "CSV soubor"
 
@@ -591,6 +585,9 @@ msgstr "Držitel platební karty zrušil platbu"
 
 msgid "Cart manipulation and order creation"
 msgstr "Manipulace s košíkem a vytváření objednávky"
+
+msgid "Catalog"
+msgstr "Katalog"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
@@ -676,6 +673,9 @@ msgstr "Kód pro uplatnění"
 msgid "Code of service Heureka - Verified by Customer"
 msgstr "Kód služby Ověřeno zákazníky"
 
+msgid "Codes"
+msgstr "Kódy"
+
 msgid "Collapse"
 msgstr "Sbalit"
 
@@ -685,14 +685,17 @@ msgstr "Kolekce %collectionAttribute% byla změněna:<br> %changes%"
 msgid "Color"
 msgstr "Barva"
 
+msgid "Color parameter values"
+msgstr "Hodnoty barevných parametrů"
+
 msgid "Color pattern icon"
 msgstr "Ikona barevného vzoru"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
 
-msgid "Communication with customer"
-msgstr "Komunikace se zákazníkem"
+msgid "Communication"
+msgstr "Komunikace"
 
 msgid "Company"
 msgstr "Firma"
@@ -935,16 +938,13 @@ msgid "Customer user role group <strong>{{ name }}</strong> deleted."
 msgstr "Skupina práv <strong>{{ name }</strong> byla smazána"
 
 msgid "Customer user role groups"
-msgstr "Skupina práv"
+msgstr "Skupiny práv zákazníků"
 
 msgid "Customer with ID %customerId% not found."
 msgstr "Zákazník s ID %customerId% nebyl nalezen."
 
 msgid "Customers"
 msgstr "Zákazníci"
-
-msgid "Customers overview"
-msgstr "Přehled zákazníků"
 
 msgid "Dashboard"
 msgstr "Nástěnka"
@@ -1288,11 +1288,11 @@ msgstr "Trvání (mm:ss)"
 msgid "E-mail addresses whitelist"
 msgstr "Whitelist e-mailových adres"
 
+msgid "E-mail whitelist"
+msgstr "Whitelist e-mailových adres"
+
 msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
 msgstr "Whitelist e-mailových adres je vynucen environment proměnnou MAILER_FORCE_WHITELIST. Whitelist je vždy aktivní."
-
-msgid "E-mail whitelist settings"
-msgstr "Nastavení whitelistu e-mailových adres"
 
 msgid "E-mail whitelist settings modified"
 msgstr "Nastavení whitelistu e-mailových adres bylo upraveno"
@@ -1467,9 +1467,6 @@ msgstr "Povolení příjemci e-mailů (whitelist)"
 
 msgid "Email name"
 msgstr "Jméno k e-mailu"
-
-msgid "Email newsletter"
-msgstr "E-maily zpravodaje"
 
 msgid "Email settings"
 msgstr "Nastavení e-mailů"
@@ -1656,9 +1653,6 @@ msgstr "Název souboru"
 
 msgid "Files"
 msgstr "Soubory"
-
-msgid "Files overview"
-msgstr "Přehled souborů"
 
 msgid "Files uploaded:"
 msgstr "Soubory nahrány:"
@@ -2068,8 +2062,8 @@ msgstr "Poslední aktualizace"
 msgid "Latitude"
 msgstr "Zeměpisná šířka"
 
-msgid "Legal conditions"
-msgstr "Právní podmínky"
+msgid "Legal"
+msgstr "Legislativa"
 
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upraveno."
@@ -2095,14 +2089,8 @@ msgstr "Odkaz na stránku s přihlášením"
 msgid "LinkedIn URL"
 msgstr "LinkedIn URL"
 
-msgid "List of language constants"
-msgstr "Přehled jazykových konstant"
-
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Seznam produktů v objednávce (obrázek, název, množství, cena za jednotku s DPH, celková cena za položku s DPH)"
-
-msgid "Lists and nomenclatures"
-msgstr "Seznamy a číselníky"
 
 msgid "Load coordinates by address"
 msgstr "Načíst souřadnice podle adresy"
@@ -2314,6 +2302,9 @@ msgstr "Nový sklad"
 msgid "New withdrawal request for order {orderNumber}"
 msgstr "Nová žádost o odstoupení od smlouvy pro objednávku {orderNumber}"
 
+msgid "Newsletter subscribers"
+msgstr "Odběratelé newsletteru"
+
 msgid "No"
 msgstr "Ne"
 
@@ -2520,9 +2511,6 @@ msgstr "Hodnota parameteru"
 
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
 msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
-
-msgid "Parameter value of type color"
-msgstr "Hodnota parametru typu barva"
 
 msgid "Parameter values"
 msgstr "Hodnoty parametru"
@@ -2755,8 +2743,8 @@ msgstr "Ceny"
 msgid "Prices and VAT"
 msgstr "Ceny a DPH"
 
-msgid "Pricing"
-msgstr "Cenotvorba"
+msgid "Prices and discounts"
+msgstr "Ceny a slevy"
 
 msgid "Pricing group"
 msgstr "Cenová skupina"
@@ -2850,9 +2838,6 @@ msgstr "Zboží"
 
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhledat. Detail tohoto zboží je dostupný přímým přístupem z URL, zboží ale nelze vložit do košíku."
-
-msgid "Products overview"
-msgstr "Přehled zboží"
 
 msgid "Products parameters of selected category"
 msgstr "Parametry produktů vybrané kategorie"
@@ -3088,6 +3073,9 @@ msgstr "SEO stránky"
 msgid "SMS was sent but not delivered yet"
 msgstr "SMS byla odeslána - Zatím se ji nepodařilo doručit"
 
+msgid "Sales"
+msgstr "Prodej"
+
 msgid "Sales including/excluding VAT settings"
 msgstr "Nastavení prodeje s/bez DPH"
 
@@ -3319,6 +3307,9 @@ msgstr "Dopravu typu E-mail nelze smazat, vždy musí existovat právě jedna."
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
 msgstr "Typ dopravy nelze změnit z typu E-mail ani na typ E-mail, vždy musí existovat právě jedna doprava typu E-mail."
 
+msgid "Shipping, payments and stock"
+msgstr "Doprava, platby a sklady"
+
 msgid "Short description"
 msgstr "Krátký popis"
 
@@ -3399,9 +3390,6 @@ msgstr "Stav objednávek <strong>{{ name }}</strong> je rezervovaný a nelze jej
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
 msgstr "Stav objednávek <strong>{{ oldName }}</strong> byl nahrazen stavem <strong>{{ newName }}</strong> a byl smazán."
-
-msgid "Stocking"
-msgstr "Skladovost"
 
 msgid "Store"
 msgstr "Prodejna"

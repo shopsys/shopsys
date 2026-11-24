@@ -28,7 +28,7 @@ class AdditionalServiceController extends AbstractCrudController
             ->setMenuSection(
                 SideMenuBuilder::ROOT_PRODUCT,
                 null,
-                ['after' => SideMenuBuilder::LIST_CATEGORY],
+                ['after' => SideMenuBuilder::LIST_FLAG],
             )
             ->registerHandler(AdditionalServiceCrudHandler::class);
     }

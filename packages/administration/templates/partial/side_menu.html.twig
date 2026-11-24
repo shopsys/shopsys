@@ -48,7 +48,7 @@
 
 {% block simple_element %}
     <li class="nav-item">
-        <a class="{{ 'nav-link' ~ (matcher.isCurrent(item) ? ' ' ~ 'show' : '') }}" href="{{ item.uri ?? '#' }}">
+        <a class="{{ 'nav-link' ~ (matcher.isCurrent(item) or matcher.isAncestor(item) ? ' ' ~ 'show' : '') }}" href="{{ item.uri ?? '#' }}">
             {{ block('label') }}
             {% if item.extra('route_name') and item.uri %}
                 {% include '@ShopsysAdministration/partial/_pin_button.html.twig' with {item: item} only %}

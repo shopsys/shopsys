@@ -241,9 +241,6 @@ msgstr ""
 msgid "Administrators"
 msgstr ""
 
-msgid "Administrators overview"
-msgstr ""
-
 msgid "All feeds successfully scheduled."
 msgstr ""
 
@@ -352,10 +349,10 @@ msgstr ""
 msgid "Article is ready to be displayed on the storefront."
 msgstr ""
 
-msgid "Articles in footer"
+msgid "Articles"
 msgstr ""
 
-msgid "Articles overview"
+msgid "Articles in footer"
 msgstr ""
 
 msgid "Articles without positioning"
@@ -559,9 +556,6 @@ msgstr ""
 msgid "By how many working days the service extends the estimated delivery time of the order."
 msgstr ""
 
-msgid "CMS"
-msgstr ""
-
 msgid "CSV file"
 msgstr ""
 
@@ -590,6 +584,9 @@ msgid "Cardholder canceled the payment"
 msgstr ""
 
 msgid "Cart manipulation and order creation"
+msgstr ""
+
+msgid "Catalog"
 msgstr ""
 
 msgid "Catalog number"
@@ -676,6 +673,9 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Codes"
+msgstr ""
+
 msgid "Collapse"
 msgstr ""
 
@@ -685,13 +685,16 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
+msgid "Color parameter values"
+msgstr ""
+
 msgid "Color pattern icon"
 msgstr ""
 
 msgid "Combination of parameters and their values"
 msgstr ""
 
-msgid "Communication with customer"
+msgid "Communication"
 msgstr ""
 
 msgid "Company"
@@ -941,9 +944,6 @@ msgid "Customer with ID %customerId% not found."
 msgstr ""
 
 msgid "Customers"
-msgstr ""
-
-msgid "Customers overview"
 msgstr ""
 
 msgid "Dashboard"
@@ -1288,10 +1288,10 @@ msgstr ""
 msgid "E-mail addresses whitelist"
 msgstr ""
 
-msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
+msgid "E-mail whitelist"
 msgstr ""
 
-msgid "E-mail whitelist settings"
+msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
 msgstr ""
 
 msgid "E-mail whitelist settings modified"
@@ -1466,9 +1466,6 @@ msgid "Email allowed recipients (whitelist)"
 msgstr ""
 
 msgid "Email name"
-msgstr ""
-
-msgid "Email newsletter"
 msgstr ""
 
 msgid "Email settings"
@@ -1655,9 +1652,6 @@ msgid "Filename"
 msgstr ""
 
 msgid "Files"
-msgstr ""
-
-msgid "Files overview"
 msgstr ""
 
 msgid "Files uploaded:"
@@ -2068,7 +2062,7 @@ msgstr ""
 msgid "Latitude"
 msgstr ""
 
-msgid "Legal conditions"
+msgid "Legal"
 msgstr ""
 
 msgid "Legal conditions settings modified."
@@ -2095,13 +2089,7 @@ msgstr ""
 msgid "LinkedIn URL"
 msgstr ""
 
-msgid "List of language constants"
-msgstr ""
-
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
-
-msgid "Lists and nomenclatures"
 msgstr ""
 
 msgid "Load coordinates by address"
@@ -2314,6 +2302,9 @@ msgstr ""
 msgid "New withdrawal request for order {orderNumber}"
 msgstr ""
 
+msgid "Newsletter subscribers"
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -2519,9 +2510,6 @@ msgid "Parameter value"
 msgstr ""
 
 msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
-msgstr ""
-
-msgid "Parameter value of type color"
 msgstr ""
 
 msgid "Parameter values"
@@ -2755,7 +2743,7 @@ msgstr ""
 msgid "Prices and VAT"
 msgstr ""
 
-msgid "Pricing"
+msgid "Prices and discounts"
 msgstr ""
 
 msgid "Pricing group"
@@ -2849,9 +2837,6 @@ msgid "Products"
 msgstr ""
 
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
-msgstr ""
-
-msgid "Products overview"
 msgstr ""
 
 msgid "Products parameters of selected category"
@@ -3088,6 +3073,9 @@ msgstr ""
 msgid "SMS was sent but not delivered yet"
 msgstr ""
 
+msgid "Sales"
+msgstr ""
+
 msgid "Sales including/excluding VAT settings"
 msgstr ""
 
@@ -3319,6 +3307,9 @@ msgstr ""
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
 msgstr ""
 
+msgid "Shipping, payments and stock"
+msgstr ""
+
 msgid "Short description"
 msgstr ""
 
@@ -3398,9 +3389,6 @@ msgid "Status of orders <strong>{{ name }}</strong> reserved and can't be delete
 msgstr ""
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
-msgstr ""
-
-msgid "Stocking"
 msgstr ""
 
 msgid "Store"

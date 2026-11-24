@@ -49,7 +49,7 @@ class ClosedDayController extends AbstractCrudController
         $config
             ->setEntityNameSingular(t('Holiday / internal day'))
             ->setEntityNamePlural(t('Holidays and internal days'))
-            ->setMenuSection(SideMenuBuilder::ROOT_SETTING, SideMenuBuilder::SECTION_LISTS)
+            ->setMenuSection(SideMenuBuilder::ROOT_TRANSPORT_AND_PAYMENT)
             ->setListDomainControl(CrudListDomainControl::SWITCHER)
             ->setTemplate(ActionType::LIST, '@ShopsysAdministration/content/closedDay/list.html.twig')
             ->registerHandler(ClosedDayCrudHandler::class);

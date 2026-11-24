@@ -118,9 +118,6 @@ msgstr ""
 msgid "Advertising"
 msgstr ""
 
-msgid "Advertising system"
-msgstr ""
-
 msgid "Adverts"
 msgstr ""
 
@@ -949,9 +946,6 @@ msgstr ""
 msgid "Email allowed recipients (whitelist)"
 msgstr ""
 
-msgid "Email newsletter"
-msgstr ""
-
 msgid "Email settings"
 msgstr ""
 
@@ -1459,6 +1453,9 @@ msgstr ""
 msgid "Newsletter"
 msgstr ""
 
+msgid "Newsletter subscribers"
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -1712,9 +1709,6 @@ msgid "Parameter groups"
 msgstr ""
 
 msgid "Parameter value of type color"
-msgstr ""
-
-msgid "Parameter values of type color"
 msgstr ""
 
 msgid "Parameters"

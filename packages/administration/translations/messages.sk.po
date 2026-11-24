@@ -118,9 +118,6 @@ msgstr "Reklama"
 msgid "Advertising"
 msgstr "Reklama"
 
-msgid "Advertising system"
-msgstr "Reklamný systém"
-
 msgid "Adverts"
 msgstr "Reklamy"
 
@@ -248,7 +245,7 @@ msgid "Basic price"
 msgstr "Základná cena"
 
 msgid "Bestsellers"
-msgstr "Najpredávanejšie"
+msgstr "Najpredávanejšie produkty"
 
 msgid "Bestsellers of the category"
 msgstr "Najpredávanejšie z kategórie"
@@ -949,9 +946,6 @@ msgstr "E-mail"
 msgid "Email allowed recipients (whitelist)"
 msgstr "Povolení príjemcovia e-mailov (whitelist)"
 
-msgid "Email newsletter"
-msgstr "E-mailový newsletter"
-
 msgid "Email settings"
 msgstr "Nastavenia e-mailu"
 
@@ -1459,6 +1453,9 @@ msgstr "Nový sklad"
 msgid "Newsletter"
 msgstr "Newsletter"
 
+msgid "Newsletter subscribers"
+msgstr "Odberatelia newslettera"
+
 msgid "No"
 msgstr "Nie"
 
@@ -1713,9 +1710,6 @@ msgstr "Skupiny parametrov"
 
 msgid "Parameter value of type color"
 msgstr "Hodnota parametra typu farba"
-
-msgid "Parameter values of type color"
-msgstr "Hodnoty parametra typu farba"
 
 msgid "Parameters"
 msgstr "Parametre"

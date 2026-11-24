@@ -41,8 +41,8 @@ class AdvertController extends AbstractCrudController
     {
         $config
             ->setEntityNameSingular(t('Advertising'))
-            ->setEntityNamePlural(t('Advertising system'))
-            ->setMenuSection(SideMenuBuilder::ROOT_CMS, null, ['after' => SideMenuBuilder::LIST_ARTICLE])
+            ->setEntityNamePlural(t('Advertising'))
+            ->setMenuSection(SideMenuBuilder::ROOT_CMS, null, ['after' => SideMenuBuilder::AUTOCOMPLETE_SETTING])
             ->setListDomainControl(CrudListDomainControl::SWITCHER)
             ->registerHandler(AdvertCrudHandler::class);
     }
