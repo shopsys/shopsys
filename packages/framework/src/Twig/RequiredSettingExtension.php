@@ -111,7 +111,10 @@ class RequiredSettingExtension extends AbstractExtension
             $this->addRequiredSettingsMessage(
                 t('<a href="%url%">Shipping or payment is not set for domain %domainName%.</a>'),
                 [
-                    '%url%' => $this->generateUrlWithSelectedDomainTab('admin_transportandpayment_list', $domainId),
+                    '%url%' => $this->generateUrlWithSelectedDomainTab(
+                        isset($domainIdsWithTransport[$domainId]) ? 'admin_payment_list' : 'admin_transport_list',
+                        $domainId,
+                    ),
                     '%domainName%' => $domainConfig->getName(),
                 ],
             );

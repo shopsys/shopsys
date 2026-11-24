@@ -1,12 +1,19 @@
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">{{ 'Payments'|trans }}</h3>
-        <div class="card-actions">
-            <a href="{{ url('admin_payment_new') }}" class="btn btn-primary">
-                {{ ux_icon('plus') }}
-                {{ 'Create payment'|trans }}
-            </a>
-        </div>
-    </div>
+{% extends '@ShopsysAdministration/layout/layout_with_panel.html.twig' %}
+
+{% block title %}- {{ 'Payment methods'|trans }}{% endblock %}
+
+{% block pre_title %}{{ 'Overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Payment methods'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_payment_new') }}" class="btn btn-primary">
+        {{ ux_icon('plus') }}
+        {{ 'Create payment'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
     {{ gridView.render() }}
-</div>
+{% endblock %}

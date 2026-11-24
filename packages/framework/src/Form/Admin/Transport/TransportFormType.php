@@ -294,7 +294,7 @@ final class TransportFormType extends AbstractType
             ->add($builderImageGroup)
             ->add($builderPackageTrackingGroup)
             ->add('actionBar', ActionBarType::class, [
-                'back_route' => 'admin_transportandpayment_list',
+                'back_route' => 'admin_transport_list',
                 'entity' => $options['transport'],
                 'apply' => true,
             ]);

@@ -2602,6 +2602,9 @@ msgstr "Platba byla provedena po splatnosti"
 msgid "Payment method chosen"
 msgstr "Platební metoda vybrána"
 
+msgid "Payment methods"
+msgstr "Způsoby platby"
+
 msgid "Payment not completed"
 msgstr "Platba nebyla provedena"
 
@@ -3304,6 +3307,9 @@ msgstr "Doprava <strong>{{ name }}</strong> byla smazána"
 msgid "Shipping instructions"
 msgstr "Pokyny k dopravě"
 
+msgid "Shipping methods"
+msgstr "Způsoby dopravy"
+
 msgid "Shipping of type Email cannot be created, exactly one must always exist."
 msgstr "Dopravu typu E-mail nelze vytvořit, vždy musí existovat právě jedna."
 
@@ -3312,9 +3318,6 @@ msgstr "Dopravu typu E-mail nelze smazat, vždy musí existovat právě jedna."
 
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
 msgstr "Typ dopravy nelze změnit z typu E-mail ani na typ E-mail, vždy musí existovat právě jedna doprava typu E-mail."
-
-msgid "Shippings and payments"
-msgstr "Dopravy a platby"
 
 msgid "Short description"
 msgstr "Krátký popis"

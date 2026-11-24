@@ -1735,6 +1735,9 @@ msgstr ""
 msgid "Payment method"
 msgstr ""
 
+msgid "Payment methods"
+msgstr ""
+
 msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
 msgstr ""
 
@@ -2233,13 +2236,10 @@ msgstr ""
 msgid "Shipping instructions"
 msgstr ""
 
+msgid "Shipping methods"
+msgstr ""
+
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
-msgstr ""
-
-msgid "Shippings"
-msgstr ""
-
-msgid "Shippings and payments"
 msgstr ""
 
 msgid "Show all customer orders"

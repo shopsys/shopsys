@@ -29,7 +29,7 @@ class TransportGroupController extends AbstractCrudController
             ->setMenuSection(
                 SideMenuBuilder::ROOT_SETTING,
                 SideMenuBuilder::SECTION_LISTS,
-                ['after' => SideMenuBuilder::LIST_TRANSPORT_AND_PAYMENT],
+                ['after' => SideMenuBuilder::LIST_PAYMENT],
             )
             ->registerHandler(TransportGroupCrudHandler::class);
     }

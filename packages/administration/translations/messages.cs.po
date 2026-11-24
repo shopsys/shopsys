@@ -1735,6 +1735,9 @@ msgstr "Pokyny k platbě"
 msgid "Payment method"
 msgstr "Platební metoda"
 
+msgid "Payment methods"
+msgstr "Způsoby platby"
+
 msgid "Payment of type Gift voucher cannot be deleted, exactly one must always exist."
 msgstr "Platbu typu Dárkový poukaz nelze smazat, vždy musí existovat právě jedna."
 
@@ -2233,14 +2236,11 @@ msgstr "Doprava"
 msgid "Shipping instructions"
 msgstr "Pokyny k dopravě"
 
+msgid "Shipping methods"
+msgstr "Způsoby dopravy"
+
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr "Dopravu typu E-mail nelze smazat, vždy musí existovat právě jedna."
-
-msgid "Shippings"
-msgstr "Dopravy"
-
-msgid "Shippings and payments"
-msgstr "Dopravy a platby"
 
 msgid "Show all customer orders"
 msgstr "Zobrazit všechny objednávky zákazníka"
@@ -2501,7 +2501,7 @@ msgid "Transport groups"
 msgstr "Skupiny doprav"
 
 msgid "Transports and payments"
-msgstr "Dopravy a platby"
+msgstr "Způsoby dopravy a platby"
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."
 msgstr "Zkuste upravit své hledání nebo filtr, abyste našli, co hledáte, nebo vytvořte nový záznam, pokud je to potřeba."

@@ -65,7 +65,7 @@ class PaymentController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectAfterSave($form, 'admin_transportandpayment_list', 'admin_payment_edit', ['id' => $payment->getId()]);
+            return $this->redirectAfterSave($form, 'admin_payment_list', 'admin_payment_edit', ['id' => $payment->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -110,7 +110,7 @@ class PaymentController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectAfterSave($form, 'admin_transportandpayment_list', 'admin_payment_edit', ['id' => $payment->getId()]);
+            return $this->redirectAfterSave($form, 'admin_payment_list', 'admin_payment_edit', ['id' => $payment->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -148,9 +148,10 @@ class PaymentController extends AdminBaseController
             $this->addErrorFlash(t('Payment of type Gift voucher cannot be deleted, exactly one must always exist.'));
         }
 
-        return $this->redirectToRoute('admin_transportandpayment_list');
+        return $this->redirectToRoute('admin_payment_list');
     }
 
+    #[Route(path: '/payment/list/')]
     #[CanView]
     public function listAction(): Response
     {

@@ -2602,6 +2602,9 @@ msgstr ""
 msgid "Payment method chosen"
 msgstr ""
 
+msgid "Payment methods"
+msgstr ""
+
 msgid "Payment not completed"
 msgstr ""
 
@@ -3304,6 +3307,9 @@ msgstr ""
 msgid "Shipping instructions"
 msgstr ""
 
+msgid "Shipping methods"
+msgstr ""
+
 msgid "Shipping of type Email cannot be created, exactly one must always exist."
 msgstr ""
 
@@ -3311,9 +3317,6 @@ msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr ""
 
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
-msgstr ""
-
-msgid "Shippings and payments"
 msgstr ""
 
 msgid "Short description"

@@ -65,7 +65,7 @@ class TransportController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectAfterSave($form, 'admin_transportandpayment_list', 'admin_transport_edit', ['id' => $transport->getId()]);
+            return $this->redirectAfterSave($form, 'admin_transport_list', 'admin_transport_edit', ['id' => $transport->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -110,7 +110,7 @@ class TransportController extends AdminBaseController
                 ],
             );
 
-            return $this->redirectAfterSave($form, 'admin_transportandpayment_list', 'admin_transport_edit', ['id' => $transport->getId()]);
+            return $this->redirectAfterSave($form, 'admin_transport_list', 'admin_transport_edit', ['id' => $transport->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -150,9 +150,10 @@ class TransportController extends AdminBaseController
             $this->addErrorFlash(t('Shipping of type Email cannot be deleted, exactly one must always exist.'));
         }
 
-        return $this->redirectToRoute('admin_transportandpayment_list');
+        return $this->redirectToRoute('admin_transport_list');
     }
 
+    #[Route(path: '/transport/list/')]
     #[CanView]
     public function listAction(): Response
     {

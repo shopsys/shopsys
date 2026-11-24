@@ -112,9 +112,10 @@ class SideMenuBuilder
     public const string LIST_MAIL_TEMPLATE = 'mail_templates';
     public const string EDIT_MAIL_TEMPLATE = 'edit_template';
     public const string SECTION_LISTS = 'lists';
-    public const string LIST_TRANSPORT_AND_PAYMENT = 'transports_and_payments';
+    public const string LIST_TRANSPORT = 'transports';
     public const string NEW_TRANSPORT = 'new_transport';
     public const string EDIT_TRANSPORT = 'edit_transport';
+    public const string LIST_PAYMENT = 'payments';
     public const string NEW_PAYMENT = 'new_payment';
     public const string EDIT_PAYMENT = 'edit_payment';
     public const string LIST_FLAG = 'flags';
@@ -686,23 +687,28 @@ class SideMenuBuilder
         );
 
         $listsMenu = $menu->addChild(static::SECTION_LISTS, ['label' => t('Lists and nomenclatures')]);
-        $transportsAndPaymentsMenu = $listsMenu->addChild(
-            static::LIST_TRANSPORT_AND_PAYMENT,
-            ['route' => 'admin_transportandpayment_list', 'label' => t('Shippings and payments')],
+        $transportsMenu = $listsMenu->addChild(
+            static::LIST_TRANSPORT,
+            ['route' => 'admin_transport_list', 'label' => t('Shipping methods')],
         );
-        $transportsAndPaymentsMenu->addChild(
+        $transportsMenu->addChild(
             static::NEW_TRANSPORT,
             ['route' => 'admin_transport_new', 'label' => t('New shipping'), 'display' => false],
         );
-        $transportsAndPaymentsMenu->addChild(
+        $transportsMenu->addChild(
             static::EDIT_TRANSPORT,
             ['route' => 'admin_transport_edit', 'label' => t('Editing shipping'), 'display' => false],
         );
-        $transportsAndPaymentsMenu->addChild(
+
+        $paymentsMenu = $listsMenu->addChild(
+            static::LIST_PAYMENT,
+            ['route' => 'admin_payment_list', 'label' => t('Payment methods')],
+        );
+        $paymentsMenu->addChild(
             static::NEW_PAYMENT,
             ['route' => 'admin_payment_new', 'label' => t('New payment'), 'display' => false],
         );
-        $transportsAndPaymentsMenu->addChild(
+        $paymentsMenu->addChild(
             static::EDIT_PAYMENT,
             ['route' => 'admin_payment_edit', 'label' => t('Editing payment'), 'display' => false],
         );
