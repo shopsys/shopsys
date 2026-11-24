@@ -9,6 +9,8 @@ use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 trait RateLimitTrait
 {
+    private const int MAX_RATE_LIMIT_EXHAUSTING_ATTEMPTS = 1000;
+
     private function clearRateLimiterCachePool(string $rateLimiterCachePoolServiceId): void
     {
         /** @var \Psr\Cache\CacheItemPoolInterface $rateLimiterCachePool */
@@ -20,9 +22,13 @@ trait RateLimitTrait
     {
         $rateLimiter = $this->getRateLimiterFactory($rateLimiterServiceId)->create($key);
 
-        do {
-            $rateLimit = $rateLimiter->consume();
-        } while ($rateLimit->isAccepted());
+        for ($attempt = 0; $attempt < self::MAX_RATE_LIMIT_EXHAUSTING_ATTEMPTS; $attempt++) {
+            if (!$rateLimiter->consume()->isAccepted()) {
+                return;
+            }
+        }
+
+        $this->fail(sprintf('Rate limiter "%s" was not exhausted after %d attempts.', $rateLimiterServiceId, self::MAX_RATE_LIMIT_EXHAUSTING_ATTEMPTS));
     }
 
     private function peekRateLimit(string $rateLimiterServiceId, string $key): RateLimit
