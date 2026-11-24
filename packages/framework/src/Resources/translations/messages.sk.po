@@ -43,8 +43,8 @@ msgstr "-- Vyberte pozíciu stránky --"
 msgid "-- Choose prefix --"
 msgstr "-- Vyberte predvoľbu --"
 
-msgid "-- Choose transport group --"
-msgstr "-- Vyberte skupinu dopravy --"
+msgid "-- Choose shipping group --"
+msgstr "-- Vyberte skupinu dopráv --"
 
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
@@ -526,7 +526,7 @@ msgstr "CSV súbor"
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr "CSV súbor musí byť v UTF-8 kódovaní so stĺpcami \"{{ columns }}\". Čiarka sa odporúča ako oddeľovač stĺpcov a bodka (.) ako desatinný oddeľovač."
 
-msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day."
+msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the shipping or the store is closed, the date is moved to the nearest allowed day."
 msgstr "Kalendárne dni potrebné na prevoz tovaru na sklad predajne, keď ho predajňa nemá dostatok skladom (alebo nemá priradený sklad). Pripočítavajú sa k očakávanému termínu osobného odberu; ak vo výsledný deň doprava nedoručuje alebo má predajňa zatvorené, termín sa posunie na najbližší povolený deň."
 
 msgid "Cancel"
@@ -934,7 +934,7 @@ msgstr "Dátum registrácie a súhlas so zásadami ochrany súkromia"
 msgid "Days for transfer between warehouses"
 msgstr "Dni na presun medzi skladmi"
 
-msgid "Days of the week when the transport delivers"
+msgid "Days of the week when the shipping delivers"
 msgstr "Dni v týždni, kedy dopravca doručuje"
 
 msgid "Days until delivery"
@@ -1510,11 +1510,11 @@ msgstr "Vyradiť z predaja na celom e-shope"
 msgid "Excluded from sale"
 msgstr "Vyradené z predaja"
 
+msgid "Excluded shippings"
+msgstr "Vylúčené dopravy"
+
 msgid "Excluded stores"
 msgstr "Vylúčené obchody"
-
-msgid "Excluded transports"
-msgstr "Vylúčené dopravy"
 
 msgid "Excluding VAT"
 msgstr "Bez DPH"
@@ -1726,9 +1726,6 @@ msgstr "Bezplatná doprava a platba"
 msgid "Free shipping and payment settings saved"
 msgstr "Nastavenia bezplatného doručovania a platby uložené"
 
-msgid "Free transport and payment"
-msgstr "Doprava a platba zadarmo"
-
 msgid "Frequency"
 msgstr "Frekvencia"
 
@@ -1870,7 +1867,7 @@ msgstr "ID %productId%"
 msgid "Icon"
 msgstr "Ikona"
 
-msgid "If enabled, a cart containing this product can only use personal pickup at store transports."
+msgid "If enabled, a cart containing this product can only use personal pickup at store shippings."
 msgstr "Ak je zapnuté, košík obsahujúci tento produkt je možné doručiť iba dopravami typu osobný odber na predajni."
 
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
@@ -2905,7 +2902,7 @@ msgstr "Sviatok"
 msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
 msgstr "Štátne sviatky a interné dni e-shopu sa spravujú v administrácii <a href=\"%closedDaysUrl%\" target=\"_blank\">Sviatky a interné dni</a>; voľné dni samotného dopravcu sa nezohľadňujú."
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which shipping delivery setting applies to this day."
 msgstr "Sviatky sa berú do úvahy pri výpočte lehoty na odstúpenie od objednávky. Príznak zároveň určuje, ktoré nastavenie doručovania dopravy sa na tento deň použije."
 
 msgid "Published"
@@ -3292,6 +3289,9 @@ msgstr "Doprava <strong><a href=\"{{ url }}\">{{ name }}</a></strong> bola uprav
 msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr "Doprava <strong>{{ name }}</strong> odstránená"
 
+msgid "Shipping group"
+msgstr "Skupina dopráv"
+
 msgid "Shipping instructions"
 msgstr "Pokyny na dopravu"
 
@@ -3303,6 +3303,9 @@ msgstr "Dopravu typu E-mail nie je možné vytvoriť, vždy musí existovať pr�
 
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
 msgstr "Dopravu typu E-mail nie je možné zmazať, vždy musí existovať práve jedna."
+
+msgid "Shipping type"
+msgstr "Typ dopravy"
 
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
 msgstr "Typ dopravy nie je možné zmeniť z typu E-mail ani na typ E-mail, vždy musí existovať práve jedna doprava typu E-mail."
@@ -3594,12 +3597,6 @@ msgstr "Prehľad Transfer issues"
 
 msgid "Transfer problem has been marked as resolved"
 msgstr "Problém prenosu bol označený ako vyřešený"
-
-msgid "Transport group"
-msgstr "Skupina dopravy"
-
-msgid "Transport type"
-msgstr "Typ dopravy"
 
 msgid "Tuesday"
 msgstr "Utorok"

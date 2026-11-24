@@ -1,6 +1,6 @@
 {% block section_content %}
     <div class="subheader d-flex justify-content-between align-items-center mb-1">
-        {{ 'Payment & Transport'|trans }}
+        {{ 'Payment & Shipping'|trans }}
         {{ component('OrderDetail:SectionEditButton', {
             section: section,
             canEdit: canEdit,
@@ -31,7 +31,7 @@
         {% endblock %}
     </div>
     <div>
-        <span class="text-secondary">{{ 'Transport'|trans }}:</span>
+        <span class="text-secondary">{{ 'Shipping'|trans }}:</span>
         {{ order.transport.name }}
     </div>
     <div class="text-secondary">

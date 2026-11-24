@@ -20,7 +20,7 @@ class PromoCodeTypeEnum extends AbstractEnum
         return [
             t('Percents') => static::DISCOUNT_TYPE_PERCENT,
             t('Nominal') => static::DISCOUNT_TYPE_NOMINAL,
-            t('Free transport and payment') => static::DISCOUNT_TYPE_FREE_TRANSPORT_PAYMENT,
+            t('Free shipping and payment') => static::DISCOUNT_TYPE_FREE_TRANSPORT_PAYMENT,
         ];
     }
 }

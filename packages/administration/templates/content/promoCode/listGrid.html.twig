@@ -9,7 +9,7 @@
         {{ 'Scaled promo code'|trans }}
     {% else %}
         {% if row['pc']['discountType'] == constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCodeTypeEnum::DISCOUNT_TYPE_FREE_TRANSPORT_PAYMENT') %}
-            {{ 'Free transport and payment'|trans }}
+            {{ 'Free shipping and payment'|trans }}
         {% elseif row['pc']['discountType'] == constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCodeTypeEnum::DISCOUNT_TYPE_PERCENT') %}
             {{ value[0]|formatPercent }}
         {% else %}

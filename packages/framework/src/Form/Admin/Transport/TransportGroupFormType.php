@@ -26,10 +26,10 @@ final class TransportGroupFormType extends AbstractType
                 'required' => true,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\NotBlank(message: 'Please enter transport group name'),
+                        new Constraints\NotBlank(message: 'Please enter shipping group name'),
                         new Constraints\Length(
                             max: 255,
-                            maxMessage: 'Transport group name cannot be longer than {{ limit }} characters',
+                            maxMessage: 'Shipping group name cannot be longer than {{ limit }} characters',
                         ),
                     ],
                 ],

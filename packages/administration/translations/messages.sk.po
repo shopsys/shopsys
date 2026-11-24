@@ -1075,9 +1075,6 @@ msgstr "Zadarmo od hodnoty objednávky"
 msgid "Free shipping and payment"
 msgstr "Bezplatná doprava a platba"
 
-msgid "Free transport and payment"
-msgstr "Doprava a platba zadarmo"
-
 msgid "Friday"
 msgstr "Piatok"
 
@@ -1720,7 +1717,7 @@ msgstr "Prehľad parametrov"
 msgid "Payment"
 msgstr "Platba"
 
-msgid "Payment & Transport"
+msgid "Payment & Shipping"
 msgstr "Platba a doprava"
 
 msgid "Payment instructions"
@@ -2227,6 +2224,15 @@ msgstr "Niekoľko zmien"
 msgid "Shipping"
 msgstr "Doprava"
 
+msgid "Shipping and payment methods"
+msgstr "Spôsoby dopravy a platby"
+
+msgid "Shipping group"
+msgstr "Skupina dopráv"
+
+msgid "Shipping groups"
+msgstr "Skupiny dopráv"
+
 msgid "Shipping instructions"
 msgstr "Pokyny na dopravu"
 
@@ -2350,7 +2356,7 @@ msgstr "Textová recenzia"
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr "Aktuálny zoznam URL adries sa nachádza v repozitári projektu v súbore \"storefront/config/routes.ts\"."
 
-msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of shippings."
 msgstr "Tieto dni sa používajú na zobrazenie správnych otváracích hodín obchodov, na výpočet lehoty na odstúpenie od objednávky a na výpočet predpokladaného dátumu doručenia dopráv."
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
@@ -2485,17 +2491,11 @@ msgstr "Prehľad Transfer issues"
 msgid "Transfers"
 msgstr "Transfery"
 
-msgid "Transport"
-msgstr "Doprava"
-
 msgid "Transport group"
 msgstr "Skupina dopravy"
 
 msgid "Transport groups"
 msgstr "Skupiny dopravy"
-
-msgid "Transports and payments"
-msgstr "Spôsoby dopravy a platby"
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."
 msgstr "Skúste upraviť svoje vyhľadávanie alebo filter, aby ste našli, čo hľadáte, alebo vytvorte nový záznam, ak je to potrebné."

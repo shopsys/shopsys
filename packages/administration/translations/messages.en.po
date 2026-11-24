@@ -1075,9 +1075,6 @@ msgstr ""
 msgid "Free shipping and payment"
 msgstr ""
 
-msgid "Free transport and payment"
-msgstr ""
-
 msgid "Friday"
 msgstr ""
 
@@ -1720,7 +1717,7 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
-msgid "Payment & Transport"
+msgid "Payment & Shipping"
 msgstr ""
 
 msgid "Payment instructions"
@@ -2227,6 +2224,15 @@ msgstr ""
 msgid "Shipping"
 msgstr ""
 
+msgid "Shipping and payment methods"
+msgstr ""
+
+msgid "Shipping group"
+msgstr ""
+
+msgid "Shipping groups"
+msgstr ""
+
 msgid "Shipping instructions"
 msgstr ""
 
@@ -2350,7 +2356,7 @@ msgstr ""
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/routes.ts\" file."
 msgstr ""
 
-msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of transports."
+msgid "The days are used to display proper stores opening hours, to calculate order withdrawal deadline, and to calculate the expected delivery date of shippings."
 msgstr ""
 
 msgid "The password reset link you used is invalid, expired, or has already been used."
@@ -2485,16 +2491,10 @@ msgstr ""
 msgid "Transfers"
 msgstr ""
 
-msgid "Transport"
-msgstr ""
-
 msgid "Transport group"
 msgstr ""
 
 msgid "Transport groups"
-msgstr ""
-
-msgid "Transports and payments"
 msgstr ""
 
 msgid "Try adjusting your search or filter to find what you’re looking for, or create a new one if needed."

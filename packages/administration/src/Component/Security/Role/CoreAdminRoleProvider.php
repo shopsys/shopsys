@@ -128,8 +128,8 @@ class CoreAdminRoleProvider implements CoreRoleProviderInterface
     protected function getTransportAndPaymentRoles(): array
     {
         return [
-            new Role(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT, t('Transports and payments'), [Permission::FULL]),
-            new Role(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, t('Free transport and payment'), [Permission::EDIT]),
+            new Role(AdminRoleConstant::ROLE_TRANSPORT_AND_PAYMENT, t('Shipping and payment methods'), [Permission::FULL]),
+            new Role(AdminRoleConstant::ROLE_FREE_TRANSPORT_AND_PAYMENT, t('Free shipping and payment'), [Permission::EDIT]),
             new Role(AdminRoleConstant::ROLE_STORE, t('Stores'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_STOCK, t('Warehouses'), [Permission::FULL]),
             new Role(AdminRoleConstant::ROLE_CLOSED_DAYS, t('Closed days'), [Permission::FULL]),

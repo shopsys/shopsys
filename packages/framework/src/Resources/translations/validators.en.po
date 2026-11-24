@@ -496,6 +496,9 @@ msgstr ""
 msgid "Please enter selling price type"
 msgstr ""
 
+msgid "Please enter shipping group name"
+msgstr ""
+
 msgid "Please enter street"
 msgstr ""
 
@@ -533,9 +536,6 @@ msgid "Please enter total price with VAT"
 msgstr ""
 
 msgid "Please enter total price without VAT"
-msgstr ""
-
-msgid "Please enter transport group name"
 msgstr ""
 
 msgid "Please enter unit name in all languages"
@@ -679,6 +679,9 @@ msgstr ""
 msgid "Seo page with slug {{ pageSlug }} already exists"
 msgstr ""
 
+msgid "Shipping group name cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Slug can contain only letters, numbers, hyphens, underscores and slashes"
 msgstr ""
 
@@ -713,9 +716,6 @@ msgid "This field must be empty"
 msgstr ""
 
 msgid "This value is not a valid email address."
-msgstr ""
-
-msgid "Transport group name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Unit name cannot be longer than {{ limit }} characters"

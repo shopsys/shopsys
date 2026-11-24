@@ -43,7 +43,7 @@ msgstr ""
 msgid "-- Choose prefix --"
 msgstr ""
 
-msgid "-- Choose transport group --"
+msgid "-- Choose shipping group --"
 msgstr ""
 
 msgid "-- Choose unit --"
@@ -526,7 +526,7 @@ msgstr ""
 msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
 msgstr ""
 
-msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the transport or the store is closed, the date is moved to the nearest allowed day."
+msgid "Calendar days needed to move the goods to the store warehouse when the store does not have enough in stock (or has no warehouse assigned). They are added to the expected personal pickup date; when the resulting day is not a delivery day of the shipping or the store is closed, the date is moved to the nearest allowed day."
 msgstr ""
 
 msgid "Cancel"
@@ -934,7 +934,7 @@ msgstr ""
 msgid "Days for transfer between warehouses"
 msgstr ""
 
-msgid "Days of the week when the transport delivers"
+msgid "Days of the week when the shipping delivers"
 msgstr ""
 
 msgid "Days until delivery"
@@ -1510,10 +1510,10 @@ msgstr ""
 msgid "Excluded from sale"
 msgstr ""
 
-msgid "Excluded stores"
+msgid "Excluded shippings"
 msgstr ""
 
-msgid "Excluded transports"
+msgid "Excluded stores"
 msgstr ""
 
 msgid "Excluding VAT"
@@ -1726,9 +1726,6 @@ msgstr ""
 msgid "Free shipping and payment settings saved"
 msgstr ""
 
-msgid "Free transport and payment"
-msgstr ""
-
 msgid "Frequency"
 msgstr ""
 
@@ -1870,7 +1867,7 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-msgid "If enabled, a cart containing this product can only use personal pickup at store transports."
+msgid "If enabled, a cart containing this product can only use personal pickup at store shippings."
 msgstr ""
 
 msgid "If the country is not listed, you have to <a href=\"%countryCreateUrl%\" target=\"_blank\">create</a> it first. Or, in rare scenarios, your country code might not be <a href=\"%supportedCountriesUrl%\" target=\"_blank\">supported</a>."
@@ -2905,7 +2902,7 @@ msgstr ""
 msgid "Public holidays and e-shop internal days are managed in the <a href=\"%closedDaysUrl%\" target=\"_blank\">Holidays and internal days</a> administration; the carrier's own days off are not taken into account."
 msgstr ""
 
-msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which transport delivery setting applies to this day."
+msgid "Public holidays are taken into account when calculating the order withdrawal deadline. The flag also determines which shipping delivery setting applies to this day."
 msgstr ""
 
 msgid "Published"
@@ -3292,6 +3289,9 @@ msgstr ""
 msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Shipping group"
+msgstr ""
+
 msgid "Shipping instructions"
 msgstr ""
 
@@ -3302,6 +3302,9 @@ msgid "Shipping of type Email cannot be created, exactly one must always exist."
 msgstr ""
 
 msgid "Shipping of type Email cannot be deleted, exactly one must always exist."
+msgstr ""
+
+msgid "Shipping type"
 msgstr ""
 
 msgid "Shipping type cannot be changed from or to type Email, exactly one shipping of type Email must always exist."
@@ -3593,12 +3596,6 @@ msgid "Transfer issues overview"
 msgstr ""
 
 msgid "Transfer problem has been marked as resolved"
-msgstr ""
-
-msgid "Transport group"
-msgstr ""
-
-msgid "Transport type"
 msgstr ""
 
 msgid "Tuesday"
