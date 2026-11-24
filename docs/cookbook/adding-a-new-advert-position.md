@@ -52,7 +52,7 @@ So don't worry about calling the controller in the wrong way.
 
 ## Conclusion
 
-An administrator can now pick the newly created position when creating an ad in the _Marketing > Advertising system_ section.
+An administrator can now pick the newly created position when creating an ad in the _Content > Advertising_ section.
 The advert will then be displayed on the page we edited in the third step (e.g., the product detail page).
 This allows quick customization of the online store visuals via the administration.
 

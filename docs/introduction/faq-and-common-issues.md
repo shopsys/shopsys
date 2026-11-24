@@ -212,7 +212,7 @@ To resolve this issue, you can modify your Git configuration to allow long paths
 
 ## How do I configure prices in e-mail templates?
 
-Order total price needs to be configured manually in template content in administration `Settings -> Communication with customer -> E-mail templates`.
+Order total price needs to be configured manually in template content in administration `Communication -> Email templates`.
 Configuration for transport, payment and product prices can be easily changed using `shopsys.mail_template.display_price` parameter in `parameters_common.yaml`.
 Supported values are `selling_price` and `both` when both stands for both price with and without VAT.
 The default is `selling_price` which displays the price using setting of the selling price type in the administration.

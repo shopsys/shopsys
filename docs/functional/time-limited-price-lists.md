@@ -11,7 +11,7 @@ This feature is ideal for managing promotions, sales campaigns, or other time-se
 
 ## Managing the time-limited price lists
 
-Time-limited price lists can be managed in the `Pricing -> Price lists` section.
+Time-limited price lists can be managed in the `Prices and discounts -> Price lists` section.
 
 Each price list has its own validity period, so it's possible to seamlessly create follow-up price promotions.
 If a product is assigned to the price list, the price is automatically used as a new selling price for the specified time period (no manual action is required).

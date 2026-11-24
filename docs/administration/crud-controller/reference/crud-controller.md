@@ -375,7 +375,7 @@ Fully disable the CRUD Controller that will not be accessible by the user.
 
 #### `setCustomRoleSection(string $roleSection)`
 
-By default, Menu section is used as role section. If you want to use a custom role section, you can set it using this method.
+By default, Menu section is used as role section. The role sections copy the root-level sections of the administration menu and share their names, so a controller placed in a root-level menu section gets the matching role section automatically. If you want to use a custom role section (e.g. when `$menuSection` is a nested menu item), you can set it using this method.
 
 Role sections can be found in the `Shopsys\AdministrationBundle\Component\Security\Role\AdminRoleSectionsProvider` class.
 
@@ -412,9 +412,9 @@ You can specify where the Crud Controller will be displayed in the administratio
 `$position` controls the order of the item among its siblings in the target (sub)section. It accepts `'first'`, `'last'` (default), `['before' => '<siblingName>']`, or `['after' => '<siblingName>']`, where the sibling name is the menu item name of an existing sibling. When the referenced sibling is not present, the item is appended last. See [Positioning menu items](../../administration-menu.md#positioning-menu-items) for details.
 
 Examples:
-- `$config->setMenuSection('products')` will create Crud controller item under `Products` section
-- `$config->setMenuSection('customers', 'promo_codes')` will create Crud controller under `Customers -> Promo Codes` section
-- `$config->setMenuSection('settings', 'lists', ['after' => 'transports_and_payments'])` will place the item in the `Settings -> Lists` section right after the `transports_and_payments` item
+- `$config->setMenuSection('products')` will create Crud controller item under `Catalog` section
+- `$config->setMenuSection('products', 'parameters_section')` will create Crud controller under `Catalog -> Parameters` section
+- `$config->setMenuSection('transport_and_payment', null, ['after' => 'payments'])` will place the item in the `Shipping, payments and stock` section right after the `payments` item
 
 #### `setMenuIcon(string $icon)`
 

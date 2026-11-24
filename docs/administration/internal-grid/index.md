@@ -103,19 +103,19 @@ class AdministratorInlineEdit extends AbstractGridInlineEdit
     - e.g., `Integrations > XML Feeds`
 - **Display with action**
     - When you need to perform some actions on the grid entries, such as deletion.
-    - e.g., `Marketing > Email newsletter`
+    - e.g., `Communication > Newsletter subscribers`
 - **Inline editable**
     - When the entities in the grid are simple enough and do not need a separate page for editing, you can edit them directly in the grid via AJAX.
-    - e.g., `Pricing > Promo codes`
+    - e.g., `Prices and discounts > Promo codes > Codes`
 - **Drag&Drop**
     - When you need to set some ordering of your entities manually.
-    - e.g., `Marketing > Slider pages`
+    - e.g., `Content > Home page > Banners`
 - **Multiple Drag&Drop**
     - When you need to set some ordering of your entities manually among multiple sections.
-    - e.g., `Marketing > Articles overview`
+    - e.g., `Content > Pages`
 - **Selectable**
     - when you need to select entries from the grid and apply some bulk actions on them.
-    - e.g., `Products > Products overview`
+    - e.g., `Catalog > Products`
 
 ## Customization of grid rendering
 
