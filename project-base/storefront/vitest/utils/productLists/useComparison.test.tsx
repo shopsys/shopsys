@@ -124,7 +124,8 @@ describe('useComparison', () => {
 
         expect(document.activeElement).toBe(wishlistButton);
     });
-    test('opens a selector for a product group and migrates it only after a confirmed variant selection', () => {
+
+    test('opens the variant selector for a product group instead of adding it', () => {
         const group = {
             __typename: 'MainVariant',
             uuid: 'family',
@@ -133,23 +134,17 @@ describe('useComparison', () => {
         } as ProductInterfaceType;
         const { result } = renderHook(() => useComparison());
 
-        act(() => result.current.toggleProductInComparison(group, GtmProductListNameType.product_detail));
+        act(() => result.current.toggleProductInComparison(group, GtmProductListNameType.category_detail, 3));
 
         expect(toggleProductInListWithGtmMock).not.toHaveBeenCalled();
         expect(useSessionStore.getState().portalContent?.props).toEqual(
-            expect.objectContaining({ productUuid: 'family', onVariantCompared: expect.any(Function) }),
-        );
-
-        inList.add('family');
-        act(() => result.current.chooseVariantForComparison(group, GtmProductListNameType.product_comparison_page, 2));
-        expect(toggleProductInListWithGtmMock).not.toHaveBeenCalled();
-        const selection = useSessionStore.getState().portalContent!.props as { onVariantCompared: () => void };
-        act(() => selection.onVariantCompared());
-        expect(toggleProductInListWithGtmMock).toHaveBeenCalledWith(
-            group,
-            GtmProductListNameType.product_comparison_page,
-            2,
-            expect.any(Function),
+            expect.objectContaining({
+                productUuid: 'family',
+                productSlug: '/family',
+                productName: 'Family',
+                gtmProductListName: GtmProductListNameType.category_detail,
+                listIndex: 3,
+            }),
         );
     });
 

@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 import { ProductComparison } from 'components/Pages/ProductComparison/ProductComparison';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -8,7 +8,8 @@ import { renderWithTooltipProvider as render } from '../../helpers/renderWithToo
 
 const state = vi.hoisted(() => ({
     products: [] as TypeProductInProductListFragment[],
-    choose: vi.fn(),
+    openVariantsPopup: vi.fn(),
+    toggle: vi.fn(),
     remove: vi.fn(),
 }));
 vi.mock('utils/productLists/comparison/useComparisonPage', () => ({
@@ -22,7 +23,10 @@ vi.mock('utils/productLists/comparison/useComparisonPage', () => ({
     }),
 }));
 vi.mock('utils/productLists/comparison/useComparison', () => ({
-    useComparison: () => ({ chooseVariantForComparison: state.choose }),
+    useComparison: () => ({ toggleProductInComparison: state.toggle }),
+}));
+vi.mock('components/Blocks/Popup/useOpenProductVariantsPopup', () => ({
+    useOpenProductVariantsPopup: () => state.openVariantsPopup,
 }));
 vi.mock('components/Pages/ProductComparison/ProductComparisonContent', () => ({
     ProductComparisonContent: ({
@@ -48,7 +52,11 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
             key.replace('{{ productName }}', options?.productName ?? ''),
     }),
 }));
-const concrete = { ...createProduct('Concrete SKU'), imagesCount: 0, parameters: [] };
+const concrete = {
+    ...createProduct('Concrete SKU'),
+    imagesCount: 0,
+    parameters: [],
+} as TypeProductInProductListFragment;
 const group = {
     ...createProduct('Product family'),
     __typename: 'MainVariant' as const,
@@ -56,7 +64,7 @@ const group = {
     variantsCount: 2,
     imagesCount: 0,
     parameters: [],
-};
+} as TypeProductInProductListFragment;
 
 beforeEach(() => {
     vi.clearAllMocks();
@@ -71,7 +79,24 @@ test('keeps a saved group as a selection prompt outside the concrete comparison 
     expect(screen.getByText('Choose a specific variant to compare its price and parameters.')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Choose a variant to compare' }));
 
-    expect(state.choose).toHaveBeenCalledWith(group, GtmProductListNameType.product_comparison_page, 1);
+    expect(state.openVariantsPopup).toHaveBeenCalledWith(
+        group,
+        expect.objectContaining({ gtmProductListName: GtmProductListNameType.product_comparison_page, listIndex: 1 }),
+    );
+});
+
+test('replaces the saved group only once when more of its variants are added to comparison', () => {
+    render(<ProductComparison />);
+    fireEvent.click(screen.getByRole('button', { name: 'Choose a variant to compare' }));
+    const { onVariantAddedToComparison } = state.openVariantsPopup.mock.calls[0][1];
+
+    act(() => {
+        onVariantAddedToComparison();
+        onVariantAddedToComparison();
+    });
+
+    expect(state.toggle).toHaveBeenCalledOnce();
+    expect(state.toggle).toHaveBeenCalledWith(group, GtmProductListNameType.product_comparison_page, 1);
 });
 
 test('can remove the saved group and restores focus to a stable heading after its prompt disappears', () => {

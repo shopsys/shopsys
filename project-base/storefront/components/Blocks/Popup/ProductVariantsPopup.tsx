@@ -13,7 +13,7 @@ const ProductVariantsPopupContent = dynamic(
     { ssr: false, loading: () => <ProductVariantsPopupSkeleton /> },
 );
 
-type ProductVariantsPopupProps = ProductVariantsPopupContentProps & {
+type ProductVariantsPopupProps = Omit<ProductVariantsPopupContentProps, 'onChooseAnotherVariant'> & {
     productSlug: string;
     productName: string;
 };
@@ -25,16 +25,32 @@ export const ProductVariantsPopup: FC<ProductVariantsPopupProps> = ({
     gtmMessageOrigin,
     gtmProductListName,
     listIndex,
-    onVariantCompared,
+    focusedVariantUuid,
+    onVariantAddedToComparison,
 }) => {
     const { t } = useTranslation();
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+
+    const reopenWithAddedVariant = (addedVariantUuid: string) =>
+        updatePortalContent(
+            <ProductVariantsPopup
+                focusedVariantUuid={addedVariantUuid}
+                gtmMessageOrigin={gtmMessageOrigin}
+                gtmProductListName={gtmProductListName}
+                listIndex={listIndex}
+                productName={productName}
+                productSlug={productSlug}
+                productUuid={productUuid}
+                onVariantAddedToComparison={onVariantAddedToComparison}
+            />,
+        );
 
     return (
         <Popup
             className="h-[min(52rem,calc(100dvh-2rem))] max-h-[calc(100dvh-2rem)] vl:max-h-[85vh] overflow-hidden"
             contentClassName="flex min-h-0 flex-1 flex-col"
-            title={onVariantCompared ? t('Choose a variant to compare') : t('Choose a variant')}
+            title={t('Choose a variant')}
         >
             <div className="mb-4 flex shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <p className="wrap-break-word min-w-0 flex-1 text-sm text-text-less">{productName}</p>
@@ -62,8 +78,10 @@ export const ProductVariantsPopup: FC<ProductVariantsPopupProps> = ({
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
                     listIndex={listIndex}
+                    focusedVariantUuid={focusedVariantUuid}
                     productUuid={productUuid}
-                    onVariantCompared={onVariantCompared}
+                    onChooseAnotherVariant={reopenWithAddedVariant}
+                    onVariantAddedToComparison={onVariantAddedToComparison}
                 />
             </div>
         </Popup>

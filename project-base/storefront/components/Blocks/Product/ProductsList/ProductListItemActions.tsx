@@ -15,6 +15,8 @@ type ProductListItemButtonsProps = {
     productName: string;
     toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
+    isComparisonVariantSelection?: boolean;
+    isWishlistVariantSelection?: boolean;
 };
 
 export const ProductListItemButtons: FC<ProductListItemButtonsProps> = ({
@@ -24,10 +26,13 @@ export const ProductListItemButtons: FC<ProductListItemButtonsProps> = ({
     productName,
     toggleProductInComparison,
     toggleProductInWishlist,
+    isComparisonVariantSelection,
+    isWishlistVariantSelection,
 }) => (
     <>
         <ProductCompareButton
             isProductInComparison={isProductInComparison}
+            isVariantSelection={isComparisonVariantSelection}
             productName={productName}
             tabIndex={allowKeyboardFocus ? 0 : -1}
             toggleProductInComparison={toggleProductInComparison}
@@ -35,6 +40,7 @@ export const ProductListItemButtons: FC<ProductListItemButtonsProps> = ({
 
         <ProductWishlistButton
             isProductInWishlist={isProductInWishlist}
+            isVariantSelection={isWishlistVariantSelection}
             productName={productName}
             tabIndex={allowKeyboardFocus ? 0 : -1}
             toggleProductInWishlist={toggleProductInWishlist}
@@ -90,6 +96,8 @@ export type ProductListItemActionProps = {
     gtmProductListName: GtmProductListNameType;
     isProductInComparison: boolean;
     isProductInWishlist: boolean;
+    isComparisonVariantSelection?: boolean;
+    isWishlistVariantSelection?: boolean;
     listIndex: number;
     product: TypeListedProductFragment;
     shouldShowProductActionSkeleton: boolean;

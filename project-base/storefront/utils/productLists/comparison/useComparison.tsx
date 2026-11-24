@@ -1,3 +1,4 @@
+import { useOpenProductVariantsPopup } from 'components/Blocks/Popup/useOpenProductVariantsPopup';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { useProductLists } from 'components/providers/ProductListsProvider';
 import { COMPARISON_PAGE_SIZE } from 'config/constants';
@@ -9,11 +10,8 @@ import {
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
-import { useSessionStore } from 'store/useSessionStore';
 import { ProductInterfaceType } from 'types/product';
 import { useClient } from 'urql';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -23,11 +21,6 @@ import { useProductListGtmEvent } from 'utils/productLists/useProductListGtmEven
 import { useProductListQueryResult } from 'utils/productLists/useProductListQueryResult';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
-
-const ProductVariantsPopup = dynamic(
-    () => import('components/Blocks/Popup/ProductVariantsPopup').then((component) => component.ProductVariantsPopup),
-    { ssr: false },
-);
 
 type ComparisonOptions = {
     onProductRemoved?: (productUuid: string) => void;
@@ -41,8 +34,7 @@ export const useComparison = ({
     showAddSuccessMessage = true,
 }: ComparisonOptions = {}) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
+    const openProductVariantsPopup = useOpenProductVariantsPopup();
     const {
         clearProductListGtmContext,
         pushAddProductListGtmEvent,
@@ -50,60 +42,41 @@ export const useComparison = ({
         toggleProductInListWithGtm,
     } = useProductListGtmEvent(GtmEventType.add_to_comparison, GtmEventType.remove_from_comparison);
 
-    const { productListSummary, removeList, isProductInList, toggleProductInList, moveProduct } = useProductList(
-        TypeProductListTypeEnum.Comparison,
-        {
-            addProductError: (productUuid) => {
-                clearProductListGtmContext(productUuid);
-                showErrorMessage(t('Unable to add product to comparison.'));
-            },
-            addProductSuccess: (productUuid) => {
-                if (showAddSuccessMessage) {
-                    showSuccessMessage(t('Product added to comparison.'));
-                }
-                pushAddProductListGtmEvent(productUuid);
-            },
-            removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
-            removeSuccess: () => {
-                showSuccessMessage(t('Comparison products have been cleaned.'));
-            },
-            removeProductError: (productUuid) => {
-                clearProductListGtmContext(productUuid);
-                showErrorMessage(t('Unable to remove product from comparison.'));
-                onProductRemoveError?.(productUuid);
-            },
-            removeProductSuccess: (productUuid) => {
-                if (!onProductRemoved) {
-                    showSuccessMessage(t('Product has been removed from your comparison.'));
-                }
-                pushRemoveProductListGtmEvent(productUuid);
-                onProductRemoved?.(productUuid);
-            },
+    const {
+        productListSummary,
+        removeList,
+        isProductInList,
+        isProductOrItsVariantInList,
+        toggleProductInList,
+        moveProduct,
+    } = useProductList(TypeProductListTypeEnum.Comparison, {
+        addProductError: (productUuid) => {
+            clearProductListGtmContext(productUuid);
+            showErrorMessage(t('Unable to add product to comparison.'));
         },
-    );
-
-    const chooseVariantForComparison = (
-        product: ProductInterfaceType,
-        gtmProductListName: GtmProductListNameType,
-        listIndex = 0,
-    ) => {
-        storeCurrentFocus();
-        updatePortalContent(
-            <ProductVariantsPopup
-                productUuid={product.uuid}
-                productSlug={product.slug}
-                productName={product.fullName}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-                gtmProductListName={gtmProductListName}
-                listIndex={listIndex}
-                onVariantCompared={() => {
-                    if (isProductInList(product.uuid)) {
-                        toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
-                    }
-                }}
-            />,
-        );
-    };
+        addProductSuccess: (productUuid) => {
+            if (showAddSuccessMessage) {
+                showSuccessMessage(t('Product added to comparison.'));
+            }
+            pushAddProductListGtmEvent(productUuid);
+        },
+        removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
+        removeSuccess: () => {
+            showSuccessMessage(t('Comparison products have been cleaned.'));
+        },
+        removeProductError: (productUuid) => {
+            clearProductListGtmContext(productUuid);
+            showErrorMessage(t('Unable to remove product from comparison.'));
+            onProductRemoveError?.(productUuid);
+        },
+        removeProductSuccess: (productUuid) => {
+            if (!onProductRemoved) {
+                showSuccessMessage(t('Product has been removed from your comparison.'));
+            }
+            pushRemoveProductListGtmEvent(productUuid);
+            onProductRemoved?.(productUuid);
+        },
+    });
 
     const toggleProductInComparison = (
         product: ProductInterfaceType,
@@ -111,7 +84,7 @@ export const useComparison = ({
         listIndex?: number,
     ) => {
         if (product.__typename === 'MainVariant' && !isProductInList(product.uuid)) {
-            chooseVariantForComparison(product, gtmProductListName, listIndex);
+            openProductVariantsPopup(product, { gtmProductListName, listIndex });
 
             return null;
         }
@@ -122,8 +95,8 @@ export const useComparison = ({
     return {
         comparisonSummary: productListSummary,
         isProductInComparison: isProductInList,
+        isProductOrItsVariantInComparison: isProductOrItsVariantInList,
         toggleProductInComparison,
-        chooseVariantForComparison,
         removeComparison: removeList,
         moveProductInComparison: moveProduct,
     };

@@ -7,13 +7,16 @@ import { ProductInterfaceType } from 'types/product';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
+vi.mock('components/Blocks/Popup/ProductVariantsPopup', () => ({ ProductVariantsPopup: () => null }));
+
 type ProductListCallbacks = {
     addProductSuccess: (productUuid: string) => void;
 };
 
-const { productListCallbacksRef, toggleProductInListWithGtmMock } = vi.hoisted(() => ({
+const { productListCallbacksRef, toggleProductInListWithGtmMock, inList } = vi.hoisted(() => ({
     productListCallbacksRef: { current: undefined as ProductListCallbacks | undefined },
     toggleProductInListWithGtmMock: vi.fn(),
+    inList: new Set<string>(),
 }));
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -25,7 +28,7 @@ vi.mock('utils/productLists/useProductList', () => ({
         productListCallbacksRef.current = callbacks;
 
         return {
-            isProductInList: vi.fn(),
+            isProductInList: (uuid: string) => inList.has(uuid),
             isProductListFetching: false,
             productListData: undefined,
             removeList: vi.fn(),
@@ -52,7 +55,8 @@ describe('useWishlist', () => {
         vi.useFakeTimers();
         productListCallbacksRef.current = undefined;
         toggleProductInListWithGtmMock.mockClear();
-        useSessionStore.setState({ storedFocusElement: null });
+        inList.clear();
+        useSessionStore.setState({ storedFocusElement: null, portalContent: null });
     });
 
     afterEach(() => {
@@ -61,7 +65,7 @@ describe('useWishlist', () => {
             vi.runOnlyPendingTimers();
         });
         vi.useRealTimers();
-        useSessionStore.setState({ storedFocusElement: null });
+        useSessionStore.setState({ storedFocusElement: null, portalContent: null });
     });
 
     test('does not restore stale focus after the wishlist toast closes', () => {
@@ -94,5 +98,44 @@ describe('useWishlist', () => {
         });
 
         expect(document.activeElement).toBe(comparisonButton);
+    });
+
+    test('opens the variant selector for a product group instead of saving it', () => {
+        const group = {
+            __typename: 'MainVariant',
+            uuid: 'family',
+            slug: '/family',
+            fullName: 'Family',
+        } as ProductInterfaceType;
+        const { result } = renderHook(() => useWishlist());
+
+        act(() => result.current.toggleProductInWishlist(group, GtmProductListNameType.category_detail, 3));
+
+        expect(toggleProductInListWithGtmMock).not.toHaveBeenCalled();
+        expect(useSessionStore.getState().portalContent?.props).toEqual(
+            expect.objectContaining({
+                productUuid: 'family',
+                productSlug: '/family',
+                productName: 'Family',
+                gtmProductListName: GtmProductListNameType.category_detail,
+                listIndex: 3,
+            }),
+        );
+    });
+
+    test('removes a product group saved earlier without opening the selector', () => {
+        const group = { __typename: 'MainVariant', uuid: 'family' } as ProductInterfaceType;
+        inList.add('family');
+        const { result } = renderHook(() => useWishlist());
+
+        act(() => result.current.toggleProductInWishlist(group, GtmProductListNameType.wishlist));
+
+        expect(toggleProductInListWithGtmMock).toHaveBeenCalledWith(
+            group,
+            GtmProductListNameType.wishlist,
+            undefined,
+            expect.any(Function),
+        );
+        expect(useSessionStore.getState().portalContent).toBeNull();
     });
 });

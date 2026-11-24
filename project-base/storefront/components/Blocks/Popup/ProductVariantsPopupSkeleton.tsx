@@ -21,8 +21,12 @@ export const ProductVariantsPopupSkeleton: FC = () => {
                             <Skeleton className="h-3 w-1/2" />
                         </div>
                         <div className={VARIANT_PURCHASE_CLASS_NAME}>
-                            <Skeleton className="h-4 w-20 md:justify-self-end" />
-                            <Skeleton className="col-start-1 xs:col-start-2 h-10 w-full md:col-start-1" />
+                            <Skeleton className="h-4 w-20" />
+                            <div className="flex items-center gap-2">
+                                <Skeleton className="size-8" />
+                                <Skeleton className="size-8" />
+                                <Skeleton className="h-10 flex-1 sm:w-44 sm:flex-none" />
+                            </div>
                         </div>
                     </div>
                 ))}

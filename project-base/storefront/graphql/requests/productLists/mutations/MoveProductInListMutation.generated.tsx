@@ -34,7 +34,7 @@ export type TypeMoveProductInListMutationVariables = Exact<{
 }>;
 
 
-export type TypeMoveProductInListMutation = { MoveProductInList: { __typename: 'ProductList', uuid: string, productUuids: Array<string>, products: { totalCount: number } } };
+export type TypeMoveProductInListMutation = { MoveProductInList: { __typename: 'ProductList', uuid: string, productUuids: Array<string>, mainVariantUuids: Array<string>, products: { totalCount: number } } };
 
 
 export const MoveProductInListMutationDocument = gql`

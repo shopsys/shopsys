@@ -4,7 +4,7 @@ export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' |
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeProductListSummaryFragment = { __typename: 'ProductList', uuid: string, productUuids: Array<string>, products: { totalCount: number } };
+export type TypeProductListSummaryFragment = { __typename: 'ProductList', uuid: string, productUuids: Array<string>, mainVariantUuids: Array<string>, products: { totalCount: number } };
 
 export const ProductListSummaryFragment = gql`
     fragment ProductListSummaryFragment on ProductList {
@@ -14,5 +14,6 @@ export const ProductListSummaryFragment = gql`
     totalCount
   }
   productUuids
+  mainVariantUuids
 }
     `;

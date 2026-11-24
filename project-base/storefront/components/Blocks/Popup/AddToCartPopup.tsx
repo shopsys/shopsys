@@ -25,9 +25,14 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 type AddToCartPopupProps = {
     addedCartItem: TypeCartItemWithGiftsFragment;
+    // Offered when the product was added from the variant selection, so more variants can be picked in a row
+    onChooseAnotherVariant?: () => void;
 };
 
-export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { product, quantity } }) => {
+export const AddToCartPopup: FC<AddToCartPopupProps> = ({
+    addedCartItem: { product, quantity },
+    onChooseAnotherVariant,
+}) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { url, isLuigisBoxActive } = useDomainConfig();
@@ -66,7 +71,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
     return (
         <Popup
             size="large"
-            hideCloseButton
+            hideCloseButton={!onChooseAnotherVariant}
             ariaDescription={ariaDescription}
             className="max-h-[calc(100dvh-2rem)] vl:max-h-[85vh] overflow-hidden"
             contentClassName="-mx-5 -mb-5 min-h-0 overflow-y-auto px-5 vl:m-0 vl:px-0 vl:pb-2"
@@ -190,13 +195,19 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ addedCartItem: { produ
                 </section>
 
                 <div className="vl:static sticky bottom-0 z-10 order-last vl:order-0 -mx-5 vl:mx-0 flex items-center justify-between gap-4 bg-background-default px-5 vl:px-0 vl:py-0 pt-3 pb-5 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] vl:shadow-none">
-                    <Button
-                        aria-label={t('Go back to shop', { ns: 'accessibility' })}
-                        variant="tertiary"
-                        onClick={handleClosePopup}
-                    >
-                        {t('Back to shop')}
-                    </Button>
+                    {onChooseAnotherVariant ? (
+                        <Button variant="tertiary" onClick={onChooseAnotherVariant}>
+                            {t('Choose another variant')}
+                        </Button>
+                    ) : (
+                        <Button
+                            aria-label={t('Go back to shop', { ns: 'accessibility' })}
+                            variant="tertiary"
+                            onClick={handleClosePopup}
+                        >
+                            {t('Back to shop')}
+                        </Button>
+                    )}
 
                     <LinkButton
                         aria-label={t('Go to cart', { ns: 'accessibility' })}

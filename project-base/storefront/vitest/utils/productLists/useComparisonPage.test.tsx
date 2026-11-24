@@ -55,6 +55,7 @@ const list = (uuids: string[], uuid = 'list') =>
         __typename: 'ProductList',
         uuid,
         productUuids: uuids,
+        mainVariantUuids: [],
         products: uuids.map((uuid) => ({ uuid, fullName: uuid })),
     }) as unknown as TypeProductListFragment & TypeProductListSummaryFragment;
 
@@ -201,6 +202,7 @@ test('Undo uses current membership order before detail cards finish refreshing',
         uuid: 'list',
         products: { totalCount: 3 },
         productUuids: ['b', 'a', 'c'],
+        mainVariantUuids: [],
     };
     hook.rerender();
     const action = mocks.success.mock.calls[0][1].action as ReactElement<{ onUndo: () => Promise<boolean> }>;

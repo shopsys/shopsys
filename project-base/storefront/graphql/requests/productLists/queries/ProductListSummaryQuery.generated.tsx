@@ -26,7 +26,7 @@ export type TypeProductListSummaryQueryVariables = Exact<{
 }>;
 
 
-export type TypeProductListSummaryQuery = { productList: { __typename: 'ProductList', uuid: string, productUuids: Array<string>, products: { totalCount: number } } | null };
+export type TypeProductListSummaryQuery = { productList: { __typename: 'ProductList', uuid: string, productUuids: Array<string>, mainVariantUuids: Array<string>, products: { totalCount: number } } | null };
 
 
 export const ProductListSummaryQueryDocument = gql`

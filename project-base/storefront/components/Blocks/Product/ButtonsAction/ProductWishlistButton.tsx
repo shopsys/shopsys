@@ -16,6 +16,7 @@ type ProductCompareButtonProps = {
     isProductInWishlist: boolean;
     toggleProductInWishlist: () => void;
     tabIndex?: number;
+    isVariantSelection?: boolean;
 };
 
 export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> = ({
@@ -26,6 +27,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     isProductInWishlist,
     toggleProductInWishlist,
     tabIndex = 0,
+    isVariantSelection = false,
 }) => {
     const { t } = useTranslation();
     const buttonText = isWithShortText
@@ -35,8 +37,9 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
         : isProductInWishlist
           ? t('Remove from wishlist')
           : t('Add to wishlist');
-    const tooltipLabel = isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist');
-    const ariaLabel = isProductInWishlist
+    const toggleTooltipLabel = isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist');
+    const tooltipLabel = isVariantSelection ? t('Choose a variant for wishlist') : toggleTooltipLabel;
+    const toggleAriaLabel = isProductInWishlist
         ? t('Remove from wishlist product {{ productName }}', {
               ns: 'accessibility',
               productName: productName,
@@ -45,6 +48,9 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
               ns: 'accessibility',
               productName: productName,
           });
+    const ariaLabel = isVariantSelection
+        ? t('Choose a variant of {{ productName }} for wishlist', { ns: 'accessibility', productName })
+        : toggleAriaLabel;
     const WishlistIcon = isProductInWishlist ? HeartFilledIcon : HeartIcon;
 
     if (!isWithText) {

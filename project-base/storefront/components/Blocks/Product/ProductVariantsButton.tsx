@@ -1,15 +1,9 @@
+import { useOpenProductVariantsPopup } from 'components/Blocks/Popup/useOpenProductVariantsPopup';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
-import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-
-const ProductVariantsPopup = dynamic(
-    () => import('components/Blocks/Popup/ProductVariantsPopup').then((component) => component.ProductVariantsPopup),
-    { ssr: false },
-);
 
 type ProductVariantsButtonProps = {
     productUuid: string;
@@ -33,21 +27,13 @@ export const ProductVariantsButton: FC<ProductVariantsButtonProps> = ({
     skipKeyboardNavigation = false,
 }) => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const storeCurrentFocus = useSessionStore((s) => s.storeCurrentFocus);
+    const openProductVariantsPopup = useOpenProductVariantsPopup();
 
-    const openProductVariantsPopup = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
-        storeCurrentFocus();
-        updatePortalContent(
-            <ProductVariantsPopup
-                gtmMessageOrigin={gtmMessageOrigin}
-                gtmProductListName={gtmProductListName}
-                listIndex={listIndex}
-                productName={productName}
-                productSlug={productSlug}
-                productUuid={productUuid}
-            />,
+        openProductVariantsPopup(
+            { uuid: productUuid, slug: productSlug, fullName: productName },
+            { gtmMessageOrigin, gtmProductListName, listIndex },
         );
     };
 
@@ -62,7 +48,7 @@ export const ProductVariantsButton: FC<ProductVariantsButtonProps> = ({
                 ns: 'accessibility',
                 productName,
             })}
-            onClick={openProductVariantsPopup}
+            onClick={handleClick}
         >
             {t('Choose')}
         </Button>

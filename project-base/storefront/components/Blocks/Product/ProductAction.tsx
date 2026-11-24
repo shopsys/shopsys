@@ -49,6 +49,7 @@ type ProductActionProps = {
     currentCart?: Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
     onProductAddedToCart?: OnProductAddedToCart;
     onAddToCartFlowStateChange?: (isPending: boolean) => void;
+    onChooseAnotherVariant?: () => void;
 } & FunctionComponentProps;
 
 export const ProductAction: FC<ProductActionProps> = ({
@@ -62,6 +63,7 @@ export const ProductAction: FC<ProductActionProps> = ({
     skipKeyboardNavigation = false,
     onProductAddedToCart,
     onAddToCartFlowStateChange,
+    onChooseAnotherVariant,
 }) => {
     const { t } = useTranslation();
     const { canCreateOrder } = useAuthorization();
@@ -89,6 +91,7 @@ export const ProductAction: FC<ProductActionProps> = ({
         tabIndex: skipKeyboardNavigation ? -1 : 0,
         onProductAddedToCart,
         onAddToCartFlowStateChange,
+        onChooseAnotherVariant,
     };
 
     return (

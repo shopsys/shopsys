@@ -21,6 +21,8 @@ type ProductVariantsPopupRowProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
+    listActions: ReactNode;
+    onChooseAnotherVariant: () => void;
 };
 
 export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
@@ -28,6 +30,8 @@ export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
     gtmMessageOrigin,
     gtmProductListName,
     listIndex,
+    listActions,
+    onChooseAnotherVariant,
 }) => {
     const {
         selectedServiceUuids,
@@ -41,6 +45,7 @@ export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
 
     return (
         <ProductVariantsPopupRowLayout
+            listActions={listActions}
             variant={variant}
             action={
                 <ProductAction
@@ -49,6 +54,7 @@ export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
                     listIndex={listIndex}
                     product={variant}
                     onAddToCartFlowStateChange={updateIsAddToCartFlowPending}
+                    onChooseAnotherVariant={onChooseAnotherVariant}
                     onProductAddedToCart={(addedCartItem) => persistPendingServicesAfterAddToCart(addedCartItem.uuid)}
                 />
             }
@@ -71,15 +77,17 @@ export const ProductVariantsPopupRow: FC<ProductVariantsPopupRowProps> = ({
 type ProductVariantsPopupRowLayoutProps = {
     variant: ProductVariantsPopupVariant;
     action: ReactNode;
+    listActions: ReactNode;
 };
 
-export const ProductVariantsPopupRowLayout: FC<ProductVariantsPopupRowLayoutProps> = ({
+const ProductVariantsPopupRowLayout: FC<ProductVariantsPopupRowLayoutProps> = ({
     variant,
     action,
+    listActions,
     children,
 }) => {
     return (
-        <li className={VARIANT_ROW_CLASS_NAME}>
+        <li className={VARIANT_ROW_CLASS_NAME} data-variant-uuid={variant.uuid}>
             <div className="size-16 self-start sm:size-20 md:self-center">
                 <Image
                     height={80}
@@ -107,7 +115,15 @@ export const ProductVariantsPopupRowLayout: FC<ProductVariantsPopupRowLayoutProp
                     productPrice={variant.price}
                     textPriceSize="base"
                 />
-                <div className="col-start-1 xs:col-start-2 flex flex-col gap-2 md:col-start-1">{action}</div>
+                <div className="flex items-center justify-end gap-2">
+                    <div className="flex shrink-0 items-center">{listActions}</div>
+                    <div
+                        className="flex min-w-0 flex-1 flex-col gap-2 sm:w-44 sm:flex-none"
+                        data-variant-purchase-action
+                    >
+                        {action}
+                    </div>
+                </div>
             </div>
             {children}
         </li>

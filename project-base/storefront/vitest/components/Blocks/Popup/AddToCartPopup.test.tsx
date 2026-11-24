@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { AddToCartPopup } from 'components/Blocks/Popup/AddToCartPopup';
 import { TypeCartItemTypeEnum } from 'graphql/types';
 import type React from 'react';
@@ -26,7 +26,11 @@ const { useCurrentCartMock } = vi.hoisted(() => ({ useCurrentCartMock: vi.fn() }
 vi.mock('utils/cart/useCurrentCart', () => ({ useCurrentCart: useCurrentCartMock }));
 
 vi.mock('components/Forms/Button/Button', () => ({
-    Button: ({ children }: { children: React.ReactNode }) => <button type="button">{children}</button>,
+    Button: ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => (
+        <button type="button" onClick={onClick}>
+            {children}
+        </button>
+    ),
 }));
 
 vi.mock('components/Forms/Button/LinkButton', () => ({
@@ -111,6 +115,16 @@ const mockCart = (items: unknown[]) => {
 
 describe('AddToCartPopup', () => {
     beforeEach(() => mockCart([]));
+
+    test('offers choosing another variant instead of returning to the shop after adding from the variant selection', () => {
+        const chooseAnotherVariant = vi.fn();
+        render(<AddToCartPopup addedCartItem={addedCartItem} onChooseAnotherVariant={chooseAnotherVariant} />);
+
+        fireEvent.click(screen.getByRole('button', { name: 'Choose another variant' }));
+
+        expect(chooseAnotherVariant).toHaveBeenCalledOnce();
+        expect(screen.queryByRole('button', { name: 'Back to shop' })).not.toBeInTheDocument();
+    });
 
     test('uses the product image fallback alt text', () => {
         render(<AddToCartPopup addedCartItem={addedCartItem} />);

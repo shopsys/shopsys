@@ -27,6 +27,7 @@ import { ProductDetailInfo } from './ProductDetailInfo';
 import { DeferredProductDetailSecondaryActions } from './ProductDetailSecondaryActions/DeferredProductDetailSecondaryActions';
 import { ProductDetailSections } from './ProductDetailSections/ProductDetailSections';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
+import { scrollToProductVariants } from './scrollToProductVariants';
 
 type ProductDetailMainVariantContentProps = {
     product: TypeMainVariantDetailFragment;
@@ -57,19 +58,9 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             return;
         }
 
-        const variantList = document.getElementById(PRODUCT_VARIANTS_ID);
-
-        if (!variantList) {
-            return;
+        if (scrollToProductVariants()) {
+            event.preventDefault();
         }
-
-        event.preventDefault();
-        window.history.replaceState(window.history.state, '', event.currentTarget.hash);
-        variantList.focus({ preventScroll: true });
-        variantList.scrollIntoView({
-            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
-            block: 'start',
-        });
     };
 
     const pageReadyEvent = useGtmFriendlyPageReadyEvent(product);

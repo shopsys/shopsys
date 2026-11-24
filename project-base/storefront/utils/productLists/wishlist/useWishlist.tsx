@@ -1,3 +1,4 @@
+import { useOpenProductVariantsPopup } from 'components/Blocks/Popup/useOpenProductVariantsPopup';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { useProductLists } from 'components/providers/ProductListsProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -26,6 +27,7 @@ import { getWishlistPageRange } from './getWishlistPageRange';
 
 export const useWishlist = () => {
     const { t } = useTranslation();
+    const openProductVariantsPopup = useOpenProductVariantsPopup();
     const {
         clearProductListGtmContext,
         pushAddProductListGtmEvent,
@@ -33,39 +35,50 @@ export const useWishlist = () => {
         toggleProductInListWithGtm,
     } = useProductListGtmEvent(GtmEventType.add_to_wishlist, GtmEventType.remove_from_wishlist);
 
-    const { removeList, isProductInList, toggleProductInList } = useProductList(TypeProductListTypeEnum.Wishlist, {
-        addProductError: (productUuid) => {
-            clearProductListGtmContext(productUuid);
-            showErrorMessage(t('Unable to add product to wishlist.'));
+    const { removeList, isProductInList, isProductOrItsVariantInList, toggleProductInList } = useProductList(
+        TypeProductListTypeEnum.Wishlist,
+        {
+            addProductError: (productUuid) => {
+                clearProductListGtmContext(productUuid);
+                showErrorMessage(t('Unable to add product to wishlist.'));
+            },
+            addProductSuccess: (productUuid) => {
+                showSuccessMessage(t('The item has been added to your wishlist.'));
+                pushAddProductListGtmEvent(productUuid);
+            },
+            removeError: () => showErrorMessage(t('Unable to clean wishlist.')),
+            removeSuccess: () => {
+                showSuccessMessage(t('Wishlist was cleaned.'));
+            },
+            removeProductError: (productUuid) => {
+                clearProductListGtmContext(productUuid);
+                showErrorMessage(t('Unable to remove product from wishlist.'));
+            },
+            removeProductSuccess: (productUuid) => {
+                showSuccessMessage(t('The item has been removed from your wishlist.'));
+                pushRemoveProductListGtmEvent(productUuid);
+            },
         },
-        addProductSuccess: (productUuid) => {
-            showSuccessMessage(t('The item has been added to your wishlist.'));
-            pushAddProductListGtmEvent(productUuid);
-        },
-        removeError: () => showErrorMessage(t('Unable to clean wishlist.')),
-        removeSuccess: () => {
-            showSuccessMessage(t('Wishlist was cleaned.'));
-        },
-        removeProductError: (productUuid) => {
-            clearProductListGtmContext(productUuid);
-            showErrorMessage(t('Unable to remove product from wishlist.'));
-        },
-        removeProductSuccess: (productUuid) => {
-            showSuccessMessage(t('The item has been removed from your wishlist.'));
-            pushRemoveProductListGtmEvent(productUuid);
-        },
-    });
+    );
 
     const toggleProductInWishlist = (
         product: ProductInterfaceType,
         gtmProductListName: GtmProductListNameType,
         listIndex?: number,
     ) => {
+        // A whole product family stored earlier stays removable; otherwise a concrete variant is chosen.
+        if (product.__typename === 'MainVariant' && !isProductInList(product.uuid)) {
+            openProductVariantsPopup(product, { gtmProductListName, listIndex });
+
+            return;
+        }
+
         toggleProductInListWithGtm(product, gtmProductListName, listIndex, toggleProductInList);
     };
 
     return {
         isProductInWishlist: isProductInList,
+        isProductOrItsVariantInWishlist: isProductOrItsVariantInList,
         removeWishlist: removeList,
         toggleProductInWishlist,
     };

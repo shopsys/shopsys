@@ -59,6 +59,7 @@ describe('wishlist SSR', () => {
                                 uuid: 'customer-wishlist',
                                 products: { __typename: 'ProductConnection', totalCount: count },
                                 productUuids: Array.from({ length: count }, (_, index) => `product-${index + 1}`),
+                                mainVariantUuids: [],
                             },
                         },
                     });

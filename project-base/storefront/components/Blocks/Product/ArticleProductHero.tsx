@@ -40,8 +40,9 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
     const { t } = useTranslation();
     const { canCreateOrder, canSeePrices } = useAuthorization();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
-    const { isProductInComparison, toggleProductInComparison } = useComparison();
-    const { isProductInWishlist, toggleProductInWishlist } = useWishlist();
+    const { isProductInComparison, isProductOrItsVariantInComparison, toggleProductInComparison } = useComparison();
+    const { isProductInWishlist, isProductOrItsVariantInWishlist, toggleProductInWishlist } = useWishlist();
+    const isMainVariant = product.__typename === 'MainVariant';
     const products = useMemo(() => [product], [product]);
 
     useGtmSliderProductListViewEvent(products, GtmProductListNameType.other);
@@ -151,14 +152,16 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
 
             <div className="absolute top-3 right-3 z-above flex shrink-0 items-center self-start justify-self-end md:relative md:top-auto md:right-auto md:col-start-3 md:row-start-1 md:-mt-2 md:-mr-2">
                 <ProductCompareButton
-                    isProductInComparison={isProductInComparison(product.uuid)}
+                    isProductInComparison={isProductOrItsVariantInComparison(product.uuid)}
+                    isVariantSelection={isMainVariant && !isProductInComparison(product.uuid)}
                     productName={product.fullName}
                     toggleProductInComparison={() =>
                         toggleProductInComparison(product, GtmProductListNameType.other, HERO_LIST_INDEX)
                     }
                 />
                 <ProductWishlistButton
-                    isProductInWishlist={isProductInWishlist(product.uuid)}
+                    isProductInWishlist={isProductOrItsVariantInWishlist(product.uuid)}
+                    isVariantSelection={isMainVariant && !isProductInWishlist(product.uuid)}
                     productName={product.fullName}
                     toggleProductInWishlist={() =>
                         toggleProductInWishlist(product, GtmProductListNameType.other, HERO_LIST_INDEX)

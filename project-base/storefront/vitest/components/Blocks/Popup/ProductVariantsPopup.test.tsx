@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { ProductVariantsPopup } from 'components/Blocks/Popup/ProductVariantsPopup';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
 import { TypeAvailabilityStatusEnum, TypeCartItemTypeEnum } from 'graphql/types';
@@ -6,17 +6,29 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { createProduct } from '../../../helpers/productFixture';
+import { renderWithTooltipProvider as render } from '../../../helpers/renderWithTooltipProvider';
 
-const { useProductVariantsQuery, closePortalContent, addProduct, setCartItemAdditionalServices, testState } =
-    vi.hoisted(() => ({
-        useProductVariantsQuery: vi.fn(),
-        closePortalContent: vi.fn(),
-        addProduct: vi.fn(),
-        setCartItemAdditionalServices: vi.fn(),
-        testState: { cart: null as unknown, isSettingAdditionalServices: false },
-    }));
+const {
+    useProductVariantsQuery,
+    closePortalContent,
+    updatePortalContent,
+    addProduct,
+    setCartItemAdditionalServices,
+    testState,
+} = vi.hoisted(() => ({
+    useProductVariantsQuery: vi.fn(),
+    closePortalContent: vi.fn(),
+    updatePortalContent: vi.fn(),
+    addProduct: vi.fn(),
+    setCartItemAdditionalServices: vi.fn(),
+    testState: { cart: null as unknown, isSettingAdditionalServices: false },
+}));
 
 const comparison = vi.hoisted(() => ({
+    toggle: vi.fn(),
+    existing: new Set<string>(),
+}));
+const wishlist = vi.hoisted(() => ({
     toggle: vi.fn(),
     existing: new Set<string>(),
 }));
@@ -26,6 +38,13 @@ vi.mock('utils/productLists/comparison/useComparison', () => ({
         toggleProductInComparison: comparison.toggle,
     }),
 }));
+vi.mock('utils/productLists/wishlist/useWishlist', () => ({
+    useWishlist: () => ({
+        isProductInWishlist: (uuid: string) => wishlist.existing.has(uuid),
+        toggleProductInWishlist: wishlist.toggle,
+    }),
+}));
+vi.mock('utils/toasts/showSuccessMessage', () => ({ showSuccessMessage: vi.fn() }));
 
 const deferComparisonAdd = () => {
     let finish!: (comparisonList: { uuid: string } | undefined) => void;
@@ -36,7 +55,6 @@ const deferComparisonAdd = () => {
     );
     return finish;
 };
-vi.mock('utils/toasts/showSuccessMessage', () => ({ showSuccessMessage: vi.fn() }));
 
 vi.mock('utils/cart/useCurrentCart', () => ({
     useCurrentCart: () => ({ cart: testState.cart, isCartFetchingOrUnavailable: false }),
@@ -101,7 +119,8 @@ vi.mock('components/Blocks/Product/Watchdog/WatchDogButton', () => ({
     WatchDogButton: () => <button type="button">Watch availability</button>,
 }));
 vi.mock('store/useSessionStore', () => ({
-    useSessionStore: (selector: (state: Record<string, unknown>) => unknown) => selector({ closePortalContent }),
+    useSessionStore: (selector: (state: Record<string, unknown>) => unknown) =>
+        selector({ closePortalContent, updatePortalContent }),
 }));
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
     default: () => ({
@@ -183,6 +202,8 @@ describe('ProductVariantsPopup', () => {
     beforeEach(() => {
         comparison.existing.clear();
         comparison.toggle.mockReset();
+        wishlist.existing.clear();
+        wishlist.toggle.mockClear();
         closePortalContent.mockClear();
         testState.cart = null;
         testState.isSettingAdditionalServices = false;
@@ -332,9 +353,7 @@ describe('ProductVariantsPopup', () => {
 
         render(<ProductVariantsPopup {...props} />);
 
-        expect(
-            await screen.findByText('Currently, it is not possible to purchase any variant of this product.'),
-        ).toBeInTheDocument();
+        expect(await screen.findByText('No variants are available.')).toBeInTheDocument();
     });
 
     test.each([null, { __typename: 'RegularProduct' }])('handles a missing or changed product', async (product) => {
@@ -345,6 +364,27 @@ describe('ProductVariantsPopup', () => {
         expect(await screen.findByRole('alert')).toBeInTheDocument();
     });
 
+    test('returns to the variant selection from the add to cart popup', async () => {
+        render(<ProductVariantsPopup {...props} />);
+        const rows = await screen.findAllByRole('listitem');
+        fireEvent.click(within(rows[0]).getByRole('button', { name: 'Add to cart' }));
+
+        act(() => addProduct.mock.calls[0][0].onChooseAnotherVariant());
+
+        expect(updatePortalContent).toHaveBeenCalledWith(
+            expect.objectContaining({
+                props: expect.objectContaining({ ...props, focusedVariantUuid: 'blue-variant' }),
+            }),
+        );
+    });
+
+    test('focuses the purchase action of the variant it returned to', async () => {
+        render(<ProductVariantsPopup {...props} focusedVariantUuid="red-variant" />);
+        const redRow = (await screen.findByRole('heading', { name: 'Red variant' })).closest('li')!;
+
+        await waitFor(() => expect(within(redRow).getByRole('button', { name: 'Inquire' })).toHaveFocus());
+    });
+
     test('closes the selector when navigating to the product detail', () => {
         render(<ProductVariantsPopup {...props} />);
 
@@ -352,59 +392,44 @@ describe('ProductVariantsPopup', () => {
 
         expect(closePortalContent).toHaveBeenCalledOnce();
     });
-    test('compares a concrete variant without cart actions and keeps the selector open until success', async () => {
-        const onVariantCompared = vi.fn();
+
+    test('toggles comparison and wishlist of each variant and keeps the selector open', async () => {
+        comparison.existing.add('red-variant');
+        wishlist.existing.add('blue-variant');
+        render(<ProductVariantsPopup {...props} />);
+        const blueRow = (await screen.findByRole('heading', { name: 'Blue variant' })).closest('li')!;
+        const redRow = screen.getByRole('heading', { name: 'Red variant' }).closest('li')!;
+
+        fireEvent.click(within(blueRow).getByRole('button', { name: 'Add to comparison product Blue variant' }));
+        fireEvent.click(within(redRow).getByRole('button', { name: 'Remove from comparison product Red variant' }));
+        fireEvent.click(within(blueRow).getByRole('button', { name: 'Remove from wishlist product Blue variant' }));
+        fireEvent.click(within(redRow).getByRole('button', { name: 'Add to wishlist product Red variant' }));
+
+        expect(comparison.toggle.mock.calls).toEqual([
+            [expect.objectContaining({ uuid: 'blue-variant' }), props.gtmProductListName, props.listIndex],
+            [expect.objectContaining({ uuid: 'red-variant' }), props.gtmProductListName, props.listIndex],
+        ]);
+        expect(wishlist.toggle.mock.calls).toEqual([
+            [expect.objectContaining({ uuid: 'blue-variant' }), props.gtmProductListName, props.listIndex],
+            [expect.objectContaining({ uuid: 'red-variant' }), props.gtmProductListName, props.listIndex],
+        ]);
+        expect(closePortalContent).not.toHaveBeenCalled();
+    });
+
+    test('lets the opener replace the stored family only after a variant is added to comparison', async () => {
+        const onVariantAddedToComparison = vi.fn();
         const failAdd = deferComparisonAdd();
         const finishAdd = deferComparisonAdd();
-        render(<ProductVariantsPopup {...props} onVariantCompared={onVariantCompared} />);
+        render(<ProductVariantsPopup {...props} onVariantAddedToComparison={onVariantAddedToComparison} />);
         const blue = await screen.findByRole('button', { name: 'Add to comparison product Blue variant' });
-        expect(screen.queryByRole('button', { name: 'Add to cart' })).not.toBeInTheDocument();
-        expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
 
         fireEvent.click(blue);
-        fireEvent.click(screen.getByRole('button', { name: 'Add to comparison product Red variant' }));
-
-        expect(comparison.toggle).toHaveBeenCalledTimes(1);
-        expect(comparison.toggle).toHaveBeenCalledWith(
-            expect.objectContaining({ uuid: 'blue-variant' }),
-            props.gtmProductListName,
-            props.listIndex,
-        );
-        expect(onVariantCompared).not.toHaveBeenCalled();
-        expect(closePortalContent).not.toHaveBeenCalled();
-        expect(blue).toBeDisabled();
-
         await act(async () => failAdd(undefined));
-        expect(blue).toBeEnabled();
-        expect(onVariantCompared).not.toHaveBeenCalled();
+        expect(onVariantAddedToComparison).not.toHaveBeenCalled();
+
         fireEvent.click(blue);
         await act(async () => finishAdd({ uuid: 'comparison' }));
-        expect(onVariantCompared).toHaveBeenCalledOnce();
-        expect(closePortalContent).toHaveBeenCalledOnce();
-    });
-
-    test('selects an already compared variant without removing it', async () => {
-        comparison.existing.add('blue-variant');
-        const onVariantCompared = vi.fn();
-        render(<ProductVariantsPopup {...props} onVariantCompared={onVariantCompared} />);
-
-        fireEvent.click(await screen.findByRole('button', { name: 'Add to comparison product Blue variant' }));
-
-        expect(comparison.toggle).not.toHaveBeenCalled();
-        expect(onVariantCompared).toHaveBeenCalledOnce();
-        expect(closePortalContent).toHaveBeenCalledOnce();
-    });
-
-    test('does not close a different popup when a pending comparison completes after dismissal', async () => {
-        const onVariantCompared = vi.fn();
-        const finishAdd = deferComparisonAdd();
-        const { unmount } = render(<ProductVariantsPopup {...props} onVariantCompared={onVariantCompared} />);
-        fireEvent.click(await screen.findByRole('button', { name: 'Add to comparison product Blue variant' }));
-        unmount();
-
-        await act(async () => finishAdd({ uuid: 'comparison' }));
-
-        expect(onVariantCompared).toHaveBeenCalledOnce();
+        expect(onVariantAddedToComparison).toHaveBeenCalledOnce();
         expect(closePortalContent).not.toHaveBeenCalled();
     });
 });

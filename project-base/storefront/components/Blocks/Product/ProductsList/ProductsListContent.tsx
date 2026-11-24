@@ -86,34 +86,38 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     isWithImageGallery,
     ...props
 }) => {
-    const { toggleProductInComparison, isProductInComparison } = useComparison();
-    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
+    const { toggleProductInComparison, isProductInComparison, isProductOrItsVariantInComparison } = useComparison();
+    const { toggleProductInWishlist, isProductInWishlist, isProductOrItsVariantInWishlist } = useWishlist();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
     const currentCart = { cart, isCartFetchingOrUnavailable };
 
-    return (
-        <ProductListPresentation
-            {...props}
-            renderItem={(item) => (
-                <ProductListItem
-                    {...item}
-                    imageCount={item.product.imagesCount}
-                    isWithImageGallery={isWithImageGallery}
-                    productListViewMode={productListViewMode}
-                    isProductInComparison={isProductInComparison(item.product.uuid)}
-                    isProductInWishlist={isProductInWishlist(item.product.uuid)}
-                    toggleProductInComparison={() =>
-                        toggleProductInComparison(item.product, item.gtmProductListName, item.listIndex)
-                    }
-                    toggleProductInWishlist={() =>
-                        toggleProductInWishlist(item.product, item.gtmProductListName, item.listIndex)
-                    }
-                    {...productItemProps}
-                    currentCart={currentCart}
-                />
-            )}
-        />
-    );
+    const renderProductListItem = (item: ItemPresentationProps<ProductsListProps['products'][number]>) => {
+        const isMainVariant = item.product.__typename === 'MainVariant';
+
+        return (
+            <ProductListItem
+                {...item}
+                imageCount={item.product.imagesCount}
+                isWithImageGallery={isWithImageGallery}
+                productListViewMode={productListViewMode}
+                isProductInComparison={isProductOrItsVariantInComparison(item.product.uuid)}
+                isProductInWishlist={isProductOrItsVariantInWishlist(item.product.uuid)}
+                // A main variant opens the variant selection unless the whole family was stored earlier.
+                isComparisonVariantSelection={isMainVariant && !isProductInComparison(item.product.uuid)}
+                isWishlistVariantSelection={isMainVariant && !isProductInWishlist(item.product.uuid)}
+                toggleProductInComparison={() =>
+                    toggleProductInComparison(item.product, item.gtmProductListName, item.listIndex)
+                }
+                toggleProductInWishlist={() =>
+                    toggleProductInWishlist(item.product, item.gtmProductListName, item.listIndex)
+                }
+                {...productItemProps}
+                currentCart={currentCart}
+            />
+        );
+    };
+
+    return <ProductListPresentation {...props} renderItem={renderProductListItem} />;
 };
 
 type CompactProductsListProps = ProductListPresentationProps<TypeCompactProductFragment> & {

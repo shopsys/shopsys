@@ -17,8 +17,16 @@ import { describe, expect, expectTypeOf, test, vi } from 'vitest';
 
 const mocks = vi.hoisted(() => ({
     cart: vi.fn(() => ({ cart: undefined, isCartFetchingOrUnavailable: false })),
-    wishlist: vi.fn(() => ({ isProductInWishlist: () => false, toggleProductInWishlist: vi.fn() })),
-    comparison: vi.fn(() => ({ isProductInComparison: () => false, toggleProductInComparison: vi.fn() })),
+    wishlist: vi.fn(() => ({
+        isProductInWishlist: () => false,
+        isProductOrItsVariantInWishlist: () => false,
+        toggleProductInWishlist: vi.fn(),
+    })),
+    comparison: vi.fn(() => ({
+        isProductInComparison: () => false,
+        isProductOrItsVariantInComparison: () => false,
+        toggleProductInComparison: vi.fn(),
+    })),
     productClick: vi.fn(),
 }));
 vi.mock('utils/cart/useCurrentCart', () => ({ useCurrentCart: mocks.cart }));

@@ -31,10 +31,18 @@ vi.mock('components/providers/DomainConfigProvider', () => ({
 }));
 vi.mock('utils/queryParams/useCurrentPageQuery', () => ({ useCurrentPageQuery: () => 1 }));
 vi.mock('utils/productLists/comparison/useComparison', () => ({
-    useComparison: () => ({ toggleProductInComparison: vi.fn(), isProductInComparison: () => false }),
+    useComparison: () => ({
+        toggleProductInComparison: vi.fn(),
+        isProductInComparison: () => false,
+        isProductOrItsVariantInComparison: () => false,
+    }),
 }));
 vi.mock('utils/productLists/wishlist/useWishlist', () => ({
-    useWishlist: () => ({ toggleProductInWishlist: vi.fn(), isProductInWishlist: () => false }),
+    useWishlist: () => ({
+        toggleProductInWishlist: vi.fn(),
+        isProductInWishlist: () => false,
+        isProductOrItsVariantInWishlist: () => false,
+    }),
 }));
 vi.mock('gtm/handlers/onGtmProductClickEventHandler', () => ({ onGtmProductClickEventHandler: vi.fn() }));
 
