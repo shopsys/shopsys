@@ -74,7 +74,7 @@ msgid "Add new customer user to %companyName%"
 msgstr "Přidat nový zákaznický účet do %companyName%"
 
 msgid "Add product"
-msgstr "Přidat zboží"
+msgstr "Přidat produkt"
 
 msgid "Add requirement"
 msgstr "Přidat podmínku"
@@ -236,13 +236,13 @@ msgid "Basic price"
 msgstr "Základní cena"
 
 msgid "Bestsellers"
-msgstr "Nejprodávanější zboží"
+msgstr "Nejprodávanější produkty"
 
 msgid "Bestsellers of the category"
-msgstr "Nejprodávanější zboží kategorie"
+msgstr "Nejprodávanější produkty kategorie"
 
 msgid "Bestselling products"
-msgstr "Nejprodávanější zboží"
+msgstr "Nejprodávanější produkty"
 
 msgid "Billing address"
 msgstr "Fakturační adresa"
@@ -566,7 +566,7 @@ msgid "Create new price list"
 msgstr "Vytvořit nový ceník"
 
 msgid "Create new product"
-msgstr "Vytvořit nové zboží"
+msgstr "Vytvořit nový produkt"
 
 msgid "Create new sales representative"
 msgstr "Vytvořit nového obchodního zástupce"
@@ -926,7 +926,7 @@ msgid "Editing payment"
 msgstr "Editace platby"
 
 msgid "Editing product"
-msgstr "Editace zboží"
+msgstr "Editace produktu"
 
 msgid "Editing promo code"
 msgstr "Editace slevového kupónu"
@@ -1427,7 +1427,7 @@ msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was 
 msgstr "Byl vytvořen nový ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>."
 
 msgid "New product"
-msgstr "Nové zboží"
+msgstr "Nový produkt"
 
 msgid "New promo code"
 msgstr "Nový slevový kupón"
@@ -1541,7 +1541,7 @@ msgid "No pricing groups found. You have to create some first."
 msgstr "Nebyly nalezeny žádné cenové skupiny. Nejprve musíte nějakou vytvořit."
 
 msgid "No product found."
-msgstr "Nebylo nalezeno žádné zboží."
+msgstr "Nebyl nalezen žádný produkt."
 
 msgid "No promo codes found. You have to create some first."
 msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytvořit."
@@ -1820,13 +1820,13 @@ msgid "Privacy policy settings"
 msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Product"
-msgstr "Zboží"
+msgstr "Produkt"
 
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr "Produkt v této poptávce není již dostupný v katalogu."
 
 msgid "Product not in e-shop."
-msgstr "Zboží se nenachází v eshopu."
+msgstr "Produkt se nenachází v eshopu."
 
 msgid "Product review"
 msgstr "Recenze produktu"
@@ -1850,10 +1850,10 @@ msgid "Product with X + Y free promotion"
 msgstr "Produkt s akcí X + Y zdarma"
 
 msgid "Products"
-msgstr "Zboží"
+msgstr "Produkty"
 
 msgid "Products overview"
-msgstr "Přehled zboží"
+msgstr "Přehled produktů"
 
 msgid "Promo code"
 msgstr "Slevový kupón"
@@ -2705,10 +2705,10 @@ msgid "You can't delete yourself."
 msgstr "Nemůžete smazat sami sebe."
 
 msgid "You cannot choose product that is main variant"
-msgstr "Nelze vybrat zboží, které je hlavní variantou"
+msgstr "Nelze vybrat produkt, který je hlavní variantou"
 
 msgid "You cannot choose product that is variant"
-msgstr "Nelze vybrat zboží, které je variantou"
+msgstr "Nelze vybrat produkt, který je variantou"
 
 msgid "You have unsaved changes. Do you really want to close the editor without saving?"
 msgstr "Máte neuložené změny. Opravdu chcete zavřít editor bez uložení?"
@@ -2795,7 +2795,7 @@ msgid "parameters"
 msgstr "parametry"
 
 msgid "products"
-msgstr "zboží"
+msgstr "produktů"
 
 msgid "promo codes"
 msgstr "slevové kupóny"

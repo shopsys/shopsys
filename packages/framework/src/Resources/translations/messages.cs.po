@@ -164,7 +164,7 @@ msgid "Add opening hours"
 msgstr "Přidat otevírací dobu"
 
 msgid "Add product"
-msgstr "Přidat zboží"
+msgstr "Přidat produkt"
 
 msgid "Add some alternate language combinations"
 msgstr "Přidejte nějaké kombinace alternativních jazyků"
@@ -287,7 +287,7 @@ msgid "Apply according to date and time limit"
 msgstr "Aplikovat podle časového omezení"
 
 msgid "Apply according to product flags"
-msgstr "Aplikovat podle příznaků zboží"
+msgstr "Aplikovat podle příznaků produktů"
 
 msgid "Apply according to the total price of the order"
 msgstr "Aplikovat podle celkové ceny objednávky"
@@ -428,13 +428,13 @@ msgid "Because status \"%name%\" is used with other orders also, you have to cho
 msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
 
 msgid "Best-selling products of category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> set."
-msgstr "Bylo nastaveno nejprodávanější zboží kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr "Byly nastaveny nejprodávanější produkty kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
 msgid "Bestsellers"
-msgstr "Nejprodávanější zboží"
+msgstr "Nejprodávanější produkty"
 
 msgid "Bestselling products"
-msgstr "Nejprodávanější zboží"
+msgstr "Nejprodávanější produkty"
 
 msgid "Billing address"
 msgstr "Fakturační adresa"
@@ -1121,7 +1121,7 @@ msgid "Display products with special prices only"
 msgstr "Zobrazit pouze produkty se speciální cenou"
 
 msgid "Do you really want to %action% %count% product?"
-msgstr "Opravdu chcete %action% %count% zboží?"
+msgstr "Opravdu chcete %action% vybrané produkty (%count%)?"
 
 msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
 msgstr "Opravdu chcete smazat tento soubor? Soubor bude nevratně odstraněn a odebrán z přiřažených záznamů."
@@ -1196,7 +1196,7 @@ msgid "Do you really want to remove this payment?"
 msgstr "Opravdu chcete odstranit tuto platbu?"
 
 msgid "Do you really want to remove this product?"
-msgstr "Opravdu chcete odstranit toto zboží?"
+msgstr "Opravdu chcete odstranit tento produkt?"
 
 msgid "Do you really want to remove this promo code?"
 msgstr "Opravdu chcete odstranit tento slevový kupón?"
@@ -1298,7 +1298,7 @@ msgid "Editing administrator role group - %name%"
 msgstr "Editace skupiny práv pro administrátora - %name%"
 
 msgid "Editing bestseller"
-msgstr "Editace nejprodávanějšího zboží"
+msgstr "Editace nejprodávanějších produktů"
 
 msgid "Editing billing address - %name%"
 msgstr "Úprava fakturační adresy – %name%"
@@ -1403,10 +1403,10 @@ msgid "Editing payment - %name%"
 msgstr "Editace platby - %name%"
 
 msgid "Editing product"
-msgstr "Editace zboží"
+msgstr "Editace produktu"
 
 msgid "Editing product - %name%"
-msgstr "Editace zboží - %name%"
+msgstr "Editace produktu - %name%"
 
 msgid "Editing promo code"
 msgstr "Editace slevového kupónu"
@@ -1676,7 +1676,7 @@ msgid "Footer Text"
 msgstr "Text v patičce"
 
 msgid "For deleting rate \"%name%\" you have to choose other one to be set everywhere where the existing one is used. After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. Which unit you want to set instead?"
-msgstr "Pro odstranění sazby \"%name% musíte zvolit, která se má všude, kde je aktuálně používaná nastavit. Po změně sazby DPH dojde k přepočtu cen zboží - základní cena s DPH zůstane zachována. Jakou sazbu místo ní chcete nastavit?"
+msgstr "Pro odstranění sazby \"%name% musíte zvolit, která se má všude, kde je aktuálně používaná nastavit. Po změně sazby DPH dojde k přepočtu cen produktů - základní cena s DPH zůstane zachována. Jakou sazbu místo ní chcete nastavit?"
 
 msgid "For deleting unit \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which unit you want to set instead?"
 msgstr "Pro odstranění jednotky \"%name% musíte zvolit, která se má všude, kde je aktuálně používaná nastavit. Jakou jednotku místo ní chcete nastavit?"
@@ -1841,10 +1841,10 @@ msgid "Hide on domain"
 msgstr "Skrýt na doméně"
 
 msgid "Hide product"
-msgstr "Skrýt zboží"
+msgstr "Skrýt produkt"
 
 msgid "Hiding product"
-msgstr "Skrývání zboží"
+msgstr "Skrývání produktů"
 
 msgid "Holidays import"
 msgstr "Import svátků"
@@ -2252,7 +2252,7 @@ msgid "New payment"
 msgstr "Nová platba"
 
 msgid "New product"
-msgstr "Nové zboží"
+msgstr "Nový produkt"
 
 msgid "New promo code"
 msgstr "Nový slevový kupón"
@@ -2297,7 +2297,7 @@ msgid "Not possible to assign to itself"
 msgstr "Není možné přiřadit k sám sobě"
 
 msgid "Not possible to create variations of products that are already variant or main variant."
-msgstr "Nelze vytvářet varianty ze zboží, které jsou již variantou nebo hlavní variantou."
+msgstr "Nelze vytvářet varianty z produktů, které jsou již variantou nebo hlavní variantou."
 
 msgid "Note"
 msgstr "Poznámka"
@@ -2318,7 +2318,7 @@ msgid "Number of orders"
 msgstr "Počet objednávek"
 
 msgid "Number of products in filter"
-msgstr "Počty zboží ve filtru"
+msgstr "Počty produktů ve filtru"
 
 msgid "Number of watchdogs"
 msgstr "Počet hlídacích psů"
@@ -2336,7 +2336,7 @@ msgid "Only 100 characters will be exported to the Google feed custom label, so 
 msgstr "Do custom labelu v google feedu se vyexportuje jen 100 znaků, nemusí se v něm tedy projevit všechny zvolené služby."
 
 msgid "Only checked products"
-msgstr "Pouze zaškrtnuté zboží"
+msgstr "Pouze zaškrtnuté produkty"
 
 msgid "Only products with \"Selling start date\" not older than %count% days are displayed"
 msgstr "Zobrazují se pouze produkty s datem vložení mladším než %count% dní"
@@ -2774,13 +2774,13 @@ msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
 msgid "Product"
-msgstr "Zboží"
+msgstr "Produkt"
 
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> created"
-msgstr "Bylo vytvořeno zboží <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong>"
+msgstr "Byl vytvořen produkt <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong>"
 
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
-msgstr "Bylo upraveno zboží <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong>"
+msgstr "Byl upraven produkt <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong>"
 
 msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
 msgstr "Produkt <strong>{{ product|productDisplayName }}</strong> byl smazán"
@@ -2801,7 +2801,7 @@ msgid "Product image URL"
 msgstr "URL obrázku produktu"
 
 msgid "Product in order"
-msgstr "Zboží v objednávce"
+msgstr "Produkt v objednávce"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavní variantou."
@@ -2825,7 +2825,7 @@ msgid "Product review policy page"
 msgstr "Stránka se zásadami recenzí"
 
 msgid "Product settings on the main page successfully changed"
-msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
+msgstr "Nastavení produktů na titulce bylo úspěšně změněno."
 
 msgid "Product stock quantity"
 msgstr "Počet kusů skladem"
@@ -2834,10 +2834,10 @@ msgid "Product type"
 msgstr "Typ produktu"
 
 msgid "Products"
-msgstr "Zboží"
+msgstr "Produkty"
 
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
-msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhledat. Detail tohoto zboží je dostupný přímým přístupem z URL, zboží ale nelze vložit do košíku."
+msgstr "Produkty vyřazené z prodeje se nezobrazují ve výpisech ani je nelze vyhledat. Detail takového produktu je dostupný přímým přístupem z URL, produkt ale nelze vložit do košíku."
 
 msgid "Products parameters of selected category"
 msgstr "Parametry produktů vybrané kategorie"
@@ -3635,7 +3635,7 @@ msgid "Unable to add"
 msgstr "Nelze přidat"
 
 msgid "Unable to add product"
-msgstr "Zboží se nepodařilo vložit"
+msgstr "Produkt se nepodařilo vložit"
 
 msgid "Unable to change status for domain %name%:"
 msgstr "Nelze změnit stav pro doménu %name%:"
