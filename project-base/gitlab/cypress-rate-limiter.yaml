@@ -1,10 +1,12 @@
 # Cypress scenarios and retries share an IP; they verify promo codes, checkout and registration flows, not request throttling.
 # This override is mounted only by the GitHub Actions Cypress and project GitLab CI compose configurations.
-# The isolated CI backend runs in Symfony prod mode; when@test or when@dev would not apply.
-# Isolation is provided by the CI-only mount, not the Symfony environment. Never mount this file in a live deployment.
-framework:
-    rate_limiter:
-        apply_code_to_cart:
-            policy: no_limit
-        frontend_api_customer_registration:
-            policy: no_limit
+# The isolated CI backend runs in Symfony prod mode. The GitLab CI compose mounts this file into the same container
+# that runs functional tests, so the override is limited to prod to keep the test environment rate limits intact.
+# Never mount this file in a live deployment.
+when@prod:
+    framework:
+        rate_limiter:
+            apply_code_to_cart:
+                policy: no_limit
+            frontend_api_customer_registration:
+                policy: no_limit
