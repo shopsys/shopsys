@@ -33,7 +33,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                         {item.items.map((article) => (
                                             <li key={article.uuid}>
                                                 <ExtendedNextLink
-                                                    className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
+                                                    className="block font-secondary font-semibold text-footer-foreground text-sm tracking-wider no-underline hover:text-footer-foreground hover:underline"
                                                     rel={article.external ? 'nofollow noreferrer noopener' : undefined}
                                                     target={article.external ? '_blank' : undefined}
                                                     href={
@@ -53,7 +53,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
 
                         {/* Contacts skeleton with data for crawlers */}
                         <div className="flex flex-col gap-4">
-                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
+                            <div className="relative flex gap-4 rounded-lg bg-footer-surface p-4">
                                 <a
                                     aria-label={t('Call us at {{ phone }}. {{ openingHours }}', {
                                         ns: 'accessibility',
@@ -72,7 +72,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                 </div>
                             </div>
 
-                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
+                            <div className="relative flex gap-4 rounded-lg bg-footer-surface p-4">
                                 <a
                                     aria-label={t('Write to us at {{ email }}. {{ emailSubtitle }}', {
                                         ns: 'accessibility',
@@ -121,20 +121,23 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
             <FooterContainer>
                 <div className="flex flex-col items-center gap-5 lg:gap-2">
                     <div
-                        className="flex w-full items-center justify-center text-center text-sm text-text-default"
+                        className="flex w-full items-center justify-center text-center text-footer-foreground text-sm"
                         data-tid={TIDs.footer_copyright}
                     >
                         {t('footerCopyright', { currentYear })}
                     </div>
 
-                    <div className="flex items-center justify-center gap-1.5 text-sm text-text-default">
+                    <div className="flex items-center justify-center gap-1.5 text-footer-foreground text-sm">
                         <a className="sr-only" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                             {t('Customized E-shop by')} Shopsys
                         </a>
                         <Skeleton className="h-6 w-48" />
                     </div>
 
-                    <ExtendedNextLink className="text-sm leading-6" href={userConsentUrl}>
+                    <ExtendedNextLink
+                        className="text-footer-link text-sm leading-6 hover:text-footer-link-hovered"
+                        href={userConsentUrl}
+                    >
                         {t('User consent update')}
                     </ExtendedNextLink>
                 </div>

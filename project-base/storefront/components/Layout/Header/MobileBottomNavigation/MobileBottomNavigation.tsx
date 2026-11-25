@@ -11,7 +11,7 @@ import {
 } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomNavigationItem';
 import { MobileBottomSearchWithOverlay } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomSearchWithOverlay';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { HEADER_THEME } from 'config/headerTheme';
+import { HEADER_THEME } from 'config/theme';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';

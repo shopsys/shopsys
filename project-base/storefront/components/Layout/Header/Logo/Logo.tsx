@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { HEADER_THEME } from 'config/headerTheme';
+import { HEADER_THEME } from 'config/theme';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';

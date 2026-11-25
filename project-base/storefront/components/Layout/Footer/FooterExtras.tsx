@@ -30,7 +30,7 @@ export const FooterExtras = () => {
                         >
                             {transportsWithImages.map((transport, index) => (
                                 <Tooltip key={transport.mainImage?.name || index} label={transport.name}>
-                                    <div className="flex items-center">
+                                    <div className="flex items-center rounded-sm bg-footer-logo">
                                         <Image
                                             alt={getImageAlt(transport.mainImage?.name, transport.name)}
                                             className="h-8 w-16 object-contain object-center"

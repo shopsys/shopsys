@@ -10,7 +10,7 @@ export const FooterContact: FC<FooterContactProps> = ({ icon, title, subtitle, h
     return (
         <a
             aria-label={ariaLabel}
-            className="group flex cursor-pointer gap-4 text-nowrap rounded-lg bg-background-default p-4 font-secondary font-semibold text-text-accent no-underline"
+            className="group flex cursor-pointer gap-4 text-nowrap rounded-lg bg-footer-surface p-4 font-secondary font-semibold text-footer-link no-underline"
             href={href}
             tabIndex={0}
             title={title}
@@ -18,8 +18,8 @@ export const FooterContact: FC<FooterContactProps> = ({ icon, title, subtitle, h
             {icon}
 
             <div className="flex flex-col">
-                <span className="text-lg text-text-accent group-hover:underline">{title}</span>
-                <span className="text-text-default text-xs uppercase tracking-wider">{subtitle}</span>
+                <span className="text-footer-link text-lg group-hover:underline">{title}</span>
+                <span className="text-footer-foreground text-xs uppercase tracking-wider">{subtitle}</span>
             </div>
         </a>
     );

@@ -36,11 +36,11 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
             </div>
 
             {/* Mobile accordion layout */}
-            <div className="rounded-xl bg-background-default px-5 py-4 lg:hidden">
+            <div className="rounded-xl bg-footer-surface px-5 py-4 lg:hidden">
                 <button
                     aria-controls={contentId}
                     aria-expanded={isExpanded}
-                    className="flex w-full cursor-pointer items-center justify-between"
+                    className="flex w-full cursor-pointer items-center justify-between text-footer-foreground"
                     tabIndex={0}
                     type="button"
                     onClick={toggleExpanded}
@@ -49,7 +49,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
 
                     <ArrowIcon
                         className={twMergeCustom(
-                            '0 size-6 rotate-0 text-icon-less transition-all',
+                            '0 size-6 rotate-0 text-footer-icon transition-all',
                             isExpanded && 'rotate-180',
                         )}
                     />
@@ -86,7 +86,7 @@ const FooterMenuItemLink: FC<{ item: TypeSimpleNotBlogArticleFragment }> = ({ it
 
     return (
         <ExtendedNextLink
-            className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
+            className="block font-secondary font-semibold text-footer-foreground text-sm tracking-wider no-underline hover:text-footer-foreground hover:underline"
             href={isArticleSite ? item.slug : item.url}
             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
             skeletonType={isArticleSite ? 'article' : undefined}

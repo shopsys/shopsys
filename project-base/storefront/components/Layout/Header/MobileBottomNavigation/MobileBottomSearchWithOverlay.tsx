@@ -1,5 +1,5 @@
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
-import { HEADER_THEME } from 'config/headerTheme';
+import { HEADER_THEME } from 'config/theme';
 import { type RefObject, useEffect, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 

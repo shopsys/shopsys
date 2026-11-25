@@ -385,7 +385,17 @@
     --color-header-hovered: var(--color-link-inverted-hovered);
     --color-header-search: var(--color-base-white);
 
+    --color-footer-background: var(--color-secondary-50);
+    --color-footer-background-accent-less: var(--color-background-accent-less);
+    --color-footer-background-order: transparent;
     --color-footer-bg-dark: var(--color-background-brand-less);
+    --color-footer-foreground: var(--color-text-default);
+    --color-footer-surface: var(--color-background-default);
+    --color-footer-border: var(--color-border-less);
+    --color-footer-icon: var(--color-icon-less);
+    --color-footer-link: var(--color-link-default);
+    --color-footer-link-hovered: var(--color-link-hovered);
+    --color-footer-logo: transparent;
     --color-footer-bg-light: var(--color-brand-50);
 
     --color-icon-accent: var(--color-text-accent);
@@ -481,4 +491,17 @@
     --color-header-foreground: var(--color-text-default);
     --color-header-hovered: var(--color-link-hovered);
     --color-header-search: var(--color-input-border-default);
+}
+
+[data-footer-theme='dark'] {
+    --color-footer-background: var(--color-footer-bg-dark);
+    --color-footer-background-accent-less: var(--color-footer-background);
+    --color-footer-background-order: var(--color-footer-background);
+    --color-footer-foreground: var(--color-text-inverted);
+    --color-footer-surface: var(--color-secondary-800);
+    --color-footer-border: var(--color-secondary-500);
+    --color-footer-icon: var(--color-text-inverted);
+    --color-footer-link: var(--color-link-inverted-default);
+    --color-footer-link-hovered: var(--color-link-inverted-default);
+    --color-footer-logo: var(--color-base-white);
 }

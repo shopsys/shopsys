@@ -12,7 +12,7 @@ import { Navigation } from 'components/Layout/Header/Navigation/Navigation';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { HEADER_THEME } from 'config/headerTheme';
+import { FOOTER_THEME, HEADER_THEME } from 'config/theme';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -63,7 +63,10 @@ const Index: FC = () => {
                 </VerticalStack>
             </main>
 
-            <footer className="mt-auto h-fit bg-background-accent-less">
+            <footer
+                data-footer-theme={FOOTER_THEME}
+                className="mt-auto h-fit bg-footer-background-accent-less text-footer-foreground"
+            >
                 <NewsletterForm />
                 <Footer footerArticles={footerArticles} />
             </footer>

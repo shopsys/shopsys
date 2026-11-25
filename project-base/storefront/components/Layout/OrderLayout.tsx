@@ -5,7 +5,7 @@ import { AccessibilityNavigation } from 'components/Layout/Header/AccessibilityN
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { HEADER_THEME } from 'config/headerTheme';
+import { FOOTER_THEME, HEADER_THEME } from 'config/theme';
 import { useSessionStore } from 'store/useSessionStore';
 import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -53,7 +53,11 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
                     </SkeletonManager>
                 </main>
 
-                <footer aria-label={t('Site information', { ns: 'accessibility' })} className="mt-auto h-fit">
+                <footer
+                    data-footer-theme={FOOTER_THEME}
+                    aria-label={t('Site information', { ns: 'accessibility' })}
+                    className="mt-auto h-fit bg-footer-background-order text-footer-foreground"
+                >
                     <Footer simpleFooter />
                 </footer>
             </div>

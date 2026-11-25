@@ -1,6 +1,6 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { HEADER_THEME } from 'config/headerTheme';
+import { HEADER_THEME } from 'config/theme';
 import { TIDs } from 'cypress/tids';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import type { RefCallback } from 'react';
