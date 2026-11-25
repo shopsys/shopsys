@@ -126,6 +126,8 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
               )
         : options;
 
+    const isLabelRaised = isOpen || !!comboBoxConfig?.searchValue || !!activeOption || !!placeholder;
+
     return (
         <>
             <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
@@ -182,7 +184,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 <span
                                     className={twJoin(
                                         'pointer-events-none absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
-                                        isOpen || comboBoxConfig.searchValue || activeOption || placeholder
+                                        isLabelRaised
                                             ? twJoin(FIELD_FLOATING_LABEL_CLASS_NAME, 'left-3')
                                             : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                     )}

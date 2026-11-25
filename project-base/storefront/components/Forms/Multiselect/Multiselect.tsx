@@ -114,6 +114,9 @@ export function MultiSelect<T extends string | number = string>({
         }
     };
 
+    const isLabelRaised =
+        isOpen || !!comboBoxConfig?.searchValue || !!comboBoxConfig?.placeholder || selectedOptions.length > 0;
+
     return (
         <div className={twMergeCustom('flex w-full flex-col gap-4', className)}>
             {!comboBoxConfig && tooltip && <div className="mr-4 flex items-center text-sm lg:text-md">{tooltip}</div>}
@@ -150,10 +153,7 @@ export function MultiSelect<T extends string | number = string>({
                             <span
                                 className={twJoin(
                                     'pointer-events-none absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
-                                    isOpen ||
-                                        comboBoxConfig.searchValue ||
-                                        comboBoxConfig.placeholder ||
-                                        selectedOptions.length > 0
+                                    isLabelRaised
                                         ? twJoin(FIELD_FLOATING_LABEL_CLASS_NAME, 'left-3')
                                         : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                 )}
