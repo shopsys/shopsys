@@ -64,7 +64,7 @@ export const ModalGalleryTrack = forwardRef<MediaCarouselTrackHandle, ModalGalle
                             {isLoaded && !isMediaLoaded && (
                                 <SpinnerIcon
                                     aria-hidden="true"
-                                    className="absolute z-above size-12 text-icon opacity-50"
+                                    className="absolute z-above size-12 text-icon-default opacity-50"
                                 />
                             )}
 

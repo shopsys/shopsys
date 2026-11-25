@@ -62,7 +62,7 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                             data-focus-style="ring"
                             className={twJoin(
                                 'relative flex size-12 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-control border-2 border-transparent bg-background-more outline-hidden transition-colors hover:border-border-default focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2 sm:size-16',
-                                isSelected && 'border-border-accent',
+                                isSelected && 'border-border-active',
                             )}
                             ref={(element) => {
                                 thumbnailRefs.current[index] = element;

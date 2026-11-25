@@ -29,7 +29,7 @@ export const BlogArticleAuthorBox: FC<BlogArticleAuthorBoxProps> = ({ author }) 
                         width={64}
                     />
                 ) : (
-                    <UserIcon className="size-16 shrink-0 rounded-full bg-background p-3 text-text-less" />
+                    <UserIcon className="size-16 shrink-0 rounded-full bg-background-more p-3 text-text-less" />
                 )}
 
                 <div className="flex flex-col gap-1">

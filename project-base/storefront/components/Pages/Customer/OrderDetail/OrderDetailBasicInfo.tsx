@@ -240,7 +240,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 {t('Total price')}
 
                                 <div className="flex flex-col items-end gap-2">
-                                    <strong className="text-lg text-price">
+                                    <strong className="text-lg text-price-default">
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </strong>
 

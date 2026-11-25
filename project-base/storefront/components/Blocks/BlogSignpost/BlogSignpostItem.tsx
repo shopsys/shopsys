@@ -38,7 +38,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     <ArrowIcon
                         className={twMergeCustom(
                             'size-4 shrink-0 -rotate-90 text-text-less transition-transform group-hover:translate-x-0.5',
-                            isInActivePath && 'text-link',
+                            isInActivePath && 'text-text-accent',
                         )}
                     />
                 </button>

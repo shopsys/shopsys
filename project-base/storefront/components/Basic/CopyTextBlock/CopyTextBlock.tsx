@@ -142,7 +142,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy, onIgnore }) 
 
             <div className="flex items-center justify-between gap-2 px-3 pb-2">
                 <button
-                    className="cursor-pointer text-text-secondary text-xs underline hover:text-text-default"
+                    className="cursor-pointer text-text-less text-xs underline hover:text-text-default"
                     title={t('Ignore errors with identifier: {{ errorIdentifier }}', { errorIdentifier })}
                     type="button"
                     onClick={handleIgnore}

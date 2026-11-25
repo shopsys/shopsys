@@ -34,7 +34,7 @@ export const IgnoredErrorsManager: FC = () => {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <p className="text-text-secondary">
+                <p className="text-text-less">
                     {t('{{ count }} error type(s) being ignored', { count: ignoredErrors.length })}
                 </p>
                 <Button size="small" variant="ghost" onClick={handleClearAll}>

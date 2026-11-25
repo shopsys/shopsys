@@ -66,7 +66,7 @@ export const MinimalErrorContent: FC<MinimalErrorContentProps> = ({ statusCode, 
                                         'whitespace-pre-wrap break-all font-mono text-text-less text-xs',
                                     )}
                                 >
-                                    <p className="mb-2 font-semibold text-text-less text-xxs uppercase tracking-widest">
+                                    <p className="mb-2 font-semibold text-text-less text-xs uppercase tracking-widest">
                                         Debug information
                                     </p>
                                     {formattedError}

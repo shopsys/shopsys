@@ -153,7 +153,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                         />
 
                                         {isWithAdditionalImages && (
-                                            <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-control bg-image-overlay font-bold text-lg">
+                                            <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-control bg-white-alpha-100 font-bold text-lg">
                                                 +{galleryAdditionalItemsCount}
                                             </span>
                                         )}

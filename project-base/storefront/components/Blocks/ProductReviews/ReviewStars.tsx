@@ -28,7 +28,7 @@ export const ReviewStars: FC<ReviewStarsProps> = ({ rating, ariaLabel, starClass
                             isFullyFilled && 'text-rating-fill',
                             starClassName,
                         )}
-                        fill={isFullyFilled ? 'currentColor' : 'var(--color-gray-400)'}
+                        fill={isFullyFilled ? 'currentColor' : 'var(--color-rating-empty)'}
                     />
 
                     {fillPercentage > 0 && !isFullyFilled && (

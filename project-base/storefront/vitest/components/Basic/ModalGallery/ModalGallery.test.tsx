@@ -113,7 +113,7 @@ describe('ModalGallery', () => {
             expect(thumbnailTab).toHaveAttribute('data-focus-style', 'ring');
         }
         expect(thumbnailTabs[2]).toHaveAttribute('aria-selected', 'true');
-        expect(thumbnailTabs[2]).toHaveClass('border-border-accent');
+        expect(thumbnailTabs[2]).toHaveClass('border-border-active');
         expect(thumbnailTabs[0]).toHaveAttribute('aria-selected', 'false');
         expect(thumbnailTabs[0]).toHaveClass('opacity-60');
     });

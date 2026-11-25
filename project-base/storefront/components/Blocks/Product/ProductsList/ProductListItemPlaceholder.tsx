@@ -32,7 +32,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
             <li
                 className={twMergeCustom(
                     'group relative grid select-none gap-4 rounded-card border border-background-more bg-background-more p-3 text-left transition',
-                    'hover:border-border-less hover:bg-background',
+                    'hover:border-border-less hover:bg-background-default',
                     'sm:p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center',
                     className,
                 )}
@@ -106,7 +106,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
             className={twMergeCustom(
                 'group relative flex select-none flex-col gap-2.5 rounded-card border border-background-more bg-background-more px-2.5 py-5 text-left transition sm:px-5',
                 size === 'small' && 'p-5',
-                'hover:border-border-less hover:bg-background',
+                'hover:border-border-less hover:bg-background-default',
                 className,
             )}
         >
