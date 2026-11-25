@@ -46,7 +46,7 @@ The AI client can also change data, but only through write tools that the applic
 Shopsys Platform ships with tools that create a blog article as a draft and edit blog articles.
 Some write tools do not change the data right away.
 They wait until the administrator who owns the MCP token approves the change in administration, in the user menu under "MCP change requests".
-The edit of a published blog article is such a tool.
+The blog article edit waits for the approval unless the article is a draft on all domains.
 A project can add its own write tools, see [Adding a write tool](#adding-a-write-tool).
 
 ## How users authenticate
