@@ -18,6 +18,17 @@ Packeta is configurable via ENV variables, the following ENV variables should be
 - PACKETERY_SENDER (string)
 - PACKETERY_REST_API_URL (string)
 
+The `PACKETERY_API_KEY` is used by the storefront widget and by the backend to download the pickup point feeds.
+
+## Pickup point opening hours
+
+The `PacketeryPickupPointImportCronModule` downloads the [Packeta pickup point feeds](https://docs.packeta.com/docs/pudo-delivery/packeta-pudos) (branches and Z-BOXes of all the countries allowed for the API key) four times a day, as Packeta recommends, and stores the opening hours of every point.
+The expected delivery date of a Packeta transport is then postponed to the first day the pickup point selected in the cart is open, so the customer sees the first day the parcel can actually be picked up.
+
+!!! note
+
+    Until the first import runs, or when the selected point is missing in the feeds, the expected delivery date does not take the opening hours into account.
+
 ## Mandatory data
 
 Packeta requires weight to be set for each product in the order.

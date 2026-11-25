@@ -47,6 +47,7 @@ services:
             PACKETERY_REST_API_URL: ~
             PACKETERY_API_PASSWORD: ~
             PACKETERY_SENDER: ~
+            PACKETERY_API_KEY: ~
             FORCE_ELASTIC_LIMITS: 1
             MESSENGER_TRANSPORT_VHOST: ${COMPOSE_PROJECT_NAME}
             FACEBOOK_CLIENT_ID: ~
@@ -77,6 +78,7 @@ services:
             PACKETERY_REST_API_URL: ~
             PACKETERY_API_PASSWORD: ~
             PACKETERY_SENDER: ~
+            PACKETERY_API_KEY: ~
             FORCE_ELASTIC_LIMITS: 1
             MESSENGER_TRANSPORT_VHOST: ${COMPOSE_PROJECT_NAME}
             FACEBOOK_CLIENT_ID: ~

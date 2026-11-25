@@ -422,6 +422,8 @@ services:
 
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryRenderer: ~
 
+    Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointFeedClient: ~
+
     Shopsys\FrameworkBundle\Component\PostDeploy\Task\PostDeployTaskConfig: ~
 
     Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:

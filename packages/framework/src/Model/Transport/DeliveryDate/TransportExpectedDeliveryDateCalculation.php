@@ -9,6 +9,9 @@ use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPoint;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointFacade;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -47,6 +50,8 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
         protected readonly AdditionalServicesDeliveryDaysExtensionCalculation $additionalServicesDeliveryDaysExtensionCalculation,
+        protected readonly PacketeryPickupPointFacade $packeteryPickupPointFacade,
+        protected readonly PacketeryPickupPointOpeningHoursProvider $packeteryPickupPointOpeningHoursProvider,
     ) {
     }
 
@@ -85,6 +90,7 @@ class TransportExpectedDeliveryDateCalculation
             $domainId,
             $this->findSelectedStoreForTransport($transport, $pickupPlaceIdentifier, $domainId),
             $this->additionalServicesDeliveryDaysExtensionCalculation->calculateHighestDeliveryDaysExtension($quantifiedProducts),
+            $this->findSelectedPacketeryPickupPointForTransport($transport, $pickupPlaceIdentifier),
         );
     }
 
@@ -149,6 +155,7 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
         int $deliveryDaysExtension = 0,
+        ?PacketeryPickupPoint $packeteryPickupPoint = null,
     ): ?DateTimeImmutable {
         if ($store === null && $transport->isPersonalPickup()) {
             return $this->calculateBestPickupDeliveryDateAcrossStores(
@@ -182,6 +189,7 @@ class TransportExpectedDeliveryDateCalculation
             $domainId,
             $store,
             $deliveryDaysExtension,
+            $packeteryPickupPoint,
         );
 
         return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
@@ -258,6 +266,20 @@ class TransportExpectedDeliveryDateCalculation
     }
 
     /**
+     * A point missing in the imported feeds (e.g. before the first import) does not postpone the delivery date
+     */
+    protected function findSelectedPacketeryPickupPointForTransport(
+        Transport $transport,
+        ?string $pickupPlaceIdentifier,
+    ): ?PacketeryPickupPoint {
+        if ($pickupPlaceIdentifier === null || !$transport->isPacketery()) {
+            return null;
+        }
+
+        return $this->packeteryPickupPointFacade->findById($pickupPlaceIdentifier);
+    }
+
+    /**
      * Returns the day the order can be dispatched — today, or the worst expected restocking date
      * of the awaited products; null when an awaited product has no valid restocking date
      *
@@ -315,6 +337,7 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
         int $deliveryDaysExtension = 0,
+        ?PacketeryPickupPoint $packeteryPickupPoint = null,
     ): ?DateTimeImmutable {
         $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
 
@@ -327,6 +350,7 @@ class TransportExpectedDeliveryDateCalculation
                 $domainId,
                 $store,
                 $closedDaysIndexedByDate[$deliveryDate->format(static::DATE_INDEX_FORMAT)] ?? [],
+                $packeteryPickupPoint,
             );
 
             if ($isDeliveryAllowed) {
@@ -392,13 +416,31 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
         array $closedDaysOnDate,
+        ?PacketeryPickupPoint $packeteryPickupPoint = null,
     ): bool {
         if ($transport->isPersonalPickup() && $store !== null) {
             return !$this->isStoreClosedOnDate($store, $deliveryDate, $domainId, $closedDaysOnDate);
         }
 
         return !$this->isDeliveryBlockedByDayOfWeek($transport, $deliveryDate)
-            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate);
+            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate)
+            && ($packeteryPickupPoint === null || $this->isPacketeryPickupPointOpenForPickupOnDate($packeteryPickupPoint, $deliveryDate, $domainId));
+    }
+
+    protected function isPacketeryPickupPointOpenForPickupOnDate(
+        PacketeryPickupPoint $packeteryPickupPoint,
+        DateTimeImmutable $deliveryDate,
+        int $domainId,
+    ): bool {
+        if (!$this->isToday($deliveryDate, $domainId)) {
+            return $this->packeteryPickupPointOpeningHoursProvider->isOpenOnDate($packeteryPickupPoint, $deliveryDate);
+        }
+
+        return $this->packeteryPickupPointOpeningHoursProvider->isOpenAfterTimeOnDate(
+            $packeteryPickupPoint,
+            $deliveryDate,
+            $this->getCurrentTime($domainId),
+        );
     }
 
     protected function isDeliveryBlockedByDayOfWeek(Transport $transport, DateTimeImmutable $deliveryDate): bool
@@ -438,15 +480,26 @@ class TransportExpectedDeliveryDateCalculation
             return true;
         }
 
-        if ($deliveryDate->format(static::DATE_INDEX_FORMAT) !== $this->getToday($domainId)->format(static::DATE_INDEX_FORMAT)) {
+        if (!$this->isToday($deliveryDate, $domainId)) {
             return false;
         }
 
-        $nowTime = $this->clock->now()
+        return !$this->storeOpeningHoursProvider->isStoreOpenAfterTimeOnDayOfWeek($store, $dayOfWeek, $this->getCurrentTime($domainId));
+    }
+
+    protected function isToday(DateTimeImmutable $date, int $domainId): bool
+    {
+        return $date->format(static::DATE_INDEX_FORMAT) === $this->getToday($domainId)->format(static::DATE_INDEX_FORMAT);
+    }
+
+    /**
+     * Returns the current "HH:MM" time in the domain display timezone
+     */
+    protected function getCurrentTime(int $domainId): string
+    {
+        return $this->clock->now()
             ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId))
             ->format('H:i');
-
-        return !$this->storeOpeningHoursProvider->isStoreOpenAfterTimeOnDayOfWeek($store, $dayOfWeek, $nowTime);
     }
 
     /**

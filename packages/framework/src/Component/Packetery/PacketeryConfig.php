@@ -16,6 +16,8 @@ class PacketeryConfig
 
     protected string $sender;
 
+    protected string $apiKey;
+
     public function __construct(array $packeteryConfig)
     {
         $optionsResolver = new OptionsResolver();
@@ -47,12 +49,17 @@ class PacketeryConfig
             'string',
         );
 
-        $optionsResolver->resolve($packeteryConfig);
+        // the API key is needed only for the pickup point feeds, so the projects without them do not have to set it
+        $optionsResolver->setDefault('api_key', '');
+        $optionsResolver->setAllowedTypes('api_key', 'string');
+
+        $packeteryConfig = $optionsResolver->resolve($packeteryConfig);
 
         $this->enabled = $packeteryConfig['enabled'];
         $this->restApiUrl = $packeteryConfig['rest_api_url'];
         $this->apiPassword = $packeteryConfig['api_password'];
         $this->sender = $packeteryConfig['sender'];
+        $this->apiKey = $packeteryConfig['api_key'];
     }
 
     public function isEnabled(): bool
@@ -81,5 +88,15 @@ class PacketeryConfig
             $this->getRestApiUrl() !== '' &&
             $this->getApiPassword() !== '' &&
             $this->getSender() !== '';
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    public function isPickupPointFeedAllowed(): bool
+    {
+        return $this->isEnabled() && $this->getApiKey() !== '';
     }
 }

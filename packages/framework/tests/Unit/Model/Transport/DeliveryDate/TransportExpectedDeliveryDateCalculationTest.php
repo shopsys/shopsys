@@ -14,6 +14,10 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPoint;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointData;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointFacade;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -1312,12 +1316,122 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         return $closedDayFacadeStub;
     }
 
+    public function testPacketeryDeliveryDateIsPostponedToTheNextDayTheSelectedPickupPointIsOpen(): void
+    {
+        // NOW is Thursday, the parcel arrives on Friday, the point is open on Mondays only
+        $deliveryDate = $this->calculatePacketeryDeliveryDate(
+            $this->createPacketeryTransportStub(1),
+            $this->createPacketeryPickupPointFacadeStub([1 => ['08:00-18:00']]),
+        );
+
+        $this->assertDeliveryDateSame('2026-07-20 00:00:00', $deliveryDate);
+    }
+
+    public function testPacketeryDeliveryDateIsKeptWhileTheSelectedPickupPointIsStillOpenToday(): void
+    {
+        // NOW is Thursday 12:00, the point closes at 18:00 today
+        $deliveryDate = $this->calculatePacketeryDeliveryDate(
+            $this->createPacketeryTransportStub(0),
+            $this->createPacketeryPickupPointFacadeStub([4 => ['08:00-18:00'], 5 => ['08:00-18:00']]),
+        );
+
+        $this->assertDeliveryDateSame('2026-07-16 00:00:00', $deliveryDate);
+    }
+
+    public function testPacketeryDeliveryDateIsPostponedWhenTheSelectedPickupPointHasAlreadyClosedToday(): void
+    {
+        // NOW is Thursday 12:00, the point closed at 11:00 today
+        $deliveryDate = $this->calculatePacketeryDeliveryDate(
+            $this->createPacketeryTransportStub(0),
+            $this->createPacketeryPickupPointFacadeStub([4 => ['08:00-11:00'], 5 => ['08:00-18:00']]),
+        );
+
+        $this->assertDeliveryDateSame('2026-07-17 00:00:00', $deliveryDate);
+    }
+
+    public function testPacketeryDeliveryDateIsPostponedByTheExceptionOpeningHoursOfTheSelectedPickupPoint(): void
+    {
+        // the point is open every day except Friday, the day the parcel arrives
+        $deliveryDate = $this->calculatePacketeryDeliveryDate(
+            $this->createPacketeryTransportStub(1),
+            $this->createPacketeryPickupPointFacadeStub(
+                array_fill_keys(DateTimeHelper::ALL_DAYS_OF_WEEK, ['08:00-18:00']),
+                ['2026-07-17' => []],
+            ),
+        );
+
+        $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
+    }
+
+    public function testPacketeryDeliveryDateIsNotPostponedWhenTheSelectedPickupPointIsNotImported(): void
+    {
+        $packeteryPickupPointFacadeStub = $this->createStub(PacketeryPickupPointFacade::class);
+        $packeteryPickupPointFacadeStub->method('findById')->willReturn(null);
+
+        $deliveryDate = $this->calculatePacketeryDeliveryDate(
+            $this->createPacketeryTransportStub(1),
+            $packeteryPickupPointFacadeStub,
+        );
+
+        $this->assertDeliveryDateSame('2026-07-17 00:00:00', $deliveryDate);
+    }
+
+    public function testPickupPointOpeningHoursAreIgnoredForNonPacketeryTransport(): void
+    {
+        $deliveryDate = $this->calculatePacketeryDeliveryDate(
+            $this->createTransportStubDeliveringAnyDay(1),
+            $this->createPacketeryPickupPointFacadeStub([1 => ['08:00-18:00']]),
+        );
+
+        $this->assertDeliveryDateSame('2026-07-17 00:00:00', $deliveryDate);
+    }
+
+    private function calculatePacketeryDeliveryDate(
+        Transport $transport,
+        PacketeryPickupPointFacade $packeteryPickupPointFacade,
+    ): ?DateTimeImmutable {
+        return $this->createTransportExpectedDeliveryDateCalculation(packeteryPickupPointFacade: $packeteryPickupPointFacade)
+            ->calculateExpectedDeliveryDateForQuantifiedProducts($transport, [], Domain::FIRST_DOMAIN_ID, '13789');
+    }
+
+    /**
+     * @param array<int, string[]> $regularOpeningHours
+     * @param array<string, string[]> $exceptionOpeningHours
+     */
+    private function createPacketeryPickupPointFacadeStub(
+        array $regularOpeningHours,
+        array $exceptionOpeningHours = [],
+    ): PacketeryPickupPointFacade {
+        $packeteryPickupPointData = new PacketeryPickupPointData();
+        $packeteryPickupPointData->id = '13789';
+        $packeteryPickupPointData->regularOpeningHours = $regularOpeningHours;
+        $packeteryPickupPointData->exceptionOpeningHours = $exceptionOpeningHours;
+
+        $packeteryPickupPointFacadeStub = $this->createStub(PacketeryPickupPointFacade::class);
+        $packeteryPickupPointFacadeStub->method('findById')->willReturn(new PacketeryPickupPoint($packeteryPickupPointData));
+
+        return $packeteryPickupPointFacadeStub;
+    }
+
+    private function createPacketeryTransportStub(int $daysUntilDelivery): Transport
+    {
+        $transportStub = $this->createStub(Transport::class);
+        $transportStub->method('getDaysUntilDelivery')->willReturn($daysUntilDelivery);
+        $transportStub->method('isPacketery')->willReturn(true);
+        $this->stubDeliveryDaysOfWeek($transportStub, DateTimeHelper::ALL_DAYS_OF_WEEK);
+        $transportStub->method('deliversOnPublicHolidays')->willReturn(true);
+        $transportStub->method('deliversOnInternalClosedDays')->willReturn(true);
+
+        return $transportStub;
+    }
+
     private function createTransportExpectedDeliveryDateCalculation(
         ?ClosedDayFacade $closedDayFacade = null,
         ?StoreFacade $storeFacade = null,
         ?ProductAvailabilityFacade $productAvailabilityFacade = null,
         string $now = self::NOW,
         string $displayTimezone = 'UTC',
+        ?PacketeryPickupPointFacade $packeteryPickupPointFacade = null,
     ): TransportExpectedDeliveryDateCalculation {
         $clockStub = $this->createStub(ClockInterface::class);
         $clockStub->method('now')->willReturn(new DatePoint($now, new DateTimeZone('UTC')));
@@ -1334,6 +1448,8 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             new InMemoryCache(),
             new StoreOpeningHoursProvider($this->createStub(ClosedDayFacade::class), new InMemoryCache()),
             new AdditionalServicesDeliveryDaysExtensionCalculation(),
+            $packeteryPickupPointFacade ?? $this->createStub(PacketeryPickupPointFacade::class),
+            new PacketeryPickupPointOpeningHoursProvider(),
         );
     }
 

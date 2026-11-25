@@ -117,6 +117,11 @@ services:
         tags:
             - { name: shopsys.cron, cron: '* * * * *', instanceName: packetery, readableName: 'Sending parcels to the packetery', sentryMonitoring: true, sentryFailureThreshold: 3 }
 
+    # Packeta recommends refreshing the pickup points 4 times a day between 7:00 and 21:00, not exactly on the hour
+    Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointImportCronModule:
+        tags:
+            - { name: shopsys.cron, cron: '25 7,11,15,19 * * *', instanceName: packetery, readableName: 'Import pickup points from the packetery', sentryMonitoring: true, sentryFailureThreshold: 3 }
+
     # Watchdog
 
     Shopsys\FrameworkBundle\Model\Watchdog\WatchdogCronModule:
