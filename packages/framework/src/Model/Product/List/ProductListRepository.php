@@ -47,6 +47,21 @@ class ProductListRepository
         return array_column($result, 'uuid');
     }
 
+    /**
+     * @return string[]
+     */
+    public function getMainVariantUuidsByProductList(ProductList $productList): array
+    {
+        $result = $this->createProductsByProductListQueryBuilder($productList)
+            ->select('DISTINCT mv.uuid')
+            ->join('p.mainVariant', 'mv')
+            ->resetDQLPart('orderBy')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'uuid');
+    }
+
     protected function createProductsByProductListQueryBuilder(ProductList $productList): QueryBuilder
     {
         return $this->entityManager->createQueryBuilder()

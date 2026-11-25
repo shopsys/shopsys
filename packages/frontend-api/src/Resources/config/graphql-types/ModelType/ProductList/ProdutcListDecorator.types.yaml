@@ -13,6 +13,10 @@ ProductListDecorator:
                 type: "[Uuid!]!"
                 description: "All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain"
                 resolve: '@=query("productUuidsByProductListQuery", value)'
+            mainVariantUuids:
+                type: "[Uuid!]!"
+                description: "UUIDs of main variants whose variants are in the list, including products that are not visible on the current domain"
+                resolve: '@=query("mainVariantUuidsByProductListQuery", value)'
             products:
                 type: "ProductConnection!"
                 description: "Paginated products of the list that are visible on the current domain, in the order of the list"

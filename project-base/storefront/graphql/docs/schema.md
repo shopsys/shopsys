@@ -10040,6 +10040,15 @@ Number of category parameters shown in the sidebar; all parameters remain availa
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="productlist.mainvariantuuids">mainVariantUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+UUIDs of main variants whose variants are in the list, including products that are not visible on the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="productlist.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
