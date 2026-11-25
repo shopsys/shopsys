@@ -130,7 +130,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                                 />
                             </div>
 
-                            <span className="min-w-0 flex-1 font-product-name text-sm group-focus-visible/product-link:underline">
+                            <span className="min-w-0 flex-1 font-product-name text-sm group-hover/product-link:underline group-focus-visible/product-link:underline">
                                 {product.fullName}
                             </span>
                         </ExtendedNextLink>

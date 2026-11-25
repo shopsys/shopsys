@@ -1,9 +1,9 @@
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { TIDs } from 'cypress/tids';
-import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
+import { twMergeCustom } from 'utils/twMerge';
 import { useContacts } from 'utils/useContacts';
 
 export const HeaderContact: FC = () => {
@@ -21,12 +21,12 @@ export const HeaderContact: FC = () => {
                             phone,
                             openingHours,
                         })}
-                        className={twJoin(
+                        className={twMergeCustom(
                             getLinkClassName({ variant: 'navigation', tone: 'inverted' }),
-                            'rounded-detail font-bold',
+                            'font-bold hover:no-underline',
                         )}
+                        data-tid={TIDs.simple_header_contact}
                         href={`tel:${cleanPhone}`}
-                        tid={TIDs.simple_header_contact}
                     >
                         <PhoneIcon className="size-6" />
                         {phone}
