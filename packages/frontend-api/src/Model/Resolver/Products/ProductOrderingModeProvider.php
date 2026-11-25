@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
 
 class ProductOrderingModeProvider
@@ -22,6 +23,10 @@ class ProductOrderingModeProvider
 
         if ($argument->offsetExists('orderingMode') && $argument->offsetGet('orderingMode') !== null) {
             $orderingMode = $argument->offsetGet('orderingMode');
+        }
+
+        if ($orderingMode === ProductListOrderingConfig::ORDER_BY_POSITION) {
+            throw new InvalidArgumentUserError('Ordering by position is available only for products of a product list.');
         }
 
         if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {

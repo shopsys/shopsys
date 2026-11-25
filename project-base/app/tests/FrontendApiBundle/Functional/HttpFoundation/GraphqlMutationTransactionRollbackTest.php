@@ -8,10 +8,13 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
+use Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListProductIdsTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GraphqlMutationTransactionRollbackTest extends GraphQlTestCase
 {
+    use ProductListProductIdsTrait;
+
     public function testMutationWithGraphqlErrorRollsBackPreviousWrite(): void
     {
         $this->runWithIsolatedProductList([$this, 'doTestMutationWithGraphqlErrorRollsBackPreviousWrite']);
@@ -40,7 +43,7 @@ class GraphqlMutationTransactionRollbackTest extends GraphQlTestCase
         );
 
         $this->assertUserError($response, 'product-not-found');
-        $this->assertSame([69], array_column($response['data']['AddProductToList']['products'], 'id'));
+        $this->assertSame([69], $this->getProductIds($response['data']['AddProductToList']));
         $this->assertNull($this->findProductListByUuid($productListUuid));
     }
 
@@ -59,7 +62,7 @@ class GraphqlMutationTransactionRollbackTest extends GraphQlTestCase
         $productList = $this->findProductListByUuid($productListUuid);
 
         $this->assertNotNull($productList);
-        $this->assertSame([69], array_column($productList['products'], 'id'));
+        $this->assertSame([69], $this->getProductIds($productList));
     }
 
     private function doTestQueryErrorDoesNotAffectFollowingMutationCommit(string $productListUuid): void
@@ -86,7 +89,7 @@ class GraphqlMutationTransactionRollbackTest extends GraphQlTestCase
         $productList = $this->findProductListByUuid($productListUuid);
 
         $this->assertNotNull($productList);
-        $this->assertSame([69], array_column($productList['products'], 'id'));
+        $this->assertSame([69], $this->getProductIds($productList));
     }
 
     /**

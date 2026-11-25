@@ -1,7 +1,11 @@
 fragment ProductListFragment on ProductList {
     __typename
     uuid
-    products {
-        ...ProductInProductListFragment
+    products(after: $endCursor, first: $pageSize) {
+        edges {
+            node {
+                ...ProductInProductListFragment
+            }
+        }
     }
 }

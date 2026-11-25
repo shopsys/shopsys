@@ -7,6 +7,9 @@ import { afterEach, expect, test, vi } from 'vitest';
 
 const { logoutMutation, navigate } = vi.hoisted(() => ({ logoutMutation: vi.fn(), navigate: vi.fn() }));
 vi.mock('components/providers/DomainConfigProvider', () => ({ useDomainConfig: () => ({ domainId: 1 }) }));
+vi.mock('components/providers/ProductListsProvider', () => ({
+    useProductLists: () => ({ invalidateSession: vi.fn() }),
+}));
 vi.mock('graphql/requests/auth/mutations/LogoutMutation.generated', () => ({
     useLogoutMutation: () => [{}, logoutMutation],
 }));

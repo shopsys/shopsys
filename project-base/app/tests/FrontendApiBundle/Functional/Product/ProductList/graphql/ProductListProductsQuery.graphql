@@ -1,0 +1,19 @@
+query ProductListProductsQuery($uuid: Uuid, $type: ProductListTypeEnum!, $first: Int, $after: String) {
+    productList(input: {uuid: $uuid, type: $type}) {
+        productUuids
+        products(first: $first, after: $after) {
+            totalCount
+            orderingMode
+            defaultOrderingMode
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+            edges {
+                node {
+                    id
+                }
+            }
+        }
+    }
+}

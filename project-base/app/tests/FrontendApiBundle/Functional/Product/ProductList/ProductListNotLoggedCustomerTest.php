@@ -25,6 +25,8 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 {
+    use ProductListProductIdsTrait;
+
     /**
      * @inject
      */
@@ -91,7 +93,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
         $this->assertSame($expectedUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
+        $this->assertSame($expectedProductIds, $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -122,7 +124,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
         $this->assertSame($expectedUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
+        $this->assertSame($expectedProductIds, $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -140,7 +142,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
         $this->assertSame($newUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+        $this->assertSame([$productToAddId], $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -159,7 +161,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
         $this->assertNotSame($customerUserProductListUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+        $this->assertSame([$productToAddId], $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
@@ -174,7 +176,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'AddProductToList');
 
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+        $this->assertSame([$productToAddId], $this->getProductIds($data));
     }
 
     /**
@@ -271,7 +273,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
         $this->assertSame($productListUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
-        $this->assertSame([$product1->getId()], array_column($data['products'], 'id'));
+        $this->assertSame([$product1->getId()], $this->getProductIds($data));
     }
 
     #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]

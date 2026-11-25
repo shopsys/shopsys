@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
@@ -86,17 +87,39 @@ class ProductsQuery extends AbstractQuery
         );
     }
 
-    public function productsByProductListQuery(ProductList $productList): Promise
+    public function productsByProductListQuery(ProductList $productList, Argument $argument): Promise
     {
-        $productIds = $this->productListFacade->getProductIdsByProductList($productList);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
+        $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
+        $batchLoadDataId = Uuid::uuid4()->toString();
+        $orderingMode = ProductListOrderingConfig::ORDER_BY_POSITION;
+
+        return $this->productConnectionFactory->createConnectionPromiseForProductList(
+            function ($offset, $limit) use ($productList, $orderingMode, $batchLoadDataId) {
+                return $this->productsByEntitiesBatchLoader->load(
+                    new ProductBatchLoadByEntityData(
+                        $batchLoadDataId,
+                        $productList,
+                        $limit,
+                        $offset,
+                        $orderingMode,
+                        $this->productFilterDataFactory->create(),
+                    ),
+                );
+            },
+            $argument,
+            $orderingMode,
+            $batchLoadDataId,
+        );
     }
 
-    public function productsCountByProductListQuery(ProductList $productList): Promise
+    /**
+     * @return string[]
+     */
+    public function productUuidsByProductListQuery(ProductList $productList): array
     {
-        return $this->productsByProductListQuery($productList)
-            ->then(static fn (array $products): int => count($products));
+        return $this->productListFacade->getProductUuidsByProductList($productList);
     }
 
     /**

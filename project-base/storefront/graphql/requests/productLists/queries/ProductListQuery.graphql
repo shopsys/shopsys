@@ -1,4 +1,4 @@
-query ProductListQuery($input: ProductListInput!) {
+query ProductListQuery($input: ProductListInput!, $endCursor: String, $pageSize: Int!) {
     productList(input: $input) {
         ...ProductListFragment
     }

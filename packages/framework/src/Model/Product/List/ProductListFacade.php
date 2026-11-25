@@ -75,6 +75,14 @@ class ProductListFacade
         return $this->productListRepository->getProductIdsByProductList($productList);
     }
 
+    /**
+     * @return string[]
+     */
+    public function getProductUuidsByProductList(ProductList $productList): array
+    {
+        return $this->productListRepository->getProductUuidsByProductList($productList);
+    }
+
     public function findProductListByTypeAndCustomerUser(
         string $productListType,
         CustomerUser $customerUser,

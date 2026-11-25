@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useProductLists } from 'components/providers/ProductListsProvider';
 import {
     TypeLoginMutation,
     TypeLoginMutationVariables,
@@ -48,6 +49,7 @@ export const useLogin = () => {
 export const useHandleActionsAfterLogin = () => {
     const setCartStale = useSessionStore((store) => store.setCartStale);
     const closePortalContent = useSessionStore((store) => store.closePortalContent);
+    const { invalidateSession } = useProductLists();
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateLastLoginType = usePersistStore((store) => store.updateLastLoginType);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -62,6 +64,8 @@ export const useHandleActionsAfterLogin = () => {
         // Clearing the guest identity must not look like an empty cart before the auth reload completes.
         setCartStale(true);
         closePortalContent();
+        invalidateSession();
+        dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
         updateCartUuid(null);
         updateProductListUuids({});
         clearOrderConfirmationContext();
@@ -73,7 +77,6 @@ export const useHandleActionsAfterLogin = () => {
         storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');
 
-        dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
         performAuthHardNavigation(rewriteUrl);
     };
 
@@ -82,6 +85,7 @@ export const useHandleActionsAfterLogin = () => {
 
 export const useLoginAfterPasswordRecovery = () => {
     const setCartStale = useSessionStore((store) => store.setCartStale);
+    const { invalidateSession } = useProductLists();
     const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
@@ -89,6 +93,8 @@ export const useLoginAfterPasswordRecovery = () => {
 
     const handleActionsAfterPasswordRecovery = (showCartMergeInfo: boolean) => {
         setCartStale(true);
+        invalidateSession();
+        dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
         updateCartUuid(null);
         updateProductListUuids({});
         clearOrderConfirmationContext();
@@ -96,7 +102,6 @@ export const useLoginAfterPasswordRecovery = () => {
         storeAuthNotification(domainConfig.domainId, showCartMergeInfo ? 'login-with-cart-modifications' : 'login');
         updateUserEntryState('login');
 
-        dispatchBroadcastChannel('reloadPage', domainConfig.domainId);
         performAuthHardNavigation('/');
     };
 

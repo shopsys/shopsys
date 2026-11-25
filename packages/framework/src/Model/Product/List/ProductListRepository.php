@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\List;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use SortDirection;
 
@@ -25,18 +26,36 @@ class ProductListRepository
      */
     public function getProductIdsByProductList(ProductList $productList): array
     {
-        $result = $this->entityManager->createQueryBuilder()
+        $result = $this->createProductsByProductListQueryBuilder($productList)
             ->select('p.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'id');
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProductUuidsByProductList(ProductList $productList): array
+    {
+        $result = $this->createProductsByProductListQueryBuilder($productList)
+            ->select('p.uuid')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'uuid');
+    }
+
+    protected function createProductsByProductListQueryBuilder(ProductList $productList): QueryBuilder
+    {
+        return $this->entityManager->createQueryBuilder()
             ->from(ProductListItem::class, 'pli')
             ->join('pli.product', 'p')
             ->where('pli.productList = :productList')
             ->orderBy('pli.position', SortDirection::Ascending)
             ->addOrderBy('pli.id', SortDirection::Descending)
-            ->setParameter('productList', $productList)
-            ->getQuery()
-            ->getArrayResult();
-
-        return array_column($result, 'id');
+            ->setParameter('productList', $productList);
     }
 
     public function findProductListByTypeAndCustomerUser(

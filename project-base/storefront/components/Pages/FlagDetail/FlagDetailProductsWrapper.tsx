@@ -29,6 +29,7 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
                 gtmProductListName={GtmProductListNameType.flag_detail}
                 isLoadingMoreProducts={isLoadingMoreProducts}
                 products={flagListedProducts}
+                totalCount={flag.products.totalCount}
             />
 
             <Pagination isWithLoadMore hasNextPage={hasNextPage} totalCount={flag.products.totalCount} />

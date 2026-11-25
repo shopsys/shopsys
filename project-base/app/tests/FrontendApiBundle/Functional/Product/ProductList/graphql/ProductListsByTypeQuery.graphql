@@ -3,7 +3,11 @@ query ProductListsByTypeQuery($type: ProductListTypeEnum!) {
         uuid
         type
         products {
-            id
+            edges {
+                node {
+                    id
+                }
+            }
         }
     }
 }

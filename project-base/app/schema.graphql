@@ -2571,10 +2571,10 @@ type ProductFilterOptions {
 }
 
 type ProductList {
-  "Count of products in the list that are visible on the current domain"
-  itemsCount: Int!
-  "An array of the products in the list"
-  products: [Product!]!
+  "Paginated products of the list that are visible on the current domain, in the order of the list"
+  products(after: String, before: String, first: Int, last: Int): ProductConnection!
+  "All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain"
+  productUuids: [Uuid!]!
   "Product list type"
   type: ProductListTypeEnum!
   "Product list identifier"
@@ -2620,6 +2620,8 @@ enum ProductOrderingModeEnum {
   NAME_ASC
   "Order by name descending"
   NAME_DESC
+  "Order by the position in the product list"
+  POSITION
   "Order by price ascending"
   PRICE_ASC
   "Order by price descending"
