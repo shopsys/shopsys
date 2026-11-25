@@ -14,6 +14,7 @@ export enum SkeletonEnum {
     ComplaintNew = 'complaintNew',
     Contact = 'contact',
     ContactInformation = 'contact-information',
+    CustomerDashboard = 'customerDashboard',
     CustomerUsers = 'customer-users',
     EditProfile = 'editProfile',
     Flag = 'flag',

@@ -121,7 +121,6 @@ export const logoutFromHeader = () => {
     cy.getByTID([TIDs.header, TIDs.user_menu_logout])
         .filter(':visible')
         .first()
-        .should('be.visible')
         .click({ scrollBehavior: 'nearest' });
 };
 

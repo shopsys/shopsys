@@ -68,7 +68,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <CustomerRecordColumnInfo tid={TIDs.order_list_item_number} title={t('Order number')}>
                         <ExtendedNextLink
                             aria-describedby={orderSummaryId}
-                            className="font-bold"
+                            className="font-semibold"
                             type="orderDetail"
                             aria-label={t('Go to order detail number {{ orderNumber }}', {
                                 ns: 'accessibility',

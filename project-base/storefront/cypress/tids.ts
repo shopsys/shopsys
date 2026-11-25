@@ -45,6 +45,7 @@ export enum TIDs {
     user_menu_logout = 'user_menu_logout',
     user_menu_edit_profile_link = 'user_menu_edit_profile_link',
     user_menu_change_password_link = 'user_menu_change_password_link',
+    user_menu_account_overview_link = 'user_menu_account_overview_link',
     user_menu_my_orders_link = 'user_menu_my_orders_link',
     user_menu_my_complaints_link = 'user_menu_my_complaints_link',
     user_menu_my_reviews_link = 'user_menu_my_reviews_link',

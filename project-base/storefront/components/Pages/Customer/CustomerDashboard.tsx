@@ -1,14 +1,22 @@
+import { CountBadge } from 'components/Basic/CountBadge/CountBadge';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
-import { Loader } from 'components/Basic/Loader/Loader';
+import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { StatusBadge } from 'components/Basic/StatusBadge/StatusBadge';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { CustomerRecordColumnInfo } from 'components/Pages/Customer/CustomerRecordElements';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useDashboardComplaintsQuery } from 'graphql/requests/complaints/queries/DashboardComplaintsQuery.generated';
-import { useDashboardOrdersQuery } from 'graphql/requests/orders/queries/DashboardOrdersQuery.generated';
+import {
+    TypeDashboardComplaintsQuery,
+    useDashboardComplaintsQuery,
+} from 'graphql/requests/complaints/queries/DashboardComplaintsQuery.generated';
+import {
+    TypeDashboardOrdersQuery,
+    useDashboardOrdersQuery,
+} from 'graphql/requests/orders/queries/DashboardOrdersQuery.generated';
 import { TypeComplaintStatusEnum, TypeOrderStatusEnum } from 'graphql/types';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -42,19 +50,23 @@ export const CustomerDashboard: FC<{ title: string }> = ({ title }) => {
         );
     const showOrders = !!currentCustomerUserUuid && (canCreateOrder || canViewCompanyOrders);
     const showComplaints = !!currentCustomerUserUuid && (canCreateComplaint || canViewCompanyComplaints);
-    const [orders] = useDashboardOrdersQuery({ pause: !showOrders, requestPolicy: 'cache-and-network' });
-    const [complaints] = useDashboardComplaintsQuery({ pause: !showComplaints, requestPolicy: 'cache-and-network' });
+    const [{ data: ordersData, fetching: areOrdersFetching, error: ordersError }] = useDashboardOrdersQuery({
+        pause: !showOrders,
+        requestPolicy: 'cache-and-network',
+    });
+    const [{ data: complaintsData, fetching: areComplaintsFetching, error: complaintsError }] =
+        useDashboardComplaintsQuery({ pause: !showComplaints, requestPolicy: 'cache-and-network' });
 
     return (
         <>
             <header className="flex flex-wrap items-center justify-between gap-4">
                 <h1 className="h2">{title}</h1>
                 <div className="flex flex-wrap gap-2">
-                    <LinkButton href={profileUrl} size="small" type="editProfile" variant="secondary">
+                    <LinkButton href={profileUrl} size="large" type="editProfile" variant="secondary">
                         {profileLabel}
                     </LinkButton>
                     {canManageUsers && (
-                        <LinkButton href={usersUrl} size="small" type="customer-users" variant="secondary">
+                        <LinkButton href={usersUrl} size="large" type="customer-users" variant="secondary">
                             {t('Customer users')}
                         </LinkButton>
                     )}
@@ -64,18 +76,11 @@ export const CustomerDashboard: FC<{ title: string }> = ({ title }) => {
                 {showOrders && (
                     <DashboardSection
                         title={t('Recent orders')}
-                        records={mapConnectionEdges(orders.data?.orders?.edges)}
+                        records={mapConnectionEdges(ordersData?.orders?.edges)}
                         openLabel={t('Open orders')}
-                        openCount={orders.data?.orderStatusCounts.reduce(
-                            (sum, { status, count }) =>
-                                status.type === TypeOrderStatusEnum.New ||
-                                status.type === TypeOrderStatusEnum.InProgress
-                                    ? sum + count
-                                    : sum,
-                            0,
-                        )}
-                        hasError={!!orders.error}
-                        fetching={orders.fetching}
+                        openCount={ordersData && countOpenOrders(ordersData.orderStatusCounts)}
+                        hasError={!!ordersError}
+                        fetching={areOrdersFetching}
                         emptyLabel={t('You have no orders')}
                         listUrl={ordersUrl}
                         listLabel={t('My orders')}
@@ -86,15 +91,11 @@ export const CustomerDashboard: FC<{ title: string }> = ({ title }) => {
                 {showComplaints && (
                     <DashboardSection
                         title={t('Recent complaints')}
-                        records={mapConnectionEdges(complaints.data?.complaints.edges)}
+                        records={mapConnectionEdges(complaintsData?.complaints.edges)}
                         openLabel={t('Open complaints')}
-                        openCount={complaints.data?.complaintStatusCounts.reduce(
-                            (sum, { status, count }) =>
-                                status.type === TypeComplaintStatusEnum.Resolved ? sum : sum + count,
-                            0,
-                        )}
-                        hasError={!!complaints.error}
-                        fetching={complaints.fetching}
+                        openCount={complaintsData && countOpenComplaints(complaintsData.complaintStatusCounts)}
+                        hasError={!!complaintsError}
+                        fetching={areComplaintsFetching}
                         emptyLabel={t('You have no complaints')}
                         listUrl={complaintsUrl}
                         listLabel={t('My complaints')}
@@ -121,6 +122,31 @@ type DashboardSectionProps = {
     numberParam: 'orderNumber' | 'complaintNumber';
 };
 
+const dashboardRowClassName =
+    'grid grid-cols-[repeat(auto-fit,minmax(min(100%,6rem),1fr))] items-center gap-3 rounded-xl bg-background-default p-4';
+
+const DashboardRecordsSkeleton: FC = () => {
+    const { t } = useTranslation();
+
+    return (
+        <div role="status">
+            <span className="sr-only">{t('Page loading', { ns: 'accessibility' })}</span>
+            <div aria-hidden="true" className="flex flex-col gap-2">
+                {[0, 1, 2].map((row) => (
+                    <div key={row} className={dashboardRowClassName}>
+                        {['number', 'date', 'status'].map((column) => (
+                            <div key={column} className="flex flex-col gap-2">
+                                <Skeleton className="h-3 w-3/4" />
+                                <Skeleton className="h-4 w-2/3" />
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const DashboardSection: FC<DashboardSectionProps> = ({
     title,
     records,
@@ -136,41 +162,55 @@ const DashboardSection: FC<DashboardSectionProps> = ({
 }) => {
     const { t } = useTranslation();
     const { formatDate } = useFormatDate();
-    const Icon = numberParam === 'orderNumber' ? OrderIcon : DocumentIcon;
+    const isOrder = numberParam === 'orderNumber';
+    const Icon = isOrder ? OrderIcon : DocumentIcon;
+
+    const isLoading = !hasError && fetching && !records;
+    const hasRecords = !hasError && !!records?.length;
+    const isEmpty = !hasError && !isLoading && !hasRecords;
 
     return (
-        <section className="flex min-w-0 flex-col rounded-2xl border border-border-less">
-            <div className="flex items-center justify-between gap-3 rounded-t-2xl bg-background-accent-less px-5 py-5 sm:px-6">
-                <p className="flex flex-col gap-1 font-secondary font-semibold text-sm">
-                    {openLabel}:{' '}
-                    <strong className="text-4xl tabular-nums tracking-tight">
-                        {hasError || openCount === undefined ? '—' : openCount}
-                    </strong>
-                </p>
-                <span className="flex size-12 items-center justify-center rounded-xl bg-background-default text-icon-accent">
-                    <Icon aria-hidden="true" className="size-7" />
-                </span>
-            </div>
-            <div className="flex flex-1 flex-col gap-2 px-5 pt-5 pb-3 sm:px-6">
-                <h2 className="h4">{title}</h2>
-                {hasError ? (
-                    <p role="alert">{t('Something went wrong.')}</p>
-                ) : fetching && !records ? (
-                    <div role="status">
-                        <Loader className="size-5" />
-                        <span className="sr-only">{t('Page loading', { ns: 'accessibility' })}</span>
+        <section className="flex min-w-0 flex-col gap-5 rounded-xl bg-background-more p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                    <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-background-default text-icon-accent">
+                        <Icon aria-hidden="true" className="size-6" />
+                    </span>
+                    <div>
+                        <h2 className="h4">{title}</h2>
+                        <p className="mt-1 flex items-center gap-2 font-secondary font-semibold text-sm text-text-less">
+                            {openLabel}{' '}
+                            <CountBadge className="bg-background-accent-less text-icon-accent">
+                                {hasError || openCount === undefined ? '—' : openCount}
+                            </CountBadge>
+                        </p>
                     </div>
-                ) : records?.length ? (
-                    <ul className="divide-y divide-border-less">
-                        {records.map((record) => (
-                            <li
-                                key={record.number}
-                                className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 py-3"
+                </div>
+                <LinkButton
+                    href={listUrl}
+                    size="large"
+                    type={isOrder ? 'orderList' : 'complaintList'}
+                    variant="secondary"
+                >
+                    {listLabel}
+                    <ArrowSecondaryIcon aria-hidden="true" className="size-4 -rotate-90" />
+                </LinkButton>
+            </div>
+            {hasError && <p role="alert">{t('Something went wrong.')}</p>}
+            {isLoading && <DashboardRecordsSkeleton />}
+            {hasRecords && (
+                <ul className="flex flex-col gap-2">
+                    {records.map((record) => (
+                        <li key={record.number} className={dashboardRowClassName}>
+                            <CustomerRecordColumnInfo
+                                className="min-w-0 break-words"
+                                title={isOrder ? t('Order number') : t('Complaint number')}
                             >
                                 <ExtendedNextLink
-                                    type={numberParam === 'orderNumber' ? 'orderDetail' : 'complaintDetail'}
+                                    className="font-semibold"
+                                    type={isOrder ? 'orderDetail' : 'complaintDetail'}
                                     aria-label={
-                                        numberParam === 'orderNumber'
+                                        isOrder
                                             ? t('Go to order detail number {{ orderNumber }}', {
                                                   ns: 'accessibility',
                                                   orderNumber: record.number,
@@ -184,30 +224,38 @@ const DashboardSection: FC<DashboardSectionProps> = ({
                                 >
                                     {record.number}
                                 </ExtendedNextLink>
-                                <time className="col-start-1 row-start-2 text-sm text-text-less" dateTime={record.date}>
-                                    {formatDate(record.date)}
-                                </time>
-                                <StatusBadge
-                                    className="col-start-2 row-span-2 row-start-1 max-w-36 text-wrap break-words"
-                                    variant="neutral"
-                                >
+                            </CustomerRecordColumnInfo>
+                            <CustomerRecordColumnInfo
+                                className="min-w-0"
+                                title={isOrder ? t('Date of order') : t('Creation date')}
+                            >
+                                <time dateTime={record.date}>{formatDate(record.date)}</time>
+                            </CustomerRecordColumnInfo>
+                            <CustomerRecordColumnInfo className="min-w-0" title={isOrder ? t('State') : t('Status')}>
+                                <StatusBadge className="max-w-full text-wrap break-words" variant="neutral">
                                     {record.status}
                                 </StatusBadge>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>{emptyLabel}</p>
-                )}
-            </div>
-            <ExtendedNextLink
-                className="flex items-center justify-between gap-3 rounded-b-2xl border-border-less border-t px-5 py-4 font-semibold no-underline hover:bg-background-more hover:underline sm:px-6"
-                href={listUrl}
-                type={numberParam === 'orderNumber' ? 'orderList' : 'complaintList'}
-            >
-                {listLabel}
-                <ArrowSecondaryIcon aria-hidden="true" className="size-4 -rotate-90" />
-            </ExtendedNextLink>
+                            </CustomerRecordColumnInfo>
+                        </li>
+                    ))}
+                </ul>
+            )}
+            {isEmpty && <p>{emptyLabel}</p>}
         </section>
     );
 };
+
+const countOpenOrders = (counts: TypeDashboardOrdersQuery['orderStatusCounts']) =>
+    counts.reduce(
+        (sum, { status, count }) =>
+            status.type === TypeOrderStatusEnum.New || status.type === TypeOrderStatusEnum.InProgress
+                ? sum + count
+                : sum,
+        0,
+    );
+
+const countOpenComplaints = (counts: TypeDashboardComplaintsQuery['complaintStatusCounts']) =>
+    counts.reduce(
+        (sum, { status, count }) => (status.type !== TypeComplaintStatusEnum.Resolved ? sum + count : sum),
+        0,
+    );

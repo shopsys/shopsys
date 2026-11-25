@@ -1,5 +1,6 @@
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
+import { GridIcon } from 'components/Basic/Icon/GridIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { LockIcon } from 'components/Basic/Icon/LockIcon';
 import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
@@ -104,11 +105,14 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
                 <ul className="flex flex-col gap-2">
                     <MenuIconicItemUserAuthenticatedContentListItem isActive={pathname === customerDashboardUrl}>
                         <MenuIconicSubItemLink
+                            ariaLabel={t('Go to account overview', { ns: 'accessibility' })}
                             href={customerDashboardUrl}
                             isActive={pathname === customerDashboardUrl}
+                            tid={TIDs.user_menu_account_overview_link}
+                            type="customerDashboard"
                             onClick={closeUserMenu}
                         >
-                            <UserIcon className="size-6" />
+                            <GridIcon className="size-6" />
                             {t('Account overview')}
                         </MenuIconicSubItemLink>
                     </MenuIconicItemUserAuthenticatedContentListItem>

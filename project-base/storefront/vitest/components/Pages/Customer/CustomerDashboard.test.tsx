@@ -58,8 +58,8 @@ describe('CustomerDashboard', () => {
 
     test('shows recent records and counts open cases across the full history', () => {
         renderDashboard(0, []);
-        expect(screen.getByText('Open orders:')).toHaveTextContent('Open orders: 6');
-        expect(screen.getByText('Open complaints:')).toHaveTextContent('Open complaints: 3');
+        expect(screen.getByText('Open orders')).toHaveTextContent('Open orders 6');
+        expect(screen.getByText('Open complaints')).toHaveTextContent('Open complaints 3');
         expect(screen.getByText('O123')).toHaveAttribute('href', '/customer/order-detail?orderNumber=O123');
         expect(screen.getByText('C123')).toHaveAttribute('href', '/customer/complaint-detail?complaintNumber=C123');
         expect(screen.queryByText('Customer users')).not.toBeInTheDocument();
@@ -77,12 +77,30 @@ describe('CustomerDashboard', () => {
         expect(screen.getByText('O123')).toHaveAttribute('href', '/zakaznik/detail-objednavky?orderNumber=O123');
     });
 
+    test('announces initial loading while keeping cached records visible during a refresh', () => {
+        queries.orders.mockReturnValue([{ fetching: true }]);
+        queries.complaints.mockReturnValue([
+            {
+                fetching: true,
+                data: {
+                    complaints: { edges: [{ node: { number: 'C123', date: '2026-05-03', status: 'Resolved' } }] },
+                    complaintStatusCounts: [],
+                },
+            },
+        ]);
+
+        renderDashboard(0, []);
+        expect(screen.getByRole('status')).toHaveTextContent('Page loading');
+        expect(screen.queryByText('You have no orders')).not.toBeInTheDocument();
+        expect(screen.getByText('C123')).toBeVisible();
+    });
+
     test('keeps the other section available when one request fails', () => {
         queries.orders.mockReturnValue([{ error: new Error('Orders unavailable') }]);
         queries.complaints.mockReturnValue([{ data: { complaints: { edges: [] }, complaintStatusCounts: [] } }]);
         renderDashboard(0, []);
         expect(screen.getByRole('alert')).toHaveTextContent('Something went wrong.');
         expect(screen.getByText('You have no complaints')).toBeInTheDocument();
-        expect(screen.getByText('Open complaints:')).toHaveTextContent('Open complaints: 0');
+        expect(screen.getByText('Open complaints')).toHaveTextContent('Open complaints 0');
     });
 });

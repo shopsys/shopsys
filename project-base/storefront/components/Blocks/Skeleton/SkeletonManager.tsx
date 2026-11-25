@@ -18,6 +18,7 @@ import { SkeletonPageCustomerChangePassword } from './SkeletonPageCustomerChange
 import { SkeletonPageCustomerComplaintDetail } from './SkeletonPageCustomerComplaintDetail';
 import { SkeletonPageCustomerComplaintList } from './SkeletonPageCustomerComplaintList';
 import { SkeletonPageCustomerComplaintNew } from './SkeletonPageCustomerComplaintNew';
+import { SkeletonPageCustomerDashboard } from './SkeletonPageCustomerDashboard';
 import { SkeletonPageCustomerEditProfile } from './SkeletonPageCustomerEditProfile';
 import { SkeletonPageCustomerMyReviews } from './SkeletonPageCustomerMyReviews';
 import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDetail';
@@ -58,6 +59,7 @@ const SKELETON_COMPONENT_MAP: Record<PageType, ComponentType> = {
     [SkeletonEnum.ComplaintNew]: SkeletonPageCustomerComplaintNew,
     [SkeletonEnum.Contact]: SkeletonPageContact,
     [SkeletonEnum.ContactInformation]: SkeletonPageContactInformation,
+    [SkeletonEnum.CustomerDashboard]: SkeletonPageCustomerDashboard,
     [SkeletonEnum.CustomerUsers]: SkeletonPageCustomerUsers,
     [SkeletonEnum.EditProfile]: SkeletonPageCustomerEditProfile,
     [SkeletonEnum.Flag]: SkeletonPageFlag,
