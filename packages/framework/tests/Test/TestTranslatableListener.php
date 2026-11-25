@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
 class TestTranslatableListener extends TranslatableListener
 {
+    protected bool $isImplicitLocaleDisabled = false;
+
     public function __construct(
         MetadataFactory $factory,
         Domain $domain,
@@ -24,9 +26,21 @@ class TestTranslatableListener extends TranslatableListener
         parent::__construct($domain, $factory);
     }
 
-    #[Override]
-    public function getCurrentLocale(): string
+    /**
+     * Makes entities behave as in a console process, where no request sets the current locale
+     */
+    public function disableImplicitLocale(): void
     {
+        $this->isImplicitLocaleDisabled = true;
+    }
+
+    #[Override]
+    public function getCurrentLocale(): ?string
+    {
+        if ($this->isImplicitLocaleDisabled) {
+            return null;
+        }
+
         if ($this->contextResolver->isCurrentContext(AdminContext::class)) {
             return $this->localization->getCurrentLocaleForTranslatableEntities();
         }
