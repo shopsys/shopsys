@@ -14,6 +14,7 @@ fragment ListedOrderFragment on Order {
     hasPaymentInProcess
     isAwaitingPayment
     status
+    statusType
     note
     items {
         type

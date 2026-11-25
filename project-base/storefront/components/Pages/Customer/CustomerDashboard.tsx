@@ -4,9 +4,9 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { DocumentIcon } from 'components/Basic/Icon/DocumentIcon';
 import { OrderIcon } from 'components/Basic/Icon/OrderIcon';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
-import { StatusBadge } from 'components/Basic/StatusBadge/StatusBadge';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { CustomerRecordColumnInfo } from 'components/Pages/Customer/CustomerRecordElements';
+import { CustomerRecordStatusBadge } from 'components/Pages/Customer/CustomerRecordStatusBadge';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
@@ -110,7 +110,12 @@ export const CustomerDashboard: FC<{ title: string }> = ({ title }) => {
 
 type DashboardSectionProps = {
     title: string;
-    records?: { number: string; status: string; date: string }[];
+    records?: {
+        number: string;
+        status: string;
+        statusType: TypeOrderStatusEnum | TypeComplaintStatusEnum;
+        date: string;
+    }[];
     openLabel: string;
     openCount?: number;
     hasError: boolean;
@@ -232,9 +237,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({
                                 <time dateTime={record.date}>{formatDate(record.date)}</time>
                             </CustomerRecordColumnInfo>
                             <CustomerRecordColumnInfo className="min-w-0" title={isOrder ? t('State') : t('Status')}>
-                                <StatusBadge className="max-w-full text-wrap break-words" variant="neutral">
-                                    {record.status}
-                                </StatusBadge>
+                                <CustomerRecordStatusBadge status={record.status} statusType={record.statusType} />
                             </CustomerRecordColumnInfo>
                         </li>
                     ))}

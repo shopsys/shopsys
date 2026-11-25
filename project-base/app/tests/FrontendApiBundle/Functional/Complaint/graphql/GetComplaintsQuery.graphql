@@ -25,6 +25,7 @@ query GetComplaintsQuery (
                 deliveryCity
                 deliveryPostcode
                 status
+                statusType
                 items {
                     quantity
                     description

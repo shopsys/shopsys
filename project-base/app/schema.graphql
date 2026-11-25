@@ -804,6 +804,8 @@ type Complaint {
   resolution: ComplaintResolution!
   "Status of the complaint"
   status: String!
+  "Type of the complaint status"
+  statusType: ComplaintStatusEnum!
   "UUID"
   uuid: Uuid!
 }

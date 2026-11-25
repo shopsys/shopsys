@@ -24,6 +24,7 @@ class ComplaintResolverMap extends ResolverMap
         return [
             'Complaint' => [
                 'status' => fn (Complaint $complaint) => $complaint->getStatus()->getName($this->domain->getLocale()),
+                'statusType' => fn (Complaint $complaint) => $complaint->getStatus()->getStatusType(),
                 'resolution' => fn (Complaint $complaint) => $this->complaintResolutionEnum->serialize()[$complaint->getResolution()],
             ],
         ];

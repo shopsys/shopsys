@@ -5000,6 +5000,15 @@ Status of the complaint
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="complaint.statustype">statusType</strong></td>
+<td valign="top"><a href="#complaintstatusenum">ComplaintStatusEnum</a>!</td>
+<td>
+
+Type of the complaint status
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="complaint.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>

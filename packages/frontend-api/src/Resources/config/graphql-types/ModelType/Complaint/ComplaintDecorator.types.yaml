@@ -45,6 +45,9 @@ ComplaintDecorator:
             status:
                 type: "String!"
                 description: "Status of the complaint"
+            statusType:
+                type: "ComplaintStatusEnum!"
+                description: "Type of the complaint status"
             order:
                 type: "Order"
                 description: "Order for which the complaint was created"

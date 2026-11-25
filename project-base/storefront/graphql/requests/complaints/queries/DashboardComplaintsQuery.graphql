@@ -5,6 +5,7 @@ query DashboardComplaintsQuery {
                 number
                 date: createdAt
                 status
+                statusType
             }
         }
     }

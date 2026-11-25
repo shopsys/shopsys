@@ -9,6 +9,15 @@ import gql from 'graphql-tag';
 import { ComplaintDetailFragment } from '../fragments/ComplaintDetailFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+/** Status of complaint */
+export type TypeComplaintStatusEnum =
+  /** In progress */
+  | 'in_progress'
+  /** New */
+  | 'new'
+  /** Resolved */
+  | 'resolved';
+
 /** One of possible types of the order item */
 export type TypeOrderItemTypeEnum =
   | 'additionalService'
@@ -25,7 +34,7 @@ export type TypeComplaintQueryVariables = Exact<{
 }>;
 
 
-export type TypeComplaintQuery = { complaint: { uuid: string, number: string, createdAt: string, email: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, bankAccountNumber: string | null, status: string, manualDocumentNumber: string | null, deliveryCountry: { __typename: 'Country', name: string, code: string }, resolution: { name: string, value: string }, items: Array<{ uuid: string, quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', deliveryDaysExtension: number | null, uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }> } | null, files: Array<{ __typename: 'File', anchorText: string, url: string, viewUrl: string | null, filesize: number | null, extension: string | null }> | null, product:
+export type TypeComplaintQuery = { complaint: { uuid: string, number: string, createdAt: string, email: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, bankAccountNumber: string | null, status: string, statusType: Types.TypeComplaintStatusEnum, manualDocumentNumber: string | null, deliveryCountry: { __typename: 'Country', name: string, code: string }, resolution: { name: string, value: string }, items: Array<{ uuid: string, quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, unit: string | null, totalPrice: { priceWithVat: string }, relatedItems: Array<{ __typename: 'OrderItem', deliveryDaysExtension: number | null, uuid: string, name: string, catnum: string | null, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, mainImage: { __typename: 'Image', name: string | null, url: string } | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }> } | null, files: Array<{ __typename: 'File', anchorText: string, url: string, viewUrl: string | null, filesize: number | null, extension: string | null }> | null, product:
         | { fullName: string, slug: string, isVisible: boolean, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
         | { fullName: string, slug: string, isVisible: boolean, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }
         | { fullName: string, slug: string, isVisible: boolean, mainCategory: { name: string } | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null }

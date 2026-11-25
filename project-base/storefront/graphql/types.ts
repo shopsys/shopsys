@@ -962,6 +962,8 @@ export type TypeComplaint = {
   resolution: TypeComplaintResolution;
   /** Status of the complaint */
   status: Scalars['String']['output'];
+  /** Type of the complaint status */
+  statusType: TypeComplaintStatusEnum;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };

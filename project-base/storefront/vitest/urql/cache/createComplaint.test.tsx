@@ -6,6 +6,7 @@ import {
     TypeCreateComplaintVariables,
 } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { useComplaintsQuery } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
+import { TypeComplaintStatusEnum } from 'graphql/types';
 // biome-ignore lint/style/noRestrictedImports: Exercise production Graphcache with a controlled network transport.
 import { createClient, fetchExchange, Provider } from 'urql';
 import { cache } from 'urql/cache/cacheExchange';
@@ -72,6 +73,7 @@ test('refreshes an already loaded complaint list after an identity-only mutation
                                           number: 'COMPLAINT-001',
                                           createdAt: '2026-01-01T00:00:00+00:00',
                                           status: 'New',
+                                          statusType: TypeComplaintStatusEnum.New,
                                           resolution: { __typename: 'ComplaintResolution', name: 'Repair' },
                                           items: [],
                                       },

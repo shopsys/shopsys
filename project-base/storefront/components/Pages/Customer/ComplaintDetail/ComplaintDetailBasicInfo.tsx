@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CustomerRecordCard, CustomerRecordColumnInfo } from 'components/Pages/Customer/CustomerRecordElements';
+import { CustomerRecordStatusBadge } from 'components/Pages/Customer/CustomerRecordStatusBadge';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -37,7 +38,9 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     {formatDate(complaint.createdAt)}
                 </CustomerRecordColumnInfo>
 
-                <CustomerRecordColumnInfo title={t('Status')}>{complaint.status}</CustomerRecordColumnInfo>
+                <CustomerRecordColumnInfo title={t('Status')}>
+                    <CustomerRecordStatusBadge status={complaint.status} statusType={complaint.statusType} />
+                </CustomerRecordColumnInfo>
 
                 <CustomerRecordColumnInfo title={t('Resolution')}>{complaint.resolution.name}</CustomerRecordColumnInfo>
 

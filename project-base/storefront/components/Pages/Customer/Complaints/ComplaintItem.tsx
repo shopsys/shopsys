@@ -6,6 +6,7 @@ import {
     CustomerRecordProductImage,
     CustomerRecordRowInfo,
 } from 'components/Pages/Customer/CustomerRecordElements';
+import { CustomerRecordStatusBadge } from 'components/Pages/Customer/CustomerRecordStatusBadge';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintListItemFragment } from 'graphql/requests/complaints/fragments/ComplaintListItemFragment.generated';
@@ -49,7 +50,12 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         {formatDate(complaintItem.createdAt)}
                     </CustomerRecordColumnInfo>
 
-                    <CustomerRecordColumnInfo title={t('Status')}>{complaintItem.status}</CustomerRecordColumnInfo>
+                    <CustomerRecordColumnInfo title={t('Status')}>
+                        <CustomerRecordStatusBadge
+                            status={complaintItem.status}
+                            statusType={complaintItem.statusType}
+                        />
+                    </CustomerRecordColumnInfo>
 
                     <CustomerRecordColumnInfo title={t('Resolution')}>
                         {complaintItem.resolution.name}

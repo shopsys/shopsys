@@ -24,7 +24,7 @@ export type TypeOrderStatusEnum =
 export type TypeDashboardOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeDashboardOrdersQuery = { orders: { edges: Array<{ node: { uuid: string, number: string, status: string, date: string } | null } | null> | null } | null, orderStatusCounts: Array<{ count: number, status: { code: string, type: Types.TypeOrderStatusEnum } }> };
+export type TypeDashboardOrdersQuery = { orders: { edges: Array<{ node: { uuid: string, number: string, status: string, statusType: Types.TypeOrderStatusEnum, date: string } | null } | null> | null } | null, orderStatusCounts: Array<{ count: number, status: { code: string, type: Types.TypeOrderStatusEnum } }> };
 
 
 export const DashboardOrdersQueryDocument = gql`
@@ -36,6 +36,7 @@ export const DashboardOrdersQueryDocument = gql`
         number
         date: creationDate
         status
+        statusType
       }
     }
   }

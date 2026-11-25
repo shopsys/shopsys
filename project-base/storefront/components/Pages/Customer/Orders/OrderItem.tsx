@@ -7,6 +7,7 @@ import {
     CustomerRecordElementWithImage,
     CustomerRecordRowInfo,
 } from 'components/Pages/Customer/CustomerRecordElements';
+import { CustomerRecordStatusBadge } from 'components/Pages/Customer/CustomerRecordStatusBadge';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -99,7 +100,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         </CustomerRecordColumnInfo>
                     )}
 
-                    <CustomerRecordColumnInfo title={t('State')}>{order.status}</CustomerRecordColumnInfo>
+                    <CustomerRecordColumnInfo title={t('State')}>
+                        <CustomerRecordStatusBadge status={order.status} statusType={order.statusType} />
+                    </CustomerRecordColumnInfo>
                 </div>
 
                 {orderTransport && (

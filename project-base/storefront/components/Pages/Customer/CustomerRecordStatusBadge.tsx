@@ -1,0 +1,30 @@
+import { StatusBadge, StatusBadgeVariant } from 'components/Basic/StatusBadge/StatusBadge';
+import { TypeComplaintStatusEnum, TypeOrderStatusEnum } from 'graphql/types';
+import { twJoin } from 'tailwind-merge';
+
+type CustomerRecordStatus = TypeOrderStatusEnum | TypeComplaintStatusEnum;
+
+const statusVariants: Record<CustomerRecordStatus, StatusBadgeVariant> = {
+    [TypeOrderStatusEnum.New]: 'info',
+    [TypeOrderStatusEnum.InProgress]: 'warning',
+    [TypeComplaintStatusEnum.InProgress]: 'warning',
+    [TypeOrderStatusEnum.Done]: 'success',
+    [TypeComplaintStatusEnum.Resolved]: 'success',
+    [TypeOrderStatusEnum.Canceled]: 'error',
+    [TypeOrderStatusEnum.Withdrawn]: 'neutral',
+};
+
+export const CustomerRecordStatusBadge: FC<{ status: string; statusType: CustomerRecordStatus }> = ({
+    status,
+    statusType,
+}) => (
+    <StatusBadge
+        variant={statusVariants[statusType]}
+        className={twJoin(
+            'max-w-full text-wrap break-words',
+            statusType === TypeOrderStatusEnum.Withdrawn && 'bg-gray-400',
+        )}
+    >
+        {status}
+    </StatusBadge>
+);

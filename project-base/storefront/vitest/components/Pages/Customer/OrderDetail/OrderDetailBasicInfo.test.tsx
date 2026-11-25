@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import { OrderDetailBasicInfo } from 'components/Pages/Customer/OrderDetail/OrderDetailBasicInfo';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
-import { TypeOrderItemTypeEnum } from 'graphql/types';
+import { TypeOrderItemTypeEnum, TypeOrderStatusEnum } from 'graphql/types';
 import { ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -63,6 +63,7 @@ const order = {
     number: '1234567890',
     creationDate: '2026-09-01T08:00:00+02:00',
     status: 'Done',
+    statusType: TypeOrderStatusEnum.Done,
     totalPrice: {
         priceWithVat: '100',
         priceWithoutVat: '80',

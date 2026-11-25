@@ -20,7 +20,7 @@ export type TypeComplaintStatusEnum =
 export type TypeDashboardComplaintsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TypeDashboardComplaintsQuery = { complaints: { edges: Array<{ node: { number: string, status: string, date: string } | null } | null> | null }, complaintStatusCounts: Array<{ count: number, status: { code: string, type: Types.TypeComplaintStatusEnum } }> };
+export type TypeDashboardComplaintsQuery = { complaints: { edges: Array<{ node: { number: string, status: string, statusType: Types.TypeComplaintStatusEnum, date: string } | null } | null> | null }, complaintStatusCounts: Array<{ count: number, status: { code: string, type: Types.TypeComplaintStatusEnum } }> };
 
 
 export const DashboardComplaintsQueryDocument = gql`
@@ -31,6 +31,7 @@ export const DashboardComplaintsQueryDocument = gql`
         number
         date: createdAt
         status
+        statusType
       }
     }
   }

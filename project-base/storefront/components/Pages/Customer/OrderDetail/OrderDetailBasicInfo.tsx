@@ -10,6 +10,7 @@ import {
     CustomerRecordElementWithImage,
     CustomerRecordRowInfo,
 } from 'components/Pages/Customer/CustomerRecordElements';
+import { CustomerRecordStatusBadge } from 'components/Pages/Customer/CustomerRecordStatusBadge';
 import { OrderPaymentStatusBadge } from 'components/Pages/Customer/Orders/OrderPaymentStatusBadge';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -84,7 +85,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     </CustomerRecordColumnInfo>
                 )}
 
-                <CustomerRecordColumnInfo title={t('Status')}>{order.status}</CustomerRecordColumnInfo>
+                <CustomerRecordColumnInfo title={t('Status')}>
+                    <CustomerRecordStatusBadge status={order.status} statusType={order.statusType} />
+                </CustomerRecordColumnInfo>
 
                 {showRepeatOrderButton && !order.isAwaitingPayment && (
                     <div className="flex shrink-0 gap-4">

@@ -34,7 +34,18 @@ describe('CustomerDashboard', () => {
         queries.orders.mockReturnValue([
             {
                 data: {
-                    orders: { edges: [{ node: { number: 'O123', date: '2026-05-01', status: 'New' } }] },
+                    orders: {
+                        edges: [
+                            {
+                                node: {
+                                    number: 'O123',
+                                    date: '2026-05-01',
+                                    status: 'Nová',
+                                    statusType: TypeOrderStatusEnum.New,
+                                },
+                            },
+                        ],
+                    },
                     orderStatusCounts: [
                         { status: { type: TypeOrderStatusEnum.New }, count: 2 },
                         { status: { type: TypeOrderStatusEnum.InProgress }, count: 4 },
@@ -46,7 +57,18 @@ describe('CustomerDashboard', () => {
         queries.complaints.mockReturnValue([
             {
                 data: {
-                    complaints: { edges: [{ node: { number: 'C123', date: '2026-05-03', status: 'Resolved' } }] },
+                    complaints: {
+                        edges: [
+                            {
+                                node: {
+                                    number: 'C123',
+                                    date: '2026-05-03',
+                                    status: 'Vyřízená',
+                                    statusType: TypeComplaintStatusEnum.Resolved,
+                                },
+                            },
+                        ],
+                    },
                     complaintStatusCounts: [
                         { status: { type: TypeComplaintStatusEnum.New }, count: 3 },
                         { status: { type: TypeComplaintStatusEnum.Resolved }, count: 5 },
@@ -62,6 +84,8 @@ describe('CustomerDashboard', () => {
         expect(screen.getByText('Open complaints')).toHaveTextContent('Open complaints 3');
         expect(screen.getByText('O123')).toHaveAttribute('href', '/customer/order-detail?orderNumber=O123');
         expect(screen.getByText('C123')).toHaveAttribute('href', '/customer/complaint-detail?complaintNumber=C123');
+        expect(screen.getByText('Nová')).toHaveClass('bg-status-badge-bg-info');
+        expect(screen.getByText('Vyřízená')).toHaveClass('bg-status-badge-bg-success');
         expect(screen.queryByText('Customer users')).not.toBeInTheDocument();
     });
 
@@ -83,7 +107,18 @@ describe('CustomerDashboard', () => {
             {
                 fetching: true,
                 data: {
-                    complaints: { edges: [{ node: { number: 'C123', date: '2026-05-03', status: 'Resolved' } }] },
+                    complaints: {
+                        edges: [
+                            {
+                                node: {
+                                    number: 'C123',
+                                    date: '2026-05-03',
+                                    status: 'Resolved',
+                                    statusType: TypeComplaintStatusEnum.Resolved,
+                                },
+                            },
+                        ],
+                    },
                     complaintStatusCounts: [],
                 },
             },

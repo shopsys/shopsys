@@ -120,6 +120,8 @@ trait ComplaintTestTrait
             $complaintMessage,
         );
 
+        $this->assertSame($expectedComplaint->getStatus()->getStatusType(), $actualComplaintData['statusType']);
+
         $this->assertArrayHasKey('items', $actualComplaintData, $complaintMessage);
 
         $expectedComplaintItems = $expectedComplaint->getItems();
