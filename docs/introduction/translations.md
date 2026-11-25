@@ -71,7 +71,7 @@ When `php phing translations-dump` command is run, texts are extracted from foll
 $this->translator->trans('Offer in feed');
 
 // pluralization (replacement of transChoice)
-$this->translator->trans('{0} no products|{1} product|]1,Inf[ products', ['%count%' => $count]);
+$this->translator->trans('%count% product|%count% products', ['%count%' => $count]);
 
 // shortcut for Translator::staticTrans()
 t('Offer in feed');
@@ -93,6 +93,12 @@ class MyConstraint extends \Symfony\Component\Validator\Constraint
 }
 ```
 
+!!! note
+
+    Write the plural forms without intervals and in the number the language needs, e.g. `%count% product|%count% products` in English and `%count% produkt|%count% produkty|%count% produktů` in Czech.
+    Symfony picks the form by the plural rule of the locale, so a translation can have a different number of forms than the message ID.
+    Use an explicit interval only when a value needs a different message, not just a different grammatical form, e.g. `{0}No products|%count% product|%count% products`.
+
 ### Twig
 
 ```twig
@@ -100,11 +106,11 @@ class MyConstraint extends \Symfony\Component\Validator\Constraint
 
 {% trans %}Add another parameter{% endtrans %}
 
-{{ '{0} no products|{1} product|]1,Inf[ products'|trans(count) }}
+{{ '%count% product|%count% products'|trans({ '%count%': count }) }}
 
-{% trans with { '%count%': count }  %}
-    {0} no products|{1} product|]1,Inf[ products
-{% trans %}
+{% trans with { '%count%': count } %}
+    %count% product|%count% products
+{% endtrans %}
 
 {{ 'items added to <a href="/cart">cart</a>'|transHtml }}
 

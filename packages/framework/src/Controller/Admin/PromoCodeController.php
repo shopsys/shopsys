@@ -185,7 +185,7 @@ class PromoCodeController extends AdminBaseController
 
             $this->addSuccessFlashTwig(
                 t(
-                    '{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created',
+                    '<strong>%count%</strong> promo code has been created|<strong>%count%</strong> promo codes have been created',
                     ['%count%' => $promoCodeData->quantity],
                 ),
             );

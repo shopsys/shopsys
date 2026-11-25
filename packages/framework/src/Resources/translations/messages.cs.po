@@ -100,6 +100,9 @@ msgstr "<a href=\"%url%\">Neexistují žádné sklady, musíte nějaký vytvoři
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek správa osobních údajů pro doménu %domainName%.</a>"
 
+msgid "<strong>%count%</strong> promo code has been created|<strong>%count%</strong> promo codes have been created"
+msgstr "Byl vytvořen <strong>%count%</strong> slevový kupón|Byly vytvořeny <strong>%count%</strong> slevové kupóny|Bylo vytvořeno <strong>%count%</strong> slevových kupónů"
+
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
 
@@ -3517,6 +3520,9 @@ msgstr "Slug musí odpovídat konfiguraci stránky na storefrontu, pokud si nejs
 msgid "The stock quantities are set for the product variants separately."
 msgstr "Skladové zásoby se nastavují zvlášť pro jednotlivé varianty."
 
+msgid "There is one parameter slider that does not have its numeric values filled in.|There are %count% parameter sliders that do not have their numeric values filled in."
+msgstr "Existuje jeden parametr typu slider, který nemá vyplněné své číselné hodnoty.|Existují %count% parametry typu slider, které nemají vyplněné své číselné hodnoty.|Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty."
+
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 
@@ -3937,6 +3943,9 @@ msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 msgid "You have unsaved changes, save them first, please."
 msgstr "Máte neuložené změny. Nejdříve je prosím uložte."
 
+msgid "You must wait 1 second before submitting the form.|You must wait %count% seconds before submitting the form."
+msgstr "Před odesláním formuláře musíte počkat 1 vteřinu.|Před odesláním formuláře musíte počkat %count% vteřiny.|Před odesláním formuláře musíte počkat %count% vteřin."
+
 msgid "Youtube ID"
 msgstr "Youtube ID"
 
@@ -4038,12 +4047,3 @@ msgstr "bez DPH"
 
 msgid "without positioning"
 msgstr "bez umístění"
-
-msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
-msgstr "{1} Existuje jeden parametr typu slider, který nemá vyplněné své číselné hodnoty.|[2,4] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty.|[5,Inf] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty."
-
-msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
-msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
-
-msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
-msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"

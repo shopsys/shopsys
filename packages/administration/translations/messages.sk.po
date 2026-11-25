@@ -17,7 +17,7 @@ msgid "%count% item from CSV file was imported successfully.|%count% items from 
 msgstr "%count% položka z CSV súboru bola úspešne importovaná.|%count% položky z CSV súboru boli úspešne importované.|%count% položiek z CSV súboru bolo úspešne importovaných."
 
 msgid "%count% item|%count% items"
-msgstr "{1} %count% položka|[2,4] %count% položky|[5,Inf] %count% položiek"
+msgstr "%count% položka|%count% položky|%count% položiek"
 
 msgid "%defaultCurrency% per 1 %currentCurrency%"
 msgstr "%defaultCurrency% za 1 %currentCurrency%"
@@ -1188,6 +1188,9 @@ msgstr "Import sviatkov"
 
 msgid "Import price list"
 msgstr "Importovať cenník"
+
+msgid "Imported <strong>%count%</strong> holiday.|Imported <strong>%count%</strong> holidays."
+msgstr "Importovaný <strong>%count%</strong> sviatok.|Importované <strong>%count%</strong> sviatky.|Importovaných <strong>%count%</strong> sviatkov."
 
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr "V konkrétnej záložke domény nie je možné upraviť poradie a zaradenie kategórií. Prosím, choďte do detailu kategórie alebo do prehľadu kategórií všetkých domén"
@@ -2723,7 +2726,7 @@ msgid "administrators"
 msgstr "administrátorov"
 
 msgid "and %count% more"
-msgstr "{1} a %count% ďalšia|[2,4] a %count% ďalšie|[5,Inf] a %count% ďalších"
+msgstr "a %count% ďalšia|a %count% ďalšie|a %count% ďalších"
 
 msgid "articles"
 msgstr "článkov"
@@ -2841,9 +2844,6 @@ msgstr "bez DPH"
 
 msgid "yesterday"
 msgstr "včera"
-
-msgid "{1} Imported <strong>%count%</strong> holiday.|[2,Inf] Imported <strong>%count%</strong> holidays."
-msgstr "{1} Importovaný <strong>%count%</strong> sviatok.|[2,4] Importované <strong>%count%</strong> sviatky.|[5,Inf] Importovaných <strong>%count%</strong> sviatkov."
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodný zástupca \"%label%\" je priradený %count% zákazníkovi a bude odstránený ak budete pokračovať.<br><br> Zákazník:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[2,10]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo? |[11,Inf]Obchodný zástupca \"%label%\" je priradený %count% zákazníkom a bude odstránený ak budete pokračovať.<br><br> Zákazníci:<br> %customersEnumeration%<br> +%extraCount% viac<br><br> Naozaj chcete odstrániť obchodného zástupcu \"%label%\" natrvalo?"
