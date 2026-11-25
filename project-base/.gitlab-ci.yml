@@ -23,6 +23,7 @@ variables:
     STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-${CI_PIPELINE_ID}-storefront
     HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
     HOSTS: ${HOST}, cs.${HOST}, ${HOST}/sk
+    MAILPIT_HOST: mailpit.${HOST}
     COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
 
 before_script:
@@ -318,6 +319,7 @@ review:
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
         - docker compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
         - printDomains
+        - echo "Mailpit:" && echo "    - https://${MAILPIT_HOST}"
     tags:
         - review
     interruptible: true
