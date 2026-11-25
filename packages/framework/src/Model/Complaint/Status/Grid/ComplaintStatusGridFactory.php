@@ -43,7 +43,7 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
         $grid->addColumn('name', 'cst.name', t('Name'), true);
         $grid->addColumn('statusType', 'cs.statusType', t('Type'), true, [
             'help' => t('Products of complaints in the statuses "In Progress" and "Resolved, the products cannot be complained about again" (e.g. money return) stay claimed. Products of complaints in the status "Resolved, the products can be complained about again" (e.g. rejection or fix) can be claimed in new complaints.'),
-        ]);
+        ])->setClassAttribute('w-33 text-nowrap');
 
         $grid->addDeleteActionColumn('admin_complaintstatus_deleteconfirm', ['id' => 'cs.id'])
             ->setAjaxConfirm();
