@@ -84,6 +84,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
                     <div className="order-3 flex flex-col gap-5">
                         <ProductDetailInfo
+                            brand={product.brand}
                             catalogNumber={product.catalogNumber}
                             reviewsSummary={product.reviewsSummary}
                         />
