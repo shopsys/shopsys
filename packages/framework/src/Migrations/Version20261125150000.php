@@ -16,10 +16,10 @@ final class Version20261125150000 extends AbstractMigration
         $this->sql('
             CREATE TABLE packetery_pickup_points (
                 id VARCHAR(50) NOT NULL,
-                regular_opening_hours JSON NOT NULL,
-                upcoming_opening_hours JSON DEFAULT NULL,
+                regular_opening_hours JSONB NOT NULL,
+                upcoming_opening_hours JSONB DEFAULT NULL,
                 upcoming_opening_hours_since DATE DEFAULT NULL,
-                exception_opening_hours JSON NOT NULL,
+                exception_opening_hours JSONB NOT NULL,
                 PRIMARY KEY (id)
             )');
     }

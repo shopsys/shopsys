@@ -6,13 +6,13 @@ namespace Tests\FrameworkBundle\Unit\Component\Packetery\PickupPoint;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointDataFactory;
+use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointFeedParser;
 
-final class PacketeryPickupPointDataFactoryTest extends TestCase
+final class PacketeryPickupPointFeedParserTest extends TestCase
 {
     public function testRegularOpeningHoursAreNormalizedAndClosedDaysAreOmitted(): void
     {
-        $packeteryPickupPointData = (new PacketeryPickupPointDataFactory())->createFromFeedItem([
+        $packeteryPickupPoint = (new PacketeryPickupPointFeedParser())->parseFeedItem([
             'id' => 13789,
             'openingHours' => [
                 'regular' => [
@@ -26,7 +26,7 @@ final class PacketeryPickupPointDataFactoryTest extends TestCase
             ],
         ]);
 
-        $this->assertSame('13789', $packeteryPickupPointData->id);
+        $this->assertSame('13789', $packeteryPickupPoint->id);
         $this->assertSame(
             [
                 1 => ['08:00-12:30', '13:30-17:30'],
@@ -34,16 +34,16 @@ final class PacketeryPickupPointDataFactoryTest extends TestCase
                 5 => ['10:00-12:00'],
                 6 => ['00:00-23:59'],
             ],
-            $packeteryPickupPointData->regularOpeningHours,
+            $packeteryPickupPoint->regularOpeningHours,
         );
-        $this->assertNull($packeteryPickupPointData->upcomingOpeningHours);
-        $this->assertNull($packeteryPickupPointData->upcomingOpeningHoursSince);
-        $this->assertSame([], $packeteryPickupPointData->exceptionOpeningHours);
+        $this->assertNull($packeteryPickupPoint->upcomingOpeningHours);
+        $this->assertNull($packeteryPickupPoint->upcomingOpeningHoursSince);
+        $this->assertSame([], $packeteryPickupPoint->exceptionOpeningHours);
     }
 
     public function testUpcomingOpeningHoursAreParsedWithTheirStartDate(): void
     {
-        $packeteryPickupPointData = (new PacketeryPickupPointDataFactory())->createFromFeedItem([
+        $packeteryPickupPoint = (new PacketeryPickupPointFeedParser())->parseFeedItem([
             'id' => '1',
             'openingHours' => [
                 'regular' => ['monday' => '08:00–18:00'],
@@ -51,8 +51,8 @@ final class PacketeryPickupPointDataFactoryTest extends TestCase
             ],
         ]);
 
-        $this->assertSame([1 => ['08:00-17:00'], 7 => ['10:00-12:00']], $packeteryPickupPointData->upcomingOpeningHours);
-        $this->assertSame('2026-11-30', $packeteryPickupPointData->upcomingOpeningHoursSince?->format('Y-m-d'));
+        $this->assertSame([1 => ['08:00-17:00'], 7 => ['10:00-12:00']], $packeteryPickupPoint->upcomingOpeningHours);
+        $this->assertSame('2026-11-30', $packeteryPickupPoint->upcomingOpeningHoursSince);
     }
 
     /**
@@ -97,11 +97,11 @@ final class PacketeryPickupPointDataFactoryTest extends TestCase
         mixed $exceptions,
         array $expectedExceptionOpeningHours,
     ): void {
-        $packeteryPickupPointData = (new PacketeryPickupPointDataFactory())->createFromFeedItem([
+        $packeteryPickupPoint = (new PacketeryPickupPointFeedParser())->parseFeedItem([
             'id' => '1',
             'openingHours' => ['regular' => [], 'exceptions' => $exceptions],
         ]);
 
-        $this->assertSame($expectedExceptionOpeningHours, $packeteryPickupPointData->exceptionOpeningHours);
+        $this->assertSame($expectedExceptionOpeningHours, $packeteryPickupPoint->exceptionOpeningHours);
     }
 }

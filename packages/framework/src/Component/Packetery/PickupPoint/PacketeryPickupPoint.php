@@ -4,122 +4,62 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Packetery\PickupPoint;
 
-use Doctrine\ORM\Mapping as ORM;
-use Shopsys\McpAttributes\Attribute\AsMcpColumn;
-use Shopsys\McpAttributes\Attribute\AsMcpTable;
+use DateTimeImmutable;
 
 /**
- * A local copy of a Packeta pickup point (a branch or a Z-BOX) imported from the Packeta pickup point feeds,
- * so the expected delivery date can respect the opening hours of the point selected in the cart;
- * every opening hours range is a "HH:MM-HH:MM" string
+ * Opening hours of a Packeta pickup point (a branch or a Z-BOX) imported from the Packeta pickup point feeds,
+ * so the expected delivery date can respect the point selected in the cart;
+ * every opening hours range is a "HH:MM-HH:MM" string and every date is a "Y-m-d" string
  */
-#[AsMcpTable]
-#[ORM\Table(name: 'packetery_pickup_points')]
-#[ORM\Entity]
 class PacketeryPickupPoint
 {
     /**
-     * @var string
+     * @param array<int, string[]> $regularOpeningHours ranges indexed by the ISO-8601 day of week, a missing day means closed
+     * @param array<int, string[]>|null $upcomingOpeningHours new regular opening hours valid since $upcomingOpeningHoursSince
+     * @param array<string, string[]> $exceptionOpeningHours ranges indexed by the date they override, an empty list means closed
      */
-    #[AsMcpColumn]
-    #[ORM\Id]
-    #[ORM\Column(type: 'string', length: 50)]
-    protected $id;
-
-    /**
-     * @var array<int, string[]>
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'json')]
-    protected $regularOpeningHours;
-
-    /**
-     * @var array<int, string[]>|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'json', nullable: true)]
-    protected $upcomingOpeningHours;
-
-    /**
-     * @var \DateTimeImmutable|null
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'date_immutable', nullable: true)]
-    protected $upcomingOpeningHoursSince;
-
-    /**
-     * @var array<string, string[]>
-     */
-    #[AsMcpColumn]
-    #[ORM\Column(type: 'json')]
-    protected $exceptionOpeningHours;
-
-    public function __construct(PacketeryPickupPointData $packeteryPickupPointData)
-    {
-        $this->id = $packeteryPickupPointData->id;
-        $this->setData($packeteryPickupPointData);
+    public function __construct(
+        public readonly string $id,
+        public readonly array $regularOpeningHours,
+        public readonly ?array $upcomingOpeningHours,
+        public readonly ?string $upcomingOpeningHoursSince,
+        public readonly array $exceptionOpeningHours,
+    ) {
     }
 
-    public function edit(PacketeryPickupPointData $packeteryPickupPointData): void
+    public function isOpenOnDate(DateTimeImmutable $date): bool
     {
-        $this->setData($packeteryPickupPointData);
+        return $this->getOpeningHoursRangesOnDate($date) !== [];
     }
 
-    protected function setData(PacketeryPickupPointData $packeteryPickupPointData): void
+    /**
+     * @param string $time "HH:MM"
+     */
+    public function isOpenAfterTimeOnDate(DateTimeImmutable $date, string $time): bool
     {
-        $this->regularOpeningHours = $packeteryPickupPointData->regularOpeningHours;
-        $this->upcomingOpeningHours = $packeteryPickupPointData->upcomingOpeningHours;
-        $this->exceptionOpeningHours = $packeteryPickupPointData->exceptionOpeningHours;
+        return array_any(
+            $this->getOpeningHoursRangesOnDate($date),
+            static fn (string $openingHoursRange): bool => explode('-', $openingHoursRange)[1] > $time,
+        );
+    }
 
-        // Doctrine compares dates by instance, so an equal date is kept to not update every point on each import
-        if ($this->upcomingOpeningHoursSince?->format('Y-m-d') !== $packeteryPickupPointData->upcomingOpeningHoursSince?->format('Y-m-d')) {
-            $this->upcomingOpeningHoursSince = $packeteryPickupPointData->upcomingOpeningHoursSince;
+    /**
+     * An exception for the date takes precedence over the upcoming opening hours, which take precedence over the regular ones
+     *
+     * @return string[]
+     */
+    protected function getOpeningHoursRangesOnDate(DateTimeImmutable $date): array
+    {
+        $formattedDate = $date->format('Y-m-d');
+
+        if (array_key_exists($formattedDate, $this->exceptionOpeningHours)) {
+            return $this->exceptionOpeningHours[$formattedDate];
         }
-    }
 
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+        $weekOpeningHours = $this->upcomingOpeningHoursSince !== null && $this->upcomingOpeningHoursSince <= $formattedDate
+            ? $this->upcomingOpeningHours ?? []
+            : $this->regularOpeningHours;
 
-    /**
-     * Ranges indexed by the ISO-8601 day of week (1 = Monday, 7 = Sunday); a missing day means closed
-     *
-     * @return array<int, string[]>
-     */
-    public function getRegularOpeningHours()
-    {
-        return $this->regularOpeningHours;
-    }
-
-    /**
-     * New regular opening hours valid since getUpcomingOpeningHoursSince(), indexed the same way as the regular ones
-     *
-     * @return array<int, string[]>|null
-     */
-    public function getUpcomingOpeningHours()
-    {
-        return $this->upcomingOpeningHours;
-    }
-
-    /**
-     * @return \DateTimeImmutable|null
-     */
-    public function getUpcomingOpeningHoursSince()
-    {
-        return $this->upcomingOpeningHoursSince;
-    }
-
-    /**
-     * Ranges indexed by a "Y-m-d" date overriding the regular opening hours; an empty list means closed
-     *
-     * @return array<string, string[]>
-     */
-    public function getExceptionOpeningHours()
-    {
-        return $this->exceptionOpeningHours;
+        return $weekOpeningHours[(int)$date->format('N')] ?? [];
     }
 }

@@ -4,64 +4,51 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Packetery\PickupPoint;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 
 class PacketeryPickupPointFacade
 {
+    protected const string PICKUP_POINTS_CACHE_NAMESPACE = 'packeteryPickupPoints';
+
     public function __construct(
-        protected readonly EntityManagerInterface $em,
         protected readonly PacketeryPickupPointRepository $packeteryPickupPointRepository,
-        protected readonly PacketeryPickupPointFactory $packeteryPickupPointFactory,
-        protected readonly PacketeryPickupPointDataFactory $packeteryPickupPointDataFactory,
         protected readonly PacketeryPickupPointFeedClient $packeteryPickupPointFeedClient,
+        protected readonly PacketeryPickupPointFeedParser $packeteryPickupPointFeedParser,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
+    /**
+     * The point is cached for the request, as the delivery date is calculated repeatedly (transport list, cart, order)
+     */
     public function findById(string $id): ?PacketeryPickupPoint
     {
-        return $this->packeteryPickupPointRepository->findById($id);
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PICKUP_POINTS_CACHE_NAMESPACE,
+            fn (): ?PacketeryPickupPoint => $this->packeteryPickupPointRepository->findById($id),
+            $id,
+        );
     }
 
     /**
      * Every feed is downloaded before anything is saved, so a failed download never removes the points of a feed
      *
-     * @return array{importedCount: int, removedCount: int}
+     * @return array{importedCount: int, savedCount: int, removedCount: int}
      */
     public function importPickupPointsFromFeeds(): array
     {
-        $packeteryPickupPointsDataIndexedById = [];
+        $packeteryPickupPointsIndexedById = [];
 
         foreach ([PacketeryPickupPointFeedClient::FEED_BRANCH, PacketeryPickupPointFeedClient::FEED_BOX] as $feed) {
             foreach ($this->packeteryPickupPointFeedClient->getFeedItems($feed) as $feedItem) {
-                $packeteryPickupPointData = $this->packeteryPickupPointDataFactory->createFromFeedItem($feedItem);
-                $packeteryPickupPointsDataIndexedById[$packeteryPickupPointData->id] = $packeteryPickupPointData;
+                $packeteryPickupPoint = $this->packeteryPickupPointFeedParser->parseFeedItem($feedItem);
+                $packeteryPickupPointsIndexedById[$packeteryPickupPoint->id] = $packeteryPickupPoint;
             }
         }
-
-        $removedPacketeryPickupPointsIndexedById = $this->packeteryPickupPointRepository->getAllIndexedById();
-
-        foreach ($packeteryPickupPointsDataIndexedById as $id => $packeteryPickupPointData) {
-            $packeteryPickupPoint = $removedPacketeryPickupPointsIndexedById[$id] ?? null;
-
-            if ($packeteryPickupPoint === null) {
-                $this->em->persist($this->packeteryPickupPointFactory->create($packeteryPickupPointData));
-
-                continue;
-            }
-
-            $packeteryPickupPoint->edit($packeteryPickupPointData);
-            unset($removedPacketeryPickupPointsIndexedById[$id]);
-        }
-
-        foreach ($removedPacketeryPickupPointsIndexedById as $removedPacketeryPickupPoint) {
-            $this->em->remove($removedPacketeryPickupPoint);
-        }
-
-        $this->em->flush();
 
         return [
-            'importedCount' => count($packeteryPickupPointsDataIndexedById),
-            'removedCount' => count($removedPacketeryPickupPointsIndexedById),
+            'importedCount' => count($packeteryPickupPointsIndexedById),
+            ...$this->packeteryPickupPointRepository->replaceAll(array_values($packeteryPickupPointsIndexedById)),
         ];
     }
 }

@@ -37,8 +37,9 @@ class PacketeryPickupPointImportCronModule implements SimpleCronModuleInterface
         $importResult = $this->packeteryPickupPointFacade->importPickupPointsFromFeeds();
 
         $this->logger->info(sprintf(
-            'Imported %d Packetery pickup points, removed %d pickup points missing in the feeds.',
+            'Imported %d Packetery pickup points (%d of them new or changed), removed %d pickup points missing in the feeds.',
             $importResult['importedCount'],
+            $importResult['savedCount'],
             $importResult['removedCount'],
         ));
     }

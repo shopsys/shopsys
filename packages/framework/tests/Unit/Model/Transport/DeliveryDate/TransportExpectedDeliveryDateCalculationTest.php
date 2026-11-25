@@ -15,9 +15,7 @@ use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPoint;
-use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointData;
 use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointFacade;
-use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalService;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -1402,13 +1400,10 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         array $regularOpeningHours,
         array $exceptionOpeningHours = [],
     ): PacketeryPickupPointFacade {
-        $packeteryPickupPointData = new PacketeryPickupPointData();
-        $packeteryPickupPointData->id = '13789';
-        $packeteryPickupPointData->regularOpeningHours = $regularOpeningHours;
-        $packeteryPickupPointData->exceptionOpeningHours = $exceptionOpeningHours;
-
         $packeteryPickupPointFacadeStub = $this->createStub(PacketeryPickupPointFacade::class);
-        $packeteryPickupPointFacadeStub->method('findById')->willReturn(new PacketeryPickupPoint($packeteryPickupPointData));
+        $packeteryPickupPointFacadeStub->method('findById')->willReturn(
+            new PacketeryPickupPoint('13789', $regularOpeningHours, null, null, $exceptionOpeningHours),
+        );
 
         return $packeteryPickupPointFacadeStub;
     }
@@ -1449,7 +1444,6 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
             new StoreOpeningHoursProvider($this->createStub(ClosedDayFacade::class), new InMemoryCache()),
             new AdditionalServicesDeliveryDaysExtensionCalculation(),
             $packeteryPickupPointFacade ?? $this->createStub(PacketeryPickupPointFacade::class),
-            new PacketeryPickupPointOpeningHoursProvider(),
         );
     }
 

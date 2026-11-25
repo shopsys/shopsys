@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPoint;
 use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointFacade;
-use Shopsys\FrameworkBundle\Component\Packetery\PickupPoint\PacketeryPickupPointOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -51,7 +50,6 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
         protected readonly AdditionalServicesDeliveryDaysExtensionCalculation $additionalServicesDeliveryDaysExtensionCalculation,
         protected readonly PacketeryPickupPointFacade $packeteryPickupPointFacade,
-        protected readonly PacketeryPickupPointOpeningHoursProvider $packeteryPickupPointOpeningHoursProvider,
     ) {
     }
 
@@ -433,14 +431,10 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
     ): bool {
         if (!$this->isToday($deliveryDate, $domainId)) {
-            return $this->packeteryPickupPointOpeningHoursProvider->isOpenOnDate($packeteryPickupPoint, $deliveryDate);
+            return $packeteryPickupPoint->isOpenOnDate($deliveryDate);
         }
 
-        return $this->packeteryPickupPointOpeningHoursProvider->isOpenAfterTimeOnDate(
-            $packeteryPickupPoint,
-            $deliveryDate,
-            $this->getCurrentTime($domainId),
-        );
+        return $packeteryPickupPoint->isOpenAfterTimeOnDate($deliveryDate, $this->getCurrentTime($domainId));
     }
 
     protected function isDeliveryBlockedByDayOfWeek(Transport $transport, DateTimeImmutable $deliveryDate): bool
