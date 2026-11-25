@@ -11,7 +11,14 @@ import { describe, expect, test } from 'vitest';
 const STOREFRONT_ROOT = join(__dirname, '..', '..');
 const COMPONENTS_DIRECTORY = join(STOREFRONT_ROOT, 'components');
 
-const HAND_WRITTEN_LINK_CLASS = /^(?:(?:hover|active|focus|focus-visible|disabled):)?(?:underline|text-link-[a-z-]+)$/;
+// Checked on the utility after all variants (`lg:hover:`, `group-hover/name:`, `[&>a]:`) and without the `!` modifier.
+const HAND_WRITTEN_LINK_UTILITY = /^(?:underline|text-link-[a-z-]+)$/;
+
+const isHandWrittenLinkClass = (token: string) => {
+    const utility = token.split(':').at(-1)?.replace(/^!|!$/g, '') ?? '';
+
+    return HAND_WRITTEN_LINK_UTILITY.test(utility);
+};
 
 const SHARED_LINK_COMPONENT_PATHS = [
     'components/Basic/Link/',
@@ -36,15 +43,20 @@ const OWN_LINK_STYLE_PATHS = new Set([
 
     // own interactive families with a selected state: sorting tabs, blog category pills, calendar days, accordions
     'components/Blocks/BlogSignpost/BlogSignpostCategoryLink.tsx',
+    'components/Blocks/CartSteps/CartStep.tsx',
+    'components/Blocks/Product/ProductsList/ProductListViewModeToggle.tsx',
     'components/Blocks/PromoCode/PromoCode.tsx',
     'components/Blocks/SortingBar/SortingBarTabs.tsx',
     'components/Forms/DatePicker/datePickerUtils.ts',
     'components/Pages/ProductDetail/ProductDetailGallery/ProductDetailGalleryThumbnails.tsx',
 
-    // availability keeps its status color, the card link underlines its own label
+    // availability keeps its status color, a row link marks its own label (the whole row is the link)
     'components/Blocks/Popup/AddToCartPopup.tsx',
     'components/Blocks/Product/ProductAvailability.tsx',
     'components/Blocks/ProductReviews/ProductListReviewsSummaryLink.tsx',
+    'components/Blocks/ProductReviews/ProductReviewItem.tsx',
+    'components/Forms/Dropzone/DropzoneControlled.tsx',
+    'components/Layout/Header/Cart/CartInHeaderListItem.tsx',
     'components/Pages/Cart/CartList/CartListItem.tsx',
 
     // icon actions on the product (wishlist, compare, ask a question): muted with the icon as the signal, the label
@@ -53,7 +65,8 @@ const OWN_LINK_STYLE_PATHS = new Set([
     'components/Blocks/Product/ButtonsAction/ProductQuestionButton.tsx',
     'components/Blocks/Product/ButtonsAction/ProductWishlistButton.tsx',
 
-    // waiting for a design decision: the link-colored label of a checked choice
+    // waiting for a design decision: the label of a choice reacts to hover like a link
+    'components/Blocks/Product/AdditionalServices/AdditionalServiceLabel.tsx',
     'components/Forms/Lib/LabelWrapper.tsx',
 
     // developer tools, not part of the shop
@@ -74,7 +87,7 @@ const getTsxFiles = (directory: string): string[] =>
     });
 
 const countHandWrittenLinkClasses = (source: string) =>
-    source.split(/[\s'"`{}(),]+/).filter((token) => HAND_WRITTEN_LINK_CLASS.test(token)).length;
+    source.split(/[\s'"`{}(),]+/).filter(isHandWrittenLinkClass).length;
 
 const getHandWrittenLinkClassCounts = (): Record<string, number> =>
     Object.fromEntries(
@@ -99,4 +112,32 @@ describe('link class names', () => {
             'Style text links with Link (variant, tone) or TextButton, or add the file to OWN_LINK_STYLE_PATHS with a reason',
         ).toEqual([]);
     });
+
+    test('every file allowed to style its links by hand still does so', () => {
+        const handWrittenLinkClassCounts = getHandWrittenLinkClassCounts();
+        const staleAllowedPaths = Array.from(OWN_LINK_STYLE_PATHS).filter(
+            (path) => !(path in handWrittenLinkClassCounts),
+        );
+
+        expect(staleAllowedPaths, 'Remove these files from OWN_LINK_STYLE_PATHS').toEqual([]);
+    });
+
+    // Variant chains are joined at runtime, so Tailwind does not generate CSS for these test-only class names.
+    test.each([
+        'underline',
+        'hover:underline',
+        ['lg', 'hover', 'underline'].join(':'),
+        ['group-hover/title', 'underline'].join(':'),
+        ['[&>a]', 'underline'].join(':'),
+    ])('recognizes %s as a hand-written link class', (token) => {
+        expect(isHandWrittenLinkClass(token)).toBe(true);
+        expect(isHandWrittenLinkClass(`${token}!`)).toBe(true);
+    });
+
+    test.each(['no-underline', 'hover:no-underline', 'underline-offset-2', 'text-link'])(
+        'does not report %s',
+        (token) => {
+            expect(isHandWrittenLinkClass(token)).toBe(false);
+        },
+    );
 });
