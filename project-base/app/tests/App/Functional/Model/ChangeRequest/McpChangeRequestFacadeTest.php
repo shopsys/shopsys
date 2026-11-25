@@ -86,7 +86,7 @@ class McpChangeRequestFacadeTest extends TransactionFunctionalTestCase
     {
         $mcpChangeRequestData = $this->mcpChangeRequestDataFactory->create();
         $mcpChangeRequestData->administrator = $administrator;
-        $mcpChangeRequestData->toolName = 'editPublishedBlogArticle';
+        $mcpChangeRequestData->toolName = 'editBlogArticle';
         $mcpChangeRequestData->argumentsClass = stdClass::class;
         $mcpChangeRequestData->arguments = ['blogArticleId' => 1];
         $mcpChangeRequestData->change = ['subject' => 'Blog article', 'subjectParameters' => [], 'subjectUrl' => null, 'fields' => []];

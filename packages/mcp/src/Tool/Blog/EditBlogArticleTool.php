@@ -6,12 +6,17 @@ namespace Shopsys\McpBundle\Tool\Blog;
 
 use Mcp\Capability\Attribute\McpTool;
 use Mcp\Capability\Attribute\Schema;
-use Mcp\Exception\ToolCallException;
+use Override;
 use Shopsys\McpBundle\Component\Logger\McpToolCallLogger;
+use Shopsys\McpBundle\Component\WriteTool\AbstractMcpApprovableTool;
+use Shopsys\McpBundle\Component\WriteTool\McpChange;
 
-class EditUnpublishedBlogArticleTool
+/**
+ * @extends \Shopsys\McpBundle\Component\WriteTool\AbstractMcpApprovableTool<\Shopsys\McpBundle\Tool\Blog\EditBlogArticleArguments>
+ */
+class EditBlogArticleTool extends AbstractMcpApprovableTool
 {
-    protected const string TOOL_NAME = 'editUnpublishedBlogArticle';
+    protected const string TOOL_NAME = 'editBlogArticle';
 
     public function __construct(
         protected readonly BlogArticleMcpFacade $blogArticleMcpFacade,
@@ -27,13 +32,13 @@ class EditUnpublishedBlogArticleTool
      * @param array<int, int[]> $blogCategoryIdsByDomainId
      * @param array<int, array{title?: string|null, metaDescription?: string|null, h1?: string|null}> $seoByDomainId
      * @param array<int, string> $slugsByDomainId
-     * @return array{blogArticleId: int}
+     * @return array{status: string, blogArticleId: int}|array{status: string, changeRequestId: int, message: string}
      */
     #[McpTool(
         name: self::TOOL_NAME,
-        description: 'Edits a blog article that is a draft on all domains. The change is applied immediately. Use editPublishedBlogArticle for other articles.',
+        description: 'Edits a blog article. When the article is a draft on all domains, the change is applied immediately (status "applied"). Otherwise the change is applied only after the administrator approves it in administration (status "pending_approval").',
     )]
-    public function editUnpublishedBlogArticle(
+    public function editBlogArticle(
         #[Schema(description: 'ID of the edited blog article.', minimum: 1)]
         int $blogArticleId,
         #[Schema(type: 'object', description: BlogArticleInputSchema::NAMES . ' ' . BlogArticleInputSchema::UNCHANGED_WHEN_OMITTED, additionalProperties: BlogArticleInputSchema::NAME)]
@@ -64,17 +69,40 @@ class EditUnpublishedBlogArticleTool
         );
 
         if (!$this->blogArticleMcpFacade->getById($blogArticleId)->isDraftOnAllDomains()) {
-            throw new ToolCallException('The blog article is not a draft on all domains, edit it with the tool editPublishedBlogArticle.');
+            return $this->requestApproval($arguments);
         }
 
-        $blogArticle = $this->blogArticleMcpFacade->edit($arguments);
-
         $result = [
-            'blogArticleId' => $blogArticle->getId(),
+            'status' => 'applied',
+            'blogArticleId' => $this->blogArticleMcpFacade->edit($arguments)->getId(),
         ];
 
         $this->mcpToolCallLogger->logSuccess(static::TOOL_NAME, get_object_vars($arguments), $result, $startedAt);
 
         return $result;
+    }
+
+    #[Override]
+    public static function getToolName(): string
+    {
+        return static::TOOL_NAME;
+    }
+
+    /**
+     * @param \Shopsys\McpBundle\Tool\Blog\EditBlogArticleArguments $arguments
+     */
+    #[Override]
+    public function describeChange(object $arguments): McpChange
+    {
+        return $this->blogArticleMcpFacade->describeEdit($arguments);
+    }
+
+    /**
+     * @param \Shopsys\McpBundle\Tool\Blog\EditBlogArticleArguments $arguments
+     */
+    #[Override]
+    public function apply(object $arguments): void
+    {
+        $this->blogArticleMcpFacade->edit($arguments);
     }
 }

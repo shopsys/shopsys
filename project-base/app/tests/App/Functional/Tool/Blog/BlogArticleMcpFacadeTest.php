@@ -12,8 +12,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\McpBundle\Tool\Blog\BlogArticleChangeLabel;
 use Shopsys\McpBundle\Tool\Blog\BlogArticleMcpFacade;
 use Shopsys\McpBundle\Tool\Blog\EditBlogArticleArguments;
-use Shopsys\McpBundle\Tool\Blog\EditPublishedBlogArticleTool;
-use Shopsys\McpBundle\Tool\Blog\EditUnpublishedBlogArticleTool;
+use Shopsys\McpBundle\Tool\Blog\EditBlogArticleTool;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
@@ -28,12 +27,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private EditPublishedBlogArticleTool $editPublishedBlogArticleTool;
-
-    /**
-     * @inject
-     */
-    private EditUnpublishedBlogArticleTool $editUnpublishedBlogArticleTool;
+    private EditBlogArticleTool $editBlogArticleTool;
 
     /**
      * @inject
@@ -185,22 +179,13 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         ));
     }
 
-    public function testEditUnpublishedToolRejectsPublishedArticle(): void
-    {
-        $blogArticle = $this->getPublishedBlogArticle();
-
-        $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('edit it with the tool editPublishedBlogArticle');
-
-        $this->editUnpublishedBlogArticleTool->editUnpublishedBlogArticle($blogArticle->getId(), perexes: [$this->getFirstDomainLocale() => 'New perex']);
-    }
-
-    public function testEditUnpublishedToolMakesSlugMainUrl(): void
+    public function testEditToolAppliesChangeOfDraftImmediatelyAndMakesSlugMainUrl(): void
     {
         $blogArticle = $this->getReference(BlogArticleDataFixture::BLOG_ARTICLE_DRAFT, BlogArticle::class);
 
-        $this->editUnpublishedBlogArticleTool->editUnpublishedBlogArticle($blogArticle->getId(), slugsByDomainId: [Domain::FIRST_DOMAIN_ID => 'new-draft-slug']);
+        $result = $this->editBlogArticleTool->editBlogArticle($blogArticle->getId(), slugsByDomainId: [Domain::FIRST_DOMAIN_ID => 'new-draft-slug']);
 
+        $this->assertSame('applied', $result['status']);
         $this->assertSame('new-draft-slug', $this->friendlyUrlFacade->getMainFriendlyUrlSlug(Domain::FIRST_DOMAIN_ID, 'front_blogarticle_detail', $blogArticle->getId()));
     }
 
@@ -226,19 +211,6 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $this->blogArticleMcpFacade->edit(new EditBlogArticleArguments(
             blogArticleId: $this->getPublishedBlogArticle()->getId(),
             slugsByDomainId: [Domain::FIRST_DOMAIN_ID => 'Nový článek'],
-        ));
-    }
-
-    public function testEditPublishedToolRejectsDraftArticle(): void
-    {
-        $blogArticle = $this->getReference(BlogArticleDataFixture::BLOG_ARTICLE_DRAFT, BlogArticle::class);
-
-        $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('edit it with the tool editUnpublishedBlogArticle');
-
-        $this->editPublishedBlogArticleTool->describeChange(new EditBlogArticleArguments(
-            blogArticleId: $blogArticle->getId(),
-            perexes: [$this->getFirstDomainLocale() => 'New perex'],
         ));
     }
 
