@@ -64,7 +64,7 @@ class OrderPaymentsTest extends GraphQlTestCase
     #[Group('multidomain')]
     public function testGetOrderPaymentsForOrderFromAnotherDomainIsDenied(): void
     {
-        $orderOnSecondDomain = $this->getReference(OrderDataFixture::ORDER_PREFIX . 24, Order::class);
+        $orderOnSecondDomain = $this->getReference(OrderDataFixture::ORDER_ON_SECOND_DOMAIN, Order::class);
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/OrderPaymentsQuery.graphql',
             [

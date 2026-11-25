@@ -41,6 +41,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const string ORDER_CANCELLED = 'order_cancelled';
     public const string ORDER_WITH_WITHDRAWAL_REQUEST = 'order_with_withdrawal_request';
     public const string ORDER_DELIVERED_YESTERDAY = 'order_delivered_yesterday';
+    public const string ORDER_ON_SECOND_DOMAIN = 'order_on_second_domain';
     public const string ORDER_DELIVERED_MONTH_AGO = 'order_delivered_month_ago';
     public const string ORDER_CREATED_BY_VITEK = 'order_created_by_vitek';
     public const string ORDER_WITH_GIFT_VOUCHER_PRODUCTS = 'order_with_gift_voucher_products';
@@ -70,8 +71,13 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $this->loadDistinct($domainId);
+                $this->loadCompletedOrdersOfCustomersForSecondDomain($domainId);
             } else {
                 $this->loadDefault($domainId);
+            }
+
+            if ($domainId === Domain::FIRST_DOMAIN_ID) {
+                $this->loadCompletedOrdersOfCustomersForFirstDomain($domainId);
             }
         }
 
@@ -846,7 +852,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->fillCurrencyFieldsFromCurrency($domainDefaultCurrency);
         $orderData->createdAt = (new DatePoint())->modify('-7 day')->setTime(11, 10, 47);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '2' => 2,
@@ -856,10 +862,67 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             PaymentDataFixture::PAYMENT_LATER,
             $customerUser,
         );
+        $this->addReference(self::ORDER_ON_SECOND_DOMAIN, $order);
 
         $this->createOrderWithPromoCodeAndRounding($domainDefaultCurrency, $domainId);
 
         $this->createDeliveredYesterdayOrder($domainId);
+    }
+
+    private function loadCompletedOrdersOfCustomersForFirstDomain(int $domainId): void
+    {
+        foreach (['no-reply.5@shopsys.com', 'no-reply.9@shopsys.com', 'no-reply.10@shopsys.com', 'no-reply.11@shopsys.com', 'no-reply.12@shopsys.com', 'no-reply.13@shopsys.com'] as $email) {
+            $this->createCompletedOrderForCustomerUser($email, $domainId, TransportDataFixture::TRANSPORT_PPL, PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        }
+
+        $this->createCompletedOrderForCustomerUser('no-reply.14@shopsys.com', $domainId, TransportDataFixture::TRANSPORT_PERSONAL, PaymentDataFixture::PAYMENT_CASH);
+        $this->createCompletedOrderForCustomerUser('no-reply.15@shopsys.com', $domainId, TransportDataFixture::TRANSPORT_PACKETERY, PaymentDataFixture::PAYMENT_BANK_TRANSFER, 'Z2026112515');
+    }
+
+    private function loadCompletedOrdersOfCustomersForSecondDomain(int $domainId): void
+    {
+        foreach (['no-reply.4@shopsys.com', 'no-reply.6@shopsys.com', 'no-reply.8@shopsys.com', 'no-reply.17@shopsys.com'] as $email) {
+            $this->createCompletedOrderForCustomerUser($email, $domainId, TransportDataFixture::TRANSPORT_PPL, PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        }
+    }
+
+    private function createCompletedOrderForCustomerUser(
+        string $email,
+        int $domainId,
+        string $transportReferenceName,
+        string $paymentReferenceName,
+        ?string $trackingNumber = null,
+    ): void {
+        $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+        $orderData = $this->orderDataFactory->create();
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
+        $orderData->firstName = $customerUser->getFirstName();
+        $orderData->lastName = $customerUser->getLastName();
+        $orderData->email = $customerUser->getEmail();
+        $orderData->telephone = $customerUser->getTelephoneData();
+        $orderData->trackingNumber = $trackingNumber;
+        $orderData->companyName = $billingAddress->getCompanyName();
+        $orderData->companyNumber = $billingAddress->getCompanyNumber();
+        $orderData->street = $billingAddress->getStreet();
+        $orderData->city = $billingAddress->getCity();
+        $orderData->postcode = $billingAddress->getPostcode();
+        $orderData->country = $billingAddress->getCountry();
+        $orderData->deliveryAddressSameAsBillingAddress = true;
+        $orderData->domainId = $domainId;
+        $orderData->fillCurrencyFieldsFromCurrency($this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
+        $orderData->createdAt = (new DatePoint('-2 day'))->setTime(10, 15, 0);
+
+        $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
+            ],
+            $transportReferenceName,
+            $paymentReferenceName,
+            $customerUser,
+        );
     }
 
     /**
