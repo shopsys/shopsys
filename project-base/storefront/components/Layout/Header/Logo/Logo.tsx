@@ -1,9 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { HEADER_THEME } from 'config/headerTheme';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 import logo from '/public/images/logo.svg';
+import lightHeaderLogo from '/public/images/logo-light.svg';
+
+const headerLogos = { dark: logo, light: lightHeaderLogo };
 
 type LogoProps = {
     imageClassName?: string;
@@ -28,7 +32,7 @@ export const Logo: FC<LogoProps> = ({ imageClassName }) => {
                     'h-auto vl:w-40 w-32 max-w-full group-focus-visible:brightness-0',
                     imageClassName,
                 )}
-                src={logo}
+                src={headerLogos[HEADER_THEME]}
             />
         </ExtendedNextLink>
     );

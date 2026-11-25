@@ -19,8 +19,8 @@ export const NavigationItemContent: FC<NavigationItemContentProps> = ({ isDropdo
             >
                 <ArrowIcon
                     className={twJoin(
-                        'size-6 text-link-inverted-default transition',
-                        isMenuOpened && 'group-hover:text-link-inverted-hovered',
+                        'size-6 text-header-foreground transition',
+                        isMenuOpened && 'group-hover:text-header-hovered',
                     )}
                 />
             </span>

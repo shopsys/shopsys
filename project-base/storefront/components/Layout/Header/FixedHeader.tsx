@@ -1,5 +1,6 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
+import { HEADER_THEME } from 'config/headerTheme';
 import { TIDs } from 'cypress/tids';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import type { RefCallback } from 'react';
@@ -23,12 +24,13 @@ export const FixedHeader: FC<FixedHeaderProps> = ({ fixedHeaderRef, isVisible, n
     return (
         <div
             className={twJoin(
-                'fixed inset-x-0 top-0 z-1040 bg-background-brand shadow-lg',
+                'fixed inset-x-0 top-0 z-1040 bg-header-background shadow-lg',
                 RemoveScroll.classNames.fullWidth,
                 isVisible
                     ? 'motion-safe:animate-[fixedHeaderSlideDown_200ms_ease-out]'
                     : 'pointer-events-none invisible -translate-y-full opacity-0',
             )}
+            data-header-theme={HEADER_THEME}
             data-tid={isVisible ? TIDs.fixed_header : undefined}
             inert={!isVisible || undefined}
             ref={fixedHeaderRef}

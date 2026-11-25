@@ -11,6 +11,7 @@ import {
 } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomNavigationItem';
 import { MobileBottomSearchWithOverlay } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomSearchWithOverlay';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { HEADER_THEME } from 'config/headerTheme';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -83,7 +84,8 @@ export const MobileBottomNavigation: FC = () => {
         <>
             <nav
                 aria-label={t('Mobile bottom navigation', { ns: 'accessibility' })}
-                className="pointer-events-auto relative z-10 vl:hidden bg-background-brand p-1 pb-[calc(0.25rem+env(safe-area-inset-bottom)+1px)] shadow-[0_-8px_24px_rgba(0,0,0,0.35)]"
+                data-header-theme={HEADER_THEME}
+                className="pointer-events-auto relative z-10 vl:hidden bg-header-background p-1 pb-[calc(0.25rem+env(safe-area-inset-bottom)+1px)] shadow-[0_-8px_24px_rgba(0,0,0,0.35)]"
             >
                 <ul className="grid grid-cols-5">
                     <MobileBottomNavigationLink href={homeUrl} icon={HomeIcon} label={t('Home')} />

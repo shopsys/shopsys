@@ -380,6 +380,11 @@
     --color-fill-most: var(--color-gray-200);
     --color-fill-accent-less: var(--color-secondary-100);
 
+    --color-header-background: var(--color-background-brand);
+    --color-header-foreground: var(--color-link-inverted-default);
+    --color-header-hovered: var(--color-link-inverted-hovered);
+    --color-header-search: var(--color-base-white);
+
     --color-footer-bg-dark: var(--color-background-brand-less);
     --color-footer-bg-light: var(--color-brand-50);
 
@@ -470,3 +475,10 @@
     --color-text-success: var(--color-green-800);
     --color-text-warning: var(--color-orange-700);
   }
+
+[data-header-theme='light'] {
+    --color-header-background: var(--color-background-default);
+    --color-header-foreground: var(--color-text-default);
+    --color-header-hovered: var(--color-link-hovered);
+    --color-header-search: var(--color-input-border-default);
+}

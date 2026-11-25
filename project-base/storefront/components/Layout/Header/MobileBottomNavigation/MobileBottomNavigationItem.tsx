@@ -2,7 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import type { MouseEventHandler } from 'react';
 
 const mobileBottomNavigationItemClassName =
-    'flex min-h-14 w-full flex-col items-center justify-center gap-1 rounded-md px-1 text-xs text-text-inverted no-underline';
+    'flex min-h-14 w-full flex-col items-center justify-center gap-1 rounded-md px-1 text-xs text-header-foreground no-underline';
 
 type MobileBottomNavigationLinkProps = {
     href: string;

@@ -12,6 +12,7 @@ import { Navigation } from 'components/Layout/Header/Navigation/Navigation';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { HEADER_THEME } from 'config/headerTheme';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -26,7 +27,7 @@ const Index: FC = () => {
 
             <NotificationBars />
 
-            <header>
+            <header data-header-theme={HEADER_THEME}>
                 <Webline className="relative" wrapperClassName="gjs-template-header-bg">
                     <div className="flex flex-wrap items-center gap-x-1 gap-y-3 py-3 lg:gap-x-7 lg:pt-6 lg:pb-5">
                         <Logo />

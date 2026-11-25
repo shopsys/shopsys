@@ -3,7 +3,7 @@
 @layer components {
     /* header background */
     .gjs-template-header-bg {
-        @apply bg-background-brand;
+        @apply bg-header-background;
     }
 
     /* header search button */

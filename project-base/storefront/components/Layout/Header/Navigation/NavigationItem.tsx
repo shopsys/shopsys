@@ -67,9 +67,9 @@ export const NavigationItem: FC<NavigationItemProps> = ({
     const isExternalLink = link !== null && (link.startsWith('http://') || link.startsWith('https://'));
     const navigationItemClassName = twMergeCustom(
         'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-sm vl:text-base group-first-of-type:pl-0 group-last-of-type:pr-0',
-        'text-link-inverted-default no-underline',
-        'hover:text-link-inverted-hovered hover:no-underline group-hover:text-link-inverted-hovered group-hover:no-underline',
-        'active:text-link-inverted-hovered',
+        'text-header-foreground no-underline',
+        'hover:text-header-hovered hover:no-underline group-hover:text-header-hovered group-hover:no-underline',
+        'active:text-header-hovered',
         'disabled:text-link-inverted-disabled',
         itemClassName,
     );

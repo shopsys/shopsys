@@ -1,3 +1,4 @@
+import { HEADER_THEME } from 'config/headerTheme';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { Footer } from './Footer/Footer';
 import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
@@ -10,7 +11,7 @@ export const ErrorLayout: FC = ({ children }) => {
         <div className="flex h-full min-h-screen flex-col">
             <AccessibilityNavigation />
 
-            <header className="bg-background-brand">
+            <header data-header-theme={HEADER_THEME} className="bg-header-background">
                 <Header simpleHeader />
             </header>
 
