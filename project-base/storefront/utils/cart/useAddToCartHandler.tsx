@@ -13,6 +13,7 @@ type UseAddToCartHandlerProps = {
     listIndex?: number;
     onProductAddedToCart?: OnProductAddedToCart;
     onAddToCartFlowStateChange?: (isPending: boolean) => void;
+    onChooseAnotherVariant?: () => void;
 };
 
 export const useAddToCartHandler = ({
@@ -24,6 +25,7 @@ export const useAddToCartHandler = ({
     listIndex,
     onProductAddedToCart,
     onAddToCartFlowStateChange,
+    onChooseAnotherVariant,
 }: UseAddToCartHandlerProps) => {
     const { addToCart, isAddingToCart } = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -64,9 +66,10 @@ export const useAddToCartHandler = ({
                     <AddToCartPopup
                         key={addToCartResult.addProductResult.cartItem.uuid}
                         addedCartItem={addToCartResult.addProductResult.cartItem}
+                        onChooseAnotherVariant={onChooseAnotherVariant}
                     />,
                 );
-            } else {
+            } else if (!document.querySelector('[role="dialog"], [role="alertdialog"]')) {
                 clearStoredFocus();
             }
         } finally {

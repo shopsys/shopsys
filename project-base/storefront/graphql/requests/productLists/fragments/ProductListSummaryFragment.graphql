@@ -5,4 +5,5 @@ fragment ProductListSummaryFragment on ProductList {
         totalCount
     }
     productUuids
+    mainVariantUuids
 }

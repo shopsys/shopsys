@@ -40,6 +40,7 @@ const setup = (productListType: TypeProductListTypeEnum) => {
                               uuid: 'list-uuid',
                               products: { __typename: 'ProductConnection', totalCount: itemsCount },
                               productUuids: Array.from({ length: itemsCount }, (_, i) => `product-${i}`),
+                              mainVariantUuids: [],
                           },
             },
         }),

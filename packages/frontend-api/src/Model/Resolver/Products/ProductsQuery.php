@@ -123,6 +123,14 @@ class ProductsQuery extends AbstractQuery
     }
 
     /**
+     * @return string[]
+     */
+    public function mainVariantUuidsByProductListQuery(ProductList $productList): array
+    {
+        return $this->productListFacade->getMainVariantUuidsByProductList($productList);
+    }
+
+    /**
      * @param string[] $catnums
      */
     public function productsByCatnumsQuery(array $catnums): Promise

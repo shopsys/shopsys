@@ -38,6 +38,8 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
     highlightBadgeText,
     isProductInComparison,
     isProductInWishlist,
+    isComparisonVariantSelection,
+    isWishlistVariantSelection,
     listIndex,
     onProductClick,
     product,
@@ -166,6 +168,8 @@ export const ProductListItemListView: FC<ProductListItemListViewProps> = ({
                                 allowKeyboardFocus={allowKeyboardFocus}
                                 isProductInComparison={isProductInComparison}
                                 isProductInWishlist={isProductInWishlist}
+                                isComparisonVariantSelection={isComparisonVariantSelection}
+                                isWishlistVariantSelection={isWishlistVariantSelection}
                                 productName={product.fullName}
                                 toggleProductInComparison={toggleProductInComparison}
                                 toggleProductInWishlist={toggleProductInWishlist}

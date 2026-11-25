@@ -3122,6 +3122,8 @@ export type TypeProductFilterOptions = {
 
 export type TypeProductList = {
   __typename?: 'ProductList';
+  /** UUIDs of main variants whose variants are in the list, including products that are not visible on the current domain */
+  mainVariantUuids: Array<Scalars['Uuid']['output']>;
   /** All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain */
   productUuids: Array<Scalars['Uuid']['output']>;
   /** Paginated products of the list that are visible on the current domain, in the order of the list */

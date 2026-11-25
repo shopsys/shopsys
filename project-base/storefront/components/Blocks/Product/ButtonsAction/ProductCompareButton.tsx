@@ -12,6 +12,7 @@ type ProductCompareButtonProps = {
     isProductInComparison: boolean;
     toggleProductInComparison: () => void;
     tabIndex?: number;
+    isVariantSelection?: boolean;
 };
 
 export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
@@ -22,6 +23,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     isProductInComparison,
     toggleProductInComparison,
     tabIndex = 0,
+    isVariantSelection = false,
 }) => {
     const { t } = useTranslation();
     const buttonText = isWithShortText
@@ -31,9 +33,12 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
         : isProductInComparison
           ? t('Remove from comparison')
           : t('Compare');
-    const tooltipLabel = isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison');
+    const toggleTooltipLabel = isProductInComparison
+        ? t('Remove product from comparison')
+        : t('Add product to comparison');
+    const tooltipLabel = isVariantSelection ? t('Choose a variant to compare') : toggleTooltipLabel;
 
-    const ariaLabel = isProductInComparison
+    const toggleAriaLabel = isProductInComparison
         ? t('Remove from comparison product {{ productName }}', {
               productName: productName,
               ns: 'accessibility',
@@ -42,6 +47,9 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
               ns: 'accessibility',
               productName: productName,
           });
+    const ariaLabel = isVariantSelection
+        ? t('Choose a variant of {{ productName }} to compare', { ns: 'accessibility', productName })
+        : toggleAriaLabel;
     const ComparisonIcon = isProductInComparison ? CompareFilledIcon : CompareIcon;
 
     if (!isWithText) {

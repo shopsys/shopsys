@@ -27,6 +27,8 @@ export const useProductList = (
     const [, moveMutation] = useMoveProductInListMutation();
 
     const isProductInList = (uuid: string) => !!state.summary?.productUuids.includes(uuid);
+    const isProductOrItsVariantInList = (uuid: string) =>
+        isProductInList(uuid) || !!state.summary?.mainVariantUuids.includes(uuid);
 
     const clearList = async () => {
         const selection = state.getSelection();
@@ -118,6 +120,7 @@ export const useProductList = (
     return {
         productListSummary: state.summary,
         isProductInList,
+        isProductOrItsVariantInList,
         removeList,
         toggleProductInList,
         moveProduct,

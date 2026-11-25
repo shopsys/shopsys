@@ -32,7 +32,7 @@ export type TypeRemoveProductFromListMutationVariables = Exact<{
 }>;
 
 
-export type TypeRemoveProductFromListMutation = { RemoveProductFromList: { __typename: 'ProductList', uuid: string, productUuids: Array<string>, products: { totalCount: number } } | null };
+export type TypeRemoveProductFromListMutation = { RemoveProductFromList: { __typename: 'ProductList', uuid: string, productUuids: Array<string>, mainVariantUuids: Array<string>, products: { totalCount: number } } | null };
 
 
 export const RemoveProductFromListMutationDocument = gql`

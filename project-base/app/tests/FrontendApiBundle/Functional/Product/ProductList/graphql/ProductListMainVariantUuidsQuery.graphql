@@ -1,0 +1,6 @@
+query ProductListMainVariantUuidsQuery($uuid: Uuid, $type: ProductListTypeEnum!) {
+    productList(input: {uuid: $uuid, type: $type}) {
+        productUuids
+        mainVariantUuids
+    }
+}

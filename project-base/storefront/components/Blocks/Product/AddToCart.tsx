@@ -31,6 +31,8 @@ type AddToCartProps = {
     ariaPrice: string;
     ariaUnit: string;
     onProductAddedToCart?: OnProductAddedToCart;
+    onAddToCartFlowStateChange?: (isPending: boolean) => void;
+    onChooseAnotherVariant?: () => void;
 };
 
 type AddToCartContentProps = AddToCartProps & Pick<CurrentCartType, 'cart' | 'isCartFetchingOrUnavailable'>;
@@ -51,6 +53,8 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
     ariaPrice,
     ariaUnit,
     onProductAddedToCart,
+    onAddToCartFlowStateChange,
+    onChooseAnotherVariant,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
@@ -66,6 +70,8 @@ export const AddToCartContent: FC<AddToCartContentProps> = ({
         isWithSpinbox: false,
         listIndex,
         onProductAddedToCart,
+        onAddToCartFlowStateChange,
+        onChooseAnotherVariant,
     });
 
     const { ariaLabel, onFocusHandler } = useAddToCartAriaLabel({

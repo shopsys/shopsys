@@ -2573,6 +2573,8 @@ type ProductFilterOptions {
 }
 
 type ProductList {
+  "UUIDs of main variants whose variants are in the list, including products that are not visible on the current domain"
+  mainVariantUuids: [Uuid!]!
   "Paginated products of the list that are visible on the current domain, in the order of the list"
   products(after: String, before: String, first: Int, last: Int): ProductConnection!
   "All UUIDs of products in the list, in the order of the list, including products that are not visible on the current domain"

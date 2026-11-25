@@ -36,6 +36,8 @@ export type ProductItemProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     isProductInComparison: boolean;
     isProductInWishlist: boolean;
+    isComparisonVariantSelection?: boolean;
+    isWishlistVariantSelection?: boolean;
     toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
     visibleItemsConfig?: ProductVisibleItemsConfigType;
@@ -60,6 +62,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             gtmMessageOrigin,
             isProductInComparison,
             isProductInWishlist,
+            isComparisonVariantSelection,
+            isWishlistVariantSelection,
             toggleProductInComparison,
             toggleProductInWishlist,
             className,
@@ -98,8 +102,10 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
                     highlightBadgeText={highlightBadgeText}
+                    isComparisonVariantSelection={isComparisonVariantSelection}
                     isProductInComparison={isProductInComparison}
                     isProductInWishlist={isProductInWishlist}
+                    isWishlistVariantSelection={isWishlistVariantSelection}
                     listIndex={listIndex}
                     product={product}
                     shouldShowProductActionSkeleton={shouldShowProductActionSkeleton}
@@ -131,6 +137,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             allowKeyboardFocus={allowKeyboardFocus}
                             isProductInComparison={isProductInComparison}
                             isProductInWishlist={isProductInWishlist}
+                            isComparisonVariantSelection={isComparisonVariantSelection}
+                            isWishlistVariantSelection={isWishlistVariantSelection}
                             productName={product.fullName}
                             toggleProductInComparison={toggleProductInComparison}
                             toggleProductInWishlist={toggleProductInWishlist}

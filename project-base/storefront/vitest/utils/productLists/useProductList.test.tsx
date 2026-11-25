@@ -61,6 +61,7 @@ const setup = (
     let failedPageCursor: string | undefined;
     const pageInputs = { page: 1, loadMore: 0 };
     let products = ['first-product', 'second-product', 'third-product'];
+    let mainVariantUuids: string[] = [];
     let mutationError: string | null = null;
     let countOffset = 0;
     let listUuid = 'list-uuid';
@@ -73,6 +74,7 @@ const setup = (
                   __typename: 'ProductList',
                   uuid: listUuid,
                   productUuids: products,
+                  mainVariantUuids,
                   products: {
                       __typename: 'ProductConnection',
                       totalCount: products.length + countOffset,
@@ -247,6 +249,9 @@ const setup = (
         },
         setProducts: (ids: string[]) => {
             products = ids;
+        },
+        setMainVariantUuids: (uuids: string[]) => {
+            mainVariantUuids = uuids;
         },
         setCountOffset: (offset: number) => {
             countOffset = offset;
@@ -652,6 +657,40 @@ describe.each([TypeProductListTypeEnum.Wishlist, TypeProductListTypeEnum.Compari
         await waitFor(() => expect(result.current.count).toBe(5));
         expect(result.current.list.isProductInList('fourth-product')).toBe(true);
         expect(result.current.list.isProductInList('fifth-product')).toBe(true);
+    });
+
+    test('recognizes a product family by itself or by any of its variants in the list', async () => {
+        const { result, setProducts, setMainVariantUuids } = setup(type);
+        await waitFor(() => expect(result.current.count).toBe(3));
+        setProducts(['blue-variant', 'stored-family', 'regular']);
+        setMainVariantUuids(['tv']);
+        act(() => result.current.refresh());
+
+        await waitFor(() => expect(result.current.list.isProductOrItsVariantInList('tv')).toBe(true));
+        expect(result.current.list.isProductInList('tv')).toBe(false);
+        expect(result.current.list.isProductOrItsVariantInList('stored-family')).toBe(true);
+        expect(result.current.list.isProductOrItsVariantInList('regular')).toBe(true);
+        expect(result.current.list.isProductOrItsVariantInList('other-family')).toBe(false);
+    });
+
+    test('rejects a duplicate change of a product that is still being saved', async () => {
+        const { result, deferMutation } = setup(type);
+        await waitFor(() => expect(result.current.count).toBe(3));
+        let finish!: () => void;
+        deferMutation(
+            new Promise<void>((resolve) => {
+                finish = resolve;
+            }),
+        );
+        act(() => {
+            expect(result.current.list.toggleProductInList('fourth-product')).toBeInstanceOf(Promise);
+            expect(result.current.list.toggleProductInList('fourth-product')).toBeNull();
+            expect(result.current.list.toggleProductInList('fifth-product')).toBeInstanceOf(Promise);
+        });
+        await act(async () => {
+            finish();
+        });
+        await waitFor(() => expect(result.current.count).toBe(5));
     });
 
     test('rejects a product change while clearing instead of leaving an unfinished operation', async () => {

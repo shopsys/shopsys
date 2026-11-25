@@ -125,12 +125,42 @@ final class ProductListProductsTest extends GraphQlTestCase
         $this->assertUserError($response, 'product-filter-options-not-supported');
     }
 
+    public function testMainVariantOfListedVariantsIsExposedOnce(): void
+    {
+        $productListType = ProductListTypeEnum::WISHLIST;
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
+        [$firstVariant, $secondVariant] = $mainVariant->getVariants();
+        $regularProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::PRODUCT_IDS[0], Product::class);
+        $productListUuid = $this->addProductsToList($productListType, [$firstVariant, $secondVariant, $regularProduct]);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListMainVariantUuidsQuery.graphql', [
+            'uuid' => $productListUuid,
+            'type' => $productListType,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'productList');
+
+        $this->assertCount(3, $data['productUuids']);
+        $this->assertSame([$mainVariant->getUuid()], $data['mainVariantUuids']);
+    }
+
     private function createProductList(string $productListType): string
+    {
+        $products = array_map(
+            fn (int $productId): Product => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId, Product::class),
+            array_reverse(self::PRODUCT_IDS),
+        );
+
+        return $this->addProductsToList($productListType, $products);
+    }
+
+    /**
+     * @param \App\Model\Product\Product[] $products
+     */
+    private function addProductsToList(string $productListType, array $products): string
     {
         $productListUuid = Uuid::uuid4()->toString();
 
-        foreach (array_reverse(self::PRODUCT_IDS) as $productId) {
-            $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId, Product::class);
+        foreach ($products as $product) {
             $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
                 'productListUuid' => $productListUuid,
                 'productUuid' => $product->getUuid(),

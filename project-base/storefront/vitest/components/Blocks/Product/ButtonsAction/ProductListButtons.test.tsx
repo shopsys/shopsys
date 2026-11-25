@@ -48,6 +48,28 @@ const buttonScenarios: { button: ReactElement; tooltipLabel: string }[] = [
         ),
         tooltipLabel: 'Remove product from wishlist',
     },
+    {
+        button: (
+            <ProductCompareButton
+                isProductInComparison
+                isVariantSelection
+                productName="Test product"
+                toggleProductInComparison={vi.fn()}
+            />
+        ),
+        tooltipLabel: 'Choose a variant to compare',
+    },
+    {
+        button: (
+            <ProductWishlistButton
+                isProductInWishlist
+                isVariantSelection
+                productName="Test product"
+                toggleProductInWishlist={vi.fn()}
+            />
+        ),
+        tooltipLabel: 'Choose a variant for wishlist',
+    },
 ];
 
 const activeButtonScenarios: { button: ReactElement; name: string }[] = [
@@ -148,4 +170,30 @@ describe('Product list action buttons', () => {
             expect(screen.getByRole('button')).not.toHaveAttribute('aria-haspopup');
         },
     );
+
+    test('names the comparison and wishlist variant selections differently for screen readers', () => {
+        render(
+            <>
+                <ProductCompareButton
+                    isVariantSelection
+                    isProductInComparison={false}
+                    productName="Test product"
+                    toggleProductInComparison={vi.fn()}
+                />
+                <ProductWishlistButton
+                    isVariantSelection
+                    isProductInWishlist={false}
+                    productName="Test product"
+                    toggleProductInWishlist={vi.fn()}
+                />
+            </>,
+        );
+
+        expect(
+            screen.getByRole('button', { name: 'Choose a variant of {{ productName }} to compare' }),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole('button', { name: 'Choose a variant of {{ productName }} for wishlist' }),
+        ).toBeInTheDocument();
+    });
 });
