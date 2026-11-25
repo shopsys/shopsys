@@ -308,6 +308,6 @@ protected function setUp(): void
 
 ## Configuration
 
-- **Frontend**: `project-base/storefront/vitest.config.ts`
-- **Backend**: `project-base/phpunit.xml`
-- **Acceptance**: `project-base/tests/cypress.config.ts`
+- **Frontend**: `project-base/storefront/vitest.config.mjs`
+- **Backend**: `project-base/app/phpunit.xml`
+- **Acceptance**: `project-base/storefront/cypress/cypress.config.ts`
