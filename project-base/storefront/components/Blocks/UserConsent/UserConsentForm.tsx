@@ -17,7 +17,7 @@ type UserConsentFormProps = {
 
 export const UserConsentForm: FC<UserConsentFormProps> = ({ layout = 'default', onSetCallback }) => {
     const { t } = useTranslation();
-    const [formProviderMethods] = useUserConsentForm();
+    const formProviderMethods = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
     const isCompact = layout === 'compact';

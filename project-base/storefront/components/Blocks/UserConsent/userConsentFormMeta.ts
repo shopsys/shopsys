@@ -1,25 +1,31 @@
+import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { usePersistStore } from 'store/usePersistStore';
+import { usePersistStoreApi } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 import { FormMeta } from 'types/formMeta';
 import { createFields } from 'utils/forms/createFields';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
-import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
-export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserConsentFormType] => {
-    const userConsent = usePersistStore((store) => store.userConsent);
+const emptyConsent: UserConsentFormType = {
+    statistics: false,
+    marketing: false,
+    preferences: false,
+};
 
-    const defaultValues = userConsent ?? {
-        statistics: false,
-        marketing: false,
-        preferences: false,
-    };
-    const formProviderMethods = useFormWrapper(undefined, defaultValues);
+export const useUserConsentForm = (): UseFormReturn<UserConsentFormType> => {
+    const store = usePersistStoreApi();
+    const formProviderMethods = useFormWrapper(undefined, emptyConsent);
+    const { reset } = formProviderMethods;
 
-    useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
+    useEffect(() => {
+        const { userConsent } = store.getState();
+        if (userConsent) {
+            reset(userConsent);
+        }
+    }, [store, reset]);
 
-    return [formProviderMethods, defaultValues];
+    return formProviderMethods;
 };
 
 export const useUserConsentFormMeta = (): FormMeta<UserConsentFormType> => {
