@@ -74,6 +74,7 @@ mutation CreateFullOrder(
                 product {
                     uuid
                 }
+                remainingComplaintQuantity
             }
             firstName
             lastName

@@ -56,6 +56,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         defaultDeliveryAddressChecked,
         user?.email || '',
         isCreationWithoutOrder,
+        orderItem?.remainingComplaintQuantity,
     );
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
@@ -74,13 +75,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     const complaintResolutionsAsOptions = useComplaintResolutionsAsSelectOptions();
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
 
-    const [deliveryAddressUuid, resolution] = useWatch({
-        name: [formMeta.fields.deliveryAddressUuid.name, formMeta.fields.resolution.name],
+    const [deliveryAddressUuid, preferredResolution] = useWatch({
+        name: [formMeta.fields.deliveryAddressUuid.name, formMeta.fields.preferredResolution.name],
         control: formProviderMethods.control,
     });
 
     const isNewDeliveryAddressSelected = deliveryAddressUuid === '';
-    const isMoneyBackResolutionSelected = isResolutionMoneyReturn(resolution);
+    const isMoneyBackResolutionSelected = isResolutionMoneyReturn(preferredResolution);
 
     const handleChangeDeliveryAddressForComplaint = (value: string) => {
         setValue(formMeta.fields.deliveryAddressUuid.name, value);
@@ -158,7 +159,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                 deliveryAddress,
                 email: complaintFormData.email,
                 manualDocumentNumber: complaintFormData.manualDocumentNumber,
-                resolution: complaintFormData.resolution.value,
+                preferredResolution: complaintFormData.preferredResolution.value,
                 bankAccountNumber: complaintFormData.bankAccountNumber ?? null,
             },
         });
@@ -287,16 +288,16 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             <FormHeading>{t('Resolution')}</FormHeading>
 
                             <Controller
-                                name={formMeta.fields.resolution.name}
+                                name={formMeta.fields.preferredResolution.name}
                                 render={({ fieldState: { error }, field }) => (
                                     <FormLine>
                                         <Select
                                             isRequired
                                             ariaLabel={t('Select resolution', { ns: 'accessibility' })}
                                             isDisabled={isSubmitting}
-                                            label={formMeta.fields.resolution.label}
+                                            label={formMeta.fields.preferredResolution.label}
                                             options={complaintResolutionsAsOptions}
-                                            tid={`${formMeta.formName}-${formMeta.fields.resolution.name}`}
+                                            tid={`${formMeta.formName}-${formMeta.fields.preferredResolution.name}`}
                                             activeOption={complaintResolutionsAsOptions.find(
                                                 (option) => option.value === field.value.value,
                                             )}

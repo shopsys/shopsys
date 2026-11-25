@@ -3,7 +3,7 @@ fragment ComplaintListItemFragment on Complaint {
     number
     createdAt
     status
-    resolution {
+    preferredResolution {
         name
     }
     items {

@@ -57,7 +57,7 @@ class ComplaintDataFactory
         $complaintData->deliveryCountry = $complaint->getDeliveryCountry();
         $complaintData->email = $complaint->getEmail();
         $complaintData->manualDocumentNumber = $complaint->getManualDocumentNumber();
-        $complaintData->resolution = $complaint->getResolution();
+        $complaintData->preferredResolution = $complaint->getPreferredResolution();
         $complaintData->bankAccountNumber = $complaint->getBankAccountNumber();
 
         foreach ($complaint->getItems() as $complaintItem) {

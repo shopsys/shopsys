@@ -72,7 +72,7 @@ test('refreshes an already loaded complaint list after an identity-only mutation
                                           number: 'COMPLAINT-001',
                                           createdAt: '2026-01-01T00:00:00+00:00',
                                           status: 'New',
-                                          resolution: { __typename: 'ComplaintResolution', name: 'Repair' },
+                                          preferredResolution: { __typename: 'ComplaintResolution', name: 'Repair' },
                                           items: [],
                                       },
                                   },
@@ -96,7 +96,7 @@ test('refreshes an already loaded complaint list after an identity-only mutation
             .mutation<TypeCreateComplaint, TypeCreateComplaintVariables>(CreateComplaintDocument, {
                 input: {
                     email: 'customer@example.com',
-                    resolution: 'repair',
+                    preferredResolution: 'repair',
                     items: [{ manualComplaintItemName: 'Product', quantity: 1, description: 'Does not work' }],
                     deliveryAddress: {
                         firstName: 'Test',

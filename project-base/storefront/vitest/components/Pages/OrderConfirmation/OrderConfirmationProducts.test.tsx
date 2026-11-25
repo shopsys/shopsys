@@ -66,6 +66,7 @@ const createItem = (
     name: 'Purchased item',
     type,
     quantity: 3,
+    remainingComplaintQuantity: 3,
     unit: 'pcs',
     relatedItems: [],
     unitPrice: { __typename: 'Price', priceWithVat: unitPrice, priceWithoutVat: unitPrice, vatAmount: '0' },

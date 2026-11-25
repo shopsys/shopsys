@@ -958,8 +958,8 @@ export type TypeComplaint = {
   number: Scalars['String']['output'];
   /** Order for which the complaint was created */
   order: Maybe<TypeOrder>;
-  /** Resolution of the complaint */
-  resolution: TypeComplaintResolution;
+  /** Resolution of the complaint preferred by the customer */
+  preferredResolution: TypeComplaintResolution;
   /** Status of the complaint */
   status: Scalars['String']['output'];
   /** UUID */
@@ -1012,7 +1012,7 @@ export type TypeComplaintInput = {
   /** UUID of the order */
   orderUuid?: InputMaybe<Scalars['Uuid']['input']>;
   /** Chosen resolution from complaintResolutionQuery */
-  resolution: Scalars['String']['input'];
+  preferredResolution: Scalars['String']['input'];
 };
 
 export type TypeComplaintItem = {
@@ -2400,6 +2400,8 @@ export type TypeOrderItem = {
   quantity: Scalars['Int']['output'];
   /** Order items related to this order item (e.g. additional services of a product item) */
   relatedItems: Array<TypeOrderItem>;
+  /** Quantity still available for complaint after subtracting quantities claimed by complaints that are unresolved or resolved by money return */
+  remainingComplaintQuantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;
   /** Transport method applied to the order */

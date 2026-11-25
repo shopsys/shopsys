@@ -30,7 +30,7 @@ class ComplaintDataApiFactory
         string $number,
         ?Order $order,
         array $complaintItems,
-        string $resolution,
+        string $preferredResolution,
         ?string $bankAccountNumber = null,
         ?CustomerUser $customerUser = null,
     ): ComplaintData {
@@ -41,7 +41,7 @@ class ComplaintDataApiFactory
         $complaintData->order = $order;
         $complaintData->manualDocumentNumber = $input['manualDocumentNumber'];
         $complaintData->domainId = $order?->getDomainId() ?? $this->domain->getId();
-        $complaintData->resolution = $resolution;
+        $complaintData->preferredResolution = $preferredResolution;
         $complaintData->bankAccountNumber = $bankAccountNumber;
         $complaintData->customerUser = $customerUser;
         $complaintData->complaintItems = $complaintItems;

@@ -249,7 +249,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
             [
                 'input' => [
                     'orderUuid' => self::VALID_UUID,
-                    'resolution' => ComplaintResolutionEnum::FIX,
+                    'preferredResolution' => ComplaintResolutionEnum::FIX,
                     'email' => 'email',
                     'items' => [
                         [

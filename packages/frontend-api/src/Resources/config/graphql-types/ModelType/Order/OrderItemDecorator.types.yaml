@@ -19,6 +19,9 @@ OrderItemDecorator:
             quantity:
                 type: "Int!"
                 description: "Quantity of order items in the order"
+            remainingComplaintQuantity:
+                type: "Int!"
+                description: "Quantity still available for complaint after subtracting quantities claimed by complaints that are unresolved or resolved by money return"
             unit:
                 type: "String"
                 description: "Unit of measurement used for the order item"

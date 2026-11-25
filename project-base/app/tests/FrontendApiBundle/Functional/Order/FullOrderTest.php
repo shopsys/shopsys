@@ -17,7 +17,12 @@ class FullOrderTest extends GraphQlTestCase
     public function testCreateFullOrder(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
-        $expectedOrderItems = $this->getExpectedOrderItems();
+        $expectedOrderItems = array_map(
+            static fn (array $expectedOrderItem): array => $expectedOrderItem + [
+                'remainingComplaintQuantity' => $expectedOrderItem['quantity'],
+            ],
+            $this->getExpectedOrderItems(),
+        );
         $expected = [
             'order' => [
                 'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

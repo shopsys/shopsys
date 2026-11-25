@@ -800,8 +800,8 @@ type Complaint {
   number: String!
   "Order for which the complaint was created"
   order: Order
-  "Resolution of the complaint"
-  resolution: ComplaintResolution!
+  "Resolution of the complaint preferred by the customer"
+  preferredResolution: ComplaintResolution!
   "Status of the complaint"
   status: String!
   "UUID"
@@ -852,7 +852,7 @@ input ComplaintInput {
   "UUID of the order"
   orderUuid: Uuid = null
   "Chosen resolution from complaintResolutionQuery"
-  resolution: String!
+  preferredResolution: String!
 }
 
 type ComplaintItem {
@@ -1931,6 +1931,8 @@ type OrderItem {
   quantity: Int!
   "Order items related to this order item (e.g. additional services of a product item)"
   relatedItems: [OrderItem!]!
+  "Quantity still available for complaint after subtracting quantities claimed by complaints that are unresolved or resolved by money return"
+  remainingComplaintQuantity: Int!
   "Total price for the quantity of order item"
   totalPrice: Price!
   "Transport method applied to the order"

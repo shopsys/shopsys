@@ -115,7 +115,6 @@ class ComplaintApiFacadeTest extends TestCase
         $this->complaintNumberSequenceRepository->method('getNextNumber')->willReturn('123');
         $orderItemStub = $this->createStub(OrderItem::class);
         $orderItemStub->method('getOrder')->willReturn($order);
-        $orderItemStub->method('getQuantity')->willReturn(1);
 
         $this->orderItemApiFacade->expects($this->any())->method('findMappedByUuid')
             ->with(['item-uuid'])->willReturn(['item-uuid' => $orderItemStub]);
@@ -154,7 +153,6 @@ class ComplaintApiFacadeTest extends TestCase
         $this->complaintNumberSequenceRepository->method('getNextNumber')->willReturn('123');
         $orderItemStub = $this->createStub(OrderItem::class);
         $orderItemStub->method('getOrder')->willReturn($order);
-        $orderItemStub->method('getQuantity')->willReturn(1);
 
         $this->orderItemApiFacade->expects($this->any())->method('findMappedByUuid')
             ->with(['item-uuid'])->willReturn(['item-uuid' => $orderItemStub]);
@@ -178,7 +176,7 @@ class ComplaintApiFacadeTest extends TestCase
                 'items' => [
                     ['orderItemUuid' => 'item-uuid', 'quantity' => 1],
                 ],
-                'resolution' => 'fix',
+                'preferredResolution' => 'fix',
                 'bankAccountNumber' => null,
             ],
         ]);

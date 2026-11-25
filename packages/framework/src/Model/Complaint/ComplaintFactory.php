@@ -29,7 +29,7 @@ class ComplaintFactory
 
         $entityClassName = $this->entityNameResolver->resolve(Complaint::class);
 
-        if (!$this->complaintResolutionEnum->isMoneyReturn($complaintData->resolution)) {
+        if (!$this->complaintResolutionEnum->isMoneyReturn($complaintData->preferredResolution)) {
             $complaintData->bankAccountNumber = null;
         }
 

@@ -31,6 +31,7 @@ export const useComplaintForm = (
     defaultDeliveryAddressChecked: string,
     defaultEmail: string,
     isCreationWithoutOrder: boolean,
+    remainingComplaintQuantity?: number,
 ): [UseFormReturn<ComplaintFormType>, ComplaintFormType | undefined] => {
     const { t } = useTranslation();
 
@@ -38,14 +39,19 @@ export const useComplaintForm = (
         Yup.object().shape<Record<keyof ComplaintFormType, any>>({
             quantity: Yup.string()
                 .matches(/^[1-9][0-9]*$/, t('Please enter quantity'))
-                .required(t('Please enter quantity')),
+                .required(t('Please enter quantity'))
+                .test(
+                    'remainingComplaintQuantity',
+                    t('Complaint item quantity exceeds the remaining quantity available for complaint.'),
+                    (value) => remainingComplaintQuantity === undefined || Number(value) <= remainingComplaintQuantity,
+                ),
             description: Yup.string().required(t('Please enter description')),
             files: validateImageFile(t),
             deliveryAddressUuid: Yup.string().nullable(),
             email: validateEmail(t),
-            resolution: validateResolution(t),
-            bankAccountNumber: Yup.string().when('resolution', {
-                is: (resolution: SelectOptionType) => isResolutionMoneyReturn(resolution),
+            preferredResolution: validateResolution(t),
+            bankAccountNumber: Yup.string().when('preferredResolution', {
+                is: (preferredResolution: SelectOptionType) => isResolutionMoneyReturn(preferredResolution),
                 then: () => validateBankAccountNumber(t),
                 otherwise: (schema) => schema,
             }),
@@ -124,7 +130,7 @@ export const useComplaintForm = (
         manualDocumentNumber: '',
         manualComplaintItemName: '',
         manualComplaintItemCatnum: '',
-        resolution: {
+        preferredResolution: {
             label: '',
             value: '',
         },
@@ -161,7 +167,7 @@ export const useComplaintFormMeta = (): FormMeta<ComplaintFormType, { error: str
             manualDocumentNumber: t('Order or document number'),
             manualComplaintItemName: t('Item name'),
             manualComplaintItemCatnum: t('Catalog number'),
-            resolution: t('Resolution'),
+            preferredResolution: t('Resolution'),
             bankAccountNumber: t('Bank account number'),
         }),
     };

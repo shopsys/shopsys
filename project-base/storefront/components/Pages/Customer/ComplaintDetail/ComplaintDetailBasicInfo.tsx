@@ -39,7 +39,9 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
 
                 <CustomerRecordColumnInfo title={t('Status')}>{complaint.status}</CustomerRecordColumnInfo>
 
-                <CustomerRecordColumnInfo title={t('Resolution')}>{complaint.resolution.name}</CustomerRecordColumnInfo>
+                <CustomerRecordColumnInfo title={t('Resolution')}>
+                    {complaint.preferredResolution.name}
+                </CustomerRecordColumnInfo>
 
                 {complaintDocumentNumber && (
                     <CustomerRecordColumnInfo
@@ -62,7 +64,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     </CustomerRecordColumnInfo>
                 )}
 
-                {isResolutionMoneyReturn(complaint.resolution) && complaint.bankAccountNumber && (
+                {isResolutionMoneyReturn(complaint.preferredResolution) && complaint.bankAccountNumber && (
                     <CustomerRecordColumnInfo
                         tid={TIDs.complaint_detail_bank_account_number}
                         title={t('Bank account number')}

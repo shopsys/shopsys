@@ -93,6 +93,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'product' => [
                     'uuid' => $helloKittyProduct->getUuid(),
                 ],
+                'remainingComplaintQuantity' => 1,
             ], [
                 'name' => $hundredCrownsTicketProduct->getFullName($firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
@@ -104,6 +105,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'product' => [
                     'uuid' => $hundredCrownsTicketProduct->getUuid(),
                 ],
+                'remainingComplaintQuantity' => 2,
             ], [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
@@ -113,6 +115,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'unit' => null,
                 'type' => OrderItemTypeEnum::TYPE_PAYMENT,
                 'product' => null,
+                'remainingComplaintQuantity' => 1,
             ], [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
@@ -122,6 +125,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'unit' => null,
                 'type' => OrderItemTypeEnum::TYPE_TRANSPORT,
                 'product' => null,
+                'remainingComplaintQuantity' => 1,
             ],
         ];
     }

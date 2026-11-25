@@ -16,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 class ComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const string COMPLAINT_PREFIX = 'complaint_';
+    public const string COMPLAINT_RESOLVED_MONEY_RETURN = 'complaint_resolved_money_return';
+    public const string COMPLAINT_REJECTED = 'complaint_rejected';
     public const string COMPLAINT_BANK_ACCOUNT_NUMBER = '6846460001/5500';
 
     public function __construct(
@@ -38,6 +40,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $uploadedFile2 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/401.jpg');
         $uploadedFile3 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/402.jpg');
         $uploadedFile4 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/403.jpg');
+        $uploadedFile5 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/402.jpg');
 
         $orderItems1 = $order1->getProductItems();
         $complaintItem1 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Both broken!', 2, [$uploadedFile1, $uploadedFile2]);
@@ -64,6 +67,21 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
             self::COMPLAINT_BANK_ACCOUNT_NUMBER,
         );
         $this->addReference(self::COMPLAINT_PREFIX . 2, $complaint2);
+        $this->addReference(self::COMPLAINT_RESOLVED_MONEY_RETURN, $complaint2);
+
+        /** @var \App\Model\Order\Order $order4 */
+        $order4 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 4);
+        $orderItem4 = array_first($order4->getProductItems());
+        $complaintItem3 = $this->complaintHelper->createComplaintItemData($orderItem4, 'Does not work!', $orderItem4->getQuantity(), [$uploadedFile5]);
+        $complaint3 = $this->complaintHelper->createComplaint(
+            $customerUser1,
+            $order4,
+            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED_CLAIMABLE_AGAIN, ComplaintStatus::class),
+            $this->complaintResolutionEnum::FIX,
+            [$complaintItem3],
+        );
+        $this->addReference(self::COMPLAINT_PREFIX . 3, $complaint3);
+        $this->addReference(self::COMPLAINT_REJECTED, $complaint3);
 
         $this->createComplaintWithoutOrder();
     }

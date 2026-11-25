@@ -22,6 +22,7 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
         protected readonly QueryBuilderDataSourceFactory $queryBuilderDataSourceFactory,
+        protected readonly ComplaintStatusTypeEnum $complaintStatusTypeEnum,
     ) {
     }
 
@@ -40,13 +41,15 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'cst.name', t('Name'), true);
+        $grid->addColumn('statusType', 'cs.statusType', t('Type'), true, [
+            'help' => t('Products of complaints in the statuses "In Progress" and "Resolved, the products cannot be complained about again" (e.g. money return) stay claimed. Products of complaints in the status "Resolved, the products can be complained about again" (e.g. rejection or fix) can be claimed in new complaints.'),
+        ])->setClassAttribute('w-33 text-nowrap');
 
         $grid->addDeleteActionColumn('admin_complaintstatus_deleteconfirm', ['id' => 'cs.id'])
             ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysAdministration/content/complaintStatus/listGrid.html.twig', [
-            'STATUS_TYPE_NEW' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW,
-            'STATUS_TYPE_RESOLVED' => ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED,
+            'complaintStatusTypeEnum' => $this->complaintStatusTypeEnum,
         ]);
 
         return $grid;

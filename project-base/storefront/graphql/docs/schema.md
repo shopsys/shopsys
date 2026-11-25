@@ -4982,11 +4982,11 @@ Order for which the complaint was created
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="complaint.resolution">resolution</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.preferredresolution">preferredResolution</strong></td>
 <td valign="top"><a href="#complaintresolution">ComplaintResolution</a>!</td>
 <td>
 
-Resolution of the complaint
+Resolution of the complaint preferred by the customer
 
 </td>
 </tr>
@@ -8217,6 +8217,15 @@ Quantity of order items in the order
 <td>
 
 Order items related to this order item (e.g. additional services of a product item)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="orderitem.remainingcomplaintquantity">remainingComplaintQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity still available for complaint after subtracting quantities claimed by complaints that are unresolved or resolved by money return
 
 </td>
 </tr>
@@ -13771,7 +13780,7 @@ UUID of the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="complaintinput.resolution">resolution</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.preferredresolution">preferredResolution</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
