@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "symfony/monolog-bridge": "^7.4"
     }
 }

@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "ext-amqp": "*",
         "ext-bcmath": "*",
         "ext-calendar": "*",

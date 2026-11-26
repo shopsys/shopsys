@@ -87,7 +87,7 @@ class PhpFileExtractorTest extends TestCase
         $extractor = $this->getExtractor();
 
         $parserFactory = new ParserFactory();
-        $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.5'));
+        $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.6'));
         $ast = $parser->parse(file_get_contents($file->getPathname()));
 
         $catalogue = new MessageCatalogue();

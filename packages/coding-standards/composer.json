@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^8.5",
+        "php": "^8.6",
         "ext-tokenizer": "*",
         "friendsofphp/php-cs-fixer": "^3.71.0",
         "nette/utils": "^4.0",
