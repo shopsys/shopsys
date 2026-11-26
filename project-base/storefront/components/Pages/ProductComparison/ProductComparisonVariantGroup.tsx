@@ -48,11 +48,11 @@ export const ProductComparisonVariantGroup: FC<ProductComparisonVariantGroupProp
 
     return (
         <div
-            className="flex flex-wrap items-center gap-4 rounded-xl bg-background-more p-4"
+            className="flex flex-wrap items-center gap-4 rounded-card bg-background-more p-4"
             data-comparison-variant-group
         >
             <div className="min-w-0 flex-1">
-                <p className="font-semibold">{product.fullName}</p>
+                <p className="font-product-name">{product.fullName}</p>
                 <p className="mt-1 text-sm text-text-less">
                     {t('Choose a specific variant to compare its price and parameters.')}
                 </p>

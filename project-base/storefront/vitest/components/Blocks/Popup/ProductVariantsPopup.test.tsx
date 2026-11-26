@@ -85,10 +85,10 @@ vi.mock('components/Forms/Button/LinkButton', () => ({
     LinkButton: ({
         children,
         href,
-        onClick,
+        onNavigate,
         'aria-label': ariaLabel,
-    }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-        <a href={href} aria-label={ariaLabel} onClick={onClick}>
+    }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { onNavigate?: () => void }) => (
+        <a href={href} aria-label={ariaLabel} onClick={onNavigate}>
             {children}
         </a>
     ),

@@ -58,7 +58,7 @@ export const SkeletonPageProductDetail: FC<SkeletonPageProductDetailProps> = ({ 
 
                         {isMainVariant ? (
                             <div className="flex flex-col gap-4 rounded-surface bg-skeleton-less p-4 sm:p-5">
-                                <SkeletonModuleProductDetailAddToCart size="large" />
+                                <SkeletonModuleProductDetailAddToCart />
                                 <Skeleton className="h-6 w-40" />
                             </div>
                         ) : (
