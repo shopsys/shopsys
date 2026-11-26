@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\McpBundle\Component\WriteTool\McpChange;
+use Shopsys\McpBundle\Component\WriteTool\McpDomainInputValidator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BlogArticleMcpFacade
@@ -32,6 +33,7 @@ class BlogArticleMcpFacade
         protected readonly UrlGeneratorInterface $urlGenerator,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly UrlListDataFactory $urlListDataFactory,
+        protected readonly McpDomainInputValidator $mcpDomainInputValidator,
     ) {
     }
 
@@ -214,7 +216,7 @@ class BlogArticleMcpFacade
         array $descriptions,
     ): void {
         foreach ($descriptionReplacements as $locale => $replacements) {
-            $this->assertLocaleExists($locale);
+            $this->mcpDomainInputValidator->assertLocaleExists($locale);
 
             if (array_key_exists($locale, $descriptions)) {
                 throw new ToolCallException(sprintf('The content (%s) cannot be given in both descriptions and descriptionReplacements.', $locale));
@@ -321,22 +323,22 @@ class BlogArticleMcpFacade
         array $seoByDomainId,
     ): void {
         foreach ($names as $locale => $name) {
-            $this->assertLocaleExists($locale);
+            $this->mcpDomainInputValidator->assertLocaleExists($locale);
             $blogArticleData->names[$locale] = $name;
         }
 
         foreach ($perexes as $locale => $perex) {
-            $this->assertLocaleExists($locale);
+            $this->mcpDomainInputValidator->assertLocaleExists($locale);
             $blogArticleData->perexes[$locale] = trim($perex) === '' ? null : $perex;
         }
 
         foreach ($descriptions as $locale => $description) {
-            $this->assertLocaleExists($locale);
+            $this->mcpDomainInputValidator->assertLocaleExists($locale);
             $blogArticleData->descriptions[$locale] = trim($description) === '' ? null : $description;
         }
 
         foreach ($blogCategoryIdsByDomainId as $domainId => $blogCategoryIds) {
-            $this->assertDomainExists($domainId);
+            $this->mcpDomainInputValidator->assertDomainExists($domainId);
             $blogCategories = $this->blogCategoryFacade->getByIds($blogCategoryIds);
             $missingBlogCategoryIds = array_diff($blogCategoryIds, array_map(static fn ($blogCategory) => $blogCategory->getId(), $blogCategories));
 
@@ -348,7 +350,7 @@ class BlogArticleMcpFacade
         }
 
         foreach ($seoByDomainId as $domainId => $seo) {
-            $this->assertDomainExists($domainId);
+            $this->mcpDomainInputValidator->assertDomainExists($domainId);
 
             foreach ($seo as $seoAttribute => $value) {
                 $blogArticleData->seo[$domainId]->{$seoAttribute} = $value === null || trim($value) === '' ? null : $value;
@@ -365,7 +367,7 @@ class BlogArticleMcpFacade
         array $slugsByDomainId,
     ): void {
         foreach ($slugsByDomainId as $domainId => $slug) {
-            $this->assertDomainExists($domainId);
+            $this->mcpDomainInputValidator->assertDomainExists($domainId);
 
             $friendlyUrlSlug = ExtendedClassNameResolver::resolve(TransformStringHelper::class)::createFriendlyUrlSlug($slug);
 
@@ -397,20 +399,6 @@ class BlogArticleMcpFacade
             $urlListData->mainFriendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($domainId, $slug);
 
             $this->friendlyUrlFacade->saveUrlListFormDataForDomain(static::ROUTE_NAME, $blogArticle->getId(), $urlListData, $domainId);
-        }
-    }
-
-    protected function assertLocaleExists(string $locale): void
-    {
-        if (!in_array($locale, $this->domain->getAllLocales(), true)) {
-            throw new ToolCallException(sprintf('The locale "%s" does not exist, use one of: %s.', $locale, implode(', ', $this->domain->getAllLocales())));
-        }
-    }
-
-    protected function assertDomainExists(int $domainId): void
-    {
-        if (!in_array($domainId, $this->domain->getAllIds(), true)) {
-            throw new ToolCallException(sprintf('The domain with ID %d does not exist, use one of: %s.', $domainId, implode(', ', $this->domain->getAllIds())));
         }
     }
 
