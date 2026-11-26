@@ -390,6 +390,7 @@ Renaming the arguments class or its properties makes the pending change requests
 The change request belongs to the administrator who owns the MCP token.
 `apply()` runs after the approval in a database transaction, and only when `previewChange()` still returns the same change, so the administrator never approves outdated data.
 Therefore, build the change from the current data and the arguments only.
+`addField()` skips a field whose value does not change, so you can add every field the input contains.
 For a long text, describe only the changed part and pass the text around it as `contextBefore` and `contextAfter` of `addField()`.
 
 `McpChange` names the changed entity and links its administration page, so the administrator can check its current state before the approval.
