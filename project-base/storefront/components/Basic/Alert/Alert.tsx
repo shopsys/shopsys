@@ -36,15 +36,13 @@ export const Alert: FC<AlertProps> = ({ icon: Icon, title, variant, tid, role, c
             data-tid={tid}
             role={role}
         >
+            {/* the 24px icon of boxed messages, centered on the first 20px line of the text without a badge around it */}
             {Icon && (
-                <span
-                    className={twMergeCustom(
-                        'flex size-9 shrink-0 items-center justify-center rounded-full bg-background-default',
-                        iconVariantClasses[variant],
-                    )}
-                >
-                    <Icon aria-hidden="true" className="size-5" focusable="false" />
-                </span>
+                <Icon
+                    aria-hidden="true"
+                    className={twMergeCustom('-my-0.5 size-6 shrink-0', iconVariantClasses[variant])}
+                    focusable="false"
+                />
             )}
 
             <div className="flex flex-col gap-1">
