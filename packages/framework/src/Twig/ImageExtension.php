@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -21,6 +22,7 @@ class ImageExtension extends AbstractExtension
     protected const string NOIMAGE_FILENAME = 'noimage.png';
     protected const array NON_HTML_ATTRIBUTES = [
         'type',
+        'skipSvg',
     ];
 
     protected string $frontDesignImageUrlPrefix;
@@ -105,6 +107,11 @@ class ImageExtension extends AbstractExtension
 
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
+
+            if (($attributes['skipSvg'] ?? false) && $image->getExtension() === ImageProcessor::EXTENSION_SVG) {
+                return '';
+            }
+
             $entityName = $image->getEntityName();
             $attributes['src'] = $this->getImageUrl($image, $attributes, $domainConfig);
             $attributes['alt'] = $image->getName($domainConfig->getLocale());

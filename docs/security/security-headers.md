@@ -26,7 +26,15 @@ For implementation details, see:
     - `default-src 'self' https: ...` keeps resource loading restrictive while allowing standard HTTPS integrations
     - `script-src` explicitly allows only platform-required script sources
 - Configurable by superadmin in: `Admin > Superadmin > CSP Header Setting`
-- Applied to HTML responses (admin/storefront); not intended as a protection mechanism for static files or API payloads
+- Applies to HTML responses in the administration and storefront
+
+Administrators can upload self-contained SVG logos for transports and transport groups. The framework validates SVG content before generating a preview or storing the image and rejects active content and external references. When nginx serves an uploaded SVG from `content/images/` or `content-test/images/`, including under a domain path prefix, it sends a separate policy:
+
+```http
+Content-Security-Policy: sandbox; default-src 'none'; style-src 'unsafe-inline'; img-src data:
+```
+
+This policy blocks scripts and external resources even when someone opens the image directly. It allows inline styles and embedded data images so logos can render. Projects serving uploaded images through a CDN or another web server must deliver the same header on the public SVG response.
 
 ### X-Frame-Options
 
