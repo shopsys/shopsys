@@ -90,7 +90,8 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
     }
 
     return (
-        <div>
+        // in one column the tabs follow right after the product actions, so extra space sets them apart as a new part
+        <div className="max-vl:mt-6">
             <ProductDetailSectionNavigation
                 activeSection={activeSection}
                 product={product}
@@ -99,34 +100,36 @@ export const ProductDetailSections: FC<ProductDetailSectionsProps> = ({
                 onSectionClick={scrollToSection}
             />
 
-            <VerticalStack gap="lg">
-                {isOverviewVisible && (
-                    <ProductDetailOverviewSection description={description} sectionRef={overviewRef} />
-                )}
+            <div className="pt-6 xl:pt-8">
+                <VerticalStack gap="lg">
+                    {isOverviewVisible && (
+                        <ProductDetailOverviewSection description={description} sectionRef={overviewRef} />
+                    )}
 
-                {!!parameters.length && (
-                    <ProductDetailParametersSection parameters={parameters} sectionRef={parametersRef} />
-                )}
+                    {!!parameters.length && (
+                        <ProductDetailParametersSection parameters={parameters} sectionRef={parametersRef} />
+                    )}
 
-                {areProductReviewsEnabled && (
-                    <ProductDetailReviewsSection
-                        initialProductReviews={initialProductReviews}
-                        productName={productFullName}
-                        productUuid={productUuid}
-                        sectionRef={reviewsRef}
-                        variants={productVariants}
-                    />
-                )}
+                    {areProductReviewsEnabled && (
+                        <ProductDetailReviewsSection
+                            initialProductReviews={initialProductReviews}
+                            productName={productFullName}
+                            productUuid={productUuid}
+                            sectionRef={reviewsRef}
+                            variants={productVariants}
+                        />
+                    )}
 
-                {!!files.length && <ProductDetailFilesSection files={files} sectionRef={filesRef} />}
+                    {!!files.length && <ProductDetailFilesSection files={files} sectionRef={filesRef} />}
 
-                {!!relatedProducts.length && (
-                    <ProductDetailRelatedProductsSection
-                        relatedProducts={relatedProducts}
-                        sectionRef={relatedProductsRef}
-                    />
-                )}
-            </VerticalStack>
+                    {!!relatedProducts.length && (
+                        <ProductDetailRelatedProductsSection
+                            relatedProducts={relatedProducts}
+                            sectionRef={relatedProductsRef}
+                        />
+                    )}
+                </VerticalStack>
+            </div>
 
             <div aria-hidden="true" className="h-px" ref={stickyActionBoundaryRef} />
         </div>

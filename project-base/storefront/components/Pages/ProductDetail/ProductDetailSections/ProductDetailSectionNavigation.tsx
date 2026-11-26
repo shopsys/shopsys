@@ -1,5 +1,6 @@
 import { HorizontalScrollHint } from 'components/Basic/HorizontalScrollHint/HorizontalScrollHint';
-import { Tag } from 'components/Basic/Tag/Tag';
+import { TabIndicator } from 'components/Basic/TabIndicator/TabIndicator';
+import { getSortingTabClassName } from 'components/Blocks/SortingBar/sortingBarUtils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -38,6 +39,8 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
     const [isBeforeStickyActionBoundary, setIsBeforeStickyActionBoundary] = useState(true);
     const isDesktop = useMediaMin('vl');
     const isSectionNavigationVisible = sections.length > 1;
+    // before the first section is scrolled to, the first tab is the current one, so the bar reads as tabs right away
+    const currentSection = activeSection ?? sections[0]?.id ?? null;
 
     useEffect(() => {
         let animationFrameId: number | null = null;
@@ -116,49 +119,79 @@ export const ProductDetailSectionNavigation: FC<ProductDetailSectionNavigationPr
                 )}
                 ref={navigationRef}
             >
+                {/* from xl the tabs start where the section content does (its 50rem column) and the sticky action takes
+                    the space on the right; narrower screens keep them at the left edge, so they fit next to the action */}
                 <Webline
                     className={twMergeCustom(
-                        'flex items-center gap-6 py-4',
+                        'flex items-center gap-6',
+                        isSectionNavigationVisible &&
+                            'xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,50rem)_minmax(0,1fr)] xl:gap-0',
                         !isSectionNavigationVisible &&
                             'absolute inset-x-0 top-0 justify-end bg-background-default shadow-md',
                         !isSectionNavigationVisible && (!product || !isDesktop || !isNavigationSticky) && 'hidden',
                     )}
                 >
-                    {isSectionNavigationVisible && (
-                        <nav className="min-w-0 flex-1" data-tid={TIDs.product_detail_section_navigation}>
-                            <HorizontalScrollHint
-                                render={(scrollContainerRef) => (
-                                    <div ref={scrollContainerRef} className="flex gap-3 overflow-x-auto">
-                                        {sections.map((section) => (
-                                            <Tag
-                                                key={section.id}
-                                                buttonRef={(el) => {
-                                                    if (el) {
-                                                        buttonRefs.current.set(section.id, el);
-                                                    } else {
-                                                        buttonRefs.current.delete(section.id);
-                                                    }
-                                                }}
-                                                isActive={activeSection === section.id}
-                                                onClick={() => onSectionClick(section.id)}
-                                                className="shrink-0"
-                                            >
-                                                {section.label}
-                                            </Tag>
-                                        ))}
-                                    </div>
-                                )}
-                            />
-                        </nav>
-                    )}
+                    <div
+                        className={twMergeCustom(
+                            'flex min-w-0 flex-1 items-center gap-6 xl:col-span-2 xl:col-start-2',
+                            !isSectionNavigationVisible && 'justify-end',
+                        )}
+                    >
+                        {isSectionNavigationVisible && (
+                            <nav
+                                className="-ml-1 min-w-0 flex-1 xl:max-w-[calc(50rem+0.25rem)]"
+                                data-tid={TIDs.product_detail_section_navigation}
+                            >
+                                <HorizontalScrollHint
+                                    render={(scrollContainerRef) => (
+                                        <div
+                                            ref={scrollContainerRef}
+                                            className="hide-scrollbar relative flex gap-6 overflow-x-auto"
+                                        >
+                                            {sections.map((section) => {
+                                                const isActive = currentSection === section.id;
 
-                    {product && isDesktop && (
-                        <ProductDetailStickyAction
-                            isVisible={isNavigationSticky}
-                            placement="inline"
-                            product={product}
-                        />
-                    )}
+                                                return (
+                                                    <button
+                                                        key={section.id}
+                                                        aria-current={isActive ? 'location' : undefined}
+                                                        type="button"
+                                                        className={twMergeCustom(
+                                                            getSortingTabClassName({ isActive }),
+                                                            'min-h-12 vl:min-h-14 shrink-0 whitespace-nowrap',
+                                                        )}
+                                                        ref={(element) => {
+                                                            if (element) {
+                                                                buttonRefs.current.set(section.id, element);
+                                                            } else {
+                                                                buttonRefs.current.delete(section.id);
+                                                            }
+                                                        }}
+                                                        onClick={() => onSectionClick(section.id)}
+                                                    >
+                                                        {section.label}
+                                                    </button>
+                                                );
+                                            })}
+
+                                            <TabIndicator
+                                                activeKey={currentSection}
+                                                containerRef={scrollContainerRef}
+                                            />
+                                        </div>
+                                    )}
+                                />
+                            </nav>
+                        )}
+
+                        {product && isDesktop && (
+                            <ProductDetailStickyAction
+                                isVisible={isNavigationSticky}
+                                placement="inline"
+                                product={product}
+                            />
+                        )}
+                    </div>
                 </Webline>
             </div>
 

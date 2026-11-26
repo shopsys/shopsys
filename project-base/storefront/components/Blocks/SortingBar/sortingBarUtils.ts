@@ -9,9 +9,9 @@ import { FilterOptionsUrlQueryType } from 'types/productFilter';
 const MAX_VISIBLE_SORT_TABS = 4;
 
 /**
- * Tabs shared by the product list sorting and the review sorting, so they look the same: the active option has
- * a darker text and the row's TabIndicator under it, hover only darkens the text. Both states keep one weight, so
- * switching the active tab never changes the width of the row.
+ * Tabs shared by the product list sorting, the review sorting and the product detail section navigation, so they
+ * look the same: the active option has a darker text and the row's TabIndicator under it, hover only darkens the text.
+ * Both states keep one weight, so switching the active tab never changes the width of the row.
  */
 export const getSortingTabClassName = ({ isActive }: { isActive: boolean }) =>
     twJoin(

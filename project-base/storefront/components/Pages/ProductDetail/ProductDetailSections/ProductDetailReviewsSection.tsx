@@ -6,7 +6,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
+import { PRODUCT_DETAIL_SECTION_WIDTH_CLASS_NAME, PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
 
 type ProductDetailReviewsSectionProps = ProductReviewsContentProps & {
     sectionRef: RefObject<HTMLDivElement | null>;
@@ -22,7 +22,7 @@ export const ProductDetailReviewsSection: FC<ProductDetailReviewsSectionProps> =
             ref={sectionRef}
             tabIndex={-1}
         >
-            <Webline width="vl">
+            <Webline className={PRODUCT_DETAIL_SECTION_WIDTH_CLASS_NAME} width="vl">
                 <ProductDetailSectionHeading>{t('Reviews')}</ProductDetailSectionHeading>
 
                 <ProductReviewsContent key={contentProps.productUuid} {...contentProps} />

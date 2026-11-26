@@ -69,7 +69,7 @@ export const ProductDetailStickyAction = ({ isVisible, placement, product }: Pro
 
             <div className="vl:w-40 w-36 shrink-0">
                 <DeferredProductDetailAddToCart
-                    buttonSize="large"
+                    buttonSize="medium"
                     buttonTid={TIDs.product_detail_sticky_addtocart_button}
                     product={product}
                     spinboxId={`${product.uuid}-sticky-action`}
