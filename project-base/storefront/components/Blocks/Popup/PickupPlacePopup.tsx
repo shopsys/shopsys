@@ -115,7 +115,10 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
             contentClassName="flex min-h-0 flex-1 flex-col overflow-hidden"
             title={t('Choose the store where you are going to pick up your order')}
         >
-            <div className="min-h-0 flex-1 overflow-y-auto pr-1" id={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}>
+            <div
+                className="thin-scrollbar min-h-0 flex-1 overflow-y-auto pr-1"
+                id={PICKUP_PLACE_POPUP_STORES_SCROLL_TARGET_ID}
+            >
                 <StoresWrapper
                     appliedSearchTextValue={appliedSearchTextValue}
                     isDistanceFromSearchText={isDistanceFromSearchText}

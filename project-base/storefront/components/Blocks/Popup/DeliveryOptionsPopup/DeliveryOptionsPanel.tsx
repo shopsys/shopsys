@@ -74,7 +74,7 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
                     inert={!isDesktop && !isOpen ? true : undefined}
                 >
                     <div
-                        className="border-border-less max-lg:border-t max-lg:px-4 max-lg:py-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1"
+                        className="thin-scrollbar border-border-less max-lg:border-t max-lg:px-4 max-lg:py-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1"
                         id={scrollableContentId}
                     >
                         {children}
