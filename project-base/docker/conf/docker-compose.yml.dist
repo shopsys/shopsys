@@ -56,6 +56,8 @@ services:
         environment:
             # toggled by `make environment-dev` / `make environment-prod`; recreate the container to apply (dev = dev server, build = production build)
             - STOREFRONT_RUN_COMMAND=dev
+            # limits parallel vitest workers, e.g. VITEST_MAX_WORKERS=2 to keep the machine responsive; empty = vitest default (no limit)
+            - VITEST_MAX_WORKERS=${VITEST_MAX_WORKERS:-}
         volumes:
             - ./storefront:/home/node/app
         ports:
