@@ -23,7 +23,10 @@ class McpChangeDiffCalculatorTest extends TestCase
         $segments = new McpChangeDiffCalculator()->calculate($before, $after);
 
         $this->assertSame($expectedSegments, array_map(
-            static fn (McpChangeDiffSegment $segment) => ['type' => $segment->type, 'text' => $segment->text],
+            static fn (McpChangeDiffSegment $segment) => [
+                'type' => $segment->type,
+                'text' => $segment->text,
+            ],
             $segments,
         ));
     }

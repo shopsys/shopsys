@@ -265,5 +265,8 @@ msgstr "Zobraziť pokyny pre Codex CLI"
 msgid "You can generate a new token manually or connect an MCP client using the instructions below."
 msgstr "Nový token môžete vygenerovať manuálne alebo pripojiť MCP klienta podľa pokynov nižšie."
 
+msgid "from"
+msgstr "z"
+
 msgid "tokens"
 msgstr "tokeny"

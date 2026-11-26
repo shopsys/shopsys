@@ -265,5 +265,8 @@ msgstr ""
 msgid "You can generate a new token manually or connect an MCP client using the instructions below."
 msgstr ""
 
+msgid "from"
+msgstr ""
+
 msgid "tokens"
 msgstr ""
