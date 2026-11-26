@@ -42,7 +42,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $this->assertTrue($blogArticle->isDraftOnAllDomains());
     }
 
-    public function testDescribeEditListsOnlyChangedFields(): void
+    public function testPreviewEditListsOnlyChangedFields(): void
     {
         $blogArticle = $this->getPublishedBlogArticle();
         $locale = $this->getFirstDomainLocale();
