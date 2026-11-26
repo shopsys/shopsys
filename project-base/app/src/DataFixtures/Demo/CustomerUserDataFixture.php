@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\PhonePrefix\PhoneData;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Symfony\Component\Clock\DatePoint;
 
@@ -45,6 +46,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private const string KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION = 'newsletterSubscription';
     private const string KEY_CUSTOMER_USER_DATA_UUID = 'uuid';
     private const string KEY_CUSTOMER_USER_DATA_SALES_REPRESENTATIVE = 'salesRepresentative';
+    private const string KEY_CUSTOMER_USER_DATA_PRICING_GROUP = 'pricingGroup';
 
     private const string KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
     private const string KEY_ADDRESS_COMPANY_NAME = 'companyName';
@@ -128,6 +130,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $customerUserData->newsletterSubscription = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION] ?? false;
         $customerUserData->uuid = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_UUID];
         $customerUserData->salesRepresentative = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_SALES_REPRESENTATIVE] ?? null;
+        $customerUserData->pricingGroup = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_PRICING_GROUP] ?? $customerUserData->pricingGroup;
 
         $this->setBillingAddressData($customerUserUpdateData, $data[self::KEY_BILLING_ADDRESS]);
 
@@ -319,6 +322,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_UUID => 'b296e9bc-8446-41aa-a192-fb4c2b8dd666',
                 ],
             ],
+            $this->getCustomerUserInputArray('Lucas', 'Kane', 12, '842427fc-1b1e-4e73-a936-9535280f5bcd', 'Opava', 'Horní náměstí 12', '74601'),
+            $this->getCustomerUserInputArray('Ijon', 'Tichý', 13, '1d4d0515-6231-4991-aac4-9be0bf84bbca', 'Olomouc', 'Třída Svobody 13', '77900'),
+            $this->getCustomerUserInputArray('Rufus', 'Sheppard', 14, '564d9dcf-4132-48bf-bba3-ec4cff83ed63', 'Zlín', 'Bartošova 14', '76001'),
+            $this->getCustomerUserInputArray('Nico', 'Collard', 15, '7d037008-2f02-411d-807e-a8c4da5c13f2', 'Jihlava', 'Masarykovo náměstí 15', '58601'),
+            $this->getCustomerUserInputArray('Ignatius', 'Reilly', 16, '516d5daa-2678-41de-8aec-f6b04691fc62', 'Pardubice', 'Pernštýnská 16', '53002', $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_VIP, Domain::FIRST_DOMAIN_ID, PricingGroup::class)),
         ];
     }
 
@@ -451,6 +459,40 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
                 ],
             ],
+            $this->getCustomerUserInputArray('Roger', 'Wilco', 17, '0efeddb2-65d2-48aa-a636-1a821b1a30c9', 'Hradec Králové', 'Gočárova třída 17', '50002', null, 'Testovací firma s.r.o.'),
+        ];
+    }
+
+    private function getCustomerUserInputArray(
+        string $firstName,
+        string $lastName,
+        int $number,
+        string $uuid,
+        string $city,
+        string $street,
+        string $postcode,
+        ?PricingGroup $pricingGroup = null,
+        ?string $companyName = null,
+    ): array {
+        return [
+            self::KEY_CUSTOMER_USER_DATA => [
+                self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => $firstName,
+                self::KEY_CUSTOMER_USER_DATA_LAST_NAME => $lastName,
+                self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.' . $number . '@shopsys.com',
+                self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.' . $number,
+                self::KEY_CUSTOMER_USER_DATA_TELEPHONE => new PhoneData('CZ', '+420', '605000' . (200 + $number)),
+                self::KEY_CUSTOMER_USER_DATA_UUID => $uuid,
+                self::KEY_CUSTOMER_USER_DATA_PRICING_GROUP => $pricingGroup,
+            ],
+            self::KEY_BILLING_ADDRESS => [
+                self::KEY_ADDRESS_COMPANY_CUSTOMER => $companyName !== null,
+                self::KEY_ADDRESS_COMPANY_NAME => $companyName,
+                self::KEY_ADDRESS_COMPANY_NUMBER => $companyName !== null ? '27082440' : null,
+                self::KEY_ADDRESS_CITY => $city,
+                self::KEY_ADDRESS_STREET => $street,
+                self::KEY_ADDRESS_POSTCODE => $postcode,
+                self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
+            ],
         ];
     }
 
@@ -487,6 +529,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         return [
             CountryDataFixture::class,
             SalesRepresentativeDataFixture::class,
+            PricingGroupDataFixture::class,
         ];
     }
 

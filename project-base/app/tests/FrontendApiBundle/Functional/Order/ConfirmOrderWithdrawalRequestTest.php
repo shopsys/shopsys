@@ -64,7 +64,7 @@ final class ConfirmOrderWithdrawalRequestTest extends GraphQlTestCase
     #[Group('multidomain')]
     public function testConfirmationHashOfOrderFromAnotherDomainReturnsError(): void
     {
-        $orderOnSecondDomain = $this->getReference(OrderDataFixture::ORDER_PREFIX . 24, Order::class);
+        $orderOnSecondDomain = $this->getReference(OrderDataFixture::ORDER_ON_SECOND_DOMAIN, Order::class);
 
         $this->assertNotSame(1, $orderOnSecondDomain->getDomainId(), 'Test setup error: the order should not belong to the first domain');
 
