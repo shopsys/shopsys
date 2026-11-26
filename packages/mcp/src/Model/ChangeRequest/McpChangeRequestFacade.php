@@ -62,7 +62,7 @@ class McpChangeRequestFacade
         $mcpChangeRequestData->toolName = $tool::getToolName();
         $mcpChangeRequestData->argumentsClass = $arguments::class;
         $mcpChangeRequestData->arguments = $this->normalizer->normalize($arguments);
-        $mcpChangeRequestData->change = $tool->describeChange($arguments)->toArray();
+        $mcpChangeRequestData->change = $tool->previewChange($arguments)->toArray();
         $mcpChangeRequestData->createdAt = $this->clock->now();
 
         $mcpChangeRequest = $this->mcpChangeRequestFactory->create($mcpChangeRequestData);
@@ -125,7 +125,7 @@ class McpChangeRequestFacade
 
         $change = $this->callOrFail(
             $mcpChangeRequest,
-            fn () => $this->getApprovableTool($mcpChangeRequest)->describeChange($this->getArguments($mcpChangeRequest)),
+            fn () => $this->getApprovableTool($mcpChangeRequest)->previewChange($this->getArguments($mcpChangeRequest)),
         );
 
         $mcpChangeRequest->refresh($change->toArray());
@@ -143,7 +143,7 @@ class McpChangeRequestFacade
         $tool = $this->getApprovableTool($mcpChangeRequest);
         $arguments = $this->getArguments($mcpChangeRequest);
 
-        if ($tool->describeChange($arguments)->toArray() !== $mcpChangeRequest->getChange()) {
+        if ($tool->previewChange($arguments)->toArray() !== $mcpChangeRequest->getChange()) {
             throw new McpChangeRequestApprovalFailedException(t('The data has changed since the request was created.'));
         }
 

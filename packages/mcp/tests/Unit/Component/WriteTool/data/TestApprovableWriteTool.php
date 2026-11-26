@@ -35,7 +35,7 @@ class TestApprovableWriteTool implements McpApprovableToolInterface
      * @param \Tests\McpBundle\Unit\Component\WriteTool\data\TestApprovableWriteToolArguments $arguments
      */
     #[Override]
-    public function describeChange(object $arguments): McpChange
+    public function previewChange(object $arguments): McpChange
     {
         return new McpChange('Published test article', [], '/admin/test-article/edit/' . $arguments->articleId)
             ->addField('Name', $this->currentName, $arguments->name);

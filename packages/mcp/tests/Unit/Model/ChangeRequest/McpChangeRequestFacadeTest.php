@@ -109,7 +109,7 @@ class McpChangeRequestFacadeTest extends TestCase
         $this->assertApprovalFails($this->createFacade(), $mcpChangeRequest, 'The change could not be applied.');
     }
 
-    public function testRefreshDescribesChangeAgainstCurrentDataAndAllowsApproval(): void
+    public function testRefreshPreviewsChangeAgainstCurrentDataAndAllowsApproval(): void
     {
         $mcpChangeRequest = $this->createChangeRequest();
         $this->tool->currentName = 'Name changed in administration';
@@ -181,7 +181,7 @@ class McpChangeRequestFacadeTest extends TestCase
         $mcpChangeRequestData->toolName = TestApprovableWriteTool::TOOL_NAME;
         $mcpChangeRequestData->argumentsClass = TestApprovableWriteToolArguments::class;
         $mcpChangeRequestData->arguments = ['articleId' => 1, 'name' => 'New name'];
-        $mcpChangeRequestData->change = $this->tool->describeChange($arguments)->toArray();
+        $mcpChangeRequestData->change = $this->tool->previewChange($arguments)->toArray();
         $mcpChangeRequestData->createdAt = new DateTimeImmutable('2026-11-16 10:00:00');
 
         $mcpChangeRequest = new McpChangeRequest($mcpChangeRequestData);

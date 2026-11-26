@@ -16,7 +16,7 @@ interface McpApprovableToolInterface
     /**
      * @param TArguments $arguments
      */
-    public function describeChange(object $arguments): McpChange;
+    public function previewChange(object $arguments): McpChange;
 
     /**
      * @param TArguments $arguments
