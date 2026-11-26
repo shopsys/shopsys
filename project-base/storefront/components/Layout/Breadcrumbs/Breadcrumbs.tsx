@@ -30,6 +30,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
     return (
         <Webline className="mb-4">
             <nav
+                data-tid={TIDs.breadcrumbs}
                 aria-label={t('Breadcrumb navigation', { ns: 'accessibility' })}
                 className={twMergeCustom(breadcrumbsTwClass, className)}
             >

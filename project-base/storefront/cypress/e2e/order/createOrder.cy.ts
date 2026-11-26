@@ -23,6 +23,7 @@ import { generateCustomerRegistrationData } from 'fixtures/generators';
 import { translationKeys } from 'fixtures/translationKeys';
 import {
     checkAndHideSuccessToast,
+    checktHeadlineText,
     checkUrl,
     getSnapshotIndexingFunction,
     goToEditProfileFromHeader,
@@ -291,6 +292,10 @@ describe('Create Order Tests', () => {
                 translations.transport.czechPost,
                 translations.payment.onDelivery,
             );
+
+            cy.getByTID([TIDs.breadcrumbs]).find(`a[href="${url.customer.overview}"]`).click();
+            cy.location('pathname').should('eq', url.customer.overview);
+            checktHeadlineText('Account overview');
 
             goToEditProfileFromHeader();
             takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'customer edit page', {

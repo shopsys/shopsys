@@ -6,7 +6,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import {
     OrderAvailablePaymentsQueryDocument,
@@ -40,6 +39,7 @@ import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const OrderDetailPage: FC = () => {
     const { t } = useTranslation();
@@ -50,20 +50,16 @@ const OrderDetailPage: FC = () => {
     const [{ data: orderData, fetching: isOrderDetailFetching, error: orderDetailError }] = useOrderDetailQuery({
         variables: { orderNumber },
     });
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
         { __typename: 'Link', name: orderNumber, slug: '' },
-    ];
+    ]);
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
 
     return (
         <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!orderDetailError}>
-            <CustomerLayout
-                breadcrumbs={breadcrumbs}
-                breadcrumbsType="orderList"
-                isFetchingData={isOrderDetailFetching}
-            >
+            <CustomerLayout breadcrumbs={breadcrumbs} isFetchingData={isOrderDetailFetching}>
                 <PageHero
                     icon={DocumentIcon}
                     title={t('Your order') + (orderData?.order?.number ? ` ${orderData.order.number}` : '')}

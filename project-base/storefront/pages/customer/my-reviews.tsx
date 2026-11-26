@@ -5,7 +5,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { MyReviewsContent } from 'components/Pages/Customer/MyReviews/MyReviewsContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     CurrentCustomerUserProductReviewsQueryDocument,
     TypeCurrentCustomerUserProductReviewsQueryVariables,
@@ -27,15 +26,16 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const MyReviewsPage: FC = () => {
     const { t } = useTranslation();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();
     const [customerMyReviewsUrl] = getInternationalizedStaticUrls(['/customer/my-reviews'], url);
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('My reviews'), slug: customerMyReviewsUrl },
-    ];
+    ]);
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);

@@ -13,6 +13,7 @@ export enum TIDs {
     header_comparison_link = 'header_comparison_link',
     simple_header_contact = 'simple_header_contact',
     banners_slider = 'banners_slider',
+    breadcrumbs = 'breadcrumbs',
     breadcrumbs_tail = 'breadcrumbs_tail',
 
     // Footer

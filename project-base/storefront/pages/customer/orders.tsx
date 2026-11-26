@@ -5,7 +5,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrdersPageContent } from 'components/Pages/Customer/Orders/OrdersPageContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { OrdersQueryDocument, TypeOrdersQueryVariables } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -22,15 +21,14 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const OrdersPage: FC = () => {
     const { t } = useTranslation();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
-    ];
+    const breadcrumbs = useCustomerBreadcrumbs([{ __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl }]);
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);

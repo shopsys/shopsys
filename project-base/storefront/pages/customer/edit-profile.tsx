@@ -4,7 +4,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -12,6 +11,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
 const EditProfilePage: FC = () => {
@@ -20,9 +20,9 @@ const EditProfilePage: FC = () => {
     const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer/edit-profile'], url);
     const currentCustomerUserData = useCurrentCustomerData();
     const userProfileSectionLabel = useUserProfileSectionLabel();
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: userProfileSectionLabel, slug: customerEditProfileUrl },
-    ];
+    ]);
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);

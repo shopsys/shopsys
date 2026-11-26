@@ -5,7 +5,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { ComplaintDetailContent } from 'components/Pages/Customer/ComplaintDetail/ComplaintDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     ComplaintQueryDocument,
     TypeComplaintQueryVariables,
@@ -21,6 +20,7 @@ import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const ComplaintDetailPage: FC = () => {
     const { t } = useTranslation();
@@ -33,10 +33,10 @@ const ComplaintDetailPage: FC = () => {
             variables: { complaintNumber },
         });
 
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('My complaints'), slug: customerComplaintsUrl },
         { __typename: 'Link', name: complaintNumber, slug: '' },
-    ];
+    ]);
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
@@ -45,7 +45,6 @@ const ComplaintDetailPage: FC = () => {
         <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!complaintDetailError}>
             <CustomerLayout
                 breadcrumbs={breadcrumbs}
-                breadcrumbsType="complaintList"
                 isFetchingData={isComplaintDetailFetching}
                 defaultTitle={`${t('Complaint number')} ${complaintNumber}`}
             >

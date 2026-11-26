@@ -4,7 +4,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { ChangePasswordContent } from 'components/Pages/Customer/ChangePassword/ChangePasswordContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
 import { useGtmPageReadyEvent } from 'gtm/utils/pageReadyEvents/useGtmPageReadyEvent';
@@ -12,15 +11,16 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const ChangePasswordPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [changePasswordUrl] = getInternationalizedStaticUrls(['/customer/change-password'], url);
     const currentCustomerUserData = useCurrentCustomerData();
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('Change password'), slug: changePasswordUrl },
-    ];
+    ]);
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);

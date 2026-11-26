@@ -207,6 +207,7 @@ export const url = {
         orderDetail: route['/order-detail/:urlHash']?.replace('/:urlHash', '') as string,
     },
     customer: {
+        overview: route['/customer'] as string,
         orders: route['/customer/orders'] as string,
         editProfile: route['/customer/edit-profile'] as string,
         complaints: route['/customer/complaints'] as string,

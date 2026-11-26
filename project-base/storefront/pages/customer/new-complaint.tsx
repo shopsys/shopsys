@@ -8,7 +8,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { OrderedItemsContent } from 'components/Pages/Customer/OrderedItems/OrderedItemsContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERED_ITEMS_FILTER, DEFAULT_PAGE_SIZE } from 'config/constants';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { ComplaintResolutionQueryDocument } from 'graphql/requests/complaints/queries/ComplaintResolutionQuery.generated';
 import {
     OrderedItemsQueryDocument,
@@ -30,6 +29,7 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const NewComplaintPage: FC = () => {
     const { t } = useTranslation();
@@ -44,10 +44,10 @@ const NewComplaintPage: FC = () => {
     const debouncedSearchQuery = useDebounce(searchQueryValue, 300);
     const isSearchQueryValid = debouncedSearchQuery.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('My complaints'), slug: customerComplaintsUrl },
         { __typename: 'Link', name: t('New complaint'), slug: customerComplaintsNewUrl },
-    ];
+    ]);
 
     const [{ data: orderedItemsData, fetching: orderedItemsFetching, error: orderedItemsError }] = useOrderedItemsQuery(
         {
@@ -88,7 +88,7 @@ const NewComplaintPage: FC = () => {
 
     return (
         <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
-            <CustomerLayout breadcrumbs={breadcrumbs} breadcrumbsType="complaintList" defaultTitle={t('New complaint')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} defaultTitle={t('New complaint')}>
                 <PageHero
                     icon={DocumentIcon}
                     title={t('New complaint')}

@@ -4,7 +4,6 @@ import { PageHero } from 'components/Layout/PageHero/PageHero';
 import { CustomerUsersTable } from 'components/Pages/Customer/Users/CustomerUsersTable';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageReadyEvent } from 'gtm/factories/useGtmStaticPageReadyEvent';
@@ -14,15 +13,16 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 import { useRedirectOnPermissionsChange } from 'utils/user/useRedirectOnPermissionsChange';
 
 const UsersPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerUsersUrl] = getInternationalizedStaticUrls(['/customer/users'], url);
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('Customer users'), slug: customerUsersUrl },
-    ];
+    ]);
     const { canManageUsers } = useAuthorization();
     const { redirect } = useRedirectOnPermissionsChange();
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);

@@ -9,7 +9,6 @@ import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERS_SIZE } from 'config/constants';
 import { TIDs } from 'cypress/tids';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     ComplaintsQueryDocument,
     TypeComplaintsQueryVariables,
@@ -29,6 +28,7 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCustomerBreadcrumbs } from 'utils/user/useCustomerBreadcrumbs';
 
 const ComplaintsPage: FC = () => {
     const { t } = useTranslation();
@@ -39,9 +39,9 @@ const ComplaintsPage: FC = () => {
         ['/customer/complaints', '/customer/new-complaint'],
         url,
     );
-    const breadcrumbs: TypeBreadcrumbFragment[] = [
+    const breadcrumbs = useCustomerBreadcrumbs([
         { __typename: 'Link', name: t('My complaints'), slug: customerComplaintsUrl },
-    ];
+    ]);
 
     const gtmStaticPageReadyEvent = useGtmStaticPageReadyEvent(GtmPageType.other, breadcrumbs);
     useGtmPageReadyEvent(gtmStaticPageReadyEvent);
