@@ -12,7 +12,7 @@ import {
 import { MobileBottomSearchWithOverlay } from 'components/Layout/Header/MobileBottomNavigation/MobileBottomSearchWithOverlay';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import dynamic from 'next/dynamic';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useSessionStore } from 'store/useSessionStore';
 import { MobileNavigationPanelEnum } from 'types/mobileNavigation';
@@ -20,6 +20,7 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 import { useKeypress } from 'utils/useKeyPress';
 
 const MobileBottomAccountDrawer = dynamic(
@@ -48,6 +49,21 @@ export const MobileBottomNavigation: FC = () => {
     const openedPanelsRef = useRef(new Set<MobileNavigationPanelEnum>());
     const [openPanel, setOpenPanel] = useState<MobileNavigationPanelEnum | null>(null);
     const [homeUrl] = getInternationalizedStaticUrls(['/'], url);
+    const isDesktop = useMediaMin('vl');
+    const isUserMenuOpen = useSessionStore((store) => store.isUserMenuOpen);
+    const setIsUserMenuOpen = useSessionStore((store) => store.setIsUserMenuOpen);
+
+    // "My menu" in the customer area asks for the user menu through the session store; below vl the header menu is not
+    // mounted, so this navigation opens its account drawer instead
+    useEffect(() => {
+        if (!isUserMenuOpen || !isUserLoggedIn || isDesktop !== false) {
+            return;
+        }
+
+        openedPanelsRef.current.add(MobileNavigationPanelEnum.Account);
+        setOpenPanel(MobileNavigationPanelEnum.Account);
+        setIsUserMenuOpen(false);
+    }, [isUserMenuOpen, isUserLoggedIn, isDesktop]);
 
     const closeOpenPanel = () => setOpenPanel(null);
 
