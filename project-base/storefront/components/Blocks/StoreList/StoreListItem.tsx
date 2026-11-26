@@ -17,6 +17,9 @@ type StoreListItemProps = {
     onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
+// the default duration of the framer-motion tween used by AnimateCollapseDiv
+const STORE_DETAILS_EXPAND_DURATION = 300;
+
 export const StoreListItem: FC<StoreListItemProps> = ({
     store,
     isSelected,
@@ -39,6 +42,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
         }
     }, [isSelected, isSelectionMode]);
 
+    // scrolls the expanded store into view once its details finished expanding, so the page does not move mid-animation
     useEffect(() => {
         if (isExpanded && itemRef.current) {
             const timeoutId = setTimeout(() => {
@@ -47,7 +51,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
                     block: 'nearest',
                     inline: 'end',
                 });
-            }, 100);
+            }, STORE_DETAILS_EXPAND_DURATION);
             return () => clearTimeout(timeoutId);
         }
 
