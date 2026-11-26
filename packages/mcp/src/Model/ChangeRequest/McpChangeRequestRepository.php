@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class McpChangeRequestRepository
@@ -35,16 +37,16 @@ class McpChangeRequestRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @return \Shopsys\McpBundle\Model\ChangeRequest\McpChangeRequest[]
-     */
-    public function getOpenByAdministrator(Administrator $administrator): array
-    {
-        return $this->createOpenByAdministratorQueryBuilder($administrator)
+    public function getOpenByAdministratorPaginationResult(
+        Administrator $administrator,
+        int $page,
+        int $pageSize,
+    ): PaginationResult {
+        $queryBuilder = $this->createOpenByAdministratorQueryBuilder($administrator)
             ->orderBy('mcr.createdAt', 'DESC')
-            ->addOrderBy('mcr.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('mcr.id', 'DESC');
+
+        return new QueryPaginator($queryBuilder)->getResult($page, $pageSize);
     }
 
     public function countOpenByAdministrator(Administrator $administrator): int

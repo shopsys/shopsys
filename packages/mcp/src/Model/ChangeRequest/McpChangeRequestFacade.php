@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Mcp\Exception\ToolCallException;
 use Psr\Clock\ClockInterface;
 use Psr\Container\ContainerInterface;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\McpBundle\Component\Logger\McpToolCallLogger;
 use Shopsys\McpBundle\Component\WriteTool\McpApprovableToolInterface;
@@ -22,6 +23,8 @@ use Webmozart\Assert\Assert;
 
 class McpChangeRequestFacade
 {
+    protected const int MAX_OPEN_COUNT_PER_ADMINISTRATOR = 500;
+
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly McpChangeRequestRepository $mcpChangeRequestRepository,
@@ -44,8 +47,17 @@ class McpChangeRequestFacade
      */
     public function create(McpApprovableToolInterface $tool, object $arguments): McpChangeRequest
     {
+        $administrator = $this->getCurrentAdministrator();
+
+        if ($this->countOpenByAdministrator($administrator) >= static::MAX_OPEN_COUNT_PER_ADMINISTRATOR) {
+            throw new ToolCallException(sprintf(
+                '%d changes already wait for approval in administration, ask the administrator to approve or discard them first.',
+                static::MAX_OPEN_COUNT_PER_ADMINISTRATOR,
+            ));
+        }
+
         $mcpChangeRequestData = $this->mcpChangeRequestDataFactory->create();
-        $mcpChangeRequestData->administrator = $this->getCurrentAdministrator();
+        $mcpChangeRequestData->administrator = $administrator;
         $mcpChangeRequestData->toolName = $tool::getToolName();
         $mcpChangeRequestData->argumentsClass = $arguments::class;
         $mcpChangeRequestData->arguments = $this->normalizer->normalize($arguments);
@@ -66,12 +78,12 @@ class McpChangeRequestFacade
         return $this->mcpChangeRequestRepository->countOpenByAdministrator($administrator);
     }
 
-    /**
-     * @return \Shopsys\McpBundle\Model\ChangeRequest\McpChangeRequest[]
-     */
-    public function getOpenByAdministrator(Administrator $administrator): array
-    {
-        return $this->mcpChangeRequestRepository->getOpenByAdministrator($administrator);
+    public function getOpenByAdministratorPaginationResult(
+        Administrator $administrator,
+        int $page,
+        int $pageSize,
+    ): PaginationResult {
+        return $this->mcpChangeRequestRepository->getOpenByAdministratorPaginationResult($administrator, $page, $pageSize);
     }
 
     public function getOpenByIdAndAdministrator(int $id, Administrator $administrator): McpChangeRequest

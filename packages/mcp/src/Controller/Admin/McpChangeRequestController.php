@@ -10,22 +10,29 @@ use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Model\ChangeRequest\Exception\McpChangeRequestApprovalFailedException;
 use Shopsys\McpBundle\Model\ChangeRequest\McpChangeRequestFacade;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[SuperAdminOnly]
 class McpChangeRequestController extends AdminBaseController
 {
+    protected const int PAGE_SIZE = 20;
+
     public function __construct(
         protected readonly McpChangeRequestFacade $mcpChangeRequestFacade,
     ) {
     }
 
     #[Route(path: '/superadmin/mcp-server/change-requests/', name: McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST, methods: ['GET'])]
-    public function listAction(): Response
+    public function listAction(Request $request): Response
     {
         return $this->render('@ShopsysMcp/content/changeRequest/list.html.twig', [
-            'mcpChangeRequests' => $this->mcpChangeRequestFacade->getOpenByAdministrator($this->getCurrentAdministrator()),
+            'paginationResult' => $this->mcpChangeRequestFacade->getOpenByAdministratorPaginationResult(
+                $this->getCurrentAdministrator(),
+                $request->query->getInt('page', 1),
+                static::PAGE_SIZE,
+            ),
         ]);
     }
 

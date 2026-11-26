@@ -6,15 +6,15 @@
 {% block h1 %}{{ 'MCP change requests'|trans }}{% endblock %}
 
 {% block main_content %}
-    {# @var mcpChangeRequests \Shopsys\McpBundle\Model\ChangeRequest\McpChangeRequest[] #}
+    {# @var paginationResult \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult #}
     <div class="card">
-        {% if mcpChangeRequests is empty %}
+        {% if paginationResult.results is empty %}
             <div class="card-body text-secondary">
                 {{ 'There are no MCP change requests waiting for your approval.'|trans }}
             </div>
         {% else %}
             <div class="list-group list-group-flush">
-                {% for mcpChangeRequest in mcpChangeRequests %}
+                {% for mcpChangeRequest in paginationResult.results %}
                     {% set change = mcpChangeRequest.change %}
                     {% set detailId = 'mcp-change-request-' ~ mcpChangeRequest.id %}
                     {% set changedFieldCount = change.fields|reduce((labels, field) => field.label|trans(field.labelParameters) in labels ? labels : labels|merge([field.label|trans(field.labelParameters)]), [])|length %}
@@ -102,6 +102,25 @@
                     </div>
                 {% endfor %}
             </div>
+            {% if paginationResult.pageCount > 1 %}
+                <div class="card-footer d-flex align-items-center">
+                    <p class="m-0 text-secondary">
+                        {{ paginationResult.fromItem }} - {{ paginationResult.toItem }} {{ 'from'|trans }} {{ paginationResult.totalCount }}
+                    </p>
+                    <ul class="pagination m-0 ms-auto">
+                        <li class="page-item{% if paginationResult.firstPage %} disabled{% endif %}">
+                            <a class="page-link" href="{{ path('admin_superadmin_mcp_change_request_list', {page: paginationResult.previousPage}) }}">
+                                {{ ux_icon('chevron-left', {class: 'icon icon-sm'}) }}
+                            </a>
+                        </li>
+                        <li class="page-item{% if paginationResult.lastPage %} disabled{% endif %}">
+                            <a class="page-link" href="{{ path('admin_superadmin_mcp_change_request_list', {page: paginationResult.nextPage}) }}">
+                                {{ ux_icon('chevron-right', {class: 'icon icon-sm'}) }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}
