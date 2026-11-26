@@ -85,7 +85,13 @@ export const CustomerDashboard: FC<{ title: string }> = ({ title }) => {
                         listUrl={ordersUrl}
                         listLabel={t('My orders')}
                         detailUrl={orderDetailUrl}
-                        numberParam="orderNumber"
+                        type="order"
+                        numberLabel={t('Order number')}
+                        dateLabel={t('Date of order')}
+                        statusLabel={t('State')}
+                        getDetailLabel={(orderNumber) =>
+                            t('Go to order detail number {{ orderNumber }}', { ns: 'accessibility', orderNumber })
+                        }
                     />
                 )}
                 {showComplaints && (
@@ -100,7 +106,13 @@ export const CustomerDashboard: FC<{ title: string }> = ({ title }) => {
                         listUrl={complaintsUrl}
                         listLabel={t('My complaints')}
                         detailUrl={complaintDetailUrl}
-                        numberParam="complaintNumber"
+                        type="complaint"
+                        numberLabel={t('Complaint number')}
+                        dateLabel={t('Creation date')}
+                        statusLabel={t('Status')}
+                        getDetailLabel={(complaintNumber) =>
+                            t('Go to complaint number {{complaintNumber}}', { ns: 'accessibility', complaintNumber })
+                        }
                     />
                 )}
             </div>
@@ -124,7 +136,11 @@ type DashboardSectionProps = {
     listUrl: string;
     listLabel: string;
     detailUrl: string;
-    numberParam: 'orderNumber' | 'complaintNumber';
+    type: 'order' | 'complaint';
+    numberLabel: string;
+    dateLabel: string;
+    statusLabel: string;
+    getDetailLabel: (number: string) => string;
 };
 
 const dashboardRowClassName =
@@ -163,12 +179,15 @@ const DashboardSection: FC<DashboardSectionProps> = ({
     listUrl,
     listLabel,
     detailUrl,
-    numberParam,
+    type,
+    numberLabel,
+    dateLabel,
+    statusLabel,
+    getDetailLabel,
 }) => {
     const { t } = useTranslation();
     const { formatDate } = useFormatDate();
-    const isOrder = numberParam === 'orderNumber';
-    const Icon = isOrder ? OrderIcon : DocumentIcon;
+    const Icon = type === 'order' ? OrderIcon : DocumentIcon;
 
     const isLoading = !hasError && fetching && !records;
     const hasRecords = !hasError && !!records?.length;
@@ -191,12 +210,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({
                         </p>
                     </div>
                 </div>
-                <LinkButton
-                    href={listUrl}
-                    size="large"
-                    type={isOrder ? 'orderList' : 'complaintList'}
-                    variant="secondary"
-                >
+                <LinkButton href={listUrl} size="large" type={`${type}List`} variant="secondary">
                     {listLabel}
                     <ArrowSecondaryIcon aria-hidden="true" className="size-4 -rotate-90" />
                 </LinkButton>
@@ -207,36 +221,20 @@ const DashboardSection: FC<DashboardSectionProps> = ({
                 <ul className="flex flex-col gap-2">
                     {records.map((record) => (
                         <li key={record.number} className={dashboardRowClassName}>
-                            <CustomerRecordColumnInfo
-                                className="min-w-0 break-words"
-                                title={isOrder ? t('Order number') : t('Complaint number')}
-                            >
+                            <CustomerRecordColumnInfo className="min-w-0 break-words" title={numberLabel}>
                                 <ExtendedNextLink
                                     className="font-semibold"
-                                    type={isOrder ? 'orderDetail' : 'complaintDetail'}
-                                    aria-label={
-                                        isOrder
-                                            ? t('Go to order detail number {{ orderNumber }}', {
-                                                  ns: 'accessibility',
-                                                  orderNumber: record.number,
-                                              })
-                                            : t('Go to complaint number {{complaintNumber}}', {
-                                                  ns: 'accessibility',
-                                                  complaintNumber: record.number,
-                                              })
-                                    }
-                                    href={{ pathname: detailUrl, query: { [numberParam]: record.number } }}
+                                    type={`${type}Detail`}
+                                    aria-label={getDetailLabel(record.number)}
+                                    href={{ pathname: detailUrl, query: { [`${type}Number`]: record.number } }}
                                 >
                                     {record.number}
                                 </ExtendedNextLink>
                             </CustomerRecordColumnInfo>
-                            <CustomerRecordColumnInfo
-                                className="min-w-0"
-                                title={isOrder ? t('Date of order') : t('Creation date')}
-                            >
+                            <CustomerRecordColumnInfo className="min-w-0" title={dateLabel}>
                                 <time dateTime={record.date}>{formatDate(record.date)}</time>
                             </CustomerRecordColumnInfo>
-                            <CustomerRecordColumnInfo className="min-w-0" title={isOrder ? t('State') : t('Status')}>
+                            <CustomerRecordColumnInfo className="min-w-0" title={statusLabel}>
                                 <CustomerRecordStatusBadge status={record.status} statusType={record.statusType} />
                             </CustomerRecordColumnInfo>
                         </li>
