@@ -4,10 +4,26 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Component\WriteTool;
 
+/**
+ * @phpstan-type McpChangeFieldArray array{
+ *     label: string,
+ *     labelParameters: array<string, string|int>,
+ *     before: string|null,
+ *     after: string|null,
+ *     contextBefore: string|null,
+ *     contextAfter: string|null
+ * }
+ * @phpstan-type McpChangeArray array{
+ *     subject: string,
+ *     subjectParameters: array<string, string|int>,
+ *     subjectUrl: string|null,
+ *     fields: array<int, McpChangeFieldArray>
+ * }
+ */
 class McpChange
 {
     /**
-     * @var array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null, contextBefore: string|null, contextAfter: string|null}>
+     * @var array<int, McpChangeFieldArray>
      */
     protected array $fields = [];
 
@@ -45,7 +61,7 @@ class McpChange
     }
 
     /**
-     * @return array{subject: string, subjectParameters: array<string, string|int>, subjectUrl: string|null, fields: array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null, contextBefore: string|null, contextAfter: string|null}>}
+     * @return McpChangeArray
      */
     public function toArray(): array
     {

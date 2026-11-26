@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\McpAttributes\Attribute\AsMcpTable;
 
+/**
+ * @phpstan-import-type McpChangeArray from \Shopsys\McpBundle\Component\WriteTool\McpChange
+ */
 #[AsMcpTable(exposed: false)]
 #[ORM\Table(name: 'mcp_change_requests')]
 #[ORM\Entity]
@@ -47,7 +50,7 @@ class McpChangeRequest
     protected $arguments;
 
     /**
-     * @var array{subject: string, subjectParameters: array<string, string|int>, subjectUrl: string|null, fields: array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null}>}
+     * @var McpChangeArray
      */
     #[ORM\Column(type: 'json')]
     protected $change;
@@ -122,7 +125,7 @@ class McpChangeRequest
     }
 
     /**
-     * @return array{subject: string, subjectParameters: array<string, string|int>, subjectUrl: string|null, fields: array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null}>}
+     * @return McpChangeArray
      */
     public function getChange()
     {
@@ -164,7 +167,7 @@ class McpChangeRequest
     }
 
     /**
-     * @param array{subject: string, subjectParameters: array<string, string|int>, subjectUrl: string|null, fields: array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null}>} $change
+     * @param McpChangeArray $change
      */
     public function refresh(array $change): void
     {

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Model\ChangeRequest;
 
+/**
+ * @phpstan-import-type McpChangeArray from \Shopsys\McpBundle\Component\WriteTool\McpChange
+ */
 class McpChangeRequestData
 {
     /**
@@ -27,7 +30,7 @@ class McpChangeRequestData
     public $arguments;
 
     /**
-     * @var array{subject: string, subjectParameters: array<string, string|int>, subjectUrl: string|null, fields: array<int, array{label: string, labelParameters: array<string, string|int>, before: string|null, after: string|null}>}
+     * @var McpChangeArray
      */
     public $change;
 
