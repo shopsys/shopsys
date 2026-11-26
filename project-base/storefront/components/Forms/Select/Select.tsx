@@ -173,7 +173,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 className={twMergeCustom(
                                     'h-full w-full min-w-0 bg-transparent px-3 text-md! outline-hidden',
                                     label && FIELD_VALUE_PADDING_CLASS_NAME,
-                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
+                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active disabled:placeholder:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
                                 onChange={(e) => handleSearchValueChange(e)}

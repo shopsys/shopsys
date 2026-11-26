@@ -144,7 +144,7 @@ export function MultiSelect<T extends string | number = string>({
                                 className={twJoin(
                                     'size-full bg-transparent px-3 text-md! outline-hidden',
                                     label && FIELD_VALUE_PADDING_CLASS_NAME,
-                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
+                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active disabled:placeholder:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
                                 onChange={(e) => handleSearchValueChange(e)}
