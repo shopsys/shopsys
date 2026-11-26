@@ -79,7 +79,7 @@ class BlogArticleMcpFacade
         }
     }
 
-    public function describeEdit(EditBlogArticleArguments $arguments): McpChange
+    public function previewEdit(EditBlogArticleArguments $arguments): McpChange
     {
         $blogArticle = $this->getById($arguments->blogArticleId);
         $editedData = $this->createEditedData($blogArticle, $arguments);

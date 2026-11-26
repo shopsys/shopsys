@@ -92,9 +92,9 @@ class EditBlogArticleTool extends AbstractMcpApprovableTool
      * @param \Shopsys\McpBundle\Tool\Blog\EditBlogArticleArguments $arguments
      */
     #[Override]
-    public function describeChange(object $arguments): McpChange
+    public function previewChange(object $arguments): McpChange
     {
-        return $this->blogArticleMcpFacade->describeEdit($arguments);
+        return $this->blogArticleMcpFacade->previewEdit($arguments);
     }
 
     /**

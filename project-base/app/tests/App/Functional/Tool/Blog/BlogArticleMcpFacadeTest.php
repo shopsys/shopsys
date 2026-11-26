@@ -48,7 +48,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $locale = $this->getFirstDomainLocale();
         $currentName = $blogArticle->getName($locale);
 
-        $change = $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+        $change = $this->blogArticleMcpFacade->previewEdit(new EditBlogArticleArguments(
             blogArticleId: $blogArticle->getId(),
             names: [$locale => $currentName],
             perexes: [$locale => 'New perex'],
@@ -60,7 +60,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame('New perex', $change['fields'][0]['after']);
     }
 
-    public function testDescribeEditFailsWhenInputDoesNotChangeArticle(): void
+    public function testPreviewEditFailsWhenInputDoesNotChangeArticle(): void
     {
         $blogArticle = $this->getPublishedBlogArticle();
         $locale = $this->getFirstDomainLocale();
@@ -68,18 +68,18 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $this->expectException(ToolCallException::class);
         $this->expectExceptionMessage('The input does not change the blog article.');
 
-        $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+        $this->blogArticleMcpFacade->previewEdit(new EditBlogArticleArguments(
             blogArticleId: $blogArticle->getId(),
             names: [$locale => $blogArticle->getName($locale)],
         ));
     }
 
-    public function testDescribeEditShowsSlugChange(): void
+    public function testPreviewEditShowsSlugChange(): void
     {
         $blogArticle = $this->getPublishedBlogArticle();
         $currentSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(Domain::FIRST_DOMAIN_ID, 'front_blogarticle_detail', $blogArticle->getId());
 
-        $change = $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+        $change = $this->blogArticleMcpFacade->previewEdit(new EditBlogArticleArguments(
             blogArticleId: $blogArticle->getId(),
             slugsByDomainId: [Domain::FIRST_DOMAIN_ID => 'new-slug'],
         ))->toArray();
@@ -89,12 +89,12 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame('new-slug', $change['fields'][0]['after']);
     }
 
-    public function testDescribeEditShowsReplacementWithItsContext(): void
+    public function testPreviewEditShowsReplacementWithItsContext(): void
     {
         $blogArticle = $this->getPublishedBlogArticleWithDescription();
         $locale = $this->getFirstDomainLocale();
 
-        $change = $this->blogArticleMcpFacade->describeEdit(new EditBlogArticleArguments(
+        $change = $this->blogArticleMcpFacade->previewEdit(new EditBlogArticleArguments(
             blogArticleId: $blogArticle->getId(),
             descriptionReplacements: [$locale => [['find' => '<p>Old sentence.</p>', 'replace' => '<p>New sentence.</p>']]],
         ))->toArray();
