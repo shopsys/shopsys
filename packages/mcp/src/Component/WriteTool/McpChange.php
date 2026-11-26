@@ -48,6 +48,10 @@ class McpChange
         ?string $contextBefore = null,
         ?string $contextAfter = null,
     ): static {
+        if ($before === $after) {
+            return $this;
+        }
+
         $this->fields[] = [
             'label' => $label,
             'labelParameters' => $labelParameters,
