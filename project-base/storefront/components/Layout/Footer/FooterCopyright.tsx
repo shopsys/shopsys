@@ -4,11 +4,13 @@ import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/Us
 import { Button } from 'components/Forms/Button/Button';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { FOOTER_THEME } from 'config/theme';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import logo from '/public/images/shopsys-logo.svg';
+import invertedLogo from '/public/images/shopsys-logo-inverted.svg';
 
 export const FooterCopyright: FC = () => {
     const { t } = useTranslation();
@@ -25,13 +27,13 @@ export const FooterCopyright: FC = () => {
         <FooterContainer>
             <div className="flex flex-col items-center gap-5 lg:gap-2">
                 <div
-                    className="flex w-full items-center justify-center text-center text-sm text-text-default"
+                    className="flex w-full items-center justify-center text-center text-footer-foreground text-sm"
                     data-tid={TIDs.footer_copyright}
                 >
                     {t('footerCopyright', { currentYear })}
                 </div>
 
-                <div className="flex items-center justify-center gap-1.5 text-sm text-text-default">
+                <div className="flex items-center justify-center gap-1.5 text-footer-foreground text-sm">
                     {t('Customized E-shop by')}
 
                     <a
@@ -41,14 +43,14 @@ export const FooterCopyright: FC = () => {
                         tabIndex={0}
                         target="_blank"
                     >
-                        <Image alt="" height="24" src={logo} />
+                        <Image alt="" height="24" src={FOOTER_THEME === 'dark' ? invertedLogo : logo} />
                     </a>
                 </div>
 
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
                     <ExtendedNextLink
                         aria-label={t('Update your consent. Go to user consent update page', { ns: 'accessibility' })}
-                        className="text-sm leading-6"
+                        className="text-footer-link text-sm leading-6 hover:text-footer-link-hovered"
                         href={userConsentUrl}
                         skeletonType="user-consent"
                         title={t('User consent page')}
@@ -60,7 +62,7 @@ export const FooterCopyright: FC = () => {
                 <Button
                     aria-label={t('Go to top of the page', { ns: 'accessibility' })}
                     className="vl:hidden w-auto"
-                    variant="tertiary"
+                    variant={FOOTER_THEME === 'dark' ? 'inverted' : 'tertiary'}
                     onClick={handleBackToTop}
                 >
                     {t('Back to top')}

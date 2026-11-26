@@ -20,7 +20,7 @@ import { CartInHeaderList } from './CartInHeaderList';
 import { CartInHeaderPopover } from './CartInHeaderPopover';
 
 const emptyCartTwClassName = [
-    'bg-none text-button-primary-text-default border-button-primary-text-default',
+    'bg-none text-header-foreground border-header-foreground',
     'group-hover:bg-button-primary-bg-hovered group-hover:text-button-primary-text-hovered group-hover:border-button-primary-border-hovered',
     'group-active:bg-button-primary-bg-active group-active:text-button-primary-text-active group-active:border-button-primary-border-active',
 ];

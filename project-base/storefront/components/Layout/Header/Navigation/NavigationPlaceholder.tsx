@@ -29,7 +29,7 @@ export const NavigationPlaceholder: FC<NavigationPlaceholderProps> = ({ navigati
                           const isExternalLink =
                               link !== null && (link.startsWith('http://') || link.startsWith('https://'));
                           const navigationItemClassName =
-                              'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-link-inverted-default text-sm vl:text-base no-underline hover:text-link-inverted-hovered hover:no-underline active:text-link-inverted-hovered disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0 group-hover:text-link-inverted-hovered group-hover:no-underline';
+                              'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-header-foreground text-sm vl:text-base no-underline hover:text-header-hovered hover:no-underline active:text-header-hovered disabled:text-link-inverted-disabled group-first-of-type:pl-0 group-last-of-type:pr-0 group-hover:text-header-hovered group-hover:no-underline';
                           const content = (
                               <NavigationItemContent
                                   isDropdownTrigger={isDropdownTrigger}

@@ -1,3 +1,4 @@
+import { FOOTER_THEME, HEADER_THEME } from 'config/theme';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { Footer } from './Footer/Footer';
 import { AccessibilityNavigation } from './Header/AccessibilityNavigation/AccessibilityNavigation';
@@ -10,7 +11,7 @@ export const ErrorLayout: FC = ({ children }) => {
         <div className="flex h-full min-h-screen flex-col">
             <AccessibilityNavigation />
 
-            <header className="bg-background-brand">
+            <header data-header-theme={HEADER_THEME} className="bg-header-background">
                 <Header simpleHeader />
             </header>
 
@@ -24,8 +25,9 @@ export const ErrorLayout: FC = ({ children }) => {
             </main>
 
             <footer
+                data-footer-theme={FOOTER_THEME}
                 aria-label={t('Site information', { ns: 'accessibility' })}
-                className="mt-auto h-fit bg-background-accent-less"
+                className="mt-auto h-fit bg-footer-background-accent-less text-footer-foreground"
             >
                 <Footer simpleFooter />
             </footer>

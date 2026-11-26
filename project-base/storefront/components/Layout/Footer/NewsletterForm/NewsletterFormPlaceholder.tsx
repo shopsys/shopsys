@@ -2,7 +2,7 @@ import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 
 export const NewsletterFormPlaceholder: FC = () => (
-    <FooterContainer className="border-t-0!">
+    <FooterContainer className="border-t-0! bg-background-brand">
         <div className="grid grid-cols-1 vl:grid-cols-[minmax(20rem,28rem)_minmax(0,32rem)] items-center vl:justify-center gap-4 vl:gap-12">
             <div className="flex flex-col gap-2">
                 <Skeleton className="h-3 w-24 bg-white-alpha-200" />

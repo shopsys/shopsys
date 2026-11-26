@@ -12,6 +12,7 @@ import { Navigation } from 'components/Layout/Header/Navigation/Navigation';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { FOOTER_THEME, HEADER_THEME } from 'config/theme';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -26,7 +27,7 @@ const Index: FC = () => {
 
             <NotificationBars />
 
-            <header>
+            <header data-header-theme={HEADER_THEME}>
                 <Webline className="relative" wrapperClassName="gjs-template-header-bg">
                     <div className="flex flex-wrap items-center gap-x-1 gap-y-3 py-3 lg:gap-x-7 lg:pt-6 lg:pb-5">
                         <Logo />
@@ -62,7 +63,10 @@ const Index: FC = () => {
                 </VerticalStack>
             </main>
 
-            <footer className="mt-auto h-fit bg-background-accent-less">
+            <footer
+                data-footer-theme={FOOTER_THEME}
+                className="mt-auto h-fit bg-footer-background-accent-less text-footer-foreground"
+            >
                 <NewsletterForm />
                 <Footer footerArticles={footerArticles} />
             </footer>

@@ -63,9 +63,9 @@ export const NavigationMoreItem: FC<NavigationMoreItemProps> = ({
                 aria-expanded={isOpened}
                 className={twMergeCustom(
                     'relative m-0 flex cursor-pointer items-center whitespace-nowrap rounded-sm border-0 bg-transparent p-5 font-secondary font-semibold text-sm vl:text-base group-first-of-type:pl-0 group-last-of-type:pr-0',
-                    'text-link-inverted-default',
-                    'hover:text-link-inverted-hovered group-hover:text-link-inverted-hovered',
-                    'active:text-link-inverted-hovered',
+                    'text-header-foreground',
+                    'hover:text-header-hovered group-hover:text-header-hovered',
+                    'active:text-header-hovered',
                     itemClassName,
                 )}
                 type="button"
@@ -80,8 +80,8 @@ export const NavigationMoreItem: FC<NavigationMoreItemProps> = ({
                 >
                     <ArrowIcon
                         className={twJoin(
-                            'size-5 text-link-inverted-default transition',
-                            isOpened && 'group-hover:text-link-inverted-hovered',
+                            'size-5 text-header-foreground transition',
+                            isOpened && 'group-hover:text-header-hovered',
                         )}
                     />
                 </span>

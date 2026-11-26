@@ -2,6 +2,7 @@ import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
+import { FOOTER_THEME, HEADER_THEME } from 'config/theme';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
@@ -153,7 +154,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 )}
 
                 <header
-                    className="bg-background-brand focus-visible:outline-hidden"
+                    data-header-theme={HEADER_THEME}
+                    className="bg-header-background focus-visible:outline-hidden"
                     id="site-header"
                     inert={isOriginalHeaderHidden || undefined}
                     ref={siteHeaderRef}
@@ -196,8 +198,9 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </main>
 
                 <footer
+                    data-footer-theme={FOOTER_THEME}
                     aria-label={t('Site information and navigation', { ns: 'accessibility' })}
-                    className="mt-auto h-fit bg-secondary-50"
+                    className="mt-auto h-fit bg-footer-background text-footer-foreground"
                 >
                     <DeferredNewsletterForm />
 

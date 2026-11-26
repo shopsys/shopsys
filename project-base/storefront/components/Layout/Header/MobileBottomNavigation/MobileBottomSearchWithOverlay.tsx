@@ -1,4 +1,5 @@
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
+import { HEADER_THEME } from 'config/theme';
 import { type RefObject, useEffect, useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -41,6 +42,7 @@ export const MobileBottomSearchWithOverlay: FC<MobileBottomSearchWithOverlayProp
 
             <div
                 className="pointer-events-none fixed inset-x-0 top-5 z-aboveOverlay flex justify-center px-5"
+                data-header-theme={HEADER_THEME}
                 style={{ transform: `translateY(${visualViewportOffsetTop}px)` }}
             >
                 <div className="pointer-events-auto w-full max-w-xl">
