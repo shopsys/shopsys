@@ -1,6 +1,5 @@
 import { StatusBadge, StatusBadgeVariant } from 'components/Basic/StatusBadge/StatusBadge';
 import { TypeComplaintStatusEnum, TypeOrderStatusEnum } from 'graphql/types';
-import { twJoin } from 'tailwind-merge';
 
 type CustomerRecordStatus = TypeOrderStatusEnum | TypeComplaintStatusEnum;
 
@@ -18,13 +17,7 @@ export const CustomerRecordStatusBadge: FC<{ status: string; statusType: Custome
     status,
     statusType,
 }) => (
-    <StatusBadge
-        variant={statusVariants[statusType]}
-        className={twJoin(
-            'max-w-full text-wrap break-words',
-            statusType === TypeOrderStatusEnum.Withdrawn && 'bg-gray-400',
-        )}
-    >
+    <StatusBadge className="max-w-full text-wrap break-words" variant={statusVariants[statusType]}>
         {status}
     </StatusBadge>
 );

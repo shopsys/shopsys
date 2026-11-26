@@ -205,6 +205,7 @@
     --color-skeleton-default: var(--color-gray-200);
     --color-skeleton-less: var(--color-gray-100);
 
+    --color-status-badge-bg-neutral: var(--color-gray-400);
     --color-status-badge-bg-info: var(--color-primary-100);
     --color-status-badge-bg-error: var(--color-red-100);
     --color-status-badge-bg-success: var(--color-green-100);
