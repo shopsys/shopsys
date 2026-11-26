@@ -166,6 +166,15 @@
         @apply focus-visible:outline-hidden;
     }
 
+    /* boxed messages (toasts, alerts, infoboxes) share one 24px icon size */
+    .Toastify__toast-icon {
+        @apply w-6;
+
+        svg {
+            @apply size-6;
+        }
+    }
+
     .custom-toast-content {
         @apply text-text-default! max-w-[90%];
 
