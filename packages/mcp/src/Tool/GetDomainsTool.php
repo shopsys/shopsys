@@ -32,10 +32,18 @@ class GetDomainsTool
                     'items' => [
                         'type' => 'object',
                         'properties' => [
-                            'id' => ['type' => 'integer'],
-                            'name' => ['type' => 'string'],
-                            'locale' => ['type' => 'string'],
-                            'url' => ['type' => 'string'],
+                            'id' => [
+                                'type' => 'integer',
+                            ],
+                            'name' => [
+                                'type' => 'string',
+                            ],
+                            'locale' => [
+                                'type' => 'string',
+                            ],
+                            'url' => [
+                                'type' => 'string',
+                            ],
                         ],
                         'required' => ['id', 'name', 'locale', 'url'],
                     ],
