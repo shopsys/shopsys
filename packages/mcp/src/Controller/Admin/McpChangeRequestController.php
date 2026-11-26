@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Security\Attribute\SuperAdminOnly;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\McpBundle\Component\Routing\McpRouteName;
 use Shopsys\McpBundle\Model\ChangeRequest\Exception\McpChangeRequestApprovalFailedException;
+use Shopsys\McpBundle\Model\ChangeRequest\Exception\McpChangeRequestNotFoundException;
 use Shopsys\McpBundle\Model\ChangeRequest\McpChangeRequestFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,20 +41,22 @@ class McpChangeRequestController extends AdminBaseController
     #[CsrfProtection]
     public function approveAction(int $id): Response
     {
-        $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
-
-        if (!$mcpChangeRequest->isPending()) {
-            $this->addErrorFlash(t('The change request failed, update it according to the current data or discard it.'));
-
-            return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
-        }
-
         try {
+            $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
+
+            if (!$mcpChangeRequest->isPending()) {
+                $this->addErrorFlash(t('The change request failed, update it according to the current data or discard it.'));
+
+                return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+            }
+
             if ($this->mcpChangeRequestFacade->approve($mcpChangeRequest)) {
                 $this->addSuccessFlash(t('The change was approved and applied.'));
             } else {
                 $this->addInfoFlash(t('The change request has already been resolved.'));
             }
+        } catch (McpChangeRequestNotFoundException) {
+            $this->addInfoFlash(t('The change request has already been resolved.'));
         } catch (McpChangeRequestApprovalFailedException $exception) {
             $this->addErrorFlashTwig(t('The change could not be approved: {{ errorMessage }}'), [
                 'errorMessage' => $exception->getMessage(),
@@ -67,15 +70,17 @@ class McpChangeRequestController extends AdminBaseController
     #[CsrfProtection]
     public function refreshAction(int $id): Response
     {
-        $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
-
-        if (!$mcpChangeRequest->isRefreshable()) {
-            return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
-        }
-
         try {
+            $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
+
+            if (!$mcpChangeRequest->isRefreshable()) {
+                return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+            }
+
             $this->mcpChangeRequestFacade->refresh($mcpChangeRequest);
             $this->addSuccessFlash(t('The change request was updated according to the current data, check it and approve it again.'));
+        } catch (McpChangeRequestNotFoundException) {
+            $this->addInfoFlash(t('The change request has already been resolved.'));
         } catch (McpChangeRequestApprovalFailedException $exception) {
             $this->addErrorFlashTwig(t('The change request could not be updated: {{ errorMessage }}'), [
                 'errorMessage' => $exception->getMessage(),
@@ -89,9 +94,13 @@ class McpChangeRequestController extends AdminBaseController
     #[CsrfProtection]
     public function discardAction(int $id): Response
     {
-        $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
-        $this->mcpChangeRequestFacade->discard($mcpChangeRequest);
-        $this->addSuccessFlash(t('The change was discarded.'));
+        try {
+            $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
+            $this->mcpChangeRequestFacade->discard($mcpChangeRequest);
+            $this->addSuccessFlash(t('The change was discarded.'));
+        } catch (McpChangeRequestNotFoundException) {
+            $this->addInfoFlash(t('The change request has already been resolved.'));
+        }
 
         return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
     }
