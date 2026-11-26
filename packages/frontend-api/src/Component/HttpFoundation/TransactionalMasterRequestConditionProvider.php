@@ -8,7 +8,6 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Context\ContextResolverInterface;
 use Shopsys\FrameworkBundle\Component\Context\FrontendApiContext;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
-use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class TransactionalMasterRequestConditionProvider implements TransactionalMasterRequestConditionProviderInterface
@@ -42,7 +41,8 @@ class TransactionalMasterRequestConditionProvider implements TransactionalMaster
         $source = json_decode($requestContent, true);
 
         if (!is_array($source)) {
-            throw new InvalidArgumentUserError('Request content is not a valid JSON.');
+            // The body can still carry a mutation (application/graphql or form content type), so keep the transaction
+            return false;
         }
 
         $operationType = $this->graphqlOperationTypeResolver->resolveOperationTypeFromPayload($source);
