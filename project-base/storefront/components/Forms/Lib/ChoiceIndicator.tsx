@@ -32,17 +32,18 @@ export const ChoiceIndicator: FC<ChoiceIndicatorProps> = ({ inputType, checked, 
         {inputType === 'checkbox' ? (
             <CheckmarkIcon
                 aria-hidden="true"
+                // the mark grows into place when the choice is checked (unless reduced motion is requested), instead of only appearing
                 className={twMergeCustom(
-                    'h-full text-icon-inverted opacity-0 transition',
-                    checked && 'opacity-100',
+                    'h-full text-icon-inverted opacity-0 transition motion-safe:scale-50',
+                    checked && 'opacity-100 motion-safe:scale-100',
                     disabled && 'text-input-text-disabled',
                 )}
             />
         ) : (
             <span
                 className={twMergeCustom(
-                    'h-full w-full rounded-full bg-icon-inverted opacity-0 transition',
-                    checked && 'opacity-100',
+                    'h-full w-full rounded-full bg-icon-inverted opacity-0 transition motion-safe:scale-50',
+                    checked && 'opacity-100 motion-safe:scale-100',
                 )}
             />
         )}

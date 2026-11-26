@@ -118,7 +118,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                     id={mobileMenuId}
                     className={twJoin(
                         'absolute top-full right-0 left-0 z-above mt-2 flex-col divide-y divide-border-less overflow-hidden rounded-control border border-border-less bg-background-default shadow-lg',
-                        isMobileMenuOpen ? 'flex' : 'hidden',
+                        isMobileMenuOpen ? 'flex motion-safe:animate-dropdown-in' : 'hidden',
                     )}
                 >
                     <legend className="sr-only">{t('Sort reviews')}</legend>

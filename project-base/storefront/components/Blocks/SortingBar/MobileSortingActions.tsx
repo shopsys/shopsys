@@ -109,7 +109,7 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     ref={sortDropdownRef}
                     className={twJoin(
                         'absolute top-full left-0 mt-1 w-full flex-col divide-y divide-border-less overflow-hidden rounded-input border border-border-less bg-background-default shadow-lg',
-                        isSortMenuOpen ? 'flex' : 'hidden',
+                        isSortMenuOpen ? 'flex motion-safe:animate-dropdown-in' : 'hidden',
                     )}
                 >
                     <SortingBarOptions

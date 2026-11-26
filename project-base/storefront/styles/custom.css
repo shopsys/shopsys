@@ -25,7 +25,24 @@
  */
 @custom-variant choice-focus-visible (.peer:focus-visible ~ label &);
 
+/* Short feedback animations, used with `motion-safe:`: an icon pops when it is switched on and a dropdown fades in
+ * with a small slide. */
+@keyframes iconPop {
+    40% {
+        transform: scale(1.25);
+    }
+}
+
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-0.25rem);
+    }
+}
+
 @theme {
+    --animate-icon-pop: iconPop 300ms ease-out;
+    --animate-dropdown-in: dropdownIn 150ms ease-out;
     --text-zero: [0, 0];
     --keyframes-fadeIn: fadeIn 0.2s ease-in-out;
     --animation-fadeIn: fadeIn 0.2s ease-in-out;

@@ -2,6 +2,7 @@ import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
+import { useState } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -50,6 +51,15 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     const ariaLabel = isVariantSelection
         ? t('Choose a variant of {{ productName }} to compare', { ns: 'accessibility', productName })
         : toggleAriaLabel;
+    // the icon pops when the customer switches it on, not when the page loads with the product already in the list
+    const [hasBeenToggled, setHasBeenToggled] = useState(false);
+    const iconPopClassName = hasBeenToggled && isProductInComparison ? 'motion-safe:animate-icon-pop' : undefined;
+
+    const handleToggleClick = () => {
+        setHasBeenToggled(true);
+        toggleProductInComparison();
+    };
+
     const ComparisonIcon = isProductInComparison ? CompareFilledIcon : CompareIcon;
 
     if (!isWithText) {
@@ -58,7 +68,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 Icon={ComparisonIcon}
                 ariaLabel={ariaLabel}
                 className={className}
-                iconClassName={isProductInComparison ? 'text-icon-accent-red' : undefined}
+                iconClassName={twMergeCustom(isProductInComparison && 'text-icon-accent-red', iconPopClassName)}
                 shape="rounded"
                 size="small"
                 tabIndex={tabIndex}
@@ -66,7 +76,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 title={tooltipLabel}
                 tooltipLabel={tooltipLabel}
                 variant="ghost"
-                onClick={toggleProductInComparison}
+                onClick={handleToggleClick}
             />
         );
     }
@@ -82,11 +92,15 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 'rounded-detail outline-hidden transition-colors',
                 className,
             )}
-            onClick={toggleProductInComparison}
+            onClick={handleToggleClick}
         >
             <ComparisonIcon
                 aria-hidden="true"
-                className={twMergeCustom('size-6 shrink-0', isProductInComparison && 'text-icon-accent-red')}
+                className={twMergeCustom(
+                    'size-6 shrink-0',
+                    isProductInComparison && 'text-icon-accent-red',
+                    iconPopClassName,
+                )}
             />
             <span className="truncate text-sm">{buttonText}</span>
         </button>

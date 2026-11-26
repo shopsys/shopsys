@@ -113,7 +113,7 @@ const SortingBarMoreOptions: FC<SortingBarMoreOptionsProps> = ({
                 id={listId}
                 className={twJoin(
                     'absolute top-full left-0 z-above mt-1 min-w-60 flex-col overflow-hidden rounded-input border border-border-less bg-background-default shadow-lg',
-                    isOpen ? 'flex' : 'hidden',
+                    isOpen ? 'flex motion-safe:animate-dropdown-in' : 'hidden',
                 )}
             >
                 <SortingBarOptions

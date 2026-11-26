@@ -2,7 +2,7 @@ import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useState } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { twMergeCustom } from 'utils/twMerge';
@@ -51,6 +51,15 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     const ariaLabel = isVariantSelection
         ? t('Choose a variant of {{ productName }} for wishlist', { ns: 'accessibility', productName })
         : toggleAriaLabel;
+    // the icon pops when the customer switches it on, not when the page loads with the product already in the list
+    const [hasBeenToggled, setHasBeenToggled] = useState(false);
+    const iconPopClassName = hasBeenToggled && isProductInWishlist ? 'motion-safe:animate-icon-pop' : undefined;
+
+    const handleToggleClick = () => {
+        setHasBeenToggled(true);
+        toggleProductInWishlist();
+    };
+
     const WishlistIcon = isProductInWishlist ? HeartFilledIcon : HeartIcon;
 
     if (!isWithText) {
@@ -59,7 +68,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
                 Icon={WishlistIcon}
                 ariaLabel={ariaLabel}
                 className={className}
-                iconClassName={isProductInWishlist ? 'text-icon-accent-red' : undefined}
+                iconClassName={twMergeCustom(isProductInWishlist && 'text-icon-accent-red', iconPopClassName)}
                 shape="rounded"
                 size="small"
                 tabIndex={tabIndex}
@@ -67,7 +76,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
                 title={tooltipLabel}
                 tooltipLabel={tooltipLabel}
                 variant="ghost"
-                onClick={toggleProductInWishlist}
+                onClick={handleToggleClick}
             />
         );
     }
@@ -83,11 +92,15 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
                 'rounded-detail outline-hidden transition-colors',
                 className,
             )}
-            onClick={toggleProductInWishlist}
+            onClick={handleToggleClick}
         >
             <WishlistIcon
                 aria-hidden="true"
-                className={twMergeCustom('size-6 shrink-0', isProductInWishlist && 'text-icon-accent-red')}
+                className={twMergeCustom(
+                    'size-6 shrink-0',
+                    isProductInWishlist && 'text-icon-accent-red',
+                    iconPopClassName,
+                )}
             />
             <span className="truncate text-sm">{buttonText}</span>
         </button>
