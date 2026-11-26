@@ -1,8 +1,9 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Tag } from 'components/Basic/Tag/Tag';
+import { AnimatePresence, m } from 'framer-motion';
 import { twJoin } from 'tailwind-merge';
+import { fadeAnimation } from 'utils/animations/animationVariants';
 import { twMergeCustom } from 'utils/twMerge';
 
 export const FilterGroupWrapper: FC<{ isStandalone?: boolean }> = ({ children, isStandalone }) => (
@@ -69,10 +70,19 @@ export const SelectedParametersName: FC = ({ children }) => (
     <p className="font-semibold text-input-placeholder-default text-xs">{children}</p>
 );
 
+// selected filters only fade in and out: nothing slides, so a removed group or value never moves over its neighbours
+const SELECTED_PARAMETERS_FADE_PROPS = {
+    animate: 'visible',
+    exit: 'hidden',
+    initial: 'hidden',
+    transition: { duration: 0.15 },
+    variants: fadeAnimation,
+} as const;
+
 export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, keyName }) => (
-    <AnimateSlideDiv className="flex! flex-wrap items-center gap-x-2.5 gap-y-2" direction="right" keyName={keyName}>
-        {children}
-    </AnimateSlideDiv>
+    <m.div key={keyName} className="flex flex-wrap items-center gap-x-2.5 gap-y-2" {...SELECTED_PARAMETERS_FADE_PROPS}>
+        <AnimatePresence initial={false}>{children}</AnimatePresence>
+    </m.div>
 );
 
 export const SelectedParametersListItem: FC<{ onClick: () => void; ariaLabel: string }> = ({
@@ -80,11 +90,13 @@ export const SelectedParametersListItem: FC<{ onClick: () => void; ariaLabel: st
     onClick,
     ariaLabel,
 }) => (
-    <Tag
-        ariaLabel={ariaLabel}
-        className="group rounded-tag border border-tag-border-default bg-tag-bg-default py-1.25 text-tag-text-default last-of-type:mr-6 hover:bg-tag-bg-hovered hover:text-tag-text-hovered"
-        onClick={onClick}
-    >
-        {children}
-    </Tag>
+    <m.span className="flex last-of-type:mr-6" {...SELECTED_PARAMETERS_FADE_PROPS}>
+        <Tag
+            ariaLabel={ariaLabel}
+            className="group rounded-tag border border-tag-border-default bg-tag-bg-default py-1.25 text-tag-text-default hover:bg-tag-bg-hovered hover:text-tag-text-hovered"
+            onClick={onClick}
+        >
+            {children}
+        </Tag>
+    </m.span>
 );
