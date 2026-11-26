@@ -19,8 +19,6 @@ vi.mock('next/router', () => ({
     useRouter: () => ({ events: { on: vi.fn(), off: vi.fn() } }),
 }));
 
-vi.mock('utils/ui/useMediaMin', () => ({ useMediaMin: () => false }));
-
 vi.mock('framer-motion', () => ({
     AnimatePresence: ({ children }: any) => children,
     motion: {
@@ -232,6 +230,7 @@ describe('FilterPanel Component', () => {
     };
 
     const defaultProps = {
+        isInDrawer: true,
         productFilterOptions: mockFilterOptions,
         defaultOrderingMode: TypeProductOrderingModeEnum.Priority,
         orderingMode: TypeProductOrderingModeEnum.Priority,

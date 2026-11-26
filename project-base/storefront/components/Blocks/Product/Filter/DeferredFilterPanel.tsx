@@ -19,7 +19,9 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
     const isDesktop = useMediaMin('vl');
     const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
     const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
-    const filterPanel = shouldRender ? <FilterPanel {...props} /> : <SkeletonModuleFilterPanel />;
+
+    const renderFilterPanel = (isInDrawer: boolean) =>
+        shouldRender ? <FilterPanel {...props} isInDrawer={isInDrawer} /> : <SkeletonModuleFilterPanel />;
 
     if (isDesktop === false) {
         return (
@@ -31,10 +33,10 @@ export const DeferredFilterPanel: FC<FilterPanelProps> = (props) => {
                 setIsActive={setIsFilterPanelOpen}
                 shouldRenderHeader={false}
             >
-                {filterPanel}
+                {renderFilterPanel(true)}
             </Drawer>
         );
     }
 
-    return <div className="vl:block hidden vl:w-56">{filterPanel}</div>;
+    return <div className="vl:block hidden vl:w-56">{renderFilterPanel(false)}</div>;
 };

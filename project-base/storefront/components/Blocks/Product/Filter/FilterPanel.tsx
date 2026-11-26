@@ -15,7 +15,6 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getPriceRounded, isPriceVisible } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
-import { useMediaMin } from 'utils/ui/useMediaMin';
 import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
@@ -33,20 +32,27 @@ export type FilterPanelProps = {
     categoryAutomatedFilters?: string[];
 };
 
+type FilterPanelLayoutProps = {
+    // the drawer on mobile, the sidebar otherwise; DeferredFilterPanel decides, because a media query of the panel
+    // itself is unknown on the first render of every newly opened drawer
+    isInDrawer: boolean;
+};
+
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 const DEFAULT_NUMBER_OF_SHOWN_ITEMS = 5;
 
-export const FilterPanel: FC<FilterPanelProps> = ({
+export const FilterPanel: FC<FilterPanelProps & FilterPanelLayoutProps> = ({
     productFilterOptions: filterOptions,
     totalCount,
     categoryAutomatedFilters,
+    isInDrawer,
 }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const { resetAllFilterQueries } = useUpdateFilterQuery();
     const currentFilter = useCurrentFilterQuery();
-    const isDesktop = useMediaMin('vl') === true;
+    const isDesktop = !isInDrawer;
     const popupId = useId();
     const showResultsButtonId = useId();
     const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
