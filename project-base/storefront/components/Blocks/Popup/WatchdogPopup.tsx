@@ -1,9 +1,11 @@
 import { useWatchdogForm, useWatchdogFormMeta } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -78,7 +80,8 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>
-                        <FormBlockWrapper>
+                        {/* the consent belongs to the email, so it sits closer to it than the fields are to each other */}
+                        <FormBlockWrapper className="gap-3" variant="plain">
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
@@ -102,9 +105,15 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ product, listIndex }) =>
                             />
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
-                            <SubmitButton size="large">{t('Notify me')}</SubmitButton>
-                        </FormButtonWrapper>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
+                            <SubmitButton className="w-full sm:w-auto" wrapperClassName="w-full sm:w-fit">
+                                {t('Notify me')}
+                            </SubmitButton>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

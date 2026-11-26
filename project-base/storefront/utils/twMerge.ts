@@ -1,6 +1,6 @@
 import { extendTailwindMerge } from 'tailwind-merge';
 
-export const twMergeCustom = extendTailwindMerge({
+export const twMergeCustom = extendTailwindMerge<'heading-level'>({
     extend: {
         theme: {
             // Font weight roles from styles/theme.css; without them `font-heading` would be merged as a font family and drop `font-default`.
@@ -22,6 +22,8 @@ export const twMergeCustom = extendTailwindMerge({
             ],
         },
         classGroups: {
+            // The heading classes from styles/base.css, so e.g. `h5` overrides the `h4` of `FormHeading`.
+            'heading-level': ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
             z: [
                 {
                     z: [

@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -17,14 +18,14 @@ export const DeleteDeliveryAddressPopup: FC<DeleteDeliveryAddressPopupProps> = (
             contentClassName="overflow-y-auto"
             title={t('Do you really want to delete this delivery address?')}
         >
-            <div className="flex flex-row flex-nowrap justify-between">
-                <Button variant="outline" onClick={closePortalContent}>
+            <PopupActions>
+                <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
                     {t('No')}
                 </Button>
-                <Button variant="danger" onClick={deleteDeliveryAddressHandler}>
+                <Button className="w-full sm:w-auto" variant="danger" onClick={deleteDeliveryAddressHandler}>
                     {t('Yes')}
                 </Button>
-            </div>
+            </PopupActions>
         </Popup>
     );
 };

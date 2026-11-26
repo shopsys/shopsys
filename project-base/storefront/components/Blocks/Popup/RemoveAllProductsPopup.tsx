@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { TIDs } from 'cypress/tids';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -27,7 +28,7 @@ export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ descri
             <div className="flex flex-col gap-6">
                 <p>{description}</p>
 
-                <div className="flex flex-col justify-end gap-3 sm:flex-row">
+                <PopupActions>
                     <Button className="w-full sm:w-auto" variant="outline" onClick={handleClose}>
                         {t('Cancel')}
                     </Button>
@@ -39,7 +40,7 @@ export const RemoveAllProductsPopup: FC<RemoveAllProductsPopupProps> = ({ descri
                     >
                         {t('Remove all')}
                     </Button>
-                </div>
+                </PopupActions>
             </div>
         </Popup>
     );

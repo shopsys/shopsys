@@ -6,10 +6,11 @@ import {
 import { CreateProductReviewPopupProps } from 'components/Blocks/ProductReviews/productReviewTypes';
 import { StarRatingPicker } from 'components/Blocks/ProductReviews/StarRatingPicker';
 import { useProductReviewPolicyArticleUrl } from 'components/Blocks/ProductReviews/useProductReviewPolicyArticleUrl';
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { DropzoneControlled } from 'components/Forms/Dropzone/DropzoneControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -18,6 +19,7 @@ import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateProductReviewMutation } from 'graphql/requests/productReviews/mutations/CreateProductReviewMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -39,6 +41,7 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
     guestPrefill,
 }) => {
     const { t } = useTranslation();
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const isUserLoggedIn = useIsUserLoggedIn();
     const user = useCurrentCustomerData();
@@ -103,7 +106,8 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
 
     return (
         <Popup
-            contentClassName="overflow-y-auto"
+            size="small"
+            contentClassName="-mx-1 overflow-y-auto px-1"
             title={t('Write a review')}
             ariaDescription={t('Rate the product with 1 to 5 stars and optionally describe your experience.', {
                 ns: 'accessibility',
@@ -117,7 +121,7 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                     onSubmit={formProviderMethods.handleSubmit(createProductReviewHandler)}
                 >
                     <FormContentWrapper>
-                        <FormBlockWrapper>
+                        <FormBlockWrapper variant="plain">
                             {isVariantSelectShown && (
                                 <Controller
                                     name={formMeta.fields.productUuid.name}
@@ -270,9 +274,15 @@ export const CreateProductReviewPopup: FC<CreateProductReviewPopupProps> = ({
                             </p>
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
-                            <SubmitButton size="large">{t('Send review')}</SubmitButton>
-                        </FormButtonWrapper>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
+                            <SubmitButton className="w-full sm:w-auto" wrapperClassName="w-full sm:w-fit">
+                                {t('Send review')}
+                            </SubmitButton>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

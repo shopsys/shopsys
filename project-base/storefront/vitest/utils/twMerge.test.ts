@@ -19,4 +19,9 @@ describe('twMergeCustom', () => {
         expect(twMergeCustom('font-semibold', 'font-ui')).toBe('font-ui');
         expect(twMergeCustom('font-secondary', 'font-price')).toBe('font-secondary font-price');
     });
+
+    test('lets a later heading class override an earlier one', () => {
+        expect(twMergeCustom('h4 contents', 'h5')).toBe('contents h5');
+        expect(twMergeCustom('h3 outline-hidden', 'h2')).toBe('outline-hidden h2');
+    });
 });

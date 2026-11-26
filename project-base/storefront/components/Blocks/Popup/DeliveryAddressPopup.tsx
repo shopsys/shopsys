@@ -1,10 +1,12 @@
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { CountrySelectControlled } from 'components/Forms/Select/CountrySelectControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import {
     useDeliveryAddressForm,
     useDeliveryAddressFormMeta,
@@ -117,11 +119,11 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     };
 
     return (
-        <Popup contentClassName="overflow-y-auto" title={t('Delivery address')}>
+        <Popup size="small" contentClassName="-mx-1 overflow-y-auto px-1" title={t('Delivery address')}>
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
                     <FormContentWrapper>
-                        <FormBlockWrapper>
+                        <FormBlockWrapper variant="plain">
                             <FormColumn>
                                 <TextInputControlled
                                     control={formProviderMethods.control}
@@ -219,15 +221,20 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                             />
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
                             <SubmitButton
-                                size="large"
+                                className="w-full sm:w-auto"
+                                wrapperClassName="w-full sm:w-fit"
                                 aria-label={t('Save. Save delivery address', { ns: 'accessibility' })}
                                 tid={TIDs.delivery_address_form_submit_button}
                             >
                                 {t('Save')}
                             </SubmitButton>
-                        </FormButtonWrapper>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

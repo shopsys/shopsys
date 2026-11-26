@@ -2,6 +2,7 @@ import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { usePaginatedStoreConnection } from 'components/Blocks/StoreList/usePaginatedStoreConnection';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import {
@@ -135,12 +136,13 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                 />
             </div>
 
-            <div className="mt-3 flex shrink-0 justify-between border-border-less border-t bg-background-default pt-3">
-                <Button variant="outline" onClick={closePortalContent}>
+            <PopupActions className="mt-3 shrink-0 border-border-less border-t bg-background-default pt-3">
+                <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
                     {t('Close')}
                 </Button>
 
                 <Button
+                    className="w-full sm:w-auto"
                     disabled={selectedPickupPlace === null}
                     hasDisabledLook={selectedPickupPlace === null}
                     tid={TIDs.pages_order_pickupplace_popup_confirm}
@@ -148,7 +150,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                 >
                     {t('Select store')}
                 </Button>
-            </div>
+            </PopupActions>
         </Popup>
     );
 };

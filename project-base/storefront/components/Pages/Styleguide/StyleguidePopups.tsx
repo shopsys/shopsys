@@ -2,6 +2,7 @@ import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { Button } from 'components/Forms/Button/Button';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { StyleguideCode, StyleguidePreview, StyleguideRules, StyleguideSpecimen } from './StyleguideElements';
@@ -12,25 +13,30 @@ const LONG_CONTENT_PARAGRAPHS = Array.from(
         `Paragraph ${index + 1}. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora consectetur at necessitatibus obcaecati optio quas dicta debitis et quod provident harum, voluptatem perferendis ullam soluta temporibus corrupti.`,
 );
 
-type PopupActionsProps = {
+type StyleguidePopupActionsProps = {
     cancelLabel: string;
     confirmLabel: string;
     confirmVariant?: 'primary' | 'danger';
     onConfirm: () => void;
 };
 
-const PopupActions: FC<PopupActionsProps> = ({ cancelLabel, confirmLabel, confirmVariant = 'primary', onConfirm }) => {
+const StyleguidePopupActions: FC<StyleguidePopupActionsProps> = ({
+    cancelLabel,
+    confirmLabel,
+    confirmVariant = 'primary',
+    onConfirm,
+}) => {
     const closePortalContent = useSessionStore((s) => s.closePortalContent);
 
     return (
-        <div className="flex flex-col justify-end gap-3 sm:flex-row">
+        <PopupActions>
             <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
                 {cancelLabel}
             </Button>
             <Button className="w-full sm:w-auto" variant={confirmVariant} onClick={onConfirm}>
                 {confirmLabel}
             </Button>
-        </div>
+        </PopupActions>
     );
 };
 
@@ -42,7 +48,7 @@ const ConfirmationPopup: FC = () => {
         <Popup ariaDescription={description} role="alertdialog" size="small" title="Remove all products?">
             <div className="flex flex-col gap-6">
                 <p>{description}</p>
-                <PopupActions
+                <StyleguidePopupActions
                     cancelLabel="Cancel"
                     confirmLabel="Remove all"
                     confirmVariant="danger"
@@ -58,7 +64,7 @@ const FormPopup: FC = () => {
     const [email, setEmail] = useState('');
 
     return (
-        <Popup title="Watch the price">
+        <Popup size="small" title="Watch the price">
             <div className="flex flex-col gap-6">
                 <p>
                     We will send you an email when the price of this product drops below the current price. You can
@@ -72,7 +78,11 @@ const FormPopup: FC = () => {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                 />
-                <PopupActions cancelLabel="Cancel" confirmLabel="Watch the price" onConfirm={closePortalContent} />
+                <StyleguidePopupActions
+                    cancelLabel="Cancel"
+                    confirmLabel="Watch the price"
+                    onConfirm={closePortalContent}
+                />
             </div>
         </Popup>
     );
@@ -89,7 +99,7 @@ const LongContentPopup: FC = () => {
                         <p key={paragraph}>{paragraph}</p>
                     ))}
                 </div>
-                <PopupActions cancelLabel="Close" confirmLabel="I agree" onConfirm={closePortalContent} />
+                <StyleguidePopupActions cancelLabel="Close" confirmLabel="I agree" onConfirm={closePortalContent} />
             </div>
         </Popup>
     );
@@ -102,9 +112,16 @@ export const StyleguidePopups: FC = () => {
         <>
             <StyleguideRules
                 rules={[
-                    'Actions sit at the end of the content, aligned right: the secondary action (Cancel) first, the main action last.',
+                    <>
+                        Actions sit in <StyleguideCode>PopupActions</StyleguideCode> at the end of the content, aligned
+                        right: the secondary action (Cancel) first, the main action last.
+                    </>,
                     'On mobile the actions stack and take the full width.',
                     'A confirmation of a destructive action uses role="alertdialog", the small size and the danger variant.',
+                    <>
+                        A form in a popup uses <StyleguideCode>{'<FormBlockWrapper variant="plain">'}</StyleguideCode>{' '}
+                        without the gray surface and the small size, so its fields align with the title and the actions.
+                    </>,
                     <>
                         The popup is at most 80 % of the viewport high. Long content needs{' '}
                         <StyleguideCode>contentClassName="overflow-y-auto"</StyleguideCode> to scroll inside it.
@@ -118,7 +135,7 @@ export const StyleguidePopups: FC = () => {
                         Open confirmation
                     </Button>
                 </StyleguideSpecimen>
-                <StyleguideSpecimen hint='size="medium" (default)' label="Content with a form">
+                <StyleguideSpecimen hint='size="small"' label="Content with a form">
                     <Button variant="outline" onClick={() => updatePortalContent(<FormPopup />)}>
                         Open form popup
                     </Button>

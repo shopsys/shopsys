@@ -174,7 +174,11 @@ export const Popup: React.FC<PopupProps> = ({
                             <div className={twMergeCustom('mb-3 flex justify-between', headerClassName)}>
                                 <h2
                                     aria-describedby={descriptionId}
-                                    className={twMergeCustom('h3 outline-hidden', isTitleHidden && 'sr-only')}
+                                    className={twMergeCustom(
+                                        size === 'small' ? 'h4' : 'h3',
+                                        'outline-hidden',
+                                        isTitleHidden && 'sr-only',
+                                    )}
                                     id={titleId}
                                     ref={titleRef}
                                     tabIndex={-1}

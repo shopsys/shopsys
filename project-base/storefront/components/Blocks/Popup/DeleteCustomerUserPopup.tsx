@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { TIDs } from 'cypress/tids';
 import { useSessionStore } from 'store/useSessionStore';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -34,7 +35,7 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({
             <div className="flex flex-col gap-6">
                 <p className="wrap-anywhere">{description}</p>
 
-                <div className="flex flex-col justify-end gap-3 sm:flex-row">
+                <PopupActions>
                     <Button
                         className="w-full sm:w-auto"
                         tid={TIDs.customer_users_delete_cancel_button}
@@ -51,7 +52,7 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({
                     >
                         {t('Delete user')}
                     </Button>
-                </div>
+                </PopupActions>
             </div>
         </Popup>
     );

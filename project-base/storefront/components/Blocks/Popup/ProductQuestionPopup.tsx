@@ -2,11 +2,13 @@ import {
     useProductQuestionForm,
     useProductQuestionFormMeta,
 } from 'components/Blocks/Product/Question/productQuestionFormMeta';
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useProductQuestionMutation } from 'graphql/requests/productQuestion/mutations/ProductQuestionMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -70,7 +72,7 @@ export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUui
 
     return (
         <Popup
-            size="medium"
+            size="small"
             title={t('Ask a product question')}
             ariaDescription={t('Fill in your name, email and question and we will get back to you by email.', {
                 ns: 'accessibility',
@@ -79,7 +81,7 @@ export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUui
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(productQuestionHandler)}>
                     <FormContentWrapper>
-                        <FormBlockWrapper>
+                        <FormBlockWrapper variant="plain">
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
@@ -116,9 +118,15 @@ export const ProductQuestionPopup: FC<ProductQuestionPopupProps> = ({ productUui
                             />
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
-                            <SubmitButton size="large">{t('Send')}</SubmitButton>
-                        </FormButtonWrapper>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
+                            <SubmitButton className="w-full sm:w-auto" wrapperClassName="w-full sm:w-fit">
+                                {t('Send')}
+                            </SubmitButton>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>
