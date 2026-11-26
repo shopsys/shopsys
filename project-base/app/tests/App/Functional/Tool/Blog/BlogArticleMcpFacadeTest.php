@@ -128,7 +128,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
     public function testEditFailsWhenTextToFindIsMissing(): void
     {
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('The text to find was not found in the content');
+        $this->expectExceptionMessage(sprintf('The text to find was not found in the content (%s): "Missing sentence.". Read the current content and copy the exact part of it.', $this->getFirstDomainLocale()));
 
         $this->editDescriptionWithReplacement('Missing sentence.');
     }
@@ -136,7 +136,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
     public function testEditFailsWhenTextToFindIsNotUnique(): void
     {
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('The text to find is in the content (' . $this->getFirstDomainLocale() . ') 3 times');
+        $this->expectExceptionMessage(sprintf('The text to find is in the content (%s) 3 times, it must be there exactly once: "<p>". Use a longer part of the content.', $this->getFirstDomainLocale()));
 
         $this->editDescriptionWithReplacement('<p>');
     }
@@ -147,7 +147,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $locale = $this->getFirstDomainLocale();
 
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('cannot be given in both descriptions and descriptionReplacements');
+        $this->expectExceptionMessage(sprintf('The content (%s) cannot be given in both descriptions and descriptionReplacements.', $locale));
 
         $this->blogArticleMcpFacade->edit(new EditBlogArticleArguments(
             blogArticleId: $blogArticle->getId(),
@@ -161,7 +161,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $blogArticle = $this->getPublishedBlogArticle();
 
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('The locale "xx" does not exist');
+        $this->expectExceptionMessage(sprintf('The locale "xx" does not exist, use one of: %s.', implode(', ', $this->domain->getAllLocales())));
 
         $this->blogArticleMcpFacade->edit(new EditBlogArticleArguments(blogArticleId: $blogArticle->getId(), names: ['xx' => 'Name']));
     }
@@ -195,7 +195,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
         $usedSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(Domain::FIRST_DOMAIN_ID, 'front_blogarticle_detail', $this->getPublishedBlogArticle()->getId());
 
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('is already used on the domain');
+        $this->expectExceptionMessage(sprintf('The slug "%s" is already used on the domain with ID %d.', $usedSlug, Domain::FIRST_DOMAIN_ID));
 
         $this->blogArticleMcpFacade->edit(new EditBlogArticleArguments(
             blogArticleId: $draftBlogArticle->getId(),
@@ -206,7 +206,7 @@ class BlogArticleMcpFacadeTest extends TransactionFunctionalTestCase
     public function testEditFailsForInvalidSlug(): void
     {
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('is not valid');
+        $this->expectExceptionMessage('The slug "Nový článek" is not valid, use only lowercase letters without diacritics, digits and dashes, for example "novy-clanek".');
 
         $this->blogArticleMcpFacade->edit(new EditBlogArticleArguments(
             blogArticleId: $this->getPublishedBlogArticle()->getId(),
