@@ -4,7 +4,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { SkeletonModulePageHero } from './SkeletonModulePageHero';
 
 export const SkeletonPageConfirmation: FC = () => (
-    <Webline>
+    <Webline width="xl">
         <div className="mb-4 lg:mt-6">
             <SkeletonModulePageHero />
         </div>
