@@ -123,7 +123,7 @@ class McpChangeRequestFacadeTest extends TransactionFunctionalTestCase
         $this->em->flush();
 
         $this->expectException(ToolCallException::class);
-        $this->expectExceptionMessage('500 changes already wait for approval');
+        $this->expectExceptionMessage('500 changes already wait for approval in administration, ask the administrator to approve or discard them first.');
 
         $this->mcpChangeRequestFacade->create($this->editBlogArticleTool, new EditBlogArticleArguments(blogArticleId: 1));
     }
