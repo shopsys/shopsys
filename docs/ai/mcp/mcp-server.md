@@ -362,7 +362,7 @@ class EditBrandTool extends AbstractMcpApprovableTool
     /**
      * @param \App\Mcp\EditBrandArguments $arguments
      */
-    public function describeChange(object $arguments): McpChange
+    public function previewChange(object $arguments): McpChange
     {
         $brand = $this->brandMcpFacade->getById($arguments->brandId);
 
@@ -384,11 +384,11 @@ class EditBrandTool extends AbstractMcpApprovableTool
 }
 ```
 
-The arguments are stored as JSON together with the name of their class and are restored with the Symfony Serializer before `describeChange()` and `apply()`, so keep the arguments class a plain object whose constructor parameters match its public properties.
+The arguments are stored as JSON together with the name of their class and are restored with the Symfony Serializer before `previewChange()` and `apply()`, so keep the arguments class a plain object whose constructor parameters match its public properties.
 Renaming the arguments class or its properties makes the pending change requests fail on approval.
 
 The change request belongs to the administrator who owns the MCP token.
-`apply()` runs after the approval in a database transaction, and only when `describeChange()` still returns the same change, so the administrator never approves outdated data.
+`apply()` runs after the approval in a database transaction, and only when `previewChange()` still returns the same change, so the administrator never approves outdated data.
 Therefore, build the change from the current data and the arguments only.
 For a long text, describe only the changed part and pass the text around it as `contextBefore` and `contextAfter` of `addField()`.
 
@@ -397,7 +397,7 @@ The subject and the field labels are translation messages with parameters, trans
 Do not translate them in the tool, the change would differ in another locale and could not be approved.
 List the messages in a class implementing `TranslationContainerInterface` (see `BlogArticleChangeLabel`), so that the translation dump keeps them.
 
-When `describeChange()` or `apply()` throws `ToolCallException` during the approval, the change can no longer be applied and the administrator can only discard it.
+When `previewChange()` or `apply()` throws `ToolCallException` during the approval, the change can no longer be applied and the administrator can only discard it.
 When the data only changed, the administrator can update the change request according to the current data and approve it again.
 
 ## Operational notes
