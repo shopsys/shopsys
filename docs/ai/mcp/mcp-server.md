@@ -313,6 +313,7 @@ class RenameBrandTool
 
 - The arguments are validated against the generated schema before the method runs, so put the input constraints into `#[Schema]`.
 - Maps (arrays indexed by locale or domain ID) need `#[Schema(type: 'object', ...)]`, otherwise the AI client sees them as lists.
+- Check the keys of such maps with `McpDomainInputValidator`, its error lists the existing locales or domain IDs, so the AI client can correct the input.
 - When the input is valid but cannot be applied, throw `Mcp\Exception\ToolCallException`. Its message goes back to the AI client, so tell the client what to do instead.
 - The returned array goes back to the AI client as well, typically with the ID of the changed entity.
 
