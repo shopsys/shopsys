@@ -8,6 +8,7 @@ use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\McpBundle\Component\WriteTool\McpChangeDiffCalculator;
+use Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment;
 
 class McpChangeDiffCalculatorTest extends TestCase
 {
@@ -19,7 +20,12 @@ class McpChangeDiffCalculatorTest extends TestCase
     #[DataProvider('cleanupProvider')]
     public function testCalculate(?string $before, ?string $after, array $expectedSegments): void
     {
-        $this->assertSame($expectedSegments, new McpChangeDiffCalculator()->calculate($before, $after));
+        $segments = new McpChangeDiffCalculator()->calculate($before, $after);
+
+        $this->assertSame($expectedSegments, array_map(
+            static fn (McpChangeDiffSegment $segment) => ['type' => $segment->type, 'text' => $segment->text],
+            $segments,
+        ));
     }
 
     public static function diffProvider(): Iterator

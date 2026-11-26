@@ -84,11 +84,11 @@
                                     <div class="text-break border rounded px-2 py-1 mb-1 overflow-auto" style="white-space: pre-wrap; max-height: 20rem">
                                         {%- if field.contextBefore ?? null -%}<span class="text-secondary">{{ field.contextBefore }}</span>{%- endif -%}
                                         {%- set segments = mcpChangeDiff(field.before, field.after) -%}
-                                        {%- set segmentDisplayClass = segments|filter(segment => segment.type == 'equal') is empty ? ' d-block' : '' -%}
+                                        {%- set segmentDisplayClass = segments|filter(segment => segment.equal) is empty ? ' d-block' : '' -%}
                                         {%- for segment in segments -%}
-                                            {%- if segment.type == 'deleted' -%}
+                                            {%- if segment.deleted -%}
                                                 <del class="bg-red-lt text-red-lt-fg{{ segmentDisplayClass }}">{{ segment.text }}</del>
-                                            {%- elseif segment.type == 'inserted' -%}
+                                            {%- elseif segment.inserted -%}
                                                 <ins class="bg-green-lt text-green-lt-fg text-decoration-none{{ segmentDisplayClass }}">{{ segment.text }}</ins>
                                             {%- else -%}
                                                 {{ segment.text }}

@@ -6,16 +6,12 @@ namespace Shopsys\McpBundle\Component\WriteTool;
 
 class McpChangeDiffCalculator
 {
-    public const string SEGMENT_EQUAL = 'equal';
-    public const string SEGMENT_DELETED = 'deleted';
-    public const string SEGMENT_INSERTED = 'inserted';
-
     protected const int MAX_COMPARED_TOKEN_PAIRS = 250000;
     protected const float MIN_EQUAL_RATIO = 0.4;
     protected const int MIN_KEPT_EQUAL_WORD_COUNT = 2;
 
     /**
-     * @return array<int, array{type: string, text: string}>
+     * @return \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[]
      */
     public function calculate(?string $before, ?string $after): array
     {
@@ -38,20 +34,20 @@ class McpChangeDiffCalculator
     }
 
     /**
-     * @return array<int, array{type: string, text: string}>
+     * @return \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[]
      */
     protected function createReplacementSegments(string $before, string $after): array
     {
         $segments = [
-            ['type' => static::SEGMENT_DELETED, 'text' => $before],
-            ['type' => static::SEGMENT_INSERTED, 'text' => $after],
+            new McpChangeDiffSegment(McpChangeDiffSegment::TYPE_DELETED, $before),
+            new McpChangeDiffSegment(McpChangeDiffSegment::TYPE_INSERTED, $after),
         ];
 
-        return array_values(array_filter($segments, static fn (array $segment) => $segment['text'] !== ''));
+        return array_values(array_filter($segments, static fn (McpChangeDiffSegment $segment) => $segment->text !== ''));
     }
 
     /**
-     * @param array<int, array{type: string, text: string}> $segments
+     * @param \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[] $segments
      */
     protected function getEqualRatio(array $segments, string $before, string $after): float
     {
@@ -64,8 +60,8 @@ class McpChangeDiffCalculator
         $equalLength = 0;
 
         foreach ($segments as $segment) {
-            if ($segment['type'] === static::SEGMENT_EQUAL) {
-                $equalLength += mb_strlen($segment['text']);
+            if ($segment->isEqual()) {
+                $equalLength += mb_strlen($segment->text);
             }
         }
 
@@ -73,8 +69,8 @@ class McpChangeDiffCalculator
     }
 
     /**
-     * @param array<int, array{type: string, text: string}> $segments
-     * @return array<int, array{type: string, text: string}>
+     * @param \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[] $segments
+     * @return \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[]
      */
     protected function absorbShortEqualSegments(array $segments): array
     {
@@ -84,8 +80,8 @@ class McpChangeDiffCalculator
         $lastIndex = count($segments) - 1;
 
         foreach ($segments as $index => $segment) {
-            $isKeptEqualSegment = $segment['type'] === static::SEGMENT_EQUAL
-                && ($index === 0 || $index === $lastIndex || $this->countWords($segment['text']) >= static::MIN_KEPT_EQUAL_WORD_COUNT);
+            $isKeptEqualSegment = $segment->isEqual()
+                && ($index === 0 || $index === $lastIndex || $this->countWords($segment->text) >= static::MIN_KEPT_EQUAL_WORD_COUNT);
 
             if ($isKeptEqualSegment) {
                 $absorbedSegments = [...$absorbedSegments, ...$this->createReplacementSegments($deletedText, $insertedText), $segment];
@@ -95,12 +91,12 @@ class McpChangeDiffCalculator
                 continue;
             }
 
-            if ($segment['type'] !== static::SEGMENT_INSERTED) {
-                $deletedText .= $segment['text'];
+            if (!$segment->isInserted()) {
+                $deletedText .= $segment->text;
             }
 
-            if ($segment['type'] !== static::SEGMENT_DELETED) {
-                $insertedText .= $segment['text'];
+            if (!$segment->isDeleted()) {
+                $insertedText .= $segment->text;
             }
         }
 
@@ -127,7 +123,7 @@ class McpChangeDiffCalculator
     /**
      * @param string[] $beforeTokens
      * @param string[] $afterTokens
-     * @return array<int, array{type: string, text: string}>
+     * @return \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[]
      */
     protected function diffTokens(array $beforeTokens, array $afterTokens): array
     {
@@ -149,37 +145,37 @@ class McpChangeDiffCalculator
 
         while ($i < $beforeCount && $j < $afterCount) {
             if ($beforeTokens[$i] === $afterTokens[$j]) {
-                $segments[] = ['type' => static::SEGMENT_EQUAL, 'text' => $beforeTokens[$i]];
+                $segments[] = new McpChangeDiffSegment(McpChangeDiffSegment::TYPE_EQUAL, $beforeTokens[$i]);
                 $i++;
                 $j++;
             } elseif ($commonLengths[$i + 1][$j] >= $commonLengths[$i][$j + 1]) {
-                $segments[] = ['type' => static::SEGMENT_DELETED, 'text' => $beforeTokens[$i]];
+                $segments[] = new McpChangeDiffSegment(McpChangeDiffSegment::TYPE_DELETED, $beforeTokens[$i]);
                 $i++;
             } else {
-                $segments[] = ['type' => static::SEGMENT_INSERTED, 'text' => $afterTokens[$j]];
+                $segments[] = new McpChangeDiffSegment(McpChangeDiffSegment::TYPE_INSERTED, $afterTokens[$j]);
                 $j++;
             }
         }
 
         return [
             ...$segments,
-            ...$this->createSegments(static::SEGMENT_DELETED, array_slice($beforeTokens, $i)),
-            ...$this->createSegments(static::SEGMENT_INSERTED, array_slice($afterTokens, $j)),
+            ...$this->createSegments(McpChangeDiffSegment::TYPE_DELETED, array_slice($beforeTokens, $i)),
+            ...$this->createSegments(McpChangeDiffSegment::TYPE_INSERTED, array_slice($afterTokens, $j)),
         ];
     }
 
     /**
      * @param string[] $tokens
-     * @return array<int, array{type: string, text: string}>
+     * @return \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[]
      */
     protected function createSegments(string $type, array $tokens): array
     {
-        return array_map(static fn (string $token) => ['type' => $type, 'text' => $token], $tokens);
+        return array_map(static fn (string $token) => new McpChangeDiffSegment($type, $token), $tokens);
     }
 
     /**
-     * @param array<int, array{type: string, text: string}> $segments
-     * @return array<int, array{type: string, text: string}>
+     * @param \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[] $segments
+     * @return \Shopsys\McpBundle\Component\WriteTool\McpChangeDiffSegment[]
      */
     protected function mergeSegments(array $segments): array
     {
@@ -188,8 +184,8 @@ class McpChangeDiffCalculator
         foreach ($segments as $segment) {
             $lastIndex = count($mergedSegments) - 1;
 
-            if ($lastIndex >= 0 && $mergedSegments[$lastIndex]['type'] === $segment['type']) {
-                $mergedSegments[$lastIndex]['text'] .= $segment['text'];
+            if ($lastIndex >= 0 && $mergedSegments[$lastIndex]->type === $segment->type) {
+                $mergedSegments[$lastIndex] = new McpChangeDiffSegment($segment->type, $mergedSegments[$lastIndex]->text . $segment->text);
             } else {
                 $mergedSegments[] = $segment;
             }
