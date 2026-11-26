@@ -46,7 +46,7 @@ msgstr ""
 msgid "Blog article #%id% \"%name%\""
 msgstr ""
 
-msgid "Categories (domain %domainId%)"
+msgid "Categories (%domainName%)"
 msgstr ""
 
 msgid "Claude Code client setup"
@@ -181,13 +181,13 @@ msgstr ""
 msgid "Run the command above once in the shell where you use Claude Code."
 msgstr ""
 
-msgid "SEO H1 (domain %domainId%)"
+msgid "SEO H1 (%domainName%)"
 msgstr ""
 
-msgid "SEO meta description (domain %domainId%)"
+msgid "SEO meta description (%domainName%)"
 msgstr ""
 
-msgid "SEO title (domain %domainId%)"
+msgid "SEO title (%domainName%)"
 msgstr ""
 
 msgid "Select Authenticate for the Shopsys MCP server."
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Show change"
 msgstr ""
 
-msgid "Slug (domain %domainId%)"
+msgid "Slug (%domainName%)"
 msgstr ""
 
 msgid "Start Claude Code and run /mcp."

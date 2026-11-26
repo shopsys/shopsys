@@ -46,8 +46,8 @@ msgstr "Autorizovať MCP klienta"
 msgid "Blog article #%id% \"%name%\""
 msgstr "Článok blogu #%id% \"%name%\""
 
-msgid "Categories (domain %domainId%)"
-msgstr "Kategórie (doména %domainId%)"
+msgid "Categories (%domainName%)"
+msgstr "Kategórie (%domainName%)"
 
 msgid "Claude Code client setup"
 msgstr "Nastavenie klienta Claude Code"
@@ -181,14 +181,14 @@ msgstr "Zneplatnený"
 msgid "Run the command above once in the shell where you use Claude Code."
 msgstr "Vyššie uvedený príkaz spustite raz v shelli, v ktorom používate Claude Code."
 
-msgid "SEO H1 (domain %domainId%)"
-msgstr "SEO nadpis H1 (doména %domainId%)"
+msgid "SEO H1 (%domainName%)"
+msgstr "SEO nadpis H1 (%domainName%)"
 
-msgid "SEO meta description (domain %domainId%)"
-msgstr "SEO meta popis (doména %domainId%)"
+msgid "SEO meta description (%domainName%)"
+msgstr "SEO meta popis (%domainName%)"
 
-msgid "SEO title (domain %domainId%)"
-msgstr "SEO titulok (doména %domainId%)"
+msgid "SEO title (%domainName%)"
+msgstr "SEO titulok (%domainName%)"
 
 msgid "Select Authenticate for the Shopsys MCP server."
 msgstr "Pri Shopsys MCP serveri zvoľte Authenticate."
@@ -199,8 +199,8 @@ msgstr "Nastavenia"
 msgid "Show change"
 msgstr "Zobraziť zmenu"
 
-msgid "Slug (domain %domainId%)"
-msgstr "Slug (doména %domainId%)"
+msgid "Slug (%domainName%)"
+msgstr "Slug (%domainName%)"
 
 msgid "Start Claude Code and run /mcp."
 msgstr "Spustite Claude Code a zadajte /mcp."

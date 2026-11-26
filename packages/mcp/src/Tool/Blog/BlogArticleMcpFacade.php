@@ -137,7 +137,7 @@ class BlogArticleMcpFacade
                 BlogArticleChangeLabel::CATEGORIES,
                 $this->getBlogCategoryNames($currentBlogCategoriesByDomainId[$domainId] ?? [], $locale),
                 $this->getBlogCategoryNames($editedData->blogCategoriesByDomainId[$domainId], $locale),
-                ['%domainId%' => $domainId],
+                ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
             );
         }
     }
@@ -150,9 +150,9 @@ class BlogArticleMcpFacade
         foreach ($slugsByDomainId as $domainId => $slug) {
             $change->addField(
                 BlogArticleChangeLabel::SLUG,
-                $this->friendlyUrlFacade->findMainFriendlyUrl((int)$domainId, static::ROUTE_NAME, $blogArticle->getId())?->getSlug(),
+                $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, static::ROUTE_NAME, $blogArticle->getId())?->getSlug(),
                 $slug,
-                ['%domainId%' => $domainId],
+                ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
             );
         }
     }
@@ -179,7 +179,7 @@ class BlogArticleMcpFacade
                     BlogArticleChangeLabel::SEO_BY_ATTRIBUTE[$seoAttribute],
                     $currentSeo[$seoAttribute],
                     $editedData->seo[$domainId]->{$seoAttribute},
-                    ['%domainId%' => $domainId],
+                    ['%domainName%' => $this->domain->getDomainConfigById($domainId)->getName()],
                 );
             }
         }
