@@ -31,7 +31,7 @@ The MCP server does not:
 
 ## What an AI client can do
 
-The MCP server exposes three read tools:
+The MCP server exposes four read tools:
 
 1. `getDatabaseTableNames`
    Returns the list of database tables that are intentionally exposed to MCP clients.
@@ -39,6 +39,8 @@ The MCP server exposes three read tools:
    Returns the exposed schema for selected tables, including columns, primary keys, and foreign keys.
 3. `executeSql`
    Executes a validated read-only SQL query against the exposed schema.
+4. `getDomains`
+   Returns the domains with their IDs, names, locales, and URLs, which the write tools use as keys of their inputs.
 
 For an end user, this means the AI client can answer questions about the project’s data model and query selected business data, but only within the boundaries explicitly allowed by the application.
 

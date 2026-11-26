@@ -36,7 +36,7 @@ class EditBlogArticleTool extends AbstractMcpApprovableTool
      */
     #[McpTool(
         name: self::TOOL_NAME,
-        description: 'Edits a blog article. When the article is a draft on all domains, the change is applied immediately (status "applied"). Otherwise the change is applied only after the administrator approves it in administration (status "pending_approval").',
+        description: 'Edits a blog article. When the article is a draft on all domains, the change is applied immediately (status "applied"). Otherwise the change is applied only after the administrator approves it in administration (status "pending_approval"). Get the locales and domain IDs with the tool getDomains.',
     )]
     public function editBlogArticle(
         #[Schema(description: 'ID of the edited blog article.', minimum: 1)]

@@ -28,7 +28,7 @@ class CreateBlogArticleTool
      */
     #[McpTool(
         name: self::TOOL_NAME,
-        description: 'Creates a blog article as a draft on all domains, so it is not visible on the storefront until an administrator publishes it.',
+        description: 'Creates a blog article as a draft on all domains, so it is not visible on the storefront until an administrator publishes it. Get the locales and domain IDs with the tool getDomains.',
     )]
     public function createBlogArticle(
         #[Schema(type: 'object', description: BlogArticleInputSchema::NAMES, additionalProperties: BlogArticleInputSchema::NAME)]
