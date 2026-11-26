@@ -100,7 +100,7 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
 
                 {groupParameters.map(({ groupName, groupParameters }) => (
                     <Fragment key={groupName}>
-                        <h3 className="h4 pt-6 pb-4">{groupName}</h3>
+                        <h3 className="h4 pt-6 pb-4 first-of-type:pt-2">{groupName}</h3>
 
                         <ParameterTable parameters={groupParameters} />
                     </Fragment>
