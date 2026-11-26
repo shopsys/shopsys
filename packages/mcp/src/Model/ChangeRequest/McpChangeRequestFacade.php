@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Model\ChangeRequest;
 
+use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Mcp\Exception\ToolCallException;
 use Psr\Clock\ClockInterface;
@@ -99,15 +100,10 @@ class McpChangeRequestFacade
 
     public function approve(McpChangeRequest $mcpChangeRequest): bool
     {
-        try {
-            $isApproved = $this->em->wrapInTransaction(fn () => $this->applyAndApprove($mcpChangeRequest));
-        } catch (McpChangeRequestApprovalFailedException $exception) {
-            $this->fail($mcpChangeRequest, $exception->getMessage(), $exception);
-        } catch (ToolCallException $exception) {
-            $this->markInapplicable($mcpChangeRequest, t('The change can no longer be applied, discard it.'), $exception);
-        } catch (Throwable $exception) {
-            $this->fail($mcpChangeRequest, t('The change could not be applied.'), $exception);
-        }
+        $isApproved = $this->callOrFail(
+            $mcpChangeRequest,
+            fn () => $this->em->wrapInTransaction(fn () => $this->applyAndApprove($mcpChangeRequest)),
+        );
 
         if ($isApproved) {
             $this->mcpToolCallLogger->logChangeRequestApproved($mcpChangeRequest);
@@ -127,15 +123,10 @@ class McpChangeRequestFacade
     {
         Assert::true($mcpChangeRequest->isRefreshable());
 
-        try {
-            $change = $this->getApprovableTool($mcpChangeRequest)->describeChange($this->getArguments($mcpChangeRequest));
-        } catch (McpChangeRequestApprovalFailedException $exception) {
-            $this->fail($mcpChangeRequest, $exception->getMessage(), $exception);
-        } catch (ToolCallException $exception) {
-            $this->markInapplicable($mcpChangeRequest, t('The change can no longer be applied, discard it.'), $exception);
-        } catch (Throwable $exception) {
-            $this->fail($mcpChangeRequest, t('The change could not be applied.'), $exception);
-        }
+        $change = $this->callOrFail(
+            $mcpChangeRequest,
+            fn () => $this->getApprovableTool($mcpChangeRequest)->describeChange($this->getArguments($mcpChangeRequest)),
+        );
 
         $mcpChangeRequest->refresh($change->toArray());
         $this->em->flush();
@@ -160,6 +151,24 @@ class McpChangeRequestFacade
         $this->mcpChangeRequestRepository->delete($mcpChangeRequest);
 
         return true;
+    }
+
+    /**
+     * @template T
+     * @param \Closure(): T $callback
+     * @return T
+     */
+    protected function callOrFail(McpChangeRequest $mcpChangeRequest, Closure $callback): mixed
+    {
+        try {
+            return $callback();
+        } catch (McpChangeRequestApprovalFailedException $exception) {
+            $this->fail($mcpChangeRequest, $exception->getMessage(), $exception);
+        } catch (ToolCallException $exception) {
+            $this->markInapplicable($mcpChangeRequest, t('The change can no longer be applied, discard it.'), $exception);
+        } catch (Throwable $exception) {
+            $this->fail($mcpChangeRequest, t('The change could not be applied.'), $exception);
+        }
     }
 
     protected function getApprovableTool(McpChangeRequest $mcpChangeRequest): McpApprovableToolInterface
