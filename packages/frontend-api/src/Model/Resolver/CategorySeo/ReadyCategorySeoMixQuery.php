@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\CategorySeo;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
@@ -27,7 +28,7 @@ class ReadyCategorySeoMixQuery extends AbstractQuery
         try {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
-                'front_category_seo',
+                FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO,
                 $urlSlug,
             );
 

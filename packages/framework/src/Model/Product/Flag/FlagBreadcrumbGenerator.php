@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
@@ -31,7 +32,7 @@ class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
             $breadcrumbItems[] = new BreadcrumbItem(
                 $flag->getName(),
-                'front_flag_detail',
+                FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL,
                 ['id' => $id],
             );
         }
@@ -45,6 +46,6 @@ class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_flag_detail'];
+        return [FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL];
     }
 }

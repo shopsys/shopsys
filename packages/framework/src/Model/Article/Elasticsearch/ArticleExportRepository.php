@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
@@ -82,11 +83,11 @@ class ArticleExportRepository
         ];
 
         if ($article->isSiteType()) {
-            $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
+            $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL, $articleId);
 
-            $extractedArticle['slug'] = $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId);
+            $extractedArticle['slug'] = $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL, $articleId);
             $extractedArticle['mainSlug'] = $mainFriendlyUrl->getSlug();
-            $extractedArticle['breadcrumb'] = $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId);
+            $extractedArticle['breadcrumb'] = $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL, $domainId);
         }
 
         return $extractedArticle;

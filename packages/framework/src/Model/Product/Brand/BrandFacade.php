@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BrandFacade
@@ -41,7 +42,7 @@ class BrandFacade
 
         foreach ($domains as $domain) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_brand_detail',
+                FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL,
                 $brand->getId(),
                 $brand->getName(),
                 $domain->getId(),
@@ -65,11 +66,11 @@ class BrandFacade
         $this->imageFacade->manageImages($brand, $brandData->image);
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_brand_detail', $brand->getId(), $brandData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL, $brand->getId(), $brandData->urls);
 
         foreach ($domains as $domain) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_brand_detail',
+                FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL,
                 $brand->getId(),
                 $brand->getName(),
                 $domain->getId(),

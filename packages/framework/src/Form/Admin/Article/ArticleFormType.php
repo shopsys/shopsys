@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -186,7 +187,7 @@ final class ArticleFormType extends AbstractType
             'placeholder_source_path' => ['articleData', 'name'],
             'domain_id' => $article?->getDomainId() ?? $domainId,
             'url_list_options' => $article !== null ? [
-                'route_name' => 'front_article_detail',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL,
                 'entity_id' => $article->getId(),
             ] : null,
             'row_attr' => ['data-js-article-type-content' => 'site'],

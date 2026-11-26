@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Generator;
 use Override;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
@@ -51,7 +52,7 @@ class CategorySeoExtension extends AbstractExtension
 
         $readyCategorySeoMixDomainRouter = $this->domainRouterFactory->getRouter($readyCategorySeoMix->getDomainId());
 
-        return $readyCategorySeoMixDomainRouter->generate('front_category_seo', [
+        return $readyCategorySeoMixDomainRouter->generate(FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO, [
             'id' => $readyCategorySeoMixId,
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }

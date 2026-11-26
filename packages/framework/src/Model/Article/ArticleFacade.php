@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher;
 
 class ArticleFacade
@@ -55,7 +56,7 @@ class ArticleFacade
 
         if (!$article->isLinkType()) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_article_detail',
+                FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL,
                 $article->getId(),
                 $article->getName(),
                 $article->getDomainId(),
@@ -78,9 +79,9 @@ class ArticleFacade
         $article->edit($articleData);
 
         if (!$article->isLinkType()) {
-            $this->friendlyUrlFacade->saveUrlListFormDataForDomain('front_article_detail', $article->getId(), $articleData->urls, $article->getDomainId());
+            $this->friendlyUrlFacade->saveUrlListFormDataForDomain(FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL, $article->getId(), $articleData->urls, $article->getDomainId());
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_article_detail',
+                FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL,
                 $article->getId(),
                 $article->getName(),
                 $article->getDomainId(),

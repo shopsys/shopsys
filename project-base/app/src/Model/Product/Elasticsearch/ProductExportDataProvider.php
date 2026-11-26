@@ -9,6 +9,7 @@ use App\Model\Product\Product;
 use InvalidArgumentException;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
@@ -278,7 +279,7 @@ final class ProductExportDataProvider implements ProductExportDataProviderInterf
      */
     private function extractBreadcrumb(Product $product, int $domainId, string $locale): array
     {
-        return $this->breadcrumbFacade->getBreadcrumbOnDomain($product->getId(), 'front_product_detail', $domainId, $locale);
+        return $this->breadcrumbFacade->getBreadcrumbOnDomain($product->getId(), FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $domainId, $locale);
     }
 
     private function extractMainCategoryPath(Product $product, int $domainId, string $locale): string

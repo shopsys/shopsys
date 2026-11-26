@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
@@ -66,7 +67,7 @@ class SitemapRepository
                 AND fu.main = TRUE',
             )
             ->andWhere('pd.calculatedSellingDenied = FALSE')
-            ->setParameter('productDetailRouteName', 'front_product_detail')
+            ->setParameter('productDetailRouteName', FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'pd');
 
@@ -90,7 +91,7 @@ class SitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE',
             )
-            ->setParameter('productListRouteName', 'front_product_list')
+            ->setParameter('productListRouteName', FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'cd');
 
@@ -116,7 +117,7 @@ class SitemapRepository
             )
             ->andWhere('a.type = :articleType')
             ->setParameter('articleType', Article::TYPE_SITE)
-            ->setParameter('articleDetailRouteName', 'front_article_detail')
+            ->setParameter('articleDetailRouteName', FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'a');
 
@@ -161,7 +162,7 @@ class SitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE',
             )
-            ->setParameter('blogArticlesRouteName', 'front_blogarticle_detail')
+            ->setParameter('blogArticlesRouteName', FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'bad');
 
@@ -186,7 +187,7 @@ class SitemapRepository
             ->andWhere('p.variantType != :variantTypeMain')
             ->andWhere('pd.calculatedSellingDenied = TRUE')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->setParameter('productDetailRouteName', 'front_product_detail')
+            ->setParameter('productDetailRouteName', FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'pd');
 
@@ -211,7 +212,7 @@ class SitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE',
             )
-            ->setParameter('flagDetailRouteName', 'front_flag_detail')
+            ->setParameter('flagDetailRouteName', FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'fd');
 
@@ -236,7 +237,7 @@ class SitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE',
             )
-            ->setParameter('categorySeoMixRouteName', 'front_category_seo')
+            ->setParameter('categorySeoMixRouteName', FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO)
             ->setParameter('domainId', $domainConfig->getId());
         $this->addSeoExclusionConditions($queryBuilder, 'rcsm');
 

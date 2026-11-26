@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -64,7 +65,7 @@ class CategoryDataFactory
         $categoryData->name = $category->getNames();
         $categoryData->parent = $category->getParent();
 
-        $categoryData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_product_list', $category->getId());
+        $categoryData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST, $category->getId());
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(

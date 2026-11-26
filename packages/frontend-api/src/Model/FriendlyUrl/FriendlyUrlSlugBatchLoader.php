@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as FrameworkFriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDetailFriendlyUrlDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductListFriendlyUrlDataProvider;
@@ -26,7 +27,7 @@ class FriendlyUrlSlugBatchLoader
      */
     public function loadBrandSlugs(array $entityIds): Promise
     {
-        return $this->loadSlugs($entityIds, 'front_brand_detail');
+        return $this->loadSlugs($entityIds, FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL);
     }
 
     /**
@@ -34,7 +35,7 @@ class FriendlyUrlSlugBatchLoader
      */
     public function loadStoreSlugs(array $entityIds): Promise
     {
-        return $this->loadSlugs($entityIds, 'front_stores_detail');
+        return $this->loadSlugs($entityIds, FriendlyUrlRouteNameEnum::FRONT_STORES_DETAIL);
     }
 
     /**
@@ -74,7 +75,7 @@ class FriendlyUrlSlugBatchLoader
      */
     public function loadCategorySeoSlugs(array $entityIds): Promise
     {
-        return $this->loadSlugs($entityIds, 'front_category_seo');
+        return $this->loadSlugs($entityIds, FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO);
     }
 
     /**

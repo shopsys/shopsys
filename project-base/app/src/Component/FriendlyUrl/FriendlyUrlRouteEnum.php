@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Component\FriendlyUrl;
 
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 
 enum FriendlyUrlRouteEnum: string
 {
-    case FRONT_ARTICLE_DETAIL = 'front_article_detail';
-    case FRONT_PRODUCT_DETAIL = 'front_product_detail';
-    case FRONT_PRODUCT_LIST = 'front_product_list';
-    case FRONT_BRAND_DETAIL = 'front_brand_detail';
-    case FRONT_BLOGARTICLE_DETAIL = 'front_blogarticle_detail';
-    case FRONT_BLOGCATEGORY_DETAIL = 'front_blogcategory_detail';
-    case FRONT_CATEGORY_SEO = 'front_category_seo';
-    case FRONT_STORES_DETAIL = 'front_stores_detail';
-    case FRONT_FLAG_DETAIL = 'front_flag_detail';
+    case FRONT_ARTICLE_DETAIL = FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL;
+    case FRONT_PRODUCT_DETAIL = FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL;
+    case FRONT_PRODUCT_LIST = FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST;
+    case FRONT_BRAND_DETAIL = FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL;
+    case FRONT_BLOGARTICLE_DETAIL = FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL;
+    case FRONT_BLOGCATEGORY_DETAIL = FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL;
+    case FRONT_CATEGORY_SEO = FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO;
+    case FRONT_STORES_DETAIL = FriendlyUrlRouteNameEnum::FRONT_STORES_DETAIL;
+    case FRONT_FLAG_DETAIL = FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL;
 
     public static function getOptionsForCase(self $case): array
     {

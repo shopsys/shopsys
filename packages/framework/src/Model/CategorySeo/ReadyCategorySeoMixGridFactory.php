@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSourceFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Security\Role\AdminRoleConstant;
 use Shopsys\FrameworkBundle\Model\Category\CategoryTranslation;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation;
@@ -67,7 +68,7 @@ class ReadyCategorySeoMixGridFactory
             ->leftJoin(FlagTranslation::class, 'ft', Join::WITH, 'ft.translatable = f and ft.locale = :locale')
             ->setParameter('locale', $locale)
             ->setParameter('domainId', $domainId)
-            ->setParameter('routeName', 'front_category_seo')
+            ->setParameter('routeName', FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO)
             ->orderBy('rcsm.id', SortDirection::Descending);
     }
 }

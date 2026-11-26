@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
@@ -46,7 +47,7 @@ class LuigisBoxCategoryFeedItemFactory
         return new LuigisBoxCategoryFeedItem(
             $category->getId(),
             $category->getName($locale),
-            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_product_list', $category->getId()),
+            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST, $category->getId()),
             array_reverse($hierarchyNames),
             $imageUrl,
             $seoAttributes->getTitle(),

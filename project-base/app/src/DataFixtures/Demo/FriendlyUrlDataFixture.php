@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class FriendlyUrlDataFixture extends AbstractReferenceFixture
 {
@@ -21,7 +22,7 @@ class FriendlyUrlDataFixture extends AbstractReferenceFixture
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_product_detail',
+                FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
                 9999,
                 'Unused friendly URL',
                 $domainId,

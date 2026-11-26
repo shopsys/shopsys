@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Watchdog\Mail;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Mailer\MailerHelper;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -109,7 +110,7 @@ class WatchdogMail
     protected function getProductUrl(Product $product, int $domainId): string
     {
         return $this->domainRouterFactory->getRouter($domainId)->generate(
-            'front_product_detail',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
             ['id' => $product->getId()],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );

@@ -8,6 +8,7 @@ use App\Model\Category\Category;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator as BaseProductBreadcrumbGenerator;
 
 /**
@@ -69,7 +70,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
         foreach ($categoriesInPath as $categoryInPath) {
             $breadcrumbItems[] = new BreadcrumbItem(
                 $categoryInPath->getName($locale),
-                'front_product_list',
+                FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST,
                 ['id' => $categoryInPath->getId()],
             );
         }

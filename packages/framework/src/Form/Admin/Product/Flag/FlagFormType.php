@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Flag;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -58,7 +59,7 @@ final class FlagFormType extends AbstractType
         $builder->add('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['name', '{locale}'],
             'url_list_options' => $options['flag'] !== null ? [
-                'route_name' => 'front_flag_detail',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL,
                 'entity_id' => $options['flag']->getId(),
             ] : null,
         ]);

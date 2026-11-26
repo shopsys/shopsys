@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
@@ -17,7 +18,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class ReadyCategorySeoMixBatchLoader
 {
-    protected const string ROUTE_NAME = 'front_category_seo';
+    protected const string ROUTE_NAME = FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO;
 
     public function __construct(
         protected readonly PromiseAdapter $promiseAdapter,
@@ -60,7 +61,12 @@ class ReadyCategorySeoMixBatchLoader
                 function (ReadyCategorySeoMix $readyCategorySeoMix) use ($slugsByEntityId) {
                     if (!isset($slugsByEntityId[$readyCategorySeoMix->getId()])) {
                         throw new FriendlyUrlNotFoundException(
-                            sprintf('Main friendly URL not found for route "front_category_seo", domain ID "%d", and entity ID "%d".', $this->domain->getId(), $readyCategorySeoMix->getId()),
+                            sprintf(
+                                'Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".',
+                                FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO,
+                                $this->domain->getId(),
+                                $readyCategorySeoMix->getId(),
+                            ),
                         );
                     }
 

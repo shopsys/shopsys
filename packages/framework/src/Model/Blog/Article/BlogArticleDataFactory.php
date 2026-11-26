@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -73,7 +74,7 @@ class BlogArticleDataFactory
 
         $blogArticleData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogArticle);
 
-        $blogArticleData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_blogarticle_detail', $blogArticle->getId());
+        $blogArticleData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId(FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticle->getId());
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogArticleData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(

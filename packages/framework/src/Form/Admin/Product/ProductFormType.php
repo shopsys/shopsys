@@ -12,6 +12,7 @@ use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStocksType;
@@ -599,7 +600,7 @@ final class ProductFormType extends AbstractType
         return $builder->create('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['name', '{locale}'],
             'url_list_options' => $product !== null ? [
-                'route_name' => 'front_product_detail',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
                 'entity_id' => $product->getId(),
             ] : null,
         ]);

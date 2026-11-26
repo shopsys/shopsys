@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
@@ -46,6 +47,6 @@ class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_article_detail'];
+        return [FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL];
     }
 }

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
@@ -58,7 +59,7 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
         $blogCategory->createDomains($blogCategoryData);
 
-        $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL, $blogCategory->getId(), $blogCategory->getNames());
 
         $this->imageFacade->manageImages($blogCategory, $blogCategoryData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
@@ -82,8 +83,8 @@ class BlogCategoryFacade implements TreeSelectionDataProviderInterface
 
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_blogcategory_detail', $blogCategory->getId(), $blogCategoryData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL, $blogCategory->getId(), $blogCategoryData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL, $blogCategory->getId(), $blogCategory->getNames());
 
         $this->imageFacade->manageImages($blogCategory, $blogCategoryData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();

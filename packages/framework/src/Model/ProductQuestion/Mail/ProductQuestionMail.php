@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\ProductQuestion\Mail;
 
 use Shopsys\FrameworkBundle\Component\Mailer\MailerHelper;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade;
@@ -92,7 +93,7 @@ class ProductQuestionMail
     protected function getProductUrl(ProductQuestionData $productQuestionData): string
     {
         return $this->domainRouterFactory->getRouter($productQuestionData->domainId)->generate(
-            'front_product_detail',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
             ['id' => $productQuestionData->product->getId()],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );

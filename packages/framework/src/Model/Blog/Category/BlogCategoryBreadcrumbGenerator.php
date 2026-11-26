@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
@@ -53,6 +54,6 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_blogcategory_detail'];
+        return [FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL];
     }
 }

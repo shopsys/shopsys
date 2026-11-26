@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -1867,7 +1868,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $canonicalUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
                 $domain->getId(),
-                'front_product_detail',
+                FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
                 $lg22mt44dSmallerProduct->getId(),
             );
             // canonical URL has to be https even when the domain runs on http (e.g. locally)

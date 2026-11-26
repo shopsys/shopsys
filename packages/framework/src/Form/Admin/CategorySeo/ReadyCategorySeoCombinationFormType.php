@@ -8,6 +8,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
@@ -34,7 +35,7 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                 'domain_id' => $options['domain_id'],
                 'url_list_options' => [
                     'required' => true,
-                    'route_name' => 'front_category_seo',
+                    'route_name' => FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO,
                     'entity_id' => $readyCategorySeoMix?->getId(),
                     'constraints' => [
                         new NotBlank(),

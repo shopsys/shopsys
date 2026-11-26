@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Blog;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -118,7 +119,7 @@ final class BlogCategoryFormType extends AbstractType
         return $builder->create('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['settings', 'names', '{locale}'],
             'url_list_options' => $options['blogCategory'] !== null ? [
-                'route_name' => 'front_blogcategory_detail',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL,
                 'entity_id' => $this->getBlogCategoryId($options['blogCategory']),
             ] : null,
         ]);

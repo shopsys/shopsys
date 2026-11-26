@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -66,7 +67,7 @@ class BrandDataFactory
             $brandData->descriptions[$translation->getLocale()] = $translation->getDescription();
         }
 
-        $brandData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_brand_detail', $brand->getId());
+        $brandData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId(FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL, $brand->getId());
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(
