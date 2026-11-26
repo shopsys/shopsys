@@ -94,15 +94,15 @@ class BlogArticleMcpFacade
         );
 
         foreach (array_keys($arguments->names) as $locale) {
-            $this->addChangedField($change, BlogArticleChangeLabel::NAME, ['%locale%' => $locale], $blogArticle->getName($locale), $editedData->names[$locale]);
+            $change->addField(BlogArticleChangeLabel::NAME, $blogArticle->getName($locale), $editedData->names[$locale], ['%locale%' => $locale]);
         }
 
         foreach (array_keys($arguments->perexes) as $locale) {
-            $this->addChangedField($change, BlogArticleChangeLabel::PEREX, ['%locale%' => $locale], $blogArticle->getPerex($locale), $editedData->perexes[$locale]);
+            $change->addField(BlogArticleChangeLabel::PEREX, $blogArticle->getPerex($locale), $editedData->perexes[$locale], ['%locale%' => $locale]);
         }
 
         foreach (array_keys($arguments->descriptions) as $locale) {
-            $this->addChangedField($change, BlogArticleChangeLabel::CONTENT, ['%locale%' => $locale], $blogArticle->getDescription($locale), $editedData->descriptions[$locale]);
+            $change->addField(BlogArticleChangeLabel::CONTENT, $blogArticle->getDescription($locale), $editedData->descriptions[$locale], ['%locale%' => $locale]);
         }
 
         foreach ($arguments->descriptionReplacements as $locale => $replacements) {
@@ -133,12 +133,11 @@ class BlogArticleMcpFacade
 
         foreach (array_keys($blogCategoryIdsByDomainId) as $domainId) {
             $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-            $this->addChangedField(
-                $change,
+            $change->addField(
                 BlogArticleChangeLabel::CATEGORIES,
-                ['%domainId%' => $domainId],
                 $this->getBlogCategoryNames($currentBlogCategoriesByDomainId[$domainId] ?? [], $locale),
                 $this->getBlogCategoryNames($editedData->blogCategoriesByDomainId[$domainId], $locale),
+                ['%domainId%' => $domainId],
             );
         }
     }
@@ -149,12 +148,11 @@ class BlogArticleMcpFacade
     protected function addSlugFields(McpChange $change, BlogArticle $blogArticle, array $slugsByDomainId): void
     {
         foreach ($slugsByDomainId as $domainId => $slug) {
-            $this->addChangedField(
-                $change,
+            $change->addField(
                 BlogArticleChangeLabel::SLUG,
-                ['%domainId%' => $domainId],
                 $this->friendlyUrlFacade->findMainFriendlyUrl((int)$domainId, static::ROUTE_NAME, $blogArticle->getId())?->getSlug(),
                 $slug,
+                ['%domainId%' => $domainId],
             );
         }
     }
@@ -177,12 +175,11 @@ class BlogArticleMcpFacade
             ];
 
             foreach (array_keys($seo) as $seoAttribute) {
-                $this->addChangedField(
-                    $change,
+                $change->addField(
                     BlogArticleChangeLabel::SEO_BY_ATTRIBUTE[$seoAttribute],
-                    ['%domainId%' => $domainId],
                     $currentSeo[$seoAttribute],
                     $editedData->seo[$domainId]->{$seoAttribute},
+                    ['%domainId%' => $domainId],
                 );
             }
         }
@@ -270,16 +267,14 @@ class BlogArticleMcpFacade
             $position = $this->getUniquePosition($description, $replacement['find'], $locale);
             $findLength = strlen($replacement['find']);
 
-            if ($replacement['find'] !== $replacement['replace']) {
-                $change->addField(
-                    BlogArticleChangeLabel::CONTENT,
-                    $replacement['find'],
-                    $replacement['replace'],
-                    ['%locale%' => $locale],
-                    $this->getContextBefore(substr($description, 0, $position)),
-                    $this->getContextAfter(substr($description, $position + $findLength)),
-                );
-            }
+            $change->addField(
+                BlogArticleChangeLabel::CONTENT,
+                $replacement['find'],
+                $replacement['replace'],
+                ['%locale%' => $locale],
+                $this->getContextBefore(substr($description, 0, $position)),
+                $this->getContextAfter(substr($description, $position + $findLength)),
+            );
 
             $description = substr_replace($description, $replacement['replace'], $position, $findLength);
         }
@@ -411,20 +406,5 @@ class BlogArticleMcpFacade
         sort($blogCategoryNames);
 
         return implode(', ', $blogCategoryNames);
-    }
-
-    /**
-     * @param array<string, string|int> $labelParameters
-     */
-    protected function addChangedField(
-        McpChange $change,
-        string $label,
-        array $labelParameters,
-        ?string $before,
-        ?string $after,
-    ): void {
-        if ($before !== $after) {
-            $change->addField($label, $before, $after, $labelParameters);
-        }
     }
 }
