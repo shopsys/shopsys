@@ -57,6 +57,7 @@ services:
             SEZNAM_CLIENT_SECRET: ~
             MCP_DATABASE_USER: shopsys_mcp
             MCP_DATABASE_PASSWORD: shopsys_mcp
+            MAILER_DSN: smtp://${COMPOSE_PROJECT_NAME}-mailpit:1025?verify_peer=false
         labels:
             - traefik.enable=false
         networks:
@@ -87,6 +88,7 @@ services:
             SEZNAM_CLIENT_SECRET: ~
             MCP_DATABASE_USER: shopsys_mcp
             MCP_DATABASE_PASSWORD: shopsys_mcp
+            MAILER_DSN: smtp://${COMPOSE_PROJECT_NAME}-mailpit:1025?verify_peer=false
         networks:
             - default
             - services-network
@@ -117,6 +119,26 @@ services:
             - default
         labels:
             - traefik.enable=false
+
+    mailpit:
+        restart: always
+        image: axllent/mailpit:v1.34
+        container_name: ${COMPOSE_PROJECT_NAME}-mailpit
+        environment:
+            MP_SMTP_RELAY_HOST: smtp-server
+            MP_SMTP_RELAY_PORT: 25
+            MP_SMTP_RELAY_ALL: true
+        labels:
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-mailpit.rule=Host(`${MAILPIT_HOST}`)"
+            - traefik.http.services.${COMPOSE_PROJECT_NAME}-mailpit.loadbalancer.server.port=8025
+            - traefik.docker.network=ci_traefik-network
+            - traefik.http.routers.${COMPOSE_PROJECT_NAME}-mailpit.tls=true
+            - traefik.http.routers.${COMPOSE_PROJECT_NAME}-mailpit.tls.certresolver=myresolver
+            - traefik.http.routers.${COMPOSE_PROJECT_NAME}-mailpit.middlewares=protection@file
+        networks:
+            - default
+            - services-network
+            - traefik-network
 volumes:
     web-volume:
 

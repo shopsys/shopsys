@@ -121,49 +121,53 @@ See [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md) arti
 
 ## Do you have any tips how to debug emails during development in Docker?
 
-The `smtp-server` service uses [`maildev/maildev`](https://github.com/maildev/maildev), which catches outgoing application emails and shows them in a web UI — including headers, plain text, HTML rendering, and attachments.
+The `smtp-server` service uses [Mailpit](https://mailpit.axllent.org/), which catches outgoing application emails and shows them in a web UI — including headers, plain text, HTML rendering, and attachments.
 
-- Open the inbox at [`http://127.0.0.1:1080`](http://127.0.0.1:1080).
-- All application emails appear there immediately after they are sent.
+- Open the inbox at [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
+- Emails are delivered based on the e-mail whitelist.
 - You can also view outgoing emails in the Symfony profiler.
 
-_Note: By default no emails are delivered to their original recipients — they are only captured by MailDev. See [How do I deliver emails to real recipients from my local environment?](#how-do-i-deliver-emails-to-real-recipients-from-my-local-environment) below._
+_Note: By default no emails are delivered to their original recipients — they are only captured by Mailpit. See [How do I deliver emails to real recipients from my local environment?](#how-do-i-deliver-emails-to-real-recipients-from-my-local-environment) below._
 
 ## How do I deliver emails to real recipients from my local environment?
 
-MailDev can be configured to act as a relay so that emails are also forwarded to the original recipients (and visible in the inbox UI). You need to provide SMTP relay credentials — the typical choice is a personal Gmail account with an App Password.
+Mailpit can be configured to act as a relay so that emails are also forwarded to the original recipients (and visible in the inbox UI). You need to provide SMTP relay credentials — the typical choice is a personal Gmail account with an App Password.
 
 ### Generate a Gmail App Password
 
 1. Open <https://myaccount.google.com/security> and enable **2-Step Verification** if it is not already on (App Passwords are only available with 2FA enabled).
 2. Open <https://myaccount.google.com/apppasswords>.
-3. Create a new App Password — name it e.g. `Shopsys MailDev local` — and copy the 16-character value Google generates. It is shown only once.
+3. Create a new App Password — name it e.g. `Shopsys Mailpit local` — and copy the 16-character value Google generates. It is shown only once.
 
-### Configure MailDev to relay via Gmail
+### Configure Mailpit to relay via Gmail
 
-The `smtp-server` service in your local `docker-compose.yml` already has `--auto-relay` enabled and a pre-prepared Gmail block commented out. Uncomment it, fill in your Gmail address, and leave `MAILDEV_OUTGOING_PASS` referencing an environment variable so the App Password is **never written into the repo file**:
+The `smtp-server` service in your local `docker-compose.yml` has a pre-prepared Gmail block commented out. Uncomment it, fill in your Gmail address, and leave `MP_SMTP_RELAY_PASSWORD` referencing an environment variable so the App Password is **never written into the repo file**:
 
 ```yaml
 smtp-server:
     # ...
     environment:
-        MAILDEV_OUTGOING_HOST: smtp.gmail.com
-        MAILDEV_OUTGOING_PORT: 465
-        MAILDEV_OUTGOING_SECURE: 'true'
-        MAILDEV_OUTGOING_USER: your-address@gmail.com
-        MAILDEV_OUTGOING_PASS: ${MAILDEV_OUTGOING_PASS:-}
+        MP_SMTP_RELAY_HOST: smtp.gmail.com
+        MP_SMTP_RELAY_PORT: 587
+        MP_SMTP_RELAY_STARTTLS: 'true'
+        MP_SMTP_RELAY_AUTH: plain
+        MP_SMTP_RELAY_USERNAME: your-address@gmail.com
+        MP_SMTP_RELAY_PASSWORD: ${MP_SMTP_RELAY_PASSWORD:-}
+        MP_SMTP_RELAY_ALL: 'true'
 ```
 
-**Do not paste the App Password directly into `docker-compose.yml`.** The compose file already reads `MAILDEV_OUTGOING_PASS` from your shell environment via `${MAILDEV_OUTGOING_PASS:-}`. Store the password in your OS credential store (or a password manager) and export it from your shell profile so it is available when `docker compose up` runs. Every modern OS has a native credential store you can use — macOS Keychain, Windows Credential Manager, GNOME Keyring / KWallet on Linux — pick whichever your machine offers and load the value into the environment variable from there.
+`MP_SMTP_RELAY_ALL` forwards every captured email automatically. Without it, Mailpit only relays the emails you release manually in its UI.
+
+**Do not paste the App Password directly into `docker-compose.yml`.** The compose file already reads `MP_SMTP_RELAY_PASSWORD` from your shell environment via `${MP_SMTP_RELAY_PASSWORD:-}`. Store the password in your OS credential store (or a password manager) and export it from your shell profile so it is available when `docker compose up` runs. Every modern OS has a native credential store you can use — macOS Keychain, Windows Credential Manager, GNOME Keyring / KWallet on Linux — pick whichever your machine offers and load the value into the environment variable from there.
 
 #### Example: macOS Keychain
 
 ```bash
 # one-time — prompts for the password interactively, stores it in Keychain
-security add-generic-password -a "$USER" -s 'shopsys-maildev-gmail' -w
+security add-generic-password -a "$USER" -s 'shopsys-mailpit-gmail' -w
 
 # add to ~/.zprofile (or ~/.bash_profile) — loaded once per login shell
-export MAILDEV_OUTGOING_PASS=$(security find-generic-password -w -s 'shopsys-maildev-gmail' -a "$USER" 2>/dev/null)
+export MP_SMTP_RELAY_PASSWORD=$(security find-generic-password -w -s 'shopsys-mailpit-gmail' -a "$USER" 2>/dev/null)
 ```
 
 Open a new terminal so the profile loads, then recreate the `smtp-server` container from it (docker compose reads the variable from the shell that invokes it):

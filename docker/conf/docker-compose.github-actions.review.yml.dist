@@ -74,6 +74,7 @@ services:
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY}"
+            MAILER_DSN: smtp://mailpit:1025?verify_peer=false
             MCP_DATABASE_USER: shopsys_mcp
             MCP_DATABASE_PASSWORD: shopsys_mcp
         networks:
@@ -115,6 +116,7 @@ services:
             GOOGLE_MAP_API_KEY : "${GOOGLE_MAP_API_KEY}"
             SEZNAM_CLIENT_ID: "${SEZNAM_CLIENTID}"
             SEZNAM_CLIENT_SECRET: "${SEZNAM_CLIENTSECRET}"
+            MAILER_DSN: smtp://mailpit:1025?verify_peer=false
         networks:
             - default
         entrypoint:
@@ -178,6 +180,26 @@ services:
             - default
         labels:
             - traefik.enable=false
+
+    mailpit:
+        restart: always
+        image: axllent/mailpit:v1.34
+        depends_on:
+            - smtp-server
+        environment:
+            MP_SMTP_RELAY_HOST: smtp-server
+            MP_SMTP_RELAY_PORT: 25
+            MP_SMTP_RELAY_ALL: true
+        labels:
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}-mailpit.rule=${TRAEFIK_MAILPIT_HOSTS}
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}-mailpit.entrypoints=http,https
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}-mailpit.tls.certresolver=letsencrypt
+            - traefik.http.services.${BRANCH_NAME_ESCAPED}-mailpit.loadbalancer.server.port=8025
+            - traefik.docker.network=github-runner_traefik-network
+            - traefik.enable=true
+        networks:
+            - default
+            - github-runner_traefik-network
 
     elasticsearch:
         image: elasticsearch-image

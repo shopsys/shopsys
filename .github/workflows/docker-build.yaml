@@ -92,6 +92,7 @@ jobs:
             BRANCH_NAME: ${{ steps.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}
             TRAEFIK_HOSTS: ${{ steps.variables.outputs.TRAEFIK_HOSTS }}
+            TRAEFIK_MAILPIT_HOSTS: ${{ steps.variables.outputs.TRAEFIK_MAILPIT_HOSTS }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v7
@@ -151,6 +152,7 @@ jobs:
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "TRAEFIK_HOSTS=Host(\`$HOST\`) || Host(\`cz.$HOST\`)" >> $GITHUB_OUTPUT
+                    echo "TRAEFIK_MAILPIT_HOSTS=Host(\`mailpit.$HOST\`)" >> $GITHUB_OUTPUT
             -   name: Prepare docker-compose.yml file from docker-compose.github-actions.yml.dist
                 run: |
                     sh .github/prepare-docker-compose-file.sh \
@@ -1307,6 +1309,7 @@ jobs:
             BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             TRAEFIK_HOSTS: ${{ needs.variables.outputs.TRAEFIK_HOSTS }}
+            TRAEFIK_MAILPIT_HOSTS: ${{ needs.variables.outputs.TRAEFIK_MAILPIT_HOSTS }}
             GOPAY_CONFIG_VALUE: ${{ secrets.GOPAY_CONFIG || '[]' }}
             GTM_ID_VALUE: ${{ secrets.GTM_ID }}
             PACKETERY_API_KEY_VALUE: ${{ secrets.PACKETERY_API_KEY }}
@@ -1397,6 +1400,9 @@ jobs:
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}/sk
+
+                        :envelope: Mailpit:
+                          - https://mailpit.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                 with:
                     script: |
                         const marker = '<!-- Replace -->'
