@@ -10,6 +10,7 @@ use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -122,7 +123,7 @@ final class CategoryFormType extends AbstractType
         $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['settings', 'name', '{locale}'],
             'url_list_options' => $options['scenario'] === self::SCENARIO_EDIT ? [
-                'route_name' => 'front_product_list',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST,
                 'entity_id' => $options['category']?->getId(),
             ] : null,
         ]);

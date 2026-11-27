@@ -8,6 +8,7 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -29,7 +30,7 @@ class BrandResolverMap extends ResolverMap
             'Brand' => [
                 'link' => function (Brand $brand) {
                     return $this->urlGenerator->generate(
-                        'front_brand_detail',
+                        FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL,
                         ['id' => $brand->getId()],
                         UrlGeneratorInterface::ABSOLUTE_URL,
                     );

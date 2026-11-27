@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -64,7 +65,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             'categories',
-            'front_product_list',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST,
             $this->sitemapFacade->getSitemapItemsForVisibleCategories(...),
         );
 
@@ -74,7 +75,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             'sellableProducts',
-            'front_product_detail',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
             $this->sitemapFacade->getSitemapItemsForListableProducts(...),
         );
 
@@ -84,7 +85,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             'soldOutProducts',
-            'front_product_detail',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
             $this->sitemapFacade->getSitemapItemsForSoldOutProducts(...),
         );
 
@@ -102,7 +103,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             'articles',
-            'front_blogarticle_detail',
+            FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL,
             $this->sitemapFacade->getSitemapItemsForBlogArticlesOnDomain(...),
         );
 
@@ -112,7 +113,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             'flags',
-            'front_flag_detail',
+            FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL,
             $this->sitemapFacade->getSitemapItemsForVisibleFlags(...),
         );
 

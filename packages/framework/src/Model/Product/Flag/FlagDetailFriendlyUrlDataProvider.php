@@ -11,10 +11,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    public const string ROUTE_NAME = 'front_flag_detail';
+    public const string ROUTE_NAME = FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL;
 
     public function __construct(
         protected readonly EntityManagerInterface $em,

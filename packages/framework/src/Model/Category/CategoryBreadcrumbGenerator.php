@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
@@ -55,6 +56,6 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_product_list'];
+        return [FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST];
     }
 }

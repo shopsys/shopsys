@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory;
@@ -174,7 +175,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
         $categoryReference = $this->getCategoryReference($categoryReferenceName);
 
         return $router->generate(
-            'front_product_list',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST,
             ['id' => $categoryReference->getId()],
             UrlGeneratorInterface::RELATIVE_PATH,
         );

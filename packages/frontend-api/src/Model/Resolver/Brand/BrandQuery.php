@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
@@ -50,7 +51,7 @@ class BrandQuery extends AbstractQuery
         try {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
-                'front_brand_detail',
+                FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL,
                 $urlSlug,
             );
 

@@ -257,15 +257,15 @@ class FriendlyUrlRepository
     public function getRouteNameToEntityMap(): array
     {
         return [
-            'front_article_detail' => $this->entityNameResolver->resolve(Article::class),
-            'front_blogarticle_detail' => $this->entityNameResolver->resolve(BlogArticle::class),
-            'front_blogcategory_detail' => $this->entityNameResolver->resolve(BlogCategory::class),
-            'front_brand_detail' => $this->entityNameResolver->resolve(Brand::class),
-            'front_product_detail' => $this->entityNameResolver->resolve(Product::class),
-            'front_product_list' => $this->entityNameResolver->resolve(Category::class),
-            'front_stores_detail' => $this->entityNameResolver->resolve(Store::class),
-            'front_flag_detail' => $this->entityNameResolver->resolve(Flag::class),
-            'front_category_seo' => $this->entityNameResolver->resolve(ReadyCategorySeoMix::class),
+            FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL => $this->entityNameResolver->resolve(Article::class),
+            FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL => $this->entityNameResolver->resolve(BlogArticle::class),
+            FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL => $this->entityNameResolver->resolve(BlogCategory::class),
+            FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL => $this->entityNameResolver->resolve(Brand::class),
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL => $this->entityNameResolver->resolve(Product::class),
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST => $this->entityNameResolver->resolve(Category::class),
+            FriendlyUrlRouteNameEnum::FRONT_STORES_DETAIL => $this->entityNameResolver->resolve(Store::class),
+            FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL => $this->entityNameResolver->resolve(Flag::class),
+            FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO => $this->entityNameResolver->resolve(ReadyCategorySeoMix::class),
             'front_page_seo' => $this->entityNameResolver->resolve(SeoPage::class),
         ];
     }

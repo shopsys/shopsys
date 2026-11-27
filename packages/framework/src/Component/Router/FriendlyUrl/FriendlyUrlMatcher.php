@@ -55,11 +55,11 @@ class FriendlyUrlMatcher
 
         $matchedParameters = $route->getDefaults();
 
-        if ($friendlyUrl->getRouteName() === 'front_category_seo' && $friendlyUrl->isMain() === false) {
+        if ($friendlyUrl->getRouteName() === FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO && $friendlyUrl->isMain() === false) {
             return $this->getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl($friendlyUrl, $matchedParameters);
         }
 
-        if ($friendlyUrl->getRouteName() === 'front_category_seo') {
+        if ($friendlyUrl->getRouteName() === FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO) {
             return $this->getMatchedParametersForMainFrontCategorySeoFriendlyUrl($friendlyUrl, $matchedParameters);
         }
 
@@ -86,7 +86,7 @@ class FriendlyUrlMatcher
             throw new ReadyCategorySeoMixNotFoundException(sprintf('ReadyCategorySeoMix with ID %s not found', $readyCategorySeoMixId));
         }
 
-        $matchedParameters['_route'] = 'front_product_list';
+        $matchedParameters['_route'] = FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST;
         $matchedParameters['id'] = $readyCategorySeoMix->getCategory()->getId();
         $matchedParameters['readyCategorySeoMixId'] = $readyCategorySeoMixId;
 

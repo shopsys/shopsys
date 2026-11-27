@@ -51,14 +51,14 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
     public function getReadableNameForRouteName(string $routeName): string
     {
         $readableNamesByRouteName = [
-            'front_article_detail' => t('Article'),
-            'front_blogarticle_detail' => t('Blog article'),
-            'front_blogcategory_detail' => t('Blog category'),
-            'front_brand_detail' => t('Brand'),
-            'front_category_seo' => t('Category with prefilled filters'),
-            'front_product_detail' => t('Product'),
-            'front_product_list' => t('Category'),
-            'front_stores_detail' => t('Store'),
+            FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL => t('Article'),
+            FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL => t('Blog article'),
+            FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL => t('Blog category'),
+            FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL => t('Brand'),
+            FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO => t('Category with prefilled filters'),
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL => t('Product'),
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST => t('Category'),
+            FriendlyUrlRouteNameEnum::FRONT_STORES_DETAIL => t('Store'),
         ];
 
         if (array_key_exists($routeName, $readableNamesByRouteName)) {

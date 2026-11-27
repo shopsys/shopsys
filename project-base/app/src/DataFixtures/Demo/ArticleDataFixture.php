@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
@@ -386,7 +387,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $categoryReference = $this->getReference($categoryReferenceName, Category::class);
 
         return $router->generate(
-            'front_product_list',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST,
             ['id' => $categoryReference->getId()],
             UrlGeneratorInterface::RELATIVE_PATH,
         );

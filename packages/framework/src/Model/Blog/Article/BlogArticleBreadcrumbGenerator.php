@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 
@@ -78,7 +79,7 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
         foreach ($blogCategoriesInPath as $blogCategoryInPath) {
             $breadcrumbItems[] = new BreadcrumbItem(
                 $blogCategoryInPath->getName($locale),
-                'front_blogcategory_detail',
+                FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL,
                 ['id' => $blogCategoryInPath->getId()],
             );
         }
@@ -92,6 +93,6 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_blogarticle_detail'];
+        return [FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL];
     }
 }

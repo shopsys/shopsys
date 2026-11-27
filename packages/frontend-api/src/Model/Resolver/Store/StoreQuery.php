@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Store;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -48,7 +49,7 @@ class StoreQuery extends AbstractQuery
         try {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
-                'front_stores_detail',
+                FriendlyUrlRouteNameEnum::FRONT_STORES_DETAIL,
                 $urlSlug,
             );
 

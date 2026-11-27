@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Brand;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -60,7 +61,7 @@ final class BrandFormType extends AbstractType
         $builderSeoGroup = $builder->create('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['basicInformation', 'name'],
             'url_list_options' => $brand !== null ? [
-                'route_name' => 'front_brand_detail',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL,
                 'entity_id' => $brand->getId(),
             ] : null,
         ]);

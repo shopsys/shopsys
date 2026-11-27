@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -143,7 +144,7 @@ class ProductDataFactory
                 $this->productPromotionXyDataFactory->createFromEntity($product->getPromotionXy($domainId));
         }
 
-        $productData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_product_detail', $product->getId());
+        $productData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId());
 
         $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createFromProductForAllDomains($product);
 

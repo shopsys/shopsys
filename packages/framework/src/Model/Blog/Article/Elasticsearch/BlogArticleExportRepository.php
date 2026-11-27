@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
@@ -75,7 +76,7 @@ class BlogArticleExportRepository
     public function extractBlogArticle(BlogArticle $blogArticle, int $domainId, string $locale): array
     {
         $blogArticleCategories = $blogArticle->getBlogCategoriesIndexedByDomainId()[$domainId];
-        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticle->getId());
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 
         try {
@@ -101,10 +102,10 @@ class BlogArticleExportRepository
             'seoH1' => $blogArticle->getSeoAttributes($domainId)->getH1(),
             'seoMetaRobots' => $blogArticle->getSeoAttributes($domainId)->getMetaRobots(),
             'seoCanonicalUrl' => $blogArticle->getSeoAttributes($domainId)->getCanonicalUrl(),
-            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
+            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticle->getId()),
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
-            'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), 'front_blogarticle_detail', $domainId, $locale),
+            'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $domainId, $locale),
             'imageUrl' => $imageUrl,
             'hreflangLinks' => $this->hreflangLinksFacade->getForBlogArticle($blogArticle, $domainId, false),
             'mainBlogCategoryUuid' => $this->blogCategoryFacade->getBlogArticleMainBlogCategoryOnDomain(

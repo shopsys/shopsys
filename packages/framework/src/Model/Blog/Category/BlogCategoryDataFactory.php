@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -60,7 +61,7 @@ class BlogCategoryDataFactory
 
         $blogCategoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogCategory);
 
-        $blogCategoryData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId('front_blogcategory_detail', $blogCategory->getId());
+        $blogCategoryData->urls = $this->urlListDataFactory->createForAllDomainsIndexedByDomainId(FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL, $blogCategory->getId());
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogCategoryData->seo[$domainId] = $this->seoAttributesDataFactory->createFromSeoAttributes(

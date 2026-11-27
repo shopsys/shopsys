@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
@@ -170,7 +171,7 @@ class ProductExportRepository
             ProductExportFieldProvider::PERSONAL_PICKUP_ONLY => $product->isPersonalPickupOnly(),
             ProductExportFieldProvider::IS_MAIN_VARIANT => $product->isMainVariant(),
             ProductExportFieldProvider::IS_VARIANT => $product->isVariant(),
-            ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_product_detail', $product->getId()),
+            ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId()),
             ProductExportFieldProvider::VISIBILITY => $this->extractVisibility($domainId, $product),
             ProductExportFieldProvider::UUID => $product->getUuid(),
             ProductExportFieldProvider::UNIT => $product->getUnit()->getName($locale),
@@ -255,7 +256,7 @@ class ProductExportRepository
             return '';
         }
 
-        return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_brand_detail', $product->getBrand()->getId());
+        return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL, $product->getBrand()->getId());
     }
 
     protected function createQueryBuilder(int $domainId): QueryBuilder

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FlagFacade
@@ -37,7 +38,7 @@ class FlagFacade
 
         $this->dispatchFlagEvent($flag, FlagEvent::CREATE);
 
-        $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL, $flag->getId(), $flag->getNames());
 
         return $flag;
     }
@@ -50,8 +51,8 @@ class FlagFacade
 
         $this->dispatchFlagEvent($flag, FlagEvent::UPDATE);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_flag_detail', $flag->getId(), $flagData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL, $flag->getId(), $flagData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL, $flag->getId(), $flag->getNames());
 
         return $flag;
     }

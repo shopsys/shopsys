@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class LuigisBoxBrandFeedItemFactory
@@ -34,7 +35,7 @@ class LuigisBoxBrandFeedItemFactory
         return new LuigisBoxBrandFeedItem(
             $brand->getId(),
             $brand->getName(),
-            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_brand_detail', $brand->getId()),
+            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL, $brand->getId()),
             $imageUrl,
             $seoAttributes->getTitle(),
             $seoAttributes->getMetaDescription(),

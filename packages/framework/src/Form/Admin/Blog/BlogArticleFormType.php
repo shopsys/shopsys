@@ -11,6 +11,7 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoGroupType;
 use Shopsys\FrameworkBundle\Form\BlogArticleAuthorPickerType;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
@@ -84,7 +85,7 @@ final class BlogArticleFormType extends AbstractType
         return $builder->create('seoGroup', SeoGroupType::class, [
             'placeholder_source_path' => ['settings', 'names', '{locale}'],
             'url_list_options' => $blogArticle !== null ? [
-                'route_name' => 'front_blogarticle_detail',
+                'route_name' => FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL,
                 'entity_id' => $blogArticle->getId(),
             ] : null,
         ]);
@@ -180,7 +181,7 @@ final class BlogArticleFormType extends AbstractType
         }
 
         try {
-            return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId());
+            return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainId, FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticle->getId());
         } catch (FriendlyUrlNotFoundException) {
             return null;
         }

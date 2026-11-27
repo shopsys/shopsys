@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -17,11 +18,11 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 
 class HreflangLinksFacade
 {
-    protected const string ROUTE_PRODUCT_DETAIL = 'front_product_detail';
-    protected const string ROUTE_PRODUCT_LIST = 'front_product_list';
-    protected const string ROUTE_BRAND_DETAIL = 'front_brand_detail';
-    protected const string ROUTE_FLAG_DETAIL = 'front_flag_detail';
-    protected const string ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
+    protected const string ROUTE_PRODUCT_DETAIL = FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL;
+    protected const string ROUTE_PRODUCT_LIST = FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST;
+    protected const string ROUTE_BRAND_DETAIL = FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL;
+    protected const string ROUTE_FLAG_DETAIL = FriendlyUrlRouteNameEnum::FRONT_FLAG_DETAIL;
+    protected const string ROUTE_BLOG_ARTICLE_DETAIL = FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL;
 
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,

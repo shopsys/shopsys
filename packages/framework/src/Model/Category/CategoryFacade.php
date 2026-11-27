@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Form\TreeSelection\TreeSelectionDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -79,7 +80,7 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
         $category = $this->categoryFactory->create($categoryData, $rootCategory);
         $this->em->persist($category);
         $this->em->flush();
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST, $category->getId(), $category->getNames());
         $this->imageFacade->manageImages($category, $categoryData->image);
 
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
@@ -104,8 +105,8 @@ class CategoryFacade implements TreeSelectionDataProviderInterface
             $category->setParent($rootCategory);
         }
         $this->em->flush();
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_list', $category->getId(), $categoryData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST, $category->getId(), $categoryData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_LIST, $category->getId(), $category->getNames());
 
         $this->imageFacade->manageImages($category, $categoryData->image);
 

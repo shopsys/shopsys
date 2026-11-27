@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
@@ -21,7 +22,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     #[Override]
     public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
-        $isBrandDetail = $routeName === 'front_brand_detail';
+        $isBrandDetail = $routeName === FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL;
 
         $breadcrumbItems[] = new BreadcrumbItem(
             t('Brand overview', domain: Translator::CUSTOMER_TRANSLATION_DOMAIN),
@@ -44,6 +45,6 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_brand_detail'];
+        return [FriendlyUrlRouteNameEnum::FRONT_BRAND_DETAIL];
     }
 }

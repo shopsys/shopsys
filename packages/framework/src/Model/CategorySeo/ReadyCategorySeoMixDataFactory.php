@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -60,7 +61,7 @@ class ReadyCategorySeoMixDataFactory
             $this->fillValuesFromReadyCategorySeoMix($readyCategorySeoMixData, $readyCategorySeoMix);
 
             $readyCategorySeoMixData->urls = $this->urlListDataFactory->createForDomain(
-                'front_category_seo',
+                FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO,
                 $readyCategorySeoMix->getId(),
                 $readyCategorySeoMix->getDomainId(),
             );

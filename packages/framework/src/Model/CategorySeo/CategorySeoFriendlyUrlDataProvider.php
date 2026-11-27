@@ -7,10 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class CategorySeoFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    protected const string ROUTE_NAME = 'front_category_seo';
+    protected const string ROUTE_NAME = FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO;
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]

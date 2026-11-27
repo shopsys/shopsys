@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Store;
 use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use function t;
 
@@ -45,6 +46,6 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     #[Override]
     public function getRouteNames(): array
     {
-        return ['front_stores_detail', 'front_stores'];
+        return [FriendlyUrlRouteNameEnum::FRONT_STORES_DETAIL, 'front_stores'];
     }
 }

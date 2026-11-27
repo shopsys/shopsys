@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
@@ -70,7 +71,7 @@ class ImageSitemapFacade
                 try {
                     $imageUrl = $this->imageFacade->getImageUrl($domainConfig, $product);
                     $imageSitemapItem = new ImageSitemapItem();
-                    $imageSitemapItem->loc = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainConfig->getId(), 'front_product_detail', $product->getId());
+                    $imageSitemapItem->loc = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainConfig->getId(), FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId());
 
                     $sitemapImage = new ImageSitemapItemImage();
                     $sitemapImage->loc = $imageUrl;

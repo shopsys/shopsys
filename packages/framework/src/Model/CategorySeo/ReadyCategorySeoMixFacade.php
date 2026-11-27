@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
@@ -111,15 +112,15 @@ class ReadyCategorySeoMixFacade
         UrlListData $urlListData,
     ): void {
         $domainId = $readyCategorySeoMix->getDomainId();
-        $this->friendlyUrlFacade->saveUrlListFormDataForDomain('front_category_seo', $readyCategorySeoMix->getId(), $urlListData, $domainId);
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain(FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO, $readyCategorySeoMix->getId(), $urlListData, $domainId);
 
-        $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_category_seo', $readyCategorySeoMix->getId());
+        $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO, $readyCategorySeoMix->getId());
 
         if ($mainFriendlyUrl !== null) {
             return;
         }
 
-        $readyCategoryMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId('front_category_seo', $readyCategorySeoMix->getId());
+        $readyCategoryMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId(FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO, $readyCategorySeoMix->getId());
 
         if (count($readyCategoryMixAllFriendlyUrls) === 0) {
             return;
@@ -128,12 +129,12 @@ class ReadyCategorySeoMixFacade
         $urlListDataForMainFriendlyUrl = $this->urlListDataFactory->create();
         $urlListDataForMainFriendlyUrl->mainFriendlyUrl = array_shift($readyCategoryMixAllFriendlyUrls);
 
-        $this->friendlyUrlFacade->saveUrlListFormDataForDomain('front_category_seo', $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl, $domainId);
+        $this->friendlyUrlFacade->saveUrlListFormDataForDomain(FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO, $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl, $domainId);
     }
 
     protected function validateReadyCategoryMixFriendlyUrls(ReadyCategorySeoMix $readyCategorySeoMix): void
     {
-        $readyCategorySeoMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId('front_category_seo', $readyCategorySeoMix->getId());
+        $readyCategorySeoMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId(FriendlyUrlRouteNameEnum::FRONT_CATEGORY_SEO, $readyCategorySeoMix->getId());
 
         $hasCorrectDomainUrl = false;
         $hasMainFriendlyUrl = false;

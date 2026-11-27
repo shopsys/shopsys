@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry\Mail;
 use Shopsys\FrameworkBundle\Component\Mailer\MailerHelper;
 use Shopsys\FrameworkBundle\Component\Router\AdministrationRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Inquiry\Inquiry;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -124,7 +125,7 @@ class InquiryMail
         }
 
         return $this->domainRouterFactory->getRouter($inquiry->getDomainId())->generate(
-            'front_product_detail',
+            FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL,
             ['id' => $inquiry->getProduct()->getId()],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );

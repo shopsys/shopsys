@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Workflow\TransitionNameByTargetPlaceResolver;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
@@ -52,7 +53,7 @@ class BlogArticleFacade
         $this->em->persist($blogArticle);
         $this->em->flush();
 
-        $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticle->getId(), $blogArticle->getNames());
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticle->getId(), $blogArticle->getNames());
 
         $this->imageFacade->manageImages($blogArticle, $blogArticleData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
@@ -79,8 +80,8 @@ class BlogArticleFacade
 
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_blogarticle_detail', $blogArticle->getId(), $blogArticleData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticleId, $blogArticle->getNames());
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticle->getId(), $blogArticleData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_BLOGARTICLE_DETAIL, $blogArticleId, $blogArticle->getNames());
 
         $this->imageFacade->manageImages($blogArticle, $blogArticleData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();

@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
@@ -113,8 +114,8 @@ class ProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->uploadedFileFacade->manageFiles($product, $productData->files);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullNames());
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId(), $productData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId(), $product->getFullNames());
 
         $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
     }
@@ -158,8 +159,8 @@ class ProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->uploadedFileFacade->manageFiles($product, $productData->files);
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullNames());
+        $this->friendlyUrlFacade->saveUrlListFormData(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId(), $productData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls(FriendlyUrlRouteNameEnum::FRONT_PRODUCT_DETAIL, $product->getId(), $product->getFullNames());
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 

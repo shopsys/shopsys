@@ -11,10 +11,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 
 class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    public const string ROUTE_NAME = 'front_blogcategory_detail';
+    public const string ROUTE_NAME = FriendlyUrlRouteNameEnum::FRONT_BLOGCATEGORY_DETAIL;
 
     public function __construct(
         protected EntityManagerInterface $em,

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\GrapesJs\EnsureCorrectGrapesJsFormatHelper;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouteNameEnum;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListDataFactory;
 use Shopsys\FrameworkBundle\Model\Seo\SeoAttributesDataFactory;
 
@@ -60,7 +61,7 @@ class ArticleDataFactory
         $articleData->type = $article->getType();
         $articleData->url = $article->getUrl();
 
-        $articleData->urls = $this->urlListDataFactory->createForDomain('front_article_detail', $article->getId(), $article->getDomainId());
+        $articleData->urls = $this->urlListDataFactory->createForDomain(FriendlyUrlRouteNameEnum::FRONT_ARTICLE_DETAIL, $article->getId(), $article->getDomainId());
     }
 
     protected function fillNew(ArticleData $articleData, int $domainId): void
