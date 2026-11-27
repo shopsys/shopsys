@@ -84,10 +84,11 @@ const mapPacketeryOpeningHoursToInternalOpeningHours = (
         const openingHoursRanges = parseOpeningHours(hours as string);
         const date = new Date();
         date.setDate(date.getDate() + ((daysMap[day as keyof typeof daysMap] - date.getDay() + 7) % 7));
-        const isoDate = date.toISOString().split('T')[0];
+        // the local midnight, a fixed offset would shift the date to the previous day outside the summer time
+        date.setHours(0, 0, 0, 0);
 
         internalOpeningHours.openingHoursOfDays.push({
-            date: `${isoDate}T00:00:00+02:00`,
+            date: date.toISOString(),
             dayOfWeek: daysMap[day as keyof typeof daysMap],
             openingHoursRanges,
         });
