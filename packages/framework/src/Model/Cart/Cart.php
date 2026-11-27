@@ -126,6 +126,13 @@ class Cart
     protected $pickupPlaceIdentifier;
 
     /**
+     * @var array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'json', nullable: true)]
+    protected $pickupPlaceOpeningHours;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
     #[AsMcpColumn]
@@ -558,6 +565,7 @@ class Cart
         $this->transport = null;
         $this->setTransportWatchedPrice(null);
         $this->pickupPlaceIdentifier = null;
+        $this->pickupPlaceOpeningHours = null;
         $this->updateLastActivityDate();
     }
 
@@ -566,6 +574,7 @@ class Cart
         $this->transport = $cartTransportData->transport;
         $this->setTransportWatchedPrice($cartTransportData->watchedPrice);
         $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
+        $this->pickupPlaceOpeningHours = $cartTransportData->pickupPlaceOpeningHours;
         $this->updateLastActivityDate();
     }
 
@@ -627,6 +636,15 @@ class Cart
     public function unsetPickupPlaceIdentifier(): void
     {
         $this->pickupPlaceIdentifier = null;
+        $this->pickupPlaceOpeningHours = null;
+    }
+
+    /**
+     * @return array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null
+     */
+    public function getPickupPlaceOpeningHours()
+    {
+        return $this->pickupPlaceOpeningHours;
     }
 
     /**

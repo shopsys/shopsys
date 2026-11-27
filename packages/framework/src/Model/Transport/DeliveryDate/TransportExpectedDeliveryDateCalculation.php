@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\AdditionalService\AdditionalServicesDeliveryDaysExtensionCalculation;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -20,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\DeliveryDate\Exception\TransportIsNotPersonalPickupException;
+use Shopsys\FrameworkBundle\Model\Transport\PickupPlace\PickupPlaceOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class TransportExpectedDeliveryDateCalculation
@@ -47,6 +49,8 @@ class TransportExpectedDeliveryDateCalculation
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
         protected readonly AdditionalServicesDeliveryDaysExtensionCalculation $additionalServicesDeliveryDaysExtensionCalculation,
+        protected readonly PickupPlaceOpeningHoursProvider $pickupPlaceOpeningHoursProvider,
+        protected readonly DateTimeHelper $dateTimeHelper,
     ) {
     }
 
@@ -63,6 +67,7 @@ class TransportExpectedDeliveryDateCalculation
             $cart?->getQuantifiedProducts() ?? [],
             $domainId,
             $this->findPickupPlaceIdentifierSelectedInCartForTransport($transport, $cart),
+            $this->findPickupPlaceOpeningHoursSelectedInCartForTransport($transport, $cart),
         );
     }
 
@@ -70,12 +75,14 @@ class TransportExpectedDeliveryDateCalculation
      * Returns the expected delivery date of an order of the given products placed today; null when no date can be promised
      *
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null $pickupPlaceOpeningHours
      */
     public function calculateExpectedDeliveryDateForQuantifiedProducts(
         Transport $transport,
         array $quantifiedProducts,
         int $domainId,
         ?string $pickupPlaceIdentifier = null,
+        ?array $pickupPlaceOpeningHours = null,
     ): ?DateTimeImmutable {
         $quantifiedProducts = array_values($quantifiedProducts);
 
@@ -85,6 +92,7 @@ class TransportExpectedDeliveryDateCalculation
             $domainId,
             $this->findSelectedStoreForTransport($transport, $pickupPlaceIdentifier, $domainId),
             $this->additionalServicesDeliveryDaysExtensionCalculation->calculateHighestDeliveryDaysExtension($quantifiedProducts),
+            $this->getPickupPlaceOpeningHoursApplicableToTransport($transport, $pickupPlaceOpeningHours),
         );
     }
 
@@ -142,6 +150,7 @@ class TransportExpectedDeliveryDateCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null $pickupPlaceOpeningHours
      */
     protected function calculateDeliveryDate(
         Transport $transport,
@@ -149,6 +158,7 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
         int $deliveryDaysExtension = 0,
+        ?array $pickupPlaceOpeningHours = null,
     ): ?DateTimeImmutable {
         if ($store === null && $transport->isPersonalPickup()) {
             return $this->calculateBestPickupDeliveryDateAcrossStores(
@@ -182,9 +192,39 @@ class TransportExpectedDeliveryDateCalculation
             $domainId,
             $store,
             $deliveryDaysExtension,
+            $pickupPlaceOpeningHours,
         );
 
+        if ($deliveryDate === null && $pickupPlaceOpeningHours !== null) {
+            $deliveryDate = $this->postponeToFirstAllowedDeliveryDay(
+                $transport,
+                $closestPossibleDeliveryDate,
+                $domainId,
+                $store,
+                $deliveryDaysExtension,
+            );
+        }
+
         return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
+    }
+
+    /**
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>} $pickupPlaceOpeningHours
+     */
+    protected function isPickupPlaceOpenForPickupOnDate(
+        array $pickupPlaceOpeningHours,
+        DateTimeImmutable $pickupDate,
+        int $domainId,
+    ): bool {
+        if (!$this->isToday($pickupDate, $domainId)) {
+            return $this->pickupPlaceOpeningHoursProvider->isPickupPlaceOpenOnDate($pickupPlaceOpeningHours, $pickupDate);
+        }
+
+        return $this->pickupPlaceOpeningHoursProvider->isPickupPlaceOpenAfterTimeOnDate(
+            $pickupPlaceOpeningHours,
+            $pickupDate,
+            $this->dateTimeHelper->getCurrentTime($domainId),
+        );
     }
 
     /**
@@ -238,11 +278,39 @@ class TransportExpectedDeliveryDateCalculation
 
     protected function findPickupPlaceIdentifierSelectedInCartForTransport(Transport $transport, ?Cart $cart): ?string
     {
-        if ($cart === null || $cart->getTransport()?->getId() !== $transport->getId()) {
+        if (!$this->isTransportSelectedInCart($transport, $cart)) {
             return null;
         }
 
-        return $cart->getPickupPlaceIdentifier();
+        return $cart?->getPickupPlaceIdentifier();
+    }
+
+    protected function isTransportSelectedInCart(Transport $transport, ?Cart $cart): bool
+    {
+        return $cart !== null && $cart->getTransport()?->getId() === $transport->getId();
+    }
+
+    /**
+     * @return array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null
+     */
+    protected function findPickupPlaceOpeningHoursSelectedInCartForTransport(Transport $transport, ?Cart $cart): ?array
+    {
+        if (!$this->isTransportSelectedInCart($transport, $cart)) {
+            return null;
+        }
+
+        return $cart?->getPickupPlaceOpeningHours();
+    }
+
+    /**
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null $pickupPlaceOpeningHours
+     * @return array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null
+     */
+    protected function getPickupPlaceOpeningHoursApplicableToTransport(
+        Transport $transport,
+        ?array $pickupPlaceOpeningHours,
+    ): ?array {
+        return $transport->isPacketery() ? $pickupPlaceOpeningHours : null;
     }
 
     protected function findSelectedStoreForTransport(
@@ -309,12 +377,16 @@ class TransportExpectedDeliveryDateCalculation
             && $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $store, $domainId);
     }
 
+    /**
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null $pickupPlaceOpeningHours
+     */
     protected function postponeToFirstAllowedDeliveryDay(
         Transport $transport,
         DateTimeImmutable $deliveryDate,
         int $domainId,
         ?Store $store,
         int $deliveryDaysExtension = 0,
+        ?array $pickupPlaceOpeningHours = null,
     ): ?DateTimeImmutable {
         $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
 
@@ -328,8 +400,10 @@ class TransportExpectedDeliveryDateCalculation
                 $store,
                 $closedDaysIndexedByDate[$deliveryDate->format(static::DATE_INDEX_FORMAT)] ?? [],
             );
+            $isPickupPossible = $pickupPlaceOpeningHours === null
+                || $this->isPickupPlaceOpenForPickupOnDate($pickupPlaceOpeningHours, $deliveryDate, $domainId);
 
-            if ($isDeliveryAllowed) {
+            if ($isDeliveryAllowed && $isPickupPossible) {
                 if ($remainingDeliveryDaysExtension === 0) {
                     return $deliveryDate;
                 }
@@ -438,15 +512,16 @@ class TransportExpectedDeliveryDateCalculation
             return true;
         }
 
-        if ($deliveryDate->format(static::DATE_INDEX_FORMAT) !== $this->getToday($domainId)->format(static::DATE_INDEX_FORMAT)) {
+        if (!$this->isToday($deliveryDate, $domainId)) {
             return false;
         }
 
-        $nowTime = $this->clock->now()
-            ->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId))
-            ->format('H:i');
+        return !$this->storeOpeningHoursProvider->isStoreOpenAfterTimeOnDayOfWeek($store, $dayOfWeek, $this->dateTimeHelper->getCurrentTime($domainId));
+    }
 
-        return !$this->storeOpeningHoursProvider->isStoreOpenAfterTimeOnDayOfWeek($store, $dayOfWeek, $nowTime);
+    protected function isToday(DateTimeImmutable $date, int $domainId): bool
+    {
+        return $date->format(static::DATE_INDEX_FORMAT) === $this->getToday($domainId)->format(static::DATE_INDEX_FORMAT);
     }
 
     /**

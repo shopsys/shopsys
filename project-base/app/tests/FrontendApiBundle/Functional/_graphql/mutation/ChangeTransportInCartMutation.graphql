@@ -2,11 +2,13 @@ mutation ChangeTransportInCart(
     $cartUuid: Uuid
     $transportUuid: Uuid
     $pickupPlaceIdentifier: String
+    $pickupPlaceOpeningHours: PickupPlaceOpeningHoursInput
 ) {
     ChangeTransportInCart(input: {
         cartUuid: $cartUuid
         transportUuid: $transportUuid
         pickupPlaceIdentifier: $pickupPlaceIdentifier
+        pickupPlaceOpeningHours: $pickupPlaceOpeningHours
     }) {
         uuid
         transport {

@@ -1,0 +1,4 @@
+PickupPlaceOpeningHoursRangeInput:
+    type: input-object
+    inherits:
+        - 'PickupPlaceOpeningHoursRangeInputDecorator'

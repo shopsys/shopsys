@@ -1,0 +1,22 @@
+PickupPlaceExceptionDayInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Period when the opening hours of a pickup place differ from the regular ones"
+        fields:
+            from:
+                type: "String!"
+                description: "First day of the period in the YYYY-MM-DD format"
+                validation:
+                    -   Date:
+                            message: "First day of the exception must be a date in the YYYY-MM-DD format"
+            to:
+                type: "String"
+                description: "Last day of the period in the YYYY-MM-DD format; null when the period is the first day only"
+                validation:
+                    -   Date:
+                            message: "Last day of the exception must be a date in the YYYY-MM-DD format"
+            openingHoursRanges:
+                type: "[PickupPlaceOpeningHoursRangeInput!]!"
+                description: "Time periods when the pickup place is open during the period; empty when it is closed"
+                validation: cascade

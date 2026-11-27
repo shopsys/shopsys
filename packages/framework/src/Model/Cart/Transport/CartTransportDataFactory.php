@@ -20,10 +20,14 @@ class CartTransportDataFactory
     ) {
     }
 
+    /**
+     * @param array{openingHoursOfDays: array<int, array{dayOfWeek: int, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>, exceptionDays: array<int, array{from: string, to: string|null, openingHoursRanges: array<int, array{openingTime: string, closingTime: string}>}>}|null $pickupPlaceOpeningHours
+     */
     public function create(
         Cart $cart,
         string $transportUuid,
         ?string $pickupPlaceIdentifier,
+        ?array $pickupPlaceOpeningHours = null,
     ): CartTransportData {
         $domainId = $this->domain->getId();
         $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $domainId);
@@ -33,6 +37,7 @@ class CartTransportDataFactory
         $cartTransportData->transport = $transport;
         $cartTransportData->watchedPrice = $watchedPrice;
         $cartTransportData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
+        $cartTransportData->pickupPlaceOpeningHours = $pickupPlaceOpeningHours;
 
         return $cartTransportData;
     }
