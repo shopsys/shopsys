@@ -56,15 +56,15 @@
                                 </div>
                             {% endif %}
                             <div class="col-auto d-flex gap-2">
-                                <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_discard', {id: mcpChangeRequest.id}) }}" class="btn btn-outline-danger btn-sm">
+                                <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_discard', {id: mcpChangeRequest.id, page: paginationResult.page}) }}" class="btn btn-outline-danger btn-sm">
                                     {{ 'Discard'|trans }}
                                 </a>
                                 {% if mcpChangeRequest.pending %}
-                                    <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_approve', {id: mcpChangeRequest.id}) }}" class="btn btn-primary btn-sm">
+                                    <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_approve', {id: mcpChangeRequest.id, page: paginationResult.page}) }}" class="btn btn-primary btn-sm">
                                         {{ 'Approve'|trans }}
                                     </a>
                                 {% elseif mcpChangeRequest.refreshable %}
-                                    <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_refresh', {id: mcpChangeRequest.id}) }}" class="btn btn-primary btn-sm">
+                                    <a href="{{ protectedUrl('admin_superadmin_mcp_change_request_refresh', {id: mcpChangeRequest.id, page: paginationResult.page}) }}" class="btn btn-primary btn-sm">
                                         {{ 'Update according to current data'|trans }}
                                     </a>
                                 {% endif %}

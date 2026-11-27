@@ -31,7 +31,7 @@ class McpChangeRequestController extends AdminBaseController
         return $this->render('@ShopsysMcp/content/changeRequest/list.html.twig', [
             'paginationResult' => $this->mcpChangeRequestFacade->getOpenByAdministratorPaginationResult(
                 $this->getCurrentAdministrator(),
-                $request->query->getInt('page', 1),
+                $this->getPageFromRequest($request),
                 static::PAGE_SIZE,
             ),
         ]);
@@ -39,7 +39,7 @@ class McpChangeRequestController extends AdminBaseController
 
     #[Route(path: '/superadmin/mcp-server/change-requests/{id}/approve/', name: McpRouteName::ADMIN_MCP_CHANGE_REQUEST_APPROVE, requirements: ['id' => '\d+'])]
     #[CsrfProtection]
-    public function approveAction(int $id): Response
+    public function approveAction(int $id, Request $request): Response
     {
         try {
             $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
@@ -47,7 +47,7 @@ class McpChangeRequestController extends AdminBaseController
             if (!$mcpChangeRequest->isPending()) {
                 $this->addErrorFlash(t('The change request failed, update it according to the current data or discard it.'));
 
-                return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+                return $this->redirectToList($request);
             }
 
             if ($this->mcpChangeRequestFacade->approve($mcpChangeRequest)) {
@@ -63,18 +63,18 @@ class McpChangeRequestController extends AdminBaseController
             ]);
         }
 
-        return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+        return $this->redirectToList($request);
     }
 
     #[Route(path: '/superadmin/mcp-server/change-requests/{id}/refresh/', name: McpRouteName::ADMIN_MCP_CHANGE_REQUEST_REFRESH, requirements: ['id' => '\d+'])]
     #[CsrfProtection]
-    public function refreshAction(int $id): Response
+    public function refreshAction(int $id, Request $request): Response
     {
         try {
             $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
 
             if (!$mcpChangeRequest->isRefreshable()) {
-                return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+                return $this->redirectToList($request);
             }
 
             $this->mcpChangeRequestFacade->refresh($mcpChangeRequest);
@@ -87,12 +87,12 @@ class McpChangeRequestController extends AdminBaseController
             ]);
         }
 
-        return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+        return $this->redirectToList($request);
     }
 
     #[Route(path: '/superadmin/mcp-server/change-requests/{id}/discard/', name: McpRouteName::ADMIN_MCP_CHANGE_REQUEST_DISCARD, requirements: ['id' => '\d+'])]
     #[CsrfProtection]
-    public function discardAction(int $id): Response
+    public function discardAction(int $id, Request $request): Response
     {
         try {
             $mcpChangeRequest = $this->mcpChangeRequestFacade->getOpenByIdAndAdministrator($id, $this->getCurrentAdministrator());
@@ -102,6 +102,18 @@ class McpChangeRequestController extends AdminBaseController
             $this->addInfoFlash(t('The change request has already been resolved.'));
         }
 
-        return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST);
+        return $this->redirectToList($request);
+    }
+
+    protected function redirectToList(Request $request): Response
+    {
+        return $this->redirectToRoute(McpRouteName::ADMIN_MCP_CHANGE_REQUEST_LIST, [
+            'page' => $this->getPageFromRequest($request),
+        ]);
+    }
+
+    protected function getPageFromRequest(Request $request): int
+    {
+        return $request->query->getInt('page', 1);
     }
 }
