@@ -44,6 +44,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     const { t } = useTranslation();
     const isLarge = size === 'large';
     const isCatalogVariant = variant === 'catalog';
+    const Heading = isCatalogVariant ? 'h2' : 'h3';
     const imageSize = isCatalogVariant ? 145 : isLarge ? 170 : 110;
     const itemImage = category.mainImage ?? null;
     const href = `${getStringWithoutTrailingSlash(category.slug)}/`;
@@ -81,7 +82,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
             {imageContent}
 
             <div className={twJoin(isLarge && 'vl:min-w-0')}>
-                <h3 className="h5 line-clamp-2">{category.name}</h3>
+                <Heading className="h5 line-clamp-2">{category.name}</Heading>
                 {variant === 'homepage' && isLarge && (
                     <p className="mt-2 vl:block hidden font-secondary font-semibold text-sm text-text-less">
                         {t('Our most popular category')}
