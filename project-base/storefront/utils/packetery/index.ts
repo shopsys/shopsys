@@ -67,6 +67,10 @@ const mapPacketeryOpeningHoursToInternalOpeningHours = (
     };
 
     const parseOpeningHours = (hours: string) => {
+        if (hours === '') {
+            return [];
+        }
+
         if (hours.toLowerCase() === 'nonstop') {
             return [
                 {

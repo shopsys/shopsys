@@ -1,13 +1,17 @@
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
+import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { usePersistStore } from 'store/usePersistStore';
+import { useDisplayTimezone } from 'utils/formatting/useDisplayTimezone';
+import { getPickupPlaceClosedDates } from 'utils/packetery/getPickupPlaceClosedDates';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { isPacketeryTransport } from 'utils/transport';
 import { useLatest } from 'utils/ui/useLatest';
 
 export type ChangeTransportInCart = (
-    newTransportUuid: string | null,
+    newTransport: Pick<TypeTransportWithAvailablePaymentsFragment, 'uuid' | 'transportTypeCode'> | null,
     newPickupPlace: StoreOrPacketeryPoint | null,
     options?: { suppressValidationErrors?: boolean },
 ) => Promise<TypeCartFragment | undefined | null>;
@@ -17,15 +21,21 @@ export const useChangeTransportInCart = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { gtmCartInfo } = useGtmCartInfo();
     const { canSeePrices } = useAuthorization();
+    const displayTimezone = useDisplayTimezone();
 
     const gtmCart = useLatest(gtmCartInfo);
 
-    const changeTransportInCart: ChangeTransportInCart = async (newTransportUuid, newPickupPlace, options) => {
+    const changeTransportInCart: ChangeTransportInCart = async (newTransport, newPickupPlace, options) => {
         const changeTransportResult = await changeTransportInCartMutation(
             {
                 input: {
-                    transportUuid: newTransportUuid,
+                    transportUuid: newTransport?.uuid ?? null,
                     pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
+                    // only the opening hours of a carrier's pickup place are unknown to the API, the stores' ones are not
+                    pickupPlaceClosedDates:
+                        newPickupPlace && isPacketeryTransport(newTransport?.transportTypeCode)
+                            ? getPickupPlaceClosedDates(newPickupPlace, new Date(), displayTimezone)
+                            : [],
                     cartUuid,
                 },
             },

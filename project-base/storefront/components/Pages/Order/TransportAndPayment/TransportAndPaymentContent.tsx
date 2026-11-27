@@ -58,7 +58,7 @@ export const TransportAndPaymentContent: FC = () => {
 
     const autoSelectEmailTransport = useEffectEvent(() => {
         if (emailTransport && transport?.uuid !== emailTransport.uuid) {
-            changeTransportInCart(emailTransport.uuid, null);
+            changeTransportInCart(emailTransport, null);
         }
     });
 
