@@ -189,14 +189,14 @@ export const useTransportChangeInSelect = (
                 return;
             }
 
-            changeTransportHandler(updatedTransport.uuid, preSelectedPickupPlace);
+            changeTransportHandler(updatedTransport, preSelectedPickupPlace);
             setPreSelectedPickupPlace(null);
 
             return;
         }
 
         if (updatedTransport.uuid !== currentTransport?.uuid) {
-            changeTransportHandler(updatedTransport.uuid, null);
+            changeTransportHandler(updatedTransport, null);
         }
     };
 
@@ -213,7 +213,7 @@ export const useTransportChangeInSelect = (
                     if (packeteryPoint) {
                         const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
                         setPacketeryPickupPoint(mappedPacketeryPoint);
-                        changeTransportHandler(newTransport.uuid, mappedPacketeryPoint);
+                        changeTransportHandler(newTransport, mappedPacketeryPoint);
                     }
                 },
                 { language: defaultLocale, country: packeteryCountry },
@@ -265,8 +265,10 @@ export const useTransportChangeInSelect = (
     };
 
     const changePickupPlace = (transportUuid: string, selectedPickupPlace: StoreOrPacketeryPoint | null) => {
-        if (selectedPickupPlace) {
-            changeTransportHandler(transportUuid, selectedPickupPlace);
+        const transport = transports?.find((transportItem) => transportItem.uuid === transportUuid);
+
+        if (transport && selectedPickupPlace) {
+            changeTransportHandler(transport, selectedPickupPlace);
         } else {
             changeTransport(null);
             clearPacketeryPickupPoint();
@@ -348,7 +350,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         try {
             const lastOrderPickupPlace = await loadLastOrderPickupPlace(lastOrderData);
 
-            const newCart = await changeTransportInCart(orderTransport?.transport?.uuid ?? null, lastOrderPickupPlace, {
+            const newCart = await changeTransportInCart(orderTransport?.transport ?? null, lastOrderPickupPlace, {
                 suppressValidationErrors: true,
             });
             const successfullyChangedTransport = newCart?.transport?.uuid === orderTransport?.transport?.uuid;

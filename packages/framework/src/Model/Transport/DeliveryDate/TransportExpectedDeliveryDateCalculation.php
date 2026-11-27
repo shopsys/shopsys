@@ -63,6 +63,7 @@ class TransportExpectedDeliveryDateCalculation
             $cart?->getQuantifiedProducts() ?? [],
             $domainId,
             $this->findPickupPlaceIdentifierSelectedInCartForTransport($transport, $cart),
+            $this->getPickupPlaceClosedDatesSelectedInCartForTransport($transport, $cart),
         );
     }
 
@@ -70,12 +71,14 @@ class TransportExpectedDeliveryDateCalculation
      * Returns the expected delivery date of an order of the given products placed today; null when no date can be promised
      *
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param string[] $pickupPlaceClosedDates "Y-m-d" dates the selected pickup place is closed on, the delivery date is postponed beyond them
      */
     public function calculateExpectedDeliveryDateForQuantifiedProducts(
         Transport $transport,
         array $quantifiedProducts,
         int $domainId,
         ?string $pickupPlaceIdentifier = null,
+        array $pickupPlaceClosedDates = [],
     ): ?DateTimeImmutable {
         $quantifiedProducts = array_values($quantifiedProducts);
 
@@ -85,6 +88,7 @@ class TransportExpectedDeliveryDateCalculation
             $domainId,
             $this->findSelectedStoreForTransport($transport, $pickupPlaceIdentifier, $domainId),
             $this->additionalServicesDeliveryDaysExtensionCalculation->calculateHighestDeliveryDaysExtension($quantifiedProducts),
+            $pickupPlaceClosedDates,
         );
     }
 
@@ -142,6 +146,7 @@ class TransportExpectedDeliveryDateCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param string[] $pickupPlaceClosedDates
      */
     protected function calculateDeliveryDate(
         Transport $transport,
@@ -149,6 +154,7 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
         int $deliveryDaysExtension = 0,
+        array $pickupPlaceClosedDates = [],
     ): ?DateTimeImmutable {
         if ($store === null && $transport->isPersonalPickup()) {
             return $this->calculateBestPickupDeliveryDateAcrossStores(
@@ -182,6 +188,7 @@ class TransportExpectedDeliveryDateCalculation
             $domainId,
             $store,
             $deliveryDaysExtension,
+            $pickupPlaceClosedDates,
         );
 
         return $deliveryDate?->setTimezone(new DateTimeZone('UTC'));
@@ -243,6 +250,18 @@ class TransportExpectedDeliveryDateCalculation
         }
 
         return $cart->getPickupPlaceIdentifier();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getPickupPlaceClosedDatesSelectedInCartForTransport(Transport $transport, ?Cart $cart): array
+    {
+        if ($cart === null || $cart->getTransport()?->getId() !== $transport->getId()) {
+            return [];
+        }
+
+        return $cart->getPickupPlaceClosedDates();
     }
 
     protected function findSelectedStoreForTransport(
@@ -309,12 +328,16 @@ class TransportExpectedDeliveryDateCalculation
             && $this->productAvailabilityFacade->isTransferToStoreNeeded($quantifiedProducts, $store, $domainId);
     }
 
+    /**
+     * @param string[] $pickupPlaceClosedDates
+     */
     protected function postponeToFirstAllowedDeliveryDay(
         Transport $transport,
         DateTimeImmutable $deliveryDate,
         int $domainId,
         ?Store $store,
         int $deliveryDaysExtension = 0,
+        array $pickupPlaceClosedDates = [],
     ): ?DateTimeImmutable {
         $closedDaysIndexedByDate = $this->getClosedDaysForPostponeWindowIndexedByDate($domainId, $deliveryDate);
 
@@ -327,6 +350,7 @@ class TransportExpectedDeliveryDateCalculation
                 $domainId,
                 $store,
                 $closedDaysIndexedByDate[$deliveryDate->format(static::DATE_INDEX_FORMAT)] ?? [],
+                $pickupPlaceClosedDates,
             );
 
             if ($isDeliveryAllowed) {
@@ -385,6 +409,7 @@ class TransportExpectedDeliveryDateCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDaysOnDate
+     * @param string[] $pickupPlaceClosedDates
      */
     protected function isDeliveryAllowedOnDate(
         Transport $transport,
@@ -392,13 +417,15 @@ class TransportExpectedDeliveryDateCalculation
         int $domainId,
         ?Store $store,
         array $closedDaysOnDate,
+        array $pickupPlaceClosedDates = [],
     ): bool {
         if ($transport->isPersonalPickup() && $store !== null) {
             return !$this->isStoreClosedOnDate($store, $deliveryDate, $domainId, $closedDaysOnDate);
         }
 
         return !$this->isDeliveryBlockedByDayOfWeek($transport, $deliveryDate)
-            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate);
+            && !$this->isDeliveryBlockedByClosedDays($transport, $closedDaysOnDate)
+            && !in_array($deliveryDate->format(static::DATE_INDEX_FORMAT), $pickupPlaceClosedDates, true);
     }
 
     protected function isDeliveryBlockedByDayOfWeek(Transport $transport, DateTimeImmutable $deliveryDate): bool

@@ -16,3 +16,12 @@ ChangeTransportInCartInputDecorator:
                 type: "String"
                 defaultValue: null
                 description: "The identifier of selected personal pickup place"
+            pickupPlaceClosedDates:
+                type: "[String!]!"
+                defaultValue: []
+                description: "Dates (YYYY-MM-DD) the selected pickup place of a carrier is closed on, so the expected delivery date is postponed to the first day the place is open; ignored for stores"
+                validation:
+                    -   Count:
+                            max: 60
+                    -   All:
+                            -   Date: ~

@@ -126,6 +126,13 @@ class Cart
     protected $pickupPlaceIdentifier;
 
     /**
+     * @var string[]
+     */
+    #[AsMcpColumn]
+    #[ORM\Column(type: 'json')]
+    protected $pickupPlaceClosedDates;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
     #[AsMcpColumn]
@@ -163,6 +170,7 @@ class Cart
         $this->promoCodes = new ArrayCollection();
         $this->giftVouchers = new ArrayCollection();
         $this->removedProductGifts = new ArrayCollection();
+        $this->pickupPlaceClosedDates = [];
     }
 
     public function addItem(CartItem $item): void
@@ -558,6 +566,7 @@ class Cart
         $this->transport = null;
         $this->setTransportWatchedPrice(null);
         $this->pickupPlaceIdentifier = null;
+        $this->pickupPlaceClosedDates = [];
         $this->updateLastActivityDate();
     }
 
@@ -566,6 +575,7 @@ class Cart
         $this->transport = $cartTransportData->transport;
         $this->setTransportWatchedPrice($cartTransportData->watchedPrice);
         $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
+        $this->pickupPlaceClosedDates = $cartTransportData->pickupPlaceClosedDates;
         $this->updateLastActivityDate();
     }
 
@@ -627,6 +637,15 @@ class Cart
     public function unsetPickupPlaceIdentifier(): void
     {
         $this->pickupPlaceIdentifier = null;
+        $this->pickupPlaceClosedDates = [];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPickupPlaceClosedDates()
+    {
+        return $this->pickupPlaceClosedDates;
     }
 
     /**

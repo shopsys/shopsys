@@ -14,4 +14,9 @@ class CartTransportData
     public PriceInterface $watchedPrice;
 
     public ?string $pickupPlaceIdentifier;
+
+    /**
+     * @var string[] "Y-m-d" dates the selected pickup place is closed on
+     */
+    public array $pickupPlaceClosedDates = [];
 }

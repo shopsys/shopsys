@@ -13651,6 +13651,15 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="changetransportincartinput.pickupplacecloseddates">pickupPlaceClosedDates</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td>
+
+Dates (YYYY-MM-DD) the selected pickup place of a carrier is closed on, so the expected delivery date is postponed to the first day the place is open; ignored for stores
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="changetransportincartinput.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>

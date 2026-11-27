@@ -28,6 +28,8 @@ export type TypeCartItemTypeEnum =
 export type TypeChangeTransportInCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid?: string | null | undefined;
+  /** Dates (YYYY-MM-DD) the selected pickup place of a carrier is closed on, so the expected delivery date is postponed to the first day the place is open; ignored for stores */
+  pickupPlaceClosedDates: Array<string>;
   /** The identifier of selected personal pickup place */
   pickupPlaceIdentifier?: string | null | undefined;
   /** UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart */

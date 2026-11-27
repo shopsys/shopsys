@@ -868,6 +868,8 @@ export type TypeChangePersonalDataInput = {
 export type TypeChangeTransportInCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
+  /** Dates (YYYY-MM-DD) the selected pickup place of a carrier is closed on, so the expected delivery date is postponed to the first day the place is open; ignored for stores */
+  pickupPlaceClosedDates: Array<Scalars['String']['input']>;
   /** The identifier of selected personal pickup place */
   pickupPlaceIdentifier?: InputMaybe<Scalars['String']['input']>;
   /** UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart */

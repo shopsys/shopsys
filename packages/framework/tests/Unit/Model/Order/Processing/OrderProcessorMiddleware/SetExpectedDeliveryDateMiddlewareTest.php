@@ -29,12 +29,16 @@ final class SetExpectedDeliveryDateMiddlewareTest extends MiddlewareTestCase
             PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER,
             'selected-store-uuid',
         );
+        $orderProcessingData->orderInput->addAdditionalData(
+            SetExpectedDeliveryDateMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_CLOSED_DATES,
+            ['2026-09-10'],
+        );
 
         $transportExpectedDeliveryDateCalculationMock = $this->createMock(TransportExpectedDeliveryDateCalculation::class);
         $transportExpectedDeliveryDateCalculationMock
             ->expects($this->once())
             ->method('calculateExpectedDeliveryDateForQuantifiedProducts')
-            ->with($transportStub, [$quantifiedProduct], Domain::FIRST_DOMAIN_ID, 'selected-store-uuid')
+            ->with($transportStub, [$quantifiedProduct], Domain::FIRST_DOMAIN_ID, 'selected-store-uuid', ['2026-09-10'])
             ->willReturn($expectedDeliveryDate);
 
         $result = (new SetExpectedDeliveryDateMiddleware($transportExpectedDeliveryDateCalculationMock))
