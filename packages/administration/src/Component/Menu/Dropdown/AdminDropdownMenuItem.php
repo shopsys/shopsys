@@ -12,6 +12,7 @@ readonly class AdminDropdownMenuItem
         public string $link,
         public int $priority,
         public bool $renderDividerBefore = false,
+        public ?int $badgeCount = null,
     ) {
     }
 }

@@ -13,6 +13,7 @@ use Shopsys\McpBundle\Component\Database\Query\SqlQueryValidator;
 use Shopsys\McpBundle\Component\Database\User\McpDatabaseUserFacade;
 use Shopsys\McpBundle\Component\Database\View\McpDatabaseViewsFacade;
 use Shopsys\McpBundle\Component\PostDeploy\Task\CheckMcpDatabaseRolePrivilegesTask;
+use Shopsys\McpBundle\Component\WriteTool\McpApprovableToolInterface;
 use Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -113,6 +114,9 @@ TEXT;
                 ->arg('$maxReturnedRows', $config['query']['max_returned_rows'])
             ->get(AdministratorMcpTokenFacade::class)
                 ->arg('$accessTokenTtlSeconds', $config['authorization']['access_token_ttl_seconds']);
+
+        $builder->registerForAutoconfiguration(McpApprovableToolInterface::class)
+            ->addTag(McpApprovableToolInterface::TAG);
     }
 
     #[Override]

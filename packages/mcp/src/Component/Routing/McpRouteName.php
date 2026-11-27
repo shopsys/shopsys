@@ -11,6 +11,10 @@ class McpRouteName
     public const string ADMIN_MCP_TOKEN = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'token';
     public const string ADMIN_MCP_TOKEN_MANUAL = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'manual_token';
     public const string ADMIN_MCP_TOKEN_REVOKE = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'token_revoke';
+    public const string ADMIN_MCP_CHANGE_REQUEST_LIST = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'change_request_list';
+    public const string ADMIN_MCP_CHANGE_REQUEST_APPROVE = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'change_request_approve';
+    public const string ADMIN_MCP_CHANGE_REQUEST_DISCARD = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'change_request_discard';
+    public const string ADMIN_MCP_CHANGE_REQUEST_REFRESH = self::ADMIN_MCP_ROUTE_NAME_PREFIX . 'change_request_refresh';
     public const string MCP_ENDPOINT = '_mcp_endpoint';
     public const string MCP_OAUTH_METADATA = 'mcp_oauth_metadata';
     public const string MCP_OAUTH_REGISTER = 'mcp_oauth_register';

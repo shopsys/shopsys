@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "%count% changed field|%count% changed fields"
+msgstr ""
+
 msgid "1 day"
 msgstr ""
 
@@ -25,6 +28,9 @@ msgstr ""
 msgid "Allow access"
 msgstr ""
 
+msgid "Approve"
+msgstr ""
+
 msgid "Approve MCP access"
 msgstr ""
 
@@ -37,6 +43,12 @@ msgstr ""
 msgid "Authorize MCP client"
 msgstr ""
 
+msgid "Blog article #%id% \"%name%\""
+msgstr ""
+
+msgid "Categories (%domainName%)"
+msgstr ""
+
 msgid "Claude Code client setup"
 msgstr ""
 
@@ -47,6 +59,9 @@ msgid "Close"
 msgstr ""
 
 msgid "Complete the browser login and approve MCP access in Shopsys administration."
+msgstr ""
+
+msgid "Content (%locale%)"
 msgstr ""
 
 msgid "Copy command"
@@ -65,6 +80,9 @@ msgid "Custom"
 msgstr ""
 
 msgid "Deny access"
+msgstr ""
+
+msgid "Discard"
 msgstr ""
 
 msgid "Do you really want to revoke this MCP token?"
@@ -91,6 +109,9 @@ msgstr ""
 msgid "Export the manual token in your current shell, then add the MCP server once."
 msgstr ""
 
+msgid "Failed"
+msgstr ""
+
 msgid "Generate manual token"
 msgstr ""
 
@@ -109,6 +130,12 @@ msgstr ""
 msgid "Last used at"
 msgstr ""
 
+msgid "MCP change requests"
+msgstr ""
+
+msgid "MCP server"
+msgstr ""
+
 msgid "MCP token \"%tokenLabel%\" revoked"
 msgstr ""
 
@@ -119,6 +146,9 @@ msgid "My MCP server"
 msgstr ""
 
 msgid "My MCP tokens"
+msgstr ""
+
+msgid "Name (%locale%)"
 msgstr ""
 
 msgid "Never used"
@@ -139,6 +169,9 @@ msgstr ""
 msgid "Per-shell token command"
 msgstr ""
 
+msgid "Perex (%locale%)"
+msgstr ""
+
 msgid "Revoke access"
 msgstr ""
 
@@ -148,10 +181,25 @@ msgstr ""
 msgid "Run the command above once in the shell where you use Claude Code."
 msgstr ""
 
+msgid "SEO H1 (%domainName%)"
+msgstr ""
+
+msgid "SEO meta description (%domainName%)"
+msgstr ""
+
+msgid "SEO title (%domainName%)"
+msgstr ""
+
 msgid "Select Authenticate for the Shopsys MCP server."
 msgstr ""
 
 msgid "Settings"
+msgstr ""
+
+msgid "Show change"
+msgstr ""
+
+msgid "Slug (%domainName%)"
 msgstr ""
 
 msgid "Start Claude Code and run /mcp."
@@ -160,13 +208,52 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+msgid "The action no longer exists."
+msgstr ""
+
+msgid "The change can no longer be applied, discard it."
+msgstr ""
+
+msgid "The change could not be applied."
+msgstr ""
+
+msgid "The change could not be approved: {{ errorMessage }}"
+msgstr ""
+
+msgid "The change request could not be updated: {{ errorMessage }}"
+msgstr ""
+
+msgid "The change request failed, update it according to the current data or discard it."
+msgstr ""
+
+msgid "The change request has already been resolved."
+msgstr ""
+
+msgid "The change request was updated according to the current data, check it and approve it again."
+msgstr ""
+
+msgid "The change was approved and applied."
+msgstr ""
+
+msgid "The change was discarded."
+msgstr ""
+
+msgid "The data has changed since the request was created."
+msgstr ""
+
 msgid "The requested active MCP token was not found."
+msgstr ""
+
+msgid "There are no MCP change requests waiting for your approval."
 msgstr ""
 
 msgid "This client is requesting access to the Shopsys MCP server with your administrator account."
 msgstr ""
 
 msgid "Type"
+msgstr ""
+
+msgid "Update according to current data"
 msgstr ""
 
 msgid "Use a manual token for clients such as Codex CLI."
@@ -176,6 +263,9 @@ msgid "View Codex CLI instructions"
 msgstr ""
 
 msgid "You can generate a new token manually or connect an MCP client using the instructions below."
+msgstr ""
+
+msgid "from"
 msgstr ""
 
 msgid "tokens"
