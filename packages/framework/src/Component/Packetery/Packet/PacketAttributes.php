@@ -22,6 +22,8 @@ class PacketAttributes
 
     protected float $value;
 
+    protected string $currency;
+
     protected float $weight;
 
     public function __construct(Order $order)
@@ -31,6 +33,7 @@ class PacketAttributes
         $this->surname = $order->getLastName();
         $this->email = $order->getEmail();
         $this->value = (float)$order->getTotalPriceWithVat()->getAmount();
+        $this->currency = $order->getCurrencyCode();
         $this->addressId = (int)$order->getPickupPlaceIdentifier();
         $this->weight = $order->getTotalWeight() > 0 ? $order->getTotalWeight() / static::GRAMS_IN_KILOGRAM : 0;
     }
@@ -63,6 +66,11 @@ class PacketAttributes
     public function getValue(): float
     {
         return $this->value;
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency;
     }
 
     public function getWeight(): float

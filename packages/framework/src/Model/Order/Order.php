@@ -436,6 +436,13 @@ class Order implements DomainSeparatedEntityInterface
      * @var string|null
      */
     #[AsMcpColumn]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected $packeteryRejectionReason;
+
+    /**
+     * @var string|null
+     */
+    #[AsMcpColumn]
     #[ORM\Column(type: 'string', length: 64, nullable: true)]
     protected $promoCode;
 
@@ -1467,6 +1474,22 @@ class Order implements DomainSeparatedEntityInterface
     public function setTrackingNumber($trackingNumber): void
     {
         $this->trackingNumber = $trackingNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPacketeryRejectionReason()
+    {
+        return $this->packeteryRejectionReason;
+    }
+
+    /**
+     * @param string|null $packeteryRejectionReason
+     */
+    public function setPacketeryRejectionReason($packeteryRejectionReason): void
+    {
+        $this->packeteryRejectionReason = $packeteryRejectionReason;
     }
 
     public function getTrackingUrl(): ?string

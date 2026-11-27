@@ -384,6 +384,12 @@ class OrderFacade
         $this->em->flush();
     }
 
+    public function updatePacketeryRejectionReason(Order $order, ?string $packeteryRejectionReason): void
+    {
+        $order->setPacketeryRejectionReason($packeteryRejectionReason);
+        $this->em->flush();
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */

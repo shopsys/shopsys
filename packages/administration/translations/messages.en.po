@@ -784,6 +784,9 @@ msgstr ""
 msgid "Do you really want to remove this store? This step is irreversible!"
 msgstr ""
 
+msgid "Do you really want to send the order to Packetery again? Remove the cause of the rejection first, otherwise Packetery will reject it again."
+msgstr ""
+
 msgid "Domain"
 msgstr ""
 
@@ -1645,13 +1648,22 @@ msgstr ""
 msgid "Order confirmation page"
 msgstr ""
 
+msgid "Order could not be sent to Packetery."
+msgstr ""
+
 msgid "Order detail"
 msgstr ""
 
 msgid "Order has been marked as paid."
 msgstr ""
 
+msgid "Order has been sent to Packetery."
+msgstr ""
+
 msgid "Order has not been sent to GoPay"
+msgstr ""
+
+msgid "Order is not waiting to be sent to Packetery again."
 msgstr ""
 
 msgid "Order items"
@@ -1697,6 +1709,9 @@ msgid "Origin"
 msgstr ""
 
 msgid "Overview"
+msgstr ""
+
+msgid "Packetery rejected the order"
 msgstr ""
 
 msgid "Paid"
@@ -2198,6 +2213,9 @@ msgid "Sellable"
 msgstr ""
 
 msgid "Selling prices"
+msgstr ""
+
+msgid "Send again"
 msgstr ""
 
 msgid "Send refund"

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Transfer\TransferIdentificationInterface;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory;
 use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface;
 use SimpleXMLElement;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -20,6 +21,8 @@ use Twig\Error\Error;
 
 class PacketeryClient implements TransferIdentificationInterface
 {
+    protected const string PACKET_ATTRIBUTES_FAULT = 'PacketAttributesFault';
+
     protected TransferLoggerInterface $transferLogger;
 
     public function __construct(
@@ -81,14 +84,28 @@ class PacketeryClient implements TransferIdentificationInterface
             try {
                 $xml = $this->createPacketXml($order);
                 $responseXml = $this->restApiPostRequest($xml);
+
+                if ($responseXml->getStatusCode() >= Response::HTTP_INTERNAL_SERVER_ERROR) {
+                    $logger->warning(
+                        'Packetery API is unavailable, sending of the remaining packets is postponed to the next run.',
+                        [
+                            'statusCode' => $responseXml->getStatusCode(),
+                        ],
+                    );
+
+                    break;
+                }
+
                 $this->saveTrackingNumberFromResponse($responseXml, $order);
             } catch (TransportExceptionInterface $transportException) {
-                $logger->error(
-                    'Transport error - packetery API.',
+                $logger->warning(
+                    'Packetery API is unreachable, sending of the remaining packets is postponed to the next run.',
                     [
                         'msg' => $transportException->getMessage(),
                     ],
                 );
+
+                break;
             } catch (Error $twigError) {
                 $logger->error(
                     'Render error - packetery xml: ',
@@ -125,6 +142,20 @@ class PacketeryClient implements TransferIdentificationInterface
         }
         $parsedResponse = new SimpleXMLElement($responseXml->getContent(false));
 
+        if ((string)$parsedResponse->status === 'fault' && (string)$parsedResponse->fault === static::PACKET_ATTRIBUTES_FAULT) {
+            $rejectionReason = $this->getPacketAttributesFaultReason($parsedResponse);
+            $this->orderFacade->updatePacketeryRejectionReason($order, $rejectionReason);
+            $logger->warning(
+                'Packetery rejected the order.',
+                [
+                    'orderNumber' => $order->getNumber(),
+                    'rejectionReason' => $rejectionReason,
+                ],
+            );
+
+            return;
+        }
+
         if ((string)$parsedResponse->status === 'fault') {
             $logger->error(
                 'Response from Packetery fault.',
@@ -137,6 +168,7 @@ class PacketeryClient implements TransferIdentificationInterface
 
             return;
         }
+
         $barcode = (string)$parsedResponse->result->barcode;
         $this->orderFacade->updateTrackingNumber($order, $barcode);
         $logger->info(
@@ -146,6 +178,21 @@ class PacketeryClient implements TransferIdentificationInterface
                 'barcode' => $barcode,
             ],
         );
+    }
+
+    protected function getPacketAttributesFaultReason(SimpleXMLElement $parsedResponse): string
+    {
+        $attributeFaultMessages = [];
+
+        foreach ($parsedResponse->detail->attributes->fault as $attributeFault) {
+            $attributeFaultMessages[] = (string)$attributeFault->fault;
+        }
+
+        if (count($attributeFaultMessages) === 0) {
+            return (string)$parsedResponse->string;
+        }
+
+        return implode(' ', $attributeFaultMessages);
     }
 
     #[Override]

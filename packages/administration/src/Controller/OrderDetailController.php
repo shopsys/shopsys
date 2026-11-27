@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Controller;
 
 use Shopsys\AdministrationBundle\Component\OrderDetail\OrderDetailTabRegistry;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\HttpMethod;
+use Shopsys\FrameworkBundle\Component\Packetery\PacketeryClient;
 use Shopsys\FrameworkBundle\Component\Router\Security\Attribute\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanEdit;
 use Shopsys\FrameworkBundle\Component\Security\Attribute\CanView;
@@ -33,6 +34,7 @@ class OrderDetailController extends AdminBaseController
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly OrderDetailTabRegistry $orderDetailTabRegistry,
         protected readonly OrderPaidStatusFacade $orderPaidStatusFacade,
+        protected readonly PacketeryClient $packeteryClient,
     ) {
     }
 
@@ -171,6 +173,36 @@ class OrderDetailController extends AdminBaseController
 
         $this->orderPaidStatusFacade->markOrderAsPaid($order);
         $this->addSuccessFlash(t('Order has been marked as paid.'));
+
+        return $this->redirectToRoute('admin_order_edit', ['id' => $id]);
+    }
+
+    #[Route(
+        path: '/order/edit/{id}/resend-to-packetery',
+        requirements: ['id' => '\d+'],
+        methods: ['GET'],
+        name: 'admin_order_edit_resendtopacketery',
+    )]
+    #[CanEdit]
+    #[CsrfProtection]
+    public function resendToPacketeryAction(int $id): Response
+    {
+        $order = $this->orderFacade->getById($id);
+
+        if ($order->getPacketeryRejectionReason() === null || $order->getTrackingNumber() !== null) {
+            $this->addErrorFlash(t('Order is not waiting to be sent to Packetery again.'));
+
+            return $this->redirectToRoute('admin_order_edit', ['id' => $id]);
+        }
+
+        $this->packeteryClient->sendPackets([$order]);
+
+        if ($order->getTrackingNumber() !== null) {
+            $this->orderFacade->updatePacketeryRejectionReason($order, null);
+            $this->addSuccessFlash(t('Order has been sent to Packetery.'));
+        } else {
+            $this->addErrorFlash(t('Order could not be sent to Packetery.'));
+        }
 
         return $this->redirectToRoute('admin_order_edit', ['id' => $id]);
     }
