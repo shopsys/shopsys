@@ -28,10 +28,11 @@ class TransportInCartMutation extends AbstractMutation
         $cartUuid = $input['cartUuid'];
         $transportUuid = $input['transportUuid'];
         $pickupPlaceIdentifier = $input['pickupPlaceIdentifier'];
+        $pickupPlaceClosedDates = $input['pickupPlaceClosedDates'];
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
-        $this->cartTransportFacade->updateTransportInCart($cart, $transportUuid, $pickupPlaceIdentifier);
+        $this->cartTransportFacade->updateTransportInCart($cart, $transportUuid, $pickupPlaceIdentifier, $pickupPlaceClosedDates);
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }

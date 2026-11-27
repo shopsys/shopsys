@@ -20,10 +20,14 @@ class CartTransportDataFactory
     ) {
     }
 
+    /**
+     * @param string[] $pickupPlaceClosedDates
+     */
     public function create(
         Cart $cart,
         string $transportUuid,
         ?string $pickupPlaceIdentifier,
+        array $pickupPlaceClosedDates = [],
     ): CartTransportData {
         $domainId = $this->domain->getId();
         $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $domainId);
@@ -33,6 +37,7 @@ class CartTransportDataFactory
         $cartTransportData->transport = $transport;
         $cartTransportData->watchedPrice = $watchedPrice;
         $cartTransportData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
+        $cartTransportData->pickupPlaceClosedDates = $pickupPlaceClosedDates;
 
         return $cartTransportData;
     }

@@ -16,10 +16,17 @@ class CartTransportFacade
     ) {
     }
 
-    public function updateTransportInCart(Cart $cart, ?string $transportUuid, ?string $pickupPlaceIdentifier): void
-    {
+    /**
+     * @param string[] $pickupPlaceClosedDates "Y-m-d" dates the selected pickup place is closed on
+     */
+    public function updateTransportInCart(
+        Cart $cart,
+        ?string $transportUuid,
+        ?string $pickupPlaceIdentifier,
+        array $pickupPlaceClosedDates = [],
+    ): void {
         if ($transportUuid !== null) {
-            $cartTransportData = $this->cartTransportDataFactory->create($cart, $transportUuid, $pickupPlaceIdentifier);
+            $cartTransportData = $this->cartTransportDataFactory->create($cart, $transportUuid, $pickupPlaceIdentifier, $pickupPlaceClosedDates);
             $cart->editCartTransport($cartTransportData);
         } else {
             $cart->unsetCartTransport();

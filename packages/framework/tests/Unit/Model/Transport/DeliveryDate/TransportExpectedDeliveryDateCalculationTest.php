@@ -133,7 +133,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $productAvailabilityFacadeStub->method('findValidExpectedRestockingDate')
             ->willReturnMap($restockingDateMap);
 
-        $cartStub = $this->createStub(Cart::class);
+        $cartStub = $this->createCartStub();
         $cartStub->method('getQuantifiedProducts')->willReturn($quantifiedProducts);
 
         $transportStub = $this->createTransportStubDeliveringAnyDay($daysUntilDelivery);
@@ -152,7 +152,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $productAvailabilityFacade = $this->createStub(ProductAvailabilityFacade::class);
         $productAvailabilityFacade->method('getGroupedStockQuantitiesByProductsAndDomainIdIndexedByProductId')->willReturn([1 => 1]);
         $productAvailabilityFacade->method('findValidExpectedRestockingDate')->willReturn(new DatePoint(self::RESTOCKING_DATE, new DateTimeZone('UTC')));
-        $cart = $this->createStub(Cart::class);
+        $cart = $this->createCartStub();
         $cart->method('getQuantifiedProducts')->willReturn([new QuantifiedProduct($product, 1), new QuantifiedProduct($product, 1)]);
 
         $date = $this->createTransportExpectedDeliveryDateCalculation(productAvailabilityFacade: $productAvailabilityFacade)
@@ -588,7 +588,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
         $transportStub = $this->createTransportStubDeliveringOnNoSpecialDay(1, true);
 
-        $cartStub = $this->createStub(Cart::class);
+        $cartStub = $this->createCartStub();
         $cartStub->method('getQuantifiedProducts')->willReturn([]);
         $cartStub->method('getTransport')->willReturn($transportStub);
         $cartStub->method('getPickupPlaceIdentifier')->willReturn('selected-store-uuid');
@@ -650,7 +650,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $anotherTransportStub = $this->createStub(Transport::class);
         $anotherTransportStub->method('getId')->willReturn(2);
 
-        $cartStub = $this->createStub(Cart::class);
+        $cartStub = $this->createCartStub();
         $cartStub->method('getQuantifiedProducts')->willReturn([]);
         $cartStub->method('getTransport')->willReturn($anotherTransportStub);
         $cartStub->method('getPickupPlaceIdentifier')->willReturn('selected-store-uuid');
@@ -1190,7 +1190,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
         $transportStub = $this->createTransportStubDeliveringOnNoSpecialDay(1, true);
 
-        $cartStub = $this->createStub(Cart::class);
+        $cartStub = $this->createCartStub();
         $cartStub->method('getQuantifiedProducts')->willReturn([]);
         $cartStub->method('getTransport')->willReturn($transportStub);
         $cartStub->method('getPickupPlaceIdentifier')->willReturn('selected-store-uuid');
@@ -1256,7 +1256,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $quantifiedProduct = new QuantifiedProduct($this->createProductStub(), 1);
         $quantifiedProduct->setAdditionalData(QuantifiedProduct::ADDITIONAL_SERVICES_KEY, $additionalServiceStubs);
 
-        $cartStub = $this->createStub(Cart::class);
+        $cartStub = $this->createCartStub();
         $cartStub->method('getQuantifiedProducts')->willReturn([$quantifiedProduct]);
 
         return $cartStub;
@@ -1310,6 +1310,88 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
         $closedDayFacadeStub->method('getClosedDaysWithEagerLoadedExcludedStores')->willReturn($closedDays);
 
         return $closedDayFacadeStub;
+    }
+
+    public function testDeliveryDateIsPostponedBeyondTheClosedDatesOfThePickupPlace(): void
+    {
+        // NOW is Thursday, the parcel arrives on Friday, the pickup place is closed on Friday and Saturday
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()->calculateExpectedDeliveryDateForQuantifiedProducts(
+            $this->createTransportStubDeliveringAnyDay(1),
+            [],
+            Domain::FIRST_DOMAIN_ID,
+            '13789',
+            ['2026-07-17', '2026-07-18'],
+        );
+
+        $this->assertDeliveryDateSame('2026-07-19 00:00:00', $deliveryDate);
+    }
+
+    public function testClosedDatesOfThePickupPlaceAreIgnoredForStore(): void
+    {
+        $storeFacadeStub = $this->createStub(StoreFacade::class);
+        $storeFacadeStub->method('findByUuidAndDomainId')->willReturn($this->createStoreStubOpenEveryDay());
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation(storeFacade: $storeFacadeStub)
+            ->calculateExpectedDeliveryDateForQuantifiedProducts(
+                $this->createTransportStubDeliveringAnyDay(1, true),
+                [],
+                Domain::FIRST_DOMAIN_ID,
+                'store-uuid',
+                ['2026-07-17'],
+            );
+
+        // the opening hours of the store are known to the backend
+        $this->assertDeliveryDateSame('2026-07-17 00:00:00', $deliveryDate);
+    }
+
+    public function testClosedDatesOfThePickupPlaceInCartPostponeTheDeliveryDateOfTheSelectedTransport(): void
+    {
+        $transportStub = $this->createTransportStubDeliveringAnyDay(1);
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()->calculateExpectedDeliveryDate(
+            $transportStub,
+            $this->createCartStubWithPickupPlaceClosedDates($transportStub, ['2026-07-17']),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertDeliveryDateSame('2026-07-18 00:00:00', $deliveryDate);
+    }
+
+    public function testClosedDatesOfThePickupPlaceInCartAreIgnoredForAnotherTransport(): void
+    {
+        $selectedTransportStub = $this->createStub(Transport::class);
+        $selectedTransportStub->method('getId')->willReturn(2);
+
+        $deliveryDate = $this->createTransportExpectedDeliveryDateCalculation()->calculateExpectedDeliveryDate(
+            $this->createTransportStubDeliveringAnyDay(1),
+            $this->createCartStubWithPickupPlaceClosedDates($selectedTransportStub, ['2026-07-17']),
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $this->assertDeliveryDateSame('2026-07-17 00:00:00', $deliveryDate);
+    }
+
+    private function createCartStub(): Stub&Cart
+    {
+        $cartStub = $this->createStub(Cart::class);
+        $cartStub->method('getPickupPlaceClosedDates')->willReturn([]);
+
+        return $cartStub;
+    }
+
+    /**
+     * @param string[] $pickupPlaceClosedDates
+     */
+    private function createCartStubWithPickupPlaceClosedDates(
+        Transport $selectedTransport,
+        array $pickupPlaceClosedDates,
+    ): Cart {
+        $cartStub = $this->createStub(Cart::class);
+        $cartStub->method('getQuantifiedProducts')->willReturn([]);
+        $cartStub->method('getTransport')->willReturn($selectedTransport);
+        $cartStub->method('getPickupPlaceClosedDates')->willReturn($pickupPlaceClosedDates);
+
+        return $cartStub;
     }
 
     private function createTransportExpectedDeliveryDateCalculation(
@@ -1386,7 +1468,7 @@ final class TransportExpectedDeliveryDateCalculationTest extends TestCase
 
     private function createCartStubWithSingleProduct(): Cart
     {
-        $cartStub = $this->createStub(Cart::class);
+        $cartStub = $this->createCartStub();
         $cartStub->method('getQuantifiedProducts')->willReturn([new QuantifiedProduct($this->createProductStub(), 1)]);
 
         return $cartStub;
